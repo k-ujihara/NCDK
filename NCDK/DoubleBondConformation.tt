@@ -1,0 +1,23 @@
+﻿<#@ include file="Config.ttinclude" #>
+
+namespace NCDK
+{
+    public struct DoubleBondConformation : System.IComparable
+    {
+<# 
+        GenerateEnumBody(
+            "DoubleBondConformation", 
+             new[]
+            {
+                "Unset",
+				"Together:Z-form",
+				"Opposite:E-form",
+            },
+            true
+        ); 
+#>
+        public bool IsUnset => this.Ordinal == 0;
+
+        public DoubleBondConformation Invert() => Ordinal == O.Together ? Opposite : Together;
+    }
+}

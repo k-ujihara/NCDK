@@ -1,0 +1,107 @@
+<#@ include file="ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Text;
+
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
+{
+    [Serializable]
+    public class ChemSequence
+        : ChemObject, IChemSequence, IChemObjectListener, ICloneable
+    {
+        private IList<IChemModel> chemModels = new List<IChemModel>();
+
+        public ChemSequence()
+            : base()
+        {
+        }
+
+        public void Add(IChemModel chemModel)
+        {
+            chemModels.Add(chemModel);
+<# if (!ns.IsSilent) { #> 
+			chemModel.Listeners.Add(this);
+			NotifyChanged(); 
+<# } #>
+        }
+
+        public bool Remove(IChemModel chemModel)
+        {
+            var ret = chemModels.Remove(chemModel);
+<# if (!ns.IsSilent) { #> 
+            chemModel.Listeners.Add(this);
+			NotifyChanged(); 
+<# } #>
+            return ret;
+        }
+
+        public IChemModel this[int index]
+        {
+            get { return chemModels[index]; }
+
+            set
+            {
+                chemModels[index] = value;
+                <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+            }
+        }
+
+        public int Count => chemModels.Count;
+        public bool IsReadOnly => chemModels.IsReadOnly;
+        public void Clear() => chemModels.Clear();
+        public bool Contains(IChemModel chemModel) => chemModels.Contains(chemModel);
+        public void CopyTo(IChemModel[] array, int arrayIndex) => chemModels.CopyTo(array, arrayIndex);
+        public IEnumerator<IChemModel> GetEnumerator() => chemModels.GetEnumerator();
+        public int IndexOf(IChemModel chemModel) => chemModels.IndexOf(chemModel);
+        public void Insert(int index, IChemModel chemModel) => chemModels.Insert(index, chemModel);
+        public void RemoveAt(int index) => chemModels.RemoveAt(index);
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("ChemSequence(#M=");
+            sb.Append(Count);
+            if (Count > 0)
+            {
+                sb.Append(", ");
+                foreach (var chemModel in chemModels)
+                    sb.Append(chemModel.ToString());
+            }
+            sb.Append(')');
+            return sb.ToString();
+        }
+
+        public override ICDKObject Clone(CDKObjectMap map)
+        {
+            var clone_chemModels = new List<IChemModel>();
+            foreach (var chemModel in chemModels)
+                clone_chemModels.Add((IChemModel)chemModel.Clone(map));
+            var clone = (ChemSequence)base.Clone(map);
+            clone.chemModels = clone_chemModels;
+            return clone;
+        }
+
+        /**
+         *  Called by objects to which this object has
+         *  registered as a listener.
+         *
+         *@param  event  A change event pointing to the source of the change
+         */
+        public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        {
+            <# if (!ns.IsSilent) { #> NotifyChanged(evt); <# } #>
+        }
+    }
+}
+<#
+}
+#>

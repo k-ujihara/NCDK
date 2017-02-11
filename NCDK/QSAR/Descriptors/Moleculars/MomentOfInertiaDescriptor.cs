@@ -1,0 +1,228 @@
+/*
+ *  Copyright (C) 2004-2007  Rajarshi Guha <rajarshi@users.sourceforge.net>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using NCDK.Common.Collections;
+using MathNet.Numerics.LinearAlgebra;
+using NCDK.Config;
+using NCDK.Geometries;
+using NCDK.QSAR.Result;
+using NCDK.Tools.Manipulator;
+using System;
+using System.Linq;
+
+namespace NCDK.QSAR.Descriptors.Moleculars
+{
+    /**
+     * A descriptor that calculates the moment of inertia and radius of gyration.
+     * Moment of inertia (MI) values characterize the mass distribution of a molecule.
+     * Related to the MI values, ratios of the MI values along the three principal axes
+     * are also well know modeling variables. This descriptor calculates the MI values
+     * along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
+     * calculates the radius of gyration of the molecule.
+     * <p/>
+     * The descriptor generates 7 values in the following order
+     * <ul>
+     * <li>MOMI-X - MI along X axis
+     * <li>MOMI-Y - MI along Y axis
+     * <li>MOMI-Z - MI along Z axis
+     * <li>MOMI-XY - X/Y
+     * <li>MOMI-XZ - X/Z
+     * <li>MOMI-YZ Y/Z
+     * <li>MOMI-R - Radius of gyration
+     * </ul>
+     * One important aspect of the algorithm is that if the eigenvalues of the MI tensor
+     * are below 1e-3, then the ratio's are set to a default of 1000.
+     * <p/>
+     * <p>This descriptor uses these parameters:
+     * <table border="1">
+     * <tr>
+     * <td>Name</td>
+     * <td>Default</td>
+     * <td>Description</td>
+     * </tr>
+     * <tr>
+     * <td></td>
+     * <td></td>
+     * <td>no parameters</td>
+     * </tr>
+     * </table>
+     *
+     * @author           Rajarshi Guha
+     * @cdk.created      2005-02-07
+     * @cdk.module       qsarmolecular
+     * @cdk.githash
+     * @cdk.set          qsar-descriptors
+     * @cdk.dictref      qsar-descriptors:momentOfInertia
+     * @cdk.keyword      moment of inertia
+     */
+    public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
+    {
+        private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
+
+        public override IImplementationSpecification Specification => _Specification;
+        private static DescriptorSpecification _Specification { get; } =
+            new DescriptorSpecification(
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#momentOfInertia",
+                typeof(MomentOfInertiaDescriptor).FullName, "The Chemistry Development Kit");
+
+        /// <summary>
+        /// The parameters attribute of the MomentOfInertiaDescriptor object.
+        /// </summary>
+        public override object[] Parameters { get { return null; } set { } }
+
+        public override string[] DescriptorNames => NAMES;
+
+        /// <summary>
+        /// Tthe parameterNames attribute of the MomentOfInertiaDescriptor object.
+        /// </summary>
+        public override string[] ParameterNames => null;
+
+        /// <summary>
+        /// Gets the parameterType attribute of the MomentOfInertiaDescriptor object.
+        /// </summary>
+        /// <param name="name">Description of the Parameter</param>
+        /// <returns>The parameterType value</returns>
+        public override object GetParameterType(string name) => null;
+
+        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        {
+            int ndesc = DescriptorNames.Length;
+            DoubleArrayResult results = new DoubleArrayResult(ndesc);
+            for (int i = 0; i < ndesc; i++)
+                results.Add(double.NaN);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, results,
+                    DescriptorNames, e);
+        }
+
+        /// <summary>
+        /// Calculates the 3 MI's, 3 ration and the R_gyr value.
+        ///
+        /// The molecule should have hydrogens
+        /// </summary>
+        /// <param name="container">Parameter is the atom container.</param>
+        /// <returns>An ArrayList containing 7 elements in the order described above</returns>
+        public override DescriptorValue Calculate(IAtomContainer container)
+        {
+            if (!GeometryUtil.Has3DCoordinates(container))
+                return GetDummyDescriptorValue(new CDKException("Molecule must have 3D coordinates"));
+
+            IAtomContainer clone;
+            IsotopeFactory factory;
+            clone = (IAtomContainer)container.Clone();
+            factory = Isotopes.Instance;
+            factory.ConfigureAtoms(clone);
+
+            DoubleArrayResult retval = new DoubleArrayResult(7);
+
+            double ccf = 1.000138;
+            double eps = 1e-5;
+
+            double[][] imat = Arrays.CreateJagged<double>(3, 3);
+            var centerOfMass = GeometryUtil.Get3DCentreOfMass(clone).Value;
+
+            double xdif;
+            double ydif;
+            double zdif;
+            double xsq;
+            double ysq;
+            double zsq;
+            for (int i = 0; i < clone.Atoms.Count; i++)
+            {
+                IAtom currentAtom = clone.Atoms[i];
+
+                double mass = factory.GetMajorIsotope(currentAtom.Symbol).ExactMass.Value;
+
+                var p = currentAtom.Point3D.Value;
+                xdif = p.X - centerOfMass.X;
+                ydif = p.Y - centerOfMass.Y;
+                zdif = p.Z - centerOfMass.Z;
+                xsq = xdif * xdif;
+                ysq = ydif * ydif;
+                zsq = zdif * zdif;
+
+                imat[0][0] += mass * (ysq + zsq);
+                imat[1][1] += mass * (xsq + zsq);
+                imat[2][2] += mass * (xsq + ysq);
+
+                imat[1][0] += -1 * mass * ydif * xdif;
+                imat[0][1] = imat[1][0];
+
+                imat[2][0] += -1 * mass * xdif * zdif;
+                imat[0][2] = imat[2][0];
+
+                imat[2][1] += -1 * mass * ydif * zdif;
+                imat[1][2] = imat[2][1];
+            }
+
+            // diagonalize the MI tensor
+            var tmp = Matrix<double>.Build.DenseOfColumnArrays(imat);
+            var eigenDecomp = tmp.Evd();
+            double[] eval = eigenDecomp.EigenValues.Select(n => n.Real).ToArray();
+
+            retval.Add(eval[2]);
+            retval.Add(eval[1]);
+            retval.Add(eval[0]);
+
+            double etmp = eval[0];
+            eval[0] = eval[2];
+            eval[2] = etmp;
+
+            if (Math.Abs(eval[1]) > 1e-3)
+                retval.Add(eval[0] / eval[1]);
+            else
+                retval.Add(1000);
+
+            if (Math.Abs(eval[2]) > 1e-3)
+            {
+                retval.Add(eval[0] / eval[2]);
+                retval.Add(eval[1] / eval[2]);
+            }
+            else
+            {
+                retval.Add(1000);
+                retval.Add(1000);
+            }
+
+            // finally get the radius of gyration
+            double pri;
+            IMolecularFormula formula = MolecularFormulaManipulator.GetMolecularFormula(clone);
+            if (Math.Abs(eval[2]) > eps)
+                pri = Math.Pow(eval[0] * eval[1] * eval[2], 1.0 / 3.0);
+            else
+                pri = Math.Sqrt(eval[0] * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula));
+            retval.Add(Math.Sqrt(Math.PI * 2 * pri * ccf / MolecularFormulaManipulator.GetTotalExactMass(formula)));
+
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, retval,
+                    DescriptorNames);
+        }
+
+        /// <summary>
+        /// Returns the specific type of the DescriptorResult object.
+        /// <p/>
+        /// The return value from this method really indicates what type of result will
+        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
+        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
+        /// allows you to do the same thing, without actually calculating the descriptor.
+        ///
+        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
+        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
+        /// </summary>
+        public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(7);
+    }
+}

@@ -1,0 +1,73 @@
+﻿// .NET Framework port by Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
+
+<#@ include file="Config.ttinclude" #>
+
+namespace NCDK
+{
+    /// <summary>
+    /// Hybridization states.
+    /// </summary>
+    public struct Hybridization : System.IComparable
+    {
+<# 
+        GenerateEnumBody(
+            "Hybridization", 
+             new[]
+            {
+				"Unset:A undefined hybridization.",
+				"S",
+				"SP1:A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.",
+				"SP2:A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.",
+				"SP3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.",
+				"Planar3:trigonal planar (lone pair in pz)",
+				"SP3D1:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with one d orbital.",
+				"SP3D2:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with two d orbitals.",
+				"SP3D3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with three d orbitals.",
+				"SP3D4:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with four d orbitals.",
+				"SP3D5:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with five d orbitals.",
+            },
+            true
+        ); 
+#>
+        public string Name => ToString();
+
+		public bool IsUnset => this.Ordinal == 0;
+
+        internal static Hybridization GetInstance(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return Unset;
+
+            switch (value.ToLowerInvariant())
+            {
+                case "s":
+                    return S;
+                case "sp":
+                    return SP1;
+                case "sp1":
+                    return SP1;
+                case "sp2":
+                    return SP2;
+                case "sp3":
+                case "tetrahedral":
+                    return SP3;
+                case "planar":
+                    return Planar3;
+                case "sp3d1":
+                    return SP3D1;
+                case "sp3d2":
+                case "octahedral":
+                    return SP3D2;
+                case "sp3d3":
+                    return SP3D3;
+                case "sp3d4":
+                    return SP3D4;
+                case "sp3d5":
+                    return SP3D5;
+                default:
+                    throw new System.ArgumentException("Unrecognized hybridization", nameof(value));
+            }
+		}
+	}
+}

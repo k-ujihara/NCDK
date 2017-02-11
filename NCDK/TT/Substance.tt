@@ -1,0 +1,23 @@
+<#@ include file="ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
+using System;
+
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
+{
+    [Serializable]
+    public class Substance
+        : AtomContainerSet<IAtomContainer>, ISubstance, ICloneable
+    {
+        public Substance()
+            : base()
+        {
+        }
+    }
+}
+<#
+}
+#>

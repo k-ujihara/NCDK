@@ -1,0 +1,126 @@
+/* Copyright (C) 2007  Miguel Rojasch <miguelrojasch@users.sf.net>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *  All we ask is that proper credit is given for our work, which includes
+ *  - but is not limited to - adding the above copyright notice to the beginning
+ *  of your source code files, and to any copyright notice that you may distribute
+ *  with programs based on this work.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using NCDK.Formula.Rules;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace NCDK.Formula
+{
+    /**
+    // <p> Validate a molecular formula given in IMolecularformula object. The
+    // validation is based according different rules that you have to introduce before
+    // see IRule.
+     *
+    // @cdk.module  formula
+    // @author      miguelrojasch
+    // @cdk.created 2007-11-20
+    // @cdk.keyword molecule, molecular formula
+    // @cdk.githash
+    // @see         IRule
+     */
+    public class MolecularFormulaChecker
+    {
+        /** List of IRules to be applied in the validation.*/
+        private IList<IRule> rules;
+
+        /**
+        // Construct an instance of MolecularFormulaChecker. It must be initialized
+        // with the rules to applied.
+         *
+        // @param rules  A List with IRule to be applied
+         */
+        public MolecularFormulaChecker(IList<IRule> rules)
+        {
+            this.rules = rules;
+        }
+
+        /**
+        // Get the IRules to be applied to validate the IMolecularFormula.
+         *
+        // @return A List with IRule
+         */
+        public IList<IRule> Rules => rules;
+
+        /**
+        // Validate if a IMolecularFormula is valid. The result more close to 1 means
+        // maximal probability to be valid. Opposite more close to 0 means minimal
+        // probability to be valid. To know the result in each IRule use
+        // {@link #IsValid(IMolecularFormula)}
+         *
+        // @param  formula      The IMolecularFormula value
+        // @return              The percent of the validity
+        // @see                 #IsValid(IMolecularFormula)
+         */
+        public double IsValidSum(IMolecularFormula formula)
+        {
+            double result = 1.0;
+
+            IMolecularFormula formulaWith = IsValid(formula);
+            IDictionary<string, object> properties = formulaWith.GetProperties();
+
+            foreach (var rule in rules)
+            {
+                result *= (double)properties[rule.GetType().ToString()];
+            }
+            return result;
+        }
+
+        /**
+        // Validate if a IMolecularFormula is valid. The results of each IRule which
+        // has to be applied is put into IMolecularFormula as properties. To extract
+        // the result final as the product of rule's result use
+        // {@link #IsValidSum(IMolecularFormula)}.
+         *
+        // @param  formula      The IMolecularFormula value
+        // @return formulaWith  The IMolecularFormula with the results for each
+        //                      IRule into properties
+        // @see                 #IsValidSum(IMolecularFormula)
+         */
+        public IMolecularFormula IsValid(IMolecularFormula formula)
+        {
+            Trace.TraceInformation("Generating the validity of the molecular formula");
+
+            if (formula.Count == 0)
+            {
+
+                Trace.TraceError("Proposed molecular formula has not elements");
+                return formula;
+            }
+
+            try
+            {
+                foreach (var rule in rules)
+                {
+                    double result = rule.Validate(formula);
+                    formula.SetProperty(rule.GetType().ToString(), result);
+                }
+            }
+            catch (CDKException e)
+            {
+                Console.Error.WriteLine(e.StackTrace);
+            }
+            return formula;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+<#@ include file="ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
+using System;
+using System.Text;
+
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
+{
+    [Serializable]
+    public class ElectronContainer 
+        : ChemObject, IElectronContainer, ICloneable
+    {
+        private int? electronCount = 0;
+
+        public ElectronContainer()
+            : base()
+        {
+        }
+
+        public virtual int? ElectronCount
+        {
+            get { return electronCount; }
+            set
+            {
+                electronCount = value;
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("ElectronContainer(").Append(GetHashCode());
+            if (ElectronCount > -1)
+                sb.Append("EC:").Append(ElectronCount);
+            sb.Append(')');
+            return sb.ToString();
+        }
+    }
+}
+<#
+}
+#>

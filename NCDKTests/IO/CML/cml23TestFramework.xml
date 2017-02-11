@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<cml title="Regression tests for valid XML Schema documents for CML 2.3"
+
+  xmlns="http://www.xml-cml.org/schema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://www.xml-cml.org/schema ../../../../../../main/org/openscience/cdk/io/cml/data/cml23.xsd">
+  
+  <!-- IMPORTANT
+  
+    the goal of this file is to list the exact strings tested in the
+    CML23FragmentsTest JUnit test, in order to make sure that the 
+    tested CML fragments are valid against the CML Schema 2.3.
+    
+    Each fragment has a label pointing to the method in the JUnit test
+    class that tests that string.    
+  -->
+  
+  <!-- CML23FragmentsTest.TestAtomId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+  
+  <!-- CML23FragmentsTest.TestAtomId3() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestAtomElementType3() -->
+  <molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>
+  
+  <!-- CML23FragmentsTest.TestBond() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestBond4() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+    <bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestBond5() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2 a3'/>
+    <bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestBondId() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestBondAromatic() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2'/>
+    <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestBondAromatic2() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2'/>
+    <bondArray>
+      <bond atomRefs='a1 a2' order='2'>
+        <bondType dictRef="cdk:aromaticBond"/>
+      </bond>
+    </bondArray>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestList() -->
+  <list> 
+    <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+    <molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
+  </list>
+  
+  <!-- CML23FragmentsTest.TestCoordinates2D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestCoordinates3D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestFractional3D() -->
+  <molecule id='m1'>
+    <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestMoleculeId() -->
+  <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
+
+  <!-- Not tested yet -->
+  <molecule id='m1'><atomArray>
+    <atom id='a1' elementType="C">
+      <scalar dataType="xsd:float" dictRef="cdk:partialCharge">-0.234</scalar>
+    </atom>
+  </atomArray></molecule>
+
+  <!-- Not tested yet -->
+  <molecule id='m1'><atomArray>
+    <atom id='a1' elementType="C" isotopeNumber="13"/>
+  </atomArray></molecule>
+
+  <!-- CML23FragmentsTest.TestQSAROutput() -->
+  <molecule id="m1" xmlns="http://www.xml-cml.org/schema">
+    <atomArray>
+      <atom id="a1" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a2" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a3" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a4" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a5" elementType="C" formalCharge="0" hydrogenCount="0"/>
+      <atom id="a6" elementType="C" formalCharge="0" hydrogenCount="0"/>
+    </atomArray>
+    <bondArray>
+      <bond id="b1" atomRefs2="a1 a2" order="S"/>
+      <bond id="b2" atomRefs2="a2 a3" order="D"/>
+      <bond id="b3" atomRefs2="a3 a4" order="S"/>
+      <bond id="b4" atomRefs2="a4 a5" order="D"/>
+      <bond id="b5" atomRefs2="a5 a6" order="S"/>
+      <bond id="b6" atomRefs2="a6 a1" order="D"/>
+    </bondArray>
+    <propertyList>
+      <property xmlns:qsar="http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/"
+        convention="qsar:DescriptorValue">
+        <metadataList>
+          <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
+          <metadata dictRef="qsar:implementationTitle" content="NCDK.QSAR.Descriptors.Atomic.WeightDescriptor"/>
+          <metadata dictRef="qsar:implementationIdentifier" content="$Id$"/>
+          <metadata dictRef="qsar:implementationVendor" content="The Chemistry Development Kit"/>
+          <metadataList title="qsar:descriptorParameters">
+            <metadata title="elementSymbol" content="*"/>
+          </metadataList>
+        </metadataList>
+        <scalar dataType="xsd:double" dictRef="qsar:weight">72.0</scalar>
+      </property>
+    </propertyList>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestCrystal() -->
+  <molecule id="crystal1">
+    <crystal z="4">
+      <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc2" title="b" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc3" title="c" errorValue="0.001" units="units:angstrom">4.500</scalar>
+      <scalar id="sc4" title="alpha" units="units:degrees">90</scalar>
+      <scalar id="sc5" title="beta" units="units:degrees">90</scalar>
+      <scalar id="sc6" title="gamma" units="units:degrees">90</scalar>
+      <symmetry id="s1" spaceGroup="Fm3m"/>
+    </crystal>
+    <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
+    <atomArray>
+      <atom id="a1" elementType="Na" formalCharge="1" xFract="0.0"
+            yFract="0.0" zFract="0.0"/>
+      <atom id="a2" elementType="Cl" formalCharge="-1"
+            xFract="0.5" yFract="0.0" zFract="0.0"/>
+    </atomArray>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestName() -->
+  <molecule id='m1'>
+    <name>acetic acid</name>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestInChI() -->
+  <molecule id='m1'>
+    <identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/>
+    <atomArray atomID='a1 a2 a3'/>
+  </molecule>
+
+  <!-- CML23FragmentsTest.TestBondStereo() -->
+  <molecule id='m1'>
+    <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
+    <bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef="cml:H"/></bond></bondArray>
+  </molecule>
+  
+  <!-- CML23FragmentsTest.TestReaction() -->
+	<reaction>
+		<reactantList>
+			<reactant>
+				<molecule id='react'/>
+			</reactant>
+		</reactantList>
+		<productList>
+			<product>
+				<molecule id='product'/>
+			</product>
+		</productList>
+		<substanceList>
+			<substance>
+				<molecule id='water'/>
+			</substance>
+		</substanceList>
+	</reaction>
+	
+  <!-- not tested yet -->
+  <molecule>
+    <formula concise="C 1 H 4" dictRef="mb:possibleMatch"/>
+    <formula concise="C 2 H 6" dictRef="mb:possibleMatch"/>
+  </molecule>
+
+  <!-- atomic number -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType="C">
+        <scalar dataType="xsd:integer" dictRef="cdk:atomicNumber">6</scalar>
+      </atom>
+    </atomArray>
+  </molecule>
+
+  <!-- isotopic mass -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType="C">
+        <scalar dataType="xsd:float" dictRef="cdk:isotopicMass">12.0</scalar>
+      </atom>
+    </atomArray>
+  </molecule>
+
+  <!-- hydrogen count #1 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+    </atomArray>
+  </molecule>
+
+  <!-- hydrogen count #2 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+      <atom id='a2' elementType='H'/>
+      <atom id='a3' elementType='H'/>
+      <atom id='a4' elementType='H'/>
+      <atom id='a5' elementType='H'/>
+    </atomArray>
+    <bondArray>
+      <bond id='b1' atomRefs2='a1 a2' order='S'/>
+      <bond id='b2' atomRefs2='a1 a3' order='S'/>
+      <bond id='b3' atomRefs2='a1 a4' order='S'/>
+      <bond id='b4' atomRefs2='a1 a5' order='S'/>
+    </bondArray>
+  </molecule>
+
+  <!-- hydrogen count #3 -->
+  <molecule>
+    <atomArray>
+      <atom id='a1' elementType='C' hydrogenCount='4'/>
+      <atom id='a2' elementType='H'/>
+    </atomArray>
+    <bondArray>
+      <bond id='b1' atomRefs2='a1 a2' order='S'/>
+    </bondArray>
+  </molecule>
+
+</cml>

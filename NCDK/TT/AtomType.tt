@@ -1,0 +1,270 @@
+<#@ include file="ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
+using System;
+using System.Text;
+
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
+{
+    [Serializable]
+    public class AtomType
+        : Isotope, IAtomType, ICloneable
+    {
+        internal string atomTypeName;
+        internal BondOrder maxBondOrder;
+        internal double? bondOrderSum;
+        internal int? formalCharge;
+        internal int? formalNeighbourCount;
+        internal Hybridization hybridization;
+        internal double? covalentRadius;
+        internal int? valency;
+        internal bool isHydrogenBondAcceptor;
+        internal bool isHydrogenBondDonor;
+        internal bool isAliphatic;
+        internal bool isAromatic;
+        internal bool isInRing;
+		internal bool isReactiveCenter;
+
+        public AtomType(string elementSymbol)
+            : base(elementSymbol)
+        {
+            this.formalCharge = 0;
+        }
+
+        public AtomType(string identifier, string elementSymbol)
+            : base(elementSymbol)
+        {
+            this.atomTypeName = identifier;
+        }
+
+        public AtomType(IElement element)
+            : base(element)
+        {
+            var aa = element as IAtomType;
+            if (aa != null)
+            {
+                maxBondOrder = aa.MaxBondOrder;
+                bondOrderSum = aa.BondOrderSum;
+                covalentRadius = aa.CovalentRadius;
+                formalCharge = aa.FormalCharge;
+                hybridization = aa.Hybridization;
+                valency = aa.Valency;
+                formalNeighbourCount = aa.FormalNeighbourCount;
+                atomTypeName = aa.AtomTypeName;
+
+                isHydrogenBondAcceptor = aa.IsHydrogenBondAcceptor;
+                isHydrogenBondDonor = aa.IsHydrogenBondDonor;
+                isAromatic = aa.IsAromatic;
+                isInRing = aa.IsInRing;
+            }
+        }
+
+        public virtual string AtomTypeName
+        {
+            get { return atomTypeName; }
+            set 
+            {
+                atomTypeName = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual BondOrder MaxBondOrder
+        {
+            get { return maxBondOrder; }
+            set
+            {
+                maxBondOrder = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual double? BondOrderSum
+        {
+            get { return bondOrderSum; }
+            set 
+            {
+                bondOrderSum = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual int? FormalCharge
+        {
+            get { return formalCharge; }
+            set 
+            { 
+                formalCharge = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual int? FormalNeighbourCount
+        {
+            get { return formalNeighbourCount; }
+            set
+            { 
+                formalNeighbourCount = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+
+        }
+
+        public virtual Hybridization Hybridization
+        {
+            get { return hybridization; }
+            set { 
+                hybridization = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual double? CovalentRadius
+        {
+            get { return covalentRadius; }
+            set
+            { 
+                covalentRadius = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual int? Valency
+        {
+            get { return valency; }
+            set 
+            {
+                valency = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual bool IsHydrogenBondAcceptor
+        {
+            get { return isHydrogenBondAcceptor; }
+            set
+            {
+                isHydrogenBondAcceptor = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual bool IsHydrogenBondDonor
+        {
+            get { return isHydrogenBondDonor; }
+            set
+            {
+                isHydrogenBondDonor = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual bool IsAliphatic
+        {
+            get { return isAliphatic; }
+            set
+            { 
+                isAliphatic = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual bool IsAromatic
+        {
+            get { return isAromatic; }
+            set
+            {
+                isAromatic = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public virtual bool IsInRing
+        {
+            get { return isInRing; }
+            set 
+            {
+                isInRing = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+		public virtual bool IsReactiveCenter
+        {
+            get { return isReactiveCenter; }
+            set 
+            {
+                isReactiveCenter = value; 
+<# if (!ns.IsSilent) { #>
+                NotifyChanged();
+<# } #>
+            }
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("AtomType(").Append(GetHashCode());
+            if (AtomTypeName != null)
+                sb.Append(", N:").Append(AtomTypeName);
+            if (MaxBondOrder != null)
+                sb.Append(", MBO:").Append(MaxBondOrder);
+            if (BondOrderSum != null)
+                sb.Append(", BOS:").Append(BondOrderSum);
+            if (FormalCharge != null)
+                sb.Append(", FC:").Append(FormalCharge);
+            if (Hybridization != null)
+                sb.Append(", H:").Append(Hybridization);
+            if (FormalNeighbourCount != null)
+                sb.Append(", NC:").Append(FormalNeighbourCount);
+            if (CovalentRadius != null)
+                sb.Append(", CR:").Append(CovalentRadius);
+            if (Valency != null)
+                sb.Append(", EV:").Append(Valency);
+            sb.Append(", ").Append(base.ToString());
+            sb.Append(')');
+            return sb.ToString();
+        }
+
+        public override bool Compare(object obj)
+        {
+            var o = obj as IAtomType;
+            return o != null && base.Compare(obj)
+                && AtomTypeName == o.AtomTypeName
+                && MaxBondOrder == o.MaxBondOrder
+                && BondOrderSum == o.BondOrderSum;
+        }
+    }
+}
+<#
+}
+#>

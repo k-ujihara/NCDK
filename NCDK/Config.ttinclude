@@ -1,0 +1,192 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+
+<#+
+	static Regex OSplitter = new Regex(@"(?<name>\w+)(\((?<tostring>.*)\))?(\:(?<summary>.*))?", RegexOptions.Compiled);
+
+	public string OName(string s)
+	{
+		return OSplitter.Match(s).Groups["name"].Value;
+	}
+
+	public string OString(string s)
+	{
+		var m = OSplitter.Match(s);
+		var t = m.Groups["tostring"].Value;
+		if (string.IsNullOrEmpty(t))
+			return m.Groups["name"].Value;
+		return t;
+	}
+
+	public string[] Split(string s)
+	{
+		return s.Split(':');
+	}
+
+    public void GenerateEnumBody(string name, string[] entities, bool isStruct)
+    {
+#>
+        public static class O
+        {
+<#+ 
+		for (var i = 0; i < entities.Length; i++) 
+		{
+			var s = entities[i];
+#>
+			public const int <#= OName(s) #> = <#= i #>;
+<#+ 
+		}
+#>      	
+        }
+
+		private readonly int ordinal;
+		public int Ordinal => ordinal;
+
+        public override string ToString()
+        {
+            return names[Ordinal];
+        }
+
+        private static readonly string[] names = new string[] 
+        {
+<#+ 
+foreach (var s in entities) 
+{
+#>
+            "<#= OString(s) #>", 
+<#+ 
+} 
+#>         
+        };
+
+        private <#= name #>(int ordinal)
+        {
+            this.ordinal = ordinal;
+        }
+
+		public static explicit operator <#= name #>(int ordinal)
+        {
+            if (!(0 <= ordinal || ordinal < values.Length))
+                throw new System.ArgumentOutOfRangeException();
+			return values[ordinal];
+        }
+
+		public static explicit operator int(<#= name #> obj)
+        {
+            return obj.Ordinal;
+        }
+
+<#+
+    for (var i = 0; i < entities.Length; i++)
+    {
+        var s = entities[i];
+		var ss = Split(s);
+		if (ss.Length > 1)
+		{
+#>
+		/// <summary>
+		/// <#= ss[1] #>
+		/// </summary>
+<#+
+		}
+#>
+        public static readonly <#= name #> <#= OName(s) #> = new <#= name #>(<#= i #>);
+<#+
+    }
+#>
+		private static readonly <#= name #>[] values = new <#= name #>[]
+		{
+<#+ foreach (var s in entities) { #>
+            <#= OName(s) #>, 
+<#+ } #>    
+		};
+        public static System.Collections.Generic.IEnumerable<<#= name #>> Values => values;
+
+<#+
+		 if (isStruct) 
+		{	
+#>
+		/* In order to cause compiling error */
+
+		public static bool operator==(<#= name #> a, object b)
+        {
+			throw new System.Exception();
+		}
+
+		public static bool operator!=(<#= name #> a, object b)
+        {
+			throw new System.Exception();
+		}
+
+        public static bool operator==(object a, <#= name #> b)
+        {
+			throw new System.Exception();
+		}
+
+        public static bool operator!=(object a, <#= name #> b)
+        {
+			throw new System.Exception();
+		}
+<#+
+		}
+#>
+
+        public static bool operator==(<#= name #> a, <#= name #> b)
+        {
+<#+
+		 if (!isStruct) 
+		{	
+#>
+            if (ReferenceEquals(a, b))
+                return true;
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return false;
+<#+
+		}
+#>			
+            return a.Ordinal == b.Ordinal;
+        }
+
+        public static bool operator !=(<#= name #> a, <#= name #> b)
+        {
+            return !(a == b);
+        }
+
+		public override bool Equals(object obj)
+        {
+<#+ if (isStruct) { #>	
+			if (!(obj is <#= name #>))
+				return false;
+            return this.Ordinal == ((<#= name #>)obj).Ordinal;
+<#+ } else { #>
+            var o = obj as <#= name #>;
+            return this.Ordinal == o.Ordinal;
+<#+ } #>
+        }
+
+        public override int GetHashCode()
+        {
+            return Ordinal;
+        }
+
+        public int CompareTo(object obj)
+        {
+            var o = (<#= name #>)obj;
+            return ((int)Ordinal).CompareTo((int)o.Ordinal);
+        }   
+<#+
+    }
+#>

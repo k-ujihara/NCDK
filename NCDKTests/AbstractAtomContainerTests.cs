@@ -1,0 +1,2699 @@
+﻿/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using NCDK.Numerics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Stereo;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace NCDK
+{
+    /**
+     * Checks the functionality of the AtomContainer.
+     *
+     * @cdk.module test-interfaces
+     */
+    [TestClass()]
+    public abstract class AbstractAtomContainerTest
+        : AbstractChemObjectTest
+    {
+        private static IAtom[] MakeTestAtomsArray(IAtomContainer ac)
+        {
+            IAtom[] atoms = new IAtom[4];
+            atoms[0] = ac.Builder.CreateAtom("C");
+            atoms[1] = ac.Builder.CreateAtom("C");
+            atoms[2] = ac.Builder.CreateAtom("C");
+            atoms[3] = ac.Builder.CreateAtom("O");
+            foreach (var atom in atoms)
+                ac.Add(atom);
+            return atoms;
+        }
+
+        [TestMethod()]
+        public virtual void TestSetAtoms_arrayIAtom()
+        {
+            IAtomContainer ac = (IAtomContainer)NewChemObject();
+            IAtom[] atoms = MakeTestAtomsArray(ac);
+            Assert.AreEqual(4, ac.Atoms.Count);
+        }
+
+        /// <summary>
+        // @cdk.bug 2993609
+        /// </summary>
+        [TestMethod()]
+        public virtual void TestSetAtoms_removeListener()
+        {
+            IAtomContainer ac = (IAtomContainer)NewChemObject();
+            IAtom[] atoms = MakeTestAtomsArray(ac);
+
+            // if an atom changes, the atomcontainer will throw a change event too
+            ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+            ac.Listeners.Add(listener);
+            Assert.IsFalse(listener.Changed);
+
+            // ok, change the atom, and make sure we do get an event
+            atoms[0].AtomTypeName = "C.sp2";
+            Assert.IsTrue(listener.Changed);
+
+            // reset the listener, overwrite the atoms, and change an old atom.
+            // if all is well, we should not get a change event this time
+            ac.Atoms.Clear();
+            listener.Reset(); // reset here, because the SetAtoms() triggers a change even too
+            atoms[1].AtomTypeName = "C.sp2"; // make a change to an old atom
+            Assert.IsFalse(listener.Changed); // but no change event should happen
+        }
+
+        /**
+         * Only test whether the atoms are correctly cloned.
+         */
+        [TestMethod()]
+        public override void TestClone()
+        {
+            IAtomContainer ac = (IAtomContainer)NewChemObject();
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            object clone = molecule.Clone();
+            Assert.IsInstanceOfType(clone, typeof(IAtomContainer));
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_IAtom()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            for (int i = 0; i < 4; i++)
+                molecule.Add(molecule.Builder.CreateAtom("C"));
+
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            Assert.AreEqual(molecule.Atoms.Count, clonedMol.Atoms.Count);
+            for (int f = 0; f < molecule.Atoms.Count; f++)
+            {
+                for (int g = 0; g < clonedMol.Atoms.Count; g++)
+                {
+                    Assert.IsNotNull(molecule.Atoms[f]);
+                    Assert.IsNotNull(clonedMol.Atoms[g]);
+                    Assert.AreNotSame(molecule.Atoms[f], clonedMol.Atoms[g]);
+                }
+            }
+        }
+
+        [TestMethod()]
+        public virtual void TestCloneButKeepOriginalsIntact()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IAtom atom = molecule.Builder.CreateAtom();
+            molecule.Add(atom);
+            Assert.AreEqual(atom, molecule.Atoms[0]);
+            object clone = molecule.Clone();
+            Assert.AreNotSame(molecule, clone);
+            // after the cloning the IAtom on the original IAtomContainer should be unchanged
+            Assert.AreEqual(atom, molecule.Atoms[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestCloneButKeepOriginalsIntact_IBond()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            molecule.Add(molecule.Builder.CreateAtom());
+            molecule.Add(molecule.Builder.CreateAtom());
+            IBond bond = molecule.Builder.CreateBond(molecule.Atoms[0], molecule.Atoms[1],
+                    BondOrder.Single);
+            molecule.Add(bond);
+            Assert.AreEqual(bond, molecule.Bonds[0]);
+            object clone = molecule.Clone();
+            Assert.AreNotSame(molecule, clone);
+            // after the cloning the IBond on the original IAtomContainer should be unchanged
+            Assert.AreEqual(bond, molecule.Bonds[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestCloneButKeepOriginalsIntact_ILonePair()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            molecule.Add(molecule.Builder.CreateAtom());
+            ILonePair lonePair = molecule.Builder.CreateLonePair(molecule.Atoms[0]);
+            molecule.Add(lonePair);
+            Assert.AreEqual(lonePair, molecule.LonePairs[0]);
+            object clone = molecule.Clone();
+            Assert.AreNotSame(molecule, clone);
+            // after the cloning the ILonePair on the original IAtomContainer should be unchanged
+            Assert.AreEqual(lonePair, molecule.LonePairs[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestCloneButKeepOriginalsIntact_ISingleElectron()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            molecule.Add(molecule.Builder.CreateAtom());
+            ISingleElectron singleElectron = molecule.Builder.CreateSingleElectron(molecule.Atoms[0]);
+            molecule.Add(singleElectron);
+            Assert.AreEqual(singleElectron, molecule.SingleElectrons[0]);
+            object clone = molecule.Clone();
+            Assert.AreNotSame(molecule, clone);
+            // after the cloning the ISingleElectron on the original IAtomContainer should be unchanged
+            Assert.AreEqual(singleElectron, molecule.SingleElectrons[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_IAtom2()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IAtom carbon = molecule.Builder.CreateAtom("C");
+            carbon.Point2D = new Vector2(2, 4);
+            molecule.Add(carbon); // 1
+
+            // test cloning of Atoms
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            carbon.Point2D = new Vector2(3, 1);
+            Assert.AreEqual(clonedMol.Atoms[0].Point2D.Value.X, 2.0, 0.001);
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_IBond()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            molecule.Add(molecule.Builder.CreateAtom("C")); // 1
+            molecule.Add(molecule.Builder.CreateAtom("C")); // 2
+            molecule.Add(molecule.Builder.CreateAtom("C")); // 3
+            molecule.Add(molecule.Builder.CreateAtom("C")); // 4
+
+            molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double); // 1
+            molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single); // 2
+            molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single); // 3
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clonedMol);
+            Assert.AreEqual(molecule.Bonds.Count, clonedMol.Bonds.Count);
+            for (int f = 0; f < molecule.GetElectronContainers().Count(); f++)
+            {
+                for (int g = 0; g < clonedMol.GetElectronContainers().Count(); g++)
+                {
+                    Assert.IsNotNull(molecule.Bonds[f]);
+                    Assert.IsNotNull(clonedMol.Bonds[g]);
+                    Assert.AreNotSame(molecule.Bonds[f], clonedMol.Bonds[g]);
+                }
+            }
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_IBond2()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IAtom atom1 = molecule.Builder.CreateAtom("C");
+            IAtom atom2 = molecule.Builder.CreateAtom("C");
+            molecule.Add(atom1); // 1
+            molecule.Add(atom2); // 2
+            molecule.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
+
+            // test cloning of atoms in bonds
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clonedMol);
+            Assert.AreNotSame(atom1, clonedMol.Bonds[0].Atoms[0]);
+            Assert.AreNotSame(atom2, clonedMol.Bonds[0].Atoms[1]);
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_IBond3()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IAtom atom1 = molecule.Builder.CreateAtom("C");
+            IAtom atom2 = molecule.Builder.CreateAtom("C");
+            molecule.Add(atom1); // 1
+            molecule.Add(atom2); // 2
+            molecule.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
+
+            // test that cloned bonds contain atoms from cloned atomcontainer
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clonedMol);
+            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].Atoms[0]));
+            Assert.IsTrue(clonedMol.Contains(clonedMol.Bonds[0].Atoms[1]));
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_AtomlessIBond()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IBond bond = molecule.Builder.CreateBond();
+            molecule.Add(bond);
+            Assert.AreEqual(bond, molecule.Bonds[0]);
+            IAtomContainer clone = (IAtomContainer)molecule.Clone();
+            Assert.AreEqual(0, clone.Bonds[0].Atoms.Where(atom => atom != null).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_AtomlessILonePair()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            ILonePair lonePair = molecule.Builder.CreateLonePair();
+            molecule.Add(lonePair);
+            Assert.AreEqual(lonePair, molecule.LonePairs[0]);
+            IAtomContainer clone = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clone.LonePairs[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_AtomlessISingleElectron()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            ISingleElectron singleElectron = molecule.Builder.CreateSingleElectron();
+            molecule.Add(singleElectron);
+            Assert.AreEqual(singleElectron, molecule.SingleElectrons[0]);
+            IAtomContainer clone = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clone.SingleElectrons[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestClone_ILonePair()
+        {
+            IAtomContainer molecule = (IAtomContainer)NewChemObject();
+            IAtom atom1 = molecule.Builder.CreateAtom("C");
+            IAtom atom2 = molecule.Builder.CreateAtom("C");
+            molecule.Add(atom1); // 1
+            molecule.Add(atom2); // 2
+            molecule.AddLonePair(atom1);
+
+            // test that cloned bonds contain atoms from cloned atomcontainer
+            IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
+            Assert.IsNotNull(clonedMol);
+            Assert.AreEqual(1, clonedMol.GetConnectedLonePairs(clonedMol.Atoms[0]).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedElectronContainersList_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(1, acetone.GetConnectedElectronContainers(o).Count());
+            Assert.AreEqual(3, acetone.GetConnectedElectronContainers(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedElectronContainers(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedElectronContainers(c3).Count());
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(3, acetone.GetConnectedElectronContainers(o).Count());
+            Assert.AreEqual(3, acetone.GetConnectedElectronContainers(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedElectronContainers(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedElectronContainers(c3).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedBondsList_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
+            Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c3).Count());
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
+            Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c3).Count());
+        }
+
+        /**
+         * Unit test to ensure that the stereo elements remain intact on cloning a
+         * container. This test ensures tetrahedral chirality is preserved
+         *
+         * @cdk.bug 1264
+         * @
+         */
+        [TestMethod()]
+        public virtual void TestClone_IStereoElement_Tetrahedral()
+        {
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+
+            IChemObjectBuilder builder = container.Builder;
+
+            IAtom c1 = builder.CreateAtom("C");
+            IAtom o2 = builder.CreateAtom("O");
+            IAtom n3 = builder.CreateAtom("N");
+            IAtom c4 = builder.CreateAtom("C");
+            IAtom h5 = builder.CreateAtom("H");
+
+            container.Add(c1);
+            container.Add(o2);
+            container.Add(n3);
+            container.Add(c4);
+            container.Add(h5);
+
+            IBond c1o2 = builder.CreateBond(c1, o2);
+            IBond c1n3 = builder.CreateBond(c1, n3);
+            IBond c1c4 = builder.CreateBond(c1, c4);
+            IBond c1h5 = builder.CreateBond(c1, h5);
+
+            c1o2.Stereo = BondStereo.Up;
+
+            container.Add(c1o2);
+            container.Add(c1n3);
+            container.Add(c1c4);
+            container.Add(c1h5);
+
+            ITetrahedralChirality chirality = builder.CreateTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
+                h5}, TetrahedralStereo.Clockwise);
+
+            container.AddStereoElement(chirality);
+
+            // clone the container
+            IAtomContainer clone = (IAtomContainer)container.Clone();
+
+            var elements = clone.StereoElements;
+
+            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+
+            IStereoElement element = elements.First();
+
+            Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
+            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+
+            // we've tested the class already  - cast is okay
+            ITetrahedralChirality cloneChirality = (ITetrahedralChirality)element;
+            var ligands = cloneChirality.Ligands;
+
+            Assert.AreEqual(4, ligands.Count, "not enough ligands");
+
+            // test same instance - reference equality '=='
+            Assert.AreSame(ligands[0], clone.Atoms[1], "expected same oxygen instance");
+            Assert.AreSame(ligands[1], clone.Atoms[2], "expected same nitrogen instance");
+            Assert.AreSame(ligands[2], clone.Atoms[3], "expected same carbon instance");
+            Assert.AreSame(ligands[3], clone.Atoms[4], "expected same hydrogen instance");
+
+            Assert.AreEqual(TetrahedralStereo.Clockwise, cloneChirality.Stereo, "incorrect stereo");
+            Assert.AreSame(clone.Atoms[0], cloneChirality.ChiralAtom, "incorrect chiral atom");
+        }
+
+        /**
+         * Unit test to ensure that the stereo elements remain intact on cloning a
+         * container. This test ensures DoubleBondStereochemistry is preserved
+         *
+         * @cdk.bug 1264
+         * @
+         */
+        [TestMethod()]
+        public virtual void TestClone_IStereoElement_DoubleBond()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IChemObjectBuilder builder = container.Builder;
+
+            IAtom c1 = builder.CreateAtom("C");
+            IAtom c2 = builder.CreateAtom("C");
+            IAtom c3 = builder.CreateAtom("C");
+            IAtom c4 = builder.CreateAtom("C");
+
+            container.Add(c1);
+            container.Add(c2);
+            container.Add(c3);
+            container.Add(c4);
+
+            IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
+            IBond c2c3 = builder.CreateBond(c2, c3);
+            IBond c1c4 = builder.CreateBond(c1, c4);
+
+            container.Add(c1c2);
+            container.Add(c2c3);
+            container.Add(c1c4);
+
+            IDoubleBondStereochemistry dbStereo = new DoubleBondStereochemistry(
+                c1c2, 
+                new IBond[] { c2c3, c1c4 },
+                DoubleBondConformation.Opposite);
+
+            container.AddStereoElement(dbStereo);
+
+            // clone the container
+            IAtomContainer clone = (IAtomContainer)container.Clone();
+
+            var elements = clone.StereoElements;
+
+            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+
+            IStereoElement element = elements.First();
+
+            Assert.IsInstanceOfType(dbStereo, element.GetType(), "cloned element was incorrect class");
+            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+
+            // we've tested the class already - cast is okay
+            IDoubleBondStereochemistry clonedDBStereo = (IDoubleBondStereochemistry)element;
+            var ligands = clonedDBStereo.Bonds;
+
+            Assert.AreEqual(2, ligands.Count, "not enough ligands");
+
+            // test same instance - reference equality '=='
+            Assert.AreSame(ligands[0], clone.Bonds[1], "expected same c2-c3 instance");
+            Assert.AreSame(ligands[1], clone.Bonds[2], "expected same c1-c4 instance");
+            Assert.AreEqual(clonedDBStereo.Stereo, DoubleBondConformation.Opposite, "incorrect stereo");
+            Assert.AreEqual(clonedDBStereo.StereoBond, clone.Bonds[0], "incorrect chiral atom");
+        }
+
+        /**
+         * Unit test to ensure that the stereo elements remain intact on cloning a
+         * container. This test ensures AtomParity is preserved
+         *
+         * @cdk.bug 1264
+         * @
+         */
+        [TestMethod()]
+        public virtual void TestClone_IStereoElement_AtomParity()
+        {
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+
+            IChemObjectBuilder builder = container.Builder;
+
+            IAtom c1 = builder.CreateAtom("C");
+            IAtom o2 = builder.CreateAtom("O");
+            IAtom n3 = builder.CreateAtom("N");
+            IAtom c4 = builder.CreateAtom("C");
+            IAtom h5 = builder.CreateAtom("H");
+
+            container.Add(c1);
+            container.Add(o2);
+            container.Add(n3);
+            container.Add(c4);
+            container.Add(h5);
+
+            IBond c1o2 = builder.CreateBond(c1, o2);
+            IBond c1n3 = builder.CreateBond(c1, n3);
+            IBond c1c4 = builder.CreateBond(c1, c4);
+            IBond c1h5 = builder.CreateBond(c1, h5);
+
+            c1o2.Stereo = BondStereo.Up;
+
+            container.Add(c1o2);
+            container.Add(c1n3);
+            container.Add(c1c4);
+            container.Add(c1h5);
+
+            ITetrahedralChirality chirality = builder.CreateTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
+                h5}, TetrahedralStereo.Clockwise);
+
+            container.AddStereoElement(chirality);
+
+            // clone the container
+            IAtomContainer clone = (IAtomContainer)container.Clone();
+
+            var elements = clone.StereoElements;
+
+            Assert.IsTrue(elements.Count() > 0, "no stereo elements cloned");
+
+            IStereoElement element = elements.First();
+
+            Assert.IsInstanceOfType(chirality, element.GetType(), "cloned element was incorrect class");
+            Assert.IsTrue(elements.Count() == 1, "too many stereo elements");
+
+            // we've tested the class already  - cast is okay
+            ITetrahedralChirality cloneChirality = (ITetrahedralChirality)element;
+            var ligands = cloneChirality.Ligands;
+
+            Assert.AreEqual(4, ligands.Count, "not enough ligands");
+
+            // test same instance - reference equality
+            Assert.AreSame(ligands[0], clone.Atoms[1], "expected same oxygen instance");
+            Assert.AreSame(ligands[1], clone.Atoms[2], "expected same nitrogen instance");
+            Assert.AreSame(ligands[2], clone.Atoms[3], "expected same carbon instance");
+            Assert.AreSame(ligands[3], clone.Atoms[4], "expected same hydrogen instance");
+
+            Assert.AreEqual(cloneChirality.Stereo, TetrahedralStereo.Clockwise, "incorrect stereo");
+            Assert.AreEqual(cloneChirality.ChiralAtom, clone.Atoms[0], "incorrect chiral atom");
+        }
+
+        [TestMethod()]
+        public virtual void TestSetStereoElements_List()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+
+            Assert.IsFalse(container.StereoElements.Count > 0);
+
+            List<IStereoElement> dbElements = new List<IStereoElement>();
+            dbElements.Add(new DoubleBondStereochemistry(null, new IBond[2],
+                    DoubleBondConformation.Together));
+            container.SetStereoElements(dbElements);
+            var first = container.StereoElements.GetEnumerator();
+            Assert.IsTrue(first.MoveNext(), "container did not have stereo elements");
+            Assert.AreEqual(dbElements[0], first.Current, "expected element to equal set element (double bond)");
+            Assert.IsFalse(first.MoveNext(), "container had more then one stereo element");
+
+            List<IStereoElement> tetrahedralElements = new List<IStereoElement>();
+            tetrahedralElements.Add(new TetrahedralChirality(null, new IAtom[4], TetrahedralStereo.Clockwise));
+            container.SetStereoElements(tetrahedralElements);
+            var second = container.StereoElements.GetEnumerator();
+            Assert.IsTrue(second.MoveNext(), "container did not have stereo elements");
+            Assert.AreEqual(tetrahedralElements[0], second.Current, "expected element to equal set element (tetrahedral)");
+            Assert.IsFalse(second.MoveNext(), "container had more then one stereo element");
+        }
+
+        //    [TestMethod()] public virtual void TestGetConnectedBonds_IAtom() {
+        //        // acetone molecule
+        //        IAtomContainer acetone = GetNewBuilder().CreateAtomContainer();
+        //
+        //        IAtom c1 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom o = GetNewBuilder().NewInstance(typeof(IAtom),"O");
+        //        IAtom c3 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        acetone.Add(c1);
+        //        acetone.Add(c2);
+        //        acetone.Add(c3);
+        //        acetone.Add(o);
+        //        IBond b1 = GetNewBuilder().CreateBond(c1, c2, BondOrder.Single);
+        //        IBond b2 = GetNewBuilder().CreateBond(c1, o, BondOrder.Double);
+        //        IBond b3 = GetNewBuilder().CreateBond(c1, c3, BondOrder.Single);
+        //        acetone.Add(b1);
+        //        acetone.Add(b2);
+        //        acetone.Add(b3);
+        //
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(o).Count());
+        //        Assert.AreEqual(3, acetone.GetConnectedBondsVector(c1).Count());
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(c2).Count());
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(c3).Count());
+        //
+        //        // Add lone pairs on oxygen
+        //        ILonePair lp1 = GetNewBuilder().NewInstance(typeof(ILonePair),o);
+        //        ILonePair lp2 = GetNewBuilder().NewInstance(typeof(ILonePair),o);
+        //        acetone.Add(lp1);
+        //        acetone.Add(lp2);
+        //
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(o).Count());
+        //        Assert.AreEqual(3, acetone.GetConnectedBondsVector(c1).Count());
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(c2).Count());
+        //        Assert.AreEqual(1, acetone.GetConnectedBondsVector(c3).Count());
+        //    }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedLonePairsList_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(o).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c1).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c2).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c3).Count());
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c1).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c2).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c3).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAtomAndConnectedElectronContainers_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            // Remove the oxygen
+            acetone.RemoveAtomAndConnectedElectronContainers(o);
+            Assert.AreEqual(3, acetone.Atoms.Count);
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(0, acetone.LonePairs.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAtomAndConnectedElectronContainers_stereoElement()
+        {
+
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            acetone.AddStereoElement(new TetrahedralChirality(c1, new IAtom[] { c2, o, c3, c1 },
+                    TetrahedralStereo.Clockwise));
+
+            // Remove the oxygen
+            acetone.RemoveAtomAndConnectedElectronContainers(o);
+            Assert.AreEqual(3, acetone.Atoms.Count);
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(0, acetone.LonePairs.Count);
+            Assert.IsFalse(acetone.StereoElements.Count > 0);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetAtomCount()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            Assert.AreEqual(0, acetone.Atoms.Count);
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            Assert.AreEqual(4, acetone.Atoms.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondCount()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            Assert.AreEqual(0, acetone.Bonds.Count);
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestAdd_IAtomContainer()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.Add(acetone);
+            Assert.AreEqual(4, container.Atoms.Count);
+            Assert.AreEqual(3, container.Bonds.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestAdd_IAtomContainer_LonePairs()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c1);
+            mol.AddLonePair(mol.Atoms[0]);
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.Add(mol);
+            Assert.AreEqual(1, container.Atoms.Count);
+            Assert.AreEqual(1, container.LonePairs.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestAdd_IAtomContainer_SingleElectrons()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[0]);
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.Add(mol);
+            Assert.AreEqual(1, container.Atoms.Count);
+            Assert.AreEqual(1, container.SingleElectrons.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemove_IAtomContainer()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.Add(acetone);
+            Assert.AreEqual(4, container.Atoms.Count);
+            Assert.AreEqual(3, container.Bonds.Count);
+            container.Remove((IAtomContainer)acetone.Clone());
+            Assert.AreEqual(4, container.Atoms.Count);
+            Assert.AreEqual(3, container.Bonds.Count);
+            container.Remove(acetone);
+            Assert.AreEqual(0, container.Atoms.Count);
+            Assert.AreEqual(0, container.Bonds.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAllElements()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.Add(acetone);
+            Assert.AreEqual(4, container.Atoms.Count);
+            Assert.AreEqual(3, container.Bonds.Count);
+            container.RemoveAllElements();
+            Assert.AreEqual(0, container.Atoms.Count);
+            Assert.AreEqual(0, container.Bonds.Count);
+        }
+        /**
+         * Unit test ensures that stereo-elements are removed from a container
+         * when {@link IAtomContainer#RemoveAllElements()} is invoked.
+         * @cdk.bug 1270
+         */
+        [TestMethod()]
+        public virtual void TestRemoveAllElements_StereoElements()
+        {
+
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            container.AddStereoElement(new TetrahedralChirality(container.Builder.CreateAtom(),
+                        new IAtom[4], TetrahedralStereo.Clockwise));
+
+            int count = 0;
+            foreach (var element in container.StereoElements)
+                count++;
+
+            Assert.AreEqual(1, count, "no stereo elements were added");
+
+            count = 0;
+            Assert.AreEqual(0, count, "count did not reset");
+
+            container.RemoveAllElements();
+
+            foreach (IStereoElement element in container.StereoElements)
+            {
+                count++;
+            }
+            Assert.AreEqual(0, count, "stereo elements were not removed");
+        }
+
+
+        [TestMethod()]
+        public virtual void TestRemoveAtom_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            Assert.AreEqual(4, acetone.Atoms.Count);
+            acetone.Remove(acetone.Atoms[1]);
+            Assert.AreEqual(3, acetone.Atoms.Count);
+            Assert.AreEqual(c1, acetone.Atoms[0]);
+            Assert.AreEqual(c3, acetone.Atoms[1]);
+            Assert.AreEqual(o, acetone.Atoms[2]);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAtom_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            Assert.AreEqual(4, acetone.Atoms.Count);
+            acetone.Remove(c3);
+            Assert.AreEqual(3, acetone.Atoms.Count);
+            Assert.AreEqual(c1, acetone.Atoms[0]);
+            Assert.AreEqual(c2, acetone.Atoms[1]);
+            Assert.AreEqual(o, acetone.Atoms[2]);
+        }
+
+        [TestMethod()]
+        public virtual void TestSetAtom_int_IAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom n = container.Builder.CreateAtom("N");
+            IAtom c = container.Builder.CreateAtom("C");
+            container.Add(n);   // I believe this line is requied but not exist in CDK version. 
+            container.Atoms[0] = c;
+
+            Assert.IsNotNull(container.Atoms[0]);
+            Assert.AreEqual("C", container.Atoms[0].Symbol);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetAtom_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom n = acetone.Builder.CreateAtom("N");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom s = acetone.Builder.CreateAtom("S");
+            acetone.Add(c);
+            acetone.Add(n);
+            acetone.Add(o);
+            acetone.Add(s);
+
+            IAtom a1 = acetone.Atoms[0];
+            Assert.IsNotNull(a1);
+            Assert.AreEqual("C", a1.Symbol);
+            IAtom a2 = acetone.Atoms[1];
+            Assert.IsNotNull(a2);
+            Assert.AreEqual("N", a2.Symbol);
+            IAtom a3 = acetone.Atoms[2];
+            Assert.IsNotNull(a3);
+            Assert.AreEqual("O", a3.Symbol);
+            IAtom a4 = acetone.Atoms[3];
+            Assert.IsNotNull(a4);
+            Assert.AreEqual("S", a4.Symbol);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBond_int()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            Assert.AreEqual(0, acetone.Bonds.Count);
+
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Triple);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(BondOrder.Triple, acetone.Bonds[0].Order);
+            Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
+            Assert.AreEqual(BondOrder.Single, acetone.Bonds[2].Order);
+        }
+
+        //    [TestMethod()] public virtual void TestSetElectronContainer_int_IElectronContainer() {
+        //        IAtomContainer container = (IAtomContainer)NewChemObject();
+        //        IAtom c1 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        container.Add(c1);
+        //        container.Add(c2);
+        //        IBond b = GetNewBuilder().CreateBond(c1, c2, 3);
+        //        container.ElectronContainer = 3, b;
+        //
+        //        Assert.IsTrue(container.GetElectronContainers().ElementAt(3) is IBond);
+        //        IBond bond = (IBond)container.GetElectronContainers().ElementAt(3);
+        //        Assert.AreEqual(3.0, bond.Order);;
+        //    }
+
+        [TestMethod()]
+        public virtual void TestGetElectronContainerCount()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(2, acetone.LonePairs.Count);
+            Assert.AreEqual(5, acetone.GetElectronContainers().Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAllBonds()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+
+            acetone.RemoveAllBonds();
+            Assert.AreEqual(0, acetone.Bonds.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveAllElectronContainers()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.GetElectronContainers().Count());
+
+            acetone.RemoveAllElectronContainers();
+            Assert.AreEqual(0, acetone.GetElectronContainers().Count());
+        }
+
+        //    [TestMethod()] public virtual void TestSetElectronContainerCount_int() {
+        //        IAtomContainer container = (IAtomContainer)NewChemObject();
+        //        container.GetElectronContainers().Count() = 2;
+        //
+        //        Assert.AreEqual(2, container.GetElectronContainers().Count());
+        //    }
+
+        //    [TestMethod()] public virtual void TestSetAtomCount_int() {
+        //        IAtomContainer container = (IAtomContainer)NewChemObject();
+        //        container.AtomCount = 2;
+        //
+        //        Assert.AreEqual(2, container.Atoms.Count);
+        //    }
+
+        //    [TestMethod()] public virtual void TestGetAtoms() {
+        //        // acetone molecule
+        //        IAtomContainer acetone = GetNewBuilder().CreateAtomContainer();
+        //        IAtom c1 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom o = GetNewBuilder().NewInstance(typeof(IAtom),"O");
+        //        IAtom c3 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        acetone.Add(c1);
+        //        acetone.Add(c2);
+        //        acetone.Add(c3);
+        //        acetone.Add(o);
+        //
+        //        Assert.AreEqual(4, acetone.GetAtoms().Length);
+        //    }
+
+        [TestMethod()]
+        public virtual void TestAddAtom_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IEnumerator<IAtom> atomIter = acetone.Atoms.GetEnumerator();
+            int counter = 0;
+            while (atomIter.MoveNext())
+            {
+                counter++;
+            }
+            Assert.AreEqual(4, counter);
+
+            // test force growing of default arrays
+            for (int i = 0; i < 11; i++)
+            {
+                acetone.Add(acetone.Builder.CreateAtom());
+                acetone.Add(acetone.Builder.CreateBond());
+            }
+        }
+
+        [TestMethod()]
+        public virtual void TestAtoms()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IEnumerator<IAtom> atomIter = acetone.Atoms.GetEnumerator();
+            Assert.IsNotNull(atomIter);
+            Assert.IsTrue(atomIter.MoveNext());
+            IAtom next = atomIter.Current;
+            Assert.IsTrue(next is IAtom);
+            Assert.AreEqual(c1, next);
+            Assert.IsTrue(atomIter.MoveNext());
+            next = (IAtom)atomIter.Current;
+            Assert.IsTrue(next is IAtom);
+            Assert.AreEqual(c2, next);
+            Assert.IsTrue(atomIter.MoveNext());
+            next = (IAtom)atomIter.Current;
+            Assert.IsTrue(next is IAtom);
+            Assert.AreEqual(c3, next);
+            Assert.IsTrue(atomIter.MoveNext());
+            next = (IAtom)atomIter.Current;
+            Assert.IsTrue(next is IAtom);
+            Assert.AreEqual(o, next);
+
+            Assert.IsFalse(atomIter.MoveNext());
+        }
+
+        [TestMethod()]
+        public virtual void TestBonds()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
+            IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
+            acetone.Add(bond1);
+            acetone.Add(bond2);
+            acetone.Add(bond3);
+
+            IEnumerator<IBond> bonds = acetone.Bonds.GetEnumerator();
+            Assert.IsNotNull(bonds);
+            Assert.IsTrue(bonds.MoveNext());
+
+            IBond next = (IBond)bonds.Current;
+            Assert.IsTrue(next is IBond);
+            Assert.AreEqual(bond1, next);
+            bonds.MoveNext();
+            next = (IBond)bonds.Current;
+            Assert.IsTrue(next is IBond);
+            Assert.AreEqual(bond2, next);
+            bonds.MoveNext();
+            next = (IBond)bonds.Current;
+            Assert.IsTrue(next is IBond);
+            Assert.AreEqual(bond3, next);
+
+            Assert.IsFalse(bonds.MoveNext());
+        }
+
+        [TestMethod()]
+        public virtual void TestLonePairs()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
+            IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
+            acetone.Add(bond1);
+            acetone.Add(bond2);
+            acetone.Add(bond3);
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            IEnumerator<ILonePair> lonePairs = acetone.LonePairs.GetEnumerator();
+            Assert.IsNotNull(lonePairs);
+            Assert.IsTrue(lonePairs.MoveNext());
+
+            ILonePair next = (ILonePair)lonePairs.Current;
+            Assert.IsTrue(next is ILonePair);
+            Assert.AreEqual(lp1, next);
+            lonePairs.MoveNext();
+            next = (ILonePair)lonePairs.Current;
+            Assert.IsTrue(next is ILonePair);
+            Assert.AreEqual(lp2, next);
+
+            Assert.IsFalse(lonePairs.MoveNext());
+        }
+
+        [TestMethod()]
+        public virtual void TestSingleElectrons()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
+            IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
+            acetone.Add(bond1);
+            acetone.Add(bond2);
+            acetone.Add(bond3);
+            ISingleElectron se1 = acetone.Builder.CreateSingleElectron(o);
+            ISingleElectron se2 = acetone.Builder.CreateSingleElectron(c1);
+            acetone.Add(se1);
+            acetone.Add(se2);
+
+            var singleElectrons = acetone.SingleElectrons;
+            Assert.IsNotNull(singleElectrons);
+            Assert.IsTrue(singleElectrons.Count > 0);
+
+            ISingleElectron next = (ISingleElectron)singleElectrons[0];
+            Assert.IsTrue(next is ISingleElectron);
+            Assert.AreEqual(se1, next);
+
+            next = (ISingleElectron)singleElectrons[1];
+            Assert.IsTrue(next is ISingleElectron);
+            Assert.AreEqual(se2, next);
+
+            Assert.IsTrue(singleElectrons.Count == 2);
+        }
+
+        [TestMethod()]
+        public virtual void TestElectronContainers()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
+            IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
+            acetone.Add(bond1);
+            acetone.Add(bond2);
+            acetone.Add(bond3);
+            ISingleElectron se1 = acetone.Builder.CreateSingleElectron(c1);
+            ISingleElectron se2 = acetone.Builder.CreateSingleElectron(c2);
+            acetone.Add(se1);
+            acetone.Add(se2);
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            var electronContainers = acetone.GetElectronContainers()?.ToList();
+            Assert.IsNotNull(electronContainers);
+            Assert.IsTrue(electronContainers.Count > 0);
+            IElectronContainer ec = (IElectronContainer)electronContainers[2];
+            Assert.IsTrue(ec is IBond);
+            Assert.AreEqual(bond3, ec);
+            ILonePair lp = (ILonePair)electronContainers[4];
+            Assert.IsTrue(lp is ILonePair);
+            Assert.AreEqual(lp2, lp);
+            ISingleElectron se = (ISingleElectron)electronContainers[5];
+            Assert.IsTrue(se is ISingleElectron);
+            Assert.AreEqual(se1, se);
+            se = (ISingleElectron)electronContainers[6];
+            Assert.IsTrue(se is ISingleElectron);
+            Assert.AreEqual(se2, se);
+
+            Assert.IsTrue(electronContainers.Count == 7);
+        }
+
+        [TestMethod()]
+        public virtual void TestContains_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            Assert.IsTrue(acetone.Contains(c1));
+            Assert.IsTrue(acetone.Contains(c2));
+            Assert.IsTrue(acetone.Contains(o));
+            Assert.IsTrue(acetone.Contains(c3));
+        }
+
+        [TestMethod()]
+        public virtual void TestAddLonePair_int()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(5, acetone.GetElectronContainers().Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetMaximumBondOrder_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(BondOrder.Double, acetone.GetMaximumBondOrder(o));
+            Assert.AreEqual(BondOrder.Double, acetone.GetMaximumBondOrder(c1));
+            Assert.AreEqual(BondOrder.Single, acetone.GetMaximumBondOrder(c2));
+            Assert.AreEqual(BondOrder.Single, acetone.GetMaximumBondOrder(c3));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetMinimumBondOrder_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(BondOrder.Double, acetone.GetMinimumBondOrder(o));
+            Assert.AreEqual(BondOrder.Single, acetone.GetMinimumBondOrder(c1));
+            Assert.AreEqual(BondOrder.Single, acetone.GetMinimumBondOrder(c2));
+            Assert.AreEqual(BondOrder.Single, acetone.GetMinimumBondOrder(c3));
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveElectronContainer_int()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.AddLonePair(acetone.Atoms[2]);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(5, acetone.GetElectronContainers().Count());
+            acetone.Remove(acetone.GetElectronContainers().Skip(3).First());
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(4, acetone.GetElectronContainers().Count());
+            acetone.Remove(acetone.GetElectronContainers().First()); // first bond now
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(3, acetone.GetElectronContainers().Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveElectronContainer_IElectronContainer()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            ILonePair firstLP = acetone.Builder.CreateLonePair(o);
+            acetone.Add(firstLP);
+            acetone.Add(acetone.Builder.CreateLonePair(o));
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(5, acetone.GetElectronContainers().Count());
+            acetone.Remove(firstLP);
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            Assert.AreEqual(4, acetone.GetElectronContainers().Count());
+            acetone.Remove(b1); // first bond now
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(3, acetone.GetElectronContainers().Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestAddBond_IBond()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            IEnumerable<IBond> bonds = acetone.Bonds;
+            foreach (var bond in bonds)
+                Assert.IsNotNull(bond);
+            Assert.AreEqual(b1, acetone.Bonds[0]);
+            Assert.AreEqual(b2, acetone.Bonds[1]);
+            Assert.AreEqual(b3, acetone.Bonds[2]);
+        }
+
+        //    [TestMethod()] public virtual void TestSetElectronContainers_arrayIElectronContainer() {
+        //        // acetone molecule
+        //        IAtomContainer acetone = GetNewBuilder().CreateAtomContainer();
+        //        IAtom c1 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom o = GetNewBuilder().NewInstance(typeof(IAtom),"O");
+        //        IAtom c3 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        acetone.Add(c1);
+        //        acetone.Add(c2);
+        //        acetone.Add(c3);
+        //        acetone.Add(o);
+        //        IElectronContainer[] electronContainers = new IElectronContainer[3];
+        //        electronContainers[0] = GetNewBuilder().CreateBond(c1, c2, BondOrder.Single);
+        //        electronContainers[1] = GetNewBuilder().CreateBond(c1, o, BondOrder.Double);
+        //        electronContainers[2] = GetNewBuilder().CreateBond(c1, c3, BondOrder.Single);
+        //        acetone.ElectronContainers = electronContainers;
+        //
+        //        Assert.AreEqual(3, acetone.Bonds.Count);
+        //        IBond[] bonds = acetone.Bonds;
+        //        for (int i=0; i<bonds.Length; i++) {
+        //            Assert.IsNotNull(bonds[i]);
+        //        }
+        //        Assert.AreEqual(electronContainers[0], bonds[0]);
+        //        Assert.AreEqual(electronContainers[1], bonds[1]);
+        //        Assert.AreEqual(electronContainers[2], bonds[2]);
+        //    }
+
+        //    [TestMethod()] public virtual void TestAddElectronContainers_IAtomContainer() {
+        //        // acetone molecule
+        //        IAtomContainer acetone = GetNewBuilder().CreateAtomContainer();
+        //        IAtom c1 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom o = GetNewBuilder().NewInstance(typeof(IAtom),"O");
+        //        IAtom c3 = GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        acetone.Add(c1);
+        //        acetone.Add(c2);
+        //        acetone.Add(c3);
+        //        acetone.Add(o);
+        //        IElectronContainer[] electronContainers = new IElectronContainer[3];
+        //        electronContainers[0] = GetNewBuilder().CreateBond(c1, c2, BondOrder.Single);
+        //        electronContainers[1] = GetNewBuilder().CreateBond(c1, o, BondOrder.Double);
+        //        electronContainers[2] = GetNewBuilder().CreateBond(c1, c3, BondOrder.Single);
+        //        acetone.ElectronContainers = electronContainers;
+        //
+        //        IAtomContainer tested = (IAtomContainer)NewChemObject();
+        //        tested.Add(GetNewBuilder().CreateBond(c2, c3));
+        //        tested.Adds(acetone);
+        //
+        //        Assert.AreEqual(0, tested.Atoms.Count);
+        //        Assert.AreEqual(4, tested.Bonds.Count);
+        //        IBond[] bonds = tested.Bonds;
+        //        for (int i=0; i<bonds.Length; i++) {
+        //            Assert.IsNotNull(bonds[i]);
+        //        }
+        //        Assert.AreEqual(electronContainers[0], bonds[1]);
+        //        Assert.AreEqual(electronContainers[1], bonds[2]);
+        //        Assert.AreEqual(electronContainers[2], bonds[3]);
+        //    }
+
+        [TestMethod()]
+        public virtual void TestAddElectronContainer_IElectronContainer()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            acetone.Add(acetone.Builder.CreateLonePair(o));
+            acetone.Add(acetone.Builder.CreateSingleElectron(c));
+
+            Assert.AreEqual(3, acetone.GetElectronContainers().Count());
+            Assert.AreEqual(1, acetone.Bonds.Count);
+            Assert.AreEqual(1, acetone.LonePairs.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetSingleElectron_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            acetone.Add(acetone.Builder.CreateLonePair(o));
+            ISingleElectron single = acetone.Builder.CreateSingleElectron(c);
+            acetone.Add(single);
+
+            Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(c).Count());
+            Assert.AreEqual(single, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).First());
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveBond_IAtom_IAtom()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            acetone.Remove(acetone.GetBond(c1, o));
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(b1, acetone.Bonds[0]);
+            Assert.AreEqual(b3, acetone.Bonds[1]);
+        }
+
+        [TestMethod()]
+        public virtual void TestAddBond_int_int_BondOrder()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddBond(acetone.Atoms[0], acetone.Atoms[1], BondOrder.Single);
+            acetone.AddBond(acetone.Atoms[1], acetone.Atoms[3], BondOrder.Double);
+            acetone.AddBond(acetone.Atoms[1], acetone.Atoms[2], BondOrder.Single);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            foreach (var bond in acetone.Bonds)
+                Assert.IsNotNull(bond);
+
+            Assert.AreEqual(c1, acetone.Bonds[0].Atoms[0]);
+            Assert.AreEqual(c2, acetone.Bonds[0].Atoms[1]);
+            Assert.AreEqual(BondOrder.Single, acetone.Bonds[0].Order);
+            Assert.AreEqual(c2, acetone.Bonds[1].Atoms[0]);
+            Assert.AreEqual(o, acetone.Bonds[1].Atoms[1]);
+            Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
+            Assert.AreEqual(c2, acetone.Bonds[2].Atoms[0]);
+            Assert.AreEqual(c3, acetone.Bonds[2].Atoms[1]);
+            Assert.AreEqual(BondOrder.Single, acetone.Bonds[2].Order);
+        }
+
+        [TestMethod()]
+        public virtual void TestAddBond_int_int_BondOrder_IBond_Stereo()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            acetone.AddBond(acetone.Atoms[0], acetone.Atoms[1], BondOrder.Single, BondStereo.Up); // yes this is crap
+            acetone.AddBond(acetone.Atoms[1], acetone.Atoms[3], BondOrder.Double, BondStereo.Down);
+            acetone.AddBond(acetone.Atoms[1], acetone.Atoms[2], BondOrder.Single, BondStereo.None);
+
+            Assert.AreEqual(3, acetone.Bonds.Count);
+            foreach (var bond in acetone.Bonds)
+                Assert.IsNotNull(bond);
+
+            Assert.AreEqual(c1, acetone.Bonds[0].Atoms[0]);
+            Assert.AreEqual(c2, acetone.Bonds[0].Atoms[1]);
+            Assert.AreEqual(BondOrder.Single, acetone.Bonds[0].Order);
+            Assert.AreEqual(BondStereo.Up, acetone.Bonds[0].Stereo);
+            Assert.AreEqual(c2, acetone.Bonds[1].Atoms[0]);
+            Assert.AreEqual(o, acetone.Bonds[1].Atoms[1]);
+            Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
+            Assert.AreEqual(BondStereo.Down, acetone.Bonds[1].Stereo);
+            Assert.AreEqual(c2, acetone.Bonds[2].Atoms[0]);
+            Assert.AreEqual(c3, acetone.Bonds[2].Atoms[1]);
+            Assert.AreEqual(BondOrder.Single, acetone.Bonds[2].Order);
+            Assert.AreEqual(BondStereo.None, acetone.Bonds[2].Stereo);
+        }
+
+        [TestMethod()]
+        public virtual void TestContains_IElectronContainer()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.IsTrue(acetone.Contains(b1));
+            Assert.IsTrue(acetone.Contains(b2));
+            Assert.IsTrue(acetone.Contains(b3));
+            Assert.IsTrue(acetone.Contains(lp1));
+            Assert.IsTrue(acetone.Contains(lp2));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetFirstAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom c1 = container.Builder.CreateAtom("C");
+            IAtom c2 = container.Builder.CreateAtom("O");
+            IAtom o = container.Builder.CreateAtom("H");
+            container.Add(c1);
+            container.Add(c2);
+            container.Add(o);
+
+            Assert.IsNotNull(container.Atoms.First());
+            Assert.AreEqual("C", container.Atoms.First().Symbol);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetLastAtom()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom c1 = container.Builder.CreateAtom("C");
+            IAtom c2 = container.Builder.CreateAtom("O");
+            IAtom o = container.Builder.CreateAtom("H");
+            container.Add(c1);
+            container.Add(c2);
+            container.Add(o);
+
+            Assert.IsNotNull(container.Atoms.Last());
+            Assert.AreEqual("H", container.Atoms.Last().Symbol);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetAtomNumber_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+
+            Assert.AreEqual(0, acetone.Atoms.IndexOf(c1));
+            Assert.AreEqual(1, acetone.Atoms.IndexOf(c2));
+            Assert.AreEqual(2, acetone.Atoms.IndexOf(c3));
+            Assert.AreEqual(3, acetone.Atoms.IndexOf(o));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondNumber_IBond()
+        {
+            // acetone molecule
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(0, acetone.Bonds.IndexOf(b1));
+            Assert.AreEqual(1, acetone.Bonds.IndexOf(b2));
+            Assert.AreEqual(2, acetone.Bonds.IndexOf(b3));
+
+            // test the default return value
+            Assert.AreEqual(-1, acetone.Bonds.IndexOf(acetone.Builder.CreateBond()));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondNumber_IAtom_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(0, acetone.Bonds.IndexOf(acetone.GetBond(c1, c2)));
+            Assert.AreEqual(1, acetone.Bonds.IndexOf(acetone.GetBond(c1, o)));
+            Assert.AreEqual(2, acetone.Bonds.IndexOf(acetone.GetBond(c1, c3)));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBond_IAtom_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(acetone.GetBond(c1, c2), b1);
+            Assert.AreEqual(acetone.GetBond(c1, o), b2);
+            Assert.AreEqual(acetone.GetBond(c1, c3), b3);
+
+            // test the default return value
+            Assert.IsNull(acetone.GetBond(acetone.Builder.CreateAtom(), acetone.Builder
+                    .CreateAtom()));
+        }
+
+        //    [TestMethod()] public virtual void TestGetConnectedAtoms_IAtom() {
+        //        IAtomContainer acetone = acetone.GetNewBuilder().CreateAtomContainer();
+        //        IAtom c1 = acetone.GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom c2 = acetone.GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        IAtom o = acetone.GetNewBuilder().NewInstance(typeof(IAtom),"O");
+        //        IAtom c3 = acetone.GetNewBuilder().NewInstance(typeof(IAtom),"C");
+        //        acetone.Add(c1);
+        //        acetone.Add(c2);
+        //        acetone.Add(c3);
+        //        acetone.Add(o);
+        //        IBond b1 = acetone.GetNewBuilder().CreateBond(c1, c2, BondOrder.Single);
+        //        IBond b2 = acetone.GetNewBuilder().CreateBond(c1, o, BondOrder.Double);
+        //        IBond b3 = acetone.GetNewBuilder().CreateBond(c1, c3, BondOrder.Single);
+        //        acetone.Add(b1);
+        //        acetone.Add(b2);
+        //        acetone.Add(b3);
+        //
+        //        Assert.AreEqual(3, acetone.GetConnectedAtoms(c1).Length);
+        //        Assert.AreEqual(1, acetone.GetConnectedAtoms(c2).Length);
+        //        Assert.AreEqual(1, acetone.GetConnectedAtoms(c3).Length);
+        //        Assert.AreEqual(1, acetone.GetConnectedAtoms(o).Length);
+        //    }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedAtomsList_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.GetConnectedAtoms(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(c3).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(o).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedAtomsCount_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            Assert.AreEqual(3, acetone.GetConnectedAtoms(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(c3).Count());
+            Assert.AreEqual(1, acetone.GetConnectedAtoms(o).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetLonePairCount()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(2, acetone.LonePairs.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedLonePairsCount_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c2).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c3).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c1).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondOrderSum_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(4.0, acetone.GetBondOrderSum(c1), 0.00001);
+            Assert.AreEqual(1.0, acetone.GetBondOrderSum(c2), 0.00001);
+            Assert.AreEqual(1.0, acetone.GetBondOrderSum(c3), 0.00001);
+            Assert.AreEqual(2.0, acetone.GetBondOrderSum(o), 0.00001);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondCount_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c2).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c3).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetBondCount_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            IAtom c3 = acetone.Builder.CreateAtom("C");
+            acetone.Add(c1);
+            acetone.Add(c2);
+            acetone.Add(c3);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
+            IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
+            IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(b2);
+            acetone.Add(b3);
+
+            // Add lone pairs on oxygen
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+
+            Assert.AreEqual(3, acetone.GetConnectedBonds(acetone.Atoms[0]).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[1]).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[2]).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[3]).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestStereoElements()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            IAtom carbon = container.Builder.CreateAtom("C");
+            carbon.Id = "central";
+            IAtom carbon1 = container.Builder.CreateAtom("C");
+            carbon1.Id = "c1";
+            IAtom carbon2 = container.Builder.CreateAtom("C");
+            carbon2.Id = "c2";
+            IAtom carbon3 = container.Builder.CreateAtom("C");
+            carbon3.Id = "c3";
+            IAtom carbon4 = container.Builder.CreateAtom("C");
+            carbon4.Id = "c4";
+            IStereoElement stereoElement = container.Builder.CreateTetrahedralChirality(carbon,
+                            new IAtom[] { carbon1, carbon2, carbon3, carbon4 }, TetrahedralStereo.Clockwise);
+            container.AddStereoElement(stereoElement);
+
+            IEnumerator<IStereoElement> stereoElements = container.StereoElements.GetEnumerator();
+            Assert.IsTrue(stereoElements.MoveNext());
+            IStereoElement element = stereoElements.Current;
+            Assert.IsNotNull(element);
+            Assert.IsTrue(element is ITetrahedralChirality);
+            Assert.AreEqual(carbon, ((ITetrahedralChirality)element).ChiralAtom);
+            Assert.IsFalse(stereoElements.MoveNext());
+        }
+
+        /// <summary>Test for RFC #9</summary>
+        [TestMethod()]
+        public virtual void TestToString()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            string description = container.ToString();
+            for (int i = 0; i < description.Length; i++)
+            {
+                Assert.IsTrue(description[i] != '\n');
+                Assert.IsTrue(description[i] != '\r');
+            }
+        }
+
+        [TestMethod()]
+        public override void TestStateChanged_IChemObjectChangeEvent()
+        {
+            ChemObjectListenerImpl listener = new ChemObjectListenerImpl();
+            IAtomContainer chemObject = (IAtomContainer)NewChemObject();
+            chemObject.Listeners.Add(listener);
+
+            chemObject.Add(chemObject.Builder.CreateAtom());
+            Assert.IsTrue(listener.Changed);
+
+            listener.Reset();
+            Assert.IsFalse(listener.Changed);
+            chemObject.Add(chemObject.Builder.CreateBond(
+                    chemObject.Builder.CreateAtom(), chemObject.Builder.CreateAtom()));
+            Assert.IsTrue(listener.Changed);
+        }
+
+        class ChemObjectListenerImpl : IChemObjectListener
+        {
+            public bool Changed { get; private set; }
+
+            public ChemObjectListenerImpl()
+            {
+                Changed = false;
+            }
+
+            public void OnStateChanged(ChemObjectChangeEventArgs evt)
+            {
+                Changed = true;
+            }
+
+            public virtual void Reset()
+            {
+                Changed = false;
+            }
+        }
+
+        [TestMethod()]
+        public virtual void TestAddStereoElement_IStereoElement()
+        {
+            TestStereoElements();
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedSingleElectronsCount_IAtom()
+        {
+            // another rather artifial example
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            ISingleElectron single1 = acetone.Builder.CreateSingleElectron(c);
+            ISingleElectron single2 = acetone.Builder.CreateSingleElectron(c);
+            ISingleElectron single3 = acetone.Builder.CreateSingleElectron(o);
+            acetone.Add(single1);
+            acetone.Add(single2);
+            acetone.Add(single3);
+
+            Assert.AreEqual(2, acetone.GetConnectedSingleElectrons(c).Count());
+            Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(o).Count());
+            Assert.AreEqual(single1, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(0));
+            Assert.AreEqual(single2, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(1));
+            Assert.AreEqual(single3, (ISingleElectron)acetone.GetConnectedSingleElectrons(o).ElementAt(0));
+
+            Assert.AreEqual(2, acetone.GetConnectedSingleElectrons(c).Count());
+            Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(o).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestAddLonePair_ILonePair()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            ILonePair lp1 = acetone.Builder.CreateLonePair(o);
+            ILonePair lp2 = acetone.Builder.CreateLonePair(o);
+            acetone.Add(lp1);
+            acetone.Add(lp2);
+            Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
+            Assert.AreEqual(0, acetone.GetConnectedLonePairs(c).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestAddSingleElectron_ISingleElectron()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            ISingleElectron single1 = acetone.Builder.CreateSingleElectron(c);
+            ISingleElectron single2 = acetone.Builder.CreateSingleElectron(c);
+            ISingleElectron single3 = acetone.Builder.CreateSingleElectron(o);
+            acetone.Add(single1);
+            acetone.Add(single2);
+            acetone.Add(single3);
+            Assert.AreEqual(single1, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(0));
+            Assert.AreEqual(single2, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(1));
+            Assert.AreEqual(single3, (ISingleElectron)acetone.GetConnectedSingleElectrons(o).ElementAt(0));
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveBond_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b);
+            acetone.Add(c1);
+            IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(c2);
+            IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
+            acetone.Add(b2);
+            acetone.Remove(acetone.Bonds[2]);
+            Assert.AreEqual(2, acetone.Bonds.Count);
+            Assert.AreEqual(b, acetone.Bonds[0]);
+            Assert.AreEqual(b1, acetone.Bonds[1]);
+            acetone.Remove(acetone.Bonds[0]);
+            Assert.AreEqual(1, acetone.Bonds.Count);
+            Assert.AreEqual(b1, acetone.Bonds[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestContains_IBond()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b1);
+            IBond falseBond = acetone.Builder.CreateBond();
+            Assert.IsTrue(acetone.Contains(b1));
+            Assert.IsFalse(acetone.Contains(falseBond));
+        }
+
+        [TestMethod()]
+        public virtual void TestAddSingleElectron_int()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            Assert.AreEqual(2, mol.SingleElectrons.Count);
+            Assert.IsNotNull(mol.SingleElectrons[1]);
+            var singles = mol.SingleElectrons.ToList();
+            ISingleElectron singleElectron = singles[0];
+            Assert.IsNotNull(singleElectron);
+            Assert.AreEqual(c1, singleElectron.Atom);
+            Assert.IsTrue(singleElectron.Contains(c1));
+            singleElectron = singles[1];
+            Assert.IsNotNull(singleElectron);
+            Assert.AreEqual(c1, singleElectron.Atom);
+            Assert.IsTrue(singleElectron.Contains(c1));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedSingleElectronsList_IAtom()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            var list = mol.GetConnectedSingleElectrons(c1);
+            Assert.AreEqual(2, list.Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveBond_IBond()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+            Assert.AreEqual(1, mol.Bonds.Count);
+            IBond bond = mol.Bonds[0];
+            mol.Remove(bond);
+            Assert.AreEqual(0, mol.Bonds.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedBondsCount_IAtom()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b);
+            acetone.Add(c1);
+            IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(c2);
+            IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
+            acetone.Add(b2);
+            Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
+            Assert.AreEqual(3, acetone.GetConnectedBonds(c).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c1).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(c2).Count());
+        }
+
+        [TestMethod()]
+        public virtual void TestGetConnectedBondsCount_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b);
+            acetone.Add(c1);
+            IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(c2);
+            IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
+            acetone.Add(b2);
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[1]).Count());
+            Assert.AreEqual(3, acetone.GetConnectedBonds(acetone.Atoms[0]).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[2]).Count());
+            Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[3]).Count());
+        }
+
+        // AtomContainer.SetBonds is not supported
+        //[TestMethod()]
+        //public virtual void TestSetBonds_arrayIBond()
+        //{
+        //    IAtomContainer acetone = (IAtomContainer)NewChemObject();
+        //    IAtom c = acetone.Builder.CreateAtom("C");
+        //    IAtom c1 = acetone.Builder.CreateAtom("C");
+        //    IAtom c2 = acetone.Builder.CreateAtom("C");
+        //    IAtom o = acetone.Builder.CreateAtom("O");
+        //    acetone.Add(c);
+        //    acetone.Add(o);
+        //    IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+        //    //acetone.Add(b);
+        //    acetone.Add(c1);
+        //    IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
+        //    //acetone.Add(b1);
+        //    acetone.Add(c2);
+        //    IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
+        //    //acetone.Add(b2);
+        //    IBond[] bonds = new IBond[3];
+        //    bonds[0] = b;
+        //    bonds[1] = b1;
+        //    bonds[2] = b2;
+        //    acetone.Bonds = bonds;
+        //    Assert.AreEqual(3, acetone.Bonds.Count);
+        //    Assert.AreEqual(acetone.Bonds[2], b2);
+        //}
+
+        [TestMethod()]
+        public virtual void TestGetLonePair_int()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddLonePair(mol.Atoms[1]);
+            ILonePair lp = mol.Builder.CreateLonePair(c);
+            mol.Add(lp);
+            Assert.AreEqual(lp, mol.LonePairs[1]);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetSingleElectron_int()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            ISingleElectron se = mol.Builder.CreateSingleElectron(c);
+            mol.Add(se);
+            Assert.AreEqual(se, mol.SingleElectrons[1]);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetLonePairNumber_ILonePair()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddLonePair(mol.Atoms[1]);
+            ILonePair lp = mol.Builder.CreateLonePair(c);
+            mol.Add(lp);
+            Assert.AreEqual(1, mol.LonePairs.IndexOf(lp));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetSingleElectronNumber_ISingleElectron()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            ISingleElectron se = mol.Builder.CreateSingleElectron(c);
+            mol.Add(se);
+            Assert.AreEqual(1, mol.SingleElectrons.IndexOf(se));
+        }
+
+        [TestMethod()]
+        public virtual void TestGetElectronContainer_int()
+        {
+            IAtomContainer acetone = (IAtomContainer)NewChemObject();
+            IAtom c = acetone.Builder.CreateAtom("C");
+            IAtom c1 = acetone.Builder.CreateAtom("C");
+            IAtom c2 = acetone.Builder.CreateAtom("C");
+            IAtom o = acetone.Builder.CreateAtom("O");
+            acetone.Add(c);
+            acetone.Add(o);
+            IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
+            acetone.Add(b);
+            acetone.Add(c1);
+            IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
+            acetone.Add(b1);
+            acetone.Add(c2);
+            IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
+            acetone.Add(b2);
+            acetone.AddLonePair(acetone.Atoms[1]);
+            acetone.AddLonePair(acetone.Atoms[1]);
+            Assert.IsTrue(acetone.GetElectronContainers().ElementAt(2) is IBond);
+            Assert.IsTrue(acetone.GetElectronContainers().ElementAt(4) is ILonePair);
+        }
+
+        [TestMethod()]
+        public virtual void TestGetSingleElectronCount()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            Assert.AreEqual(2, mol.SingleElectrons.Count);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveLonePair_int()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddLonePair(mol.Atoms[1]);
+            ILonePair lp = mol.Builder.CreateLonePair(c);
+            mol.Add(lp);
+            mol.Remove(mol.LonePairs[0]);
+            Assert.AreEqual(1, mol.LonePairs.Count);
+            Assert.AreEqual(lp, mol.LonePairs[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveLonePair_ILonePair()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            ILonePair lp = mol.Builder.CreateLonePair(c1);
+            mol.Add(lp);
+            ILonePair lp1 = mol.Builder.CreateLonePair(c);
+            mol.Add(lp1);
+            mol.Remove(lp);
+            Assert.AreEqual(1, mol.LonePairs.Count);
+            Assert.AreEqual(lp1, mol.LonePairs[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveSingleElectron_int()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            mol.AddSingleElectron(mol.Atoms[1]);
+            ISingleElectron se = mol.Builder.CreateSingleElectron(c);
+            mol.Add(se);
+            mol.Remove(mol.SingleElectrons[0]);
+            Assert.AreEqual(1, mol.SingleElectrons.Count);
+            Assert.AreEqual(se, mol.SingleElectrons[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestRemoveSingleElectron_ISingleElectron()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            ISingleElectron se1 = mol.Builder.CreateSingleElectron(c1);
+            mol.Add(se1);
+            ISingleElectron se = mol.Builder.CreateSingleElectron(c);
+            mol.Add(se);
+            Assert.AreEqual(2, mol.SingleElectrons.Count);
+            mol.Remove(se);
+            Assert.AreEqual(1, mol.SingleElectrons.Count);
+            Assert.AreEqual(se1, mol.SingleElectrons[0]);
+        }
+
+        [TestMethod()]
+        public virtual void TestContains_ILonePair()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            ILonePair lp = mol.Builder.CreateLonePair(c1);
+            mol.Add(lp);
+            ILonePair lp1 = mol.Builder.CreateLonePair(c);
+            Assert.IsTrue(mol.Contains(lp));
+            Assert.IsFalse(mol.Contains(lp1));
+        }
+
+        [TestMethod()]
+        public virtual void TestContains_ISingleElectron()
+        {
+            IAtomContainer mol = (IAtomContainer)NewChemObject();
+            IAtom c = mol.Builder.CreateAtom("C");
+            IAtom c1 = mol.Builder.CreateAtom("C");
+            mol.Add(c);
+            mol.Add(c1);
+            ISingleElectron se = mol.Builder.CreateSingleElectron(c1);
+            mol.Add(se);
+            ISingleElectron se1 = mol.Builder.CreateSingleElectron(c1);
+            Assert.IsTrue(mol.Contains(se));
+            Assert.IsFalse(mol.Contains(se1));
+        }
+
+        [TestMethod()]
+        public virtual void TestIsEmpty()
+        {
+            IAtomContainer container = (IAtomContainer)NewChemObject();
+            Assert.IsTrue(container.IsEmpty, "new atom container was not empty");
+            IAtom c1 = container.Builder.CreateAtom("C");
+            IAtom c2 = container.Builder.CreateAtom("C");
+            container.Add(c1);
+            container.Add(c2);
+            Assert.IsFalse(container.IsEmpty, "atom container Contains 2 atoms but was empty");
+            container.Add(container.Builder.CreateBond(c1, c2));
+            Assert.IsFalse(container.IsEmpty, "atom container Contains 2 atoms and 1 bond but was empty");
+            container.Remove(c1);
+            container.Remove(c2);
+            Assert.AreEqual(1, container.Bonds.Count, "atom Contains Contains no bonds");
+            Assert.IsTrue(container.IsEmpty, "atom Contains Contains no atoms but was not empty");
+        }
+    }
+}

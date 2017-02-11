@@ -1,0 +1,707 @@
+/* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received sourceAtom copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using NCDK.SMSD.Helper;
+using NCDK.Tools.Manipulator;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace NCDK.SMSD.Algorithms.RGraph
+{
+    /**
+     * This algorithm derives from the algorithm described in
+     * [Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.,
+     * Machine Learning of generic reactions:
+     * 3. An efficient algorithm for maximal common substructure determination,
+     * Tetrahedron Comput. Methodol., 1990, 3:351-358] and modified in the thesis of
+     * T. Hanser [Unknown BibTeXML type: HAN93].
+     *
+     * @cdk.module smsd
+     * @cdk.githash
+     * @author Syed Asad Rahman <asad@ebi.ac.uk>
+     */
+    public class CDKRMapHandler
+    {
+
+        public CDKRMapHandler()
+        {
+
+        }
+
+        /**
+         * Returns source molecule
+         * @return the source
+         */
+        public IAtomContainer Source
+        {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                source = value;
+            }
+        }
+
+        /**
+         * Returns target molecule
+         * @return the target
+         */
+        public IAtomContainer Target
+        {
+            get
+            {
+                return target;
+            }
+
+            set
+            {
+                target = value;
+            }
+        }
+
+        private IList<IDictionary<int, int>> mappings;
+        private IAtomContainer source;
+        private IAtomContainer target;
+        private bool timeoutFlag = false;
+
+        /**
+         * This function calculates all the possible combinations of MCS
+         * @param molecule1
+         * @param molecule2
+         * @param shouldMatchBonds
+         * @throws CDKException
+         */
+        public void CalculateOverlapsAndReduce(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
+        {
+            Source = molecule1;
+            Target = molecule2;
+
+            Mappings = new List<IDictionary<int, int>>();
+
+            if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
+            {
+                List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
+                int nAtomsMatched = overlaps.Count;
+                nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
+                if (nAtomsMatched > 0)
+                {
+                    /* UnComment this to get one Unique Mapping */
+                    //List reducedList = RemoveRedundantMappingsForSingleAtomCase(overlaps);
+                    //int counter = 0;
+                    IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
+
+                }
+
+            }
+            else
+            {
+                var overlaps = CDKMCS.Search(Source, Target, new BitArray(Source.Bonds.Count), new BitArray(Target.Bonds.Count), true,
+                        true, shouldMatchBonds);
+
+                var reducedList = RemoveSubGraph(overlaps);
+                var allMaxOverlaps = GetAllMaximum(reducedList);
+                while (allMaxOverlaps.Count != 0)
+                {
+                    //                Console.Out.WriteLine("source: " + source.Atoms.Count + ", target: " + target.Atoms.Count + ", overl: " + allMaxOverlaps.Peek().Count);
+                    var maxOverlapsAtoms = MakeAtomsMapOfBondsMap(allMaxOverlaps.Peek(), Source,
+                             Target);
+                    //                Console.Out.WriteLine("size of maxOverlaps: " + maxOverlapsAtoms.Count);
+                    IdentifyMatchedParts(maxOverlapsAtoms, Source, Target);
+                    //                IdentifyMatchedParts(allMaxOverlaps.Peek(), source, target);
+                    allMaxOverlaps.Pop();
+                }
+            }
+
+            FinalMappings.Instance.Set(Mappings);
+
+        }
+
+        /**
+         * This function calculates only one solution (exact) because we are looking at the
+         * molecules which are exactly same in terms of the bonds and atoms determined by the
+         * Fingerprint
+         * @param molecule1
+         * @param molecule2
+         * @param shouldMatchBonds
+         * @throws CDKException
+         */
+        public void CalculateOverlapsAndReduceExactMatch(IAtomContainer molecule1, IAtomContainer molecule2,
+                bool shouldMatchBonds)
+        {
+
+            Source = molecule1;
+            Target = molecule2;
+
+            Mappings = new List<IDictionary<int, int>>();
+
+            //Console.Out.WriteLine("Searching: ");
+            //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.GetSubgraphAtomsMap(source, target);
+
+            if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
+            {
+
+                List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
+                int nAtomsMatched = overlaps.Count;
+                nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
+                if (nAtomsMatched > 0)
+                {
+                    IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
+                }
+            }
+            else
+            {
+                var overlaps = CDKMCS.Search(Source, Target, new BitArray(Source.Bonds.Count), new BitArray(Target.Bonds.Count), true,
+                                    true, shouldMatchBonds);
+
+                var reducedList = RemoveSubGraph(overlaps);
+                var allMaxOverlaps = GetAllMaximum(reducedList);
+
+                while (allMaxOverlaps.Count != 0)
+                {
+                    var maxOverlapsAtoms = MakeAtomsMapOfBondsMap(allMaxOverlaps.Peek(), Source,
+                        Target);
+                    IdentifyMatchedParts(maxOverlapsAtoms, Source, Target);
+                    allMaxOverlaps.Pop();
+                }
+            }
+            FinalMappings.Instance.Set(Mappings);
+        }
+
+        /**
+         * This function calculates only one solution (exact) because we are looking at the
+         * molecules which are exactly same in terms of the bonds and atoms determined by the
+         * Fingerprint
+         * @param molecule1
+         * @param molecule2
+         * @param shouldMatchBonds
+         * @throws CDKException
+         */
+        public void CalculateSubGraphs(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
+        {
+            Source = molecule1;
+            Target = molecule2;
+
+            Mappings = new List<IDictionary<int, int>>();
+
+            //Console.Out.WriteLine("Searching: ");
+            //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.GetSubgraphAtomsMap(source, target);
+
+            if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
+            {
+
+                List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
+                int nAtomsMatched = overlaps.Count;
+                nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
+                if (nAtomsMatched > 0)
+                {
+                    IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
+                }
+
+            }
+            else
+            {
+
+                var overlaps = CDKMCS.GetSubgraphMaps(Source, Target, shouldMatchBonds);
+
+                var reducedList = RemoveSubGraph(overlaps);
+                var allMaxOverlaps = GetAllMaximum(reducedList);
+
+                while (allMaxOverlaps.Count != 0)
+                {
+                    var maxOverlapsAtoms = MakeAtomsMapOfBondsMap(allMaxOverlaps.Peek(), Source,
+                        Target);
+                    IdentifyMatchedParts(maxOverlapsAtoms, Source, Target);
+                    allMaxOverlaps.Pop();
+                }
+            }
+            FinalMappings.Instance.Set(Mappings);
+        }
+
+        /**
+         * This function calculates only one solution (exact) because we are looking at the
+         * molecules which are exactly same in terms of the bonds and atoms determined by the
+         * Fingerprint
+         * @param molecule1
+         * @param molecule2
+         * @param shouldMatchBonds
+         * @throws CDKException
+         */
+        public void CalculateIsomorphs(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
+        {
+            Source = molecule1;
+            Target = molecule2;
+
+            Mappings = new List<IDictionary<int, int>>();
+
+            //Console.Out.WriteLine("Searching: ");
+            //List overlaps = UniversalIsomorphismTesterBondTypeInSensitive.GetSubgraphAtomsMap(source, target);
+
+            if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
+            {
+
+                List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
+                int nAtomsMatched = overlaps.Count;
+                nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
+                if (nAtomsMatched > 0)
+                {
+                    IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
+                }
+
+            }
+            else
+            {
+
+                var overlaps = CDKMCS.GetIsomorphMaps(Source, Target, shouldMatchBonds);
+
+                var reducedList = RemoveSubGraph(overlaps);
+                var allMaxOverlaps = GetAllMaximum(reducedList);
+
+                while (allMaxOverlaps.Count != 0)
+                {
+                    var maxOverlapsAtoms = MakeAtomsMapOfBondsMap(allMaxOverlaps.Peek(), Source,
+                        Target);
+                    IdentifyMatchedParts(maxOverlapsAtoms, Source, Target);
+                    allMaxOverlaps.Pop();
+                }
+            }
+            FinalMappings.Instance.Set(Mappings);
+        }
+
+        /**
+         *
+         * @param overlaps
+         * @return
+         */
+        protected IList<IList<CDKRMap>> RemoveSubGraph(IList<IList<CDKRMap>> overlaps)
+        {
+
+            var reducedList = new List<IList<CDKRMap>>(overlaps);
+
+            for (int i = 0; i < overlaps.Count; i++)
+            {
+                var graphI = overlaps[i];
+
+                for (int j = i + 1; j < overlaps.Count; j++)
+                {
+                    var graphJ = overlaps[j];
+
+                    // Gi included in Gj or Gj included in Gi then
+                    // reduce the irrelevant solution
+                    if (graphI.Count != graphJ.Count)
+                    {
+                        if (IsSubgraph(graphJ, graphI))
+                        {
+                            reducedList.Remove(graphI);
+                        }
+                        else if (IsSubgraph(graphI, graphJ))
+                        {
+                            reducedList.Remove(graphJ);
+                        }
+                    }
+
+                }
+            }
+            return reducedList;
+        }
+
+        /**
+         *
+         * @param overlaps
+         * @return
+         */
+        protected List<CDKRMap> RemoveRedundantMappingsForSingleAtomCase(List<CDKRMap> overlaps)
+        {
+            List<CDKRMap> reducedList = new List<CDKRMap>();
+            reducedList.Add(overlaps[0]);
+            //reducedList.Add(overlaps[1]);
+            return reducedList;
+        }
+
+        /**
+         *  This makes sourceAtom map of matching atoms out of sourceAtom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
+         *
+         * @param  rMapList   The list produced by the getMap method.
+         * @param  graph1  first molecule. Must not be an IQueryAtomContainer.
+         * @param  graph2  second molecule. May be an IQueryAtomContainer.
+         * @return     The mapping found projected on graph1. This is sourceAtom List of CDKRMap objects containing Ids of matching atoms.
+         */
+        private static IList<IList<CDKRMap>> MakeAtomsMapOfBondsMap(IList<CDKRMap> rMapList, IAtomContainer graph1,
+                IAtomContainer graph2)
+        {
+            if (rMapList == null)
+            {
+                return (null);
+            }
+            IList<IList<CDKRMap>> result = null;
+            if (rMapList.Count == 1)
+            {
+                result = MakeAtomsMapOfBondsMapSingleBond(rMapList, graph1, graph2);
+            }
+            else
+            {
+                List<CDKRMap> resultLocal = new List<CDKRMap>();
+                for (int i = 0; i < rMapList.Count; i++)
+                {
+                    IBond qBond = graph1.Bonds[rMapList[i].Id1];
+                    IBond tBond = graph2.Bonds[rMapList[i].Id2];
+                    IAtom[] qAtoms = BondManipulator.GetAtomArray(qBond);
+                    IAtom[] tAtoms = BondManipulator.GetAtomArray(tBond);
+                    for (int j = 0; j < 2; j++)
+                    {
+                        var bondsConnectedToAtom1j = graph1.GetConnectedBonds(qAtoms[j]);
+                        foreach (var bondConnectedToAtom1j in bondsConnectedToAtom1j)
+                        {
+                            if (bondConnectedToAtom1j != qBond)
+                            {
+                                IBond testBond = bondConnectedToAtom1j;
+                                foreach (var rMap in rMapList)
+                                {
+                                    IBond testBond2;
+                                    if ((rMap).Id1 == graph1.Bonds.IndexOf(testBond))
+                                    {
+                                        testBond2 = graph2.Bonds[(rMap).Id2];
+                                        for (int n = 0; n < 2; n++)
+                                        {
+                                            var bondsToTest = graph2.GetConnectedBonds(tAtoms[n]);
+                                            if (bondsToTest.Contains(testBond2))
+                                            {
+                                                CDKRMap map;
+                                                if (j == n)
+                                                {
+                                                    map = new CDKRMap(graph1.Atoms.IndexOf(qAtoms[0]),
+                                                            graph2.Atoms.IndexOf(tAtoms[0]));
+                                                }
+                                                else
+                                                {
+                                                    map = new CDKRMap(graph1.Atoms.IndexOf(qAtoms[1]),
+                                                            graph2.Atoms.IndexOf(tAtoms[0]));
+                                                }
+                                                if (!resultLocal.Contains(map))
+                                                {
+                                                    resultLocal.Add(map);
+                                                }
+                                                CDKRMap map2;
+                                                if (j == n)
+                                                {
+                                                    map2 = new CDKRMap(graph1.Atoms.IndexOf(qAtoms[1]),
+                                                            graph2.Atoms.IndexOf(tAtoms[1]));
+                                                }
+                                                else
+                                                {
+                                                    map2 = new CDKRMap(graph1.Atoms.IndexOf(qAtoms[0]),
+                                                            graph2.Atoms.IndexOf(tAtoms[1]));
+                                                }
+                                                if (!resultLocal.Contains(map2))
+                                                {
+                                                    resultLocal.Add(map2);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                result = new List<IList<CDKRMap>>();
+                result.Add(resultLocal);
+            }
+            return result;
+        }
+
+        /**
+         *  This makes atom map of matching atoms out of atom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
+         *  Added by Asad since CDK one doesn't pick up the correct changes
+         * @param  list   The list produced by the getMap method.
+         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
+         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
+         * @return     The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.
+         */
+        private static IList<IList<CDKRMap>> MakeAtomsMapOfBondsMapSingleBond(IList<CDKRMap> list, IAtomContainer sourceGraph,
+                IAtomContainer targetGraph)
+        {
+            if (list == null)
+            {
+                return null;
+            }
+            IDictionary<IBond, IBond> bondMap = new Dictionary<IBond, IBond>(list.Count);
+            foreach (var solBondMap in list)
+            {
+                int id1 = solBondMap.Id1;
+                int id2 = solBondMap.Id2;
+                IBond qBond = sourceGraph.Bonds[id1];
+                IBond tBond = targetGraph.Bonds[id2];
+                bondMap[qBond] = tBond;
+            }
+            List<CDKRMap> result1 = new List<CDKRMap>();
+            List<CDKRMap> result2 = new List<CDKRMap>();
+            foreach (var qbond in sourceGraph.Bonds)
+            {
+                if (bondMap.ContainsKey(qbond))
+                {
+                    IBond tbond = bondMap[qbond];
+                    CDKRMap map00 = null;
+                    CDKRMap map01 = null;
+                    CDKRMap map10 = null;
+                    CDKRMap map11 = null;
+
+                    if ((qbond.Atoms[0].Symbol.Equals(tbond.Atoms[0].Symbol))
+                            && (qbond.Atoms[1].Symbol.Equals(tbond.Atoms[1].Symbol)))
+                    {
+                        map00 = new CDKRMap(sourceGraph.Atoms.IndexOf(qbond.Atoms[0]), targetGraph.Atoms.IndexOf(tbond
+                                .Atoms[0]));
+                        map11 = new CDKRMap(sourceGraph.Atoms.IndexOf(qbond.Atoms[1]), targetGraph.Atoms.IndexOf(tbond
+                                .Atoms[1]));
+                        if (!result1.Contains(map00))
+                        {
+                            result1.Add(map00);
+                        }
+                        if (!result1.Contains(map11))
+                        {
+                            result1.Add(map11);
+                        }
+                    }
+                    if ((qbond.Atoms[0].Symbol.Equals(tbond.Atoms[1].Symbol))
+                            && (qbond.Atoms[1].Symbol.Equals(tbond.Atoms[0].Symbol)))
+                    {
+                        map01 = new CDKRMap(sourceGraph.Atoms.IndexOf(qbond.Atoms[0]), targetGraph.Atoms.IndexOf(tbond
+                                .Atoms[1]));
+                        map10 = new CDKRMap(sourceGraph.Atoms.IndexOf(qbond.Atoms[1]), targetGraph.Atoms.IndexOf(tbond
+                                .Atoms[0]));
+                        if (!result2.Contains(map01))
+                        {
+                            result2.Add(map01);
+                        }
+                        if (!result2.Contains(map10))
+                        {
+                            result2.Add(map10);
+                        }
+                    }
+                }
+            }
+            List<IList<CDKRMap>> result = new List<IList<CDKRMap>>();
+            if (result1.Count == result2.Count)
+            {
+                result.Add(result1);
+                result.Add(result2);
+            }
+            else if (result1.Count > result2.Count)
+            {
+                result.Add(result1);
+            }
+            else
+            {
+                result.Add(result2);
+            }
+            return result;
+        }
+
+        protected IList GetMaximum(IList<IList> overlaps)
+        {
+            IList list = null;
+            int count = 0;
+            foreach (var o in overlaps)
+            {
+                var arrayList = o;
+                if (arrayList.Count > count)
+                {
+                    list = arrayList;
+                    count = arrayList.Count;
+                }
+
+            }
+            return list;
+        }
+
+        protected Stack<IList<CDKRMap>> GetAllMaximum(IList<IList<CDKRMap>> overlaps)
+        {
+
+            Stack<IList<CDKRMap>> allMaximumMappings = null;
+
+            int count = -1;
+
+            foreach (var arrayList in overlaps)
+            {
+                //Console.Out.WriteLine("O size" + sourceAtom.Count);
+
+                if (arrayList.Count > count)
+                {
+
+                    List<CDKRMap> list = new List<CDKRMap>(arrayList);
+                    count = arrayList.Count;
+
+                    //Console.Out.WriteLine("List size" + list.Count);
+
+                    //Collection threadSafeList = Collections.SynchronizedCollection( list );
+                    allMaximumMappings = new Stack<IList<CDKRMap>>();
+                    //allMaximumMappings.Clear();
+                    allMaximumMappings.Push(list);
+                }
+                else if (arrayList.Count == count)
+                {
+
+                    List<CDKRMap> list = new List<CDKRMap>(arrayList);
+                    count = arrayList.Count;
+                    allMaximumMappings.Push(list);
+                }
+
+            }
+            return allMaximumMappings;
+        }
+
+        protected void IdentifyMatchedParts(IList<IList<CDKRMap>> list, IAtomContainer source, IAtomContainer target)
+        {
+
+            List<IAtom> array1 = new List<IAtom>();
+            List<IAtom> array2 = new List<IAtom>();
+
+            /*
+             * We have serial numbers of the bonds/Atoms to delete Now we will
+             * collect the actual bond/Atoms rather than serial number for deletion.
+             * RonP flag check whether reactant is mapped on product or Vise Versa
+             */
+            foreach (var rMap in list)
+            {
+                IDictionary<int, int> atomNumbersFromContainer = new SortedDictionary<int, int>();
+                foreach (var rmap in rMap)
+                {
+                    IAtom sourceAtom = source.Atoms[rmap.Id1];
+                    IAtom targetAtom = target.Atoms[rmap.Id2];
+
+                    array1.Add(sourceAtom);
+                    array2.Add(targetAtom);
+
+                    int indexI = source.Atoms.IndexOf(sourceAtom);
+                    int indexJ = target.Atoms.IndexOf(targetAtom);
+
+                    atomNumbersFromContainer[indexI] = indexJ;
+                }
+                /*
+                 * Added the Mapping Numbers to the FinalMapping*
+                 */
+                Mappings.Add(atomNumbersFromContainer);
+            }
+        }
+
+        protected void IdentifySingleAtomsMatchedParts(List<CDKRMap> list, IAtomContainer source, IAtomContainer target)
+        {
+
+            List<IAtom> array1 = new List<IAtom>();
+            List<IAtom> array2 = new List<IAtom>();
+
+            /*
+             * We have serial numbers of the bonds/Atoms to delete Now we will
+             * collect the actual bond/Atoms rather than serial number for deletion.
+             * RonP flag check whether reactant is mapped on product or Vise Versa
+             */
+
+            SortedDictionary<int, int> atomNumbersFromContainer = new SortedDictionary<int, int>();
+
+            foreach (var rmap in list)
+            {
+                //System.err.Print("Map " + o.GetType());
+
+                IAtom sAtom = source.Atoms[rmap.Id1];
+                IAtom tAtom = target.Atoms[rmap.Id2];
+
+                array1.Add(sAtom);
+                array2.Add(tAtom);
+
+                int indexI = source.Atoms.IndexOf(sAtom);
+                int indexJ = target.Atoms.IndexOf(tAtom);
+
+                atomNumbersFromContainer[indexI] = indexJ;
+
+                /*
+                 * Added the Mapping Numbers to the FinalMapping*
+                 */
+                Mappings.Add(atomNumbersFromContainer);
+
+            }
+        }
+
+        protected bool IsSubgraph(IList<CDKRMap> rmaps1, IList<CDKRMap> rmaps2)
+        {
+            //Console.Out.WriteLine("Entering isSubgraph.");
+            List<CDKRMap> rmaps2clone = new List<CDKRMap>(rmaps2);
+            foreach (var rmap1 in rmaps1)
+            {
+                bool found = false;
+                for (int i = 0; i < rmaps2clone.Count; ++i)
+                {
+                    CDKRMap rmap2 = rmaps2clone[i];
+                    if (IsSameRMap(rmap1, rmap2))
+                    {
+                        rmaps2clone.RemoveAt(i);
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
+        protected bool IsSameRMap(CDKRMap sourceRMap, CDKRMap targetRMap)
+        {
+            return sourceRMap.Id1 == targetRMap.Id1 && sourceRMap.Id2 == targetRMap.Id2 ? true : false;
+        }
+
+        /// <summary>
+        /// mapping solutions
+        /// </summary>
+        public IList<IDictionary<int, int>> Mappings
+        {
+            get
+            {
+                return mappings;
+            }
+            set
+            {
+                this.mappings = value;
+            }
+        }
+
+        /// <summary>
+        /// true if a time out occured else false
+        /// </summary>
+        public bool IsTimedOut
+        {
+            get
+            {
+                return timeoutFlag;
+            }
+            set
+            {
+                this.timeoutFlag = value;
+            }
+        }
+    }
+}
+

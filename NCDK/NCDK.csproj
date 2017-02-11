@@ -1,0 +1,1871 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B0B5EACF-5F39-42D0-BACD-1FF559CCC8B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NCDK</RootNamespace>
+    <AssemblyName>NCDK</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;TEST</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0612,0618,0672,0164,0168</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;TEST</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;TEST</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>0618,0162,0169,0612,0164,0219,0809,0672</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=3.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.17.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Beam\Core\AllCycles.cs" />
+    <Compile Include="Beam\Core\ArbitraryMatching.cs" />
+    <Compile Include="Beam\Core\Atom.cs" />
+    <Compile Include="Beam\Core\AtomBuilder.cs" />
+    <Compile Include="Beam\Core\AtomImpl.cs" />
+    <Compile Include="Beam\Core\BiconnectedComponents.cs" />
+    <Compile Include="Beam\Core\Bond.cs" />
+    <Compile Include="Beam\Core\CharBuffer.cs" />
+    <Compile Include="Beam\Core\Configuration.cs" />
+    <Compile Include="Beam\Core\Edge.cs" />
+    <Compile Include="Beam\Core\ElectronAssignment.cs" />
+    <Compile Include="Beam\Core\ElectronDonation.cs" />
+    <Compile Include="Beam\Core\Element.cs" />
+    <Compile Include="Beam\Core\Function.cs" />
+    <Compile Include="Beam\Core\Generator.cs" />
+    <Compile Include="Beam\Core\Graph.cs" />
+    <Compile Include="Beam\Core\GraphBuilder.cs" />
+    <Compile Include="Beam\Core\IntSet.cs" />
+    <Compile Include="Beam\Core\IntStack.cs" />
+    <Compile Include="Beam\Core\InvalidSmilesException.cs" />
+    <Compile Include="Beam\Core\Localise.cs" />
+    <Compile Include="Beam\Core\Matching.cs" />
+    <Compile Include="Beam\Core\MaximumMatching.cs" />
+    <Compile Include="Beam\Core\Parser.cs" />
+    <Compile Include="Beam\Core\Topology.cs" />
+    <Compile Include="Beam\Core\Tuple.cs" />
+    <Compile Include="Beam\Core\UnionFind.cs" />
+    <Compile Include="Beam\Func\AbstractFunction.cs" />
+    <Compile Include="Beam\Func\AddDirectionalLabels.cs" />
+    <Compile Include="Beam\Func\BondBasedConfiguration.cs" />
+    <Compile Include="Beam\Func\ExplicitToImplicit.cs" />
+    <Compile Include="Beam\Func\FromSubsetAtoms.cs" />
+    <Compile Include="Beam\Func\FromTrigonalTopology.cs" />
+    <Compile Include="Beam\Func\Functions.cs" />
+    <Compile Include="Beam\Func\ImplicitToExplicit.cs" />
+    <Compile Include="Beam\Func\NormaliseDirectionalLabels.cs" />
+    <Compile Include="Beam\Func\RemoveUpDownBonds.cs" />
+    <Compile Include="Beam\Func\ToSubsetAtoms.cs" />
+    <Compile Include="Beam\Func\ToTrigonalTopology.cs" />
+    <Compile Include="BondOrder1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BondOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BondStereo1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BondStereo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Common\Base\Compares.cs" />
+    <Compile Include="Common\Base\Function.cs" />
+    <Compile Include="Common\Base\Preconditions.cs" />
+    <Compile Include="Common\Base\Predicate.cs" />
+    <Compile Include="Common\Collections\Arrays.cs" />
+    <Compile Include="Common\Collections\BidirectionalDictionary.cs" />
+    <Compile Include="Common\Collections\BitArrays.cs" />
+    <Compile Include="Common\Collections\Deque.cs" />
+    <Compile Include="Common\Collections\DictionaryEqualityComparer.cs" />
+    <Compile Include="Common\Collections\ImmutableCollection.cs" />
+    <Compile Include="Common\Collections\LinkedHashSet.cs" />
+    <Compile Include="Common\Collections\Lists.cs" />
+    <Compile Include="Common\Collections\Maps.cs" />
+    <Compile Include="Common\Collections\MultiMap.cs" />
+    <Compile Include="Common\Hash\Crc32.cs" />
+    <Compile Include="Common\Mathematics\BitsStreamGenerator.cs" />
+    <Compile Include="Common\Mathematics\JavaRandom.cs" />
+    <Compile Include="Common\Mathematics\MersenneTwister.cs" />
+    <Compile Include="Common\Mathematics\Vectors.cs" />
+    <Compile Include="Common\Primitives\Ints.cs" />
+    <Compile Include="Common\Primitives\Longs.cs" />
+    <Compile Include="Common\Primitives\Primitive.cs" />
+    <Compile Include="Common\Primitives\Strings.cs" />
+    <Compile Include="Common\Util\ReadSeekableStream.cs" />
+    <Compile Include="Common\Util\StreamTokenizer.cs" />
+    <Compile Include="FaulonSignatures\AbstractGraphBuilder.cs" />
+    <Compile Include="FaulonSignatures\AbstractGraphSignature.cs" />
+    <Compile Include="FaulonSignatures\AbstractQuotientGraph.cs" />
+    <Compile Include="FaulonSignatures\AbstractVertexSignature.cs" />
+    <Compile Include="FaulonSignatures\CanonicalLabellingVisitor.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\AtomPermutor.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\AtomSignature.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\ChiralCenterFinder.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\Molecule.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeBuilder.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeFactory.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeQuotientGraph.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeReader.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeSignature.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\MoleculeWriter.cs" />
+    <Compile Include="FaulonSignatures\Chemistry\SDFToSignatures.cs" />
+    <Compile Include="FaulonSignatures\ColoredTree.cs" />
+    <Compile Include="FaulonSignatures\ColoredTreeVisitor.cs" />
+    <Compile Include="FaulonSignatures\DAG.cs" />
+    <Compile Include="FaulonSignatures\DAGVisitor.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraph.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphBuilder.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphFactory.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphPermutor.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredGraphSignature.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredQuotientGraph.cs" />
+    <Compile Include="FaulonSignatures\EdgeColored\EdgeColoredVertexSignature.cs" />
+    <Compile Include="FaulonSignatures\InvariantArray.cs" />
+    <Compile Include="FaulonSignatures\InvariantInt.cs" />
+    <Compile Include="FaulonSignatures\InvariantIntIntPair.cs" />
+    <Compile Include="FaulonSignatures\InvariantIntStringPair.cs" />
+    <Compile Include="FaulonSignatures\InvariantList.cs" />
+    <Compile Include="FaulonSignatures\Invariants.cs" />
+    <Compile Include="FaulonSignatures\Permutor.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraph.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraphBuilder.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraphFactory.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraphPermutor.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleGraphSignature.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleQuotientGraph.cs" />
+    <Compile Include="FaulonSignatures\Simple\SimpleVertexSignature.cs" />
+    <Compile Include="FaulonSignatures\SymmetryClass.cs" />
+    <Compile Include="FaulonSignatures\VirtualGraphBuilder.cs" />
+    <Compile Include="FaulonSignatures\VisitableColoredTree.cs" />
+    <Compile Include="FaulonSignatures\VisitableDAG.cs" />
+    <Compile Include="IO\CML\CMLConstants.cs" />
+    <Compile Include="LibIO\CML\CMLLabel.cs" />
+    <Compile Include="LibIO\CML\CMLAtomArray.cs" />
+    <Compile Include="LibIO\CML\CMLCrystal.cs" />
+    <Compile Include="LibIO\CML\CMLElementBodies.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMLElementBodies.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LibIO\CML\CMLElementDefines.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMLElementDefines.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LibIO\CML\CMLFormula.cs" />
+    <Compile Include="LibIO\CML\CMLFormula1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMLFormula.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Config\Elements.cs" />
+    <Compile Include="DoubleBondConformation1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoubleBondConformation.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Events\ICDKChangeListener.cs" />
+    <Content Include="LibIO\CML\CMLElementDefines.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CMLElementDefines.cs</LastGenOutput>
+    </Content>
+    <Content Include="x64\libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="x86\libinchi.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Beam\element-defaults.txt" />
+    <Compile Include="Config\Isotope\IsotopeHandler.cs" />
+    <Compile Include="Config\Isotope\IsotopeReader.cs" />
+    <Compile Include="Config\XMLIsotopeFactory.cs" />
+    <None Include="FaulonSignatures\LICENCE.txt" />
+    <Compile Include="Geometries\Alignments\KabschAlignment.cs" />
+    <Compile Include="Geometries\AtomTools.cs" />
+    <Compile Include="Geometries\IRDFWeightFunction.cs" />
+    <Compile Include="Geometries\Projector.cs" />
+    <Compile Include="Geometries\RDFCalculator.cs" />
+    <Compile Include="Graphs\Invariant\EquivalentClassPartitioner.cs" />
+    <Compile Include="Graphs\Invariant\BadMatrixFormatException.cs" />
+    <Compile Include="Graphs\Invariant\IndexOutOfBoundsException.cs" />
+    <Compile Include="Graphs\Invariant\MatrixNotInvertibleException.cs" />
+    <Compile Include="Graphs\Invariant\GIMatrix.cs" />
+    <Compile Include="Graphs\Invariant\HuLuIndexTool.cs" />
+    <Compile Include="Indexes\CASNumber.cs" />
+    <Content Include="Numerics\ConstantHelper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ConstantHelper1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Numerics\Register.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Register1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Numerics\Vector.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Vector.cs</LastGenOutput>
+    </Content>
+    <Compile Include="LibIO\CML\CMLMolecule.cs" />
+    <Compile Include="LibIO\CML\CMLScalar.cs" />
+    <Compile Include="Proteins\ProteinPocketFinder.cs" />
+    <Compile Include="Reactions\ReactionChain.cs" />
+    <Compile Include="Templates\IsoAlkanes.cs" />
+    <Compile Include="NInChI\INCHI_BOND_STEREO.cs" />
+    <Compile Include="NInChI\INCHI_BOND_TYPE.cs" />
+    <Compile Include="NInChI\INCHI_KEY.cs" />
+    <Compile Include="NInChI\INCHI_KEY_STATUS.cs" />
+    <Compile Include="NInChI\INCHI_OPTION.cs" />
+    <Compile Include="NInChI\INCHI_PARITY.cs" />
+    <Compile Include="NInChI\INCHI_RADICAL.cs" />
+    <Compile Include="NInChI\INCHI_RET.cs" />
+    <Compile Include="NInChI\INCHI_STATUS.cs" />
+    <Compile Include="NInChI\INCHI_STEREOTYPE.cs" />
+    <Compile Include="NInChI\NInchiAtom.cs" />
+    <Compile Include="NInChI\NInchiBond.cs" />
+    <Compile Include="NInChI\NInchiException.cs" />
+    <Compile Include="NInChI\NInchiInput.cs" />
+    <Compile Include="NInChI\NInchiInputData.cs" />
+    <Compile Include="NInChI\NInchiInputInchi.cs" />
+    <Compile Include="NInChI\NInchiOutput.cs" />
+    <Compile Include="NInChI\NInchiOutputKey.cs" />
+    <Compile Include="NInChI\NInchiOutputStructure.cs" />
+    <Compile Include="NInChI\NInchiStereo0D.cs" />
+    <Compile Include="NInChI\NInchiStructure.cs" />
+    <Compile Include="NInChI\NInchiWrapper.cs" />
+    <Compile Include="Numerics\ConstantHelper1.cs">
+      <DependentUpon>ConstantHelper.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Numerics\HashCodeHelper.cs" />
+    <Compile Include="Numerics\Matrix3x2.cs" />
+    <Compile Include="Numerics\Matrix4x4.cs" />
+    <Compile Include="Numerics\Plane.cs" />
+    <Compile Include="Numerics\Quaternion.cs" />
+    <Compile Include="Numerics\Register1.cs">
+      <DependentUpon>Register.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Numerics\Vector.cs">
+      <DependentUpon>Vector.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Numerics\Vector2.cs" />
+    <Compile Include="Numerics\Vector2_Intrinsics.cs" />
+    <Compile Include="Numerics\Vector3.cs" />
+    <Compile Include="Numerics\Vector3_Intrinsics.cs" />
+    <Compile Include="Numerics\Vector4.cs" />
+    <Compile Include="Numerics\Vector4_Intrinsics.cs" />
+    <Compile Include="Numerics\Vector_Operations.cs" />
+    <Compile Include="Validate\AbstractValidator.cs" />
+    <Compile Include="Validate\BasicValidator.cs" />
+    <Compile Include="Validate\CDKValidator.cs" />
+    <Compile Include="Validate\DictionaryValidator.cs" />
+    <Compile Include="Validate\Geometry3DValidator.cs" />
+    <Compile Include="Validate\IValidator.cs" />
+    <Compile Include="Validate\ValidationReport.cs" />
+    <Compile Include="Validate\ValidationTest.cs" />
+    <Compile Include="Validate\ValidatorEngine.cs" />
+    <Compile Include="Vibration.cs" />
+    <EmbeddedResource Include="QSAR\Descriptors\Data\taepeptides.txt" />
+    <Compile Include="TT\Association.cs" />
+    <Content Include="LibIO\CML\CMLElementBodies.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CMLElementBodies.cs</LastGenOutput>
+    </Content>
+    <Content Include="LibIO\CML\CMLFormula.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CMLFormula1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="PhysicalConstants.cs" />
+    <Content Include="TT\Atom.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Atom1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ChemObject.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemObject1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomType1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Geometries\CIP\Rules\IComparator.cs" />
+    <Compile Include="Hybridization1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hybridization.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Isomorphisms\Matchers\QueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\QueryAtomContainer.cs" />
+    <Compile Include="Isomorphisms\Matchers\QueryChemObject.cs" />
+    <Compile Include="SMSD\Algorithm1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Algorithm.tt</DependentUpon>
+    </Compile>
+    <Content Include="TetrahedralStereo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TetrahedralStereo1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Stereo\Projection1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Projection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TetrahedralStereo1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TetrahedralStereo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AminoAcid1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AminoAcid.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Atom1.cs">
+      <DependentUpon>Atom.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="TT\AtomContainer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomContainerSet1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomContainerSet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\AtomType1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AtomType.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Bond.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Bond1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\BioPolymer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BioPolymer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Bond1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Bond.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemFile1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemFile.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemObject1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConformerContainer.cs" />
+    <Content Include="TT\Element.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Element1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ElectronContainer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ElectronContainer1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ChemObjectBuilder.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemObjectBuilder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ChemSequence1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemSequence.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Crystal1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Crystal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\ElectronContainer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ElectronContainer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Element1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Element.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Isotope.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Isotope1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\EnzymeResidueLocator1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EnzymeResidueLocator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\FragmentAtom1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FragmentAtom.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Isotope1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Isotope.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\AminoAcid.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AminoAcid1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomContainer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainer1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\AtomContainerSet.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AtomContainerSet1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\BioPolymer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BioPolymer1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ChemFile.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemFile1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ChemModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemModel1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\ChemSequence.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemSequence1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\Crystal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Crystal1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\EnzymeResidueLocator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnzymeResidueLocator1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\FragmentAtom.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FragmentAtom1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\LonePair.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>LonePair1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\LonePair1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LonePair.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Mapping.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Mapping1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Mapping1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mapping.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Monomer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Monomer1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\Polymer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Polymer1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Monomer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Monomer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\PDBAtom1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBAtom.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\PDBMonomer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBMonomer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\PDBPolymer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBPolymer.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\PDBStrand1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBStrand.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\PDBStructure1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PDBStructure.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TT\Polymer1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Polymer.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\PseudoAtom.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PseudoAtom1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\PseudoAtom1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PseudoAtom.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Reaction.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Reaction1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Reaction1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reaction.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ReactionScheme.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionScheme1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ReactionScheme1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionScheme.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\ReactionSet.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ReactionSet1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\ReactionSet1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReactionSet.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Ring.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Ring1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Ring1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Ring.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\RingSet.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>RingSet1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\RingSet1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RingSet.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\SingleElectron.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SingleElectron1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\SingleElectron1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SingleElectron.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Strand.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Strand1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Strand1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strand.tt</DependentUpon>
+    </Compile>
+    <Content Include="TT\Substance.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Substance1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="TT\Substance1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Substance.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Util\ServiceLoader.cs" />
+    <Compile Include="Util\Xml\XReader.cs" />
+    <Content Include="BondOrder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BondOrder1.cs</LastGenOutput>
+    </Content>
+    <Content Include="BondStereo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BondStereo1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="CDKTools.cs" />
+    <Compile Include="Config\AtomType\OWLConstants.cs" />
+    <Compile Include="LibIO\CML\CMLElement.cs" />
+    <Compile Include="ObservableChemObjectCollection.cs" />
+    <Content Include="DoubleBondConformation.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DoubleBondConformation1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Graphs\AllCycles.cs" />
+    <Compile Include="Graphs\CycleFinder.cs" />
+    <Compile Include="Graphs\Cycles.cs" />
+    <Content Include="Hybridization.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Hybridization1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reactions\Types\AdductionProtonPBReaction.cs" />
+    <Compile Include="Reactions\Types\AdductionSodiumLPReaction.cs" />
+    <Compile Include="Reactions\Types\CarbonylEliminationReaction.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactNBEReaction.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactPDBReaction.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactSDBReaction.cs" />
+    <Compile Include="Reactions\Types\HeterolyticCleavagePBReaction.cs" />
+    <Compile Include="Reactions\Types\HeterolyticCleavageSBReaction.cs" />
+    <Compile Include="Reactions\Types\HomolyticCleavageReaction.cs" />
+    <Compile Include="Reactions\Types\HyperconjugationReaction.cs" />
+    <Compile Include="Reactions\Types\PiBondingMovementReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalChargeSiteInitiationHReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalChargeSiteInitiationReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrAlphaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrBetaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrDeltaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrGammaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteInitiationHReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteInitiationReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrAlphaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrBetaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrDeltaReaction.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrGammaReaction.cs" />
+    <Compile Include="Reactions\Types\RearrangementAnionReaction.cs" />
+    <Compile Include="Reactions\Types\RearrangementCationReaction.cs" />
+    <Compile Include="Reactions\Types\RearrangementLonePairReaction.cs" />
+    <Compile Include="Reactions\Types\RearrangementRadicalReaction.cs" />
+    <Compile Include="Reactions\Types\SharingAnionReaction.cs" />
+    <Compile Include="Reactions\Types\SharingChargeDBReaction.cs" />
+    <Compile Include="Reactions\Types\SharingChargeSBReaction.cs" />
+    <Compile Include="Reactions\Types\SharingLonePairReaction.cs" />
+    <Compile Include="Reactions\Types\TautomerizationReaction.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAliphatic.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAnyAtom.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAromatic.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAtom.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAtomicMass.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTAtomicNumber.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTCharge.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTChirality.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTElement.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTExplicitAtom.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTExplicitConnectivity.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTExplicitHighAndBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTExplicitHighAndExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTGroup.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTHybrdizationNumber.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTImplicitHCount.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTImplicitHighAndBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTImplicitHighAndExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTLowAndBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTLowAndExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTNonCHHeavyAtom.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTNotBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTNotExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTOrBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTOrExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTPeriodicGroupNumber.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTPrimitiveAtomExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTReaction.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTRecursiveSmartsExpression.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTRingConnectivity.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTRingIdentifier.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTRingMembership.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTSimpleBond.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTSmallestRingSize.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTSmarts.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTStart.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTTotalConnectivity.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTTotalHCount.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ASTValence.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\JJTSMARTSParserState.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\Node.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ParseException.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SimpleCharStream.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SimpleNode.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\Smarts2MQLVisitor.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SmartsDumpVisitor.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSParser.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSParserConstants.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSParserTokenManager.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSParserTreeConstants.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSParserVisitor.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitor.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\Token.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\TokenMgrError.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\VFBondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\BKKCKCF.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\ExactMapping.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\GenerateCompatibilityGraph.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\MCSPlus.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\MCSPlusHandler.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Builder\EdgeBuilder.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Builder\NodeBuilder.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Builder\TargetProperties.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\INode.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Mapper.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFlibMCSHandler.cs" />
+    <Compile Include="SMSD\Filters\PostFilter.cs" />
+    <Compile Include="SMSD\IMCSBase.cs" />
+    <Compile Include="SMSD\Tools\TimeManager.cs" />
+    <Compile Include="Graphs\JumboPathGraph.cs" />
+    <Content Include="TT\ChemObjectBuilder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ChemObjectBuilder.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAtom.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Config\Data\isotopes.dat" />
+    <EmbeddedResource Include="Config\Data\log4j.properties" />
+    <EmbeddedResource Include="Dict\Data\atom-type-mappings.owl" />
+    <EmbeddedResource Include="Dict\Data\atom-types.owl" />
+    <EmbeddedResource Include="Dict\Data\cdk-atom-types.owl" />
+    <EmbeddedResource Include="Dict\Data\cdk-sybyl-mappings.owl" />
+    <EmbeddedResource Include="Dict\Data\descriptor-algorithms.owl" />
+    <EmbeddedResource Include="Dict\Data\elements.owl" />
+    <EmbeddedResource Include="Dict\Data\reaction-processes.owl" />
+    <EmbeddedResource Include="Dict\Data\sybyl-atom-types.owl" />
+    <EmbeddedResource Include="IO\CML\Data\cml1_0.dtd" />
+    <EmbeddedResource Include="IO\CML\Data\cml1_0_1.dtd" />
+    <EmbeddedResource Include="IO\CML\Data\cml1_0_1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\CML\Data\cml23.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\CML\Data\cml25b1.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\CML\Data\cmlAll.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IO\CML\Data\cmlCore.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAtomType.cs" />
+    <Compile Include="IIsotope.cs" />
+    <Compile Include="IElement.cs" />
+    <Compile Include="IChemObject.cs" />
+    <Compile Include="ICDKObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAdductFormula.cs" />
+    <Compile Include="IAminoAcid.cs" />
+    <Compile Include="IAtomContainer.cs" />
+    <Compile Include="IAtomContainerSet.cs" />
+    <Compile Include="IBioPolymer.cs" />
+    <Compile Include="IBond.cs" />
+    <Compile Include="IChemFile.cs" />
+    <Compile Include="IChemModel.cs" />
+    <Compile Include="IChemSequence.cs" />
+    <Compile Include="ICrystal.cs" />
+    <Compile Include="IDoubleBondStereochemistry.cs" />
+    <Compile Include="IElectronContainer.cs" />
+    <Compile Include="IFragmentAtom.cs" />
+    <Compile Include="ILonePair.cs" />
+    <Compile Include="IMapping.cs" />
+    <Compile Include="IMolecularFormula.cs" />
+    <Compile Include="IMolecularFormulaSet.cs" />
+    <Compile Include="IMonomer.cs" />
+    <Compile Include="IPDBAtom.cs" />
+    <Compile Include="IPDBMonomer.cs" />
+    <Compile Include="IPDBPolymer.cs" />
+    <Compile Include="IPDBStructure.cs" />
+    <Compile Include="IPolymer.cs" />
+    <Compile Include="IPseudoAtom.cs" />
+    <Compile Include="IReaction.cs" />
+    <Compile Include="IReactionSet.cs" />
+    <Compile Include="IRing.cs" />
+    <Compile Include="IRingSet.cs" />
+    <Compile Include="ISingleElectron.cs" />
+    <Compile Include="IStereoElement.cs" />
+    <Compile Include="IStrand.cs" />
+    <Compile Include="ISubstance.cs" />
+    <Compile Include="ITetrahedralChirality.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CDKConstants.cs" />
+    <Compile Include="Isomorphisms\Matchers\IQueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\IQueryAtomContainer.cs" />
+    <Compile Include="Isomorphisms\Matchers\IQueryBond.cs" />
+    <Compile Include="Graphs\Matrix\IGraphMatrix.cs" />
+    <Compile Include="Hash\AtomEncoder.cs" />
+    <Compile Include="Hash\AtomHashGenerator.cs" />
+    <Compile Include="Hash\EnsembleHashGenerator.cs" />
+    <Compile Include="Hash\MoleculeHashGenerator.cs" />
+    <Compile Include="LibIO\CML\ICMLCustomizer.cs" />
+    <Compile Include="CDKException.cs" />
+    <Compile Include="Intractable.cs" />
+    <Compile Include="NoSuchAtomException.cs" />
+    <Compile Include="NoSuchAtomTypeException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\AtomType\AtomTypeReader.cs" />
+    <Compile Include="Config\AtomTypeFactory.cs" />
+    <Compile Include="Config\IAtomTypeConfigurator.cs" />
+    <Compile Include="Config\TXTBasedAtomTypeConfigurator.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeReader.cs" />
+    <Compile Include="ReactionDirection.cs" />
+    <Compile Include="Tools\Manipulator\BondManipulator.cs" />
+    <Compile Include="Config\ImmutableAtomType.cs" />
+    <Compile Include="IChemObjectListener.cs" />
+    <Compile Include="Stereo\TetrahedralChirality.cs" />
+    <EmbeddedResource Include="Dict\Data\conversion_table.xml" />
+    <EmbeddedResource Include="Config\Data\structgen_atomtypes.xml" />
+    <Compile Include="Config\OWLBasedAtomTypeConfigurator.cs" />
+    <Compile Include="Config\CDKBasedAtomTypeConfigurator.cs" />
+    <Compile Include="Tools\PeriodicTable.cs" />
+    <Compile Include="Config\NaturalElement.cs" />
+    <Compile Include="IChemObjectBuilder.cs" />
+    <EmbeddedResource Include="Config\Data\electroneg-pauling.txt" />
+    <EmbeddedResource Include="Config\Data\isotopes.xml" />
+    <EmbeddedResource Include="Config\Data\jmol_atomtypes.txt" />
+    <EmbeddedResource Include="Config\Data\mm2_atomtypes.xml" />
+    <EmbeddedResource Include="Config\Data\mmff94_atomtypes.xml" />
+    <EmbeddedResource Include="Config\Data\mol2_atomtypes.xml" />
+    <EmbeddedResource Include="Config\Data\pdb_atomtypes.xml" />
+    <EmbeddedResource Include="Config\Data\radii-covalent.txt" />
+    <EmbeddedResource Include="Config\Data\radii-vdw.txt" />
+    <EmbeddedResource Include="Config\Data\whim_weights.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\GraphUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Stereo\DoubleBondStereochemistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\PathGraph.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\RegularPathGraph.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\IsotopeFactory.cs" />
+    <Compile Include="Config\Isotopes.cs" />
+    <Compile Include="Config\BODRIsotope.cs" />
+    <Compile Include="Graphs\InitialCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\ShortestPaths.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RingSearches\RingSearch.cs" />
+    <Compile Include="RingSearches\CyclicVertexSearch.cs" />
+    <Compile Include="RingSearches\JumboCyclicVertexSearch.cs" />
+    <Compile Include="RingSearches\RegularCyclicVertexSearch.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\MinimumCycleBasis.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\GreedyBasis.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\BitMatrix.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\RelevantCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\EssentialCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\TripletShortCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\VertexShortCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\EdgeShortCycles.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Graphs\AllPairsShortestPaths.cs" />
+    <Compile Include="Graphs\ConnectedComponents.cs" />
+    <Compile Include="Graphs\PathTools.cs" />
+    <Compile Include="Graphs\Matrix\AdjacencyMatrix.cs" />
+    <Compile Include="Graphs\SpanningTree.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fingerprint\IBitFingerprint.cs" />
+    <Compile Include="Fingerprint\ICountFingerprint.cs" />
+    <Compile Include="Fingerprint\IFingerprinter.cs" />
+    <Compile Include="AtomTypes\CDKAtomTypeMatcher.cs" />
+    <Compile Include="AtomTypes\IAtomTypeMatcher.cs" />
+    <Compile Include="ChemObjectChangeEventArgs.cs" />
+    <Compile Include="Aromaticities\Aromaticity.cs" />
+    <Compile Include="Aromaticities\AtomTypeModel.cs" />
+    <Compile Include="Aromaticities\DaylightModel.cs" />
+    <Compile Include="Aromaticities\ElectronDonation.cs" />
+    <Compile Include="Aromaticities\Kekulization.cs" />
+    <Compile Include="Aromaticities\PiBondModel.cs" />
+    <Compile Include="AtomTypes\EStateAtomTypeMatcher.cs" />
+    <Compile Include="AtomTypes\IAtomTypeGuesser.cs" />
+    <Compile Include="AtomTypes\Mapper\AtomTypeMapper.cs" />
+    <Compile Include="AtomTypes\StructGenAtomTypeGuesser.cs" />
+    <Compile Include="AtomTypes\StructGenMatcher.cs" />
+    <Compile Include="AtomTypes\SybylAtomTypeMatcher.cs" />
+    <Compile Include="CDK.cs" />
+    <Compile Include="Charges\AtomTypeCharges.cs" />
+    <Compile Include="Charges\Electronegativity.cs" />
+    <Compile Include="Charges\GasteigerMarsiliPartialCharges.cs" />
+    <Compile Include="Charges\GasteigerPEPEPartialCharges.cs" />
+    <Compile Include="Charges\IChargeCalculator.cs" />
+    <Compile Include="Charges\IElectronicPropertyCalculator.cs" />
+    <Compile Include="Charges\InductivePartialCharges.cs" />
+    <Compile Include="Charges\MMFF94PartialCharges.cs" />
+    <Compile Include="Charges\PiElectronegativity.cs" />
+    <Compile Include="Charges\Polarizability.cs" />
+    <Compile Include="Charges\StabilizationCharges.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeMappingHandler.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeMappingReader.cs" />
+    <Compile Include="Config\Fragments\EStateFragments.cs" />
+    <Compile Include="Dict\CDKDictionaryReferences.cs" />
+    <Compile Include="Dict\DictionaryMap.cs" />
+    <Compile Include="Dict\DictionaryDatabase.cs" />
+    <Compile Include="Dict\DictionaryHandler.cs" />
+    <Compile Include="Dict\DictRef.cs" />
+    <Compile Include="Dict\Entry.cs" />
+    <Compile Include="Dict\EntryReact.cs" />
+    <Compile Include="Dict\OWLFile.cs" />
+    <Compile Include="Dict\OWLReact.cs" />
+    <EmbeddedResource Include="Dict\Data\cdk.xml" />
+    <EmbeddedResource Include="Dict\Data\chemical.xml" />
+    <EmbeddedResource Include="Dict\Data\emboss.xml" />
+    <Compile Include="Events\ICDKSelectionChangeListener.cs" />
+    <Compile Include="InvalidSmilesException.cs" />
+    <Compile Include="UnsupportedChemObjectException.cs" />
+    <Compile Include="Fingerprint\BitSetFingerprint.cs" />
+    <Compile Include="Fingerprint\CircularFingerprinter.cs" />
+    <EmbeddedResource Include="Fingerprint\Data\maccs.txt" />
+    <EmbeddedResource Include="Fingerprint\Data\SMARTS_InteLigand.txt" />
+    <Compile Include="Fingerprint\EStateFingerprinter.cs" />
+    <Compile Include="Fingerprint\ExtendedFingerprinter.cs" />
+    <Compile Include="Fingerprint\Fingerprinter.cs" />
+    <Compile Include="Fingerprint\FingerprinterTool.cs" />
+    <Compile Include="Fingerprint\GraphOnlyFingerprinter.cs" />
+    <Compile Include="Fingerprint\HybridizationFingerprinter.cs" />
+    <Compile Include="Fingerprint\IntArrayCountFingerprint.cs" />
+    <Compile Include="Fingerprint\IntArrayFingerprint.cs" />
+    <Compile Include="Fingerprint\KlekotaRothFingerprinter.cs" />
+    <Compile Include="Fingerprint\LingoFingerprinter.cs" />
+    <Compile Include="Fingerprint\MACCSFingerprinter.cs" />
+    <Compile Include="Fingerprint\Model\Bayesian.cs" />
+    <Compile Include="Fingerprint\PubchemFingerprinter.cs" />
+    <Compile Include="Fingerprint\RandomNumber.cs" />
+    <Compile Include="Fingerprint\ShortestPathFingerprinter.cs" />
+    <Compile Include="Fingerprint\ShortestPathWalker.cs" />
+    <Compile Include="Fingerprint\SimpleAtomCanonicalizer.cs" />
+    <Compile Include="Fingerprint\SimpleAtomComparator.cs" />
+    <Compile Include="Fingerprint\StandardSubstructureSets.cs" />
+    <Compile Include="Fingerprint\SubstructureFingerprinter.cs" />
+    <Compile Include="Formula\AdductFormula.cs" />
+    <Compile Include="Formula\MolecularFormula.cs" />
+    <Compile Include="Formula\MolecularFormulaSet.cs" />
+    <Compile Include="Fingerprint\SignatureFingerprinter.cs" />
+    <Compile Include="ForceField\MMFF\Mmff.cs" />
+    <Compile Include="ForceField\MMFF\MmffAromaticTypeMapping.cs" />
+    <Compile Include="ForceField\MMFF\MmffAtomTypeMatcher.cs" />
+    <Compile Include="ForceField\MMFF\MmffParamSet.cs" />
+    <Compile Include="Formula\IsotopeContainer.cs" />
+    <Compile Include="Formula\IsotopePattern.cs" />
+    <Compile Include="Formula\IsotopePatternGenerator.cs" />
+    <Compile Include="Formula\IsotopePatternManipulator.cs" />
+    <Compile Include="Formula\IsotopePatternSimilarity.cs" />
+    <Compile Include="Formula\MolecularFormulaChecker.cs" />
+    <Compile Include="Formula\MolecularFormulaGenerator.cs" />
+    <Compile Include="Formula\MolecularFormulaRange.cs" />
+    <Compile Include="Formula\Rules\ChargeRule.cs" />
+    <Compile Include="Formula\Rules\ElementRule.cs" />
+    <Compile Include="Formula\Rules\IRule.cs" />
+    <Compile Include="Formula\Rules\IsotopePatternRule.cs" />
+    <Compile Include="Formula\Rules\MMElementRule.cs" />
+    <Compile Include="Formula\Rules\NitrogenRule.cs" />
+    <Compile Include="Formula\Rules\RDBERule.cs" />
+    <Compile Include="Formula\Rules\ToleranceRangeRule.cs" />
+    <Compile Include="Fragment\ExhaustiveFragmenter.cs" />
+    <Compile Include="Fragment\FragmentUtils.cs" />
+    <Compile Include="Fragment\IFragmenter.cs" />
+    <Compile Include="Fragment\MurckoFragmenter.cs" />
+    <Compile Include="Geometries\BondTools.cs" />
+    <Compile Include="Geometries\CrystalGeometryTools.cs" />
+    <Compile Include="Geometries\GeometryUtil.cs" />
+    <Compile Include="Geometries\Volume\VABCVolume.cs" />
+    <Compile Include="Geometries\ZMatrixTools.cs" />
+    <Compile Include="Graphs\AtomContainerAtomPermutor.cs" />
+    <Compile Include="Graphs\AtomContainerBondPermutor.cs" />
+    <Compile Include="Graphs\AtomContainerPermutor.cs" />
+    <Compile Include="Graphs\ConnectivityChecker.cs" />
+    <Compile Include="Graphs\EdmondsMaximumMatching.cs" />
+    <Compile Include="Graphs\InChI\InChIGenerator.cs" />
+    <Compile Include="Graphs\InChI\InChIGeneratorFactory.cs" />
+    <Compile Include="Graphs\InChI\InChIToStructure.cs" />
+    <Compile Include="Graphs\Invariant\Canon.cs" />
+    <Compile Include="Graphs\Invariant\CanonicalLabeler.cs" />
+    <Compile Include="Geometries\CIP\CIPTool.cs" />
+    <Compile Include="Geometries\CIP\ILigand.cs" />
+    <Compile Include="Geometries\CIP\ImmutableHydrogen.cs" />
+    <Compile Include="Geometries\CIP\ImplicitHydrogenLigand.cs" />
+    <Compile Include="Geometries\CIP\LigancyFourChirality.cs" />
+    <Compile Include="Geometries\CIP\Ligand.cs" />
+    <Compile Include="Geometries\CIP\Rules\AtomicNumberRule.cs" />
+    <Compile Include="Geometries\CIP\Rules\CIPLigandRule.cs" />
+    <Compile Include="Geometries\CIP\Rules\CombinedAtomicMassNumberRule.cs" />
+    <Compile Include="Geometries\CIP\Rules\ISequenceSubRule.cs" />
+    <Compile Include="Geometries\CIP\Rules\MassNumberRule.cs" />
+    <Compile Include="Geometries\CIP\TerminalLigand.cs" />
+    <Compile Include="Geometries\CIP\VisitedAtoms.cs" />
+    <Compile Include="Geometries\Surface\NeighborList.cs" />
+    <Compile Include="Geometries\Surface\NumericalSurface.cs" />
+    <Compile Include="Geometries\Surface\Tessellate.cs" />
+    <Compile Include="Geometries\Surface\Triangle.cs" />
+    <Compile Include="Graphs\Invariant\ConjugatedPiSystemsDetector.cs" />
+    <Compile Include="Graphs\Invariant\InChINumbersTools.cs" />
+    <Compile Include="Graphs\Invariant\InvariantRanker.cs" />
+    <Compile Include="Graphs\Invariant\MorganNumbersTools.cs" />
+    <Compile Include="Graphs\Matching.cs" />
+    <Compile Include="Graphs\Matrix\ConnectionMatrix.cs" />
+    <Compile Include="Graphs\Permutor.cs" />
+    <Compile Include="Graphs\Rebond\Bspt.cs" />
+    <Compile Include="Graphs\Rebond\Point.cs" />
+    <Compile Include="Graphs\Rebond\RebondTool.cs" />
+    <Compile Include="Groups\DisjointSetForest.cs" />
+    <Compile Include="IImplementationSpecification.cs" />
+    <Compile Include="Graphs\Matrix\TopologicalMatrix.cs" />
+    <Compile Include="Groups\AbstractDiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\AbstractEquitablePartitionRefiner.cs" />
+    <Compile Include="Groups\AtomDiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\AtomEquitablePartitionRefiner.cs" />
+    <Compile Include="Groups\BondDiscretePartitionRefiner.cs" />
+    <Compile Include="Groups\BondEquitablePartitionRefiner.cs" />
+    <Compile Include="Groups\IEquitablePartitionRefiner.cs" />
+    <Compile Include="Groups\Partition.cs" />
+    <Compile Include="Groups\Permutation.cs" />
+    <Compile Include="Groups\PermutationGroup.cs" />
+    <Compile Include="Hash\AbstractAtomHashGenerator.cs" />
+    <Compile Include="Hash\AbstractHashGenerator.cs" />
+    <Compile Include="Hash\AllEquivalentCyclicSet.cs" />
+    <Compile Include="Hash\AtomSuppression.cs" />
+    <Compile Include="Hash\BasicAtomEncoder.cs" />
+    <Compile Include="Hash\BasicAtomHashGenerator.cs" />
+    <Compile Include="Hash\BasicMoleculeHashGenerator.cs" />
+    <Compile Include="Hash\ConjugatedAtomEncoder.cs" />
+    <Compile Include="Hash\EquivalentSetFinder.cs" />
+    <Compile Include="Hash\HashGeneratorMaker.cs" />
+    <Compile Include="Hash\MinimumEquivalentCyclicSet.cs" />
+    <Compile Include="Hash\MinimumEquivalentCyclicSetUnion.cs" />
+    <Compile Include="Hash\PerturbedAtomHashGenerator.cs" />
+    <Compile Include="Hash\Pseudorandom.cs" />
+    <Compile Include="Hash\SeedGenerator.cs" />
+    <Compile Include="Hash\Stereo\BasicPermutationParity.cs" />
+    <Compile Include="Hash\Stereo\CombinedPermutationParity.cs" />
+    <Compile Include="Hash\Stereo\DoubleBond2DParity.cs" />
+    <Compile Include="Hash\Stereo\DoubleBond3DParity.cs" />
+    <Compile Include="Hash\Stereo\DoubleBondElementEncoderFactory.cs" />
+    <Compile Include="Hash\Stereo\GeometricCumulativeDoubleBondFactory.cs" />
+    <Compile Include="Hash\Stereo\GeometricDoubleBondEncoderFactory.cs" />
+    <Compile Include="Hash\Stereo\GeometricParity.cs" />
+    <Compile Include="Hash\Stereo\GeometricTetrahedralEncoderFactory.cs" />
+    <Compile Include="Hash\Stereo\GeometryEncoder.cs" />
+    <Compile Include="Hash\Stereo\MultiStereoEncoder.cs" />
+    <Compile Include="Hash\Stereo\PermutationParity.cs" />
+    <Compile Include="Hash\Stereo\StereoEncoder.cs" />
+    <Compile Include="Hash\Stereo\StereoEncoderFactory.cs" />
+    <Compile Include="Hash\Stereo\Tetrahedral2DParity.cs" />
+    <Compile Include="Hash\Stereo\Tetrahedral3DParity.cs" />
+    <Compile Include="Hash\Stereo\TetrahedralElementEncoderFactory.cs" />
+    <Compile Include="Hash\Suppressed.cs" />
+    <Compile Include="Hash\SuppressedAtomHashGenerator.cs" />
+    <Compile Include="Hash\Xorshift.cs" />
+    <Compile Include="IO\NCDKSourceCodeWriter.cs" />
+    <Compile Include="IO\ChemObjectIO.cs" />
+    <Compile Include="IO\CIFReader.cs" />
+    <Compile Include="IO\CMLReader.cs" />
+    <Compile Include="IO\CMLWriter.cs" />
+    <Compile Include="IO\CML\CDKConvention.cs" />
+    <Compile Include="IO\CML\CMLCoreModule.cs" />
+    <Compile Include="IO\CML\CMLHandler.cs" />
+    <Compile Include="IO\CML\CMLModuleStack.cs" />
+    <Compile Include="IO\CML\CMLReactionModule.cs" />
+    <Compile Include="IO\CML\CMLResolver.cs" />
+    <Compile Include="IO\CML\CMLStack.cs" />
+    <Compile Include="IO\CML\ICMLModule.cs" />
+    <Compile Include="IO\CML\JMOLANIMATIONConvention.cs" />
+    <Compile Include="IO\CML\MDLMolConvention.cs" />
+    <Compile Include="IO\CML\OtherNamespace.cs" />
+    <Compile Include="IO\CML\PDBConvention.cs" />
+    <Compile Include="IO\CML\PMPConvention.cs" />
+    <Compile Include="IO\CML\QSARConvention.cs" />
+    <Compile Include="IO\CrystClustReader.cs" />
+    <Compile Include="IO\CrystClustWriter.cs" />
+    <Compile Include="IO\CTXReader.cs" />
+    <Compile Include="IO\DefaultChemObjectReader.cs" />
+    <Compile Include="IO\DefaultChemObjectWriter.cs" />
+    <Compile Include="IO\FormatFactory.cs" />
+    <Compile Include="IO\Formats\ABINITFormat.cs" />
+    <Compile Include="IO\Formats\AbstractResourceFormat.cs" />
+    <Compile Include="IO\Formats\Aces2Format.cs" />
+    <Compile Include="IO\Formats\ADFFormat.cs" />
+    <Compile Include="IO\Formats\AlchemyFormat.cs" />
+    <Compile Include="IO\Formats\BGFFormat.cs" />
+    <Compile Include="IO\Formats\BSFormat.cs" />
+    <Compile Include="IO\Formats\CacaoCartesianFormat.cs" />
+    <Compile Include="IO\Formats\CacaoInternalFormat.cs" />
+    <Compile Include="IO\Formats\CACheFormat.cs" />
+    <Compile Include="IO\Formats\CDKOWLFormat.cs" />
+    <Compile Include="IO\Formats\NCDKSourceCodeFormat.cs" />
+    <Compile Include="IO\Formats\Chem3D_Cartesian_1Format.cs" />
+    <Compile Include="IO\Formats\Chem3D_Cartesian_2Format.cs" />
+    <Compile Include="IO\Formats\ChemDrawFormat.cs" />
+    <Compile Include="IO\Formats\ChemtoolFormat.cs" />
+    <Compile Include="IO\Formats\CIFFormat.cs" />
+    <Compile Include="IO\Formats\CMLFormat.cs" />
+    <Compile Include="IO\Formats\CMLRSSFormat.cs" />
+    <Compile Include="IO\Formats\CRK2DFormat.cs" />
+    <Compile Include="IO\Formats\CRK3DFormat.cs" />
+    <Compile Include="IO\Formats\CrystClustFormat.cs" />
+    <Compile Include="IO\Formats\CTXFormat.cs" />
+    <Compile Include="IO\Formats\DaltonFormat.cs" />
+    <Compile Include="IO\Formats\DMol3Format.cs" />
+    <Compile Include="IO\Formats\DOCK5Format.cs" />
+    <Compile Include="IO\Formats\FenskeHall_ZMatrixFormat.cs" />
+    <Compile Include="IO\Formats\FingerprintFormat.cs" />
+    <Compile Include="IO\Formats\GamessFormat.cs" />
+    <Compile Include="IO\Formats\Gaussian03Format.cs" />
+    <Compile Include="IO\Formats\Gaussian90Format.cs" />
+    <Compile Include="IO\Formats\Gaussian92Format.cs" />
+    <Compile Include="IO\Formats\Gaussian94Format.cs" />
+    <Compile Include="IO\Formats\Gaussian95Format.cs" />
+    <Compile Include="IO\Formats\Gaussian98Format.cs" />
+    <Compile Include="IO\Formats\GaussianInputFormat.cs" />
+    <Compile Include="IO\Formats\GhemicalMMFormat.cs" />
+    <Compile Include="IO\Formats\GhemicalSPMFormat.cs" />
+    <Compile Include="IO\Formats\GROMOS96Format.cs" />
+    <Compile Include="IO\Formats\HINFormat.cs" />
+    <Compile Include="IO\Formats\IChemFormat.cs" />
+    <Compile Include="IO\Formats\IChemFormatMatcher.cs" />
+    <Compile Include="IO\Formats\INChIFormat.cs" />
+    <Compile Include="IO\Formats\INChIPlainTextFormat.cs" />
+    <Compile Include="IO\Formats\IResourceFormat.cs" />
+    <Compile Include="IO\Formats\JaguarFormat.cs" />
+    <Compile Include="IO\Formats\JMEFormat.cs" />
+    <Compile Include="IO\Formats\MacroModelFormat.cs" />
+    <Compile Include="IO\Formats\MDLFormat.cs" />
+    <Compile Include="IO\Formats\MDLRXNFormat.cs" />
+    <Compile Include="IO\Formats\MDLRXNV3000Format.cs" />
+    <Compile Include="IO\Formats\MDLV2000Format.cs" />
+    <Compile Include="IO\Formats\MDLV3000Format.cs" />
+    <Compile Include="IO\Formats\MMODFormat.cs" />
+    <Compile Include="IO\Formats\Mol2Format.cs" />
+    <Compile Include="IO\Formats\MOPAC2002Format.cs" />
+    <Compile Include="IO\Formats\MOPAC2007Format.cs" />
+    <Compile Include="IO\Formats\MOPAC2009Format.cs" />
+    <Compile Include="IO\Formats\MOPAC2012Format.cs" />
+    <Compile Include="IO\Formats\MOPAC7Format.cs" />
+    <Compile Include="IO\Formats\MOPAC7InputFormat.cs" />
+    <Compile Include="IO\Formats\MOPAC93Format.cs" />
+    <Compile Include="IO\Formats\MOPAC97Format.cs" />
+    <Compile Include="IO\Formats\MoSSOutputFormat.cs" />
+    <Compile Include="IO\Formats\MPQCFormat.cs" />
+    <Compile Include="IO\Formats\NWChemFormat.cs" />
+    <Compile Include="IO\Formats\PCModelFormat.cs" />
+    <Compile Include="IO\Formats\PDBFormat.cs" />
+    <Compile Include="IO\Formats\PDBMLFormat.cs" />
+    <Compile Include="IO\Formats\PMPFormat.cs" />
+    <Compile Include="IO\Formats\POVRayFormat.cs" />
+    <Compile Include="IO\Formats\PQSChemFormat.cs" />
+    <Compile Include="IO\Formats\PubChemASNFormat.cs" />
+    <Compile Include="IO\Formats\PubChemCompoundsXMLFormat.cs" />
+    <Compile Include="IO\Formats\PubChemCompoundXMLFormat.cs" />
+    <Compile Include="IO\Formats\PubChemFormat.cs" />
+    <Compile Include="IO\Formats\PubChemSubstancesASNFormat.cs" />
+    <Compile Include="IO\Formats\PubChemSubstancesXMLFormat.cs" />
+    <Compile Include="IO\Formats\PubChemSubstanceXMLFormat.cs" />
+    <Compile Include="IO\Formats\QChemFormat.cs" />
+    <Compile Include="IO\Formats\RawCopyFormat.cs" />
+    <Compile Include="IO\Formats\RGroupQueryFormat.cs" />
+    <Compile Include="IO\Formats\SDFFormat.cs" />
+    <Compile Include="IO\Formats\ShelXFormat.cs" />
+    <Compile Include="IO\Formats\SimpleChemFormatMatcher.cs" />
+    <Compile Include="IO\Formats\SMARTSFormat.cs" />
+    <Compile Include="IO\Formats\SMILESFIXFormat.cs" />
+    <Compile Include="IO\Formats\SMILESFormat.cs" />
+    <Compile Include="IO\Formats\SpartanFormat.cs" />
+    <Compile Include="IO\Formats\SVGFormat.cs" />
+    <Compile Include="IO\Formats\SybylDescriptorFormat.cs" />
+    <Compile Include="IO\Formats\TinkerMM2Format.cs" />
+    <Compile Include="IO\Formats\TinkerXYZFormat.cs" />
+    <Compile Include="IO\Formats\TurboMoleFormat.cs" />
+    <Compile Include="IO\Formats\UniChemXYZFormat.cs" />
+    <Compile Include="IO\Formats\VASPFormat.cs" />
+    <Compile Include="IO\Formats\ViewmolFormat.cs" />
+    <Compile Include="IO\Formats\XEDFormat.cs" />
+    <Compile Include="IO\Formats\XYZFormat.cs" />
+    <Compile Include="IO\Formats\YasaraFormat.cs" />
+    <Compile Include="IO\Formats\ZindoFormat.cs" />
+    <Compile Include="IO\Formats\ZMatrixFormat.cs" />
+    <Compile Include="IO\GamessReader.cs" />
+    <Compile Include="IO\Gaussian03Reader.cs" />
+    <Compile Include="IO\Gaussian98Reader.cs" />
+    <Compile Include="IO\GhemicalMMReader.cs" />
+    <Compile Include="IO\HINReader.cs" />
+    <Compile Include="IO\HINWriter.cs" />
+    <Compile Include="IO\IChemObjectIO.cs" />
+    <Compile Include="IO\IChemObjectReader.cs" />
+    <Compile Include="IO\IChemObjectReaderErrorHandler.cs" />
+    <Compile Include="IO\IChemObjectWriter.cs" />
+    <Compile Include="IO\Setting\ISetting.cs" />
+    <Compile Include="IO\ISimpleChemObjectReader.cs" />
+    <Compile Include="IO\INChIPlainTextReader.cs" />
+    <Compile Include="IO\INChIReader.cs" />
+    <Compile Include="IO\INChI\INChIContentProcessorTool.cs" />
+    <Compile Include="IO\INChI\INChIHandler.cs" />
+    <Compile Include="IO\Iterator\DefaultIteratingChemObjectReader.cs" />
+    <Compile Include="IO\Iterator\IIteratingChemObjectReader.cs" />
+    <Compile Include="IO\Iterator\IteratingMDLConformerReader.cs" />
+    <Compile Include="IO\Iterator\IteratingPCCompoundASNReader.cs" />
+    <Compile Include="IO\Iterator\IteratingPCCompoundXMLReader.cs" />
+    <Compile Include="IO\Iterator\IteratingPCSubstancesXMLReader.cs" />
+    <Compile Include="IO\Iterator\IteratingSDFReader.cs" />
+    <Compile Include="IO\Iterator\IteratingSMILESReader.cs" />
+    <Compile Include="IO\Listener\IChemObjectIOListener.cs" />
+    <Compile Include="IO\Listener\IReaderListener.cs" />
+    <Compile Include="IO\Listener\IWriterListener.cs" />
+    <Compile Include="IO\Listener\PropertiesListener.cs" />
+    <Compile Include="IO\Listener\TextGUIListener.cs" />
+    <Compile Include="IO\MDLReader.cs" />
+    <Compile Include="IO\MDLRXNReader.cs" />
+    <Compile Include="IO\MDLRXNV2000Reader.cs" />
+    <Compile Include="IO\MDLRXNV3000Reader.cs" />
+    <Compile Include="IO\MDLRXNWriter.cs" />
+    <Compile Include="IO\MDLV2000Reader.cs" />
+    <Compile Include="IO\MDLV2000Writer.cs" />
+    <Compile Include="IO\MDLV3000Reader.cs" />
+    <Compile Include="IO\MDLV3000Writer.cs" />
+    <Compile Include="IO\MDLValence.cs" />
+    <Compile Include="IO\Mol2Reader.cs" />
+    <Compile Include="IO\Mol2Writer.cs" />
+    <Compile Include="IO\Mopac7Reader.cs" />
+    <Compile Include="IO\MoSSOutputReader.cs" />
+    <Compile Include="IO\PCCompoundASNReader.cs" />
+    <Compile Include="IO\PCCompoundXMLReader.cs" />
+    <Compile Include="IO\PCSubstanceXMLReader.cs" />
+    <Compile Include="IO\PDBReader.cs" />
+    <Compile Include="IO\PDBWriter.cs" />
+    <Compile Include="IO\PMPReader.cs" />
+    <Compile Include="IO\GaussianInputWriter.cs" />
+    <Compile Include="IO\Mopac7Writer.cs" />
+    <Compile Include="IO\PubChemXml\PubChemXMLHelper.cs" />
+    <Compile Include="IO\RandomAccess\DefaultRandomAccessChemObjectReader.cs" />
+    <Compile Include="IO\RandomAccess\RandomAccessReader.cs" />
+    <Compile Include="IO\RandomAccess\RandomAccessSDFReader.cs" />
+    <Compile Include="IO\RDF\CDKOWLReader.cs" />
+    <Compile Include="IO\RDF\CDKOWLWriter.cs" />
+    <Compile Include="IO\ReaderEvent.cs" />
+    <Compile Include="IO\ReaderFactory.cs" />
+    <Compile Include="IO\RGroupQueryReader.cs" />
+    <Compile Include="IO\RGroupQueryWriter.cs" />
+    <Compile Include="IO\RssWriter.cs" />
+    <Compile Include="IO\SDFWriter.cs" />
+    <Compile Include="IO\Setting\BooleanIOSetting.cs" />
+    <Compile Include="IO\Setting\IntegerIOSetting.cs" />
+    <Compile Include="IO\Setting\IOSetting.cs" />
+    <Compile Include="IO\Setting\OptionIOSetting.cs" />
+    <Compile Include="IO\Setting\SettingManager.cs" />
+    <Compile Include="IO\Setting\StringIOSetting.cs" />
+    <Compile Include="IO\ShelXReader.cs" />
+    <Compile Include="IO\ShelXWriter.cs" />
+    <Compile Include="IO\SMILESReader.cs" />
+    <Compile Include="IO\SMILESWriter.cs" />
+    <EmbeddedResource Include="IO\type_map.txt" />
+    <Compile Include="IO\VASPReader.cs" />
+    <Compile Include="IO\WriterFactory.cs" />
+    <Compile Include="IO\XYZReader.cs" />
+    <Compile Include="IO\XYZWriter.cs" />
+    <Compile Include="IReactionScheme.cs" />
+    <Compile Include="Isomorphisms\AbstractVFState.cs" />
+    <Compile Include="Isomorphisms\AtomMappingTools.cs" />
+    <Compile Include="Isomorphisms\AtomMatcher.cs" />
+    <Compile Include="Isomorphisms\BondMatcher.cs" />
+    <Compile Include="IO\ZMatrixReader.cs" />
+    <Compile Include="Isomorphisms\CompatibilityMatrix.cs" />
+    <Compile Include="Isomorphisms\ComponentGrouping.cs" />
+    <Compile Include="Isomorphisms\IsomorphismTester.cs" />
+    <Compile Include="Isomorphisms\Mappings.cs" />
+    <Compile Include="Isomorphisms\Matchers\CTFileQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\InverseSymbolSetQueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\IRGroupQuery.cs" />
+    <Compile Include="Isomorphisms\Matchers\OrderQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\OrderQueryBondOrderOnly.cs" />
+    <Compile Include="Isomorphisms\Matchers\QueryAtomContainerCreator.cs" />
+    <Compile Include="Isomorphisms\Matchers\QueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\RGroup.cs" />
+    <Compile Include="Isomorphisms\Matchers\RGroupList.cs" />
+    <Compile Include="Isomorphisms\Matchers\RGroupQuery.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AliphaticAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AliphaticSymbolAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AnyAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AnyOrderQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AromaticAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AromaticOrSingleQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AromaticQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AromaticSymbolAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AtomicNumberAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\ChiralityAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\ExplicitConnectionAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\FormalChargeAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\HybridizationNumberAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\HydrogenAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\ImplicitHCountAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\LogicalOperatorAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\LogicalOperatorBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\MassAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\NonCHHeavyAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\OrderQueryBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\PeriodicGroupNumberAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\RecursiveSmartsAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\RingBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\RingIdentifierAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\RingMembershipAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SmallestRingAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SMARTSAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SMARTSAtomInvariants.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SMARTSBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SmartsMatchers.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\StereoBond.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalConnectionAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalHCountAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalRingConnectionAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalValencyAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SymbolAndChargeQueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SymbolChargeIDQueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SymbolQueryAtom.cs" />
+    <Compile Include="Isomorphisms\Matchers\SymbolSetQueryAtom.cs" />
+    <Compile Include="Isomorphisms\MCSS\RGraph.cs" />
+    <Compile Include="Isomorphisms\MCSS\RMap.cs" />
+    <Compile Include="Isomorphisms\MCSS\RNode.cs" />
+    <Compile Include="Isomorphisms\Pattern.cs" />
+    <Compile Include="Isomorphisms\State.cs" />
+    <Compile Include="Isomorphisms\StateStream.cs" />
+    <Compile Include="Isomorphisms\StereoMatch.cs" />
+    <Compile Include="Isomorphisms\SmartsStereoMatch.cs" />
+    <Compile Include="Isomorphisms\Ullmann.cs" />
+    <Compile Include="Isomorphisms\UllmannState.cs" />
+    <Compile Include="Isomorphisms\UniqueAtomMatches.cs" />
+    <Compile Include="Isomorphisms\UniqueBondMatches.cs" />
+    <Compile Include="Isomorphisms\UniversalIsomorphismTester.cs" />
+    <Compile Include="Isomorphisms\VentoFoggia.cs" />
+    <Compile Include="Isomorphisms\VFState.cs" />
+    <Compile Include="Isomorphisms\VFSubState.cs" />
+    <Compile Include="LibIO\CML\Convertor.cs" />
+    <Compile Include="IO\MDMoleculeConvention.cs" />
+    <Compile Include="Layout\AtomPlacer.cs" />
+    <Compile Include="Layout\Congestion.cs" />
+    <Compile Include="Layout\CorrectGeometricConfiguration.cs" />
+    <Compile Include="Layout\HydrogenPlacer.cs" />
+    <Compile Include="Layout\IdentityTemplateLibrary.cs" />
+    <Compile Include="Layout\LayoutRefiner.cs" />
+    <Compile Include="Layout\MacroCycleLayout.cs" />
+    <Compile Include="Layout\NonplanarBonds.cs" />
+    <Compile Include="Layout\RingPlacer.cs" />
+    <Compile Include="Layout\StructureDiagramGenerator.cs" />
+    <Compile Include="Layout\TemplateHandler.cs" />
+    <Compile Include="LibIO\CML\MDMoleculeCustomizer.cs" />
+    <Compile Include="LibIO\CML\PDBAtomCustomizer.cs" />
+    <Compile Include="LibIO\CML\QSARCustomizer.cs" />
+    <Compile Include="LibIO\MD\ChargeGroup.cs" />
+    <Compile Include="LibIO\MD\MDMolecule.cs" />
+    <Compile Include="LibIO\MD\Residue.cs" />
+    <Compile Include="Maths\FortranFormat.cs" />
+    <Compile Include="Maths\MathTools.cs" />
+    <Compile Include="Maths\Primes.cs" />
+    <Compile Include="Maths\RandomNumbersTool.cs" />
+    <Compile Include="Modeling\Builder3D\AtomPlacer3D.cs" />
+    <Compile Include="Modeling\Builder3D\AtomTetrahedralLigandPlacer3D.cs" />
+    <Compile Include="Modeling\Builder3D\ForceFieldConfigurator.cs" />
+    <Compile Include="Modeling\Builder3D\MM2BasedAtomTypePattern.cs" />
+    <Compile Include="Modeling\Builder3D\MM2BasedParameterSetReader.cs" />
+    <Compile Include="Modeling\Builder3D\MMFF94BasedAtomTypePattern.cs" />
+    <Compile Include="Modeling\Builder3D\MMFF94BasedParameterSetReader.cs" />
+    <Compile Include="Modeling\Builder3D\MMFF94ParametersCall.cs" />
+    <Compile Include="Modeling\Builder3D\ModelBuilder3D.cs" />
+    <Compile Include="Modeling\Builder3D\TemplateExtractor.cs" />
+    <Compile Include="Modeling\Builder3D\TemplateHandler3D.cs" />
+    <Compile Include="Normalize\Normalizer.cs" />
+    <Content Include="TT\PDBAtom.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBAtom1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\PDBMonomer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBMonomer1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\PDBPolymer.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBPolymer1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TT\PDBStructure.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBStructure1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Normalize\SMSDNormalizer.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreAngleBond.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreAtom.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreBond.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreMatcher.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQuery.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryAngleBond.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryAtom.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryBond.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreUtils.cs" />
+    <Content Include="TT\PDBStrand.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>PDBStrand1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="QSAR\AbstractAtomicDescriptor.cs" />
+    <Compile Include="QSAR\AbstractAtomPairDescriptor.cs" />
+    <Compile Include="QSAR\AbstractBondDescriptor.cs" />
+    <Compile Include="QSAR\AbstractDescriptor.cs" />
+    <Compile Include="QSAR\AbstractMolecularDescriptor.cs" />
+    <Compile Include="QSAR\AtomValenceTool.cs" />
+    <Compile Include="QSAR\DescriptorSpecification.cs" />
+    <Compile Include="QSAR\DescriptorValue.cs" />
+    <Compile Include="QSAR\Result\BooleanResult.cs" />
+    <Compile Include="QSAR\Result\BooleanResultType.cs" />
+    <Compile Include="QSAR\Result\DoubleArrayResult.cs" />
+    <Compile Include="QSAR\Result\DoubleArrayResultType.cs" />
+    <Compile Include="QSAR\Result\DoubleResult.cs" />
+    <Compile Include="QSAR\Result\DoubleResultType.cs" />
+    <Compile Include="QSAR\Result\IDescriptorResult.cs" />
+    <Compile Include="QSAR\Result\IntegerArrayResult.cs" />
+    <Compile Include="QSAR\Result\IntegerArrayResultType.cs" />
+    <Compile Include="QSAR\Result\IntegerResult.cs" />
+    <Compile Include="QSAR\Result\IntegerResultType.cs" />
+    <Compile Include="Reactions\IReactionMechanism.cs" />
+    <Compile Include="Reactions\IReactionProcess.cs" />
+    <Compile Include="Reactions\Mechanisms\AdductionLPMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\AdductionPBMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\HeterolyticCleavageMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\HomolyticCleavageMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\RadicalSiteIonizationMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\RadicalSiteRearrangementMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\RearrangementChargeMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\RemovingSEofBMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\RemovingSEofNBMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\SharingElectronMechanism.cs" />
+    <Compile Include="Reactions\Mechanisms\TautomerizationMechanism.cs" />
+    <Compile Include="Reactions\ReactionEngine.cs" />
+    <Compile Include="Reactions\ReactionSpecification.cs" />
+    <Compile Include="Reactions\Types\AdductionProtonLPReaction.cs" />
+    <Compile Include="Reactions\Types\Parameters\IParameterReact.cs" />
+    <Compile Include="Reactions\Types\Parameters\ParameterReact.cs" />
+    <Compile Include="Reactions\Types\Parameters\SetReactionCenter.cs" />
+    <Compile Include="RingSearches\AllRingsFinder.cs" />
+    <Compile Include="RingSearches\RingPartitioner.cs" />
+    <Compile Include="SGroups\Sgroup.cs" />
+    <Compile Include="SGroups\SgroupBracket.cs" />
+    <Compile Include="SGroups\SgroupKey.cs" />
+    <Compile Include="SGroups\SgroupType.cs" />
+    <Compile Include="Smiles\BeamToCDK.cs" />
+    <Compile Include="Smiles\CDKToBeam.cs" />
+    <Compile Include="Smiles\CxSmilesParser.cs" />
+    <Compile Include="Smiles\CxSmilesState.cs" />
+    <Compile Include="Smiles\DeduceBondSystemTool.cs" />
+    <Compile Include="Smiles\FixBondOrdersTool.cs" />
+    <Compile Include="Smiles\InvPair.cs" />
+    <Compile Include="Smiles\SmilesGenerator.cs" />
+    <Compile Include="Smiles\SmilesParser.cs" />
+    <Compile Include="Stereo\CyclicCarbohydrateRecognition.cs" />
+    <Compile Include="Stereo\ExtendedTetrahedral.cs" />
+    <Compile Include="Stereo\FischerRecognition.cs" />
+    <Content Include="Stereo\Projection.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Projection1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Stereo\Stereocenters.cs" />
+    <Compile Include="Stereo\StereoElementFactory.cs" />
+    <Compile Include="QSAR\DescriptorEngine.cs" />
+    <Compile Include="QSAR\DescriptorException.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomDegreeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomHybridizationDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomHybridizationVSEPRDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomValenceDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\BondsToAtomDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\CovalentRadiusDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\DistanceToAtomDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\EffectiveAtomPolarizabilityDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\InductiveAtomicHardnessDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\InductiveAtomicSoftnessDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IPAtomicHOSEDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IsProtonInAromaticSystemDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IsProtonInConjugatedPiSystemDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialPiChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialSigmaChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialTChargeMMFF94Descriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialTChargePEOEDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PeriodicTablePositionDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PiElectronegativityDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\ProtonAffinityHOSEDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\ProtonTotalPartialChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_G3R.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GDR.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GHR.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GHR_topol.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GSR.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\SigmaElectronegativityDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\StabilizationPlusChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\VdWRadiusDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\AtomPair\PiContactDetectionDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\AtomicNumberDifferenceDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialPiChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialSigmaChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialTChargeDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondSigmaElectronegativityDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AcidicGroupCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ALOGPDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\APolDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AromaticAtomsCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AromaticBondsCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AtomCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorCharge.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorMass.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorPolarizability.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BasicGroupCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BCUTDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BondCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BPolDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\CarbonTypesDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiChainDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiClusterDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiIndexUtils.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiPathClusterDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiPathDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\CPSADescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\EccentricConnectivityIndexDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FMFDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FractionalPSADescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FragmentComplexityDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\GravitationalIndexDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HBondAcceptorCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HBondDonorCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HybridizationRatioDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\KappaShapeIndicesDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\KierHallSmartsDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LargestChainDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LargestPiSystemDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LengthOverBreadthDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LongestAliphaticChainDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MannholdLogPDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MDEDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MomentOfInertiaDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\PetitjeanNumberDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\PetitjeanShapeIndexDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\RotatableBondsCountDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\RuleOfFiveDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\SmallRingDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\TPSADescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\VABCDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\VAdjMaDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WeightDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WeightedPathDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WHIMDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WienerNumbersDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\XLogPDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ZagrebIndexDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Substances\ISubstanceDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Substances\OxygenAtomCountDescriptor.cs" />
+    <Compile Include="QSAR\IAtomicDescriptor.cs" />
+    <Compile Include="QSAR\IAtomPairDescriptor.cs" />
+    <Compile Include="QSAR\IBondDescriptor.cs" />
+    <Compile Include="QSAR\IDescriptor.cs" />
+    <Compile Include="QSAR\IMolecularDescriptor.cs" />
+    <Compile Include="QSAR\Descriptors\Proteins\TaeAminoAcidDescriptor.cs" />
+    <Compile Include="Signature\AtomSignature.cs" />
+    <Compile Include="Signature\MoleculeFromSignatureBuilder.cs" />
+    <Compile Include="Signature\MoleculeSignature.cs" />
+    <Compile Include="Signature\Orbit.cs" />
+    <Compile Include="Signature\SignatureQuotientGraph.cs" />
+    <Compile Include="Similarity\DistanceMoment.cs" />
+    <Compile Include="Similarity\LingoSimilarity.cs" />
+    <Compile Include="Similarity\Tanimoto.cs" />
+    <Compile Include="Smiles\SMARTS\SmartsPattern.cs" />
+    <Compile Include="Smiles\SMARTS\SMARTSQueryTool.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\AtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\BondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultBondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultMCSPlusAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultRGraphAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultVFAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\DefaultVFBondMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\Matchers\VFAtomMatcher.cs" />
+    <Compile Include="SMSD\Algorithms\McGregors\McGregor.cs" />
+    <Compile Include="SMSD\Algorithms\McGregors\McGregorChecks.cs" />
+    <Compile Include="SMSD\Algorithms\McGregors\McgregorHelper.cs" />
+    <Compile Include="SMSD\Algorithms\McGregors\QueryProcessor.cs" />
+    <Compile Include="SMSD\Algorithms\McGregors\TargetProcessor.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKMCS.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKMCSHandler.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRGraph.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRMap.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRMapHandler.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRNode.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKSubGraphHandler.cs" />
+    <Compile Include="SMSD\Algorithms\Single\SingleMapping.cs" />
+    <Compile Include="SMSD\Algorithms\Single\SingleMappingHandler.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Builder\VFQueryBuilder.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\IEdge.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\IMapper.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\IQuery.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\IQueryCompiler.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\IState.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Map\Match.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Map\VFMapper.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Map\VFMCSMapper.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Map\VFState.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Query\QueryCompiler.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFlibSubStructureHandler.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFlibTurboHandler.cs" />
+    <Compile Include="SMSD\Filters\ChemicalFilters.cs" />
+    <Compile Include="SMSD\Global\TimeOut.cs" />
+    <Compile Include="SMSD\Helper\BinaryTree.cs" />
+    <Compile Include="SMSD\Helper\BondEnergy.cs" />
+    <Compile Include="SMSD\Helper\FinalMappings.cs" />
+    <Compile Include="SMSD\Helper\LabelContainer.cs" />
+    <Compile Include="SMSD\AbstractMCS.cs" />
+    <Compile Include="SMSD\AbstractMCSAlgorithm.cs" />
+    <Compile Include="SMSD\AbstractSubGraph.cs" />
+    <Content Include="SMSD\Algorithm.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Algorithm1.cs</LastGenOutput>
+    </Content>
+    <Compile Include="SMSD\IFinalMapping.cs" />
+    <Compile Include="SMSD\Isomorphism.cs" />
+    <Compile Include="SMSD\Labelling\AbstractReactionLabeller.cs" />
+    <Compile Include="SMSD\Labelling\AtomContainerAtomPermutor.cs" />
+    <Compile Include="SMSD\Labelling\AtomContainerPrinter.cs" />
+    <Compile Include="SMSD\Labelling\CanonicalLabellingAdaptor.cs" />
+    <Compile Include="SMSD\Labelling\ICanonicalMoleculeLabeller.cs" />
+    <Compile Include="SMSD\Labelling\ICanonicalReactionLabeller.cs" />
+    <Compile Include="SMSD\Labelling\MoleculeSignatureLabellingAdaptor.cs" />
+    <Compile Include="SMSD\Labelling\Permutor.cs" />
+    <Compile Include="SMSD\Labelling\SignatureReactionCanoniser.cs" />
+    <Compile Include="SMSD\Labelling\SmilesReactionCanoniser.cs" />
+    <Compile Include="SMSD\Ring\HanserRingFinder.cs" />
+    <Compile Include="SMSD\Ring\PathEdge.cs" />
+    <Compile Include="SMSD\Ring\PathGraph.cs" />
+    <Compile Include="SMSD\Ring\RingFilter.cs" />
+    <Compile Include="SMSD\Ring\RingFinder.cs" />
+    <Compile Include="SMSD\Tools\BondEnergies.cs" />
+    <Compile Include="SMSD\Tools\ExtAtomContainerManipulator.cs" />
+    <Compile Include="SMSD\Tools\MoleculeSanityCheck.cs" />
+    <Compile Include="SMSD\Tools\MolHandler.cs" />
+    <Compile Include="Stereo\StereoTool.cs" />
+    <Compile Include="StructGen\IStructureGenerationListener.cs" />
+    <Compile Include="StructGen\RandomGenerator.cs" />
+    <Compile Include="StructGen\SingleStructureRandomGenerator.cs" />
+    <Compile Include="StructGen\Stochastic\Operator\ChemGraph.cs" />
+    <Compile Include="StructGen\Stochastic\Operator\CrossoverMachine.cs" />
+    <Compile Include="StructGen\Stochastic\PartialFilledStructureMerger.cs" />
+    <Compile Include="StructGen\VicinitySampler.cs" />
+    <Compile Include="Tautomers\InChITautomerGenerator.cs" />
+    <Compile Include="Templates\AminoAcids.cs" />
+    <Compile Include="Tools\AtomTypeAwareSaturationChecker.cs" />
+    <Compile Include="Tools\CDKHydrogenAdder.cs" />
+    <Compile Include="Tools\CDKValencyChecker.cs" />
+    <Compile Include="Tools\DataFeatures.cs" />
+    <Compile Include="Tools\Diff\AtomContainerDiff.cs" />
+    <Compile Include="Tools\Diff\AtomDiff.cs" />
+    <Compile Include="Tools\Diff\AtomTypeDiff.cs" />
+    <Compile Include="Tools\Diff\BondDiff.cs" />
+    <Compile Include="Tools\Diff\ChemObjectDiff.cs" />
+    <Compile Include="Tools\Diff\ElectronContainerDiff.cs" />
+    <Compile Include="Tools\Diff\ElementDiff.cs" />
+    <Compile Include="Tools\Diff\IsotopeDiff.cs" />
+    <Compile Include="Tools\Diff\LonePairDiff.cs" />
+    <Compile Include="Tools\Diff\SingleElectronDiff.cs" />
+    <Compile Include="Tools\Diff\Tree\AbstractDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\AbstractDifferenceList.cs" />
+    <Compile Include="Tools\Diff\Tree\AtomTypeHybridizationDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\BondOrderDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\BooleanArrayDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\BooleanDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\ChemObjectDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\DoubleDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\IDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\IDifferenceList.cs" />
+    <Compile Include="Tools\Diff\Tree\IntegerDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\Point2dDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\Point3dDifference.cs" />
+    <Compile Include="Tools\Diff\Tree\StringDifference.cs" />
+    <Compile Include="Tools\AtomTypeTools.cs" />
+    <Compile Include="Tools\AtomicProperties.cs" />
+    <Compile Include="Tools\BremserOneSphereHOSECodePredictor.cs" />
+    <Compile Include="Tools\CDKUtilities.cs" />
+    <Compile Include="Tools\DataFeaturesTool.cs" />
+    <Compile Include="Tools\ElementComparator.cs" />
+    <Compile Include="Tools\Features\MoleculeFeaturesTool.cs" />
+    <Compile Include="Tools\HOSECodeGenerator.cs" />
+    <Compile Include="Tools\IDCreator.cs" />
+    <Compile Include="Tools\IDeduceBondOrderTool.cs" />
+    <Compile Include="Tools\IValencyChecker.cs" />
+    <Compile Include="Tools\GridGenerator.cs" />
+    <Compile Include="Tools\HOSECodeAnalyser.cs" />
+    <Compile Include="Tools\LonePairElectronChecker.cs" />
+    <Compile Include="Tools\Manipulator\AminoAcidManipulator.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerComparator.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerComparatorBy2DCenter.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerManipulator.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerSetManipulator.cs" />
+    <Compile Include="Tools\Manipulator\AtomTypeManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ChemFileManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ChemModelManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ChemSequenceManipulator.cs" />
+    <Compile Include="Tools\Manipulator\MoleculeSetManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ReactionManipulator.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaManipulator.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaRangeManipulator.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaSetManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ReactionSchemeManipulator.cs" />
+    <Compile Include="Tools\Manipulator\ReactionSetManipulator.cs" />
+    <Compile Include="Tools\Manipulator\RingManipulator.cs" />
+    <Compile Include="Tools\Manipulator\RingSetManipulator.cs" />
+    <Compile Include="Tools\Manipulator\RingSizeComparator.cs" />
+    <Compile Include="Tools\ProteinBuilderTool.cs" />
+    <Compile Include="Tools\SaturationChecker.cs" />
+    <Compile Include="Tools\SmilesValencyChecker.cs" />
+    <Compile Include="Tools\StructureResonanceGenerator.cs" />
+    <Compile Include="Validate\ProblemMarker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Graphs\Invariant\primes.dat" />
+    <EmbeddedResource Include="IO\structure-with-radical.mol" />
+    <EmbeddedResource Include="Layout\chebi-ring-templates.smi" />
+    <EmbeddedResource Include="Layout\custom-templates.smi" />
+    <EmbeddedResource Include="Layout\macro.smi" />
+    <EmbeddedResource Include="Layout\Templates\adamantane.cml" />
+    <EmbeddedResource Include="Layout\Templates\cubane.cml" />
+    <EmbeddedResource Include="Layout\Templates\diamantane.cml" />
+    <EmbeddedResource Include="Layout\Templates\ring1.cml" />
+    <EmbeddedResource Include="Layout\Templates\sterane.cml" />
+    <EmbeddedResource Include="Layout\Templates\templates.list" />
+    <EmbeddedResource Include="io-formats.set" />
+    <EmbeddedResource Include="IO\Formats\IChemFormatMatcher" />
+    <EmbeddedResource Include="libio-cml-customizers.set" />
+    <EmbeddedResource Include="ForceField\MMFF\mmff-symb-mapping.tsv" />
+    <EmbeddedResource Include="ForceField\MMFF\MMFFCHG.PAR" />
+    <EmbeddedResource Include="ForceField\MMFF\MMFFFORMCHG.PAR" />
+    <EmbeddedResource Include="ForceField\MMFF\MMFFPBCI.PAR" />
+    <EmbeddedResource Include="ForceField\MMFF\MMFFPROP.PAR" />
+    <EmbeddedResource Include="ForceField\MMFF\MMFFSYMB.sma" />
+    <EmbeddedResource Include="Modeling\ForceField\Data\mm2.prm" />
+    <EmbeddedResource Include="Modeling\ForceField\Data\mmff94.prm" />
+    <EmbeddedResource Include="Modeling\ForceField\Data\mmffdfsb.par" />
+    <EmbeddedResource Include="Modeling\ForceField\Data\mmffvdw.prm" />
+    <None Include="Beam\LICENSE" />
+    <None Include="Beam\README.md" />
+    <None Include="Config.ttinclude" />
+    <None Include="FaulonSignatures\README" />
+    <None Include="ForceField\MMFF\README" />
+    <EmbeddedResource Include="Modeling\Builder3D\Data\ringTemplateFingerprints.txt.gz" />
+    <EmbeddedResource Include="Modeling\Builder3D\Data\ringTemplateStructures.sdf.gz" />
+    <EmbeddedResource Include="Templates\Data\list_aminoacids.cml" />
+    <EmbeddedResource Include="QSAR\IAtomPairDescriptor" />
+    <EmbeddedResource Include="QSAR\IMolecularDescriptor" />
+    <EmbeddedResource Include="qsar-descriptors.set" />
+    <None Include="LibIO\CML\ConfigCML.ttinclude" />
+    <EmbeddedResource Include="QSAR\IBondDescriptor" />
+    <EmbeddedResource Include="QSAR\IAtomicDescriptor" />
+    <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_AffiProton_HOSE.db" />
+    <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_AffiProton_HOSE_S.db" />
+    <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE.db" />
+    <EmbeddedResource Include="QSAR\Descriptors\Atomic\Data\X_IP_HOSE_S.db" />
+    <None Include="Numerics\GenerationConfig.ttinclude" />
+    <None Include="packages.config" />
+    <None Include="reaction-types.set" />
+    <None Include="TT\ChemObjectConfig.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphs\Invariant\Exceptions\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

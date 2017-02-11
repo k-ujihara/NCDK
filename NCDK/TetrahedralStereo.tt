@@ -1,0 +1,36 @@
+﻿<#@ include file="Config.ttinclude" #>
+
+namespace NCDK
+{
+    public struct TetrahedralStereo
+    {
+<# 
+        GenerateEnumBody(
+            "TetrahedralStereo", 
+             new[]
+            {
+                "Unset",
+				"Clockwise",
+				"AntiClockwise",
+            },
+            true
+        ); 
+#>
+        public bool IsUnset => this.Ordinal == 0;
+
+        /// <summary>
+        /// Invert this conformation,
+        /// Invert(clockwise) = anti_clockwise, Invert(anti_clockwise) = clockwise.
+        /// </summary>
+        /// <returns> the inverse conformation</returns>
+        public TetrahedralStereo Invert()
+        {
+            if (this == Clockwise)
+                return AntiClockwise;
+            if (this == AntiClockwise)
+                return Clockwise;
+            return this;
+        }
+    }
+}
+

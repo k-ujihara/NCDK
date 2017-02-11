@@ -1,0 +1,186 @@
+/* Copyright (C) 2002-2007  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sf.net
+ *
+ *  This library is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public
+ *  License as published by the Free Software Foundation; either
+ *  version 2.1 of the License, or (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public
+ *  License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+using System.Diagnostics;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace NCDK.IO.InChI
+{
+    /**
+	 * Tool to help process INChI 1.12beta content.
+	 *
+	 * @cdk.module extra
+	 * @cdk.githash
+	 */
+    public class INChIContentProcessorTool
+    {
+        public INChIContentProcessorTool() { }
+
+        private static readonly Regex pattern1 = new Regex("([A-Z][a-z]?)(\\d+)?(.*)", RegexOptions.Compiled);
+        private static readonly Regex pattern2 = new Regex("^(\\d+)-?(.*)", RegexOptions.Compiled);
+
+        /**
+		 * Processes the content from the formula field of the INChI.
+		 * Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+		 */
+        public IAtomContainer ProcessFormula(IAtomContainer parsedContent, string atomsEncoding)
+        {
+            Debug.WriteLine("Parsing atom data: ", atomsEncoding);
+
+            string remainder = atomsEncoding;
+            while (remainder.Length > 0)
+            {
+                Debug.WriteLine("Remaining: ", remainder);
+                var match = pattern1.Match(remainder);
+                if (match.Success)
+                {
+                    string symbol = match.Groups[1].Value;
+                    Debug.WriteLine("Atom symbol: ", symbol);
+                    if (symbol.Equals("H"))
+                    {
+                        // don't add explicit hydrogens
+                    }
+                    else
+                    {
+                        string occurenceStr = match.Groups[2].Value;
+                        int occurence = 1;
+                        if (!string.IsNullOrEmpty(occurenceStr))
+                        {
+                            occurence = int.Parse(occurenceStr);
+                        }
+                        Debug.WriteLine("  occurence: ", occurence);
+                        for (int i = 1; i <= occurence; i++)
+                        {
+                            parsedContent.Add(parsedContent.Builder.CreateAtom(symbol));
+                        }
+                    }
+                    remainder = match.Groups[3].Value;
+                    if (remainder == null) remainder = "";
+                    Debug.WriteLine("  Remaining: ", remainder);
+                }
+                else
+                {
+                    Trace.TraceError("No match found!");
+                    remainder = "";
+                }
+                Debug.WriteLine("NO atoms: ", parsedContent.Atoms.Count);
+            }
+            return parsedContent;
+        }
+
+        /**
+		 * Processes the content from the connections field of the INChI.
+		 * Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+		 *
+		 * @param bondsEncoding the content of the INChI connections field
+		 * @param container     the atomContainer parsed from the formula field
+		 * @param source        the atom to build the path upon. If -1, then start new path
+		 *
+		 * @see   #processFormula
+		 */
+        public void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
+        {
+            Debug.WriteLine("Parsing bond data: ", bondsEncoding);
+
+            IBond bondToAdd = null;
+            /* Fixme: treatment of branching is too limited! */
+            string remainder = bondsEncoding;
+            while (remainder.Length > 0)
+            {
+                Debug.WriteLine("Bond part: ", remainder);
+                if (remainder[0] == '(')
+                {
+                    string branch = ChopBranch(remainder);
+                    ProcessConnections(branch, container, source);
+                    if (branch.Length + 2 <= remainder.Length)
+                    {
+                        remainder = remainder.Substring(branch.Length + 2);
+                    }
+                    else
+                    {
+                        remainder = "";
+                    }
+                }
+                else
+                {
+                    var matcher = pattern2.Match(remainder);
+                    if (matcher.Success)
+                    {
+                        string targetStr = matcher.Groups[1].Value;
+                        int target = int.Parse(targetStr);
+                        Debug.WriteLine("Source atom: ", source);
+                        Debug.WriteLine("Target atom: ", targetStr);
+                        IAtom targetAtom = container.Atoms[target - 1];
+                        if (source != -1)
+                        {
+                            IAtom sourceAtom = container.Atoms[source - 1];
+                            bondToAdd = container.Builder.CreateBond(sourceAtom, targetAtom,
+                                    BondOrder.Single);
+                            container.Add(bondToAdd);
+                        }
+                        remainder = matcher.Groups[2].Value;
+                        source = target;
+                        Debug.WriteLine("  remainder: ", remainder);
+                    }
+                    else
+                    {
+                        Trace.TraceError("Could not get next bond info part");
+                        return;
+                    }
+                }
+            }
+        }
+
+        /**
+		 * Extracts the first full branch. It extracts everything between the first
+		 * '(' and the corresponding ')' char.
+		 */
+        private string ChopBranch(string remainder)
+        {
+            bool doChop = false;
+            int branchLevel = 0;
+            StringBuilder choppedString = new StringBuilder();
+            for (int i = 0; i < remainder.Length; i++)
+            {
+                char currentChar = remainder[i];
+                if (currentChar == '(')
+                {
+                    if (doChop) choppedString.Append(currentChar);
+                    doChop = true;
+                    branchLevel++;
+                }
+                else if (currentChar == ')')
+                {
+                    branchLevel--;
+                    if (branchLevel == 0)
+                    {
+                        doChop = false;
+                        break;
+                    }
+                    if (doChop) choppedString.Append(currentChar);
+                }
+                else if (doChop)
+                {
+                    choppedString.Append(currentChar);
+                }
+            }
+            return choppedString.ToString();
+        }
+    }
+}

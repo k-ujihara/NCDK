@@ -1,0 +1,117 @@
+<#@ include file="ChemObjectConfig.ttinclude" #>
+<# GenerateCopyrightHeader(); #>
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+
+<#    foreach (var ns in namespaces) 
+{
+#>
+namespace <#= ns.NS #>
+{
+    [Serializable]
+    public class ReactionSet
+        : ChemObject, IReactionSet, IChemObjectListener, ICloneable
+    {
+        private IList<IReaction> reactions = new List<IReaction>();
+
+        public ReactionSet()
+        {
+        }
+
+        public virtual IReaction this[int index]
+        {
+            get { return reactions[index]; }
+
+            set
+            {
+                reactions[index] = value;
+                value.Listeners.Add(this);
+            }
+        }
+
+        public int Count => reactions.Count;
+        public bool IsReadOnly => reactions.IsReadOnly;
+        public void Add(IReaction reaction)
+        {
+            reactions.Add(reaction);
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+        }
+
+        public void Clear()
+        {
+            reactions.Clear();
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+        }
+
+        public bool Contains(IReaction reaction) => reactions.Contains(reaction);
+        public void CopyTo(IReaction[] array, int arrayIndex)
+        {
+            reactions.CopyTo(array, arrayIndex);
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+        }
+
+        public IEnumerator<IReaction> GetEnumerator() => reactions.GetEnumerator();
+        public int IndexOf(IReaction reaction) => reactions.IndexOf(reaction);
+
+        public void Insert(int index, IReaction reaction)
+        {
+            reactions.Insert(index, reaction);
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+        }
+
+        public bool Remove(IReaction reaction)
+        {
+            bool ret = false;
+            while (reactions.Contains(reaction))
+            {
+                reactions.Remove(reaction);
+                ret = true;
+            }
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+            return ret;
+        }
+
+        public void RemoveAt(int index)
+        {
+            reactions.RemoveAt(index);
+            <# if (!ns.IsSilent) { #> NotifyChanged(); <# } #>
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public bool IsEmpty => reactions.Count == 0;
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("ReactionSet(");
+            sb.Append(GetHashCode());
+            sb.Append(", R=").Append(Count).Append(", ");
+            foreach (var reaction in reactions)
+                sb.Append(reaction.ToString());
+            sb.Append(')');
+            return sb.ToString();
+        }
+
+        public override ICDKObject Clone(CDKObjectMap map)
+        {
+            var clonedReactions = new List<IReaction>();
+            foreach (var reaction in reactions)
+                clonedReactions.Add((IReaction)reaction.Clone(map));
+            var clone = (ReactionSet)base.Clone(map);
+            clone.reactions = clonedReactions;
+            return clone;
+        }
+
+        public void OnStateChanged(ChemObjectChangeEventArgs evt)
+        {
+            <# if (!ns.IsSilent) { #> NotifyChanged(evt); <# } #>
+        }
+    }
+}
+<#
+}
+#>

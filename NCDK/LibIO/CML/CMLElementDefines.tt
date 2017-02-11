@@ -1,0 +1,38 @@
+﻿// Copyright (C) 2017  Kazuya Ujihara
+
+<#@ include file="ConfigCML.ttinclude" #>
+
+namespace NCDK.LibIO.CML
+{
+<# 
+	MakeCMLClass("array");
+	MakeCMLClass("atom", true);
+	MakeCMLClass("atomArray");
+	MakeCMLClass("bond", true);
+	MakeCMLClass("bondArray");
+	MakeCMLClass("bondStereo", true);
+	MakeCMLClass("bondType", true);
+	MakeCMLClass("cml");
+	MakeCMLClass("crystal");
+	MakeCMLClass("formula");
+	MakeCMLClass("identifier", true);
+	MakeCMLClass("list");
+	MakeCMLClass("metadata");
+	MakeCMLClass("metadataList");
+	MakeCMLClass("molecule");
+	MakeCMLClass("moleculeList", true);
+	MakeCMLClass("property");
+	MakeCMLClass("propertyList");
+	MakeCMLClass("reaction", true);
+	MakeCMLClass("reactionList", true);
+	MakeCMLClass("reactionScheme", true);
+	MakeCMLClass("reactionStep", true);
+	MakeCMLClass("reactant", true);
+	MakeCMLClass("reactantList", true);
+	MakeCMLClass("product", true);
+	MakeCMLClass("productList", true);
+	MakeCMLClass("substance", true);
+	MakeCMLClass("substanceList", true);
+	MakeCMLClass("scalar");
+#>
+}

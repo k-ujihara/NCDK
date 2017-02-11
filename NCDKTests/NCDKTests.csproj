@@ -1,0 +1,1718 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{20CDE36F-227D-4181-9D49-538581A3ADF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NCDK</RootNamespace>
+    <AssemblyName>NCDKTests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;_ENABLE_NOT_IMPLEMENTED</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0612,0618</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="AbstractAtomContainerTests.cs" />
+    <Compile Include="AbstractCDKObjectTest.cs" />
+    <Compile Include="AbstractChemObjectTest.cs" />
+    <Compile Include="Beam\Core\ArbitraryMatchingTest.cs" />
+    <Compile Include="Beam\Core\AtomBuilderTest.cs" />
+    <Compile Include="Beam\Core\AtomCentricDBConfigTest.cs" />
+    <Compile Include="Beam\Core\AtomTest.cs" />
+    <Compile Include="Beam\Core\BiconnectedComponentsTest.cs" />
+    <Compile Include="Beam\Core\BondTest.cs" />
+    <Compile Include="Beam\Core\CharBufferTest.cs" />
+    <Compile Include="Beam\Core\ConfigurationTest.cs" />
+    <Compile Include="Beam\Core\DaylightDelocalisationTest.cs" />
+    <Compile Include="Beam\Core\DaylightRoundTrippingTest.cs" />
+    <Compile Include="Beam\Core\EdgeTest.cs" />
+    <Compile Include="Beam\Core\ElectronAssignmentTest.cs" />
+    <Compile Include="Beam\Core\ElementTest.cs" />
+    <Compile Include="Beam\Core\GeneratorTest.cs" />
+    <Compile Include="Beam\Core\GraphBuilderTest.cs" />
+    <Compile Include="Beam\Core\GraphTest.cs" />
+    <Compile Include="Beam\Core\IntSetTest.cs" />
+    <Compile Include="Beam\Core\IntStackTest.cs" />
+    <Compile Include="Beam\Core\LocaliseTest.cs" />
+    <Compile Include="Beam\Core\MatchingTest.cs" />
+    <Compile Include="Beam\Core\MaximumMatchingTest.cs" />
+    <Compile Include="Beam\Core\OpenSMILESSpecificationTest.cs" />
+    <Compile Include="Beam\Core\ParserTest.cs" />
+    <Compile Include="Beam\Core\ParsingAtomChargeTest.cs" />
+    <Compile Include="Beam\Core\ParsingAtomClassTest.cs" />
+    <Compile Include="Beam\Core\ParsingBracketAtomTest.cs" />
+    <Compile Include="Beam\Core\ParsingHydrogenCountTest.cs" />
+    <Compile Include="Beam\Core\TopologyTest.cs" />
+    <Compile Include="Beam\Core\UnionFindTest.cs" />
+    <Compile Include="Beam\Core\ValenceTest.cs" />
+    <Compile Include="Beam\Func\AddDirectionalLabelsTest.cs" />
+    <Compile Include="Beam\Func\BondBasedConfigurationTest.cs" />
+    <Compile Include="Beam\Func\ExplicitToImplicitTest.cs" />
+    <Compile Include="Beam\Func\FromSubsetAtomsTest.cs" />
+    <Compile Include="Beam\Func\FromTrigonalTopologyTest.cs" />
+    <Compile Include="Beam\Func\FunctionsTest.cs" />
+    <Compile Include="Beam\Func\ImplicitToExplicitTest.cs" />
+    <Compile Include="Beam\Func\NormaliseDirectionalLabelsTest.cs" />
+    <Compile Include="Beam\Func\RemoveUpDownBondsTest.cs" />
+    <Compile Include="Beam\Func\ToSubsetAtomsTest.cs" />
+    <Compile Include="Beam\Func\ToTrigonalTopologyTest.cs" />
+    <Compile Include="Config\BODRIsotopeTest.cs" />
+    <Compile Include="Default\AtomContainerTest.cs" />
+    <Compile Include="Default\BondTest.cs" />
+    <Compile Include="Config\AtomTypeFactoryTest.cs" />
+    <Compile Include="Config\CDKBasedAtomTypeConfiguratorTest.cs" />
+    <Compile Include="Config\OWLBasedAtomTypeConfiguratorTest.cs" />
+    <Compile Include="Config\TXTBasedAtomTypeConfiguratorTest.cs" />
+    <Compile Include="Default\ElementTest.cs" />
+    <Compile Include="Default\ReactionTest.cs" />
+    <Compile Include="Graphs\AllCyclesTests.cs" />
+    <Compile Include="Graphs\GraphUtilTests.cs" />
+    <Compile Include="Graphs\InitialCyclesTest.cs" />
+    <Compile Include="Graphs\JumboPathGraphTests.cs" />
+    <Compile Include="Graphs\RegularPathGraphTests.cs" />
+    <Compile Include="Graphs\ShortestPathsTests.cs" />
+    <Compile Include="Hash\AbstractHashGeneratorTest.cs" />
+    <Compile Include="Hash\AllEquivalentCyclicSetTest.cs" />
+    <Compile Include="Hash\AtomSuppressionTest.cs" />
+    <Compile Include="Hash\BasicAtomEncoderTest.cs" />
+    <Compile Include="Hash\BasicAtomHashGeneratorTest.cs" />
+    <Compile Include="Hash\BasicMoleculeHashGeneratorTest.cs" />
+    <Compile Include="Hash\ConjugatedAtomEncoderTest.cs" />
+    <Compile Include="Hash\HashCodeScenariosTest.cs" />
+    <Compile Include="Hash\HashGeneratorMakerTest.cs" />
+    <Compile Include="Hash\MinimumEquivalentCyclicSetTest.cs" />
+    <Compile Include="Hash\MinimumEquivalentCyclicSetUnionTest.cs" />
+    <Compile Include="Hash\PerturbedAtomHashGeneratorTest.cs" />
+    <Compile Include="Hash\SeedGeneratorTest.cs" />
+    <Compile Include="Hash\Stereo\BasicPermutationParityTest.cs" />
+    <Compile Include="Hash\Stereo\CombinedPermutationParityTest.cs" />
+    <Compile Include="Hash\Stereo\DoubleBond2DParityTest.cs" />
+    <Compile Include="Hash\Stereo\DoubleBond3DParityTest.cs" />
+    <Compile Include="Hash\Stereo\DoubleBondElementEncoderFactoryTest.cs" />
+    <Compile Include="Hash\Stereo\GeometricCumulativeDoubleBondFactoryTest.cs" />
+    <Compile Include="Hash\Stereo\GeometricDoubleBondEncoderFactoryTest.cs" />
+    <Compile Include="Hash\Stereo\GeometricParityTest.cs" />
+    <Compile Include="Hash\Stereo\GeometricTetrahedralEncoderFactoryTest.cs" />
+    <Compile Include="Hash\Stereo\GeometryEncoderTest.cs" />
+    <Compile Include="Hash\Stereo\MultiStereoEncoderTest.cs" />
+    <Compile Include="Hash\Stereo\Tetrahedral2DParityTest.cs" />
+    <Compile Include="Hash\Stereo\Tetrahedral3DParityTest.cs" />
+    <Compile Include="Hash\Stereo\TetrahedralElementEncoderFactoryTest.cs" />
+    <Compile Include="Hash\SuppressedAtomHashGeneratorTest.cs" />
+    <Compile Include="Hash\SuppressedTest.cs" />
+    <Compile Include="Hash\XorshiftTest.cs" />
+    <Compile Include="IO\Formats\Chem3D_Cartesian_1FormatTest.cs" />
+    <Compile Include="IO\Formats\Chem3D_Cartesian_2FormatTest.cs" />
+    <Compile Include="IO\Formats\ChemtoolFormatTest.cs" />
+    <Compile Include="IO\Formats\CRK2DFormatTest.cs" />
+    <Compile Include="IO\Formats\CRK3DFormatTest.cs" />
+    <Compile Include="IO\Formats\DaltonFormatTest.cs" />
+    <Compile Include="IO\Formats\DMol3FormatTest.cs" />
+    <Compile Include="IO\Formats\DOCK5FormatTest.cs" />
+    <Compile Include="IO\Formats\FingerprintFormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian90FormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian94FormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian95FormatTest.cs" />
+    <Compile Include="IO\Formats\GROMOS96FormatTest.cs" />
+    <Compile Include="IO\Formats\INChIPlainTextFormatTest.cs" />
+    <Compile Include="IO\Formats\JaguarFormatTest.cs" />
+    <Compile Include="IO\Formats\JMEFormatTest.cs" />
+    <Compile Include="IO\Formats\MacroModelFormatTest.cs" />
+    <Compile Include="IO\Formats\MMODFormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC2002FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC2007FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC2009FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC2012FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC93FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC97FormatTest.cs" />
+    <Compile Include="IO\Formats\MPQCFormatTest.cs" />
+    <Compile Include="IO\Formats\NWChemFormatTest.cs" />
+    <Compile Include="IO\Formats\PCModelFormatTest.cs" />
+    <Compile Include="IO\Formats\PDBMLFormatTest.cs" />
+    <Compile Include="IO\Formats\POVRayFormatTest.cs" />
+    <Compile Include="IO\Formats\PQSChemFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemSubstancesXMLFormatTest.cs" />
+    <Compile Include="IO\Formats\QChemFormatTest.cs" />
+    <Compile Include="IO\Formats\RawCopyFormatTest.cs" />
+    <Compile Include="IO\Formats\SMILESFIXFormatTest.cs" />
+    <Compile Include="IO\Formats\SpartanFormatTest.cs" />
+    <Compile Include="IO\Formats\SVGFormatTest.cs" />
+    <Compile Include="IO\Formats\SybylDescriptorFormatTest.cs" />
+    <Compile Include="IO\Formats\TinkerMM2FormatTest.cs" />
+    <Compile Include="IO\Formats\TinkerXYZFormatTest.cs" />
+    <Compile Include="IO\Formats\TurboMoleFormatTest.cs" />
+    <Compile Include="IO\Formats\UniChemXYZFormatTest.cs" />
+    <Compile Include="IO\Formats\ViewmolFormatTest.cs" />
+    <Compile Include="IO\Formats\XEDFormatTest.cs" />
+    <Compile Include="IO\Formats\YasaraFormatTest.cs" />
+    <Compile Include="IO\Formats\ZindoFormatTest.cs" />
+    <Compile Include="NInChI\TestExamples.cs" />
+    <Compile Include="NInChI\TestNInchiAtom.cs" />
+    <Compile Include="NInChI\TestNInchiBond.cs" />
+    <Compile Include="NInChI\TestNInchiInput.cs" />
+    <Compile Include="NInChI\TestNInchiInputInchi.cs" />
+    <Compile Include="NInChI\TestNInchiOutput.cs" />
+    <Compile Include="NInChI\TestNInchiOutputStructure.cs" />
+    <Compile Include="NInChI\TestNInchiStereo0D.cs" />
+    <Compile Include="NInChI\TestNInchiStructure.cs" />
+    <Compile Include="NInChI\TestNInchiWrapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reactions\Types\AdductionProtonLPReactionTest.cs" />
+    <Compile Include="Reactions\Types\AdductionProtonPBReactionTest.cs" />
+    <Compile Include="Reactions\Types\AdductionSodiumLPReactionTest.cs" />
+    <Compile Include="Reactions\Types\CarbonylEliminationReactionTest.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactNBEReactionTest.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactPDBReactionTest.cs" />
+    <Compile Include="Reactions\Types\ElectronImpactSDBReactionTest.cs" />
+    <Compile Include="Reactions\Types\HeterolyticCleavagePBReactionTest.cs" />
+    <Compile Include="Reactions\Types\HeterolyticCleavageSBReactionTest.cs" />
+    <Compile Include="Reactions\Types\HomolyticCleavageReactionTest.cs" />
+    <Compile Include="Reactions\Types\HyperconjugationReactionTest.cs" />
+    <Compile Include="Reactions\Types\PiBondingMovementReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalChargeSiteInitiationHReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalChargeSiteInitiationReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrAlphaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrBetaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrDeltaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteHrGammaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteInitiationHReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteInitiationReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrAlphaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrBetaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrDeltaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrGammaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RearrangementAnionReactionTest.cs" />
+    <Compile Include="Reactions\Types\RearrangementCationReactionTest.cs" />
+    <Compile Include="Reactions\Types\RearrangementLonePairReactionTest.cs" />
+    <Compile Include="Reactions\Types\RearrangementRadicalReactionTest.cs" />
+    <Compile Include="Reactions\Types\SharingAnionReactionTest.cs" />
+    <Compile Include="Reactions\Types\SharingChargeDBReactionTest.cs" />
+    <Compile Include="Reactions\Types\SharingChargeSBReactionTest.cs" />
+    <Compile Include="Reactions\Types\SharingLonePairReactionTest.cs" />
+    <Compile Include="Reactions\Types\TautomerizationReactionTest.cs" />
+    <Compile Include="RingSearches\RegularCyclicVertexSearchTest.cs" />
+    <Compile Include="Silent\AdductFormulaTest.cs" />
+    <Compile Include="Silent\AminoAcidTest.cs" />
+    <Compile Include="Silent\AtomContainerSetTest.cs" />
+    <Compile Include="Silent\AtomContainerTest.cs" />
+    <Compile Include="Silent\AtomTest.cs" />
+    <Compile Include="Silent\AtomTypeTest.cs" />
+    <Compile Include="Silent\BioPolymerTest.cs" />
+    <Compile Include="Silent\BondTest.cs" />
+    <Compile Include="Silent\ChemFileTest.cs" />
+    <Compile Include="Silent\ChemModelTest.cs" />
+    <Compile Include="Silent\ChemObjectListener.cs" />
+    <Compile Include="Silent\ChemObjectTest.cs" />
+    <Compile Include="Silent\ChemObjectTestHelper.cs" />
+    <Compile Include="Silent\ChemSequenceTest.cs" />
+    <Compile Include="Silent\CrystalTest.cs" />
+    <Compile Include="Silent\ElectronContainerTest.cs" />
+    <Compile Include="Silent\ElementTest.cs" />
+    <Compile Include="Silent\FragmentAtomTest.cs" />
+    <Compile Include="Silent\IsotopeTest.cs" />
+    <Compile Include="Silent\LonePairTest.cs" />
+    <Compile Include="Silent\MappingTest.cs" />
+    <Compile Include="Silent\MolecularFormulaSetTest.cs" />
+    <Compile Include="Silent\MolecularFormulaTest.cs" />
+    <Compile Include="Silent\MonomerTest.cs" />
+    <Compile Include="Silent\PDBAtomTest.cs" />
+    <Compile Include="Silent\PDBMonomerTest.cs" />
+    <Compile Include="Silent\PDBPolymerTest.cs" />
+    <Compile Include="Silent\PDBStructureTest.cs" />
+    <Compile Include="Silent\PolymerTest.cs" />
+    <Compile Include="Silent\PseudoAtomTest.cs" />
+    <Compile Include="Silent\ReactionSchemeTest.cs" />
+    <Compile Include="Silent\ReactionSetTest.cs" />
+    <Compile Include="Silent\ReactionTest.cs" />
+    <Compile Include="Silent\RingSetTest.cs" />
+    <Compile Include="Silent\RingTest.cs" />
+    <Compile Include="Silent\ChemObjectBuilderTest.cs" />
+    <Compile Include="Silent\SingleElectronTest.cs" />
+    <Compile Include="Silent\StrandTest.cs" />
+    <Compile Include="Silent\SubstanceTest.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\Molecules.cs" />
+    <Compile Include="SMSD\Ring\HanserRingFinderTest.cs" />
+    <Compile Include="SMSD\Tools\TimeManagerTest.cs" />
+    <Compile Include="Tools\PeriodicTable\PeriodicTableTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Templates\TestMoleculeFactory.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="RingSearches\JumboCyclicVertexSearchTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CDKTestCase.cs" />
+    <Compile Include="AbstractAminoAcidTest.cs" />
+    <Compile Include="AbstractAtomContainerSetTest.cs" />
+    <Compile Include="AbstractAtomTest.cs" />
+    <Compile Include="AbstractAtomTypeTest.cs" />
+    <Compile Include="AbstractBioPolymerTest.cs" />
+    <Compile Include="AbstractBondTest.cs" />
+    <Compile Include="AbstractChemFileTest.cs" />
+    <Compile Include="AbstractChemModelTest.cs" />
+    <Compile Include="AbstractAdductFormulaTest.cs" />
+    <Compile Include="AbstractChemObjectBuilderTest.cs" />
+    <Compile Include="AbstractChemSequenceTest.cs" />
+    <Compile Include="AbstractCrystalTest.cs" />
+    <Compile Include="AbstractElectronContainerTest.cs" />
+    <Compile Include="AbstractElementTest.cs" />
+    <Compile Include="AbstractFragmentAtomTest.cs" />
+    <Compile Include="AbstractIsotopeTest.cs" />
+    <Compile Include="AbstractLonePairTest.cs" />
+    <Compile Include="AbstractMappingTest.cs" />
+    <Compile Include="AbstractMolecularFormulaSetTest.cs" />
+    <Compile Include="AbstractMolecularFormulaTest.cs" />
+    <Compile Include="AbstractMoleculeTest.cs" />
+    <Compile Include="AbstractMonomerTest.cs" />
+    <Compile Include="AbstractPDBAtomTest.cs" />
+    <Compile Include="AbstractPDBMonomerTest.cs" />
+    <Compile Include="AbstractPDBPolymerTest.cs" />
+    <Compile Include="AbstractPDBStructureTest.cs" />
+    <Compile Include="AbstractPolymerTest.cs" />
+    <Compile Include="AbstractPseudoAtomTest.cs" />
+    <Compile Include="AbstractReactionSchemeTest.cs" />
+    <Compile Include="AbstractReactionSetTest.cs" />
+    <Compile Include="AbstractReactionTest.cs" />
+    <Compile Include="AbstractRingSetTest.cs" />
+    <Compile Include="AbstractRingTest.cs" />
+    <Compile Include="AbstractSingleElectronTest.cs" />
+    <Compile Include="AbstractStrandTest.cs" />
+    <Compile Include="AbstractSubstanceTest.cs" />
+    <Compile Include="Default\AminoAcidTest.cs" />
+    <Compile Include="Default\AtomContainerSetTest.cs" />
+    <Compile Include="Aromaticities\AromaticityTest.cs" />
+    <Compile Include="Aromaticities\AtomTypeModelTest.cs" />
+    <Compile Include="Aromaticities\DaylightModelTest.cs" />
+    <Compile Include="Aromaticities\ExocyclicAtomTypeModelTest.cs" />
+    <Compile Include="Aromaticities\KekulizationTest.cs" />
+    <Compile Include="Aromaticities\PiBondModelTest.cs" />
+    <Compile Include="AtomTypes\AbstractAtomTypeTest.cs" />
+    <Compile Include="AtomTypes\AbstractCDKAtomTypeTest.cs" />
+    <Compile Include="AtomTypes\AbstractSybylAtomTypeTest.cs" />
+    <Compile Include="AtomTypes\CDKAtomTypeMatcherFilesTest.cs" />
+    <Compile Include="AtomTypes\CDKAtomTypeMatcherSMILESTest.cs" />
+    <Compile Include="AtomTypes\CDKAtomTypeMatcherTest.cs" />
+    <Compile Include="AtomTypes\CDKAtomTypeMatcherTestFileReposTest.cs" />
+    <Compile Include="AtomTypes\EStateAtomTypeMatcherTest.cs" />
+    <Compile Include="AtomTypes\IAtomTypeTest.cs" />
+    <Compile Include="AtomTypes\Mapper\AtomTypeMapperTest.cs" />
+    <Compile Include="AtomTypes\RepeatedCDKAtomTypeMatcherSMILESTest.cs" />
+    <Compile Include="AtomTypes\StructGenAtomTypeGuesserTest.cs" />
+    <Compile Include="AtomTypes\StructGenMatcherTest.cs" />
+    <Compile Include="AtomTypes\SybylAtomTypeMatcherTest.cs" />
+    <Compile Include="Charges\AtomTypeChargesTest.cs" />
+    <Compile Include="Charges\ElectronegativityTest.cs" />
+    <Compile Include="AtomTypes\ReactionStructuresTest.cs" />
+    <Compile Include="AtomTypes\ResonanceStructuresTest.cs" />
+    <Compile Include="Charges\GasteigerMarsiliPartialChargesTest.cs" />
+    <Compile Include="Charges\GasteigerPEPEPartialChargesTest.cs" />
+    <Compile Include="Charges\InductivePartialChargesTest.cs" />
+    <Compile Include="Charges\MMFF94PartialChargesTest.cs" />
+    <Compile Include="Charges\PiElectronegativityTest.cs" />
+    <Compile Include="Charges\PolarizabilityTest.cs" />
+    <Compile Include="Charges\StabilizationChargesTest.cs" />
+    <Compile Include="Config\AtomType\AtomTypeReaderTest.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeMappingHandlerTest.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeMappingReaderTest.cs" />
+    <Compile Include="Config\AtomType\OWLAtomTypeReaderTest.cs" />
+    <Compile Include="Config\IsotopesTest.cs" />
+    <Compile Include="Config\NaturalElementTest.cs" />
+    <Compile Include="Default\AtomTest.cs" />
+    <Compile Include="Default\AtomTypeTest.cs" />
+    <Compile Include="Default\BioPolymerTest.cs" />
+    <Compile Include="Default\ChangeEventPropagationTest.cs" />
+    <Compile Include="Default\ChemFileTest.cs" />
+    <Compile Include="Default\ChemModelTest.cs" />
+    <Compile Include="Default\ChemObjectTest.cs" />
+    <Compile Include="Default\ChemSequenceTest.cs" />
+    <Compile Include="AssociationTest.cs" />
+    <Compile Include="CloneAtomContainerTest.cs" />
+    <Compile Include="MockMolecule.cs" />
+    <Compile Include="Reactions\ReactionChainTest.cs" />
+    <Compile Include="Tools\BremserPredictorTest.cs" />
+    <Compile Include="Tools\HOSECodeAnalyserTest.cs" />
+    <Compile Include="Validate\Geometry3DValidatorTest.cs" />
+    <EmbeddedResource Include="Data\MDL\24763.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\AliasPropertyRGroup.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\bug1356.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\bug2911300.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\bug3488307.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\burden_undefined.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\cnssmarts.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\cpsa-charged.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\cpsa-uncharged.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\emptyStructure.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\emptyStructures.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\equivClassPartiOOMBug.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\error.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\fingerprints_from_modelbuilder3d.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\iterconftest.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\ligand-1a0i.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\lobtest.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\lobtest2.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\mdeotest.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\molecules_exception.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\multiplenewline-property.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\no3dStructures.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\noxide.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\noxide2.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\noxide3.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\nozcoord.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\pcoretest1.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\petitejean.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\pseudoatoms.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\qsar-test.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\SARGROUPTEST.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\sim3d1.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\sim3d2.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\singleMol.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test2.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test3.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test4.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test5.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\test6.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\UITTimeout.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\weirdprops.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\wpn.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\wpo.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\writetest.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\MDL\zinc_1309609.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CML\AZD5423.xml" />
+    <EmbeddedResource Include="Data\CML\ceph-ns.xml" />
+    <EmbeddedResource Include="Data\CML\curan.xml" />
+    <EmbeddedResource Include="Data\CML\nsc2dcml.xml" />
+    <EmbeddedResource Include="Data\CML\nsc3dcml.xml" />
+    <EmbeddedResource Include="Data\CML\nucleustest.xml" />
+    <EmbeddedResource Include="Data\InChI\benzoicacid.mol.txt" />
+    <EmbeddedResource Include="Data\InChI\guanine.inchi.xml" />
+    <EmbeddedResource Include="Data\CDD\Binders.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CDD\FoldedProbes.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CDD\MLProbes.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CDD\Small.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\CDD\Tiny.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\Smiles\smiles.txt" />
+    <EmbeddedResource Include="Data\ASN\PubChem\aceticAcids38.xml" />
+    <EmbeddedResource Include="Data\ASN\PubChem\cid1145.xml" />
+    <EmbeddedResource Include="Data\ASN\PubChem\cid176.xml" />
+    <EmbeddedResource Include="Data\ASN\PubChem\sid577309.xml" />
+    <EmbeddedResource Include="Data\ASN\PubChem\taxols.xml" />
+    <EmbeddedResource Include="Data\PDB\114D.pdb" />
+    <EmbeddedResource Include="Data\PDB\1A00.pdb" />
+    <EmbeddedResource Include="Data\PDB\1A2C.pdb" />
+    <EmbeddedResource Include="Data\PDB\1ALE.pdb" />
+    <EmbeddedResource Include="Data\PDB\1ALM.pdb" />
+    <EmbeddedResource Include="Data\PDB\1ARJ.pdb" />
+    <EmbeddedResource Include="Data\PDB\1B07.pdb" />
+    <EmbeddedResource Include="Data\PDB\1BOQ.pdb" />
+    <EmbeddedResource Include="Data\PDB\1CKV.pdb" />
+    <EmbeddedResource Include="Data\PDB\1CRN.pdb" />
+    <EmbeddedResource Include="Data\PDB\1CRN_noSS.pdb" />
+    <EmbeddedResource Include="Data\PDB\1D66.pdb" />
+    <EmbeddedResource Include="Data\PDB\1D68.pdb" />
+    <EmbeddedResource Include="Data\PDB\1EBL.pdb" />
+    <EmbeddedResource Include="Data\PDB\1EPL.pdb" />
+    <EmbeddedResource Include="Data\PDB\1GCI.pdb" />
+    <EmbeddedResource Include="Data\PDB\1GFL.pdb" />
+    <EmbeddedResource Include="Data\PDB\1HJE.pdb" />
+    <EmbeddedResource Include="Data\PDB\1IHA.pdb" />
+    <EmbeddedResource Include="Data\PDB\1JGQ.pdb" />
+    <EmbeddedResource Include="Data\PDB\1LCD.pdb" />
+    <EmbeddedResource Include="Data\PDB\1MBO.pdb" />
+    <EmbeddedResource Include="Data\PDB\1NE6.pdb" />
+    <EmbeddedResource Include="Data\PDB\1NE6_noSS.pdb" />
+    <EmbeddedResource Include="Data\PDB\1OHG.pdb" />
+    <EmbeddedResource Include="Data\PDB\1PN8.pdb" />
+    <EmbeddedResource Include="Data\PDB\1PPA.pdb" />
+    <EmbeddedResource Include="Data\PDB\1SPX.pdb" />
+    <EmbeddedResource Include="Data\PDB\1TOH.pdb" />
+    <EmbeddedResource Include="Data\PDB\1TWV.pdb" />
+    <EmbeddedResource Include="Data\PDB\1XKQ.pdb" />
+    <EmbeddedResource Include="Data\PDB\coffeine.pdb" />
+    <EmbeddedResource Include="Data\PDB\hetatm_only.pdb" />
+    <EmbeddedResource Include="Data\PDB\Test-1crn.pdb" />
+    <EmbeddedResource Include="Data\PDB\unk.pdb" />
+    <EmbeddedResource Include="Data\PDB\viagra.pdb" />
+    <EmbeddedResource Include="Data\PCore\invalid1.xml" />
+    <EmbeddedResource Include="Data\PCore\multismartpcore.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Data\PCore\pcore.xml" />
+    <EmbeddedResource Include="Data\PCore\pcoreangle.xml" />
+    <Compile Include="Default\ConformerContainerTest.cs" />
+    <Compile Include="Default\CrystalTest.cs" />
+    <Compile Include="Default\ChemObjectBuilderTest.cs" />
+    <Compile Include="Default\ElectronContainerTest.cs" />
+    <Compile Include="Default\FragmentAtomTest.cs" />
+    <Compile Include="Default\IsotopeTest.cs" />
+    <Compile Include="Default\LonePairTest.cs" />
+    <Compile Include="Default\MappingTest.cs" />
+    <Compile Include="Default\MoleculeTest.cs" />
+    <Compile Include="Default\MonomerTest.cs" />
+    <Compile Include="Default\PolymerTest.cs" />
+    <Compile Include="Default\PseudoAtomTest.cs" />
+    <Compile Include="Default\ReactionSchemeTest.cs" />
+    <Compile Include="Default\ReactionSetTest.cs" />
+    <Compile Include="Default\SingleElectronTest.cs" />
+    <Compile Include="Default\StrandTest.cs" />
+    <Compile Include="Default\RingSetTest.cs" />
+    <Compile Include="Default\RingTest.cs" />
+    <Compile Include="Default\SubstanceTest.cs" />
+    <Compile Include="Dict\DictRefTest.cs" />
+    <Compile Include="Dict\AbstractDictionaryTest.cs" />
+    <Compile Include="Dict\AbstractEntryTest.cs" />
+    <Compile Include="Dict\DictDBReactTest.cs" />
+    <Compile Include="Dict\DictDBTest.cs" />
+    <Compile Include="Dict\DictionaryTest.cs" />
+    <Compile Include="Dict\EntryReactTest.cs" />
+    <Compile Include="Dict\EntryTest.cs" />
+    <Compile Include="Dict\OWLFileTest.cs" />
+    <Compile Include="Dict\OWLReactTest.cs" />
+    <Compile Include="ChemObjectChangeEventTest.cs" />
+    <Compile Include="Exception\CDKExceptionTest.cs" />
+    <Compile Include="Exception\IntractableTest.cs" />
+    <Compile Include="Exception\InvalidSmilesExceptionTest.cs" />
+    <Compile Include="Exception\NoSuchAtomExceptionTest.cs" />
+    <Compile Include="Exception\NoSuchAtomTypeExceptionTest.cs" />
+    <Compile Include="Exception\UnsupportedChemObjectExceptionTest.cs" />
+    <Compile Include="Fingerprint\AbstractFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\AbstractBitFingerprintTest.cs" />
+    <Compile Include="Fingerprint\AbstractFixedLengthFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\BitSetFingerprintTest.cs" />
+    <Compile Include="Fingerprint\CircularFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\EStateFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\ExtendedFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\FingerprinterTest.cs" />
+    <Compile Include="Fingerprint\FingerprinterToolTest.cs" />
+    <Compile Include="Fingerprint\GraphOnlyFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\HybridizationFingerprinterTest.cs" />
+    <Compile Include="Formula\AdductFormulaTest.cs" />
+    <Compile Include="Formula\MolecularFormulaSetTest.cs" />
+    <Compile Include="Formula\MolecularFormulaTest.cs" />
+    <Compile Include="Fingerprint\IntArrayCountFingerprintTest.cs" />
+    <Compile Include="Fingerprint\IntArrayFingerprintTest.cs" />
+    <Compile Include="Fingerprint\KlekotaRothFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\LingoFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\MACCSFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\Model\BayesianTest.cs" />
+    <Compile Include="Fingerprint\PubchemFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\RandomNumberTest.cs" />
+    <Compile Include="Fingerprint\ShortestPathFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\ShortestPathWalkerTest.cs" />
+    <Compile Include="Fingerprint\SimpleAtomCanonicalizerTest.cs" />
+    <Compile Include="Fingerprint\SimpleAtomComparatorTest.cs" />
+    <Compile Include="Fingerprint\StandardSubstructureSetsTest.cs" />
+    <Compile Include="Fingerprint\SubstructureFingerprinterTest.cs" />
+    <Compile Include="Fingerprint\SignatureFingerprinterTest.cs" />
+    <Compile Include="ForceField\MMFF\AbstractMmffAtomTypeValidationSuiteTest.cs" />
+    <Compile Include="ForceField\MMFF\MmffAromaticTypeMappingTest.cs" />
+    <Compile Include="ForceField\MMFF\MmffAtomTypeMatcherTest.cs" />
+    <Compile Include="ForceField\MMFF\MmffAtomTypeValidationSuiteTest.cs" />
+    <Compile Include="ForceField\MMFF\MmffParamSetTest.cs" />
+    <Compile Include="ForceField\MMFF\MmffTest.cs" />
+    <Compile Include="Formula\IsotopeContainerTest.cs" />
+    <Compile Include="Formula\IsotopePatternGeneratorTest.cs" />
+    <Compile Include="Formula\IsotopePatternManipulatorTest.cs" />
+    <Compile Include="Formula\IsotopePatternSimilarityTest.cs" />
+    <Compile Include="Formula\IsotopePatternTest.cs" />
+    <Compile Include="Formula\MolecularFormulaCheckerTest.cs" />
+    <Compile Include="Formula\MolecularFormulaGeneratorTest.cs" />
+    <Compile Include="Formula\MolecularFormulaRangeTest.cs" />
+    <Compile Include="Formula\Rules\ChargeRuleTest.cs" />
+    <Compile Include="Formula\Rules\ElementRuleTest.cs" />
+    <Compile Include="Formula\Rules\FormulaRuleTest.cs" />
+    <Compile Include="Formula\Rules\IsotopePatternRuleTest.cs" />
+    <Compile Include="Formula\Rules\MMElementRuleTest.cs" />
+    <Compile Include="Formula\Rules\NitrogenRuleTest.cs" />
+    <Compile Include="Formula\Rules\RDBERuleTest.cs" />
+    <Compile Include="Formula\Rules\ToleranceRangeRuleTest.cs" />
+    <Compile Include="Fragment\ExhaustiveFragmenterTest.cs" />
+    <Compile Include="Fragment\FragmentUtilsTest.cs" />
+    <Compile Include="Fragment\MurckoFragmenterTest.cs" />
+    <Compile Include="Geometries\BondToolsTest.cs" />
+    <Compile Include="Geometries\CIP\Rules\AtomicNumberRuleTest.cs" />
+    <Compile Include="Geometries\CIP\Rules\CIPLigandRuleTest.cs" />
+    <Compile Include="Geometries\CIP\Rules\CombinedAtomicMassNumberRuleTest.cs" />
+    <Compile Include="Geometries\CIP\Rules\MassNumberRuleTest.cs" />
+    <Compile Include="Geometries\CML\CML23FragmentsTest.cs" />
+    <Compile Include="Geometries\CML\CML25FragmentsTest.cs" />
+    <Compile Include="Geometries\CML\CMLFragmentsTest.cs" />
+    <Compile Include="Geometries\CML\CMLModuleStackTest.cs" />
+    <Compile Include="Geometries\CML\CMLStackTest.cs" />
+    <Compile Include="Geometries\CML\JChemPaintTest.cs" />
+    <Compile Include="Geometries\CML\JmolTest.cs" />
+    <Compile Include="Geometries\CML\Jumbo46CMLFragmentsTest.cs" />
+    <Compile Include="Geometries\CML\JumboTest.cs" />
+    <Compile Include="Geometries\CrystalGeometryToolsTest.cs" />
+    <Compile Include="Geometries\GeometryUtilTest.cs" />
+    <Compile Include="Graphs\Invariant\ConjugatedPiSystemsDetectorTest.cs" />
+    <Compile Include="Graphs\Matrix\TopologicalMatrixTest.cs" />
+    <Compile Include="Groups\AbstractDiscretePartitionRefinerTest.cs" />
+    <Compile Include="Groups\AtomContainerPrinter.cs" />
+    <Compile Include="Groups\AtomDiscretePartitionRefinerTest.cs" />
+    <Compile Include="Groups\AtomEquitablePartitionRefinerTest.cs" />
+    <Compile Include="Groups\AtomGroupTests.cs" />
+    <Compile Include="Groups\AtomPermutationTests.cs" />
+    <Compile Include="Groups\BondDiscretePartitionRefinerTest.cs" />
+    <Compile Include="Groups\BondEquitablePartitionRefinerTest.cs" />
+    <Compile Include="Groups\BondGroupTests.cs" />
+    <Compile Include="Groups\PartitionTest.cs" />
+    <Compile Include="Groups\PermutationGroupTest.cs" />
+    <Compile Include="Groups\PermutationTest.cs" />
+    <EmbeddedResource Include="Hash\allene-explicit-3d-h.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\allene-explicit-h.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\allene-implicit-h.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\allene-unspecified.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\aminotetracosanones.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\butan-2-ols-explicit-hydrogens.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\butan-2-ols.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\cumulenes.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\dichloroethenes-explicit-hydrogens.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\dichloroethenes.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-10.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-11.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-12.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13a.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-13b.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-14.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-15.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16a.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-16b.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2a.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2b.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-2c.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-3.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\ihlenfeldt93-figure-7.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\inositols-explicit-hydrogens.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Hash\inositols.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Compile Include="IO\AbstractReaderFactoryTest.cs" />
+    <Compile Include="IO\NCDKSourceCodeWriterTest.cs" />
+    <Compile Include="IO\ChemObjectIOInstantionTests.cs" />
+    <Compile Include="IO\ChemObjectIOTest.cs" />
+    <Compile Include="IO\ChemObjectReaderTest.cs" />
+    <Compile Include="IO\ChemObjectWriterTest.cs" />
+    <Compile Include="IO\CIFReaderTest.cs" />
+    <Compile Include="IO\CMLReaderTest.cs" />
+    <EmbeddedResource Include="IO\CML\cml23TestFramework.xml" />
+    <EmbeddedResource Include="IO\CML\cml25TestFramework.xml" />
+    <EmbeddedResource Include="IO\CML\cmlTestFramework.xml" />
+    <EmbeddedResource Include="IO\CML\cmlTestFramework4DTD.xml" />
+    <EmbeddedResource Include="IO\CML\cmlTestFramework_jumbo4.6.xml" />
+    <Compile Include="IO\CML\QSARCMLRoundTripTest.cs" />
+    <Compile Include="IO\CrystClustReaderTest.cs" />
+    <Compile Include="IO\CTXReaderTest.cs" />
+    <Compile Include="IO\CustomFormat.cs" />
+    <Compile Include="IO\CustomWriter.cs" />
+    <Compile Include="IO\ExtraReaderFactoryTest.cs" />
+    <Compile Include="IO\GamessReaderTest.cs" />
+    <Compile Include="IO\Gaussian98ReaderTest.cs" />
+    <Compile Include="IO\GhemicalReaderTest.cs" />
+    <Compile Include="IO\HINReaderTest.cs" />
+    <Compile Include="IO\MDLReaderTest.cs" />
+    <Compile Include="IO\MDLRXNReaderTest.cs" />
+    <Compile Include="IO\MDLRXNV2000ReaderTest.cs" />
+    <Compile Include="IO\INChIPlainTextReaderTest.cs" />
+    <Compile Include="IO\INChIReaderTest.cs" />
+    <Compile Include="IO\Iterator\IteratingMDLConformerReaderTest.cs" />
+    <Compile Include="IO\MDLRXNV3000ReaderTest.cs" />
+    <Compile Include="IO\MDLRXNWriterTest.cs" />
+    <Compile Include="IO\MDLV2000AtomBlockTest.cs" />
+    <Compile Include="IO\MDLV2000BondBlockTest.cs" />
+    <Compile Include="IO\MDLV2000PropertiesBlockTest.cs" />
+    <Compile Include="IO\MDLV2000ReaderTest.cs" />
+    <Compile Include="IO\MDLV2000WriterTest.cs" />
+    <Compile Include="IO\MDLV3000ReaderTest.cs" />
+    <Compile Include="IO\MDLV3000WriterTest.cs" />
+    <Compile Include="IO\MDLValenceTest.cs" />
+    <Compile Include="IO\Mol2ReaderTest.cs" />
+    <Compile Include="IO\Mol2WriterTest.cs" />
+    <Compile Include="IO\Mopac7ReaderTest.cs" />
+    <Compile Include="IO\PCCompoundASNReaderTest.cs" />
+    <Compile Include="IO\PCCompoundXMLReaderTest.cs" />
+    <Compile Include="IO\PCSubstanceXMLReaderTest.cs" />
+    <Compile Include="IO\PMPReaderTest.cs" />
+    <Compile Include="IO\RandomAccess\RandomAccessTest.cs" />
+    <Compile Include="IO\ReaderFactoryTest.cs" />
+    <Compile Include="IO\RGroupQueryReaderTest.cs" />
+    <Compile Include="IO\RGroupQueryWriterTest.cs" />
+    <Compile Include="IO\SDFReaderTest.cs" />
+    <Compile Include="IO\SDFWriterTest.cs" />
+    <Compile Include="IO\ShelXReaderTest.cs" />
+    <Compile Include="IO\SimpleChemObjectReaderTest.cs" />
+    <Compile Include="IO\ShelXWriterTest.cs" />
+    <Compile Include="IO\VASPReaderTest.cs" />
+    <Compile Include="IO\WriterFactoryTest.cs" />
+    <Compile Include="IO\XYZReaderTest.cs" />
+    <Compile Include="IO\XYZWriterTest.cs" />
+    <Compile Include="Geometries\Iterator\IteratingPCCompoundASNReaderTest.cs" />
+    <Compile Include="Geometries\Iterator\IteratingPCCompoundXMLReaderTest.cs" />
+    <Compile Include="Geometries\Iterator\IteratingPCSubstancesXMLReaderTest.cs" />
+    <Compile Include="Geometries\Iterator\IteratingSDFReaderTest.cs" />
+    <Compile Include="IO\GaussianInputWriterTest.cs" />
+    <Compile Include="IO\Mopac7WriterTest.cs" />
+    <Compile Include="Geometries\Volume\VABCVolumeTest.cs" />
+    <Compile Include="Geometries\ZMatrixToolsTest.cs" />
+    <Compile Include="Graphs\AllPairsShortestPathsTest.cs" />
+    <Compile Include="Graphs\BitMatrixTests.cs" />
+    <Compile Include="Graphs\AtomContainerAtomPermutorTest.cs" />
+    <Compile Include="Graphs\AtomContainerBondPermutorTest.cs" />
+    <Compile Include="Graphs\AtomContainerPermutorTest.cs" />
+    <Compile Include="Graphs\ConnectedComponentsTest.cs" />
+    <Compile Include="Graphs\ConnectionMatrixTest.cs" />
+    <Compile Include="Graphs\ConnectivityCheckerTest.cs" />
+    <Compile Include="Graphs\CyclesTest.cs" />
+    <Compile Include="Graphs\EdgeShortCyclesTest.cs" />
+    <Compile Include="Graphs\EdmondsMaximumMatchingTest.cs" />
+    <Compile Include="Graphs\EssentialCyclesTest.cs" />
+    <Compile Include="Graphs\GreedyBasisTest.cs" />
+    <Compile Include="Graphs\MinimumCycleBasisTest.cs" />
+    <Compile Include="Graphs\InChi\InChIGeneratorFactoryTest.cs" />
+    <Compile Include="Graphs\InChi\InChIGeneratorTest.cs" />
+    <Compile Include="Graphs\InChi\InChIToStructureTest.cs" />
+    <Compile Include="Graphs\Invariant\CanonicalLabelerTest.cs" />
+    <Compile Include="Graphs\Invariant\CanonTest.cs" />
+    <Compile Include="Graphs\Invariant\InChINumbersToolsTest.cs" />
+    <Compile Include="Graphs\Invariant\InvariantRankerTest.cs" />
+    <Compile Include="Graphs\Invariant\MorganNumbersToolsTest.cs" />
+    <Compile Include="Graphs\MatchingTest.cs" />
+    <Compile Include="Graphs\Matrix\AdjacencyMatrixTest.cs" />
+    <Compile Include="Graphs\PathToolsTests.cs" />
+    <Compile Include="Graphs\RelevantCyclesTests.cs" />
+    <Compile Include="Graphs\PermutorTest.cs" />
+    <Compile Include="Graphs\Rebond\BsptTest.cs" />
+    <Compile Include="Graphs\Rebond\PointTest.cs" />
+    <Compile Include="Graphs\Rebond\RebondToolTest.cs" />
+    <Compile Include="Smiles\AbsoluteSMILESTest.cs" />
+    <Compile Include="Graphs\SpanningTreeTest.cs" />
+    <Compile Include="Graphs\TripletShortCyclesTest.cs" />
+    <Compile Include="Graphs\VertexShortCyclesTest.cs" />
+    <Compile Include="Groups\DisjointSetForestTest.cs" />
+    <Compile Include="IO\CMLWriterFactoryTest.cs" />
+    <Compile Include="IO\CML\CDKRoundTripTest.cs" />
+    <Compile Include="IO\CML\CML2Test.cs" />
+    <Compile Include="IO\CML\CML2WriterTest.cs" />
+    <Compile Include="IO\CML\CMLRoundTripTest.cs" />
+    <Compile Include="IO\CML\CMLRoundTripTool.cs" />
+    <Compile Include="IO\CML\PDBAtomCustomizerTest.cs" />
+    <EmbeddedResource Include="IO\finalPump96.09.06.pdb" />
+    <Compile Include="IO\FormatFactoryTest.cs" />
+    <Compile Include="IO\Formats\ABINITFormatTest.cs" />
+    <Compile Include="IO\Formats\Aces2FormatTest.cs" />
+    <Compile Include="IO\Formats\ADFFormatTest.cs" />
+    <Compile Include="IO\Formats\AlchemyFormatTest.cs" />
+    <Compile Include="IO\Formats\BGFFormatTest.cs" />
+    <Compile Include="IO\Formats\BSFormatTest.cs" />
+    <Compile Include="IO\Formats\CacaoCartesianFormatTest.cs" />
+    <Compile Include="IO\Formats\CacaoInternalFormatTest.cs" />
+    <Compile Include="IO\Formats\CACheFormatTest.cs" />
+    <Compile Include="IO\Formats\CDKOWLFormatTest.cs" />
+    <Compile Include="IO\Formats\CDKSourceCodeFormatTest.cs" />
+    <Compile Include="IO\Formats\ChemDrawFormatTest.cs" />
+    <Compile Include="IO\Formats\ChemFormatMatcherTest.cs" />
+    <Compile Include="IO\Formats\ChemFormatTest.cs" />
+    <Compile Include="IO\Formats\CIFFormatTest.cs" />
+    <Compile Include="IO\Formats\CMLFormatTest.cs" />
+    <Compile Include="IO\Formats\CMLRSSFormatTest.cs" />
+    <Compile Include="IO\Formats\CrystClustFormatTest.cs" />
+    <Compile Include="IO\Formats\CTXFormatTest.cs" />
+    <Compile Include="IO\Formats\FenskeHall_ZMatrixFormatTest.cs" />
+    <Compile Include="IO\Formats\GamessFormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian03FormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian92FormatTest.cs" />
+    <Compile Include="IO\Formats\Gaussian98FormatTest.cs" />
+    <Compile Include="IO\Formats\GaussianInputFormatTest.cs" />
+    <Compile Include="IO\Formats\GhemicalMMFormatTest.cs" />
+    <Compile Include="IO\Formats\GhemicalSPMFormatTest.cs" />
+    <Compile Include="IO\Formats\HINFormatTest.cs" />
+    <Compile Include="IO\Formats\INChIFormatTest.cs" />
+    <Compile Include="IO\Formats\MDLFormatTest.cs" />
+    <Compile Include="IO\Formats\MDLRXNFormatTest.cs" />
+    <Compile Include="IO\Formats\MDLRXNV3000FormatTest.cs" />
+    <Compile Include="IO\Formats\MDLV2000FormatTest.cs" />
+    <Compile Include="IO\Formats\MDLV3000FormatTest.cs" />
+    <Compile Include="IO\Formats\Mol2FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC7FormatTest.cs" />
+    <Compile Include="IO\Formats\MOPAC7InputFormatTest.cs" />
+    <Compile Include="IO\Formats\MoSSOutputFormatTest.cs" />
+    <Compile Include="IO\Formats\PDBFormatTest.cs" />
+    <Compile Include="IO\Formats\PMPFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemASNFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemCompoundsXMLFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemCompoundXMLFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemSubstancesASNFormatTest.cs" />
+    <Compile Include="IO\Formats\PubChemSubstanceXMLFormatTest.cs" />
+    <Compile Include="IO\Formats\ResourceFormatTest.cs" />
+    <Compile Include="IO\Formats\RGroupQueryFormatTest.cs" />
+    <Compile Include="IO\Formats\SDFFormatTest.cs" />
+    <Compile Include="IO\Formats\ShelXFormatTest.cs" />
+    <Compile Include="IO\Formats\SMARTSFormatTest.cs" />
+    <Compile Include="IO\Formats\SMILESFormatTest.cs" />
+    <Compile Include="IO\Formats\VASPFormatTest.cs" />
+    <Compile Include="IO\Formats\XYZFormatTest.cs" />
+    <Compile Include="IO\Formats\ZMatrixFormatTest.cs" />
+    <Compile Include="IO\Iterator\IteratingSMILESReaderTest.cs" />
+    <Compile Include="IO\MDLCMLRoundtripTest.cs" />
+    <Compile Include="IO\MoSSOutputReaderTest.cs" />
+    <Compile Include="IO\PDBReaderFactoryTest.cs" />
+    <Compile Include="IO\PDBReaderTest.cs" />
+    <Compile Include="IO\PDBWriterTest.cs" />
+    <Compile Include="IO\RDF\CDKOWLReaderTest.cs" />
+    <Compile Include="IO\RDF\CDKOWLWriterTest.cs" />
+    <Compile Include="IO\SMILES2Mol2WriterTest.cs" />
+    <Compile Include="IO\SMILESReaderTest.cs" />
+    <Compile Include="IO\SMILESWriterTest.cs" />
+    <Compile Include="Isomorphisms\IsomorphismTesterTest.cs" />
+    <Compile Include="Isomorphisms\MCSS\RGraphTest.cs" />
+    <Compile Include="Isomorphisms\MCSS\RMapTest.cs" />
+    <Compile Include="Isomorphisms\MCSS\RNodeTest.cs" />
+    <Compile Include="IO\ZMatrixReaderTest.cs" />
+    <Compile Include="Isomorphisms\AbstractVFStateTest.cs" />
+    <Compile Include="Isomorphisms\AtomMatcherTest.cs" />
+    <Compile Include="Isomorphisms\BondMatcherTest.cs" />
+    <Compile Include="Isomorphisms\CompatibilityMatrixTest.cs" />
+    <Compile Include="Isomorphisms\ComponentGroupingTest.cs" />
+    <Compile Include="Isomorphisms\MappingPredicatesTest.cs" />
+    <Compile Include="Isomorphisms\MappingsTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\QueryAtomContainerCreatorTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\RGroupListTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AnyAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\AnyOrderQueryBondTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\DaylightSMARTSAtomInvariantsTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\ExplicitConnectionAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\RingMembershipAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\SmallestRingAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalConnectionAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalHCountAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalRingConnectionAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SMARTS\TotalValencyAtomTest.cs" />
+    <Compile Include="Isomorphisms\Matchers\SymbolSetQueryAtomTest.cs" />
+    <Compile Include="Isomorphisms\SmartsStereoMatchTest.cs" />
+    <Compile Include="Isomorphisms\SMARTSTest.cs" />
+    <Compile Include="Isomorphisms\StateStreamTest.cs" />
+    <Compile Include="Isomorphisms\StereoMatchTest.cs" />
+    <Compile Include="Isomorphisms\SubstructureTest.cs" />
+    <Compile Include="Isomorphisms\UllmannStateTest.cs" />
+    <Compile Include="Isomorphisms\UllmannSubstructureTest.cs" />
+    <Compile Include="Isomorphisms\UllmannTest.cs" />
+    <Compile Include="Isomorphisms\UniversalIsomorphismTesterTest.cs" />
+    <Compile Include="LibIO\CML\ConvertorTest.cs" />
+    <Compile Include="Isomorphisms\VentoFoggiaTest.cs" />
+    <Compile Include="Isomorphisms\VFStateTest.cs" />
+    <Compile Include="Isomorphisms\VFSubStateTest.cs" />
+    <Compile Include="Isomorphisms\VFSubstructureTest.cs" />
+    <Compile Include="Layout\AtomPlacerTest.cs" />
+    <Compile Include="Layout\CorrectGeometricConfigurationTest.cs" />
+    <Compile Include="Layout\HydrogenPlacerTest.cs" />
+    <Compile Include="Layout\IdentityTemplateLibraryTest.cs" />
+    <Compile Include="Layout\NonPlanarBondsTest.cs" />
+    <Compile Include="Layout\StructureDiagramGeneratorTest.cs" />
+    <Compile Include="Layout\TemplateHandlerTest.cs" />
+    <Compile Include="LibIO\CML\PDBAtomCustomizerTest.cs" />
+    <Compile Include="LibIO\MD\MDMoleculeTest.cs" />
+    <Compile Include="Math\FortranFormatTest.cs" />
+    <Compile Include="Math\MathToolsTest.cs" />
+    <Compile Include="Math\PrimesTest.cs" />
+    <Compile Include="Math\RandomNumbersToolTest.cs" />
+    <Compile Include="Default\PDBAtomTest.cs" />
+    <Compile Include="Default\PDBMonomerTest.cs" />
+    <Compile Include="Default\PDBPolymerTest.cs" />
+    <Compile Include="Default\PDBStructureTest.cs" />
+    <Compile Include="Modeling\Builder3D\AtomPlacer3DTest.cs" />
+    <Compile Include="Modeling\Builder3D\AtomTetrahedralLigandPlacer3DTest.cs" />
+    <Compile Include="Modeling\Builder3D\ForceFieldConfiguratorTest.cs" />
+    <Compile Include="Modeling\Builder3D\FurtherAtomPlacer3DTest.cs" />
+    <Compile Include="Modeling\Builder3D\FurtherTemplateHandler3DTest.cs" />
+    <Compile Include="Modeling\Builder3D\MMFF94BasedParameterSetReaderTest.cs" />
+    <Compile Include="Modeling\Builder3D\ModelBuilder3DTest.cs" />
+    <Compile Include="Modeling\Builder3D\TemplateHandler3DTest.cs" />
+    <Compile Include="Normalize\NormalizerTest.cs" />
+    <Compile Include="Normalize\SMSDNormalizerTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreAngleBondTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreAtomTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreBondTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreMatcherTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryAngleBondTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryAtomTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryBondTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreQueryTest.cs" />
+    <Compile Include="Config\Isotope\IsotopeHandlerTest.cs" />
+    <Compile Include="Config\Isotope\IsotopeReaderTest.cs" />
+    <Compile Include="Config\XMLIsotopeFactoryTest.cs" />
+    <Compile Include="Geometries\Alignments\KabschAlignmentTest.cs" />
+    <Compile Include="Geometries\RDFCalculatorTest.cs" />
+    <Compile Include="Graphs\Invariant\EquivalentClassPartitionerTest.cs" />
+    <Compile Include="Indexes\CASNumberTest.cs" />
+    <Compile Include="Pharmacophore\PharmacophoreUtilityTest.cs" />
+    <Compile Include="QSAR\DescriptorSpecificationTest.cs" />
+    <Compile Include="QSAR\DescriptorValueTest.cs" />
+    <Compile Include="QSAR\Result\BooleanResultTest.cs" />
+    <Compile Include="QSAR\Result\BooleanResultTypeTest.cs" />
+    <Compile Include="QSAR\Result\DoubleArrayResultTest.cs" />
+    <Compile Include="QSAR\Result\DoubleArrayResultTypeTest.cs" />
+    <Compile Include="QSAR\Result\DoubleResultTest.cs" />
+    <Compile Include="QSAR\Result\DoubleResultTypeTest.cs" />
+    <Compile Include="QSAR\Result\IntegerArrayResultTest.cs" />
+    <Compile Include="QSAR\Result\IntegerArrayResultTypeTest.cs" />
+    <Compile Include="QSAR\Result\IntegerResultTest.cs" />
+    <Compile Include="QSAR\Result\IntegerResultTypeTest.cs" />
+    <Compile Include="RingSearches\AllRingsFinderTest.cs" />
+    <Compile Include="RingSearches\RingPartitionerTest.cs" />
+    <Compile Include="RingSearches\RingSearchTest.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Benzene.cs" />
+    <Compile Include="RingSearches\RingSearchTest_BenzylBenzene.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Bicyclo.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Biphenyl.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Empty.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Fused.cs" />
+    <Compile Include="RingSearches\RingSearchTest_Hexaphenylene.cs" />
+    <Compile Include="RingSearches\RingSearchTest_NonCyclic.cs" />
+    <Compile Include="RingSearches\RingSearchTest_SpiroRings.cs" />
+    <Compile Include="Smiles\BeamToCDKTest.cs" />
+    <Compile Include="Smiles\CDKToBeamTest.cs" />
+    <Compile Include="Smiles\CxSmilesParserTest.cs" />
+    <Compile Include="Smiles\CxSmilesTest.cs" />
+    <Compile Include="Smiles\DeduceBondSystemToolTest.cs" />
+    <Compile Include="Smiles\FixBondOrdersToolTest.cs" />
+    <Compile Include="Smiles\InvPairTest.cs" />
+    <Compile Include="Smiles\SmilesGeneratorTest.cs" />
+    <Compile Include="Smiles\SmilesParserTest.cs" />
+    <Compile Include="Reactions\Mechanisms\AdductionLPMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\AdductionPBMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\HeterolyticCleavageMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\HomolyticCleavageMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\RadicalSiteIonizationMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\RadicalSiteRearrangementMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\RearrangementChargeMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\RemovingSEofBMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\RemovingSEofNBMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\SharingElectronMechanismTest.cs" />
+    <Compile Include="Reactions\Mechanisms\TautomerizationMechanismTest.cs" />
+    <Compile Include="Reactions\ReactionEngineTest.cs" />
+    <Compile Include="Reactions\ReactionMechanismTest.cs" />
+    <Compile Include="Reactions\ReactionProcessTest.cs" />
+    <Compile Include="Reactions\ReactionSpecificationTest.cs" />
+    <Compile Include="Reactions\Types\Parameters\ParameterReactTest.cs" />
+    <Compile Include="Reactions\Types\Parameters\SetReactionCenterTest.cs" />
+    <Compile Include="QSAR\DescriptorEngineTest.cs" />
+    <Compile Include="QSAR\DescriptorExceptionTest.cs" />
+    <Compile Include="QSAR\DescriptorNamesTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomDegreeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomHybridizationDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomHybridizationVSEPRDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomicDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AtomValenceDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\BondsToAtomDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\CovalentRadiusDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\DistanceToAtomDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\EffectiveAtomPolarizabilityDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\InductiveAtomicHardnessDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\InductiveAtomicSoftnessDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IPAtomicHOSEDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IsProtonInAromaticSystemDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\IsProtonInConjugatedPiSystemDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialPiChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialSigmaChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialTChargeMMFF94DescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PartialTChargePEOEDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PeriodicTablePositionDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\PiElectronegativityDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\ProtonAffinityHOSEDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\ProtonTotalPartialChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_G3RTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GDRTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GHRTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GHR_topolTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\RDFProtonDescriptor_GSRTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\SigmaElectronegativityDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\StabilizationPlusChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\VdWRadiusDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\AtomicNumberDifferenceDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialPiChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialSigmaChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondPartialTChargeDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Bonds\BondSigmaElectronegativityDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\DescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AcidicGroupCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ALOGPDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AminoAcidCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\APolDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AromaticAtomsCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AromaticBondsCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AtomCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorChargeTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorMassTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\AutocorrelationDescriptorPolarizabilityTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BasicGroupCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BCUTDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BondCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\BPolDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\CarbonTypesDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiChainDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiClusterDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiIndexUtilsTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiPathClusterDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ChiPathDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\CPSADescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\EccentricConnectivityIndexDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FMFDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FractionalPSADescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\FragmentComplexityDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\GravitationalIndexDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HBondAcceptorCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HBondDonorCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\HybridizationRatioDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\KappaShapeIndicesDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\KierHallSmartsDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LargestChainDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LargestPiSystemDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LengthOverBreadthDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\LongestAliphaticChainDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MannholdLogPDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MDEDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MolecularDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\MomentOfInertiaDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\PetitjeanNumberDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\PetitjeanShapeIndexDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\RotatableBondsCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\RuleOfFiveDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\SmallRingDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\TPSADescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\VABCDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\VAdjMaDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WeightDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WeightedPathDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WHIMDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\WienerNumbersDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\XLogPDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Moleculars\ZagrebIndexDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Proteins\TaeAminoAcidDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Substances\OxygenAtomCountDescriptorTest.cs" />
+    <Compile Include="QSAR\Descriptors\Substances\SubstanceDescriptorTest.cs" />
+    <Compile Include="Signature\AbstractSignatureTest.cs" />
+    <Compile Include="Signature\AtomSignatureTest.cs" />
+    <Compile Include="Signature\MoleculeFromSignatureBuilderTest.cs" />
+    <Compile Include="Signature\MoleculeSignatureTest.cs" />
+    <Compile Include="Signature\OrbitTest.cs" />
+    <Compile Include="Signature\SignatureQuotientGraphTest.cs" />
+    <Compile Include="Similarity\DistanceMomentTest.cs" />
+    <Compile Include="Similarity\LingoSimilarityTest.cs" />
+    <Compile Include="Similarity\SignatureFingerprintTanimotoTest.cs" />
+    <Compile Include="Similarity\TanimotoTest.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\BKKCKCFTest.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\ExactMappingTest.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\GenerateCompatibilityGraphTest.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\MCSPlusHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\MCSPluses\MCSPlusTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKMCSHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKMCSTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRGraphTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRMapHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRMapTest.cs" />
+    <Compile Include="SMSD\Algorithms\RGraph\CDKRNodeTest.cs" />
+    <Compile Include="SMSD\Algorithms\Single\SingleMappingHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\Single\SingleMappingTest.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFlibMCSHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFLibTest.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFlibTurboHandlerTest.cs" />
+    <Compile Include="SMSD\Algorithms\VFLib\VFMapperTest.cs" />
+    <Compile Include="SMSD\Factory\SubStructureSearchAlgorithmsTest.cs" />
+    <Compile Include="SMSD\Filters\ChemicalFiltersTest.cs" />
+    <Compile Include="SMSD\Filters\PostFilterTest.cs" />
+    <Compile Include="SMSD\Global\TimeOutTest.cs" />
+    <Compile Include="SMSD\Helper\BinaryTreeTest.cs" />
+    <Compile Include="SMSD\Helper\BondEnergyTest.cs" />
+    <Compile Include="SMSD\Helper\FinalMappingsTest.cs" />
+    <Compile Include="SMSD\Helper\LabelContainerTest.cs" />
+    <Compile Include="SMSD\Helper\MolHandlerTest.cs" />
+    <Compile Include="SMSD\AbstractMCSAlgorithmTest.cs" />
+    <Compile Include="SMSD\AbstractMCSTest.cs" />
+    <Compile Include="SMSD\AbstractSubGraphTest.cs" />
+    <Compile Include="SMSD\SMSDBondInsensitiveTest.cs" />
+    <Compile Include="SMSD\SMSDBondSensitiveTest.cs" />
+    <Compile Include="SMSD\SMSDTest.cs" />
+    <Compile Include="SMSD\Tools\BondEnergiesTest.cs" />
+    <Compile Include="SMSD\Tools\ExtAtomContainerManipulatorTest.cs" />
+    <Compile Include="SMSD\Tools\MoleculeSanityCheckTest.cs" />
+    <Compile Include="Stereo\CyclicCarbohydrateRecognitionTest.cs" />
+    <Compile Include="Stereo\DoubleBondStereochemistryTest.cs" />
+    <Compile Include="Stereo\ExtendedTetrahedralTest.cs" />
+    <Compile Include="Stereo\FischerRecognitionTest.cs" />
+    <Compile Include="Stereo\StereocentersTest.cs" />
+    <Compile Include="Stereo\StereoElementFactoryTest.cs" />
+    <Compile Include="Stereo\StereoToolTest.cs" />
+    <Compile Include="Stereo\TetrahedralChiralityTest.cs" />
+    <Compile Include="StructGen\RandomStructureGeneratorTest.cs" />
+    <Compile Include="StructGen\SingleStructureRandomGeneratorTest.cs" />
+    <Compile Include="StructGen\Stochastic\Operator\ChemGraphTest.cs" />
+    <Compile Include="StructGen\Stochastic\Operator\CrossoverMachineTest.cs" />
+    <Compile Include="StructGen\Stochastic\PartialFilledStructureMergerTest.cs" />
+    <Compile Include="StructGen\VicinitySamplerTest.cs" />
+    <Compile Include="Tautomers\InChITautomerGeneratorTest.cs" />
+    <Compile Include="Templates\AminoAcidsTest.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\ParserTest.cs" />
+    <EmbeddedResource Include="Smiles\SMARTS\Parser\cnssmarts.sdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Compile Include="Smiles\SMARTS\Parser\RecursiveTest.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SmartsDumpVisitorTest.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SmartsQueryVisitorTest.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SMARTSSearchTest.cs" />
+    <Compile Include="Smiles\SMARTS\Parser\SmartsStereoTest.cs" />
+    <Compile Include="Smiles\SMARTS\SmartsPatternTest.cs" />
+    <Compile Include="Smiles\SMARTS\SMARTSQueryToolTest.cs" />
+    <Compile Include="Tools\ATASaturationCheckerTest.cs" />
+    <Compile Include="Tools\CDKHydrogenAdderTest.cs" />
+    <Compile Include="Tools\CDKValencyCheckerTest.cs" />
+    <Compile Include="Tools\DataFeaturesTest.cs" />
+    <Compile Include="Tools\DeduceBondOrderTestFromExplicitHydrogens.cs" />
+    <Compile Include="Tools\ElementComparatorTest.cs" />
+    <Compile Include="Tools\AtomicPropertiesTest.cs" />
+    <Compile Include="Tools\HOSECodeGeneratorTest.cs" />
+    <Compile Include="Tools\IDCreatorTest.cs" />
+    <Compile Include="Tools\LonePairElectronCheckerTest.cs" />
+    <Compile Include="Tools\Manipulator\AminoAcidManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerComparatorBy2DCenterTest.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerComparatorTest.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\AtomContainerSetManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\AtomTypeManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\BondManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ChemFileManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ChemModelManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ChemSequenceManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaRangeManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\MolecularFormulaSetManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\MoleculeSetManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ReactionManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ReactionSchemeManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\ReactionSetManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\RingManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\RingSetManipulatorTest.cs" />
+    <Compile Include="Tools\Manipulator\RingSizeComparatorTest.cs" />
+    <Compile Include="Tools\ProteinBuilderToolTest.cs" />
+    <Compile Include="Tools\SaturationCheckerTest.cs" />
+    <Compile Include="Tools\StructureResonanceGeneratorTest.cs" />
+    <Compile Include="Validate\ProblemMarkerTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Data\MDL\0002.stg01.rxn" />
+    <EmbeddedResource Include="Data\MDL\0024.stg02.rxn" />
+    <EmbeddedResource Include="Data\MDL\2,5-dimethyl-furan.mol" />
+    <EmbeddedResource Include="Data\MDL\332727182.radical.mol" />
+    <EmbeddedResource Include="Data\MDL\540545.mol" />
+    <EmbeddedResource Include="Data\MDL\5SD.mol" />
+    <EmbeddedResource Include="Data\MDL\9553-with-exp-hyd.mol" />
+    <EmbeddedResource Include="Data\MDL\9553.mol" />
+    <EmbeddedResource Include="Data\MDL\9554-with-exp-hyd.mol" />
+    <EmbeddedResource Include="Data\MDL\9554.mol" />
+    <EmbeddedResource Include="Data\MDL\a-pinene-with-atom-atom-mapping.mol" />
+    <EmbeddedResource Include="Data\MDL\a-pinene-with-undefined-stereo.mol" />
+    <EmbeddedResource Include="Data\MDL\a-pinene-with-valence.mol" />
+    <EmbeddedResource Include="Data\MDL\a-pinene.mol" />
+    <EmbeddedResource Include="Data\MDL\ADN.mol" />
+    <EmbeddedResource Include="Data\MDL\ADP.mol" />
+    <EmbeddedResource Include="Data\MDL\ADP_H.mol" />
+    <EmbeddedResource Include="Data\MDL\allmol231.mol" />
+    <EmbeddedResource Include="Data\MDL\allmol232.mol" />
+    <EmbeddedResource Include="Data\MDL\atomValueLines.mol" />
+    <EmbeddedResource Include="Data\MDL\ATP.mol" />
+    <EmbeddedResource Include="Data\MDL\ATP_H.mol" />
+    <EmbeddedResource Include="Data\MDL\azulene.mol" />
+    <EmbeddedResource Include="Data\MDL\big.mol" />
+    <EmbeddedResource Include="Data\MDL\bismuth-ion.mol" />
+    <EmbeddedResource Include="Data\MDL\boronBuckyBall.mol" />
+    <EmbeddedResource Include="Data\MDL\BremserPredictionTest.mol" />
+    <EmbeddedResource Include="Data\MDL\brenda_molfile_rgroup.mol" />
+    <EmbeddedResource Include="Data\MDL\buckyball.mol" />
+    <EmbeddedResource Include="Data\MDL\bug-1649526.mol" />
+    <EmbeddedResource Include="Data\MDL\bug-1788686-adamantane-biphenyl.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1014344-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1089770-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1089770-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1241421.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1295.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1328739.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1587283.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1772609.mol" />
+    <EmbeddedResource Include="Data\MDL\bug1784850.mol" />
+    <EmbeddedResource Include="Data\MDL\bug2831420.mol" />
+    <EmbeddedResource Include="Data\MDL\bug2846213.mol" />
+    <EmbeddedResource Include="Data\MDL\bug3485634.mol" />
+    <EmbeddedResource Include="Data\MDL\bug599540.mol" />
+    <EmbeddedResource Include="Data\MDL\bug682233.mol" />
+    <EmbeddedResource Include="Data\MDL\bug698152.mol" />
+    <EmbeddedResource Include="Data\MDL\bug706786-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug706786-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug716259.mol" />
+    <EmbeddedResource Include="Data\MDL\bug771485-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug771485-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug853254-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug853254-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug931608-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug931608-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug934819-1.mol" />
+    <EmbeddedResource Include="Data\MDL\bug934819-2.mol" />
+    <EmbeddedResource Include="Data\MDL\bug982782.mol" />
+    <EmbeddedResource Include="Data\MDL\bugtest.mol" />
+    <EmbeddedResource Include="Data\MDL\bug_1750968.mol" />
+    <EmbeddedResource Include="Data\MDL\butadiene.mol" />
+    <EmbeddedResource Include="Data\MDL\Butane-TestFF-output.mol" />
+    <EmbeddedResource Include="Data\MDL\Butane-TestFF.mol" />
+    <EmbeddedResource Include="Data\MDL\butanoic_acid.mol" />
+    <EmbeddedResource Include="Data\MDL\C03374.mol" />
+    <EmbeddedResource Include="Data\MDL\C05787.mol" />
+    <EmbeddedResource Include="Data\MDL\C12308.mol" />
+    <EmbeddedResource Include="Data\MDL\carbocations.mol" />
+    <EmbeddedResource Include="Data\MDL\chebi.querybond.51736.mol" />
+    <EmbeddedResource Include="Data\MDL\chebifind.mol" />
+    <EmbeddedResource Include="Data\MDL\chebisearch.mol" />
+    <EmbeddedResource Include="Data\MDL\ChEBI_26120.mol" />
+    <EmbeddedResource Include="Data\MDL\ChEBI_29293.mol" />
+    <EmbeddedResource Include="Data\MDL\ChEBI_30668.mol" />
+    <EmbeddedResource Include="Data\MDL\ChEBI_37340.mol" />
+    <EmbeddedResource Include="Data\MDL\chemblMolregno5369.mol" />
+    <EmbeddedResource Include="Data\MDL\chemblMolregno7039.mol" />
+    <EmbeddedResource Include="Data\MDL\choloylcoa.mol" />
+    <EmbeddedResource Include="Data\MDL\clorobenzene.mol" />
+    <EmbeddedResource Include="Data\MDL\CPD-7272.mol" />
+    <EmbeddedResource Include="Data\MDL\cyclooctadien.mol" />
+    <EmbeddedResource Include="Data\MDL\cyclooctan.mol" />
+    <EmbeddedResource Include="Data\MDL\cycloocten.mol" />
+    <EmbeddedResource Include="Data\MDL\cyclopropane.mol" />
+    <EmbeddedResource Include="Data\MDL\D+-glucose.mol" />
+    <EmbeddedResource Include="Data\MDL\d-ala.mol" />
+    <EmbeddedResource Include="Data\MDL\D-mannose.mol" />
+    <EmbeddedResource Include="Data\MDL\decalin.mol" />
+    <EmbeddedResource Include="Data\MDL\diadamantane-cubane.mol" />
+    <EmbeddedResource Include="Data\MDL\Ethane-TestFF-output.mol" />
+    <EmbeddedResource Include="Data\MDL\Ethane-TestFF.mol" />
+    <EmbeddedResource Include="Data\MDL\e_butene_0d.mol" />
+    <EmbeddedResource Include="Data\MDL\e_butene_2d.mol" />
+    <EmbeddedResource Include="Data\MDL\e_butene_3d.mol" />
+    <EmbeddedResource Include="Data\MDL\figueras-test-buried.mol" />
+    <EmbeddedResource Include="Data\MDL\figueras-test-inring.mol" />
+    <EmbeddedResource Include="Data\MDL\figueras-test-sep3D.mol" />
+    <EmbeddedResource Include="Data\MDL\formulatest.mol" />
+    <EmbeddedResource Include="Data\MDL\four-ring-5x10.mol" />
+    <EmbeddedResource Include="Data\MDL\frag5.mol" />
+    <EmbeddedResource Include="Data\MDL\furan.mol" />
+    <EmbeddedResource Include="Data\MDL\glycine-short-lines.mol" />
+    <EmbeddedResource Include="Data\MDL\heptane-modelbuilder-output.mol" />
+    <EmbeddedResource Include="Data\MDL\heptane-modelbuilder.mol" />
+    <EmbeddedResource Include="Data\MDL\Heptane-TestFF-output.mol" />
+    <EmbeddedResource Include="Data\MDL\Heptane-TestFF.mol" />
+    <EmbeddedResource Include="Data\MDL\heptane.mol" />
+    <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic-output.mol" />
+    <EmbeddedResource Include="Data\MDL\heptane_almost_cyclic.mol" />
+    <EmbeddedResource Include="Data\MDL\het5.mol" />
+    <EmbeddedResource Include="Data\MDL\hisotopes.mol" />
+    <EmbeddedResource Include="Data\MDL\hydroxyamino.mol" />
+    <EmbeddedResource Include="Data\MDL\iridiumCoordination.chebi52748.mol" />
+    <EmbeddedResource Include="Data\MDL\iron-iii.mol" />
+    <EmbeddedResource Include="Data\MDL\isopropylacetate.mol" />
+    <EmbeddedResource Include="Data\MDL\l-ala.mol" />
+    <EmbeddedResource Include="Data\MDL\mappingTest.rxn" />
+    <EmbeddedResource Include="Data\MDL\massnumber.mol" />
+    <EmbeddedResource Include="Data\MDL\mdlWithBond4.mol" />
+    <EmbeddedResource Include="Data\MDL\methylbenzol.mol" />
+    <EmbeddedResource Include="Data\MDL\mmff94AtomTypeTest_molecule.mol" />
+    <EmbeddedResource Include="Data\MDL\molV3000.mol" />
+    <EmbeddedResource Include="Data\MDL\mol_testAliasAtomNaming.mol" />
+    <EmbeddedResource Include="Data\MDL\mol_testAtomParity.mol" />
+    <EmbeddedResource Include="Data\MDL\multipleRadicals.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest1.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest10.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest11.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest2.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest3.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest4.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest5.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest6.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest6_3d.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest6_3d_2.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest7.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest8.mol" />
+    <EmbeddedResource Include="Data\MDL\murckoTest9.mol" />
+    <EmbeddedResource Include="Data\MDL\NN_dimethylaniline.mol" />
+    <EmbeddedResource Include="Data\MDL\nonConnectedPiSystems.mol" />
+    <EmbeddedResource Include="Data\MDL\Ooporphyrin.mol" />
+    <EmbeddedResource Include="Data\MDL\output.rxn" />
+    <EmbeddedResource Include="Data\MDL\output_Cleaned.rxn" />
+    <EmbeddedResource Include="Data\MDL\piSystemCumulative.mol" />
+    <EmbeddedResource Include="Data\MDL\piSystemWithCarbokation.mol" />
+    <EmbeddedResource Include="Data\MDL\polycarpol.mol" />
+    <EmbeddedResource Include="Data\MDL\porphyrin.mol" />
+    <EmbeddedResource Include="Data\MDL\prediction-test.mol" />
+    <EmbeddedResource Include="Data\MDL\prev2000.sd" />
+    <EmbeddedResource Include="Data\MDL\pseudoatomsv3000.mol" />
+    <EmbeddedResource Include="Data\MDL\qsar-reaction-test.rdf" />
+    <EmbeddedResource Include="Data\MDL\queryBondTypes.mol" />
+    <EmbeddedResource Include="Data\MDL\r-group-with-alias.mol" />
+    <EmbeddedResource Include="Data\MDL\reaction-1.rxn" />
+    <EmbeddedResource Include="Data\MDL\reaction-2.rxn" />
+    <EmbeddedResource Include="Data\MDL\reaction-3.rxn" />
+    <EmbeddedResource Include="Data\MDL\reaction-4.rxn" />
+    <EmbeddedResource Include="Data\MDL\reaction_v3.rxn" />
+    <EmbeddedResource Include="Data\MDL\reserpine.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.1.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.2.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.3.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.4.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.5.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.6.mol" />
+    <EmbeddedResource Include="Data\MDL\rgfile.7.mol" />
+    <EmbeddedResource Include="Data\MDL\rgroups.mol" />
+    <EmbeddedResource Include="Data\MDL\rgroupsNumbered.mol" />
+    <EmbeddedResource Include="Data\MDL\ring_03419.mol" />
+    <EmbeddedResource Include="Data\MDL\saturationcheckertest.mol" />
+    <EmbeddedResource Include="Data\MDL\sdg_test.mol" />
+    <EmbeddedResource Include="Data\MDL\shortest_path_test.mol" />
+    <EmbeddedResource Include="Data\MDL\singleDoubletRadical.mol" />
+    <EmbeddedResource Include="Data\MDL\singleSingletRadical.mol" />
+    <EmbeddedResource Include="Data\MDL\singleTripletRadical.mol" />
+    <EmbeddedResource Include="Data\MDL\six-ring-4x4.mol" />
+    <EmbeddedResource Include="Data\MDL\squareplanar.mol" />
+    <EmbeddedResource Include="Data\MDL\Strychnine_nichtOK.mol" />
+    <EmbeddedResource Include="Data\MDL\sulfurCompound.mol" />
+    <EmbeddedResource Include="Data\MDL\superspiro.mol" />
+    <EmbeddedResource Include="Data\MDL\testdoublebondconfig.mol" />
+    <EmbeddedResource Include="Data\MDL\testisopropylacetate.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral_1.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral_1_lazy.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral_2_lazy.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral_with_four_wedges.mol" />
+    <EmbeddedResource Include="Data\MDL\thiamin.mol" />
+    <EmbeddedResource Include="Data\MDL\too.many.rings.mol" />
+    <EmbeddedResource Include="Data\MDL\triacylglycerols.mol" />
+    <EmbeddedResource Include="Data\MDL\trigonal_bipyramidal.mol" />
+    <EmbeddedResource Include="Data\MDL\with000coordinate.mol" />
+    <EmbeddedResource Include="Data\MDL\withcharges.mol" />
+    <EmbeddedResource Include="Data\HIN\arorings.hin" />
+    <EmbeddedResource Include="Data\HIN\benzene.hin" />
+    <EmbeddedResource Include="Data\HIN\bug2984581.hin" />
+    <EmbeddedResource Include="Data\HIN\connectivity1.hin" />
+    <EmbeddedResource Include="Data\HIN\gravindex.hin" />
+    <EmbeddedResource Include="Data\HIN\molecule2.hin" />
+    <EmbeddedResource Include="Data\HIN\molecule3.hin" />
+    <EmbeddedResource Include="Data\HIN\momi2.hin" />
+    <EmbeddedResource Include="Data\HIN\multiple.hin" />
+    <EmbeddedResource Include="Data\MDL\ChEBI_81539.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-all-labelled.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-embedded-space.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-leading-trailing-space.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-longest-label.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-one-label.mol" />
+    <EmbeddedResource Include="Data\MDL\chemsketch-printable-ascii.mol" />
+    <EmbeddedResource Include="Data\MDL\nylon-6-source-rep.mol" />
+    <EmbeddedResource Include="Data\MDL\nylon-6-structure-rep.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-abbrv.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-mod-example.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-ord-mixture.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-peptide.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-ran-copolymer.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-def.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-sru-bad-scn.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-sru-bracketstyles.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-sru.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-unord-mixture.mol" />
+    <EmbeddedResource Include="Data\MDL\sgroup-xl-copolymer.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withExpH.mol" />
+    <EmbeddedResource Include="Data\MDL\tetrahedral-parity-withImplH.mol" />
+    <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-contracted.mol" />
+    <EmbeddedResource Include="Data\MDL\triphenyl-phosphate-expanded.mol" />
+    <EmbeddedResource Include="Data\CML\%281R%29-1-aminoethan-1-ol-malformedDictRef.cml" />
+    <EmbeddedResource Include="Data\CML\%281R%29-1-aminoethan-1-ol-multipleBondStereo.cml" />
+    <EmbeddedResource Include="Data\CML\%281R%29-1-aminoethan-1-ol.cml" />
+    <EmbeddedResource Include="Data\CML\100-11-8.cml" />
+    <EmbeddedResource Include="Data\CML\1CKV_1.cml" />
+    <EmbeddedResource Include="Data\CML\3.cml" />
+    <EmbeddedResource Include="Data\CML\a-pinen.cml" />
+    <EmbeddedResource Include="Data\CML\aelfred2_test.cml" />
+    <EmbeddedResource Include="Data\CML\AlanineTree.cml" />
+    <EmbeddedResource Include="Data\CML\AlanineTreeReverse.cml" />
+    <EmbeddedResource Include="Data\CML\benzene.cml" />
+    <EmbeddedResource Include="Data\CML\bug1014344-1.cml" />
+    <EmbeddedResource Include="Data\CML\bug1535055.cml" />
+    <EmbeddedResource Include="Data\CML\bug639455.cml" />
+    <EmbeddedResource Include="Data\CML\butadiene.cml" />
+    <EmbeddedResource Include="Data\CML\cmlConciseFormula.cml" />
+    <EmbeddedResource Include="Data\CML\cmlConciseFormula2.cml" />
+    <EmbeddedResource Include="Data\CML\cmlWithFormula.cml" />
+    <EmbeddedResource Include="Data\CML\COONa.cml" />
+    <EmbeddedResource Include="Data\CML\cs2a.cml" />
+    <EmbeddedResource Include="Data\CML\cs2a.mol.cml" />
+    <EmbeddedResource Include="Data\CML\custompropertiestest.cml" />
+    <EmbeddedResource Include="Data\CML\cyclohexane-xdrawchem.cml" />
+    <EmbeddedResource Include="Data\CML\dictref.cml" />
+    <EmbeddedResource Include="Data\CML\estron.cml" />
+    <EmbeddedResource Include="Data\CML\isolated_ringsystems.cml" />
+    <EmbeddedResource Include="Data\CML\keggtest.cml" />
+    <EmbeddedResource Include="Data\CML\methanol1.cml" />
+    <EmbeddedResource Include="Data\CML\methanol2.cml" />
+    <EmbeddedResource Include="Data\CML\mol28.cml" />
+    <EmbeddedResource Include="Data\CML\molAndspect.cml" />
+    <EmbeddedResource Include="Data\CML\naphtalene.cml" />
+    <EmbeddedResource Include="Data\CML\nitrate.cml" />
+    <EmbeddedResource Include="Data\CML\nsc2dmol.1.cml" />
+    <EmbeddedResource Include="Data\CML\nsc2dmol.2.cml" />
+    <EmbeddedResource Include="Data\CML\nsc2dmol.a1.cml" />
+    <EmbeddedResource Include="Data\CML\nsc2dmol.a2.cml" />
+    <EmbeddedResource Include="Data\CML\nsc3dmol.1.cml" />
+    <EmbeddedResource Include="Data\CML\nsc3dmol.2.cml" />
+    <EmbeddedResource Include="Data\CML\nsc3dmol.a1.cml" />
+    <EmbeddedResource Include="Data\CML\nsc3dmol.a2.cml" />
+    <EmbeddedResource Include="Data\CML\olaCmlAtomType.cml" />
+    <EmbeddedResource Include="Data\CML\Ooporphyrin.cml" />
+    <EmbeddedResource Include="Data\CML\overlaptest.cml" />
+    <EmbeddedResource Include="Data\CML\overlaptest2.cml" />
+    <EmbeddedResource Include="Data\CML\overlaptest3.cml" />
+    <EmbeddedResource Include="Data\CML\phosphate.cml" />
+    <EmbeddedResource Include="Data\CML\r.cml" />
+    <EmbeddedResource Include="Data\CML\reaction.1.cml" />
+    <EmbeddedResource Include="Data\CML\reaction.2.cml" />
+    <EmbeddedResource Include="Data\CML\reaction.ArginineFragmentation.cml" />
+    <EmbeddedResource Include="Data\CML\reactionList.1.cml" />
+    <EmbeddedResource Include="Data\CML\reactionScheme.1.cml" />
+    <EmbeddedResource Include="Data\CML\reactionScheme.2.cml" />
+    <EmbeddedResource Include="Data\CML\reactionSchemeMoleculeSet.cml" />
+    <EmbeddedResource Include="Data\CML\reactionSchemeStepList.1.cml" />
+    <EmbeddedResource Include="Data\CML\reactionStepList.1.cml" />
+    <EmbeddedResource Include="Data\CML\SL0016a.cml" />
+    <EmbeddedResource Include="Data\CML\smiles1.cml" />
+    <EmbeddedResource Include="Data\CML\smiles2.cml" />
+    <EmbeddedResource Include="Data\CML\SN1_reaction.cml" />
+    <EmbeddedResource Include="Data\CML\test1.cml" />
+    <EmbeddedResource Include="Data\CML\testBug777488-1-AllRingsFinder.cml" />
+    <EmbeddedResource Include="Data\CML\testBug777488-2-AllRingsFinder.cml" />
+    <EmbeddedResource Include="Data\CML\testBug777488-3-AllRingsFinder.cml" />
+    <EmbeddedResource Include="Data\CML\toluene.cml" />
+    <EmbeddedResource Include="IO\1100784.cif" />
+    <EmbeddedResource Include="IO\CLMW1.mol2" />
+    <EmbeddedResource Include="IO\multicenterBond.mol" />
+    <EmbeddedResource Include="Data\InChI\benzoicacid.inchi" />
+    <EmbeddedResource Include="Data\InChI\Figure04.inchi" />
+    <EmbeddedResource Include="Data\InChI\guanine.inchi" />
+    <EmbeddedResource Include="Data\InChI\H2O.inchi" />
+    <EmbeddedResource Include="Data\CDD\Binders-ECFP6-1024-loo.bayesian" />
+    <EmbeddedResource Include="Data\CDD\Binders-ECFP6-32768-xv5.bayesian" />
+    <EmbeddedResource Include="Data\CDD\Binders-FCFP6-0-loo.bayesian" />
+    <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-1024-loo.bayesian" />
+    <EmbeddedResource Include="Data\CDD\MLProbes-ECFP6-32768-xv5.bayesian" />
+    <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-0-loo.bayesian" />
+    <EmbeddedResource Include="Data\CDD\MLProbes-FCFP6-256-xv3.bayesian" />
+    <EmbeddedResource Include="Data\Smiles\c10h16isomers.smi" />
+    <EmbeddedResource Include="Data\Smiles\drugs.smi" />
+    <EmbeddedResource Include="Data\Smiles\smiles.smi" />
+    <EmbeddedResource Include="Data\Smiles\tabs.smi" />
+    <EmbeddedResource Include="Data\Smiles\test.smi" />
+    <EmbeddedResource Include="Data\Smiles\test2.smi" />
+    <EmbeddedResource Include="Data\Smiles\test3.smi" />
+    <EmbeddedResource Include="IO\pseudoAtomReplacement.mol" />
+    <EmbeddedResource Include="IO\US06358966-20020319-C00001-enr.cml" />
+    <EmbeddedResource Include="Data\CDD\circular_validation.zip" />
+    <EmbeddedResource Include="Data\XYZ\bf3.xyz" />
+    <EmbeddedResource Include="Data\XYZ\bf3.xyz.gz" />
+    <EmbeddedResource Include="Data\XYZ\hydrogen.xyz" />
+    <EmbeddedResource Include="Data\XYZ\viagra.xyz" />
+    <EmbeddedResource Include="Data\XYZ\viagra_withComment.xyz" />
+    <EmbeddedResource Include="Data\Mol2\actives.mol2" />
+    <EmbeddedResource Include="Data\Mol2\atomtyping.mol2" />
+    <EmbeddedResource Include="Data\Mol2\atomtyping2.mol2" />
+    <EmbeddedResource Include="Data\Mol2\atomtyping3.mol2" />
+    <EmbeddedResource Include="Data\Mol2\atomtyping4.mol2" />
+    <EmbeddedResource Include="Data\Mol2\fromWebsite.mol2" />
+    <EmbeddedResource Include="Data\Mol2\NCI_feb03_2D.mol2.gz" />
+    <EmbeddedResource Include="Data\ASN\PubChem\cid1.asn" />
+    <EmbeddedResource Include="Data\ASN\PubChem\list.asn" />
+    <EmbeddedResource Include="Data\PDB\hugeMembrane.pdb.gz" />
+    <EmbeddedResource Include="Data\MOPAC\ethylene.dat.out" />
+    <EmbeddedResource Include="Data\ABINIT\t54.in" />
+    <EmbeddedResource Include="Data\Aces2\ch3oh_ace.out" />
+    <EmbeddedResource Include="Data\ADF\ammonia.adf.out" />
+    <EmbeddedResource Include="Data\ARFF\Acetyl_EthylWithoutHetero.arff" />
+    <EmbeddedResource Include="Data\ARFF\Carbonyl1.arff" />
+    <EmbeddedResource Include="Data\ARFF\ConjugatedPiSys.arff" />
+    <EmbeddedResource Include="Data\ARFF\HeteroAtom1.arff" />
+    <EmbeddedResource Include="Data\ARFF\PySystWithHetero.arff" />
+    <EmbeddedResource Include="Data\ARFF\Table1.arff" />
+    <EmbeddedResource Include="Data\ARFF\Table2.arff" />
+    <EmbeddedResource Include="Data\ARFF\Table3.arff" />
+    <EmbeddedResource Include="Data\ARFF\Table4.arff" />
+    <EmbeddedResource Include="Data\CrystClust\estron.crystclust" />
+    <EmbeddedResource Include="Data\CTX\methanol_with_descriptors.ctx" />
+    <EmbeddedResource Include="Data\Gamess\ch3oh_gam.out" />
+    <EmbeddedResource Include="Data\Gamess\Cl2O.log" />
+    <EmbeddedResource Include="Data\Gaussian\4-cyanophenylnitrene-Benzazirine-TS.g94.out" />
+    <EmbeddedResource Include="Data\Gaussian\ch3oh_g94.out" />
+    <EmbeddedResource Include="Data\Gaussian\g98.out" />
+    <EmbeddedResource Include="Data\Gaussian\g98ReaderNMRTest.log" />
+    <EmbeddedResource Include="Data\Gaussian\phenol-without-para-H.g98.out" />
+    <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g92.out" />
+    <EmbeddedResource Include="Data\Gaussian\phenylnitrene.g94.out" />
+    <EmbeddedResource Include="Data\Gaussian\tms.log" />
+    <EmbeddedResource Include="Data\Ghemical\ethene.mm1gp" />
+    <EmbeddedResource Include="Data\IChI\3-aminocyclopentene.ichi" />
+    <EmbeddedResource Include="Data\IChI\random.ichi" />
+    <EmbeddedResource Include="Data\IChI\reserpine.ichi" />
+    <EmbeddedResource Include="Data\Jaguar\ch4-opt.out" />
+    <EmbeddedResource Include="Data\MoSS\TKO.mossoutput" />
+    <EmbeddedResource Include="Data\OWL\molecule.n3" />
+    <EmbeddedResource Include="Data\PMP\aceticacid.pmp" />
+    <EmbeddedResource Include="Data\PMP\two_aceticacid.pmp" />
+    <EmbeddedResource Include="Data\ShelX\frame_1.res" />
+    <EmbeddedResource Include="Data\VASP\LiMoS2_optimisation_ISIF3.vasp" />
+    <EmbeddedResource Include="Data\CDD\aromring_validation.zip" />
+    <EmbeddedResource Include="Data\CDD\pyridineacid.mol" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NCDK\NCDK.csproj">
+      <Project>{b0b5eacf-5f39-42d0-bacd-1ff559ccc8b2}</Project>
+      <Name>NCDK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\W3C\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

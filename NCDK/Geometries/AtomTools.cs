@@ -1,0 +1,426 @@
+/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  */
+using NCDK.Numerics;
+using System;
+using System.Linq;
+
+namespace NCDK.Geometries
+{
+    /// <summary>
+    /// A set of static utility classes for geometric calculations on Atoms.
+    /// </summary>
+    // @author Peter Murray-Rust
+    // @cdk.githash
+    // @cdk.created 2003-06-14
+    public class AtomTools
+    {
+        public readonly static double TETRAHEDRAL_ANGLE = 2.0 * Math.Acos(1.0 / Math.Sqrt(3.0));
+
+        /**
+         * Generate coordinates for all atoms which are singly bonded and have
+         * no coordinates. This is useful when hydrogens are present but have
+         * no coordinates. It knows about C, O, N, S only and will give tetrahedral or
+         * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
+         * if available. Angles are tetrahedral or trigonal
+         *
+         * @param atomContainer the set of atoms involved
+         *
+         * @cdk.keyword coordinate calculation
+         * @cdk.keyword 3D model
+         */
+        public static void add3DCoordinates1(IAtomContainer atomContainer)
+        {
+            // atoms without coordinates
+            IAtomContainer noCoords = atomContainer.Builder.CreateAtomContainer();
+            // get vector of possible referenceAtoms?
+            IAtomContainer refAtoms = atomContainer.Builder.CreateAtomContainer();
+            foreach (var atom in atomContainer.Atoms)
+            {
+                // is this atom without 3D coords, and has only one ligand?
+                if (atom.Point3D == null)
+                {
+                    var connectedAtoms = atomContainer.GetConnectedAtoms(atom).ToList();
+                    if (connectedAtoms.Count == 1)
+                    {
+                        IAtom refAtom = (IAtom)connectedAtoms[0];
+                        if (refAtom.Point3D != null)
+                        {
+                            refAtoms.Atoms.Add(refAtom);
+                            // store atoms with no coords and ref atoms in a
+                            // single container
+                            noCoords.Atoms.Add(atom);
+                            noCoords.Atoms.Add(refAtom);
+                            // bond is required to extract ligands
+                            noCoords.Bonds.Add(atomContainer.Builder.CreateBond(atom, refAtom, BondOrder.Single));
+                        }
+                    }
+                }
+            }
+            // now add coordinates to ligands of reference atoms
+            // use default length of 1.0, which can be adjusted later
+            double length = 1.0;
+            double angle = TETRAHEDRAL_ANGLE;
+            foreach (var refAtom in refAtoms.Atoms)
+            {
+                var noCoordLigands = noCoords.GetConnectedAtoms(refAtom).ToList();
+                int nLigands = noCoordLigands.Count();
+                int nwanted = nLigands;
+                string elementType = refAtom.Symbol;
+                // try to deal with lone pairs on small hetero
+                if (elementType.Equals("N") || elementType.Equals("O") || elementType.Equals("S"))
+                {
+                    nwanted = 3;
+                }
+                var newPoints = Calculate3DCoordinatesForLigands(atomContainer, refAtom, nwanted, length, angle);
+                for (int j = 0; j < nLigands; j++)
+                {
+                    IAtom ligand = (IAtom)noCoordLigands[j];
+                    Vector3 newPoint = RescaleBondLength(refAtom, ligand, newPoints[j].Value);
+                    ligand.Point3D = newPoint;
+                }
+            }
+        }
+
+        /**
+         * Rescales Point2 so that length 1-2 is sum of covalent radii.
+         * if covalent radii cannot be found, use bond length of 1.0
+         *
+         * @param  atom1  stationary atom
+         * @param  atom2  movable atom
+         * @param  point2 coordinates for atom 2
+         * @return        new coords for atom 2
+         */
+        public static Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
+        {
+            Vector3 point1 = atom1.Point3D.Value;
+            double d1 = atom1.CovalentRadius.Value;
+            double d2 = atom2.CovalentRadius.Value;
+            // in case we have no covalent radii, set to 1.0
+            double distance = (d1 < 0.1 || d2 < 0.1) ? 1.0 : atom1.CovalentRadius.Value + atom2.CovalentRadius.Value;
+            Vector3 vect = Vector3.Normalize(point2 - point1) * distance;
+            Vector3 newPoint = point1 + vect;
+            return newPoint;
+        }
+
+        /**
+         * Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
+         * Initially designed for hydrogens. The ligands of refAtom are identified
+         * and those with 3D coordinates used to generate the new points. (This
+         * allows structures with partially known 3D coordinates to be used, as when
+         * groups are added.)
+         * "Bent" and "non-planar" groups can be formed by taking a subset of the
+         * calculated points. Thus R-NH2 could use 2 of the 3 points calculated
+         * from (1,iii)
+         * nomenclature: A is point to which new ones are "attached".
+         *     A may have ligands B, C...
+         *     B may have ligands J, K..
+         *     points X1, X2... are returned
+         * The cases (see individual routines, which use idealised geometry by default):
+         * (0) zero ligands of refAtom. The resultant points are randomly oriented:
+         *    (i) 1 points  required; +x,0,0
+         *    (ii) 2 points: use +x,0,0 and -x,0,0
+         *    (iii) 3 points: equilateral triangle in xy plane
+         *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x
+         * (1a) 1 ligand(B) of refAtom which itself has a ligand (J)
+         *    (i) 1 points  required; vector along AB vector
+         *    (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
+         *    (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J
+         * (1b) 1 ligand(B) of refAtom which has no other ligands. A random J is
+         * generated and (1a) applied
+         * (2) 2 ligands(B, C) of refAtom A
+         *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
+         *        linear, no points
+         *    (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i
+         * (3) 3 ligands(B, C, D) of refAtom A
+         *    (i) 1 points  required; if A, B, C, D coplanar, no points.
+         *       else vector is resultant of BA, CA, DA
+
+         * fails if atom itself has no coordinates or >4 ligands
+         *
+         * @param atomContainer describing the ligands of refAtom. It could be the
+         * whole molecule, or could be a selected subset of ligands
+         * @param refAtom (A) to which new ligands coordinates could be added
+         * @param length A-X length
+         * @param angle B-A-X angle (used in certain cases)
+         * @return Point3D[] points calculated. If request could not be fulfilled (e.g.
+         * too many atoms, or strange geometry, returns empty array (zero length,
+         * not null)
+         *
+         * @cdk.keyword coordinate generation
+         */
+        public static Vector3?[] Calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle)
+        {
+            var newPoints = new Vector3?[0];
+            var aPoint = refAtom.Point3D;
+            // get ligands
+            var connectedAtoms = atomContainer.GetConnectedAtoms(refAtom);
+            if (connectedAtoms == null)
+            {
+                return newPoints;
+            }
+            IAtomContainer ligandsWithCoords = atomContainer.Builder.CreateAtomContainer();
+            foreach (var ligand in connectedAtoms)
+            {
+                if (ligand.Point3D != null)
+                {
+                    ligandsWithCoords.Atoms.Add(ligand);
+                }
+            }
+            int nwithCoords = ligandsWithCoords.Atoms.Count;
+            // too many ligands at present
+            if (nwithCoords > 3)
+            {
+                return newPoints;
+            }
+            if (nwithCoords == 0)
+            {
+                newPoints = Calculate3DCoordinates0(refAtom.Point3D.Value, nwanted, length);
+            }
+            else if (nwithCoords == 1)
+            {
+                // ligand on A
+                IAtom bAtom = ligandsWithCoords.Atoms[0];
+                connectedAtoms = ligandsWithCoords.GetConnectedAtoms(bAtom);
+                // does B have a ligand (other than A)
+                IAtom jAtom = null;
+                foreach (var connectedAtom in connectedAtoms)
+                {
+                    if (!connectedAtom.Equals(refAtom))
+                    {
+                        jAtom = connectedAtom;
+                        break;
+                    }
+                }
+                newPoints = Calculate3DCoordinates1(aPoint, bAtom.Point3D, (jAtom != null) ? jAtom.Point3D : null, nwanted, length, angle);
+            }
+            else if (nwithCoords == 2)
+            {
+                var bPoint = ligandsWithCoords.Atoms[0].Point3D;
+                var cPoint = ligandsWithCoords.Atoms[1].Point3D;
+                newPoints = Calculate3DCoordinates2(aPoint, bPoint, cPoint, nwanted, length, angle);
+            }
+            else if (nwithCoords == 3)
+            {
+                var bPoint = ligandsWithCoords.Atoms[0].Point3D;
+                var cPoint = ligandsWithCoords.Atoms[1].Point3D;
+                var dPoint = ligandsWithCoords.Atoms[2].Point3D;
+                newPoints = new Vector3?[1];
+                newPoints[0] = Calculate3DCoordinates3(aPoint.Value, bPoint.Value, cPoint.Value, dPoint.Value, length);
+            }
+            return newPoints;
+        }
+
+        /**
+         * Calculates substituent points.
+         * Calculate substituent points for
+         * (0) zero ligands of aPoint. The resultant points are randomly oriented:
+         *    (i) 1 points  required; +x,0,0
+         *    (ii) 2 points: use +x,0,0 and -x,0,0
+         *    (iii) 3 points: equilateral triangle in xy plane
+         *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
+         *
+         * @param aPoint to which substituents are added
+         * @param nwanted number of points to calculate (1-4)
+         * @param length from aPoint
+         *
+         * @return Vector3[] nwanted points (or zero if failed)
+         */
+        public static Vector3?[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
+        {
+            var points = new Vector3?[0];
+            if (nwanted == 1)
+            {
+                points = new Vector3?[1];
+                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
+            }
+            else if (nwanted == 2)
+            {
+                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
+                points[1] = aPoint + new Vector3(-length, 0.0, 0.0);
+            }
+            else if (nwanted == 3)
+            {
+                points[0] = aPoint + new Vector3(length, 0.0, 0.0);
+                points[1] = aPoint + new Vector3(-length * 0.5, -length * 0.5 * Math.Sqrt(3.0), 0);
+                points[2] = aPoint + new Vector3(-length * 0.5, length * 0.5 * Math.Sqrt(3.0), 0);
+            }
+            else if (nwanted == 4)
+            {
+                double dx = length / Math.Sqrt(3.0);
+                points[0] = aPoint + new Vector3(dx, dx, dx);
+                points[1] = aPoint + new Vector3(dx, -dx, -dx);
+                points[2] = aPoint + new Vector3(-dx, -dx, dx);
+                points[3] = aPoint + new Vector3(-dx, dx, -dx);
+            }
+            return points;
+        }
+
+        /**
+         * Calculate new point(s) X in a B-A system to form B-A-X.
+         * Use C as reference for * staggering about the B-A bond
+         *
+         * (1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C)
+         *    (i) 1 points  required; vector along AB vector
+         *    (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
+         *    (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C
+         * If C is null, a random non-colinear C is generated
+         *
+         * @param aPoint to which substituents are added
+         * @param nwanted number of points to calculate (1-3)
+         * @param length A-X length
+         * @param angle B-A-X angle
+         *
+         * @return Vector3[] nwanted points (or zero if failed)
+         */
+        public static Vector3?[] Calculate3DCoordinates1(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted, double length, double angle)
+        {
+            var points = new Vector3?[nwanted];
+            // BA vector
+            Vector3 ba = Vector3.Normalize(aPoint.Value - bPoint.Value);
+            // if no cPoint, generate a random reference
+            if (cPoint == null)
+            {
+                Vector3 cVector = GetNonColinearVector(ba);
+                cPoint = cVector;
+            }
+            // CB vector
+            Vector3 cb = Vector3.Normalize(bPoint.Value - cPoint.Value);
+            // if A, B, C colinear, replace C by random point
+            double cbdotba = Vector3.Dot(cb, ba);
+            if (cbdotba > 0.999999)
+            {
+                Vector3 cVector = GetNonColinearVector(ba);
+                cPoint = cVector;
+                cb = bPoint.Value - cPoint.Value;
+            }
+            // cbxba = c x b
+            Vector3 cbxba = Vector3.Normalize(Vector3.Cross(cb, ba));
+            // create three perp axes ba, cbxba, and ax
+            Vector3 ax = Vector3.Normalize(Vector3.Cross(cbxba, ba));
+            double drot = Math.PI * 2.0 / (double)nwanted;
+            for (int i = 0; i < nwanted; i++)
+            {
+                double rot = (double)i * drot;
+                points[i] = aPoint.Value;
+                Vector3 vx = ba * (-Math.Cos(angle) * length); ;
+                Vector3 vy = ax * (Math.Cos(rot) * length);
+                Vector3 vz = cbxba * (Math.Sin(rot) * length);
+                points[i] += vx;
+                points[i] += vy;
+                points[i] += vz;
+            }
+            return points;
+        }
+
+        /**
+         * Calculate new point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
+         *
+         * (2) 2 ligands(B, C) of refAtom A
+         *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
+         *        linear, no points
+         *    (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
+         *
+         * @param aPoint to which substituents are added
+         * @param bPoint first ligand of A
+         * @param cPoint second ligand of A
+         * @param nwanted number of points to calculate (1-2)
+         * @param length A-X length
+         * @param angle B-A-X angle
+         *
+         * @return Vector3[] nwanted points (or zero if failed)
+         */
+        public static Vector3?[] Calculate3DCoordinates2(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted,
+                double length, double angle)
+        {
+            var newPoints = new Vector3?[0];
+            double ang2 = angle / 2.0;
+
+            Vector3 ba = aPoint.Value - bPoint.Value;
+            Vector3 ca = aPoint.Value - cPoint.Value;
+            Vector3 baxca = Vector3.Cross(ba, ca);
+            if (baxca.Length() < 0.00000001)
+            {
+                ; // linear
+            }
+            else if (nwanted == 1)
+            {
+                newPoints = new Vector3?[1];
+                Vector3 ax = Vector3.Normalize(ba - ca) * length;
+                newPoints[0] = aPoint.Value + ax;
+            }
+            else if (nwanted == 2)
+            {
+                newPoints = new Vector3?[2];
+                Vector3 ax = Vector3.Normalize(ba + ca) * (Math.Cos(ang2) * length);
+                baxca = Vector3.Normalize(baxca) * (Math.Sin(ang2) * length);
+                newPoints[0] = aPoint.Value + ax + baxca;
+                newPoints[1] = aPoint.Value + ax - baxca;
+            }
+            return newPoints;
+        }
+
+        /**
+         * Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
+         *
+         * (3) 3 ligands(B, C, D) of refAtom A
+         *    (i) 1 points  required; if A, B, C, D coplanar, no points.
+         *       else vector is resultant of BA, CA, DA
+         *
+         * @param aPoint to which substituents are added
+         * @param bPoint first ligand of A
+         * @param cPoint second ligand of A
+         * @param dPoint third ligand of A
+         * @param length A-X length
+         *
+         * @return Vector3 nwanted points (or null if failed (coplanar))
+         */
+        public static Vector3? Calculate3DCoordinates3(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, Vector3 dPoint, double length)
+        {
+            Vector3 v1 = aPoint - bPoint;
+            Vector3 v2 = aPoint - cPoint;
+            Vector3 v3 = aPoint - dPoint;
+            Vector3 v = bPoint + cPoint + dPoint;
+            if (v.Length() < 0.00001)
+            {
+                return null;
+            }
+            v = Vector3.Normalize(v) * length;
+            Vector3 point = aPoint + v;
+            return point;
+        }
+
+        // gets a point not on vector a...b; this can be used to define a plan or cross products
+        private static Vector3 GetNonColinearVector(Vector3 ab)
+        {
+            Vector3 cr = Vector3.Cross(ab, Vector3.UnitX);
+            if (cr.Length() > 0.00001)
+            {
+                return Vector3.UnitX;
+            }
+            else
+            {
+                return Vector3.UnitY;
+            }
+        }
+    }
+}

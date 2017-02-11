@@ -1,0 +1,875 @@
+/* Copyright (C) 1997-2007  The Chemistry Development Kit (CDK) project
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ */
+using NCDK.Common.Collections;
+
+namespace NCDK.Graphs.Invariant
+{
+    /**
+     * This class is intended to provide the user an efficient way of implementing matrix of double number and
+     * using normal operations (linear operations, addition, subtraction, multiplication, inversion, concatenation)
+     * on them. The internal representation of a matrix is an array of array of double objects. For the moment,
+     * double class is the best way I have developed to perform exact operation on numbers; however, for
+     * irdoubles, normal operations on float and doubles have to be performed, with the well-known risks of error
+     * this implies. This class also provides a way of representing matrix as arrays of string for output use.
+     *
+     * <P>Please note that although in most books matrix elements' indexes take values between [1..n] I chose not
+     * to disturb Java language way of calling indexes; so the indexes used here take values between [0..n-1] instead.
+     *
+     * @author Jean-Sebastien Senecal
+     * @cdk.githash
+     * @version 1.0
+     * @cdk.created 1999-05-20
+     */
+    public class GIMatrix
+    {
+
+        private double[][] array; // the matrix itself as an array of doubles
+        private int m, n; // matrix's params (m=no of line, n=no of columns)
+
+        /**
+         * Class constructor. Uses an array of integers to create a new Matrix object. Note that integers
+         * will be converted to double objects so mathematical operations may be properly performed and
+         * provide exact solutions. The given array should be properly instantiated as a matrix i.e. it
+         * must contain a fixed number of lines and columns, otherwise an exception will be thrown.
+         * Array must be at leat 1x1.
+         * @param array an array of integer (first index is the line, second is the column)
+         * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
+         */
+        public GIMatrix(int[][] array)
+        {
+            double[][] temp = new double[array.Length][];
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp[i] = new double[array[i].Length]; // line by line ...
+                for (int j = 0; j < array[i].Length; j++)
+                    temp[i][j] = array[i][j]; // converts ints to doubles
+            }
+            //	VerifyMatrixFormat(temp);
+            this.array = temp;
+            m = temp.Length;
+            n = temp[0].Length;
+        } // constructor Matrix(int[][])
+
+        /**
+         * Class constructor. Uses an array of doubles to create a new Matrix object. The given array should
+         * be properly instantiated as a matrix i.e. it must contain a fixed number of lines and columns,
+         * otherwise an exception will be thrown. Array must be at leat 1x1.
+         *
+         * @param array an array of double objects (first index is the line, second is the column)
+         * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
+         */
+        public GIMatrix(double[][] array)
+        {
+            VerifyMatrixFormat(array);
+            double[][] temp = new double[array.Length][];
+            for (int i = 0; i < array.Length; i++)
+            {
+                temp[i] = new double[array[i].Length]; // line by line ...
+                for (int j = 0; j < array[i].Length; j++)
+                    temp[i][j] = array[i][j];
+            }
+            this.array = temp;
+            m = array.Length;
+            n = array[0].Length;
+        } // constructor Matrix(double[][])
+
+        /**
+         * Class constructor. Creates a new Matrix object with fixed dimensions. The matrix is
+         * initialised to the "zero" matrix.
+         *
+         * @param line number of lines
+         * @param col number of columns
+         */
+        public GIMatrix(int line, int col)
+        {
+            array = Arrays.CreateJagged<double>(line, col);
+            for (int i = 0; i < line; i++)
+                for (int j = 0; j < col; j++)
+                    array[i][j] = 0.0;
+            m = line;
+            n = col;
+        } // constructor Matrix(int,int)
+
+        /**
+         * Class constructor. Copies an already existing Matrix object in a new Matrix object.
+         * @param matrix a Matrix object
+         */
+        public GIMatrix(GIMatrix matrix)
+        {
+            double[][] temp = new double[matrix.Height][];
+            for (int i = 0; i < matrix.Height; i++)
+            {
+                temp[i] = new double[matrix.Width]; // line by line ...
+                for (int j = 0; j < matrix.Width; j++)
+                {
+                    try
+                    {
+                        temp[i][j] = matrix.GetValueAt(i, j);
+                    }
+                    catch (IndexOutOfBoundsException)
+                    {
+                    } // never happens
+                }
+            }
+            this.array = temp;
+            m = array.Length;
+            n = array[0].Length;
+        } // constructor Matrix(Matrix)
+
+        /**
+         * Class constructor. Creates a new Matrix object using a table of matrices (an array of Matrix objects).
+         * The given array should be properly instantiated i.e. it must contain a fixed number of lines and columns,
+         * otherwise an exception will be thrown.
+         * @param table an array of matrices
+         * @exception BadMatrixFormatException if the table is not properly instantiated
+         */
+        public GIMatrix(GIMatrix[][] table)
+        {
+            VerifyTableFormat(table);
+            m = n = 0;
+            for (int i = 0; i < table.Length; i++)
+                m += table[i][0].Height;
+            for (int j = 0; j < table[0].Length; j++)
+                n += table[0][j].Width;
+            double[][] temp = Arrays.CreateJagged<double>(m, n);
+            int k = 0; // counters for matrices
+            for (int i = 0; i < m; i++)
+            {
+                temp[i] = new double[n]; // line by line ...
+                if (i == table[k][0].Height) k++; // last line of matrix reached
+                int h = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (j == table[k][h].Width) h++; // last column of matrix reached
+                    try
+                    {
+                        GIMatrix tempMatrix = table[k][h];
+                        temp[i][j] = tempMatrix.GetValueAt(i - k * tempMatrix.Height, j - h * tempMatrix.Width);
+                    }
+                    catch (IndexOutOfBoundsException)
+                    {
+                    } // never happens
+                }
+            }
+            this.array = temp;
+        } // constructor Matrix(Matrix)
+
+        /**
+         * Returns the number of lines of the matrix.
+         * @return the height of the matrix
+         */
+        public int Height => m;
+
+        /**
+         * Returns the number of columns of the matrix.
+         * @return the width of the matrix
+         */
+        public int Width => n;
+
+        /**
+         * Returns the internal representation of the matrix, that is an array of double objects.
+         * @return an array of double equivalent to the matrix
+         */
+        /**
+         * Resets the value of the matrix to the given array of double numbers.
+         * @param array an array of double objects (first index is the line, second is the column)
+         * @exception BadMatrixFormatException in case the given array is unproper to construct a matrix
+         */
+        public double[][] ArrayValue
+        {
+            get { return array; }
+            set
+            {
+                VerifyMatrixFormat(array);
+                this.array = value;
+            }
+        }
+
+        /**
+         * Returns the value of the given element.
+         * @param i the line number
+         * @param j the column number
+         * @return the double at the given index in the Matrix
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public double GetValueAt(int i, int j)
+        {
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            return array[i][j];
+        } // method GetValueAt(int,int)
+
+        /**
+         * Sets the value of the element at the given index.
+         * @param i the line number
+         * @param j the column number
+         * @param element the double to place at the given index in the Matrix
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public void SetValueAt(int i, int j, double element)
+        {
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            array[i][j] = element;
+        } // method SetValueAt(int,int,double)
+
+        /**
+         * Returns the line-matrix at the given line index.
+         * @param i the line number
+         * @return the specified line as a Matrix object
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public GIMatrix GetLine(int i)
+        {
+            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            double[][] line = Arrays.CreateJagged<double>(1, n);
+            for (int k = 0; k < n; k++)
+                line[0][k] = array[i][k];
+            try
+            {
+                return new GIMatrix(line);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method GetLine(int)
+
+        /**
+         * Returns the column-matrix at the given line index.
+         * @param j the column number
+         * @return the specified column as a Matrix object
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public GIMatrix GetColumn(int j)
+        {
+            if ((j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            double[][] column = Arrays.CreateJagged<double>(m, 1);
+            for (int k = 0; k < m; k++)
+                column[k][0] = array[k][j];
+            try
+            {
+                return new GIMatrix(column);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method GetColumn(int)
+
+        /**
+         * Sets the line of the matrix at the specified index to a new value.
+         * @param i the line number
+         * @param line the line to be placed at the specified index
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a line of this Matrix
+         */
+        public void SetLine(int i, GIMatrix line)
+        {
+            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            if ((line.Height != 1) || (line.Width != n)) throw new BadMatrixFormatException();
+            for (int k = 0; k < n; k++)
+                array[i][k] = line.GetValueAt(0, k);
+        } // method SetLine(int,Matrix)
+
+        /**
+         * Sets the column of the matrix at the specified index to a new value.
+         * @param j the column number
+         * @param column the colums to be placed at the specified index
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         * @exception BadMatrixFormatException in case the given Matrix is unproper to replace a column of this Matrix
+         */
+        public void SetColumn(int j, GIMatrix column)
+        {
+            if ((j < 0) || (j >= n)) throw new IndexOutOfBoundsException();
+            if ((column.Height != m) || (column.Width != 1)) throw new BadMatrixFormatException();
+            for (int k = 0; k < m; k++)
+                array[k][j] = column.GetValueAt(k, 0);
+        } // method SetColumn(int,Matrix)
+
+        /**
+         * Returns the identity matrix.
+         * @param n the matrix's dimension (identity matrix is a square matrix)
+         * @return the identity matrix of format nxn
+         */
+        public static GIMatrix Identity(int n)
+        {
+            double[][] identity = Arrays.CreateJagged<double>(n, n);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < i; j++)
+                    identity[i][j] = 0.0;
+                identity[i][i] = 1.0;
+                for (int j = i + 1; j < n; j++)
+                    identity[i][j] = 0.0;
+            }
+            try
+            {
+                return new GIMatrix(identity);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method Identity(int)
+
+        /**
+         * Returns a null matrix (with zeros everywhere) of given dimensions.
+         * @param m number of lines
+         * @param n number of columns
+         * @return the zero (null) matrix of format mxn
+         */
+        public static GIMatrix Zero(int m, int n)
+        {
+            double[][] zero = Arrays.CreateJagged<double>(m, n);
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    zero[i][j] = 0.0;
+            try
+            {
+                return new GIMatrix(zero);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method Zero(int,int)
+
+        /**
+         * Verifies if two given matrix are equal or not. The matrix must be of the same size and dimensions,
+         * otherwise an exception will be thrown.
+         * @param matrix the Matrix object to be compared to
+         * @return true if both matrix are equal element to element
+         * @exception BadMatrixFormatException if the given matrix doesn't have the same dimensions as this one
+         */
+        public bool Equals(GIMatrix matrix)
+        {
+            if ((Height != matrix.Height) || (Width != matrix.Width)) throw new BadMatrixFormatException();
+            double[][] temp = matrix.ArrayValue;
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    if (!(array[i][j] == temp[i][j])) return false;
+            return true;
+        } // method Equals(Matrix)
+
+        /**
+         * Verifies if the matrix is square, that is if it has an equal number of lines and columns.
+         * @return true if this matrix is square
+         */
+        public bool IsSquare()
+        {
+            return (m == n);
+        } // method IsSquare()
+
+        /**
+         * Verifies if the matrix is symmetric, that is if the matrix is equal to it's transpose.
+         * @return true if the matrix is symmetric
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsSymmetric()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            // the loop looks in the lower half of the matrix to find non-symetric elements
+            for (int i = 1; i < m; i++)
+                // starts at index 1 because index (0,0) always symmetric
+                for (int j = 0; j < i; j++)
+                    if (!(array[i][j] == array[j][i])) return false;
+            return true; // the matrix has passed the test
+        } //method IsSymmetric()
+
+        // NOT OVER, LOOK MORE CAREFULLY FOR DEFINITION
+        /**
+         * Verifies if the matrix is antisymmetric, that is if the matrix is equal to the opposite of
+         * it's transpose.
+         * @return true if the matrix is antisymmetric
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsAntisymmetric()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            // the loop looks in the lower half of the matrix to find non-antisymetric elements
+            for (int i = 0; i < m; i++)
+                // not as IsSymmetric() loop
+                for (int j = 0; j <= i; j++)
+                    if (!(array[i][j] == -array[j][i])) return false;
+            return true; // the matrix has passed the test
+        } // method IsAntisymmetric()
+
+        /**
+         * Verifies if the matrix is triangular superior or not. A triangular superior matrix has
+         * zero (0) values everywhere under it's diagonal.
+         * @return true if the matrix is triangular superior
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsTriangularSuperior()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            // the loop looks in the lower half of the matrix to find non-null elements
+            for (int i = 1; i < m; i++)
+                // starts at index 1 because index (0,0) is on the diagonal
+                for (int j = 0; j < i; j++)
+                    if (!(array[i][j] == 0.0)) return false;
+            return true; // the matrix has passed the test
+        } // method isTriangularSuperior
+
+        /**
+         * Verifies if the matrix is triangular inferior or not. A triangular inferior matrix has
+         * zero (0) values everywhere upper it's diagonal.
+         * @return true if the matrix is triangular inferior
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsTriangularInferior()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            // the loop looks in the upper half of the matrix to find non-null elements
+            for (int i = 1; i < m; i++)
+                // starts at index 1 because index (0,0) is on the diagonal
+                for (int j = i; j < n; j++)
+                    if (!(array[i][j] == 0.0)) return false;
+            return true; // the matrix has passed the test
+        } // method IsTriangularInferior()
+
+        /**
+         * Verifies whether or not the matrix is diagonal. A diagonal matrix only has elements on its diagonal
+         * and zeros (0) at every other index. The matrix must be square.
+         * @return true if the matrix is diagonal
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsDiagonal()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            // the loop looks both halves of the matrix to find non-null elements
+            for (int i = 1; i < m; i++)
+                // starts at index 1 because index (0,0) must not be checked
+                for (int j = 0; j < i; j++)
+                    if ((!(array[i][j] == 0.0)) || (!(array[j][i] == 0.0))) return false; // not null
+            return true;
+        } // method isDiagonal
+
+        /**
+         * Verifies if the matrix is invertible or not by asking for its determinant.
+         * @return true if the matrix is invertible
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public bool IsInvertible()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            return (!(Determinant() == 0)); // det != 0
+        } // method IsInvertible()
+
+        /**
+         * Returns the transpose of this matrix. The transpose of a matrix A = {a(i,j)} is the matrix B = {b(i,j)}
+         * such that b(i,j) = a(j,i) for every i,j i.e. it is the symmetrical reflection of the matrix along its
+         * diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
+         * @return the matrix's transpose as a Matrix object
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public GIMatrix Inverse()
+        {
+            try
+            {
+                if (!IsInvertible()) throw new MatrixNotInvertibleException();
+            }
+            catch (BadMatrixFormatException)
+            {
+                throw new MatrixNotInvertibleException();
+            }
+            GIMatrix I = Identity(n); // Creates an identity matrix of same dimensions
+            GIMatrix table;
+            try
+            {
+                GIMatrix[][] temp = new[] { new[] { this, I } };
+                table = new GIMatrix(temp);
+            }
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            } // never happens
+            table = table.GaussJordan(); // linear reduction method applied
+            double[][] inv = Arrays.CreateJagged<double>(m, n);
+            for (int i = 0; i < m; i++)
+                // extracts inverse matrix
+                for (int j = n; j < 2 * n; j++)
+                {
+                    try
+                    {
+                        inv[i][j - n] = table.GetValueAt(i, j);
+                    }
+                    catch (IndexOutOfBoundsException)
+                    {
+                        return null;
+                    } // never happens
+                }
+            try
+            {
+                return new GIMatrix(inv);
+            }
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            } // never happens...
+        } // method Inverse()
+
+        /**
+         * Gauss-Jordan algorithm. Returns the reduced-echeloned matrix of this matrix. The
+         * algorithm has not yet been optimised but since it is quite simple, it should not be
+         * a serious problem.
+         * @return the reduced matrix
+         */
+        public GIMatrix GaussJordan()
+        {
+            GIMatrix tempMatrix = new GIMatrix(this);
+            try
+            {
+                int i = 0;
+                int j = 0;
+                int k = 0;
+                bool end = false;
+                while ((i < m) && (!end))
+                {
+                    bool allZero = true; // true if all elements under line i are null (zero)
+                    while (j < n)
+                    { // determination of the pivot
+                        for (k = i; k < m; k++)
+                        {
+                            if (!(tempMatrix.GetValueAt(k, j) == 0.0))
+                            { // if an element != 0
+                                allZero = false;
+                                break;
+                            }
+                        }
+                        if (allZero)
+                            j++;
+                        else
+                            break;
+                    }
+                    if (j == n)
+                        end = true;
+                    else
+                    {
+                        if (k != i) tempMatrix = tempMatrix.InvertLine(i, k);
+                        if (!(tempMatrix.GetValueAt(i, j) == 1.0)) // if element != 1
+                            tempMatrix = // A = L(i)(1/a(i,j))(A)
+                            tempMatrix.MultiplyLine(i, 1 / tempMatrix.GetValueAt(i, j));
+                        for (int q = 0; q < m; q++)
+                            if (q != i) // A = L(q,i)(-a(q,j))(A)
+                                tempMatrix = tempMatrix.AddLine(q, i, -tempMatrix.GetValueAt(q, j));
+                    }
+                    i++;
+                }
+                // normally here, r = i-1
+                return tempMatrix;
+            }
+            catch (IndexOutOfBoundsException)
+            {
+                return null;
+            } // never happens... well I hope ;)
+               // From: LEROUX, P. Algebre lineaire: une approche matricielle. Modulo Editeur, 1983. p. 75. (In French)
+        } // method GaussJordan()
+
+        /**
+         * Returns the transpose of this matrix. The transpose of a matrix A = {a(i,j)} is the matrix B = {b(i,j)}
+         * such that b(i,j) = a(j,i) for every i,j i.e. it is the symmetrical reflection of the matrix along its
+         * diagonal. The matrix must be square to use this method, otherwise an exception will be thrown.
+         * @return the matrix's transpose as a Matrix object
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public GIMatrix Transpose()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            double[][] transpose = Arrays.CreateJagged<double>(array.Length, array[0].Length);
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    transpose[i][j] = array[j][i];
+            return new GIMatrix(transpose);
+        } // method Transpose()
+
+        /**
+         * Returns a matrix containing all of the diagonal elements of this matrix and zero (0) everywhere
+         * else. This matrix is called the diagonal of the matrix.
+         * @return the diagonal of the matrix
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public GIMatrix Diagonal()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            double[][] diagonal = Arrays.CreateJagged<double>(array.Length, array[0].Length);
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                {
+                    if (i == j)
+                        diagonal[i][j] = array[i][j];
+                    else
+                        diagonal[i][j] = 0;
+                }
+            return new GIMatrix(diagonal);
+        } // method Diagonal()
+
+        /**
+         * Returns the resulting matrix of an elementary linear operation that consists of multiplying a
+         * single line of the matrix by a constant.
+         * @param i the line number
+         * @param c the double constant that multiplies the line
+         * @return the resulting Matrix object of the linear operation
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public GIMatrix MultiplyLine(int i, double c)
+        {
+            if ((i < 0) || (i >= m)) throw new IndexOutOfBoundsException();
+            double[][] temp = array;
+            for (int k = 0; k < n; k++)
+                temp[i][k] = c * temp[i][k]; // mutliply every member of the line by c
+            try
+            {
+                return new GIMatrix(temp);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method MultiplyLine(int,int)
+
+        /**
+         * Returns the resulting matrix of an elementary linear operation that consists of inverting two lines.
+         * @param i the first line number
+         * @param j the second line number
+         * @return the resulting Matrix object of the linear operation
+         * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+         */
+        public GIMatrix InvertLine(int i, int j)
+        {
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new IndexOutOfBoundsException();
+            double[][] temp = array;
+            double[] tempLine = temp[j]; // temporary line
+            temp[j] = temp[i];
+            temp[i] = tempLine;
+            try
+            {
+                return new GIMatrix(temp);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method InvertLine(int,int)
+
+        /**
+          * Returns the resulting matrix of an elementary linear operation that consists of adding one line,
+          * multiplied by some constant factor, to another line.
+          * @param i the first line number
+          * @param j the second line number (to be added to the first)
+          * @param c the double constant that multiplies the first line
+          * @return the resulting Matrix object of the linear operation
+          * @exception IndexOutOfBoundsException if the given index is out of the matrix's range
+          */
+        public GIMatrix AddLine(int i, int j, double c)
+        {
+            if ((i < 0) || (i >= m) || (j < 0) || (j >= m)) throw new IndexOutOfBoundsException();
+            double[][] temp = array;
+            for (int k = 0; k < n; k++)
+                temp[i][k] = temp[i][k] + c * temp[j][k]; // add multiplied element of i to element of j
+            try
+            {
+                return new GIMatrix(temp);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method AddLine(int,int,double)
+
+        /**
+         *  Addition from two matrices.
+         */
+        public GIMatrix Add(GIMatrix b)
+        {
+            if ((b == null) || (m != b.m) || (n != b.n)) return null;
+
+            int i, j;
+            GIMatrix result = new GIMatrix(m, n);
+            for (i = 0; i < m; i++)
+                for (j = 0; j < n; j++)
+                    result.array[i][j] = array[i][j] + b.array[i][j];
+            return result;
+        }
+
+        /**
+         * Returns the result of the scalar multiplication of the matrix, that is the multiplication of every
+         * of its elements by a given number.
+         * @param c the constant by which the matrix is multiplied
+         * @return the resulting matrix of the scalar multiplication
+         */
+        public GIMatrix Multiply(double c)
+        {
+            double[][] temp = array;
+            for (int i = 0; i < m; i++)
+                for (int j = 0; j < n; j++)
+                    temp[i][j] = c * temp[i][j];
+            try
+            {
+                return new GIMatrix(temp);
+            } // format is always OK anyway ...
+            catch (BadMatrixFormatException)
+            {
+                return null;
+            }
+        } // method Multiply(double)
+
+        /**
+         * Returns the result of the matrix multiplication of this matrix by another one. The matrix passed
+         * as parameter <i>follows</i> this matrix in the multiplication, so for an example if the dimension of
+         * the actual matrix is mxn, the dimension of the second one should be nxp in order for the multiplication
+         * to be performed (otherwise an exception will be thrown) and the resulting matrix will have dimension mxp.
+         * @param matrix the matrix following this one in the matrix multiplication
+         * @return the resulting matrix of the matrix multiplication
+         * @exception BadMatrixFormatException if the matrix passed in arguments has wrong dimensions
+         */
+        public GIMatrix Multiply(GIMatrix matrix)
+        {
+            if (n != matrix.Height) throw new BadMatrixFormatException(); // unsuitable dimensions
+            int p = matrix.Width;
+            double[][] temp = Arrays.CreateJagged<double>(m, p);
+            double[][] multiplied = matrix.ArrayValue;
+            for (int i = 0; i < m; i++)
+                // line index of the first matrix
+                for (int k = 0; k < p; k++)
+                { // column index of the second matrix
+                    temp[i][k] = array[i][0] * multiplied[0][k]; // first multiplication
+                    for (int j = 1; j < n; j++)
+                        // sum of multiplications
+                        temp[i][k] = temp[i][k] + array[i][j] * multiplied[j][k];
+                }
+            return new GIMatrix(temp);
+        } // method Multiply(Matrix)
+
+        /**
+         * Returns the determinant of this matrix. The matrix must be
+         * square in order to use this method, otherwise an exception will be thrown.
+         * <i>Warning: this algorithm is very inefficient and takes too much time to compute
+         * with large matrices.</i>
+         * @return the determinant of the matrix
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public double Determinant()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            return Det(array); // use of recursive method
+        } // method Determinant()
+
+        // Method used for recursive determinant algorithm. Supposes the given array is square.
+        private double Det(double[][] mat)
+        {
+            if (mat.Length == 1) return mat[0][0];
+            double temp = mat[0][0] * Det(M(mat, 0, 0)); // (-1)^(0+0)*m[0][0]*Det(M(i,j)) ... first assignation
+            for (int k = 1; k < mat.Length; k++)
+                temp = temp + (Det(M(mat, 0, k)) * ((k % 2 == 0) ? mat[0][k] : -mat[0][k]));
+            // Note: ((0+k)%2 == 0)?1:-1 is equivalent to (-1)^(0+k)
+            return temp;
+        } // method Det(double[][])
+
+        // Returns the minor of the array (supposed square) i.e. the array least its i-th line
+        // and j-th column
+        private double[][] M(double[][] mat, int i, int j)
+        {
+            double[][] temp = Arrays.CreateJagged<double>(mat.Length - 1, mat[0].Length - 1); // "void minor"
+            for (int k = 0; k < i; k++)
+            {
+                for (int h = 0; h < j; h++)
+                    temp[k][h] = mat[k][h];
+                for (int h = j + 1; h < mat[0].Length; h++)
+                    temp[k][h - 1] = mat[k][h];
+            }
+            for (int k = i + 1; k < mat.Length; k++)
+            {
+                for (int h = 0; h < j; h++)
+                    temp[k - 1][h] = mat[k][h];
+                for (int h = j + 1; h < mat[0].Length; h++)
+                    temp[k - 1][h - 1] = mat[k][h];
+            }
+            return temp;
+        } // method M(double[][],int,int)
+
+        /**
+         * Returns the trace of this matrix, that is the sum of the elements of its diagonal. The matrix must be
+         * square in order to use this method, otherwise an exception will be thrown.
+         * @return the trace of the matrix
+         * @exception BadMatrixFormatException if the matrix is not square
+         */
+        public double Trace()
+        {
+            if (m != n) throw new BadMatrixFormatException();
+            double trace = array[0][0];
+            for (int i = 1; i < m; i++)
+                trace = trace + array[i][i];
+            return trace;
+        } // method Trace()
+
+        //    /**
+        //     * Returns the matrix as a string.
+        //     * The double numbers are printed using the form "p/q" or "a b/c" depending on the value of the bool,
+        //     * and use a minimal number of spaces as specified. It is the user's responsibility to grant a number
+        //     * of spaces wide enough to get proper alignment.
+        //     * @see tatien.toolbox.double#toString
+        //     * @param simple must be true to get simple expression, false otherwise as specified
+        //     * @param spaces number of spaces
+        //     */
+        //    public string print(bool simple, int spaces) {
+        //	string print = "";
+        //	for (int i = 0; i < m; i++) {
+        //	    print = print + array[i][0].ToString(simple,spaces);
+        //	    for (int j = 1; j < n; j++) {
+        //	       print = print + array[i][j].ToString(simple,spaces);
+        //	    }
+        //	    print = print + "\n";
+        //	}
+        //	return print;
+        //    } // method print()
+
+        // Verifies if the matrix is of good format when calling a constructor or setArrayValue
+        private void VerifyMatrixFormat(double[][] testedMatrix)
+        {
+            if ((testedMatrix.Length == 0) || (testedMatrix[0].Length == 0)) throw new BadMatrixFormatException();
+            int noOfColumns = testedMatrix[0].Length;
+            for (int i = 1; i < testedMatrix.Length; i++)
+                if (testedMatrix[i].Length != noOfColumns) throw new BadMatrixFormatException();
+        } // method VerifyMatrixFormat(double[][])
+
+        // In the case of the implementation of a table i.e. an array of matrices, verifies if the table is proper.
+        private void VerifyTableFormat(GIMatrix[][] testedTable)
+        {
+            if ((testedTable.Length == 0) || (testedTable[0].Length == 0)) throw new BadMatrixFormatException();
+            int noOfColumns = testedTable[0].Length;
+            int currentHeigth, currentWidth;
+            for (int i = 0; i < testedTable.Length; i++)
+            { // verifies correspondence of m's (heigth)
+                if (testedTable[i].Length != noOfColumns) throw new BadMatrixFormatException();
+                currentHeigth = testedTable[i][0].Height;
+                for (int j = 1; j < testedTable[0].Length; j++)
+                    if (testedTable[i][j].Height != currentHeigth) throw new BadMatrixFormatException();
+            }
+            for (int j = 0; j < testedTable[0].Length; j++)
+            { // verifies correspondence of n's (width)
+                currentWidth = testedTable[0][j].Width;
+                for (int i = 1; i < testedTable.Length; i++)
+                    if (testedTable[i][j].Width != currentWidth) throw new BadMatrixFormatException();
+            }
+        } // method VerifyTableFormat(Matrix[][])
+
+    } // class Matrix
+}
+
