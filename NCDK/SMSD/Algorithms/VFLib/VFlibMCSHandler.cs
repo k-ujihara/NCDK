@@ -35,20 +35,20 @@ using System.IO;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * This class should be used to find MCS between query
-     * graph and target graph.
-     *
-     * First the algorithm runs VF lib {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper}
-     * and reports MCS between
-     * run query and target graphs. Then these solutions are extended
-     * using McGregor {@link org.openscience.cdk.smsd.algorithm.mcgregor.McGregor}
-     * algorithm where ever required.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class should be used to find MCS between query
+    /// graph and target graph.
+    ///
+    /// First the algorithm runs VF lib {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper}
+    /// and reports MCS between
+    /// run query and target graphs. Then these solutions are extended
+    /// using McGregor {@link org.openscience.cdk.smsd.algorithm.mcgregor.McGregor}
+    /// algorithm where ever required.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFlibMCSHandler : AbstractMCSAlgorithm, IMCSBase
     {
 
@@ -67,9 +67,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
         private int countR = 0;
         private int countP = 0;
 
-        /**
-         * Constructor for an extended VF Algorithm for the MCS search
-         */
+        /// <summary>
+        /// Constructor for an extended VF Algorithm for the MCS search
+        /// </summary>
         public VFlibMCSHandler()
         {
             allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
@@ -129,24 +129,22 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        /** {@inheritDoc}
-         *
-         * Set the VFLib MCS software
-         *
-         * @param reactant
-         * @param product
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// Set the VFLib MCS software
+        ///
+        /// <param name="reactant">/// @param product</param>
+        /// </summary>
         public void Set(MolHandler reactant, MolHandler product)
         {
             mol1 = reactant.Molecule;
             mol2 = product.Molecule;
         }
 
-        /** {@inheritDoc}
-         *
-         * @param source
-         * @param target
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// <param name="source">/// @param target</param>
+        /// </summary>
         public void Set(IQueryAtomContainer source, IAtomContainer target)
         {
             queryMol = source;
@@ -255,7 +253,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             }
             SetVFMappings(false, query);
             //        Console.Out.WriteLine("Sol count " + vfLibSolutions.Count);
-            //        Console.Out.WriteLine("Sol size " + vfLibSolutions.iterator().Next().Count);
+            //        Console.Out.WriteLine("Sol size " + vfLibSolutions.Iterator().Next().Count);
             //        Console.Out.WriteLine("MCSSize " + vfMCSSize);
             //        Console.Out.WriteLine("After Sol count " + allMCSCopy.Count);
 

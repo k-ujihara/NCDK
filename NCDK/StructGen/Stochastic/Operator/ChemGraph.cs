@@ -27,10 +27,10 @@ using System.Collections.Generic;
 
 namespace NCDK.StructGen.Stochastic.Operator
 {
-    /**
-     * @cdk.module     structgen
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module     structgen
+    // @cdk.githash
+    /// </summary>
     public class ChemGraph
     {
         /* Number of atoms in this structure */
@@ -76,8 +76,8 @@ namespace NCDK.StructGen.Stochastic.Operator
                 travIndex++;
                 visited[atom] = true;
 
-                //			for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
-                //				if (contab[atom][nextAtom] != 0) RecursiveDFT(nextAtom);
+                //            for (int nextAtom = 0; nextAtom < dim; nextAtom++) //not generalized
+                //                if (contab[atom][nextAtom] != 0) RecursiveDFT(nextAtom);
                 List<int> adjSet = new List<int>();
                 for (int nextAtom = 0; nextAtom < dim; nextAtom++)
                 {

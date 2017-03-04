@@ -54,7 +54,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestMomentOfInertia1()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -75,7 +75,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestMomentOfInertia2()
         {
             string filename = "NCDK.Data.HIN.momi2.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

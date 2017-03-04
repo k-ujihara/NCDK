@@ -22,89 +22,89 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     *  A QueryAtom that matches all symbols but those in this container. You may
-     *  add symbols to this container. This QueryAtom will only give a match if it
-     *  does NOT contain the symbol of the Atom to match (example: add "C" to get a
-     *  match for all non-"C"-Atoms).
-     *
-     *@author        kha
-     * @cdk.githash
-     *@cdk.created   2004-09-16
-     *@see           SymbolSetQueryAtom
-     *@cdk.module    isomorphism
-     */
+    /// <summary>
+    ///  A QueryAtom that matches all symbols but those in this container. You may
+    ///  add symbols to this container. This QueryAtom will only give a match if it
+    ///  does NOT contain the symbol of the Atom to match (example: add "C" to get a
+    ///  match for all non-"C"-Atoms).
+    ///
+    ///@author        kha
+    // @cdk.githash
+    ///@cdk.created   2004-09-16
+    ///@see           SymbolSetQueryAtom
+    ///@cdk.module    isomorphism
+    /// </summary>
     public class InverseSymbolSetQueryAtom : QueryAtom, IQueryAtom
     {
         private ICollection<string> symbols = new HashSet<string>();
 
-        /**
-         *  Constructor for the InverseSymbolSetQueryAtom object
-         */
+        /// <summary>
+        ///  Constructor for the InverseSymbolSetQueryAtom object
+        /// </summary>
         public InverseSymbolSetQueryAtom(IChemObjectBuilder builder)
             : base(builder)
         { }
 
         public void SetOperator(string str) { }
 
-        /**
-         *  The matches implementation of the QueryAtom interface.
-         *
-         *@param  atom  The atom to be matched by this QueryAtom
-         *@return       true if Atom matched
-         */
+        /// <summary>
+        ///  The matches implementation of the QueryAtom interface.
+        ///
+        /// <param name="atom">The atom to be matched by this QueryAtom</param>
+        /// <returns>true if Atom matched</returns>
+        /// </summary>
 
         public override bool Matches(IAtom atom)
         {
             return !symbols.Contains(atom.Symbol);
         }
 
-        /**
-         *  Add a symbol to this QueryAtom
-         *
-         *@param  symbol  The symbol to add
-         */
+        /// <summary>
+        ///  Add a symbol to this QueryAtom
+        ///
+        /// <param name="symbol">The symbol to add</param>
+        /// </summary>
         public void AddSymbol(string symbol)
         {
             symbols.Add(symbol);
         }
 
-        /**
-         *  Remove a symbol from this QueryAtom
-         *
-         *@param  symbol  The symbol to remove
-         */
+        /// <summary>
+        ///  Remove a symbol from this QueryAtom
+        ///
+        /// <param name="symbol">The symbol to remove</param>
+        /// </summary>
         public void RemoveSymbol(string symbol)
         {
             symbols.Remove(symbol);
         }
 
-        /**
-         *  Check whether a symbol is already registered
-         *
-         *@param  symbol  The symbol to check for
-         *@return         true if symbol already registered
-         */
+        /// <summary>
+        ///  Check whether a symbol is already registered
+        ///
+        /// <param name="symbol">The symbol to check for</param>
+        /// <returns>true if symbol already registered</returns>
+        /// </summary>
         public bool HasSymbol(string symbol)
         {
             return symbols.Contains(symbol);
         }
 
-        /**
-         *  Retrieve the Set of symbols
-         *
-         *@return    The symbol Set
-         */
+        /// <summary>
+        ///  Retrieve the Set of symbols
+        ///
+        /// <returns>The symbol Set</returns>
+        /// </summary>
         public ICollection<string> GetSymbolSet()
         {
             return symbols;
         }
 
-        /**
-         *  The ToString method
-         *
-         *@return    The string representation of this object.
-         */
+        /// <summary>
+        ///  The ToString method
+        ///
+        /// <returns>The string representation of this object.</returns>
+        /// </summary>
 
         public override string ToString()
         {

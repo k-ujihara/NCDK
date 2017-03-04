@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 
 /* Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
@@ -44,40 +45,41 @@ using NCDK.Default;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace NCDK.Default
 {
-    /**
-     * An entry in the PDB database. It is not just a regular protein, but the
-     * regular PDB mix of protein or protein complexes, ligands, water molecules
-     * and other species.
-     *
-     * @cdk.module  pdb
-     * @cdk.githash
-     *
-     * @author      Egon Willighagen
-     * @cdk.created 2006-04-19
-     * @cdk.keyword polymer
-     */
+    /// <summary>
+    /// An entry in the PDB database. It is not just a regular protein, but the
+    /// regular PDB mix of protein or protein complexes, ligands, water molecules
+    /// and other species.
+    ///
+    // @cdk.module  pdb
+    // @cdk.githash
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2006-04-19
+    // @cdk.keyword polymer
+    /// </summary>
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;
 
-        /**
-         * Constructs a new Polymer to store the Monomers.
-         */
+        /// <summary>
+        /// Constructs a new Polymer to store the Monomers.
+        /// </summary>
         public PDBStrand()
             : base()
         {
             sequentialListOfMonomers = new List<string>();
         }
 
-        /**
-         * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-         * record of the iCode.
-         *
-         * @param oAtom  The atom to add
-         * @param oMonomer  The monomer the atom belongs to
-         */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+        /// record of the iCode.
+        ///
+        /// <param name="oAtom">The atom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
         public override void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -85,11 +87,11 @@ namespace NCDK.Default
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-         * Returns the monomer names in the order in which they were added.
-         *
-         * @see IPolymer#GetMonomerNames()
-         */
+        /// <summary>
+        /// Returns the monomer names in the order in which they were added.
+        ///
+        /// @see IPolymer#GetMonomerNames()
+        /// </summary>
         public ICollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
@@ -107,40 +109,41 @@ namespace NCDK.Default
         }
     }
 }
+
 namespace NCDK.Silent
 {
-    /**
-     * An entry in the PDB database. It is not just a regular protein, but the
-     * regular PDB mix of protein or protein complexes, ligands, water molecules
-     * and other species.
-     *
-     * @cdk.module  pdb
-     * @cdk.githash
-     *
-     * @author      Egon Willighagen
-     * @cdk.created 2006-04-19
-     * @cdk.keyword polymer
-     */
+    /// <summary>
+    /// An entry in the PDB database. It is not just a regular protein, but the
+    /// regular PDB mix of protein or protein complexes, ligands, water molecules
+    /// and other species.
+    ///
+    // @cdk.module  pdb
+    // @cdk.githash
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2006-04-19
+    // @cdk.keyword polymer
+    /// </summary>
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;
 
-        /**
-         * Constructs a new Polymer to store the Monomers.
-         */
+        /// <summary>
+        /// Constructs a new Polymer to store the Monomers.
+        /// </summary>
         public PDBStrand()
             : base()
         {
             sequentialListOfMonomers = new List<string>();
         }
 
-        /**
-         * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-         * record of the iCode.
-         *
-         * @param oAtom  The atom to add
-         * @param oMonomer  The monomer the atom belongs to
-         */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+        /// record of the iCode.
+        ///
+        /// <param name="oAtom">The atom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
         public override void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -148,11 +151,11 @@ namespace NCDK.Silent
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-         * Returns the monomer names in the order in which they were added.
-         *
-         * @see IPolymer#GetMonomerNames()
-         */
+        /// <summary>
+        /// Returns the monomer names in the order in which they were added.
+        ///
+        /// @see IPolymer#GetMonomerNames()
+        /// </summary>
         public ICollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
@@ -170,3 +173,4 @@ namespace NCDK.Silent
         }
     }
 }
+

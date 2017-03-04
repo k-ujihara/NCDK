@@ -23,21 +23,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD
 {
-    /**
-     * Unit test class to be extended by test classes for classes that
-     * implement the {@link AbstractMCSAlgorithm} interface.
-     *
-     * @author     egonw
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    /// Unit test class to be extended by test classes for classes that
+    /// implement the {@link AbstractMCSAlgorithm} interface.
+    ///
+    // @author     egonw
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMCSAlgorithmTest
     {
         protected abstract AbstractMCSAlgorithm algorithm { get; }
 
-        /**
-         * Meta test that tests if #setMCSAlgorithm has been called.
-         */
+        /// <summary>
+        /// Meta test that tests if #setMCSAlgorithm has been called.
+        /// </summary>
         [TestMethod()]
         public void TestIsMCSAlgorithmSet()
         {

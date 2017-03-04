@@ -1,8 +1,8 @@
 
 
-           *******************************************************
-           * ACES2: Advanced Concepts in Electronic Structure II *
-           *******************************************************
+          ///******************************************************
+          /// ACES2: Advanced Concepts in Electronic Structure II *
+          ///******************************************************
 
                            Quantum Theory Project
                            University of Florida
@@ -13,39 +13,39 @@
         External           Internal           Value            Units
           Name               Name
     -------------------------------------------------------------------
-       PRINT                IPRNT               0               ***   
+       PRINT                IPRNT               0              ///**   
        CALCLEVEL            ICLLVL           SCF        [  0]   ***   
        DERIV_LEV            IDRLVL            SECOND    [  2]   ***   
-       CC_CONV              ICCCNV          10D-  7             ***   
-       SCF_CONV             ISCFCV          10D-  7             ***   
-       XFORM_TOL            IXFTOL          10D- 11             ***   
+       CC_CONV              ICCCNV          10D-  7            ///**   
+       SCF_CONV             ISCFCV          10D-  7            ///**   
+       XFORM_TOL            IXFTOL          10D- 11            ///**   
        CC_MAXCYC            ICCCYC              0              cycles 
-       LINDEP_TOL           ILINDP              5               ***   
+       LINDEP_TOL           ILINDP              5              ///**   
        RDO                  IRDOFM             OFF      [  0]   ***   
   
        SCF_EXTRAPO          IRPP                ON      [  1]   ***   
        REFERENCE            IREFNC             RHF      [  0]   ***   
-       CC_EXPORDER          ICCEOR              0               ***   
-       TAMP_SUM             IEVERY              0               ***   
-       NTOP_TAMP            ITOPT2             15               ***   
+       CC_EXPORDER          ICCEOR              0              ///**   
+       TAMP_SUM             IEVERY              0              ///**   
+       NTOP_TAMP            ITOPT2             15              ///**   
        DAMPSCF              ISCFDP             20             x 0.01  
        SCF_MAXCYC           ISCFCY            150              cycles 
        OCCUPATION           IOCCU   ESTIMATED BY SCF 
        PROPS                IPROPS             OFF      [  0]   ***   
        RELAX_DENS           IRDENS             OFF      [  0]   ***   
   
-       SCF_EXPORDE          IRPPOR              6               ***   
+       SCF_EXPORDE          IRPPOR              6              ///**   
        CC_EXTRAPOL          ICCEXT             DIIS     [  1]   ***   
        BRUECKNER            IBRKNR             OFF      [  0]   ***   
        XFIELD               IXEFLD              0             x 10-6  
        YFIELD               IYEFLD              0             x 10-6  
        ZFIELD               IZEFLD              0             x 10-6  
        SAVE_INTS            ISVINT             OFF      [  0]   ***   
-       DROPMO               IDRPMO      None         
-       CHARGE               ICHRGE              0               ***   
-       MULTIPLICTY          IMULTP              1               ***   
+       DROPMO               IDRPMO      NONE         
+       CHARGE               ICHRGE              0              ///**   
+       MULTIPLICTY          IMULTP              1              ///**   
   
-       CPHF_CONVER          ICPHFT          10D- 12             ***   
+       CPHF_CONVER          ICPHFT          10D- 12            ///**   
        CPHF_MAXCYC          ICPHFC             64              cycles 
        INCORE               INCORE             OFF      [  0]   ***   
        MEMORY_SIZE          IMEMSZ           6500000           words  
@@ -53,26 +53,26 @@
        NON-HF               INONHF             OFF      [  0]   ***   
        ORBITALS             IORBTP           STANDARD   [  0]   ***   
   
-       SCF_EXPSTAR          IRPPLS              8               ***   
+       SCF_EXPSTAR          IRPPLS              8              ///**   
        LOCK_ORBOCC          ILOCOC             OFF      [  0]   ***   
-       FILE_STRIPE          ISTRIP              0               ***   
+       FILE_STRIPE          ISTRIP              0              ///**   
        HBAR                 IHBAR              OFF      [  0]   ***   
-       CACHE_RECS           ICHREC             10               ***   
+       CACHE_RECS           ICHREC             10              ///**   
        GUESS                IGUESS            MOREAD    [  0]   ***   
-       JODA_PRINT           IJPRNT              0               ***   
+       JODA_PRINT           IJPRNT              0              ///**   
        METHOD               INR            SINGLE_POINT [  5]   ***   
        CONVERGENCE          ICONTL              4              H/bohr 
-       EIGENVECTOR          IVEC                1               ***   
+       EIGENVECTOR          IVEC                1              ///**   
   
        NEGEVAL              IDIE             ABORT      [  0]   ***   
        CURVILINEAR          ICURVY            OFF       [  0]   ***   
-       SCALE_ON             ISTCRT              0               ***   
+       SCALE_ON             ISTCRT              0              ///**   
        MAX_STEP             IMXSTP            300            millibohr
        VIBRATION            IVIB             EXACT      [  1]   ***   
        EVAL_HESS            IRECAL              0            # of cyc.
        INTEGRALS            INTTYP             VMOL     [  1]   ***   
        FD_STEPSIZE          IDISFD              0            10-4 bohr
-       POINTS               IGRDFD           Double     [  0]   ***   
+       POINTS               IGRDFD           DOUBLE     [  0]   ***   
        CONTRACTION          ICNTYP          GENERAL     [  1]   ***   
   
        SYMMETRY             ISYM            OFF         [  1]   ***   
@@ -80,71 +80,71 @@
        SPHERICAL            IDFGHI             OFF      [  0]   ***   
        RESET_FLAGS          IRESET             OFF      [  0]   ***   
        PERT_ORB             IPTORB         STANDARD     [  0]   ***   
-       GENBAS_1             IGNBS1              0               ***   
-       GENBAS_2             IGNBS2              0               ***   
-       GENBAS_3             IGNBS3              0               ***   
+       GENBAS_1             IGNBS1              0              ///**   
+       GENBAS_2             IGNBS2              0              ///**   
+       GENBAS_3             IGNBS3              0              ///**   
        COORDINATES          ICOORD         INTERNAL     [  0]   ***   
        SYM_CHECK            ISYMCK         OVERRIDE     [  1]   ***   
   
-       SCF_PRINT            ISCFPR              0               ***   
+       SCF_PRINT            ISCFPR              0              ///**   
        ECP                  IECP           OFF          [  0]   ***   
        RESTART_CC           ICCRES         OFF          [  0]   ***   
        TRANS_INV            ITRAIN         USE          [  0]   ***   
        HFSTABILITY          ISTABL         OFF          [  0]   ***   
-       ROT_EVEC             ROTVEC              0               ***   
-       BRUCK_CONV           IBRTOL          10D-  4             ***   
+       ROT_EVEC             ROTVEC              0              ///**   
+       BRUCK_CONV           IBRTOL          10D-  4            ///**   
        UNITS                IUNITS         ANGSTROM     [  0]   ***   
-       FD_USEGROUP          IFDGRP         FULL         [  0]   ***   
+       FD_USEGROUP          IFDGRP         Full         [  0]   ***   
   
        FD_PROJECT           IFDPRJ         ON           [  0]   ***   
        FD_CALTYPE           IFDCAL         GRADONLY     [  0]   ***   
-       VTRAN                IVTRAN         FULL/PARTIAL [  0]   ***   
+       VTRAN                IVTRAN         Full/Partial [  0]   ***   
        HF2_FILE             IHF2Fl         USE          [  1]   ***   
        SUBGROUP             ISUBGP         DEFAULT      [  0]   ***   
        SUBGRPAXIS           ISBXYZ         X            [  0]   ***   
-       EXCITE               IEXCIT         None         [  0]   ***   
-       ZETA_CONV            IZTACN          10D- 14             ***   
+       EXCITE               IEXCIT         NONE         [  0]   ***   
+       ZETA_CONV            IZTACN          10D- 14            ///**   
   
        TREAT_PERT           ITREAT         SIMULTANEOUS [  0]   ***   
        ESTATE_PROP          IEXPRP         OFF          [  0]   ***   
-       OPT_MAXCYC           IOPTCY             50               ***   
+       OPT_MAXCYC           IOPTCY             50              ///**   
        ABCDTYPE             IABCDT         STANDARD     [  0]   ***   
        AO_LADDERS           IAOLAD         SINGLEPASS   [  1]   ***   
        FOCK                 IFOCK          PK           [  0]   ***   
-       ESTATE_MAXC          IEXMXC             20               ***   
-       ESTATE_TOL           IEXTOL          10D-  5             ***   
+       ESTATE_MAXC          IEXMXC             20              ///**   
+       ESTATE_TOL           IEXTOL          10D-  5            ///**   
        DIRECT               IDIRCT         OFF          [  0]   ***   
   
        GAMMA_ABCD           IGABCD         DISK         [  0]   ***   
        ZETA_TYPE            IZTYPE         POPLE        [  0]   ***   
-       ZETA_MAXCYC          IZMAXC              0               ***   
+       ZETA_MAXCYC          IZMAXC              0              ///**   
        RESRAMAN             IRESRM         OFF          [  0]   ***   
        PSI                  IPSI           OFF          [  0]   ***   
   
-       EA_CALC              IEACLC         None         [  0]   ***   
+       EA_CALC              IEACLC         NONE         [  0]   ***   
        TDHF                 ITDHF          OFF          [  0]   ***   
        FUNCTIONAL           IFNCTL         BLYP         [  4]   ***   
        EOM_MAXCYC           IEOMCY             50              cycles 
        EOMPROP              IEOMPR         CILIKE       [  0]   ***   
        ABCDFULL             IABCDF         ON           [  1]   ***   
-       INTGRL_TOL           IINTOL          10D- 14             ***   
-       DAMP_TYP             IDMPTY         None         [  0]   ***   
+       INTGRL_TOL           IINTOL          10D- 14            ///**   
+       DAMP_TYP             IDMPTY         NONE         [  0]   ***   
   
        DAMP_TOL             IDMPTL             10             x 0.01  
        LSHF_A1              ILSHA1              0             x 0.01  
        LSHF_B1              ILSHB1              0             x 0.01  
        POLYRATE             IPOLYR         OFF          [  0]   ***   
-       IP_CALC              IIPCLC         None         [  0]   ***   
+       IP_CALC              IIPCLC         NONE         [  0]   ***   
        IP_SEARCH            IPTYPE         VALENCE      [  0]   ***   
-       EOMREF               IEOM           None         [  0]   ***   
-       SOLVENT              ISOLV               0               ***   
+       EOMREF               IEOM           NONE         [  0]   ***   
+       SOLVENT              ISOLV               0              ///**   
        EE_SEARCH            EETYPE         LOWEST       [  0]   ***   
   
        EOM_PRJCT            IEOMPR         NO           [  0]   ***   
        NEWVRT               INWVRT         OFF          [  0]   ***   
        HBARABCD             IABCD          OFF          [  1]   ***   
        HBARABCI             IABCI          OFF          [  1]   ***   
-       NT3EOMEE             INT3EE         None         [  0]   ***   
+       NT3EOMEE             INT3EE         NONE         [  0]   ***   
        NOREORI              INOREO         OFF          [  0]   ***   
        KS_POT               IKSPOT         HF           [  0]   ***   
     -------------------------------------------------------------------
@@ -163,7 +163,7 @@
         H          1         R4         2        A4         3        D4   
         H          1         R5         2        A5         3        D5   
         H          1         R6         2        A6         3        D6   
-                  *Initial values for internal coordinates* 
+                 ///Initial values for internal coordinates* 
                       Name             Value
                         R2              1.432900
                         R3              0.991200

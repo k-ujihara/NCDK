@@ -38,12 +38,12 @@ namespace NCDK.RingSearches
      * often impractical (e.g. fullerenes). <p/>
      *
      * To avoid combinatorial explosion there is a configurable threshold, at which
-     * the computation aborts. The {@link Threshold} values have been precomputed on
+     * the computation aborts. The <see cref="Threshold"/> values have been precomputed on
      * PubChem-Compound and can be used with the {@link AllRingsFinder#UsingThreshold(Threshold)}.
      * Alternatively, other ring sets which are a subset of this set offer a
      * tractable alternative. <p/>
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * AllRingsFinder arf = new AllRingsFinder();
      * foreach (var m in ms) {
      *     try {
@@ -52,7 +52,7 @@ namespace NCDK.RingSearches
      *         // molecule was too complex, handle error
      *     }
      * }
-     * </pre></blockquote>
+     * </code></blockquote>
      *
      * @author steinbeck
      * @author johnmay
@@ -64,7 +64,6 @@ namespace NCDK.RingSearches
      */
     public sealed class AllRingsFinder
     {
-
         /// <summary>Precomputed threshold - stops the computation running forever.</summary>
         private readonly Threshold threshold;
 
@@ -142,7 +141,7 @@ namespace NCDK.RingSearches
             }
 
             // for each set of fused cyclic vertices run the separate search
-            foreach (var fused in rs.FUsed())
+            foreach (var fused in rs.Fused())
             {
 
                 AllCycles ac = new AllCycles(GraphUtil.Subgraph(graph, fused), Math.Min(maxRingSize, fused.Length),
@@ -242,7 +241,7 @@ namespace NCDK.RingSearches
         public long TimeOut => 0;
 
         /**
-         * Convert a cycle in {@literal int[]} representation to an {@link IRing}.
+         * Convert a cycle in {@literal int[]} representation to an <see cref="IRing"/>.
          *
          * @param container atom container
          * @param edges     edge map
@@ -266,7 +265,7 @@ namespace NCDK.RingSearches
         }
 
         /**
-         * Convert a cycle in {@literal int[]} representation to an {@link IRing}
+         * Convert a cycle in {@literal int[]} representation to an <see cref="IRing"/>
          * but first map back using the given {@literal mapping}.
          *
          * @param container atom container
@@ -380,12 +379,12 @@ namespace NCDK.RingSearches
         }
 
         /**
-         * Create an {@link AllRingsFinder} instance using the given threshold.
+         * Create an <see cref="AllRingsFinder"/> instance using the given threshold.
          *
-         * <blockquote><pre>
+         * <blockquote><code>
          * // import static AllRingsFinder.Threshold.PubChem_99;
          * AllRingsFinder arf = AllRingsFinder.UsingThreshold(PubChem_99);
-         * </pre></blockquote>
+         * </code></blockquote>
          *
          * @param threshold the threshold value
          * @return instance with the set threshold

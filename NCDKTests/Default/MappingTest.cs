@@ -18,21 +18,16 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the Mapping class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.Mapping
-     */
+    /// <summary>
+    /// Checks the functionality of the Mapping class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.Mapping
+    /// </summary>
     [TestClass()]
     public class MappingTest : AbstractMappingTest
     {

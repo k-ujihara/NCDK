@@ -30,19 +30,16 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * A multiple stereo encoder. Given a list of other encoders this class wraps
-     * them up into a single method call. Once each encoder has been configured it
-     * is marked and will not be visited again unless the encoder is {@link
-     * #Reset()}.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
-#if TEST
-    public
-#endif
-        sealed class MultiStereoEncoder : IStereoEncoder
+    /// <summary>
+    /// A multiple stereo encoder. Given a list of other encoders this class wraps
+    /// them up into a single method call. Once each encoder has been configured it
+    /// is marked and will not be visited again unless the encoder is {@link
+    /// #Reset()}.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
+    internal sealed class MultiStereoEncoder : IStereoEncoder
     {
         /* indices of unconfigured encoders */
         private readonly BitArray unconfigured;
@@ -50,9 +47,9 @@ namespace NCDK.Hash.Stereo
         /* list of encoders */
         private readonly IList<IStereoEncoder> encoders;
 
-        /**
-         * Create a new multiple stereo encoder from a single list of encoders
-         */
+        /// <summary>
+        /// Create a new multiple stereo encoder from a single list of encoders
+        /// </summary>
         public MultiStereoEncoder(IList<IStereoEncoder> encoders)
         {
             if (encoders.Count == 0) throw new ArgumentException("no stereo encoders provided");

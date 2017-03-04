@@ -26,36 +26,33 @@ using System;
 
 namespace NCDK.Hash
 {
-    /**
-     * Generate a seed value for each atom of a molecule. The provided {@link
-     * AtomEncoder} is used to encode invariant attributes of the atoms. This value
-     * is then modified by the size of the molecule and pseudorandomly distributed.
-     * The seed values should be used with another {@link AtomHashGenerator} which
-     * will differentiate atoms experiencing different environments, such as, {@link
-     * BasicAtomHashGenerator}.
-     *
-     * <blockquote><pre>
-     *
-     * // create a new seed generator
-     * AtomEncoder       encoder   = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-     *                                                            MASS_NUMBER);
-     * AtomHashGenerator generator = new SeedGenerator(encoder);
-     *
-     * // generate six hash codes for each atom of benzene
-     * IAtomContainer benzene   = MoleculeFactory.MakeBenzene();
-     * long[]         hashCodes = generator.Generate(benzene);
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     * @see BasicAtomHashGenerator
-     * @see ConjugatedAtomEncoder
-     */
-#if TEST
-    public
-#endif
-        sealed class SeedGenerator : AbstractHashGenerator, AtomHashGenerator
+    /// <summary>
+    /// Generate a seed value for each atom of a molecule. The provided {@link
+    /// AtomEncoder} is used to encode invariant attributes of the atoms. This value
+    /// is then modified by the size of the molecule and pseudorandomly distributed.
+    /// The seed values should be used with another <see cref="AtomHashGenerator"/> which
+    /// will differentiate atoms experiencing different environments, such as, {@link
+    /// BasicAtomHashGenerator}.
+    ///
+    /// <blockquote><code>
+    ///
+    /// // create a new seed generator
+    /// AtomEncoder       encoder   = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
+    ///                                                            MASS_NUMBER);
+    /// AtomHashGenerator generator = new SeedGenerator(encoder);
+    ///
+    /// // generate six hash codes for each atom of benzene
+    /// IAtomContainer benzene   = MoleculeFactory.MakeBenzene();
+    /// long[]         hashCodes = generator.Generate(benzene);
+    /// </code></blockquote>
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// <seealso cref="BasicAtomHashGenerator"/>
+    /// <seealso cref="ConjugatedAtomEncoder"/>
+    /// </summary>
+    internal sealed class SeedGenerator : AbstractHashGenerator, AtomHashGenerator
     {
 
         /* used to encode atom attributes */
@@ -64,38 +61,38 @@ namespace NCDK.Hash
         /// <summary>Optional suppression of atoms.</summary>
         private readonly AtomSuppression suppression;
 
-        /**
-         * Create a new seed generator using the provided {@link AtomEncoder}.
-         *
-         * @param encoder a method for encoding atom invariant properties
-         * @throws NullPointerException encoder was null
-         * @see ConjugatedAtomEncoder
-         */
+        /// <summary>
+        /// Create a new seed generator using the provided <see cref="AtomEncoder"/>.
+        ///
+        /// <param name="encoder">a method for encoding atom invariant properties</param>
+        /// <exception cref="NullPointerException">encoder was null</exception>
+        /// <seealso cref="ConjugatedAtomEncoder"/>
+        /// </summary>
         public SeedGenerator(AtomEncoder encoder)
                 : this(encoder, new Xorshift(), AtomSuppression.Unsuppressed)
         { }
 
-        /**
-         * Create a new seed generator using the provided {@link AtomEncoder}.
-         *
-         * @param encoder a method for encoding atom invariant properties
-         * @throws NullPointerException encoder was null
-         * @see ConjugatedAtomEncoder
-         */
+        /// <summary>
+        /// Create a new seed generator using the provided <see cref="AtomEncoder"/>.
+        ///
+        /// <param name="encoder">a method for encoding atom invariant properties</param>
+        /// <exception cref="NullPointerException">encoder was null</exception>
+        /// <seealso cref="ConjugatedAtomEncoder"/>
+        /// </summary>
         public SeedGenerator(AtomEncoder encoder, AtomSuppression suppression)
             : this(encoder, new Xorshift(), suppression)
         { }
 
-        /**
-         * Create a new seed generator using the provided {@link AtomEncoder} and
-         * pseudorandom number generator.
-         *
-         * @param encoder      a method for encoding atom invariant properties
-         * @param pseudorandom number generator to randomise initial invariants
-         * @param suppression  indicates which vertices should be suppressed
-         * @throws NullPointerException encoder or pseudorandom number generator was
-         *                              null
-         */
+        /// <summary>
+        /// Create a new seed generator using the provided <see cref="AtomEncoder"/> and
+        /// pseudorandom number generator.
+        ///
+        /// <param name="encoder">a method for encoding atom invariant properties</param>
+        /// <param name="pseudorandom">number generator to randomise initial invariants</param>
+        /// <param name="suppression">indicates which vertices should be suppressed</param>
+        /// <exception cref="NullPointerException">encoder or pseudorandom number generator was</exception>
+        ///                              null
+        /// </summary>
         public SeedGenerator(AtomEncoder encoder, Pseudorandom pseudorandom, AtomSuppression suppression)
             : base(pseudorandom)
         {

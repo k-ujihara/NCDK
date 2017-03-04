@@ -29,20 +29,20 @@ using System.Collections;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     *  Node of the resolution graphe (RGraph) An CDKRNode represents an association
-     *  betwwen two edges of the source graphs G1 and G2 that are compared. Two
-     *  edges may be associated if they have at least one common feature. The
-     *  association is defined outside this class. The node keeps tracks of the ID
-     *  of the mapped edges (in an CDKRMap), of its neighbours in the RGraph it belongs
-     *  to and of the set of incompatible nodes (nodes that may not be along with
-     *  this node in the same solution)
-     *
-     * @author      Stephane Werner from IXELIS mail@ixelis.net
-     * @cdk.created 2002-07-17
-     * @cdk.module  smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Node of the resolution graphe (RGraph) An CDKRNode represents an association
+    ///  betwwen two edges of the source graphs G1 and G2 that are compared. Two
+    ///  edges may be associated if they have at least one common feature. The
+    ///  association is defined outside this class. The node keeps tracks of the ID
+    ///  of the mapped edges (in an CDKRMap), of its neighbours in the RGraph it belongs
+    ///  to and of the set of incompatible nodes (nodes that may not be along with
+    ///  this node in the same solution)
+    ///
+    // @author      Stephane Werner from IXELIS mail@ixelis.net
+    // @cdk.created 2002-07-17
+    // @cdk.module  smsd
+    // @cdk.githash
+    /// </summary>
     public class CDKRNode
     {
         // G1/G2 mapping

@@ -21,9 +21,9 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-     * @cdk.module test-io
-     */
+    /// <summary>
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public class ZMatrixToolsTest : CDKTestCase
     {

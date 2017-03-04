@@ -43,31 +43,31 @@ namespace NCDK.QSAR.Descriptors
             }
         }
 
-        /**
-         * Makes sure that the extending class has set the super.descriptor.
-         * Each extending class should have this bit of code (JUnit3 formalism):
-         * <pre>
-         * [TestMethod()] public void SetUp() {
-         *   // Pass a Class, not an Object!
-         *   SetDescriptor(typeof(SomeDescriptor));
-         * }
-         *
-         * <p>The unit tests in the extending class may use this instance, but
-         * are not required.
-         *
-         * </pre>
-         */
+        /// <summary>
+        /// Makes sure that the extending class has set the super.descriptor.
+        /// Each extending class should have this bit of code (JUnit3 formalism):
+        /// <pre>
+        /// [TestMethod()] public void SetUp() {
+        ///   // Pass a Class, not an Object!
+        ///   SetDescriptor(typeof(SomeDescriptor));
+        /// }
+        ///
+        /// <p>The unit tests in the extending class may use this instance, but
+        /// are not required.
+        ///
+        /// </pre>
+        /// </summary>
         [TestMethod()]
         public void TestHasSetSuperDotDescriptor()
         {
             Assert.IsNotNull(Descriptor, "The extending class must set the super.descriptor in its SetUp() method.");
         }
 
-        /**
-         * Checks if the parameterization is consistent.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Checks if the parameterization is consistent.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetParameterNames()
         {
@@ -80,9 +80,9 @@ namespace NCDK.QSAR.Descriptors
             }
         }
 
-        /**
-         * @cdk.bug 1862137
-         */
+        /// <summary>
+        // @cdk.bug 1862137
+        /// </summary>
         [TestMethod()]
         public void TestGetParameters()
         {
@@ -100,9 +100,9 @@ namespace NCDK.QSAR.Descriptors
             }
         }
 
-        /**
-         * @cdk.bug 1862137
-         */
+        /// <summary>
+        // @cdk.bug 1862137
+        /// </summary>
         [TestMethod()]
         public void TestGetParameterType_String()
         {
@@ -159,10 +159,10 @@ namespace NCDK.QSAR.Descriptors
             Assert.AreNotEqual(0, spec.SpecificationReference.Length, "The specification reference must not be empty.");
         }
 
-        /**
-         * Tests that the specification no longer gives an empty CVS identifier,
-         * but one based on a repository blob or commit.
-         */
+        /// <summary>
+        /// Tests that the specification no longer gives an empty CVS identifier,
+        /// but one based on a repository blob or commit.
+        /// </summary>
         [TestMethod()]
         public void TestGetSpecification_IdentifierNonDefault()
         {

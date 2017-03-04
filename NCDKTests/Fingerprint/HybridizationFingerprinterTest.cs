@@ -24,9 +24,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class HybridizationFingerprinterTest : AbstractFingerprinterTest
     {

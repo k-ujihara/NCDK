@@ -19,13 +19,13 @@ using System;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This query bond indicates a particular geometric stereo configuration.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This query bond indicates a particular geometric stereo configuration.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class StereoBond : SMARTSBond
     {
         private readonly bool unspecified;

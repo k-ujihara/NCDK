@@ -20,9 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Exceptions
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class UnsupportedChemObjectExceptionTest : CDKTestCase
     {

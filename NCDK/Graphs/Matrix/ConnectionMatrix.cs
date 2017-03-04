@@ -21,30 +21,26 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Graphs.Matrix
 {
-    /**
-     * Calculator for a connection matrix representation of this AtomContainer. An
-     * adjacency matrix is a matrix of square NxN matrix, where N is the number of
-     * atoms in the AtomContainer. If the i-th and the j-th atom in the
-     * atomcontainer share a bond, the element i,j in the matrix is set to the
-     * bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
-     *
-     * @cdk.module  standard
-     * @cdk.githash
-     * @cdk.keyword connection matrix
-     * @cdk.dictref blue-obelisk:calculateConnectivityMatrix
-     *
-     * @author      steinbeck
-     * @cdk.created 2004-07-04
-     */
+    /// <summary>
+    /// Calculator for a connection matrix representation of this AtomContainer. An
+    /// adjacency matrix is a matrix of square NxN matrix, where N is the number of
+    /// atoms in the AtomContainer. If the i-th and the j-th atom in the
+    /// atomcontainer share a bond, the element i,j in the matrix is set to the
+    /// bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
+    /// </summary>
+    // @cdk.module  standard
+    // @cdk.githash
+    // @cdk.keyword connection matrix
+    // @cdk.dictref blue-obelisk:calculateConnectivityMatrix
+    // @author      steinbeck
+    // @cdk.created 2004-07-04
     public class ConnectionMatrix : IGraphMatrix
     {
-
-        /**
-         * Returns the connection matrix representation of this AtomContainer.
-         *
-         * @param  container The AtomContainer for which the matrix is calculated
-         * @return           A connection matrix representing this AtomContainer
-         */
+        /// <summary>
+        /// Returns the connection matrix representation of this AtomContainer.
+        /// </summary>
+        /// <param name="container">The AtomContainer for which the matrix is calculated</param>
+        /// <returns>A connection matrix representing this AtomContainer</returns>
         public static double[][] GetMatrix(IAtomContainer container)
         {
             IBond bond = null;

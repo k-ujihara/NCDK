@@ -20,19 +20,19 @@ using NCDK.QSAR.Result;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:zagrebIndex
-     *
-     * @cdk.keyword Zagreb index
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Zagreb index: the sum of the squares of atom degree over all heavy atoms i.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:zagrebIndex
+    ///
+    // @cdk.keyword Zagreb index
+    // @cdk.keyword descriptor
+    /// </summary>
     public class ZagrebIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Zagreb" };

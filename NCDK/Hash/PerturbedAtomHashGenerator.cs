@@ -29,40 +29,37 @@ using System.Linq;
 
 namespace NCDK.Hash
 {
-    /**
-     * A perturbed hash generator {@cdk.cite Ihlenfeldt93} which differentiates
-     * molecules with uniform atom environments and symmetry. The generator first
-     * calculates the basic hash codes ({@link BasicAtomHashGenerator}) and then
-     * checks for duplicate values (uniform environments). These duplicate values
-     * are then filtered down ({@link EquivalentSetFinder}) to a set (<i>S</i>)
-     * which can introduce systematic differences with. We then combine the
-     * |<i>S</i>| different invariant values with the original value to produce a
-     * unique value of each atom. There may still be duplicate values but providing
-     * the depth is appropriate then the atoms are truly equivalent.
-     * <p/><br/>
-     * The class requires a lot of configuration however it can be easily built with
-     * the {@link HashGeneratorMaker}.
-     * <blockquote><pre>
-     * MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(8)
-     *                                                           .Elemental()
-     *                                                           .Perturbed()
-     *                                                           .Molecular();
-     * IAtomContainer molecule = ...;
-     * long hash = generator.Generate(molecule);
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see org.openscience.cdk.hash.SeedGenerator
-     * @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
-     *      Publication</a>
-     * @cdk.githash
-     * @see HashGeneratorMaker
-     */
-#if TEST
-    public
-#endif
-    sealed class PerturbedAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
+    /// <summary>
+    /// A perturbed hash generator {@cdk.cite Ihlenfeldt93} which differentiates
+    /// molecules with uniform atom environments and symmetry. The generator first
+    /// calculates the basic hash codes (<see cref="BasicAtomHashGenerator"/>) and then
+    /// checks for duplicate values (uniform environments). These duplicate values
+    /// are then filtered down (<see cref="EquivalentSetFinder"/>) to a set (<i>S</i>)
+    /// which can introduce systematic differences with. We then combine the
+    /// |<i>S</i>| different invariant values with the original value to produce a
+    /// unique value of each atom. There may still be duplicate values but providing
+    /// the depth is appropriate then the atoms are truly equivalent.
+    /// <p/><br/>
+    /// The class requires a lot of configuration however it can be easily built with
+    /// the <see cref="HashGeneratorMaker"/>.
+    /// <example><code>
+    /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(8)
+    ///                                                           .Elemental()
+    ///                                                           .Perturbed()
+    ///                                                           .Molecular();
+    /// IAtomContainer molecule = ...;
+    /// long hash = generator.Generate(molecule);
+    /// </code></example>
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @see org.openscience.cdk.hash.SeedGenerator
+    // @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
+    ///      Publication</a>
+    // @cdk.githash
+    /// <seealso cref="HashGeneratorMaker"/>
+    /// </summary>
+    internal sealed class PerturbedAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
     {
 
         /* creates stereo encoders for IAtomContainers */
@@ -80,30 +77,30 @@ namespace NCDK.Hash
         /* suppression of atoms */
         private readonly AtomSuppression suppression;
 
-        /**
-         * Create a perturbed hash generator using the provided seed generator to
-         * initialise atom invariants and using the provided stereo factory.
-         *
-         * @param simple        generator to encode the initial values of atoms
-         * @param pseudorandom  pseudorandom number generator used to randomise hash
-         *                      distribution
-         * @param factory       a stereo encoder factory
-         * @param finder        equivalent set finder for driving the systematic
-         *                      perturbation
-         * @param suppression   suppression of atoms (these atoms are 'ignored'
-         *                      in the hash generation)
-         * @throws ArgumentException depth was less then 0
-         * @throws NullPointerException     seed generator or pseudo random was
-         *                                  null
-         * @see org.openscience.cdk.hash.SeedGenerator
-         */
+        /// <summary>
+        /// Create a perturbed hash generator using the provided seed generator to
+        /// initialise atom invariants and using the provided stereo factory.
+        ///
+        /// <param name="simple">generator to encode the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
+        ///                      distribution
+        /// <param name="factory">a stereo encoder factory</param>
+        /// <param name="finder">equivalent set finder for driving the systematic</param>
+        ///                      perturbation
+        /// <param name="suppression">suppression of atoms (these atoms are 'ignored'</param>
+        ///                      in the hash generation)
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
+        ///                                  null
+        /// @see org.openscience.cdk.hash.SeedGenerator
+        /// </summary>
         public PerturbedAtomHashGenerator(SeedGenerator seeds, AbstractAtomHashGenerator simple, Pseudorandom pseudorandom,
                IStereoEncoderFactory factory, EquivalentSetFinder finder, AtomSuppression suppression)
                 : base(pseudorandom)
         {
             if (simple == null) throw new ArgumentNullException("no simple generator provided");
             if (seeds == null) throw new ArgumentNullException("no seed generator provided");
-            if (suppression == null) throw new ArgumentNullException("no suppression provided, use AtomSuppression.none()");
+            if (suppression == null) throw new ArgumentNullException("no suppression provided, use AtomSuppression.None()");
             this.finder = finder;
             this.factory = factory;
             this.simple = simple;
@@ -167,19 +164,16 @@ namespace NCDK.Hash
             return Combine(perturbed);
         }
 
-        /**
-         * Combines the values in an n x m matrix into a single array of size n.
-         * This process scans the rows and xors all unique values in the row
-         * together. If a duplicate value is found it is rotated using a
-         * pseudorandom number generator.
-         *
-         * @param perturbed n x m, matrix
-         * @return the combined values of each row
-         */
-#if TEST
-        public
-#endif
-            long[] Combine(long[][] perturbed)
+        /// <summary>
+        /// Combines the values in an n x m matrix into a single array of size n.
+        /// This process scans the rows and xors all unique values in the row
+        /// together. If a duplicate value is found it is rotated using a
+        /// pseudorandom number generator.
+        ///
+        /// <param name="perturbed">n x m, matrix</param>
+        /// <returns>the combined values of each row</returns>
+        /// </summary>
+        internal long[] Combine(long[][] perturbed)
         {
 
             int n = perturbed.Length;

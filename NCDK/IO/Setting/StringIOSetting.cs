@@ -18,14 +18,14 @@
  */
 namespace NCDK.IO.Setting
 {
-    /**
-     * An class for a reader setting which must be of type string.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// An class for a reader setting which must be of type string.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     public class StringIOSetting : IOSetting
     {
 
@@ -33,10 +33,10 @@ namespace NCDK.IO.Setting
             : base(name, level, question, defaultSetting)
         { }
 
-        /**
-         * Sets the setting for a certain question. The setting
-         * is of type string, and any string is accepted.
-         */
+        /// <summary>
+        /// Sets the setting for a certain question. The setting
+        /// is of type string, and any string is accepted.
+        /// </summary>
         public override string Setting
         {
             set

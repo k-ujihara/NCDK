@@ -1,4 +1,27 @@
-
+/*
+ *
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received eAtom copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
@@ -11,39 +34,15 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-/**
-*
-* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received eAtom copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
 namespace NCDK.SMSD.Filters
 {
-    /**
-     * Class that ranks MCS final solution according to the chemical rules.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class that ranks MCS final solution according to the chemical rules.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class ChemicalFilters
     {
 
@@ -57,23 +56,20 @@ namespace NCDK.SMSD.Filters
         private IAtomContainer rMol = null;
         private IAtomContainer pMol = null;
 
-        /**
-         * This class has all the three chemical filters supported by the SMSD.
-         * i.e ring matches, bond energy etc
-         *
-         * <OL>
-         * <lI>a: Bond energy,
-         * <lI>b: Fragment count,
-         * <lI>c: Stereo matches
-         * </OL>
-         *
-         * @param allMCS
-         * @param allAtomMCS
-         * @param firstSolution
-         * @param firstAtomMCS
-         * @param sourceMol
-         * @param targetMol
-         */
+        /// <summary>
+        /// This class has all the three chemical filters supported by the SMSD.
+        /// i.e ring matches, bond energy etc
+        ///
+        /// <OL>
+        /// <lI>a: Bond energy,
+        /// <lI>b: Fragment count,
+        /// <lI>c: Stereo matches
+        /// </OL>
+        ///
+        /// <param name="allMCS">/// @param allAtomMCS</param>
+        /// <param name="firstSolution">/// @param firstAtomMCS</param>
+        /// <param name="sourceMol">/// @param targetMol</param>
+        /// </summary>
         public ChemicalFilters(List<IDictionary<int, int>> allMCS, List<IDictionary<IAtom, IAtom>> allAtomMCS,
                 IDictionary<int, int> firstSolution, IDictionary<IAtom, IAtom> firstAtomMCS, IAtomContainer sourceMol,
                 IAtomContainer targetMol)
@@ -173,10 +169,10 @@ namespace NCDK.SMSD.Filters
 
         }
 
-        /**
-         * Sort MCS solution by stereo and bond type matches.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Sort MCS solution by stereo and bond type matches.
+        // @throws CDKException
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByStereoAndBondMatch()
         {
@@ -253,9 +249,9 @@ namespace NCDK.SMSD.Filters
 
         }
 
-        /**
-         * Sort solution by ascending order of the fragment count.
-         */
+        /// <summary>
+        /// Sort solution by ascending order of the fragment count.
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByFragments()
         {
@@ -311,11 +307,11 @@ namespace NCDK.SMSD.Filters
             }
         }
 
-        /**
-         * Sort MCS solution by bond breaking energy.
-         *
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Sort MCS solution by bond breaking energy.
+        ///
+        // @throws CDKException
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByEnergies()
         {
@@ -490,45 +486,39 @@ namespace NCDK.SMSD.Filters
             return totalBondEnergy;
         }
 
-#if TEST
-        public
-#endif
-        static IEnumerable<KeyValuePair<int, double>> SortMapByValueInAccendingOrder(IDictionary<int, double> map)
+        internal static IEnumerable<KeyValuePair<int, double>> SortMapByValueInAccendingOrder(IDictionary<int, double> map)
         {
             return map.OrderBy(entry => entry.Value);
         }
 
 
-#if TEST
-        public
-#endif
-        static IEnumerable<KeyValuePair<int, double>> SortMapByValueInDecendingOrder(IDictionary<int, double> map)
+        internal static IEnumerable<KeyValuePair<int, double>> SortMapByValueInDecendingOrder(IDictionary<int, double> map)
         {
             return map.OrderByDescending(entry => entry.Value);
         }
 
-        /**
-         * Return sorted energy in ascending order.
-         * @return sorted bond breaking energy
-         */
+        /// <summary>
+        /// Return sorted energy in ascending order.
+        /// <returns>sorted bond breaking energy</returns>
+        /// </summary>
         public IList<double> GetSortedEnergy()
         {
             return new ReadOnlyCollection<double>(bEnergies);
         }
 
-        /**
-         * Return sorted fragment in ascending order of the size.
-         * @return sorted fragment count
-         */
+        /// <summary>
+        /// Return sorted fragment in ascending order of the size.
+        /// <returns>sorted fragment count</returns>
+        /// </summary>
         public IList<int> GetSortedFragment()
         {
             return new ReadOnlyCollection<int>(fragmentSize);
         }
 
-        /**
-         * Return Stereo matches in descending order.
-         * @return sorted stereo matches
-         */
+        /// <summary>
+        /// Return Stereo matches in descending order.
+        /// <returns>sorted stereo matches</returns>
+        /// </summary>
         public IList<double> GetStereoMatches()
         {
             return new ReadOnlyCollection<double>(stereoScore);
@@ -923,22 +913,21 @@ namespace NCDK.SMSD.Filters
             return BondOrder.Unset;
         }
 
-        /**
-         * Get bond order value as {@code int} value.
-         *
-         * @param  bond The {@link IBond} for which the order is returned.
-         * @return      1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,
-         *              and 0 for any other bond type.
-         */
+        /// <summary>
+        /// Get bond order value as {@code int} value.
+        ///
+        /// <param name="bond">The <see cref="IBond"/> for which the order is returned.</param>
+        /// <returns>1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,</returns>
+        ///              and 0 for any other bond type.
+        /// </summary>
         public static int ConvertBondOrder(IBond bond)
         {
             return bond.Order.Numeric;
         }
 
-        /**
-         * Get stereo value as integer
-         * @param bond
-         */
+        /// <summary>
+        /// Get stereo value as integer
+        /// <param name="bond">/// </summary></param>
         public static int ConvertBondStereo(IBond bond)
         {
             int value = 0;
@@ -966,10 +955,9 @@ namespace NCDK.SMSD.Filters
             return value;
         }
 
-        /**
-         * Get stereo value as Stereo enum
-         * @param stereoValue
-         */
+        /// <summary>
+        /// Get stereo value as Stereo enum
+        /// <param name="stereoValue">/// </summary></param>
         public static BondStereo ConvertStereo(int stereoValue)
         {
             BondStereo stereo = BondStereo.None;

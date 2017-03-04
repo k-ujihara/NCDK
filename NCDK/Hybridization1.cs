@@ -4,19 +4,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 namespace NCDK
 {
     /// <summary>
@@ -26,22 +13,22 @@ namespace NCDK
     {
         public static class O
         {
-			public const int Unset = 0;
-			public const int S = 1;
-			public const int SP1 = 2;
-			public const int SP2 = 3;
-			public const int SP3 = 4;
-			public const int Planar3 = 5;
-			public const int SP3D1 = 6;
-			public const int SP3D2 = 7;
-			public const int SP3D3 = 8;
-			public const int SP3D4 = 9;
-			public const int SP3D5 = 10;
-      	
+            public const int Unset = 0;
+            public const int S = 1;
+            public const int SP1 = 2;
+            public const int SP2 = 3;
+            public const int SP3 = 4;
+            public const int Planar3 = 5;
+            public const int SP3D1 = 6;
+            public const int SP3D2 = 7;
+            public const int SP3D3 = 8;
+            public const int SP3D4 = 9;
+            public const int SP3D5 = 10;
+          
         }
 
-		private readonly int ordinal;
-		public int Ordinal => ordinal;
+        private readonly int ordinal;
+        public int Ordinal => ordinal;
 
         public override string ToString()
         {
@@ -69,61 +56,61 @@ namespace NCDK
             this.ordinal = ordinal;
         }
 
-		public static explicit operator Hybridization(int ordinal)
+        public static explicit operator Hybridization(int ordinal)
         {
             if (!(0 <= ordinal || ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
-			return values[ordinal];
+            return values[ordinal];
         }
 
-		public static explicit operator int(Hybridization obj)
+        public static explicit operator int(Hybridization obj)
         {
             return obj.Ordinal;
         }
 
-		/// <summary>
-		/// A undefined hybridization.
-		/// </summary>
+        /// <summary>
+        /// A undefined hybridization.
+        /// </summary>
         public static readonly Hybridization Unset = new Hybridization(0);
         public static readonly Hybridization S = new Hybridization(1);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.
+        /// </summary>
         public static readonly Hybridization SP1 = new Hybridization(2);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.
+        /// </summary>
         public static readonly Hybridization SP2 = new Hybridization(3);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.
+        /// </summary>
         public static readonly Hybridization SP3 = new Hybridization(4);
-		/// <summary>
-		/// trigonal planar (lone pair in pz)
-		/// </summary>
+        /// <summary>
+        /// trigonal planar (lone pair in pz)
+        /// </summary>
         public static readonly Hybridization Planar3 = new Hybridization(5);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with one d orbital.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with one d orbital.
+        /// </summary>
         public static readonly Hybridization SP3D1 = new Hybridization(6);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with two d orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with two d orbitals.
+        /// </summary>
         public static readonly Hybridization SP3D2 = new Hybridization(7);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with three d orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with three d orbitals.
+        /// </summary>
         public static readonly Hybridization SP3D3 = new Hybridization(8);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with four d orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with four d orbitals.
+        /// </summary>
         public static readonly Hybridization SP3D4 = new Hybridization(9);
-		/// <summary>
-		/// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with five d orbitals.
-		/// </summary>
+        /// <summary>
+        /// A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with five d orbitals.
+        /// </summary>
         public static readonly Hybridization SP3D5 = new Hybridization(10);
-		private static readonly Hybridization[] values = new Hybridization[]
-		{
+        private static readonly Hybridization[] values = new Hybridization[]
+        {
             Unset, 
             S, 
             SP1, 
@@ -136,34 +123,34 @@ namespace NCDK
             SP3D4, 
             SP3D5, 
     
-		};
+        };
         public static System.Collections.Generic.IEnumerable<Hybridization> Values => values;
 
-		/* In order to cause compiling error */
+        /* In order to cause compiling error */
 
-		public static bool operator==(Hybridization a, object b)
+        public static bool operator==(Hybridization a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
-		public static bool operator!=(Hybridization a, object b)
+        public static bool operator!=(Hybridization a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(object a, Hybridization b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator!=(object a, Hybridization b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(Hybridization a, Hybridization b)
         {
-			
+            
             return a.Ordinal == b.Ordinal;
         }
 
@@ -172,11 +159,11 @@ namespace NCDK
             return !(a == b);
         }
 
-		public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-	
-			if (!(obj is Hybridization))
-				return false;
+    
+            if (!(obj is Hybridization))
+                return false;
             return this.Ordinal == ((Hybridization)obj).Ordinal;
         }
 
@@ -192,7 +179,7 @@ namespace NCDK
         }   
         public string Name => ToString();
 
-		public bool IsUnset => this.Ordinal == 0;
+        public bool IsUnset => this.Ordinal == 0;
 
         internal static Hybridization GetInstance(string value)
         {
@@ -228,6 +215,6 @@ namespace NCDK
                 default:
                     throw new System.ArgumentException("Unrecognized hybridization", nameof(value));
             }
-		}
-	}
+        }
+    }
 }

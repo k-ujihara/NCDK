@@ -21,39 +21,37 @@
  */
 namespace NCDK.Validate
 {
-    /**
-     * Tool to mark IChemObject's as having a problem. There are two levels:
-     * a problem, and a warning, to allow for different coloring by renderer's.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author   Egon Willighagen
-     * @cdk.created  2003-08-11
-     */
+    /// <summary>
+    /// Tool to mark IChemObject's as having a problem. There are two levels:
+    /// a problem, and a warning, to allow for different coloring by renderer's.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    // @author   Egon Willighagen
+    // @cdk.created  2003-08-11
     public class ProblemMarker
     {
-        public const string ERROR_MARKER = "NCDK.Validate.error";
-        public const string WARNING_MARKER = "NCDK.Validate.warning";
+        public const string ErrorMarker = "NCDK.Validate.error";
+        public const string WarningMarker = "NCDK.Validate.warning";
 
         public static void MarkWithError(IChemObject obj)
         {
-            obj.SetProperty(ERROR_MARKER, true);
+            obj.SetProperty(ErrorMarker, true);
         }
 
         public static void MarkWithWarning(IChemObject obj)
         {
-            obj.SetProperty(WARNING_MARKER, true);
+            obj.SetProperty(WarningMarker, true);
         }
 
         public static void UnMarkWithError(IChemObject obj)
         {
-            obj.RemoveProperty(ERROR_MARKER);
+            obj.RemoveProperty(ErrorMarker);
         }
 
         public static void UnMarkWithWarning(IChemObject obj)
         {
-            obj.RemoveProperty(WARNING_MARKER);
+            obj.RemoveProperty(WarningMarker);
         }
 
         public static void Unmark(IChemObject obj)

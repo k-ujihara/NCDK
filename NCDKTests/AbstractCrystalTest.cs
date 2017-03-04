@@ -23,11 +23,11 @@ using NCDK.Numerics;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link ICrystal} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link ICrystal} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractCrystalTest
         : AbstractAtomContainerTest
@@ -169,9 +169,9 @@ namespace NCDK
             TestSetZ_Integer();
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()

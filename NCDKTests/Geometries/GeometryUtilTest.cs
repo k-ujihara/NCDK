@@ -33,17 +33,17 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-	 * This class defines regression tests that should ensure that the source code
-	 * of the {@link org.openscience.cdk.geometry.GeometryUtil} is not broken.
-	 *
-	 * @cdk.module test-standard
-	 *
-	 * @author     Egon Willighagen
-	 * @cdk.created    2004-01-30
-	 *
-	 * @see org.openscience.cdk.geometry.GeometryUtil
-	 */
+    /// <summary>
+    /// This class defines regression tests that should ensure that the source code
+    /// of the {@link org.openscience.cdk.geometry.GeometryUtil} is not broken.
+    ///
+    // @cdk.module test-standard
+    ///
+    // @author     Egon Willighagen
+    // @cdk.created    2004-01-30
+    ///
+    // @see org.openscience.cdk.geometry.GeometryUtil
+    /// </summary>
     [TestClass()]
     public class GeometryUtilTest : CDKTestCase
     {
@@ -91,14 +91,14 @@ namespace NCDK.Geometries
             Assert.IsFalse(GeometryUtil.Has2DCoordinates(container));
         }
 
-        /**
-		 * @cdk.bug 2936440
-		 */
+        /// <summary>
+        // @cdk.bug 2936440
+        /// </summary>
         [TestMethod()]
         public void TestHas2DCoordinates_With000()
         {
             string filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filenameMol);
+            var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             molOne = (IAtomContainer) reader.Read(new AtomContainer());
@@ -131,7 +131,7 @@ namespace NCDK.Geometries
             container.Add(atom2);
             container.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.PARTIAL, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get2DCoordinateCoverage(container));
 
         }
 
@@ -153,7 +153,7 @@ namespace NCDK.Geometries
             container.Add(atom2);
             container.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.FULL, GeometryUtil.Get2DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get2DCoordinateCoverage(container));
 
         }
 
@@ -207,14 +207,14 @@ namespace NCDK.Geometries
             string filenameMolOne = "NCDK.Data.MDL.murckoTest6_3d_2.mol";
             string filenameMolTwo = "NCDK.Data.MDL.murckoTest6_3d.mol";
             //string filenameMolTwo = "NCDK.Data.MDL.murckoTest6_3d_2.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filenameMolOne);
+            var ins = ResourceLoader.GetAsStream(filenameMolOne);
             IAtomContainer molOne;
             IAtomContainer molTwo;
             IDictionary<int, int> mappedAtoms = new Dictionary<int, int>();
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             molOne = reader.Read(new AtomContainer());
 
-            ins = this.GetType().Assembly.GetManifestResourceStream(filenameMolTwo);
+            ins = ResourceLoader.GetAsStream(filenameMolTwo);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             molTwo = reader.Read(new AtomContainer());
 
@@ -234,9 +234,7 @@ namespace NCDK.Geometries
             Assert.AreEqual(0.2, BondLengthRMSD, 0.1);
         }
 
-        /*
-		 * @cdk.bug 1649007
-		 */
+        // @cdk.bug 1649007
         [TestMethod()]
         public void TestRotate_IAtomContainer_Point2d_Double()
         {
@@ -509,7 +507,7 @@ namespace NCDK.Geometries
             container.Add(atom2);
             container.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.PARTIAL, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Partial, GeometryUtil.Get3DCoordinateCoverage(container));
 
         }
 
@@ -531,7 +529,7 @@ namespace NCDK.Geometries
             container.Add(atom2);
             container.Add(atom3);
 
-            Assert.AreEqual(GeometryUtil.CoordinateCoverage.FULL, GeometryUtil.Get3DCoordinateCoverage(container));
+            Assert.AreEqual(GeometryUtil.CoordinateCoverage.Full, GeometryUtil.Get3DCoordinateCoverage(container));
 
         }
 
@@ -620,9 +618,9 @@ namespace NCDK.Geometries
             Assert.AreEqual(atom1, GeometryUtil.GetClosestAtom(1.0, 0.0, acont, null));
         }
 
-        /**
-		 * Tests if not the central atom is returned as closest atom.
-		 */
+        /// <summary>
+        /// Tests if not the central atom is returned as closest atom.
+        /// </summary>
         [TestMethod()]
         public void TestGetClosestAtom_IAtomContainer_IAtom()
         {
@@ -664,12 +662,12 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-		 * Unit tests that tests the situation where two vertical two-atom
-		 * molecules are with the same x coordinates.
-		 *
-		 * @ Thrown when the cloning failed.
-		 */
+        /// <summary>
+        /// Unit tests that tests the situation where two vertical two-atom
+        /// molecules are with the same x coordinates.
+        ///
+        // @ Thrown when the cloning failed.
+        /// </summary>
         [TestMethod()]
         public void TestShiftContainerHorizontal_Two_vertical_molecules()
         {
@@ -713,10 +711,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(1.0, GeometryUtil.GetBondLengthAverage(reaction), 0.0);
         }
 
-        /**
-		 * Tests if the bond length average is calculated based on all
-		 * <see cref="IAtomContainer"/>s in the IReaction.
-		 */
+        /// <summary>
+        /// Tests if the bond length average is calculated based on all
+        /// <see cref="IAtomContainer"/>s in the IReaction.
+        /// </summary>
         [TestMethod()]
         public void TestGetBondLengthAverage_MultiReaction()
         {
@@ -779,12 +777,12 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-		 * Unit tests that tests the situation where two horizontal two-atom
-		 * molecules are with the same y coordinates.
-		 *
-		 * @ Thrown when the cloning failed.
-		 */
+        /// <summary>
+        /// Unit tests that tests the situation where two horizontal two-atom
+        /// molecules are with the same y coordinates.
+        ///
+        // @ Thrown when the cloning failed.
+        /// </summary>
         [TestMethod()]
         public void TestShiftReactionVertical_Two_horizontal_molecules()
         {

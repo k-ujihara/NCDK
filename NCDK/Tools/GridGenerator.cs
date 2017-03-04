@@ -25,13 +25,13 @@ using NCDK.Numerics;
 
 namespace NCDK.Tools
 {
-    /**
-     * Generates a Grid of points in 3D space within given boundaries.
-     *
-     * @author cho
-     * @cdk.githash
-     * @cdk.created 2005-09-30
-     */
+    /// <summary>
+    /// Generates a Grid of points in 3D space within given boundaries.
+    ///
+    // @author cho
+    // @cdk.githash
+    // @cdk.created 2005-09-30
+    /// </summary>
     public class GridGenerator
     {
         public double LatticeConstant { get; set; } = 0.5;
@@ -54,9 +54,9 @@ namespace NCDK.Tools
             GenerateGrid();
         }
 
-        /**
-         * @param initialValue used as initial value for the Grid points
-         */
+        /// <summary>
+        /// <param name="initialValue">used as initial value for the Grid points</param>
+        /// </summary>
         public GridGenerator(double min, double max, double initialValue)
         {
             SetDimension(min, max);
@@ -71,9 +71,9 @@ namespace NCDK.Tools
             InitializeGrid(initialValue);
         }
 
-        /**
-         * Method sets the maximal 3d dimensions to given min and max values.
-         */
+        /// <summary>
+        /// Method sets the maximal 3d dimensions to given min and max values.
+        /// </summary>
         public void SetDimension(double min, double max)
         {
             this.MinX = min;
@@ -84,9 +84,9 @@ namespace NCDK.Tools
             this.MaxZ = max;
         }
 
-        /**
-         * Method sets the maximal 3d dimensions to given min and max values.
-         */
+        /// <summary>
+        /// Method sets the maximal 3d dimensions to given min and max values.
+        /// </summary>
         public void SetDimension(double[] minMax, bool cubicGridFlag)
         {
             if (cubicGridFlag)
@@ -117,9 +117,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Method sets the maximal 3d dimensions to given min and max values.
-         */
+        /// <summary>
+        /// Method sets the maximal 3d dimensions to given min and max values.
+        /// </summary>
         public void SetDimension(double minx, double maxx, double miny, double maxy, double minz, double maxz)
         {
             this.MinX = minx;
@@ -130,11 +130,11 @@ namespace NCDK.Tools
             this.MaxZ = maxz;
         }
 
-        /**
-         * Main method creates a Grid between given boundaries (dimensions).
-         * The Grid my be extended over the given boundaries with the
-         * variable ExtendGrid.
-         */
+        /// <summary>
+        /// Main method creates a Grid between given boundaries (dimensions).
+        /// The Grid my be extended over the given boundaries with the
+        /// variable ExtendGrid.
+        /// </summary>
         public void GenerateGrid()
         {
             MinX = MinX - ExtendGrid;
@@ -151,9 +151,9 @@ namespace NCDK.Tools
             Grid = Arrays.CreateJagged<double>(Dim[0] + 1, Dim[1] + 1, Dim[2] + 1);
         }
 
-        /**
-         * Method initialise the given Grid points with a value.
-         */
+        /// <summary>
+        /// Method initialise the given Grid points with a value.
+        /// </summary>
         public void InitializeGrid(double value)
         {
             for (int i = 0; i < Grid.Length; i++)
@@ -168,9 +168,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Method initialise the given Grid points with a value.
-         */
+        /// <summary>
+        /// Method initialise the given Grid points with a value.
+        /// </summary>
         public double[][][] InitializeGrid(double[][][] Grid, double value)
         {
             for (int i = 0; i < Grid.Length; i++)
@@ -186,9 +186,9 @@ namespace NCDK.Tools
             return Grid;
         }
 
-        /**
-         * Method transforms the Grid to an array.
-         */
+        /// <summary>
+        /// Method transforms the Grid to an array.
+        /// </summary>
         public double[] GridToGridArray(double[][][] Grid)
         {
             if (Grid == null)
@@ -211,9 +211,9 @@ namespace NCDK.Tools
             return GridArray;
         }
 
-        /**
-         * Method calculates coordinates from a given Grid point.
-         */
+        /// <summary>
+        /// Method calculates coordinates from a given Grid point.
+        /// </summary>
         public Vector3 GetCoordinatesFromGridPoint(Vector3 gridPoint)
         {
             double dx = MinX + LatticeConstant * gridPoint.X;
@@ -222,9 +222,9 @@ namespace NCDK.Tools
             return new Vector3(dx, dy, dz);
         }
 
-        /**
-         * Method calculates coordinates from a given Grid array position.
-         */
+        /// <summary>
+        /// Method calculates coordinates from a given Grid array position.
+        /// </summary>
         public Vector3 GetCoordinatesFromGridPoint(int gridPoint)
         {
             int dimCounter = 0;
@@ -249,9 +249,9 @@ namespace NCDK.Tools
             return point;
         }
 
-        /**
-         * Method calculates the nearest Grid point from given coordinates.
-         */
+        /// <summary>
+        /// Method calculates the nearest Grid point from given coordinates.
+        /// </summary>
         public Vector3 GetGridPointFrom3dCoordinates(Vector3 coord)
         {
             Vector3 gridPoint = new Vector3();
@@ -284,9 +284,9 @@ namespace NCDK.Tools
             return gridPoint;
         }
 
-        /**
-         * Method transforms the Grid into pmesh format.
-         */
+        /// <summary>
+        /// Method transforms the Grid into pmesh format.
+        /// </summary>
         public void WriteGridInPmeshFormat(string outPutFileName)
         {
             using (var srm = new FileStream(outPutFileName + ".pmesh", FileMode.Create, FileAccess.Write))
@@ -308,14 +308,14 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Method transforms the Grid into pmesh format. Only Grid points
-         * with specific value defined with cutoff are considered.
-         * <pre>
-         * cutoff <0, the values considered must be <=cutoff
-         * cutoff >0, the values considered must be >=cutoff
-         * </pre>
-         */
+        /// <summary>
+        /// Method transforms the Grid into pmesh format. Only Grid points
+        /// with specific value defined with cutoff are considered.
+        /// <code>
+        /// cutoff <0, the values considered must be <=cutoff
+        /// cutoff >0, the values considered must be >=cutoff
+        /// </code>
+        /// </summary>
         public void WriteGridInPmeshFormat(string outPutFileName, double cutOff)
         {
             using (var srm = new FileStream(outPutFileName + ".pmesh", FileMode.Create, FileAccess.Write))

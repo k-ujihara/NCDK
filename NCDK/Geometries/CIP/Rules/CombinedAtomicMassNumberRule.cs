@@ -22,20 +22,16 @@
  */
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * Compares to {@link ILigand}s based on CIP sequences sub rules. The used CIP sub rules are:
-     * <ol>
-     *   <li>{@link MassNumberRule}</li>
-     *   <li>{@link AtomicNumberRule}</li>
-     * </ol>
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class CombinedAtomicMassNumberRule : ISequenceSubRule<ILigand>
+    /// <summary>
+    /// Compares to <see cref="ILigand"/>s based on CIP sequences sub rules. The used CIP sub rules are:
+    /// <list type="bullet">
+    /// <item><see cref="MassNumberRule"/></item>
+    /// <item><see cref="AtomicNumberRule"/></item>
+    /// </list>
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
+    internal class CombinedAtomicMassNumberRule : ISequenceSubRule<ILigand>
     {
 
         MassNumberRule massNumberRule = new MassNumberRule();

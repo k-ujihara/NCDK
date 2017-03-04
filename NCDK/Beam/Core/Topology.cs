@@ -38,27 +38,21 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Defines the relative topology around a vertex (atom).
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    abstract class Topology
+    // @author John May
+    internal abstract class Topology
     {
         /// <summary>
         /// The vertex/atom which this topology describes.
-        ///
-        /// <returns>vertex</returns>
-        // @ Unknown topology
         /// </summary>
+        /// <returns>vertex</returns>
+        /// <exception cref="">Unknown topology</exception>
         public abstract int Atom { get; }
 
         /// <summary>
         /// The configuration of the topology.
-        ///
-        /// <returns>configuration for this topology</returns>
         /// </summary>
+        /// <returns>configuration for this topology</returns>
         public abstract Configuration Configuration { get; }
 
         /// <summary>
@@ -75,25 +69,22 @@ namespace NCDK.Beam
         /// <summary>
         /// What type of configuration is defined by this topology (e.g. Tetrahedral,
         /// DoubleBond etc).
-        ///
-        /// <returns>the type of the configuration</returns>
         /// </summary>
+        /// <returns>the type of the configuration</returns>
         public virtual Configuration.Types Type => Configuration.Type;
 
         /// <summary>
         /// Arrange the topology relative to a given ranking of vertices.
-        ///
+        /// </summary>
         /// <param name="rank">Ordering of vertices</param>
         /// <returns>a new topology with the neighbors arranged by the given rank</returns>
-        /// </summary>
         public abstract Topology OrderBy(int[] rank);
 
         /// <summary>
         /// Transform the topology to one with the given {@literal mapping}.
-        ///
+        /// </summary>
         /// <param name="mapping">the mapping used to transform the topology</param>
         /// <returns>a new topology with it's vertices mapped</returns>
-        /// </summary>
         public abstract Topology Transform(int[] mapping);
 
         public abstract void Copy(int[] dest);
@@ -103,13 +94,13 @@ namespace NCDK.Beam
         /// given {@literal rank}. The parity defines the oddness or evenness of a
         /// permutation and is the number of inversions (swaps) one would need to
         /// make to place the 'vs' in the Order specified by rank.
-        ///
+        /// </summary>
+        /// <remarks>
+        /// <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation</a>
+        /// </remarks>
         /// <param name="vs">  array of vertices</param>
         /// <param name="rank">rank of vertices</param>, |R| = Max(vs) + 1
-        /// <returns>sign of the permutation</returns>, -1=odd or 1=even
-        // @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity
-        ///      of a Permutation</a>
-        /// </summary>
+        /// <returns>sign of the permutation, -1=odd or 1=even</returns>
         public static int Parity(int[] vs, int[] rank)
         {
             // count elements which are out of Order and by how much
@@ -148,14 +139,13 @@ namespace NCDK.Beam
         /// <summary>
         /// Sorts the array {@literal vs} into the Order given by the {@literal
         /// rank}.
-        ///
-        /// <param name="vs">  vertices to sort</param>
-        /// <param name="rank">rank of vertices</param>
-        /// <returns>sorted array </returns>(cpy of vs)
         /// </summary>
+        /// <param name="vs">vertices to sort</param>
+        /// <param name="rank">rank of vertices</param>
+        /// <returns>sorted array (cpy of vs)</returns>
         public static int[] Sort(int[] vs, int[] rank)
         {
-            int[] ws = (int[])vs.Clone();	// Arrays.CopyOf(vs, vs.Length);
+            int[] ws = (int[])vs.Clone();    // Arrays.CopyOf(vs, vs.Length);
 
             // insertion sort using rank for the Ordering
             for (int i = 0, j = i; i < vs.Length - 1; j = ++i)
@@ -174,23 +164,20 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Specify Unknown configuration on atom - there is no vertex data stored.
-        ///
-        /// <returns>Unknown topology</returns>
         /// </summary>
+        /// <returns>Unknown topology</returns>
         public static Topology Unknown => unknown;
 
         private static readonly Topology unknown = new UnknownTopology();
 
         /// <summary>
         /// Define tetrahedral topology of the given configuration.
-        ///
-        /// <param name="u">            central atom</param>
-        /// <param name="vs">           vertices surrounding u</param>, the first is the vertex we
-        ///                      are looking from
-        /// <param name="configuration">the tetrahedral configuration</param>, @TH1, @TH2, @ or @@
-        /// <returns>topology instance for that configuration</returns>
-        // @see Configuration
         /// </summary>
+        /// <param name="u">central atom</param>
+        /// <param name="vs">vertices surrounding u, the first is the vertex we are looking from</param>
+        /// <param name="configuration">the tetrahedral configuration, @TH1, @TH2, @ or @@</param>
+        /// <returns>topology instance for that configuration</returns>
+        /// <seealso cref="Configuration"/>
         public static Topology CreateTetrahedral(int u, int[] vs, Configuration configuration)
         {
             if (configuration.Type != Types.Implicit
@@ -205,7 +192,6 @@ namespace NCDK.Beam
 
         public static Topology CreateExtendedTetrahedral(int u, int[] vs, Configuration configuration)
         {
-
             if (configuration.Type != Implicit
                     && configuration.Type != Types.ExtendedTetrahedral)
                 throw new ArgumentException(configuration.Type
@@ -220,17 +206,14 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Define trigonal topology of the given configuration.
-        ///
-        /// <param name="u">            central atom</param>
-        /// <param name="vs">           vertices surrounding u</param>, the first is the vertex we
-        ///                      are looking from
-        /// <param name="configuration">the trigonal configuration</param>, @DB1, @Db1, @ or @@
-        /// <returns>topology instance for that configuration</returns>
-        // @see Configuration
         /// </summary>
+        /// <param name="u">central atom</param>
+        /// <param name="vs">vertices surrounding u, the first is the vertex we are looking from</param>
+        /// <param name="configuration">the trigonal configuration, @DB1, @Db1, @ or @@</param>
+        /// <returns>topology instance for that configuration</returns>
+        /// <seealso cref="Configuration"/>
         public static Topology CreateTrigonal(int u, int[] vs, Configuration configuration)
         {
-
             if (configuration.Type != Implicit
                     && configuration.Type != Types.DoubleBond)
                 throw new ArgumentException(configuration.Type
@@ -246,15 +229,10 @@ namespace NCDK.Beam
         /// <summary>
         /// Convert an implicit configuration ('@' or '@@') c, to an explicit one
         /// (e.g. @TH1).
-        ///
-        /// <blockquote><pre>
+        /// </summary>
+        /// <remarks>
         /// Implicit Valence Explicit Example
-        ///
-        /// <param name="g">chemical graph</param>
-        /// <param name="u">the atom to which the configuration is associated</param>
-        /// <param name="c">implicit configuration </param>({@link Configuration#AntiClockwise or
-        ///          Configuration#Clockwise})
-        /// <returns>an explicit configuration or </returns>{@link Configuration#Unknown}
+        /// <code>
         // @ 4       @TH1     O[C@H](N)C or O[C@]([H])(N)C
         // @@ 4       @TH2     O[C@@H](N)C or O[C@@]([H])(N)C
         // @ 3       @TH1     C[S@](N)=O
@@ -264,8 +242,13 @@ namespace NCDK.Beam
         // @ 5       @TB1     S[As@](F)(Cl)(Br)C=O
         // @@ 5       @TB2     S[As@@](F)(Cl)(Br)C=O
         // @ 5       @OH1     S[Co@@](F)(Cl)(Br)(I)C=O
-        // @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S </pre></blockquote>
-        /// </summary>
+        // @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S
+        /// </code>
+        /// </remarks>
+        /// <param name="g">chemical graph</param>
+        /// <param name="u">the atom to which the configuration is associated</param>
+        /// <param name="c">implicit configuration (<see cref="Configuration.AntiClockwise"/> or <see cref="Configuration.Clockwise"/>)</param>
+        /// <returns>an explicit configuration or <see cref="Configuration.Unknown"/></returns>
         public static Configuration ToExplicit(Graph g, int u, Configuration c)
         {
             // already explicit
@@ -285,7 +268,6 @@ namespace NCDK.Beam
             // atoms (todo)
             else if (valence == 3)
             {
-
                 // XXX: sulfoxide and selenium special case... would be better to compute
                 // hybridization don't really like doing this here but is sufficient
                 // for now
@@ -414,7 +396,7 @@ namespace NCDK.Beam
             public override void Copy(int[] dest)
             {
             }
-        };
+        }
 
         private sealed class Tetrahedral : Topology
         {
@@ -431,14 +413,14 @@ namespace NCDK.Beam
                 this.p = p;
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override int Atom => u;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Configuration Configuration
                 => p < 0 ? Configuration.TH1 : Configuration.TH2;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology OrderBy(int[] rank)
             {
                 return new Tetrahedral(u,
@@ -446,7 +428,7 @@ namespace NCDK.Beam
                                        p * Parity4(vs, rank));
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology Transform(int[] mapping)
             {
                 int[] ws = new int[vs.Length];
@@ -486,14 +468,14 @@ namespace NCDK.Beam
                 this.p = p;
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override int Atom => u;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Configuration Configuration
-				=>  p < 0 ? Configuration.AL1 : Configuration.AL2;
+                =>  p < 0 ? Configuration.AL1 : Configuration.AL2;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology OrderBy(int[] rank)
             {
                 return new ExtendedTetrahedral(u,
@@ -501,7 +483,7 @@ namespace NCDK.Beam
                                                p * Parity(vs, rank));
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology Transform(int[] mapping)
             {
                 int[] ws = new int[vs.Length];
@@ -536,14 +518,14 @@ namespace NCDK.Beam
                 this.p = p;
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override int Atom => u;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Configuration Configuration
-				=> p < 0 ? Configuration.DB1 : Configuration.DB2;
+                => p < 0 ? Configuration.DB1 : Configuration.DB2;
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology OrderBy(int[] rank)
             {
                 return new Trigonal(u,
@@ -551,7 +533,7 @@ namespace NCDK.Beam
                                     p * Parity(vs, rank));
             }
 
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override Topology Transform(int[] mapping)
             {
                 int[] ws = new int[vs.Length];

@@ -40,7 +40,7 @@ namespace NCDK.Pharmacophore
         /// Pharmacophore queries can be saved in an XML format which is described XXX. The
         /// file can contain multiple definitions. This method will process all the definitions
         /// and return a list fo {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
-        /// the {@link PharmacophoreMatcher} class.
+        /// the <see cref="PharmacophoreMatcher"/> class.
         /// <p/>
         /// The current schema for the document allows one to specify angle and distance
         /// constraints. Currently the CDK does not support angle constraints, so they are
@@ -53,13 +53,13 @@ namespace NCDK.Pharmacophore
         /// available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
         /// <p/>
         /// Example usage is
-        /// <pre>
+        /// <code>
         /// List<PharmacophoreQuery> defs = ReadPharmacophoreDefinitions("mydefs.xml");
         /// Console.Out.WriteLine("Number of definitions = "+defs.Count);
         /// for (int i = 0; i < defs.Count; i++) {
         ///     Console.Out.WriteLine("Desc: "+defs[i].GetProperty("description");
         /// }
-        /// </pre>
+        /// </code>
         /// </summary>
         /// <param name="filename">The file to read the definitions from</param>
         /// <returns>A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects</returns>
@@ -88,7 +88,7 @@ namespace NCDK.Pharmacophore
         /// Pharmacophore queries can be saved in an XML format which is described XXX. The
         /// file can contain multiple definitions. This method will process all the definitions
         /// and return a list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects which can be used with
-        /// the {@link PharmacophoreMatcher} class.
+        /// the <see cref="PharmacophoreMatcher"/> class.
         /// <p/>
         /// The current schema for the document allows one to specify angle and distance
         /// constraints.
@@ -101,22 +101,22 @@ namespace NCDK.Pharmacophore
         /// available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
         /// <p/>
         /// Example usage is
-        /// <pre>
+        /// <code>
         /// List<PharmacophoreQuery> defs = readPharmacophoreDefinitions"mydefs.xml");
         /// Console.Out.WriteLine("Number of definitions = "+defs.Count);
         /// for (int i = 0; i < defs.Count; i++) {
         ///     Console.Out.WriteLine("Desc: "+defs[i].GetProperty("description");
         /// }
-        /// </pre>
+        /// </code>
         ///
         /// <param name="ins">The stream to read the definitions from</param>
         /// <returns>A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects</returns>
         /// <exception cref="CDKException">if there is an error in the format</exception>
         /// <exception cref="IOException"> if there is an error in opening the file</exception>
-        // @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
-        // @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
-        // @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
-        // @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
+        /// @see org.openscience.cdk.pharmacophore.PharmacophoreQueryAtom
+        /// @see org.openscience.cdk.pharmacophore.PharmacophoreQueryBond
+        /// @see org.openscience.cdk.pharmacophore.PharmacophoreMatcher
+        /// @see org.openscience.cdk.pharmacophore.PharmacophoreQuery
         /// </summary>
         public static IList<PharmacophoreQuery> ReadPharmacophoreDefinitions(Stream ins)
         {
@@ -144,25 +144,25 @@ namespace NCDK.Pharmacophore
             WritePharmacophoreDefinition(new PharmacophoreQuery[] { query }, out_);
         }
 
-        /**
-         * Write out one or more pharmacophore queries in the CDK XML format.
-         *
-         * @param queries The pharmacophore queries
-         * @param out     The Stream to write to
-         * @throws IOException if there is a problem writing the XML document
-         */
+        /// <summary>
+        /// Write out one or more pharmacophore queries in the CDK XML format.
+        ///
+        /// <param name="queries">The pharmacophore queries</param>
+        /// <param name="out">The Stream to write to</param>
+        /// <exception cref="IOException">if there is a problem writing the XML document</exception>
+        /// </summary>
         public static void WritePharmacophoreDefinition(IList<PharmacophoreQuery> queries, Stream out_)
         {
             WritePharmacophoreDefinition(queries.ToArray(), out_);
         }
 
-        /**
-         * Write out one or more pharmacophore queries in the CDK XML format.
-         *
-         * @param queries The pharmacophore queries
-         * @param out     The Stream to write to
-         * @throws IOException if there is a problem writing the XML document
-         */
+        /// <summary>
+        /// Write out one or more pharmacophore queries in the CDK XML format.
+        ///
+        /// <param name="queries">The pharmacophore queries</param>
+        /// <param name="out">The Stream to write to</param>
+        /// <exception cref="IOException">if there is a problem writing the XML document</exception>
+        /// </summary>
         public static void WritePharmacophoreDefinition(PharmacophoreQuery[] queries, Stream out_)
         {
             var root = new XElement("pharmacophoreContainer");

@@ -29,16 +29,16 @@ using System.Text;
 #>
 namespace <#= ns.NS #>
 {
-    /**
-     * A LonePair is an orbital primarily located with one Atom, containing
-     * two electrons.
-     *
-     * @cdk.module data
-     * @cdk.githash
-     *
-     * @cdk.keyword orbital
-     * @cdk.keyword lone-pair
-     */
+    /// <summary>
+    /// A LonePair is an orbital primarily located with one Atom, containing
+    /// two electrons.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @cdk.keyword orbital
+    // @cdk.keyword lone-pair
+    /// </summary>
     [Serializable]
     public class LonePair
         : ElectronContainer, ILonePair, ICloneable
@@ -49,36 +49,36 @@ namespace <#= ns.NS #>
         /// <summary>The atom with which this lone pair is associated.</summary>
         protected IAtom atom;
 
-        /**
-         * Constructs an unconnected lone pair.
-         *
-         */
+        /// <summary>
+        /// Constructs an unconnected lone pair.
+        ///
+        /// </summary>
         public LonePair()
         {
             this.atom = null;
         }
 
-        /**
-         * Constructs an lone pair on an Atom.
-         *
-         * @param atom  Atom to which this lone pair is connected
-         */
+        /// <summary>
+        /// Constructs an lone pair on an Atom.
+        ///
+        /// <param name="atom">Atom to which this lone pair is connected</param>
+        /// </summary>
         public LonePair(IAtom atom)
         {
             this.atom = atom;
         }
 
-        /**
-         * The number of electrons in a LonePair.
-         */
+        /// <summary>
+        /// The number of electrons in a LonePair.
+        /// </summary>
         public override int? ElectronCount
         {
             get { return this.electronCount; }
         }
 
-        /**
-         * The associated Atom.
-         */
+        /// <summary>
+        /// The associated Atom.
+        /// </summary>
         public IAtom Atom
         {
             get { return atom; }
@@ -89,12 +89,12 @@ namespace <#= ns.NS #>
             }
         }
 
-        /**
-         * Returns true if the given atom participates in this lone pair.
-         *
-         * @param   atom  The atom to be tested if it participates in this bond
-         * @return     true if this lone pair is associated with the atom
-         */
+        /// <summary>
+        /// Returns true if the given atom participates in this lone pair.
+        ///
+        /// <param name="atom">The atom to be tested if it participates in this bond</param>
+        /// <returns>true if this lone pair is associated with the atom</returns>
+        /// </summary>
         public bool Contains(IAtom atom)
         {
             return (this.atom == atom);
@@ -107,12 +107,12 @@ namespace <#= ns.NS #>
             return clone;
         }
 
-        /**
-         * Returns a one line string representation of this LonePair.
-         * This method is conform RFC #9.
-         *
-         * @return    The string representation of this LonePair
-         */
+        /// <summary>
+        /// Returns a one line string representation of this LonePair.
+        /// This method is conform RFC #9.
+        ///
+        /// <returns>The string representation of this LonePair</returns>
+        /// </summary>
         public override string ToString()
         {
             StringBuilder resultString = new StringBuilder();

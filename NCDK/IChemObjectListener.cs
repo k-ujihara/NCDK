@@ -23,22 +23,22 @@
 
 namespace NCDK
 {
-    /**
-     * Classes implementing this interface must implement this method
-     * such that they react appropriately to changes in the object they
-     * are interested in.
-     *
-     * @cdk.module interfaces
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Classes implementing this interface must implement this method
+    /// such that they react appropriately to changes in the object they
+    /// are interested in.
+    ///
+    // @cdk.module interfaces
+    // @cdk.githash
+    /// </summary>
     public interface IChemObjectListener
     {
-        /**
-         * Called by objects to notify objects that implemented this interface
-         * and registered with them as ChemObjectListeners.
-         *
-         * @param event  a ChemObjectChangeEvent object
-         */
+        /// <summary>
+        /// Called by objects to notify objects that implemented this interface
+        /// and registered with them as ChemObjectListeners.
+        ///
+        /// <param name="event">a ChemObjectChangeEvent object</param>
+        /// </summary>
         void OnStateChanged(ChemObjectChangeEventArgs evt);
     }
 }

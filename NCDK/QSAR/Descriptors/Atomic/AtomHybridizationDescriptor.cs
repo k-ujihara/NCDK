@@ -23,30 +23,30 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  This class returns the hybridization of an atom.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * @author         mfe4
-     * @cdk.created    2004-11-13
-     * @cdk.module     qsaratomic
-     * @cdk.githash
-     * @cdk.set        qsar-descriptors
-     * @cdk.dictref    qsar-descriptors:atomHybridization
-     */
+    /// <summary>
+    ///  This class returns the hybridization of an atom.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author         mfe4
+    // @cdk.created    2004-11-13
+    // @cdk.module     qsaratomic
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref    qsar-descriptors:atomHybridization
+    /// </summary>
     public class AtomHybridizationDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         /// <summary>

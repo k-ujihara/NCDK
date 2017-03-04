@@ -29,10 +29,10 @@ using NCDK.Stereo;
 
 namespace NCDK.Layout
 {
-    /**
-     * @author John May
-     * @cdk.module test-sdg
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-sdg
+    /// </summary>
     [TestClass()]
     public class NonPlanarBondsTest
     {
@@ -240,7 +240,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void nonPlanarBondsForAntiClockwsieExtendedTetrahedral()
+        public void NonPlanarBondsForAntiClockwsieExtendedTetrahedral()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
@@ -264,7 +264,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void nonPlanarBondsForClockwsieExtendedTetrahedral()
+        public void NonPlanarBondsForClockwsieExtendedTetrahedral()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -1.56d, 0.78d));
@@ -325,9 +325,9 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C4H8O/c1-3-4(2)5/h3H2,1-2H3
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C4H8O/c1-3-4(2)5/h3H2,1-2H3
+        /// </summary>
         [TestMethod()]
         public void DontMarkTerminalBonds()
         {
@@ -347,9 +347,9 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.None, m.Bonds[2].Stereo);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C4H8/c1-3-4-2/h3-4H,1-2H3
+        /// </summary>
         [TestMethod()]
         public void MarkBut2eneWithWavyBond()
         {
@@ -365,9 +365,9 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.UpOrDown, m.Bonds[0].Stereo);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C8H12/c1-3-5-7-8-6-4-2/h3-8H,1-2H3/b5-3+,6-4+,8-7?
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C8H12/c1-3-5-7-8-6-4-2/h3-8H,1-2H3/b5-3+,6-4+,8-7?
+        /// </summary>
         [TestMethod()]
         public void UseCrossedBondIfNeeded()
         {
@@ -403,9 +403,9 @@ namespace NCDK.Layout
             Assert.AreEqual(BondStereo.EOrZ, m.Bonds[3].Stereo);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C6H14S/c1-5-7(4)6(2)3/h5H2,1-4H3/t7-/m0/s1 
+        /// </summary>
         [TestMethod()]
         public void DontMarkTetrahedralCentresWithDoubleBondsAsUnspecified()
         {
@@ -454,9 +454,9 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * {@code SMILES: *CN=C(N)N}
-         */
+        /// <summary>
+        /// {@code SMILES: *CN=C(N)N}
+        /// </summary>
         [TestMethod()]
         public void DontMarkGuanidineAsUnspecified()
         {
@@ -477,9 +477,9 @@ namespace NCDK.Layout
                 Assert.AreEqual(BondStereo.None, bond.Stereo);
         }
 
-        /**
-         * {@code SMILES: *CN=C(CCC)CCC[H]}
-         */
+        /// <summary>
+        /// {@code SMILES: *CN=C(CCC)CCC[H]}
+        /// </summary>
         [TestMethod()]
         public void DontUnspecifiedDueToHRepresentation()
         {
@@ -510,9 +510,9 @@ namespace NCDK.Layout
                 Assert.AreEqual(BondStereo.None, bond.Stereo);
         }
 
-        /**
-         * {@code SMILES: *CN=C(CCC)CCC}
-         */
+        /// <summary>
+        /// {@code SMILES: *CN=C(CCC)CCC}
+        /// </summary>
         [TestMethod()]
         public void DontMarkUnspecifiedForLinearEqualChains()
         {
@@ -541,9 +541,9 @@ namespace NCDK.Layout
                 Assert.AreEqual(BondStereo.None, bond.Stereo);
         }
 
-        /**
-         * {@code SMILES: *CN=C1CCCCC1}
-         */
+        /// <summary>
+        /// {@code SMILES: *CN=C1CCCCC1}
+        /// </summary>
         [TestMethod()]
         public void MarkUnspecifiedForCyclicLigands()
         {
@@ -575,9 +575,9 @@ namespace NCDK.Layout
             Assert.AreEqual(1, wavyCount);
         }
 
-        /**
-         * {@code SMILES: *CN=C(CCC)CCN}
-         */
+        /// <summary>
+        /// {@code SMILES: *CN=C(CCC)CCN}
+        /// </summary>
         [TestMethod()]
         public void UnspecifiedMarkedOnDifferentLigands()
         {

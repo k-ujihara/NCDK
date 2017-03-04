@@ -1,9 +1,9 @@
 namespace NCDK.SMSD.Labelling
 {
-    /**
-     * @cdk.module smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    /// </summary>
     public interface ICanonicalMoleculeLabeller
     {
         IAtomContainer GetCanonicalMolecule(IAtomContainer container);

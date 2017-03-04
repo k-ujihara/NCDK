@@ -42,7 +42,7 @@ namespace NCDK.Signature
             return molSig.ToCanonicalString();
         }
 
-        public IAtomContainer reconstruct(string signature)
+        public IAtomContainer Reconstruct(string signature)
         {
             ColoredTree tree = AbstractVertexSignature.Parse(signature);
             MoleculeFromSignatureBuilder builder = new MoleculeFromSignatureBuilder(Silent.ChemObjectBuilder.Instance);
@@ -57,7 +57,7 @@ namespace NCDK.Signature
             cc.Atoms.Add(builder.CreateAtom("C"));
             cc.AddBond(cc.Atoms[0], cc.Atoms[1], order);
             string signature = SignatureForAtom(cc, 0);
-            IAtomContainer reconstructed = reconstruct(signature);
+            IAtomContainer reconstructed = Reconstruct(signature);
             Assert.AreEqual(2, reconstructed.Atoms.Count);
             Assert.AreEqual(1, reconstructed.Bonds.Count);
             Assert.AreEqual(order, reconstructed.Bonds[0].Order);
@@ -82,7 +82,7 @@ namespace NCDK.Signature
         {
             IAtomContainer ring = MakeRing(ringSize);
             string signature = CanonicalSignature(ring);
-            IAtomContainer reconstructedRing = reconstruct(signature);
+            IAtomContainer reconstructedRing = Reconstruct(signature);
             Assert.AreEqual(ringSize, reconstructedRing.Atoms.Count);
         }
 
@@ -111,7 +111,7 @@ namespace NCDK.Signature
         }
 
         [TestMethod()]
-        public void squareRingTest()
+        public void SquareRingTest()
         {
             RingTest(4);
         }
@@ -123,7 +123,7 @@ namespace NCDK.Signature
         }
 
         [TestMethod()]
-        public void hexagonRingTest()
+        public void HexagonRingTest()
         {
             RingTest(5);
         }

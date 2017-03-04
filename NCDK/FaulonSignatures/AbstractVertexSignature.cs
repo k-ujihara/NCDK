@@ -235,9 +235,8 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Convert this signature into a canonical signature string.
-        /// 
-        /// <returns>the canonical string form</returns>
         /// </summary>
+        /// <returns>the canonical string form</returns>
         public string ToCanonicalString()
         {
             StringBuilder stringBuffer = new StringBuilder();
@@ -259,10 +258,9 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Find the minimal signature string by trying all colors.
-        /// 
+        /// </summary>
         /// <param name="color">the current color to use</param>
         /// <param name="canonicalVertexSignature">the buffer to fill</param>
-        /// </summary>
         public void Canonize(int color, StringBuilder canonicalVertexSignature)
         {
             // assume that the atom invariants have been initialized
@@ -321,15 +319,13 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Get a canonical labelling for this signature. Note that a signature that
-        /// does not cover the graph (has a height < graph diameter) will not have
+        /// does not cover the graph (has a height &lt; graph diameter) will not have
         /// labels for every vertex. Unlabelled vertices will have a value of -1. To
         /// handle all cases, the total number of vertices must be passed to the 
         /// method.
-        /// 
-        /// <param name="totalVertexCount">the number of vertices in the graph</param>
-        /// 
-        /// <returns>///    the permutation necessary to transform the graph into a canonical form</returns>
         /// </summary>
+        /// <param name="totalVertexCount">the number of vertices in the graph</param>
+        /// <returns>the permutation necessary to transform the graph into a canonical form</returns>
         public int[] GetCanonicalLabelling(int totalVertexCount)
         {
             // TODO : get the totalVertexCount from the graph?
@@ -355,11 +351,9 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Get the number of vertices.
-        /// 
-        /// <returns>the number of vertices seen when making the signature, which may</returns>
-        ///         be less than the number in the full graph, depending on the 
-        ///         height
         /// </summary>
+        /// <returns>the number of vertices seen when making the signature, which may
+        ///         be less than the number in the full graph, depending on the height</returns>
         public int GetVertexCount()
         {
             return this.vertexCount;
@@ -368,58 +362,51 @@ namespace FaulonSignatures
         /// <summary>
         /// Convert the edge label (if any) to an integer color, for example the bond
         /// order in a chemistry implementation.
-        /// 
-        /// <param name="label">///            the label for an edge</param>
-        /// <returns>an int color</returns>
         /// </summary>
+        /// <param name="label">the label for an edge</param>
+        /// <returns>an int color</returns>
         public abstract int ConvertEdgeLabelToColor(string label);
 
         /// <summary>
         /// Get the integer label for a vertex - in chemistry implementations this
         /// will be the element mass.
-        /// 
-        /// <param name="vertexIndex">///            the index of the vertex in the input graph</param>
-        /// <returns>an integer label</returns>
         /// </summary>
+        /// <param name="vertexIndex">the index of the vertex in the input graph</param>
+        /// <returns>an integer label</returns>
         public abstract int GetIntLabel(int vertexIndex);
 
         /// <summary>
         /// Get the symbol to use in the output signature string for this vertex of 
         /// the input graph.
-        ///  
+        /// </summary>
         /// <param name="vertexIndex">the index of the vertex in the input graph</param>
         /// <returns>a string symbol</returns>
-        /// </summary>
         public abstract string GetVertexSymbol(int vertexIndex);
 
         /// <summary>
         /// Get a list of the indices of the vertices connected to the vertex with 
         /// the supplied index.
-        /// 
+        /// </summary>
         /// <param name="vertexIndex">the index of the vertex to use</param>
         /// <returns>the indices of connected vertices in the input graph</returns>
-        /// </summary>
         public abstract int[] GetConnected(int vertexIndex);
 
         /// <summary>
-        /// Get the symbol (if any) for the edge between the vertices with these two
-        /// indices.
-        /// 
+        /// Get the symbol (if any) for the edge between the vertices with these two indices.
+        /// </summary>
         /// <param name="vertexIndex">the index of one of the vertices in the edge</param>
         /// <param name="otherVertexIndex">the index of the other vertex in the edge </param>
         /// <returns>a string symbol for this edge</returns>
-        /// </summary>
         public abstract string GetEdgeLabel(int vertexIndex, int otherVertexIndex);
 
         /// <summary>
         /// Recursively print the signature into the buffer.
-        /// 
+        /// </summary>
         /// <param name="buffer">the string buffer to print into</param>
         /// <param name="node">the current node of the signature</param>
         /// <param name="parent">the parent node, or null</param>
         /// <param name="arcs">the list of already visited arcs</param>
         /// <param name="colorMap">a map between pre-printed colors and printed colors</param>
-        /// </summary>
         private void Print(StringBuilder buffer, DAG.Node node,
                 DAG.Node parent, List<DAG.Arc> arcs)
         {

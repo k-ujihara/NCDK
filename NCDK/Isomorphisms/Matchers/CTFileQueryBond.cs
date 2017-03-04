@@ -24,23 +24,27 @@ using System;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Captures query bond types defined in the CTFile.
-     *
-     * @cdk.module  isomorphism
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Captures query bond types defined in the CTFile.
+    /// </summary>
+    // @cdk.module  isomorphism
+    // @cdk.githash
     public class CTFileQueryBond : Default.Bond, IQueryBond // use Default.Bond instead of QueryBond
     {
-        /*
-         * Bond types, as stated in the CTFile manual 1 = Single, 2 = Double, 3 =
-         * Triple, 4 = Aromatic, 5 = Single or Double, 6 = Single or Aromatic, 7 =
-         * Double or Aromatic, 8 = Any
-         */
+        /// <summary>
+        /// Bond types, as stated in the CTFile manual
+        /// </summary>
         public enum BondType
         {
-			Unset = 0,
-            Single, Double, Triple, Aromatic, SingleOrDouble, SingleOrAromatic, DoubleOrAromatic, Any
+            Unset = 0,
+            Single = 1,
+            Double = 2,
+            Triple = 3,
+            Aromatic = 4,
+            SingleOrDouble = 5,
+            SingleOrAromatic = 6,
+            DoubleOrAromatic = 7,
+            Any = 8,
         }
 
         public CTFileQueryBond(IChemObjectBuilder builder)
@@ -58,15 +62,15 @@ namespace NCDK.Isomorphisms.Matchers
             return false;
         }
 
-        /**
-         * Create a CTFileQueryBond of the specified type (from the MDL spec). The
-         * bond copies the atoms and sets the type using the value 'type', 5 = single
-         * or double, 8 = any, etc.
-         *
-         * @param bond an existing bond
-         * @param type the specified type
-         * @return a new CTFileQueryBond
-         */
+        /// <summary>
+        /// Create a CTFileQueryBond of the specified type (from the MDL spec). The
+        /// bond copies the atoms and sets the type using the value 'type', 5 = single
+        /// or double, 8 = any, etc.
+        ///
+        /// <param name="bond">an existing bond</param>
+        /// <param name="type">the specified type</param>
+        /// <returns>a new CTFileQueryBond</returns>
+        /// </summary>
         public static CTFileQueryBond OfType(IBond bond, int type)
         {
             CTFileQueryBond queryBond = new CTFileQueryBond(bond.Builder);

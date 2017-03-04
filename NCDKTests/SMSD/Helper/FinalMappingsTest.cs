@@ -27,21 +27,21 @@ using System.Linq;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class FinalMappingsTest
     {
 
         public FinalMappingsTest() { }
 
-        /**
-         * Test of getInstance method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of getInstance method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestInstance()
         {
@@ -49,9 +49,9 @@ namespace NCDK.SMSD.Helper
             Assert.IsNotNull(result);
         }
 
-        /**
-         * Test of add method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of add method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestAdd()
         {
@@ -65,9 +65,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(1, instance.Count);
         }
 
-        /**
-         * Test of set method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of set method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestSet()
         {
@@ -89,9 +89,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(2, instance.Count);
         }
 
-        /**
-         * Test of getIterator method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of getIterator method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestGetIterator()
         {
@@ -113,9 +113,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(true, instance.Any());
         }
 
-        /**
-         * Test of clear method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of clear method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestClear()
         {
@@ -138,9 +138,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(0, instance.Count);
         }
 
-        /**
-         * Test of getFinalMapping method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of getFinalMapping method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestGetFinalMapping()
         {
@@ -164,9 +164,9 @@ namespace NCDK.SMSD.Helper
             Assert.IsTrue(Compares.AreEqual(expResult, result));
         }
 
-        /**
-         * Test of getSize method, of class FinalMappings.
-         */
+        /// <summary>
+        /// Test of getSize method, of class FinalMappings.
+        /// </summary>
         [TestMethod()]
         public void TestGetSize()
         {

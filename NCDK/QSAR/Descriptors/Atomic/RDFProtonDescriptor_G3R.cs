@@ -32,34 +32,34 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     * This class calculates G3R proton descriptors used in neural networks for H1
-     * NMR shift {@cdk.cite AiresDeSousa2002}. It only applies to (explicit) hydrogen atoms,
-     * requires aromaticity to be perceived (possibly done via a parameter), and
-     * needs 3D coordinates for all atoms.
-     *
-     * <p>
-     * This descriptor uses these parameters: <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td>checkAromaticity</td>
-     * <td>false</td>
-     * <td>True is the aromaticity has to be checked</td>
-     * </tr>
-     * </table>
-     *
-     * @author      Federico
-     * @cdk.created 2006-12-11
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
-     * @cdk.bug     1632419
-     */
+    /// <summary>
+    /// This class calculates G3R proton descriptors used in neural networks for H1
+    /// NMR shift {@cdk.cite AiresDeSousa2002}. It only applies to (explicit) hydrogen atoms,
+    /// requires aromaticity to be perceived (possibly done via a parameter), and
+    /// needs 3D coordinates for all atoms.
+    ///
+    /// <p>
+    /// This descriptor uses these parameters: <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td>checkAromaticity</td>
+    /// <td>false</td>
+    /// <td>True is the aromaticity has to be checked</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author      Federico
+    // @cdk.created 2006-12-11
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
+    // @cdk.bug     1632419
+    /// </summary>
     public class RDFProtonDescriptor_G3R : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private const int G3R_DESC_LENGTH = 13;
@@ -192,7 +192,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
             IRing ring;
             // SET ISINRING FLAGS FOR BONDS
-            //		IBond[] bondsInContainer = varAtomContainer.GetBonds();
+            //        IBond[] bondsInContainer = varAtomContainer.GetBonds();
 
             var bondsInContainer = varAtomContainer.Bonds;
             foreach (var bond in bondsInContainer)

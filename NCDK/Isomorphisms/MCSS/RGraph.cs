@@ -42,10 +42,10 @@ namespace NCDK.Isomorphisms.MCSS
       * forming this edge.
       *
       * <p>Example:
-      * <pre>
+      * <code>
       *    G1 : C-C=O  and G2 : C-C-C=0
       *         1 2 3           1 2 3 4
-      * </pre>
+      * </code>
       *
       *  <p>The resulting RGraph(G1,G2) will contain 3 nodes:
       *  <ul>
@@ -246,7 +246,7 @@ namespace NCDK.Isomorphisms.MCSS
                 // calculates the set of nodes that may still
                 // be reached at this stage (not forbidden)
                 potentialNode = ((BitArray)graphBitSet.Clone());
-				BitArrays.AndNot(potentialNode, forbidden);
+                BitArrays.AndNot(potentialNode, forbidden);
                 potentialNode.Or(traversed);
 
                 // checks if we must continue the search
@@ -284,7 +284,7 @@ namespace NCDK.Isomorphisms.MCSS
                         }
 
                         // extension my not contain forbidden nodes
-						BitArrays.AndNot(newExtension, newForbidden);
+                        BitArrays.AndNot(newExtension, newForbidden);
 
                         // create the new set of traversed node
                         // (update current partial solution)
@@ -324,7 +324,7 @@ namespace NCDK.Isomorphisms.MCSS
                 // On the other hand if a previous solution is included in the
                 // new one, the previous solution is removed.
                 var removeList = new List<int>();
-				for (var pp = 0; pp < solutionList.Count; pp++)
+                for (var pp = 0; pp < solutionList.Count; pp++)
                 {
                     if (included)
                         break;
@@ -403,7 +403,7 @@ namespace NCDK.Isomorphisms.MCSS
 
             // check if the solution potential is not included in an already
             // existing solution
-			foreach (var sol in solutionList)
+            foreach (var sol in solutionList)
             {
                 if (cancel)
                     break;
@@ -442,7 +442,7 @@ namespace NCDK.Isomorphisms.MCSS
 
             // only nodes that fulfill the initial constrains
             // are allowed in the initial extension set : B
-			foreach (var rn in graph)
+            foreach (var rn in graph)
             {
                 if ((c1[rn.RMap.Id1] || BitArrays.IsEmpty(c1)) && (c2[rn.RMap.Id2] || BitArrays.IsEmpty(c2)))
                 {
@@ -529,7 +529,7 @@ namespace NCDK.Isomorphisms.MCSS
             string message = "";
             int j = 0;
 
-			foreach (var rn in graph)
+            foreach (var rn in graph)
             {
                 message += "-------------\n" + "RNode " + j + "\n" + rn.ToString() + "\n";
                 j++;

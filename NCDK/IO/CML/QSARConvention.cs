@@ -28,14 +28,14 @@ using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * This is an implementation for the CDK convention.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author egonw
-     */
+    /// <summary>
+    /// This is an implementation for the CDK convention.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author egonw
+    /// </summary>
     public class QSARConvention : CMLCoreModule
     {
         private string currentDescriptorAlgorithmSpecification;
@@ -74,7 +74,7 @@ namespace NCDK.IO.CML
 
             if (xpath.EndsWith("molecule", "propertyList", "property"))
             {
-                //    		cdo.StartObject("MolecularDescriptor");
+                //            cdo.StartObject("MolecularDescriptor");
                 currentDescriptorDataIsArray = false;
                 currentDescriptorAlgorithmSpecification = "";
                 currentDescriptorImplementationTitel = "";
@@ -88,28 +88,28 @@ namespace NCDK.IO.CML
                 base.StartElement(xpath, element);
                 if (DICTREF.Equals("qsar:specificationReference"))
                 {
-                    //    			cdo.SetObjectProperty("MolecularDescriptor", "SpecificationReference", atts.GetValue("content"));
+                    //                cdo.SetObjectProperty("MolecularDescriptor", "SpecificationReference", atts.GetValue("content"));
                     currentDescriptorAlgorithmSpecification = AttGetValue(element.Attributes(), "content");
                 }
                 else if (DICTREF.Equals("qsar:implementationTitle"))
                 {
-                    //    			cdo.SetObjectProperty("MolecularDescriptor", "ImplementationTitle", atts.GetValue("content"));
+                    //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationTitle", atts.GetValue("content"));
                     currentDescriptorImplementationTitel = AttGetValue(element.Attributes(), "content");
                 }
                 else if (DICTREF.Equals("qsar:implementationIdentifier"))
                 {
-                    //    			cdo.SetObjectProperty("MolecularDescriptor", "ImplementationIdentifier", atts.GetValue("content"));
+                    //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationIdentifier", atts.GetValue("content"));
                     currentDescriptorImplementationIdentifier = AttGetValue(element.Attributes(), "content");
                 }
                 else if (DICTREF.Equals("qsar:implementationVendor"))
                 {
-                    //    			cdo.SetObjectProperty("MolecularDescriptor", "ImplementationVendor", atts.GetValue("content"));
+                    //                cdo.SetObjectProperty("MolecularDescriptor", "ImplementationVendor", atts.GetValue("content"));
                     currentDescriptorImplementationVendor = AttGetValue(element.Attributes(), "content");
                 }
             }
             else if (xpath.EndsWith("propertyList", "property", "scalar"))
             {
-                //    		cdo.SetObjectProperty("MolecularDescriptor", "DataType", atts.GetValue("dataType"));
+                //            cdo.SetObjectProperty("MolecularDescriptor", "DataType", atts.GetValue("dataType"));
                 currentDescriptorDataType = AttGetValue(element.Attributes(), "dataType");
                 base.StartElement(xpath, element);
             }
@@ -123,7 +123,7 @@ namespace NCDK.IO.CML
         {
             if (xpath.EndsWith("molecule", "propertyList", "property"))
             {
-                //    		cdo.EndObject("MolecularDescriptor");
+                //            cdo.EndObject("MolecularDescriptor");
                 DescriptorSpecification descriptorSpecification = new DescriptorSpecification(
                         currentDescriptorAlgorithmSpecification, currentDescriptorImplementationTitel,
                         currentDescriptorImplementationIdentifier, currentDescriptorImplementationVendor);
@@ -134,7 +134,7 @@ namespace NCDK.IO.CML
             }
             else if (xpath.EndsWith("property", "scalar"))
             {
-                //    		cdo.SetObjectProperty("MolecularDescriptor", "DescriptorValue", currentChars);
+                //            cdo.SetObjectProperty("MolecularDescriptor", "DescriptorValue", currentChars);
                 currentDescriptorResult = element.Value;
             }
             else
@@ -154,7 +154,7 @@ namespace NCDK.IO.CML
             {
                 result = new IntegerResult(int.Parse(descriptorValue));
             }
-            else if ("xsd:bool".Equals(currentDescriptorDataType))
+            else if ("xsd:boolean".Equals(currentDescriptorDataType))
             {
                 result = new BooleanResult(bool.Parse(descriptorValue));
             }

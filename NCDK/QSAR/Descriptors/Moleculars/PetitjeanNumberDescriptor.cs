@@ -22,39 +22,39 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  According to the Petitjean definition, the eccentricity of a vertex corresponds to
-     *  the distance from that vertex to the most remote vertex in the graph.
-     *  The distance is obtained from the distance matrix as the count of edges between the two vertices.
-     *  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
-     *  The graph diameter D is defined as the largest vertex eccentricity in the graph.
-     *  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value named <i>PetitjeanNumber</i>.
-     *
-     * @author         mfe4
-     * @cdk.created    December 7, 2004
-     * @cdk.created    2004-11-03
-     * @cdk.module     qsarmolecular
-     * @cdk.githash
-     * @cdk.set        qsar-descriptors
-     * @cdk.dictref    qsar-descriptors:petitjeanNumber
-     * @cdk.keyword    Petit-Jean, number
-     */
+    /// <summary>
+    ///  According to the Petitjean definition, the eccentricity of a vertex corresponds to
+    ///  the distance from that vertex to the most remote vertex in the graph.
+    ///  The distance is obtained from the distance matrix as the count of edges between the two vertices.
+    ///  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
+    ///  The graph diameter D is defined as the largest vertex eccentricity in the graph.
+    ///  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value named <i>PetitjeanNumber</i>.
+    ///
+    // @author         mfe4
+    // @cdk.created    December 7, 2004
+    // @cdk.created    2004-11-03
+    // @cdk.module     qsarmolecular
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref    qsar-descriptors:petitjeanNumber
+    // @cdk.keyword    Petit-Jean, number
+    /// </summary>
     public class PetitjeanNumberDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };

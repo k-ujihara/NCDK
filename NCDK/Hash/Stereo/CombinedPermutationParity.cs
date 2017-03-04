@@ -24,29 +24,26 @@
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Combine two permutation parities into one.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        sealed class CombinedPermutationParity : PermutationParity
+    /// <summary>
+    /// Combine two permutation parities into one.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal sealed class CombinedPermutationParity : PermutationParity
     {
 
         private readonly PermutationParity left;
         private readonly PermutationParity right;
 
-        /**
-         * Combines the left and right parity into a single parity. This parity is
-         * the product of the two separate parities.
-         *
-         * @param left  either parity
-         * @param right other parity
-         */
+        /// <summary>
+        /// Combines the left and right parity into a single parity. This parity is
+        /// the product of the two separate parities.
+        ///
+        /// <param name="left">either parity</param>
+        /// <param name="right">other parity</param>
+        /// </summary>
         public CombinedPermutationParity(PermutationParity left, PermutationParity right)
         {
             this.left = left;

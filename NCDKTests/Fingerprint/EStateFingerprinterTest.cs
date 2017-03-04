@@ -29,9 +29,9 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class EStateFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -63,11 +63,11 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(FingerprinterTool.IsSubset(bs2.AsBitSet(), bs1.AsBitSet()));
         }
 
-        /**
-         * Using EState keys, these molecules are not considered substructures
-         * and should only be used for similarity. This is because the EState
-         * fragments match hydrogen counts.
-         */
+        /// <summary>
+        /// Using EState keys, these molecules are not considered substructures
+        /// and should only be used for similarity. This is because the EState
+        /// fragments match hydrogen counts.
+        /// </summary>
         [TestMethod()]
         public override void TestBug706786()
         {

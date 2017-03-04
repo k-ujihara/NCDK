@@ -28,100 +28,94 @@ using System.Linq;
 
 namespace NCDK.Formula
 {
-    /**
-    // This class generates molecular formulas within given mass range and elemental
-    // composition. There is no guaranteed order in which the formulas are
-    // generated.
-    // 
-    // Usage:
-    // 
-    // <pre>
-    // IsotopeFactory ifac = Isotopes.Instance;
-    // IIsotope c = ifac.GetMajorIsotope(&quot;C&quot;);
-    // IIsotope h = ifac.GetMajorIsotope(&quot;H&quot;);
-    // IIsotope n = ifac.GetMajorIsotope(&quot;N&quot;);
-    // IIsotope o = ifac.GetMajorIsotope(&quot;O&quot;);
-    // IIsotope p = ifac.GetMajorIsotope(&quot;P&quot;);
-    // IIsotope s = ifac.GetMajorIsotope(&quot;S&quot;);
-    // 
-    // MolecularFormulaRange mfRange = new MolecularFormulaRange();
-    // mfRange.Add(c, 0, 50);
-    // mfRange.Add(h, 0, 100);
-    // mfRange.Add(o, 0, 50);
-    // mfRange.Add(n, 0, 50);
-    // mfRange.Add(p, 0, 10);
-    // mfRange.Add(s, 0, 10);
-    // 
-    // MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass,
-    //         maxMass, mfRange);
-    // double minMass = 133.003;
-    // double maxMass = 133.005;
-    // IMolecularFormulaSet mfSet = mfg.GetAllFormulas();
-    // </pre>
-    // 
-    // The code was originally developed for a MZmine 2 framework module, published
-    // in Pluskal et al. {@cdk.cite Pluskal2012}.
-    // 
+    /// <summary>
+    /// This class generates molecular formulas within given mass range and elemental
+    /// composition. There is no guaranteed order in which the formulas are
+    /// generated.
+    /// </summary>
+    /// <example>
+    /// Usage:
+    /// <code>
+    /// IsotopeFactory ifac = Isotopes.Instance;
+    /// IIsotope c = ifac.GetMajorIsotope(&quot;C&quot;);
+    /// IIsotope h = ifac.GetMajorIsotope(&quot;H&quot;);
+    /// IIsotope n = ifac.GetMajorIsotope(&quot;N&quot;);
+    /// IIsotope o = ifac.GetMajorIsotope(&quot;O&quot;);
+    /// IIsotope p = ifac.GetMajorIsotope(&quot;P&quot;);
+    /// IIsotope s = ifac.GetMajorIsotope(&quot;S&quot;);
+    /// 
+    /// MolecularFormulaRange mfRange = new MolecularFormulaRange();
+    /// mfRange.Add(c, 0, 50);
+    /// mfRange.Add(h, 0, 100);
+    /// mfRange.Add(o, 0, 50);
+    /// mfRange.Add(n, 0, 50);
+    /// mfRange.Add(p, 0, 10);
+    /// mfRange.Add(s, 0, 10);
+    /// 
+    /// MolecularFormulaGenerator mfg = new MolecularFormulaGenerator(builder, minMass,
+    ///       maxMass, mfRange);
+    /// double minMass = 133.003;
+    /// double maxMass = 133.005;
+    /// IMolecularFormulaSet mfSet = mfg.GetAllFormulas();
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// The code was originally developed for a MZmine 2 framework module, published
+    /// in Pluskal et al. {@cdk.cite Pluskal2012}.
+    /// </remarks>
     // @cdk.module formula
     // @author Tomas Pluskal
     // @cdk.created 2014-12-28
     // @cdk.githash
-     */
     public class MolecularFormulaGenerator
     {
         private readonly IChemObjectBuilder builder;
 
-        /**
-        // Mass range to search by this instance of MolecularFormulaGenerator
-         */
+        /// <summary>
+        /// Mass range to search by this instance of MolecularFormulaGenerator
+        /// </summary>
         private readonly double minMass, maxMass;
 
-        /**
-        // Internal arrays of isotopes (elements) used for the formula generation,
-        // their minimal and maximal counts, and the current counts, which
-        // correspond to the latest formula candidate.
-        // 
-        // For example, let's assume we set isotopes=[C,H,N], minCounts=[0,0,0], and
-        // maxCounts=[3,3,3]. Then, currentCounts will be iterated in the following
-        // order: [0,0,0], [1,0,0], [2,0,0], [3,0,0], [0,1,0], [1,1,0], [2,1,0],
-        // [3,1,0], [0,2,0], [1,2,0], [2,2,0], etc.
-        // 
-        // The lastIncreasedPosition index indicates the last position in
-        // currentCounts that was increased by calling IncreaseCounter(position)
-         */
+        /// <summary>
+        /// Internal arrays of isotopes (elements) used for the formula generation,
+        /// their minimal and maximal counts, and the current counts, which
+        /// correspond to the latest formula candidate.
+        /// 
+        /// For example, let's assume we set isotopes=[C,H,N], minCounts=[0,0,0], and
+        /// maxCounts=[3,3,3]. Then, currentCounts will be iterated in the following
+        /// order: [0,0,0], [1,0,0], [2,0,0], [3,0,0], [0,1,0], [1,1,0], [2,1,0],
+        /// [3,1,0], [0,2,0], [1,2,0], [2,2,0], etc.
+        /// 
+        /// The lastIncreasedPosition index indicates the last position in
+        /// currentCounts that was increased by calling IncreaseCounter(position)
+        /// </summary>
         private readonly IIsotope[] isotopes;
         private readonly int[] minCounts, maxCounts, currentCounts;
         private int lastIncreasedPosition = 0;
 
-        /**
-        // A flag indicating that the formula generation is running. If the search
-        // is finished (the whole search space has been examined) or the search is
-        // canceled by calling the Cancel() method, this flag is set to false.
-        // 
-        // @see #Cancel()
-         */
+        /// <summary>
+        /// A flag indicating that the formula generation is running. If the search
+        /// is finished (the whole search space has been examined) or the search is
+        /// canceled by calling the Cancel() method, this flag is set to false.
+        /// </summary>
+        /// <seealso cref="Cancel"/>
         private bool searchRunning = true;
 
-        /**
-        // Initiate the MolecularFormulaGenerator.
-        // 
-        // @param minMass
-        //            Lower boundary of the target mass range
-        // @param maxMass
-        //            Upper boundary of the target mass range
-        // @param mfRange
-        //            A range of elemental compositions defining the search space
-        // @throws ArgumentException
-        //             In case some of the isotopes in mfRange has undefined exact
-        //             mass or in case illegal parameters are provided (e.g.,
-        //             negative mass values or empty MolecularFormulaRange)
-        // @see MolecularFormulaRange
-         */
+        /// <summary>
+        /// Initiate the MolecularFormulaGenerator.
+        /// </summary>
+        /// <param name="minMass">Lower boundary of the target mass range</param>
+        /// <param name="maxMass">Upper boundary of the target mass range</param>
+        /// <param name="mfRange">A range of elemental compositions defining the search space</param>
+        /// <exception cref="ArgumentException">
+        ///            In case some of the isotopes in mfRange has undefined exact
+        ///            mass or in case illegal parameters are provided (e.g.,
+        ///            negative mass values or empty MolecularFormulaRange)</exception>
+        /// <seealso cref="MolecularFormulaRange"/>
         public MolecularFormulaGenerator(IChemObjectBuilder builder,
                 double minMass, double maxMass,
                 MolecularFormulaRange mfRange)
         {
-
             Trace.TraceInformation("Initiate MolecularFormulaGenerator, mass range ", minMass,
                     "-", maxMass);
 
@@ -182,21 +176,18 @@ namespace NCDK.Formula
 
             // Set the current counters to minimal values, initially
             currentCounts = Arrays.CopyOf(minCounts, minCounts.Length);
-
         }
 
-        /**
-        // Returns next generated formula or null in case no new formula was found
-        // (search is finished). There is no guaranteed order in which the formulas
-        // are generated.
-         */
+        /// <summary>
+        /// Returns next generated formula or null in case no new formula was found
+        /// (search is finished). There is no guaranteed order in which the formulas
+        /// are generated.
+        /// </summary>
         public IMolecularFormula GetNextFormula()
         {
-
             // Main cycle iterating through element counters
             mainCycle: while (searchRunning)
             {
-
                 double currentMass = CalculateCurrentMass();
 
                 // Heuristics: if we are over the mass, it is meaningless to add
@@ -230,27 +221,23 @@ namespace NCDK.Formula
 
             // All combinations tested, return null
             return null;
-
         }
 
-        /**
-        // Generates a {@link IMolecularFormulaSet} by repeatedly calling {@link
-        // GetNextFormula()} until all possible formulas are generated. There is no
-        // guaranteed order to the formulas in the resulting
-        // {@link IMolecularFormulaSet}.
-        // 
-        // Note: if some formulas were already generated by calling {@link
-        // GetNextFormula()} on this MolecularFormulaGenerator instance, those
-        // formulas will not be included in the returned
-        // {@link IMolecularFormulaSet}.
-        // 
-        // @see #GetNextFormula()
-         */
+        /// <summary>
+        /// Generates a <see cref="IMolecularFormulaSet"/> by repeatedly calling {@link
+        /// GetNextFormula()} until all possible formulas are generated. There is no
+        /// guaranteed order to the formulas in the resulting 
+        /// <see cref="IMolecularFormulaSet"/>.
+        /// </summary>
+        /// <remarks>
+        /// Note: if some formulas were already generated by calling {@link
+        /// GetNextFormula()} on this MolecularFormulaGenerator instance, those
+        /// formulas will not be included in the returned</remarks>
+        /// <seealso cref="IMolecularFormulaSet"/>.
+        /// <seealso cref="GetNextFormula"/>
         public IMolecularFormulaSet GetAllFormulas()
         {
-
-            IMolecularFormulaSet result = builder
-                   .CreateMolecularFormulaSet();
+            IMolecularFormulaSet result = builder.CreateMolecularFormulaSet();
             IMolecularFormula nextFormula;
             while ((nextFormula = GetNextFormula()) != null)
             {
@@ -259,17 +246,14 @@ namespace NCDK.Formula
             return result;
         }
 
-        /**
-        // Increases the internal counter array currentCounts[] at given position.
-        // If the position has reached its maximum value, its value is reset to the
-        // minimum value and the next position is increased.
-        // 
-        // @param position
-        //            Index to the currentCounts[] array that should be increased
-         */
+        /// <summary>
+        /// Increases the internal counter array <see cref="currentCounts"/>[] at given position.
+        /// If the position has reached its maximum value, its value is reset to the
+        /// minimum value and the next position is increased.
+        /// </summary>
+        /// <param name="position">Index to the currentCounts[] array that should be increased</param>
         private void IncreaseCounter(int position)
         {
-
             // This should never happen, but let's check, just in case
             if (position >= currentCounts.Length)
             {
@@ -311,14 +295,13 @@ namespace NCDK.Formula
                     }
                 }
             }
-
         }
 
-        /**
-        // Calculates the exact mass of the currently evaluated formula. Basically,
-        // it multiplies the currentCounts[] array by the masses of the isotopes in
-        // the isotopes[] array.
-         */
+        /// <summary>
+        /// Calculates the exact mass of the currently evaluated formula. Basically,
+        /// it multiplies the currentCounts[] array by the masses of the isotopes in
+        /// the isotopes[] array.
+        /// </summary>
         private double CalculateCurrentMass()
         {
             double mass = 0;
@@ -330,12 +313,12 @@ namespace NCDK.Formula
             return mass;
         }
 
-        /**
-        // Generates a MolecularFormula object that contains the isotopes in the
-        // isotopes[] array with counts in the currentCounts[] array. In other
-        // words, generates a proper CDK representation of the currently examined
-        // formula.
-         */
+        /// <summary>
+        /// Generates a MolecularFormula object that contains the isotopes in the
+        /// isotopes[] array with counts in the currentCounts[] array. In other
+        /// words, generates a proper CDK representation of the currently examined
+        /// formula.
+        /// </summary>
         private IMolecularFormula GenerateFormulaObject()
         {
             IMolecularFormula formulaObject = builder
@@ -347,17 +330,16 @@ namespace NCDK.Formula
                 formulaObject.Add(isotopes[i], currentCounts[i]);
             }
             return formulaObject;
-
         }
 
-        /**
-        // Returns a value between 0.0 and 1.0 indicating what portion of the search
-        // space has been examined so far by this MolecularFormulaGenerator. Before
-        // the first call to {@link GetNextFormula()}, this method returns 0. After
-        // all possible formulas are generated, this method returns 1.0 (the exact
-        // returned value might be slightly off due to rounding errors). This method
-        // can be called from any thread.
-         */
+        /// <summary>
+        /// Returns a value between 0.0 and 1.0 indicating what portion of the search
+        /// space has been examined so far by this MolecularFormulaGenerator. Before
+        /// the first call to {@link GetNextFormula()}, this method returns 0. After
+        /// all possible formulas are generated, this method returns 1.0 (the exact
+        /// returned value might be slightly off due to rounding errors). This method
+        /// can be called from any thread.
+        /// </summary>
         public double GetFinishedPercentage()
         {
             double result = 0.0;
@@ -379,25 +361,24 @@ namespace NCDK.Formula
             return result;
         }
 
-        /**
-        // Cancel the current search. This method can be called from any thread. If
-        // another thread is executing the {@link GetNextFormula()} method, that
-        // method call will return immediately with null return value. If another
-        // thread is executing the {@link GetAllFormulas()} method, that method call
-        // will return immediately, returning all formulas generated until this
-        // moment. The search cannot be restarted once canceled - any subsequent
-        // calls to {@link GetNextFormula()} will return null.
-         */
+        /// <summary>
+        /// Cancel the current search. This method can be called from any thread. If
+        /// another thread is executing the {@link GetNextFormula()} method, that
+        /// method call will return immediately with null return value. If another
+        /// thread is executing the {@link GetAllFormulas()} method, that method call
+        /// will return immediately, returning all formulas generated until this
+        /// moment. The search cannot be restarted once canceled - any subsequent
+        /// calls to {@link GetNextFormula()} will return null.
+        /// </summary>
         public void Cancel()
         {
             Trace.TraceInformation("Canceling MolecularFormulaGenerator");
             this.searchRunning = false;
         }
 
-        /**
-        // A simple {@link Comparator} implementation for sorting IIsotopes by their
-        // mass
-         */
+        /// <summary>
+        /// A simple <see cref="IComparer{T}"/> implementation for sorting IIsotopes by their mass
+        /// </summary>
         private class IIsotopeSorterByMass : IComparer<IIsotope>
         {
             public int Compare(IIsotope i1, IIsotope i2)
@@ -407,4 +388,3 @@ namespace NCDK.Formula
         }
     }
 }
-

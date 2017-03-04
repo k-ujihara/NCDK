@@ -23,27 +23,27 @@ using System;
 
 namespace NCDK.Geometries.Surface
 {
-    /**
-     * Performs a tessellation of the unit sphere.
-     *
-     * This class generates the coordinates of the triangles that will
-     * tessellate the unit sphere. The algorithm is recursive subdivision
-     * of an initial representation which can be tetrahedral, octahedral or
-     * icosahedral. The default is icosahedral. The number of points generated
-     * depends on the level of subdivision. The default is 4 levels and with the
-     * initial icosahedral representation this gives 1536 points.
-     * <p>
-     * The constants for the tetrahedral and icosahedral representations were
-     * taken from http://eeg.sourceforge.net/eegdoc/eeg_toolbox/sphere_tri.html
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2005-05-08
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Performs a tessellation of the unit sphere.
+    /// <para>
+    /// This class generates the coordinates of the triangles that will
+    /// tessellate the unit sphere. The algorithm is recursive subdivision
+    /// of an initial representation which can be tetrahedral, octahedral or
+    /// icosahedral. The default is icosahedral. The number of points generated
+    /// depends on the level of subdivision. The default is 4 levels and with the
+    /// initial icosahedral representation this gives 1536 points.
+    /// </para>
+    /// <para>
+    /// The constants for the tetrahedral and icosahedral representations were
+    /// taken from http://eeg.sourceforge.net/eegdoc/eeg_toolbox/sphere_tri.html
+    /// </para>
+    /// </summary>
+    // @author Rajarshi Guha
+    // @cdk.created 2005-05-08
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
     public class Tessellate
     {
-
         Triangle[] Oldtess;
         int maxlevel;
 

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Common.Collections
 {
+    public class ArrayDeque<T> : Deque<T>
+    { }
+
     public class Deque<T>
         : List<T>
     {

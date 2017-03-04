@@ -22,11 +22,11 @@ using System;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * Tests for formula restriction rules.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Tests for formula restriction rules.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public abstract class FormulaRuleTest : CDKTestCase
     {
@@ -45,20 +45,20 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        /**
-         * Makes sure that the extending class has set the super.rule.
-         * Each extending class should have this bit of code (JUnit4 formalism):
-         * <pre>
-         * @Before public static void SetUp() {
-         *   // Pass a Class, not an Object!
-         *   SetRule(typeof(SomeDescriptor));
-         * }
-         *
-         * <p>The unit tests in the extending class may use this instance, but
-         * are not required.
-         *
-         * </pre>
-         */
+        /// <summary>
+        /// Makes sure that the extending class has set the super.rule.
+        /// Each extending class should have this bit of code (JUnit4 formalism):
+        /// <pre>
+        // @Before public static void SetUp() {
+        ///   // Pass a Class, not an Object!
+        ///   SetRule(typeof(SomeDescriptor));
+        /// }
+        ///
+        /// <p>The unit tests in the extending class may use this instance, but
+        /// are not required.
+        ///
+        /// </pre>
+        /// </summary>
         [TestMethod()]
         public void TestHasSetSuperDotRule()
         {
@@ -69,12 +69,12 @@ namespace NCDK.Formula.Rules
         public void TestGetParameters()
         {
             object[] params_ = rule.Parameters;
-            //		FIXME: the next would be nice, but not currently agreed-upon policy
-            //		Assert.IsNotNull(
+            //        FIXME: the next would be nice, but not currently agreed-upon policy
+            //        Assert.IsNotNull(
             //          paramNames,
-            //			"The method Parameters must return a non-null value, possible a zero length Object[] array"
-            //		);
-            //		FIXME: so instead:
+            //            "The method Parameters must return a non-null value, possible a zero length Object[] array"
+            //        );
+            //        FIXME: so instead:
             if (params_ == null) params_ = new object[0];
             for (int i = 0; i < params_.Length; i++)
             {

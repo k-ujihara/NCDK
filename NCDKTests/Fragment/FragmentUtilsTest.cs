@@ -26,11 +26,11 @@ using System.Linq;
 
 namespace NCDK.Fragment
 {
-    /**
-     * Test fragment utils
-     *
-     * @cdk.module test-fragment
-     */
+    /// <summary>
+    /// Test fragment utils
+    ///
+    // @cdk.module test-fragment
+    /// </summary>
     [TestClass()]
     public class FragmentUtilsTest : CDKTestCase
     {

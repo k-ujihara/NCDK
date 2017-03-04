@@ -27,14 +27,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Defines a stereo encoder factory for the hash code. The factory allows the
-     * generation of stereo hash codes for molecules with predefined
-     * {@link ITetrahedralChirality} stereo elements.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
+    /// <summary>
+    /// Defines a stereo encoder factory for the hash code. The factory allows the
+    /// generation of stereo hash codes for molecules with predefined
+    /// <see cref="ITetrahedralChirality"/> stereo elements.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
     public sealed class TetrahedralElementEncoderFactory : IStereoEncoderFactory
     {
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
@@ -59,13 +59,13 @@ namespace NCDK.Hash.Stereo
             return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
         }
 
-        /**
-         * Create an encoder for the {@link ITetrahedralChirality} element.
-         *
-         * @param tc          stereo element from an atom container
-         * @param atomToIndex map of atoms to indices
-         * @return a new geometry encoder
-         */
+        /// <summary>
+        /// Create an encoder for the <see cref="ITetrahedralChirality"/> element.
+        ///
+        /// <param name="tc">stereo element from an atom container</param>
+        /// <param name="atomToIndex">map of atoms to indices</param>
+        /// <returns>a new geometry encoder</returns>
+        /// </summary>
         private static GeometryEncoder Encoder(ITetrahedralChirality tc, IDictionary<IAtom, int> atomToIndex)
         {
 
@@ -116,13 +116,13 @@ namespace NCDK.Hash.Stereo
             return new GeometryEncoder(centre, new BasicPermutationParity(indices), GeometricParity.ValueOf(parity));
         }
 
-        /**
-         * Lazy creation of an atom index map.
-         *
-         * @param map       existing map (possibly null)
-         * @param container the container we want the map for
-         * @return a usable atom to index map for the given container
-         */
+        /// <summary>
+        /// Lazy creation of an atom index map.
+        ///
+        /// <param name="map">existing map (possibly null)</param>
+        /// <param name="container">the container we want the map for</param>
+        /// <returns>a usable atom to index map for the given container</returns>
+        /// </summary>
         private static IDictionary<IAtom, int> IndexMap(IDictionary<IAtom, int> map, IAtomContainer container)
         {
             if (map != null) return map;

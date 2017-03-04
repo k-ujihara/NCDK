@@ -1,4 +1,4 @@
-﻿<#@ include file="Config.ttinclude" #>
+﻿<#@ include file="..\Config.ttinclude" #>
 
 namespace NCDK
 {
@@ -23,11 +23,11 @@ namespace NCDK
             true
         ); 
 #>
-		/// <summary>
-		/// A numeric value for the number of bonded electron pairs.
-		/// </summary>
+        /// <summary>
+        /// A numeric value for the number of bonded electron pairs.
+        /// </summary>
         public int Numeric => (int)Ordinal;
 
-		public bool IsUnset => this.Ordinal == 0;
+        public bool IsUnset => this.Ordinal == 0;
     }
 }

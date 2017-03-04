@@ -23,9 +23,9 @@ using NCDK.Tools;
 
 namespace NCDK.StructGen.Stochastic
 {
-    /**
-     * @cdk.module test-structgen
-     */
+    /// <summary>
+    // @cdk.module test-structgen
+    /// </summary>
     [TestClass()]
     public class PartialFilledStructureMergerTest : CDKTestCase
     {

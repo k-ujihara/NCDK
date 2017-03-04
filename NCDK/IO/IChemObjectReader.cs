@@ -36,91 +36,90 @@ namespace NCDK.IO
         Strict
     }
 
-    /**
-     * This interface specifies the common functionality all IO readers should provide.
-     *
-     * IO readers should not implement this interface directly, but rather implement
-     * one of its child interfaces: {@link ISimpleChemObjectReader} or {@link IIteratingChemObjectReader}.
-     * These sub-interfaces specify the information access methods:
-     * a simple Read() method for the {@link ISimpleChemObjectReader} and
-     * more advanced iterator based access for the {@link IIteratingChemObjectReader} (suitable for large files)
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author     Egon Willighagen <egonw@users.sf.net>
-     * @see ISimpleChemObjectReader
-     * @see IIteratingChemObjectReader
-     **/
+    /// <summary>
+    /// This interface specifies the common functionality all IO readers should provide.
+    ///
+    /// IO readers should not implement this interface directly, but rather implement
+    /// one of its child interfaces: <see cref="ISimpleChemObjectReader"/> or <see cref="IIteratingChemObjectReader"/>.
+    /// These sub-interfaces specify the information access methods:
+    /// a simple Read() method for the <see cref="ISimpleChemObjectReader"/> and
+    /// more advanced iterator based access for the <see cref="IIteratingChemObjectReader"/> (suitable for large files)
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author     Egon Willighagen <egonw@users.sf.net>
+    /// <seealso cref="ISimpleChemObjectReader"/>
+    /// <seealso cref="IIteratingChemObjectReader"/>
+    ///*/
     public interface IChemObjectReader : IChemObjectIO
     {
-        /**
-         * Sets the Reader from which this ChemObjectReader should read
-         * the contents.
-         */
+        /// <summary>
+        /// Sets the Reader from which this ChemObjectReader should read
+        /// the contents.
+        /// </summary>
          void SetReader(TextReader reader);
 
-        /**
-         * Sets the Stream from which this ChemObjectReader should read
-         * the contents.
-         */
+        /// <summary>
+        /// Sets the Stream from which this ChemObjectReader should read
+        /// the contents.
+        /// </summary>
          void SetReader(Stream reader);
 
-        /**
-         * Sets the reader mode. If ChemObjectReaderModes.Strict, then the reader will fail on
-         * any problem in the format of the read file, instead of trying to
-         * recover from that.
-         *
-         * @param mode
-         */
+        /// <summary>
+        /// Sets the reader mode. If ChemObjectReaderModes.Strict, then the reader will fail on
+        /// any problem in the format of the read file, instead of trying to
+        /// recover from that.
+        ///
+        /// <param name="mode">/// </summary></param>
          ChemObjectReaderModes ReaderMode { set; }
 
-        /**
-         * Sets an error handler that is sent events when file format issues occur.
-         *
-         * @param handler {@link IChemObjectReaderErrorHandler} to send error
-         *                messages to.
-         */
+        /// <summary>
+        /// Sets an error handler that is sent events when file format issues occur.
+        ///
+        /// <param name="handler"><see cref="IChemObjectReaderErrorHandler"/> to send error</param>
+        ///                messages to.
+        /// </summary>
         IChemObjectReaderErrorHandler ErrorHandler { set; }
 
-        /**
-         * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-         * Throws an {@link CDKException} when in Strict {@link Mode}.
-         *
-         * @param message the error message.
-         */
+        /// <summary>
+        /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
+        ///
+        /// <param name="message">the error message.</param>
+        /// </summary>
          void HandleError(string message);
 
-        /**
-         * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-         * Throws an {@link CDKException} when in Strict {@link Mode}.
-         *
-         * @param message  the error message.
-         * @param exception the corresponding {@link Exception}.
-         */
+        /// <summary>
+        /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
+        ///
+        /// <param name="message">the error message.</param>
+        /// <param name="exception">the corresponding <see cref="Exception"/>.</param>
+        /// </summary>
          void HandleError(string message, Exception exception);
 
-        /**
-         * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-         * Throws an {@link CDKException} when in Strict {@link Mode}.
-         *
-         * @param message  the error message.
-         * @param row      Row in the file where the error is found.
-         * @param colStart Start column in the file where the error is found.
-         * @param colEnd   End column in the file where the error is found.
-         */
+        /// <summary>
+        /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
+        ///
+        /// <param name="message">the error message.</param>
+        /// <param name="row">Row in the file where the error is found.</param>
+        /// <param name="colStart">Start column in the file where the error is found.</param>
+        /// <param name="colEnd">End column in the file where the error is found.</param>
+        /// </summary>
          void HandleError(string message, int row, int colStart, int colEnd);
 
-        /**
-         * Redirects an error message to the {@link IChemObjectReaderErrorHandler}.
-         * Throws an {@link CDKException} when in Strict {@link Mode}.
-         *
-         * @param message  the error message.
-         * @param exception the corresponding {@link Exception}.
-         * @param row       Row in the file where the error is found.
-         * @param colStart Start column in the file where the error is found.
-         * @param colEnd   End column in the file where the error is found.
-         */
+        /// <summary>
+        /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
+        ///
+        /// <param name="message">the error message.</param>
+        /// <param name="exception">the corresponding <see cref="Exception"/>.</param>
+        /// <param name="row">Row in the file where the error is found.</param>
+        /// <param name="colStart">Start column in the file where the error is found.</param>
+        /// <param name="colEnd">End column in the file where the error is found.</param>
+        /// </summary>
          void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
     }
 }

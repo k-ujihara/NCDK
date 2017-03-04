@@ -27,14 +27,14 @@ using System.Linq;
 
 namespace NCDK
 {
-    /**
-     * TestCase for {@link IPolymer} implementations.
-     *
-     * @author      Edgar Luttmann <edgar@uni-paderborn.de>
-     * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.created 2001-08-09
-     * @cdk.module  test-interfaces
-     */
+    /// <summary>
+    /// TestCase for {@link IPolymer} implementations.
+    ///
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.created 2001-08-09
+    // @cdk.module  test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractPolymerTest : AbstractMoleculeTest
     {
@@ -165,9 +165,9 @@ namespace NCDK
             Assert.AreEqual(0, oPolymer.Atoms.Count);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()
@@ -192,9 +192,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()

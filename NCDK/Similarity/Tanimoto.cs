@@ -41,11 +41,11 @@ namespace NCDK.Similarity
      *  <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
      *  We assume that you have two structures stored in cdk.Molecule objects.
      *  A tanimoto coefficient can then be calculated like:
-     *  <pre>
+     *  <code>
      *   BitArray fingerprint1 = Fingerprinter.GetBitFingerprint(molecule1);
      *   BitArray fingerprint2 = Fingerprinter.GetBitFingerprint(molecule2);
      *   double tanimoto_coefficient = Tanimoto.Calculate(fingerprint1, fingerprint2);
-     *  </pre>
+     *  </code>
      *
      *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this
      *  is desired!

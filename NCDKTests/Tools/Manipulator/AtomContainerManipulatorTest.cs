@@ -24,15 +24,16 @@ using NCDK.Isomorphisms;
 using NCDK.Smiles;
 using NCDK.Stereo;
 using NCDK.Templates;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class AtomContainerManipulatorTest : CDKTestCase
     {
@@ -47,9 +48,9 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(6, ringSubstructure.Bonds.Count);
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer()
         {
@@ -465,11 +466,11 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(mol.Atoms[5], AtomContainerManipulator.GetAtomById(mol, "a6"));
         }
 
-        /**
-         * Test removeHydrogens for B2H6, which contains two multiply bonded H.
-         * The old behaviour would removed these but now the bridged hydrogens are
-         * kept.
-         */
+        /// <summary>
+        /// Test removeHydrogens for B2H6, which contains two multiply bonded H.
+        /// The old behaviour would removed these but now the bridged hydrogens are
+        /// kept.
+        /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensBorane()
         {
@@ -504,10 +505,10 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Test total formal charge.
-         *
-         */
+        /// <summary>
+        /// Test total formal charge.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalFormalCharge_IAtomContainer()
         {
@@ -518,10 +519,10 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(1, totalCharge);
         }
 
-        /**
-         * Test total Exact Mass.
-         *
-         */
+        /// <summary>
+        /// Test total Exact Mass.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalExactMass_IAtomContainer()
         {
@@ -575,10 +576,10 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(expectedMass, totalExactMass, 0.000001);
         }
 
-        /**
-         * Test total natural abundance.
-         *
-         */
+        /// <summary>
+        /// Test total natural abundance.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalNaturalAbundance_IAtomContainer()
         {
@@ -592,10 +593,10 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(0.749432, totalAbudance, 0.000001);
         }
 
-        /**
-         * Test total positive formal charge.
-         *
-         */
+        /// <summary>
+        /// Test total positive formal charge.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalPositiveFormalCharge_IAtomContainer()
         {
@@ -606,10 +607,10 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(2, totalCharge);
         }
 
-        /**
-         * Test total negative formal charge.
-         *
-         */
+        /// <summary>
+        /// Test total negative formal charge.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetTotalNegativeFormalCharge_IAtomContainer()
         {
@@ -766,9 +767,9 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(1.0, totalCharge, 0.01);
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestCountExplicitH_Null_IAtom()
@@ -777,9 +778,9 @@ namespace NCDK.Tools.Manipulator
                     Default.ChemObjectBuilder.Instance.CreateAtom());
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestCountExplicitH_IAtomContainer_Null()
@@ -845,9 +846,9 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitHydrogenCount_unperceived()
         {
@@ -857,9 +858,9 @@ namespace NCDK.Tools.Manipulator
                     "Container has not been atom-typed - should have 0 implicit hydrogens");
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetImplicitHydrogenCount_null()
@@ -867,9 +868,9 @@ namespace NCDK.Tools.Manipulator
             AtomContainerManipulator.GetImplicitHydrogenCount(null);
         }
 
-        /**
-         * @cdk.bug 1254
-         */
+        /// <summary>
+        // @cdk.bug 1254
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitHydrogenCount_adenine()
         {
@@ -931,7 +932,7 @@ namespace NCDK.Tools.Manipulator
             container.Add(atom2);
             container.Add(new Bond(atom1, atom2, BondOrder.Single));
             container.AddSingleElectron(container.Atoms[1]);
-			
+            
             IAtom atom3 = Default.ChemObjectBuilder.Instance.CreateAtom("Br");
 
             AtomContainerManipulator.RePlaceAtomByAtom(container, atom2, atom3);
@@ -962,10 +963,10 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(2, AtomContainerManipulator.GetHeavyAtoms(container).Count);
         }
 
-        /**
-         * Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
-         *
-         */
+        /// <summary>
+        /// Test removeHydrogensPreserveMultiplyBonded for B2H6, which contains two multiply bonded H.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensPreserveMultiplyBonded()
         {
@@ -1060,11 +1061,11 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        public void skeleton()
+        public void Skeleton()
         {
 
             IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
-            IAtomContainer skeleton = AtomContainerManipulator.skeleton(adenine);
+            IAtomContainer skeleton = AtomContainerManipulator.Skeleton(adenine);
 
             Assert.AreNotSame(adenine, skeleton);
 
@@ -1077,14 +1078,14 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * @cdk.bug  1969156
-         */
+        /// <summary>
+        // @cdk.bug  1969156
+        /// </summary>
         [TestMethod()]
         public void TestOverWriteConfig()
         {
             string filename = "NCDK.Data.MDL.lobtest2.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             IList<IAtomContainer> cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -1131,15 +1132,15 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(12, n);
         }
 
-        /**
-         * Molecular hydrogen is found in the first batch of PubChem entries, and
-         * removal of hydrogen should simply return an empty IAtomContainer, not
-         * throw an NullReferenceException.
-         *
-         * - note now molecular hydrogen is preserved to avoid information loss.
-         *
-         * @cdk.bug 2366528
-         */
+        /// <summary>
+        /// Molecular hydrogen is found in the first batch of PubChem entries, and
+        /// removal of hydrogen should simply return an empty IAtomContainer, not
+        /// throw an NullReferenceException.
+        ///
+        /// - note now molecular hydrogen is preserved to avoid information loss.
+        ///
+        // @cdk.bug 2366528
+        /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensFromMolecularHydrogen()
         {

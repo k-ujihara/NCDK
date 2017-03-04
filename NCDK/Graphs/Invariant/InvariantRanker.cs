@@ -27,60 +27,52 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * A utility for ranking indices by invariants. The ranking is built around
-     * a merge/insertion sort with the primary interaction through {@link #rank}.
-     *
-     * @author John May
-     * @cdk.module standard
-     * @see <a href="http://algs4.cs.princeton.edu/22mergesort/">Mergesort</a>
-     * @see Canon
-     */
-#if TEST
-    public
-#endif
-    sealed class InvariantRanker
+    /// <summary>
+    /// A utility for ranking indices by invariants. The ranking is built around
+    /// a merge/insertion sort with the primary interaction through {@link #rank}.
+    /// </summary>
+    /// <remarks><a href="http://algs4.cs.princeton.edu/22mergesort/">Mergesort</a></remarks>
+    /// <seealso cref="Canon"/>
+    // @author John May
+    // @cdk.module standard
+    internal sealed class InvariantRanker
     {
-
         /// <summary>Auxiliary array for merge sort.</summary>
         private readonly int[] aux;
 
-        /**
-         * Length at which the sub-array should be sorted using insertion sort. As
-         * insertion sort is adaptive and in-place it's advantageous to use a high
-         * threshold for this use-case. Once we do the first sort, the invariants
-         * will always be 'almost' sorted which is the best case for the insertion
-         * sort.
-         */
+        /// <summary>
+        /// Length at which the sub-array should be sorted using insertion sort. As
+        /// insertion sort is adaptive and in-place it's advantageous to use a high
+        /// threshold for this use-case. Once we do the first sort, the invariants
+        /// will always be 'almost' sorted which is the best case for the insertion
+        /// sort.
+        /// </summary>
         private const int INSERTION_SORT_THRESHOLD = 42;
 
-        /**
-         * Create an invariant ranker for {@code n} invariants.
-         * @param n number of values
-         */
+        /// <summary>
+        /// Create an invariant ranker for <paramref name="n"/> invariants.
+        /// </summary>
+        /// <param name="n">number of values</param>
         public InvariantRanker(int n)
         {
             this.aux = new int[n];
         }
 
-        /**
-         * Given an array of equivalent indices (currEq) and their values (curr)
-         * assign a rank to the values. The values are sorted using 'prev' and
-         * 'curr' invariants and once ranked the new ranks placed in 'prev'. The
-         * values which are still equivalent are placed in 'nextEq' and terminated
-         * by a '-1'.
-         *
-         * @param currEq currently equivalent vertices (initially identity)
-         * @param nextEq equivalent vertices (to refine) will be set by this method
-         * @param n      the number of currently equivalent vertices
-         * @param curr   the current invariants
-         * @param prev   the prev invariants (initially = curr) used to sort and
-         *               then store ranks (set by this method)
-         * @return the number of ranks
-         */
-        public int rank(int[] currEq, int[] nextEq, int n, long[] curr, long[] prev)
+        /// <summary>
+        /// Given an array of equivalent indices (currEq) and their values (curr)
+        /// assign a rank to the values. The values are sorted using 'prev' and
+        /// 'curr' invariants and once ranked the new ranks placed in 'prev'. The
+        /// values which are still equivalent are placed in 'nextEq' and terminated
+        /// by a '-1'.
+        /// </summary>
+        /// <param name="currEq">currently equivalent vertices (initially identity)</param>
+        /// <param name="nextEq">equivalent vertices (to refine) will be set by this method</param>
+        /// <param name="n">the number of currently equivalent vertices</param>
+        /// <param name="curr">the current invariants</param>
+        /// <param name="prev">the prev invariants (initially = curr) used to sort and then store ranks (set by this method)</param>
+        /// <returns>the number of ranks</returns>
+        public int Rank(int[] currEq, int[] nextEq, int n, long[] curr, long[] prev)
         {
-
             SortBy(currEq, 0, n, curr, prev);
 
             // with the values sorted we now partition the values in to those
@@ -134,21 +126,19 @@ namespace NCDK.Graphs.Invariant
             return nRanks;
         }
 
-        /**
-         * Sort the values (using merge sort) in {@code vs} from {@code lo} (until
-         * {@code len}) by the {@code prev[]} and then {@code curr[]} invariants to
-         * determine rank. The values in {@code vs} are indices into the invariant
-         * arrays.
-         *
-         * @param vs   values (indices)
-         * @param lo   the first value to start sorting from
-         * @param len  the len of values to consider
-         * @param curr the current invariants
-         * @param prev the previous invariants
-         */
+        /// <summary>
+        /// Sort the values (using merge sort) in <paramref name="vs"/> from <paramref name="lo"/> (until
+        /// <paramref name="len"/>) by the <paramref name="prev"/>[] and then <paramref name="curr"/>[] invariants to
+        /// determine rank. The values in <paramref name="vs"/> are indices into the invariant
+        /// arrays.
+        /// </summary>
+        /// <param name="vs">values (indices)</param>
+        /// <param name="lo">the first value to start sorting from</param>
+        /// <param name="len">the len of values to consider</param>
+        /// <param name="curr">the current invariants</param>
+        /// <param name="prev">the previous invariants</param>
         public void SortBy(int[] vs, int lo, int len, long[] curr, long[] prev)
         {
-
             if (len < INSERTION_SORT_THRESHOLD)
             {
                 InsertionSortBy(vs, lo, len, curr, prev);
@@ -166,17 +156,16 @@ namespace NCDK.Graphs.Invariant
             Merge(vs, lo, split, len, curr, prev);
         }
 
-        /**
-         * Merge the values which are sorted between {@code lo} - {@code split} and
-         * {@code split} - {@code len}.
-         *
-         * @param vs    vertices
-         * @param lo    start index
-         * @param split the middle index (partition)
-         * @param len   the range to merge
-         * @param curr  the current invariants
-         * @param prev  the previous invariants
-         */
+        /// <summary>
+        /// Merge the values which are sorted between <paramref name="to"/> - <paramref name="split"/> and
+        /// <paramref name="split"/> - <paramref name="len"/>.
+        /// </summary>
+        /// <param name="vs">vertices</param>
+        /// <param name="lo">start index</param>
+        /// <param name="split">the middle index (partition)</param>
+        /// <param name="len">the range to merge</param>
+        /// <param name="curr">the current invariants</param>
+        /// <param name="prev">the previous invariants</param>
         private void Merge(int[] vs, int lo, int split, int len, long[] curr, long[] prev)
         {
             Array.Copy(vs, lo, aux, lo, len);
@@ -195,18 +184,17 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-         * Sort the values (using insertion sort) in {@code vs} from {@code lo}
-         * (until {@code len}) by the {@code prev[]} and then {@code curr[]}
-         * invariants to determine rank. The values in {@code vs} are indices into
-         * the invariant arrays.
-         *
-         * @param vs   values (indices)
-         * @param lo   the first value to start sorting from
-         * @param len  the len of values to consider
-         * @param curr the current invariants
-         * @param prev the previous invariants
-         */
+        /// <summary>
+        /// Sort the values (using insertion sort) in <paramref name="vs"/> from <paramref name="lo"/>
+        /// (until <paramref name="len"/>) by the <paramref name="prev"/>[] and then <paramref name="curr"/>[]
+        /// invariants to determine rank. The values in <paramref name="vs"/> are indices into
+        /// the invariant arrays.
+        /// </summary>
+        /// <param name="vs">values (indices)</param>
+        /// <param name="lo">the first value to start sorting from</param>
+        /// <param name="len">the len of values to consider</param>
+        /// <param name="curr">the current invariants</param>
+        /// <param name="prev">the previous invariants</param>
         public static void InsertionSortBy(int[] vs, int lo, int len, long[] curr, long[] prev)
         {
             for (int j = lo + 1, hi = lo + len; j < hi; j++)
@@ -219,17 +207,16 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-         * Using the {@code prev} and {@code curr} invariants is value in index i
-         * less than j. Value i is less than j if it was previously less than j
-         * (prev[]) or it was equal and it is now (curr[]) less than j.
-         *
-         * @param i    an index
-         * @param j    an index
-         * @param curr current invariants
-         * @param prev previous invariants
-         * @return is the value in index i less than j
-         */
+        /// <summary>
+        /// Using the <paramref name="prev"/> and <paramref name="curr"/> invariants is value in index i
+        /// less than <paramref name="j"/>. Value i is less than j if it was previously less than <paramref name="j"/>
+        /// (<paramref name="prev"/>[]) or it was equal and it is now (<paramref name="curr"/>[]) less than <paramref name="j"/>.
+        /// </summary>
+        /// <param name="i">an index</param>
+        /// <param name="j">an index</param>
+        /// <param name="curr">current invariants</param>
+        /// <param name="prev">previous invariants</param>
+        /// <returns>is the value in index i less than j</returns>
         public static bool Less(int i, int j, long[] curr, long[] prev)
         {
             return prev[i] < prev[j] || prev[i] == prev[j] && curr[i] < curr[j];

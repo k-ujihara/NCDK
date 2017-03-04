@@ -31,13 +31,13 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /**
-     * This class acts as a handler class for MCSPlus algorithm.
-     * {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class acts as a handler class for MCSPlus algorithm.
+    /// {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class MCSPlusHandler : AbstractMCSAlgorithm, IMCSBase
     {
 
@@ -49,9 +49,9 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         private IAtomContainer target = null;
         private bool flagExchange = false;
 
-        /**
-         * Constructor for the MCS Plus algorithm class
-         */
+        /// <summary>
+        /// Constructor for the MCS Plus algorithm class
+        /// </summary>
         public MCSPlusHandler()
         {
             allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
@@ -60,11 +60,10 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             allMCS = new List<IDictionary<int, int>>();
         }
 
-        /** {@inheritDoc}
-         *
-         * @param source
-         * @param target
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// <param name="source">/// @param target</param>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Set(MolHandler source, MolHandler target)
         {
@@ -72,22 +71,20 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             this.target = target.Molecule;
         }
 
-        /** {@inheritDoc}
-         *
-         * @param source
-         * @param target
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// <param name="source">/// @param target</param>
+        /// </summary>
         public void Set(IQueryAtomContainer source, IAtomContainer target)
         {
             this.source = source;
             this.target = target;
         }
 
-        /** {@inheritDoc}
-         * Function is called by the main program and serves as a starting point for the comparison procedure.
-         *
-         * @param shouldMatchBonds
-         */
+        /// <summary> {@inheritDoc}
+        /// Function is called by the main program and serves as a starting point for the comparison procedure.
+        ///
+        /// <param name="shouldMatchBonds">/// </summary></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public override void SearchMCS(bool shouldMatchBonds)
         {

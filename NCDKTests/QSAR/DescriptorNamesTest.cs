@@ -21,6 +21,7 @@ using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace NCDK.QSAR
 
             // we work with a simple molecule with 3D coordinates
             string filename = "NCDK.Data.MDL.lobtest2.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

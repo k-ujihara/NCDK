@@ -24,21 +24,21 @@ using System;
 
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * Class that handles execution time of the MCS search.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class that handles execution time of the MCS search.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class TimeManager
     {
 
         private DateTime startTime;
         //private SimpleDateFormat dateFormat;
 
-        /**
-         * Constructor for storing execution time
-         */
+        /// <summary>
+        /// Constructor for storing execution time
+        /// </summary>
         public TimeManager()
         {
 
@@ -48,10 +48,10 @@ namespace NCDK.SMSD.Tools
             startTime = DateTime.Now;
         }
 
-        /**
-         * Returns Elapsed Time In Hours
-         * @return Elapsed Time In Hours
-         */
+        /// <summary>
+        /// Returns Elapsed Time In Hours
+        /// <returns>Elapsed Time In Hours</returns>
+        /// </summary>
         public double GetElapsedTimeInHours()
         {
             var currentTime = DateTime.Now;
@@ -60,10 +60,10 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        /**
-         * Returns Elapsed Time In Minutes
-         * @return Elapsed Time In Minutes
-         */
+        /// <summary>
+        /// Returns Elapsed Time In Minutes
+        /// <returns>Elapsed Time In Minutes</returns>
+        /// </summary>
         public double GetElapsedTimeInMinutes()
         {
 
@@ -77,10 +77,10 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        /**
-         * Return Elapsed Time In Seconds
-         * @return Elapsed Time In Seconds
-         */
+        /// <summary>
+        /// Return Elapsed Time In Seconds
+        /// <returns>Elapsed Time In Seconds</returns>
+        /// </summary>
         public double GetElapsedTimeInSeconds()
         {
             var currentTime = DateTime.Now;
@@ -88,10 +88,10 @@ namespace NCDK.SMSD.Tools
 
         }
 
-        /**
-         * Returns Elapsed Time In Mill Seconds
-         * @return Elapsed Time In Mill Seconds
-         */
+        /// <summary>
+        /// Returns Elapsed Time In Mill Seconds
+        /// <returns>Elapsed Time In Mill Seconds</returns>
+        /// </summary>
         public double GetElapsedTimeInMilliSeconds()
         {
             var currentTime = DateTime.Now;

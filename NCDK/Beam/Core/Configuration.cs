@@ -36,10 +36,9 @@ namespace NCDK.Beam
     /// Enumeration of atom-based relative configurations. Each value defines a
     /// configuration of a given topology.
     /// </summary>
-    /// <author>John May</author>
     /// <remarks>
-    /// <a href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality,
-    /// OpenSMILES</a></remarks>
+    /// <a href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</a></remarks>
+    // @author John May
     public sealed class Configuration
     {
         /// <summary>An atoms has Unknown/no configuration. </summary>
@@ -216,12 +215,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="buffer">a character buffer</param>
         /// <returns>the configuration</returns>
-#if TEST
-        public
-#else
-        internal
-#endif
-        static Configuration Read(CharBuffer buffer)
+        internal static Configuration Read(CharBuffer buffer)
         {
             if (buffer.GetIf('@'))
             {

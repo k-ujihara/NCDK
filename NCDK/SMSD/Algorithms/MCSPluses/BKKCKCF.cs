@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -25,27 +25,23 @@
 using NCDK.Common.Collections;
 using NCDK.SMSD.Tools;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /**
-     * This class implements Bron-Kerbosch clique detection algorithm as it is
-     * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
-     * processedVertex.Comp. Sc. (2005); vol 349; pp.
-     * 484-490]
-     *
-     *
-     * BronKerboschCazalsKarandeKochCliqueFinder.java
-     *
-     * @cdk.githash
-     * @cdk.module smsd
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class implements Bron-Kerbosch clique detection algorithm as it is
+    /// described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
+    /// processedVertex.Comp. Sc. (2005); vol 349; pp. 484-490]
+    /// 
+    /// BronKerboschCazalsKarandeKochCliqueFinder.java
+    /// </summary>
+    // @cdk.githash
+    // @cdk.module smsd
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class BKKCKCF
     {
         private List<IList<int>> maxCliquesSet = null;
-        /***********************************************************************/
+
         private IList<int> cEdges = null;
         private IList<int> dEdges = null;
         private int bestCliqueSize = 0;
@@ -53,22 +49,17 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         private double dEdgeIterationSize = 0;
         private double cEdgeIterationSize = 0;
 
-        /**
-         * Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
-         * This class implements Bron-Kerbosch clique detection algorithm as it is
-         * described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
-         * processedVertex.Comp. Sc. (2005); vol 349; pp.
-         * 484-490]
-         * @param compGraphNodesOrg
-         * @param cEdgesOrg C-Edges set of allowed edges
-         * @param dEdgesOrg D-Edges set of prohibited edges
-         */
-#if TEST
-        public
-#else
-        internal 
-#endif
-        BKKCKCF(IList<int> compGraphNodesOrg, IList<int> cEdgesOrg, IList<int> dEdgesOrg)
+        /// <summary>
+        /// Creates index new instance of Bron Kerbosch Cazals Karande Koch Clique Finder
+        /// This class implements Bron-Kerbosch clique detection algorithm as it is
+        /// described in [F. Cazals, vertexOfCurrentClique. Karande: An Algorithm for reporting maximal c-cliques;
+        /// processedVertex.Comp. Sc. (2005); vol 349; pp.
+        /// 484-490]
+        /// </summary>
+        /// <param name="compGraphNodesOrg"></param>
+        /// <param name="cEdgesOrg">C-Edges set of allowed edges</param>
+        /// <param name="dEdgesOrg">D-Edges set of prohibited edges</param>
+        internal BKKCKCF(IList<int> compGraphNodesOrg, IList<int> cEdgesOrg, IList<int> dEdgesOrg)
         {
             MCSPlus.SetTimeManager(new TimeManager());
             this.compGraphNodes = compGraphNodesOrg;
@@ -92,17 +83,13 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         }
 
-        /*
-         * Call the wrapper for ENUMERATE_CLIQUES
-         */
+        /// <summary>
+        /// Call the wrapper for ENUMERATE_CLIQUES
+        /// </summary>
         private void Init()
         {
-
-            /********************************************************************/
-            /*
-             * vertex: stored all the vertices for the Graph G vertex[G] nodes of
-             * vector compGraphNodes are stored in vertex
-             */
+            // vertex: stored all the vertices for the Graph G vertex[G] nodes of
+            // vector compGraphNodes are stored in vertex
             List<int> vertex = new List<int>(); //Initialization of ArrayList vertex
 
             int vertexCount = compGraphNodes.Count / 3;
@@ -118,15 +105,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             vertex.Add(0);
             // Console.Out.WriteLine("ArrayList vertex :" + vertex);
 
-            /*
-             * processedVertex: is index set of vertices which have already been
-             * used
-             */
+            // processedVertex: is index set of vertices which have already been used
             List<int> processedVertex = new List<int>();
-            /*
-             * Let processedVertex be the set of Nodes already been used in the
-             * initialization
-             */
+
+            // Let processedVertex be the set of Nodes already been used in the
+            // initialization
             InitIterator(vertex, processedVertex);
             processedVertex.Clear();
             //Console.Out.WriteLine("maxCliquesSet: " + maxCliquesSet);
@@ -395,40 +378,29 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         private void InitIterator(List<int> vertex, List<int> processedVertex)
         {
-            /*
-             * vertexOfCurrentClique: set of vertices belonging to the current
-             * clique
-             */
+            // vertexOfCurrentClique: set of vertices belonging to the current clique
             List<int> vertexOfCurrentClique = new List<int>();
-            /*
-             * potentialCVertex: is index set of vertices which <index>can</index>
-             * be addedto vertexOfCurrentClique, because they are neighbours of
-             * vertex u via <i>c-edges</i>
-             */
+
+            // potentialCVertex: is index set of vertices which <index>can</index>
+            // be addedto vertexOfCurrentClique, because they are neighbours of
+            // vertex u via <i>c-edges</i>
             Deque<int> potentialCVertex = new Deque<int>();
-            /*
-             * potentialDVertex: is index set of vertices which
-             * <index>cannot</index> be added tovertexOfCurrentClique, because they
-             * are neighbours of vertex u via <i>d-edges</i>
-             */
+            
+            // potentialDVertex: is index set of vertices which
+            // <index>cannot</index> be added tovertexOfCurrentClique, because they
+            // are neighbours of vertex u via <i>d-edges</i>
 
             List<int> potentialDVertex = new List<int>();
-            /*
-             * excludedVertex: set of vertices which are not allowed to be added to
-             * vertexOfCurrentClique
-             */
+
+            // excludedVertex: set of vertices which are not allowed to be added to
+            // vertexOfCurrentClique
             List<int> excludedVertex = new List<int>();
 
-            /*
-             * excludedCVertex: set of vertices which are not allowed to be added to
-             * C
-             */
+            // excludedCVertex: set of vertices which are not allowed to be added to C
 
             List<int> excludedCVertex = new List<int>();
 
-            /*
-             * neighbourVertex[u]: set of neighbours of vertex u in Graph G
-             */
+            // neighbourVertex[u]: set of neighbours of vertex u in Graph G
 
             List<int> neighbourVertex = new List<int>();
 
@@ -446,9 +418,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
                 for (int c = 0; c < neighbourVertex.Count; c = c + 2)
                 {
-                    /*
-                     * u and v are adjacent via index vertexOfCurrentClique-edge
-                     */
+                    /// u and v are adjacent via index vertexOfCurrentClique-edge
                     int neighbourVertexOfC = neighbourVertex[c];
 
                     //find respective neighbor position in potentialCVertex, which is needed for the deletion from vertex

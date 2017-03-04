@@ -26,8 +26,7 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project. 
  */
-
-using System;
+using System.ComponentModel;
 
 namespace NCDK.Beam
 {
@@ -35,7 +34,7 @@ namespace NCDK.Beam
     /// Defines properties of a atom that can be encoded in SMILES. Atoms can be
     /// built using the <see cref="AtomBuilder"/> class.
     /// </summary>
-    /// <author>John May</author>
+    // @author John May
     public interface Atom
     {
         /// <summary>
@@ -93,38 +92,32 @@ namespace NCDK.Beam
         Atom AsAromaticForm();
 
         /// <summary>
+        /// (internal) Is the atom a member of the organic (aromatic/aliphatic)
+        /// subset implementation?
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        bool Subset { get; }
+
+        /// <summary>
         /// Access an aliphatic form of this atom. 
         /// </summary>
         /// <returns>the aliphatic form of this atom</returns>
         Atom AsAliphaticForm();
-    }
-
-#if TEST
-    public
-#endif
-    interface Atom_ : Atom
-    {
-        /// <summary>
-        /// Is the atom a member of the organic (aromatic/aliphatic)
-        /// subset implementation?
-        /// </summary>
-        bool Subset { get; }
 
         /// <summary>
-        /// the number of hydrogens this atom would have if it were vertex
-        /// 'u' in the graph 'g'. If the atom is in the organic subset the value is
+        /// (internal) The number of hydrogens this atom would have if it were vertex
+        /// '<paramref name="u"/>' in the graph '<paramref name="g"/>'. If the atom is in the organic subset the value is
         /// computed - otherwise the labelled hydrogen count is returned.
         /// </summary>
         /// <seealso cref="Graph.ImplHCount(int)"/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         int GetNumberOfHydrogens(Graph g, int u);
 
         /// <summary>
-        /// The token to write for the atom when generating a SMILES
+        /// (internal) The token to write for the atom when generating a SMILES
         /// string.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         Generator.AtomToken Token { get; }
-
-        Atom_ ToAromaticForm_();
-        Atom_ ToAliphaticForm_();
     }
 }

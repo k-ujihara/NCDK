@@ -41,10 +41,7 @@ namespace NCDK.Isomorphisms
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class VFSubState : AbstractVFState
+    internal sealed class VFSubState : AbstractVFState
     {
 
         /// <summary>The query (container1) and target (container2) of the subgraph matching.</summary>

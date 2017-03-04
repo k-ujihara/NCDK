@@ -23,6 +23,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 
+
 namespace NCDK.IO
 {
     /// <summary>
@@ -43,7 +44,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void Cod1100784()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream(GetType(), "1100784.cif");
+            var ins = ResourceLoader.GetAsStream(GetType(), "1100784.cif");
             CIFReader cifReader = new CIFReader(ins);
             //        try {
             IChemFile chemFile = cifReader.Read(new ChemFile());

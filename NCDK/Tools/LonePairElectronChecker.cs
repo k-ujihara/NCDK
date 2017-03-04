@@ -23,18 +23,18 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Provides methods for checking whether an atoms lone pair electrons are saturated
-     * with respect to a particular atom type.
-     *
-     * @author         Miguel Rojas
-     * @cdk.githash
-     * @cdk.created    2006-04-01
-     *
-     * @cdk.keyword    saturation
-     * @cdk.keyword    atom, valency
-     * @cdk.module     standard
-     */
+    /// <summary>
+    /// Provides methods for checking whether an atoms lone pair electrons are saturated
+    /// with respect to a particular atom type.
+    ///
+    // @author         Miguel Rojas
+    // @cdk.githash
+    // @cdk.created    2006-04-01
+    ///
+    // @cdk.keyword    saturation
+    // @cdk.keyword    atom, valency
+    // @cdk.module     standard
+    /// </summary>
     public class LonePairElectronChecker
     {
         private static AtomTypeFactory factory;
@@ -47,19 +47,19 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Determines of all atoms on the AtomContainer have the
-         * right number the lone pair electrons.
-         */
+        /// <summary>
+        /// Determines of all atoms on the AtomContainer have the
+        /// right number the lone pair electrons.
+        /// </summary>
         public bool IsSaturated(IAtomContainer container)
         {
             return AllSaturated(container);
         }
 
-        /**
-         * Determines of all atoms on the AtomContainer have
-         * the right number the lone pair electrons.
-         */
+        /// <summary>
+        /// Determines of all atoms on the AtomContainer have
+        /// the right number the lone pair electrons.
+        /// </summary>
         public bool AllSaturated(IAtomContainer ac)
         {
             Debug.WriteLine("Are all atoms saturated?");
@@ -70,12 +70,12 @@ namespace NCDK.Tools
             return true;
         }
 
-        /**
-         * Checks if an Atom is saturated their lone pair electrons
-         * by comparing it with known AtomTypes.
-         *
-         * @return       True, if it's right saturated
-         */
+        /// <summary>
+        /// Checks if an Atom is saturated their lone pair electrons
+        /// by comparing it with known AtomTypes.
+        ///
+        /// <returns>True, if it's right saturated</returns>
+        /// </summary>
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
             CreateAtomTypeFactory(ac.Builder);
@@ -85,9 +85,9 @@ namespace NCDK.Tools
             return foundLPCount >= lpCount;
         }
 
-        /**
-         * Saturates a molecule by setting appropriate number lone pair electrons.
-         */
+        /// <summary>
+        /// Saturates a molecule by setting appropriate number lone pair electrons.
+        /// </summary>
         public void Saturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting lone pair electrons...");
@@ -101,9 +101,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Saturates an IAtom by adding the appropriate number lone pairs.
-         */
+        /// <summary>
+        /// Saturates an IAtom by adding the appropriate number lone pairs.
+        /// </summary>
         public void Saturate(IAtom atom, IAtomContainer ac)
         {
             Trace.TraceInformation("Saturating atom by adjusting lone pair electrons...");

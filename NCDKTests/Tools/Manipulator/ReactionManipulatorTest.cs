@@ -24,12 +24,12 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     *
-     * @author     Egon Willighagen
-     * @cdk.created    2003-07-23
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    ///
+    // @author     Egon Willighagen
+    // @cdk.created    2003-07-23
+    /// </summary>
     [TestClass()]
     public class ReactionManipulatorTest : CDKTestCase
     {
@@ -44,7 +44,7 @@ namespace NCDK.Tools.Manipulator
         public void SetUp()
         {
             string filename1 = "NCDK.Data.MDL.reaction-1.rxn";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNReader reader1 = new MDLRXNReader(ins1);
             ReactionSet set = (ReactionSet)reader1.Read(new ReactionSet());
             reaction = set[0];
@@ -86,11 +86,11 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(5, ids.Count);
         }
 
-        /**
-         * A unit test suite for JUnit. Test of mapped IAtoms
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Test of mapped IAtoms
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IAtom()
         {
@@ -116,11 +116,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit. Test of mapped IBond
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Test of mapped IBond
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMappedChemObject_IReaction_IBond()
         {

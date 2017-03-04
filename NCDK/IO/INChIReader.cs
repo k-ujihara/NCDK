@@ -33,36 +33,36 @@ using NCDK.Util.Xml;
 
 namespace NCDK.IO
 {
-    /**
-	 * Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See
-	 * {@cdk.cite HEL01}. Recently a new INChI format was introduced an files generated
-	 * with the latest INChI generator cannot be parsed with this class. This class
-	 * needs to be updated.
-	 *
-	 * <P>The elements that are read are given in the INChIHandler class.
-	 *
-	 * @cdk.module extra
-	 * @cdk.githash
-	 * @cdk.iooptions
-	 *
-	 * @author      Egon Willighagen <egonw@sci.kun.nl>
-	 * @cdk.created 2004-05-17
-	 *
-	 * @cdk.keyword file format, INChI
-	 * @cdk.keyword chemical identifier
-	 * @cdk.require java1.4+
-	 *
-	 * @see     org.openscience.cdk.io.inchi.INChIHandler
-	 */
+    /// <summary>
+    /// Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See
+    /// {@cdk.cite HEL01}. Recently a new INChI format was introduced an files generated
+    /// with the latest INChI generator cannot be parsed with this class. This class
+    /// needs to be updated.
+    ///
+    /// <P>The elements that are read are given in the INChIHandler class.
+    ///
+    // @cdk.module extra
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author      Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.created 2004-05-17
+    ///
+    // @cdk.keyword file format, INChI
+    // @cdk.keyword chemical identifier
+    // @cdk.require java1.4+
+    ///
+    // @see     org.openscience.cdk.io.inchi.INChIHandler
+    /// </summary>
     public class INChIReader : DefaultChemObjectReader
     {
         private Stream input;
 
-        /**
-		 * Construct a INChI reader from a Stream object.
-		 *
-		 * @param input the Stream with the content
-		 */
+        /// <summary>
+        /// Construct a INChI reader from a Stream object.
+        ///
+        /// <param name="input">the Stream with the content</param>
+        /// </summary>
         public INChIReader(Stream input)
         {
             this.input = input;
@@ -74,10 +74,10 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => INChIFormat.Instance;
 
-        /**
-		 * This method must not be used; XML reading requires the use of an Stream.
-		 * Use SetReader(Stream) instead.
-		 */
+        /// <summary>
+        /// This method must not be used; XML reading requires the use of an Stream.
+        /// Use SetReader(Stream) instead.
+        /// </summary>
         public override void SetReader(TextReader reader)
         {
             throw new CDKException("Invalid method call; use SetReader(Stream) instead.");
@@ -94,13 +94,13 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-		 * Reads a IChemObject of type object from input.
-		 * Supported types are: ChemFile.
-		 *
-		 * @param  object type of requested IChemObject
-		 * @return the content in a ChemFile object
-		 */
+        /// <summary>
+        /// Reads a IChemObject of type object from input.
+        /// Supported types are: ChemFile.
+        ///
+        /// <param name="object">type of requested IChemObject</param>
+        /// <returns>the content in a ChemFile object</returns>
+        /// </summary>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -115,11 +115,11 @@ namespace NCDK.IO
 
         // private functions
 
-        /**
-		 * Reads a ChemFile object from input.
-		 *
-		 * @return ChemFile with the content read from the input
-		 */
+        /// <summary>
+        /// Reads a ChemFile object from input.
+        ///
+        /// <returns>ChemFile with the content read from the input</returns>
+        /// </summary>
         private IChemFile ReadChemFile()
         {
             IChemFile cf = null;

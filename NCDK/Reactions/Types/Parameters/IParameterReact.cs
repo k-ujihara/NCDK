@@ -18,13 +18,13 @@
  */
 namespace NCDK.Reactions.Types.Parameters
 {
-    /**
-     * Interface for classes that generate parameters used in reactions.
-     *
-     * @author      miguelrojasch
-     * @cdk.module  reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Interface for classes that generate parameters used in reactions.
+    ///
+    // @author      miguelrojasch
+    // @cdk.module  reaction
+    // @cdk.githash
+    /// </summary>
     public interface IParameterReact
     {
         /// <summary>

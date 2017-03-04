@@ -31,6 +31,7 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 
+
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
@@ -49,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestDescriptors()
         {
             string fnmol = "NCDK.Data.CDD.pyridineacid.mol";
-            MDLV2000Reader mdl = new MDLV2000Reader(this.GetType().Assembly.GetManifestResourceStream(fnmol));
+            MDLV2000Reader mdl = new MDLV2000Reader(ResourceLoader.GetAsStream(fnmol));
             AtomContainer mol = new AtomContainer();
             mdl.Read(mol);
             mdl.Close();

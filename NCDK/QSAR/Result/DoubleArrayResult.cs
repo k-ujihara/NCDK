@@ -22,10 +22,10 @@ using System.Text;
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class DoubleArrayResult : DoubleArrayResultType
     {
         private List<double> array;

@@ -18,18 +18,11 @@
  */
 namespace NCDK.Graphs.Rebond
 {
-    /**
-     * @author      Miguel Howard
-     * @cdk.created 2003-05
-     * @cdk.module  standard
-     * @cdk.githash
-     */
-#if TEST
-    public
-#else
-    internal
-#endif
-        class Point : Tuple
+    // @author      Miguel Howard
+    // @cdk.created 2003-05
+    // @cdk.module  standard
+    // @cdk.githash
+    internal class Point : Tuple
     {
         double X { get; set; }
         double Y { get; set; }

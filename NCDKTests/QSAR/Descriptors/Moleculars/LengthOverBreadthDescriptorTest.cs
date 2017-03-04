@@ -24,7 +24,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestLOBDescriptorCholesterol()
         {
             string filename = "NCDK.Data.MDL.lobtest.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -41,7 +41,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestLOBDescriptorCyclohexane()
         {
             string filename = "NCDK.Data.MDL.lobtest.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -58,7 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestLOBDescriptorNaphthalene()
         {
             string filename = "NCDK.Data.MDL.lobtest.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -76,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestLOBDescriptorNButane()
         {
             string filename = "NCDK.Data.MDL.lobtest.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -94,7 +94,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestLOBDescriptor2()
         {
             string filename = "NCDK.Data.MDL.lobtest2.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

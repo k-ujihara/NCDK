@@ -27,7 +27,7 @@ using System.Diagnostics;
 namespace NCDK.IO
 {
     // @cdk.module test-io
-	[TestClass()]
+    [TestClass()]
     public class PCCompoundXMLReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.ASN.PubChem.cid1145.xml";
@@ -46,7 +46,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
@@ -77,7 +77,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.ASN.PubChem.cid176.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundXMLReader reader = new PCCompoundXMLReader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();

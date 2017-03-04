@@ -23,153 +23,139 @@ using System.Linq;
 
 namespace NCDK.Formula
 {
-    /**
-    //  Class defining an set object of MolecularFormulas. It maintains
-    //   a list of list IMolecularFormula.<p>
-     *
+    /// <summary>
+    /// Class defining an set object of MolecularFormulas. It maintains
+    /// a list of list IMolecularFormula.<para>
+    /// </summary>
     // @cdk.module  data
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-     */
     public class MolecularFormulaSet : IMolecularFormulaSet, ICloneable
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
         private IList<IMolecularFormula> components;
 
-        /**
-		 *  Constructs an empty MolecularFormulaSet.
-		 *
-		 *  @see #MolecularFormulaSet(IMolecularFormula)
-		 */
+        /// <summary>
+        /// Constructs an empty MolecularFormulaSet.
+        /// </summary>
+        /// <seealso cref="MolecularFormulaSet(IMolecularFormula)"/>
         public MolecularFormulaSet()
         {
             components = new List<IMolecularFormula>();
         }
 
-        /**
-		 * Constructs a MolecularFormulaSet with a copy MolecularFormulaSet of another
-		 * MolecularFormulaSet (A shallow copy, i.e., with the same objects as in
-		 * the original MolecularFormulaSet).
-		 *
-		 *  @param  formula  An MolecularFormula to copy from
-		 *  @see             #MolecularFormulaSet()
-		 */
+        /// <summary>
+        /// Constructs a MolecularFormulaSet with a copy MolecularFormulaSet of another
+        /// MolecularFormulaSet (A shallow copy, i.e., with the same objects as in
+        /// the original MolecularFormulaSet).
+        /// </summary>
+        /// <param name="formula">An MolecularFormula to copy from</param>
+        /// <seealso cref="MolecularFormulaSet"/>
         public MolecularFormulaSet(IMolecularFormula formula)
         {
             components = new List<IMolecularFormula>();
             components.Insert(0, formula);
         }
 
-        /**
-		 *  Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
-		 *
-		 * @param  formulaSet  The MolecularFormulaSet
-		 */
+        /// <summary>
+        /// Adds all molecularFormulas in the MolecularFormulaSet to this chemObject.
+        /// </summary>
+        /// <param name="formulaSet">The MolecularFormulaSet</param>
         public virtual void AddRange(IEnumerable<IMolecularFormula> formulaSet)
         {
             foreach (var mf in formulaSet)
             {
                 Add(mf);
             }
-            /*
-			 * notifyChanged() is called by Add()
-			 */
+            // NotifyChanged() is called by Add()
         }
 
-        /**
-		 * Adds an molecularFormula to this chemObject.
-		 *
-		 * @param  formula  The molecularFormula to be added to this chemObject
-		 */
+        /// <summary>
+        /// Adds an molecularFormula to this chemObject.
+        /// </summary>
+        /// <param name="formula">The molecularFormula to be added to this chemObject</param>
         public virtual void Add(IMolecularFormula formula)
         {
             components.Add(formula);
         }
 
-        /**
-		 *  Returns an Enumerator for looping over all IMolecularFormula
-		 *   in this MolecularFormulaSet.
-		 *
-		 * @return    An Iterable with the IMolecularFormula in this MolecularFormulaSet
-		 */
+        /// <summary>
+        /// Returns an Enumerator for looping over all IMolecularFormula
+        /// in this MolecularFormulaSet.
+        /// </summary>
+        /// <returns>An Iterable with the IMolecularFormula in this MolecularFormulaSet</returns>
         public virtual IEnumerator<IMolecularFormula> GetEnumerator()
         {
             return components.GetEnumerator();
         }
 
-        /**
-		 * Returns the number of MolecularFormulas in this MolecularFormulaSet.
-		 *
-		 * @return     The number of MolecularFormulas in this MolecularFormulaSet
-		 */
+        /// <summary>
+        /// Returns the number of MolecularFormulas in this MolecularFormulaSet.
+        /// </summary>
+        /// <returns>The number of MolecularFormulas in this MolecularFormulaSet</returns>
         public virtual int Count => components.Count;
 
-        /**
-		 *  True, if the MolecularFormulaSet contains the given IMolecularFormula object.
-		 *
-		 * @param  formula  The IMolecularFormula this MolecularFormulaSet is searched for
-		 * @return          True, if the MolecularFormulaSet contains the given IMolecularFormula object
-		 */
+        /// <summary>
+        /// True, if the MolecularFormulaSet contains the given IMolecularFormula object.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula this MolecularFormulaSet is searched for</param>
+        /// <returns>True, if the MolecularFormulaSet contains the given IMolecularFormula object</returns>
         public virtual bool Contains(IMolecularFormula formula) => components.Contains(formula);
 
-        /**
-		 * RThe MolecularFormula at position <code>number</code> in the
-		 * chemObject.
-		 *
-		 * @param  position The position of the IMolecularFormula to be returned.
-		 */
+        /// <summary>
+        /// The MolecularFormula at position <paramref name="position"/> in the
+        /// chemObject.
+        /// </summary>
+        /// <param name="position">The position of the IMolecularFormula to be returned.</param>
         public virtual IMolecularFormula this[int position]
         {
             get { return components[position]; }
             set { components[position] = value; }
         }
 
-        /**
-		 * Removes all IMolecularFormula from this chemObject.
-		 */
+        /// <summary>
+        /// Removes all IMolecularFormula from this chemObject.
+        /// </summary>
         public virtual void Clear()
         {
             components.Clear();
         }
 
-        /**
-		 * Removes an IMolecularFormula from this chemObject.
-		 *
-		 * @param  formula  The IMolecularFormula to be removed from this chemObject
-		 */
+        /// <summary>
+        /// Removes an IMolecularFormula from this chemObject.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula to be removed from this chemObject</param>
         public virtual bool Remove(IMolecularFormula formula)
         {
             return components.Remove(formula);
         }
 
-        /**
-		 * Removes an MolecularFormula from this chemObject.
-		 *
-		 * @param  position  The position of the MolecularFormula to be removed from this chemObject
-		 */
+        /// <summary>
+        /// Removes an MolecularFormula from this chemObject.
+        /// </summary>
+        /// <param name="position">The position of the MolecularFormula to be removed from this chemObject</param>
         public void RemoveAt(int position)
         {
             components.RemoveAt(position);
         }
 
-        /**
-		 * Clones this MolecularFormulaSet object and its content.
-		 *
-		 * @return    The cloned object
-		 */
+        /// <summary>
+        /// Clones this MolecularFormulaSet object and its content.
+        /// </summary>
+        /// <returns>The cloned object</returns>
         public virtual object Clone()
         {
-            //		/* it is not a super class of chemObject */
-            //		MolecularFormulaSet clone = (MolecularFormulaSet) base.Clone();
+            //        /* it is not a super class of chemObject */
+            //        MolecularFormulaSet clone = (MolecularFormulaSet) base.Clone();
             //        // start from scratch
-            //		clone.Clear();
+            //        clone.Clear();
             //        // clone all molecularFormulas
-            //		IEnumerator<IMolecularFormula> iterForm = this;
-            //		while(iterForm.MoveNext()){
-            //			clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
-            //		}
+            //        IEnumerator<IMolecularFormula> iterForm = this;
+            //        while(iterForm.MoveNext()){
+            //            clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
+            //        }
             MolecularFormulaSet clone = new MolecularFormulaSet();
             foreach (var mf in this)
             {

@@ -23,10 +23,9 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiOutput
     {
-
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutput.ReturnStatus'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutput.ReturnStatus'
+        /// </summary>
         [TestMethod()]
         public void TestGetReturnStatus()
         {
@@ -34,9 +33,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutput.Inchi'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutput.Inchi'
+        /// </summary>
         [TestMethod()]
         public void TestGetInchi()
         {
@@ -44,9 +43,9 @@ namespace NCDK.NInChI
             Assert.AreEqual("Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", output.Inchi);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutput.AuxInfo'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutput.AuxInfo'
+        /// </summary>
         [TestMethod()]
         public void TestGetAuxInfo()
         {
@@ -54,9 +53,9 @@ namespace NCDK.NInChI
             Assert.AreEqual("AuxInfo=1/0/N:1,2,6,3,5,4/E:(1,2,3,4,5,6)/rA:6nCCCCCC/rB:d1;s2;d3;s4;s1d5;/rC:-.7145,.4125,0;-.7145,-.4125,0;0,-.825,0;.7145,-.4125,0;.7145,.4125,0;0,.825,0;", output.AuxInfo);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutput.Message'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutput.Message'
+        /// </summary>
         [TestMethod()]
         public void TestGetMessage()
         {
@@ -64,9 +63,9 @@ namespace NCDK.NInChI
             Assert.AreEqual("Test message", output.Message);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutput.Log'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutput.Log'
+        /// </summary>
         [TestMethod()]
         public void TestGetLog()
         {

@@ -24,33 +24,33 @@
  */
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Represents a single substitute structure in an {@link RGroupList}. <P>
-     * The order of attachment points is provided (first and second only, conform
-     * RGFile spec). This order is relevant when the structure connects to the root
-     * with more than one bond.
-     * <P>
-     * See also {@link RGroupList} and {@link RGroupQuery}.
-     *
-     * @cdk.module  isomorphism
-     * @cdk.githash
-     * @cdk.keyword Rgroup
-     * @cdk.keyword R group
-     * @cdk.keyword R-group
-     * @author Mark Rijnbeek
-     */
+    /// <summary>
+    /// Represents a single substitute structure in an <see cref="RGroupList"/>. <P>
+    /// The order of attachment points is provided (first and second only, conform
+    /// RGFile spec). This order is relevant when the structure connects to the root
+    /// with more than one bond.
+    /// <P>
+    /// See also <see cref="RGroupList"/> and <see cref="RGroupQuery"/>.
+    ///
+    // @cdk.module  isomorphism
+    // @cdk.githash
+    // @cdk.keyword Rgroup
+    // @cdk.keyword R group
+    // @cdk.keyword R-group
+    // @author Mark Rijnbeek
+    /// </summary>
     public class RGroup {
 
-        /**
-		 * Standard label/title to be used for the root atom container.
-		 */
+        /// <summary>
+        /// Standard label/title to be used for the root atom container.
+        /// </summary>
         public const string ROOT_LABEL = "Root structure";
 
-        /**
-		 * Makes a label/title to be used for a substituent.
-		 * @param rgroupNum R-Group number (1..32)
-		 * @return label for substituent, like "R3"
-		 */
+        /// <summary>
+        /// Makes a label/title to be used for a substituent.
+        /// <param name="rgroupNum">R-Group number (1..32)</param>
+        /// <returns>label for substituent, like "R3"</returns>
+        /// </summary>
         public static string MakeLabel(int rgroupNum) {
             return "(R" + rgroupNum + ")";
         }

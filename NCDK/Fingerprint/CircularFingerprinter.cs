@@ -36,62 +36,59 @@ using NCDK.Numerics;
 
 namespace NCDK.Fingerprint
 {
-    /**
-	 *  <p>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
-	 *  fingerprints, which are partially described by Rogers et al. {@cdk.cite Rogers2010}.
-	 *
-	 *  <p>While the literature describes the method in detail, it does not disclose either the hashing technique for converting
-	 *  lists of integers into 32-bit codes, nor does it describe the scheme used to classify the atom types for creating
-	 *  the FCFP-class of descriptors. For this reason, the fingerprints that are created are not binary compatible with
-	 *  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.</p>
-	 *
-	 *  <p>The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
-	 *  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
-	 *  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</p>
-	 *
-	 *	<p>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
-	 *	formula/parameters as used by PNG files, and described in:</p>
-	 *
-	 *		<a href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</a>
-	 *
-	 *	<p>Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
-	 *	suppressed or not.</p>
-	 *
-	 *  <p>Implementation note: many of the algorithms involved in the generation of fingerprints (e.g. aromaticity, atom
-	 *  typing) have been coded up explicitly for use by this class, rather than making use of comparable functionality
-	 *  elsewhere in the CDK. This is to ensure that the CDK implementation of the algorithm is strictly equal to other
-	 *  implementations: dependencies on CDK functionality that could be modified or improved in the future would break
-	 *  binary compatibility with formerly identical implementations on other platforms.</p>
-	 *
-	 *  <p>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
-	 *  Green et al {@cdk.cite Green1994}.</p>
-	 *  
-	 *  <p>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
-	 *  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",
-	 *  Journal of Cheminformatics, 6:38 (2014).</p>
-	 *  
-	 *  	<a href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</a>
-	 *
-	 * @author         am.clark
-	 * @cdk.created    2014-01-01
-	 * @cdk.keyword    fingerprint
-	 * @cdk.keyword    similarity
-	 * @cdk.module     standard
-	 * @cdk.githash
-	 */
-#if TEST
-    public
-#endif
-    class CircularFingerprinter : IFingerprinter
+    /// <summary>
+    ///  <para>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
+    ///  fingerprints, which are partially described by Rogers et al. {@cdk.cite Rogers2010}.</para>
+    /// </summary>
+    /// <remarks>
+    ///  <para>While the literature describes the method in detail, it does not disclose either the hashing technique for converting
+    ///  lists of integers into 32-bit codes, nor does it describe the scheme used to classify the atom types for creating
+    ///  the FCFP-class of descriptors. For this reason, the fingerprints that are created are not binary compatible with
+    ///  the reference implementation. They do, however, achieve effectively equal performance for modelling purposes.</para>
+    ///
+    ///  <para>The resulting fingerprint bits are presented as a list of unique bits, each with a 32-bit hashcode; typically there
+    ///  are no more than a hundred or so unique bit hashcodes per molecule. These identifiers can be folded into a smaller
+    ///  array of bits, such that they can be represented as a single long binary number, which is often more convenient.</para>
+    ///
+    ///    <para>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
+    ///    formula/parameters as used by PNG files, and described in:</para>
+    ///
+    ///        <a href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</a>
+    ///
+    ///    <para>Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
+    ///    suppressed or not.</para>
+    ///
+    ///  <para>Implementation note: many of the algorithms involved in the generation of fingerprints (e.g. aromaticity, atom
+    ///  typing) have been coded up explicitly for use by this class, rather than making use of comparable functionality
+    ///  elsewhere in the CDK. This is to ensure that the CDK implementation of the algorithm is strictly equal to other
+    ///  implementations: dependencies on CDK functionality that could be modified or improved in the future would break
+    ///  binary compatibility with formerly identical implementations on other platforms.</para>
+    ///
+    ///  <para>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
+    ///  Green et al {@cdk.cite Green1994}.</para>
+    ///  
+    ///  <para>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
+    ///  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",
+    ///  Journal of Cheminformatics, 6:38 (2014).</para>
+    ///  
+    ///      <a href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</a>
+    /// </remarks>
+    // @author         am.clark
+    // @cdk.created    2014-01-01
+    // @cdk.keyword    fingerprint
+    // @cdk.keyword    similarity
+    // @cdk.module     standard
+    // @cdk.githash
+    internal class CircularFingerprinter : IFingerprinter
     {
-        // ------------ constants ------------
+        /// ------------ constants ------------
 
-        // identity by literal atom environment
+        /// identity by literal atom environment
         public const int CLASS_ECFP0 = 1;
         public const int CLASS_ECFP2 = 2;
         public const int CLASS_ECFP4 = 3;
         public const int CLASS_ECFP6 = 4;
-        // identity by functional character of the atom
+        /// identity by functional character of the atom
         public const int CLASS_FCFP0 = 5;
         public const int CLASS_FCFP2 = 6;
         public const int CLASS_FCFP4 = 7;
@@ -115,7 +112,7 @@ namespace NCDK.Fingerprint
             public int[] Atoms => atoms;
         }
 
-        // ------------ private members ------------
+        /// ------------ private members ------------
 
         private const int ATOMCLASS_ECFP = 1;
         private const int ATOMCLASS_FCFP = 2;
@@ -130,7 +127,7 @@ namespace NCDK.Fingerprint
         private Crc32 crc = new Crc32();        // recycled for each CRC calculation
         private List<FP> fplist = new List<FP>();
 
-        // summary information about the molecule, for quick access
+        /// summary information about the molecule, for quick access
         private bool[] amask;                               // true for all heavy atoms, i.e. hydrogens and non-elements are excluded
         private int[] hcount;                              // total hydrogen count, including explicit and implicit hydrogens
         private int[][] atomAdj, bondAdj;                    // precalculated adjacencies, including only those qualifying with 'amask'
@@ -140,7 +137,7 @@ namespace NCDK.Fingerprint
         private bool[] atomArom, bondArom;                  // aromaticity precalculated
         private int[][] tetra;                               // tetrahedral rubric, a precursor to chirality
 
-        // stored information for bio-typing; only defined for FCFP-class fingerprints
+        /// stored information for bio-typing; only defined for FCFP-class fingerprints
         private bool[] maskDon, maskAcc, maskPos, maskNeg, maskAro, maskHal; // functional property flags
         private int[] bondSum;                                             // sum of bond orders for each atom (including explicit H's)
         private bool[] hasDouble;                                           // true if an atom has any double bonds
@@ -149,34 +146,32 @@ namespace NCDK.Fingerprint
         private bool[] lonePair;                                            // true if the atom is N,O,S with octet valence and at least one lone pair
         private bool[] tetrazole;                                           // special flag for being in a tetrazole (C1=NN=NN1) ring
 
-        // ------------ methods ------------
+        /// ------------ methods ------------
 
-        /**
-		 * Default constructor: uses the ECFP6 type.
-		 */
+        /// <summary>
+        /// Default constructor: uses the ECFP6 type.
+        /// </summary>
         public CircularFingerprinter()
             : this(CLASS_ECFP6)
         { }
 
-        /**
-		 * Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
-		 * for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
-		 * path diameter, and may be 0, 2, 4 or 6.
-		 *
-		 * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
-		 */
+        /// <summary>
+        /// Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
+        /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
+        /// path diameter, and may be 0, 2, 4 or 6.
+        /// </summary>
+        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
         public CircularFingerprinter(int classType)
             : this(classType, 1024)
         { }
 
-        /**
-		 * Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
-		 * for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
-		 * path diameter, and may be 0, 2, 4 or 6.
-		 *
-		 * @param classType one of CLASS_ECFP{n} or CLASS_FCFP{n}
-		 * @param len size of folded (binary) fingerprint                  
-		 */
+        /// <summary>
+        /// Specific constructor: initializes with descriptor class type, one of ECFP_{p} or FCFP_{p}, where ECFP is
+        /// for the extended-connectivity fingerprints, FCFP is for the functional class version, and {p} is the
+        /// path diameter, and may be 0, 2, 4 or 6.
+        /// </summary>
+        /// <param name="classType">one of CLASS_ECFP{n} or CLASS_FCFP{n}</param>
+        /// <param name="len">size of folded (binary) fingerprint</param>
         public CircularFingerprinter(int classType, int len)
         {
             if (classType < 1 || classType > 8)
@@ -185,11 +180,10 @@ namespace NCDK.Fingerprint
             this.length = len;
         }
 
-        /**
-		 * Calculates the fingerprints for the given <see cref="IAtomContainer"/>, and stores them for subsequent retrieval.
-		 *
-		 * @param mol chemical structure; all nodes should be known legitimate elements
-		 */
+        /// <summary>
+        /// Calculates the fingerprints for the given <see cref="IAtomContainer"/>, and stores them for subsequent retrieval.
+        /// </summary>
+        /// <param name="mol">chemical structure; all nodes should be known legitimate elements</param>
         public void Calculate(IAtomContainer mol)
         {
             this.mol = mol;
@@ -236,32 +230,28 @@ namespace NCDK.Fingerprint
             }
         }
 
-        /**
-		 * Returns the number of fingerprints generated.
-		 *
-		 * @return total number of unique fingerprint hashes generated
-		 * */
+        /// <summary>
+        /// Returns the number of fingerprints generated.
+        /// </summary>
+        /// <returns>total number of unique fingerprint hashes generated</returns>
         public int FPCount => fplist.Count;
 
-        /**
-		 * Returns the requested fingerprint.
-		 *
-		 * @param N index of fingerprint (0-based)
-		 * @return instance of a fingerprint hash
-		 * */
+        /// <summary>
+        /// Returns the requested fingerprint.
+        /// </summary>
+        /// <param name="N">index of fingerprint (0-based)</param>
+        /// <returns>instance of a fingerprint hash</returns>
         public FP GetFP(int N)
         {
             return fplist[N];
         }
 
-        /**
-		 * Calculates the circular fingerprint for the given <see cref="IAtomContainer"/>, and <b>folds</b> the result into a single bitset
-		 * (see GetSize()).
-		 *
-		 * @param  mol IAtomContainer for which the fingerprint should be calculated.
-		 * @return the fingerprint
-		 */
-
+        /// <summary>
+        /// Calculates the circular fingerprint for the given <see cref="IAtomContainer"/>, and <b>folds</b> the result into a single bitset
+        /// (see GetSize()).
+        /// </summary>
+        /// <param name="mol">IAtomContainer for which the fingerprint should be calculated.</param>
+        /// <returns>the fingerprint</returns>
         public IBitFingerprint GetBitFingerprint(IAtomContainer mol)
         {
             Calculate(mol);
@@ -299,13 +289,12 @@ namespace NCDK.Fingerprint
             public int GetCountForHash(int hash) => map.ContainsKey(hash) ? map[hash] : 0;
         }
 
-        /**
-		 * Calculates the circular fingerprint for the given <see cref="IAtomContainer"/>, and returns a datastructure that enumerates all
-		 * of the fingerprints, and their counts (i.e. does <b>not</b> fold them into a bitmask).
-		 *
-		 * @param  mol IAtomContainer for which the fingerprint should be calculated.
-		 * @return the count fingerprint
-		 */
+        /// <summary>
+        /// Calculates the circular fingerprint for the given <see cref="IAtomContainer"/>, and returns a datastructure that enumerates all
+        /// of the fingerprints, and their counts (i.e. does <b>not</b> fold them into a bitmask).
+        /// </summary>
+        /// <param name="mol">IAtomContainer for which the fingerprint should be calculated.</param>
+        /// <returns>the count fingerprint</returns>
         public ICountFingerprint GetCountFingerprint(IAtomContainer mol)
         {
             Calculate(mol);
@@ -332,33 +321,31 @@ namespace NCDK.Fingerprint
             return new CountFingerprint(map, hash, count);
         }
 
-        /**
-		 * Invalid: it is not appropriate to convert the integer hash codes into strings.
-		 */
+        /// <summary>
+        /// Invalid: it is not appropriate to convert the integer hash codes into strings.
+        /// </summary>
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer mol)
         {
             throw new NotSupportedException();
         }
 
-        /**
-		 * Returns the extent of the folded fingerprints.
-		 *
-		 * @return the size of the fingerprint
-		 */
+        /// <summary>
+        /// Returns the extent of the folded fingerprints.
+        /// </summary>
+        /// <returns>the size of the fingerprint</returns>
         public int Count => length;
 
-        // ------------ private methods ------------
+        /// ------------ private methods ------------
 
-        // calculates an integer number that stores the bit-packed identity of the given atom
+        /// calculates an integer number that stores the bit-packed identity of the given atom
         private int InitialIdentityECFP(int aidx)
         {
-            /*
-			 * Atom properties from the source reference: (1) number of heavy atom
-			 * neighbours (2) atom degree: valence minus # hydrogens (3) atomic
-			 * number (4) atomic mass (5) atom charge (6) number of hydrogen
-			 * neighbours (7) whether the atom is in a ring
-			 */
-
+            /// <summary>
+            /// Atom properties from the source reference: (1) number of heavy atom
+            /// neighbours (2) atom degree: valence minus # hydrogens (3) atomic
+            /// number (4) atomic mass (5) atom charge (6) number of hydrogen
+            /// neighbours (7) whether the atom is in a ring
+            /// </summary>
             IAtom atom = mol.Atoms[aidx];
 
             int nheavy = atomAdj[aidx].Length, nhydr = hcount[aidx];
@@ -388,7 +375,7 @@ namespace NCDK.Fingerprint
                     (maskHal[aidx] ? 0x20 : 0);
         }
 
-        // takes the current identity values
+        /// takes the current identity values
         private int CircularIterate(int iter, int atom)
         {
             int[] adj = atomAdj[atom], adjb = bondAdj[atom];
@@ -463,8 +450,8 @@ namespace NCDK.Fingerprint
             }
         }
 
-        // takes a set of atom indices and adds all atoms that are adjacent to at least one of them; the resulting list of
-        // atom indices is sorted
+        /// takes a set of atom indices and adds all atoms that are adjacent to at least one of them; the resulting list of
+        /// atom indices is sorted
         private int[] GrowAtoms(int[] atoms)
         {
             int na = mol.Atoms.Count;
@@ -485,8 +472,8 @@ namespace NCDK.Fingerprint
             return newList;
         }
 
-        // consider adding a new fingerprint: if it's a duplicate with regard to the atom list, either replace the match or
-        // discard it
+        /// consider adding a new fingerprint: if it's a duplicate with regard to the atom list, either replace the match or
+        /// discard it
         private void ConsiderNewFP(FP newFP)
         {
             //wr("CONSIDER:"+newFP.iteration+",hash="+newFP.hashCode); //foo
@@ -515,9 +502,9 @@ namespace NCDK.Fingerprint
             fplist[hit] = newFP;
         }
 
-        // ------------ molecule analysis: cached cheminformatics ------------
+        /// ------------ molecule analysis: cached cheminformatics ------------
 
-        // summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
+        /// summarize preliminary information about the molecular structure, to make sure the rest all goes quickly
         private void ExcavateMolecule()
         {
             int na = mol.Atoms.Count, nb = mol.Bonds.Count;
@@ -620,7 +607,7 @@ namespace NCDK.Fingerprint
                 tetra[n] = RubricTetrahedral(n);
         }
 
-        // assign a ring block ID to each atom (0=not in ring)
+        /// assign a ring block ID to each atom (0=not in ring)
         private void MarkRingBlocks()
         {
             int na = mol.Atoms.Count;
@@ -703,7 +690,7 @@ namespace NCDK.Fingerprint
                 ringBlock[i] = -ringBlock[i];
         }
 
-        // hunt for ring recursively: start with a partially defined path, and go exploring
+        /// hunt for ring recursively: start with a partially defined path, and go exploring
         private void RecursiveRingFind(int[] path, int psize, int capacity, int rblk, List<int[]> rings)
         {
             // not enough atoms yet, so look for new possibilities
@@ -789,9 +776,9 @@ namespace NCDK.Fingerprint
             rings.Add(path);
         }
 
-        // aromaticity detection: uses a very narrowly defined algorithm, which detects 6-membered rings with alternating double bonds;
-        // rings that are chained together (e.g. anthracene) will also be detected by the extended followup; note that this will NOT mark
-        // rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
+        /// aromaticity detection: uses a very narrowly defined algorithm, which detects 6-membered rings with alternating double bonds;
+        /// rings that are chained together (e.g. anthracene) will also be detected by the extended followup; note that this will NOT mark
+        /// rings such as thiophene, imidazolium, porphyrins, etc.: these systems will be left in their original single/double bond form
         private void DetectStrictAromaticity()
         {
             int na = mol.Atoms.Count, nb = mol.Bonds.Count;
@@ -865,12 +852,12 @@ namespace NCDK.Fingerprint
             }
         }
 
-        // tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
-        // build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
-        // 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
-        // is a partioning technique for chirality; it can be thought of as all but the last step of determination of chiral
-        // parity, except that the raw information is required for the circular fingerprint chirality resolution; note that this
-        // does not consider the possibility of lone-pair chirality (e.g. sp3 phosphorus)
+        /// tetrahedral 'rubric': for any sp3 atom that has enough neighbours and appropriate wedge bond/3D geometry information,
+        /// build up a list of neighbours in a certain permutation order; the resulting array of size 4 can have a total of
+        /// 24 permutations; there are two groups of 12 that can be mapped onto each other by tetrahedral rotations, hence this
+        /// is a partioning technique for chirality; it can be thought of as all but the last step of determination of chiral
+        /// parity, except that the raw information is required for the circular fingerprint chirality resolution; note that this
+        /// does not consider the possibility of lone-pair chirality (e.g. sp3 phosphorus)
         private int[] RubricTetrahedral(int aidx)
         {
             if (hcount[aidx] > 1) return null;
@@ -1024,8 +1011,8 @@ namespace NCDK.Fingerprint
             return adj;
         }
 
-        // biotypes: when generating FCFP-type descriptors, atoms are initially labelled according to their functional
-        // capabilities, that being defined by centers of biological interactions, such as hydrogen bonding and electrostatics
+        /// biotypes: when generating FCFP-type descriptors, atoms are initially labelled according to their functional
+        /// capabilities, that being defined by centers of biological interactions, such as hydrogen bonding and electrostatics
         private void CalculateBioTypes()
         {
             int na = mol.Atoms.Count, nb = mol.Bonds.Count;
@@ -1100,10 +1087,10 @@ namespace NCDK.Fingerprint
                 }
         }
 
-        // if the given ring is aromatic, mark the atoms accordingly: note that this "biotype" definition of aromaticity is
-        // different to the one used in the rest of this class: any ring of size 5 to 7 that has a lone pair or pi bond on every
-        // atom is labelled as aromatic, because the concept required is physical behaviour, i.e. ring current and effect on
-        // neighbouring functional groups, rather than disambiguating conjugational equivalence
+        /// if the given ring is aromatic, mark the atoms accordingly: note that this "biotype" definition of aromaticity is
+        /// different to the one used in the rest of this class: any ring of size 5 to 7 that has a lone pair or pi bond on every
+        /// atom is labelled as aromatic, because the concept required is physical behaviour, i.e. ring current and effect on
+        /// neighbouring functional groups, rather than disambiguating conjugational equivalence
         private void ConsiderBioTypeAromaticity(int[] ring)
         {
             int rsz = ring.Length;
@@ -1123,8 +1110,8 @@ namespace NCDK.Fingerprint
                 maskAro[ring[n]] = true;
         }
 
-        // if the given ring is a tetrazole, mark the aroms accordingly; must be ring size length 5; it's possible to fool the
-        // tetrazole test with a non-sane/invalid molecule
+        /// if the given ring is a tetrazole, mark the aroms accordingly; must be ring size length 5; it's possible to fool the
+        /// tetrazole test with a non-sane/invalid molecule
         private void ConsiderBioTypeTetrazole(int[] ring)
         {
             int countC = 0, countN = 0, ndbl = 0;
@@ -1143,7 +1130,7 @@ namespace NCDK.Fingerprint
                 if (mol.Atoms[ring[n]].Symbol.Equals("N")) tetrazole[ring[n]] = true;
         }
 
-        // hydrogen bond donor
+        /// hydrogen bond donor
         private bool DetermineDonor(int aidx)
         {
             // must have a hydrogen atom, either implicit or explicit
@@ -1183,7 +1170,7 @@ namespace NCDK.Fingerprint
             return false;
         }
 
-        // hydrogen bond acceptor
+        /// hydrogen bond acceptor
         private bool DetermineAcceptor(int aidx)
         {
             IAtom atom = mol.Atoms[aidx];
@@ -1207,7 +1194,7 @@ namespace NCDK.Fingerprint
             return true;
         }
 
-        // positive charge centre
+        /// positive charge centre
         private bool DeterminePositive(int aidx)
         {
             IAtom atom = mol.Atoms[aidx];
@@ -1302,7 +1289,7 @@ namespace NCDK.Fingerprint
             return false;
         }
 
-        // negative charge centre
+        /// negative charge centre
         private bool DetermineNegative(int aidx)
         {
             IAtom atom = mol.Atoms[aidx];
@@ -1336,14 +1323,14 @@ namespace NCDK.Fingerprint
             return false;
         }
 
-        // halide
+        /// halide
         private bool DetermineHalide(int aidx)
         {
             string el = mol.Atoms[aidx].Symbol;
             return el.Equals("F") || el.Equals("Cl") || el.Equals("Br") || el.Equals("I");
         }
 
-        // returns either the bond order in the molecule, or -1 if the atoms are both labelled as aromatic
+        /// returns either the bond order in the molecule, or -1 if the atoms are both labelled as aromatic
         private int BondOrderBioType(int bidx)
         {
             IBond bond = mol.Bonds[bidx];
@@ -1353,7 +1340,7 @@ namespace NCDK.Fingerprint
             return bondOrder[bidx];
         }
 
-        // convenience: appending to an int array
+        /// convenience: appending to an int array
         private int[] AppendInteger(int[] a, int v)
         {
             if (a == null || a.Length == 0) return new int[] { v };
@@ -1364,7 +1351,7 @@ namespace NCDK.Fingerprint
             return b;
         }
 
-        // convenience: scans the atom adjacency to grab the bond index
+        /// convenience: scans the atom adjacency to grab the bond index
         private int FindBond(int a1, int a2)
         {
             for (int n = atomAdj[a1].Length - 1; n >= 0; n--)

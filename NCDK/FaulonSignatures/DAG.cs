@@ -9,21 +9,17 @@ namespace FaulonSignatures
     /// <summary>
     /// A directed acyclic graph that is the core data structure of a signature. It
     /// is the DAG that is canonized by sorting its layers of nodes.
-    /// 
-    // @author maclean
-    ///
     /// </summary>
+    // @author maclean
     public class DAG : IEnumerable<List<DAG.Node>>
     {
         /// <summary>
         /// The direction up and down the DAG. UP is from leaves to root.
-        ///
         /// </summary>
-        public enum Direction { UP, DOWN };
+        public enum Direction { UP, Down };
 
         /// <summary>
         /// A node of the directed acyclic graph
-        ///
         /// </summary>
         public class Node : VisitableDAG
         {
@@ -61,10 +57,9 @@ namespace FaulonSignatures
 
             /// <summary>
             /// Make a Node that refers to a vertex, in a layer, and with a label.
-            /// 
+            /// </summary>
             /// <param name="vertexIndex">the graph vertex index</param>
             /// <param name="layer">the layer of this Node</param>
-            /// </summary>
             public Node(int vertexIndex, int layer)
             {
                 this.vertexIndex = vertexIndex;
@@ -209,7 +204,6 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Comparator for nodes based on int labels.
-        ///
         /// </summary>
         public class NodeIntegerLabelComparator : IComparer<Node>
         {
@@ -286,10 +280,9 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Create a DAG from a graph, starting at the root vertex.
-        /// 
+        /// </summary>
         /// <param name="rootVertexIndex">the vertex to start from</param>
         /// <param name="graphVertexCount">the number of vertices in the original graph</param>
-        /// </summary>
         public DAG(int rootVertexIndex, int graphVertexCount)
         {
             this.layers = new List<List<Node>>();
@@ -418,7 +411,7 @@ namespace FaulonSignatures
 
         public void SetInvariants(Invariants invariants)
         {
-            //	    this.invariants = invariants;
+            //        this.invariants = invariants;
             this.invariants.colors = (int[])invariants.colors.Clone();
             this.invariants.nodeInvariants = (int[])invariants.nodeInvariants.Clone();
             this.invariants.vertexInvariants = (int[])invariants.vertexInvariants.Clone();
@@ -427,6 +420,7 @@ namespace FaulonSignatures
         /// <summary>
         /// Create and return a DAG.Node, while setting some internal references to
         /// the same data. Does not add the node to a layer.
+        /// </summary>
         /// <param name="vertexIndex">the index of the vertex in the original graph</param>
         /// <param name="layer">the index of the layer</param>
         /// <returns>the new node </returns>
@@ -509,8 +503,7 @@ namespace FaulonSignatures
             return occurences;
         }
 
-        private void GetOccurences(int[] occurences, DAG.Node node,
-                DAG.Node parent, List<DAG.Arc> arcs)
+        private void GetOccurences(int[] occurences, DAG.Node node, DAG.Node parent, List<DAG.Arc> arcs)
         {
             occurences[node.vertexIndex]++;
             node.children.Sort(nodeComparator);
@@ -584,7 +577,7 @@ namespace FaulonSignatures
                 }
             }
 
-            //	    Console.Out.WriteLine("Orbits " + orbits);
+            //        Console.Out.WriteLine("Orbits " + orbits);
 
             // find the largest orbit
             if (!orbits.Any())
@@ -667,15 +660,15 @@ namespace FaulonSignatures
                 // This is not mentioned in Faulon's paper.
                 ComputeVertexInvariants();
 
-                UpdateNodeInvariants(Direction.DOWN); // From the root to the leaves
+                UpdateNodeInvariants(Direction.Down); // From the root to the leaves
                 ComputeVertexInvariants();
 
                 invariantSame =
                     CheckInvariantChange(
                             oldInvariants, invariants.GetVertexInvariants());
-                //	        Console.Out.WriteLine(
-                //	               "invs\t" +
-                //	               java.util.Arrays.ToString(invariants.GetVertexInvariants()));
+                //            Console.Out.WriteLine(
+                //                   "invs\t" +
+                //                   java.util.Arrays.ToString(invariants.GetVertexInvariants()));
             }
 
             // finally, copy the node invariants into the nodes, for easy sorting
@@ -753,7 +746,7 @@ namespace FaulonSignatures
                     {
                         edgeColor = layerNode.edgeColors[relative.vertexIndex];
                     }
-                    //            	relativeInvariants.Add(inv * edgeColor);
+                    //                relativeInvariants.Add(inv * edgeColor);
                     //                relativeInvariants.Add(inv * (edgeColor + 1));
 
                     relativeInvariants.Add(inv);

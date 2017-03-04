@@ -24,10 +24,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class XorshiftTest
     {
@@ -65,9 +65,9 @@ namespace NCDK.Hash
             }
         }
 
-        /**
-         * demonstrates a limitation of the xor-shift, 0 will always return 0
-         */
+        /// <summary>
+        /// demonstrates a limitation of the xor-shift, 0 will always return 0
+        /// </summary>
         [TestMethod()]
         public void DemonstrateZeroLimitation()
         {

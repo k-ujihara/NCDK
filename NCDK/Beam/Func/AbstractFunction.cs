@@ -37,11 +37,8 @@ namespace NCDK.Beam
     /// </summary>
     /// <typeparam name="S"></typeparam>
     /// <typeparam name="T"></typeparam>
-    /// <author>John May</author> 
-#if TEST
-	public
-#endif
-    abstract class AbstractFunction<S, T> : Function<S, T>
+    // @author John May 
+    internal abstract class AbstractFunction<S, T> : Function<S, T>
     {
         public abstract T Apply(S s);
 

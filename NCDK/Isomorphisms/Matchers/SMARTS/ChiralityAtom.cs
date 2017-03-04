@@ -18,14 +18,14 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches an atom with chirality property. It is not implemented yet.
-     * It'll match any atom right now.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches an atom with chirality property. It is not implemented yet.
+    /// It'll match any atom right now.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class ChiralityAtom : SMARTSAtom
     {
         /// <summary>
@@ -43,10 +43,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// </summary>
         public bool IsClockwise { get; set; }
 
-        /**
-         * Creates a new instance
-         *
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// </summary>
         public ChiralityAtom(IChemObjectBuilder builder)
             : base(builder)
         {

@@ -23,22 +23,21 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.Surface
 {
-    /**
-     * Creates a list of atoms neighboring each atom in the molecule.
-     *
-     * <p>The routine is a simplified version of the neighbor list described
-     * in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
-     * Due to the fact that it divides the cube into a fixed number of sub cubes,
-     * some accuracy may be lost.
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2005-05-09
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Creates a list of atoms neighboring each atom in the molecule.
+    /// </summary>
+    /// <remarks>
+    /// The routine is a simplified version of the neighbor list described
+    /// in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
+    /// Due to the fact that it divides the cube into a fixed number of sub cubes,
+    /// some accuracy may be lost.
+    /// </remarks>
+    // @author Rajarshi Guha
+    // @cdk.created 2005-05-09
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
     public class NeighborList
     {
-
         Dictionary<string, List<int>> boxes;
         double boxSize;
         IAtom[] atoms;

@@ -1,49 +1,45 @@
-
+/*
+ *
+ * Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received atom copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using NCDK.Aromaticities;
 using NCDK.AtomTypes;
-using NCDK.Default;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using NCDK.Numerics;
-/**
-*
-* Copyright (C) 2006-2010  Syed Asad Rahman {asad@ebi.ac.uk}
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received atom copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * Class that handles some customised features for SMSD atom containers.
-     * <p>This is an extension of CDK AtomContainer.
-     * Some part of this code was taken from CDK source code and modified.</p>
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class that handles some customised features for SMSD atom containers.
+    /// <para>This is an extension of CDK AtomContainer.
+    /// Some part of this code was taken from CDK source code and modified.</para>
+    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class ExtAtomContainerManipulator : AtomContainerManipulator
     {
         private static void PrintAtoms(IAtomContainer mol)
@@ -64,11 +60,11 @@ namespace NCDK.SMSD.Tools
             Console.Out.WriteLine();
         }
 
-        /**
-         * Retrurns deep copy of the molecule
-         * @param container
-         * @return deep copy of the mol
-         */
+        /// <summary>
+        /// Retrurns deep copy of the molecule
+        /// </summary>
+        /// <param name="container"></param>
+        /// <returns>deep copy of the mol</returns>
         public static IAtomContainer MakeDeepCopy(IAtomContainer container)
         {
             IAtomContainer newAtomContainer = (IAtomContainer)container.Clone();
@@ -76,14 +72,13 @@ namespace NCDK.SMSD.Tools
             return newAtomContainer;
         }
 
-        /**
-         * This function finds rings and uses aromaticity detection code to
-         * aromatize the molecule.
-         * @param mol input molecule
-         */
+        /// <summary>
+        /// This function finds rings and uses aromaticity detection code to
+        /// aromatize the molecule.
+        /// </summary>
+        /// <param name="mol">input molecule</param>
         public static void AromatizeMolecule(IAtomContainer mol)
         {
-
             // need to find rings and aromaticity again since added H's
 
             IRingSet ringSet = null;
@@ -94,7 +89,6 @@ namespace NCDK.SMSD.Tools
 
                 // SSSRFinder s = new SSSRFinder(atomContainer);
                 // srs = s.FindEssentialRings();
-
             }
             catch (Exception e)
             {
@@ -147,12 +141,12 @@ namespace NCDK.SMSD.Tools
             }
         }
 
-        /**
-         * Returns The number of explicit hydrogens for a given IAtom.
-         * @param atomContainer
-         * @param atom
-         * @return The number of explicit hydrogens on the given IAtom.
-         */
+        /// <summary>
+        /// Returns The number of explicit hydrogens for a given IAtom.
+        /// </summary>
+        /// <param name="atomContainer"></param>
+        /// <param name="atom"></param>
+        /// <returns>The number of explicit hydrogens on the given IAtom.</returns>
         public static int GetExplicitHydrogenCount(IAtomContainer atomContainer, IAtom atom)
         {
             int hCount = 0;
@@ -167,34 +161,33 @@ namespace NCDK.SMSD.Tools
             return hCount;
         }
 
-        /**
-         * Returns The number of Implicit Hydrogen Count for a given IAtom.
-         * @param atom
-         * @return Implicit Hydrogen Count
-         */
+        /// <summary>
+        /// Returns The number of Implicit Hydrogen Count for a given IAtom.
+        /// </summary>
+        /// <param name="atom"></param>
+        /// <returns>Implicit Hydrogen Count</returns>
         public static int GetImplicitHydrogenCount(IAtom atom)
         {
             return atom.ImplicitHydrogenCount ?? 0;
         }
 
-        /**
-         * The summed implicit + explicit hydrogens of the given IAtom.
-         * @param atomContainer
-         * @param atom
-         * @return The summed implicit + explicit hydrogens of the given IAtom.
-         */
+        /// <summary>
+        /// The summed implicit + explicit hydrogens of the given IAtom.
+        /// </summary>
+        /// <param name="atomContainer"></param>
+        /// <param name="atom"></param>
+        /// <returns>The summed implicit + explicit hydrogens of the given IAtom.</returns>
         public static int GetHydrogenCount(IAtomContainer atomContainer, IAtom atom)
         {
             return GetExplicitHydrogenCount(atomContainer, atom) + GetImplicitHydrogenCount(atom);
         }
 
-        /**
-         * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-         * is atom Hydrogen then its not removed.
-         * @param atomContainer
-         * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-         * is atom Hydrogen then its not removed.
-         */
+        /// <summary>
+        /// Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
+        /// is atom Hydrogen then its not removed.
+        /// </summary>
+        /// <param name="atomContainer"></param>
+        /// <returns>IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is atom Hydrogen then its not removed.</returns>
         public static IAtomContainer RemoveHydrogensExceptSingleAndPreserveAtomID(IAtomContainer atomContainer)
         {
             var map = new CDKObjectMap(); // maps original object to clones.
@@ -226,13 +219,12 @@ namespace NCDK.SMSD.Tools
             }
         }
 
-        /**
-         * Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-         * is atom Hydrogen then its not removed.
-         * @param atomContainer
-         * @return IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
-         * is atom Hydrogen then its not removed.
-         */
+        /// <summary>
+        /// Returns IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which
+        /// is atom Hydrogen then its not removed.
+        /// </summary>
+        /// <param name="atomContainer"></param>
+        /// <returns>IAtomContainer without Hydrogen. If an AtomContainer has atom single atom which is atom Hydrogen then its not removed.</returns>
         public static IAtomContainer ConvertExplicitToImplicitHydrogens(IAtomContainer atomContainer)
         {
             IAtomContainer mol = (IAtomContainer)atomContainer.Clone();
@@ -248,15 +240,15 @@ namespace NCDK.SMSD.Tools
             return mol;
         }
 
-        /**
-         * Convenience method to perceive atom types for all <code>IAtom</code>s in the
-         * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
-         * matcher finds atom matching atom type, the <code>IAtom</code> will be configured
-         * to have the same properties as the <code>IAtomType</code>. If no matching atom
-         * type is found, no configuration is performed.
-         * @param container
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Convenience method to perceive atom types for all <code>IAtom</code>s in the
+        /// <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
+        /// matcher finds atom matching atom type, the <code>IAtom</code> will be configured
+        /// to have the same properties as the <code>IAtomType</code>. If no matching atom
+        /// type is found, no configuration is performed.
+        /// </summary>
+        /// <param name="container"></param>
+        /// <exception cref="CDKException"></exception>
         public static new void PercieveAtomTypesAndConfigureAtoms(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -264,13 +256,11 @@ namespace NCDK.SMSD.Tools
             {
                 if (!(atom is IPseudoAtom))
                 {
-
                     IAtomType matched = matcher.FindMatchingAtomType(container, atom);
                     if (matched != null)
                     {
                         AtomTypeManipulator.Configure(atom, matched);
                     }
-
                 }
             }
         }

@@ -3,18 +3,18 @@ using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * Junit testing routine for SmartsDumpVisitor
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-05-10
-     * @cdk.module test-smarts
-     * @cdk.keyword SMARTS
-     */
-	 [TestClass()]
+    /// <summary>
+    /// Junit testing routine for SmartsDumpVisitor
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-05-10
+    // @cdk.module test-smarts
+    // @cdk.keyword SMARTS
+    /// </summary>
+     [TestClass()]
     public class SmartsDumpVisitorTest : CDKTestCase
     {
-        public void dump(string smarts)
+        public void Dump(string smarts)
         {
             SMARTSParser parser = new SMARTSParser(new StringReader(smarts));
             ASTStart start = parser.Start();
@@ -24,7 +24,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public void TestRing()
         {
-            dump("(C=1CCC1).(CCC).(C1CC1CCC=12CCCC2)");
+            Dump("(C=1CCC1).(CCC).(C1CC1CCC=12CCCC2)");
         }
     }
 }

@@ -21,11 +21,11 @@ using NCDK.Formula;
 
 namespace NCDK.Silent
 {
-    /**
-     * Checks the functionality of the {@link MolecularFormula}.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link MolecularFormula}.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaTest : AbstractMolecularFormulaTest
     {

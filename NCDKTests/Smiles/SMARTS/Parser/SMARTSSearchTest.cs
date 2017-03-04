@@ -30,13 +30,13 @@ using System.Linq;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * JUnit test routines for the SMARTS substructure search.
-     *
-     * @author Dazhi Jiao
-     * @cdk.module test-smarts
-     * @cdk.require ant1.6
-     */
+    /// <summary>
+    /// JUnit test routines for the SMARTS substructure search.
+    ///
+    // @author Dazhi Jiao
+    // @cdk.module test-smarts
+    // @cdk.require ant1.6
+    /// </summary>
     [TestClass()]
     public class SMARTSSearchTest : CDKTestCase
     {
@@ -80,7 +80,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-		internal static int[] Match(string smarts, string smiles)
+        internal static int[] Match(string smarts, string smiles)
         {
             return Match(CreateFromSmarts(smarts), CreateFromSmiles(smiles));
         }
@@ -89,7 +89,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void TestMoleculeFromSDF()
         {
             string filename = "cnssmarts.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(GetType(), filename);
+            var ins = ResourceLoader.GetAsStream(GetType(), filename);
             DefaultChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content;
             content = (ChemFile)reader.Read((ChemObject)new ChemFile());
@@ -270,9 +270,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.IsFalse(uiTester.IsSubgraph(atomContainer, query));
         }
 
-        /**
-         * From http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html
-         */
+        /// <summary>
+        /// From http://www.daylight.com/dayhtml_tutorials/languages/smarts/index.html
+        /// </summary>
         [TestMethod()]
         public void TestPropertyCharge1()
         {
@@ -481,10 +481,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(21, results[1]);
         }
 
-        /**
-         * @cdk.bug 2686473
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2686473
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicNumber8()
         {
@@ -493,10 +493,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @cdk.bug 2686473
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2686473
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicNumber9()
         {
@@ -612,7 +612,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void quadBond()
+        public void QuadBond()
         {
             int[] results = Match("*$*", "[Re]$[Re]");
             Assert.AreEqual(2, results[0]);
@@ -749,10 +749,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(8, results[0]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD7()
         {
@@ -761,10 +761,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD8()
         {
@@ -773,10 +773,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD9()
         {
@@ -787,10 +787,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD10()
         {
@@ -801,10 +801,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD11()
         {
@@ -815,10 +815,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * With '*' matching 'H', this smarts matches twice 'OC' and 'O[H]'.
-         * @cdk.bug 2489417
-         */
+        /// <summary>
+        /// With '*' matching 'H', this smarts matches twice 'OC' and 'O[H]'.
+        // @cdk.bug 2489417
+        /// </summary>
         [TestMethod()]
         public void TestPropertyD12()
         {
@@ -958,10 +958,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2489533
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2489533
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAnyAtom6()
         {
@@ -970,13 +970,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, result[1]);
         }
 
-        /**
-         * Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
-         * suppressed by default.
-         *
-         * @throws Exception
-         * @cdk.bug 2489533
-         */
+        /// <summary>
+        /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
+        /// suppressed by default.
+        ///
+        // @throws Exception
+        // @cdk.bug 2489533
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAnyAtom7()
         {
@@ -985,13 +985,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(3, result[1]);
         }
 
-        /**
-         * Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
-         * suppressed by default.
-         *
-         * @throws Exception
-         * @cdk.bug 2489533
-         */
+        /// <summary>
+        /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
+        /// suppressed by default.
+        ///
+        // @throws Exception
+        // @cdk.bug 2489533
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAnyAtom8()
         {
@@ -1000,13 +1000,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(5, result[1]);
         }
 
-        /**
-         * Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
-         * suppressed by default.
-         *
-         * @throws Exception
-         * @cdk.bug 2489533
-         */
+        /// <summary>
+        /// Bug was mistaken - '*' does match explicit H but in DEPICTMATCH H's are
+        /// suppressed by default.
+        ///
+        // @throws Exception
+        // @cdk.bug 2489533
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAnyAtom9()
         {
@@ -1047,10 +1047,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /**
-         * @cdk.bug 2490336
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2490336
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPropertyAtomicMass5()
         {
@@ -1490,8 +1490,8 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(5, results[1]);
         }
 
-        /** The CDK aromaticity detection differs from Daylight - by persevering
-         *  aromaticity from the SMILES we can match correctly.  */
+        /// <summary> The CDK aromaticity detection differs from Daylight - by persevering
+        ///  aromaticity from the SMILES we can match correctly.  */
         [TestMethod()]
         public void TestLogicalOrLowAnd6()
         {
@@ -1792,10 +1792,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 1967468
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 1967468
+        /// </summary>
         [TestMethod()]
         public void TestAcyclicUreas()
         {
@@ -1805,10 +1805,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(0, results[1]);
         }
 
-        /**
-         * @cdk.bug 1985811
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 1985811
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestIndoleAgainstIndole()
         {
@@ -1822,10 +1822,10 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         }
 
-        /**
-         * @cdk.bug 1985811
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 1985811
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPyridineAgainstPyridine()
         {
@@ -1967,10 +1967,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Match("[^9]", "CCN"); // Should throw an exception if ^ is not followed by a number
         }
 
-        /**
-         * @cdk.bug  2589807
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug  2589807
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestAromAliArom()
         {
@@ -2038,10 +2038,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2587204
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2587204
+        /// </summary>
         [TestMethod()]
         public void TestLactamSimple()
         {
@@ -2050,10 +2050,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @throws Exception
-         * @cdk.bug 2587204
-         */
+        /// <summary>
+        // @throws Exception
+        // @cdk.bug 2587204
+        /// </summary>
         [TestMethod()]
         public void TestLactamRecursive()
         {
@@ -2070,10 +2070,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @cdk.bug 2898399
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2898399
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestHydrogen()
         {
@@ -2082,10 +2082,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @cdk.bug 2898399
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2898399
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestLeadingHydrogen()
         {
@@ -2094,13 +2094,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(1, results[1]);
         }
 
-        /**
-         * @cdk.bug 2871303
-         * <p/>
-         * Note that this test passes, and really indicates that
-         * the SMARTS below is not a correct one for vinylogous
-         * esters
-         */
+        /// <summary>
+        // @cdk.bug 2871303
+        /// <p/>
+        /// Note that this test passes, and really indicates that
+        /// the SMARTS below is not a correct one for vinylogous
+        /// esters
+        /// </summary>
         [TestMethod()]
         public void TestVinylogousEster()
         {
@@ -2109,11 +2109,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(2, results[1]);
         }
 
-        /**
-         * Check that bond order query respects aromaticity.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Check that bond order query respects aromaticity.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestBondOrderQueryKekuleVsSmiles()
         {
@@ -2142,12 +2142,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.AreEqual(3, results[1]);
         }
 
-        /**
-         * Checks that when no number is specified for ring member ship any ring
-         * atom is matched.
-         *
-         * @cdk.bug 1168
-         */
+        /// <summary>
+        /// Checks that when no number is specified for ring member ship any ring
+        /// atom is matched.
+        ///
+        // @cdk.bug 1168
+        /// </summary>
         [TestMethod()]
         public void UnspecifiedRingMembership()
         {
@@ -2187,20 +2187,20 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 2, 1 }, Match("([#8]).([#8])", "O.CCO")));
         }
 
-        /**
-         * Ensure a class cast exception is not thrown when matching stereochemistry. 
-         * @cdk.bug 1358
-         */
+        /// <summary>
+        /// Ensure a class cast exception is not thrown when matching stereochemistry. 
+        // @cdk.bug 1358
+        /// </summary>
         [TestMethod()]
         public void Bug1358()
         {
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 0 }, Match("[$([*@](~*)(~*)(*)*),$([*@H](*)(*)*),$([*@](~*)(*)*)]", "N#CN/C(=N/CCSCC=1N=CNC1C)NC")));
         }
 
-        /**
-         * Ensure 'r' without a size is equivalent to !R0 and R.
-         * @cdk.bug 1364
-         */
+        /// <summary>
+        /// Ensure 'r' without a size is equivalent to !R0 and R.
+        // @cdk.bug 1364
+        /// </summary>
         [TestMethod()]
         public void Bug1364()
         {

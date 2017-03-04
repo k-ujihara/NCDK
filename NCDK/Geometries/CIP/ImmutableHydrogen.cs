@@ -26,15 +26,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Helper class to represent a immutable hydrogen. All set methods are void, and only
-     * {@link #GetSymbol()}, {@link #AtomicNumber}, and {@link #MassNumber} are
-     * implemented.
-     *
-     * @author egonw
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Helper class to represent a immutable hydrogen. All set methods are void, and only
+    /// <see cref="Symbol"/>, <see cref="AtomicNumber"/>, and <see cref="MassNumber"/> are
+    /// implemented.
+    /// </summary>
+    // @author egonw
+    // @cdk.module cip
+    // @cdk.githash
     class ImmutableHydrogen : IAtom, ICloneable
     {
         private const string SYMBOL = "H";

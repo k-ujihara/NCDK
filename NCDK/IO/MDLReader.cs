@@ -36,36 +36,36 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-	 * Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
-	 * is read into a {@link IChemSequence} of {@link IChemModel}'s. Each ChemModel will contain one
-	 * Molecule. If the MDL molfile contains a property block, the {@link MDLV2000Reader} should be
-	 * used.
-	 *
-	 * <p>If all z coordinates are 0.0, then the xy coordinates are taken as
-	 * 2D, otherwise the coordinates are read as 3D.
-	 *
-	 * <p>The title of the MOL file is read and can be retrieved with:
-	 * <pre>
-	 *   molecule.GetProperty<string>(CDKPropertyName.TITLE);
-	 * </pre>
-	 *
-	 * @cdk.module io
-	 * @cdk.githash
-	 * @cdk.iooptions
-	 *
-	 * @author     steinbeck
-	 * @author     Egon Willighagen
-	 * @cdk.created    2000-10-02
-	 * @cdk.keyword    file format, MDL molfile
-	 * @cdk.keyword    file format, SDF
-	 *
-	 * @see        org.openscience.cdk.io.MDLV2000Reader
-	 * @deprecated This reader is only for molfiles without a version tag, typically the most
-	 *             common molfile now encountered is V2000 and the {@link MDLV2000Reader} should be used
-	 *             instead. The V2000 reader can actually read files missing the version tag when
-	 *             in relaxed mode.
-	 */
+    /// <summary>
+    /// Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
+    /// is read into a <see cref="IChemSequence"/> of <see cref="IChemModel"/>'s. Each ChemModel will contain one
+    /// Molecule. If the MDL molfile contains a property block, the <see cref="MDLV2000Reader"/> should be
+    /// used.
+    ///
+    /// <p>If all z coordinates are 0.0, then the xy coordinates are taken as
+    /// 2D, otherwise the coordinates are read as 3D.
+    ///
+    /// <p>The title of the MOL file is read and can be retrieved with:
+    /// <code>
+    ///   molecule.GetProperty<string>(CDKPropertyName.TITLE);
+    /// </code>
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author     steinbeck
+    // @author     Egon Willighagen
+    // @cdk.created    2000-10-02
+    // @cdk.keyword    file format, MDL molfile
+    // @cdk.keyword    file format, SDF
+    ///
+    // @see        org.openscience.cdk.io.MDLV2000Reader
+    // @deprecated This reader is only for molfiles without a version tag, typically the most
+    ///             common molfile now encountered is V2000 and the <see cref="MDLV2000Reader"/> should be used
+    ///             instead. The V2000 reader can actually read files missing the version tag when
+    ///             in relaxed mode.
+    /// </summary>
     [Obsolete]
     public class MDLReader : DefaultChemObjectReader
     {
@@ -78,11 +78,11 @@ namespace NCDK.IO
             : this(new StringReader(""))
         { }
 
-        /**
-		 *  Constructs a new MDLReader that can read Molecule from a given Stream.
-		 *
-		 *@param  in  The Stream to read from
-		 */
+        /// <summary>
+        ///  Constructs a new MDLReader that can read Molecule from a given Stream.
+        ///
+        /// <param name="in">The Stream to read from</param>
+        /// </summary>
         public MDLReader(Stream in_)
             : this(in_, ChemObjectReaderModes.Relaxed)
         {
@@ -94,11 +94,11 @@ namespace NCDK.IO
             base.mode = mode;
         }
 
-        /**
-		 * Constructs a new MDLReader that can read Molecule from a given Reader.
-		 *
-		 * @param  in  The Reader to read from
-		 */
+        /// <summary>
+        /// Constructs a new MDLReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// </summary>
         public MDLReader(TextReader in_)
             : this(in_, ChemObjectReaderModes.Relaxed)
         {
@@ -131,16 +131,16 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-		 *  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
-		 *  this (from file, database, internet etc). If the specific implementation
-		 *  does not support a specific IChemObject it will throw an Exception.
-		 *
-		 *@param  object                              The object that subclasses
-		 *      IChemObject
-		 *@return                                     The IChemObject read
-		 *@exception  CDKException
-		 */
+        /// <summary>
+        ///  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
+        ///  this (from file, database, internet etc). If the specific implementation
+        ///  does not support a specific IChemObject it will throw an Exception.
+        ///
+        /// <param name="object">The object that subclasses</param>
+        ///      IChemObject
+        /// <returns>The IChemObject read</returns>
+        ///@exception  CDKException
+        /// </summary>
 
         public override T Read<T>(T obj)
         {
@@ -178,11 +178,11 @@ namespace NCDK.IO
             return chemModel;
         }
 
-        /**
-		 * Read a ChemFile from a file in MDL SDF format.
-		 *
-		 * @return    The ChemFile that was read from the MDL file.
-		 */
+        /// <summary>
+        /// Read a ChemFile from a file in MDL SDF format.
+        ///
+        /// <returns>The ChemFile that was read from the MDL file.</returns>
+        /// </summary>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
@@ -308,11 +308,11 @@ namespace NCDK.IO
             return chemFile;
         }
 
-        /**
-		 *  Read a Molecule from a file in MDL sd format
-		 *
-		 *@return    The Molecule that was read from the MDL file.
-		 */
+        /// <summary>
+        ///  Read a Molecule from a file in MDL sd format
+        ///
+        /// <returns>The Molecule that was read from the MDL file.</returns>
+        /// </summary>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
         {
             Debug.WriteLine("Reading new molecule");

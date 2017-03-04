@@ -26,9 +26,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * @cdk.module test-cip
-     */
+    /// <summary>
+    // @cdk.module test-cip
+    /// </summary>
     [TestClass()]
     public class CIPLigandRuleTest : CDKTestCase
     {
@@ -102,9 +102,9 @@ namespace NCDK.Geometries.CIP.Rules
             Assert.AreEqual("Br", ligands[3].GetLigandAtom().Symbol);
         }
 
-        /**
-         * Test that verifies the branching of the side chains determines precedence for ties.
-         */
+        /// <summary>
+        /// Test that verifies the branching of the side chains determines precedence for ties.
+        /// </summary>
         [TestMethod()]
         public void TestSideChains()
         {
@@ -116,10 +116,10 @@ namespace NCDK.Geometries.CIP.Rules
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }
 
-        /**
-         * Test that verifies the branching of the side chains determines precedence for ties,
-         * but unlike {@link #TestSideChains()}, the tie only gets resolved after recursion.
-         */
+        /// <summary>
+        /// Test that verifies the branching of the side chains determines precedence for ties,
+        /// but unlike {@link #TestSideChains()}, the tie only gets resolved after recursion.
+        /// </summary>
         [TestMethod()]
         public void TestSideChains_Recursive()
         {
@@ -131,11 +131,11 @@ namespace NCDK.Geometries.CIP.Rules
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }
 
-        /**
-         * The CIP sequence rule prescribes that double bonded side chains of a ligand
-         * are counted twice. This alone, is not enough to distinguish between a
-         * hypothetical dialcohol and a aldehyde.
-         */
+        /// <summary>
+        /// The CIP sequence rule prescribes that double bonded side chains of a ligand
+        /// are counted twice. This alone, is not enough to distinguish between a
+        /// hypothetical dialcohol and a aldehyde.
+        /// </summary>
         [TestMethod()]
         public void TestTwoVersusDoubleBondedOxygen()
         {
@@ -147,9 +147,9 @@ namespace NCDK.Geometries.CIP.Rules
             Assert.AreEqual(1, rule.Compare(ligand2, ligand1));
         }
 
-        /**
-         * Tests deep recursion.
-         */
+        /// <summary>
+        /// Tests deep recursion.
+        /// </summary>
         [TestMethod()]
         public void TestDeepRecursion()
         {

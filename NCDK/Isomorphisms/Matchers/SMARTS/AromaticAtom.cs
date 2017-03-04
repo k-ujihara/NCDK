@@ -18,41 +18,31 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher any aromatic atom. This assumes that aromaticity in the molecule
-     * has been perceived.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-	 */
+    /// <summary>
+    /// This matcher any aromatic atom. This assumes that aromaticity in the molecule
+    /// has been perceived.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AromaticAtom : SMARTSAtom
     {
-        /**
-         * Creates a new instance
-         *
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// </summary>
         public AromaticAtom(IChemObjectBuilder builder)
             : base(builder)
         {
             isAromatic = true;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return atom.IsAromatic;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
             return "AromaticAtom()";

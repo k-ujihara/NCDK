@@ -22,11 +22,8 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Templates;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
@@ -101,7 +98,7 @@ namespace NCDK.Graphs
         [TestMethod()]
         public virtual void TestGetShortestPath_Middle() {
             string filename = "NCDK.Data.MDL.shortest_path_test.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer testMolecule = new AtomContainer();
             reader.Read(testMolecule);
@@ -325,7 +322,7 @@ namespace NCDK.Graphs
                     break;
                 }
             }
-            IAtom[] closestAtoms = PathTools.FindClosestByBond(container, queryAtom, 2);
+            var closestAtoms = PathTools.FindClosestByBond(container, queryAtom, 2);
             foreach (var atom in closestAtoms) {
                 Assert.AreEqual("C", atom.Symbol);
             }

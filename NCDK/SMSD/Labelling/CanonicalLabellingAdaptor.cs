@@ -3,10 +3,10 @@ using NCDK.Smiles;
 
 namespace NCDK.SMSD.Labelling
 {
-    /**
-     * @cdk.module smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    /// </summary>
 
     public class CanonicalLabellingAdaptor : ICanonicalMoleculeLabeller
     {

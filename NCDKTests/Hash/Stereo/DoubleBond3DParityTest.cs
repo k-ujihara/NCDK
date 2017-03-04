@@ -28,10 +28,10 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class DoubleBond3DParityTest
     {
@@ -40,7 +40,7 @@ namespace NCDK.Hash.Stereo
         private const int Together = -1;
 
         [TestMethod()]
-        public void opposite()
+        public void OppositeTest()
         {
             GeometricParity geometric = new DoubleBond3DParity(new Vector3(-4.6440, 0.4411, 0.5917),
                 new Vector3(-3.7159, 0.1090, -0.5916), new Vector3(-5.3207, -0.6945, 1.3818), new Vector3(-3.0392, 1.2445, -1.3818));
@@ -56,7 +56,7 @@ namespace NCDK.Hash.Stereo
         }
 
         [TestMethod()]
-        public void opposite_endOn()
+        public void Opposite_endOn()
         {
             GeometricParity geometric = new DoubleBond3DParity(new Vector3(-4.3262, 0.3192, 0.6495),
                 new Vector3(-4.3206, 0.3724, -0.8896), new Vector3(-4.3367, -1.0402, 1.3729), new Vector3(-4.3101, 1.7319, -1.6131));
@@ -73,7 +73,7 @@ namespace NCDK.Hash.Stereo
 
         /* slight torsion around double bond */
         [TestMethod()]
-        public void opposite_torsion()
+        public void Opposite_torsion()
         {
             GeometricParity geometric = new DoubleBond3DParity(new Vector3(-4.6152, 0.3287, 0.5476),
                 new Vector3(-3.6042, 0.3501, -0.6139), new Vector3(-4.5881, -0.9142, 1.5627), new Vector3(-3.1478, 1.6935, -1.2129));

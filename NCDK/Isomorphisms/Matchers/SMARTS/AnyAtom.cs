@@ -18,38 +18,28 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher any Atom including explicit hydrogens.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher any Atom including explicit hydrogens.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AnyAtom : SMARTSAtom
     {
-        /**
-         * Creates a new instance
-         */
+        /// <summary>
+        /// Creates a new instance
+        /// </summary>
         public AnyAtom(IChemObjectBuilder builder)
             : base(builder)
         {
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return true;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
             return "AnyAtom()";

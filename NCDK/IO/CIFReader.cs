@@ -32,26 +32,26 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * This is not a reader for the CIF and mmCIF crystallographic formats.
-     * It is able, however, to extract some content from such files.
-     * It's very ad hoc, not written
-     * using any dictionary. So please complain if something is not working.
-     * In addition, the things it does read are considered experimental.
-     *
-     * <p>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
-     * in the PDB database.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @cdk.keyword file format, CIF
-     * @cdk.keyword file format, mmCIF
-     *
-     * @author  E.L. Willighagen
-     * @cdk.created 2003-10-12
-     * @cdk.iooptions
-     */
+    /// <summary>
+    /// This is not a reader for the CIF and mmCIF crystallographic formats.
+    /// It is able, however, to extract some content from such files.
+    /// It's very ad hoc, not written
+    /// using any dictionary. So please complain if something is not working.
+    /// In addition, the things it does read are considered experimental.
+    ///
+    /// <para>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
+    /// in the PDB database.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @cdk.keyword file format, CIF
+    // @cdk.keyword file format, mmCIF
+    ///
+    // @author  E.L. Willighagen
+    // @cdk.created 2003-10-12
+    // @cdk.iooptions
+    /// </summary>
     public class CIFReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -100,11 +100,6 @@ namespace NCDK.IO
             return false;
         }
 
-        /*
-         * 
-         *
-         * @return 
-         */
         /// <summary>
         /// Read a ChemFile from input.
         /// </summary>
@@ -164,7 +159,6 @@ namespace NCDK.IO
                 }
                 else
                 {
-
                     /* determine CIF command */
                     string command = "";
                     int spaceIndex = line.IndexOf(' ');
@@ -478,9 +472,9 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Process double in the format: '.071(1)'.
-         */
+        /// <summary>
+        /// Process double in the format: '.071(1)'.
+        /// </summary>
         private double ParseIntoDouble(string value)
         {
             double returnVal = 0.0;

@@ -30,49 +30,44 @@ using System.Text;
 
 namespace NCDK.Graphs
 {
-    /**
-     * A matching is an independent edge set of a graph. This is a set of edges that
-     * share no common vertices. A matching is perfect if every vertex in the graph
-     * is matched. Each vertex can be matched with exactly one other vertex.<p/>
-     *
-     * This class provides storage and manipulation of a matching. A new match is
-     * added with {@link #Match(int, int)}, any existing match for the newly matched
-     * vertices is no-longer available. The status of a vertex can be queried with
-     * {@link #Matched(int)} and the matched vertex obtained with {@link
-     * #Other(int)}. <p/>
-     *
-     * @author John May
-     * @cdk.module standard
-     * @see <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching
-     * (graph theory), Wikipedia</a>
-     */
+    /// <summary>
+    /// A matching is an independent edge set of a graph. This is a set of edges that
+    /// share no common vertices. A matching is perfect if every vertex in the graph
+    /// is matched. Each vertex can be matched with exactly one other vertex.
+    /// <para>
+    /// This class provides storage and manipulation of a matching. A new match is
+    /// added with <see cref="Match(int, int)"/>, any existing match for the newly matched
+    /// vertices is no-longer available. The status of a vertex can be queried with
+    /// {@link #Matched(int)} and the matched vertex obtained with <see cref="Other(int)"/>.
+    /// </para>
+    /// <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory), Wikipedia</a>
+    /// </summary>
+    // @author John May
+    // @cdk.module standard
     public sealed class Matching
     {
-
         /// <summary>Indicate an unmatched vertex.</summary>
         private const int NIL = -1;
 
         /// <summary>Match storage.</summary>
         private readonly int[] match;
 
-        /**
-         * Create a matching of the given size.
-         *
-         * @param n number of items
-         */
+        /// <summary>
+        /// Create a matching of the given size.
+        /// </summary>
+        /// <param name="n">number of items</param>
         private Matching(int n)
         {
             this.match = new int[n];
             Arrays.Fill(match, NIL);
         }
 
-        /**
-         * Add the edge '{u,v}' to the matched edge set. Any existing matches for
-         * 'u' or 'v' are removed from the matched set.
-         *
-         * @param u a vertex
-         * @param v another vertex
-         */
+        /// <summary>
+        /// Add the edge '{<paramref name="u"/>, <paramref name="v"/>}' to the matched edge set. Any existing matches for
+        /// <paramref name="u"/> or <paramref name="v"/> are removed from the matched set.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <param name="v">another vertex</param>
         public void Match(int u, int v)
         {
             // set the new match, don't need to update existing - we only provide
@@ -81,64 +76,57 @@ namespace NCDK.Graphs
             match[v] = u;
         }
 
-        /**
-         * Access the vertex matched with 'v'.
-         *
-         * @param v vertex
-         * @return matched vertex
-         * @ the vertex is currently unmatched
-         */
+        /// <summary>
+        /// Access the vertex matched with 'v'.
+        /// </summary>
+        /// <param name="v">vertex</param>
+        /// <returns>matched vertex</returns>
+        /// <exception cref="ArgumentException">the vertex is currently unmatched</exception>
         public int Other(int v)
         {
             if (Unmatched(v)) throw new ArgumentException(v + " is not matched");
             return match[v];
         }
 
-        /**
-         * Remove a matching for the specified vertex.
-         *
-         * @param v vertex
-         */
+        /// <summary>
+        /// Remove a matching for the specified vertex.
+        /// </summary>
+        /// <param name="v">vertex</param>
         public void Unmatch(int v)
         {
             match[v] = NIL;
         }
 
-        /**
-         * Determine if a vertex has a match.
-         *
-         * @param v vertex
-         * @return the vertex is matched
-         */
+        /// <summary>
+        /// Determine if a vertex has a match.
+        /// </summary>
+        /// <param name="v">vertex</param>
+        /// <returns>the vertex is matched</returns>
         public bool Matched(int v)
         {
             return !Unmatched(v);
         }
 
-        /**
-         * Determine if a vertex is not matched.
-         *
-         * @param v a vertex
-         * @return the vertex has no matching
-         */
+        /// <summary>
+        /// Determine if a vertex is not matched.
+        /// </summary>
+        /// <param name="v">a vertex</param>
+        /// <returns>the vertex has no matching</returns>
         public bool Unmatched(int v)
         {
             return match[v] == NIL || match[match[v]] != v;
         }
 
-        /**
-         * Attempt to augment the matching such that it is perfect over the subset
-         * of vertices in the provided graph.
-         *
-         * @param graph  adjacency list representation of graph
-         * @param subset subset of vertices
-         * @return the matching was perfect
-         * @ the graph was a different size to the
-         *                                  matching capacity
-         */
+        /// <summary>
+        /// Attempt to augment the matching such that it is perfect over the subset
+        /// of vertices in the provided graph.
+        /// </summary>
+        /// <param name="graph">adjacency list representation of graph</param>
+        /// <param name="subset">subset of vertices</param>
+        /// <returns>the matching was perfect</returns>
+        /// <exception cref="ArgumentException">the graph was a different size to the matching capacity</exception>
         public bool Perfect(int[][] graph, BitArray subset)
         {
-
             if (graph.Length != match.Length || BitArrays.Cardinality(subset) > graph.Length)
                 throw new ArgumentException("graph and matching had different capacity");
 
@@ -157,19 +145,14 @@ namespace NCDK.Graphs
             return true;
         }
 
-        /**
-         * Assign an arbitrary matching that covers the subset of vertices.
-         *
-         * @param graph  adjacency list representation of graph
-         * @param subset subset of vertices in the graph
-         * @return the matching was perfect
-         */
-#if TEST
-        public
-#endif
-        bool ArbitaryMatching(int[][] graph, BitArray subset)
+        /// <summary>
+        /// Assign an arbitrary matching that covers the subset of vertices.
+        /// </summary>
+        /// <param name="graph">adjacency list representation of graph</param>
+        /// <param name="subset">subset of vertices in the graph</param>
+        /// <returns>the matching was perfect</returns>
+        internal bool ArbitaryMatching(int[][] graph, BitArray subset)
         {
-
             BitArray unmatched = new BitArray(subset.Length);
 
             // indicates the deg of each vertex in unmatched subset
@@ -195,7 +178,6 @@ namespace NCDK.Graphs
 
             while (!BitArrays.IsEmpty(unmatched))
             {
-
                 int v = -1;
 
                 // attempt to select a vertex with degree = 1 (in matched set)
@@ -236,19 +218,17 @@ namespace NCDK.Graphs
             return nMatched == BitArrays.Cardinality(subset);
         }
 
-        /**
-         * Create an empty matching with the specified capacity.
-         *
-         * @param capacity maximum number of vertices
-         * @return empty matching
-         */
+        /// <summary>
+        /// Create an empty matching with the specified capacity.
+        /// </summary>
+        /// <param name="capacity">maximum number of vertices</param>
+        /// <returns>empty matching</returns>
         public static Matching WithCapacity(int capacity)
         {
             return new Matching(capacity);
         }
 
         /// <inheritdoc/>
-
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(4 * match.Length);

@@ -19,37 +19,37 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * Enumeration of InChI 0D parities.
-     * Corresponds to <tt>inchi_StereoParity0D</tt> in <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Enumeration of InChI 0D parities.
+    /// Corresponds to <tt>inchi_StereoParity0D</tt> in <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_PARITY
     {
 
-        /**
-         * None.
-         */
+        /// <summary>
+        /// None.
+        /// </summary>
         None = 0,
 
-        /**
-         * Odd.
-         */
+        /// <summary>
+        /// Odd.
+        /// </summary>
         Odd = 1,
 
-        /**
-         * Even.
-         */
+        /// <summary>
+        /// Even.
+        /// </summary>
         Even = 2,
 
-        /**
-         * Unknown.
-         */
+        /// <summary>
+        /// Unknown.
+        /// </summary>
         Unknown = 3,
 
-        /**
-         * Undefined.
-         */
+        /// <summary>
+        /// Undefined.
+        /// </summary>
         Undefined = 4,
     }
 }

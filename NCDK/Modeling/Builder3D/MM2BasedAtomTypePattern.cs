@@ -26,36 +26,36 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     *  Class stores hose code patterns to identify mm2 force field atom types.
-     *
-     * @author      chhoppe
-     * @cdk.created 2004-09-07
-     * @cdk.module  forcefield
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Class stores hose code patterns to identify mm2 force field atom types.
+    ///
+    // @author      chhoppe
+    // @cdk.created 2004-09-07
+    // @cdk.module  forcefield
+    // @cdk.githash
+    /// </summary>
     public class MM2BasedAtomTypePattern
     {
         private List<Regex> atomTypePatterns = new List<Regex>();
 
-        /**
-         *Constructor for the MM2BasedAtomTypePattern object
-         */
+        /// <summary>
+        ///Constructor for the MM2BasedAtomTypePattern object
+        /// </summary>
         internal MM2BasedAtomTypePattern()
         {
             this.CreatePattern();
         }
 
-        /**
-         *  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
-         *
-         * @return    The atomTypePatterns as a vector
-         */
+        /// <summary>
+        ///  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
+        ///
+        /// <returns>The atomTypePatterns as a vector</returns>
+        /// </summary>
         public IList<Regex> AtomTypePatterns => atomTypePatterns;
 
-        /**
-         *  Creates the atom type pattern
-         */
+        /// <summary>
+        ///  Creates the atom type pattern
+        /// </summary>
         private void CreatePattern()
         {
             atomTypePatterns.Add(new Regex(@"[CSP]\-[0-4]\-?\;[A-Za-z\+\-]{0,6}\(.*", RegexOptions.Compiled));

@@ -25,20 +25,17 @@ using System.Collections.Generic;
 
 namespace NCDK.Dict
 {
-    /**
-    // Entry in a Dictionary for reactions.
-     *
+    /// <summary>
+    /// Entry in a Dictionary for reactions.
+    /// </summary>
+    /// <seealso cref="EntryDictionary"/>
     // @author       Miguel Rojas <miguelrojasch@users.sf.net>
     // @cdk.created  2008-01-01
     // @cdk.keyword  dictionary
     // @cdk.module   dict
     // @cdk.githash
-     *
-    // @see          Dictionary
-     */
     public class EntryReact : Entry
     {
-
         private List<string> reactionInfo;
         private List<string> representations;
         private Dictionary<string, string> parameters;
@@ -46,12 +43,11 @@ namespace NCDK.Dict
         private List<string> reactionExample;
         private List<IList<string>> parameterClass;
 
-        /**
-        // Constructor of the EntryReact.
-         *
-        // @param identifier The ID value
-        // @param term
-         */
+        /// <summary>
+        /// Constructor of the EntryReact.
+        /// </summary>
+        /// <param name="identifier">The ID value</param>
+        /// <param name="term"></param>
         public EntryReact(string identifier, string term)
             : base(identifier, term)
         {
@@ -63,11 +59,10 @@ namespace NCDK.Dict
             this.reactionInfo = new List<string>();
         }
 
-        /**
+        /// <summary>
         // Constructor of the EntryReact.
-         *
-        // @param identifier The ID value
-         */
+        /// </summary>
+        /// <param name="identifier">The ID value</param>
         public EntryReact(string identifier)
             : this(identifier, "")
         {
@@ -80,11 +75,10 @@ namespace NCDK.Dict
 
         public IList<string> ReactionMetadata => this.reactionInfo;
 
-        /**
-        // Set the representation of the reaction.
-         *
-        // @param contentRepr The representation of the reaction as string
-         */
+        /// <summary>
+        /// Set the representation of the reaction.
+        /// </summary>
+        /// <param name="contentRepr">The representation of the reaction as string</param>
         public void AddRepresentation(string contentRepr)
         {
             this.representations.Add(contentRepr);
@@ -95,24 +89,21 @@ namespace NCDK.Dict
         /// </summary>
         public List<string> Representations => this.representations;
 
-        /**
-        // Set the parameters of the reaction.
-         *
-        // @param nameParam The parameter names of the reaction as string
-        // @param typeParam The parameter types of the reaction as string
-        // @param value     The value default of the parameter
-         */
+        /// <summary>
+        /// Set the parameters of the reaction.
+        /// </summary>
+        /// <param name="nameParam">The parameter names of the reaction as string</param>
+        /// <param name="typeParam">The parameter types of the reaction as string</param>
+        /// <param name="value">The value default of the parameter</param>
         public void SetParameters(string nameParam, string typeParam, string value)
         {
             this.parameters.Add(nameParam, typeParam);
             this.parametersValue.Add(value);
         }
 
-        /**
-        // Get the parameters of the reaction.
-         *
-        // @return A Dictionary with the parameters
-         */
+        /// <summary>
+        /// The parameters of the reaction.
+        /// </summary>
         public IDictionary<string, string> Parameters => this.parameters;
 
         /// <summary>
@@ -126,7 +117,6 @@ namespace NCDK.Dict
         /// <param name="param">A string List containing the information about this parameter.</param>
         public void AddParameter(IList<string> param)
         {
-
             this.parameterClass.Add(param);
         }
 
@@ -140,11 +130,10 @@ namespace NCDK.Dict
         /// </summary>
         public string Mechanism { get; set; }
 
-        /**
-        // add a example for this reaction.
-         *
-        // @param xml A reaction in XML scheme
-         */
+        /// <summary>
+        /// add a example for this reaction.
+        /// </summary>
+        /// <param name="xml">A reaction in XML scheme</param>
         public void AddExampleReaction(string xml)
         {
             this.reactionExample.Add(xml);

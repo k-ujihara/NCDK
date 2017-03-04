@@ -22,90 +22,86 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using System;
-using System.Linq;
 using System.Collections.Generic;
-using static NCDK.Graphs.InitialCycles;
-using static NCDK.Common.Base.Preconditions;
-using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Determine the set of cycles which are the shortest through each edge.
-     * Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of
-     * each cycle does not need to be verified.
-     *
-     * @author John May
-     * @cdk.module core
-     */
-#if TEST
-    public
-#endif
-    sealed class EdgeShortCycles {
-
+    /// <summary>
+    /// Determine the set of cycles which are the shortest through each edge.
+    /// Unlike the Smallest Set of Smallest Rings (SSSR), linear dependence of
+    /// each cycle does not need to be verified.
+    /// </summary>
+    // @author John May
+    // @cdk.module core
+    internal sealed class EdgeShortCycles
+    {
         /// <summary>Shortest cycles stored as closed walks.</summary>
         private readonly List<int[]> paths;
 
-        /** Construct the edge short cycles for the
-		 *  given graph. */
-        public EdgeShortCycles(int[][] graph) 
+        /// <summary> Construct the edge short cycles for the
+        ///  given graph. */
+        public EdgeShortCycles(int[][] graph)
             : this(new InitialCycles(graph))
-        {}
+        { }
 
-        /** Construct the edge short cycles for the
-		 *  given initial cycles. */
-        public EdgeShortCycles(InitialCycles initialCycles) {
-
+        /// <summary> Construct the edge short cycles for the
+        ///  given initial cycles. */
+        public EdgeShortCycles(InitialCycles initialCycles)
+        {
             int[][] graph = initialCycles.Graph;
             int[] sizeOf = new int[initialCycles.GetNumberOfEdges()];
 
             this.paths = new List<int[]>(initialCycles.GetNumberOfCycles());
 
             // cycles are returned ordered by length
-            foreach (var cycle in initialCycles.GetCycles()) {
+            foreach (var cycle in initialCycles.GetCycles())
+            {
 
-                 int length = cycle.Length;
-                 int[] path = cycle.Path;
+                int length = cycle.Length;
+                int[] path = cycle.Path;
 
                 bool found = false;
 
                 // check if any vertex is the shortest through a vertex in the path
-                for (int i = 1; i < path.Length; i++) {
+                for (int i = 1; i < path.Length; i++)
+                {
                     int idx = initialCycles.IndexOfEdge(path[i - 1], path[i]);
-                    if (sizeOf[idx] < 1 || length <= sizeOf[idx]) {
+                    if (sizeOf[idx] < 1 || length <= sizeOf[idx])
+                    {
                         found = true;
                         sizeOf[idx] = length;
                     }
                 }
 
-                if (found) {
-                    foreach (var p in cycle.GetFamily()) {
+                if (found)
+                {
+                    foreach (var p in cycle.GetFamily())
+                    {
                         paths.Add(p);
                     }
                 }
             }
         }
 
-        /**
-		 * The paths of the shortest cycles, that paths are closed walks such that
-		 * the first and last vertex is the same.
-		 *
-		 * @return the paths
-		 */
-        public int[][] GetPaths() {
+        /// <summary>
+        /// The paths of the shortest cycles, that paths are closed walks such that
+        /// the first and last vertex is the same.
+        /// </summary>
+        /// <returns>the paths</returns>
+        public int[][] GetPaths()
+        {
             int[][] paths = new int[this.paths.Count][];
-            for (int i = 0; i < this.paths.Count; i++) {
+            for (int i = 0; i < this.paths.Count; i++)
+            {
                 paths[i] = this.paths[i];
             }
             return paths;
         }
 
-        /**
-		 * The size of the shortest cycles set.
-		 *
-		 * @return number of cycles
-		 */
+        /// <summary>
+        /// The size of the shortest cycles set.
+        /// </summary>
+        /// <returns>number of cycles</returns>
         int Count => paths.Count;
     }
 }

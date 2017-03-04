@@ -26,49 +26,49 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * IDescriptor characterizing the mass distribution of the molecule.
-     * Described by Katritzky et al. {@cdk.cite KAT96}.
-     * For modelling purposes the value of the descriptor is calculated
-     * both with and without H atoms. Furthermore the square and cube roots
-     * of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
-     * <p/>
-     * The descriptor routine generates 9 descriptors:
-     * <ul>
-     * <li>GRAV-1 -  gravitational index of heavy atoms
-     * <li>GRAV-2 -  square root of gravitational index of heavy atoms
-     * <li>GRAV-3 -  cube root of gravitational index of heavy atoms
-     * <li>GRAVH-1 -  gravitational index - hydrogens included
-     * <li>GRAVH-2 -  square root of hydrogen-included gravitational index
-     * <li>GRAVH-3 -  cube root of hydrogen-included gravitational index
-     * <li>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)
-     * <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
-     * <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
-     * </ul>
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td></td>
-     * <td></td>
-     * <td>no parameters</td>
-     * </tr>
-     * </table>
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2004-11-23
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:gravitationalIndex
-     * @cdk.keyword gravitational index
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// IDescriptor characterizing the mass distribution of the molecule.
+    /// Described by Katritzky et al. {@cdk.cite KAT96}.
+    /// For modelling purposes the value of the descriptor is calculated
+    /// both with and without H atoms. Furthermore the square and cube roots
+    /// of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
+    /// <p/>
+    /// The descriptor routine generates 9 descriptors:
+    /// <ul>
+    /// <li>GRAV-1 -  gravitational index of heavy atoms
+    /// <li>GRAV-2 -  square root of gravitational index of heavy atoms
+    /// <li>GRAV-3 -  cube root of gravitational index of heavy atoms
+    /// <li>GRAVH-1 -  gravitational index - hydrogens included
+    /// <li>GRAVH-2 -  square root of hydrogen-included gravitational index
+    /// <li>GRAVH-3 -  cube root of hydrogen-included gravitational index
+    /// <li>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)
+    /// <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
+    /// <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
+    /// </ul>
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td></td>
+    /// <td></td>
+    /// <td>no parameters</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2004-11-23
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:gravitationalIndex
+    // @cdk.keyword gravitational index
+    // @cdk.keyword descriptor
+    /// </summary>
     public class GravitationalIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private struct Pair

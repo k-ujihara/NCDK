@@ -10,37 +10,32 @@ namespace NCDK.Smiles.SMARTS.Parser
     interface Node
     {
 
-        /** This method is called after the node has been made the current
-          node.  It indicates that child nodes can now be added to it. */
-        void jjtOpen();
+        /// <summary> This method is called after the node has been made the current node.  It indicates that child nodes can now be added to it.</summary>
+        void JJTOpen();
 
-        /** This method is called after all the child nodes have been
-          added. */
-        void jjtClose();
+        /// <summary> This method is called after all the child nodes have been added.</summary>
+        void JJTClose();
 
-        /** This pair of methods are used to inform the node of its
-          parent. */
-        void jjtSetParent(Node n);
-        Node jjtGetParent();
+        /// <summary> This pair of methods are used to inform the node of its parent.</summary>
+        void JJTSetParent(Node n);
+        Node JJTGetParent();
 
-        /** This method tells the node to add its argument to the node's
-          list of children.  */
-        void jjtAddChild(Node n, int i);
+        /// <summary> This method tells the node to add its argument to the node's list of children. </summary>
+        void JJTAddChild(Node n, int i);
 
-        /** This method returns a child node.  The children are numbered
-           from zero, left to right. */
-        Node jjtGetChild(int i);
+        /// <summary> This method returns a child node.  The children are numbered from zero, left to right.</summary>
+        Node JJTGetChild(int i);
 
         /// <summary>Return the number of children the node has.</summary>
-        int jjtGetNumChildren();
+        int JJTGetNumChildren();
 
-        /** Accept the visitor. **/
-        object jjtAccept(SMARTSParserVisitor visitor, object data);
+        /// <summary>Accept the visitor. </summary>
+        object JJTAccept(SMARTSParserVisitor visitor, object data);
 
-        /**
-         * Removes a child from this node
-         * @param i
-         */
-        void jjtRemoveChild(int i);
+        /// <summary>
+        /// Removes a child from this node
+        /// </summary>
+        /// <param name="i"></param>
+        void JJTRemoveChild(int i);
     }
 }

@@ -31,79 +31,79 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Eigenvalue based descriptor noted for its utility in chemical diversity.
-     * Described by Pearlman et al. {@cdk.cite PEA99}.
-     * <p/>
-     * <p>The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
-     * which takes into account both the connectivity as well as atomic
-     * properties of a molecule. The weights are a variety of atom properties placed along the
-     * diagonal of the Burden matrix. Currently three weighting schemes are employed
-     * <ul>
-     * <li>atomic weight
-     * <li>partial charge (Gasteiger Marsilli)
-     * <li>polarizability {@cdk.cite KJ81}
-     * </ul>
-     * <p>By default, the descriptor will return the highest and lowest eigenvalues for the three
-     * classes of descriptor in a single ArrayList (in the order shown above). However it is also
-     * possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
-     * (for each class of descriptor) are required. The descriptor works with the hydrogen depleted molecule.
-     * <p/>
-     * A side effect of specifying the number of highest and lowest eigenvalues is that it is possible
-     * to get two copies of all the eigenvalues. That is, if a molecule has 5 heavy atoms, then specifying
-     * the 5 highest eigenvalues returns all of them, and specifying the 5 lowest eigenvalues returns
-     * all of them, resulting in two copies of all the eigenvalues.
-     * <p/>
-     * <p> Note that it is possible to
-     * specify an arbitrarily large number of eigenvalues to be returned. However if the number
-     * (i.e., nhigh or nlow) is larger than the number of heavy atoms, the remaining eignevalues
-     * will be NaN.
-     * <p/>
-     * Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
-     * set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td>nhigh</td>
-     * <td>1</td>
-     * <td>The number of highest eigenvalue</td>
-     * </tr>
-     * <tr>
-     * <td>nlow</td>
-     * <td>1</td>
-     * <td>The number of lowest eigenvalue</td>
-     * </tr>
-     * <tr>
-     * <td>checkAromaticity</td>
-     * <td>true</td>
-     * <td>Whether aromaticity should be checked</td>
-     * </tr>
-     * </table>
-     * <p/>
-     * Returns an array of values in the following order
-     * <ol>
-     * <p/>
-     * <li>BCUTw-1l, BCUTw-2l ... - <i>nhigh</i> lowest atom weighted BCUTS
-     * <li>BCUTw-1h, BCUTw-2h ... - <i>nlow</i> highest atom weighted BCUTS
-     * <li>BCUTc-1l, BCUTc-2l ... - <i>nhigh</i> lowest partial charge weighted BCUTS
-     * <li>BCUTc-1h, BCUTc-2h ... - <i>nlow</i> highest partial charge weighted BCUTS
-     * <li>BCUTp-1l, BCUTp-2l ... - <i>nhigh</i> lowest polarizability weighted BCUTS
-     * <li>BCUTp-1h, BCUTp-2h ... - <i>nlow</i> highest polarizability weighted BCUTS
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2004-11-30
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:BCUT
-     * @cdk.keyword BCUT
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Eigenvalue based descriptor noted for its utility in chemical diversity.
+    /// Described by Pearlman et al. {@cdk.cite PEA99}.
+    /// <p/>
+    /// <p>The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
+    /// which takes into account both the connectivity as well as atomic
+    /// properties of a molecule. The weights are a variety of atom properties placed along the
+    /// diagonal of the Burden matrix. Currently three weighting schemes are employed
+    /// <ul>
+    /// <li>atomic weight
+    /// <li>partial charge (Gasteiger Marsilli)
+    /// <li>polarizability {@cdk.cite KJ81}
+    /// </ul>
+    /// <p>By default, the descriptor will return the highest and lowest eigenvalues for the three
+    /// classes of descriptor in a single ArrayList (in the order shown above). However it is also
+    /// possible to supply a parameter list indicating how many of the highest and lowest eigenvalues
+    /// (for each class of descriptor) are required. The descriptor works with the hydrogen depleted molecule.
+    /// <p/>
+    /// A side effect of specifying the number of highest and lowest eigenvalues is that it is possible
+    /// to get two copies of all the eigenvalues. That is, if a molecule has 5 heavy atoms, then specifying
+    /// the 5 highest eigenvalues returns all of them, and specifying the 5 lowest eigenvalues returns
+    /// all of them, resulting in two copies of all the eigenvalues.
+    /// <p/>
+    /// <p> Note that it is possible to
+    /// specify an arbitrarily large number of eigenvalues to be returned. However if the number
+    /// (i.e., nhigh or nlow) is larger than the number of heavy atoms, the remaining eignevalues
+    /// will be NaN.
+    /// <p/>
+    /// Given the above description, if the aim is to gt all the eigenvalues for a molecule, you should
+    /// set nlow to 0 and specify the number of heavy atoms (or some large number) for nhigh (or vice versa).
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td>nhigh</td>
+    /// <td>1</td>
+    /// <td>The number of highest eigenvalue</td>
+    /// </tr>
+    /// <tr>
+    /// <td>nlow</td>
+    /// <td>1</td>
+    /// <td>The number of lowest eigenvalue</td>
+    /// </tr>
+    /// <tr>
+    /// <td>checkAromaticity</td>
+    /// <td>true</td>
+    /// <td>Whether aromaticity should be checked</td>
+    /// </tr>
+    /// </table>
+    /// <p/>
+    /// Returns an array of values in the following order
+    /// <ol>
+    /// <p/>
+    /// <li>BCUTw-1l, BCUTw-2l ... - <i>nhigh</i> lowest atom weighted BCUTS
+    /// <li>BCUTw-1h, BCUTw-2h ... - <i>nlow</i> highest atom weighted BCUTS
+    /// <li>BCUTc-1l, BCUTc-2l ... - <i>nhigh</i> lowest partial charge weighted BCUTS
+    /// <li>BCUTc-1h, BCUTc-2h ... - <i>nlow</i> highest partial charge weighted BCUTS
+    /// <li>BCUTp-1l, BCUTp-2l ... - <i>nhigh</i> lowest polarizability weighted BCUTS
+    /// <li>BCUTp-1h, BCUTp-2h ... - <i>nlow</i> highest polarizability weighted BCUTS
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2004-11-30
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:BCUT
+    // @cdk.keyword BCUT
+    // @cdk.keyword descriptor
+    /// </summary>
     public class BCUTDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         // the number of negative & positive eigenvalues

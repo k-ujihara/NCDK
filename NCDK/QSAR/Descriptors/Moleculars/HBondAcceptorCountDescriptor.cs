@@ -23,48 +23,48 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
-     * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
-     * The following groups are counted as hydrogen bond acceptors:
-     * <ul>
-     * <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
-     * <ol>
-     * <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
-     * <li>an oxygen that is adjacent to a nitrogen</li>
-     * </ol>
-     * <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
-     * <ol>
-     * <li>a nitrogen that is adjacent to an oxygen</li>
-     * </ol>
-     * </ul>
-     *
-     * Returns a single value named <i>nHBAcc</i>.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table>
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>checkAromaticity</td>
-     *     <td>false</td>
-     *     <td>true if the aromaticity has to be checked</td>
-     *   </tr>
-     * </table>
-     * <p>
-     * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
-     * hydrogens</b>.
-     *
-     * @author      ulif
-     * @cdk.created 2005-22-07
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:hBondacceptors
-     */
+    /// <summary>
+    /// This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
+    /// <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+    /// The following groups are counted as hydrogen bond acceptors:
+    /// <ul>
+    /// <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
+    /// <ol>
+    /// <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
+    /// <li>an oxygen that is adjacent to a nitrogen</li>
+    /// </ol>
+    /// <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
+    /// <ol>
+    /// <li>a nitrogen that is adjacent to an oxygen</li>
+    /// </ol>
+    /// </ul>
+    ///
+    /// Returns a single value named <i>nHBAcc</i>.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table>
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>checkAromaticity</td>
+    ///     <td>false</td>
+    ///     <td>true if the aromaticity has to be checked</td>
+    ///   </tr>
+    /// </table>
+    /// <p>
+    /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
+    /// hydrogens</b>.
+    ///
+    // @author      ulif
+    // @cdk.created 2005-22-07
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:hBondacceptors
+    /// </summary>
     public class HBondAcceptorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
 

@@ -29,14 +29,11 @@ using System.Text;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Light-weight intermediate data-structure for transferring information CDK to/from
-     * CXSMILES.
-     */
-#if TEST
-    public
-#endif
-    sealed class CxSmilesState
+    /// <summary>
+    /// Light-weight intermediate data-structure for transferring information CDK to/from
+    /// CXSMILES.
+    /// </summary>
+    internal sealed class CxSmilesState
     {
         public IDictionary<int, string> atomLabels = null;
         public IDictionary<int, string> atomValues = null;

@@ -27,25 +27,25 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Class with constants for possible data features defined in the
-     * a Data Feature Ontology. Actual integers are random
-     * and should <b>not</b> be used directly.
-     *
-     * <p>To test whether a IChemFormat supports a certain feature, the
-     * following code can be used:
-     * <pre>
-     * int features = new XYZFormat().SupportedDataFeatures;
-     * bool has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
-     * </pre>
-     *
-     * <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
-     * >Blue Obelisk Data Features Ontology</a>.
-     *
-     * @author     Egon Willighagen <ewilligh@uni-koeln.de>
-     * @cdk.module annotation
-     * @cdk.githash
-     **/
+    /// <summary>
+    /// Class with constants for possible data features defined in the
+    /// a Data Feature Ontology. Actual integers are random
+    /// and should <b>not</b> be used directly.
+    ///
+    /// <p>To test whether a IChemFormat supports a certain feature, the
+    /// following code can be used:
+    /// <code>
+    /// int features = new XYZFormat().SupportedDataFeatures;
+    /// bool has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
+    /// </code>
+    ///
+    /// <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
+    /// >Blue Obelisk Data Features Ontology</a>.
+    ///
+    // @author     Egon Willighagen <ewilligh@uni-koeln.de>
+    // @cdk.module annotation
+    // @cdk.githash
+    ///*/
     public class DataFeatures
     {
         /// <summary>Indicated that no feature are defined.</summary>
@@ -72,7 +72,7 @@ namespace NCDK.Tools
         public const int HAS_ATOM_PARTIAL_CHARGES = 1 << 4;
         /// <summary>@cdk.dictref bodf:formalAtomicCharges</summary>
         public const int HAS_ATOM_FORMAL_CHARGES = 1 << 5;
-        /** FIXME: NOT YET IN BODF !!! **/
+        /// <summary>FIXME: NOT YET IN BODF !!! </summary>
         public const int HAS_ATOM_HYBRIDIZATIONS = 1 << 6;
         /// <summary>@cdk.dictref bodf:massNumbers</summary>
         public const int HAS_ATOM_MASS_NUMBERS = 1 << 7;
@@ -88,9 +88,9 @@ namespace NCDK.Tools
 
         // MODEL FEATURES
 
-        /** FIXME: NOT YET IN BODF !!! **/
+        /// <summary>FIXME: NOT YET IN BODF !!! </summary>
         public const int HAS_UNITCELL_PARAMETERS = 1 << 11;
-        /** FIXME: NOT YET IN BODF !!! **/
+        /// <summary>FIXME: NOT YET IN BODF !!! </summary>
         public const int HAS_REACTIONS = 1 << 12;
     }
 }

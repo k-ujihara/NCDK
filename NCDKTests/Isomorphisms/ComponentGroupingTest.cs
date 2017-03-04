@@ -28,10 +28,10 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class ComponentGroupingTest
     {
@@ -40,8 +40,8 @@ namespace NCDK.Isomorphisms
         [TestMethod()]
         public void Ungrouped()
         {
-            Assert.IsTrue(Create(null, oxidanone()).Apply(new int[] { 0, 1 }));
-            Assert.IsTrue(Create(null, oxidanone()).Apply(new int[] { 1, 0 }));
+            Assert.IsTrue(Create(null, Oxidanone()).Apply(new int[] { 0, 1 }));
+            Assert.IsTrue(Create(null, Oxidanone()).Apply(new int[] { 1, 0 }));
             Assert.IsTrue(Create(null, EthyleneGlycol()).Apply(new int[] { 0, 3 }));
             Assert.IsTrue(Create(null, EthyleneGlycol()).Apply(new int[] { 3, 0 }));
             Assert.IsTrue(Create(null, EthylAlcoholHydrate()).Apply(new int[] { 0, 3 }));
@@ -53,8 +53,8 @@ namespace NCDK.Isomorphisms
         public void Grouped()
         {
             int[] grouping = { 1, 1, 1 };
-            Assert.IsTrue(Create(grouping, oxidanone()).Apply(new int[] { 0, 1 }));
-            Assert.IsTrue(Create(grouping, oxidanone()).Apply(new int[] { 1, 0 }));
+            Assert.IsTrue(Create(grouping, Oxidanone()).Apply(new int[] { 0, 1 }));
+            Assert.IsTrue(Create(grouping, Oxidanone()).Apply(new int[] { 1, 0 }));
             Assert.IsTrue(Create(grouping, EthyleneGlycol()).Apply(new int[] { 0, 3 }));
             Assert.IsTrue(Create(grouping, EthyleneGlycol()).Apply(new int[] { 3, 0 }));
             Assert.IsFalse(Create(grouping, EthylAlcoholHydrate()).Apply(new int[] { 0, 3 }));
@@ -66,8 +66,8 @@ namespace NCDK.Isomorphisms
         public void MultipleGroups()
         {
             int[] grouping = { 1, 2, 2 };
-            Assert.IsFalse(Create(grouping, oxidanone()).Apply(new int[] { 0, 1 }));
-            Assert.IsFalse(Create(grouping, oxidanone()).Apply(new int[] { 1, 0 }));
+            Assert.IsFalse(Create(grouping, Oxidanone()).Apply(new int[] { 0, 1 }));
+            Assert.IsFalse(Create(grouping, Oxidanone()).Apply(new int[] { 1, 0 }));
             Assert.IsFalse(Create(grouping, EthyleneGlycol()).Apply(new int[] { 0, 3 }));
             Assert.IsFalse(Create(grouping, EthyleneGlycol()).Apply(new int[] { 3, 0 }));
             Assert.IsTrue(Create(grouping, EthylAlcoholHydrate()).Apply(new int[] { 0, 3 }));
@@ -75,7 +75,7 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>@cdk.inchi InChI=1/O2/c1-2</summary>
-        static IAtomContainer oxidanone()
+        static IAtomContainer Oxidanone()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(new Atom("O"));

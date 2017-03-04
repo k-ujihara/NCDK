@@ -68,7 +68,7 @@ namespace NCDK.Modeling.Builder3D
                 ParseBitSet("{4, 14, 50, 61, 65, 67, 83, 86, 91, 103, 104, 120, 133, 154, 162, 166, 188, 192, 222, 300, 308, 317, 320, 398, 426, 429, 432, 465, 468, 473, 475, 490, 505, 506, 510, 515, 522, 671, 682, 689, 704, 739, 747, 770, 782, 834, 921, 922, 925, 944, 952, 953, 960, 963, 998, 1020}")};
 
             string filename = "NCDK.Data.MDL.fingerprints_from_modelbuilder3d.sdf";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var data = new TemplateExtractor().MakeFingerprintsFromSdf(true, false, new Dictionary<string, int>(), new StreamReader(ins), 10);
             QueryChemObject obj = new QueryChemObject(Default.ChemObjectBuilder.Instance);
             var dummy = obj.Builder;

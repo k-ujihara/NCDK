@@ -25,21 +25,21 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * <see cref="IMolecularDescriptor"/> that reports the fraction of sp3 carbons to sp2 carbons.
-     * <p/>
-     * Note that it only considers carbon atoms and rather than use a simple ratio
-     * it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
-     * The original form of the descriptor (i.e., simple ratio) has been used to
-     * characterize molecular complexity, especially in the are of natural products
-     * , which usually have a high value of the sp3 to sp2 ratio.
-     *
-     * @author Rajarshi Guha
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:hybratio
-     */
+    /// <summary>
+    /// <see cref="IMolecularDescriptor"/> that reports the fraction of sp3 carbons to sp2 carbons.
+    /// <p/>
+    /// Note that it only considers carbon atoms and rather than use a simple ratio
+    /// it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
+    /// The original form of the descriptor (i.e., simple ratio) has been used to
+    /// characterize molecular complexity, especially in the are of natural products
+    /// , which usually have a high value of the sp3 to sp2 ratio.
+    ///
+    // @author Rajarshi Guha
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:hybratio
+    /// </summary>
     public class HybridizationRatioDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /// <summary>

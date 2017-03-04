@@ -21,13 +21,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link ISingleElectron} implementations.
-     *
-     * @see org.openscience.cdk.SingleElectron
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link ISingleElectron} implementations.
+    ///
+    // @see org.openscience.cdk.SingleElectron
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractSingleElectronTest
         : AbstractElectronContainerTest
@@ -105,9 +105,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * The electron count of a single electron is always exactly 1.
-         */
+        /// <summary>
+        /// The electron count of a single electron is always exactly 1.
+        /// </summary>
         [TestMethod()]
 
         public override void TestSetElectronCount_Integer()

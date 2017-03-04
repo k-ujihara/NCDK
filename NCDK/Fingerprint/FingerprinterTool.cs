@@ -28,37 +28,37 @@ using System.Diagnostics;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Tool with helper methods for IFingerprint.
-     *
+    /// <summary>
+    /// Tool with helper methods for IFingerprint.
+    /// </summary>
     // @author         steinbeck
     // @cdk.created    2002-02-24
     // @cdk.keyword    fingerprint
     // @cdk.module     standard
     // @cdk.githash
-     */
     public class FingerprinterTool
     {
-        /**
-        //  Checks whether all the positive bits in BitArray bs2 occur in BitArray bs1. If
-        //  so, the molecular structure from which bs2 was generated is a possible
-        //  substructure of bs1. <p>
-         *
-        //  Example: <pre>
-        //  Molecule mol = MoleculeFactory.MakeIndole();
-        //  BitArray bs = Fingerprinter.GetBitFingerprint(mol);
-        //  Molecule frag1 = MoleculeFactory.MakePyrrole();
-        //  BitArray bs1 = Fingerprinter.GetBitFingerprint(frag1);
-        //  if (Fingerprinter.IsSubset(bs, bs1)) {
-        //      Console.Out.WriteLine("Pyrrole is subset of Indole.");
-        //  }
-        //  </pre>
-         *
-         *@param  bs1     The reference BitArray
-         *@param  bs2     The BitArray which is compared with bs1
-         *@return         True, if bs2 is a subset of bs1
-         *@cdk.keyword    substructure search
-         */
+        /// <summary>
+        /// Checks whether all the positive bits in BitArray bs2 occur in BitArray bs1. If
+        /// so, the molecular structure from which bs2 was generated is a possible
+        /// substructure of bs1. 
+        /// </summary>
+        /// <example>
+        /// Example: 
+        /// <code>
+        /// Molecule mol = MoleculeFactory.MakeIndole();
+        /// BitArray bs = Fingerprinter.GetBitFingerprint(mol);
+        /// Molecule frag1 = MoleculeFactory.MakePyrrole();
+        /// BitArray bs1 = Fingerprinter.GetBitFingerprint(frag1);
+        /// if (Fingerprinter.IsSubset(bs, bs1)) {
+        ///     Console.Out.WriteLine("Pyrrole is subset of Indole.");
+        /// }
+        /// </code>
+        /// </example>
+        /// <param name="bs1">The reference BitArray</param>
+        /// <param name="bs2">The BitArray which is compared with bs1</param>
+        /// <returns>True, if bs2 is a subset of bs1</returns>
+        // @cdk.keyword    substructure search
         public static bool IsSubset(BitArray bs1, BitArray bs2)
         {
             BitArray clone = (BitArray)bs1.Clone();
@@ -70,16 +70,15 @@ namespace NCDK.Fingerprint
             return false;
         }
 
-        /**
-        // This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
-        // See. {@link #Differences(java.util.BitArray, java.util.BitArray)} for a method to list all differences,
-        // including those missing present in bs2 but not bs1.
-         *
-        // @param bs1 First bitset
-        // @param bs2 Second bitset
-        // @return An arrayList of Integers
-        // @see #Differences(java.util.BitArray, java.util.BitArray)
-         */
+        /// <summary>
+        /// This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
+        /// See. {@link #Differences(java.util.BitArray, java.util.BitArray)} for a method to list all differences,
+        /// including those missing present in bs2 but not bs1.
+        /// </summary>
+        /// <param name="bs1">First bitset</param>
+        /// <param name="bs2">Second bitset</param>
+        /// <returns>An arrayList of Integers</returns>
+        /// <seealso cref="Differences(BitArray, BitArray)"/>
         public static IList<int> ListDifferences(BitArray bs1, BitArray bs2)
         {
             BitArray u = (BitArray)bs1.Clone();
@@ -101,15 +100,14 @@ namespace NCDK.Fingerprint
             return l;
         }
 
-        /**
-        // List all differences between the two bit vectors. Unlike {@link
-        // #ListDifferences(java.util.BitArray, java.util.BitArray)} which only list
-        // those which are set in <i>s</i> but not in <i>t</i>.
-         *
-        // @param s a bit vector
-        // @param t another bit vector
-        // @return all differences between <i>s</i> and <i>t</i>
-         */
+        /// <summary>
+        /// List all differences between the two bit vectors. Unlike 
+        /// <see cref="ListDifferences(BitArray, BitArray)"/> which only list
+        /// those which are set in <paramref name="s"/> but not in <paramref name="t"/>.
+        /// </summary>
+        /// <param name="s">a bit vector</param>
+        /// <param name="t">another bit vector</param>
+        /// <returns>all differences between <paramref name="s"/> and <paramref name="t"/></returns>
         public static ICollection<int> Differences(BitArray s, BitArray t)
         {
             BitArray u = (BitArray)s.Clone();
@@ -129,42 +127,39 @@ namespace NCDK.Fingerprint
             return differences;
         }
 
-        /**
-        // Convert a mapping of features and their counts to a 1024-bit binary fingerprint. A single 
-        // bit is set for each pattern.
-         *
-        // @param features features to include
-        // @return the continuous fingerprint
-        // @see #MakeBitFingerprint(java.util.IDictionary, int, int)
-         */
+        /// <summary>
+        /// Convert a mapping of features and their counts to a 1024-bit binary fingerprint. A single 
+        /// bit is set for each pattern.
+        /// </summary>
+        /// <param name="features">features to include</param>
+        /// <returns>the continuous fingerprint</returns>
+        /// <seealso cref="MakeBitFingerprint(IDictionary{string, int}, int, int)"/>
         public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features)
         {
             return MakeBitFingerprint(features, 1024, 1);
         }
 
-        /**
-        // Convert a mapping of features and their counts to a binary fingerprint. A single bit is
-        // set for each pattern.
-         *
-        // @param features features to include
-        // @param len fingerprint length
-        // @return the continuous fingerprint
-        // @see #MakeBitFingerprint(java.util.IDictionary, int, int) 
-         */
+        /// <summary>
+        /// Convert a mapping of features and their counts to a binary fingerprint. A single bit is
+        /// set for each pattern.
+        /// </summary>
+        /// <param name="features">features to include</param>
+        /// <param name="len">fingerprint length</param>
+        /// <returns>the continuous fingerprint</returns>
+        /// <seealso cref="MakeBitFingerprint(IDictionary{string, int}, int, int)"/>
         public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features, int len)
         {
             return MakeBitFingerprint(features, len, 1);
         }
 
-        /**
-        // Convert a mapping of features and their counts to a binary fingerprint. Each feature
-        // can set 1-n hashes, the amount is modified by the {@code bits} operand.
-         *
-        // @param features features to include
-        // @param len fingerprint length
-        // @param bits number of bits to set for each pattern            
-        // @return the continuous fingerprint
-         */
+        /// <summary>
+        /// Convert a mapping of features and their counts to a binary fingerprint. Each feature
+        /// can set 1-n hashes, the amount is modified by the <paramref name="bits"/> operand.
+        /// </summary>
+        /// <param name="features">features to include</param>
+        /// <param name="len">fingerprint length</param>
+        /// <param name="bits">number of bits to set for each pattern</param>
+        /// <returns>the continuous fingerprint</returns>
         public static IBitFingerprint MakeBitFingerprint(IDictionary<string, int> features, int len, int bits)
         {
             BitSetFingerprint fingerprint = new BitSetFingerprint(len);
@@ -181,12 +176,11 @@ namespace NCDK.Fingerprint
             return fingerprint;
         }
 
-        /**
-        // Wrap a mapping of features and their counts to a continuous (count based) fingerprint.
-        // 
-        // @param features features to include
-        // @return the continuous fingerprint
-         */
+        /// <summary>
+        /// Wrap a mapping of features and their counts to a continuous (count based) fingerprint.
+        /// </summary>
+        /// <param name="features">features to include</param>
+        /// <returns>the continuous fingerprint</returns>
         public static ICountFingerprint MakeCountFingerprint(IDictionary<string, int> features)
         {
             return new IntArrayCountFingerprint(features);

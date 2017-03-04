@@ -26,30 +26,30 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Class with convenience methods that provide methods from
-     * methods from ChemObjects within the ChemModel. For example:
-     * <pre>
-     * ChemModelManipulator.RemoveAtomAndConnectedElectronContainers(chemModel, atom);
-     * </pre>
-     * will find the Atom in the model by traversing the ChemModel's
-     * MoleculeSet, Crystal and ReactionSet fields and remove
-     * it with the RemoveAtomAndConnectedElectronContainers(Atom) method.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
-     */
+    /// <summary>
+    /// Class with convenience methods that provide methods from
+    /// methods from ChemObjects within the ChemModel. For example:
+    /// <code>
+    /// ChemModelManipulator.RemoveAtomAndConnectedElectronContainers(chemModel, atom);
+    /// </code>
+    /// will find the Atom in the model by traversing the ChemModel's
+    /// MoleculeSet, Crystal and ReactionSet fields and remove
+    /// it with the RemoveAtomAndConnectedElectronContainers(Atom) method.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    ///
+    // @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
+    /// </summary>
     public class ChemModelManipulator
     {
 
-        /**
-         * Get the total number of atoms inside an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @return           The number of Atom object inside.
-         */
+        /// <summary>
+        /// Get the total number of atoms inside an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <returns>The number of Atom object inside.</returns>
+        /// </summary>
         public static int GetAtomCount(IChemModel chemModel)
         {
             int count = 0;
@@ -71,12 +71,12 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Get the total number of bonds inside an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @return           The number of Bond object inside.
-         */
+        /// <summary>
+        /// Get the total number of bonds inside an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <returns>The number of Bond object inside.</returns>
+        /// </summary>
         public static int GetBondCount(IChemModel chemModel)
         {
             int count = 0;
@@ -98,13 +98,13 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Remove an Atom and the connected ElectronContainers from all AtomContainers
-         * inside an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @param atom       The Atom object to remove.
-         */
+        /// <summary>
+        /// Remove an Atom and the connected ElectronContainers from all AtomContainers
+        /// inside an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <param name="atom">The Atom object to remove.</param>
+        /// </summary>
 
         public static void RemoveAtomAndConnectedElectronContainers(IChemModel chemModel, IAtom atom)
         {
@@ -129,13 +129,13 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Remove an ElectronContainer from all AtomContainers
-         * inside an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @param electrons  The ElectronContainer to remove.
-         */
+        /// <summary>
+        /// Remove an ElectronContainer from all AtomContainers
+        /// inside an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <param name="electrons">The ElectronContainer to remove.</param>
+        /// </summary>
         public static void RemoveElectronContainer(IChemModel chemModel, IElectronContainer electrons)
         {
             ICrystal crystal = chemModel.Crystal;
@@ -159,13 +159,13 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Adds a new Molecule to the MoleculeSet inside a given ChemModel.
-         * Creates a MoleculeSet if none is contained.
-         *
-         * @param chemModel  The ChemModel object.
-         * @return           The created Molecule object.
-         */
+        /// <summary>
+        /// Adds a new Molecule to the MoleculeSet inside a given ChemModel.
+        /// Creates a MoleculeSet if none is contained.
+        ///
+        /// <param name="chemModel">The ChemModel object.</param>
+        /// <returns>The created Molecule object.</returns>
+        /// </summary>
         public static IAtomContainer CreateNewMolecule(IChemModel chemModel)
         {
             // Add a new molecule either the set of molecules
@@ -192,14 +192,14 @@ namespace NCDK.Tools.Manipulator
             return molecule;
         }
 
-        /**
-         * Create a new ChemModel containing an IAtomContainer. It will create an
-         * <see cref="IAtomContainer"/> from the passed IAtomContainer when needed, which may cause
-         * information loss.
-         *
-         * @param  atomContainer  The AtomContainer to have inside the ChemModel.
-         * @return                The new IChemModel object.
-         */
+        /// <summary>
+        /// Create a new ChemModel containing an IAtomContainer. It will create an
+        /// <see cref="IAtomContainer"/> from the passed IAtomContainer when needed, which may cause
+        /// information loss.
+        ///
+        /// <param name="atomContainer">The AtomContainer to have inside the ChemModel.</param>
+        /// <returns>The new IChemModel object.</returns>
+        /// </summary>
         public static IChemModel NewChemModel(IAtomContainer atomContainer)
         {
             IChemModel model = atomContainer.Builder.CreateChemModel();
@@ -209,10 +209,10 @@ namespace NCDK.Tools.Manipulator
             return model;
         }
 
-        /**
-         * This badly named methods tries to determine which AtomContainer in the
-         * ChemModel is best suited to contain added Atom's and Bond's.
-         */
+        /// <summary>
+        /// This badly named methods tries to determine which AtomContainer in the
+        /// ChemModel is best suited to contain added Atom's and Bond's.
+        /// </summary>
         public static IAtomContainer GetRelevantAtomContainer(IChemModel chemModel, IAtom atom)
         {
             IAtomContainer result = null;
@@ -241,14 +241,14 @@ namespace NCDK.Tools.Manipulator
             throw new ArgumentException("The provided atom is not part of this IChemModel.");
         }
 
-        /**
-         * Retrieves the first IAtomContainer containing a given IBond from an
-         * IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @param bond       The IBond object to search.
-         * @return           The IAtomContainer object found, null if none is found.
-         */
+        /// <summary>
+        /// Retrieves the first IAtomContainer containing a given IBond from an
+        /// IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <param name="bond">The IBond object to search.</param>
+        /// <returns>The IAtomContainer object found, null if none is found.</returns>
+        /// </summary>
         public static IAtomContainer GetRelevantAtomContainer(IChemModel chemModel, IBond bond)
         {
             IAtomContainer result = null;
@@ -270,14 +270,14 @@ namespace NCDK.Tools.Manipulator
             return null;
         }
 
-        /**
-         * Retrieves the first IReaction containing a given IAtom from an
-         * IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @param atom       The IAtom object to search.
-         * @return           The IAtomContainer object found, null if none is found.
-         */
+        /// <summary>
+        /// Retrieves the first IReaction containing a given IAtom from an
+        /// IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <param name="atom">The IAtom object to search.</param>
+        /// <returns>The IAtomContainer object found, null if none is found.</returns>
+        /// </summary>
         public static IReaction GetRelevantReaction(IChemModel chemModel, IAtom atom)
         {
             IReaction reaction = null;
@@ -289,9 +289,9 @@ namespace NCDK.Tools.Manipulator
             return reaction;
         }
 
-        /**
-         * Returns all the AtomContainer's of a ChemModel.
-         */
+        /// <summary>
+        /// Returns all the AtomContainer's of a ChemModel.
+        /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IChemModel chemModel)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = chemModel.Builder.CreateAtomContainerSet();
@@ -306,13 +306,13 @@ namespace NCDK.Tools.Manipulator
             return MoleculeSetManipulator.GetAllAtomContainers(moleculeSet);
         }
 
-        /**
-         * Sets the AtomProperties of all Atoms inside an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @param propKey    The key of the property.
-         * @param propVal    The value of the property.
-         */
+        /// <summary>
+        /// Sets the AtomProperties of all Atoms inside an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <param name="propKey">The key of the property.</param>
+        /// <param name="propVal">The value of the property.</param>
+        /// </summary>
         public static void SetAtomProperties(IChemModel chemModel, string propKey, object propVal)
         {
             if (chemModel.MoleculeSet != null)
@@ -329,12 +329,12 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Retrieve a List of all ChemObject objects within an IChemModel.
-         *
-         * @param chemModel  The IChemModel object.
-         * @return           A List of all ChemObjects inside.
-         */
+        /// <summary>
+        /// Retrieve a List of all ChemObject objects within an IChemModel.
+        ///
+        /// <param name="chemModel">The IChemModel object.</param>
+        /// <returns>A List of all ChemObjects inside.</returns>
+        /// </summary>
         public static List<IChemObject> GetAllChemObjects(IChemModel chemModel)
         {
             List<IChemObject> list = new List<IChemObject>();

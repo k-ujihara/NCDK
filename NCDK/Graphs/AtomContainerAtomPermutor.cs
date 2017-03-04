@@ -29,42 +29,41 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Graphs
 {
-    /**
-     * An atom container atom permutor that uses ranking and unranking to calculate
-     * the next permutation in the series.</p>
-     *
-     * <p>Typical use:<pre>
-     * AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(container);
-     * while (permutor.MoveNext()) {
-     *   IAtomContainer permutedContainer = permutor.Next();
-     *   ...
-     * }</pre>
-     *
-     * @author maclean
-     * @cdk.created 2009-09-09
-     * @cdk.keyword permutation
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// An atom container atom permutor that uses ranking and unranking to calculate
+    /// the next permutation in the series.
+    /// </summary>
+    /// <example>
+    /// Typical use:<code>
+    /// AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(container);
+    /// while (permutor.MoveNext()) {
+    ///   IAtomContainer permutedContainer = permutor.Next();
+    ///   ...
+    /// }
+    /// </code>
+    /// </example>
+    // @author maclean
+    // @cdk.created 2009-09-09
+    // @cdk.keyword permutation
+    // @cdk.module standard
+    // @cdk.githash
     public class AtomContainerAtomPermutor : AtomContainerPermutor
     {
-        /**
-         * A permutor wraps the original atom container, and produces cloned
-         * (and permuted!) copies on demand.
-         *
-         * @param atomContainer the atom container to permute
-         */
+        /// <summary>
+        /// A permutor wraps the original atom container, and produces cloned
+        /// (and permuted!) copies on demand.
+        /// </summary>
+        /// <param name="atomContainer">the atom container to permute</param>
         public AtomContainerAtomPermutor(IAtomContainer atomContainer)
             : base(atomContainer.Atoms.Count, atomContainer)
         {
         }
 
-        /**
-         * Generate the atom container with this permutation of the atoms.
-         *
-         * @param permutation the permutation to use
-         * @return the
-         */
+        /// <summary>
+        /// Generate the atom container with this permutation of the atoms.
+        /// </summary>
+        /// <param name="permutation">the permutation to use</param>
+        /// <returns></returns>
         public override IAtomContainer ContainerFromPermutation(int[] permutation)
         {
             IAtomContainer permutedContainer = (IAtomContainer)atomContainer.Clone();

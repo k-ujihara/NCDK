@@ -27,13 +27,13 @@ using System.Collections.Generic;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged
-     * system) is found correctly.
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Unit tests for ring search. These unit tests ensure bicyclo rings (a bridged
+    /// system) is found correctly.
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Bicyclo
     {
@@ -68,7 +68,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFUsed()
         {
-            Assert.AreEqual(1, new RingSearch(bicyclo).FUsed().Length, "one fused cycle should be found");
+            Assert.AreEqual(1, new RingSearch(bicyclo).Fused().Length, "one fused cycle should be found");
 
         }
 
@@ -97,7 +97,7 @@ namespace NCDK.RingSearches
         public void TestFUsedRingFragments()
         {
 
-            IList<IAtomContainer> fragments = new RingSearch(bicyclo).FUsedRingFragments();
+            IList<IAtomContainer> fragments = new RingSearch(bicyclo).FusedRingFragments();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             Assert.AreEqual(bicyclo.Atoms.Count, fragment.Atoms.Count);

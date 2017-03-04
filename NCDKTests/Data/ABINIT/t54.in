@@ -26,7 +26,7 @@ rprim  0.0  0.5  0.5   # In lessons 1 and 2, these primitive vectors
 #Definition of the atom types
 ntype 2                # There are two types of atom
 zatnum 13 33           # The keyword "zatnum" refers to the atomic number of the 
-                       # possible type(s) of atom. The PseuDopotential(s) 
+                       # possible type(s) of atom. The pseudopotential(s) 
                        # mentioned in the "files" file must correspond
                        # to the type(s) of atom. Here, type 1 is the Aluminum,
                        # type 2 is the Arsenic.

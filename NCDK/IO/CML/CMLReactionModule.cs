@@ -27,12 +27,12 @@ using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * @author Egon Willighagen <elw38@cam.ac.uk>
-     *
-     * @cdk.module io
-     * @cdk.githash
-     */
+    /// <summary>
+    // @author Egon Willighagen <elw38@cam.ac.uk>
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    /// </summary>
     public class CMLReactionModule : CMLCoreModule
     {
 #if DEBUG
@@ -59,7 +59,7 @@ namespace NCDK.IO.CML
                 currentReaction = currentChemFile.Builder.CreateReaction();
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null) currentReaction.Id = id;
-                //            	cdo.SetObjectProperty("Reaction", "id", id);
+                //                cdo.SetObjectProperty("Reaction", "id", id);
             }
             else if ("reactionList".Equals(element.Name.LocalName))
             {
@@ -67,7 +67,7 @@ namespace NCDK.IO.CML
                 currentReactionSet = currentChemFile.Builder.CreateReactionSet();
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null) currentReactionSet.Id = id;
-                //            	cdo.SetObjectProperty("reactionList", "id", id);
+                //                cdo.SetObjectProperty("reactionList", "id", id);
             }
             else if ("reactant".Equals(element.Name.LocalName))
             {
@@ -90,7 +90,7 @@ namespace NCDK.IO.CML
                     string ref_ = AttGetValue(element.Attributes(), "ref");
                     if (ref_ != null) currentMolecule.Id = ref_;
                 }
-                //            	cdo.SetObjectProperty("Reactant", "id", id);
+                //                cdo.SetObjectProperty("Reactant", "id", id);
             }
             else if ("product".Equals(element.Name.LocalName))
             {
@@ -113,7 +113,7 @@ namespace NCDK.IO.CML
                     string ref_ = AttGetValue(element.Attributes(), "ref");
                     if (ref_ != null) currentMolecule.Id = ref_;
                 }
-                //            	cdo.SetObjectProperty("Product", "id", id);
+                //                cdo.SetObjectProperty("Product", "id", id);
             }
             else if ("substance".Equals(element.Name.LocalName))
             {
@@ -136,7 +136,7 @@ namespace NCDK.IO.CML
                     string ref_ = AttGetValue(element.Attributes(), "ref");
                     if (ref_ != null) currentMolecule.Id = ref_;
                 }
-                //            	cdo.SetObjectProperty("Agent", "id", id);
+                //                cdo.SetObjectProperty("Agent", "id", id);
             }
             else if ("molecule".Equals(element.Name.LocalName))
             {
@@ -226,13 +226,13 @@ namespace NCDK.IO.CML
             }
         }
 
-        /**
-         * Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
-         *
-         * @param molSet   The IAtomContainerSet
-         * @param id       The ID the look
-         * @return         The IAtomContainer with the ID
-         */
+        /// <summary>
+        /// Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
+        ///
+        /// <param name="molSet">The IAtomContainerSet</param>
+        /// <param name="id">The ID the look</param>
+        /// <returns>The IAtomContainer with the ID</returns>
+        /// </summary>
         private IAtomContainer GetMoleculeFromID(IAtomContainerSet<IAtomContainer> molSet, string id)
         {
             foreach (var mol in molSet)

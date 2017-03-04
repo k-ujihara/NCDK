@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
     public class JJTSMARTSParserState
     {
         private IList<Node> nodes;
@@ -24,7 +23,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         /* Determines whether the current node was actually closed and
            pushed.  This should only be called in the final user action of a
            node scope.  */
-        public bool nodeCreated()
+        public bool NodeCreated()
         {
             return node_created;
         }
@@ -75,7 +74,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /* Returns the number of children on the stack in the current node
            scope. */
-        public int nodeArity()
+        public int NodeArity()
         {
             return sp - mk;
         }
@@ -91,11 +90,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             marks.RemoveAt(marks.Count - 1);
         }
 
-        public void openNodeScope(Node n)
+        public void OpenNodeScope(Node n)
         {
             marks.Add(mk);
             mk = sp;
-            n.jjtOpen();
+            n.JJTOpen();
         }
 
 
@@ -110,10 +109,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             while (num-- > 0)
             {
                 Node c = PopNode();
-                c.jjtSetParent(n);
-                n.jjtAddChild(c, num);
+                c.JJTSetParent(n);
+                n.JJTAddChild(c, num);
             }
-            n.jjtClose();
+            n.JJTClose();
             PushNode(n);
             node_created = true;
         }
@@ -128,16 +127,16 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             if (condition)
             {
-                int a = nodeArity();
+                int a = NodeArity();
                 mk = marks[marks.Count - 1];
                 marks.RemoveAt(marks.Count - 1);
                 while (a-- > 0)
                 {
                     Node c = PopNode();
-                    c.jjtSetParent(n);
-                    n.jjtAddChild(c, a);
+                    c.JJTSetParent(n);
+                    n.JJTAddChild(c, a);
                 }
-                n.jjtClose();
+                n.JJTClose();
                 PushNode(n);
                 node_created = true;
             }

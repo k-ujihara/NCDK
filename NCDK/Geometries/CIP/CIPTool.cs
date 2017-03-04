@@ -21,86 +21,78 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Geometries.CIP.Rules;
+using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.Geometries.CIP
 {
-    /**
-    // Tool to help determine the R,S and stereochemistry definitions of a subset of the
-    // CIP rules {@cdk.cite Cahn1966}. The used set up sub rules are specified in the
-    // {@link CIPLigandRule} class.
-     *
-    // <p>Basic use starts from a {@link ITetrahedralChirality} and therefore
-    // assumes atoms with four neighbours:
-    // <pre>
-    // IAtom[] ligandAtoms =
-    //   mol.GetConnectedAtoms(centralAtom).ToArray(new IAtom[4]);
-    // ITetrahedralChirality tetraStereo = new TetrahedralChirality(
-    //   centralAtom, ligandAtoms, Stereo.AntiClockwise
-    // );
-    // CIP_CHIRALITY cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
-    // </pre>
-    // The {@link BondStereo} value can be
-    // reconstructed from 3D coordinates with the {@link StereoTool}.
-     *
+    /// <summary>
+    /// Tool to help determine the R,S and stereochemistry definitions of a subset of the
+    /// CIP rules {@cdk.cite Cahn1966}. The used set up sub rules are specified in the
+    /// <see cref="CIPLigandRule"/> class.
+    /// </summary>
+    /// <example>
+    /// Basic use starts from a <see cref="ITetrahedralChirality"/> and therefore
+    /// assumes atoms with four neighbours:
+    /// <code>
+    /// IAtom[] ligandAtoms = mol.GetConnectedAtoms(centralAtom).ToArray(new IAtom[4]);
+    /// ITetrahedralChirality tetraStereo = new TetrahedralChirality(centralAtom, ligandAtoms, Stereo.AntiClockwise);
+    /// CIPChirality cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
+    /// </code>
+    /// The <see cref="BondStereo"/> value can be
+    /// reconstructed from 3D coordinates with the <see cref="StereoTool"/>.
+    /// </example>
     // @cdk.module cip
     // @cdk.githash
-     */
     public class CIPTool
     {
-
-        /**
-        // IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
-         */
+        /// <summary>
+        /// IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
+        /// </summary>
         public const int HYDROGEN = -1;
 
         private static CIPLigandRule cipRule = new CIPLigandRule();
 
-        /**
-        // Enumeration with the two tetrahedral chiralities defined by the CIP schema.
-         *
-        // @author egonw
-         */
-        public enum CIP_CHIRALITY
+        /// <summary>
+        /// Enumeration with the two tetrahedral chiralities defined by the CIP schema.
+        /// </summary>
+       // @author egonw
+        public enum CIPChirality
         {
             R, S, E, Z, None
         }
 
-        /**
-        // Returns the R or S chirality according to the CIP rules, based on the given
-        // chirality information.
-         *
-        // @param  stereoCenter Chiral center for which the CIP chirality is to be
-        //                      determined as {@link LigancyFourChirality} object.
-        // @return A {@link CIP_CHIRALITY} value.
-         */
-        public static CIP_CHIRALITY GetCIPChirality(LigancyFourChirality stereoCenter)
+        /// <summary>
+        /// Returns the R or S chirality according to the CIP rules, based on the given
+        /// chirality information.
+        /// </summary>
+        /// <param name="stereoCenter">Chiral center for which the CIP chirality is to be
+        ///                     determined as <see cref="LigancyFourChirality"/> object.</param>
+        /// <returns>A <see cref="CIPChirality"/> value.</returns>
+        public static CIPChirality GetCIPChirality(LigancyFourChirality stereoCenter)
         {
             ILigand[] ligands = Order(stereoCenter.Ligands);
             LigancyFourChirality rsChirality = stereoCenter.Project(ligands);
 
             bool allAreDifferent = CheckIfAllLigandsAreDifferent(ligands);
-            if (!allAreDifferent) return CIP_CHIRALITY.None;
+            if (!allAreDifferent) return CIPChirality.None;
 
-            if (rsChirality.Stereo == TetrahedralStereo.Clockwise) return CIP_CHIRALITY.R;
+            if (rsChirality.Stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
 
-            return CIP_CHIRALITY.S;
+            return CIPChirality.S;
         }
 
-        /**
-        // Convenience method for labelling all stereo elements. The {@link
-        // CIP_CHIRALITY} is determined for each element and stored as as {@link
-        // string} on the {@link CDKConstants#CIP_DESCRIPTOR} property key.
-        // Atoms/bonds that are not stereocenters have no label assigned and the
-        // property will be null.
-         *
-        // @param container structure to label
-         */
+        /// <summary>
+        /// Convenience method for labelling all stereo elements. The <see cref="CIPChirality"/> is determined for each element and stored as as {@link
+        /// string} on the {@link CDKConstants#CIP_DESCRIPTOR} property key.
+        /// Atoms/bonds that are not stereocenters have no label assigned and the
+        /// property will be null.
+        /// </summary>
+        /// <param name="container">structure to label</param>
         public static void Label(IAtomContainer container)
         {
-
             foreach (var stereoElement in container.StereoElements)
             {
                 if (stereoElement is ITetrahedralChirality)
@@ -115,22 +107,17 @@ namespace NCDK.Geometries.CIP
                             .SetProperty(CDKPropertyName.CIP_DESCRIPTOR, GetCIPChirality(container, dbs).ToString());
                 }
             }
-
         }
 
-        /**
-        // Returns the R or S chirality according to the CIP rules, based on the given
-        // chirality information.
-         *
-        // @param  container    <see cref="IAtomContainer"/> to which the <code>stereoCenter</code>
-        //                      belongs.
-        // @param  stereoCenter Chiral center for which the CIP chirality is to be
-        //                      determined as {@link ITetrahedralChirality} object.
-        // @return A {@link CIP_CHIRALITY} value.
-         */
-        public static CIP_CHIRALITY GetCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter)
+        /// <summary>
+        /// Returns the R or S chirality according to the CIP rules, based on the given
+        /// chirality information.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> to which the <paramref name="stereoCenter"/> belongs.</param>              
+        /// <param name="stereoCenter">Chiral center for which the CIP chirality is to be determined as <see cref="ITetrahedralChirality"/> object.</param>
+        /// <returns>A <see cref="CIPChirality"/> value.</returns>
+        public static CIPChirality GetCIPChirality(IAtomContainer container, ITetrahedralChirality stereoCenter)
         {
-
             // the LigancyFourChirality is kind of redundant but we keep for an
             // easy way to get the ILigands array
             LigancyFourChirality tmp = new LigancyFourChirality(container, stereoCenter);
@@ -138,18 +125,17 @@ namespace NCDK.Geometries.CIP
 
             int parity = PermParity(tmp.Ligands);
 
-            if (parity == 0) return CIP_CHIRALITY.None;
+            if (parity == 0) return CIPChirality.None;
             if (parity < 0) stereo = stereo.Invert();
 
-            if (stereo == TetrahedralStereo.Clockwise) return CIP_CHIRALITY.R;
-            if (stereo == TetrahedralStereo.AntiClockwise) return CIP_CHIRALITY.S;
+            if (stereo == TetrahedralStereo.Clockwise) return CIPChirality.R;
+            if (stereo == TetrahedralStereo.AntiClockwise) return CIPChirality.S;
 
-            return CIP_CHIRALITY.None;
+            return CIPChirality.None;
         }
 
-        public static CIP_CHIRALITY GetCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter)
+        public static CIPChirality GetCIPChirality(IAtomContainer container, IDoubleBondStereochemistry stereoCenter)
         {
-
             IBond stereoBond = stereoCenter.StereoBond;
             IBond leftBond = stereoCenter.Bonds[0];
             IBond rightBond = stereoCenter.Bonds[1];
@@ -173,7 +159,7 @@ namespace NCDK.Geometries.CIP
             ILigand[] leftLigands = GetLigands(u, container, v);
             ILigand[] rightLigands = GetLigands(v, container, u);
 
-            if (leftLigands.Length > 2 || rightLigands.Length > 2) return CIP_CHIRALITY.None;
+            if (leftLigands.Length > 2 || rightLigands.Length > 2) return CIPChirality.None;
 
             // invert if x/y aren't in the first position
             if (leftLigands[0].GetLigandAtom() != x) conformation = conformation.Invert();
@@ -181,28 +167,26 @@ namespace NCDK.Geometries.CIP
 
             int p = PermParity(leftLigands) * PermParity(rightLigands);
 
-            if (p == 0) return CIP_CHIRALITY.None;
+            if (p == 0) return CIPChirality.None;
 
             if (p < 0) conformation = conformation.Invert();
 
-            if (conformation == DoubleBondConformation.Together) return CIP_CHIRALITY.Z;
-            if (conformation == DoubleBondConformation.Opposite) return CIP_CHIRALITY.E;
+            if (conformation == DoubleBondConformation.Together) return CIPChirality.Z;
+            if (conformation == DoubleBondConformation.Opposite) return CIPChirality.E;
 
-            return CIP_CHIRALITY.None;
+            return CIPChirality.None;
         }
 
-        /**
-        // Obtain the ligands connected to the 'atom' excluding 'exclude'. This is
-        // mainly meant as a utility for double-bond labelling.
-         *
-        // @param atom      an atom
-        // @param container a structure to which 'atom' belongs
-        // @param exclude   exclude this atom - can not be null
-        // @return the ligands
-         */
+        /// <summary>
+        /// Obtain the ligands connected to the 'atom' excluding 'exclude'. This is
+        /// mainly meant as a utility for double-bond labelling.
+        /// </summary>
+        /// <param name="atom">an atom</param>
+        /// <param name="container">a structure to which 'atom' belongs</param>
+        /// <param name="exclude">exclude this atom - can not be null</param>
+        /// <returns>the ligands</returns>
         private static ILigand[] GetLigands(IAtom atom, IAtomContainer container, IAtom exclude)
         {
-
             var neighbors = container.GetConnectedAtoms(atom);
 
             ILigand[] ligands = neighbors.
@@ -212,15 +196,13 @@ namespace NCDK.Geometries.CIP
             return ligands;
         }
 
-
-        /**
-        // Checks if each next {@link ILigand} is different from the previous
-        // one according to the {@link CIPLigandRule}. It assumes that the input
-        // is sorted based on that rule.
-         *
-        // @param ligands array of {@link ILigand} to check
-        // @return true, if all ligands are different
-         */
+        /// <summary>
+        /// Checks if each next <see cref="ILigand"/> is different from the previous
+        /// one according to the <see cref="CIPLigandRule"/>. It assumes that the input
+        /// is sorted based on that rule.
+        /// </summary>
+        /// <param name="ligands">array of <see cref="ILigand"/> to check</param>
+        /// <returns>true, if all ligands are different</returns>
         public static bool CheckIfAllLigandsAreDifferent(ILigand[] ligands)
         {
             for (int i = 0; i < (ligands.Length - 1); i++)
@@ -230,12 +212,11 @@ namespace NCDK.Geometries.CIP
             return true;
         }
 
-        /**
-        // Reorders the {@link ILigand} objects in the array according to the CIP rules.
-         *
-        // @param ligands Array of {@link ILigand}s to be reordered.
-        // @return        Reordered array of {@link ILigand}s.
-         */
+        /// <summary>
+        /// Reorders the <see cref="ILigand"/> objects in the array according to the CIP rules.
+        /// </summary>
+        /// <param name="ligands">Array of <see cref="ILigand"/>s to be reordered.</param>
+        /// <returns>Reordered array of <see cref="ILigand"/>s.</returns>
         public static ILigand[] Order(ILigand[] ligands)
         {
             ILigand[] newLigands = new ILigand[ligands.Length];
@@ -245,17 +226,15 @@ namespace NCDK.Geometries.CIP
             return newLigands;
         }
 
-        /**
-        // Obtain the permutation parity (-1,0,+1) to put the ligands in descending
-        // order (highest first). A parity of 0 indicates two or more ligands were
-        // equivalent.
-         *
-        // @param ligands the ligands to sort
-        // @return parity, odd (-1), even (+1) or none (0)
-         */
+        /// <summary>
+        /// Obtain the permutation parity (-1,0,+1) to put the ligands in descending
+        /// order (highest first). A parity of 0 indicates two or more ligands were
+        /// equivalent.
+        /// </summary>
+        /// <param name="ligands">the ligands to sort</param>
+        /// <returns>parity, odd (-1), even (+1) or none (0)</returns>
         private static int PermParity(ILigand[] ligands)
         {
-
             // count the number of swaps made by insertion sort - if duplicates
             // are fount the parity is 0
             int swaps = 0;
@@ -279,22 +258,21 @@ namespace NCDK.Geometries.CIP
             return (swaps & 0x1) == 0x1 ? -1 : +1;
         }
 
-        /**
-        // Creates a ligancy for chirality around a single chiral atom, where the involved
-        // atoms are identified by there index in the <see cref="IAtomContainer"/>. For the four ligand
-        // atoms, {@link #HYDROGEN} can be passed as index, which will indicate the presence of
-        // an implicit hydrogen, not explicitly present in the chemical graph of the
-        // given <code>container</code>.
-         *
-        // @param container  <see cref="IAtomContainer"/> for which the returned {@link ILigand}s are defined
-        // @param chiralAtom int pointing to the {@link IAtom} index of the chiral atom
-        // @param ligand1    int pointing to the {@link IAtom} index of the first {@link ILigand}
-        // @param ligand2    int pointing to the {@link IAtom} index of the second {@link ILigand}
-        // @param ligand3    int pointing to the {@link IAtom} index of the third {@link ILigand}
-        // @param ligand4    int pointing to the {@link IAtom} index of the fourth {@link ILigand}
-        // @param stereo     {@link Stereo} for the chirality
-        // @return           the created {@link LigancyFourChirality}
-         */
+        /// <summary>
+        /// Creates a ligancy for chirality around a single chiral atom, where the involved
+        /// atoms are identified by there index in the <see cref="IAtomContainer"/>. For the four ligand
+        /// atoms, <see cref="HYDROGEN"/> can be passed as index, which will indicate the presence of
+        /// an implicit hydrogen, not explicitly present in the chemical graph of the
+        /// given <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> for which the returned <see cref="ILigand"/>s are defined</param>
+        /// <param name="chiralAtom">int pointing to the <see cref="IAtom"/> index of the chiral atom</param>
+        /// <param name="ligand1">int pointing to the <see cref="IAtom"/> index of the first <see cref="ILigand"/></param>
+        /// <param name="ligand2">int pointing to the <see cref="IAtom"/> index of the second <see cref="ILigand"/></param>
+        /// <param name="ligand3">int pointing to the <see cref="IAtom"/> index of the third <see cref="ILigand"/></param>
+        /// <param name="ligand4">int pointing to the <see cref="IAtom"/> index of the fourth <see cref="ILigand"/></param>
+        /// <param name="stereo"><see cref="TetrahedralStereo"/> for the chirality</param>
+        /// <returns>the created <see cref="LigancyFourChirality"/></returns>
         public static LigancyFourChirality DefineLigancyFourChirality(IAtomContainer container, int chiralAtom,
                 int ligand1, int ligand2, int ligand3, int ligand4, TetrahedralStereo stereo)
         {
@@ -308,19 +286,18 @@ namespace NCDK.Geometries.CIP
             return new LigancyFourChirality(container.Atoms[chiralAtom], ligands, stereo);
         }
 
-        /**
-        // Creates a ligand attached to a single chiral atom, where the involved
-        // atoms are identified by there index in the <see cref="IAtomContainer"/>. For ligand
-        // atom, {@link #HYDROGEN} can be passed as index, which will indicate the presence of
-        // an implicit hydrogen, not explicitly present in the chemical graph of the
-        // given <code>container</code>.
-         *
-        // @param container  <see cref="IAtomContainer"/> for which the returned {@link ILigand}s are defined
-        // @param visitedAtoms a list of atoms already visited in the analysis
-        // @param chiralAtom an integer pointing to the {@link IAtom} index of the chiral atom
-        // @param ligandAtom an integer pointing to the {@link IAtom} index of the {@link ILigand}
-        // @return           the created {@link ILigand}
-         */
+        /// <summary>
+        /// Creates a ligand attached to a single chiral atom, where the involved
+        /// atoms are identified by there index in the <see cref="IAtomContainer"/>. For ligand
+        /// atom, <see cref="HYDROGEN"/> can be passed as index, which will indicate the presence of
+        /// an implicit hydrogen, not explicitly present in the chemical graph of the
+        /// given <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> for which the returned <see cref="ILigand"/>s are defined</param>
+        /// <param name="visitedAtoms">a list of atoms already visited in the analysis</param>
+        /// <param name="chiralAtom">an integer pointing to the <see cref="IAtom"/> index of the chiral atom</param>
+        /// <param name="ligandAtom">an integer pointing to the <see cref="IAtom"/> index of the <see cref="ILigand"/></param>
+        /// <returns>the created <see cref="ILigand"/></returns>
         public static ILigand DefineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom,
                 int ligandAtom)
         {
@@ -334,14 +311,13 @@ namespace NCDK.Geometries.CIP
             }
         }
 
-        /**
-        // Returns a CIP-expanded array of side chains of a ligand. If the ligand atom is only connected to
-        // the chiral atom, the method will return an empty list. The expansion involves the CIP rules,
-        // so that a double bonded oxygen will be represented twice in the list.
-         *
-        // @param ligand     the {@link ILigand} for which to return the ILigands
-        // @return           a {@link ILigand} array with the side chains of the ligand atom
-         */
+        /// <summary>
+        /// Returns a CIP-expanded array of side chains of a ligand. If the ligand atom is only connected to
+        /// the chiral atom, the method will return an empty list. The expansion involves the CIP rules,
+        /// so that a double bonded oxygen will be represented twice in the list.
+        /// </summary>
+        /// <param name="ligand">the <see cref="ILigand"/> for which to return the ILigands</param>
+        /// <returns>a <see cref="ILigand"/> array with the side chains of the ligand atom</returns>
         public static ILigand[] GetLigandLigands(ILigand ligand)
         {
             if (ligand is TerminalLigand) return new ILigand[0];
@@ -388,13 +364,12 @@ namespace NCDK.Geometries.CIP
             return ligands.ToArray();
         }
 
-        /**
-        // Returns the number of times the side chain should end up as the CIP-expanded ligand list. The CIP
-        // rules prescribe that a double bonded oxygen should be represented twice in the list.
-         *
-        // @param  order {@link Order} of the bond
-        // @return int reflecting the duplication number
-         */
+        /// <summary>
+        /// Returns the number of times the side chain should end up as the CIP-expanded ligand list. The CIP
+        /// rules prescribe that a double bonded oxygen should be represented twice in the list.
+        /// </summary>
+        /// <param name="order"><see cref="BondOrder"/> of the bond</param>
+        /// <returns>int reflecting the duplication number</returns>
         private static int GetDuplication(BondOrder order)
         {
             return order.Numeric;

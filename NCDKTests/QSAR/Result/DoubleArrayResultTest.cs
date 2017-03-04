@@ -21,9 +21,9 @@ using System.Linq;
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class DoubleArrayResultTest : CDKTestCase
     {

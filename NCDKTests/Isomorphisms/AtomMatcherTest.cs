@@ -29,10 +29,10 @@ using System;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class AtomMatcherTest
     {

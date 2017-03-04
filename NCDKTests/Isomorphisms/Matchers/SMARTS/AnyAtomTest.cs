@@ -30,7 +30,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     public class AnyAtomTest
     {
         [TestMethod()]
-        public void matchHydrogen()
+        public void MatchHydrogen()
         {
             Assert.IsTrue(new AnyAtom(null).Matches(new Atom("H")));
         }

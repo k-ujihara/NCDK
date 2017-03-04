@@ -8,7 +8,7 @@ namespace NCDK
     /// a nanomaterial with impurities.
     /// </summary>
     public interface ISubstance 
-		: IAtomContainerSet<IAtomContainer>
+        : IAtomContainerSet<IAtomContainer>
     {
     }
 }

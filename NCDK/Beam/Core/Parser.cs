@@ -38,18 +38,15 @@ using static NCDK.Beam.Element;
 namespace NCDK.Beam
 {
     /// <summary>
-	/// Parse a SMILES string and create a {@link Graph}. A new parser should be
-	/// created for each invocation, for convenience {@link #Parse(string)} is
-	/// provided.
+    /// Parse a SMILES string and create a <see cref="Graph"/>. A new parser should be
+    /// created for each invocation, for convenience <see cref="Parse(string)"/> is
+    /// provided.
     /// </summary>
-	/// <blockquote><pre>
-	/// Graph g = Parser.Parse("CCO");
-	/// </pre></blockquote>
-	/// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class Parser
+    /// <example><code>
+    /// Graph g = Parser.Parse("CCO");
+    /// </code></example>
+    // @author John May
+    internal sealed class Parser
     {
         /// <summary>Keep track of branching.</summary>
         private readonly IntStack stack = new IntStack(10);
@@ -112,9 +109,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create a new (loose) parser for the specified string.
-        /// <param name="str">SMILES string</param>
-        // @ thrown if the SMILES could not be parsed
         /// </summary>
+        /// <param name="str">SMILES string</param>
+        /// <exception cref="">thrown if the SMILES could not be parsed</exception>
         public Parser(string str)
             : this(CharBuffer.FromString(str), false)
         {
@@ -123,9 +120,9 @@ namespace NCDK.Beam
         /// <summary>
         /// Strict parsing of the provided SMILES string. The strict parser will
         /// throw more exceptions for unusual input.
+        /// </summary>
         /// <param name="str">the SMILES string to process</param>
         /// <returns>a graph created with the strict parser</returns>
-        /// </summary>
         public static Graph GetStrict(string str)
         {
             return new Parser(CharBuffer.FromString(str), true).Molecule();
@@ -136,9 +133,9 @@ namespace NCDK.Beam
         /// relaxed and will allow abnormal aromatic elements (e.g. 'te') as well as
         /// bare 'H', 'D' and 'T' for hydrogen and it's isotopes. Note the hydrogen
         /// and isotopes are replaced with their correct bracket equivalent.
+        /// </summary>
         /// <param name="str">the SMILES string to process</param>
         /// <returns>a graph created with the loose parser</returns>
-        /// </summary>
         public static Graph Losse(string str)
         {
             return new Parser(CharBuffer.FromString(str), false).Molecule();
@@ -146,8 +143,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Access the molecule created by the parser.
-        /// <returns>the chemical graph for the parsed smiles string</returns>
         /// </summary>
+        /// <returns>the chemical graph for the parsed smiles string</returns>
         public Graph Molecule()
         {
             return g;
@@ -156,7 +153,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Create the topologies (stereo configurations) for the chemical graph. The
         /// topologies define spacial arrangement around atoms.
-        /// </summary>CharBuffer buffer>
+        /// </summary>
         private void CreateTopologies(CharBuffer buffer)
         {
             // create topologies (stereo configurations)
@@ -229,13 +226,12 @@ namespace NCDK.Beam
         /// involved in a ring closure the local arrangement is used instead of the
         /// Order in the graph. The configuration should be explicit '@TH1' or '@TH2'
         /// instead of '@' or '@@'.
+        /// </summary>
         /// <param name="u">a vertex</param>
         /// <param name="c">explicit configuration of that vertex</param>
-        // @see Topology#ToExplicit(Graph, int, Configuration)
-        /// </summary>
+        /// <seealso cref="Topology.ToExplicit(Graph, int, Configuration)"/>
         private void AddTopology(int u, Configuration c)
         {
-
             // stereo on ring closure - use local arrangement
             if (arrangement.ContainsKey(u))
             {
@@ -326,11 +322,10 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Add an atom and bond with the atom on the stack (if available and non-dot
-        /// bond).
-        /// <param name="a">an atom to add</param>
+        /// Add an atom and bond with the atom on the stack (if available and non-dot bond).
         /// </summary>
-        private void AddAtom(Atom_ a, CharBuffer buffer)
+        /// <param name="a">an atom to add</param>
+        private void AddAtom(Atom a, CharBuffer buffer)
         {
             int v = g.AddAtom(a);
             if (!stack.IsEmpty)
@@ -368,8 +363,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Read a molecule from the character buffer.
+        /// </summary>
         /// <param name="buffer">a character buffer</param>
-        // @ invalid grammar
+        /// <exception cref="InvalidSmilesException">invalid grammar</exception>
         private void ReadSmiles(CharBuffer buffer)
         {
             // primary dispatch
@@ -581,8 +577,8 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="buffer">a character buffer</param>
         /// <returns>a bracket atom</returns>
-        // @thrown if the bracket atom did not match the grammar, invalid symbol, missing closing bracket or invalid chiral specification.
-        public Atom_ ReadBracketAtom(CharBuffer buffer)
+        /// <exception cref="InvalidSmilesException">if the bracket atom did not match the grammar, invalid symbol, missing closing bracket or invalid chiral specification.</exception>
+        public Atom ReadBracketAtom(CharBuffer buffer)
         {
             int start = buffer.Position;
 
@@ -666,9 +662,9 @@ namespace NCDK.Beam
         /// count is specified by a 'H' an 0 or more digits. A 'H' without digits is
         /// intercepted as 'H1'. When there is no 'H' or 'H0' is specified then the
         /// the hydrogen count is 0.
-        /// <param name="buffer">a character buffer</param>
-        /// <returns>the hydrogen count</returns>, 0 if none
         /// </summary>
+        /// <param name="buffer">a character buffer</param>
+        /// <returns>the hydrogen count, 0 if none</returns>
         public static int ReadHydrogens(CharBuffer buffer)
         {
             if (buffer.GetIf('H'))
@@ -686,11 +682,10 @@ namespace NCDK.Beam
         /// specification or the hydrogen count. The specification of charge by
         /// concatenated signs (e.g. ++, --) and other bad form (e.g. '++-1') is
         /// intercepted.
+        /// </summary>
+        /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#charge">Charge -OpenSMILES Specification</a></remarks>
         /// <param name="buffer">a character buffer</param>
         /// <returns>the formal charge value</returns>, 0 if none present
-        // @see <a href="http://www.opensmiles.org/opensmiles.html#charge">Charge -
-        ///      OpenSMILES Specification</a>
-        /// </summary>
         public static int ReadCharge(CharBuffer buffer)
         {
             return ReadCharge(0, buffer);
@@ -699,10 +694,10 @@ namespace NCDK.Beam
         /// <summary>
         /// Internal method for parsing charge, to allow concatenated signs (--, ++)
         /// the method recursively invokes increment or decrementing an accumulator.
+        /// </summary>
         /// <param name="acc">   accumulator</param>
         /// <param name="buffer">a character buffer</param>
         /// <returns>the charge value</returns>
-        /// </summary>
         private static int ReadCharge(int acc, CharBuffer buffer)
         {
             if (buffer.GetIf('+'))
@@ -719,11 +714,10 @@ namespace NCDK.Beam
         /// The atom class is the last attribute of the bracket atom and is
         /// identified by a ':' followed by one or more digits. The atom class may be
         /// padded such that ':005' and ':5' are equivalent.
-        /// <param name="buffer">a character buffer</param>
-        /// <returns>the atom class</returns>, or 0
-        // @see <a href="http://www.opensmiles.org/opensmiles.html#atomclass">Atom
-        ///      Class - OpenSMILES Specification</a>
         /// </summary>
+        /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#atomclass">Atom Class - OpenSMILES Specification</a></remarks>
+        /// <param name="buffer">a character buffer</param>
+        /// <returns>the atom class, or 0</returns>
         public static int ReadClass(CharBuffer buffer)
         {
             if (buffer.GetIf(':'))
@@ -737,9 +731,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Handle the ring open/closure of the specified ring number 'rnum'.
-        /// <param name="rnum">ring number</param>
-        // @ bond types did not match on ring closure
         /// </summary>
+        /// <param name="rnum">ring number</param>
+        /// <exception cref="InvalidSmilesException">bond types did not match on ring closure</exception>
         private void Ring(int rnum, CharBuffer buffer)
         {
             if (bond == Bond.Dot)
@@ -758,8 +752,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Open the ring bond with the specified 'rnum'.
-        /// <param name="rnum">ring number</param>
         /// </summary>
+        /// <param name="rnum">ring number</param>
         private void OpenRing(int rnum)
         {
             if (rnum >= rings.Length)
@@ -780,9 +774,9 @@ namespace NCDK.Beam
         /// <summary>
         /// Create the current local arrangement for vertex 'u' - if the arrangment
         /// already exists then that arrangement is used.
+        /// </summary>
         /// <param name="u">vertex to get the arrangement around</param>
         /// <returns>current local arrangement</returns>
-        /// </summary>
         private LocalArrangement CreateArrangement(int u)
         {
             LocalArrangement la;
@@ -804,7 +798,7 @@ namespace NCDK.Beam
         /// Close the ring bond with the specified 'rnum'.
         /// </summary>
         /// <param name="rnum">ring number</param>
-        // @ bond types did not match
+        /// <exception cref="InvalidSmilesException">bond types did not match</exception>
         private void CloseRing(int rnum, CharBuffer buffer)
         {
             RingBond rbond = rings[rnum];
@@ -840,17 +834,19 @@ namespace NCDK.Beam
         /// Decide the bond to use for a ring bond. The bond symbol can be present on
         /// either or both bonded atoms. This method takes those bonds, chooses the
         /// correct one or reports an error if there is a conflict.
+        /// </summary>
+        /// <remarks>
         /// Equivalent SMILES:
-        /// <blockquote><pre>
-        ///     C=1CCCCC=1
-        ///     C=1CCCCC1    (preferred)
-        ///     C1CCCCC=1
-        /// </pre></blockquote>
+        /// <list type="bullet">
+        /// <item>C=1CCCCC=1</item>
+        /// <item>C=1CCCCC1    (preferred)</item>
+        /// <item>C1CCCCC=1</item>
+        /// </list>
+        /// </remarks>
         /// <param name="a">a bond</param>
         /// <param name="b">other bond</param>
         /// <returns>the bond to use for this edge</returns>
-        // @ ring bonds did not match
-        /// </summary>
+        /// <exception cref="InvalidSmilesException">ring bonds did not match</exception>
         public static Bond DecideBond(Bond a, Bond b, CharBuffer buffer)
         {
             if (a == b)
@@ -867,10 +863,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Convenience method for parsing a SMILES string.
+        /// </summary>
         /// <param name="str">SMILES string</param>
         /// <returns>the chemical graph for the provided SMILES notation</returns>
-        // @ thrown if the SMILES could not be interpreted
-        /// </summary>
+        /// <exception cref="">thrown if the SMILES could not be interpreted</exception>
         public static Graph Parse(string str)
         {
             return new Parser(str).Molecule();
@@ -904,7 +900,6 @@ namespace NCDK.Beam
         /// </summary>
         private sealed class LocalArrangement
         {
-
             int[] vs;
             int n;
 
@@ -926,10 +921,9 @@ namespace NCDK.Beam
             }
 
             /// <summary>
-            /// Replace the vertex 'u' with 'v'. Allows us to use negated values as
-            /// placeholders.
+            /// Replace the vertex 'u' with 'v'. Allows us to use negated values as placeholders.
             /// </summary>
-            /// <blockquote><pre>
+            /// <example><code>
             /// LocalArrangement la = new LocalArrangement();
             /// la.Add(1);
             /// la.Add(-2);
@@ -938,7 +932,7 @@ namespace NCDK.Beam
             /// la.Replace(-1, 4);
             /// la.Replace(-2, 6);
             /// la.ToArray() = {1, 6, 4, 5}
-            /// </pre></blockquote>
+            /// </code></example>
             /// <param name="u">negated vertex</param>
             /// <param name="v">new vertex</param>
             public void Replace(int u, int v)

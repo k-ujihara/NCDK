@@ -24,32 +24,25 @@ using System.Diagnostics;
 
 namespace NCDK.Charges
 {
-    /**
+    /// <summary>
     /// The calculation of the inductive partial atomic charges and equalization of
     /// effective electronegativities is based on {@cdk.cite CHE03}.
-     *
-    /// @author      mfe4
-    /// @cdk.module  charges
-    /// @cdk.githash
-    /// @cdk.created 2004-11-03
-    /// @cdk.keyword partial atomic charges
-    /// @cdk.keyword charge distribution
-    /// @cdk.keyword electronegativity
-     */
+    // @author      mfe4
+    // @cdk.module  charges
+    // @cdk.githash
+    // @cdk.created 2004-11-03
+    // @cdk.keyword partial atomic charges
+    // @cdk.keyword charge distribution
+    // @cdk.keyword electronegativity
     public class InductivePartialCharges : IChargeCalculator
     {
-
         private static double[] pauling;
         private IsotopeFactory ifac = null;
         private AtomTypeFactory factory = null;
 
-
-        /**
+        /// <summary>
         ///  Constructor for the InductivePartialCharges object.
-         *
-         *@exception  IOException             Description of the Exception
-         *@exception  ClassNotFoundException  Description of the Exception
-         */
+        /// </summary>
         public InductivePartialCharges()
         {
             if (pauling == null)
@@ -63,13 +56,11 @@ namespace NCDK.Charges
             }
         }
 
-        /**
-        ///  Main method, set charge as atom properties.
-         *
-         *@param  ac             AtomContainer
-         *@return                AtomContainer
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        /// Main method, set charge as atom properties.
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>AtomContainer</returns>
         public IAtomContainer AssignInductivePartialCharges(IAtomContainer ac)
         {
             if (factory == null)
@@ -125,15 +116,13 @@ namespace NCDK.Charges
             }
         }
 
-        /**
+        /// <summary>
         ///  Gets the paulingElectronegativities attribute of the
         ///  InductivePartialCharges object.
-         *
-         *@param  ac             AtomContainer
-         *@param  modified       if true, some values are modified by following the reference
-         *@return                The pauling electronegativities
-         *@exception  Exception  Description of the Exception
-         */
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <param name="modified">if true, some values are modified by following the reference</param>
+        /// <returns>The pauling electronegativities</returns>
         public double[] GetPaulingElectronegativities(IAtomContainer ac, bool modified)
         {
             double[] paulingElectronegativities = new double[ac.Atoms.Count];
@@ -226,17 +215,18 @@ namespace NCDK.Charges
             }
         }
 
-        /**
+        /// <summary>
         ///  Gets the atomicSoftnessCore attribute of the InductivePartialCharges object.
-         *
-         *@param  ac                AtomContainer
-         *@param  atomPosition      position of target atom
-         *@return                   The atomicSoftnessCore value
-         *@exception  CDKException  Description of the Exception
-         */
-        // this method returns the result of the core of the equation of atomic softness
-        // that can be used for qsar descriptors and during the iterative calculation
-        // of effective electronegativity
+        /// </summary>
+        /// <remarks>
+        /// this method returns the result of the core of the equation of atomic softness
+        /// that can be used for qsar descriptors and during the iterative calculation
+        /// of effective electronegativity
+        /// </remarks>
+        /// <param name="ac">AtomContainer</param>
+        /// <param name="atomPosition">position of target atom</param>
+        /// <returns>The atomicSoftnessCore value</returns>
+        /// <exception cref="CDKException"></exception>
         public double GetAtomicSoftnessCore(IAtomContainer ac, int atomPosition)
         {
             if (factory == null)
@@ -307,17 +297,15 @@ namespace NCDK.Charges
         }
 
         // this method returns the partial charge increment for a given atom
-        /**
-        ///  Gets the atomicChargeIncrement attribute of the InductivePartialCharges
-        ///  object.
-         *
-         *@param  ac                AtomContainer
-         *@param  atomPosition      position of target atom
-         *@param  ElEn              electronegativity of target atom
-         *@param  as        step in iteration
-         *@return                   The atomic charge increment for the target atom
-         *@exception  CDKException  Description of the Exception
-         */
+        /// <summary>
+        ///  Gets the atomicChargeIncrement attribute of the InductivePartialCharges object.
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <param name="atomPosition">position of target atom</param>
+        /// <param name="ElEn">electronegativity of target atom</param>
+        /// <param name="as">step in iteration</param>
+        /// <returns>The atomic charge increment for the target atom</returns>
+        /// <exception cref="CDKException"></exception>
         private double GetAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as_)
         {
             IAtom[] allAtoms = null;
@@ -386,13 +374,12 @@ namespace NCDK.Charges
             return incrementedCharge;
         }
 
-        /**
-        ///  Gets the covalentRadius attribute of the InductivePartialCharges object.
-         *
-         *@param  symbol        symbol of the atom
-         *@param  maxBondOrder  its max bond order
-         *@return               The covalentRadius value given by the reference
-         */
+        /// <summary>
+        /// Gets the covalentRadius attribute of the InductivePartialCharges object.
+        /// </summary>
+        /// <param name="symbol">symbol of the atom</param>
+        /// <param name="maxBondOrder">its max bond order</param>
+        /// <returns>The covalentRadius value given by the reference</returns>
         private double GetCovalentRadius(string symbol, BondOrder maxBondOrder)
         {
             double radiusTarget = 0;
@@ -463,13 +450,12 @@ namespace NCDK.Charges
             return radiusTarget;
         }
 
-        /**
-        ///  Evaluate the square of the Euclidean distance between two atoms.
-         *
-         *@param  atom1  first atom
-         *@param  atom2  second atom
-         *@return        squared distance between the 2 atoms
-         */
+        /// <summary>
+        /// Evaluate the square of the Euclidean distance between two atoms.
+        /// </summary>
+        /// <param name="atom1">first atom</param>
+        /// <param name="atom2">second atom</param>
+        /// <returns>squared distance between the 2 atoms</returns>
         private double CalculateSquaredDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
         {
             double distance = 0;

@@ -33,27 +33,27 @@ using System.IO;
 
 namespace NCDK.Tools
 {
-    /**
-     * Tests the HOSECode generator.
-     *
-     * @cdk.module  test-standard
-     * @author      steinbeck
-     * @cdk.created 2002-11-16
-     */
+    /// <summary>
+    /// Tests the HOSECode generator.
+    ///
+    // @cdk.module  test-standard
+    // @author      steinbeck
+    // @cdk.created 2002-11-16
+    /// </summary>
     [TestClass()]
     public class HOSECodeGeneratorTest : CDKTestCase
     {
 
         static bool standAlone = false;
 
-        /**
-         * @cdk.bug 968852
-         */
+        /// <summary>
+        // @cdk.bug 968852
+        /// </summary>
         [TestMethod()]
         public void Test968852()
         {
             string filename = "NCDK.Data.MDL.2,5-dimethyl-furan.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
@@ -62,32 +62,32 @@ namespace NCDK.Tools
                     new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[3], 6));
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSecondSphere()
         {
             string filename = "NCDK.Data.MDL.isopropylacetate.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             string code1 = new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[0], 6);
             filename = "NCDK.Data.MDL.testisopropylacetate.mol";
-            Stream ins2 = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins2 = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader2 = new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict);
             IAtomContainer mol2 = reader2.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             string code2 = new HOSECodeGenerator().GetHOSECode(mol2, mol2.Atoms[2], 6);
             Assert.AreNotSame(code2, code1);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void Test1Sphere()
         {
@@ -237,11 +237,11 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMakeBremserCompliant()
         {
@@ -265,11 +265,11 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void Test4Sphere()
         {
@@ -432,11 +432,11 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void Test4()
         {
@@ -462,9 +462,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * @cdk.bug 655169
-         */
+        /// <summary>
+        // @cdk.bug 655169
+        /// </summary>
         [TestMethod()]
         public void TestBug655169()
         {
@@ -485,28 +485,26 @@ namespace NCDK.Tools
                 if (standAlone) Console.Out.WriteLine("  OK");
             }
 
-            /*
-             * JFrame frame = new JFrame("HOSECodeTest");
-             * frame.SetDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-             * frame.GetContentPane().SetLayout(new BorderLayout());
-             * DefaultMutableTreeNode top = hcg.GetRootNode();
-             * StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-             * MoleculeViewer2D mv = new MoleculeViewer2D(); Renderer2DModel r2dm =
-             * mv.GetRenderer2DModel(); r2dm.SetDrawNumbers(true);
-             * sdg.SetMolecule((Molecule) molecule.Clone());
-             * sdg.GenerateCoordinates(new Vector2(0, 1));
-             * mv.SetAtomContainer(sdg.Molecule); final JTree tree = new
-             * JTree(top); JScrollPane treeView = new JScrollPane(tree);
-             * frame.GetContentPane().Add("West", treeView); mv.SetPreferredSize(new
-             * Dimension(400,400)); frame.GetContentPane().Add("Center", mv); for
-             * (int f = 0; f < tree.GetRowCount(); f ++) { tree.ExpandRow(f); }
-             * frame.Pack(); frame.show();
-             */
+            // JFrame frame = new JFrame("HOSECodeTest");
+            // frame.SetDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            // frame.GetContentPane().SetLayout(new BorderLayout());
+            // DefaultMutableTreeNode top = hcg.GetRootNode();
+            // StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            // MoleculeViewer2D mv = new MoleculeViewer2D(); Renderer2DModel r2dm =
+            // mv.GetRenderer2DModel(); r2dm.SetDrawNumbers(true);
+            // sdg.SetMolecule((Molecule) molecule.Clone());
+            // sdg.GenerateCoordinates(new Vector2(0, 1));
+            // mv.SetAtomContainer(sdg.Molecule); final JTree tree = new
+            // JTree(top); JScrollPane treeView = new JScrollPane(tree);
+            // frame.GetContentPane().Add("West", treeView); mv.SetPreferredSize(new
+            // Dimension(400,400)); frame.GetContentPane().Add("Center", mv); for
+            // (int f = 0; f < tree.GetRowCount(); f ++) { tree.ExpandRow(f); }
+            // frame.Pack(); frame.Show();
         }
 
-        /**
-         * @cdk.bug 795480
-         */
+        /// <summary>
+        // @cdk.bug 795480
+        /// </summary>
         [TestMethod()]
         public void TestBug795480()
         {

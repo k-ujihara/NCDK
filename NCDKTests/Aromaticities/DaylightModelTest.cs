@@ -32,12 +32,12 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Aromaticities
 {
-    /**
-     * Test the electron contribution using the Daylight aromatic model.
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Test the electron contribution using the Daylight aromatic model.
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class DaylightModelTest
     {
@@ -81,7 +81,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void hexamethylidenecyclohexane()
+        public void Hexamethylidenecyclohexane()
         {
             Test(CreateFromSmiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"), -1, 1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1);
         }
@@ -105,7 +105,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void azulene()
+        public void Azulene()
         {
             Test(AddHydrogens(TestMoleculeFactory.MakeAzulene()), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         }
@@ -117,7 +117,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void thiazole()
+        public void Thiazole()
         {
             Test(AddHydrogens(TestMoleculeFactory.MakeThiazole()), 1, 1, 1, 2, 1);
         }
@@ -148,7 +148,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void quinone()
+        public void Quinone()
         {
             Test(CreateFromSmiles("O=C1C=CC(=O)C=C1"), -1, 0, 1, 1, 0, -1, 1, 1);
         }
@@ -172,14 +172,14 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void imidazothiazole()
+        public void Imidazothiazole()
         {
             Test(CreateFromSmiles("S1C=CN2C=CN=C12"), 2, 1, 1, 2, 1, 1, 1, 1);
         }
 
         // 1-oxide pyridine
         [TestMethod()]
-        public void oxidepyridine()
+        public void Oxidepyridine()
         {
             Test(CreateFromSmiles("O=N1=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
         }
@@ -193,50 +193,50 @@ namespace NCDK.Aromaticities
 
         // 1H-oxepin-1-ium
         [TestMethod()]
-        public void oxepinium()
+        public void Oxepinium()
         {
             Test(CreateFromSmiles("[OH+]1C=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
         }
 
         // 4-oxo-1H-pyridin-1-ide
         [TestMethod()]
-        public void oxypyridinide()
+        public void Oxypyridinide()
         {
             Test(CreateFromSmiles("O=C1C=C[N-]C=C1"), -1, 0, 1, 1, 2, 1, 1);
         }
 
         [TestMethod()]
-        public void abnormalValence_carbon()
+        public void AbnormalValence_carbon()
         {
             Test(CreateFromSmiles("[C]1[C][C][C][C]1"), -1, -1, -1, -1, -1);
         }
 
         [TestMethod()]
-        public void abnormalValence_nitrogen()
+        public void AbnormalValence_nitrogen()
         {
             Test(CreateFromSmiles("[N]1[N][N][N][N]1"), -1, -1, -1, -1, -1);
         }
 
         [TestMethod()]
-        public void abnormalValence_phosphorus()
+        public void AbnormalValence_phosphorus()
         {
             Test(CreateFromSmiles("[P]1[P][P][P][P]1"), -1, -1, -1, -1, -1);
         }
 
-        /**
-         * A 3 valent nitrogen cation should be aromatic, otherwise when we make it
-         * lower case we can not convert it back.
-         *
-         * @cdk.bug 1332
-         */
+        /// <summary>
+        /// A 3 valent nitrogen cation should be aromatic, otherwise when we make it
+        /// lower case we can not convert it back.
+        ///
+        // @cdk.bug 1332
+        /// </summary>
         [TestMethod()]
-        public void abnormalValence_nitrogenCation()
+        public void AbnormalValence_nitrogenCation()
         {
             Test(CreateFromSmiles("C1=CC(=C([N+]=C1)N)[N+](=O)[O-]"), 1, 1, 1, 1, -1, 1, -1, -1, -1, -1);
         }
 
         [TestMethod()]
-        public void thiazole1oxide()
+        public void Thiazole1oxide()
         {
             Test(CreateFromSmiles("O=S1C=NC=C1"), -1, 2, 1, 1, 1, 1);
         }

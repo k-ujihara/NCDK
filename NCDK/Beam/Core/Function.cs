@@ -35,20 +35,15 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Defines a function which can be applied to one type to produce another.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-	public
-#endif
-    interface Function<S, T>
+    // @author John May
+    internal interface Function<S, T>
     {
         /// <summary>
         /// Apply the function to an instance of 's' and producing and instance 't'.
-        ///
+        /// </summary>
         /// <param name="s">input instance</param>
         /// <returns>output instance</returns>
-        /// </summary>
         T Apply(S s);
 
         Function<S, U> With<U>(Function<T, U> g);

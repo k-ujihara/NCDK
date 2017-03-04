@@ -21,20 +21,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for CDK IO classes.
-     *
-     * @cdk.module test-io
-     */
+    /// <summary>
+    /// TestCase for CDK IO classes.
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public abstract class ChemObjectReaderTest : ChemObjectIOTest
     {
@@ -45,7 +41,7 @@ namespace NCDK.IO
         public virtual void TestSetReader_InputStream()
         {
             Assert.IsNotNull(testFile, "No test file has been set!");
-            var ins = typeof(ChemObjectReaderTest).Assembly.GetManifestResourceStream(testFile);
+            var ins = ResourceLoader.GetAsStream(testFile);
             ChemObjectReaderToTest.SetReader(ins);
         }
 
@@ -53,7 +49,7 @@ namespace NCDK.IO
         public virtual void TestSetReader_Reader()
         {
             Assert.IsNotNull(testFile, "No test file has been set!");
-            var ins = typeof(ChemObjectReaderTest).Assembly.GetManifestResourceStream(testFile);
+            var ins = ResourceLoader.GetAsStream(testFile);
             ChemObjectReaderToTest.SetReader(new StreamReader(ins));
         }
     }

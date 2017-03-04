@@ -19,6 +19,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,9 +27,9 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class ChemModelManipulatorTest : CDKTestCase
     {
@@ -80,7 +81,7 @@ namespace NCDK.Tools.Manipulator
         {
             string filename = "NCDK.Data.MDL.a-pinene.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemModel chemFile = (ChemModel)reader.Read((ChemObject)new ChemModel());
@@ -94,7 +95,7 @@ namespace NCDK.Tools.Manipulator
         {
             string filename = "NCDK.Data.MDL.0024.stg02.rxn";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemModel chemFile = (ChemModel)reader.Read((ChemObject)new ChemModel());
@@ -287,9 +288,9 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(10, uniq.Count);
         }
 
-        /**
-         * @cdk.bug 3530861
-         */
+        /// <summary>
+        // @cdk.bug 3530861
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestGetRelevantAtomContainer_NonExistentAtom()

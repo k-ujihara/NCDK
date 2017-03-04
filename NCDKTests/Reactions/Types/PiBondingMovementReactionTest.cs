@@ -27,31 +27,31 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the PiBondingMovementReactionTest.
-     * Generalized Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
-     *
-     * FIXME: REACT: The tests fail if I don't put the smiles, strange
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the PiBondingMovementReactionTest.
+    /// Generalized Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1.
+    ///
+    /// FIXME: REACT: The tests fail if I don't put the smiles, strange
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class PiBondingMovementReactionTest : ReactionProcessTest
     {
 
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public PiBondingMovementReactionTest()
         {
             SetReaction(typeof(PiBondingMovementReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestPiBondingMovementReaction()
         {
@@ -59,15 +59,15 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         * A unit test suite for JUnit with benzene.
-         * Reaction:  C1=CC=CC=C1 -> C1(C)=C(C)-C=C-C=C1
-         * Automatic search of the center active.
-         *
-         * InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit with benzene.
+        /// Reaction:  C1=CC=CC=C1 -> C1(C)=C(C)-C=C-C=C1
+        /// Automatic search of the center active.
+        ///
+        /// InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
@@ -112,15 +112,15 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit with 1,2-dimethylbenzene.
-         * Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1
-         * Automatic search of the center active.
-         *
-         * InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit with 1,2-dimethylbenzene.
+        /// Reaction: C1=C(C)-C(C)=C-C=C1 -> C1(C)=C(C)-C=C-C=C1
+        /// Automatic search of the center active.
+        ///
+        /// InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAutomaticSearchCentreActiveExample1()
         {
@@ -197,16 +197,16 @@ namespace NCDK.Reactions.Types
             return new UniversalIsomorphismTester().IsIsomorph(a, query);
         }
 
-        /**
-         * A unit test suite for JUnit with 2-methylnaphthalene.
-         * Reaction: C1=CC(=CC2=C1C=CC=C2)C
-         * -> C1=CC(=CC2=CC=CC=C12)C + C1=C2C(=CC(=C1)C)C=CC=C2
-         * Automatic search of the center active.
-         *
-         * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit with 2-methylnaphthalene.
+        /// Reaction: C1=CC(=CC2=C1C=CC=C2)C
+        /// -> C1=CC(=CC2=CC=CC=C12)C + C1=C2C(=CC(=C1)C)C=CC=C2
+        /// Automatic search of the center active.
+        ///
+        /// InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDoubleRingConjugated()
         {
@@ -267,17 +267,17 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit with 2-methylnaphthalene.
-         * Reaction: C1=CC(=CC2=C1C=CC=C2)C
-         * -> C1=CC(=CC2=CC=CC=C12)C + {NO => C1=C2C(=CC(=C1)C)C=CC=C2}
-         *
-         * restricted the reaction center.
-         *
-         * InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit with 2-methylnaphthalene.
+        /// Reaction: C1=CC(=CC2=C1C=CC=C2)C
+        /// -> C1=CC(=CC2=CC=CC=C12)C + {NO => C1=C2C(=CC(=C1)C)C=CC=C2}
+        ///
+        /// restricted the reaction center.
+        ///
+        /// InChI=1/C11H10/c1-9-6-7-10-4-2-3-5-11(10)8-9/h2-8H,1H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDoubleRingConjugated2()
         {
@@ -315,12 +315,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * Create one of the resonance for 2-methylnaphthalene.
-         * C1=CC(=CC2=C1C=CC=C2)C
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Create one of the resonance for 2-methylnaphthalene.
+        /// C1=CC(=CC2=C1C=CC=C2)C
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -366,12 +366,12 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules. 2-methylnaphthalene.
-         * C=1C=CC2=CC(=CC=C2(C=1))C
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules. 2-methylnaphthalene.
+        /// C=1C=CC2=CC(=CC=C2(C=1))C
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -417,12 +417,12 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
 

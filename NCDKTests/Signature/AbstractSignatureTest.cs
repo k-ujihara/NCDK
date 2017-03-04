@@ -259,10 +259,8 @@ namespace NCDK.Signature
 
         public static IAtomContainer MakeCage()
         {
-            /*
-             * This 'molecule' is the example used to illustrate the algorithm
-             * outlined in the 2004 Faulon &ct. paper
-             */
+            // This 'molecule' is the example used to illustrate the algorithm
+            // outlined in the 2004 Faulon &ct. paper
             IAtomContainer cage = builder.CreateAtomContainer();
             for (int i = 0; i < 16; i++)
             {
@@ -295,12 +293,11 @@ namespace NCDK.Signature
             return cage;
         }
 
-        /**
-         * Strictly speaking, this is more like a cube than cubane, as it has no
-         * hydrogens.
-         *
-         * @return
-         */
+        /// <summary>
+        /// Strictly speaking, this is more like a cube than cubane, as it has no
+        /// hydrogens.
+        ///
+        /// <returns>/// </summary></returns>
         public static IAtomContainer MakeCubane()
         {
             IAtomContainer mol = builder.CreateAtomContainer();
@@ -438,13 +435,12 @@ namespace NCDK.Signature
             return mol;
         }
 
-        /**
-         * This may not be a real molecule, but it is a good, simple test.
-         * It is something like cyclobutane with a single carbon bridge across it,
-         * or propellane without one of its bonds (see makePropellane).
-         *
-         * @return
-         */
+        /// <summary>
+        /// This may not be a real molecule, but it is a good, simple test.
+        /// It is something like cyclobutane with a single carbon bridge across it,
+        /// or propellane without one of its bonds (see makePropellane).
+        ///
+        /// <returns>/// </summary></returns>
         public static IAtomContainer MakePseudoPropellane()
         {
             IAtomContainer mol = builder.CreateAtomContainer();

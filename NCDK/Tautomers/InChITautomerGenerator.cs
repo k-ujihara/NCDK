@@ -32,27 +32,27 @@ using System.Text.RegularExpressions;
 namespace NCDK.Tautomers
 {
 
-    /**
-     * Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
-     * Algorithm described in {@cdk.cite Thalheim2010}.
-     * <br>
-     * <B>Provide your input molecules in Kekule form, and make sure atom type are perceived.</B></br>
-     * When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
-     * InChITautomerGeneratorTest test case.
-     *
-     * @author Mark Rijnbeek
-     * @cdk.module tautomer
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
+    /// Algorithm described in {@cdk.cite Thalheim2010}.
+    /// <br>
+    /// <B>Provide your input molecules in Kekule form, and make sure atom type are perceived.</B></br>
+    /// When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
+    /// InChITautomerGeneratorTest test case.
+    ///
+    // @author Mark Rijnbeek
+    // @cdk.module tautomer
+    // @cdk.githash
+    /// </summary>
     public class InChITautomerGenerator
     {
-        /**
-         * Public method to get tautomers for an input molecule, based on the InChI which will be calculated by jniinchi.
-         * @param molecule molecule for which to generate tautomers
-         * @return a list of tautomers, if any
-         * @throws CDKException
-         * @throws CloneNotSupportedException
-         */
+        /// <summary>
+        /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by jniinchi.
+        /// <param name="molecule">molecule for which to generate tautomers</param>
+        /// <returns>a list of tautomers, if any</returns>
+        // @throws CDKException
+        // @throws CloneNotSupportedException
+        /// </summary>
         public IList<IAtomContainer> GetTautomers(IAtomContainer molecule)
         {
 
@@ -64,15 +64,15 @@ namespace NCDK.Tautomers
             return GetTautomers(molecule, inchi);
         }
 
-        /**
-         * Overloaded {@link #GetTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
-         * provided as input argument.
-         * @param inputMolecule and input molecule for which to generate tautomers
-         * @param inchi InChI for the input molecule
-         * @return a list of tautomers
-         * @throws CDKException
-         * @throws CloneNotSupportedException
-         */
+        /// <summary>
+        /// Overloaded {@link #GetTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
+        /// provided as input argument.
+        /// <param name="inputMolecule">and input molecule for which to generate tautomers</param>
+        /// <param name="inchi">InChI for the input molecule</param>
+        /// <returns>a list of tautomers</returns>
+        // @throws CDKException
+        // @throws CloneNotSupportedException
+        /// </summary>
         public List<IAtomContainer> GetTautomers(IAtomContainer inputMolecule, string inchi)
         {
             //Initial checks
@@ -100,14 +100,14 @@ namespace NCDK.Tautomers
             return RemoveDuplicates(tautomers);
         }
 
-        /**
-         * Parses the InChI's formula (ignoring hydrogen) and returns a map
-         * with with a position for each atom, increasing in the order
-         * of the elements as listed in the formula.
-         * @param inputInchi user input InChI
-         * @param inputMolecule user input molecule
-         * @return <Integer,IAtom> map indicating position and atom
-         */
+        /// <summary>
+        /// Parses the InChI's formula (ignoring hydrogen) and returns a map
+        /// with with a position for each atom, increasing in the order
+        /// of the elements as listed in the formula.
+        /// <param name="inputInchi">user input InChI</param>
+        /// <param name="inputMolecule">user input molecule</param>
+        /// <returns><Integer,IAtom> map indicating position and atom</returns>
+        /// </summary>
         private IDictionary<int, IAtom> GetElementsByPosition(string inputInchi, IAtomContainer inputMolecule)
         {
             IDictionary<int, IAtom> inchiAtomsByPosition = new Dictionary<int, IAtom>();
@@ -117,14 +117,12 @@ namespace NCDK.Tautomers
             inchi = inchi.Substring(inchi.IndexOf('/') + 1);
             string formula = inchi.Substring(0, inchi.IndexOf('/'));
 
-            /*
-             * Test for dots in the formula. For now, bail out when encountered; it
-             * would require more sophisticated InChI connection table parsing.
-             * Example: what happened to the platinum connectivity below?
-             * N.N.O=C1O[Pt]OC(=O)C12CCC2<br>
-             * InChI=1S/C6H8O4.2H3N.Pt/c7-4(8)6(5(9)10
-             * )2-1-3-6;;;/h1-3H2,(H,7,8)(H,9,10);2*1H3;/q;;;+2/p-2
-             */
+            // Test for dots in the formula. For now, bail out when encountered; it
+            // would require more sophisticated InChI connection table parsing.
+            // Example: what happened to the platinum connectivity below?
+            // N.N.O=C1O[Pt]OC(=O)C12CCC2<br>
+            // InChI=1S/C6H8O4.2H3N.Pt/c7-4(8)6(5(9)10
+            // )2-1-3-6;;;/h1-3H2,(H,7,8)(H,9,10);2*1H3;/q;;;+2/p-2
             if (formula.Contains("."))
                 throw new CDKException($"Cannot parse InChI, formula contains dot (unsupported feature). Input formula={formula}");
 
@@ -145,12 +143,11 @@ namespace NCDK.Tautomers
                     {
                         position++;
                         IAtom atom = inputMolecule.Builder.CreateAtom(elementSymbol);
-                        /*
-                         * This class uses the atom's ID attribute to keep track of
-                         * atom positions defined in the InChi. So if for example
-                         * atom.ID=14, it means this atom has position 14 in the
-                         * InChI connection table.
-                         */
+
+                        // This class uses the atom's ID attribute to keep track of
+                        // atom positions defined in the InChi. So if for example
+                        // atom.ID=14, it means this atom has position 14 in the
+                        // InChI connection table.
                         atom.Id = position + "";
                         inchiAtomsByPosition[position] = atom;
                     }
@@ -159,13 +156,12 @@ namespace NCDK.Tautomers
             return inchiAtomsByPosition;
         }
 
-        /**
-         * Pops and pushes its ways through the InChI connection table to build up a simple molecule.
-         * @param inputInchi user input InChI
-         * @param inputMolecule user input molecule
-         * @param inchiAtomsByPosition
-         * @return molecule with single bonds and no hydrogens.
-         */
+        /// <summary>
+        /// Pops and pushes its ways through the InChI connection table to build up a simple molecule.
+        /// </summary>
+        /// <param name="inputInchi">user input InChI</param>
+        /// <param name="inputMolecule">user input molecule</param>
+        /// <param name="inchiAtomsByPosition">/// <returns>molecule with single bonds and no hydrogens.</param></returns>
         private IAtomContainer ConnectAtoms(string inputInchi, IAtomContainer inputMolecule,
                 IDictionary<int, IAtom> inchiAtomsByPosition)
         {
@@ -246,15 +242,14 @@ namespace NCDK.Tautomers
             return inchiMolGraph;
         }
 
-        /**
-         * Atom-atom mapping of the input molecule to the bare container constructed from the InChI connection table.
-         * This makes it possible to map the positions of the mobile hydrogens in the InChI back to the input molecule.
-         * @param inchiMolGraph molecule (bare) as defined in InChI
-         * @param inputMolecule user input molecule
-         * @throws CDKException
-         */
-        private List<IAtomContainer> MapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph,
-                IAtomContainer inputMolecule)
+        /// <summary>
+        /// Atom-atom mapping of the input molecule to the bare container constructed from the InChI connection table.
+        /// This makes it possible to map the positions of the mobile hydrogens in the InChI back to the input molecule.
+        /// </summary>
+        /// <param name="inchiMolGraph">molecule (bare) as defined in InChI</param>
+        /// <param name="inputMolecule">user input molecule</param>
+        /// <exception cref="CDKException"></exception>
+        private List<IAtomContainer> MapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer inputMolecule)
         {
             List<IAtomContainer> mappedContainers = new List<IAtomContainer>();
             Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, false);
@@ -275,27 +270,28 @@ namespace NCDK.Tautomers
             return mappedContainers;
         }
 
-        /**
-         * Parses mobile H Group(s) in an InChI string.
-         * <p>
-         * Multiple InChI sequences of mobile hydrogens are joined into a single sequence (list),
-         * see step 1 of algorithm in paper.
-         * <br>
-         * Mobile H group has syntax (H[n][-[m]],a1,a2[,a3[,a4...]])
-         * Brackets [ ] surround optional terms.
-         * <ul>
-         *  <li>Term H[n] stands for 1 or, if the number n (n>1) is present, n mobile hydrogen atoms.</li>
-         *  <li>Term [-[m]], if present, stands for 1 or, if the number m (m>1) is present, m mobile negative charges.</li>
-         *  <li>a1,a2[,a3[,a4...]] are canonical numbers of atoms in the mobile H group.</li>
-         *  <li>no two mobile H groups may have an atom (a canonical number) in common.</li>
-         * </ul>
-         * @param mobHydrAttachPositions list of positions where mobile H can attach
-         * @param inputInchi InChI input
-         * @return overall count of hydrogens to be dispersed over the positions
-         */
+        /// <summary>
+        /// Parses mobile H Group(s) in an InChI string.
+        /// <para>
+        /// Multiple InChI sequences of mobile hydrogens are joined into a single sequence (list),
+        /// see step 1 of algorithm in paper.
+        /// </para>
+        /// <para>
+        /// Mobile H group has syntax (H[n][-[m]],a1,a2[,a3[,a4...]])
+        /// Brackets [ ] surround optional terms.
+        /// <list type="bullet">
+        ///  <item>Term H[n] stands for 1 or, if the number n (n>1) is present, n mobile hydrogen atoms.</item>
+        ///  <item>Term [-[m]], if present, stands for 1 or, if the number m (m>1) is present, m mobile negative charges.</item>
+        ///  <item>a1,a2[,a3[,a4...]] are canonical numbers of atoms in the mobile H group.</item>
+        ///  <item>no two mobile H groups may have an atom (a canonical number) in common.</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        /// <param name="mobHydrAttachPositions">list of positions where mobile H can attach</param>
+        /// <param name="inputInchi">InChI input</param>
+        /// <returns>overall count of hydrogens to be dispersed over the positions</returns>
         private int ParseMobileHydrogens(List<int> mobHydrAttachPositions, string inputInchi)
         {
-
             int totalMobHydrCount = 0;
             string hydrogens = "";
             string inchi = inputInchi;
@@ -315,14 +311,13 @@ namespace NCDK.Tautomers
                     if (head.Contains("H,")) head = head.Replace("H,", "H1,");
                     if (head.Contains("-,")) head = head.Replace("-,", "-1,");
                     head = head.Substring(2);
-                    /*
-                     * Pragmatically, also add any delocalised neg charge to the
-                     * mobile H count. Based on examples like:
-                     * C[N+](C)(C)CCCCC\C=C(/NC(=O)C1CC1(Cl)Cl)\C(=O)O ->
-                     * ...(H-,18,20,21,22)
-                     * COc1cc(N)c(Cl)cc1C(=O)NC2C[N+]3(CCl)CCC2CC3 ->
-                     * ...(H2-,19,20,22)
-                     */
+                    
+                    // Pragmatically, also add any delocalised neg charge to the
+                    // mobile H count. Based on examples like:
+                    // C[N+](C)(C)CCCCC\C=C(/NC(=O)C1CC1(Cl)Cl)\C(=O)O ->
+                    // ...(H-,18,20,21,22)
+                    // COc1cc(N)c(Cl)cc1C(=O)NC2C[N+]3(CCl)CCC2CC3 ->
+                    // ...(H2-,19,20,22)
                     foreach (Match subMatch in subPattern.Matches(head))
                     {
                         if (!subMatch.Value.Equals(""))
@@ -347,16 +342,14 @@ namespace NCDK.Tautomers
         private static readonly Regex mobileHydrPattern = new Regex("\\((.)*?\\)", RegexOptions.Compiled);
         private static readonly Regex subPattern = new Regex("[0-9]*", RegexOptions.Compiled);
 
-        /**
-         * Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
-         * @param inputMolecule input molecule
-         * @param mobHydrAttachPositions mobile H positions
-         * @param totalMobHydrCount count of mobile hydrogens in molecule
-         * @return tautomers
-         * @throws CloneNotSupportedException
-         */
-        private List<IAtomContainer> ConstructTautomers(IAtomContainer inputMolecule, List<int> mobHydrAttachPositions,
-            int totalMobHydrCount)
+        /// <summary>
+        /// Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
+        /// </summary>
+        /// <param name="inputMolecule">input molecule</param>
+        /// <param name="mobHydrAttachPositions">mobile H positions</param>
+        /// <param name="totalMobHydrCount">count of mobile hydrogens in molecule</param>
+        /// <returns>tautomers</returns>
+        private List<IAtomContainer> ConstructTautomers(IAtomContainer inputMolecule, List<int> mobHydrAttachPositions, int totalMobHydrCount)
         {
             List<IAtomContainer> tautomers = new List<IAtomContainer>();
 
@@ -544,15 +537,14 @@ namespace NCDK.Tautomers
             return tautomers;
         }
 
-        /**
-         * Removes duplicates from a molecule set. Uses SMSD to detect identical molecules.
-         * An example of pruning can be a case where double bonds are placed in different positions in
-         * an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
-         *
-         * @param tautomers molecule set of tautomers with possible duplicates
-         * @return tautomers same set with duplicates removed
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Removes duplicates from a molecule set. Uses SMSD to detect identical molecules.
+        /// An example of pruning can be a case where double bonds are placed in different positions in
+        /// an aromatic (Kekule) ring, which all amounts to one same aromatic ring.
+        /// </summary>
+        /// <param name="tautomers">molecule set of tautomers with possible duplicates</param>
+        /// <returns>tautomers same set with duplicates removed</returns>
+        /// <exception cref="CDKException"></exception>
         private List<IAtomContainer> RemoveDuplicates(List<IAtomContainer> tautomers)
         {
             List<IAtomContainer> unique = new List<IAtomContainer>();
@@ -585,16 +577,15 @@ namespace NCDK.Tautomers
             return unique;
         }
 
-        /**
-         * Makes combinations recursively of all possible mobile Hydrogen positions.
-         * @param taken positions taken by hydrogen
-         * @param combinations combinations made so far
-         * @param skeleton container to work on
-         * @param totalMobHydrCount
-         * @param mobHydrAttachPositions
-         */
-        private void CombineHydrogenPositions(IList<int> taken, List<IList<int>> combinations,
-                IAtomContainer skeleton, int totalMobHydrCount, IList<int> mobHydrAttachPositions)
+        /// <summary>
+        /// Makes combinations recursively of all possible mobile Hydrogen positions.
+        /// </summary>
+        /// <param name="taken">positions taken by hydrogen</param>
+        /// <param name="combinations">combinations made so far</param>
+        /// <param name="skeleton">container to work on</param>
+        /// <param name="totalMobHydrCount"></param>
+        /// <param name="mobHydrAttachPositions"></param>
+        private void CombineHydrogenPositions(IList<int> taken, List<IList<int>> combinations, IAtomContainer skeleton, int totalMobHydrCount, IList<int> mobHydrAttachPositions)
         {
             if (taken.Count != totalMobHydrCount)
             {
@@ -626,13 +617,13 @@ namespace NCDK.Tautomers
             }
         }
 
-        /**
-         * Helper method that locates an atom based on its InChI atom table
-         * position, which has been set as ID.
-         * @param container input container
-         * @param position InChI atom table position
-         * @return atom on the position
-         */
+        /// <summary>
+        /// Helper method that locates an atom based on its InChI atom table
+        /// position, which has been set as ID.
+        /// </summary>
+        /// <param name="container">input container</param>
+        /// <param name="position">InChI atom table position</param>
+        /// <returns>atom on the position</returns>
         private IAtom FindAtomByPosition(IAtomContainer container, int position)
         {
             string pos = position.ToString();
@@ -643,17 +634,15 @@ namespace NCDK.Tautomers
             return null;
         }
 
-        /**
-         * Tries double bond combinations for a certain input container of which the double bonds have been stripped
-         * around the mobile hydrogen positions. Recursively.
-         *
-         * @param container
-         * @param dblBondsAdded counts double bonds added so far
-         * @param bondOffSet offset for next double bond position to consider
-         * @param doubleBondMax maximum number of double bonds to add
-         * @param atomsInNeedOfFix atoms that require more bonds
-         * @return a list of double bond positions (index) that make a valid combination, null if none found
-         */
+        /// <summary>
+        /// Tries double bond combinations for a certain input container of which the double bonds have been stripped
+        /// around the mobile hydrogen positions. Recursively.
+        /// </summary>
+        /// <param name="container">/// <param name="dblBondsAdded">counts double bonds added so far</param></param>
+        /// <param name="bondOffSet">offset for next double bond position to consider</param>
+        /// <param name="doubleBondMax">maximum number of double bonds to add</param>
+        /// <param name="atomsInNeedOfFix">atoms that require more bonds</param>
+        /// <returns>a list of double bond positions (index) that make a valid combination, null if none found</returns>
         private List<int> TryDoubleBondCombinations(IAtomContainer container, int dblBondsAdded, int bondOffSet,
                 int doubleBondMax, List<IAtom> atomsInNeedOfFix)
         {
@@ -704,12 +693,12 @@ namespace NCDK.Tautomers
             return dblBondPositions;
         }
 
-        /**
-         * Sums the number of bonds (counting order) an atom is hooked up with.
-         * @param atom an atom in the container
-         * @param container the container
-         * @return valence (bond order sum) of the atom
-         */
+        /// <summary>
+        /// Sums the number of bonds (counting order) an atom is hooked up with.
+        /// </summary>
+        /// <param name="atom">an atom in the container</param>
+        /// <param name="container">the container</param>
+        /// <returns>valence (bond order sum) of the atom</returns>
         private int GetConnectivity(IAtom atom, IAtomContainer container)
         {
             int connectivity = 0;

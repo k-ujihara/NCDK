@@ -29,12 +29,10 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
-    /**
-    /// An immutable {@link IAtomType} implementation to support the {@link AtomTypeFactory}.
-     *
-    /// @author egonw
-     */
-
+    /// <summary>
+    /// An immutable <see cref="IAtomType"/> implementation to support the <see cref="AtomTypeFactory"/>.
+    /// </summary>
+    // @author egonw
     internal sealed class ImmutableAtomType
         : IAtomType
     {

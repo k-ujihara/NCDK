@@ -21,31 +21,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-namespace NCDK.Hash {
+namespace NCDK.Hash
+{
 
 
-    /**
-     * A fast pseudorandom number generator based on feedback shift registers.
-     *
-     * @author John May
-     * @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
-     * @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
-     *      random number generators</a>
-     * @cdk.githash
-     * @cdk.module hash
-     */
-#if TEST
-        public
-#endif
-        sealed class Xorshift : Pseudorandom {
-
-        /**
-         * Generate the next pseudorandom number for the provided <i>seed</i>.
-         *
-         * @param seed random number seed
-         * @return the next pseudorandom number
-         */
-        public override long Next(long seed) {
+    /// <summary>
+    /// A fast pseudorandom number generator based on feedback shift registers.
+    ///
+    // @author John May
+    // @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
+    // @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
+    ///      random number generators</a>
+    // @cdk.githash
+    // @cdk.module hash
+    /// </summary>
+    internal sealed class Xorshift : Pseudorandom
+    {
+        /// <summary>
+        /// Generate the next pseudorandom number for the provided <i>seed</i>.
+        ///
+        /// <param name="seed">random number seed</param>
+        /// <returns>the next pseudorandom number</returns>
+        /// </summary>
+        public override long Next(long seed)
+        {
             seed = (long)((ulong)seed ^ (ulong)seed << 21);
             seed = (long)((ulong)seed ^ (ulong)seed >> 35);
             return (long)((ulong)seed ^ (ulong)seed << 4);

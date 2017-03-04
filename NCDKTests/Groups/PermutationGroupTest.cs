@@ -25,11 +25,11 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     *
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    ///
+    /// </summary>
     [TestClass()]
     public class PermutationGroupTest : CDKTestCase
     {
@@ -93,7 +93,7 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void baseConstructor()
+        public void BaseConstructor()
         {
             int size = 4;
             Permutation base_ = new Permutation(size);

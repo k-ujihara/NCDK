@@ -22,11 +22,11 @@ using System.Linq;
 
 namespace NCDK.Silent
 {
-    /**
-     * Checks the functionality of the {@link BioPolymer}.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link BioPolymer}.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     [TestClass()]
     public class BioPolymerTest : AbstractBioPolymerTest
     {

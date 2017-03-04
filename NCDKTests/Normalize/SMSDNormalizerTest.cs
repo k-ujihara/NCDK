@@ -25,21 +25,21 @@ using System;
 
 namespace NCDK.Normalize
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public class SMSDNormalizerTest
     {
 
         public SMSDNormalizerTest() { }
 
-        /**
-         * Test of makeDeepCopy method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of makeDeepCopy method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestMakeDeepCopy()
         {
@@ -62,10 +62,10 @@ namespace NCDK.Normalize
 
         }
 
-        /**
-         * Test of aromatizeMolecule method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of aromatizeMolecule method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestAromatizeMolecule()
         {
@@ -84,10 +84,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(5, count);
         }
 
-        /**
-         * Test of getExplicitHydrogenCount method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getExplicitHydrogenCount method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetExplicitHydrogenCount()
         {
@@ -110,10 +110,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getImplicitHydrogenCount method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getImplicitHydrogenCount method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitHydrogenCount()
         {
@@ -136,10 +136,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getHydrogenCount method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getHydrogenCount method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetHydrogenCount()
         {
@@ -160,10 +160,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of removeHydrogensAndPreserveAtomID method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of removeHydrogensAndPreserveAtomID method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestRemoveHydrogensAndPreserveAtomID()
         {
@@ -195,10 +195,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(afterAtom.Id, beforeAtom.Id);
         }
 
-        /**
-         * Test of convertExplicitToImplicitHydrogens method, of class SMSDNormalizer.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of convertExplicitToImplicitHydrogens method, of class SMSDNormalizer.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestConvertExplicitToImplicitHydrogens()
         {
@@ -210,10 +210,10 @@ namespace NCDK.Normalize
             Assert.AreEqual(expResult, result.Atoms.Count);
         }
 
-        /**
-         * Test of percieveAtomTypesAndConfigureAtoms method, of class SMSDNormalizer.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of percieveAtomTypesAndConfigureAtoms method, of class SMSDNormalizer.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPercieveAtomTypesAndConfigureAtoms()
         {

@@ -387,8 +387,8 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //        		Debug.WriteLine("Found an atom ID: " + line);
-                    //        		Debug.WriteLine("  index: " + atomIndex);
+                    //                Debug.WriteLine("Found an atom ID: " + line);
+                    //                Debug.WriteLine("  index: " + atomIndex);
                     IAtom atom = GetAtom(atomIndex);
                     string id = GetValue(line);
                     atom.Id = id;
@@ -412,8 +412,8 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //        		Debug.WriteLine("Found an atom ID: " + line);
-                    //        		Debug.WriteLine("  index: " + atomIndex);
+                    //                Debug.WriteLine("Found an atom ID: " + line);
+                    //                Debug.WriteLine("  index: " + atomIndex);
                     IBond bond = GetBond(bondIndex);
                     string id = GetValue(line);
                     IAtom atom = (IAtom)atomIDs[id];
@@ -441,8 +441,8 @@ namespace NCDK.IO
                 }
                 else
                 {
-                    //        		Debug.WriteLine("Found symbol: " + ToSymbol(GetValue(line)));
-                    //        		Debug.WriteLine("  index: " + atomIndex);
+                    //                Debug.WriteLine("Found symbol: " + ToSymbol(GetValue(line)));
+                    //                Debug.WriteLine("  index: " + atomIndex);
                     IAtom atom = GetAtom(atomIndex);
                     atom.Symbol = ToSymbol(GetValue(line));
                     atomIndex++;
@@ -463,12 +463,12 @@ namespace NCDK.IO
             int openBrackets = 0;
             while (line != null)
             {
-                //    		Debug.WriteLine("SkipBlock: line=" + line);
+                //            Debug.WriteLine("SkipBlock: line=" + line);
                 if (line.IndexOf('{') != -1)
                 {
                     openBrackets++;
                 }
-                //    		Debug.WriteLine(" #open brackets: " + openBrackets);
+                //            Debug.WriteLine(" #open brackets: " + openBrackets);
                 if (line.IndexOf('}') != -1)
                 {
                     if (openBrackets == 0) return;
@@ -530,7 +530,7 @@ namespace NCDK.IO
         {
             StringBuilder buffer = new StringBuilder();
             int i = 0;
-            //    	Debug.WriteLine("QV line: " + line);
+            //        Debug.WriteLine("QV line: " + line);
             bool startQuoteFound = false;
             while (line != null)
             {

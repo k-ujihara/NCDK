@@ -19,19 +19,19 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * <p>Type-safe enumeration of InChIKey check return codes.
-     *
-     * <p>InChI library return values:<br>
-     * <tt>
-     * VALID_STANDARD            (0)
-     * INVALID_LENGTH     (1)
-     * INVALID_LAYOUT     (2)
-     * INVALID_VERSION    (3)
-     * </tt>
-     * <p>See <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// <p>Type-safe enumeration of InChIKey check return codes.
+    ///
+    /// <p>InChI library return values:<br>
+    /// <tt>
+    /// VALID_STANDARD            (0)
+    /// INVALID_LENGTH     (1)
+    /// INVALID_LAYOUT     (2)
+    /// INVALID_VERSION    (3)
+    /// </tt>
+    /// <p>See <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_KEY_STATUS
     {
 

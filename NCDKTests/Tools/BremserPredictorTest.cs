@@ -24,6 +24,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
+
 using System;
 
 namespace NCDK.Tools
@@ -46,11 +47,11 @@ namespace NCDK.Tools
             Assert.IsNotNull(bp);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestPrediction()
         {
@@ -72,11 +73,11 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetConfidenceLimit()
         {
@@ -85,14 +86,14 @@ namespace NCDK.Tools
                 8.9, 14.8, 14.8, 13.3, 13.3, 13.3, 14.4, 14.4, 13.3};
             IAtomContainer molecule = null;
             string filename = "NCDK.Data.MDL.BremserPredictionTest.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             molecule = reader.Read(new AtomContainer());
             double prediction;
             BremserOneSphereHOSECodePredictor bp = new BremserOneSphereHOSECodePredictor();
             HOSECodeGenerator hcg = new HOSECodeGenerator();
             string s = null;
-            removeHydrogens(molecule);
+            RemoveHydrogens(molecule);
             //logger.debug("Molecule has " + molecule.Atoms.Count + " atoms.");
             for (int f = 0; f < molecule.Atoms.Count; f++)
             {
@@ -162,7 +163,7 @@ namespace NCDK.Tools
             Assert.IsTrue(correct);
         }
 
-        private void removeHydrogens(IAtomContainer ac)
+        private void RemoveHydrogens(IAtomContainer ac)
         {
             IAtom atom = null;
             int f = ac.Atoms.Count - 1;

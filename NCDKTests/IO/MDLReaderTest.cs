@@ -30,15 +30,15 @@ using System.Linq;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the reading MDL mol files using one test file.
-     * A test case for SDF files is available as separate Class.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.MDLReader
-     * @see org.openscience.cdk.io.SDFReaderTest
-     */
+    /// <summary>
+    /// TestCase for the reading MDL mol files using one test file.
+    /// A test case for SDF files is available as separate Class.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.MDLReader
+    // @see org.openscience.cdk.io.SDFReaderTest
+    /// </summary>
     [TestClass()]
     public class MDLReaderTest : SimpleChemObjectReaderTest
     {
@@ -91,15 +91,15 @@ namespace NCDK.IO
             Assert.AreEqual(9, m.Bonds.Count);
         }
 
-        /**
-		 * @cdk.bug 1542467
-		 */
+        /// <summary>
+        // @cdk.bug 1542467
+        /// </summary>
         [TestMethod()]
         public void TestBug1542467()
         {
             string filename = "NCDK.Data.MDL.Strychnine_nichtOK.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -125,15 +125,15 @@ namespace NCDK.IO
             Assert.AreEqual(1, atom.FormalCharge.Value);
         }
 
-        /**
-		 * The corrupt file is really ok; it is just not V2000 material.
-		 */
+        /// <summary>
+        /// The corrupt file is really ok; it is just not V2000 material.
+        /// </summary>
         [TestMethod()]
         public void TestSDF()
         {
             string filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -146,16 +146,16 @@ namespace NCDK.IO
             Assert.AreEqual(28, (containersList[1]).Bonds.Count);
         }
 
-        /**
-		 * Tests that the '0' read from the bond block for bond stereo
-		 * is read is 'no stereochemistry involved'.
-		 */
+        /// <summary>
+        /// Tests that the '0' read from the bond block for bond stereo
+        /// is read is 'no stereochemistry involved'.
+        /// </summary>
         [TestMethod()]
         public void TestStereoReadZeroDefault()
         {
             string filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -181,7 +181,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.ChEBI_26120.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Relaxed);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
@@ -196,7 +196,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.a-pinene-with-atom-atom-mapping.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             IAtomContainer mol = reader.Read(new AtomContainer());
@@ -211,7 +211,7 @@ namespace NCDK.IO
         public void TestHas2DCoordinates_With000()
         {
             string filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filenameMol);
+            var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Relaxed);
             molOne = reader.Read(new AtomContainer());
@@ -219,13 +219,13 @@ namespace NCDK.IO
             Assert.IsNull(molOne.Atoms[0].Point2D);
         }
 
-        /**
-		 * @cdk.bug 3485634
-		 */
+        /// <summary>
+        // @cdk.bug 3485634
+        /// </summary>
         [TestMethod()]
         public void TestMissingAtomProperties()
         {
-            var in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.bug3485634.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
             MDLReader reader = new MDLReader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -233,13 +233,13 @@ namespace NCDK.IO
             Assert.AreEqual(9, molecule.Atoms.Count);
         }
 
-        /**
-		 * @cdk.bug 1356
-		 */
+        /// <summary>
+        // @cdk.bug 1356
+        /// </summary>
         [TestMethod()]
         public void Properties()
         {
-            var in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.bug1356.sdf");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(in_);
             IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
             chemfile = reader.Read(chemfile);
@@ -251,9 +251,9 @@ namespace NCDK.IO
 
         [TestMethod()]
         [ExpectedException(typeof(CDKException))]
-        public void wrongFormat()
+        public void WrongFormat()
         {
-            var in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.bug1356.sdf");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
             MDLReader reader = new MDLReader(in_, ChemObjectReaderModes.Strict);
             IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
             chemfile = reader.Read(chemfile);

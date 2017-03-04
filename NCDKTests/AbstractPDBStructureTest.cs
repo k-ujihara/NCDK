@@ -21,11 +21,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IPDBStructure} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IPDBStructure} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractPDBStructureTest : CDKTestCase
     {
@@ -136,9 +136,9 @@ namespace NCDK
         Assert.AreEqual(type, structure.StructureType);
     }
 
-    /**
-     * Method to test whether the class complies with RFC #9.
-     */
+    /// <summary>
+    /// Method to test whether the class complies with RFC #9.
+    /// </summary>
     [TestMethod()]
     public virtual void TestToString() {
         IPDBStructure structure = Builder.CreatePDBStructure();

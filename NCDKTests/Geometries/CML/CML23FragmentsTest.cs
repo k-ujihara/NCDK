@@ -32,14 +32,14 @@ using System.Text;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
-     * as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
-     *
-     * @cdk.module test-io
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// Atomic tests for reading CML documents. All tested CML strings are valid CML 2.3,
+    /// as can be determined in cdk/src/org.openscience.cdk/io/cml/cml23TestFramework.xml.
+    ///
+    // @cdk.module test-io
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     [TestClass()]
     public class CML23FragmentsTest : CDKTestCase
     {
@@ -374,9 +374,9 @@ namespace NCDK.IO.CML
             Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.TITLE));
         }
 
-        /**
-         * @cdk.bug 2142400
-         */
+        /// <summary>
+        // @cdk.bug 2142400
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount1()
         {
@@ -392,9 +392,9 @@ namespace NCDK.IO.CML
             Assert.AreEqual(4, atom.ImplicitHydrogenCount.Value);
         }
 
-        /**
-         * @cdk.bug 2142400
-         */
+        /// <summary>
+        // @cdk.bug 2142400
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount2()
         {
@@ -416,9 +416,9 @@ namespace NCDK.IO.CML
             Assert.AreEqual(0, atom.ImplicitHydrogenCount.Value);
         }
 
-        /**
-         * @cdk.bug 2142400
-         */
+        /// <summary>
+        // @cdk.bug 2142400
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount3()
         {
@@ -529,9 +529,9 @@ namespace NCDK.IO.CML
             return chemFile;
         }
 
-        /**
-         * Tests whether the file is indeed a single molecule file
-         */
+        /// <summary>
+        /// Tests whether the file is indeed a single molecule file
+        /// </summary>
         private IAtomContainer CheckForSingleMoleculeFile(IChemFile chemFile)
         {
             return CheckForXMoleculeFile(chemFile, 1);
@@ -597,9 +597,9 @@ namespace NCDK.IO.CML
             Assert.AreEqual("water", reaction.Agents[0].Id);
         }
 
-        /**
-         * Tests whether the file is indeed a single reaction file
-         */
+        /// <summary>
+        /// Tests whether the file is indeed a single reaction file
+        /// </summary>
         private IReaction CheckForSingleReactionFile(IChemFile chemFile)
         {
             return CheckForXReactionFile(chemFile, 1);

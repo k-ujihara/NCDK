@@ -1,12 +1,12 @@
-1         ******************************************************
-          *            GAMESS VERSION = 31 OCT 1996            *
-          *             FROM IOWA STATE UNIVERSITY             *
-          * M.W.SCHMIDT, K.K.BALDRIDGE, J.A.BOATZ, S.T.ELBERT, *
-          *   M.S.GORDON, J.H.JENSEN, S.KOSEKI, N.MATSUNAGA,   *
-          *          K.A.NGUYEN, S.J.SU, T.L.WINDUS,           *
-          *       Together WITH M.DUPUIS, J.A.MONTGOMERY       *
-          *         J.COMPUT.CHEM.  14, 1347-1363(1993)        *
-          *************** SILICON GRAPHICS VERSION *************
+1        ///*****************************************************
+         ///            GAMESS VERSION = 31 OCT 1996           ///
+         ///             FROM IOWA STATE UNIVERSITY            ///
+         /// M.W.SCHMIDT, K.K.BALDRIDGE, J.A.BOATZ, S.T.ELBERT, *
+         ///   M.S.GORDON, J.H.JENSEN, S.KOSEKI, N.MATSUNAGA,   *
+         ///          K.A.NGUYEN, S.J.SU, T.L.WINDUS,          ///
+         ///       TOGETHER WITH M.DUPUIS, J.A.MONTGOMERY      ///
+         ///         J.COMPUT.CHEM.  14, 1347-1363(1993)       ///
+         ///************** SILICON GRAPHICS VERSION *************
 
  EXECUTION OF GAMESS BEGUN Mon Jul  7 11:30:44 1997
 
@@ -27,7 +27,7 @@
 
      BASIS OPTIONS
      -------------
-     GBASIS=STO          IGAUSS=       3      POLAR=None    
+     GBASIS=STO          IGAUSS=       3      POLAR=NONE    
      NDFUNC=       0     DIFFSP=       F
      NPFUNC=       0      DIFFS=       F
 
@@ -134,14 +134,14 @@
      $CONTRL OPTIONS
      ---------------
      SCFTYP=RHF          RUNTYP=HESSIAN      EXETYP=RUN     
-     MPLEVL=       0     LOCAL =None         UNITS =ANGS    
+     MPLEVL=       0     LOCAL =NONE         UNITS =ANGS    
      MULT  =       1     ICHARG=       0     MAXIT =      30
      NPRINT=       7     IREST =       0     COORD =UNIQUE  
-     ECP   =None         NORMF =       0     NORMP =       0
+     ECP   =NONE         NORMF =       0     NORMP =       0
      ITOL  =      20     ICUT  =       9     NZVAR =       0
      NOSYM =       0     INTTYP=POPLE        GEOM  =INPUT   
      PLTORB=       F     MOLPLT=       F     RPAC  =       F
-     AIMPAC=       F     FRIEND=             CITYP =None    
+     AIMPAC=       F     FRIEND=             CITYP =NONE    
 
      $SYSTEM OPTIONS
      ---------------
@@ -174,7 +174,7 @@
      MPTRAN =       0     DIRTRF =       F
      AOINTS =DUP     
 
- ..... DONE SETTING Up THE RUN .....
+ ..... DONE SETTING UP THE RUN .....
 
         STEP CPU TIME =    0.10  TOTAL CPU TIME =       0.1   (   0.0 MIN) IS 10.05 PERCENT OF REAL TIME OF       1.0
 
@@ -194,9 +194,9 @@
      ------------------------------
      POLAR  =       F     NWORD  =       0
 
-          ********************
+         ///*******************
           1 ELECTRON INTEGRALS
-          ********************
+         ///*******************
  ...... END OF ONE-ELECTRON INTEGRALS ......
 
         STEP CPU TIME =    0.03  TOTAL CPU TIME =       0.1   (   0.0 MIN) IS 12.77 PERCENT OF REAL TIME OF       1.0
@@ -414,7 +414,7 @@
         STEP CPU TIME =    0.03  TOTAL CPU TIME =       0.4   (   0.0 MIN) IS 41.67 PERCENT OF REAL TIME OF       1.0
 
      -------------------------------
-     PARTIAL INTEGRAL TRANSFORMATION
+     Partial INTEGRAL TRANSFORMATION
      -------------------------------
 
  NUMBER OF CORE MOLECULAR ORBITALS     =    0
@@ -426,7 +426,7 @@
  # OF WORDS AVAILABLE =     750000
  # OF WORDS NEEDED    =      74142 FOR IN MEMORY TRANSFORMATION
 
- CHOOSING IN MEMORY PARTIAL TRANSFORMATION...
+ CHOOSING IN MEMORY Partial TRANSFORMATION...
  TOTAL NUMBER OF TRANSFORMED 2E- INTEGRALS KEPT =      2723
  ... END OF INTEGRAL TRANSFORMATION ...
 
@@ -544,7 +544,7 @@
      THE DIPOLE DERIVATIVE MATRIX IS IN DEBYE/ANGSTROM
 
           --------------------------------------------------------
-          Normal COORDINATE ANALYSIS IN THE HARMONIC APPROXIMATION
+          NORMAL COORDINATE ANALYSIS IN THE HARMONIC APPROXIMATION
           --------------------------------------------------------
 
           ATOMIC WEIGHTS (AMU)
@@ -639,7 +639,7 @@
      THERMOCHEMISTRY AT T=  298.15 K
      -------------------------------
 
- USING IDEAL GAS, RIGID ROTOR, HARMONIC Normal MODE APPROXIMATIONS.
+ USING IDEAL GAS, RIGID ROTOR, HARMONIC NORMAL MODE APPROXIMATIONS.
  P=  1.01325E+05 PASCAL.
  ALL FREQUENCIES ARE SCALED BY   1.00000
  THE MOMENTS OF INERTIA ARE (IN AMU*BOHR**2)
@@ -671,7 +671,7 @@
  ROT.       0.889     0.889    -4.785     2.981     2.981    19.031
  VIB.      38.119    38.119    37.800     2.064     2.064     1.072
  TOTAL     39.896    40.489    23.665     8.026    10.013    56.426
- ......END OF Normal COORDINATE ANALYSIS......
+ ......END OF NORMAL COORDINATE ANALYSIS......
 
         STEP CPU TIME =    0.05  TOTAL CPU TIME =       6.1   (   0.1 MIN) IS 87.61 PERCENT OF REAL TIME OF       7.0
        100000 WORDS OF DYNAMIC MEMORY USED

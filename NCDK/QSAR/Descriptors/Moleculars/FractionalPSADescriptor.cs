@@ -36,20 +36,20 @@ using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is
-     * to {@link TPSADescriptor} / <b>molecular weight</b>, in units of square Angstroms per Dalton.
-     *
-     * Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
-     *
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     *
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:fractionalPSA
-     * @cdk.keyword volume
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Polar surface area expressed as a ratio to molecular size. Calculates <b>tpsaEfficiency</b>, which is
+    /// to <see cref="TPSADescriptor"/> / <b>molecular weight</b>, in units of square Angstroms per Dalton.
+    ///
+    /// Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
+    ///
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    ///
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:fractionalPSA
+    // @cdk.keyword volume
+    // @cdk.keyword descriptor
+    /// </summary>
     public class FractionalPSADescriptor : IMolecularDescriptor
     {
         public FractionalPSADescriptor() { }
@@ -60,8 +60,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fractionalPSA", 
-				typeof(FractionalPSADescriptor).FullName,
-				"The Chemistry Development Kit");
+                typeof(FractionalPSADescriptor).FullName,
+                "The Chemistry Development Kit");
 
         public object[] Parameters
         {

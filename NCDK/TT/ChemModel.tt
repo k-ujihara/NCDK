@@ -37,7 +37,7 @@ namespace <#= ns.NS #>
 <# if (!ns.IsSilent) { #> 
                 if (setOfMolecules != null)
                     setOfMolecules.Listeners.Add(this);
-				NotifyChanged(); 
+                NotifyChanged(); 
 <# } #>
             }
         }

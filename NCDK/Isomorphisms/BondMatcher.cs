@@ -76,7 +76,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Bonds are compatible if the first {@code bond1} (an {@link IQueryBond})
+         * Bonds are compatible if the first {@code bond1} (an <see cref="IQueryBond"/>)
          * matches the second, {@code bond2}.
          *
          * @return a bond matcher
@@ -129,7 +129,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Bonds are compatible if the first {@code bond1} (an {@link IQueryBond})
+         * Bonds are compatible if the first {@code bond1} (an <see cref="IQueryBond"/>)
          * matches the second, {@code bond2}.
          */
         private sealed class QueryMatcher : BondMatcher

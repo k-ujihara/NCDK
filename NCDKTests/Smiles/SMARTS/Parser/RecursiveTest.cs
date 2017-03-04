@@ -27,13 +27,13 @@ using static NCDK.Smiles.SMARTS.Parser.SMARTSSearchTest;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * Test recursive smarts
-     *
-     * @author Dazhi Jiao
-     * @cdk.module test-smarts
-     * @cdk.require ant1.6
-     */
+    /// <summary>
+    /// Test recursive smarts
+    ///
+    // @author Dazhi Jiao
+    // @cdk.module test-smarts
+    // @cdk.require ant1.6
+    /// </summary>
     [TestClass()]
     public class RecursiveTest : CDKTestCase
     {
@@ -442,7 +442,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void TestBasicAmineOnDrugs_cdkAromaticModel()
         {
             string filename = "drugs.smi";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(GetType(), filename);
+            var ins = ResourceLoader.GetAsStream(GetType(), filename);
             using (IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance))
             {
                 SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
@@ -481,7 +481,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         public void TestBasicAmineOnDrugs()
         {
             string filename = "drugs.smi";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(GetType(), filename);
+            var ins = ResourceLoader.GetAsStream(GetType(), filename);
 
             SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
 
@@ -508,19 +508,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        /**
-         * @cdk.bug 1312
-         */
+        /// <summary>
+        // @cdk.bug 1312
+        /// </summary>
         [TestMethod()]
-        public void recursiveComponentGrouping()
+        public void RecursiveComponentGrouping()
         {
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 1, 1 }, SMARTSSearchTest.Match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O.c1ccccc1")));
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 0 }, SMARTSSearchTest.Match("[O;D1;$(([a,A]).([A,a]))][CH]=O", "OC=O")));
         }
 
-        /**
-         * @cdk.bug 844
-          */
+        /// <summary>
+        // @cdk.bug 844
+         /// </summary>
         [TestMethod()]
         public void Bug844()
         {

@@ -34,9 +34,9 @@ namespace NCDK.Beam
     /// Unit tests ensure round tripping for examples in the (<a
     /// href="http://www.opensmiles.org/opensmiles.htmll">OpenSMILES
     /// specification</a>)
-    /// <author>John May</author>
+    // @author John May
     /// </summary>
-	[TestClass()]
+    [TestClass()]
     public class OpenSMILESSpecificationTest
     {
         // Atoms
@@ -56,7 +56,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void helium()
+        public void Helium()
         {
             RoundTrip("[He]");
         }
@@ -90,7 +90,7 @@ namespace NCDK.Beam
         // Charge
 
         [TestMethod()]
-        public void chloride_anion()
+        public void Chloride_anion()
         {
             RoundTrip("[Cl-]");
         }
@@ -108,13 +108,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void chloride_cation1()
+        public void Chloride_cation1()
         {
             RoundTrip("[Cu+2]");
         }
 
         [TestMethod()]
-        public void chloride_cation2()
+        public void Chloride_cation2()
         {
             RoundTrip("[Cu++]", "[Cu+2]");
         }
@@ -145,7 +145,7 @@ namespace NCDK.Beam
         // Wildcard
 
         [TestMethod()]
-        public void orthoSubstitutedPhenol()
+        public void OrthoSubstitutedPhenol()
         {
             RoundTrip("Oc1c(*)cccc1");
         }
@@ -173,13 +173,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void n_butylamine1()
+        public void N_butylamine1()
         {
             RoundTrip("NCCCC");
         }
 
         [TestMethod()]
-        public void n_butylamine2()
+        public void N_butylamine2()
         {
             RoundTrip("CCCCN");
         }
@@ -209,7 +209,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void octachlorodirhenate_III()
+        public void Octachlorodirhenate_III()
         {
             RoundTrip("[Rh-](Cl)(Cl)(Cl)(Cl)$[Rh-](Cl)(Cl)(Cl)Cl");
         }
@@ -253,7 +253,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void thiosulfate()
+        public void Thiosulfate()
         {
             RoundTrip("OS(=O)(=S)O");
         }
@@ -376,7 +376,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void loop()
+        public void Loop()
         {
             Graph.FromSmiles("C11");
         }
@@ -396,13 +396,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void indane()
+        public void Indane()
         {
             RoundTrip("c1ccc2CCCc2c1");
         }
 
         [TestMethod()]
-        public void indane_kekule()
+        public void Indane_kekule()
         {
             RoundTrip("C1=CC=CC(CCC2)=C12",
                       "C1=CC=CC=2CCCC21"); // input wasn't a DFS
@@ -507,7 +507,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void dot_ring_bond()
+        public void Dot_ring_bond()
         {
             Graph.FromSmiles("C.1CCCCC.1");
         }
@@ -590,19 +590,19 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void cis_difluoroethane_1()
+        public void Cis_difluoroethane_1()
         {
             RoundTrip("F/C=C\\F");
         }
 
         [TestMethod()]
-        public void cis_difluoroethane_2()
+        public void Cis_difluoroethane_2()
         {
             RoundTrip("F\\C=C/F");
         }
 
         [TestMethod()]
-        public void cis_difluoroethane_3()
+        public void Cis_difluoroethane_3()
         {
             RoundTrip("C(/F)=C/F");
             RoundTrip("C(/F)=C/F", new int[] { 1, 0, 2, 3 }, "F\\C=C/F");
@@ -650,25 +650,25 @@ namespace NCDK.Beam
 
         // Parsing termination
         [TestMethod()]
-        public void terminate_on_space()
+        public void Terminate_on_space()
         {
             RoundTrip("CCO ethanol", "CCO");
         }
 
         [TestMethod()]
-        public void terminate_on_tab()
+        public void Terminate_on_tab()
         {
             RoundTrip("CCO\tethanol", "CCO");
         }
 
         [TestMethod()]
-        public void terminate_on_newline()
+        public void Terminate_on_newline()
         {
             RoundTrip("CCO\nethanol", "CCO");
         }
 
         [TestMethod()]
-        public void terminate_on_carriage_return()
+        public void Terminate_on_carriage_return()
         {
             RoundTrip("CCO\r\nethanol", "CCO");
         }
@@ -799,14 +799,14 @@ namespace NCDK.Beam
         // Cycles
 
         [TestMethod()]
-        public void rnum_reuse_1()
+        public void Rnum_reuse_1()
         {
             RoundTrip("c1ccccc1C1CCCC1",
                       "c1ccccc1C2CCCC2");
         }
 
         [TestMethod()]
-        public void rnum_reuse_2()
+        public void Rnum_reuse_2()
         {
             RoundTrip("c0ccccc0C1CCCC1",
                       "c1ccccc1C2CCCC2");
@@ -814,7 +814,7 @@ namespace NCDK.Beam
 
         // avoid ring closures on double bond - nice idea but not valid to implement
         [TestMethod()]
-        public void avoid_ring_closures_on_double_bond()
+        public void Avoid_ring_closures_on_double_bond()
         {
             RoundTrip("CC=1CCCCC=1",
                       "CC=1CCCCC1");
@@ -822,14 +822,14 @@ namespace NCDK.Beam
 
         // avoid closing/openning 2 rings on a single atom - yeah good luck :-)
         [TestMethod()]
-        public void avoid_starting_ringsystem_on_two_digits()
+        public void Avoid_starting_ringsystem_on_two_digits()
         {
             RoundTrip("C12(CCCCC1)CCCCC2",
                   "C12(CCCCC1)CCCCC2");
         }
 
         [TestMethod()]
-        public void use_simple_digits()
+        public void Use_simple_digits()
         {
             RoundTrip("C%01CCCCC%01",
                       "C1CCCCC1");
@@ -850,13 +850,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void short_branches_wrong()
+        public void Short_branches_wrong()
         {
             RoundTrip("CC(CCCCCC)C");
         }
 
         [TestMethod()]
-        public void short_branched_right()
+        public void Short_branched_right()
         {
             RoundTrip("CC(C)CCCCCC");
         }
@@ -874,7 +874,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void only_use_dot_for_disconnected()
+        public void Only_use_dot_for_disconnected()
         {
             RoundTrip("C1.C1", "CC");
         }
@@ -971,7 +971,7 @@ namespace NCDK.Beam
         // Extensions
 
         [TestMethod()]
-        public void nope_not_illegal()
+        public void Nope_not_illegal()
         {
             RoundTrip("C/1=C/C=C\\C=C/C=C\\1",
                       "C/1=C/C=C\\C=C/C=C1");

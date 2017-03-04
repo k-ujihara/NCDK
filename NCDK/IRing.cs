@@ -11,7 +11,7 @@ namespace NCDK
     /// atom i-1 and atom i+1 and atom 1 is bonded to atom N and atom 2.
     /// </summary>
     public interface IRing
-		: IAtomContainer
+        : IAtomContainer
     {
         int RingSize { get; }
 

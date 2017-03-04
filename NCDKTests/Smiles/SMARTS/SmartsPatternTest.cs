@@ -26,10 +26,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Smiles.SMARTS
 {
-    /**
-     * @author John May
-     */
-	 [TestClass()]
+    /// <summary>
+    // @author John May
+    /// </summary>
+     [TestClass()]
     public class SmartsPatternTest
     {
         IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;

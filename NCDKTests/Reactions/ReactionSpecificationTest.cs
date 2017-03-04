@@ -20,9 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Reactions
 {
-    /**
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ReactionSpecificationTest : CDKTestCase
     {

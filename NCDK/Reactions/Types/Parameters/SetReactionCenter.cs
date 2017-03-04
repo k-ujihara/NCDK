@@ -18,14 +18,14 @@
  */
 namespace NCDK.Reactions.Types.Parameters
 {
-    /**
-     * Class extension of ParameterReact class which defines if a reaction is set already the reaction center
-     * in the reactants.
-     *
-     * @author      miguelrojasch
-     * @cdk.module  reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class extension of ParameterReact class which defines if a reaction is set already the reaction center
+    /// in the reactants.
+    ///
+    // @author      miguelrojasch
+    // @cdk.module  reaction
+    // @cdk.githash
+    /// </summary>
     public class SetReactionCenter : ParameterReact
     {
 

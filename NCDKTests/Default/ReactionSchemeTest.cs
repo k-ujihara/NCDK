@@ -21,13 +21,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the MolecularFormulaSet class.
-     *
-     * @cdk.module test-data
-     *
-     * @see ReactionScheme
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaSet class.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="ReactionScheme"/>
+    /// </summary>
     [TestClass()]
     public class ReactionSchemeTest : AbstractReactionSchemeTest
     {

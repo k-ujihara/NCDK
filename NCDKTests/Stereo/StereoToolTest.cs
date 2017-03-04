@@ -28,10 +28,10 @@ using static NCDK.Stereo.StereoTool;
 
 namespace NCDK.Stereo
 {
-    /**
-     * @author maclean
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class StereoToolTest : CDKTestCase
     {
@@ -183,7 +183,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void squarePlanarUShapeTest()
+        public void SquarePlanarUShapeTest()
         {
             // all points are in the XY plane
             IAtom atomA = new Atom("C", new Vector3(1, 2, 0));
@@ -196,7 +196,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void squarePlanar4ShapeTest()
+        public void SquarePlanar4ShapeTest()
         {
             // all points are in the XY plane
             IAtom atomA = new Atom("C", new Vector3(1, 2, 0));
@@ -209,7 +209,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void squarePlanarZShapeTest()
+        public void SquarePlanarZShapeTest()
         {
             // all points are in the XY plane
             IAtom atomA = new Atom("C", new Vector3(1, 2, 0));
@@ -234,7 +234,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void octahedralTest()
+        public void OctahedralTest()
         {
             IAtom atomA = new Atom("C", new Vector3(2, 2, 2)); // axis point 1
             IAtom atomB = new Atom("C", new Vector3(2, 2, 1)); // center of plane
@@ -248,7 +248,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void squarePlanarTest()
+        public void SquarePlanarTest()
         {
             IAtom atomA = new Atom("C", new Vector3(1, 2, 0));
             IAtom atomB = new Atom("C", new Vector3(1, 1, 0));

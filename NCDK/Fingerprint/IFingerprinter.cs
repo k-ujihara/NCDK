@@ -21,63 +21,50 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Interface for fingerprint calculators.
-     *
+    /// <summary>
+    /// Interface for fingerprint calculators.
+    /// </summary>
     // @author         egonw
     // @cdk.keyword    fingerprint
     // @cdk.module     core
     // @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    interface IFingerprinter
+    public interface IFingerprinter
     {
-        /**
-        // Returns the bit fingerprint for the given <see cref="IAtomContainer"/>.
-         *
-        // @param  container <see cref="IAtomContainer"/> for which the fingerprint should be calculated.
-        // @return           the bit fingerprint
-        // @ may be thrown if there is an error during aromaticity detection
-        // or (for key based fingerprints) if there is a SMARTS parsing error
-        // @ if the Fingerprinter can not produce bit fingerprints
-         */
+        /// <summary>
+        /// Returns the bit fingerprint for the given <see cref="IAtomContainer"/>.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> for which the fingerprint should be calculated.</param>
+        /// <returns>the bit fingerprint</returns>
+        /// <exception cref="CDKException">may be thrown if there is an error during aromaticity detection or (for key based fingerprints) if there is a SMARTS parsing error</exception>   
+        /// <exception cref="NotSupportedException">if the Fingerprinter can not produce bit fingerprints</exception>
         IBitFingerprint GetBitFingerprint(IAtomContainer container);
 
-        /**
-        // Returns the count fingerprint for the given <see cref="IAtomContainer"/>.
-         *
-        // @param container <see cref="IAtomContainer"/> for which the fingerprint should be calculated.
-        // @return the count fingerprint
-        // @ if there is an error during aromaticity detection
-        // or (for key based fingerprints) if there is a SMARTS parsing error.
-        // @ if the Fingerprinter can not produce count fingerprints
-         */
+        /// <summary>
+        /// Returns the count fingerprint for the given <see cref="IAtomContainer"/>.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> for which the fingerprint should be calculated.</param>
+        /// <returns>the count fingerprint</returns>
+        /// <exception cref="CDKException">if there is an error during aromaticity detection or (for key based fingerprints) if there is a SMARTS parsing error.</exception>
+        /// <exception cref="NotSupportedException">if the Fingerprinter can not produce count fingerprints</exception>
         ICountFingerprint GetCountFingerprint(IAtomContainer container);
 
-        /**
-        // Returns the raw representation of the fingerprint for the given IAtomContainer. The raw representation contains
-        // counts as well as the key strings.
-         *
-        // @param container IAtomContainer for which the fingerprint should be calculated.
-        // @return the raw fingerprint
-        // @
-         */
+        /// <summary>
+        /// Returns the raw representation of the fingerprint for the given IAtomContainer. The raw representation contains
+        /// counts as well as the key strings.
+        /// </summary>
+        /// <param name="container">IAtomContainer for which the fingerprint should be calculated.</param>
+        /// <returns>the raw fingerprint</returns>
+        /// <exception cref="CDKException"></exception>
         IDictionary<string, int> GetRawFingerprint(IAtomContainer container);
 
-        /**
-        // Returns the size of the fingerprints calculated.
-         *
-        // @return the size of the fingerprint
-         */
+        /// <summary>
+        /// The size of the fingerprints calculated.
+        /// </summary>
         int Count { get; }
     }
 }

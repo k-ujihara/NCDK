@@ -22,11 +22,11 @@ using System.IO;
 
 namespace NCDK.Config.AtomType
 {
-    /**
-     * Checks the functionality of the {@link OWLAtomTypeMappingReader}.
-     *
-     * @cdk.module test-atomtype
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link OWLAtomTypeMappingReader}.
+    ///
+    // @cdk.module test-atomtype
+    /// </summary>
     [TestClass()]
     public class OWLAtomTypeMappingReaderTest : CDKTestCase
     {

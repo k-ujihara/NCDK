@@ -18,7 +18,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins,
                     Default.ChemObjectBuilder.Instance);
 
@@ -45,7 +45,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.iterconftest.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var reader = new IteratingMDLConformerReader(ins, Default.ChemObjectBuilder.Instance).GetEnumerator();
 
             reader.MoveNext();

@@ -36,14 +36,14 @@ namespace NCDK.Config.AtomType
         private string toType;
 
         /// <summary>
-		/// Constructs a new OWLAtomTypeMappingHandler.
-		/// </summary>
+        /// Constructs a new OWLAtomTypeMappingHandler.
+        /// </summary>
         public OWLAtomTypeMappingHandler() { }
 
         /// <summary>
-		/// Returns a <see cref="IDictionary{string, string}"/> with atom type mappings.
+        /// Returns a <see cref="IDictionary{string, string}"/> with atom type mappings.
         /// </summary>
-		/// <returns>a <see cref="IDictionary{string, string}"/> with the atom type name of the source schema as key, and the atom type name of the target schema as values.</returns>
+        /// <returns>a <see cref="IDictionary{string, string}"/> with the atom type name of the source schema as key, and the atom type name of the target schema as values.</returns>
         public IDictionary<string, string> GetAtomTypeMappings()
         {
             return atomTypeMappings;

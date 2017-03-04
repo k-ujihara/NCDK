@@ -21,38 +21,38 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions
 {
-    /**
-     * Classes that extends the definition of reaction to a chain reaction.
-     * This is designed to contains a set of reactions which are lineal linked as
-     * chain. That would mean no exist branches or cycles and in this concept
-     * you have a start reaction and final reaction. Each reaction is included
-     * in a step of the chain.
-     *
-     * @author      miguelrojasch <miguelrojasch@yahoo.es>
-     * @cdk.module  extra
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Classes that extends the definition of reaction to a chain reaction.
+    /// This is designed to contains a set of reactions which are lineal linked as
+    /// chain. That would mean no exist branches or cycles and in this concept
+    /// you have a start reaction and final reaction. Each reaction is included
+    /// in a step of the chain.
+    ///
+    // @author      miguelrojasch <miguelrojasch@yahoo.es>
+    // @cdk.module  extra
+    // @cdk.githash
+    /// </summary>
     public class ReactionChain : ReactionSet
     {
         Dictionary<IReaction, int> hashMapChain = new Dictionary<IReaction, int>();
 
-        /**
-         * Added a IReaction for this chain in position.
-         *
-         * @param reaction  The IReaction
-         * @param position  The position in this chain where the reaction is to be inserted
-         */
+        /// <summary>
+        /// Added a IReaction for this chain in position.
+        ///
+        /// <param name="reaction">The IReaction</param>
+        /// <param name="position">The position in this chain where the reaction is to be inserted</param>
+        /// </summary>
         public void Add(IReaction reaction, int position)
         {
             hashMapChain[reaction] = position;
             this.Add(reaction);
         }
 
-        /**
-         * Get the position of the reaction into this chain reaction object.
-         * @param reaction The IReaction to look at
-         * @return         The position of the IReaction in this chain
-         */
+        /// <summary>
+        /// Get the position of the reaction into this chain reaction object.
+        /// <param name="reaction">The IReaction to look at</param>
+        /// <returns>The position of the IReaction in this chain</returns>
+        /// </summary>
         public int GetReactionStep(IReaction reaction)
         {
 
@@ -62,13 +62,13 @@ namespace NCDK.Reactions
                 return -1;
         }
 
-        /**
-         * Get the reaction of this chain reaction object at the position.
-         *
-         * @param  position The position of the IReaction in this chain to look for
-         * @return          Reaction The IReaction to look at
-         *
-         */
+        /// <summary>
+        /// Get the reaction of this chain reaction object at the position.
+        ///
+        /// <param name="position">The position of the IReaction in this chain to look for</param>
+        /// <returns>Reaction The IReaction to look at</returns>
+        ///
+        /// </summary>
         public override IReaction this[int position]
         {
             get

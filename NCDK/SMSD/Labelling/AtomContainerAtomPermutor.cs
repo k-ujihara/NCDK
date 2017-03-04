@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Labelling
 {
-    /**
-     * @cdk.module smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    /// </summary>
 
     public class AtomContainerAtomPermutor : Permutor, IEnumerable<IAtomContainer>
     {

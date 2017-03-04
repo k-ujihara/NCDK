@@ -22,17 +22,13 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Moq;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test
-     */
+    /// <summary>
+    // @cdk.module test
+    /// </summary>
     [TestClass()]
     public abstract class AbstractFingerprinterTest : CDKTestCase
     {

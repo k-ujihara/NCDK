@@ -24,39 +24,34 @@ using System.Collections.Generic;
 
 namespace NCDK.Charges
 {
-    /**
+    /// <summary>
     /// The stabilization of the positive and the negative charge
     /// obtained (e.g in the polar breaking of a bond) is calculated from the sigma- and
     ///  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
     ///  obtaining the charges. Based on H. Saller Dissertation @cdk.cite{SallerH1895}.
-     *
-    /// @author       Miguel Rojas Cherto
-    /// @cdk.created  2008-104-31
-    /// @cdk.module   charges
-    /// @cdk.keyword  stabilization charge
-    /// @cdk.githash
-     */
+    /// </summary>
+    // @author       Miguel Rojas Cherto
+    // @cdk.created  2008-104-31
+    // @cdk.module   charges
+    // @cdk.keyword  stabilization charge
+    // @cdk.githash
     public class StabilizationCharges
     {
-
-        /**
+        /// <summary>
         /// Constructor for the StabilizationCharges object.
-         */
+        /// </summary>
         public StabilizationCharges() { }
 
-        /**
+        /// <summary>
         /// calculate the stabilization of orbitals when they contain deficiency of charge.
-         *
-        /// @param atomContainer the molecule to be considered
-        /// @param atom       IAtom for which effective atom StabilizationCharges
-        ///                   factor should be calculated
-         *
-        /// @return stabilizationValue
-         */
+        /// </summary>
+        /// <param name="atomContainer">the molecule to be considered</param>
+        /// <param name="atom">IAtom for which effective atom StabilizationCharges factor should be calculated</param>
+        /// <returns>stabilizationValue</returns>
         public double CalculatePositive(IAtomContainer atomContainer, IAtom atom)
         {
             /* restrictions */
-            //    	if(atomContainer.GetConnectedSingleElectronsCount(atom) > 0 || atom.FormalCharge != 1){
+            //        if(atomContainer.GetConnectedSingleElectronsCount(atom) > 0 || atom.FormalCharge != 1){
             if (atom.FormalCharge != 1)
             {
                 return 0.0;

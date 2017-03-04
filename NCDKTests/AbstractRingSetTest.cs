@@ -25,11 +25,11 @@ using NCDK.Default;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IRingSet} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IRingSet} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractRingSetTest : AbstractAtomContainerSetTest<IRing>
     {
@@ -315,13 +315,13 @@ namespace NCDK
             Assert.AreEqual(1, ringset.GetConnectedRings(ring1).Count());
         }
 
-        /**
-         * Test for RingSetTest bug #1772613.
-         * When using method GetConnectedRings(...) of RingSet.java fused or bridged rings
-         * returned a list of connected rings that contained duplicates.
-         * Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-         * @cdk.bug 1772613
-         */
+        /// <summary>
+        /// Test for RingSetTest bug #1772613.
+        /// When using method GetConnectedRings(...) of RingSet.java fused or bridged rings
+        /// returned a list of connected rings that contained duplicates.
+        /// Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        // @cdk.bug 1772613
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetConnectedRingsBug1772613()
         {
@@ -399,12 +399,12 @@ namespace NCDK
 
             Assert.IsTrue(ringSet.IsEmpty, "new ringset should be empty");
 
-            ringSet.Add(ringSet.Builder.CreateRing());	// NCDK does not suppor to add AtomContainer object to RingSet object
+            ringSet.Add(ringSet.Builder.CreateRing());    // NCDK does not suppor to add AtomContainer object to RingSet object
 
             Assert.IsFalse(ringSet.IsEmpty, "ringset with an atom container should not be empty");
 
             ringSet.Clear();
-			
+            
             Assert.IsTrue(ringSet.IsEmpty, "ringset with removed atom containers should be empty");
 
         }

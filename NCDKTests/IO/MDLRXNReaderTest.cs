@@ -57,7 +57,7 @@ namespace NCDK.IO
         {
             string filename1 = "NCDK.Data.MDL.reaction-1.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNReader reader1 = new MDLRXNReader(ins1);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
@@ -95,7 +95,7 @@ namespace NCDK.IO
         {
             string filename2 = "NCDK.Data.MDL.reaction-2.rxn";
             Trace.TraceInformation("Testing: " + filename2);
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename2);
+            var ins2 = ResourceLoader.GetAsStream(filename2);
             MDLRXNReader reader2 = new MDLRXNReader(ins2);
             IReaction reaction2 = new Reaction();
             reaction2 = (IReaction)reader2.Read(reaction2);
@@ -111,7 +111,7 @@ namespace NCDK.IO
         {
             string filename2 = "NCDK.Data.MDL.mappingTest.rxn";
             Trace.TraceInformation("Testing: " + filename2);
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename2);
+            var ins2 = ResourceLoader.GetAsStream(filename2);
             MDLRXNReader reader2 = new MDLRXNReader(ins2);
             IReaction reaction2 = new Reaction();
             reaction2 = (IReaction)reader2.Read(reaction2);
@@ -127,7 +127,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -163,7 +163,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
             IChemModel chemModel = (IChemModel)reader.Read(new ChemModel());
             reader.Close();
@@ -195,7 +195,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.qsar-reaction-test.rdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
             IReactionSet reactionSet = (IReactionSet)reader.Read(new ReactionSet());
             reader.Close();
@@ -223,13 +223,13 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.output.rxn";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLRXNReader reader = new MDLRXNReader(ins);
             IReactionSet reactionSet = (IReactionSet)reader.Read(new ReactionSet());
             reader.Close();
             filename = "NCDK.Data.MDL.output_Cleaned.rxn";
             Trace.TraceInformation("Testing: " + filename);
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLRXNReader(ins);
             IReactionSet reactionSet2 = (IReactionSet)reader.Read(new ReactionSet());
             reader.Close();

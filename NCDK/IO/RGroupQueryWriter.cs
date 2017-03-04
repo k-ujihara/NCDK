@@ -55,7 +55,7 @@ namespace NCDK.IO
         private static string LSEP = Environment.NewLine;
 
         /// <summary>
-        /// Constructs a new writer that can write an {@link IRGroupQuery}
+        /// Constructs a new writer that can write an <see cref="IRGroupQuery"/>
         /// to the Symx RGFile format.
         /// </summary>
         /// <param name="out_">The Writer to write to</param>

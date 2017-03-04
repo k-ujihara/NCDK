@@ -34,7 +34,7 @@ namespace NCDK.Beam
     /// <summary>
     /// Unit tests for bracket atoms. Examples are lifted from the specification.
     /// </summary>
-    /// <author>John May</author>
+    // @author John May
     [TestClass()]
     public class ParsingBracketAtomTest
     {
@@ -52,7 +52,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void helium()
+        public void Helium()
         {
             Assert.AreEqual(Parse("[He]"), GetAtom(Element.Helium));
         }
@@ -94,7 +94,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void chlorineAnion()
+        public void ChlorineAnion()
         {
             Assert.AreEqual(Parse("[Cl-]"), GetAtom(Element.Chlorine, 0, -1));
         }
@@ -151,14 +151,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void chlorine36()
+        public void Chlorine36()
         {
             Assert.AreEqual(Parse("[36Cl]"), GetAtom(36, Element.Chlorine, 0, 0));
         }
 
         // A general-purpose SMILES parser must accept at least three digits for the isotope and values from 0 to 999.
         [TestMethod()]
-        public void rangeCheck()
+        public void RangeCheck()
         {
             for (int i = 0; i < 999; i++)
             {
@@ -172,28 +172,28 @@ namespace NCDK.Beam
             Assert.AreEqual(Parse("[CH4:2]").AtomClass, 2);
         }
 
-        private Atom_ Parse(string str)
+        private Atom Parse(string str)
         {
             CharBuffer buffer = CharBuffer.FromString(str);
-            return new Parser(buffer, false).Molecule().GetAtom_(0);
+            return new Parser(buffer, false).Molecule().GetAtom(0);
         }
 
-        private Atom_ GetAtom(Element e)
+        private Atom GetAtom(Element e)
         {
             return new AtomImpl.BracketAtom(e, 0, 0);
         }
 
-        private Atom_ GetAtom(Element e, int hCount)
+        private Atom GetAtom(Element e, int hCount)
         {
             return new AtomImpl.BracketAtom(e, hCount, 0);
         }
 
-        private Atom_ GetAtom(Element e, int hCount, int charge)
+        private Atom GetAtom(Element e, int hCount, int charge)
         {
             return new AtomImpl.BracketAtom(e, hCount, charge);
         }
 
-        private Atom_ GetAtom(int isotope, Element e, int hCount, int charge)
+        private Atom GetAtom(int isotope, Element e, int hCount, int charge)
         {
             return new AtomImpl.BracketAtom(isotope, e, hCount, charge, 0, false);
         }

@@ -22,75 +22,71 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs.Rebond
 {
-    /**
-     *  BSP-Tree stands for Binary Space Partitioning Tree.
-     *  The tree partitions n-dimensional space (in our case 3) into little
-     *  boxes, facilitating searches for things which are *nearby*.
-     *  For some useful background info, search the web for "bsp tree faq".
-     *  Our application is somewhat simpler because we are storing points instead
-     *  of polygons.
-     *
-     * <p>We are working with three dimensions. For the purposes of the Bspt code
-     *  these dimensions are stored as 0, 1, or 2. Each node of the tree splits
-     *  along the next dimension, wrapping around to 0.
-     * <pre>
-     *    mySplitDimension = (parentSplitDimension + 1) % 3;
-     * </pre>
-     *  A split value is stored in the node. Values which are <= splitValue are
-     *  stored down the left branch. Values which are >= splitValue are stored
-     *  down the right branch. When this happens, the search must proceed down
-     *  both branches.
-     *  Planar and crystalline substructures can generate values which are == along
-     *  one dimension.
-     *
-     * <p>To get a good picture in your head, first think about it in one dimension,
-     *  points on a number line. The tree just partitions the points.
-     *  Now think about 2 dimensions. The first node of the tree splits the plane
-     *  into two rectangles along the x dimension. The second level of the tree
-     *  splits the subplanes (independently) along the y dimension into smaller
-     *  rectangles. The third level splits along the x dimension.
-     *  In three dimensions, we are doing the same thing, only working with
-     *  3-d boxes.
-     *
-     * <p>Three enumerators are provided
-     * <ul>
-     *    <li>EnumNear(Bspt.Tuple center, double distance)<br>
-     *      returns all the points contained in of all the boxes which are within
-     *      distance from the center.
-     *    <li>EnumSphere(Bspt.Tuple center, double distance)<br>
-     *      returns all the points which are contained within the sphere (inclusive)
-     *      defined by center + distance
-     *    <li>EnumHemiSphere(Bspt.Tuple center, double distance)<br>
-     *      same as sphere, but only the points which are greater along the
-     *      x dimension
-     * </ul>
-     *
-     * @author  Miguel Howard
-     * @cdk.created 2003-05
-     *
-     * @cdk.module  standard
-     * @cdk.githash
-     * @cdk.keyword rebonding
-     * @cdk.keyword Binary Space Partitioning Tree
-     * @cdk.keyword join-the-dots
-     */
+    /// <summary>
+    ///  BSP-Tree stands for Binary Space Partitioning Tree.
+    ///  The tree partitions n-dimensional space (in our case 3) into little
+    ///  boxes, facilitating searches for things which are *nearby*.
+    ///  For some useful background info, search the web for "bsp tree faq".
+    ///  Our application is somewhat simpler because we are storing points instead
+    ///  of polygons.
+    /// </summary>
+    /// <example>
+    /// We are working with three dimensions. For the purposes of the Bspt code
+    ///  these dimensions are stored as 0, 1, or 2. Each node of the tree splits
+    ///  along the next dimension, wrapping around to 0.
+    /// <code>
+    ///    mySplitDimension = (parentSplitDimension + 1) % 3;
+    /// </code>
+    ///  A split value is stored in the node. Values which are &lt;= splitValue are
+    ///  stored down the left branch. Values which are >= splitValue are stored
+    ///  down the right branch. When this happens, the search must proceed down
+    ///  both branches.
+    ///  Planar and crystalline substructures can generate values which are == along
+    ///  one dimension.
+    /// </example>
+    /// <remarks>
+    /// <para>
+    /// To get a good picture in your head, first think about it in one dimension,
+    ///  points on a number line. The tree just partitions the points.
+    ///  Now think about 2 dimensions. The first node of the tree splits the plane
+    ///  into two rectangles along the x dimension. The second level of the tree
+    ///  splits the subplanes (independently) along the y dimension into smaller
+    ///  rectangles. The third level splits along the x dimension.
+    ///  In three dimensions, we are doing the same thing, only working with
+    ///  3-d boxes.
+    ///  </para>
+    /// Three enumerators are provided
+    /// <list type="bullet">
+    ///    <item>EnumNear(Bspt.Tuple center, double distance)<br/>
+    ///      returns all the points contained in of all the boxes which are within
+    ///      distance from the center.</item>
+    ///    <item>EnumSphere(Bspt.Tuple center, double distance)<br/>
+    ///      returns all the points which are contained within the sphere (inclusive)
+    ///      defined by center + distance</item>
+    ///    <item>EnumHemiSphere(Bspt.Tuple center, double distance)<br/>
+    ///      same as sphere, but only the points which are greater along the
+    ///      x dimension</item>
+    /// </list>
+    /// </remarks>
+    // @author  Miguel Howard
+    // @cdk.created 2003-05
+    // @cdk.module  standard
+    // @cdk.githash
+    // @cdk.keyword rebonding
+    // @cdk.keyword Binary Space Partitioning Tree
+    // @cdk.keyword join-the-dots
     public sealed class Bspt<T> : IEnumerable<T> where T: Tuple
     {
         private const int LEAF_COUNT = 4;
-        private const int STACK_DEPTH = 64;/*
-                                            * this corresponds to the max
-                                            * height of the tree
-                                            */
+        private const int STACK_DEPTH = 64;  // this corresponds to the max height of the tree
         int dimMax;
         Element eleRoot;
 
-        /*
-         * static double Distance(int dim, Tuple t1, Tuple t2) { return
-         * Math.Sqrt(Distance2(dim, t1, t2)); } static double Distance2(int dim,
-         * Tuple t1, Tuple t2) { double distance2 = 0.0; while (--dim >= 0) { double
-         * distT = t1.GetDimValue(dim) - t2.GetDimValue(dim); distance2 +=
-         * distT*distT; } return distance2; }
-         */
+        // static double Distance(int dim, Tuple t1, Tuple t2) { return
+        // Math.Sqrt(Distance2(dim, t1, t2)); } static double Distance2(int dim,
+        // Tuple t1, Tuple t2) { double distance2 = 0.0; while (--dim >= 0) { double
+        // distT = t1.GetDimValue(dim) - t2.GetDimValue(dim); distance2 +=
+        // distT*distT; } return distance2; }
         public Bspt(int dimMax)
         {
             this.dimMax = dimMax;

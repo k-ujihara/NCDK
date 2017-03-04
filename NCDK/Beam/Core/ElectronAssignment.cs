@@ -34,19 +34,15 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Verifies delocalised electrons can be assigned to a structure without
-    /// changing bond Orders. To check and assign the electrons please use {@see
-    /// Localise} or {@see Graph#kekule}. Although faster than assigning a Kekulé
+    /// changing bond Orders. To check and assign the electrons please use <see cref="Localise"/>
+    /// or <see cref="Graph.Kekule"/>. Although faster than assigning a Kekulé
     /// structure the method is the same and returning a structure with specified
     /// bond Orders is usually preferred.
-    ///
-    /// <author>John May</author>
-    // @see Localise
-    // @see uk.ac.ebi.beam.Graph#Kekule()
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class ElectronAssignment
+    /// <seealso cref="Localise"/>
+    /// <seealso cref="Graph.Kekule"/>
+    // @author John May
+    internal sealed class ElectronAssignment
     {
         private ElectronAssignment()
         {
@@ -54,13 +50,12 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Check if it is possible to assign electrons to the subgraph (specified by
-        /// the set bits in of {@code bs}). Each connected subset is counted up and
+        /// the set bits in of <paramref name="bs"/>). Each connected subset is counted up and
         /// checked for odd cardinality.
-        ///
+        /// </summary>
         /// <param name="g"> graph</param>
         /// <param name="bs">binary set indicated vertices for the subgraph</param>
         /// <returns>there is an odd cardinality subgraph</returns>
-        /// </summary>
         private static bool ContainsOddCardinalitySubgraph(Graph g, BitArray bs)
         {
             // mark visited those which are not in any subgraph 
@@ -82,13 +77,12 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Determine the size the connected component using a depth-first-search.
-        ///
-        /// <param name="g">      graph</param>
-        /// <param name="v">      vertex</param>
-        /// <param name="c">      count</param>
+        /// </summary>
+        /// <param name="g">graph</param>
+        /// <param name="v">vertex</param>
+        /// <param name="c">count</param>
         /// <param name="visited">which vertices have been visited</param>
         /// <returns>size of the component from </returns>{@code v}
-        /// </summary>
         private static int Visit(Graph g, int v, int c, bool[] visited)
         {
             visited[v] = true;
@@ -103,10 +97,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Test if an a number, {@code x} is odd.
-        ///
+        /// </summary>
         /// <param name="x">a number</param>
         /// <returns>the number is odd</returns>
-        /// </summary>
         private static bool IsOdd(int x)
         {
             return (x & 0x1) == 1;
@@ -114,10 +107,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Utility method to verify electrons can be assigned.
-        ///
+        /// </summary>
         /// <param name="g">graph to check</param>
         /// <returns>electrons could be assigned to delocalised structure</returns>
-        /// </summary>
         public static bool Verify(Graph g)
         {
             return g.GetFlags(Graph.HAS_AROM) == 0 || !ContainsOddCardinalitySubgraph(g, Localise.BuildSet(g, new BitArray(g.Order)));

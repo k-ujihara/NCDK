@@ -20,10 +20,10 @@ using System;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * @cdk.module isomorphism
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module isomorphism
+    // @cdk.githash
+    /// </summary>
     public class OrderQueryBond : QueryBond, IQueryBond
     {
         public OrderQueryBond(IChemObjectBuilder builder)

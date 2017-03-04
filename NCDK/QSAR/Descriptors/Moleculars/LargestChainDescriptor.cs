@@ -23,38 +23,38 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Class that returns the number of atoms in the largest chain.
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td>checkAromaticity (deprecated)</td>
-     * <td>false</td>
-     * <td>Old parameter is now ignored</td>
-     * </tr>
-     * <tr>
-     * <td>checkRingSystem</td>
-     * <td>false</td>
-     * <td>True is the CDKConstant.ISINRING has to be set</td>
-     * </tr>
-     * </table>
-     * <p/>
-     * Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
-     * are two or more atoms. Thus single atom molecules will return 0
-     *
-     * @author chhoppe from EUROSCREEN
-     * @cdk.created 2006-1-03
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:largestChain
-     */
+    /// <summary>
+    /// Class that returns the number of atoms in the largest chain.
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td>checkAromaticity (deprecated)</td>
+    /// <td>false</td>
+    /// <td>Old parameter is now ignored</td>
+    /// </tr>
+    /// <tr>
+    /// <td>checkRingSystem</td>
+    /// <td>false</td>
+    /// <td>True is the CDKConstant.ISINRING has to be set</td>
+    /// </tr>
+    /// </table>
+    /// <p/>
+    /// Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
+    /// are two or more atoms. Thus single atom molecules will return 0
+    ///
+    // @author chhoppe from EUROSCREEN
+    // @cdk.created 2006-1-03
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:largestChain
+    /// </summary>
     public class LargestChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
@@ -83,7 +83,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </para>
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
-		public override object[] Parameters
+        public override object[] Parameters
         {
             set
             {

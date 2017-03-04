@@ -17,28 +17,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Stereo;
 using NCDK.NInChI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NCDK.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs.InChi
 {
-    /**
-     * TestCase for the InChIGenerator.
-     *
-     * @cdk.module test-inchi
-     *
-     * @see org.openscience.cdk.inchi.InChIGenerator
-     */
+    /// <summary>
+    /// TestCase for the InChIGenerator.
+    ///
+    // @cdk.module test-inchi
+    ///
+    // @see org.openscience.cdk.inchi.InChIGenerator
+    /// </summary>
     [TestClass()]
     public class InChIGeneratorTest : CDKTestCase
     {
@@ -53,11 +47,11 @@ namespace NCDK.Graphs.InChi
             return Factory;
         }
 
-        /**
-         * Tests element name is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests element name is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromChlorineAtom()
         {
@@ -116,11 +110,11 @@ namespace NCDK.Graphs.InChi
             Assert.IsTrue(gen.Message.Contains("Accepted unusual valence"));
         }
 
-        /**
-         * Tests charge is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests charge is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromLithiumIon()
         {
@@ -133,11 +127,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/Li/q+1", gen.Inchi);
         }
 
-        /**
-        * Tests isotopic mass is correctly passed to InChI.
-        *
-        * @
-        */
+        /// <summary>
+       /// Tests isotopic mass is correctly passed to InChI.
+       ///
+       // @
+       /// </summary>
         [TestMethod()]
         public void TestGetInchiFromChlorine37Atom()
         {
@@ -150,11 +144,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/ClH/h1H/i1+2", gen.Inchi);
         }
 
-        /**
-         * Tests implicit hydrogen count is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests implicit hydrogen count is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitH()
         {
@@ -167,11 +161,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Tests radical state is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests radical state is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromMethylRadical()
         {
@@ -185,11 +179,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/CH3/h1H3", gen.Inchi);
         }
 
-        /**
-         * Tests single bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests single bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthane()
         {
@@ -207,11 +201,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYNA-N", gen.GetInchiKey());
         }
 
-        /**
-         * Tests double bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests double bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthene()
         {
@@ -228,11 +222,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/C2H4/c1-2/h1-2H2", gen.Inchi);
         }
 
-        /**
-         * Tests triple bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests triple bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthyne()
         {
@@ -249,11 +243,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/C2H2/c1-2/h1-2H", gen.Inchi);
         }
 
-        /**
-         * Tests 2D coordinates are correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests 2D coordinates are correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiEandZ12Dichloroethene2D()
         {
@@ -303,11 +297,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.Inchi);
         }
 
-        /**
-         * Tests 3D coordinates are correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests 3D coordinates are correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromLandDAlanine3D()
         {
@@ -383,11 +377,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/O", gen.Inchi);
         }
 
-        /**
-         * Tests element name is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests element name is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromChlorineAtom()
         {
@@ -398,11 +392,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Tests charge is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests charge is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromLithiumIon()
         {
@@ -415,11 +409,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/Li/q+1", gen.Inchi);
         }
 
-        /**
-        * Tests isotopic mass is correctly passed to InChI.
-        *
-        * @
-        */
+        /// <summary>
+       /// Tests isotopic mass is correctly passed to InChI.
+       ///
+       // @
+       /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromChlorine37Atom()
         {
@@ -432,11 +426,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/ClH/h1H/i1+2", gen.Inchi);
         }
 
-        /**
-         * Tests implicit hydrogen count is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests implicit hydrogen count is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromHydrogenChlorideImplicitH()
         {
@@ -449,11 +443,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Tests radical state is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests radical state is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromMethylRadical()
         {
@@ -467,11 +461,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/CH3/h1H3", gen.Inchi);
         }
 
-        /**
-         * Tests single bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests single bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthane()
         {
@@ -489,11 +483,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("OTMSDBZUPAUEDD-UHFFFAOYSA-N", gen.GetInchiKey());
         }
 
-        /**
-         * Tests double bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests double bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthene()
         {
@@ -510,11 +504,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/C2H4/c1-2/h1-2H2", gen.Inchi);
         }
 
-        /**
-         * Tests triple bond is correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests triple bond is correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthyne()
         {
@@ -531,11 +525,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/C2H2/c1-2/h1-2H", gen.Inchi);
         }
 
-        /**
-         * Tests 2D coordinates are correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests 2D coordinates are correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiEandZ12Dichloroethene2D()
         {
@@ -585,11 +579,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", genZ.Inchi);
         }
 
-        /**
-         * Tests 3D coordinates are correctly passed to InChI.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests 3D coordinates are correctly passed to InChI.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromLandDAlanine3D()
         {
@@ -729,13 +723,13 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", genE.Inchi);
         }
 
-        /**
-         * @cdk.bug 1295
-         */
+        /// <summary>
+        // @cdk.bug 1295
+        /// </summary>
         [TestMethod()]
         public void Bug1295()
         {
-            MDLV2000Reader reader = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.bug1295.mol"));
+            MDLV2000Reader reader = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1295.mol"));
             try
             {
                 IAtomContainer container = reader.Read(new AtomContainer());
@@ -749,7 +743,7 @@ namespace NCDK.Graphs.InChi
         }
 
         [TestMethod()]
-        public void r_penta_2_3_diene_impl_h()
+        public void R_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
@@ -788,7 +782,7 @@ namespace NCDK.Graphs.InChi
         }
 
         [TestMethod()]
-        public void s_penta_2_3_diene_impl_h()
+        public void S_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
@@ -827,7 +821,7 @@ namespace NCDK.Graphs.InChi
         }
 
         // why it does not work? [TestMethod()]
-        public void r_penta_2_3_diene_expl_h()
+        public void R_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
@@ -870,7 +864,7 @@ namespace NCDK.Graphs.InChi
         }
 
         // why it does not work? [TestMethod()]
-        public void s_penta_2_3_diene_expl_h()
+        public void S_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(new Atom("C"));
@@ -891,7 +885,7 @@ namespace NCDK.Graphs.InChi
                 new[] {0, 5, 6, 4}, new[] {5, 0, 6, 4},
                 new[] {5, 0, 4, 6}, new[] {0, 5, 4, 6},
                 new[] {4, 6, 5, 0}, new[] {4, 6, 0, 5},
-				new[] {6, 4, 0, 5}, new[] {6, 4, 5, 0}, };
+                new[] {6, 4, 0, 5}, new[] {6, 4, 5, 0}, };
             TetrahedralStereo[] stereos = new TetrahedralStereo[]{TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise,
                 TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.AntiClockwise, TetrahedralStereo.Clockwise, TetrahedralStereo.Clockwise};
 

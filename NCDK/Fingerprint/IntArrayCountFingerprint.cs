@@ -21,39 +21,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using NCDK.Common.Collections;
-using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprint
 {
-    /**
     // @author jonalv
     // @cdk.module     standard
     // @cdk.githash
-     */
     [Serializable]
-    public class IntArrayCountFingerprint : ICountFingerprint {
-#if TEST
-        public
-#endif
-        int[] hitHashes;
-#if TEST
-        public
-#endif
-        int[] numOfHits;
+    public class IntArrayCountFingerprint : ICountFingerprint
+    {
+        internal int[] hitHashes;
+        internal int[] numOfHits;
         private bool behaveAsBitFingerprint;
 
-        public IntArrayCountFingerprint() {
+        public IntArrayCountFingerprint()
+        {
             hitHashes = new int[0];
             numOfHits = new int[0];
             behaveAsBitFingerprint = false;
         }
 
-        public IntArrayCountFingerprint(IDictionary<string, int> rawFingerprint) {
+        public IntArrayCountFingerprint(IDictionary<string, int> rawFingerprint)
+        {
             IDictionary<int, int> hashedFP = new Dictionary<int, int>();
-            foreach (var key in rawFingerprint.Keys) {
+            foreach (var key in rawFingerprint.Keys)
+            {
                 int hashedKey = key.GetHashCode();
                 int count;
                 if (!hashedFP.TryGetValue(hashedKey, out count))
@@ -65,21 +58,21 @@ namespace NCDK.Fingerprint
             hitHashes = new int[keys.Count];
             numOfHits = new int[keys.Count];
             int i = 0;
-            foreach (var key in keys) {
+            foreach (var key in keys)
+            {
                 hitHashes[i] = key;
                 numOfHits[i] = hashedFP[key];
                 i++;
             }
         }
 
-        /**
-        // Create an <code>IntArrayCountFingerprint</code> from a rawFingerprint
-        // and if <code>behaveAsBitFingerprint</code> make it only return 0 or 1
-        // as count thus behaving like a bit finger print.
-         *
-        // @param rawFingerprint
-        // @param behaveAsBitFingerprint
-         */
+        /// <summary>
+        /// Create an <see cref="IntArrayCountFingerprint"/> from a rawFingerprint
+        /// and if <paramref name="behaveAsBitFingerprint"/> make it only return 0 or 1
+        /// as count thus behaving like a bit finger print.
+        /// </summary>
+        /// <param name="rawFingerprint"></param>
+        /// <param name="behaveAsBitFingerprint"></param>
         public IntArrayCountFingerprint(IDictionary<string, int> rawFingerprint, bool behaveAsBitFingerprint)
             : this(rawFingerprint)
         {
@@ -88,22 +81,27 @@ namespace NCDK.Fingerprint
 
         public long Count => 4294967296L;
 
-        public int GetCount(int index) {
-            if (behaveAsBitFingerprint) {
+        public int GetCount(int index)
+        {
+            if (behaveAsBitFingerprint)
+            {
                 return numOfHits[index] == 0 ? 0 : 1;
             }
             return numOfHits[index];
         }
 
-        public int GetHash(int index) {
+        public int GetHash(int index)
+        {
             return hitHashes[index];
         }
 
-        public int GetNumOfPopulatedbins() {
+        public int GetNumOfPopulatedbins()
+        {
             return hitHashes.Length;
         }
 
-        public void Merge(ICountFingerprint fp) {
+        public void Merge(ICountFingerprint fp)
+        {
             IDictionary<int, int> newFp = new Dictionary<int, int>();
             {
                 for (int i = 0; i < hitHashes.Length; i++)
@@ -134,21 +132,21 @@ namespace NCDK.Fingerprint
             }
         }
 
-
-        public void SetBehaveAsBitFingerprint(bool behaveAsBitFingerprint) {
+        public void SetBehaveAsBitFingerprint(bool behaveAsBitFingerprint)
+        {
             this.behaveAsBitFingerprint = behaveAsBitFingerprint;
         }
 
-
-        public bool HasHash(int hash) {
+        public bool HasHash(int hash)
+        {
             return Array.BinarySearch(hitHashes, hash) >= 0;
         }
 
-
-        public int GetCountForHash(int hash) {
-
+        public int GetCountForHash(int hash)
+        {
             int index = Array.BinarySearch(hitHashes, hash);
-            if (index >= 0) {
+            if (index >= 0)
+            {
                 return numOfHits[index];
             }
             return 0;

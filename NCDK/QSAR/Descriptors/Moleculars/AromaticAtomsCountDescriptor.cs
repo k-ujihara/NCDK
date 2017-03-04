@@ -168,7 +168,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         ///  Gets the parameterNames attribute of the AromaticAtomsCountDescriptor object.
         ///
-        ///@return    The parameterNames value
+        /// <returns>The parameterNames value</returns>
         /// </summary>
         public override string[] ParameterNames { get; } = new string[] { "checkAromaticity" };
 

@@ -19,18 +19,18 @@ namespace NCDK
         Vector3? FractionalPoint3D { get; set; }
         int? StereoParity { get; set; }
 
-        /**
-         * Flag used for marking uncertainty of the bond order.
-         * If used on an
-         * <ul>
-         *  <li><see cref="IAtomContainer"/> it means that one or several of the bonds have
-         * 		this flag raised (which may indicate aromaticity).</li>
-         *  <li>{@link IBond} it means that it's unclear whether the bond is a single or
-         * 		double bond.</li>
-         *  <li>{@link IAtom} it is a way for the Smiles parser to indicate that this atom was
-         * 		written with a lower case letter, e.g. 'c' rather than 'C'</li>
-         * </ul>
-         */
+        /// <summary>
+        /// Flag used for marking uncertainty of the bond order.
+        /// If used on an
+        /// <list type="bullet">
+        ///  <item><see cref="IAtomContainer"/> it means that one or several of the bonds have
+        ///         this flag raised (which may indicate aromaticity).</item>
+        ///  <item><see cref="IBond"/> it means that it's unclear whether the bond is a single or
+        ///         double bond.</item>
+        ///  <item><see cref="IAtom"/> it is a way for the Smiles parser to indicate that this atom was
+        ///         written with a lower case letter, e.g. 'c' rather than 'C'</item>
+        /// </list>
+        /// </summary>
         bool IsSingleOrDouble { get; set; }
     }
 }

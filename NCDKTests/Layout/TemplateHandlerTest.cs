@@ -25,12 +25,12 @@ using System.IO;
 
 namespace NCDK.Layout
 {
-    /**
-     * @cdk.module  test-sdg
-     * @author      steinbeck
-     * @cdk.created September 4, 2003
-     * @cdk.require java1.4+
-     */
+    /// <summary>
+    // @cdk.module  test-sdg
+    // @author      steinbeck
+    // @cdk.created September 4, 2003
+    // @cdk.require java1.4+
+    /// </summary>
     [TestClass()]
     public class TemplateHandlerTest : CDKTestCase
     {
@@ -45,11 +45,11 @@ namespace NCDK.Layout
             sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         [TestMethod()]
         public void TestInit()
         {
@@ -67,9 +67,9 @@ namespace NCDK.Layout
             Assert.IsTrue(th.MapTemplates(mol));
         }
 
-        /**
-         * Tests if a template matches if just an element is non-carbon.
-         */
+        /// <summary>
+        /// Tests if a template matches if just an element is non-carbon.
+        /// </summary>
         [TestMethod()]
         public void TestOtherElements()
         {
@@ -83,9 +83,9 @@ namespace NCDK.Layout
             Assert.IsTrue(itIsInThere);
         }
 
-        /**
-         * Tests if a template matches if just and bond order is changed.
-         */
+        /// <summary>
+        /// Tests if a template matches if just and bond order is changed.
+        /// </summary>
         [TestMethod()]
         public void TestOtherBondOrder()
         {
@@ -151,15 +151,15 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         * Loads a molecule with two adamantanes and one cubane
-         * substructure and tests whether all are found.
-         */
+        /// <summary>
+        /// Loads a molecule with two adamantanes and one cubane
+        /// substructure and tests whether all are found.
+        /// </summary>
         public void GetMappedSubstructures_IAtomContainer()
         {
             // Set up molecule reader
             string filename = "NCDK.Data.MDL.diadamantane-cubane.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderModes.Strict);
 
             // Read molecule
@@ -186,7 +186,7 @@ namespace NCDK.Layout
                     + "C1C2CC3C4CC5CC(C14)C(C2)C3C5 |(-1.82,2.15,;-.37,2.53,;1.07,2.15,;1.07,.65,;-.38,.27,;-.38,-1.23,;.37,-2.53,;-1.07,-2.15,;-1.07,-.65,;-1.82,.65,;.38,-.27,;.38,1.23,;1.82,-.65,;1.82,-2.15,)|\n"
                     + "C1CCC2C(C1)CCC3C4CCCC4CCC23 |(-6.51,.72,;-6.51,-.78,;-5.22,-1.53,;-3.92,-.78,;-3.92,.72,;-5.22,1.47,;-2.62,1.47,;-1.32,.72,;-1.32,-.78,;-.02,-1.53,;1.41,-1.07,;2.29,-2.28,;1.41,-3.49,;-.02,-3.03,;-1.32,-3.78,;-2.62,-3.03,;-2.62,-1.53,)|\n"
                     + "C1CCCCCCCCCCCCC1 |(-.04,1.51,;1.26,.76,;1.26,-.74,;2.56,-1.49,;2.56,-2.99,;1.29,-3.72,;1.31,-5.29,;-.09,-5.89,;-1.34,-5.24,;-1.34,-3.74,;-2.63,-2.99,;-2.63,-1.49,;-1.34,-.74,;-1.34,.76,)|\n",
-					System.Text.Encoding.UTF8.GetString(bout.ToArray()));
+                    System.Text.Encoding.UTF8.GetString(bout.ToArray()));
             }
         }
     }

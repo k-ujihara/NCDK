@@ -28,43 +28,44 @@ using System.Collections.Generic;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-    // Facade to access Merck Molecular Force Field (MMFF) functions.
-    // 
-    // <ul>
-    //     <li>{@cdk.cite Halgren96a}</li>
-    //     <li>{@cdk.cite Halgren96b}</li>
-    //     <li>{@cdk.cite Halgren96c}</li>
-    //     <li>{@cdk.cite Halgren96d}</li>
-    //     <li>{@cdk.cite Halgren96e}</li>     
-    // </ul>
-    // 
-    // <h4>Atom Types</h4>
-    // 
-    // Symbolic atom types are assigned with {@link Mmff#AssignAtomTypes(IAtomContainer)}.
-    // The atom type name can be accessed with {@link IAtom#AtomTypeName}.
-    // 
-    // <h4>Partial Charges</h4>
-    // 
-    // Partial charges are assigned with {@link Mmff#PartialCharges(IAtomContainer)}.
-    // Atom types must be assigned before calling this function. Effective formal
-    // charges can also be obtained with {@link Mmff#EffectiveCharges(IAtomContainer)}
-    // both charge values are accessed with {@link IAtom#Charge}. Atoms of
-    // unknown type are assigned a neutral charge - to avoid this check the return
-    // value of {@link Mmff#AssignAtomTypes(IAtomContainer)}.
-    // 
-    // <pre>{@code
-    // IAtomContainer mol = ...;
-    // 
-    // Mmff mmff = new Mmff();
-    // mmff.AssignAtomTypes(mol);
-    // mmff.PartialCharges(mol);
-    // mmff.ClearProps(mol); // optional
-    // }</pre>
-    // 
+    /// <summary>
+    /// Facade to access Merck Molecular Force Field (MMFF) functions.
+    /// </summary>
+    /// <remarks>
+    /// <ul>
+    ///     <li>{@cdk.cite Halgren96a}</li>
+    ///     <li>{@cdk.cite Halgren96b}</li>
+    ///     <li>{@cdk.cite Halgren96c}</li>
+    ///     <li>{@cdk.cite Halgren96d}</li>
+    ///     <li>{@cdk.cite Halgren96e}</li>     
+    /// </ul>
+    /// 
+    /// <h4>Atom Types</h4>
+    /// 
+    /// Symbolic atom types are assigned with <see cref="Mmff.AssignAtomTypes(IAtomContainer)"/>.
+    /// The atom type name can be accessed with <see cref="IAtomType.AtomTypeName"/>.
+    /// 
+    /// <h4>Partial Charges</h4>
+    /// 
+    /// Partial charges are assigned with <see cref="Mmff.PartialCharges(IAtomContainer)"/>.
+    /// Atom types must be assigned before calling this function. Effective formal
+    /// charges can also be obtained with <see cref="Mmff.EffectiveCharges(IAtomContainer)"/>
+    /// both charge values are accessed with <see cref="IAtom.Charge"/>. Atoms of
+    /// unknown type are assigned a neutral charge - to avoid this check the return
+    /// value of <see cref="Mmff.AssignAtomTypes(IAtomContainer)"/>.
+    /// </remarks>
+    /// <example>
+    /// <code>
+    /// IAtomContainer mol = ...;
+    /// 
+    /// Mmff mmff = new Mmff();
+    /// mmff.AssignAtomTypes(mol);
+    /// mmff.PartialCharges(mol);
+    /// mmff.ClearProps(mol); // optional
+    /// </code>
+    /// </example>
     // @author John May
     // @cdk.githash
-     */
     public class Mmff
     {
         private const string MMFF_ADJLIST_CACHE = "mmff.adjlist.cache";
@@ -74,15 +75,15 @@ namespace NCDK.ForceField.MMFF
         private readonly MmffAtomTypeMatcher mmffAtomTyper = new MmffAtomTypeMatcher();
         private readonly MmffParamSet mmffParamSet = MmffParamSet.Instance;
 
-        /**
-        // Assign MMFF Symbolic atom types. The symbolic type can be accessed with
-        // {@link IAtom#AtomTypeName}. An atom of unknown type is assigned the
-        // symbolic type {@code 'UNK'}. <p/>
-        // All atoms, including hydrogens must be explicitly represented.
-         *
-        // @param mol molecule
-        // @return all atoms had a type assigned
-         */
+        /// <summary>
+        /// Assign MMFF Symbolic atom types. The symbolic type can be accessed with
+        /// <see cref="IAtomType.AtomTypeName"/>. An atom of unknown type is assigned the
+        /// symbolic type {@code 'UNK'}. <p/>
+        /// All atoms, including hydrogens must be explicitly represented.
+        ///
+        /// <param name="mol">molecule</param>
+        /// <returns>all atoms had a type assigned</returns>
+        /// </summary>
         public bool AssignAtomTypes(IAtomContainer mol)
         {
             // preconditions need explicit hydrogens
@@ -132,19 +133,17 @@ namespace NCDK.ForceField.MMFF
             return !hasUnkType;
         }
 
-        /**
-        // Assign the effective formal charges used by MMFF in calculating the
-        // final partial charge values. Atom types must be assigned first. All 
-        // existing charges are cleared.
-        // 
-        // @param mol molecule
-        // @return charges were assigned
-        // @see #PartialCharges(IAtomContainer) 
-        // @see #AssignAtomTypes(IAtomContainer) 
-         */
+        /// <summary>
+        /// Assign the effective formal charges used by MMFF in calculating the
+        /// final partial charge values. Atom types must be assigned first. All 
+        /// existing charges are cleared.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <returns>charges were assigned</returns>
+        /// <seealso cref="PartialCharges(IAtomContainer)"/>
+        /// <seealso cref="AssignAtomTypes(IAtomContainer)"/>
         public bool EffectiveCharges(IAtomContainer mol)
         {
-
             int[][] adjList = mol.GetProperty<int[][]>(MMFF_ADJLIST_CACHE);
             GraphUtil.EdgeToBondMap edgeMap = mol.GetProperty<GraphUtil.EdgeToBondMap>(MMFF_EDGEMAP_CACHE);
 
@@ -157,18 +156,16 @@ namespace NCDK.ForceField.MMFF
             return true;
         }
 
-        /**
-        // Assign the partial charges, all existing charges are cleared.
-        // Atom types must be assigned first. 
-         *
-        // @param mol molecule
-        // @return charges were assigned
-        // @see #EffectiveCharges(IAtomContainer)
-        // @see #AssignAtomTypes(IAtomContainer)
-         */
+        /// <summary>
+        /// Assign the partial charges, all existing charges are cleared.
+        /// Atom types must be assigned first. 
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <returns>charges were assigned</returns>
+        /// <seealso cref="PartialCharges(IAtomContainer)"/>
+        /// <seealso cref="AssignAtomTypes(IAtomContainer)"/>
         public bool PartialCharges(IAtomContainer mol)
         {
-
             int[][] adjList = mol.GetProperty<int[][]> (MMFF_ADJLIST_CACHE);
             GraphUtil.EdgeToBondMap edgeMap = mol.GetProperty<GraphUtil.EdgeToBondMap>(MMFF_EDGEMAP_CACHE);
 
@@ -179,7 +176,6 @@ namespace NCDK.ForceField.MMFF
 
             for (int v = 0; v < mol.Atoms.Count; v++)
             {
-
                 IAtom atom = mol.Atoms[v];
                 string symbType = atom.AtomTypeName;
                 int thisType = mmffParamSet.IntType(symbType);
@@ -192,7 +188,6 @@ namespace NCDK.ForceField.MMFF
 
                 foreach (var w in adjList[v])
                 {
-
                     int otherType = mmffParamSet.IntType(mol.Atoms[w].AtomTypeName);
 
                     // unknown
@@ -217,12 +212,11 @@ namespace NCDK.ForceField.MMFF
             return true;
         }
 
-        /**
-        // Clear all transient properties assigned by this class. Assigned charges
-        // and atom type names remain set.
-        // 
-        // @param mol molecule
-         */
+        /// <summary>
+        /// Clear all transient properties assigned by this class. Assigned charges
+        /// and atom type names remain set.
+        /// </summary>
+        /// <param name="mol">molecule</param>
         public void ClearProps(IAtomContainer mol)
         {
             mol.RemoveProperty(MMFF_EDGEMAP_CACHE);
@@ -231,14 +225,13 @@ namespace NCDK.ForceField.MMFF
                 bond.RemoveProperty(MMFF_AROM);
         }
 
-        /**
-        // Internal method, MMFF primary charges. Tabulated (MMFFFORMCHG.PAR) and
-        // variable (assigned in code).
-        // 
-        // @param mol molecule
-        // @param adjList adjacency list representation
-        // @param edgeMap edge to bond mapping
-         */
+        /// <summary>
+        /// Internal method, MMFF primary charges. Tabulated (MMFFFORMCHG.PAR) and
+        /// variable (assigned in code).
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <param name="adjList">adjacency list representation</param>
+        /// <param name="edgeMap">edge to bond mapping</param>
         void PrimaryCharges(IAtomContainer mol, int[][] adjList, GraphUtil.EdgeToBondMap edgeMap)
         {
             for (int v = 0; v < mol.Atoms.Count; v++)
@@ -256,7 +249,6 @@ namespace NCDK.ForceField.MMFF
                 // charge sharing between equivalent terminal oxygens
                 else if (symbType.Equals("O2S") || symbType.Equals("O3S") || symbType.Equals("O2P") || symbType.Equals("O3P") || symbType.Equals("O4P"))
                 {
-
                     // already handled
                     if (atom.Charge != 0)
                         continue;
@@ -350,13 +342,12 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Internal effective charges method.
-        // 
-        // @param mol molecule
-        // @param adjList adjacency list representation
-        // @see {@link #EffectiveCharges(IAtomContainer)}                
-         */
+        /// <summary>
+        /// Internal effective charges method.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <param name="adjList">adjacency list representation</param>
+        /// <seealso cref="EffectiveCharges(IAtomContainer)"/>
         void EffectiveCharges(IAtomContainer mol, int[][] adjList)
         {
             double[] tmp = new double[mol.Atoms.Count];
@@ -373,7 +364,6 @@ namespace NCDK.ForceField.MMFF
 
                 int crd = mmffParamSet.GetCrd(intType);
                 decimal fcAdj = mmffParamSet.GetFormalChargeAdjustment(intType);
-
 
                 double adjust = (double)fcAdj;
                 tmp[v] = atom.Charge.Value;
@@ -421,12 +411,11 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Helper method to find all existing aromatic chem objects.
-        // 
-        // @param mol molecule
-        // @return chem objects
-         */
+        /// <summary>
+        /// Helper method to find all existing aromatic chem objects.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <returns>chem objects</returns>
         private ISet<IMolecularEntity> GetAromatics(IAtomContainer mol)
         {
             var oldArom = new HashSet<IMolecularEntity>();
@@ -439,11 +428,11 @@ namespace NCDK.ForceField.MMFF
             return oldArom;
         }
 
-        /**
-        // Access the formal charge - if the charge is null 0 is returned.
-        // @param atom atom
-        // @return formal charge
-         */
+        /// <summary>
+        /// Access the formal charge - if the charge is null 0 is returned.
+        /// <param name="atom">atom</param>
+        /// <returns>formal charge</returns>
+        /// </summary>
         int FCharge(IAtom atom)
         {
             if (atom.FormalCharge == null)

@@ -37,25 +37,20 @@ namespace NCDK.Beam
     /// <summary>
     /// Given a molecule with bond-based double bond configurations - add directional
     /// labels to edges which do not have it assigned. For example the molecule
-    /// {@code NC(/C)=C\C} has no directional label between the nitrogen and the
+    /// "NC(/C)=C\C" has no directional label between the nitrogen and the
     /// carbon. Applying this procedure will 'fill-in' missing directional
-    /// information on the edge - {@code N/C(/C)=C\C}. <br/>
-    ///
+    /// information on the edge - "N/C(/C)=C\C". 
+    /// <para>
     /// If required the directional labels in conjugated systems may be adjusted to
     /// allow for full-specification. Attempting to assign a directional label to the
-    /// central carbon of {@code F/C=C(/F)C(/F)=C/F} creates a conflict. This conflict
-    /// will be resolved by flipping the labels on the second double-bond - {@code
-    /// F/C=C(/F)\C(\F)=C\F}.
-    ///
-    /// <author>John May</author>
+    /// central carbon of "F/C=C(/F)C(/F)=C/F" creates a conflict. This conflict
+    /// will be resolved by flipping the labels on the second double-bond - "F/C=C(/F)\C(\F)=C\F".
+    /// </para>
     /// </summary>
-#if TEST
-	public
-#endif
-    sealed class AddDirectionalLabels
+    // @author John May
+    internal sealed class AddDirectionalLabels
         : AbstractFunction<Graph, Graph>
     {
-
         /// <summary>
         /// Transform all implicit up/down to their explicit type. The original graph
         /// is unmodified
@@ -64,13 +59,12 @@ namespace NCDK.Beam
         /// <returns>new chemical graph but with all explicit bonds</returns>
         public override Graph Apply(Graph g)
         {
-
             Graph h = new Graph(g.Order);
 
             // copy atom/topology information this is unchanged
             for (int u = 0; u < g.Order; u++)
             {
-                h.AddAtom(g.GetAtom_(u));
+                h.AddAtom(g.GetAtom(u));
                 h.AddTopology(g.TopologyOf(u));
             }
 
@@ -124,13 +118,12 @@ namespace NCDK.Beam
         /// <summary>
         /// Given a double bond edge traverse the neighbors of both endpoints and
         /// accumulate any explicit replacements in the 'acc' accumulator.
-        ///
+        /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="acc">accumulator for new edges</param>
-        // @ thrown if the edge could not be converted
-        /// </summary>
-        private bool RePlaceImplWithExpl(Graph g,
+        /// <exception cref="">thrown if the edge could not be converted</exception>
+       private bool RePlaceImplWithExpl(Graph g,
                                             Edge e,
                                             IDictionary<Edge, Edge> acc)
         {
@@ -146,14 +139,13 @@ namespace NCDK.Beam
         /// <summary>
         /// Given a double bond edge traverse the neighbors of one of the endpoints
         /// and accumulate any explicit replacements in the 'acc' accumulator.
-        ///
+        /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="u">  a endpoint of the edge 'e'</param>
         /// <param name="acc">accumulator for new edges</param>
         /// <returns>does the edge 'e' need to be reconsidered later</returns>
-        // @ thrown if the edge could not be converted
-        /// </summary>
+        /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private bool RePlaceImplWithExpl(Graph g,
                                             Edge e,
                                             int u,
@@ -254,6 +246,5 @@ namespace NCDK.Beam
                 }
             }
         }
-
     }
 }

@@ -22,9 +22,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class IsotopePatternRuleTest : FormulaRuleTest
     {
@@ -39,11 +39,11 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(IsotopePatternRule));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsotopePatternRule()
         {
@@ -53,11 +53,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
@@ -67,11 +67,11 @@ namespace NCDK.Formula.Rules
             Assert.IsNull(objects[0]);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
@@ -90,11 +90,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(2, objects.Length);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestValid_Bromine()
         {
@@ -118,11 +118,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
@@ -134,7 +134,7 @@ namespace NCDK.Formula.Rules
             formula.Add(ifac.GetMajorIsotope("O"), 2);
             formula.Charge = 0;
 
-            /** experimental results*/
+            /// <summary> experimental results*/
 
             List<double[]> spectrum = new List<double[]>();
             spectrum.Add(new double[] { 133.0977, 100.00 });

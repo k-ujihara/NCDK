@@ -19,31 +19,31 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * Enumeration of InChI 0D parity types.
-     * Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Enumeration of InChI 0D parity types.
+    /// Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_STEREOTYPE
     {
-        /**
-         * None.
-         */
+        /// <summary>
+        /// None.
+        /// </summary>
         None = 0,
 
-        /**
-         * Stereogenic bond >A=B< or cumulene >A=C=C=B<.
-         */
+        /// <summary>
+        /// Stereogenic bond >A=B< or cumulene >A=C=C=B<.
+        /// </summary>
         DoubleBond = 1,
 
-        /**
-         * Tetrahedral atom.
-         */
+        /// <summary>
+        /// Tetrahedral atom.
+        /// </summary>
         Tetrahedral = 2,
 
-        /**
-         * Allene.
-         */
+        /// <summary>
+        /// Allene.
+        /// </summary>
         Allene = 3,
     }
 }

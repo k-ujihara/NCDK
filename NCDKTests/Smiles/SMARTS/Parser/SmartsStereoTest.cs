@@ -27,26 +27,26 @@ using System.Linq;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * Verifies stereo matching. We check the counts to ensure that
-     * tetrahedral/geometric stereo isn't matching absolute values (i.e. R/S or
-     * odd/even // parity from MDL molfile)
-     *
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    /// Verifies stereo matching. We check the counts to ensure that
+    /// tetrahedral/geometric stereo isn't matching absolute values (i.e. R/S or
+    /// odd/even // parity from MDL molfile)
+    ///
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class SmartsStereoTest
     {
 
         [TestMethod()]
-        public void nonAbsoluteGeometric_trans()
+        public void NonAbsoluteGeometric_trans()
         {
             AssertMatch("C/C=C/C", "C/C(CC)=C(CC)/C", 4, 2);
         }
 
         [TestMethod()]
-        public void nonAbsoluteGeometric_cis()
+        public void NonAbsoluteGeometric_cis()
         {
             AssertMatch("C(/C)=C/C", "C/C(CC)=C(CC)/C", 4, 2);
         }
@@ -63,7 +63,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void nonAbsoluteTetrahedral()
+        public void NonAbsoluteTetrahedral()
         {
             AssertMatch("C[C@](C)(C)C", "C[C@](CC)(CCC)CCCC", 12, 1);
             AssertMatch("C[C@](C)(C)C", "C[C@@](CC)(CCC)CCCC", 12, 1);
@@ -129,7 +129,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void recursiveGeometric_trans()
+        public void RecursiveGeometric_trans()
         {
             AssertMatch("[$(*/C=C/*)]", "C/C=C/C", 2, 2);
             AssertMatch("[$(*/C=C/*)]", "F/C=C/Cl", 2, 2);
@@ -140,7 +140,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void recursiveGeometric_cis()
+        public void RecursiveGeometric_cis()
         {
             AssertMatch("[$(C(/*)=C/*)]", "C/C=C/C", 0, 0);
             AssertMatch("[$(C(/*)=C/*)]", "F/C=C/Cl", 0, 0);
@@ -151,7 +151,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [TestMethod()]
-        public void recursiveTetrahedral()
+        public void RecursiveTetrahedral()
         {
             AssertMatch("[$([C@](C)(CC)(N)O)]", "C[C@@](N)(CC)O", 1, 1);
             AssertMatch("[$([C@](C)(CC)(N)O)]", "C[C@](N)(CC)O", 0, 0);

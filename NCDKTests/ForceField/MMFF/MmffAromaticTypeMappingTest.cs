@@ -264,14 +264,14 @@ namespace NCDK.ForceField.MMFF
         }
 
         [TestMethod()]
-        public void imidazoleCarbonTypesAreNeitherAlphaOrBeta()
+        public void ImidazoleCarbonTypesAreNeitherAlphaOrBeta()
         {
             IDictionary<string, string> map = new Dictionary<string, string>() { { "CB", "C5A" } };
             Assert.AreEqual("C5", MmffAromaticTypeMapping.GetAromaticType(map, 'A', "CB", true, false));
         }
 
         [TestMethod()]
-        public void imidazoleNitrogenTypesAreNeitherAlphaOrBeta()
+        public void ImidazoleNitrogenTypesAreNeitherAlphaOrBeta()
         {
             IDictionary<string, string> map = new Dictionary<string, string>() { { "N=C", "N5A" } };
             Assert.AreEqual("N5", MmffAromaticTypeMapping.GetAromaticType(map, 'A', "N=C", true, false));

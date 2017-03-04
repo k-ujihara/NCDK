@@ -1,4 +1,27 @@
-
+/*
+ *
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using NCDK.Aromaticities;
 using NCDK.Default;
 using NCDK.Geometries;
@@ -8,51 +31,27 @@ using NCDK.Tools;
 using System;
 using System.Diagnostics;
 using System.IO;
-/**
-*
-* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * Class that handles molecules for MCS search.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class that handles molecules for MCS search.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class MolHandler
     {
         private IAtomContainer atomContainer = null;
         private bool removeHydrogen = false;
         private ICanonicalMoleculeLabeller canonLabeler = new CanonicalLabellingAdaptor();
 
-        /**
-         * Creates a new instance of MolHandler
-         * @param molFile atomContainer file name
-         * @param cleanMolecule
-         * @param removeHydrogen
-         *
-         */
+        /// <summary>
+        /// Creates a new instance of MolHandler
+        /// <param name="molFile">atomContainer file name</param>
+        /// <param name="cleanMolecule">/// @param removeHydrogen</param>
+        ///
+        /// </summary>
         public MolHandler(string molFile, bool removeHydrogen, bool cleanMolecule)
         {
             MDLReader molRead = null;
@@ -113,12 +112,11 @@ namespace NCDK.SMSD.Tools
             }
         }
 
-        /**
-         * Creates a new instance of MolHandler
-         * @param container Molecule AtomContainer
-         * @param cleanMolecule
-         * @param removeHydrogen
-         */
+        /// <summary>
+        /// Creates a new instance of MolHandler
+        /// <param name="container">Molecule AtomContainer</param>
+        /// <param name="cleanMolecule">/// @param removeHydrogen</param>
+        /// </summary>
         public MolHandler(IAtomContainer container, bool removeHydrogen, bool cleanMolecule)
         {
             string molID = container.Id;
@@ -165,16 +163,16 @@ namespace NCDK.SMSD.Tools
             atomContainer.Id = molID;
         }
 
-        /**
-         * Returns the modified container
-         * @return get processed / modified container
-         */
+        /// <summary>
+        /// Returns the modified container
+        /// <returns>get processed / modified container</returns>
+        /// </summary>
         public IAtomContainer Molecule => atomContainer;
 
-        /**
-         * Returns true if hydrogens were made implicit else return false
-         * @return true if remove H else false
-         */
+        /// <summary>
+        /// Returns true if hydrogens were made implicit else return false
+        /// <returns>true if remove H else false</returns>
+        /// </summary>
         public bool RemoveHydrogenFlag => removeHydrogen;
 
         private bool IsPseudoAtoms()

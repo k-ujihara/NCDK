@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -41,15 +42,15 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    /**
-	 * Holder for secundary protein structure elements. Lously modeled after
-	 * the Jmol Structure.java.
-	 *
-	 * @author     egonw
-	 *
-	 * @cdk.module data
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Holder for secundary protein structure elements. Lously modeled after
+    /// the Jmol Structure.java.
+    ///
+    // @author     egonw
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    /// </summary>
     public class PDBStructure : ChemObject, IPDBStructure
     {
         public const string HELIX = "helix";
@@ -94,15 +95,15 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /**
-	 * Holder for secundary protein structure elements. Lously modeled after
-	 * the Jmol Structure.java.
-	 *
-	 * @author     egonw
-	 *
-	 * @cdk.module data
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Holder for secundary protein structure elements. Lously modeled after
+    /// the Jmol Structure.java.
+    ///
+    // @author     egonw
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    /// </summary>
     public class PDBStructure : ChemObject, IPDBStructure
     {
         public const string HELIX = "helix";

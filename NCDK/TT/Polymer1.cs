@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -44,7 +45,7 @@ namespace NCDK.Default
         {
             if (!Contains(oAtom))
             {
-                base.Add(oAtom);	// this calls notify
+                base.Add(oAtom);    // this calls notify
 
                 if (oMonomer != null)
                 { // Not sure what's better here...throw nullpointer exception?
@@ -132,7 +133,7 @@ namespace NCDK.Silent
         {
             if (!Contains(oAtom))
             {
-                base.Add(oAtom);	// this calls notify
+                base.Add(oAtom);    // this calls notify
 
                 if (oMonomer != null)
                 { // Not sure what's better here...throw nullpointer exception?

@@ -34,17 +34,17 @@ namespace NCDK.Beam
     /// <summary>
     /// Convert direction (up/down) bonds to trigonal topology (double bond atom
     /// centric stereo specification).
-    /// 
+    /// </summary>
+    /// <remarks>
+    /// <code>
     ///    F/C=C/F -> F/[C@H]=[C@H]F
     ///    F/C=C\F -> F/[C@H]=[C@@H]F
     ///    F\C=C/F -> F/[C@@H]=[C@H]F
     ///    F\C=C\F -> F/[C@@H]=[C@@H]F
-    /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class ToTrigonalTopology : AbstractFunction<Graph, Graph>
+    /// </code>
+    /// </remarks>
+    // @author John May
+    internal sealed class ToTrigonalTopology : AbstractFunction<Graph, Graph>
     {
         public override Graph Apply(Graph g)
         {
@@ -85,7 +85,7 @@ namespace NCDK.Beam
 
             for (int u = 0; u < g.Order; u++)
             {
-                Atom_ a = g.GetAtom_(u);
+                Atom a = g.GetAtom(u);
                 if (a.Subset && h.TopologyOf(u) != Topology.Unknown)
                 {
                     h.AddAtom(AsBracketAtom(u, g));
@@ -115,9 +115,9 @@ namespace NCDK.Beam
             return h;
         }
 
-        private Atom_ AsBracketAtom(int u, Graph g)
+        private Atom AsBracketAtom(int u, Graph g)
         {
-            Atom_ a = g.GetAtom_(u);
+            Atom a = g.GetAtom(u);
             int sum = a.IsAromatic() ? 1 : 0;
             foreach (var e in g.GetEdges(u))
             {
@@ -145,7 +145,7 @@ namespace NCDK.Beam
                 e.Other(u), // double bond
                 u,          // for implicit H
                 u,          // for implicit H
-			};
+            };
 
             if (es.Count == 2)
             {

@@ -26,6 +26,7 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.RingSearches;
 using NCDK.Smiles.SMARTS.Parser;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -33,113 +34,115 @@ using System.Diagnostics;
 using System.IO;
 
 namespace NCDK.Fingerprint {
-    /**
-	 * This fingerprinter generates 166 bit MACCS keys.
-	 * <p/>
-	 * The SMARTS patterns for each of the features was taken from
-	 * <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
-	 * official and explicit listing of the original key definitions, the results
-	 * of this implementation may differ from others.
-	 *
-	 * This class assumes that aromaticity perception, atom typing and adding of
-	 * implicit hydrogens have been performed prior to generating the fingerprint.
-	 *
-	 * <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit
-	 * defs do not provide a definition and I can't find an official description
-	 * of them.
-	 *
-	 * <p/><b>Warning - MACCS substructure keys cannot be used for substructure
-	 * filtering. It is possible for some keys to match substructures and not match
-	 * the superstructures. Some keys check for hydrogen counts which may not be
-	 * preserved in a superstructure.</b>
-	 *
-	 * @author Rajarshi Guha
-	 * @cdk.created 2008-07-23
-	 * @cdk.keyword fingerprint
-	 * @cdk.keyword similarity
-	 * @cdk.module  fingerprint
-	 * @cdk.githash
-	 */
-#if TEST
-    public
-#endif
-    class MACCSFingerprinter : IFingerprinter
+    /// <summary>
+    /// This fingerprinter generates 166 bit MACCS keys.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The SMARTS patterns for each of the features was taken from
+    /// <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
+    /// official and explicit listing of the original key definitions, the results
+    /// of this implementation may differ from others.
+    /// </para>
+    /// <para>
+    /// This class assumes that aromaticity perception, atom typing and adding of
+    /// implicit hydrogens have been performed prior to generating the fingerprint.
+    /// </para>
+    /// <para>
+    /// <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit
+    /// defs do not provide a definition and I can't find an official description
+    /// of them.
+    /// </para>
+    /// <para>
+    /// <b>Warning - MACCS substructure keys cannot be used for substructure
+    /// filtering. It is possible for some keys to match substructures and not match
+    /// the superstructures. Some keys check for hydrogen counts which may not be
+    /// preserved in a superstructure.</b>
+    /// </para>
+    /// </remarks>
+    // @author Rajarshi Guha
+    // @cdk.created 2008-07-23
+    // @cdk.keyword fingerprint
+    // @cdk.keyword similarity
+    // @cdk.module  fingerprint
+    // @cdk.githash
+    internal class MACCSFingerprinter : IFingerprinter
     {
-		private const string KEY_DEFINITIONS = "Data.maccs.txt";
+        private const string KEY_DEFINITIONS = "Data.maccs.txt";
 
-		private volatile IList<MaccsKey> keys            = null;
+        private volatile IList<MaccsKey> keys            = null;
 
-		public MACCSFingerprinter() {}
+        public MACCSFingerprinter() {}
 
         public MACCSFingerprinter(IChemObjectBuilder builder) {
-			try {
-				keys = ReadKeyDef(builder);
-			} catch (IOException e) {
-				Debug.WriteLine(e);
-			} catch (CDKException e) {
-				Debug.WriteLine(e);
-			}
-		}
+            try {
+                keys = ReadKeyDef(builder);
+            } catch (IOException e) {
+                Debug.WriteLine(e);
+            } catch (CDKException e) {
+                Debug.WriteLine(e);
+            }
+        }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
     
-		public IBitFingerprint GetBitFingerprint(IAtomContainer container)  {
-			IList<MaccsKey> keys = GetKeys(container.Builder);
-			BitArray fp = new BitArray(keys.Count);
+        public IBitFingerprint GetBitFingerprint(IAtomContainer container)  {
+            IList<MaccsKey> keys = GetKeys(container.Builder);
+            BitArray fp = new BitArray(keys.Count);
 
-			// init SMARTS invariants (connectivity, degree, etc)
-			SmartsMatchers.Prepare(container, false);
+            // init SMARTS invariants (connectivity, degree, etc)
+            SmartsMatchers.Prepare(container, false);
 
-			for (int i = 0; i < keys.Count; i++) {
-				Pattern pattern = keys[i].Pattern;
-				if (pattern == null) continue;
+            for (int i = 0; i < keys.Count; i++) {
+                Pattern pattern = keys[i].Pattern;
+                if (pattern == null) continue;
 
-				// check if there are at least 'count' unique hits, key.count = 0
-				// means find at least one match hence we add 1 to out limit
-				if (pattern.MatchAll(container).GetUniqueAtoms().AtLeast(keys[i].Count + 1)) fp.Set(i, true);
-			}
+                // check if there are at least 'count' unique hits, key.count = 0
+                // means find at least one match hence we add 1 to out limit
+                if (pattern.MatchAll(container).GetUniqueAtoms().AtLeast(keys[i].Count + 1)) fp.Set(i, true);
+            }
 
-			// at this point we have skipped the entries whose pattern is "?"
-			// (bits 1,44,125,166) so let try and do those features by hand
+            // at this point we have skipped the entries whose pattern is "?"
+            // (bits 1,44,125,166) so let try and do those features by hand
 
-			// bit 125 aromatic ring count > 1
-			// bit 101 a ring with more than 8 members
-			AllRingsFinder ringFinder = new AllRingsFinder();
-			IRingSet rings = ringFinder.FindAllRings(container);
-			int ringCount = 0;
-			for (int i = 0; i < rings.Count; i++) {
-				IAtomContainer ring = rings[i];
-				bool allAromatic = true;
-				if (ringCount < 2) { // already found enough aromatic rings
-					foreach (var bond in ring.Bonds) {
-						if (!bond.IsAromatic) {
-							allAromatic = false;
-							break;
-						}
-					}
-				}
-				if (allAromatic) ringCount++;
-				if (ringCount > 1) fp.Set(124, true);
-				if (ring.Atoms.Count >= 8) fp.Set(100, true);
-			}
+            // bit 125 aromatic ring count > 1
+            // bit 101 a ring with more than 8 members
+            AllRingsFinder ringFinder = new AllRingsFinder();
+            IRingSet rings = ringFinder.FindAllRings(container);
+            int ringCount = 0;
+            for (int i = 0; i < rings.Count; i++) {
+                IAtomContainer ring = rings[i];
+                bool allAromatic = true;
+                if (ringCount < 2) { // already found enough aromatic rings
+                    foreach (var bond in ring.Bonds) {
+                        if (!bond.IsAromatic) {
+                            allAromatic = false;
+                            break;
+                        }
+                    }
+                }
+                if (allAromatic) ringCount++;
+                if (ringCount > 1) fp.Set(124, true);
+                if (ring.Atoms.Count >= 8) fp.Set(100, true);
+            }
 
-			// bit 166 (*).(*) we can match this in SMARTS but it's faster to just
-			// count the number of component
-			ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
-			if (cc.NComponents > 1) fp.Set(165, true);
+            // bit 166 (*).(*) we can match this in SMARTS but it's faster to just
+            // count the number of component
+            ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
+            if (cc.NComponents > 1) fp.Set(165, true);
 
-			return new BitSetFingerprint(fp);
-		}
+            return new BitSetFingerprint(fp);
+        }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
     
-		public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)  {
-			throw new NotSupportedException();
-		}
+        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)  {
+            throw new NotSupportedException();
+        }
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
     
-		public int Count
+        public int Count
         {
             get
             {
@@ -150,23 +153,23 @@ namespace NCDK.Fingerprint {
             }
         }
 
-		private IList<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
+        private IList<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
         {
-			List<MaccsKey> keys = new List<MaccsKey>(166);
-            var reader = new StreamReader(GetType().Assembly.GetManifestResourceStream(GetType(), KEY_DEFINITIONS));
+            List<MaccsKey> keys = new List<MaccsKey>(166);
+            var reader = new StreamReader(ResourceLoader.GetAsStream(GetType(), KEY_DEFINITIONS));
 
-			// now process the keys
-			string line;
-			while ((line = reader.ReadLine()) != null) {
-				if (line[0] == '#') continue;
-				string data = line.Substring(0, line.IndexOf('|')).Trim();
+            // now process the keys
+            string line;
+            while ((line = reader.ReadLine()) != null) {
+                if (line[0] == '#') continue;
+                string data = line.Substring(0, line.IndexOf('|')).Trim();
                 var toks = Strings.Tokenize(data);
-				
-				keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2])));
-			}
-			if (keys.Count != 166) throw new CDKException("Found " + keys.Count + " keys during setup. Should be 166");
+                
+                keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2])));
+            }
+            if (keys.Count != 166) throw new CDKException("Found " + keys.Count + " keys during setup. Should be 166");
             return keys;
-		}
+        }
 
         private class MaccsKey {
 
@@ -188,50 +191,49 @@ namespace NCDK.Fingerprint {
         }
 
 
-		/// <inheritdoc/>
+        /// <inheritdoc/>
     
-		public ICountFingerprint GetCountFingerprint(IAtomContainer container)  {
-			throw new NotSupportedException();
-		}
+        public ICountFingerprint GetCountFingerprint(IAtomContainer container)  {
+            throw new NotSupportedException();
+        }
 
-		private readonly object syncLock = new object();
+        private readonly object syncLock = new object();
 
-		/**
-		 * Access MACCS keys definitions.
-		 *
-		 * @return array of MACCS keys.
-		 * @ maccs keys could not be loaded
-		 */
-		private IList<MaccsKey> GetKeys(IChemObjectBuilder builder)  {
-			var result = keys;
-			if (result == null) {
-				lock (syncLock) {
-					result = keys;
-					if (result == null) {
-						try {
-							keys = result = ReadKeyDef(builder);
-						} catch (IOException e) {
-							throw new CDKException("could not read MACCS definitions", e);
-						}
-					}
-				}
-			}
-			return result;
-		}
+        /// <summary>
+        /// Access MACCS keys definitions.
+        ///
+        /// <returns>array of MACCS keys.</returns>
+        // @ maccs keys could not be loaded
+        /// </summary>
+        private IList<MaccsKey> GetKeys(IChemObjectBuilder builder)  {
+            var result = keys;
+            if (result == null) {
+                lock (syncLock) {
+                    result = keys;
+                    if (result == null) {
+                        try {
+                            keys = result = ReadKeyDef(builder);
+                        } catch (IOException e) {
+                            throw new CDKException("could not read MACCS definitions", e);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
 
-		/**
-		 * Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern
-		 * is not created.
-		 *
-		 * @param smarts  a smarts pattern
-		 * @param builder chem object builder
-		 * @return the pattern to match
-		 */
-		private Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
+        /// <summary>
+        /// Create a pattern for the provided SMARTS - if the SMARTS is '?' a pattern
+        /// is not created.
+        /// </summary>
+        /// <param name="smarts">a smarts pattern</param>
+        /// <param name="builder">chem object builder</param>
+        /// <returns>the pattern to match</returns>
+        private Pattern CreatePattern(string smarts, IChemObjectBuilder builder)
         {
-			if (smarts.Equals("?")) return null;
-			return Ullmann.FindSubstructure(SMARTSParser.Parse(smarts, builder));
-		}
-	}
+            if (smarts.Equals("?")) return null;
+            return Ullmann.FindSubstructure(SMARTSParser.Parse(smarts, builder));
+        }
+    }
 }
 

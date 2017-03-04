@@ -22,50 +22,51 @@ using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-    // This class validate if the occurrence of the IElements in the IMolecularFormula, for
-    // metabolites, are into a maximal limit according paper: . The study is from 2 different mass spectral
-    // databases and according different mass of the metabolites. The analysis don't
-    // take account if the IElement is not contained in the matrix. It will be jumped. <p>
-    // The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
-    // filtering of molecular formula" {@cdk.cite kind2007}.
-     *
-    // <p>This rule uses these parameters:
-    // <table border="1">
-    //   <tr>
-    //     <td>Name</td>
-    //     <td>Default</td>
-    //     <td>Description</td>
-    //   </tr>
-    //   <tr>
-    //     <td>database</td>
-    //     <td>willey</td>
-    //     <td>Mass spectral databases extraction</td>
-    //   </tr>
-    //   <tr>
-    //     <td>massRange</td>
-    //     <td>< 500</td>
-    //     <td>Mass to take account</td>
-    //   </tr>
-    // </table>
-     *
+    /// <summary>
+    /// This class validate if the occurrence of the IElements in the IMolecularFormula, for
+    /// metabolites, are into a maximal limit according paper: . The study is from 2 different mass spectral
+    /// databases and according different mass of the metabolites. The analysis don't
+    /// take account if the IElement is not contained in the matrix. It will be jumped. 
+    /// <para>
+    /// The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
+    /// filtering of molecular formula" {@cdk.cite kind2007}.
+    /// </para>
+    /// </summary>
+    /// <remarks>
+    /// This rule uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term>database</term>
+    ///   <term>willey</term>
+    ///   <term>Mass spectral databases extraction</term>
+    /// </item>
+    /// <item>
+    ///   <term>massRange</term>
+    ///   <term>&lt; 500</term>
+    ///   <term>Mass to take account</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-     */
     public class MMElementRule : IRule
     {
-        /** Database used. As default Willey.*/
+        /// <summary> Database used. As default Willey.</summary>
         private Database databaseUsed = Database.WILEY;
 
-        /** Mass range used. As default lower than 500.*/
+        /// <summary> Mass range used. As default lower than 500.</summary>
         private RangeMass rangeMassUsed = RangeMass.Minus500;
 
         private Dictionary<string, int> hashMap;
 
-        /** A enumeration of the possible mass range
-        // according the rules. */
+        /// <summary> A enumeration of the possible mass range according the rules. </summary>
         public class RangeMass
         {
             /// <summary>IMolecularFormula from a metabolite with a mass lower than 500 Da.</summary>
@@ -78,8 +79,7 @@ namespace NCDK.Formula.Rules
             public static readonly RangeMass Minus3000 = new RangeMass();
         }
 
-        /** A enumeration of the possible databases
-        // according the rules. */
+        /// <summary> A enumeration of the possible databases according the rules.</summary>
         public class Database
         {
             /// <summary>Wiley mass spectral database.</summary>
@@ -88,12 +88,10 @@ namespace NCDK.Formula.Rules
             public static readonly Database DNP = new Database();
         }
 
-        /**
-        //  Constructor for the MMElementRule object.
-         *
-        //  @throws IOException            If an error occurs when reading atom type information
-        //  @throws ClassNotFoundException If an error occurs during tom typing
-         */
+        /// <summary>
+        /// Constructor for the MMElementRule object.
+        /// </summary>
+        /// <exception cref="IOException">If an error occurs when reading atom type information</exception>
         public MMElementRule()
         {
             // initiate Hashmap default
@@ -170,12 +168,11 @@ namespace NCDK.Formula.Rules
             return isValid;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the DNP database and mass lower than 500 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the DNP database and mass lower than 500 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_500()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -193,12 +190,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the DNP database and mass lower than 1000 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the DNP database and mass lower than 1000 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_1000()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -216,12 +212,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the DNP database and mass lower than 2000 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the DNP database and mass lower than 2000 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_2000()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -239,12 +234,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the DNP database and mass lower than 3000 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the DNP database and mass lower than 3000 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetDNP_3000()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -262,12 +256,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the Wisley database and mass lower than 500 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the Wisley database and mass lower than 500 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_500()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -286,12 +279,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the Wisley database and mass lower than 1000 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the Wisley database and mass lower than 1000 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_1000()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();
@@ -310,12 +302,11 @@ namespace NCDK.Formula.Rules
             return map;
         }
 
-        /**
-        // Get the map linking the symbol of the element and number maximum of occurrence.
-        // For the analysis with the Wisley database and mass lower than 2000 Da.
-         *
-        // @return The HashMap of the symbol linked with the maximum occurrence
-         */
+        /// <summary>
+        /// Get the map linking the symbol of the element and number maximum of occurrence.
+        /// For the analysis with the Wisley database and mass lower than 2000 Da.
+        /// </summary>
+        /// <returns>The HashMap of the symbol linked with the maximum occurrence</returns>
         private Dictionary<string, int> GetWisley_2000()
         {
             Dictionary<string, int> map = new Dictionary<string, int>();

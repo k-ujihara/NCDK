@@ -25,12 +25,12 @@ using NCDK.Default;
 using System.Collections.Generic;
 
 namespace NCDK.RingSearches {
-    /**
-     * ring search unit tests for an empty molecule
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// ring search unit tests for an empty molecule
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Empty
     {
@@ -63,7 +63,7 @@ namespace NCDK.RingSearches {
         [TestMethod()]
         public void TestFUsed()
         {
-            Assert.AreEqual(0, new RingSearch(empty).FUsed().Length);
+            Assert.AreEqual(0, new RingSearch(empty).Fused().Length);
         }
 
         [TestMethod()]
@@ -81,7 +81,7 @@ namespace NCDK.RingSearches {
         [TestMethod()]
         public void TestFUsedRingFragments()
         {
-            Assert.IsTrue(new RingSearch(empty).FUsedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(empty).FusedRingFragments().Count == 0);
         }
     }
 }

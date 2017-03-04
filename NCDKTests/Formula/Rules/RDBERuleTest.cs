@@ -21,9 +21,9 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class RDBERuleTest : FormulaRuleTest
     {
@@ -93,11 +93,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.C2H11N4O4
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.C2H11N4O4
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
         {
@@ -118,11 +118,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {
@@ -135,11 +135,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetRDBEValue_IMolecularFormula()
         {
@@ -151,11 +151,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.GetRDBEValue(formula)[0], 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestValidate_IMolecularFormula_Double()
         {
@@ -167,11 +167,11 @@ namespace NCDK.Formula.Rules
             Assert.IsTrue(rule.Validate(formula, 2.0));
         }
 
-        /**
-         * A unit test suite for JUnit.C3H8O3S2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.C3H8O3S2
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void Test1()
         {
@@ -186,11 +186,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.C4H8O3S1
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.C4H8O3S1
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void Test2()
         {
@@ -202,11 +202,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.NH4+
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.NH4+
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_1()
         {
@@ -219,11 +219,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.NH4+
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.NH4+
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAnticipatedIonState_2()
         {
@@ -235,13 +235,13 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit for lipid PC.
-         *
-         * @cdk.bug 2322906
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit for lipid PC.
+        ///
+        // @cdk.bug 2322906
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestPCCharged()
         {
@@ -254,11 +254,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(1.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit for B.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit for B.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestB()
         {

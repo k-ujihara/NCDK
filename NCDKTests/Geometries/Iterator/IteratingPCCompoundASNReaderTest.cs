@@ -34,7 +34,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.ASN.PubChem.list.asn";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingPCCompoundASNReader reader = new IteratingPCCompoundASNReader(ins,
                     Default.ChemObjectBuilder.Instance);
 

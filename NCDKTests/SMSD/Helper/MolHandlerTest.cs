@@ -26,21 +26,21 @@ using NCDK.SMSD.Tools;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class MolHandlerTest
     {
 
         public MolHandlerTest() { }
 
-        /**
-         * Test of getMolecule method, of class MolHandler.
-         */
+        /// <summary>
+        /// Test of getMolecule method, of class MolHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetMolecule()
         {
@@ -49,9 +49,9 @@ namespace NCDK.SMSD.Helper
             Assert.IsNotNull(result);
         }
 
-        /**
-         * Test of getRemoveHydrogenFlag method, of class MolHandler.
-         */
+        /// <summary>
+        /// Test of getRemoveHydrogenFlag method, of class MolHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetRemoveHydrogenFlag()
         {

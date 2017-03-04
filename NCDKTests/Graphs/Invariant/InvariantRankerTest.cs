@@ -30,15 +30,15 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class InvariantRankerTest
     {
         [TestMethod()]
-        public void rank()
+        public void Rank()
         {
             InvariantRanker ranker = new InvariantRanker(6);
             long[] prev = new long[] { 1, 1, 1, 1, 1, 1 };
@@ -48,7 +48,7 @@ namespace NCDK.Graphs.Invariant
             int[] vs = new int[] { 0, 1, 2, 3, 4, 5 };
             int[] ws = new int[6];
 
-            int ranks = ranker.rank(vs, ws, 6, curr, prev);
+            int ranks = ranker.Rank(vs, ws, 6, curr, prev);
 
             Assert.AreEqual(4, ranks);
 
@@ -60,7 +60,7 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void rank_all_equiv()
+        public void Rank_all_equiv()
         {
 
             InvariantRanker ranker = new InvariantRanker(6);
@@ -71,7 +71,7 @@ namespace NCDK.Graphs.Invariant
             int[] vs = new int[] { 0, 1, 2, 3, 4, 5 };
             int[] ws = new int[6];
 
-            int ranks = ranker.rank(vs, ws, 6, curr, prev);
+            int ranks = ranker.Rank(vs, ws, 6, curr, prev);
 
             Assert.AreEqual(1, ranks);
 
@@ -83,7 +83,7 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void rank_all_unique()
+        public void Rank_all_unique()
         {
 
             InvariantRanker ranker = new InvariantRanker(7);
@@ -94,7 +94,7 @@ namespace NCDK.Graphs.Invariant
             int[] vs = new int[] { 0, 1, 2, 3, 4, 5, 6 };
             int[] ws = new int[7];
 
-            int ranks = ranker.rank(vs, ws, 7, curr, prev);
+            int ranks = ranker.Rank(vs, ws, 7, curr, prev);
 
             Assert.AreEqual(7, ranks);
 

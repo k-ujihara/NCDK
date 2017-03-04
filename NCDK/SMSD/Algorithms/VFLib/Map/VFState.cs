@@ -54,14 +54,14 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Map
 {
-    /**
-     * This class finds mapping states between query and target
-     * molecules.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class finds mapping states between query and target
+    /// molecules.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFState : IState
     {
 
@@ -72,11 +72,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         private List<IAtom> targetPath;
         private IDictionary<INode, IAtom> map;
 
-        /**
-         * Initialise the VFState with query and target
-         * @param query
-         * @param target
-         */
+        /// <summary>
+        /// Initialise the VFState with query and target
+        /// <param name="query">/// @param target</param>
+        /// </summary>
         public VFState(IQuery query, TargetProperties target)
         {
             this.map = new Dictionary<INode, IAtom>();
@@ -144,11 +143,11 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             {
                 return false;
             }
-            if (!matchAtoms(match))
+            if (!MatchAtoms(match))
             {
                 return false;
             }
-            if (!matchBonds(match))
+            if (!MatchBonds(match))
             {
                 return false;
             }
@@ -211,7 +210,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
         //This function is updated by Asad to include more matches
 
-        private bool matchAtoms(Match match)
+        private bool MatchAtoms(Match match)
         {
             IAtom atom = match.TargetAtom;
             if (match.QueryNode.CountNeighbors() > target.CountNeighbors(atom))
@@ -221,14 +220,14 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return match.QueryNode.AtomMatcher.Matches(target, atom);
         }
 
-        private bool matchBonds(Match match)
+        private bool MatchBonds(Match match)
         {
             if (queryPath.Count == 0)
             {
                 return true;
             }
 
-            if (!matchBondsToHead(match))
+            if (!MatchBondsToHead(match))
             {
                 return false;
             }
@@ -246,7 +245,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
                 {
                     return false;
                 }
-                if (!matchBond(queryBond, targetBond))
+                if (!MatchBond(queryBond, targetBond))
                 {
                     return false;
                 }
@@ -254,7 +253,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return true;
         }
 
-        private bool matchBond(IEdge edge, IBond targetBond)
+        private bool MatchBond(IEdge edge, IBond targetBond)
         {
             return edge.BondMatcher.Matches(target, targetBond);
         }
@@ -272,7 +271,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return true;
         }
 
-        private bool matchBondsToHead(Match match)
+        private bool MatchBondsToHead(Match match)
         {
             INode queryHead = GetQueryPathHead();
             IAtom targetHead = GetTargetPathHead();
@@ -284,7 +283,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             {
                 return false;
             }
-            return matchBond(queryBond, targetBond);
+            return MatchBond(queryBond, targetBond);
         }
 
         private INode GetQueryPathHead()

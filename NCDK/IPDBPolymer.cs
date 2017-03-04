@@ -10,36 +10,32 @@ namespace NCDK
     public interface IPDBPolymer
         : IBioPolymer
     {
-        /**
-         * Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
-         * atom to this AtomContainer, but not to a certain Strand or Monomer (intended
-         * e.g. for HETATMs).
-         *
-         * @param oAtom  The atom to add
-         */
+        /// <summary>
+        /// Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
+        /// atom to this AtomContainer, but not to a certain Strand or Monomer (intended
+        /// e.g. for HETATMs).
+        /// </summary>
+        /// <param name="oAtom">The atom to add</param>
         void Add(IPDBAtom oAtom);
 
-        /**
-         * Adds the atom to a specified Strand and a specified Monomer.
-         *
-         * @param oAtom    The atom to add
-         * @param oMonomer The monomer the atom belongs to
-         * @param oStrand  The strand the atom belongs to
-         */
+        /// <summary>
+        /// Adds the atom to a specified Strand and a specified Monomer.
+        /// </summary>
+        /// <param name="oAtom">The atom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// <param name="oStrand">The strand the atom belongs to</param>
         void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
-        /**
-         * Adds the PDBStructure structure a this PDBPolymer.
-         *
-         * @param structure  The PDBStructure to add
-         */
+        /// <summary>
+        /// Adds the PDBStructure structure a this PDBPolymer.
+        /// </summary>
+        /// <param name="structure">The PDBStructure to add</param>
         void Add(IPDBStructure structure);
 
-        /**
-         * Returns a Collection containing the PDBStructure in the PDBPolymer.
-         *
-         * @return Collection containing the PDBStructure in the PDBPolymer
-         */
+        /// <summary>
+        /// Returns a Collection containing the PDBStructure in the PDBPolymer.
+        /// </summary>
+        /// <returns>Collection containing the PDBStructure in the PDBPolymer</returns>
         IEnumerable<IPDBStructure> GetStructures();
     }
 }

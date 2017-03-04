@@ -28,28 +28,21 @@
  */
 
 using NCDK.Common.Collections;
-using System;
-using System.Collections.Generic;
 
 namespace NCDK.Beam
 {
     /// <summary>
     /// Fixed size Union-Find/Disjoint-Set implementation.
-    /// 
-    /// <blockquote>
+    /// </summary>
+    /// <example><code>
     /// UnionFind uf = new UnionFind(11);
     /// uf.Join(0, 1);
     /// uf.Join(1, 10);
     /// uf.Connected(0, 10); // are 0 and 10 joint?
     /// uf.Find(10);         // id for the set to which '10' belongs
-    /// </blockquote>
-    ///
-    /// <author>John May</author>
-    /// </summary>
-#if TEST
-    public
-#endif
-    sealed class UnionFind
+    /// </code></example>
+    // @author John May
+    internal sealed class UnionFind
     {
         /// <summary>
         /// Each element is either a connected (negative), points to another element.
@@ -61,9 +54,8 @@ namespace NCDK.Beam
         /// <summary>
         /// Create a new UnionFind data structure with enough space for 'n'
         /// elements.
-        ///
-        /// <param name="n">number of elements</param>
         /// </summary>
+        /// <param name="n">number of elements</param>
         public UnionFind(int n)
         {
             this.forest = new int[n];
@@ -72,10 +64,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Find the identifier of the set to which 'u' belongs.
-        ///
+        /// </summary>
         /// <param name="u">an element</param>
         /// <returns>the connected</returns>
-        /// </summary>
         public int Find(int u)
         {
             return forest[u] < 0 ? u : (forest[u] = Find(forest[u]));
@@ -83,13 +74,11 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Join the sets containing 'u' and 'v'.
-        ///
+        /// </summary>
         /// <param name="u">an element</param>
         /// <param name="v">another element</param>
-        /// </summary>
         public void Union(int u, int v)
         {
-
             int uRoot = Find(u);
             int vRoot = Find(v);
 
@@ -104,10 +93,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Join two disjoint sets. The larger set is appended onto the smaller set.
-        ///
-        /// <param name="sRoot">root of a set </param>(small)
-        /// <param name="lRoot">root of another set </param>(large)
         /// </summary>
+        /// <param name="sRoot">root of a set (small)</param>
+        /// <param name="lRoot">root of another set (large)</param>
         private void Join(int sRoot, int lRoot)
         {
             forest[sRoot] = forest[sRoot] + forest[lRoot];
@@ -116,11 +104,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Are the elements 'u' and 'v' in the same set.
-        ///
+        /// </summary>
         /// <param name="u">an element</param>
         /// <param name="v">another element</param>
-        /// <returns>the elements are in the same set</returns>.
-        /// </summary>
+        /// <returns>the elements are in the same set.</returns>
         public bool Connected(int u, int v)
         {
             return Find(u) == Find(v);

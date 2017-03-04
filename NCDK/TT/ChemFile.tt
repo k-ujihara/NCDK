@@ -38,7 +38,7 @@ namespace <#= ns.NS #>
 <# } #>
             chemSequences.Add(chemSequence);
 <# if (!ns.IsSilent) { #> 
-			NotifyChanged(); 
+            NotifyChanged(); 
 <# } #>
         }
 
@@ -79,7 +79,7 @@ namespace <#= ns.NS #>
 <# } #>
             chemSequences.Insert(index, chemSequence);
 <# if (!ns.IsSilent) { #> 
-			NotifyChanged(); 
+            NotifyChanged(); 
 <# } #>
         }
 
@@ -87,8 +87,8 @@ namespace <#= ns.NS #>
         {
             bool ret = chemSequences.Remove(chemSequence);
 <# if (!ns.IsSilent) { #> 
-			chemSequence.Listeners.Remove(this);
-			NotifyChanged(); 
+            chemSequence.Listeners.Remove(this);
+            NotifyChanged(); 
 <# } #>
             return ret;
         }
@@ -100,7 +100,7 @@ namespace <#= ns.NS #>
 <# } #>
             chemSequences.RemoveAt(index);
 <# if (!ns.IsSilent) { #> 
-			NotifyChanged(); 
+            NotifyChanged(); 
 <# } #>
         }
 
@@ -122,7 +122,7 @@ namespace <#= ns.NS #>
                     sb.Append(chemSequence.ToString());
                 }
             }
-			sb.Append(')');
+            sb.Append(')');
             return sb.ToString(); 
         }
 

@@ -21,13 +21,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Exceptions
 {
-    /**
-     * Checks the functionality of the NoSuchAtomTypeException class.
-     *
-     * @cdk.module test-core
-     *
-     * @see NoSuchAtomTypeException
-     */
+    /// <summary>
+    /// Checks the functionality of the NoSuchAtomTypeException class.
+    ///
+    // @cdk.module test-core
+    ///
+    /// <seealso cref="NoSuchAtomTypeException"/>
+    /// </summary>
     [TestClass()]
     public class NoSuchAtomTypeExceptionTest : CDKTestCase
     {

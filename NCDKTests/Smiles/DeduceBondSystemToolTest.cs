@@ -18,11 +18,6 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.SGroups;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
 using NCDK.Default;
@@ -30,12 +25,12 @@ using NCDK.Config;
 
 namespace NCDK.Smiles
 {
-    /**
-     *
-     * @author         Rajarshi Guha
-     * @cdk.created    2006-09-18
-     * @cdk.module     test-smiles
-     */
+    /// <summary>
+    ///
+    // @author         Rajarshi Guha
+    // @cdk.created    2006-09-18
+    // @cdk.module     test-smiles
+    /// </summary>
     [TestClass()]
     public class DeduceBondSystemToolTest : CDKTestCase
     {
@@ -132,9 +127,9 @@ namespace NCDK.Smiles
             Assert.AreEqual(13, doubleBondCount);
         }
 
-        /**
-         * @cdk.bug 3506770
-         */
+        /// <summary>
+        // @cdk.bug 3506770
+        /// </summary>
         //@Ignore("This is an example structure where this class fails")
         public void TestLargeBioclipseUseCase()
         {
@@ -184,11 +179,11 @@ namespace NCDK.Smiles
             Assert.AreEqual(6, doubleBondCount);
         }
 
-        /**
-         * @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H
+        /// </summary>
         //@Ignore("previouls disabled 'xtest'")
-        public void xtestQuinone()
+        public void XtestQuinone()
         {
             IAtomContainer enol = new AtomContainer();
 
@@ -256,11 +251,11 @@ namespace NCDK.Smiles
             Assert.AreEqual(BondOrder.Double, enol.Bonds[7].Order);
         }
 
-        /**
-         * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
+        /// </summary>
         [TestMethod()]
-        public void xtestPyrrole()
+        public void XtestPyrrole()
         {
             IAtomContainer enol = new AtomContainer();
 
@@ -312,7 +307,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void xtestPyridine()
+        public void XtestPyridine()
         {
             IAtomContainer enol = new AtomContainer();
 
@@ -380,12 +375,12 @@ namespace NCDK.Smiles
                     + enol.Bonds[5].Order.Numeric); // around atom6
         }
 
-        /**
-         * @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-         * @cdk.bug   1931262
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+        // @cdk.bug   1931262
+        /// </summary>
         [TestMethod()]
-        public void xtestBenzene()
+        public void XtestBenzene()
         {
             IAtomContainer enol = new AtomContainer();
 

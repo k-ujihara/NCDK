@@ -21,28 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 
 namespace NCDK.Config
 {
-    /**
-    // A read-only class used by {@link Elements} for the natural elements. This class is not to
-    // be used than by only {@link Elements}.
-     *
+    /// <summary>
+    /// A read-only class used by <see cref="Elements"/> for the natural elements. This class is not to be used than by only <see cref="Elements"/>.
+    /// </summary>
     // @author      egonw
     // @cdk.module  core
     // @cdk.githash
-     */
-#if TEST
-    public
-#else
-    internal
-#endif
-     sealed class NaturalElement 
+    internal sealed class NaturalElement 
         : IElement
     {
         private readonly string  symbol;

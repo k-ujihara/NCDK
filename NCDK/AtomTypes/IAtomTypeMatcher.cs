@@ -20,39 +20,32 @@
 
 namespace NCDK.AtomTypes
 {
-    /**
-	 * Classes that implement this interface are atom type matchers. They find the
-	 * most appropriate AtomType matching the given Atom in a given atom type list.
-	 *
-	 * @author      mfe4
-	 * @cdk.created 2004-12-02
-	 * @cdk.module  core
-	 * @cdk.githash
-	 *
-	 * @see         IAtomTypeGuesser
-	 */
+    /// <summary>
+    /// Classes that implement this interface are atom type matchers. They find the
+    /// most appropriate AtomType matching the given Atom in a given atom type list.
+    /// </summary>
+    /// <seealso cref="IAtomTypeGuesser"/>
+    // @author      mfe4
+    // @cdk.created 2004-12-02
+    // @cdk.module  core
+    // @cdk.githash
     public interface IAtomTypeMatcher
     {
-        /**
-		 * Method that assigns an atom type to a given atom belonging to an atom
-		 * container.
-		 *
-		 * @param  container AtomContainer of which the <code>atom</code> is part
-		 * @param  atom      Atom for which a matching atom type is searched
-		 * @return           The matching AtomType
-		 * @throws           CDKException when something went wrong with going through
-		 *                   the AtomType's
-		 */
+        /// <summary>
+        /// Method that assigns an atom type to a given atom belonging to an atom container.
+        /// </summary>
+        /// <param name="container">AtomContainer of which the <code>atom</code> is part</param>
+        /// <param name="atom">Atom for which a matching atom type is searched</param>
+        /// <returns>The matching AtomType</returns>
+        /// <exception cref="CDKException">when something went wrong with going through the AtomType's</exception>
         IAtomType FindMatchingAtomType(IAtomContainer container, IAtom atom);
 
-        /**
-		 * Method that assigns atom types to atoms in the given atom container.
-		 *
-		 * @param  container AtomContainer for which atom types are perceived
-		 * @return           The matching AtomType
-		 * @throws           CDKException when something went wrong with going through
-		 *                   the AtomType's
-		 */
+        /// <summary>
+        /// Method that assigns atom types to atoms in the given atom container.
+        /// </summary>
+        /// <param name="container">AtomContainer for which atom types are perceived</param>
+        /// <returns>The matching AtomType</returns>      
+        /// <exception cref="CDKException"> when something went wrong with going through  the AtomType's</exception>        
         IAtomType[] FindMatchingAtomTypes(IAtomContainer container);
     }
 }

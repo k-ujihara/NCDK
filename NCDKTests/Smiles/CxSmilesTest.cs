@@ -82,7 +82,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void nonCXSMILESLayer()
+        public void NonCXSMILESLayer()
         {
             IAtomContainer mol = smipar.ParseSmiles("c1ccccc1 |<benzene>|");
             Assert.IsNotNull(mol);

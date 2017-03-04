@@ -28,44 +28,39 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * Collection of static utilities for manipulating adjacency list
-	 * representations stored as a {@literal int[][]}. May well be replaced in
-	 * future with a <i>Graph</i> data type.
-	 *
-	 * @author John May
-	 * @cdk.module core
-	 * @cdk.githash
-	 * @see ShortestPaths
-	 * @see org.openscience.cdk.ringsearch.RingSearch
-	 */
+    /// <summary>
+    /// Collection of static utilities for manipulating adjacency list
+    /// representations stored as a {@literal int[][]}. May well be replaced in
+    /// future with a <i>Graph</i> data type.
+    /// </summary>
+    /// <seealso cref="ShortestPaths"/>
+    /// <seealso cref="RingSearches.RingSearch"/>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
     public static class GraphUtil
     {
-        /**
-		 * Create an adjacent list representation of the {@literal container}.
-		 *
-		 * @param container the molecule
-		 * @return adjacency list representation stored as an {@literal int[][]}.
-		 * @     the container was null
-		 * @ a bond was found which contained atoms
-		 *                                  not in the molecule
-		 */
+        /// <summary>
+        /// Create an adjacent list representation of the <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">the molecule</param>
+        /// <returns>adjacency list representation stored as an <see cref="int"/>[][].</returns>
+        /// <exception cref="ArgumentNullException">the container was null</exception>
+        /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjList(IAtomContainer container)
         {
             return ToAdjList(container, null);
         }
 
-        /**
-		 * Create an adjacent list representation of the {@code container} and
-		 * fill in the {@code bondMap} for quick lookup.
-		 *
-		 * @param container the molecule
-		 * @param bondMap a map to index the bonds into
-		 * @return adjacency list representation stored as an {@literal int[][]}.
-		 * @     the container was null
-		 * @ a bond was found which contained atoms
-		 *                                  not in the molecule
-		 */
+        /// <summary>
+        /// Create an adjacent list representation of the <paramref name="container"/> and
+        /// fill in the <paramref name="bondMap"/> for quick lookup.
+        /// </summary>
+        /// <param name="container">the molecule</param>
+        /// <param name="bondMap">a map to index the bonds into</param>
+        /// <returns>adjacency list representation stored as an {@literal int[][]}.</returns>
+        /// <exception cref="ArgumentNullException">the container was null</exception>
+        /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjList(IAtomContainer container, EdgeToBondMap bondMap)
         {
             if (container == null)
@@ -85,7 +80,6 @@ namespace NCDK.Graphs
                 if (v < 0 || w < 0)
                     throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");
 
-
                 graph[v].Add(w);
                 graph[w].Add(v);
 
@@ -101,26 +95,24 @@ namespace NCDK.Graphs
             return agraph;
         }
 
-        /**
-		 * Create a subgraph by specifying the vertices from the original {@literal
-		 * graph} to {@literal include} in the subgraph. The provided vertices also
-		 * provide the mapping between vertices in the subgraph and the original.
-		 *
-		 * <blockquote><pre>
-		 * int[][] g  = ToAdjList(naphthalene);
-		 * int[]   vs = new int[]{0, 1, 2, 3, 4, 5};
-		 *
-		 * int[][] h = Subgraph(g, vs);
-		 * // for the vertices in h, the provided 'vs' gives the original index
-		 * For(int v = 0; v < h.Length; v++) {
-		 *     // vs[v] is 'v' in 'g'
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @param graph   adjacency list graph
-		 * @param include the vertices of he graph to include in the subgraph
-		 * @return the subgraph
-		 */
+        /// <summary>
+        /// Create a subgraph by specifying the vertices from the original {@literal
+        /// graph} to {@literal include} in the subgraph. The provided vertices also
+        /// provide the mapping between vertices in the subgraph and the original.
+        /// </summary>
+        /// <example><code>
+        /// int[][] g  = ToAdjList(naphthalene);
+        /// int[]   vs = new int[]{0, 1, 2, 3, 4, 5};
+        ///
+        /// int[][] h = Subgraph(g, vs);
+        /// // for the vertices in h, the provided 'vs' gives the original index
+        /// For(int v = 0; v < h.Length; v++) {
+        ///     // vs[v] is 'v' in 'g'
+        /// }
+        /// </code></example>
+        /// <param name="graph">adjacency list graph</param>
+        /// <param name="include">the vertices of he graph to include in the subgraph</param>
+        /// <returns>the subgraph</returns>
         public static int[][] Subgraph(int[][] graph, int[] include)
         {
             // number of vertices in the graph and the subgraph
@@ -162,19 +154,15 @@ namespace NCDK.Graphs
 
             return asubgraph;
         }
-
-        /**
-         * Arrange the {@literal vertices} in a simple cyclic path. If the vertices
-         * do not form such a path an {@link ArgumentException} is thrown.
-         *
-         * @param graph    a graph
-         * @param vertices set of vertices
-         * @return vertices in a walk which makes a cycle (first and last are the
-         *         same)
-         * @ thrown if the vertices do not form a
-         *                                  cycle
-         * @see org.openscience.cdk.ringsearch.RingSearch#Isolated()
-         */
+        
+        /// <summary>
+        /// Arrange the <paramref name="vertices"/> in a simple cyclic path. 
+        /// </summary>
+        /// <param name="graph">a graph</param>
+        /// <param name="vertices">set of vertices</param>
+        /// <returns>vertices in a walk which makes a cycle (first and last are the same)</returns>
+        /// <exception cref="ArgumentException">If the vertices do not form a cycle</exception>
+        /// <seealso cref="RingSearches.RingSearch.Isolated"/>
         public static int[] Cycle(int[][] graph, int[] vertices)
         {
             int n = graph.Length;
@@ -208,13 +196,12 @@ namespace NCDK.Graphs
             throw new ArgumentException("path does not make a cycle");
         }
 
-        /**
-         * Find the first value in {@literal ws} which is {@literal marked}.
-         *
-         * @param xs     array of values
-         * @param marked marked values
-         * @return first marked value, -1 if none found
-         */
+        /// <summary>
+        /// Find the first value in <paramref name="xs"/> which is <paramref name="marked"/>.
+        /// </summary>
+        /// <param name="xs">array of values</param>
+        /// <param name="marked">marked values</param>
+        /// <returns>first marked value, -1 if none found</returns>
         static int FirstMarked(int[] xs, bool[] marked)
         {
             foreach (int x in xs)
@@ -223,7 +210,7 @@ namespace NCDK.Graphs
             return -1;
         }
 
-        /// <summary>Utility for storing {@link IBond}s indexed by vertex end points.</summary>
+        /// <summary>Utility for storing <see cref="IBond"/>s indexed by vertex end points.</summary>
         public class EdgeToBondMap
         {
             Dictionary<Tuple, IBond> lookup = new Dictionary<Tuple, IBond>();
@@ -231,26 +218,24 @@ namespace NCDK.Graphs
             public EdgeToBondMap()
             { }
 
-            /**
-             * Index a bond by the endpoints.
-             *
-             * @param v    an endpoint
-             * @param w    another endpoint
-             * @param bond the bond value
-             */
+            /// <summary>
+            /// Index a bond by the endpoints.
+            /// </summary>
+            /// <param name="v">an endpoint</param>
+            /// <param name="w">another endpoint</param>
+            /// <param name="bond">the bond value</param>
             public void Add(int v, int w, IBond bond)
             {
                 lookup[new Tuple(v, w)] = bond;
             }
 
-            /**
-             * Access the bond store at the end points v and w. If no bond is
-             * store, null is returned.
-             *
-             * @param v an endpoint
-             * @param w another endpoint
-             * @return the bond stored for the endpoints
-             */
+            /// <summary>
+            /// Access the bond store at the end points v and w. If no bond is
+            /// store, null is returned.
+            /// </summary>
+            /// <param name="v">an endpoint</param>
+            /// <param name="w">another endpoint</param>
+            /// <returns>the bond stored for the endpoints</returns>
             public IBond this[int v, int w]
             {
                 get
@@ -262,22 +247,21 @@ namespace NCDK.Graphs
                 }
             }
 
-            /**
-             * Create a map with enough space for all the bonds in the molecule,
-             * {@code container}. Note - the map is not filled by this method.
-             *
-             * @param container the container
-             * @return a map with enough space for the container
-             */
+            /// <summary>
+            /// Create a map with enough space for all the bonds in the molecule,
+            /// <paramref name="container"/>. Note - the map is not filled by this method.
+            /// </summary>
+            /// <param name="container">the container</param>
+            /// <returns>a map with enough space for the container</returns>
             public static EdgeToBondMap WithSpaceFor(IAtomContainer container)
             {
                 return new EdgeToBondMap();
             }
 
-            /**
-             * Unordered storage of two int values. Mainly useful to index bonds by
-             * it's vertex end points.
-             */
+            /// <summary>
+            /// Unordered storage of two int values. Mainly useful to index bonds by
+            /// it's vertex end points.
+            /// </summary>
             struct Tuple
             {
                 private readonly int u, v;

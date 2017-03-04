@@ -82,7 +82,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAffinityDescriptor2()
         {
-
             IAtomContainer mol = builder.CreateAtomContainer();
             mol.Atoms.Add(builder.CreateAtom("C"));
             mol.Atoms.Add(builder.CreateAtom("C"));

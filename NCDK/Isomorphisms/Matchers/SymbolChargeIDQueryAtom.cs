@@ -21,10 +21,10 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * @cdk.module  isomorphism
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module  isomorphism
+    // @cdk.githash
+    /// </summary>
     public class SymbolChargeIDQueryAtom : QueryAtom, IQueryAtom
     {
         public SymbolChargeIDQueryAtom(IChemObjectBuilder builder)

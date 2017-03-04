@@ -32,7 +32,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class ElectronAssignmentTest
     {
         [TestMethod()]

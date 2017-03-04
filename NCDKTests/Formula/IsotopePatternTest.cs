@@ -2,11 +2,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula
 {
-    /**
-     * Class testing the IsotopePattern class.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Class testing the IsotopePattern class.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class IsotopePatternTest : CDKTestCase
     {
@@ -22,11 +22,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoP);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetMonoIsotope_IsotopeContainer()
         {
@@ -36,11 +36,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAddIsotope_IsotopeContainer()
         {
@@ -49,11 +49,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoP);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMonoIsotope()
         {
@@ -63,11 +63,11 @@ namespace NCDK.Formula
             Assert.AreEqual(isoC, isoP.GetMonoIsotope());
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopes()
         {
@@ -81,11 +81,11 @@ namespace NCDK.Formula
             Assert.AreEqual(iso2, isoP.Isotopes[1]);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotope_int()
         {
@@ -99,11 +99,11 @@ namespace NCDK.Formula
             Assert.AreEqual(iso2, isoP.Isotopes[1]);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetNumberOfIsotopes()
         {
@@ -115,11 +115,11 @@ namespace NCDK.Formula
             Assert.AreEqual(2, isoP.Isotopes.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetCharge_Double()
         {
@@ -129,11 +129,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetCharge()
         {
@@ -142,11 +142,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestClone()
         {

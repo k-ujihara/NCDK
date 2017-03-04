@@ -18,15 +18,15 @@
  */
 namespace NCDK.IO.Setting
 {
-    /**
-     * An interface for reader settings. It is subclassed by implementations,
-     * one for each type of field, e.g. IntReaderSetting.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// An interface for reader settings. It is subclassed by implementations,
+    /// one for each type of field, e.g. IntReaderSetting.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     public abstract class IOSetting : ISetting
     {
         public struct Importance
@@ -42,18 +42,18 @@ namespace NCDK.IO.Setting
             public static readonly Importance Low = new Importance(2);
         }
 
-        /**
-         * The default constructor that sets this field. All textual
-         * information is supposed to be English. Localization is taken care
-         * off by the ReaderConfigurator.
-         *
-         * @param name           Name of the setting
-         * @param level          Level at which question is asked
-         * @param question       Question that is poped to the user when the
-         *                       ReaderSetting needs setting
-         * @param defaultSetting The default setting, used if not overwritten
-         *                       by a user
-         */
+        /// <summary>
+        /// The default constructor that sets this field. All textual
+        /// information is supposed to be English. Localization is taken care
+        /// off by the ReaderConfigurator.
+        ///
+        /// <param name="name">Name of the setting</param>
+        /// <param name="level">Level at which question is asked</param>
+        /// <param name="question">Question that is poped to the user when the</param>
+        ///                       ReaderSetting needs setting
+        /// <param name="defaultSetting">The default setting, used if not overwritten</param>
+        ///                       by a user
+        /// </summary>
         public IOSetting(string name, Importance level, string question, string defaultSetting)
         {
             Level = level;

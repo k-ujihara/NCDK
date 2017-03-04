@@ -55,7 +55,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.InChI.guanine.inchi";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             INChIPlainTextReader reader = new INChIPlainTextReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

@@ -20,24 +20,24 @@ using System.Collections.Generic;
 
 namespace NCDK.NInChI
 {
-    /**
-     * @author Sam Adams
-     */
+    /// <summary>
+    // @author Sam Adams
+    /// </summary>
     public class NInchiStructure
     {
-        /**
-         * List of atoms.
-         */
+        /// <summary>
+        /// List of atoms.
+        /// </summary>
         public IList<NInchiAtom> Atoms { get; private set; } = new List<NInchiAtom>();
 
-        /**
-         * List of bonds.
-         */
+        /// <summary>
+        /// List of bonds.
+        /// </summary>
         public IList<NInchiBond> Bonds { get; private set; } = new List<NInchiBond>();
 
-        /**
-         * List of stero parities.
-         */
+        /// <summary>
+        /// List of stero parities.
+        /// </summary>
         public IList<NInchiStereo0D> Stereos { get; private set; } = new List<NInchiStereo0D>();
 
         public void SetStructure(NInchiStructure structure)

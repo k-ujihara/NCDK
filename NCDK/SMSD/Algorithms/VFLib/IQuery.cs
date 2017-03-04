@@ -49,68 +49,68 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Interface for the query molecule/graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the query molecule/graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
 
     public interface IQuery
     {
 
-        /**
-         * Returns nodes of the query.
-         * @return node Iterable.
-         */
+        /// <summary>
+        /// Returns nodes of the query.
+        /// <returns>node Iterable.</returns>
+        /// </summary>
         IEnumerable<INode> Nodes();
 
-        /**
-         * Returns a node of the query mol at a given position.
-         * @param index at position.
-         * @return node.
-         */
+        /// <summary>
+        /// Returns a node of the query mol at a given position.
+        /// <param name="index">at position.</param>
+        /// <returns>node.</returns>
+        /// </summary>
         INode GetNode(int index);
 
-        /**
-         * Returns edges of the query.
-         * @return edge Iterable.
-         */
+        /// <summary>
+        /// Returns edges of the query.
+        /// <returns>edge Iterable.</returns>
+        /// </summary>
         IEnumerable<IEdge> Edges();
 
-        /**
-         * Returns an edge of the query mol at a given position.
-         * @param index at position.
-         * @return edge
-         */
+        /// <summary>
+        /// Returns an edge of the query mol at a given position.
+        /// <param name="index">at position.</param>
+        /// <returns>edge</returns>
+        /// </summary>
         IEdge GetEdge(int index);
 
-        /**
-         * Returns an atom associated with this node.
-         * @param node get Atom of this node.
-         * @return atom of this node
-         */
+        /// <summary>
+        /// Returns an atom associated with this node.
+        /// <param name="node">get Atom of this node.</param>
+        /// <returns>atom of this node</returns>
+        /// </summary>
         IAtom GetAtom(INode node);
 
-        /**
-         * Returns an edge associated between two nodes.
-         *
-         * @param source get an between source.
-         * @param target and target.
-         * @return IEdge egde between source and target.
-         */
+        /// <summary>
+        /// Returns an edge associated between two nodes.
+        ///
+        /// <param name="source">get an between source.</param>
+        /// <param name="target">and target.</param>
+        /// <returns>IEdge egde between source and target.</returns>
+        /// </summary>
         IEdge GetEdge(INode source, INode target);
 
-        /**
-         * Returns edge count.
-         * @return edge count.
-         */
+        /// <summary>
+        /// Returns edge count.
+        /// <returns>edge count.</returns>
+        /// </summary>
         int CountEdges();
 
-        /**
-         * Returns node count.
-         * @return node count.
-         */
+        /// <summary>
+        /// Returns node count.
+        /// <returns>node count.</returns>
+        /// </summary>
         int CountNodes();
     }
 }

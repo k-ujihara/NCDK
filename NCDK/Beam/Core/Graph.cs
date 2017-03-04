@@ -39,8 +39,8 @@ namespace NCDK.Beam
     /// <summary>
     /// Defines a labelled graph with atoms as vertex labels and bonds as edge
     /// labels. Topological information around atoms can also be stored.
-	/// </summary>
-    /// <author>John May</author>
+    /// </summary>
+    // @author John May
     public sealed class Graph
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace NCDK.Beam
         public const int HAS_STRO = HAS_ATM_STRO | HAS_EXT_STRO | HAS_BND_STRO;
 
         /// <summary> The vertex labels, atoms.</summary>
-        private Atom_[] atoms;
+        private Atom[] atoms;
 
         private int[] degrees;
 
@@ -83,19 +83,14 @@ namespace NCDK.Beam
         /// Create a new chemical graph with expected size.
         /// </summary>
         /// <param name="expSize">expected size</param>
-#if TEST
-        public
-#else
-        internal
-#endif 
-        Graph(int expSize)
+        internal Graph(int expSize)
         {
             this.order = 0;
             this.size = 0;
             this.edges = new Edge[expSize][];
             for (int i = 0; i < expSize; i++)
                 edges[i] = new Edge[4];
-            this.atoms = new Atom_[expSize];
+            this.atoms = new Atom[expSize];
             this.degrees = new int[expSize];
             this.valences = new int[expSize];
             this.topologies = new Topology[expSize];
@@ -136,11 +131,11 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// (internal) - set the atom label at position 'i'.
-		/// </summary>
-	    /// <param name="i">index</param>
-	    /// <param name="a">atom</param>
-        internal void SetAtom(int i, Atom_ a)
+        /// (internal) - set the atom label at position 'i'.
+        /// </summary>
+        /// <param name="i">index</param>
+        /// <param name="a">atom</param>
+        internal void SetAtom(int i, Atom a)
         {
             atoms[i] = a;
         }
@@ -165,12 +160,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="a">add an atom</param>
         /// <returns>index of the atom in the graph (vertex)</returns>
-#if TEST
-        public
-#else
-        internal
-#endif
-        int AddAtom(Atom_ a)
+        internal int AddAtom(Atom a)
         {
             EnsureCapacity();
             atoms[order++] = a;
@@ -178,22 +168,12 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Access the atom at the specified index.
-		/// </summary>
-	    /// <param name="i">index of the atom to access</param>
-	    /// <returns>the atom at that index</returns>
+        /// Access the atom at the specified index.
+        /// </summary>
+        /// <param name="i">index of the atom to access</param>
+        /// <returns>the atom at that index</returns>
         /// <exception cref="ArgumentException">no atom exists</exception>"
         public Atom GetAtom(int i)
-        {
-            return GetAtom_(i);
-        }
-
-#if TEST
-        public
-#else
-        internal 
-#endif
-        Atom_ GetAtom_(int i)
         {
             return atoms[i];
         }
@@ -222,12 +202,12 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Access the degree of vertex 'u'.
-		/// </summary>
-	    /// <param name="u">a vertex</param>
-	    /// <returns>the degree of the specified vertex</returns>
-	    /// <exception cref="ArgumentOutOfRangeException">attempting to access the degree of an
-	    /// atom which does not exist</exception> 
+        /// Access the degree of vertex 'u'.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <returns>the degree of the specified vertex</returns>
+        /// <exception cref="ArgumentOutOfRangeException">attempting to access the degree of an
+        /// atom which does not exist</exception> 
         public int Degree(int u)
         {
             return degrees[u];
@@ -238,45 +218,35 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="u">a vertex index</param>
         /// <returns>the bonded valence of the specified vertex</returns>
-#if TEST
-        public
-#else
-        internal
-#endif 
-        int BondedValence(int u)
+        internal int BondedValence(int u)
         {
             return valences[u];
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif 
-        void UpdateBondedValence(int i, int x)
+        internal void UpdateBondedValence(int i, int x)
         {
             valences[i] += x;
         }
 
         /// <summary>
-	    /// Access the edges of which vertex '<paramref name="u"/>' is an endpoint.
-		/// </summary>
-	    /// <param name="u">a vertex</param>
-	    /// <returns>edges incident to '<paramref name="u"/>'</returns>
+        /// Access the edges of which vertex '<paramref name="u"/>' is an endpoint.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <returns>edges incident to '<paramref name="u"/>'</returns>
         public IList<Edge> GetEdges(int u)
         {
             return new List<Edge>(Arrays.CopyOf(edges[u], degrees[u]));
         }
 
         /// <summary>
-	    /// Access the vertices adjacent to '<paramref name="u"/>' in <b>sorted</b> Order. This
-	    /// convenience method is provided to assist in configuring atom-based stereo
-	    /// using the <see cref="ConfigurationOf(int)"/> method. For general purpose
-	    /// access to the neighbors of a vertex the <see cref="GetEdges(int)"/> is
-	    /// preferred.
-		/// </summary>
-	    /// <param name="u">a vertex</param>
-	    /// <returns>fixed-size array of vertices</returns>
+        /// Access the vertices adjacent to '<paramref name="u"/>' in <b>sorted</b> Order. This
+        /// convenience method is provided to assist in configuring atom-based stereo
+        /// using the <see cref="ConfigurationOf(int)"/> method. For general purpose
+        /// access to the neighbors of a vertex the <see cref="GetEdges(int)"/> is
+        /// preferred.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <returns>fixed-size array of vertices</returns>
         /// <seealso cref="ConfigurationOf(int)"/>
         public int[] Neighbors(int u)
         {
@@ -290,12 +260,12 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Determine if the vertices '<paramref name="u"/>' and '<paramref name="v"/>' are adjacent and there is an edge
-	    /// which connects them.
-		/// </summary>
-	    /// <param name="u">a vertex</param>
-	    /// <param name="v">another vertex</param>
-	    /// <returns>whether they are adjacent</returns>
+        /// Determine if the vertices '<paramref name="u"/>' and '<paramref name="v"/>' are adjacent and there is an edge
+        /// which connects them.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <param name="v">another vertex</param>
+        /// <returns>whether they are adjacent</returns>
         public bool Adjacent(int u, int v)
         {
             int d = degrees[u];
@@ -309,23 +279,23 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// The number of implied (or labelled) hydrogens for the vertex '<paramref name="u"/>'. Note
-	    /// the count does not include any bonded vertices which may also be
-	    /// hydrogen.
-		/// </summary>
-	    /// <param name="u">the vertex to access the implicit h count for</param>.
-	    /// <returns>the number of implicit hydrogens</returns>
+        /// The number of implied (or labelled) hydrogens for the vertex '<paramref name="u"/>'. Note
+        /// the count does not include any bonded vertices which may also be
+        /// hydrogen.
+        /// </summary>
+        /// <param name="u">the vertex to access the implicit h count for</param>.
+        /// <returns>the number of implicit hydrogens</returns>
         public int ImplHCount(int u)
         {
-            return GetAtom_(u).GetNumberOfHydrogens(this, u);
+            return GetAtom(u).GetNumberOfHydrogens(this, u);
         }
 
         /// <summary>
-	    /// Access the edge connecting two adjacent vertices.
-		/// </summary>
-	    /// <param name="u">a vertex</param>
-	    /// <param name="v">another vertex </param>(adjacent to u)
-	    /// <returns>the edge connected u and v</returns>
+        /// Access the edge connecting two adjacent vertices.
+        /// </summary>
+        /// <param name="u">a vertex</param>
+        /// <param name="v">another vertex </param>(adjacent to u)
+        /// <returns>the edge connected u and v</returns>
         /// <exception cref="ArgumentException">u and v are not adjacent</exception>
         public Edge CreateEdge(int u, int v)
         {
@@ -339,12 +309,7 @@ namespace NCDK.Beam
             throw new ArgumentException(u + ", " + v + " are not adjacent");
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        Edge EdgeAt(int u, int j)
+        internal Edge EdgeAt(int u, int j)
         {
             return edges[u][j];
         }
@@ -354,12 +319,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="org">the original edge</param>
         /// <param name="rep">the replacement</param>
-#if TEST
-        public
-#else
-        internal
-#endif
-         void Replace(Edge org, Edge rep)
+        internal void Replace(Edge org, Edge rep)
         {
             int u = org.Either();
             int v = org.Other(u);
@@ -391,12 +351,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="t">topology</param> 
         /* fixed returns tags are removed. */
-#if TEST
-        public
-#else
-        internal
-#endif
-        void AddTopology(Topology t)
+        internal void AddTopology(Topology t)
         {
             if (t != Topology.Unknown)
                 topologies[t.Atom] = t;
@@ -413,12 +368,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="u">a vertex to access the topology of</param>
         /// <returns>the topology of vertex 'u'</returns>
-#if TEST
-        public
-#else
-        internal
-#endif
-        Topology TopologyOf(int u)
+        internal Topology TopologyOf(int u)
         {
             if (topologies[u] == null)
                 return Topology.Unknown;
@@ -426,26 +376,26 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Provides the stereo-configuration of the atom label at vertex 'u'. The
-	    /// configuration describes the relative-stereo as though the atoms were
-	    /// arranged by atom number. </summary>
+        /// Provides the stereo-configuration of the atom label at vertex 'u'. The
+        /// configuration describes the relative-stereo as though the atoms were
+        /// arranged by atom number. </summary>
         /// <example>
-	    /// <b>Further Explanation for Tetrahedral Centres</b> As an example the
-	    /// molecule O[C@]12CCCC[C@@]1(O)CCCC2 has two tetrahedral centres.
-	    /// <br/> 1. The first one is on vertex '1' and looking from vertex '0' the
-	    /// other neighbors [6, 11, 2] proceed anti-clockwise ('@') - note ring
-	    /// bonds. It is easy to see that if we use the natural Order of the molecule
-	    /// and Order the neighbor [2, 6, 11] the winding is still anti-clockwise and
-	    /// '<see cref="Configuration.TH1"/>' is returned. 2. The second centre is on vertex '6' and looking
-	    /// from vertex '5' the Ordering proceeds as [1, 7, 8] with clockwise
-	    /// winding. When we arrange the atoms by their natural Order we will now be
-	    /// looking from vertex '1' as it is the lowest. The other neighbors then
-	    /// proceed in the Order [5, 7, 8]. Drawing out the configuration it's clear
-	    /// that we look from vertex '1' instead of '5' the winding is now
-	    /// anti-clockwise and the configuration is also '<see cref="Configuration.TH1"/>'.
-		/// </example>
-	    /// <param name="u">a vertex in the graph</param>
-	    /// <returns>The configuration around</returns>
+        /// <b>Further Explanation for Tetrahedral Centres</b> As an example the
+        /// molecule O[C@]12CCCC[C@@]1(O)CCCC2 has two tetrahedral centres.
+        /// <br/> 1. The first one is on vertex '1' and looking from vertex '0' the
+        /// other neighbors [6, 11, 2] proceed anti-clockwise ('@') - note ring
+        /// bonds. It is easy to see that if we use the natural Order of the molecule
+        /// and Order the neighbor [2, 6, 11] the winding is still anti-clockwise and
+        /// '<see cref="Configuration.TH1"/>' is returned. 2. The second centre is on vertex '6' and looking
+        /// from vertex '5' the Ordering proceeds as [1, 7, 8] with clockwise
+        /// winding. When we arrange the atoms by their natural Order we will now be
+        /// looking from vertex '1' as it is the lowest. The other neighbors then
+        /// proceed in the Order [5, 7, 8]. Drawing out the configuration it's clear
+        /// that we look from vertex '1' instead of '5' the winding is now
+        /// anti-clockwise and the configuration is also '<see cref="Configuration.TH1"/>'.
+        /// </example>
+        /// <param name="u">a vertex in the graph</param>
+        /// <returns>The configuration around</returns>
         public Configuration ConfigurationOf(int u)
         {
 
@@ -463,20 +413,20 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// The Order is the number vertices in the graph, |V|.
-		/// </summary>
+        /// The Order is the number vertices in the graph, |V|.
+        /// </summary>
         public int Order => order;
 
         /// <summary>
-	    /// The size is the number edges in the graph, |E|.
-		/// </summary>
+        /// The size is the number edges in the graph, |E|.
+        /// </summary>
         public int Size => size;
 
         /// <summary>
-	    /// Convenience method to create a graph from a provided SMILES string.
-		/// </summary>
-	    /// <param name="smi">string containing SMILES line notation</param>.
-	    /// <returns>graph instance from the SMILES</returns>
+        /// Convenience method to create a graph from a provided SMILES string.
+        /// </summary>
+        /// <param name="smi">string containing SMILES line notation</param>.
+        /// <returns>graph instance from the SMILES</returns>
         /// <exception cref="InvalidSmilesException">if there was a syntax error while parsing the SMILES.</exception>
         public static Graph FromSmiles(string smi)
         {
@@ -486,23 +436,23 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Convenience method to write a SMILES string for the current configuration
-	    /// of the molecule.
-		/// </summary>
-	    /// <returns>the SMILES string for the molecule</returns>.
-	    // @ a SMILES string could not be generated
+        /// Convenience method to write a SMILES string for the current configuration
+        /// of the molecule.
+        /// </summary>
+        /// <returns>the SMILES string for the molecule</returns>.
+        // @ a SMILES string could not be generated
         public string ToSmiles()
         {
             return Generator.Generate(this);
         }
 
         /// <summary>
-	    /// Generate a SMILES for the Graph. The <paramref name="visitedAt"/> is filled with
-	    /// the output rank of each vertex in the graph. This allows one to know
-	    /// the atom index when the SMILES in read in.
-		/// </summary>
-	    /// <param name="visitedAt">vector to be filled with the output Order</param>
-	    /// <returns>the SMILES string</returns>
+        /// Generate a SMILES for the Graph. The <paramref name="visitedAt"/> is filled with
+        /// the output rank of each vertex in the graph. This allows one to know
+        /// the atom index when the SMILES in read in.
+        /// </summary>
+        /// <param name="visitedAt">vector to be filled with the output Order</param>
+        /// <returns>the SMILES string</returns>
         /// <exception cref="InvalidSmilesException">a SMILES string could not be generated</exception>"
         public string ToSmiles(int[] visitedAt)
         {
@@ -510,11 +460,11 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Delocalise a kekulé graph representation to one with <i>aromatic</i>
-	    /// bonds. The original graph remains unchanged.
-	    /// TODO: more explanation
-		/// </summary>
-	    /// <returns>aromatic representation</returns>
+        /// Delocalise a kekulé graph representation to one with <i>aromatic</i>
+        /// bonds. The original graph remains unchanged.
+        /// TODO: more explanation
+        /// </summary>
+        /// <returns>aromatic representation</returns>
         public Graph IsAromatic()
         {
             // note Daylight use SSSR - should update and use that by default but
@@ -532,38 +482,46 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Resonate bond assignments in conjugate rings such that two SMILES with
-	    /// the same Ordering have the same kekulé assignment.
-		/// </summary>
-	    /// <returns>(self) - the graph is mutated</returns>
+        /// Resonate bond assignments in conjugate rings such that two SMILES with
+        /// the same Ordering have the same kekulé assignment.
+        /// </summary>
+        /// <returns>(self) - the graph is mutated</returns>
         public Graph Resonate()
         {
             return Localise.Resonate(this);
         }
 
         /// <summary>
-	    /// Localise delocalized (aromatic) bonds in this molecule producing the
-	    /// Kekulé form. The original graph is not modified.
+        /// Localise delocalized (aromatic) bonds in this molecule producing the Kekulé form. 
+        /// </summary>
+        /// <remarks>
+        /// The original graph is not modified.
         /// <code>
-	    /// Graph furan        = Graph.FromSmiles("o1cccc1");
-	    /// </code>
-	    /// If the graph could not be converted to a kekulé representation then a
-	    /// checked exception is thrown. Graphs cannot be converted if their
-	    /// structures are erroneous and there is no valid way to assign the
-	    /// delocalised electrons. <p/>
-        /// 
-	    /// Some reasons are shown below.
-        /// 
-	    /// <para>
-	    /// n1cncc1             pyrole (incorrect) could be either C1C=NC=N1 or
-	    /// N1C=CN=C1
-	    /// n1c[nH]cc1          pyrole (correct)
-        /// 
-	    /// [Hg+2][c-]1ccccc1   Mercury(2+) ion benzenide (incorrect)
-	    /// [Hg+2].[c-]1ccccc1  Mercury(2+) ion benzenide (correct)
-	    /// </para>
-		/// </summary>
-	    /// <returns>kekulé representation</returns>
+        /// Graph furan        = Graph.FromSmiles("o1cccc1");
+        /// </code>
+        /// If the graph could not be converted to a kekulé representation then a
+        /// checked exception is thrown. Graphs cannot be converted if their
+        /// structures are erroneous and there is no valid way to assign the
+        /// delocalised electrons. 
+        /// <para>
+        /// Some reasons are shown below.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>n1cncc1</term>
+        /// <description>pyrole (incorrect) could be either C1C=NC=N1 or N1C=CN=C1</description>
+        /// </item>
+        /// <item>
+        /// <term>[Hg+2][c-]1ccccc1</term>
+        /// <description>Mercury(2+) ion benzenide (incorrect)</description>
+        /// </item>
+        /// <item>
+        /// <term>[Hg+2].[c-]1ccccc1</term>
+        /// <description>Mercury(2+) ion benzenide (correct)</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </remarks>
+        /// <returns>kekulé representation</returns>
         /// <exception cref="InvalidSmilesException">molecule exploded on contact with reality</exception>"
         public Graph Kekule()
         {
@@ -572,13 +530,13 @@ namespace NCDK.Beam
 
 
         /// <summary>
-	    /// Verify that electrons can be assigned to any delocalised (aromatic)
-	    /// bonds. This method is faster than doing a full kekulisation and allows
-	    /// versification of aromatic structures without localising the bond Orders.
-	    /// However the method of determining the Kekulé structure is very similar
-	    /// and often is preferable to provide a molecule with defined bond Orders.
-		/// </summary>
-	    /// <returns>electrons can be assigned</returns>
+        /// Verify that electrons can be assigned to any delocalised (aromatic)
+        /// bonds. This method is faster than doing a full kekulisation and allows
+        /// versification of aromatic structures without localising the bond Orders.
+        /// However the method of determining the Kekulé structure is very similar
+        /// and often is preferable to provide a molecule with defined bond Orders.
+        /// </summary>
+        /// <returns>electrons can be assigned</returns>
         /// <seealso cref="Kekule"/>
         public bool Assignable()
         {
@@ -586,16 +544,17 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Permute the vertices of a graph using a given permutation.
-		///
-	    /// <code>
-	    /// g = CNCO
-	    /// h = g.Permuate(new int[]{1, 0, 3, 2});
-	    /// h = NCOC
-	    /// </code>
-		/// </summary>
-	    /// <param name="p">a permutation mapping indicate the new index of each atom</param>
-	    /// <returns>a new chemical graph with the vertices permuted by the given Ordering</returns>
+        /// Permute the vertices of a graph using a given permutation.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// g = CNCO
+        /// h = g.Permuate(new int[]{1, 0, 3, 2});
+        /// h = NCOC
+        /// </code>
+        /// </example>
+        /// <param name="p">a permutation mapping indicate the new index of each atom</param>
+        /// <returns>a new chemical graph with the vertices permuted by the given Ordering</returns>
         public Graph Permute(int[] p)
         {
             if (p.Length != order)
@@ -639,29 +598,24 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Access the atoms of the chemical graph.
-		///
-	    /// <code>
-	    /// foreach (var a in g.GetAtoms()) 
+        /// Access the atoms of the chemical graph.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// foreach (var a in g.GetAtoms()) 
         /// {
-		///
-	    /// }
-	    /// </code>
-		/// </summary>
-	    /// <returns>iterable of atoms</returns>
+        ///
+        /// }
+        /// </code></example>
+        /// <returns>iterable of atoms</returns>
         public IEnumerable<Atom> GetAtoms() => GetAtoms_();
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        IEnumerable<Atom_> GetAtoms_() => atoms.Take(Order);
+        internal IEnumerable<Atom> GetAtoms_() => atoms.Take(Order);
 
         /// <summary>
-	    /// Access the edges of the chemical graph.
-		/// </summary>
-	    /// <returns>iterable of edges</returns>
+        /// Access the edges of the chemical graph.
+        /// </summary>
+        /// <returns>iterable of edges</returns>
         public IEnumerable<Edge> Edges
         {
             get
@@ -681,21 +635,16 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Apply a function to the chemical graph.
-		/// </summary>
-	    /// <param name="f">  a function which transforms a graph into something</param>.
-	    /// <returns>the output of the function</returns>
+        /// Apply a function to the chemical graph.
+        /// </summary>
+        /// <param name="f">  a function which transforms a graph into something</param>.
+        /// <returns>the output of the function</returns>
         T Apply<T>(Function<Graph, T> f)
         {
             return f.Apply(this);
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        void Clear()
+        internal void Clear()
         {
             Arrays.Fill(topologies, Topology.Unknown);
             for (int i = 0; i < order; i++)
@@ -707,53 +656,33 @@ namespace NCDK.Beam
             size = 0;
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        int GetFlags(int mask)
+        internal int GetFlags(int mask)
         {
             return this.flags & mask;
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        int GetFlags()
+        internal int GetFlags()
         {
             return this.flags;
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        void AddFlags(int mask)
+        internal void AddFlags(int mask)
         {
             this.flags = flags | mask;
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        void SetFlags(int flags)
+        internal void SetFlags(int flags)
         {
             this.flags = flags;
         }
 
         /// <summary>
-	    /// Sort the edges of the graph to visit in a specific Order. The graph is
-	    /// modified.
-	    /// 
-	    /// <param name="comparator">Ordering on edges</param>
-	    /// <returns>the graph</returns>
-		/// </summary>
+        /// Sort the edges of the graph to visit in a specific Order. The graph is
+        /// modified.
+        /// 
+        /// <param name="comparator">Ordering on edges</param>
+        /// <returns>the graph</returns>
+        /// </summary>
         public Graph Sort(EdgeComparator comparator)
         {
             for (int u = 0; u < order; u++)
@@ -777,36 +706,31 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Defines a method for arranging the neighbors of an atom.
-		/// </summary>
+        /// Defines a method for arranging the neighbors of an atom.
+        /// </summary>
         public interface EdgeComparator
         {
 
             /// <summary>
-		    /// Should the edge, e, be visited before f.
-		    /// 
-		    /// <param name="g">graph</param>
-		    /// <param name="u">the atom we are sorting from</param>
-		    /// <param name="e">an edge adjacent to u</param>
-		    /// <param name="f">an edge adjacent to u</param>
-		    /// <returns>edge e is less than edge f</returns>
-			/// </summary>
+            /// Should the edge, e, be visited before f.
+            /// 
+            /// <param name="g">graph</param>
+            /// <param name="u">the atom we are sorting from</param>
+            /// <param name="e">an edge adjacent to u</param>
+            /// <param name="f">an edge adjacent to u</param>
+            /// <returns>edge e is less than edge f</returns>
+            /// </summary>
             bool Less(Graph g, int u, Edge e, Edge f);
         }
 
         /// <summary>
-	    /// Sort the neighbors of each atom such that hydrogens are visited first and
-	    /// deuterium before tritium. 
-		/// </summary>
+        /// Sort the neighbors of each atom such that hydrogens are visited first and
+        /// deuterium before tritium. 
+        /// </summary>
         public sealed class VisitHydrogenFirst : EdgeComparator
         {
-
-            /// <summary>
-		    // @inheritDoc
-			/// </summary>
             public bool Less(Graph g, int u, Edge e, Edge f)
             {
-
                 int v = e.Other(u);
                 int w = f.Other(u);
 
@@ -824,14 +748,10 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Visit high Order bonds before low Order bonds.
-		/// </summary>
+        /// Visit high Order bonds before low Order bonds.
+        /// </summary>
         public sealed class VisitHighOrderFirst : EdgeComparator
         {
-
-            /// <summary>
-		    // @inheritDoc
-			/// </summary>
             public bool Less(Graph g, int u, Edge e, Edge f)
             {
                 return e.Bond.Order > f.Bond.Order;
@@ -839,18 +759,10 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-	    /// Arrange neighbors in canonical Order.
-		/// </summary>
-#if TEST
-        public
-#else
-        internal
-#endif
-        sealed class CanOrderFirst : EdgeComparator
+        /// Arrange neighbors in canonical Order.
+        /// </summary>
+        internal sealed class CanOrderFirst : EdgeComparator
         {
-            /// <summary>
-		    // @inheritDoc
-			/// </summary>
             public bool Less(Graph g, int u, Edge e, Edge f)
             {
                 return e.Other(u) < f.Other(u);

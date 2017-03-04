@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Dict;
-using NCDK.Util;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,17 +53,17 @@ namespace NCDK.QSAR
     /// obtain its classification as described in the CDK descriptor-algorithms OWL dictionary.
     /// </para>
     /// </example>
-    /// @cdk.created 2004-12-02
-    /// @cdk.module qsarmolecular
-    /// @cdk.githash
-    /// @see DescriptorSpecification
-    /// @see Dictionary
-    /// @see org.openscience.cdk.dict.OWLFile
+    // @cdk.created 2004-12-02
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @see DescriptorSpecification
+    // @see Dictionary
+    // @see org.openscience.cdk.dict.OWLFile
     public class DescriptorEngine
     {
         private static readonly XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
-        private DictionaryMap dict = null;
+        private EntryDictionary dict = null;
         private IList<string> classNames = new List<string>(200);
         private IList<IDescriptor> descriptors = new List<IDescriptor>(200);
         private IList<IImplementationSpecification> speclist = null;
@@ -232,7 +232,7 @@ namespace NCDK.QSAR
         /// <returns>The type of the descriptor as stored in the dictionary, null if no entry is found matching the supplied identifier</returns>
         public string GetDictionaryType(string identifier)
         {
-            var dictEntries = dict.GetEntries();
+            var dictEntries = dict.Entries;
             string specRef = GetSpecRef(identifier);
 
             Debug.WriteLine("Got identifier: " + identifier);
@@ -308,7 +308,7 @@ namespace NCDK.QSAR
         /// </summary>
         public string[] GetDictionaryClass(string identifier)
         {
-            var dictEntries = dict.GetEntries();
+            var dictEntries = dict.Entries;
 
             string specRef = GetSpecRef(identifier);
             if (specRef == null)
@@ -381,7 +381,7 @@ namespace NCDK.QSAR
         /// </summary>
         public string GetDictionaryDefinition(string identifier)
         {
-            var dictEntries = dict.GetEntries();
+            var dictEntries = dict.Entries;
 
             string specRef = GetSpecRef(identifier);
             if (specRef == null)
@@ -428,7 +428,7 @@ namespace NCDK.QSAR
         /// </summary>
         public string GetDictionaryTitle(string identifier)
         {
-            var dictEntries = dict.GetEntries();
+            var dictEntries = dict.Entries;
             string specRef = GetSpecRef(identifier);
             if (specRef == null)
             {
@@ -629,7 +629,7 @@ namespace NCDK.QSAR
             {
                 try
                 {
-                    var c = assembly.GetType(descriptorName);	// c is IDescriptor type
+                    var c = assembly.GetType(descriptorName);    // c is IDescriptor type
                     IDescriptor descriptor = Instantiate(c);
                     descriptor.Initialise(builder);
                     descriptors.Add(descriptor);
@@ -661,7 +661,7 @@ namespace NCDK.QSAR
         {
             foreach (var descriptor in descriptors)
             {
-				yield return descriptor.Specification;
+                yield return descriptor.Specification;
             }
             yield break;
         }

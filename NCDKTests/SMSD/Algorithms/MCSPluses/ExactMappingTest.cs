@@ -25,10 +25,10 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /**
-     * @cdk.module test-smsd
-     * @author Asad
-     */
+    /// <summary>
+    // @cdk.module test-smsd
+    // @author Asad
+    /// </summary>
     [TestClass()]
     public class ExactMappingTest
     {

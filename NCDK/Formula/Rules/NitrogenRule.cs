@@ -22,37 +22,36 @@ using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-    // This class validate if the rule of nitrogen is kept.
-    // <p>If a compound has an odd number of nitrogen atoms,
-    // then the molecular ion (the [M]+) will have an odd mass and the value for m/e will be odd.</p>
-    // <p>If a compound has no nitrogen atom or an even number of nitrogen atoms, then the m/e value of [M]+ will be even.</p>
-     *
-     *
-    // <p>This rule uses these parameters:
-    // <table border="1">
-    //   <tr>
-    //     <td>Name</td>
-    //     <td>Default</td>
-    //     <td>Description</td>
-    //   </tr>
-    //   <tr>
-    //     <td>charge</td>
-    //     <td>0.0</td>
-    //     <td>The Nitrogen rule of MolecularFormula</td>
-    //   </tr>
-    // </table>
-     *
+    /// <summary>
+    /// This class validate if the rule of nitrogen is kept.
+    /// <para>If a compound has an odd number of nitrogen atoms,
+    /// then the molecular ion (the [M]<sup>+</sup>) will have an odd mass and the value for m/e will be odd.</para>
+    /// <para>If a compound has no nitrogen atom or an even number of nitrogen atoms, then the m/e value of [M]<sup>+</sup> will be even.</para>
+    /// </summary>
+    /// <remarks>
+    /// This rule uses these parameters:
+    /// <list type="table">
+    /// <item>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </item>
+    /// <item>
+    ///   <term>charge</term>
+    ///   <term>0.0</term>
+    ///   <term>The Nitrogen rule of MolecularFormula</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2008-06-11
     // @cdk.githash
-     */
     public class NitrogenRule : IRule
     {
-        /**
-        //  Constructor for the NitrogenRule object.
-         */
+        /// <summary>
+        /// Constructor for the NitrogenRule object.
+        /// </summary>
         public NitrogenRule() { }
         
         /// <summary>
@@ -108,13 +107,12 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        /**
-        // Get the number of other elements which affect to the calculation of the nominal mass.
-        // For example Fe, Co, Hg, Pt, As.
-         *
-        // @param formula The IMolecularFormula to analyze
-        // @return        Number of elements
-         */
+        /// <summary>
+        /// Get the number of other elements which affect to the calculation of the nominal mass.
+        /// For example Fe, Co, Hg, Pt, As.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula to analyze</param>
+        /// <returns>Number of elements</returns>
         private int GetOthers(IMolecularFormula formula)
         {
             int number = 0;
@@ -126,12 +124,11 @@ namespace NCDK.Formula.Rules
             return number;
         }
 
-        /**
-        // Determine if a integer is odd.
-         *
-        // @param value The value to analyze
-        // @return      True, if the integer is odd
-         */
+        /// <summary>
+        /// Determine if a integer is odd.
+        /// </summary>
+        /// <param name="value">The value to analyze</param>
+        /// <returns>True, if the integer is odd</returns>
         private bool IsOdd(double value)
         {
             if (value % 2 == 0)
@@ -139,6 +136,5 @@ namespace NCDK.Formula.Rules
             else
                 return true;
         }
-
     }
 }

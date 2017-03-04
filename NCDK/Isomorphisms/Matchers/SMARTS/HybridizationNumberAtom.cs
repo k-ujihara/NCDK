@@ -23,21 +23,21 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher checks the hybridization state of an atom.
-     *
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher checks the hybridization state of an atom.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
 
     public class HybridizationNumberAtom : SMARTSAtom
     {
-        /**
-         * Creates a new instance
-         *
-         * @param hybridizationNumber the hybridiation
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="hybridizationNumber">the hybridiation</param>
+        /// </summary>
         public HybridizationNumberAtom(int hybridizationNumber, IChemObjectBuilder builder)
             : base(builder)
         {
@@ -70,21 +70,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return hybridization == atom.Hybridization;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
             return ("HybridizationNumberAtom(" + hybridization.ToString() + ")");

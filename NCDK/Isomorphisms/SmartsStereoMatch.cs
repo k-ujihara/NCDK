@@ -286,7 +286,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Create an index of atoms for the provided {@code container}.
+         * Create an index of atoms for the provided <paramref name="container"/>.
          *
          * @param container the container to index the atoms of
          * @return the index/lookup of atoms to the index they appear
@@ -300,7 +300,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Index the stereo elements of the {@code container} into the the {@code
+         * Index the stereo elements of the <paramref name="container"/> into the the {@code
          * elements} and {@code types} arrays. The {@code map} is used for looking
          * up the index of atoms.
          *

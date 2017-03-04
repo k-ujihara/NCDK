@@ -28,10 +28,10 @@ using NCDK.Default;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class MinimumEquivalentCyclicSetUnionTest
     {
@@ -71,14 +71,14 @@ namespace NCDK.Hash
             Assert.AreEqual(0, set.Count);
         }
 
-        /**
-         * Test the method at perturbing the 2D representations of CID 44333798 and
-         * CID 57170558. These molecules are similar but distinct. To tell these
-         * apart we must use {@link org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnion} opposed to the
-         * faster method. This test serves to demonstrates the basic equivalent set
-         * finder does not tell them apart but that a more comprehensive set finder
-         * does.
-         */
+        /// <summary>
+        /// Test the method at perturbing the 2D representations of CID 44333798 and
+        /// CID 57170558. These molecules are similar but distinct. To tell these
+        /// apart we must use {@link org.openscience.cdk.hash.MinimumEquivalentCyclicSetUnion} opposed to the
+        /// faster method. This test serves to demonstrates the basic equivalent set
+        /// finder does not tell them apart but that a more comprehensive set finder
+        /// does.
+        /// </summary>
         [TestMethod()]
         public void TestScenario()
         {
@@ -97,11 +97,11 @@ namespace NCDK.Hash
             Assert.AreNotEqual(cmplx.Generate(cid4433798), cmplx.Generate(cid57170558));
         }
 
-        /**
-         * CC1=CC=C(C=C1)N2C3CCC2CC3
-         *
-         * @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
-         */
+        /// <summary>
+        /// CC1=CC=C(C=C1)N2C3CCC2CC3
+        ///
+        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14-12-6-7-13(14)9-8-12/h2-5,12-13H,6-9H2,1H3
+        /// </summary>
         private IAtomContainer CID44333798()
         {
             IAtomContainer m = new AtomContainer();
@@ -118,11 +118,11 @@ namespace NCDK.Hash
             return m;
         }
 
-        /**
-         * CC1=CC=C(C=C1)N(C2CC2)C3CC3
-         *
-         * @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
-         */
+        /// <summary>
+        /// CC1=CC=C(C=C1)N(C2CC2)C3CC3
+        ///
+        // @cdk.inchi InChI=1S/C13H17N/c1-10-2-4-11(5-3-10)14(12-6-7-12)13-8-9-13/h2-5,12-13H,6-9H2,1H3
+        /// </summary>
         private IAtomContainer CID57170558()
         {
             IAtomContainer m = new AtomContainer();

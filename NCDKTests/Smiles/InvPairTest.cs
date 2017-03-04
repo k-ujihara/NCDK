@@ -23,9 +23,9 @@ using System;
 
 namespace NCDK.Smiles
 {
-    /**
-     * @cdk.module     test-standard
-     */
+    /// <summary>
+    // @cdk.module     test-standard
+    /// </summary>
     [TestClass()]
     public class InvPairTest : CDKTestCase
     {
@@ -90,9 +90,9 @@ namespace NCDK.Smiles
             Assert.IsNotNull(pair.Atom);
         }
 
-        /**
-         * @cdk.bug 2045574
-         */
+        /// <summary>
+        // @cdk.bug 2045574
+        /// </summary>
         [TestMethod()]
         public void TestGetPrime()
         {

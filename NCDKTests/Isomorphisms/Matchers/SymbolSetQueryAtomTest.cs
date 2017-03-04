@@ -22,11 +22,11 @@ using NCDK.Default;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Checks the functionality of the IsomorphismTester
-     *
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    /// Checks the functionality of the IsomorphismTester
+    ///
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class SymbolSetQueryAtomTest : CDKTestCase
     {

@@ -39,26 +39,26 @@ pvmd still running.
  end input
 1
  *******************************************************************************
- *                                                                             *
- *  -------------------------------------                                      *
+ *                                                                            ///
+ *  -------------------------------------                                     ///
  *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
- *  -------------------------------------                                      *
- *                                                                             *
- *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
- *       Vrije Universiteit, Amsterdam, The Netherlands                        *
- *   All rights reserved.                                                      *
- *                                                                             *
- *   Recommended citation:                                                     *
- *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
- *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
- *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
- *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
- *                                                                             *
- *   Online information and documentation:                                     *
- *     http://tc.chem.vu.nl/SCM                                                *
- *                                                                             *
- *   E-mail: adf@chem.vu.nl                                                    *
- *                                                                             *
+ *  -------------------------------------                                     ///
+ *                                                                            ///
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                          ///
+ *       Vrije Universiteit, Amsterdam, The Netherlands                       ///
+ *   All rights reserved.                                                     ///
+ *                                                                            ///
+ *   Recommended citation:                                                    ///
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam          ///
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                            ///
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                    ///
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                           ///
+ *                                                                            ///
+ *   Online information and documentation:                                    ///
+ *     http://tc.chem.vu.nl/SCM                                               ///
+ *                                                                            ///
+ *   E-mail: adf@chem.vu.nl                                                   ///
+ *                                                                            ///
  **********************************************  rs6000_aix  ******************* 
 
  ADF 2.2  RunTime: Feb20-97 14:01:33
@@ -208,9 +208,9 @@ pvmd still running.
 
 
 
-                                              ***********************
-                                              *  T E C H N I C A L  *
-                                              ***********************
+                                             ///**********************
+                                             ///  T E C H N I C A L  *
+                                             ///**********************
   
 
 
@@ -270,9 +270,9 @@ pvmd still running.
 
 
 
-                                            ***************************
-                                            *  C O M P U T A T I O N  *
-                                            ***************************
+                                           ///**************************
+                                           ///  C O M P U T A T I O N  *
+                                           ///**************************
   
 
 
@@ -335,9 +335,9 @@ pvmd still running.
 
 
 
-                                                *******************
-                                                *  R E S U L T S  *
-                                                *******************
+                                               ///******************
+                                               ///  R E S U L T S  *
+                                               ///******************
   
 
  Orbital Energies, per Irrep and Spin:
@@ -562,26 +562,26 @@ STOP ADF EXIT
  end input
 1
  *******************************************************************************
- *                                                                             *
- *  -------------------------------------                                      *
+ *                                                                            ///
+ *  -------------------------------------                                     ///
  *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
- *  -------------------------------------                                      *
- *                                                                             *
- *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
- *       Vrije Universiteit, Amsterdam, The Netherlands                        *
- *   All rights reserved.                                                      *
- *                                                                             *
- *   Recommended citation:                                                     *
- *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
- *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
- *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
- *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
- *                                                                             *
- *   Online information and documentation:                                     *
- *     http://tc.chem.vu.nl/SCM                                                *
- *                                                                             *
- *   E-mail: adf@chem.vu.nl                                                    *
- *                                                                             *
+ *  -------------------------------------                                     ///
+ *                                                                            ///
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                          ///
+ *       Vrije Universiteit, Amsterdam, The Netherlands                       ///
+ *   All rights reserved.                                                     ///
+ *                                                                            ///
+ *   Recommended citation:                                                    ///
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam          ///
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                            ///
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                    ///
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                           ///
+ *                                                                            ///
+ *   Online information and documentation:                                    ///
+ *     http://tc.chem.vu.nl/SCM                                               ///
+ *                                                                            ///
+ *   E-mail: adf@chem.vu.nl                                                   ///
+ *                                                                            ///
  **********************************************  rs6000_aix  ******************* 
 
  ADF 2.2  RunTime: Feb20-97 14:01:44
@@ -761,9 +761,9 @@ STOP ADF EXIT
 
 
 
-                                              ***********************
-                                              *  T E C H N I C A L  *
-                                              ***********************
+                                             ///**********************
+                                             ///  T E C H N I C A L  *
+                                             ///**********************
   
 
 
@@ -823,9 +823,9 @@ STOP ADF EXIT
 
 
 
-                                            ***************************
-                                            *  C O M P U T A T I O N  *
-                                            ***************************
+                                           ///**************************
+                                           ///  C O M P U T A T I O N  *
+                                           ///**************************
   
 
 
@@ -891,9 +891,9 @@ STOP ADF EXIT
 
 
 
-                                                *******************
-                                                *  R E S U L T S  *
-                                                *******************
+                                               ///******************
+                                               ///  R E S U L T S  *
+                                               ///******************
   
 
  Orbital Energies, per Irrep and Spin:
@@ -1157,26 +1157,26 @@ STOP ADF EXIT
  end input
 1
  *******************************************************************************
- *                                                                             *
- *  -------------------------------------                                      *
+ *                                                                            ///
+ *  -------------------------------------                                     ///
  *   Amsterdam Density Functional  (ADF)         2.2       February 20, 1997   *
- *  -------------------------------------                                      *
- *                                                                             *
- *   (c) Copyright 1993-1997, Theoretical Chemistry,                           *
- *       Vrije Universiteit, Amsterdam, The Netherlands                        *
- *   All rights reserved.                                                      *
- *                                                                             *
- *   Recommended citation:                                                     *
- *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam           *
- *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                             *
- *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                     *
- *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                            *
- *                                                                             *
- *   Online information and documentation:                                     *
- *     http://tc.chem.vu.nl/SCM                                                *
- *                                                                             *
- *   E-mail: adf@chem.vu.nl                                                    *
- *                                                                             *
+ *  -------------------------------------                                     ///
+ *                                                                            ///
+ *   (c) Copyright 1993-1997, Theoretical Chemistry,                          ///
+ *       Vrije Universiteit, Amsterdam, The Netherlands                       ///
+ *   All rights reserved.                                                     ///
+ *                                                                            ///
+ *   Recommended citation:                                                    ///
+ *     ADF 2.2, Theoretical Chemistry, Vrije Universiteit, Amsterdam          ///
+ *     E.J.Baerends et.al., Chem.Phys. 2 (1973) 41                            ///
+ *     G.te Velde, E.J.Baerends, J.Comp.Phys. 99 (1992) 84                    ///
+ *     C.Fonseca Guerra et.al. METECC-95 (1995) 305                           ///
+ *                                                                            ///
+ *   Online information and documentation:                                    ///
+ *     http://tc.chem.vu.nl/SCM                                               ///
+ *                                                                            ///
+ *   E-mail: adf@chem.vu.nl                                                   ///
+ *                                                                            ///
  **********************************************  rs6000_aix  ******************* 
 
  ADF 2.2  RunTime: Feb20-97 14:01:56
@@ -1225,9 +1225,9 @@ STOP ADF EXIT
 
 
 
-                                        ***********************************
-                                        *  R U N   T Y P E : FREQUENCIES  *
-                                        ***********************************
+                                       ///**********************************
+                                       ///  R U N   T Y P E : FREQUENCIES  *
+                                       ///**********************************
   
 
 
@@ -1305,9 +1305,9 @@ STOP ADF EXIT
 
 
 
-                                      ****************************************
-                                      *  B U I L D : (Fragments, Functions)  *
-                                      ****************************************
+                                     ///***************************************
+                                     ///  B U I L D : (Fragments, Functions)  *
+                                     ///***************************************
   
 
 
@@ -1530,9 +1530,9 @@ STOP ADF EXIT
 
 
 
-                                              ***********************
-                                              *  T E C H N I C A L  *
-                                              ***********************
+                                             ///**********************
+                                             ///  T E C H N I C A L  *
+                                             ///**********************
   
 
 
@@ -1606,9 +1606,9 @@ STOP ADF EXIT
 
 
 
-                                            ***************************
-                                            *  C O M P U T A T I O N  *
-                                            ***************************
+                                           ///**************************
+                                           ///  C O M P U T A T I O N  *
+                                           ///**************************
   
 
 
@@ -3705,9 +3705,9 @@ STOP ADF EXIT
 
 
 
-                                            ***************************
-                                            *  F R E Q U E N C I E S  *
-                                            ***************************
+                                           ///**************************
+                                           ///  F R E Q U E N C I E S  *
+                                           ///**************************
   
 
 
@@ -4497,6 +4497,6 @@ STOP ADF EXIT
  <Feb20-97> <14:04:44>  END
 STOP ADF EXIT
 
-real	3m18.22s
-user	2m16.63s
-sys	0m39.13s
+real    3m18.22s
+user    2m16.63s
+sys    0m39.13s

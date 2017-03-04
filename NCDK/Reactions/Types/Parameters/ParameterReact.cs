@@ -20,13 +20,13 @@ namespace NCDK.Reactions.Types.Parameters
 {
 
 
-    /**
-     * Class which defines the allowed parameters of a reaction.
-     *
-     * @author      miguelrojasch
-     * @cdk.module  reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class which defines the allowed parameters of a reaction.
+    ///
+    // @author      miguelrojasch
+    // @cdk.module  reaction
+    // @cdk.githash
+    /// </summary>
     public class ParameterReact : IParameterReact
     {
         /// <summary>

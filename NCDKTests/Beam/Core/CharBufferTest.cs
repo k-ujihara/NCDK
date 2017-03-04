@@ -31,7 +31,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class CharBufferTest
     {
         [TestMethod()]
@@ -42,7 +42,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void nonEmptyBufferHasRemaining()
+        public void NonEmptyBufferHasRemaining()
         {
             CharBuffer buffer = CharBuffer.FromString("-");
             Assert.IsTrue(buffer.HasRemaining());
@@ -260,7 +260,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void nonNumber()
+        public void NonNumber()
         {
             CharBuffer buffer = CharBuffer.FromString("H3");
             Assert.AreEqual(buffer.GetNumber(), -1);

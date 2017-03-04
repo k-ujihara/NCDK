@@ -25,27 +25,21 @@ using NCDK.Numerics;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Compares two IAtomContainers based on their 2D position.
-     * <p>
-     * Implemented specifically to be used in JChemPaint.
-     *
-     * @author Mark Rijnbeek
-     * @cdk.created  2009-10-14
-     * @cdk.module   standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Compares two IAtomContainers based on their 2D position.
+    /// Implemented specifically to be used in JChemPaint.
+    /// </summary>
+    // @author Mark Rijnbeek
+    // @cdk.created  2009-10-14
+    // @cdk.module   standard
+    // @cdk.githash
     public class AtomContainerComparatorBy2DCenter<T> : IComparer<T> where T : IAtomContainer
     {
-
-        /**
-         * Compare two AtomContainers based on their 2D position.
-         * @see java.util.Comparator#Compare(java.lang.Object, java.lang.Object)
-         */
-
+        /// <summary>
+        /// Compare two AtomContainers based on their 2D position.
+        /// </summary>
         public int Compare(T a, T b)
         {
-
             Vector2 p1 = Center(a);
             Vector2 p2 = Center(b);
 
@@ -55,13 +49,11 @@ namespace NCDK.Tools.Manipulator
             if (p1.Y < p2.Y) return -1;
 
             return 0;
-
         }
 
-        /*
-         * maximum point to use when an null container is provided (sorts null to
-         * end)
-         */
+        /// <summary>
+        /// maximum point to use when an null container is provided (sorts null to end)
+        /// </summary>
         private static readonly Vector2 Maximum = Vectors.Vector2MaxValue;
 
         private static Vector2 Center(IAtomContainer container)

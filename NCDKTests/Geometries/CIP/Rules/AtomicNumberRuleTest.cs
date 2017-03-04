@@ -26,9 +26,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * @cdk.module test-cip
-     */
+    /// <summary>
+    // @cdk.module test-cip
+    /// </summary>
     [TestClass()]
     public class AtomicNumberRuleTest : CDKTestCase
     {

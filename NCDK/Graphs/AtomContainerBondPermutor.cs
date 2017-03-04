@@ -28,46 +28,38 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Graphs
 {
-    /**
-     * This class allows the user to iterate through the set of all possible
-     * permutations of the bond order in a given atom container. This provides a
-     * means to check the dependency of an algorithm's results on the bond order of
-     * the input atom container.
-     *
-     * <p>Typical use:<pre>
-     * AtomContainerBondPermutor permutor = new AtomContainerBondPermutor(container);
-     * while (permutor.MoveNext()) {
-     *   IAtomContainer permutedContainer = permutor.Next();
-     *   ...
-     * }</pre>
-     *
-     *
-     * @author         maclean
-     * @cdk.githash
-     * @cdk.created    2009-09-09
-     * @cdk.keyword    permutation
-     * @cdk.module     standard
-     */
+    /// <summary>
+    /// This class allows the user to iterate through the set of all possible
+    /// permutations of the bond order in a given atom container. This provides a
+    /// means to check the dependency of an algorithm's results on the bond order of
+    /// the input atom container.
+    /// </summary>
+    /// <example>
+    /// Typical use:<code>
+    /// AtomContainerBondPermutor permutor = new AtomContainerBondPermutor(container);
+    /// while (permutor.MoveNext()) {
+    ///   IAtomContainer permutedContainer = permutor.Next();
+    ///   ...
+    /// }</code>
+    /// </example>
+    // @author         maclean
+    // @cdk.githash
+    // @cdk.created    2009-09-09
+    // @cdk.keyword    permutation
+    // @cdk.module     standard
     public class AtomContainerBondPermutor : AtomContainerPermutor
     {
-        /**
-         * A permutor wraps the original atom container, and produces cloned
-         * (and permuted!) copies on demand.
-         *
-         * @param atomContainer the atom container to permute
-         */
+        /// <summary>
+        /// A permutor wraps the original atom container, and produces cloned
+        /// (and permuted!) copies on demand.
+        /// </summary>
+        /// <param name="atomContainer">the atom container to permute</param>
         public AtomContainerBondPermutor(IAtomContainer atomContainer)
             : base(atomContainer.Bonds.Count, atomContainer)
         {
         }
-
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.graph.AtomContainerPermutor#ContainerFromPermutation
-         * (int[])
-         */
-
+        
+        /// <seealso cref="AtomContainerPermutor.ContainerFromPermutation(int[])"/>
         public override IAtomContainer ContainerFromPermutation(int[] permutation)
         {
             IAtomContainer permutedContainer = (IAtomContainer)base.atomContainer.Clone();

@@ -24,45 +24,45 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD
 {
-    /**
-     * Interface for mappings.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for mappings.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
 
     public interface IFinalMapping : IEnumerable<IDictionary<int, int>>
     {
 
-        /**
-         * Adds mapping to the mapping list
-         * @param mapping List of all MCS mapping between a given
-         * reactant and product
-         */
+        /// <summary>
+        /// Adds mapping to the mapping list
+        /// <param name="mapping">List of all MCS mapping between a given</param>
+        /// reactant and product
+        /// </summary>
         void Add(IDictionary<int, int> mapping);
 
-        /**
-         * Sets mapping list
-         * @param list List of all MCS mapping between a given
-         * reactant and product
-         */
+        /// <summary>
+        /// Sets mapping list
+        /// <param name="list">List of all MCS mapping between a given</param>
+        /// reactant and product
+        /// </summary>
         void Set(IList<IDictionary<int, int>> list);
 
-        /**
-         * clear the mapping
-         */
+        /// <summary>
+        /// clear the mapping
+        /// </summary>
         void Clear();
 
-        /**
-         * Returns the stored mappings
-         * @return get of MCS mapping List
-         */
+        /// <summary>
+        /// Returns the stored mappings
+        /// <returns>get of MCS mapping List</returns>
+        /// </summary>
         IList<IDictionary<int, int>> GetFinalMapping();
 
-        /**
-         * Returns number of stored mappings
-         * @return size of the mapping
-         */
+        /// <summary>
+        /// Returns number of stored mappings
+        /// <returns>size of the mapping</returns>
+        /// </summary>
         int Count { get; }
     }
 }

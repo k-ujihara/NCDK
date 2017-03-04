@@ -1,4 +1,4 @@
-﻿<#@ include file="Config.ttinclude" #>
+﻿<#@ include file="..\Config.ttinclude" #>
 
 namespace NCDK
 {
@@ -10,8 +10,8 @@ namespace NCDK
              new[]
             {
                 "Unset",
-				"Clockwise",
-				"AntiClockwise",
+                "Clockwise",
+                "AntiClockwise",
             },
             true
         ); 

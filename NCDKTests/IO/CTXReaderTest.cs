@@ -22,6 +22,7 @@
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+
 using System.Diagnostics;
 
 namespace NCDK.IO
@@ -31,7 +32,7 @@ namespace NCDK.IO
     /// </summary>
     /// <seealso cref="CrystClustReader"/>
     // @cdk.module test-io
-	[TestClass()]
+    [TestClass()]
     public class CTXReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.CTX.methanol_with_descriptors.ctx";
@@ -50,7 +51,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.CTX.methanol_with_descriptors.ctx";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CTXReader reader = new CTXReader(ins);
             IChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

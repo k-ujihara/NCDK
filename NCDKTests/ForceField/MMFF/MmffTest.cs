@@ -27,10 +27,10 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-     * @author John May
-     */
-	 [TestClass()]
+    /// <summary>
+    // @author John May
+    /// </summary>
+     [TestClass()]
     public class MmffTest
     {
 
@@ -44,7 +44,7 @@ namespace NCDK.ForceField.MMFF
         }
 
         [ClassCleanup()]
-        public static void tearDown()
+        public static void TearDown()
         {
             smipar = null;
             mmff = null;
@@ -95,7 +95,7 @@ namespace NCDK.ForceField.MMFF
         }
 
         [TestMethod()]
-        public void nitrobenzeneCovalent()
+        public void NitrobenzeneCovalent()
         {
             IAtomContainer mol = LoadSmi("c1ccccc1N(=O)=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
@@ -106,7 +106,7 @@ namespace NCDK.ForceField.MMFF
         }
 
         [TestMethod()]
-        public void nitrobenzeneChargeSeparated()
+        public void NitrobenzeneChargeSeparated()
         {
             IAtomContainer mol = LoadSmi("c1ccccc1[N+](-[O-])=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
@@ -178,7 +178,7 @@ namespace NCDK.ForceField.MMFF
 
         /* TABLE V - CH3Cl */
         [TestMethod()]
-        public void chloromethane()
+        public void Chloromethane()
         {
             IAtomContainer mol = LoadSmi("CCl");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
@@ -286,7 +286,7 @@ namespace NCDK.ForceField.MMFF
 
         /* TABLE V - imidazole */
         [TestMethod()]
-        public void imidazole()
+        public void Imidazole()
         {
             IAtomContainer mol = LoadSmi("C=1NC=NC1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
@@ -334,7 +334,7 @@ namespace NCDK.ForceField.MMFF
 
         /* TABLE V - Imidazolium(+) */
         [TestMethod()]
-        public void imidazolium()
+        public void Imidazolium()
         {
             IAtomContainer mol = LoadSmi("[nH+]1c[nH]cc1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
@@ -448,7 +448,7 @@ namespace NCDK.ForceField.MMFF
             for (int i = 0; i < mol.Atoms.Count; i++)
                 actual[i] = mol.Atoms[i].Charge.Value;
             Assert.AreEqual(expected.Length, actual.Length);
-			for (var x = 0; x < actual.Length; x++)
+            for (var x = 0; x < actual.Length; x++)
                 Assert.AreEqual(expected[x], actual[x], 0.001);
         }
 

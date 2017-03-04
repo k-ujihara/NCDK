@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;TEST</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0612,0618,0672,0164,0168</NoWarn>
@@ -28,28 +28,35 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;TEST</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
-    <OutputPath>bin\Test\</OutputPath>
-    <Optimize>true</Optimize>
-    <DefineConstants>TRACE;TEST</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <NoWarn>0618,0162,0169,0612,0164,0219,0809,0672</NoWarn>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
+      <HintPath>..\packages\dotNetRDF.1.0.12\lib\net40\dotNetRDF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MathNet.Numerics, Version=3.17.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.3.17.0\lib\net40\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
+    <Reference Include="VDS.Common">
+      <HintPath>..\packages\VDS.Common.1.6.4\lib\net40-client\VDS.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Beam\Core\AllCycles.cs" />
@@ -109,6 +116,7 @@
     <Compile Include="Common\Collections\BidirectionalDictionary.cs" />
     <Compile Include="Common\Collections\BitArrays.cs" />
     <Compile Include="Common\Collections\Deque.cs" />
+    <Compile Include="Common\Collections\Dictionaries.cs" />
     <Compile Include="Common\Collections\DictionaryEqualityComparer.cs" />
     <Compile Include="Common\Collections\ImmutableCollection.cs" />
     <Compile Include="Common\Collections\LinkedHashSet.cs" />
@@ -171,6 +179,11 @@
     <Compile Include="FaulonSignatures\VirtualGraphBuilder.cs" />
     <Compile Include="FaulonSignatures\VisitableColoredTree.cs" />
     <Compile Include="FaulonSignatures\VisitableDAG.cs" />
+    <Compile Include="Hybridization1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Hybridization.tt</DependentUpon>
+    </Compile>
     <Compile Include="IO\CML\CMLConstants.cs" />
     <Compile Include="LibIO\CML\CMLLabel.cs" />
     <Compile Include="LibIO\CML\CMLAtomArray.cs" />
@@ -198,10 +211,13 @@
       <DependentUpon>DoubleBondConformation.tt</DependentUpon>
     </Compile>
     <Compile Include="Events\ICDKChangeListener.cs" />
+    <None Include="Beam\Snap.txt" />
+    <None Include="FaulonSignatures\Snap.txt" />
     <Content Include="LibIO\CML\CMLElementDefines.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementDefines.cs</LastGenOutput>
     </Content>
+    <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
     <Content Include="x64\libinchi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -224,7 +240,7 @@
     <Compile Include="Graphs\Invariant\MatrixNotInvertibleException.cs" />
     <Compile Include="Graphs\Invariant\GIMatrix.cs" />
     <Compile Include="Graphs\Invariant\HuLuIndexTool.cs" />
-    <Compile Include="Indexes\CASNumber.cs" />
+    <Compile Include="Indices\CASNumber.cs" />
     <Content Include="Numerics\ConstantHelper.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ConstantHelper1.cs</LastGenOutput>
@@ -239,6 +255,7 @@
     </Content>
     <Compile Include="LibIO\CML\CMLMolecule.cs" />
     <Compile Include="LibIO\CML\CMLScalar.cs" />
+    <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
     <Compile Include="Reactions\ReactionChain.cs" />
     <Compile Include="Templates\IsoAlkanes.cs" />
@@ -291,6 +308,12 @@
     <Compile Include="Numerics\Vector4.cs" />
     <Compile Include="Numerics\Vector4_Intrinsics.cs" />
     <Compile Include="Numerics\Vector_Operations.cs" />
+    <Compile Include="TT\Association1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Association.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceLoader.cs" />
     <Compile Include="Validate\AbstractValidator.cs" />
     <Compile Include="Validate\BasicValidator.cs" />
     <Compile Include="Validate\CDKValidator.cs" />
@@ -302,7 +325,10 @@
     <Compile Include="Validate\ValidatorEngine.cs" />
     <Compile Include="Vibration.cs" />
     <EmbeddedResource Include="QSAR\Descriptors\Data\taepeptides.txt" />
-    <Compile Include="TT\Association.cs" />
+    <Content Include="TT\Association.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Association1.cs</LastGenOutput>
+    </Content>
     <Content Include="LibIO\CML\CMLElementBodies.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementBodies.cs</LastGenOutput>
@@ -325,11 +351,6 @@
       <LastGenOutput>AtomType1.cs</LastGenOutput>
     </Content>
     <Compile Include="Geometries\CIP\Rules\IComparator.cs" />
-    <Compile Include="Hybridization1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Hybridization.tt</DependentUpon>
-    </Compile>
     <Compile Include="Isomorphisms\Matchers\QueryAtom.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryAtomContainer.cs" />
     <Compile Include="Isomorphisms\Matchers\QueryChemObject.cs" />
@@ -641,7 +662,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Substance.tt</DependentUpon>
     </Compile>
-    <Compile Include="Util\ServiceLoader.cs" />
+    <Compile Include="ServiceLoader.cs" />
     <Compile Include="Util\Xml\XReader.cs" />
     <Content Include="BondOrder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -651,7 +672,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BondStereo1.cs</LastGenOutput>
     </Content>
-    <Compile Include="CDKTools.cs" />
     <Compile Include="Config\AtomType\OWLConstants.cs" />
     <Compile Include="LibIO\CML\CMLElement.cs" />
     <Compile Include="ObservableChemObjectCollection.cs" />
@@ -986,7 +1006,7 @@
     <Compile Include="Config\AtomType\OWLAtomTypeMappingReader.cs" />
     <Compile Include="Config\Fragments\EStateFragments.cs" />
     <Compile Include="Dict\CDKDictionaryReferences.cs" />
-    <Compile Include="Dict\DictionaryMap.cs" />
+    <Compile Include="Dict\EntryDictionary.cs" />
     <Compile Include="Dict\DictionaryDatabase.cs" />
     <Compile Include="Dict\DictionaryHandler.cs" />
     <Compile Include="Dict\DictRef.cs" />
@@ -1830,7 +1850,6 @@
     <EmbeddedResource Include="Modeling\ForceField\Data\mmffvdw.prm" />
     <None Include="Beam\LICENSE" />
     <None Include="Beam\README.md" />
-    <None Include="Config.ttinclude" />
     <None Include="FaulonSignatures\README" />
     <None Include="ForceField\MMFF\README" />
     <EmbeddedResource Include="Modeling\Builder3D\Data\ringTemplateFingerprints.txt.gz" />
@@ -1857,9 +1876,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphs\Invariant\Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

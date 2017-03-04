@@ -24,11 +24,11 @@ using System.IO;
 
 namespace NCDK.Config.AtomType
 {
-    /**
-     * Checks the functionality of the AtomTypeReader.
-     *
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// Checks the functionality of the AtomTypeReader.
+    ///
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class OWLAtomTypeReaderTest : CDKTestCase
     {

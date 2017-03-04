@@ -35,17 +35,17 @@ using NCDK.Numerics;
 
 namespace NCDK.IO
 {
-    /**
-     * Reads a molecule from an Mol2 file, such as written by Sybyl.
-     * See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
-     *
-     * @author Egon Willighagen
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     * @cdk.created 2003-08-21
-     * @cdk.keyword file format, Mol2
-     */
+    /// <summary>
+    /// Reads a molecule from an Mol2 file, such as written by Sybyl.
+    /// See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
+    ///
+    // @author Egon Willighagen
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    // @cdk.created 2003-08-21
+    // @cdk.keyword file format, Mol2
+    /// </summary>
     public class Mol2Reader : DefaultChemObjectReader
     {
 
@@ -53,10 +53,10 @@ namespace NCDK.IO
 
         TextReader input = null;
 
-        /**
-         * Dictionary of known atom type aliases. If the key is seen on input, it
-         * is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
-         */
+        /// <summary>
+        /// Dictionary of known atom type aliases. If the key is seen on input, it
+        /// is repleaced with the specified value. Bugs /openbabel/bug/214 and /cdk/bug/1346
+        /// </summary>
         private static readonly IDictionary<string, string> ATOM_TYPE_ALIASES =
             new ReadOnlyDictionary<string, string>(new Dictionary<string, string>() {
                 // previously produced by Open Babel
@@ -70,11 +70,11 @@ namespace NCDK.IO
                 { "LI", "Li" }, { "MG", "Mg" },
             });
 
-        /**
-         * Constructs a new MDLReader that can read Molecule from a given Reader.
-         *
-         * @param in The Reader to read from
-         */
+        /// <summary>
+        /// Constructs a new MDLReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// </summary>
         public Mol2Reader(TextReader ins)
         {
             input = ins;
@@ -210,11 +210,11 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * Read a Reaction from a file in MDL RXN format
-         *
-         * @return The Reaction that was read from the MDL file.
-         */
+        /// <summary>
+        /// Read a Reaction from a file in MDL RXN format
+        ///
+        /// <returns>The Reaction that was read from the MDL file.</returns>
+        /// </summary>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
         {
             AtomTypeFactory atFactory = null;

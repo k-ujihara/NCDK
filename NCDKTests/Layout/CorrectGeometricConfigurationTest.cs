@@ -30,16 +30,16 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * @author John May
-     * @cdk.module test-sdg
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-sdg
+    /// </summary>
     [TestClass()]
     public class CorrectGeometricConfigurationTest
     {
         // C/C=C/CCC
         [TestMethod()]
-        public void cis()
+        public void Cis()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -0.74d, 5.00d));

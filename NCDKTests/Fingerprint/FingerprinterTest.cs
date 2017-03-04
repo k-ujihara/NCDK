@@ -32,11 +32,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
+
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class FingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -138,15 +139,15 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(1024, bs.Count); // actual bit set size
         }
 
-        /**
-         * @cdk.bug 1851202
-         */
+        /// <summary>
+        // @cdk.bug 1851202
+        /// </summary>
         [TestMethod()]
         public void TestBug1851202()
         {
             string filename1 = "NCDK.Data.MDL.0002.stg01.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            Stream ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            Stream ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNV2000Reader reader = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
             IReaction reaction = (IReaction)reader.Read(new Reaction());
             Assert.IsNotNull(reaction);
@@ -166,7 +167,7 @@ namespace NCDK.Fingerprint
         {
             string filename1 = "NCDK.Data.MDL.boronBuckyBall.mol";
             Trace.TraceInformation("Testing: " + filename1);
-            Stream ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            Stream ins1 = ResourceLoader.GetAsStream(filename1);
             MDLV2000Reader reader = new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict);
             IChemFile chemFile = reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);
@@ -176,10 +177,10 @@ namespace NCDK.Fingerprint
             Assert.IsNotNull(fingerprinter.GetBitFingerprint(mol));
         }
 
-        /**
-         * @cdk.bug 2819557
-         * @.openscience.cdk.exception.CDKException
-         */
+        /// <summary>
+        // @cdk.bug 2819557
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestBug2819557()
         {

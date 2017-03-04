@@ -20,40 +20,42 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using NCDK.IO.Iterator;
 
 namespace NCDK
 {
-    /**
-    // A memory-efficient data structure to store conformers for a single molecule.
-    // <p/>
-    // Since all the conformers for a given molecule only differ in their 3D coordinates
-    // this data structure stores a single <see cref="IAtomContainer"/> containing the atom and bond
-    // details and a List of 3D coordinate sets, each element being the set of 3D coordinates
-    // for a given conformer.
-    // <p/>
-    // The class behaves in many ways as a List<IAtomContainer> object, though a few methods are not
-    // implemented. Though it is possible to add conformers by hand, this data structure is
-    // probably best used in combination with {@link org.openscience.cdk.io.iterator.IteratingMDLConformerReader} as
-    // <pre>
-    // IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
-    //          new FileReader(new File(filename)),
-    //          Default.ChemObjectBuilder.Instance);
-    // while (reader.HasNext()) {
-    //     ConformerContainer cc = (ConformerContainer) reader.Next();
-    //     foreach (var conformer in cc) {
-    //         // do something with each conformer
-    //     }
-    // }
-    // </pre>
-     *
+    /// <summary>
+    /// A memory-efficient data structure to store conformers for a single molecule.
+    /// </summary>
+    /// <remarks>
+    /// Since all the conformers for a given molecule only differ in their 3D coordinates
+    /// this data structure stores a single <see cref="IAtomContainer"/> containing the atom and bond
+    /// details and a List of 3D coordinate sets, each element being the set of 3D coordinates
+    /// for a given conformer.
+    /// </remarks>
+    /// <example>
+    /// The class behaves in many ways as a List&lt;IAtomContainer&gt; object, though a few methods are not
+    /// implemented. Though it is possible to add conformers by hand, this data structure is
+    /// probably best used in combination with <see cref="IteratingMDLConformerReader"/> as
+    /// <code>
+    /// IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
+    ///          new FileReader(new File(filename)),
+    ///          Default.ChemObjectBuilder.Instance);
+    /// while (reader.HasNext()) {
+    ///     ConformerContainer cc = (ConformerContainer) reader.Next();
+    ///     foreach (var conformer in cc) {
+    ///         // do something with each conformer
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
+    /// <seealso cref="IteratingMDLConformerReader"/>
     // @cdk.module data
     // @cdk.githash
     // @author Rajarshi Guha
-    // @see org.openscience.cdk.io.iterator.IteratingMDLConformerReader
-     */
+    // @see org.openscience.cdk.io.iterator.
     public class ConformerContainer : IList<IAtomContainer>
     {
-
         private IAtomContainer atomContainer = null;
         private string title = null;
         private IList<Vector3[]> coordinates;
@@ -75,19 +77,20 @@ namespace NCDK
             coordinates = new List<Vector3[]>();
         }
 
-        /**
-        // Create a ConformerContainer object from a single molecule object.
-        // <p/>
-        // Using this constructor, the resultant conformer container will
-        // contain a single conformer. More conformers can be added using the
-        // {@link #add} method.
-        // <p/>
-        // Note that the constructor will use the title of the input molecule
-        // when adding new molecules as conformers. That is, the title of any molecule
-        // to be added as a conformer should match the title of the input molecule.
-         *
-        // @param atomContainer The base molecule (or first conformer).
-         */
+        /// <summary>
+        /// Create a ConformerContainer object from a single molecule object.
+        /// <para>
+        /// Using this constructor, the resultant conformer container will
+        /// contain a single conformer. More conformers can be added using the
+        /// <see cref="Add(IAtomContainer)"/> method.
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// Note that the constructor will use the title of the input molecule
+        /// when adding new molecules as conformers. That is, the title of any molecule
+        /// to be added as a conformer should match the title of the input molecule.
+        /// </remarks>
+        /// <param name="atomContainer">The base molecule (or first conformer).</param>
         public ConformerContainer(IAtomContainer atomContainer)
         {
             this.atomContainer = atomContainer;
@@ -96,15 +99,15 @@ namespace NCDK
             coordinates.Add(GetCoordinateList(atomContainer));
         }
 
-        /**
-        // Create a ConformerContainer from an array of molecules.
-        // <p/>
-        // This constructor can be used when you have an array of conformers of a given
-        // molecule. Note that this constructor will assume that all molecules in the
-        // input array will have the same title.
-         *
-        // @param atomContainers The array of conformers
-         */
+        /// <summary>
+        /// Create a ConformerContainer from an array of molecules.
+        /// </summary>
+        /// <remarks>
+        /// This constructor can be used when you have an array of conformers of a given
+        /// molecule. Note that this constructor will assume that all molecules in the
+        /// input array will have the same title.
+        /// </remarks>
+        /// <param name="atomContainers">The array of conformers</param>
         public ConformerContainer(IAtomContainer[] atomContainers)
         {
             if (atomContainers.Length == 0) throw new ArgumentException("Can't use a zero-length molecule array");
@@ -126,55 +129,48 @@ namespace NCDK
             }
         }
 
-        /**
-        // Get the title of the conformers.
-        // <p/>
-        // Note that all conformers for a given molecule will have the same
-        // title.
-         *
-        // @return The title for the conformers
-         */
+        /// <summary>
+        /// The title of the conformers.
+        /// </summary>
+        /// <remarks>
+        /// Note that all conformers for a given molecule will have the same title.</remarks>
         public string Title => title;
 
-        /**
-        // Get the number of conformers stored.
-         *
-        // @return The number of conformers
-         */
+        /// <summary>
+        /// The number of conformers stored.
+        /// </summary>
         public int Count => coordinates.Count;
 
-        /**
-        // Checks whether any conformers are stored or not.
-         *
-        // @return true if there is at least one conformer, otherwise false
-         */
+        /// <summary>
+        /// Checks whether any conformers are stored or not.
+        /// </summary>
         public bool IsEmpty => coordinates.Count == 0;
 
-        /**
-        // Checks to see whether the specified conformer is currently stored.
-        // <p/>
-        // This method first checks whether the title of the supplied molecule
-        // matches the stored title. If not, it returns false. If the title matches
-        // it then checks all the coordinates to see whether they match. If all
-        // coordinates match it returns true else false.
-         *
-        // @param o The IAtomContainer to check for
-        // @return true if it is present, false otherwise
-         */
+        /// <summary>
+        /// Checks to see whether the specified conformer is currently stored.
+        /// </summary>
+        /// <remarks>
+        /// This method first checks whether the title of the supplied molecule
+        /// matches the stored title. If not, it returns false. If the title matches
+        /// it then checks all the coordinates to see whether they match. If all
+        /// coordinates match it returns true else false.
+        /// </remarks>
+        /// <param name="o">The IAtomContainer to check for</param>
+        /// <returns>true if it is present, false otherwise</returns>
         public bool Contains(IAtomContainer o)
         {
             return IndexOf(o) != -1;
         }
 
-        /**
-        // Returns the conformers in the form of an array of IAtomContainers.
-        // <p/>
-        // Beware that if you have a large number of conformers you may run out
-        // memory during construction of the array since IAtomContainer's are not
-        // light weight objects!
-         *
-        // @return The conformers as an array of individual IAtomContainers.
-         */
+        /// <summary>
+        /// Returns the conformers in the form of an array of IAtomContainers.
+        /// <para>
+        /// Beware that if you have a large number of conformers you may run out
+        /// memory during construction of the array since IAtomContainer's are not
+        /// light weight objects!
+        /// </para>
+        /// </summary>
+        /// <returns>The conformers as an array of individual IAtomContainers.</returns>
         public IAtomContainer[] ToArray()
         {
             IAtomContainer[] ret = new IAtomContainer[coordinates.Count];
@@ -192,20 +188,20 @@ namespace NCDK
             return ret;
         }
 
-        /**
-        // Add a conformer to the end of the list.
-        // <p/>
-        // This method allows you to add a IAtomContainer object as another conformer.
-        // Before adding it ensures that the title of specific object matches the
-        // stored title for these conformers. It will also check that the number of
-        // atoms in the specified molecule match the number of atoms in the current set
-        // of conformers.
-        // <p/>
-        // This method will not check for duplicate conformers.
-         *
-        // @param atomContainer The new conformer to add.
-        // @return true
-         */
+        /// <summary>
+        /// Add a conformer to the end of the list.
+        /// <para>
+        /// This method allows you to add a IAtomContainer object as another conformer.
+        /// Before adding it ensures that the title of specific object matches the
+        /// stored title for these conformers. It will also check that the number of
+        /// atoms in the specified molecule match the number of atoms in the current set
+        /// of conformers.
+        /// </para>
+        /// <para>
+        /// This method will not check for duplicate conformers.
+        /// </para>
+        /// </summary>
+        /// <param name="atomContainer">The new conformer to add.</param>
         public void Add(IAtomContainer atomContainer)
         {
             if (this.atomContainer == null)
@@ -227,12 +223,11 @@ namespace NCDK
             coordinates.Add(GetCoordinateList(atomContainer));
         }
 
-        /**
-        // Remove the specified conformer.
-         *
-        // @param o The conformer to remove (should be castable to IAtomContainer)
-        // @return true if the specified conformer was present and removed, false if not found
-         */
+        /// <summary>
+        /// Remove the specified conformer.
+        /// </summary>
+        /// <param name="o">The conformer to remove (should be castable to IAtomContainer)</param>
+        /// <returns>true if the specified conformer was present and removed, false if not found</returns>
         public bool Remove(IAtomContainer atomContainer)
         {
             // we should never have a null conformer
@@ -247,20 +242,18 @@ namespace NCDK
             return false;
         }
 
-        /**
-        // Get rid of all the conformers but keeps atom and bond information.
-         */
+        /// <summary>
+        /// Get rid of all the conformers but keeps atom and bond information.
+        /// </summary>
         public void Clear()
         {
             coordinates.Clear();
         }
 
-        /**
-        // Get the conformer at a specified position.
-         *
-        // @param i The position of the requested conformer
-        // @return The conformer
-         */
+        /// <summary>
+        /// The conformer at a specified position.
+        /// </summary>
+        /// <param name="i">The position of the requested conformer</param>
         public IAtomContainer this[int i]
         {
             get
@@ -309,27 +302,25 @@ namespace NCDK
             coordinates.Insert(i, tmp);
         }
 
-        /**
-        // Removes the conformer at the specified position.
-         *
-        // @param i The position in the list to remove
-        // @return The conformer that was at the specified position
-         */
+        /// <summary>
+        /// Removes the conformer at the specified position.
+        /// </summary>
+        /// <param name="i">The position in the list to remove</param>
         public void RemoveAt(int i)
         {
             coordinates.RemoveAt(i);
         }
 
-        /**
-        // Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-        // <p/>
-        // A given IAtomContainer will occur in the list if the title matches the stored title for
-        // the conformers in this container and if the coordinates for each atom in the specified molecule
-        // are equal to the coordinates of the corresponding atoms in a conformer.
-         *
-        // @param o The IAtomContainer whose presence is being tested
-        // @return The index where o was found
-         */
+        /// <summary>
+        /// Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is not found.
+        /// <para>
+        /// A given IAtomContainer will occur in the list if the title matches the stored title for
+        /// the conformers in this container and if the coordinates for each atom in the specified molecule
+        /// are equal to the coordinates of the corresponding atoms in a conformer.
+        /// </para>
+        /// </summary>
+        /// <param name="o">The IAtomContainer whose presence is being tested</param>
+        /// <returns>The index where o was found</returns>
         public int IndexOf(IAtomContainer atomContainer)
         {
             if (!atomContainer.GetProperty<string>(CDKPropertyName.TITLE).Equals(title)) return -1;
@@ -356,16 +347,16 @@ namespace NCDK
             return -1;
         }
 
-        /**
-        // Returns the highest index at which the specific IAtomContainer appears in the list or -1 if is not found.
-        // <p/>
-        // A given IAtomContainer will occur in the list if the title matches the stored title for
-        // the conformers in this container and if the coordinates for each atom in the specified molecule
-        // are equal to the coordinates of the corresponding atoms in a conformer.
-         *
-        // @param o The IAtomContainer whose presence is being tested
-        // @return The index where o was found
-         */
+        /// <summary>
+        /// Returns the highest index at which the specific IAtomContainer appears in the list or -1 if is not found.
+        /// <para>
+        /// A given IAtomContainer will occur in the list if the title matches the stored title for
+        /// the conformers in this container and if the coordinates for each atom in the specified molecule
+        /// are equal to the coordinates of the corresponding atoms in a conformer.
+        /// </para>
+        /// </summary>
+        /// <param name="o">The IAtomContainer whose presence is being tested</param>
+        /// <returns>The index where o was found</returns>
         public int LastIndexOf(IAtomContainer atomContainer)
         {
             if (!atomContainer.GetProperty<string>(CDKPropertyName.TITLE).Equals(title)) return -1;

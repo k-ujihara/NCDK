@@ -21,22 +21,22 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     *@cdk.module   isomorphism
-     * @cdk.githash
-     */
+    /// <summary>
+    ///@cdk.module   isomorphism
+    // @cdk.githash
+    /// </summary>
     public class QueryAtomContainerCreator
     {
 
-        /**
-         * Creates a QueryAtomContainer with SymbolQueryAtom's, AromaticQueryBond's and
-         * OrderQueryBond's. If a IBond of the input <code>container</code> is flagged
-         * aromatic, then it disregards bond order information and only match against
-         * an aromatic target atom instead.
-         *
-         *@param  container  The AtomContainer that stands as model
-         *@return            The new QueryAtomContainer created from container.
-         */
+        /// <summary>
+        /// Creates a QueryAtomContainer with SymbolQueryAtom's, AromaticQueryBond's and
+        /// OrderQueryBond's. If a IBond of the input <code>container</code> is flagged
+        /// aromatic, then it disregards bond order information and only match against
+        /// an aromatic target atom instead.
+        ///
+        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <returns>The new QueryAtomContainer created from container.</returns>
+        /// </summary>
         public static QueryAtomContainer CreateBasicQueryContainer(IAtomContainer container)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
@@ -62,13 +62,13 @@ namespace NCDK.Isomorphisms.Matchers
             return queryContainer;
         }
 
-        /**
-         * Creates a QueryAtomContainer with SymbolQueryAtom's and OrderQueryBond's. Unlike
-         * <code>createBasicQueryContainer</code>, it disregards aromaticity flags.
-         *
-         * @param  container  The AtomContainer that stands as model
-         * @return            The new QueryAtomContainer created from container.
-         */
+        /// <summary>
+        /// Creates a QueryAtomContainer with SymbolQueryAtom's and OrderQueryBond's. Unlike
+        /// <code>createBasicQueryContainer</code>, it disregards aromaticity flags.
+        ///
+        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <returns>The new QueryAtomContainer created from container.</returns>
+        /// </summary>
         public static QueryAtomContainer CreateSymbolAndBondOrderQueryContainer(IAtomContainer container)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
@@ -86,13 +86,13 @@ namespace NCDK.Isomorphisms.Matchers
             return queryContainer;
         }
 
-        /**
-         *  Creates a QueryAtomContainer with SymbolAncChargeQueryAtom's and
-         *  OrderQueryBond's.
-         *
-         *@param  container  The AtomContainer that stands as model
-         *@return            The new QueryAtomContainer created from container.
-         */
+        /// <summary>
+        ///  Creates a QueryAtomContainer with SymbolAncChargeQueryAtom's and
+        ///  OrderQueryBond's.
+        ///
+        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <returns>The new QueryAtomContainer created from container.</returns>
+        /// </summary>
         public static QueryAtomContainer CreateSymbolAndChargeQueryContainer(IAtomContainer container)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
@@ -143,14 +143,14 @@ namespace NCDK.Isomorphisms.Matchers
             return queryContainer;
         }
 
-        /**
-         *  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
-         *  It uses the CDKConstants.ISAROMATIC flag to determine the aromaticity of container.
-         *
-         *@param  container    The AtomContainer that stands as model
-         *@param  aromaticity  True = use aromaticity flags to create AtomaticAtoms and AromaticQueryBonds
-         *@return              The new QueryAtomContainer created from container
-         */
+        /// <summary>
+        ///  Creates a QueryAtomContainer with AnyAtoms / Aromatic Atoms and OrderQueryBonds / AromaticQueryBonds.
+        ///  It uses the CDKConstants.ISAROMATIC flag to determine the aromaticity of container.
+        ///
+        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <param name="aromaticity">True = use aromaticity flags to create AtomaticAtoms and AromaticQueryBonds</param>
+        /// <returns>The new QueryAtomContainer created from container</returns>
+        /// </summary>
         public static QueryAtomContainer CreateAnyAtomContainer(IAtomContainer container, bool aromaticity)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
@@ -185,16 +185,16 @@ namespace NCDK.Isomorphisms.Matchers
             return queryContainer;
         }
 
-        /**
-         * Creates a QueryAtomContainer with wildcard atoms and wildcard bonds.
-         * <p/>
-         * This method thus allows the user to search based only on connectivity.
-         *
-         * @param container   The AtomContainer that stands as the model
-         * @param aromaticity If True, aromaticity flags are checked to create AromaticAtoms
-         *                    and AromaticQueryBonds
-         * @return The new QueryAtomContainer
-         */
+        /// <summary>
+        /// Creates a QueryAtomContainer with wildcard atoms and wildcard bonds.
+        /// <p/>
+        /// This method thus allows the user to search based only on connectivity.
+        ///
+        /// <param name="container">The AtomContainer that stands as the model</param>
+        /// <param name="aromaticity">If True, aromaticity flags are checked to create AromaticAtoms</param>
+        ///                    and AromaticQueryBonds
+        /// <returns>The new QueryAtomContainer</returns>
+        /// </summary>
         public static QueryAtomContainer CreateAnyAtomAnyBondContainer(IAtomContainer container, bool aromaticity)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);
@@ -221,14 +221,14 @@ namespace NCDK.Isomorphisms.Matchers
             return queryContainer;
         }
 
-        /**
-         *  Creates a QueryAtomContainer with SymbolQueryAtom's and
-         *  OrderQueryBond's. Each PseudoAtom will be replaced by a
-         *  AnyAtom
-         *
-         *@param  container  The AtomContainer that stands as model
-         *@return            The new QueryAtomContainer created from container.
-         */
+        /// <summary>
+        ///  Creates a QueryAtomContainer with SymbolQueryAtom's and
+        ///  OrderQueryBond's. Each PseudoAtom will be replaced by a
+        ///  AnyAtom
+        ///
+        /// <param name="container">The AtomContainer that stands as model</param>
+        /// <returns>The new QueryAtomContainer created from container.</returns>
+        /// </summary>
         public static QueryAtomContainer CreateAnyAtomForPseudoAtomQueryContainer(IAtomContainer container)
         {
             QueryAtomContainer queryContainer = new QueryAtomContainer(container.Builder);

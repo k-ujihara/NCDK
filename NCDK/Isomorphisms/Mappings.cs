@@ -33,119 +33,119 @@ using System.Collections;
 namespace NCDK.Isomorphisms
 {
     /**
-	 * A fluent interface for handling (sub)-graph mappings from a query to a target
-	 * structure. The utility allows one to modify the mappings and provides
-	 * convenience utilities. {@link Mappings} are obtained from a (sub)-graph
-	 * matching using {@link Pattern}.
-	 *
-	 * <blockquote><pre>
-	 * IAtomContainer query  = ...;
-	 * IAtomContainer target = ...;
-	 *
-	 * Mappings mappings = Pattern.FindSubstructure(query)
-	 *                            .MatchAll(target);
-	 * </pre></blockquote>
-	 *
-	 * The primary function is to provide an iterable of matches - each match is
-	 * a permutation (mapping) of the query graph indices (atom indices).
-	 *
-	 * <blockquote><pre>
-	 * for (int[] p : mappings) {
-	 *     for (int i = 0; i < p.Length; i++)
-	 *         // query.Atoms[i] is mapped to target.Atoms[p[i]];
-	 * }
-	 * </pre></blockquote>
-	 *
-	 * The matches can be filtered to provide only those that have valid
-	 * stereochemistry.
-	 *
-	 * <blockquote><pre>
-	 * for (int[] p : mappings.GetStereochemistry()) {
-	 *     // ...
-	 * }
-	 * </pre></blockquote>
-	 *
-	 * Unique matches can be obtained for both atoms and bonds.
-	 *
-	 * <blockquote><pre>
-	 * for (int[] p : mappings.GetUniqueAtoms()) {
-	 *     // ...
-	 * }
-	 *
-	 * for (int[] p : mappings.GetUniqueBonds()) {
-	 *     // ...
-	 * }
-	 * </pre></blockquote>
-	 *
-	 * As matches may be lazily generated - iterating over the match twice (as
-	 * above) will actually perform two graph matchings. If the mappings are needed
-	 * for subsequent use the {@link #ToArray()} provides the permutations as a
-	 * fixed size array.
-	 *
-	 * <blockquote><pre>
-	 * int[][] ps = mappings.ToArray();
-	 * for (int[] p : ps) {
-	 *    // ...
-	 * }
-	 * </pre></blockquote>
-	 *
-	 * Graphs with a high number of automorphisms can produce many valid matchings.
-	 * Operations can be combined such as to limit the number of matches we
-	 * retrieve.
-	 *
-	 * <blockquote><pre>
-	 * // first ten matches
-	 * for (int[] p : mappings.Limit(10)) {
-	 *     // ...
-	 * }
-	 *
-	 * // first 10 unique matches
-	 * for (int[] p : mappings.GetUniqueAtoms()
-	 *                        .Limit(10)) {
-	 *     // ...
-	 * }
-	 *
-	 * // ensure we don't waste memory and only 'fix' up to 100 unique matches
-	 * int[][] ps = mappings.GetUniqueAtoms()
-	 *                      .Limit(100)
-	 *                      .ToArray();
-	 * </pre></blockquote>
-	 *
-	 * There is no restrictions on which operation can be applied and how many times
-	 * but the order of operations may change the result.
-	 *
-	 * <blockquote><pre>
-	 * // first 100 unique matches
-	 * Mappings m = mappings.GetUniqueAtoms()
-	 *                      .Limit(100);
-	 *
-	 * // unique matches in the first 100 matches
-	 * Mappings m = mappings.Limit(100)
-	 *                      .GetUniqueAtoms();
-	 *
-	 * // first 10 unique matches in the first 100 matches
-	 * Mappings m = mappings.Limit(100)
-	 *                      .GetUniqueAtoms()
-	 *                      .Limit(10);
-	 *
-	 * // number of unique atom matches
-	 * int n = mappings.CountUnique();
-	 *
-	 * // number of unique atom matches with correct stereochemistry
-	 * int n = mappings.GetStereochemistry()
-	 *                 .CountUnique();
-	 *
-	 * </pre></blockquote>
-	 *
-	 * @author John May
-	 * @cdk.module isomorphism
-	 * @see Pattern
-	 * @cdk.keyword substructure search
-	 * @cdk.keyword structure search
-	 * @cdk.keyword mappings
-	 * @cdk.keyword matching
-	 * @cdk.githash
-	 */
+     * A fluent interface for handling (sub)-graph mappings from a query to a target
+     * structure. The utility allows one to modify the mappings and provides
+     * convenience utilities. <see cref="Mappings"/> are obtained from a (sub)-graph
+     * matching using <see cref="Pattern"/>.
+     *
+     * <blockquote><code>
+     * IAtomContainer query  = ...;
+     * IAtomContainer target = ...;
+     *
+     * Mappings mappings = Pattern.FindSubstructure(query)
+     *                            .MatchAll(target);
+     * </code></blockquote>
+     *
+     * The primary function is to provide an iterable of matches - each match is
+     * a permutation (mapping) of the query graph indices (atom indices).
+     *
+     * <blockquote><code>
+     * for (int[] p : mappings) {
+     *     for (int i = 0; i < p.Length; i++)
+     *         // query.Atoms[i] is mapped to target.Atoms[p[i]];
+     * }
+     * </code></blockquote>
+     *
+     * The matches can be filtered to provide only those that have valid
+     * stereochemistry.
+     *
+     * <blockquote><code>
+     * for (int[] p : mappings.GetStereochemistry()) {
+     *     // ...
+     * }
+     * </code></blockquote>
+     *
+     * Unique matches can be obtained for both atoms and bonds.
+     *
+     * <blockquote><code>
+     * for (int[] p : mappings.GetUniqueAtoms()) {
+     *     // ...
+     * }
+     *
+     * for (int[] p : mappings.GetUniqueBonds()) {
+     *     // ...
+     * }
+     * </code></blockquote>
+     *
+     * As matches may be lazily generated - iterating over the match twice (as
+     * above) will actually perform two graph matchings. If the mappings are needed
+     * for subsequent use the {@link #ToArray()} provides the permutations as a
+     * fixed size array.
+     *
+     * <blockquote><code>
+     * int[][] ps = mappings.ToArray();
+     * for (int[] p : ps) {
+     *    // ...
+     * }
+     * </code></blockquote>
+     *
+     * Graphs with a high number of automorphisms can produce many valid matchings.
+     * Operations can be combined such as to limit the number of matches we
+     * retrieve.
+     *
+     * <blockquote><code>
+     * // first ten matches
+     * for (int[] p : mappings.Limit(10)) {
+     *     // ...
+     * }
+     *
+     * // first 10 unique matches
+     * for (int[] p : mappings.GetUniqueAtoms()
+     *                        .Limit(10)) {
+     *     // ...
+     * }
+     *
+     * // ensure we don't waste memory and only 'fix' up to 100 unique matches
+     * int[][] ps = mappings.GetUniqueAtoms()
+     *                      .Limit(100)
+     *                      .ToArray();
+     * </code></blockquote>
+     *
+     * There is no restrictions on which operation can be applied and how many times
+     * but the order of operations may change the result.
+     *
+     * <blockquote><code>
+     * // first 100 unique matches
+     * Mappings m = mappings.GetUniqueAtoms()
+     *                      .Limit(100);
+     *
+     * // unique matches in the first 100 matches
+     * Mappings m = mappings.Limit(100)
+     *                      .GetUniqueAtoms();
+     *
+     * // first 10 unique matches in the first 100 matches
+     * Mappings m = mappings.Limit(100)
+     *                      .GetUniqueAtoms()
+     *                      .Limit(10);
+     *
+     * // number of unique atom matches
+     * int n = mappings.CountUnique();
+     *
+     * // number of unique atom matches with correct stereochemistry
+     * int n = mappings.GetStereochemistry()
+     *                 .CountUnique();
+     *
+     * </code></blockquote>
+     *
+     * @author John May
+     * @cdk.module isomorphism
+     * @see Pattern
+     * @cdk.keyword substructure search
+     * @cdk.keyword structure search
+     * @cdk.keyword mappings
+     * @cdk.keyword matching
+     * @cdk.githash
+     */
     public sealed class Mappings : IEnumerable<int[]>
     {
         /// <summary>Iterable permutations of the query vertices.</summary>
@@ -155,20 +155,15 @@ namespace NCDK.Isomorphisms
         private IAtomContainer query, target;
 
         /**
-		 * Create a fluent mappings instance for the provided query / target and an
-		 * iterable of permutations on the query vertices (specified as indices).
-		 *
-		 * @param query    the structure to be found
-		 * @param target   the structure being searched
-		 * @param iterable iterable of permutation
-		 * @see Pattern
-		 */
-#if TEST
-        public
-#else
-        internal
-#endif
-        Mappings(IAtomContainer query, IAtomContainer target, IEnumerable<int[]> iterable)
+         * Create a fluent mappings instance for the provided query / target and an
+         * iterable of permutations on the query vertices (specified as indices).
+         *
+         * @param query    the structure to be found
+         * @param target   the structure being searched
+         * @param iterable iterable of permutation
+         * @see Pattern
+         */
+        internal Mappings(IAtomContainer query, IAtomContainer target, IEnumerable<int[]> iterable)
         {
             this.query = query;
             this.target = target;
@@ -176,28 +171,28 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Filter the mappings and keep only those which match the provided
-		 * predicate (Guava).
-		 *
-		 * <blockquote><pre>
-		 *
-		 *     final IAtomContainer query;
-		 *     final IAtomContainer target;
-		 *
-		 *     // obtain only the mappings where the first atom in the query is
-		 *     // mapped to the first atom in the target
-		 *     Mappings mappings = Pattern.FindSubstructure(query)
-		 *                                .MatchAll(target)
-		 *                                .Filter(new Predicate<int[]>() {
-		 *                                    public bool Apply(int[] input) {
-		 *                                        return input[0] == 0;
-		 *                                    }});
-		 *
-		 * </pre></blockquote>
-		 *
-		 * @param predicate a predicate
-		 * @return fluent-api reference
-		 */
+         * Filter the mappings and keep only those which match the provided
+         * predicate (Guava).
+         *
+         * <blockquote><code>
+         *
+         *     final IAtomContainer query;
+         *     final IAtomContainer target;
+         *
+         *     // obtain only the mappings where the first atom in the query is
+         *     // mapped to the first atom in the target
+         *     Mappings mappings = Pattern.FindSubstructure(query)
+         *                                .MatchAll(target)
+         *                                .Filter(new Predicate<int[]>() {
+         *                                    public bool Apply(int[] input) {
+         *                                        return input[0] == 0;
+         *                                    }});
+         *
+         * </code></blockquote>
+         *
+         * @param predicate a predicate
+         * @return fluent-api reference
+         */
         public Mappings Filter(NCDK.Common.Base.Predicate<int[]> predicate)
         {
             return new Mappings(query, target, iterable.Where(n => predicate.Apply(n)));
@@ -238,23 +233,23 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Limit the number of mappings - only this number of mappings will be
-		 * generate.
-		 *
-		 * @param limit the number of mappings
-		 * @return fluent-api instance
-		 */
+         * Limit the number of mappings - only this number of mappings will be
+         * generate.
+         *
+         * @param limit the number of mappings
+         * @return fluent-api instance
+         */
         public Mappings Limit(int limit)
         {
             return new Mappings(query, target, iterable.Take(limit));
         }
 
         /**
-		 * Filter the mappings for those which preserve stereochemistry specified in
-		 * the query.
-		 *
-		 * @return fluent-api instance
-		 */
+         * Filter the mappings for those which preserve stereochemistry specified in
+         * the query.
+         *
+         * @return fluent-api instance
+         */
         public Mappings GetStereochemistry()
         {
             // query structures currently have special requirements (i.e. SMARTS)
@@ -263,13 +258,13 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Filter the mappings for those which cover a unique set of atoms in the
-		 * target. The unique atom mappings are a subset of the unique bond
-		 * matches.
-		 *
-		 * @return fluent-api instance
-		 * @see #GetUniqueBonds()
-		 */
+         * Filter the mappings for those which cover a unique set of atoms in the
+         * target. The unique atom mappings are a subset of the unique bond
+         * matches.
+         *
+         * @return fluent-api instance
+         * @see #GetUniqueBonds()
+         */
         public Mappings GetUniqueAtoms()
         {
             // we need the unique predicate to be reset for each new iterator -
@@ -279,12 +274,12 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Filter the mappings for those which cover a unique set of bonds in the
-		 * target.
-		 *
-		 * @return fluent-api instance
-		 * @see #GetUniqueAtoms()
-		 */
+         * Filter the mappings for those which cover a unique set of bonds in the
+         * target.
+         *
+         * @return fluent-api instance
+         * @see #GetUniqueAtoms()
+         */
         public Mappings GetUniqueBonds()
         {
             // we need the unique predicate to be reset for each new iterator -
@@ -295,88 +290,88 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Mappings are lazily generated and best used in a loop. However if all
-		 * mappings are required this method can provide a fixed size array of
-		 * mappings.
-		 *
-		 * <blockquote><pre>
-		 *
-		 * IAtomContainer query  = ...;
-		 * IAtomContainer target = ...;
-		 *
-		 * Pattern pat = Pattern.FindSubstructure(query);
-		 *
-		 * // lazily iterator
-		 * for (int[] mapping : pat.MatchAll(target)) {
-		 *     // logic...
-		 * }
-		 *
-		 * int[][] mappings = pat.MatchAll(target)
-		 *                       .ToArray();
-		 *
-		 * // same as lazy iterator but we now can refer to and parse 'mappings'
-		 * // to other methods without regenerating the graph match
-		 * for (int[] mapping : mappings) {
-		 *     // logic...
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * The method can be used in combination with other modifiers.
-		 *
-		 * <blockquote><pre>
-		 *
-		 * IAtomContainer query  = ...;
-		 * IAtomContainer target = ...;
-		 *
-		 * Pattern pat = Pattern.FindSubstructure(query);
-		 *
-		 * // array of the first 5 unique atom mappings
-		 * int[][] mappings = pat.MatchAll(target)
-		 *                       .GetUniqueAtoms()
-		 *                       .Limit(5)
-		 *                       .ToArray();
-		 * </pre></blockquote>
-		 *
-		 * @return array of mappings
-		 */
+         * Mappings are lazily generated and best used in a loop. However if all
+         * mappings are required this method can provide a fixed size array of
+         * mappings.
+         *
+         * <blockquote><code>
+         *
+         * IAtomContainer query  = ...;
+         * IAtomContainer target = ...;
+         *
+         * Pattern pat = Pattern.FindSubstructure(query);
+         *
+         * // lazily iterator
+         * for (int[] mapping : pat.MatchAll(target)) {
+         *     // logic...
+         * }
+         *
+         * int[][] mappings = pat.MatchAll(target)
+         *                       .ToArray();
+         *
+         * // same as lazy iterator but we now can refer to and parse 'mappings'
+         * // to other methods without regenerating the graph match
+         * for (int[] mapping : mappings) {
+         *     // logic...
+         * }
+         * </code></blockquote>
+         *
+         * The method can be used in combination with other modifiers.
+         *
+         * <blockquote><code>
+         *
+         * IAtomContainer query  = ...;
+         * IAtomContainer target = ...;
+         *
+         * Pattern pat = Pattern.FindSubstructure(query);
+         *
+         * // array of the first 5 unique atom mappings
+         * int[][] mappings = pat.MatchAll(target)
+         *                       .GetUniqueAtoms()
+         *                       .Limit(5)
+         *                       .ToArray();
+         * </code></blockquote>
+         *
+         * @return array of mappings
+         */
         public int[][] ToArray()
         {
             return iterable.ToArray();
         }
 
         /**
-		 * Convert the permutations to a atom-atom map.
-		 *
-		 * <blockquote><pre>
-		 * for (IDictionary&lt;IAtom,IAtom&gt; map : mappings.ToAtomMap()) {
-		 *     for (KeyValuePair&lt;IAtom,IAtom&gt; e : map.EntrySet()) {
-		 *         IAtom queryAtom  = e.Key;
-		 *         IAtom targetAtom = e.Value;
-		 *     }
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @return iterable of atom-atom mappings
-		 */
+         * Convert the permutations to a atom-atom map.
+         *
+         * <blockquote><code>
+         * for (IDictionary&lt;IAtom,IAtom&gt; map : mappings.ToAtomMap()) {
+         *     for (KeyValuePair&lt;IAtom,IAtom&gt; e : map.EntrySet()) {
+         *         IAtom queryAtom  = e.Key;
+         *         IAtom targetAtom = e.Value;
+         *     }
+         * }
+         * </code></blockquote>
+         *
+         * @return iterable of atom-atom mappings
+         */
         public IEnumerable<IDictionary<IAtom, IAtom>> ToAtomMap()
         {
             return GetMapping(new AtomMaper(query, target));
         }
 
         /**
-		 * Convert the permutations to a bond-bond map.
-		 *
-		 * <blockquote><pre>
-		 * for (IDictionary&lt;IBond,IBond&gt; map : mappings.ToBondMap()) {
-		 *     for (KeyValuePair&lt;IBond,IBond&gt; e : map.EntrySet()) {
-		 *         IBond queryBond  = e.Key;
-		 *         IBond targetBond = e.Value;
-		 *     }
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @return iterable of bond-bond mappings
-		 */
+         * Convert the permutations to a bond-bond map.
+         *
+         * <blockquote><code>
+         * for (IDictionary&lt;IBond,IBond&gt; map : mappings.ToBondMap()) {
+         *     for (KeyValuePair&lt;IBond,IBond&gt; e : map.EntrySet()) {
+         *         IBond queryBond  = e.Key;
+         *         IBond targetBond = e.Value;
+         *     }
+         * }
+         * </code></blockquote>
+         *
+         * @return iterable of bond-bond mappings
+         */
         public IEnumerable<IDictionary<IBond, IBond>> ToBondMap()
         {
             return GetMapping(new BondMaper(query, target));
@@ -402,18 +397,18 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Obtain the chem objects (atoms and bonds) that have 'hit' in the target molecule.
-		 *
-		 * <blockquote><pre>
-		 * foreach (var obj in mappings.ToChemObjects()) {
-		 *   if (obj is IAtom) {
-		 *      // this atom was 'hit' by the pattern
-		 *   }
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @return lazy iterable of chem objects
-		 */
+         * Obtain the chem objects (atoms and bonds) that have 'hit' in the target molecule.
+         *
+         * <blockquote><code>
+         * foreach (var obj in mappings.ToChemObjects()) {
+         *   if (obj is IAtom) {
+         *      // this atom was 'hit' by the pattern
+         *   }
+         * }
+         * </code></blockquote>
+         *
+         * @return lazy iterable of chem objects
+         */
         public IEnumerable<IChemObject> ToChemObjects()
         {
             foreach (var a in GetMapping(new AtomBondMaper(query, target)).Select(map => map.Values))
@@ -423,22 +418,22 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Obtain the mapped substructures (atoms/bonds) of the target compound. The atoms
-		 * and bonds are the same as in the target molecule but there may be less of them.
-		 *
-		 * <blockquote><pre>
-		 * IAtomContainer query, target
-		 * Mappings mappings = ...;
-		 * foreach (var mol in mol.ToSubstructures()) {
-		 *    foreach (var atom in mol.Atoms)
-		 *      target.Contains(atom); // always true
-		 *    foreach (var atom in target.Atoms)
-		 *      mol.Contains(atom): // not always true
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @return lazy iterable of molecules
-		 */
+         * Obtain the mapped substructures (atoms/bonds) of the target compound. The atoms
+         * and bonds are the same as in the target molecule but there may be less of them.
+         *
+         * <blockquote><code>
+         * IAtomContainer query, target
+         * Mappings mappings = ...;
+         * foreach (var mol in mol.ToSubstructures()) {
+         *    foreach (var atom in mol.Atoms)
+         *      target.Contains(atom); // always true
+         *    foreach (var atom in target.Atoms)
+         *      mol.Contains(atom): // not always true
+         * }
+         * </code></blockquote>
+         *
+         * @return lazy iterable of molecules
+         */
         public IEnumerable<IAtomContainer> ToSubstructures()
         {
             return GetMapping(new AtomBondMaper(query, target)).Select(map =>
@@ -453,33 +448,33 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Efficiently determine if there are at least 'n' matches
-		 *
-		 * <blockquote><pre>
-		 * Mappings mappings = ...;
-		 *
-		 * if (mappings.AtLeast(5))
-		 *    // set bit flag etc.
-		 *
-		 * // are the at least 5 unique matches?
-		 * if (mappings.GetUniqueAtoms().AtLeast(5))
-		 *    // set bit etc.
-		 * </pre></blockquote>
-		 *
-		 * @param n number of matches
-		 * @return there are at least 'n' matches
-		 */
+         * Efficiently determine if there are at least 'n' matches
+         *
+         * <blockquote><code>
+         * Mappings mappings = ...;
+         *
+         * if (mappings.AtLeast(5))
+         *    // set bit flag etc.
+         *
+         * // are the at least 5 unique matches?
+         * if (mappings.GetUniqueAtoms().AtLeast(5))
+         *    // set bit etc.
+         * </code></blockquote>
+         *
+         * @param n number of matches
+         * @return there are at least 'n' matches
+         */
         public bool AtLeast(int n)
         {
             return Limit(n).Count() == n;
         }
 
         /**
-		 * Obtain the first match - if there is no first match an empty array is
-		 * returned.
-		 *
-		 * @return first match
-		 */
+         * Obtain the first match - if there is no first match an empty array is
+         * returned.
+         *
+         * @return first match
+         */
         public int[] First()
         {
             var f = iterable.FirstOrDefault();
@@ -487,29 +482,29 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Convenience method to count the number mappings. Note mappings are lazily
-		 * generated and checking the count and then iterating over the mappings
-		 * currently performs two searches. If the mappings are also needed, it is
-		 * more efficient to check the mappings and count manually.
-		 *
-		 * @return number of matches
-		 */
+         * Convenience method to count the number mappings. Note mappings are lazily
+         * generated and checking the count and then iterating over the mappings
+         * currently performs two searches. If the mappings are also needed, it is
+         * more efficient to check the mappings and count manually.
+         *
+         * @return number of matches
+         */
         public int Count()
         {
             return iterable.Count();
         }
 
         /**
-		 * Convenience method to count the number of unique atom mappings. Note
-		 * mappings are lazily generated and checking the count and then iterating
-		 * over the mappings currently performs two searches. If the mappings are
-		 * also needed, it is more efficient to check the mappings and count
-		 * manually.
-		 *
-		 * The method is simply invokes <pre>mappings.GetUniqueAtoms().Count()</pre>.
-		 *
-		 * @return number of matches
-		 */
+         * Convenience method to count the number of unique atom mappings. Note
+         * mappings are lazily generated and checking the count and then iterating
+         * over the mappings currently performs two searches. If the mappings are
+         * also needed, it is more efficient to check the mappings and count
+         * manually.
+         *
+         * The method is simply invokes <code>mappings.GetUniqueAtoms().Count()</code>.
+         *
+         * @return number of matches
+         */
         public int CountUnique()
         {
             return GetUniqueAtoms().Count();
@@ -534,11 +529,11 @@ namespace NCDK.Isomorphisms
             private readonly IAtomContainer query, target;
 
             /**
-			 * Use the provided query and target to obtain the atom instances.
-			 *
-			 * @param query  the structure to be found
-			 * @param target the structure being searched
-			 */
+             * Use the provided query and target to obtain the atom instances.
+             *
+             * @param query  the structure to be found
+             * @param target the structure being searched
+             */
             public AtomMaper(IAtomContainer query, IAtomContainer target)
             {
                 this.query = query;

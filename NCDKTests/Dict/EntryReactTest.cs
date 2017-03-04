@@ -20,9 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Dict
 {
-    /**
-     * @cdk.module test-dict
-     */
+    // @cdk.module test-dict
     [TestClass()]
     public class EntryReactTest : AbstractEntryTest
     {

@@ -5,27 +5,27 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.xml-cml.org/schema/cml2/core ../../../io/cml/data/cmlCore.xsd">
   
-  <!-- JFragmentsTest.TestAtomId() -->
+  <!-- JFragmentsTest.testAtomId() -->
   <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
   
-  <!-- JFragmentsTest.TestAtomId2() -->
+  <!-- JFragmentsTest.testAtomId2() -->
   <molecule id='m1'><atomArray><stringArray builtin='id'>a1</stringArray></atomArray></molecule>
   
-  <!-- JFragmentsTest.TestAtomId3() -->
+  <!-- JFragmentsTest.testAtomId3() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
   </molecule>
 
-  <!-- JFragmentsTest.TestAtomElementType() -->
+  <!-- JFragmentsTest.testAtomElementType() -->
   <molecule id='m1'><atomArray><stringArray builtin='elementType'>C</stringArray></atomArray></molecule>
   
-  <!-- JFragmentsTest.TestAtomElementType2() -->
+  <!-- JFragmentsTest.testAtomElementType2() -->
   <molecule id='m1'><atomArray><atom id='a1'><string builtin='elementType'>C</string></atom></atomArray></molecule>
   
-  <!-- JFragmentsTest.TestAtomElementType3() -->
+  <!-- JFragmentsTest.testAtomElementType3() -->
   <molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>
   
-  <!-- JFragmentsTest.Test2dCoord2() -->
+  <!-- JFragmentsTest.test2dCoord2() -->
   <molecule id='m1'>
     <atomArray>
       <stringArray builtin='id'>a1</stringArray>
@@ -34,13 +34,13 @@
     </atomArray>
   </molecule>
   
-  <!-- JFragmentsTest.TestBond() -->
+  <!-- JFragmentsTest.testBond() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
-  <!-- JFragmentsTest.TestBond2() -->
+  <!-- JFragmentsTest.testBond2() -->
   <molecule id='m1'>
     <atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray>
     <bondArray>
@@ -49,7 +49,7 @@
     </bondArray>
   </molecule>
 
-  <!-- JFragmentsTest.TestBond3() -->
+  <!-- JFragmentsTest.testBond3() -->
   <molecule id='m1'>
     <atomArray><stringArray builtin='id'>a1 a2</stringArray></atomArray>
     <bondArray>
@@ -60,52 +60,52 @@
     </bondArray>
   </molecule>
 
-  <!-- JFragmentsTest.TestBond4() -->
+  <!-- JFragmentsTest.testBond4() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
     <bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/>
   </molecule>
 
-  <!-- JFragmentsTest.TestBond5() -->
+  <!-- JFragmentsTest.testBond5() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
     <bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/>
   </molecule>
 
-  <!-- JFragmentsTest.TestBondId() -->
+  <!-- JFragmentsTest.testBondId() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
-  <!-- JFragmentsTest.TestBondAromatic() -->
+  <!-- JFragmentsTest.testBondAromatic() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2'/>
     <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
   </molecule>
 
-  <!-- JFragmentsTest.TestList() -->
+  <!-- JFragmentsTest.testList() -->
   <list> 
     <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
     <molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
   </list>
   
-  <!-- JFragmentsTest.TestCoordinates2D() -->
+  <!-- JFragmentsTest.testCoordinates2D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/>
   </molecule>
   
-  <!-- JFragmentsTest.TestCoordinates3D() -->
+  <!-- JFragmentsTest.testCoordinates3D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/>
   </molecule>
   
-  <!-- JFragmentsTest.TestFractional3D() -->
+  <!-- JFragmentsTest.testFractional3D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
   </molecule>
   
-  <!-- JFragmentsTest.TestMissing2DCoordinates() -->
+  <!-- JFragmentsTest.testMissing2DCoordinates() -->
   <molecule id='m1'>
     <atomArray>
       <atom id='a1' xy2='0.0 0.1'/>
@@ -114,7 +114,7 @@
     </atomArray>
   </molecule>
   
-  <!-- JFragmentsTest.TestMissing3DCoordinates() -->
+  <!-- JFragmentsTest.testMissing3DCoordinates() -->
   <molecule id='m1'>
     <atomArray>
       <atom id='a1' xyz3='0.0 0.1 0.2'/>
@@ -123,7 +123,7 @@
     </atomArray>
   </molecule>
   
-  <!-- JFragmentsTests.TestCrystal() -->
+  <!-- JFragmentsTests.testCrystal() -->
   <molecule id="m1">
     <crystal z="4">
       <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
@@ -141,7 +141,7 @@
     </atomArray>
   </molecule>
 
-  <!-- JFragmentsTest.TestMoleculeId() -->
+  <!-- JFragmentsTest.testMoleculeId() -->
   <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
 
   <!-- Not tested yet -->

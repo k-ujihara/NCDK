@@ -27,11 +27,11 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the ElectronImpactPDBReactionTest.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the ElectronImpactPDBReactionTest.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ElectronImpactPDBReactionTest : ReactionProcessTest
     {
@@ -39,17 +39,17 @@ namespace NCDK.Reactions.Types
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public ElectronImpactPDBReactionTest()
         {
             SetReaction(typeof(ElectronImpactPDBReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestElectronImpactPDBReaction()
         {
@@ -57,13 +57,13 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
-         *
-         * @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+        ///
+        // @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
@@ -128,13 +128,13 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         *  A unit test for JUnit with the compound propene.
-         *
-         * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit with the compound propene.
+        ///
+        // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAutomatic_Set_Active_Bond()
         {
@@ -169,13 +169,13 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         *  A unit test for JUnit with the compound 2_5_Hexen_3_one.
-         *
-         * @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
-         *
-         *@return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit with the compound 2_5_Hexen_3_one.
+        ///
+        // @cdk.inchi InChI=1/C6H10O/c1-3-5-6(7)4-2/h3H,1,4-5H2,2H3
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAutomatic_Set_Active_Bond2()
         {
@@ -225,14 +225,14 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction:propene
-         * Manually put of the reactive center.
-         *
-         * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction:propene
+        /// Manually put of the reactive center.
+        ///
+        // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -268,14 +268,14 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[0].IsReactiveCenter);
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: propene
-         * Manually put of the reactive center.
-         *
-         * @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: propene
+        /// Manually put of the reactive center.
+        ///
+        // @cdk.inchi InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -304,12 +304,12 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(mappedProductA2, product.Atoms[1]);
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
 
@@ -320,11 +320,11 @@ namespace NCDK.Reactions.Types
             }
         }
 
-        /**
-         * Get the example set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the example set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -362,12 +362,12 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         * TODO:reaction. Set the products
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        /// TODO:reaction. Set the products
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

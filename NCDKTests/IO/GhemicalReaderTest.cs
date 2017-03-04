@@ -81,7 +81,7 @@ namespace NCDK.IO
         public void TestEthene()
         {
             string filename = "NCDK.Data.Ghemical.ethene.mm1gp";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             GhemicalMMReader reader = new GhemicalMMReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

@@ -218,5 +218,7 @@ namespace NCDK
         /// pack the RGB color space components into a single int.
         /// </summary>
         public const string COLOR = "org.openscience.cdk.renderer." + "color";
+
+        internal static int RGB2Int(int r, int g, int b) => (((r << 16) & 0xff0000) | ((g << 8) & 0x00ff00) | (b & 0x0000ff));
     }
 }

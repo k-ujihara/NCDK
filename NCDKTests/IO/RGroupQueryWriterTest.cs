@@ -28,15 +28,15 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-     * JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.
-     * Idea: read the test RGfiles into an object model, then writes the
-     * same model out as an RGfile again without changing anything. Then
-     * check that the original inputfile and the outputfile have the same content.
-     *
-     * @cdk.module test-io
-     * @author Mark Rijnbeek
-     */
+    /// <summary>
+    /// JUnit tests for {@link org.openscience.cdk.io.RGroupQueryWriter}.
+    /// Idea: read the test RGfiles into an object model, then writes the
+    /// same model out as an RGfile again without changing anything. Then
+    /// check that the original inputfile and the outputfile have the same content.
+    ///
+    // @cdk.module test-io
+    // @author Mark Rijnbeek
+    /// </summary>
     [TestClass()]
     public class RGroupQueryWriterTest : ChemObjectIOTest
     {
@@ -52,7 +52,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_1()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.1.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.1.mol");
 
             Assert.AreEqual(0, CountSubstring("AAL", rgFile), "AAL lines");
             Assert.AreEqual(1, CountSubstring("LOG", rgFile), "LOG lines");
@@ -64,7 +64,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_2()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.2.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.2.mol");
 
             Assert.AreEqual(1, CountSubstring("AAL", rgFile), "AAL lines");
             Assert.AreEqual(3, CountSubstring("LOG", rgFile), "LOG lines");
@@ -76,7 +76,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_3()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.3.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.3.mol");
             Assert.AreEqual(2, CountSubstring("AAL", rgFile), "AAL lines");
             Assert.AreEqual(1, CountSubstring("LOG", rgFile), "LOG lines");
             Assert.AreEqual(2, CountSubstring("APO", rgFile), "APO lines");
@@ -87,7 +87,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_4()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.4.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.4.mol");
             Assert.AreEqual(0, CountSubstring("AAL", rgFile), "AAL lines");
             Assert.AreEqual(3, CountSubstring("\\$CTAB", rgFile), "\\$CTAB lines");
             // the R-group is detached, we don't write APO lines (unlike the 0 value APO in the input file)
@@ -99,7 +99,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_5()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.5.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.5.mol");
             Assert.AreEqual(4, CountSubstring("LOG", rgFile), "LOG lines");
             Assert.AreEqual(0, CountSubstring("APO", rgFile), "APO lines");
             Assert.AreEqual(2, CountSubstring("M  RGP", rgFile), "M  RGP lines"); //overflow
@@ -109,7 +109,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_6()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.6.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.6.mol");
             Assert.AreEqual(1, CountSubstring("AAL", rgFile), "AAL lines");
             Assert.AreEqual(3, CountSubstring("LOG", rgFile), "LOG lines");
             Assert.AreEqual(1, CountSubstring("APO", rgFile), "APO lines");
@@ -119,7 +119,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRgroupQueryFile_7()
         {
-            string rgFile = recreate("NCDK.Data.MDL.rgfile.7.mol");
+            string rgFile = Recreate("NCDK.Data.MDL.rgfile.7.mol");
             Assert.AreEqual(1, CountSubstring("LOG", rgFile), "LOG lines");
             Assert.AreEqual(2, CountSubstring("APO", rgFile), "APO lines");
             Assert.IsTrue(rgFile.Contains("M  RGP  3   4  32   6  32   7  32"));
@@ -137,11 +137,11 @@ namespace NCDK.IO
 
         public override void TestAcceptsAtLeastOneNonotifyObject() { }
 
-        private string recreate(string file)
+        private string Recreate(string file)
         {
             StringWriter sw = new StringWriter();
             RGroupQueryWriter rgw = new RGroupQueryWriter(sw);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(file);
+            var ins = ResourceLoader.GetAsStream(file);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             rgw.Write(rGroupQuery);

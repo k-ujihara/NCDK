@@ -32,20 +32,13 @@ using System.Text;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     *
     // @author Syed Asad Rahman (2012)
     // @author John May (2013)
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-     *
-     */
-#if TEST
-    public
-#endif
-    sealed class ShortestPathWalker
+    internal sealed class ShortestPathWalker
     {
         /* container which is being traversed */
         private readonly IAtomContainer container;
@@ -59,10 +52,10 @@ namespace NCDK.Fingerprint
         /* maximum number of shortest paths, when there is more then one path */
         private const int MAX_SHORTEST_PATHS = 5;
 
-        /**
-        // Create a new shortest path walker for a given container.
-        // @param container the molecule to encode the shortest paths
-         */
+        /// <summary>
+        /// Create a new shortest path walker for a given container.
+        /// </summary>
+        /// <param name="container">the molecule to encode the shortest paths</param>
         public ShortestPathWalker(IAtomContainer container)
         {
             this.container = container;
@@ -70,21 +63,20 @@ namespace NCDK.Fingerprint
             this.paths = new ReadOnlyCollection<string>(Traverse());
         }
 
-        /**
-        // Access a set of all shortest paths.
-        // @return the paths
-         */
+        /// <summary>
+        /// Access a set of all shortest paths.
+        /// </summary>
+        /// <returns>the paths</returns>
         public IList<string> GetPaths()
         {
             return new ReadOnlyCollection<string>(paths);
         }
 
-        /**
-        // Traverse all-pairs of shortest-paths within a chemical graph.
-         */
+        /// <summary>
+        /// Traverse all-pairs of shortest-paths within a chemical graph.
+        /// </summary>
         private IList<string> Traverse()
         {
-
             var paths = new SortedSet<string>();
 
             // All-Pairs Shortest-Paths (APSP)
@@ -92,40 +84,33 @@ namespace NCDK.Fingerprint
 
             for (int i = 0, n = container.Atoms.Count; i < n; i++)
             {
-
                 paths.Add(ToAtomPattern(container.Atoms[i]));
 
                 // only do the comparison for i,j then reverse the path for j,i
                 for (int j = i + 1; j < n; j++)
                 {
-
                     int nPaths = apsp.From(i).GetNPathsTo(j);
 
                     // only encode when there is a manageable number of paths
                     if (nPaths > 0 && nPaths < MAX_SHORTEST_PATHS)
                     {
-
                         foreach (var path in apsp.From(i).GetPathsTo(j))
                         {
                             paths.Add(Encode(path));
                             paths.Add(Encode(Reverse(path)));
                         }
-
                     }
-
                 }
             }
 
             return paths.ToList();
-
         }
 
-        /**
-        // Reverse an array of integers.
-         *
-        // @param src array to reverse
-        // @return reversed copy of <i>src</i>
-         */
+        /// <summary>
+        /// Reverse an array of integers.
+        /// </summary>
+        /// <param name="src">array to reverse</param>
+        /// <returns>reversed copy of <paramref name="src"/></returns>
         private int[] Reverse(int[] src)
         {
             int[] dest = Arrays.CopyOf(src, src.Length);
@@ -145,12 +130,11 @@ namespace NCDK.Fingerprint
             return dest;
         }
 
-        /**
-        // Encode the provided path of atoms to a string.
-         *
-        // @param path inclusive array of vertex indices
-        // @return encoded path
-         */
+        /// <summary>
+        /// Encode the provided path of atoms to a string.
+        /// </summary>
+        /// <param name="path">inclusive array of vertex indices</param>
+        /// <returns>encoded path</returns>
         private string Encode(int[] path)
         {
             StringBuilder sb = new StringBuilder(path.Length * 3);
@@ -181,24 +165,23 @@ namespace NCDK.Fingerprint
             return sb.ToString();
         }
 
-        /**
-        // Convert an atom to a string representation. Currently this method just
-        // returns the symbol but in future may include other properties, such as, stereo
-        // descriptor and charge.
-        // @param atom The atom to encode
-        // @return encoded atom
-         */
+        /// <summary>
+        /// Convert an atom to a string representation. Currently this method just
+        /// returns the symbol but in future may include other properties, such as, stereo
+        /// descriptor and charge.
+        /// </summary>
+        /// <param name="atom">The atom to encode</param>
+        /// <returns>encoded atom</returns>
         private string ToAtomPattern(IAtom atom)
         {
             return atom.Symbol;
         }
 
-        /**
-        // Gets the bondSymbol attribute of the HashedFingerprinter class
-         *
-        // @param bond Description of the Parameter
-        // @return The bondSymbol value
-         *]\     */
+        /// <summary>
+        /// Gets the bondSymbol attribute of the HashedFingerprinter class
+        /// </summary>
+        /// <param name="bond">Description of the Parameter</param>
+        /// <returns>The bondSymbol value</returns>
         private char GetBondSymbol(IBond bond)
         {
             if (IsSP2Bond(bond))
@@ -223,18 +206,15 @@ namespace NCDK.Fingerprint
             }
         }
 
-        /**
-        // Returns true if the bond binds two atoms, and both atoms are SP2 in a ring system.
-         */
+        /// <summary>
+        /// Returns true if the bond binds two atoms, and both atoms are SP2 in a ring system.
+        /// </summary>
         private bool IsSP2Bond(IBond bond)
         {
             return bond.IsAromatic;
         }
 
-        /**
-        // @inheritDoc
-         */
-
+        /// <inheritdoc/>
         public override string ToString()
         {
             int n = this.paths.Count();

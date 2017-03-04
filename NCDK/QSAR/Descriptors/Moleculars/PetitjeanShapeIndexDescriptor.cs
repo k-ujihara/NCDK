@@ -27,42 +27,42 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Evaluates the Petitjean shape indices,
-     * <p/>
-     * These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
-     * and considered the molecular graph. This class also implements the geometric analog
-     * of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
-     * <p/>
-     * The descriptor returns a <code>DoubleArrayResult</code> which contains
-     * <ol>
-     * <li>topoShape - topological shape index
-     * <li>geomShape - geometric shape index
-     * </ol>
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     *
-     * @author      Rajarshi Guha
-     * @cdk.created 2006-01-14
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:petitjeanShapeIndex
-     * @cdk.keyword Petit-Jean, shape index
-     */
+    /// <summary>
+    /// Evaluates the Petitjean shape indices,
+    /// <p/>
+    /// These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
+    /// and considered the molecular graph. This class also implements the geometric analog
+    /// of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
+    /// <p/>
+    /// The descriptor returns a <code>DoubleArrayResult</code> which contains
+    /// <ol>
+    /// <li>topoShape - topological shape index
+    /// <li>geomShape - geometric shape index
+    /// </ol>
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    ///
+    // @author      Rajarshi Guha
+    // @cdk.created 2006-01-14
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:petitjeanShapeIndex
+    // @cdk.keyword Petit-Jean, shape index
+    /// </summary>
     public class PetitjeanShapeIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "topoShape", "geomShape" };

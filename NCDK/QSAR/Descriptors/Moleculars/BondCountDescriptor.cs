@@ -20,45 +20,45 @@ using NCDK.QSAR.Result;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  IDescriptor based on the number of bonds of a certain bond order.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>order</td>
-     *     <td>""</td>
-     *     <td>The bond order</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value with name <i>nBX</i> where <i>X</i> can be
-     * <ul>
-     * <li>s for single bonds
-     * <li>d for double bonds
-     * <li>t for triple bonds
-     * <li>a for aromatic bonds
-     * <li>"" for all bonds
-     * </ul>
-     *
-     * Note that the descriptor does not consider bonds to H's.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-13
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:bondCount
-     */
+    /// <summary>
+    ///  IDescriptor based on the number of bonds of a certain bond order.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>order</td>
+    ///     <td>""</td>
+    ///     <td>The bond order</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value with name <i>nBX</i> where <i>X</i> can be
+    /// <ul>
+    /// <li>s for single bonds
+    /// <li>d for double bonds
+    /// <li>t for triple bonds
+    /// <li>a for aromatic bonds
+    /// <li>"" for all bonds
+    /// </ul>
+    ///
+    /// Note that the descriptor does not consider bonds to H's.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-13
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:bondCount
+    /// </summary>
     public class BondCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
 
-        /// <summary> defaults to UNSET, which means: count all bonds **/
+        /// <summary>defaults to UNSET, which means: count all bonds </summary>
         private string order = "";
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// The parameters attribute of the BondCountDescriptor object
         /// </summary>
         /// <exception cref="CDKException">Description of the Exception</exception>
-		public override object[] Parameters
+        public override object[] Parameters
         {
             set
             {
@@ -143,7 +143,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 }
                 return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(bondCount), DescriptorNames, null);
             }
-			else
+            else
             {
                 int bondCount = 0;
                 foreach (var bond in container.Bonds)

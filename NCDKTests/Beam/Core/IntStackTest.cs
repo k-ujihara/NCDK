@@ -110,7 +110,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void nonEmpty()
+        public void NonEmpty()
         {
             IntStack stack = new IntStack(4);
             Assert.IsTrue(stack.IsEmpty);

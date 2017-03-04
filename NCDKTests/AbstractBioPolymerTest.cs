@@ -24,11 +24,11 @@ using System.Linq;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IBioPolymer} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IBioPolymer} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
      [TestClass()]
     public abstract class AbstractBioPolymerTest : AbstractPolymerTest
     {
@@ -263,9 +263,9 @@ namespace NCDK
             Assert.IsTrue(Compares.AreDeepEqual(strands, oBioPolymer.GetStrandMap()));
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()
@@ -279,9 +279,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()

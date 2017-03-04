@@ -1,19 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)
  *                    John May <jwmay@users.sf.net>
@@ -48,15 +35,15 @@ namespace NCDK.Stereo
     {
         public static class O
         {
-			public const int Unset = 0;
-			public const int Fischer = 1;
-			public const int Haworth = 2;
-			public const int Chair = 3;
-      	
+            public const int Unset = 0;
+            public const int Fischer = 1;
+            public const int Haworth = 2;
+            public const int Chair = 3;
+          
         }
 
-		private readonly int ordinal;
-		public int Ordinal => ordinal;
+        private readonly int ordinal;
+        public int Ordinal => ordinal;
 
         public override string ToString()
         {
@@ -77,66 +64,66 @@ namespace NCDK.Stereo
             this.ordinal = ordinal;
         }
 
-		public static explicit operator Projection(int ordinal)
+        public static explicit operator Projection(int ordinal)
         {
             if (!(0 <= ordinal || ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
-			return values[ordinal];
+            return values[ordinal];
         }
 
-		public static explicit operator int(Projection obj)
+        public static explicit operator int(Projection obj)
         {
             return obj.Ordinal;
         }
 
         public static readonly Projection Unset = new Projection(0);
-		/// <summary>
-		/// Fischer projections are used for linear chain-form carbohydrates. They are drawn vertically with all atoms at right angles around stereocenters.
-		/// </summary>
+        /// <summary>
+        /// Fischer projections are used for linear chain-form carbohydrates. They are drawn vertically with all atoms at right angles around stereocenters.
+        /// </summary>
         public static readonly Projection Fischer = new Projection(1);
-		/// <summary>
-		/// Haworth projection are used to depict ring-form carbohydrates. The ring may be of size 5, 6, or 7 (rarer). Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.
-		/// </summary>
+        /// <summary>
+        /// Haworth projection are used to depict ring-form carbohydrates. The ring may be of size 5, 6, or 7 (rarer). Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.
+        /// </summary>
         public static readonly Projection Haworth = new Projection(2);
-		/// <summary>
-		/// Projection of the low energy conformation (chair) of a cyclohexane. Used for carbohydrates.
-		/// </summary>
+        /// <summary>
+        /// Projection of the low energy conformation (chair) of a cyclohexane. Used for carbohydrates.
+        /// </summary>
         public static readonly Projection Chair = new Projection(3);
-		private static readonly Projection[] values = new Projection[]
-		{
+        private static readonly Projection[] values = new Projection[]
+        {
             Unset, 
             Fischer, 
             Haworth, 
             Chair, 
     
-		};
+        };
         public static System.Collections.Generic.IEnumerable<Projection> Values => values;
 
-		/* In order to cause compiling error */
+        /* In order to cause compiling error */
 
-		public static bool operator==(Projection a, object b)
+        public static bool operator==(Projection a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
-		public static bool operator!=(Projection a, object b)
+        public static bool operator!=(Projection a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(object a, Projection b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator!=(object a, Projection b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(Projection a, Projection b)
         {
-			
+            
             return a.Ordinal == b.Ordinal;
         }
 
@@ -145,11 +132,11 @@ namespace NCDK.Stereo
             return !(a == b);
         }
 
-		public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-	
-			if (!(obj is Projection))
-				return false;
+    
+            if (!(obj is Projection))
+                return false;
             return this.Ordinal == ((Projection)obj).Ordinal;
         }
 
@@ -163,6 +150,7 @@ namespace NCDK.Stereo
             var o = (Projection)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
         public bool IsUnset => this.Ordinal == 0;
     }
 }

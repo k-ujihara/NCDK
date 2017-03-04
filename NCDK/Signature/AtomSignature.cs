@@ -25,62 +25,62 @@ using System.Collections.Generic;
 
 namespace NCDK.Signature
 {
-    /**
-     * <p>
-     * The signature {@cdk.cite FAU03, FAU04} for a molecule rooted at a particular
-     * atom.
-     * </p>
-     *
-     * <p>
-     * A signature is a description of the connectivity of a molecule, in the form
-     * of a tree-like structure called a directed acyclic graph (DAG). This DAG can
-     * be written out as a string, for example ethane:
-     * </p>
-     *
-     * <pre>
-     *   [C]([C]([H][H][H])[H][H][H])
-     * </pre>
-     *
-     * <p>
-     * where each atom is represented by an atom symbol in square brackets. The
-     * branching of the tree is indicated by round brackets. When the molecule has a
-     * cycle, the signature string will have numbers after the atom symbol, like:
-     * </p>
-     *
-     * <pre>
-     * [C]([C]([C,0])[C]([C,0]))
-     * </pre>
-     *
-     * <p>
-     * these are known as 'colors' and indicate ring closures, in a roughly similar
-     * way to SMILES notation. Note that the colors start from 0 in this
-     * implementation, in contrast to the examples in {@cdk.cite FAU04}.
-     * </p>
-     *
-     * <p>
-     * Multiple bonds are represented by symbols in front of the opening square
-     * bracket of an atom. Double bonds are '=', triple are '#'. Since there is a
-     * defined direction for the signature tree, only the child node will have the
-     * bond symbol, and the relevant bond is to the parent.
-     * </p>
-     *
-     * @cdk.module signature
-     * @author maclean
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <p>
+    /// The signature {@cdk.cite FAU03, FAU04} for a molecule rooted at a particular
+    /// atom.
+    /// </p>
+    ///
+    /// <p>
+    /// A signature is a description of the connectivity of a molecule, in the form
+    /// of a tree-like structure called a directed acyclic graph (DAG). This DAG can
+    /// be written out as a string, for example ethane:
+    /// </p>
+    ///
+    /// <code>
+    ///   [C]([C]([H][H][H])[H][H][H])
+    /// </code>
+    ///
+    /// <p>
+    /// where each atom is represented by an atom symbol in square brackets. The
+    /// branching of the tree is indicated by round brackets. When the molecule has a
+    /// cycle, the signature string will have numbers after the atom symbol, like:
+    /// </p>
+    ///
+    /// <code>
+    /// [C]([C]([C,0])[C]([C,0]))
+    /// </code>
+    ///
+    /// <p>
+    /// these are known as 'colors' and indicate ring closures, in a roughly similar
+    /// way to SMILES notation. Note that the colors start from 0 in this
+    /// implementation, in contrast to the examples in {@cdk.cite FAU04}.
+    /// </p>
+    ///
+    /// <p>
+    /// Multiple bonds are represented by symbols in front of the opening square
+    /// bracket of an atom. Double bonds are '=', triple are '#'. Since there is a
+    /// defined direction for the signature tree, only the child node will have the
+    /// bond symbol, and the relevant bond is to the parent.
+    /// </p>
+    ///
+    // @cdk.module signature
+    // @author maclean
+    // @cdk.githash
+    /// </summary>
     public class AtomSignature : AbstractVertexSignature
     {
-        /**
-         * The atom container to make signatures from.
-         */
+        /// <summary>
+        /// The atom container to make signatures from.
+        /// </summary>
         private IAtomContainer molecule;
 
-        /**
-         * Create an atom signature starting at <code>atomIndex</code>.
-         *
-         * @param atomIndex the index of the atom that roots this signature
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature starting at <code>atomIndex</code>.
+        ///
+        /// <param name="atomIndex">the index of the atom that roots this signature</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(int atomIndex, IAtomContainer molecule)
             : base()
         {
@@ -88,24 +88,24 @@ namespace NCDK.Signature
             base.CreateMaximumHeight(atomIndex, molecule.Atoms.Count);
         }
 
-        /**
-         * Create an atom signature for the atom <code>atom</code>.
-         *
-         * @param atom the atom to make the signature for
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature for the atom <code>atom</code>.
+        ///
+        /// <param name="atom">the atom to make the signature for</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(IAtom atom, IAtomContainer molecule)
            : this(molecule.Atoms.IndexOf(atom), molecule)
         { }
 
-        /**
-         * Create an atom signature starting at <code>atomIndex</code> and with a
-         * maximum height of <code>height</code>.
-         *
-         * @param atomIndex the index of the atom that roots this signature
-         * @param height the maximum height of the signature
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature starting at <code>atomIndex</code> and with a
+        /// maximum height of <code>height</code>.
+        ///
+        /// <param name="atomIndex">the index of the atom that roots this signature</param>
+        /// <param name="height">the maximum height of the signature</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(int atomIndex, int height, IAtomContainer molecule)
             : base()
         {
@@ -113,27 +113,27 @@ namespace NCDK.Signature
             base.Create(atomIndex, molecule.Atoms.Count, height);
         }
 
-        /**
-         * Create an atom signature for the atom <code>atom</code> and with a
-         * maximum height of <code>height</code>.
-         *
-         * @param atom     the index of the atom that roots this signature
-         * @param height   the maximum height of the signature
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature for the atom <code>atom</code> and with a
+        /// maximum height of <code>height</code>.
+        ///
+        /// <param name="atom">the index of the atom that roots this signature</param>
+        /// <param name="height">the maximum height of the signature</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(IAtom atom, int height, IAtomContainer molecule)
             : this(molecule.Atoms.IndexOf(atom), height, molecule)
         { }
 
-        /**
-         * Create an atom signature starting at <code>atomIndex</code>, with maximum
-         * height of <code>height</code>, and using a particular invariant type.
-         *
-         * @param atomIndex the index of the atom that roots this signature
-         * @param height the maximum height of the signature
-         * @param invariantType the type of invariant (int, string, ...)
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature starting at <code>atomIndex</code>, with maximum
+        /// height of <code>height</code>, and using a particular invariant type.
+        ///
+        /// <param name="atomIndex">the index of the atom that roots this signature</param>
+        /// <param name="height">the maximum height of the signature</param>
+        /// <param name="invariantType">the type of invariant (int, string, ...)</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(int atomIndex, int height, InvariantType invariantType, IAtomContainer molecule)
             : base(invariantType)
         {
@@ -141,27 +141,27 @@ namespace NCDK.Signature
             base.Create(atomIndex, molecule.Atoms.Count, height);
         }
 
-        /**
-         * Create an atom signature for the atom <code>atom</code>, with maximum
-         * height of <code>height</code>, and using a particular invariant type.
-         *
-         * @param atom the index of the atom that roots this signature
-         * @param height the maximum height of the signature
-         * @param invariantType the type of invariant (int, string, ...)
-         * @param molecule the molecule to create the signature from
-         */
+        /// <summary>
+        /// Create an atom signature for the atom <code>atom</code>, with maximum
+        /// height of <code>height</code>, and using a particular invariant type.
+        ///
+        /// <param name="atom">the index of the atom that roots this signature</param>
+        /// <param name="height">the maximum height of the signature</param>
+        /// <param name="invariantType">the type of invariant (int, string, ...)</param>
+        /// <param name="molecule">the molecule to create the signature from</param>
+        /// </summary>
         public AtomSignature(IAtom atom, int height, InvariantType invariantType, IAtomContainer molecule)
                 : this(molecule.Atoms.IndexOf(atom), height, invariantType, molecule)
         { }
 
-        /// <summary>{@inheritDoc}</summary>
+        /// <inheritdoc/>
         public override int GetIntLabel(int vertexIndex)
         {
             IAtom atom = molecule.Atoms[vertexIndex];
             return atom.MassNumber.Value;
         }
 
-        /// <summary>{@inheritDoc}</summary>
+        /// <inheritdoc/>
         public override int[] GetConnected(int vertexIndex)
         {
             IAtom atom = this.molecule.Atoms[vertexIndex];
@@ -174,7 +174,7 @@ namespace NCDK.Signature
             return connectedIndices.ToArray();
         }
 
-        /// <summary>{@inheritDoc}</summary>
+        /// <inheritdoc/>
         public override string GetEdgeLabel(int vertexIndex, int otherVertexIndex)
         {
             IAtom atomA = this.molecule.Atoms[vertexIndex];
@@ -207,13 +207,13 @@ namespace NCDK.Signature
             }
         }
 
-        /// <summary>{@inheritDoc}</summary>
+        /// <inheritdoc/>
         public override string GetVertexSymbol(int vertexIndex)
         {
             return this.molecule.Atoms[vertexIndex].Symbol;
         }
 
-        /// <summary>{@inheritDoc}</summary>
+        /// <inheritdoc/>
         public override int ConvertEdgeLabelToColor(string edgeLabel)
         {
             if (edgeLabel.Equals(""))

@@ -21,34 +21,34 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *   Vertex adjacency information (magnitude):
-     *   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
-     *   (definition from MOE tutorial on line)
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value named <i>vAdjMat</i>.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:vAdjMa
-     */
+    /// <summary>
+    ///   Vertex adjacency information (magnitude):
+    ///   1 + log2 m where m is the number of heavy-heavy bonds. If m is zero, then zero is returned.
+    ///   (definition from MOE tutorial on line)
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value named <i>vAdjMat</i>.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:vAdjMa
+    /// </summary>
     public class VAdjMaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "VAdjMat" };

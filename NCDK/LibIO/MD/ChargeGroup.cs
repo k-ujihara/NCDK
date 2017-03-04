@@ -50,7 +50,7 @@ namespace NCDK.LibIO.MD
         /// <param name="number"></param>
         /// <param name="parentMolecule"></param>
         public ChargeGroup(IAtomContainer container, int number, MDMolecule parentMolecule)
-			: base(container)
+            : base(container)
         {
             this.number = number;
             this.parentMolecule = parentMolecule;

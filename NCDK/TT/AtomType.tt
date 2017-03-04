@@ -26,7 +26,7 @@ namespace <#= ns.NS #>
         internal bool isAliphatic;
         internal bool isAromatic;
         internal bool isInRing;
-		internal bool isReactiveCenter;
+        internal bool isReactiveCenter;
 
         public AtomType(string elementSymbol)
             : base(elementSymbol)
@@ -218,7 +218,7 @@ namespace <#= ns.NS #>
             }
         }
 
-		public virtual bool IsReactiveCenter
+        public virtual bool IsReactiveCenter
         {
             get { return isReactiveCenter; }
             set 
@@ -236,13 +236,13 @@ namespace <#= ns.NS #>
             sb.Append("AtomType(").Append(GetHashCode());
             if (AtomTypeName != null)
                 sb.Append(", N:").Append(AtomTypeName);
-            if (MaxBondOrder != null)
+            if (MaxBondOrder != BondOrder.Unset)
                 sb.Append(", MBO:").Append(MaxBondOrder);
             if (BondOrderSum != null)
                 sb.Append(", BOS:").Append(BondOrderSum);
             if (FormalCharge != null)
                 sb.Append(", FC:").Append(FormalCharge);
-            if (Hybridization != null)
+            if (Hybridization != Hybridization.Unset)
                 sb.Append(", H:").Append(Hybridization);
             if (FormalNeighbourCount != null)
                 sb.Append(", NC:").Append(FormalNeighbourCount);

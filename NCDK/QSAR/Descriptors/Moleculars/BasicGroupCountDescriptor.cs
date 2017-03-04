@@ -29,10 +29,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// Returns the number of basic groups. The list of basic groups is defined
     /// by these SMARTS 
-	/// "[$([NH2]-[CX4])]", 
-	/// "[$([NH](-[CX4])-[CX4])]",
+    /// "[$([NH2]-[CX4])]", 
+    /// "[$([NH](-[CX4])-[CX4])]",
     /// "[$(N(-[CX4])(-[CX4])-[CX4])]",    
-	/// "[$([*;+;!$(*~[*;-])])]",
+    /// "[$([*;+;!$(*~[*;-])])]",
     /// "[$(N=C-N)]", and "[$(N-C=N)]" 
     /// originally presented in
     /// JOELib {@cdk.cite WEGNER2006}.
@@ -43,17 +43,17 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:acidicGroupCount
     public class BasicGroupCountDescriptor 
-		: AbstractMolecularDescriptor, IMolecularDescriptor
+        : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] SMARTS_STRINGS = 
-		{
+        {
             "[$([NH2]-[CX4])]",
             "[$([NH](-[CX4])-[CX4])]",
             "[$(N(-[CX4])(-[CX4])-[CX4])]",
             "[$([*;+;!$(*~[*;-])])]",
             "[$(N=C-N)]", 
-			"[$(N-C=N)]" 
-		};
+            "[$(N-C=N)]" 
+        };
         private readonly static string[] NAMES = { "nBase" };
 
         private List<SMARTSQueryTool> tools = new List<SMARTSQueryTool>();
@@ -62,8 +62,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Creates a new <see cref="BasicGroupCountDescriptor"/>.
         /// </summary>
         public BasicGroupCountDescriptor() 
-		{ 
-		}
+        { 
+        }
 
         public override void Initialise(IChemObjectBuilder builder)
         {
@@ -78,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#basicGroupCount",
                 typeof(BasicGroupCountDescriptor).FullName, 
-				"The Chemistry Development Kit");
+                "The Chemistry Development Kit");
 
         public override object[] Parameters
         {
@@ -112,13 +112,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IDescriptorResult DescriptorResultType => IntegerResultType.Instance;
         public override string[] ParameterNames { get; } 
-			= new string[] { };
+            = new string[] { };
 
         public override object GetParameterType(string name) 
-		{
+        {
             object obj = null;
             return obj;
-		}
+        }
 
         private DescriptorValue GetDummyDescriptorValue(Exception exception)
         {

@@ -24,15 +24,16 @@ using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System.Diagnostics;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * Checks the functionality of the ConjugatedPiSystemsCalculator.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// Checks the functionality of the ConjugatedPiSystemsCalculator.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ConjugatedPiSystemsDetectorTest : CDKTestCase
     {
@@ -132,7 +133,7 @@ namespace NCDK.Graphs.Invariant
             Trace.TraceInformation("Entering testNonConnectedPiSystems.");
             IAtomContainer mol = null;
             string filename = "NCDK.Data.MDL.nonConnectedPiSystems.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
@@ -177,7 +178,7 @@ namespace NCDK.Graphs.Invariant
             Trace.TraceInformation("Entering testPiSystemWithCarbokation.");
             IAtomContainer mol = null;
             string filename = "NCDK.Data.MDL.piSystemWithCarbokation.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
@@ -216,7 +217,7 @@ namespace NCDK.Graphs.Invariant
             Trace.TraceInformation("Entering testPiSystemWithCumulativeDB.");
             IAtomContainer mol = null;
             string filename = "NCDK.Data.MDL.piSystemCumulative.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
 
@@ -292,7 +293,7 @@ namespace NCDK.Graphs.Invariant
         {
             IAtomContainer mol = null;
             string filename = "NCDK.Data.MDL.NN_dimethylaniline.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read((ChemObject)new ChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
@@ -393,7 +394,7 @@ namespace NCDK.Graphs.Invariant
         {
             IAtomContainer mol = null;
             Debug.WriteLine("Filename: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
 
             IChemFile file = (IChemFile)reader.Read(new ChemFile());

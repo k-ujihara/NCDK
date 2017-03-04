@@ -30,69 +30,69 @@ using System.Linq;
 
 namespace NCDK.StructGen
 {
-    /**
-     * Randomly generates a single, connected, correctly bonded structure for
-     * a given molecular formula.
-     * To see it working run the graphical
-     * test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
-     * and add more structures to the panel using the "More" button.
-     * In order to use this class, use MFAnalyser to get an AtomContainer from
-     * a molecular formula string.
-     *
-     * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
-     * in the atom pool but should be assigned implicitly to the heavy atoms in
-     * order to reduce computational cost.
-     * Assign this AtomContainer to the
-     * SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
-     * structure by using the Generate() method. You can then repeatedly call
-     * the Generate() method in order to retrieve further structures.
-     *
-     * <p>Agenda:
-     * <ul>
-     *  <li>add a method for randomly adding hydrogens to the atoms
-     *  <li>add a seed for random generator for reproducability
-     * </ul>
-     *
-     * @author      steinbeck
-     * @cdk.created 2001-09-04
-     * @cdk.module  structgen
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Randomly generates a single, connected, correctly bonded structure for
+    /// a given molecular formula.
+    /// To see it working run the graphical
+    /// test org.openscience.cdk.test.SingleStructureRandomGeneratorTest
+    /// and add more structures to the panel using the "More" button.
+    /// In order to use this class, use MFAnalyser to get an AtomContainer from
+    /// a molecular formula string.
+    ///
+    /// <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
+    /// in the atom pool but should be assigned implicitly to the heavy atoms in
+    /// order to reduce computational cost.
+    /// Assign this AtomContainer to the
+    /// SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
+    /// structure by using the Generate() method. You can then repeatedly call
+    /// the Generate() method in order to retrieve further structures.
+    ///
+    /// <p>Agenda:
+    /// <ul>
+    ///  <li>add a method for randomly adding hydrogens to the atoms
+    ///  <li>add a seed for random generator for reproducability
+    /// </ul>
+    ///
+    // @author      steinbeck
+    // @cdk.created 2001-09-04
+    // @cdk.module  structgen
+    // @cdk.githash
+    /// </summary>
     public class SingleStructureRandomGenerator
     {
         IAtomContainer atomContainer;
         SaturationChecker satCheck;
         Maths.Random random = null;
 
-        /**
-         * Constructor for the SingleStructureRandomGenerator object.
-         */
+        /// <summary>
+        /// Constructor for the SingleStructureRandomGenerator object.
+        /// </summary>
         public SingleStructureRandomGenerator(long seed)
         {
             satCheck = new SaturationChecker();
             random = new Maths.Random(seed);
         }
 
-        /**
-         * Constructor for the SingleStructureRandomGenerator object.
-         */
+        /// <summary>
+        /// Constructor for the SingleStructureRandomGenerator object.
+        /// </summary>
         public SingleStructureRandomGenerator()
             : this((long)11000)
         { }
 
-        /**
-         * Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
-         *
-         * @param  ac  The new AtomContainer value
-         */
+        /// <summary>
+        /// Sets the AtomContainer attribute of the SingleStructureRandomGenerator object.
+        ///
+        /// <param name="ac">The new AtomContainer value</param>
+        /// </summary>
         public void SetAtomContainer(IAtomContainer ac)
         {
             this.atomContainer = ac;
         }
 
-        /**
-         * Generates a random structure based on the atoms in the given IAtomContainer.
-         */
+        /// <summary>
+        /// Generates a random structure based on the atoms in the given IAtomContainer.
+        /// </summary>
         public IAtomContainer Generate()
         {
             bool structureFound = false;
@@ -140,11 +140,11 @@ namespace NCDK.StructGen
             return atomContainer.Builder.CreateAtomContainer(atomContainer);
         }
 
-        /**
-         * Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
-         *
-         * @return                The AnotherUnsaturatedNode value
-         */
+        /// <summary>
+        /// Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
+        ///
+        /// <returns>The AnotherUnsaturatedNode value</returns>
+        /// </summary>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom)
         {
             IAtom atom;

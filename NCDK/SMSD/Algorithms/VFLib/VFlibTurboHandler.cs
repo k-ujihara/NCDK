@@ -32,22 +32,22 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * This is an ultra fast method to report if query
-     * is a substructure for target molecule. If this case is true
-     * then it returns only one mapping.
-     *
-     * This is much faster than {@link
-     * org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler} class
-     * as it only reports first match and backtracks.
-     *
-     * This class should only be used to report if a query
-     * graph is a substructure of the target graph.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This is an ultra fast method to report if query
+    /// is a substructure for target molecule. If this case is true
+    /// then it returns only one mapping.
+    ///
+    /// This is much faster than {@link
+    /// org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler} class
+    /// as it only reports first match and backtracks.
+    ///
+    /// This class should only be used to report if a query
+    /// graph is a substructure of the target graph.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFlibTurboHandler : AbstractSubGraph, IMCSBase
     {
 
@@ -64,9 +64,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
         private int vfMCSSize = -1;
         private bool bondMatchFlag = false;
 
-        /**
-         * Constructor for an extended VF Algorithm for the MCS search
-         */
+        /// <summary>
+        /// Constructor for an extended VF Algorithm for the MCS search
+        /// </summary>
         public VFlibTurboHandler()
         {
             allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
@@ -98,13 +98,12 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        /** {@inheritDoc}
-         *
-         * Set the VFLib MCS software
-         *
-         * @param reactant
-         * @param product
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// Set the VFLib MCS software
+        ///
+        /// <param name="reactant">/// @param product</param>
+        /// </summary>
         public void Set(MolHandler reactant, MolHandler product)
         {
             mol1 = reactant.Molecule;

@@ -26,10 +26,10 @@ using NCDK.Smiles;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    /// </summary>
     [TestClass()]
     public class BondGroupTests : CDKTestCase
     {

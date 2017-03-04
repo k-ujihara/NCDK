@@ -39,10 +39,7 @@ namespace NCDK.Isomorphisms
      * @cdk.module isomorphism
      * @see UllmannState
      */
-#if TEST
-    public
-#endif
-    sealed class CompatibilityMatrix
+    internal sealed class CompatibilityMatrix
     {
         /// <summary>Value storage.</summary>
         readonly int[] data;

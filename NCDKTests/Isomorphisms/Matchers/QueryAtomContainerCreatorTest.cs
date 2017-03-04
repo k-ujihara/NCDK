@@ -20,17 +20,17 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Checks the functionality of the <code>QueryAtomContainerCreator</code>.
-     *
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    /// Checks the functionality of the <code>QueryAtomContainerCreator</code>.
+    ///
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class QueryAtomContainerCreatorTest : CDKTestCase
     {
-        /**
-         * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        /// </summary>
         [TestMethod()]
         public void Test12DimethylBenzene()
         {

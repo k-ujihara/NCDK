@@ -22,22 +22,17 @@
  *  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * TestCase for {@link IMonomer} implementations.
-     *
-     * @cdk.module test-interfaces
-     *
-     * @author  Edgar Luttman <edgar@uni-paderborn.de>
-     * @cdk.created 2001-08-09
-     */
+    /// <summary>
+    /// TestCase for {@link IMonomer} implementations.
+    ///
+    // @cdk.module test-interfaces
+    ///
+    // @author  Edgar Luttman <edgar@uni-paderborn.de>
+    // @cdk.created 2001-08-09
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMonomerTest
         : AbstractAtomContainerTest
@@ -70,9 +65,9 @@ namespace NCDK
             TestSetMonomerType_String();
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()

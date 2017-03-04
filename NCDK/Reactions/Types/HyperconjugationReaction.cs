@@ -23,75 +23,64 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>HyperconjugationReaction is the stabilizing interaction that results
-     * from the interaction of the electrons in a s-bond (for our case only C-H)
-     * with an adjacent empty (or partially filled) p-orbital.</p>
-     * <p>Based on the valence bond model of bonding, hyperconjugation can be described as
-     * "double bond - no bond resonance"</p>
-     * <p>This reaction could be represented like</p>
-     * <pre>[C+]-C => C=C + [H+] </pre>
-     *
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new HyperconjugationReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2006-07-04
-     * @cdk.module     reaction
-     * @cdk.githash
-     * @cdk.set        reaction-types
-     *
-     **/
+    /// <summary>
+    /// <para>HyperconjugationReaction is the stabilizing interaction that results
+    /// from the interaction of the electrons in a s-bond (for our case only C-H)
+    /// with an adjacent empty (or partially filled) p-orbital.</para>
+    /// <para>Based on the valence bond model of bonding, hyperconjugation can be described as
+    /// "double bond - no bond resonance"</para>
+    /// <para>This reaction could be represented like</para>
+    /// <code>[C+]-C => C=C + [H+] </code>
+    ///
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new HyperconjugationReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</para>
+    ///
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2006-07-04
+    // @cdk.module     reaction
+    // @cdk.githash
+    // @cdk.set        reaction-types
     public class HyperconjugationReaction : ReactionEngine, IReactionProcess
     {
-
-        /**
-         * Constructor of the HyperconjugationReaction object
-         *
-         */
+        /// <summary>
+        /// Constructor of the HyperconjugationReaction object
+        /// </summary>
         public HyperconjugationReaction() { }
 
-        /**
-         *  Gets the specification attribute of the HyperconjugationReaction object
-         *
-         *@return    The specification value
-         */
-
+        /// <summary>
+        ///  Gets the specification attribute of the HyperconjugationReaction object
+        /// </summary>
+        /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#Hyperconjugation", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *
-         *@exception  CDKException  Description of the Exception
-
-         * @param  reactants         reactants of the reaction.
-        * @param  agents            agents of the reaction (Must be in this case null).
-         */
-
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        /// </summary>
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <param name="reactants">reactants of the reaction.</param>
+        /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
             Debug.WriteLine("initiate reaction: HyperconjugationReaction");
 
             if (reactants.Count != 1)
@@ -106,10 +95,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -168,18 +154,18 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with [A+]-B([H]).
-         * <pre>
-         * A: Atom with charge
-         * -: Singlebond
-         * B: Atom
-         *  </pre>
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with [A+]-B([H]).
+        /// <code>
+        /// A: Atom with charge
+        /// -: Singlebond
+        /// B: Atom
+        ///  </code>
+        ///
+        /// <param name="reactant">The molecule to set the activity</param>
+        // @
+        /// </summary>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)

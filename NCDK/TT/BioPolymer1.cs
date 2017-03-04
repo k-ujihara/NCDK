@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -36,13 +37,12 @@ namespace NCDK.Default
             strands = new Dictionary<string, IStrand>();
         }
 
-        /**
-         * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
-         * the atom will be added to a Monomer of type Unknown in the specified Strand.
-         *
-         * @param oAtom   The atom to add
-         * @param oStrand The strand the atom belongs to
-         */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
+        /// the atom will be added to a Monomer of type Unknown in the specified Strand.
+        /// </summary>
+        /// <param name="oAtom">The atom to add</param>
+        /// <param name="oStrand">The strand the atom belongs to</param>
         public void AddAtom(IAtom oAtom, IStrand oStrand)
         {
             int atomCount = base.Atoms.Count;
@@ -59,9 +59,8 @@ namespace NCDK.Default
                     strands.Add(oStrand.StrandName, oStrand);
                 }
             }
-            /*
-             * notifyChanged() is called by AddAtom in AtomContainer
-             */
+            
+            // NotifyChanged() is called by AddAtom in AtomContainer
         }
 
         public void AddAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand)
@@ -81,17 +80,16 @@ namespace NCDK.Default
                     strands.Add(oStrand.StrandName, oStrand);
                 }
             }
-            /*
-             * The reasoning above is: All Monomers have to belong to a Strand and
-             * all atoms belonging to strands have to belong to a Monomer => ?
-             * oMonomer != null and oStrand != null, oAtom is added to BioPolymer
-             * and to oMonomer in oStrand ? oMonomer == null and oStrand != null,
-             * oAtom is added to BioPolymer and default Monomer in oStrand ?
-             * oMonomer != null and oStrand == null, oAtom is added to BioPolymer,
-             * but not to a Monomer or Strand (especially good to maybe throw
-             * exception in this case) ? oMonomer == null and oStrand == null, oAtom
-             * is added to BioPolymer, but not to a Monomer or Strand
-             */
+
+            // The reasoning above is: All Monomers have to belong to a Strand and
+            // all atoms belonging to strands have to belong to a Monomer => ?
+            // oMonomer != null and oStrand != null, oAtom is added to BioPolymer
+            // and to oMonomer in oStrand ? oMonomer == null and oStrand != null,
+            // oAtom is added to BioPolymer and default Monomer in oStrand ?
+            // oMonomer != null and oStrand == null, oAtom is added to BioPolymer,
+            // but not to a Monomer or Strand (especially good to maybe throw
+            // exception in this case) ? oMonomer == null and oStrand == null, oAtom
+            // is added to BioPolymer, but not to a Monomer or Strand
         }
 
         public IMonomer GetMonomer(string monomerName, string strandName)
@@ -202,13 +200,12 @@ namespace NCDK.Silent
             strands = new Dictionary<string, IStrand>();
         }
 
-        /**
-         * Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
-         * the atom will be added to a Monomer of type Unknown in the specified Strand.
-         *
-         * @param oAtom   The atom to add
-         * @param oStrand The strand the atom belongs to
-         */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Strand, whereas the Monomer is unspecified. Hence
+        /// the atom will be added to a Monomer of type Unknown in the specified Strand.
+        /// </summary>
+        /// <param name="oAtom">The atom to add</param>
+        /// <param name="oStrand">The strand the atom belongs to</param>
         public void AddAtom(IAtom oAtom, IStrand oStrand)
         {
             int atomCount = base.Atoms.Count;
@@ -225,9 +222,8 @@ namespace NCDK.Silent
                     strands.Add(oStrand.StrandName, oStrand);
                 }
             }
-            /*
-             * notifyChanged() is called by AddAtom in AtomContainer
-             */
+            
+            // NotifyChanged() is called by AddAtom in AtomContainer
         }
 
         public void AddAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand)
@@ -247,17 +243,16 @@ namespace NCDK.Silent
                     strands.Add(oStrand.StrandName, oStrand);
                 }
             }
-            /*
-             * The reasoning above is: All Monomers have to belong to a Strand and
-             * all atoms belonging to strands have to belong to a Monomer => ?
-             * oMonomer != null and oStrand != null, oAtom is added to BioPolymer
-             * and to oMonomer in oStrand ? oMonomer == null and oStrand != null,
-             * oAtom is added to BioPolymer and default Monomer in oStrand ?
-             * oMonomer != null and oStrand == null, oAtom is added to BioPolymer,
-             * but not to a Monomer or Strand (especially good to maybe throw
-             * exception in this case) ? oMonomer == null and oStrand == null, oAtom
-             * is added to BioPolymer, but not to a Monomer or Strand
-             */
+
+            // The reasoning above is: All Monomers have to belong to a Strand and
+            // all atoms belonging to strands have to belong to a Monomer => ?
+            // oMonomer != null and oStrand != null, oAtom is added to BioPolymer
+            // and to oMonomer in oStrand ? oMonomer == null and oStrand != null,
+            // oAtom is added to BioPolymer and default Monomer in oStrand ?
+            // oMonomer != null and oStrand == null, oAtom is added to BioPolymer,
+            // but not to a Monomer or Strand (especially good to maybe throw
+            // exception in this case) ? oMonomer == null and oStrand == null, oAtom
+            // is added to BioPolymer, but not to a Monomer or Strand
         }
 
         public IMonomer GetMonomer(string monomerName, string strandName)

@@ -22,7 +22,7 @@
  */
 namespace NCDK.IO.Formats
 {
-	// @cdk.module test-ioformats
+    // @cdk.module test-ioformats
     public class CrystClustFormatTest : ChemFormatMatcherTest
     {
         public CrystClustFormatTest()

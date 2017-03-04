@@ -34,7 +34,7 @@ namespace NCDK.Modeling.Builder3D
 {
     /**
      *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
-     *  Therefore, it uses the class {@link MM2BasedParameterSetReader}.
+     *  Therefore, it uses the class <see cref="MM2BasedParameterSetReader"/>.
      *  private Dictionary parameterSet;
      *  key=nameofdatafield+atomid1+;atomid2;atomxid
      *
@@ -95,7 +95,7 @@ namespace NCDK.Modeling.Builder3D
             }
             if (!check)
             {
-                //			Debug.WriteLine("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
+                //            Debug.WriteLine("FFError:checkForceFieldType> Unknown forcefield:" + ffname + "Take default:"+ffName);
                 return false;
             }
             return true;
@@ -123,8 +123,7 @@ namespace NCDK.Modeling.Builder3D
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2");
                     //f = new File(mm2File);
                     //ReadFile(f);
-                    ins = this.GetType().Assembly
-                            .GetManifestResourceStream("NCDK.Modeling.ForceField.Data.mm2.prm");
+                    ins = ResourceLoader.GetAsStream("NCDK.Modeling.ForceField.Data.mm2.prm");
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mm2 ... READY");
                     mm2 = new MM2BasedParameterSetReader();
                     mm2.SetInputStream(ins);
@@ -143,8 +142,7 @@ namespace NCDK.Modeling.Builder3D
                     //Debug.WriteLine("ForceFieldConfigurator: open Force Field mmff94");
                     //f = new File(mmff94File);
                     //ReadFile(f);
-                    ins = this.GetType().Assembly
-                            .GetManifestResourceStream("NCDK.Modeling.ForceField.Data.mmff94.prm");
+                    ins = ResourceLoader.GetAsStream("NCDK.Modeling.ForceField.Data.mmff94.prm");
                     mmff94 = new MMFF94BasedParameterSetReader();
 
                     mmff94.SetInputStream(ins);
@@ -316,7 +314,7 @@ namespace NCDK.Modeling.Builder3D
                 }
             }
 
-            //		IBond[] bond = molecule.Bonds;
+            //        IBond[] bond = molecule.Bonds;
             string bondType;
             foreach (var bond in molecule.Bonds)
             {
@@ -345,7 +343,7 @@ namespace NCDK.Modeling.Builder3D
                         bondType = "1";
                     }
                 }
-                //			molecule.Bonds[i].SetProperty("MMFF94 bond type", bondType);
+                //            molecule.Bonds[i].SetProperty("MMFF94 bond type", bondType);
                 bond.SetProperty("MMFF94 bond type", bondType);
                 //Debug.WriteLine("bond[" + i + "] properties : " + molecule.Bonds[i].GetProperties());
             }
@@ -767,7 +765,7 @@ namespace NCDK.Modeling.Builder3D
                         mat = p.Match(hoseCode);
 
                         if (atom.IsAromatic)
-                        {//id in pyridin, pyrol etc...						if (mat.Success && atom.IsAromatic && atom.GetProperty<int>("RING_SIZE").Equals(5)){
+                        {//id in pyridin, pyrol etc...                        if (mat.Success && atom.IsAromatic && atom.GetProperty<int>("RING_SIZE").Equals(5)){
                             if (atom.GetProperty<int>("RING_SIZE").Equals(6) && mat.Success)
                             {
                                 ID = ids[56];
@@ -785,7 +783,7 @@ namespace NCDK.Modeling.Builder3D
                         p = atomTypePattern[61];//npyd
                         mat = p.Match(hoseCode);
                         if (atom.IsAromatic)
-                        {//id in pyridin, pyrol etc...						if (mat.Success && atom.IsAromatic && atom.GetProperty<int>("RING_SIZE").Equals(5)){
+                        {//id in pyridin, pyrol etc...                        if (mat.Success && atom.IsAromatic && atom.GetProperty<int>("RING_SIZE").Equals(5)){
                             if (atom.GetProperty<int>("RING_SIZE").Equals(6) && mat.Success)
                             {
                                 ID = ids[61];

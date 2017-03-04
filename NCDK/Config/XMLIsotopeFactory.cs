@@ -17,6 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Config.Isotope;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,7 +73,7 @@ namespace NCDK.Config
             {
                 string configFile = "NCDK.Config.Data.isotopes.xml";
                 if (debug) Debug.WriteLine("Getting stream for ", configFile);
-                ins = this.GetType().Assembly.GetManifestResourceStream(configFile);
+                ins = ResourceLoader.GetAsStream(configFile);
             }
             catch (Exception exception)
             {
@@ -93,11 +94,9 @@ namespace NCDK.Config
                 Add(isotope);
             if (debug) Debug.WriteLine($"Found #isotopes in file: {isotopes.Count}");
 
-            /*
-             * for (int f = 0; f < isotopes.size(); f++) { Isotope isotope =
-             * (Isotope)isotopes.elementAt(f); } What's this loop for??
-             */
-
+            // for (int f = 0; f < isotopes.Size(); f++) { Isotope isotope =
+            // (Isotope)isotopes.elementAt(f); } What's this loop for??
+            
             majorIsotopes = new Dictionary<string, IIsotope>();
         }
 

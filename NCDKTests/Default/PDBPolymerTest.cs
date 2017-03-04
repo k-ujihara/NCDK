@@ -22,13 +22,13 @@ using System.Linq;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the PDBPolymer class.
-     *
-     * @cdk.module test-data
-     *
-     * @see PDBPolymer
-     */
+    /// <summary>
+    /// Checks the functionality of the PDBPolymer class.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="PDBPolymer"/>
+    /// </summary>
     [TestClass()]
     public class PDBPolymerTest : AbstractPDBPolymerTest
     {

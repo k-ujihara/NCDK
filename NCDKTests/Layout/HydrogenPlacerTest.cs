@@ -146,17 +146,17 @@ namespace NCDK.Layout
             Assert.IsNotNull(h2.Point2D);
         }
 
-        /*
-         * This one tests adding hydrogens to all atoms of a molecule and doing the
-         * layout for them. It is intended for visually checking the work of
-         * HydrogenPlacer, not to be run as a JUnit test. Thus the name without
-         * "test".
-         */
+        /// <summary>
+        /// This one tests adding hydrogens to all atoms of a molecule and doing the
+        /// layout for them. It is intended for visually checking the work of
+        /// HydrogenPlacer, not to be run as a JUnit test. Thus the name without
+        /// "test".
+        /// </summary>
         public void VisualFullMolecule2DEvaluation()
         {
             HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
             string filename = "NCDK.Data.MDL.reserpine.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];

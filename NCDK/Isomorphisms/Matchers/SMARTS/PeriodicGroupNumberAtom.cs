@@ -25,34 +25,28 @@ using NCDK.Tools;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher checks the periodic group number of an atom.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher checks the periodic group number of an atom.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class PeriodicGroupNumberAtom : SMARTSAtom
     {
         int groupNumber;
 
-        /**
-         * Creates a new instance
-         *
-         * @param groupNumber the periodic group number
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="groupNumber">the periodic group number</param>
+        /// </summary>
         public PeriodicGroupNumberAtom(int groupNumber, IChemObjectBuilder builder)
             : base(builder)
         {
             this.groupNumber = groupNumber;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             string symbol = atom.Symbol;
@@ -60,13 +54,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             return group == this.groupNumber;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
-            return ("PeriodicGroupNumberAtom(" + this.groupNumber + ")");
+            return (nameof(PeriodicGroupNumberAtom) + "(" + this.groupNumber + ")");
         }
     }
 }

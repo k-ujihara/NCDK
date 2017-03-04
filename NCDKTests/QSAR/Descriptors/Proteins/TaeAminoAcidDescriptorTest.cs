@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// TestSuite that runs test for the TAE descriptors
     /// </summary>
     // @cdk.module test-qsarprotein
-	[TestClass()]
+    [TestClass()]
     public class TaeAminoAcidDescriptorTest : MolecularDescriptorTest
     {
         private static IMolecularDescriptor descriptor;

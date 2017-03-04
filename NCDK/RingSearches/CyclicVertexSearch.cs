@@ -28,68 +28,68 @@ using NCDK.Graphs;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * Describes a search to identify vertices which belong to elementary cycles and
-     * if those cycles are isolated or are part of a fused system. We define a cycle
-     * as isolated if it edge disjoint with all other cycles. This corresponds to
-     * the isolated and spiro rings of a chemical structures.
-     *
-     * @author John May
-     * @cdk.module core
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Describes a search to identify vertices which belong to elementary cycles and
+    /// if those cycles are isolated or are part of a fused system. We define a cycle
+    /// as isolated if it edge disjoint with all other cycles. This corresponds to
+    /// the isolated and spiro rings of a chemical structures.
+    ///
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
+    /// </summary>
     public interface CyclicVertexSearch
     {
-        /**
-		 * Returns true if the vertex <i>v</i> is in a cycle.
-		 *
-		 * @param v a vertex identifier by index
-		 * @return whether the vertex is in a cycle
-		 */
+        /// <summary>
+        /// Returns true if the vertex <i>v</i> is in a cycle.
+        ///
+        /// <param name="v">a vertex identifier by index</param>
+        /// <returns>whether the vertex is in a cycle</returns>
+        /// </summary>
         bool Cyclic(int v);
 
-        /**
-		 * Is the edge between the two vertices <i>u</i> and <i>v</i> in a cycle?
-		 *
-		 * @param u a vertex
-		 * @param v another vertex
-		 * @return whether the edge is cycle
-		 */
+        /// <summary>
+        /// Is the edge between the two vertices <i>u</i> and <i>v</i> in a cycle?
+        ///
+        /// <param name="u">a vertex</param>
+        /// <param name="v">another vertex</param>
+        /// <returns>whether the edge is cycle</returns>
+        /// </summary>
         bool Cyclic(int u, int v);
 
-        /**
-		 * The set of cyclic vertices.
-		 *
-		 * @return the cyclic vertices of the molecule.
-		 */
+        /// <summary>
+        /// The set of cyclic vertices.
+        ///
+        /// <returns>the cyclic vertices of the molecule.</returns>
+        /// </summary>
         int[] Cyclic();
 
-        /**
-		 * Construct the sets of vertices which belong to isolated cycles. Each row
-		 * in the array describes a set of cyclic vertices which is edge disjoint
-		 * with all other elementary cycles.
-		 *
-		 * @return vertices belonging to the isolated rings
-		 */
+        /// <summary>
+        /// Construct the sets of vertices which belong to isolated cycles. Each row
+        /// in the array describes a set of cyclic vertices which is edge disjoint
+        /// with all other elementary cycles.
+        ///
+        /// <returns>vertices belonging to the isolated rings</returns>
+        /// </summary>
         int[][] Isolated();
 
-        /**
-		 * Construct the sets of vertices which belong to fused cycle systems (share
-		 * at least one edge). Each row in the array describes a set of vertices in
-		 * a separate fused system. Each fused system is edge disjoint with every
-		 * other fused system.
-		 *
-		 * @return vertices belonging to the fused cycles
-		 */
-        int[][] FUsed();
+        /// <summary>
+        /// Construct the sets of vertices which belong to fused cycle systems (share
+        /// at least one edge). Each row in the array describes a set of vertices in
+        /// a separate fused system. Each fused system is edge disjoint with every
+        /// other fused system.
+        ///
+        /// <returns>vertices belonging to the fused cycles</returns>
+        /// </summary>
+        int[][] Fused();
 
-        /**
-		 * Build an indexed lookup of vertex color. The vertex color indicates which
-		 * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-		 * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-		 *
-		 * @return vertex colors
-		 */
+        /// <summary>
+        /// Build an indexed lookup of vertex color. The vertex color indicates which
+        /// cycle a given vertex belongs. If a vertex belongs to more then one cycle
+        /// it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+        ///
+        /// <returns>vertex colors</returns>
+        /// </summary>
         int[] VertexColor();
     }
 }

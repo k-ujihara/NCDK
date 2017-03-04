@@ -183,10 +183,10 @@
             <h:div class="example" href="cellParameterType1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
-		<xsd:restriction base="xsd:string">
-			<xsd:enumeration value="length"/>
-			<xsd:enumeration value="angle"/>
-		</xsd:restriction>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="length"/>
+            <xsd:enumeration value="angle"/>
+        </xsd:restriction>
 </xsd:simpleType><xsd:simpleType name="chiralityType" id="st.chiralityType">
     <xsd:annotation>
         <xsd:documentation>
@@ -312,7 +312,7 @@
         <xsd:simpleType>
             <xsd:restriction base="xsd:string">
                 <xsd:enumeration value="xsd:string"/>
-                <xsd:enumeration value="xsd:bool"/>
+                <xsd:enumeration value="xsd:boolean"/>
                 <xsd:enumeration value="xsd:float"/>
                 <xsd:enumeration value="xsd:double"/>
                 <xsd:enumeration value="xsd:decimal"/>
@@ -1807,7 +1807,7 @@ is equivalent to
     <xsd:annotation>
         <xsd:documentation>
             <h:div class="summary">A reference to two distinct existing molecules in order.</h:div>
-            <h:div class="summary">At present used for joining molecules or Fragments(with join).</h:div>
+            <h:div class="summary">At present used for joining molecules or fragments(with join).</h:div>
             <h:div class="curation">2006-11-24: PMR created</h:div>
             <h:div class="example" href="moleculeRefs21.xml"/>
         </xsd:documentation>
@@ -2274,42 +2274,42 @@ is equivalent to
         <xsd:maxInclusive value="1.0E+99"/>
     </xsd:restriction>
 </xsd:simpleType><xsd:simpleType name="reactionFormatType" id="st.reactionFormatType">
-	<xsd:annotation>
-		<xsd:documentation>
-			<h:div class="summary">The format of the reaction.</h:div>
-			<h:div>
-				<h:p>This is provided for machine-understanding of the format of the reaction steps and components.</h:p>
-				<h:p>Semantics are semi-controlled.</h:p>
-			</h:div>
-		</xsd:documentation>
-	</xsd:annotation>
-	<xsd:union>
-		<xsd:simpleType>
-			<xsd:restriction base="xsd:string">
-				<xsd:enumeration value="reactantProduct">
-					<xsd:annotation>
-						<xsd:documentation>
-							<h:div>
-								<h:p>The commonest representation with reactantList and productList.</h:p>
-							</h:div>
-						</xsd:documentation>
-					</xsd:annotation>
-				</xsd:enumeration>
-				<xsd:enumeration value="cmlSnap">
-					<xsd:annotation>
-						<xsd:documentation>
-							<h:div>
-								<h:p>A list of molecules representing snap shots on a reaction pathway.</h:p>
-							</h:div>
-						</xsd:documentation>
-					</xsd:annotation>
-				</xsd:enumeration>
-			</xsd:restriction>
-		</xsd:simpleType>
-		<xsd:simpleType>
-			<xsd:restriction base="namespaceRefType"/>
-		</xsd:simpleType>
-	</xsd:union>
+    <xsd:annotation>
+        <xsd:documentation>
+            <h:div class="summary">The format of the reaction.</h:div>
+            <h:div>
+                <h:p>This is provided for machine-understanding of the format of the reaction steps and components.</h:p>
+                <h:p>Semantics are semi-controlled.</h:p>
+            </h:div>
+        </xsd:documentation>
+    </xsd:annotation>
+    <xsd:union>
+        <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="reactantProduct">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div>
+                                <h:p>The commonest representation with reactantList and productList.</h:p>
+                            </h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:enumeration>
+                <xsd:enumeration value="cmlSnap">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div>
+                                <h:p>A list of molecules representing snap shots on a reaction pathway.</h:p>
+                            </h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:enumeration>
+            </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType>
+            <xsd:restriction base="namespaceRefType"/>
+        </xsd:simpleType>
+    </xsd:union>
 </xsd:simpleType><xsd:simpleType name="reactionRoleType" id="st.reactionRoleType">
     <xsd:annotation>
         <xsd:documentation>
@@ -2378,7 +2378,7 @@ is equivalent to
             <xsd:documentation>
                 <h:div class="summary">The sequence of steps in a reactionStepList.</h:div>
                 <h:div class="description">By default the reactions in a reactionStepList are assumed to take place in sequence (e.g. one or more products of reaction n are used in reaction n+1 or later. However there are cases where it is known that reactions take place in parallel (e.g. if there is no overlap of molecular identities). Alternatively there are points at which there are two or more competing reactions which may depend on conditions or concentrations. A small semi-controlled vocabulary is suggested.</h:div>
-								<h:div>The semantic of these are not fully explored, but we suggest that consecutive and simultaneous should be the first to be supported</h:div>
+                                <h:div>The semantic of these are not fully explored, but we suggest that consecutive and simultaneous should be the first to be supported</h:div>
             </xsd:documentation>
         </xsd:annotation>
             <xsd:union>
@@ -2537,7 +2537,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
             would be replaced by the value of i. EXPERIMENTAL. It can also have variables 
             as the values.</h:div>
             <h:div class="curation">2006-05-20: PMR added.</h:div>
-	        <h:div class="example" href="repeatType1.xml"/>
+            <h:div class="example" href="repeatType1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
@@ -2760,7 +2760,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
     <xsd:annotation>
         <xsd:documentation>
             <h:div class="summary">State of a substance or property.</h:div>
-            <h:div class="description">The State(s) of matter appropriate to a substance or property. It follows a partially controlled vocabulary. It can be extended through namespace codes to dictionaries.</h:div>
+            <h:div class="description">The state(s) of matter appropriate to a substance or property. It follows a partially controlled vocabulary. It can be extended through namespace codes to dictionaries.</h:div>
             <h:div class="example" href="stateType1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
@@ -2993,18 +2993,18 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
       <xsd:enumeration value="unit">
-	    <xsd:annotation>
-	        <xsd:documentation>
-	            <h:div class="description">child elements are unit</h:div>
-	        </xsd:documentation>
-	    </xsd:annotation>
+        <xsd:annotation>
+            <xsd:documentation>
+                <h:div class="description">child elements are unit</h:div>
+            </xsd:documentation>
+        </xsd:annotation>
       </xsd:enumeration>
       <xsd:enumeration value="unitType">
-	    <xsd:annotation>
-	        <xsd:documentation>
-	            <h:div class="description">child elements are unitType</h:div>
-	        </xsd:documentation>
-	    </xsd:annotation>
+        <xsd:annotation>
+            <xsd:documentation>
+                <h:div class="description">child elements are unitType</h:div>
+            </xsd:documentation>
+        </xsd:annotation>
       </xsd:enumeration>
     </xsd:restriction>
 </xsd:simpleType><xsd:simpleType name="unitsType" id="st.unitsType">
@@ -3068,7 +3068,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.actionOrder" name="actionOrder">
-	<xsd:attribute name="order" id="att.actionOrder" type="actionOrderType">
+    <xsd:attribute name="order" id="att.actionOrder" type="actionOrderType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Describes whether child elements are sequential or parallel.</h:div>
@@ -3078,7 +3078,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.alternativeType" name="alternativeType">
 <!-- Note: name differs from attributeGroup name -->    
-	<xsd:attribute name="type" id="att.alternativeType" type="alternativeTypeType">
+    <xsd:attribute name="type" id="att.alternativeType" type="alternativeTypeType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The type of an alternative.</h:div>
@@ -3098,7 +3098,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
   </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.atomIDArray" name="atomIDArray">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="atomID" id="att.atomIDArray" type="atomRefArrayType">
+    <xsd:attribute name="atomID" id="att.atomIDArray" type="atomRefArrayType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">An array of atom IDs.</h:div>
@@ -3126,7 +3126,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
   </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.atomRef1Array" name="atomRef1Array">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="atomRef1" id="att.atomRef1Array" type="atomRefArrayType">
+    <xsd:attribute name="atomRef1" id="att.atomRef1Array" type="atomRefArrayType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The first atoms in each bond.</h:div>
@@ -3154,7 +3154,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
     </xsd:annotation>
   </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.atomRefGroup" name="atomRefGroup">
-	<xsd:attribute id="att.atomRefGroup" name="atomRefGroup" type="atomIDType"/>
+    <xsd:attribute id="att.atomRefGroup" name="atomRefGroup" type="atomIDType"/>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.atomRefs" name="atomRefs">
     <xsd:attribute name="atomRefs" id="att.atomRefs" type="atomRefArrayType">
     <xsd:annotation>
@@ -3204,7 +3204,7 @@ IUPAC Compendium of Chemical Terminology 2nd Edition (1997)
 </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.bondIDArray" name="bondIDArray">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="bondID" id="att.bondIDArray" type="bondRefArrayType">
+    <xsd:attribute name="bondID" id="att.bondIDArray" type="bondRefArrayType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The IDs for an array of bond.</h:div>
@@ -3509,9 +3509,9 @@ so that a convention for <h:tt>molecule</h:tt> would by default extend to its <h
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The orientation of the eigenvector matrix.</h:div>
-				<h:div class="description">Describes whether the vectors are columns or 
-				rows. No default, so effectively mandatory unless you want to make implementers
-				guess and break applications.</h:div>
+                <h:div class="description">Describes whether the vectors are columns or 
+                rows. No default, so effectively mandatory unless you want to make implementers
+                guess and break applications.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3589,8 +3589,8 @@ so that a convention for <h:tt>molecule</h:tt> would by default extend to its <h
             <xsd:documentation>
                 <h:div class="summary">Array of error values.</h:div>
                 <h:div class="description">Reports the author's estimate of 
-					the error in an array of values. Only meaningful for 
-					dataTypes mapping to real number.</h:div>
+                    the error in an array of values. Only meaningful for 
+                    dataTypes mapping to real number.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3684,7 +3684,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The base of one or more links.</h:div>
                 <h:div class="description">On link elements the value is the single id of an element within the document or context specified in map@fromRef attributes. It must identify the element uniquely. The reserved value 'null' implies that no mapping has been provided for the object(s) in the 'to' attribute. This implies no semantics but may be used by software to keep count of which elements have been mapped. For multiple targets use 'fromSet'.</h:div>
-				<h:div class="curation">2005-06-18: updated docs</h:div>
+                <h:div class="curation">2005-06-18: updated docs</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3694,9 +3694,9 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The context for the 'from' links in a map.</h:div>
                 <h:div class="description"><h:p>A reference to the unique 'id' attribute of an element defining the context for links in a map. This may be required when id attributes may not be unique within a document. The id should either reference an element uniquely or should be taken as the first ancestor (of the map) with such an id.</h:p>
-				<h:p>This is fairly horrid but may be required when documents are assembled without establishing unique ids (e.g. concatenation of files). As an example a map referencing linked atoms in two molecules might use the containing 'reaction' element as its uniquifying context.</h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                <h:p>This is fairly horrid but may be required when documents are assembled without establishing unique ids (e.g. concatenation of files). As an example a map referencing linked atoms in two molecules might use the containing 'reaction' element as its uniquifying context.</h:p>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3706,8 +3706,8 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">A set of ids representing the base of a link.</h:div>
                 <h:div class="description"><h:p>For a partial mapping where a number of 'from' elements are known to link to a number of 'to' elements it can be useful to aggregate these into a single attribute value. The primary use is to assert that n links exist between a set of n 'from' elements and n 'to' elements but that the precise links are unknown. The semantics of the reference are the same as for 'from' and all the elements must be of the same type (which can be specified with 'fromType' either on the link or the containing map). No order information is implied. In general there will be the same number of idRefs in the 'toSet' and all implicit links will share the same attributes (e.g. 'role'). In many cases the sets will be later split into discrete links thorugh further calculation or experiment (e.g. peak assignment). Sets should never be used as a lazy or concise alternative where the all the links are explicitly known. </h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3717,9 +3717,9 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The type of the base of a link.</h:div>
                 <h:div class="description"><h:p>The local tagname of the referenced element (e.g. 'molecule' or 'peakGroup'). This acts as a partial check on the integrity of the link. Software can assume that the referenced element is of a given tytpe and can create an object supporting that type. </h:p>
-				<h:p>This attribute can be attached to the 'map' attribute and requires all contained links to be of this type. This can be overridden by a 'toType' attribute on indivdual links, but it may also be useful to split the map into maps od different link types.</h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                <h:p>This attribute can be attached to the 'map' attribute and requires all contained links to be of this type. This can be overridden by a 'toType' attribute on indivdual links, but it may also be useful to split the map into maps od different link types.</h:p>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3749,7 +3749,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Number of hydrogens.</h:div>
-                <h:div class="description">The total number of hydrogens bonded to the atom or molecule. It is preferable to include hydrogens explicitly, and where this is done their count represents the minimum (and may thus override this attribute). It is dangerous to use this attribute for electron-deficient molecules (e.g. diborane) or hydrogen bonds. There is NO Default and the absence of this attribute must not be given any meaning.</h:div>
+                <h:div class="description">The total number of hydrogens bonded to the atom or molecule. It is preferable to include hydrogens explicitly, and where this is done their count represents the minimum (and may thus override this attribute). It is dangerous to use this attribute for electron-deficient molecules (e.g. diborane) or hydrogen bonds. There is NO DEFAULT and the absence of this attribute must not be given any meaning.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3759,7 +3759,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Array of hydrogenCounts.</h:div>
-                <h:div class="description">Normally used in CML2 array mode. The total number of hydrogens bonded to the atom or molecule. It is preferable to include hydrogens explicitly, and where this is done their count represents the minimum (and may thus override this attribute). It is dangerous to use this attribute for electron-deficient molecules (e.g. diborane) or hydrogen bonds. There is NO Default and the absence of this attribute must not be given any meaning.</h:div>
+                <h:div class="description">Normally used in CML2 array mode. The total number of hydrogens bonded to the atom or molecule. It is preferable to include hydrogens explicitly, and where this is done their count represents the minimum (and may thus override this attribute). It is dangerous to use this attribute for electron-deficient molecules (e.g. diborane) or hydrogen bonds. There is NO DEFAULT and the absence of this attribute must not be given any meaning.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -3905,7 +3905,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.isSI" name="isSI">
-    <xsd:attribute name="isSI" id="att.isSI" type="xsd:bool">
+    <xsd:attribute name="isSI" id="att.isSI" type="xsd:boolean">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">indicates whether a unit is an SI or derived SI unit.</h:div>
@@ -3961,8 +3961,8 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
-</xsd:attributeGroup><xsd:attributeGroup id="attGp.Length" name="length">
-    <xsd:attribute id="att.Length" name="length" type="xsd:nonNegativeInteger">
+</xsd:attributeGroup><xsd:attributeGroup id="attGp.length" name="length">
+    <xsd:attribute id="att.length" name="length" type="xsd:nonNegativeInteger">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Length of a scalar.</h:div>
@@ -4008,13 +4008,13 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.mandatoryId" name="mandatoryId">
-		<!-- Note: name differs from attributeGroup name -->
+        <!-- Note: name differs from attributeGroup name -->
     <xsd:attribute id="att.mandatoryId" name="id" type="idType" use="required">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">An attribute providing a mandatory unique ID for an element.</h:div>
                 <h:div class="description">This is a horrible hack. It should be possible to add 'required' to
-	the attributeGroup where used... (Maybe it is and I am still fighting Schema Wars.</h:div>
+    the attributeGroup where used... (Maybe it is and I am still fighting Schema Wars.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4087,9 +4087,9 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The metadata type.</h:div>
-				<h:div class="description">This is likely to be the Dublin Core 
-				name or something similar. The use of "type" is an infelicitous 
-				misnomer and we shall try to remove it.</h:div>
+                <h:div class="description">This is likely to be the Dublin Core 
+                name or something similar. The use of "type" is an infelicitous 
+                misnomer and we shall try to remove it.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4243,7 +4243,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
                         <h:li>qualifier</h:li>
                     </h:ul>
             It might be used to control display or XSL filtering.</h:div>
-                <h:div class="note">The attribute is named 'objectClass' to avoid clashes with other class attributes and inappropriate conversion to foo.GetType().</h:div>
+                <h:div class="note">The attribute is named 'objectClass' to avoid clashes with other class attributes and inappropriate conversion to foo.getClass().</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4277,7 +4277,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.orderArray" name="orderArray">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="order" id="att.orderArray" type="orderArrayType">
+    <xsd:attribute name="order" id="att.orderArray" type="orderArrayType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The order of the bond.</h:div>
@@ -4388,7 +4388,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     </xsd:attribute>
 
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.periodic" name="periodic">
-    <xsd:attribute name="periodic" type="xsd:bool" id="att.periodic" default="true">
+    <xsd:attribute name="periodic" type="xsd:boolean" id="att.periodic" default="true">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Is the axis periodic.</h:div>
@@ -4411,7 +4411,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">A point in 3 dimensions.</h:div>
                 <h:div class="description">can be used for any complex 
-					geometrical object, such as line.</h:div>
+                    geometrical object, such as line.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4451,7 +4451,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.powerRequired" name="powerRequired">
-	<!-- this is awful - but I can't find how to add required otherwise --> 
+    <!-- this is awful - but I can't find how to add required otherwise --> 
     <xsd:attribute name="power" type="xsd:double" use="required" id="att.powerRequired">
         <xsd:annotation>
             <xsd:documentation>
@@ -4461,7 +4461,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.preserve" name="preserve">
-    <xsd:attribute name="preserve" type="xsd:bool" id="att.preserve">
+    <xsd:attribute name="preserve" type="xsd:boolean" id="att.preserve">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Is the dimension preserved during algebra.</h:div>
@@ -4497,13 +4497,13 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Format of the reaction component.</h:div>
-								<h:div class="description">Indicates how the components of reactionScheme, reactionStepList, etc. should be processed. No controlled vocabulary. One example is format="cmlSnap" asserts that the processor can assume that the reactants and products can be rendered using the CMLSnap design. Note that the reaction can be interpreted without reference to the format, which is primarily a processing instruction.</h:div>
+                                <h:div class="description">Indicates how the components of reactionScheme, reactionStepList, etc. should be processed. No controlled vocabulary. One example is format="cmlSnap" asserts that the processor can assume that the reactants and products can be rendered using the CMLSnap design. Note that the reaction can be interpreted without reference to the format, which is primarily a processing instruction.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.reactionRole" name="reactionRole">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="role" id="att.reactionRole" type="reactionRoleType">
+    <xsd:attribute name="role" id="att.reactionRole" type="reactionRoleType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Role of the reaction.</h:div>
@@ -4517,7 +4517,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The sequence of steps in a reactionStepList.</h:div>
                 <h:div class="description">By default the reactions in a reactionStepList are assumed to take place in sequence (e.g. one or more products of reaction n are used in reaction n+1 or later. However there are cases where it is known that reactions take place in parallel (e.g. if there is no overlap of molecular identities). Alternatively there are points at which there are two or more competing reactions which may depend on conditions or concentrations. A small semi-controlled vocabulary is suggested.</h:div>
-								<h:div>The semantic of these are not fully explored, but we suggest that consecutive and simultaneous should be the first to be supported</h:div>
+                                <h:div>The semantic of these are not fully explored, but we suggest that consecutive and simultaneous should be the first to be supported</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4545,7 +4545,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">A reference to an element of given type.</h:div>
                 <h:div class="description"><h:tt>ref</h:tt> modifies an element into a reference to an existing element of that type within the document. This is similar to a pointer and it can be thought of a strongly typed hyperlink. It may also be used for "subclassing" or "overriding" elements.<br xmlns=""/>
-								When referring to an element most of the "data" such as attribute values and element content will be on the full instantiated element.  Therefore ref (and possibly id) will normally be the only attributes on the pointing element. However there may be some attributes (title, count, etc.) which have useful semantics, but these are element-specific</h:div>
+                                When referring to an element most of the "data" such as attribute values and element content will be on the full instantiated element.  Therefore ref (and possibly id) will normally be the only attributes on the pointing element. However there may be some attributes (title, count, etc.) which have useful semantics, but these are element-specific</h:div>
 
                 <h:div class="example" href="refGroup1.xml"/>
             </xsd:documentation>
@@ -4562,7 +4562,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.relatedEntryType" name="relatedEntryType">
     <!-- Note: name differs from attributeGroup name -->
-		<xsd:attribute id="att.relatedEntryType" name="type" type="relatedEntryTypeType">
+        <xsd:attribute id="att.relatedEntryType" name="type" type="relatedEntryTypeType">
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="summary">Type of relatedEntry.</h:div>
@@ -4729,7 +4729,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">The start condition.</h:div>
-                <h:div class="description">This can describe the Condition(s) that has to be met before an action can begin, such as in a recipe. Semantics are unexplored but could be used to control robotic operations.</h:div>
+                <h:div class="description">This can describe the condition(s) that has to be met before an action can begin, such as in a recipe. Semantics are unexplored but could be used to control robotic operations.</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4789,7 +4789,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         </xsd:annotation>
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.symmetryOriented" name="symmetryOriented">
-    <xsd:attribute id="att.symmetryOriented" name="symmetryOriented" type="xsd:bool">
+    <xsd:attribute id="att.symmetryOriented" name="symmetryOriented" type="xsd:boolean">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">Is the molecule oriented to the symmetry</h:div>
@@ -4850,7 +4850,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The target of one or more links.</h:div>
                 <h:div class="summary">On link elements the value is the single id of an element within the document or context specified in map@toContext attributes. It must identify the element uniquely. The reserved value 'null' implies that no mapping has been provided for the object(s) in the 'from' attribute. This implies no semantics but may be used by software to keep count of which elements have been mapped. For multiple targets use 'toSet'.</h:div>
-				<h:div class="curation">2005-06-18: updated docs</h:div>
+                <h:div class="curation">2005-06-18: updated docs</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4860,9 +4860,9 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The context for the 'from' links in a map.</h:div>
                 <h:div class="description"><h:p>A reference to the unique 'id' attribute of an element defining the context for links in a map. This may be required when id attributes may not be unique within a document. The id should either reference an element uniquely or should be taken as the first ancestor (of the map) with such an id.</h:p>
-				<h:p>This is fairly horrid but may be required when documents are assembled without establishing unique ids (e.g. concatenation of files). As an example a map referencing linked atoms in two molecules might use the containing 'reaction' element as its uniquifying context.</h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                <h:p>This is fairly horrid but may be required when documents are assembled without establishing unique ids (e.g. concatenation of files). As an example a map referencing linked atoms in two molecules might use the containing 'reaction' element as its uniquifying context.</h:p>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4872,8 +4872,8 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">A set of ids representing the base of a link.</h:div>
                 <h:div class="description"><h:p>For a partial mapping where a number of 'to' elements are known to link to a number of 'from' elements it can be useful to aggregate these into a single attribute value. The primary use is to assert that n links exist between a set of n 'to' elements and n 'from' elements but that the precise links are unknown. The semantics of the reference are the same as for 'to' and all the elements must be of the same type (which can be specified with 'toType' either on the link or the containing map). No order information is implied. In general there will be the same number of idRefs in the 'fromSet' and all implicit links will share the same attributes (e.g. 'role'). In many cases the sets will be later split into discrete links thorugh further calculation or experiment (e.g. peak assignment). Sets should never be used as a lazy or concise alternative where the all the links are explicitly known. </h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -4892,10 +4892,10 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:documentation>
                 <h:div class="summary">The type of the base of a link.</h:div>
                 <h:div class="description">
-				<h:p>The local tagname of the referenced element (e.g. 'molecule' or 'peakGroup'). This acts as a partial check on the integrity of the link. Software can assume that the referenced element is of a given tytpe and can create an object supporting that type.</h:p>
-				<h:p>This attribute can be attached to the 'map' attribute and requires all contained links to be of this type. This can be overridden by a 'toType' attribute on indivdual links, but it may also be useful to split the map into maps od different link types.</h:p>
-				</h:div>
-				<h:div class="curation">2005-06-18: created</h:div>
+                <h:p>The local tagname of the referenced element (e.g. 'molecule' or 'peakGroup'). This acts as a partial check on the integrity of the link. Software can assume that the referenced element is of a given tytpe and can create an object supporting that type.</h:p>
+                <h:p>This attribute can be attached to the 'map' attribute and requires all contained links to be of this type. This can be overridden by a 'toType' attribute on indivdual links, but it may also be useful to split the map into maps od different link types.</h:p>
+                </h:div>
+                <h:div class="curation">2005-06-18: created</h:div>
             </xsd:documentation>
         </xsd:annotation>
     </xsd:attribute>
@@ -5010,7 +5010,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     </xsd:attribute>
 </xsd:attributeGroup><xsd:attributeGroup id="attGp.x2Array" name="x2Array">
   <!-- Note: name differs from attributeGroup name -->  
-	<xsd:attribute name="x2" id="att.x2Array" type="coordinateComponentArrayType">
+    <xsd:attribute name="x2" id="att.x2Array" type="coordinateComponentArrayType">
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="summary">array of x2 coordinate.</h:div>
@@ -5496,7 +5496,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
       <h:div class="example" href="annotation1.xml"/>
     </xsd:documentation>
   </xsd:annotation>
-	 
+     
   <xsd:complexType mixed="true">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element ref="documentation"/>
@@ -5574,7 +5574,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
     <xsd:annotation>
         <xsd:documentation>
             <h:div class="summary">A homogenous 1 dimensional array of similar object.</h:div>
-            <h:div class="description">These can be encoded as strings (i.e. XSD-like datatypes) and are concatenated as string content. The size of the array should always be &gt;= 1. The default delimiter is whitespace. The _normalize-Space()_ function of XSLT could be used to normalize all whitespace to single spaces and this should not affect the value of the array elements. To extract the elements __java.lang.StringTokenizer__ could be used. If the elements themselves contain whitespace then a different delimiter must be used and is identified through the <h:tt>delimiter</h:tt> attribute. This method is mandatory if it is required to represent empty strings. If a delimiter is used it MUST start and end the array - leading and trailing whitespace is ignored. Thus <h:tt>size+1</h:tt> occurrences of the delimiter character are required. If non-normalized whitespace is to be encoded (e.g. newlines, tabs, etc) you are recommended to translate it character-wise to XML character entities.
+            <h:div class="description">These can be encoded as strings (i.e. XSD-like datatypes) and are concatenated as string content. The size of the array should always be &gt;= 1. The default delimiter is whitespace. The _normalize-space()_ function of XSLT could be used to normalize all whitespace to single spaces and this should not affect the value of the array elements. To extract the elements __java.lang.StringTokenizer__ could be used. If the elements themselves contain whitespace then a different delimiter must be used and is identified through the <h:tt>delimiter</h:tt> attribute. This method is mandatory if it is required to represent empty strings. If a delimiter is used it MUST start and end the array - leading and trailing whitespace is ignored. Thus <h:tt>size+1</h:tt> occurrences of the delimiter character are required. If non-normalized whitespace is to be encoded (e.g. newlines, tabs, etc) you are recommended to translate it character-wise to XML character entities.
                 <h:p>Note that normal Schema validation tools cannot validate the elements
          of <h:b>array</h:b> (they are defined as <h:tt>string</h:tt>) However if the string is
          split, a temporary schema 
@@ -5613,33 +5613,33 @@ This attribute should only be used for simple formulae (i.e. without brackets or
                 <xsd:attributeGroup ref="delimiter"/>
                 <xsd:attributeGroup ref="size"/>
                 <xsd:attributeGroup ref="ref"/>
-		        <xsd:attributeGroup ref="constantToSI">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
-		        <xsd:attributeGroup ref="multiplierToSI">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
-		        <xsd:attributeGroup ref="unitType">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
+                <xsd:attributeGroup ref="constantToSI">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with unitType</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
+                <xsd:attributeGroup ref="multiplierToSI">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with unitType</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
+                <xsd:attributeGroup ref="unitType">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
@@ -5700,7 +5700,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
                                 <h:li>
                                     <h:b>atomParity</h:b> (CmlAtomParityElement) the required way of defining atom-based chirality</h:li>
                                 <h:li>
-                                    <h:b>electron</h:b> a away of associating Electron(s) with the atom</h:li>
+                                    <h:b>electron</h:b> a away of associating electron(s) with the atom</h:li>
                             </h:ul></h:div>
                     </xsd:documentation>
                 </xsd:annotation>
@@ -5903,7 +5903,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
        | z1 z2 z3 z4 |
         </h:pre>
                 <h:p>Note that <h:tt>atomParity</h:tt> cannot be used with the
-                 *Array syntax for atoms.</h:p></h:div>
+                ///Array syntax for atoms.</h:p></h:div>
             <h:div class="example" href="atomParity1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
@@ -6128,8 +6128,8 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <comment xmlns="">Validate Bonds</comment>
             <template match="bond" id="val-bond" xmlns="">
                 <comment>Atom Refs for 2-atom bond</comment>
-                <variable name="at1" select="substring-before(normalize-Space(@atomRefs2),' ')"/>
-                <variable name="at2" select="substring-after(normalize-Space(@atomRefs2),' ')"/>
+                <variable name="at1" select="substring-before(normalize-space(@atomRefs2),' ')"/>
+                <variable name="at2" select="substring-after(normalize-space(@atomRefs2),' ')"/>
                 <comment>Are atoms distinct?</comment>
                 <if test="$at1 = $at2">
                     <call-template name="error">
@@ -6138,13 +6138,13 @@ This attribute should only be used for simple formulae (i.e. without brackets or
                     </call-template>
                 </if>
                 <comment>Do both atoms exist in current molecule context?</comment>
-                <if test="Not(Key('atoms', $at1))">
+                <if test="not(key('atoms', $at1))">
                     <call-template name="error">
                         <with-param name="error">BOND (<value-of select="@id"/>): ATOMREF not found: <value-of select="$at1"/>
                         </with-param>
                     </call-template>
                 </if>
-                <if test="Not(Key('atoms', $at2))">
+                <if test="not(key('atoms', $at2))">
                     <call-template name="error">
                         <with-param name="error">BOND (<value-of select="@id"/>): ATOMREF not found: <value-of select="$at2"/>
                         </with-param>
@@ -6499,10 +6499,10 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:documentation>
             <h:div class="summary">A crystallographic cell.</h:div>
             <h:div class="description">Required if fractional coordinates are provided for 
-				a molecule. Originally there were precisely SIX child <h:tt>scalar</h:tt>s to represent 
-				the cell lengths and angles in that order. There are no default values; the 
-				spacegroup is also included. This is now deprecated and replaced by cellParameter
-			</h:div>
+                a molecule. Originally there were precisely SIX child <h:tt>scalar</h:tt>s to represent 
+                the cell lengths and angles in that order. There are no default values; the 
+                spacegroup is also included. This is now deprecated and replaced by cellParameter
+            </h:div>
             <h:div class="curation">2006-03-06 PMR: added cellParameter child</h:div>
             <h:div class="example" href="crystal1.xml"/>
         </xsd:documentation>
@@ -6512,18 +6512,18 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             <xsd:annotation>
                 <xsd:documentation>
                     <h:div class="description">OLD STYLE: All 6 cell parameters must be given, even where 
-						angles are fixed by symmetry. The order is fixed as a,b,c,alpha,beta,gamma
-						 and software can neglect any title or dictRef attributes. Error estimates
-						 can be given if required. Any units can be used, but the defaults are 
-						Angstrom (10^-10 m) and degrees.</h:div>
+                        angles are fixed by symmetry. The order is fixed as a,b,c,alpha,beta,gamma
+                         and software can neglect any title or dictRef attributes. Error estimates
+                         can be given if required. Any units can be used, but the defaults are 
+                        Angstrom (10^-10 m) and degrees.</h:div>
                     <h:div class="description">NEW STYLE: Two cellParameter children are given</h:div>
                 </xsd:documentation>
             </xsd:annotation>
-			<xsd:choice minOccurs="0" maxOccurs="1">
-				<xsd:element ref="scalar" minOccurs="6" maxOccurs="6"/>
-				<xsd:element ref="cellParameter" minOccurs="1" maxOccurs="2"/>
-			</xsd:choice>
-			<xsd:element ref="symmetry" minOccurs="0"/>
+            <xsd:choice minOccurs="0" maxOccurs="1">
+                <xsd:element ref="scalar" minOccurs="6" maxOccurs="6"/>
+                <xsd:element ref="cellParameter" minOccurs="1" maxOccurs="2"/>
+            </xsd:choice>
+            <xsd:element ref="symmetry" minOccurs="0"/>
         </xsd:sequence>
 
         <xsd:attributeGroup ref="z"/>
@@ -6902,28 +6902,28 @@ This attribute should only be used for simple formulae (i.e. without brackets or
                 <h:p>An alternative briefer representation is also available through the 
         <h:tt>concise</h:tt>. This must include whitespace round all elements and 
         their counts, which must be explicit. </h:p>
-	        <h:p>2005-10-16. The semantics are now the following. A formula must have one or both:
-	        <h:ul>
-	        <h:li>A concise attribute
-	        </h:li>A single atomArray child, using array format. 
-	        </h:ul>
-	        it must also have a formalCharge attribute if atomArray is used and the charge is non-zero.
-	        </h:p>
-	        <h:p>
-	        The concise, formalCharge and atomArrary information must always be consistent and software should
-	        throw an error if not.
-	        </h:p>
-	        <h:p>
-	        Until now there was no way of holding inline formula other than concise (although JUMBO5.0 is
-	        capable of reading them). We now extend formula.xsd to incorporate this through the attribute
-	        "inline" which requires the use of the "convention" attribute. The contents of inline are
-	        purely textual. It can be used with or without atomArray or concise but there is no 
-	        guarantee that it can be interpreted as a meaningful chemical formula or that there is consistency.
-	        In some cases a document supplies several formula representations (e.g. the IUCr's CIF). In this
-	        case a molecule (or crystal) element might contain several formula children. The semantics of which
-	        to use are application dependent.
-	        </h:p>
-	        </h:div>
+            <h:p>2005-10-16. The semantics are now the following. A formula must have one or both:
+            <h:ul>
+            <h:li>A concise attribute
+            </h:li>A single atomArray child, using array format. 
+            </h:ul>
+            it must also have a formalCharge attribute if atomArray is used and the charge is non-zero.
+            </h:p>
+            <h:p>
+            The concise, formalCharge and atomArrary information must always be consistent and software should
+            throw an error if not.
+            </h:p>
+            <h:p>
+            Until now there was no way of holding inline formula other than concise (although JUMBO5.0 is
+            capable of reading them). We now extend formula.xsd to incorporate this through the attribute
+            "inline" which requires the use of the "convention" attribute. The contents of inline are
+            purely textual. It can be used with or without atomArray or concise but there is no 
+            guarantee that it can be interpreted as a meaningful chemical formula or that there is consistency.
+            In some cases a document supplies several formula representations (e.g. the IUCr's CIF). In this
+            case a molecule (or crystal) element might contain several formula children. The semantics of which
+            to use are application dependent.
+            </h:p>
+            </h:div>
             <h:div class="example" href="formula1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
@@ -6988,24 +6988,24 @@ This attribute should only be used for simple formulae (i.e. without brackets or
 
         <xsd:sequence>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
-	            <xsd:element ref="metadataList"/>
-	            <xsd:element ref="label"/>
+                <xsd:element ref="metadataList"/>
+                <xsd:element ref="label"/>
                 <xsd:element ref="molecule"/>
                 <xsd:element ref="fragmentList">
-			        <xsd:annotation>
-			            <xsd:documentation>
-			                <h:div class="summary">branches from the moelcule.</h:div>
-			            </xsd:documentation>
-			        </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="summary">branches from the moelcule.</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="join">
-			        <xsd:annotation>
-			            <xsd:documentation>
-			                <h:div class="summary">the inter-fragment join.</h:div>
-			                <h:div class="description"> 
-			                Normally it only makes sense with @countExpression.</h:div>
-			            </xsd:documentation>
-			        </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="summary">the inter-fragment join.</h:div>
+                            <h:div class="description"> 
+                            Normally it only makes sense with @countExpression.</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
             </xsd:choice>
         </xsd:sequence>
@@ -7391,7 +7391,7 @@ This attribute should only be used for simple formulae (i.e. without brackets or
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
-</xsd:element><xsd:element name="length" id="el.Length">
+</xsd:element><xsd:element name="length" id="el.length">
     <xsd:annotation>
         <xsd:documentation>
             <h:div class="summary">A length between two atoms.</h:div>
@@ -7517,47 +7517,47 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:attributeGroup ref="to"/>
         <xsd:attributeGroup ref="ref"/>
         <xsd:attributeGroup ref="fromType">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The type of the object/element in the 'from' attributes. Requires the objects referenced by the 'from' attributes to have a given elementType. Can be overridden by 'from' attributes in individual links. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The type of the object/element in the 'from' attributes. Requires the objects referenced by the 'from' attributes to have a given elementType. Can be overridden by 'from' attributes in individual links. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="toType">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The type of the object/element in the 'to' attributes. Requires the objects referenced by the 'to' attributes to have a given elementType. Can be overridden by 'to' attributes in individual links. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The type of the object/element in the 'to' attributes. Requires the objects referenced by the 'to' attributes to have a given elementType. Can be overridden by 'to' attributes in individual links. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="fromSet">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The set of ids in the base of the link. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The set of ids in the base of the link. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="toSet">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The set of ids in the target of the link. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The set of ids in the target of the link. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="fromContext">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The id of the ancestral element of objects referenced by 'from' attributes. Provides a context for uniquifying the references in the 'from' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'fromContext'. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The id of the ancestral element of objects referenced by 'from' attributes. Provides a context for uniquifying the references in the 'from' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'fromContext'. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="toContext">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The id of the ancestral element of objects referenced by 'to' attributes. Provides a context for uniquifying the references in the 'to' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'toContext'. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The id of the ancestral element of objects referenced by 'to' attributes. Provides a context for uniquifying the references in the 'to' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'toContext'. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="role">
             <xsd:annotation>
                 <xsd:documentation>
@@ -7599,19 +7599,19 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:documentation>
             <h:div class="summary">A container for links</h:div>
             <h:div class="description"><h:p>Usage is now standardized with map as the container and link as the individual links. The links are often effectively typed pointers to other parts of the document. The type can be set for all links by the 'fromType' and 'toType' attributes, either in the map, which then applied to all links by default, or in individual links, when it overrides the map setting. Since ids may not be unique within a document the refs can be given context with the 'fromRef' and 'toRef' attributes in the map element. If more than one context is used it may be better to use multiple maps. The role of map, and its relationship to RDF is still being developed. 
-			</h:p>
-			<h:p>
-			Currently (2005) map has primarily been used to map atoms between reactants and products, but we also expect shortly to extend it to peak assignments and several otherr areas. A map consists of a number of links, which can be directional, relating two elements through their ids. Reference is through the mandatory 'to' and 'from' attributes which must point to existing id attributes on elements. The type of the dereferenced element can be specified in 'toType' and 'fromType' which, while redundant, is an aid to software and acts as a check on referential type integrity. 
-			</h:p>
-			<h:p>
-			In principle any element can be linked to any other, with 1:1, 1:n, and n:m topology. We expect maps to be used for precise chemical concepts such as reactions, peak assignments, electron management, molecular superpositions, etc. and that these are supported by bespoke code. For other links, especially with complex topology, users should consider whether RDF may be more appropriate.
-			</h:p>
-			<h:p>In some cases partial mapping is known (e.g. one set of atoms maps to another set), but the precise links are unknown. (This is not the same as n:m mapping where n*m precise links would be expected). In some cases there may be objects such as atomSets or peakGroups which could be linked to support this. Alternatively the 'fromSet' and 'toSet' attributes can be used to hold a list of ids. Thus from='a1 a2' to='b3 b4' might imply that there were two precise links (either {a1=&gt;b3, a2=&gt;b4} or {a1=&gt;b4, a2=&gt;b3}). This is most likely to be used in intermediate documents where more precise semantics can be added later. The ids must all refer to elements of the same type. Note that a 'to' link referencing a single atomSet (toType='atomSet') is not the same as a 'toSet' of toType='atom' with multiple atomIds. The first would require an 'atomSet' element in the document; the second would not. The precise semantics such as the order of ids are application-dependent. If the order is known in both the toSet and fromSet then individual links should be used rather than adding the burden of deconstruction on the implementer.
-			</h:p>
-			</h:div>
-			<h:div class="curation">2005-06-18: added typing and role and updated docs.</h:div>
-			<h:div class="curation">2006-08-05: added ref attribute.</h:div>
-		</xsd:documentation>
+            </h:p>
+            <h:p>
+            Currently (2005) map has primarily been used to map atoms between reactants and products, but we also expect shortly to extend it to peak assignments and several otherr areas. A map consists of a number of links, which can be directional, relating two elements through their ids. Reference is through the mandatory 'to' and 'from' attributes which must point to existing id attributes on elements. The type of the dereferenced element can be specified in 'toType' and 'fromType' which, while redundant, is an aid to software and acts as a check on referential type integrity. 
+            </h:p>
+            <h:p>
+            In principle any element can be linked to any other, with 1:1, 1:n, and n:m topology. We expect maps to be used for precise chemical concepts such as reactions, peak assignments, electron management, molecular superpositions, etc. and that these are supported by bespoke code. For other links, especially with complex topology, users should consider whether RDF may be more appropriate.
+            </h:p>
+            <h:p>In some cases partial mapping is known (e.g. one set of atoms maps to another set), but the precise links are unknown. (This is not the same as n:m mapping where n*m precise links would be expected). In some cases there may be objects such as atomSets or peakGroups which could be linked to support this. Alternatively the 'fromSet' and 'toSet' attributes can be used to hold a list of ids. Thus from='a1 a2' to='b3 b4' might imply that there were two precise links (either {a1=&gt;b3, a2=&gt;b4} or {a1=&gt;b4, a2=&gt;b3}). This is most likely to be used in intermediate documents where more precise semantics can be added later. The ids must all refer to elements of the same type. Note that a 'to' link referencing a single atomSet (toType='atomSet') is not the same as a 'toSet' of toType='atom' with multiple atomIds. The first would require an 'atomSet' element in the document; the second would not. The precise semantics such as the order of ids are application-dependent. If the order is known in both the toSet and fromSet then individual links should be used rather than adding the burden of deconstruction on the implementer.
+            </h:p>
+            </h:div>
+            <h:div class="curation">2005-06-18: added typing and role and updated docs.</h:div>
+            <h:div class="curation">2006-08-05: added ref attribute.</h:div>
+        </xsd:documentation>
     </xsd:annotation>
     <xsd:complexType>
         <xsd:sequence minOccurs="0" maxOccurs="unbounded">
@@ -7623,40 +7623,40 @@ This attribute should only be used for simple formulae (i.e. without brackets or
         <xsd:attributeGroup ref="dictRef"/>
         <xsd:attributeGroup ref="ref"/>
         <xsd:attributeGroup ref="fromType">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The type of the object/element in the 'from' attributes. Requires the objects referenced by the 'from' attributes to have a given elementType. Can be overridden by 'from' attributes in individual links. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The type of the object/element in the 'from' attributes. Requires the objects referenced by the 'from' attributes to have a given elementType. Can be overridden by 'from' attributes in individual links. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="toType">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The type of the object/element in the 'to' attributes. Requires the objects referenced by the 'to' attributes to have a given elementType. Can be overridden by 'to' attributes in individual links. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The type of the object/element in the 'to' attributes. Requires the objects referenced by the 'to' attributes to have a given elementType. Can be overridden by 'to' attributes in individual links. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="fromContext">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The id of the ancestral element of objects referenced by 'from' attributes. Provides a context for uniquifying the references in the 'from' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'fromContext'. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The id of the ancestral element of objects referenced by 'from' attributes. Provides a context for uniquifying the references in the 'from' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'fromContext'. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="toContext">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The id of the ancestral element of objects referenced by 'to' attributes. Provides a context for uniquifying the references in the 'to' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'toContext'. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The id of the ancestral element of objects referenced by 'to' attributes. Provides a context for uniquifying the references in the 'to' attributes. Thus atoms referenced by ids should be unique within a given molecule and the id of this could be the 'toContext'. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
         <xsd:attributeGroup ref="role">
-			<xsd:annotation>
-				<xsd:documentation>
-					<h:div class="specific">The role of the map. Semantics are undefined, and can be used to provide a small semi-controlled vocabulary for identifying maps of different types. 2005-06-18: created</h:div>
-				</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="specific">The role of the map. Semantics are undefined, and can be used to provide a small semi-controlled vocabulary for identifying maps of different types. 2005-06-18: created</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
     </xsd:complexType>
 </xsd:element><xsd:element name="matrix" id="el.matrix">
     <xsd:annotation>
@@ -7900,7 +7900,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <xsd:element ref="length"/>
                 <xsd:element ref="list"/>
                 <xsd:element ref="matrix"/>
-	            <xsd:element ref="metadataList"/>
+                <xsd:element ref="metadataList"/>
                 <xsd:element ref="molecule"/>
                 <xsd:element ref="name"/>
                 <xsd:element ref="propertyList"/>
@@ -8059,13 +8059,13 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <h:p>A parameter is a broad concept and can describe numeric quantities, objects, 
                 keywords, etc. The distinction between keywords and parameters is often fuzzy. 
                 ("MINIM" might mean "minimize", while "MINIM=3" might require  three iterations 
-                to be run. It may help to think of control keywords as bool parameters. </h:p>
+                to be run. It may help to think of control keywords as boolean parameters. </h:p>
                 <h:p>Numeric parameters can describe values in molecules, forcefields or other 
                 objects. Often the parameters will be refined or otherwise varied during the 
                 calculation. Some parameters may be fixed at particular values or relaxed at different 
                 stages in the calculation.  Parameters can have errors, gradients and other indications 
                 of uncertainty.</h:p>
-                <h:p>string/character parameters are often abbreviated in program input, and this 
+                <h:p>String/character parameters are often abbreviated in program input, and this 
                 is supported through the <h:tt>regex</h:tt> and <h:tt>ignoreCase</h:tt> attributes. ?????</h:p>
                 <h:p>Parameters will usually be defined separately from the objects and use the 
                 <h:tt>ref</h:tt> attribute to reference them.</h:p>
@@ -8227,33 +8227,33 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
             </xsd:element>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                 <xsd:element ref="atom">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-9. DEPRECATED; use atomRefs</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-9. DEPRECATED; use atomRefs</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="bond">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-9. DEPRECATED; use bondRefs</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-9. DEPRECATED; use bondRefs</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="molecule">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-9. DEPRECATED; use moleculeRefs 
-				            when developed</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-9. DEPRECATED; use moleculeRefs 
+                            when developed</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="peakStructure">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-9. PMR, added</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-9. PMR, added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
             </xsd:choice>
         </xsd:sequence>
@@ -8283,39 +8283,39 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="yUnits"/>
         
         <xsd:attributeGroup ref="atomRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Atoms contributing to this peak</h:div>
-		            <h:div class="description">The primary set of atoms responsible for
-		            the peak such as an NMR peak. Coupling constants and similar splitting
-		            should not use this but peakStructure. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. It may be
-		            combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
-		            </h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Atoms contributing to this peak</h:div>
+                    <h:div class="description">The primary set of atoms responsible for
+                    the peak such as an NMR peak. Coupling constants and similar splitting
+                    should not use this but peakStructure. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. It may be
+                    combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
+                    </h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="bondRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Bonds contributing to this peak</h:div>
-		            <h:div class="description">The primary set of bonds responsible for
-		            the peak such as an IR frequency. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. It may be
-		            combined with atomRefs.</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Bonds contributing to this peak</h:div>
+                    <h:div class="description">The primary set of bonds responsible for
+                    the peak such as an IR frequency. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. It may be
+                    combined with atomRefs.</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="moleculeRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Molecule(s) contributing to this peak</h:div>
-		            <h:div class="description">The molecule or molecule responsible for
-		            the peak. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. This might, for example,
-		            be used to manage a mass spectrum or chromatogram</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Molecule(s) contributing to this peak</h:div>
+                    <h:div class="description">The molecule or molecule responsible for
+                    the peak. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. This might, for example,
+                    be used to manage a mass spectrum or chromatogram</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         
         
@@ -8344,25 +8344,25 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <xsd:element ref="peak"/>
                 <xsd:element ref="peakGroup"/>
                 <xsd:element ref="atom">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-22. DEPRECATED; use atomRefs</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-22. DEPRECATED; use atomRefs</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="bond">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-22. DEPRECATED; use bondRefs</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-22. DEPRECATED; use bondRefs</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
                 <xsd:element ref="molecule">
-				    <xsd:annotation>
-				        <xsd:documentation>
-				            <h:div class="curation">2005-11-22. DEPRECATED; use moleculeRefs</h:div>
-				        </xsd:documentation>
-				    </xsd:annotation>
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="curation">2005-11-22. DEPRECATED; use moleculeRefs</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
                 </xsd:element>
             </xsd:choice>
         </xsd:sequence>
@@ -8391,39 +8391,39 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="yUnits"/>
 
         <xsd:attributeGroup ref="atomRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Atoms contributing to this peak</h:div>
-		            <h:div class="description">The primary set of atoms responsible for
-		            the peak such as an NMR peak. Coupling constants and similar splitting
-		            should not use this but peakStructure. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. It may be
-		            combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
-		            </h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Atoms contributing to this peak</h:div>
+                    <h:div class="description">The primary set of atoms responsible for
+                    the peak such as an NMR peak. Coupling constants and similar splitting
+                    should not use this but peakStructure. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. It may be
+                    combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
+                    </h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="bondRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Bonds contributing to this peak</h:div>
-		            <h:div class="description">The primary set of bonds responsible for
-		            the peak such as an IR frequency. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. It may be
-		            combined with atomRefs.</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Bonds contributing to this peak</h:div>
+                    <h:div class="description">The primary set of bonds responsible for
+                    the peak such as an IR frequency. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. It may be
+                    combined with atomRefs.</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="moleculeRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Molecule(s) contributing to this peak</h:div>
-		            <h:div class="description">The molecule or molecule responsible for
-		            the peak. At present there is no substructure to this
-		            attribute or concept and only one attribute is allowed. This might, for example,
-		            be used to manage a mass spectrum or chromatogram</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Molecule(s) contributing to this peak</h:div>
+                    <h:div class="description">The molecule or molecule responsible for
+                    the peak. At present there is no substructure to this
+                    attribute or concept and only one attribute is allowed. This might, for example,
+                    be used to manage a mass spectrum or chromatogram</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         
     </xsd:complexType>
@@ -8488,27 +8488,27 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         &lt;/atom&gt;
       &lt;/atomArray&gt;
     &lt;/molecule&gt;
-	&lt;spectrum id="spectrum2" title="test peaks"&gt;
-	    &lt;peakList&gt;
-		    &lt;peak id="p1" title="Ha" atomRefs="a1"
-		        peakShape="sharp" xUnits="unit:ppm" xValue="6.0"&gt;
-		        &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
-		           value="12" units="unit:hertz" atomRefs="a2"/&gt; 
-			&lt;/peak&gt;            
-		    &lt;peak id="p2" title="Hb" atomRefs="a2" 
-		        peakShape="sharp" xUnits="unit:ppm" xValue="7.0"&gt;
-		        &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
-		           value="12" units="unit:hertz" atomRefs="a1"/&gt; 
-		        &lt;peakStructure type="coupling" peakMultiplicity="triplet121" 
-		           value="15" units="unit:hertz" atomRefs="a3 a4"/&gt; 
-			&lt;/peak&gt;            
-		    &lt;peak id="p3" title="Hc" atomRefs="a3 a4"
-		        peakShape="sharp" xUnits="unit:ppm" xValue="8.0"&gt;
-		        &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
-		           value="15" units="unit:hertz" atomRefs="a2"/&gt; 
-			&lt;/peak&gt;            
-	    &lt;/peakList&gt;
-	&lt;/spectrum&gt;
+    &lt;spectrum id="spectrum2" title="test peaks"&gt;
+        &lt;peakList&gt;
+            &lt;peak id="p1" title="Ha" atomRefs="a1"
+                peakShape="sharp" xUnits="unit:ppm" xValue="6.0"&gt;
+                &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
+                   value="12" units="unit:hertz" atomRefs="a2"/&gt; 
+            &lt;/peak&gt;            
+            &lt;peak id="p2" title="Hb" atomRefs="a2" 
+                peakShape="sharp" xUnits="unit:ppm" xValue="7.0"&gt;
+                &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
+                   value="12" units="unit:hertz" atomRefs="a1"/&gt; 
+                &lt;peakStructure type="coupling" peakMultiplicity="triplet121" 
+                   value="15" units="unit:hertz" atomRefs="a3 a4"/&gt; 
+            &lt;/peak&gt;            
+            &lt;peak id="p3" title="Hc" atomRefs="a3 a4"
+                peakShape="sharp" xUnits="unit:ppm" xValue="8.0"&gt;
+                &lt;peakStructure type="coupling" peakMultiplicity="doublet11" 
+                   value="15" units="unit:hertz" atomRefs="a2"/&gt; 
+            &lt;/peak&gt;            
+        &lt;/peakList&gt;
+    &lt;/spectrum&gt;
 &lt;/cml&gt;
             </h:pre>
             Where a peak is due to symmetry-related atoms there are 
@@ -8537,27 +8537,27 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         &lt;/atom&gt;
       &lt;/atomArray&gt;
     &lt;/molecule&gt;
-	&lt;spectrum id="spectrum2" title="test peaks"&gt;
-	    &lt;peakList&gt;
-	        &lt;!-- the ORDER of a1 and a2 is linked to the ORDER of the
-	        grandchildren elements, i.e. a1 couples to atoms in ps11 and ps21 
-	        while a2 relates to atoms is ps21 and ps22
-	        --&gt; 
-		    &lt;peak id="p1" title="Ha" atomRefs="a1, a2"
-		        peakShape="sharp" xUnits="unit:ppm" xValue="6.0"&gt;
-		        &lt;peakStructure id="ps1" type="coupling" peakMultiplicity="doublet" 
-		           value="10" units="unit:hertz"&gt;
-		           &lt;peakStructure id="ps11" atomRefs="a3"/&gt; 
-		           &lt;peakStructure id="ps12" atomRefs="a4"/&gt; 
-		        &lt;/peakStructure&gt;		        
-		        &lt;peakStructure id="ps2" type="coupling" peakMultiplicity="doublet" 
-		           value="2" units="unit:hertz"&gt;
-		           &lt;peakStructure id="ps21" atomRefs="a4"/&gt; 
-		           &lt;peakStructure id="ps22" atomRefs="a3"/&gt; 
-		        &lt;/peakStructure&gt;		        
-			&lt;/peak&gt;            
-	    &lt;/peakList&gt;
-	&lt;/spectrum&gt;
+    &lt;spectrum id="spectrum2" title="test peaks"&gt;
+        &lt;peakList&gt;
+            &lt;!-- the ORDER of a1 and a2 is linked to the ORDER of the
+            grandchildren elements, i.e. a1 couples to atoms in ps11 and ps21 
+            while a2 relates to atoms is ps21 and ps22
+            --&gt; 
+            &lt;peak id="p1" title="Ha" atomRefs="a1, a2"
+                peakShape="sharp" xUnits="unit:ppm" xValue="6.0"&gt;
+                &lt;peakStructure id="ps1" type="coupling" peakMultiplicity="doublet" 
+                   value="10" units="unit:hertz"&gt;
+                   &lt;peakStructure id="ps11" atomRefs="a3"/&gt; 
+                   &lt;peakStructure id="ps12" atomRefs="a4"/&gt; 
+                &lt;/peakStructure&gt;                
+                &lt;peakStructure id="ps2" type="coupling" peakMultiplicity="doublet" 
+                   value="2" units="unit:hertz"&gt;
+                   &lt;peakStructure id="ps21" atomRefs="a4"/&gt; 
+                   &lt;peakStructure id="ps22" atomRefs="a3"/&gt; 
+                &lt;/peakStructure&gt;                
+            &lt;/peak&gt;            
+        &lt;/peakList&gt;
+    &lt;/spectrum&gt;
 &lt;/cml&gt;
 </h:pre>            
 </h:div>
@@ -8600,25 +8600,25 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="units"/>
 
         <xsd:attributeGroup ref="atomRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">The atoms to which the peakStructure refers.</h:div>
-		            <h:div class="description">Allows identification of the atoms to which the 
-		            peak is coupled (not the atoms contributing to the primnary reference for
-		            which <tt xmlns="">peak</tt> should be used). It may be
-		            combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
-		            </h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">The atoms to which the peakStructure refers.</h:div>
+                    <h:div class="description">Allows identification of the atoms to which the 
+                    peak is coupled (not the atoms contributing to the primnary reference for
+                    which <tt xmlns="">peak</tt> should be used). It may be
+                    combined with bondRefs. Even single atoms should use atomRefs, not atomRef.
+                    </h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         
         <xsd:attributeGroup ref="bondRefs">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Bonds contributing to this peakStructure</h:div>
-		            <h:div class="description">Even a single bond should use bondRefs, not bondRef</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Bonds contributing to this peakStructure</h:div>
+                    <h:div class="description">Even a single bond should use bondRefs, not bondRef</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         
     </xsd:complexType>
@@ -8744,7 +8744,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:annotation>
             <xsd:documentation>
                 <h:div class="description">
-                    <h:p>A product will normally be identified by Name(s), formula, or molecule and at least one of these should normally be given. Amount(s) of product can be given after this identification and can describe mass, volume, percent yield, etc. but not stoichiometry</h:p></h:div>
+                    <h:p>A product will normally be identified by name(s), formula, or molecule and at least one of these should normally be given. Amount(s) of product can be given after this identification and can describe mass, volume, percent yield, etc. but not stoichiometry</h:p></h:div>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
@@ -8893,7 +8893,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
     <xsd:complexType>
         <xsd:annotation>
             <xsd:documentation>
-                <h:div>A reactant will normally be identified by Name(s), formula, or molecule and at least one of these should normally be given. Amount(s) of reactant can be given after this identification and can describe mass, volume, etc. but not stoichiometr.</h:div>
+                <h:div>A reactant will normally be identified by name(s), formula, or molecule and at least one of these should normally be given. Amount(s) of reactant can be given after this identification and can describe mass, volume, etc. but not stoichiometr.</h:div>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:sequence>
@@ -8975,7 +8975,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <h:p>
                     <h:tt>reaction</h:tt> is a container for reactants, products, conditions, properties and possibly other information relating to the reaction, often within a reactionList. Partial semantics exist:
                     <h:ul>
-                        <h:li><h:b>name</h:b> the Name(s) of the reaction</h:li>
+                        <h:li><h:b>name</h:b> the name(s) of the reaction</h:li>
                         <h:li>
                             <h:b>reactantList</h:b> (normally only one) the grouped reactants</h:li>
                         <h:li>
@@ -8993,11 +8993,11 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
             <h:div>
                 <h:p>Reaction normally refers to an overall reaction or a step within a reactionList. For a complex "reaction", such as in enzymes or chain reactions, it may be best to use <h:tt>reactionScheme</h:tt> to hold the overall <h:tt>reaction</h:tt> and a <h:tt>reactionList</h:tt> of the individual <h:tt>reaction</h:tt> steps.</h:p></h:div>
             <h:div class="example" href="reaction1.xml"/>
-						<h:div class="example" href="reaction9a.xml"/>
-						<h:div class="example" href="reaction9b.xml"/>
-						<h:div class="example" href="reaction10a.xml"/>
-						<h:div class="example" href="reaction10b.xml"/>
-						<h:div class="example" href="reaction11.xml"/>
+                        <h:div class="example" href="reaction9a.xml"/>
+                        <h:div class="example" href="reaction9b.xml"/>
+                        <h:div class="example" href="reaction10a.xml"/>
+                        <h:div class="example" href="reaction10b.xml"/>
+                        <h:div class="example" href="reaction11.xml"/>
         </xsd:documentation>
     </xsd:annotation>
 
@@ -9047,7 +9047,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="convention"/>
         <xsd:attributeGroup ref="title"/>
         <xsd:attributeGroup ref="id"/>
-		<xsd:attributeGroup ref="reactionFormat"/>
+        <xsd:attributeGroup ref="reactionFormat"/>
         <xsd:attributeGroup ref="ref"/>
         <xsd:attributeGroup ref="reactionRole"/>
         <xsd:attributeGroup ref="reactionType"/>
@@ -9055,16 +9055,16 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="atomMap"/>
         <xsd:attributeGroup ref="electronMap"/>
         <xsd:attributeGroup ref="bondMap"/>
-		<xsd:attributeGroup ref="yield">
-			<xsd:annotation>
-					<xsd:documentation>
-							<h:div class="specific">
-									<h:p>The yield of the reaction. Note that this lies in the range 0-1.</h:p>
-									</h:div>
+        <xsd:attributeGroup ref="yield">
+            <xsd:annotation>
+                    <xsd:documentation>
+                            <h:div class="specific">
+                                    <h:p>The yield of the reaction. Note that this lies in the range 0-1.</h:p>
+                                    </h:div>
 
-					</xsd:documentation>
-			</xsd:annotation>
-		</xsd:attributeGroup>
+                    </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attributeGroup>
 
     </xsd:complexType>
 </xsd:element><xsd:element name="reactionList" id="el.reactionList">
@@ -9097,66 +9097,66 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="ref"/>
     </xsd:complexType>
 </xsd:element><xsd:element name="reactionScheme" id="el.reactionScheme">
-	<xsd:annotation>
-		<xsd:documentation>
-			<h:div class="summary">A container for two or more related reactions and their relationships.</h:div>
-			<h:div class="description">
+    <xsd:annotation>
+        <xsd:documentation>
+            <h:div class="summary">A container for two or more related reactions and their relationships.</h:div>
+            <h:div class="description">
                 Where reactions are closely related (and often formally dependent on each other) they should be contained within the reactionStepList of a reactionScheme. The semantics which have informed this design include:
                 <h:ul>
                     <h:li>Steps within an organic synthesis.</h:li>
-					<h:li>Two or more individual (primitive) steps provding the detailed mechanism for an overall reaction.</h:li>
-					<h:li>Coupled or sequential reactions within biochemical pathways.</h:li>
-				</h:ul>
-				<h:p>This design is general because "reaction" is used in several ways. A biochemical pathway (e.g. oxidation of glucose to CO2 and water) involves many coupled enzyme reactions proceeding both in parallel and in sequence. Each of these steps ("reactions" in their own right) is itself complex and can include several mechanistics steps which are themselves reactions with products, reactants, etc. <h:tt>reactionScheme</h:tt> can therefore include reactionStepLists (with more reactionScheme children) which provide a more detailed view of the individual components.</h:p>
-				<h:p>Where a set of reactions are primitives...</h:p>
-			</h:div>
-			<h:div class="example" href="reactionScheme1.xml"/>
-			<h:div class="example" href="reactionScheme3.xml"/>
-			<h:div class="example" href="reactionScheme4a.xml"/>
-			<h:div class="example" href="reactionScheme4b.xml"/>
-		</xsd:documentation>
-	</xsd:annotation>
+                    <h:li>Two or more individual (primitive) steps provding the detailed mechanism for an overall reaction.</h:li>
+                    <h:li>Coupled or sequential reactions within biochemical pathways.</h:li>
+                </h:ul>
+                <h:p>This design is general because "reaction" is used in several ways. A biochemical pathway (e.g. oxidation of glucose to CO2 and water) involves many coupled enzyme reactions proceeding both in parallel and in sequence. Each of these steps ("reactions" in their own right) is itself complex and can include several mechanistics steps which are themselves reactions with products, reactants, etc. <h:tt>reactionScheme</h:tt> can therefore include reactionStepLists (with more reactionScheme children) which provide a more detailed view of the individual components.</h:p>
+                <h:p>Where a set of reactions are primitives...</h:p>
+            </h:div>
+            <h:div class="example" href="reactionScheme1.xml"/>
+            <h:div class="example" href="reactionScheme3.xml"/>
+            <h:div class="example" href="reactionScheme4a.xml"/>
+            <h:div class="example" href="reactionScheme4b.xml"/>
+        </xsd:documentation>
+    </xsd:annotation>
 
-	<xsd:complexType>
-		<xsd:annotation>
-			<xsd:documentation>
-				<h:div class="description">
-					<h:p>The semantics of the content model are</h:p>
-					<h:ul>
-						<h:li>metadataList for general metadata</h:li>
-						<h:li>label for classifying or describing the reaction (e.g. "hydrolysis")</h:li>
-						<h:li>identifier for unique identification. This could be a classification such as EC (enzyme commission) or an IChI-like string generated from the components.</h:li>
-						<h:li>these are followed by the possible components of the reaction and/or a reactionList of further details.</h:li>
-					</h:ul>
-				</h:div>
+    <xsd:complexType>
+        <xsd:annotation>
+            <xsd:documentation>
+                <h:div class="description">
+                    <h:p>The semantics of the content model are</h:p>
+                    <h:ul>
+                        <h:li>metadataList for general metadata</h:li>
+                        <h:li>label for classifying or describing the reaction (e.g. "hydrolysis")</h:li>
+                        <h:li>identifier for unique identification. This could be a classification such as EC (enzyme commission) or an IChI-like string generated from the components.</h:li>
+                        <h:li>these are followed by the possible components of the reaction and/or a reactionList of further details.</h:li>
+                    </h:ul>
+                </h:div>
 
-			</xsd:documentation>
-		</xsd:annotation>
+            </xsd:documentation>
+        </xsd:annotation>
 
-		<xsd:sequence>
-			<xsd:element ref="metadataList" minOccurs="0" maxOccurs="unbounded"/>
-			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element ref="label"/>
-				<xsd:element ref="name"/>
-				<xsd:element ref="identifier"/>
-			</xsd:choice>
-			<xsd:choice minOccurs="0" maxOccurs="unbounded">
-				<xsd:element ref="reaction"/>
-				<xsd:element ref="reactionStepList"/>
-				<xsd:element ref="reactionScheme"/>
-			</xsd:choice>
-		</xsd:sequence>
-		<xsd:attributeGroup ref="dictRef"/>
-		<xsd:attributeGroup ref="convention"/>
-		<xsd:attributeGroup ref="title"/>
-		<xsd:attributeGroup ref="id"/>
-		<xsd:attributeGroup ref="ref"/>
-		<xsd:attributeGroup ref="reactionRole"/>
-		<xsd:attributeGroup ref="reactionType"/>
-		<xsd:attributeGroup ref="state"/>
-		<xsd:attributeGroup ref="reactionFormat"/>
+        <xsd:sequence>
+            <xsd:element ref="metadataList" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="label"/>
+                <xsd:element ref="name"/>
+                <xsd:element ref="identifier"/>
+            </xsd:choice>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="reaction"/>
+                <xsd:element ref="reactionStepList"/>
+                <xsd:element ref="reactionScheme"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attributeGroup ref="dictRef"/>
+        <xsd:attributeGroup ref="convention"/>
+        <xsd:attributeGroup ref="title"/>
+        <xsd:attributeGroup ref="id"/>
+        <xsd:attributeGroup ref="ref"/>
+        <xsd:attributeGroup ref="reactionRole"/>
+        <xsd:attributeGroup ref="reactionType"/>
+        <xsd:attributeGroup ref="state"/>
+        <xsd:attributeGroup ref="reactionFormat"/>
 
-	</xsd:complexType>
+    </xsd:complexType>
 </xsd:element><xsd:element name="reactionStep" id="el.reactionStep">
     <xsd:annotation>
         <xsd:documentation>
@@ -9172,10 +9172,10 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                     </h:ul>.
           A reactionStep normally contains a single reaction or reactionScheme. It can have attributes such as yield and ratio which can be used by the parent reactionStepList.
         </h:p>
-				</h:div>
-						<h:div class="example" href="reactionStepList4.xml"/>
-						<h:div class="example" href="reactionStepList5a.xml"/>
-						<h:div class="example" href="reactionStepList5b.xml"/>
+                </h:div>
+                        <h:div class="example" href="reactionStepList4.xml"/>
+                        <h:div class="example" href="reactionStepList5a.xml"/>
+                        <h:div class="example" href="reactionStepList5b.xml"/>
         </xsd:documentation>
     </xsd:annotation>
 
@@ -9204,26 +9204,26 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="id"/>
         <xsd:attributeGroup ref="ref"/>
         <xsd:attributeGroup ref="yield">
-					<xsd:annotation>
-							<xsd:documentation>
-									<h:div class="specific">
-											<h:p>The yield of the reactionStep. Note that this lies in the range 0-1.</h:p>
-											</h:div>
-	
-							</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attributeGroup>
+                    <xsd:annotation>
+                            <xsd:documentation>
+                                    <h:div class="specific">
+                                            <h:p>The yield of the reactionStep. Note that this lies in the range 0-1.</h:p>
+                                            </h:div>
+    
+                            </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
         <xsd:attributeGroup ref="ratio">
-					<xsd:annotation>
-							<xsd:documentation>
-									<h:div class="specific">
-											<h:p>The ratio of this step to one or more sibling steps. Note that this lies in the range 0-1. It is meaningless to use this unless there are siblings, in which case it refers to the relative molar fluxes through each. The "percentage yields" will need to be transformed to this range. There is no requirement that the sum of fluxes through a group of siblings sum to 1.0, though they should not sum to more.</h:p>
-											</h:div>
-	
-							</xsd:documentation>
-					</xsd:annotation>
-				</xsd:attributeGroup>
-				
+                    <xsd:annotation>
+                            <xsd:documentation>
+                                    <h:div class="specific">
+                                            <h:p>The ratio of this step to one or more sibling steps. Note that this lies in the range 0-1. It is meaningless to use this unless there are siblings, in which case it refers to the relative molar fluxes through each. The "percentage yields" will need to be transformed to this range. There is no requirement that the sum of fluxes through a group of siblings sum to 1.0, though they should not sum to more.</h:p>
+                                            </h:div>
+    
+                            </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
+                
     </xsd:complexType>
 </xsd:element><xsd:element name="reactionStepList" id="el.reactionStepList">
     <xsd:annotation>
@@ -9240,7 +9240,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                     </h:ul>.
           A reactionStepList contains reactionSteps (each of which contains reactions and/or reactionSchemes (e.g. where part of the process is known in greater detail)). It may not directly contain child reactionStepLists.
         </h:p>
-				<h:p>The child reactionSteps can have attributes such as yield and ratio which describe the relationship of the component steps.</h:p>
+                <h:p>The child reactionSteps can have attributes such as yield and ratio which describe the relationship of the component steps.</h:p>
                 <h:p>Guidance on use: <h:ul>
  <h:li>reactionScheme describes a complex of reactions with metadata, one (or more) overall reactions and a reactionStepList with the overall component reactions.</h:li>
 <h:li> reactionStepList aggregates and structures the individual subreactions.
@@ -9249,8 +9249,8 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
 </h:li>
 </h:ul>
 </h:p></h:div>
-						<h:div class="example" href="reactionStepList1.xml"/>
-						<h:div class="example" href="reactionStepList3.xml"/>
+                        <h:div class="example" href="reactionStepList1.xml"/>
+                        <h:div class="example" href="reactionStepList3.xml"/>
         </xsd:documentation>
     </xsd:annotation>
 
@@ -9278,13 +9278,13 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="id"/>
         <xsd:attributeGroup ref="ref"/>
         <xsd:attributeGroup ref="type"/>
-				<xsd:attributeGroup ref="reactionFormat"/>
+                <xsd:attributeGroup ref="reactionFormat"/>
     </xsd:complexType>
 </xsd:element><xsd:element name="reactiveCentre" id="el.reactiveCentre">
     <xsd:annotation>
         <xsd:documentation>
             <h:div class="summary">The reactiveCentre in a reaction.</h:div>
-            <h:div class="description">This describes the Set(s) of bonds and atoms involved in the reaction. The semantics are flexible, but a common usage would be to create AtomSet(s) and bondSet(s) mapping to groups which undergo changes.</h:div>
+            <h:div class="description">This describes the set(s) of bonds and atoms involved in the reaction. The semantics are flexible, but a common usage would be to create atomSet(s) and bondSet(s) mapping to groups which undergo changes.</h:div>
             <h:div class="example" href="reactiveCentre1.xml"/>
         </xsd:documentation>
     </xsd:annotation>
@@ -9430,33 +9430,33 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <xsd:attributeGroup ref="max"/>
                 <xsd:attributeGroup ref="ref"/>
                 <xsd:attributeGroup ref="units"/>
-		        <xsd:attributeGroup ref="constantToSI">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
-		        <xsd:attributeGroup ref="multiplierToSI">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
-		        <xsd:attributeGroup ref="unitType">
-		            <xsd:annotation>
-		                <xsd:documentation>
-		                    <h:div class="specific">Alternative to units</h:div>
-		                    <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
-		                    <h:div class="curation">2005-10-26: added</h:div>
-		                </xsd:documentation>
-		            </xsd:annotation>
-		        </xsd:attributeGroup>
+                <xsd:attributeGroup ref="constantToSI">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with unitType</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
+                <xsd:attributeGroup ref="multiplierToSI">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with unitType</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
+                <xsd:attributeGroup ref="unitType">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            <h:div class="specific">Alternative to units</h:div>
+                            <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
+                            <h:div class="curation">2005-10-26: added</h:div>
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attributeGroup>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
@@ -9896,18 +9896,18 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                elements (<h:a href="el.array">array</h:a> or <h:a href="el.list">list</h:a>of 
                size <h:tt>rows</h:tt> data. This is the "normal" orientation of data tables
                but the table display could be transposed by XSLT transformation if required.
-	       Access is to columns, and thence to the data within them. DataTyping, delimiters,
-	       etc are delegated to the arrays or lists, which must all be of the same size.
-	       </li>
-	       <li>rows: with explicit <tt>trow</tt>s. The metadata is carried in a <tt>theader</tt>
-	       element of size <tt>cols</tt>. Within each trow the data are contained in tcells</li>
-	       <li>content: The metadata is carried in a <tt>theader</tt>
-	       element of size <tt>cols</tt>. data are contained in a single <tt>tableContent</tt> 
-	       with columns moving fastest. Within the content the data are whitespace (or delimiter) separated.</li>
-	       </ul>
-	        For 
-	       verification it is recommended that tables carry <h:tt>rows</h:tt> and <h:tt>columns</h:tt> attributes.
-	       The type of the tables should also be carried in a <tt xmlns="">tableType</tt>attribute&gt;
+           Access is to columns, and thence to the data within them. DataTyping, delimiters,
+           etc are delegated to the arrays or lists, which must all be of the same size.
+           </li>
+           <li>rows: with explicit <tt>trow</tt>s. The metadata is carried in a <tt>theader</tt>
+           element of size <tt>cols</tt>. Within each trow the data are contained in tcells</li>
+           <li>content: The metadata is carried in a <tt>theader</tt>
+           element of size <tt>cols</tt>. data are contained in a single <tt>tableContent</tt> 
+           with columns moving fastest. Within the content the data are whitespace (or delimiter) separated.</li>
+           </ul>
+            For 
+           verification it is recommended that tables carry <h:tt>rows</h:tt> and <h:tt>columns</h:tt> attributes.
+           The type of the tables should also be carried in a <tt xmlns="">tableType</tt>attribute&gt;
                </h:p>
                </h:div>
                
@@ -9921,46 +9921,46 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                <h:th>@columns</h:th>
                <h:th>actual columnCount</h:th>
                <h:th>tableHeader</h:th>
-				<h:th>arrayList</h:th>
-				<h:th>tableRowList</h:th>
-				<h:th>tableContent</h:th>
-				</h:tr>
+                <h:th>arrayList</h:th>
+                <h:th>tableRowList</h:th>
+                <h:th>tableContent</h:th>
+                </h:tr>
                <h:tr>
                <h:td>column based</h:td>
                <h:td>columnBased</h:td>
                <h:td>recommended</h:td>
                <h:td>./arrayList/@size or arrayList/*[self::array or self::list]/@size</h:td>
                <h:td>optional</h:td>
-               <h:td>./arrayList/@size or Count(arrayList/*[self::array or self::list])</h:td>
+               <h:td>./arrayList/@size or count(arrayList/*[self::array or self::list])</h:td>
                <h:td>forbidden</h:td>
-				<h:td>required</h:td>
-				<h:td>forbidden</h:td>
-				<h:td>forbidden</h:td>
-				</h:tr>
+                <h:td>required</h:td>
+                <h:td>forbidden</h:td>
+                <h:td>forbidden</h:td>
+                </h:tr>
                <h:tr>
                <h:td>row based</h:td>
                <h:td>rowBased</h:td>
                <h:td>recommended</h:td>
-               <h:td>./tableRowList/@size or Count(tableRowList/tableRow)</h:td>
+               <h:td>./tableRowList/@size or count(tableRowList/tableRow)</h:td>
                <h:td>recommended</h:td>
-               <h:td>Count(tableHeader/tableHeaderCell) or Count(tableRowList/tableRow/tableCell)</h:td>
-				<h:td>required</h:td>
+               <h:td>count(tableHeader/tableHeaderCell) or count(tableRowList/tableRow/tableCell)</h:td>
+                <h:td>required</h:td>
                <h:td>forbidden</h:td>
-				<h:td>required</h:td>
-				<h:td>forbidden</h:td>
-				</h:tr>
+                <h:td>required</h:td>
+                <h:td>forbidden</h:td>
+                </h:tr>
                <h:tr>
                <h:td>content based</h:td>
                <h:td>contentBased</h:td>
                <h:td>required</h:td>
                <h:td>only by analysing tde table</h:td>
                <h:td>recommended</h:td>
-               <h:td>Count(tableHeader/tableHeaderCell)</h:td>
-				<h:td>required</h:td>
+               <h:td>count(tableHeader/tableHeaderCell)</h:td>
+                <h:td>required</h:td>
                <h:td>forbidden</h:td>
-				<h:td>forbidden</h:td>
-				<h:td>required</h:td>
-				</h:tr>
+                <h:td>forbidden</h:td>
+                <h:td>required</h:td>
+                </h:tr>
                </h:table>
                </h:div>
             <h:div class="example" href="table1.xml"/>
@@ -10048,11 +10048,11 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
       <xsd:simpleContent>
         <xsd:extension base="xsd:string">
           <xsd:attributeGroup ref="title"/>
-	      <xsd:attributeGroup ref="id"/>
-	      <xsd:attributeGroup ref="delimiter"/>
-	      <xsd:attributeGroup ref="convention"/>
-	      <xsd:attributeGroup ref="dictRef"/>
-	    </xsd:extension>
+          <xsd:attributeGroup ref="id"/>
+          <xsd:attributeGroup ref="delimiter"/>
+          <xsd:attributeGroup ref="convention"/>
+          <xsd:attributeGroup ref="dictRef"/>
+        </xsd:extension>
       </xsd:simpleContent>
    </xsd:complexType>
 </xsd:element><xsd:element name="tableHeader" id="el.tableHeader">
@@ -10104,33 +10104,33 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                <xsd:attributeGroup ref="dictRef"/>
                <xsd:attributeGroup ref="dataType"/>
                <xsd:attributeGroup ref="units"/>
-	        <xsd:attributeGroup ref="constantToSI">
-	            <xsd:annotation>
-	                <xsd:documentation>
-	                    <h:div class="specific">Alternative to units</h:div>
-	                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-	                    <h:div class="curation">2005-10-26: added</h:div>
-	                </xsd:documentation>
-	            </xsd:annotation>
-	        </xsd:attributeGroup>
-	        <xsd:attributeGroup ref="multiplierToSI">
-	            <xsd:annotation>
-	                <xsd:documentation>
-	                    <h:div class="specific">Alternative to units</h:div>
-	                    <h:div class="description">Must be used in conjunction with unitType</h:div>
-	                    <h:div class="curation">2005-10-26: added</h:div>
-	                </xsd:documentation>
-	            </xsd:annotation>
-	        </xsd:attributeGroup>
-	        <xsd:attributeGroup ref="unitType">
-	            <xsd:annotation>
-	                <xsd:documentation>
-	                    <h:div class="specific">Alternative to units</h:div>
-	                    <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
-	                    <h:div class="curation">2005-10-26: added</h:div>
-	                </xsd:documentation>
-	            </xsd:annotation>
-	        </xsd:attributeGroup>
+            <xsd:attributeGroup ref="constantToSI">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="specific">Alternative to units</h:div>
+                        <h:div class="description">Must be used in conjunction with unitType</h:div>
+                        <h:div class="curation">2005-10-26: added</h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attributeGroup>
+            <xsd:attributeGroup ref="multiplierToSI">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="specific">Alternative to units</h:div>
+                        <h:div class="description">Must be used in conjunction with unitType</h:div>
+                        <h:div class="curation">2005-10-26: added</h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attributeGroup>
+            <xsd:attributeGroup ref="unitType">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="specific">Alternative to units</h:div>
+                        <h:div class="description">Must be used in conjunction with multiplierToSI and/or constantToSI</h:div>
+                        <h:div class="curation">2005-10-26: added</h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:attributeGroup>
     </xsd:complexType>
 </xsd:element><xsd:element name="tableRow" id="el.tableRow">
     <xsd:annotation>
@@ -10140,7 +10140,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
             At present all tableRows in a tableRowList must have the same count of tableCells
             and their semantics must correspond to the tableHeader in the table. No cells can be omitted
             and there is no spanning of cells. There is no need for a size attribute as the count is simply
-            <h:tt> Count(tableCell)</h:tt>. 
+            <h:tt> count(tableCell)</h:tt>. 
             </h:div>
             <h:div class="example" href="table5.xml"/>
             <h:div class="example" href="table6.xml"/>
@@ -10171,9 +10171,9 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
             <xsd:element ref="tableRow" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
           <xsd:attributeGroup ref="title"/>
-	      <xsd:attributeGroup ref="id"/>
+          <xsd:attributeGroup ref="id"/>
           <xsd:attributeGroup ref="convention"/>
-	      <xsd:attributeGroup ref="dictRef"/>
+          <xsd:attributeGroup ref="dictRef"/>
    </xsd:complexType>
 </xsd:element><xsd:element name="torsion" id="el.torsion">
     <xsd:annotation>
@@ -10264,22 +10264,22 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         (e.g. calorie has joule as an SI parent). </h:li>
                     <h:li>
                     Constructed units. These use a syntax of the form:
-		                <h:pre>
-		                  &lt;unit id="g.s-1" name="gram per second" 
-		                    unitType="myUnitType:massPerTime"&gt;
-		                    &lt;unit units="units:g" power="1"/&gt;
-		                    &lt;unit units="siUnits:s" power="-1"/&gt;
-		                  &lt;/unit&gt;
-		                </h:pre>
-		                This defines a new unit (g.s-1) which is composed from two 
-		                existing units (units:g and siUnits:s) to create a new unit. The
-		                conversion to SI is computed from the two child units and may be 
-		                added as a 'multiplierToSI' attribute. Only siUnits or units with
-		                'multiplierToSI' can be used as child units; 'constantToSI cannot
-		                be used yet. If the new unit points to a unitType then the dimension
-		                can be checked. Thus if the published dimension of massPerTime does not
-		                agree with mass.Length-1 an error is throwable.
-		                Alternatively a new unitType can be added as a child.
+                        <h:pre>
+                          &lt;unit id="g.s-1" name="gram per second" 
+                            unitType="myUnitType:massPerTime"&gt;
+                            &lt;unit units="units:g" power="1"/&gt;
+                            &lt;unit units="siUnits:s" power="-1"/&gt;
+                          &lt;/unit&gt;
+                        </h:pre>
+                        This defines a new unit (g.s-1) which is composed from two 
+                        existing units (units:g and siUnits:s) to create a new unit. The
+                        conversion to SI is computed from the two child units and may be 
+                        added as a 'multiplierToSI' attribute. Only siUnits or units with
+                        'multiplierToSI' can be used as child units; 'constantToSI cannot
+                        be used yet. If the new unit points to a unitType then the dimension
+                        can be checked. Thus if the published dimension of massPerTime does not
+                        agree with mass.length-1 an error is throwable.
+                        Alternatively a new unitType can be added as a child.
                     </h:li>
                 </h:ul>
                 <h:p>
@@ -10289,7 +10289,7 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                 <h:li>parentSI. This points to the ID of a parent SI unit. If this ID is the 
                 same as the current unit the implication is that this is an SI unit. 
                 </h:li>
-                <h:li>isSI. a bool indicating whether the current unit is SI. 
+                <h:li>isSI. a boolean indicating whether the current unit is SI. 
                 </h:li>
                 <h:li>multiplierToSI and constantToSI. If these are 1.0 and 0.0 (or missing)
                 the implication is that this unit is SI. However this is fragile as units can 
@@ -10316,61 +10316,61 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
             <xsd:element ref="annotation"/>
             <xsd:element ref="definition" minOccurs="0" maxOccurs="1"/>
             <xsd:element ref="unit" minOccurs="0" maxOccurs="unbounded">
-    		    <xsd:annotation>
-			        <xsd:documentation>
-			            <h:div class="summary">Child unit used to build new unit.</h:div>
-			            <h:div class="description">
-			                <h:p>These children must have 'units' and 'power' attributes.</h:p></h:div>
-			        </xsd:documentation>
-			    </xsd:annotation>
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="summary">Child unit used to build new unit.</h:div>
+                        <h:div class="description">
+                            <h:p>These children must have 'units' and 'power' attributes.</h:p></h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
             </xsd:element>
             <xsd:element ref="unitType" minOccurs="0" maxOccurs="1">
-    		    <xsd:annotation>
-			        <xsd:documentation>
-			            <h:div class="summary">Child unitType describing type of new unit.</h:div>
-			            <h:div class="description">
-			                <h:p>This can be added by the author (in which case they are
-			                responsible for checking consistency) or calculated by the software
-			                from the child units.</h:p></h:div>
-			        </xsd:documentation>
-			    </xsd:annotation>
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="summary">Child unitType describing type of new unit.</h:div>
+                        <h:div class="description">
+                            <h:p>This can be added by the author (in which case they are
+                            responsible for checking consistency) or calculated by the software
+                            from the child units.</h:p></h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
             </xsd:element>
         </xsd:choice>
 
         <xsd:attributeGroup ref="id"/>
         <xsd:attributeGroup ref="units">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Reference to a unit.</h:div>
-		            <h:div class="description">
-		                <h:p>This is used for the identification of child units when 
-		                new units are composed from existing ones. Athough the syntax looks
-		                unusual it takes advantage of the tools for resolving units. See above for
-		                syntax. 
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Reference to a unit.</h:div>
+                    <h:div class="description">
+                        <h:p>This is used for the identification of child units when 
+                        new units are composed from existing ones. Athough the syntax looks
+                        unusual it takes advantage of the tools for resolving units. See above for
+                        syntax. 
 </h:p></h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="title"/>
         <xsd:attributeGroup ref="abbreviation">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Abbreviation for the unit.</h:div>
-		            <h:div class="description">
-		                <h:p>This may be obsolete and symbol should be preferred.</h:p></h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Abbreviation for the unit.</h:div>
+                    <h:div class="description">
+                        <h:p>This may be obsolete and symbol should be preferred.</h:p></h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="symbol">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Symbol for the unit.</h:div>
-		            <h:div class="description">
-		                <h:p>This may be used for typographical display but NOT for identification
-		                as there is considerable variation in use.</h:p></h:div>
-		            <h:div class="curation">2006-01-29: PMR. Added attribute.</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Symbol for the unit.</h:div>
+                    <h:div class="description">
+                        <h:p>This may be used for typographical display but NOT for identification
+                        as there is considerable variation in use.</h:p></h:div>
+                    <h:div class="curation">2006-01-29: PMR. Added attribute.</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="name"/>
         <xsd:attributeGroup ref="parentSI"/>
@@ -10382,13 +10382,13 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="constantToSI"/>
         
         <xsd:attributeGroup ref="power">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="summary">Power of unit used to create new one.</h:div>
-		            <h:div class="description">
-		                <h:p>Only allowed on child units</h:p></h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="summary">Power of unit used to create new one.</h:div>
+                    <h:div class="description">
+                        <h:p>Only allowed on child units</h:p></h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
     </xsd:complexType>
 </xsd:element><xsd:element name="unitList" id="el.unitList">
@@ -10412,12 +10412,12 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:sequence>
             <xsd:element ref="metadataList" minOccurs="0" maxOccurs="unbounded"/>
             <xsd:element ref="unitType" minOccurs="0" maxOccurs="unbounded">
-			    <xsd:annotation>
-			        <xsd:documentation>
-			            <h:div class="deprecated">2006-01-28: PMR. use unitTypeList.</h:div>
-			        </xsd:documentation>
-			    </xsd:annotation>
-			</xsd:element>
+                <xsd:annotation>
+                    <xsd:documentation>
+                        <h:div class="deprecated">2006-01-28: PMR. use unitTypeList.</h:div>
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element ref="unit" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
         <xsd:attributeGroup ref="title"/>
@@ -10425,11 +10425,11 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
         <xsd:attributeGroup ref="convention"/>
         <xsd:attributeGroup ref="dictRef"/>
         <xsd:attributeGroup ref="unitListType">
-		    <xsd:annotation>
-		        <xsd:documentation>
-		            <h:div class="deprecated">2006-01-28: PMR. use unitTypeList.</h:div>
-		        </xsd:documentation>
-		    </xsd:annotation>
+            <xsd:annotation>
+                <xsd:documentation>
+                    <h:div class="deprecated">2006-01-28: PMR. use unitTypeList.</h:div>
+                </xsd:documentation>
+            </xsd:annotation>
         </xsd:attributeGroup>
         <xsd:attributeGroup ref="namespace"/>
         <xsd:attributeGroup ref="siNamespace"/>

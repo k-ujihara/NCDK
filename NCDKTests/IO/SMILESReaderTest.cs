@@ -28,13 +28,13 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the reading MDL mol files using one test file.
-     *
-     * @cdk.module test-smiles
-     *
-     * @see org.openscience.cdk.io.MDLReader
-     */
+    /// <summary>
+    /// TestCase for the reading MDL mol files using one test file.
+    ///
+    // @cdk.module test-smiles
+    ///
+    // @see org.openscience.cdk.io.MDLReader
+    /// </summary>
     [TestClass()]
     public class SMILESReaderTest : SimpleChemObjectReaderTest
     {
@@ -55,7 +55,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
             IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
             Assert.AreEqual(8, som.Count);
@@ -66,7 +66,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
             IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
             string name = null;
@@ -80,7 +80,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.Smiles.smiles.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
             IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
             IAtomContainer thisMol = som[1];
@@ -92,7 +92,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.Smiles.test3.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             SMILESReader reader = new SMILESReader(ins);
             IAtomContainerSet<IAtomContainer> som = reader.Read(new AtomContainerSet<IAtomContainer>());
             Assert.AreEqual(5, som.Count);

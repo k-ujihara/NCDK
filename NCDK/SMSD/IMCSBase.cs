@@ -26,62 +26,62 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD
 {
-    /**
-     * Interface that holds basic core interface for all MCS algorithm.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface that holds basic core interface for all MCS algorithm.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface IMCSBase
     {
-        /**
-         * Initialise the query and target molecule.
-         *
-         * @param source source molecule
-         * @param target target molecule
-         * @throws CDKException
-         *
-         */
+        /// <summary>
+        /// Initialise the query and target molecule.
+        ///
+        /// <param name="source">source molecule</param>
+        /// <param name="target">target molecule</param>
+        // @throws CDKException
+        ///
+        /// </summary>
         void Set(MolHandler source, MolHandler target);
 
-        /**
-         * Initialise the query and target molecule.
-         *
-         * @param source source molecule
-         * @param target target molecule
-         * @throws CDKException
-         *
-         */
+        /// <summary>
+        /// Initialise the query and target molecule.
+        ///
+        /// <param name="source">source molecule</param>
+        /// <param name="target">target molecule</param>
+        // @throws CDKException
+        ///
+        /// </summary>
         void Set(IQueryAtomContainer source, IAtomContainer target);
 
-        /**
-         * Returns all plausible mappings between query and target molecules.
-         * Each map in the list has atom-atom equivalence of the mappings
-         * between query and target molecule i.e. map.Key for the query
-         * and map.Value for the target molecule
-         * @return All possible MCS atom Mappings
-         */
+        /// <summary>
+        /// Returns all plausible mappings between query and target molecules.
+        /// Each map in the list has atom-atom equivalence of the mappings
+        /// between query and target molecule i.e. map.Key for the query
+        /// and map.Value for the target molecule
+        /// <returns>All possible MCS atom Mappings</returns>
+        /// </summary>
         IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping();
 
-        /**
-         * Returns all plausible mappings between query and target molecules.
-         * Each map in the list has atom-atom equivalence index of the mappings
-         * between query and target molecule i.e. map.Key for the query
-         * and map.Value for the target molecule
-         * @return All possible MCS Mapping Index
-         */
+        /// <summary>
+        /// Returns all plausible mappings between query and target molecules.
+        /// Each map in the list has atom-atom equivalence index of the mappings
+        /// between query and target molecule i.e. map.Key for the query
+        /// and map.Value for the target molecule
+        /// <returns>All possible MCS Mapping Index</returns>
+        /// </summary>
         IList<IDictionary<int, int>> GetAllMapping();
 
-        /**
-         * Returns one of the best matches with atoms mapped.
-         * @return Best Atom Mapping
-         */
+        /// <summary>
+        /// Returns one of the best matches with atoms mapped.
+        /// <returns>Best Atom Mapping</returns>
+        /// </summary>
         IDictionary<IAtom, IAtom> GetFirstAtomMapping();
 
-        /**
-         * Returns one of the best matches with atom indexes mapped.
-         * @return Best Mapping Index
-         */
+        /// <summary>
+        /// Returns one of the best matches with atom indexes mapped.
+        /// <returns>Best Mapping Index</returns>
+        /// </summary>
         IDictionary<int, int> GetFirstMapping();
     }
 }

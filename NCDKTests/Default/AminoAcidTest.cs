@@ -22,24 +22,18 @@
  *  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * TestCase for the AminoAcid class.
-     *
-     * @cdk.module test-data
-     *
-     * @author  Edgar Luttman <edgar@uni-paderborn.de>
-     * @cdk.created 2001-08-09
-     */
-	[TestClass()]
+    /// <summary>
+    /// TestCase for the AminoAcid class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @author  Edgar Luttman <edgar@uni-paderborn.de>
+    // @cdk.created 2001-08-09
+    /// </summary>
+    [TestClass()]
     public class AminoAcidTest
         : AbstractAminoAcidTest
     {

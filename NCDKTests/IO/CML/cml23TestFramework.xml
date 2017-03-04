@@ -15,48 +15,48 @@
     class that tests that string.    
   -->
   
-  <!-- CML23FragmentsTest.TestAtomId() -->
+  <!-- CML23FragmentsTest.testAtomId() -->
   <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
   
-  <!-- CML23FragmentsTest.TestAtomId3() -->
+  <!-- CML23FragmentsTest.testAtomId3() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestAtomElementType3() -->
+  <!-- CML23FragmentsTest.testAtomElementType3() -->
   <molecule id='m1'><atomArray atomID='a1' elementType='C'/></molecule>
   
-  <!-- CML23FragmentsTest.TestBond() -->
+  <!-- CML23FragmentsTest.testBond() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestBond4() -->
+  <!-- CML23FragmentsTest.testBond4() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
     <bondArray atomRef1='a1 a1' atomRef2='a2 a3' bondID='b1 b2'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestBond5() -->
+  <!-- CML23FragmentsTest.testBond5() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2 a3'/>
     <bondArray atomRef1='a1 a1' atomRef2='a2 a3' order='1 1'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestBondId() -->
+  <!-- CML23FragmentsTest.testBondId() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
     <bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestBondAromatic() -->
+  <!-- CML23FragmentsTest.testBondAromatic() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2'/>
     <bondArray atomRef1='a1' atomRef2='a2' order='A'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestBondAromatic2() -->
+  <!-- CML23FragmentsTest.testBondAromatic2() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2'/>
     <bondArray>
@@ -66,28 +66,28 @@
     </bondArray>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestList() -->
+  <!-- CML23FragmentsTest.testList() -->
   <list> 
     <molecule id='m1'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
     <molecule id='m2'><atomArray><atom id='a1'/><atom id='a2'/></atomArray><bondArray><bond id='b1' atomRefs2='a1 a2'/></bondArray></molecule>
   </list>
   
-  <!-- CML23FragmentsTest.TestCoordinates2D() -->
+  <!-- CML23FragmentsTest.testCoordinates2D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' x2='0.0 0.1' y2='1.2 1.3'/>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestCoordinates3D() -->
+  <!-- CML23FragmentsTest.testCoordinates3D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' x3='0.0 0.1' y3='1.2 1.3' z3='2.1 2.5'/>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestFractional3D() -->
+  <!-- CML23FragmentsTest.testFractional3D() -->
   <molecule id='m1'>
     <atomArray atomID='a1 a2' xFract='0.0 0.1' yFract='1.2 1.3' zFract='2.1 2.5'/>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestMoleculeId() -->
+  <!-- CML23FragmentsTest.testMoleculeId() -->
   <molecule id='m1'><atomArray><atom id='a1'/></atomArray></molecule>
 
   <!-- Not tested yet -->
@@ -102,7 +102,7 @@
     <atom id='a1' elementType="C" isotopeNumber="13"/>
   </atomArray></molecule>
 
-  <!-- CML23FragmentsTest.TestQSAROutput() -->
+  <!-- CML23FragmentsTest.testQSAROutput() -->
   <molecule id="m1" xmlns="http://www.xml-cml.org/schema">
     <atomArray>
       <atom id="a1" elementType="C" formalCharge="0" hydrogenCount="0"/>
@@ -125,7 +125,7 @@
         convention="qsar:DescriptorValue">
         <metadataList>
           <metadata dictRef="qsar:specificationReference" content="qsar:weight"/>
-          <metadata dictRef="qsar:implementationTitle" content="NCDK.QSAR.Descriptors.Atomic.WeightDescriptor"/>
+          <metadata dictRef="qsar:implementationTitle" content="org.openscience.cdk.qsar.descriptors.atomic.WeightDescriptor"/>
           <metadata dictRef="qsar:implementationIdentifier" content="$Id$"/>
           <metadata dictRef="qsar:implementationVendor" content="The Chemistry Development Kit"/>
           <metadataList title="qsar:descriptorParameters">
@@ -137,7 +137,7 @@
     </propertyList>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestCrystal() -->
+  <!-- CML23FragmentsTest.testCrystal() -->
   <molecule id="crystal1">
     <crystal z="4">
       <scalar id="sc1" title="a" errorValue="0.001" units="units:angstrom">4.500</scalar>
@@ -157,43 +157,43 @@
     </atomArray>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestName() -->
+  <!-- CML23FragmentsTest.testName() -->
   <molecule id='m1'>
     <name>acetic acid</name>
     <atomArray atomID='a1 a2 a3'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestInChI() -->
+  <!-- CML23FragmentsTest.testInChI() -->
   <molecule id='m1'>
     <identifier convention='iupac:inchi' value='InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)'/>
     <atomArray atomID='a1 a2 a3'/>
   </molecule>
 
-  <!-- CML23FragmentsTest.TestBondStereo() -->
+  <!-- CML23FragmentsTest.testBondStereo() -->
   <molecule id='m1'>
     <atomArray><atom id='a1'/><atom id='a2'/></atomArray>
     <bondArray><bond id='b1' atomRefs2='a1 a2'><bondStereo dictRef="cml:H"/></bond></bondArray>
   </molecule>
   
-  <!-- CML23FragmentsTest.TestReaction() -->
-	<reaction>
-		<reactantList>
-			<reactant>
-				<molecule id='react'/>
-			</reactant>
-		</reactantList>
-		<productList>
-			<product>
-				<molecule id='product'/>
-			</product>
-		</productList>
-		<substanceList>
-			<substance>
-				<molecule id='water'/>
-			</substance>
-		</substanceList>
-	</reaction>
-	
+  <!-- CML23FragmentsTest.testReaction() -->
+    <reaction>
+        <reactantList>
+            <reactant>
+                <molecule id='react'/>
+            </reactant>
+        </reactantList>
+        <productList>
+            <product>
+                <molecule id='product'/>
+            </product>
+        </productList>
+        <substanceList>
+            <substance>
+                <molecule id='water'/>
+            </substance>
+        </substanceList>
+    </reaction>
+    
   <!-- not tested yet -->
   <molecule>
     <formula concise="C 1 H 4" dictRef="mb:possibleMatch"/>

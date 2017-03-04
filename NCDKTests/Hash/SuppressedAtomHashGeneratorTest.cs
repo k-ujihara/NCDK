@@ -6,10 +6,10 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     public class SuppressedAtomHashGeneratorTest
     {
 

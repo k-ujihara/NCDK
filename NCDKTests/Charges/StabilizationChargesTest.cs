@@ -23,48 +23,41 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Charges
 {
-    /**
-    * TestSuite that runs all tests.
-    *
-    * @cdk.module test-charges
-*/
+    /// <summary>
+    /// TestSuite that runs all tests.
+    /// </summary>
+    // @cdk.module test-charges
     [TestClass()]
     public class StabilizationChargesTest : CDKTestCase
     {
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /**
-         * Constructor of the StabilizationChargesTest.
-         */
+        /// <summary>
+        /// Constructor of the StabilizationChargesTest.
+        /// </summary>
         public StabilizationChargesTest()
                 : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        /// </summary>
+        /// <returns>The test suite</returns>
         [TestMethod()]
         public void TestStabilizationCharges()
         {
-
             Assert.IsNotNull(new StabilizationCharges());
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         *  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        /// </summary>
+        /// <returns>The test suite</returns>
+        //  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
         public void TestCalculatePositive_IAtomContainer_IAtom()
         {
-
             StabilizationCharges sc = new StabilizationCharges();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -87,7 +80,6 @@ namespace NCDK.Charges
                     Assert.AreNotSame(0.0, sc.CalculatePositive(molecule, molecule.Atoms[i]));
                 else
                     Assert.AreEqual(0.0, sc.CalculatePositive(molecule, molecule.Atoms[i]), 0.001);
-
             }
         }
     }

@@ -2,30 +2,30 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula
 {
-    /**
-     * Class testing the IsotopeContainer class.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Class testing the IsotopeContainer class.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class IsotopeContainerTest : CDKTestCase
     {
 
         private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  Constructor for the IsotopeContainerTest object.
-         *
-         */
+        /// <summary>
+        ///  Constructor for the IsotopeContainerTest object.
+        ///
+        /// </summary>
         public IsotopeContainerTest()
                 : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsotopeContainer()
         {
@@ -33,11 +33,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoC);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsotopeContainer_IMolecularFormula_Double()
         {
@@ -50,11 +50,11 @@ namespace NCDK.Formula
             Assert.AreEqual(intensity, isoC.Intensity, 0.001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsotopeContainer_Double_double()
         {
@@ -67,11 +67,11 @@ namespace NCDK.Formula
             Assert.AreEqual(intensity, isoC.Intensity, 0.001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetFormula_IMolecularFormula()
         {
@@ -81,11 +81,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoC);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetMass_Double()
         {
@@ -94,11 +94,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoC);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetIntensity_Double()
         {
@@ -107,11 +107,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(isoC);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetFormula()
         {
@@ -121,11 +121,11 @@ namespace NCDK.Formula
             Assert.AreEqual(formula, isoC.Formula);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMass()
         {
@@ -136,11 +136,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIntensity()
         {
@@ -150,11 +150,11 @@ namespace NCDK.Formula
             Assert.AreEqual(intensity, isoC.Intensity, 0.001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestClone()
         {

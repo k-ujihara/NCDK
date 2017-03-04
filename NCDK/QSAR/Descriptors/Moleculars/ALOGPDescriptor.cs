@@ -350,7 +350,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             catch (Exception e)
             {
                 Debug.WriteLine("Problem in accessing atomic properties. Can't calculate");
-                throw new CDKException("Problem in accessing atomic properties. Can't calculate\n" + e.Message, e);
+                throw new CDKException($"Problem in accessing atomic properties. Can't calculate\n{e.Message}", e);
             }
         }
 

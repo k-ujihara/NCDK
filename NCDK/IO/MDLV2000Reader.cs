@@ -98,7 +98,7 @@ namespace NCDK.IO
                 new ReadOnlyCollection<string>(new[] {
                     "*", "A", "Q",
                     "L", "LP", "R", // XXX: not in spec
-                	"R#"});
+                    "R#"});
 
         public MDLV2000Reader()
             : this(new StringReader(""))
@@ -649,10 +649,7 @@ namespace NCDK.IO
 
         private static readonly IDictionary<IAtom, int> EmptyMap = new ReadOnlyDictionary<IAtom, int>(new Dictionary<IAtom, int>());
 
-#if TEST
-        public
-#endif
-            IAtom ReadAtomFast(string line, IChemObjectBuilder builder, int lineNum)
+        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, int lineNum)
         {
             return ReadAtomFast(line, builder, EmptyMap, lineNum);
         }
@@ -676,10 +673,7 @@ namespace NCDK.IO
         /// <param name="parities">map of atom parities for creation 0D stereochemistry</param>
         /// <param name="lineNum">the line number - for printing error messages</param>
         /// <returns>a new atom instance</returns>
-#if TEST
-        public
-#endif
-        IAtom ReadAtomFast(string line, IChemObjectBuilder builder, IDictionary<IAtom, int> parities, int lineNum)
+        internal IAtom ReadAtomFast(string line, IChemObjectBuilder builder, IDictionary<IAtom, int> parities, int lineNum)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths:
@@ -774,10 +768,7 @@ namespace NCDK.IO
         /// <param name="lineNum">the input line number</param>
         /// <returns>a new bond</returns>
         /// <exception cref="CDKException">if the input was malformed or didn't make sense</exception>
-#if TEST
-        public
-#endif
-        IBond ReadBondFast(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum)
+        internal IBond ReadBondFast(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int lineNum)
         {
             // The line may be truncated and it's checked in reverse at the specified
             // lengths. Absolutely required is atom indices, bond type and stereo.
@@ -861,10 +852,7 @@ namespace NCDK.IO
         /// <param name="container">the structure with atoms / bonds present</param>
         /// <param name="nAtoms">the number of atoms in the atoms block</param>
         /// <exception cref="">low-level IO error</exception>
-#if TEST
-        public
-#endif
-            void ReadPropertiesFast(TextReader input, IAtomContainer container, int nAtoms)
+        internal void ReadPropertiesFast(TextReader input, IAtomContainer container, int nAtoms)
         {
             string line;
 
@@ -1007,7 +995,7 @@ namespace NCDK.IO
                     // If present, the prefix and suffix can each contain 1 - 50 characters, from the set of printable 
                     // ASCII characters shown here
                     //                            
-                    //    !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+                    //    !"#$%&'()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
                     //                    
                     // In addition, both the prefix and suffix may contain leading and/or trailing and/or embedded 
                     // whitespace, included within the limit of 50 characters. These should be preserved when read.
@@ -1291,7 +1279,7 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Convert an MDL V2000 stereo value to the CDK {@link BondStereo}. The
+        /// Convert an MDL V2000 stereo value to the CDK <see cref="BondStereo"/>. The
         /// method should only be invoked for single/double bonds. If strict mode is
         /// enabled irrational bond stereo/types cause errors (e.g. up double bond).
         /// </summary>
@@ -1331,10 +1319,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="str">a string</param>
         /// <returns> the length when trailing white space is removed</returns>
-#if TEST
-        public
-#endif
-        static int GetLength(string str)
+        internal static int GetLength(string str)
         {
             int i = str.Length - 1;
             while (i >= 0 && str[i] == ' ')
@@ -1396,10 +1381,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="symbol">a symbol from the input</param>
         /// <returns>the symbol is a valid pseudo element</returns>
-#if TEST
-        public
-#endif
-            static bool IsPseudoElement(string symbol)
+        internal static bool IsPseudoElement(string symbol)
         {
             return PSEUDO_LABELS.Contains(symbol);
         }
@@ -1414,10 +1396,7 @@ namespace NCDK.IO
         /// <param name="offset">first character of the coordinate</param>
         /// <returns>the specified value</returns>
         /// <exception cref="CDKException">the coordinates specification was not valid</exception>
-#if TEST
-        public
-#endif
-        static double ReadMDLCoordinate(string line, int offset)
+        internal static double ReadMDLCoordinate(string line, int offset)
         {
             // to be valid the decimal should be at the fifth index (4 sig fig)
             if (line[offset + 5] != '.') throw new CDKException("invalid coordinate specification");
@@ -1598,10 +1577,7 @@ namespace NCDK.IO
         /// <param name="index">atom index to replace</param>
         /// <param name="label">the label for the atom</param>
         /// <seealso cref="IPseudoAtom.Label"/>
-#if TEST
-        public
-#endif
-            static void Label(IAtomContainer container, int index, string label)
+        internal static void Label(IAtomContainer container, int index, string label)
         {
             IAtom atom = container.Atoms[index];
             IPseudoAtom pseudoAtom = atom is IPseudoAtom ? (IPseudoAtom)atom : container.Builder
@@ -2230,10 +2206,7 @@ namespace NCDK.IO
         /// <param name="input">input source</param>
         /// <param name="container">the container</param>
         /// <exception cref="">an error occur whilst reading the input</exception>
-#if TEST
-        public
-#endif
-            static void ReadNonStructuralData(TextReader input, IAtomContainer container)
+        internal static void ReadNonStructuralData(TextReader input, IAtomContainer container)
         {
 
             string line, header = null;
@@ -2280,10 +2253,7 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="line">an input line</param>
         /// <returns>the field name</returns>
-#if TEST
-        public
-#endif
-        static string DataHeader(string line)
+        internal static string DataHeader(string line)
         {
             if (line.Length > 2 && line[0] != '>' && line[1] != ' ') return null;
             if (line.Length < 2)
@@ -2309,10 +2279,7 @@ namespace NCDK.IO
         /// <summary>
         /// Enumeration of property keys that can be specified in the V2000 property block.
         /// </summary>
-#if TEST
-        public
-#endif        
-        sealed class PropertyKey
+        internal sealed class PropertyKey
         {
             /// <summary>Atom Alias.</summary>
             public static readonly PropertyKey ATOM_ALIAS = new PropertyKey("ATOM_ALIAS");
@@ -2491,10 +2458,10 @@ namespace NCDK.IO
             }
 
             /// <summary>
-	        /// Determine the property key of the provided line.
-        	/// </summary>
-	        /// <param name="line">an property line</param>
-	        /// <returns>the key (defaults to <see cref="Unknown"/>)</returns>
+            /// Determine the property key of the provided line.
+            /// </summary>
+            /// <param name="line">an property line</param>
+            /// <returns>the key (defaults to <see cref="Unknown"/>)</returns>
             public static PropertyKey Of(string line)
             {
                 if (line.Length < 5) return Unknown;
@@ -2528,10 +2495,7 @@ namespace NCDK.IO
         /// <summary>
         /// Defines the version of the CTab.
         /// </summary>
-#if TEST
-        public
-#endif
-        class CTabVersion
+        internal class CTabVersion
         {
             public static readonly CTabVersion V2000 = new CTabVersion("V2000");
             public static readonly CTabVersion V3000 = new CTabVersion("V3000");
@@ -2545,16 +2509,16 @@ namespace NCDK.IO
             }
 
             /// <summary>
-	        /// Given a CTab header, what version was specified. The version
-	        /// is identifier in the by the presence of 'V[2|3]000'. If not
-	        /// version tag is present the version is unspecified.
-        	/// <![CDATA[
-	        ///   5  5  0  0  0  0            999 V2000
-	        ///   0  0  0  0  0  0            999 V3000
-        	/// ]]>
+            /// Given a CTab header, what version was specified. The version
+            /// is identifier in the by the presence of 'V[2|3]000'. If not
+            /// version tag is present the version is unspecified.
+            /// <![CDATA[
+            ///   5  5  0  0  0  0            999 V2000
+            ///   0  0  0  0  0  0            999 V3000
+            /// ]]>
             /// </summary>
-	        /// <param name="header">input line (non-null)</param>
-	        /// <returns>the CTab version</returns>
+            /// <param name="header">input line (non-null)</param>
+            /// <returns>the CTab version</returns>
             public static CTabVersion OfHeader(string header)
             {
                 if (header.Length < 39) return Unspecified;

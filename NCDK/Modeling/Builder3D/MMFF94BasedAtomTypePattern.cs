@@ -26,32 +26,32 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     *  Class stores hose code patterns to identify mm2 force field atom types
-     *
-     * @author     chhoppe
-     * @cdk.created    2004-09-07
-     * @cdk.module     forcefield
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Class stores hose code patterns to identify mm2 force field atom types
+    ///
+    // @author     chhoppe
+    // @cdk.created    2004-09-07
+    // @cdk.module     forcefield
+    // @cdk.githash
+    /// </summary>
     public class MMFF94BasedAtomTypePattern
     {
 
         private List<Regex> atomTypePatterns = new List<Regex>();
 
-        /**
-         *Constructor for the MM2BasedAtomTypePattern object
-         */
+        /// <summary>
+        ///Constructor for the MM2BasedAtomTypePattern object
+        /// </summary>
         internal MMFF94BasedAtomTypePattern()
         {
             CreatePattern();
         }
 
-        /**
-         *  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
-         *
-         * @return    The atomTypePatterns as a vector
-         */
+        /// <summary>
+        ///  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
+        ///
+        /// <returns>The atomTypePatterns as a vector</returns>
+        /// </summary>
         public List<Regex> AtomTypePatterns => atomTypePatterns;
 
         /// <summary>

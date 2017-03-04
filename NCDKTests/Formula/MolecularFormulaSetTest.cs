@@ -18,42 +18,37 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Formula
 {
-    /**
-     * Checks the functionality of the MolecularFormulaSet class.
-     *
-     * @cdk.module test-data
-     *
-     * @see MolecularFormulaSet
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaSet class.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="MolecularFormulaSet"/>
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaSetTest : AbstractMolecularFormulaSetTest
     {
         protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaSet() {
             IMolecularFormulaSet mfS = new MolecularFormulaSet();
             Assert.IsNotNull(mfS);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaSet_IMolecularFormula() {
             IMolecularFormulaSet mfS = new MolecularFormulaSet(Builder.CreateMolecularFormula());

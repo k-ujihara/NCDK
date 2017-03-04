@@ -25,11 +25,11 @@ using System.Threading;
 
 namespace NCDK.Formula
 {
-    /**
-	 * Checks the functionality of the MolecularFormulaGenerator.
-	 *
-	 * @cdk.module test-formula
-	 */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaGenerator.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaGeneratorTest : CDKTestCase
     {
@@ -37,9 +37,9 @@ namespace NCDK.Formula
         private readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder
                 .Instance;
 
-        /**
-		 * Test the GetNextFormula() method
-		 */
+        /// <summary>
+        /// Test the GetNextFormula() method
+        /// </summary>
         [TestMethod()]
         public void TestGetNextFormula()
         {
@@ -66,9 +66,9 @@ namespace NCDK.Formula
 
         }
 
-        /**
-		 * Test the GetAllFormulas() method
-		 */
+        /// <summary>
+        /// Test the GetAllFormulas() method
+        /// </summary>
         [TestMethod()]
         public void TestGetAllFormulas()
         {
@@ -96,9 +96,9 @@ namespace NCDK.Formula
             Assert.AreNotEqual(0, mfSet.Count);
         }
 
-        /**
-		 * Test the GetFinishedPercentage() method
-		 */
+        /// <summary>
+        /// Test the GetFinishedPercentage() method
+        /// </summary>
         [TestMethod()]
         public void TestGetFinishedPercentage()
         {
@@ -142,10 +142,10 @@ namespace NCDK.Formula
         }
 
 
-        /**
-		 * Test the Cancel() method called from another thread. This test must
-		 * finish in 100 ms.
-		 */
+        /// <summary>
+        /// Test the Cancel() method called from another thread. This test must
+        /// finish in 100 ms.
+        /// </summary>
         [TestMethod()]
         [Timeout(100)]
         public void TestCancel()
@@ -173,24 +173,24 @@ namespace NCDK.Formula
                    builder, minMass, maxMass, mfRange);
 
             var cancelThread = new ThreadStart(() => {
-				Thread.Sleep(5);
-				gen.Cancel();
+                Thread.Sleep(5);
+                gen.Cancel();
             });
             new Thread(cancelThread).Start();
 
-			// We will get stuck in the next method call until the cancel thread
-			// calls the Cancel() method
-			gen.GetAllFormulas();
+            // We will get stuck in the next method call until the cancel thread
+            // calls the Cancel() method
+            gen.GetAllFormulas();
 
             // Next GetNextFormula() call should return null
             IMolecularFormula f = gen.GetNextFormula();
-			Assert.IsNull(f);
+            Assert.IsNull(f);
         }
 
-        /**
-		 * Test empty molecular formula range
-		 *
-		 */
+        /// <summary>
+        /// Test empty molecular formula range
+        ///
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestEmptyMFRange()
@@ -199,9 +199,9 @@ namespace NCDK.Formula
                     new MolecularFormulaRange());
         }
 
-        /**
-		 * Test negative mass
-		 */
+        /// <summary>
+        /// Test negative mass
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestNegativeMass()
@@ -215,10 +215,10 @@ namespace NCDK.Formula
                     new MolecularFormulaRange());
         }
 
-        /**
-		 * Test if the generator respects minimal element counts
-		 *
-		 */
+        /// <summary>
+        /// Test if the generator respects minimal element counts
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestMinCounts()
         {
@@ -255,10 +255,10 @@ namespace NCDK.Formula
 
         }
 
-        /**
-		 * Test if the generator respects maximal element counts
-		 *
-		 */
+        /// <summary>
+        /// Test if the generator respects maximal element counts
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestMaxCounts()
         {
@@ -294,9 +294,9 @@ namespace NCDK.Formula
             }
         }
 
-        /**
-		 * Test to find a single carbon.
-		 */
+        /// <summary>
+        /// Test to find a single carbon.
+        /// </summary>
         [TestMethod()]
         public void TestSingleCarbon()
         {
@@ -319,9 +319,9 @@ namespace NCDK.Formula
             Assert.AreEqual("C", MolecularFormulaManipulator.GetString(mfSet[0]));
         }
 
-        /**
-		 * Test to find MF=C10000, MW=120000.0 using only carbons.
-		 */
+        /// <summary>
+        /// Test to find MF=C10000, MW=120000.0 using only carbons.
+        /// </summary>
         [TestMethod()]
         public void TestCarbons()
         {
@@ -345,9 +345,9 @@ namespace NCDK.Formula
                     .GetString(mfSet[0]));
         }
 
-        /**
-		 * Test to find H2O in a range of 1-20.
-		 */
+        /// <summary>
+        /// Test to find H2O in a range of 1-20.
+        /// </summary>
         [TestMethod()]
         public void TestWater()
         {
@@ -390,9 +390,9 @@ namespace NCDK.Formula
             Assert.IsTrue(found, "The molecular formula H2O should be found");
         }
 
-        /**
-		 * Test to find MF=C5H11N2O, MW=115.08714
-		 */
+        /// <summary>
+        /// Test to find MF=C5H11N2O, MW=115.08714
+        /// </summary>
         [TestMethod()]
         public void TestSmallMass()
         {
@@ -422,10 +422,10 @@ namespace NCDK.Formula
                     .GetString(mfSet[0]));
         }
 
-        /**
-		 * Test to find pentacarboxyporphyrin, MF=C37H38N4O10 MW=698.25879
-		 * 
-		 */
+        /// <summary>
+        /// Test to find pentacarboxyporphyrin, MF=C37H38N4O10 MW=698.25879
+        /// 
+        /// </summary>
         [TestMethod()]
         public void TestMiddleMass()
         {
@@ -455,10 +455,10 @@ namespace NCDK.Formula
                     .GetString(mfSet[0]));
         }
 
-        /**
-		 * Test to find ubiquitin: MF=C374H623N103O116S MW=8445.573784
-		 *
-		 */
+        /// <summary>
+        /// Test to find ubiquitin: MF=C374H623N103O116S MW=8445.573784
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestHighMass()
         {
@@ -490,13 +490,13 @@ namespace NCDK.Formula
                     .GetString(mfSet[0]));
         }
 
-        /**
-		 * 
-		 *
-		 * Test if formula MF=C4H11NO4 MW=137.06881 is found in mass range
-		 * 137-137.2.
-		 *
-		 */
+        /// <summary>
+        /// 
+        ///
+        /// Test if formula MF=C4H11NO4 MW=137.06881 is found in mass range
+        /// 137-137.2.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestFormulaFoundInRange()
         {
@@ -533,10 +533,10 @@ namespace NCDK.Formula
             Assert.IsTrue(found, "The molecular formula C4H11NO4 should be found");
         }
 
-        /**
-		 * Test if formula MF=C11H10NO2 MW=188.07115 is found in mass range 187-189.
-		 *
-		 */
+        /// <summary>
+        /// Test if formula MF=C11H10NO2 MW=188.07115 is found in mass range 187-189.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestFormulaFoundInRange2()
         {
@@ -574,11 +574,11 @@ namespace NCDK.Formula
             Assert.IsTrue(found, "The molecular formula C11H10NO2 should be found");
         }
 
-        /**
-		 * Test if formula with 7 different elements is found in a narrow mass
-		 * range. MF=C8H9Cl3NO2PS MW=318.915719
-		 *
-		 */
+        /// <summary>
+        /// Test if formula with 7 different elements is found in a narrow mass
+        /// range. MF=C8H9Cl3NO2PS MW=318.915719
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestCompoundWith7Elements()
         {
@@ -615,9 +615,9 @@ namespace NCDK.Formula
 
         }
 
-        /**
-		 * Test if C13 isotope-containing formula is found. MF=C(^12)3C(^13)H5
-		 */
+        /// <summary>
+        /// Test if C13 isotope-containing formula is found. MF=C(^12)3C(^13)H5
+        /// </summary>
         [TestMethod()]
         public void TestDifferentIsotopes()
         {
@@ -657,10 +657,10 @@ namespace NCDK.Formula
 
         }
 
-        /**
-		 * Test if formula MF=C7H15N2O4 MW=191.10318 is found properly if we fix the
-		 * element counts
-		 */
+        /// <summary>
+        /// Test if formula MF=C7H15N2O4 MW=191.10318 is found properly if we fix the
+        /// element counts
+        /// </summary>
         [TestMethod()]
         public void TestFixedElementCounts()
         {
@@ -691,10 +691,10 @@ namespace NCDK.Formula
 
         }
 
-        /**
-		 * Test if zero results are returned in case the target mass range is too
-		 * high
-		 */
+        /// <summary>
+        /// Test if zero results are returned in case the target mass range is too
+        /// high
+        /// </summary>
         [TestMethod()]
         public void TestMassRangeTooHigh()
         {
@@ -723,10 +723,10 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * Test if zero results are returned in case the target mass range is too
-         * low
-         */
+        /// <summary>
+        /// Test if zero results are returned in case the target mass range is too
+        /// low
+        /// </summary>
         [TestMethod()]
         public void TestMassRangeTooLow()
         {

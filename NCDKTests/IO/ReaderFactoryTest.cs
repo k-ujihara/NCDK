@@ -139,7 +139,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSmiles()
         {
-            var ins = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.Smiles.drugs.smi");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.Smiles.drugs.smi");
             var reader = factory.CreateReader(ins);
             Assert.IsNull(reader);
         }
@@ -149,12 +149,12 @@ namespace NCDK.IO
         public void TestBug2153298()
         {
             string filename = "NCDK.Data.ASN.PubChem.cid1145.xml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Assert.IsNotNull(ins, "Cannot find file: " + filename);
             IChemFormatMatcher realFormat = (IChemFormatMatcher)PubChemCompoundXMLFormat.Instance;
             factory.RegisterFormat(realFormat);
             // ok, if format ok, try instantiating a reader
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = factory.CreateReader(ins);
             Assert.IsNotNull(reader);
             Assert.AreEqual(((IChemFormat)PubChemCompoundXMLFormat.Instance).ReaderClassName, reader.GetType().FullName);
@@ -169,7 +169,7 @@ namespace NCDK.IO
         public void TestReadGz()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
-            var input =new GZipStream(this.GetType().Assembly.GetManifestResourceStream(filename), CompressionMode.Decompress);
+            var input =new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
             // ok, if format ok, try instantiating a reader
             ISimpleChemObjectReader reader = factory.CreateReader(input);
             Assert.IsNotNull(reader);
@@ -189,7 +189,7 @@ namespace NCDK.IO
         public void TestReadGzWithGzipDetection()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
-            var input = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var input = ResourceLoader.GetAsStream(filename);
             // ok, if format ok, try instantiating a reader
             ISimpleChemObjectReader reader = factory.CreateReader(input);
             Assert.IsNotNull(reader);

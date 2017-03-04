@@ -26,20 +26,18 @@ using System.Diagnostics;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * Collection of methods for the calculation of topological indices of a
-     * molecular graph.
-     *
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Collection of methods for the calculation of topological indices of a
+    /// molecular graph.
+    /// </summary>
+    // @cdk.githash
     public class HuLuIndexTool
     {
-        /**
-        * Calculates the extended adjacency matrix index.
-        * An implementation of the algorithm published in {@cdk.cite HU96}.
-        *
-        * @cdk.keyword EAID number
-        */
+        /// <summary>
+        /// Calculates the extended adjacency matrix index.
+        /// An implementation of the algorithm published in {@cdk.cite HU96}.
+        /// </summary>
+        // @cdk.keyword EAID number
         public static double GetEAIDNumber(AtomContainer atomContainer)
         {
             GIMatrix matrix = new GIMatrix(GetExtendedAdjacenyMatrix(atomContainer));
@@ -91,9 +89,7 @@ namespace NCDK.Graphs.Invariant
                     }
                     else
                     {
-                        adjaMatrix[i][j] = (Math.Sqrt(atomWeights[i] / atomWeights[j]) + Math.Sqrt(atomWeights[j]
-                                / atomWeights[i]))
-                                * Math.Sqrt(adjaMatrix[i][j]) / 6;
+                        adjaMatrix[i][j] = (Math.Sqrt(atomWeights[i] / atomWeights[j]) + Math.Sqrt(atomWeights[j] / atomWeights[i])) * Math.Sqrt(adjaMatrix[i][j]) / 6;
                     }
                 }
             }
@@ -142,7 +138,7 @@ namespace NCDK.Graphs.Invariant
                     interLayerBondSum[v] = 0;
                 }
 
-                //weightArray[k] = atom.getValenceElectronsCount() - atom.getHydrogenCount(); // method unfinished
+                //weightArray[k] = atom.GetValenceElectronsCount() - atom.GetHydrogenCount(); // method unfinished
                 if ("O".Equals(atom.Symbol))
                     weightArray[i] = 6 - atom.ImplicitHydrogenCount.Value;
                 else
@@ -205,7 +201,7 @@ namespace NCDK.Graphs.Invariant
             return atomLayers;
         }
 
-        /** Lists a 2D double matrix to the System console. */
+        /// <summary> Lists a 2D double matrix to the System console. </summary>
         public static void DisplayMatrix(double[][] matrix)
         {
             string line;
@@ -220,7 +216,7 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /** Lists a 2D int matrix to the System console. */
+        /// <summary> Lists a 2D int matrix to the System console. </summary>
         public static void DisplayMatrix(int[][] matrix)
         {
             string line;
@@ -235,7 +231,7 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /** Lists a 1D array to the System console. */
+        /// <summary> Lists a 1D array to the System console. </summary>
         public static void DisplayArray(int[] array)
         {
             string line = "";
@@ -246,7 +242,7 @@ namespace NCDK.Graphs.Invariant
             Debug.WriteLine(line);
         }
 
-        /** Lists a 1D array to the System console. */
+        /// <summary> Lists a 1D array to the System console. */
         public static void DisplayArray(double[] array)
         {
             string line = "";

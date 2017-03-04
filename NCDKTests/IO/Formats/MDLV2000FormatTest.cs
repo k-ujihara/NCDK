@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
-	[TestClass()]
+    [TestClass()]
     public class MDLV2000FormatTest : ChemFormatMatcherTest
     {
         public MDLV2000FormatTest()

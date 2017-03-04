@@ -25,28 +25,28 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the ElectronImpactSDBReactionTest.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the ElectronImpactSDBReactionTest.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ElectronImpactSDBReactionTest : ReactionProcessTest
     {
 
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public ElectronImpactSDBReactionTest()
         {
             SetReaction(typeof(ElectronImpactSDBReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestElectronImpactSDBReaction()
         {
@@ -54,17 +54,17 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         *  A unit test for JUnit.
-         *
-         *  FIXME REAC: not recognized IAtomType =C*
-         *
-         * @return    Description of the Return Value
-         */
+        /// <summary>
+        ///  A unit test for JUnit.
+        ///
+        ///  FIXME REAC: not recognized IAtomType =C*
+        ///
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-            /* ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center */
+            /* Ionize(>C-C<): C=CCC -> C=C* + C+ , set the reactive center */
 
             var setOfReactants = GetExampleReactants();
             IAtomContainer reactant = setOfReactants[0];
@@ -119,12 +119,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
 
@@ -135,11 +135,11 @@ namespace NCDK.Reactions.Types
             }
         }
 
-        /**
-         * Get the example set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the example set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -164,12 +164,12 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         * TODO:reaction. Set the products
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        /// TODO:reaction. Set the products
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

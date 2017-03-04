@@ -28,29 +28,29 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the RearrangementRadicalReactionTest.
-     * Generalized Reaction: [A*]-B-C => A=B + [c*].
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the RearrangementRadicalReactionTest.
+    /// Generalized Reaction: [A*]-B-C => A=B + [c*].
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class RadicalSiteInitiationReactionTest : ReactionProcessTest
     {
 
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public RadicalSiteInitiationReactionTest()
         {
             SetReaction(typeof(RadicalSiteInitiationReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestRadicalSiteInitiationReaction()
         {
@@ -58,12 +58,12 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: [C*]-C-C => C=C +[C*]
-         * Automatic search of the center active.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: [C*]-C-C => C=C +[C*]
+        /// Automatic search of the center active.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
 
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -101,11 +101,11 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -142,11 +142,11 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[1].IsReactiveCenter);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -185,12 +185,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * Get the IAtomContainer
-         *
-         * @return The IAtomContainer
-         * @throws Exception
-         */
+        /// <summary>
+        /// Get the IAtomContainer
+        ///
+        /// <returns>The IAtomContainer</returns>
+        // @throws Exception
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -227,11 +227,11 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -267,12 +267,12 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

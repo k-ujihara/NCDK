@@ -1,23 +1,24 @@
 ﻿
+/*
+ *    Copyright 2011 Peter Murray-Rust et. al.
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-/**
-*    Copyright 2011 Peter Murray-Rust et. al.
-*
-*    Licensed under the Apache License, Version 2.0 (the "License");
-*    you may not use this file except in compliance with the License.
-*    You may obtain a copy of the License at
-*
-*        http://www.apache.org/licenses/LICENSE-2.0
-*
-*    Unless required by applicable law or agreed to in writing, software
-*    distributed under the License is distributed on an "AS IS" BASIS,
-*    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*    See the License for the specific language governing permissions and
-*    limitations under the License.
-*/
+
 namespace NCDK.LibIO.CML
 {
     /// <summary>
@@ -105,8 +106,8 @@ namespace NCDK.LibIO.CML
                 if (SMILES.Equals(convention) ||
                     SMILES1.Equals(convention))
                 {
-                    //    			throw new RuntimeException("Move to SMILESTool");
-                    //    			inline2Concise = getConciseFromSMILES(inline);
+                    //                throw new RuntimeException("Move to SMILESTool");
+                    //                inline2Concise = GetConciseFromSMILES(inline);
                 }
             }
             if (conciseS == null)
@@ -124,9 +125,9 @@ namespace NCDK.LibIO.CML
             if (atomArray == null)
             {
                 // causes problems with Jmol
-                //			if (conciseS != null) {
-                //				atomArray = createAndAddAtomArrayAndFormalChargeFromConcise(conciseS);
-                //			}
+                //            if (conciseS != null) {
+                //                atomArray = CreateAndAddAtomArrayAndFormalChargeFromConcise(conciseS);
+                //            }
             }
             else
             {
@@ -276,7 +277,7 @@ namespace NCDK.LibIO.CML
             processedConcise = true;
         }
 
-        // FIXME move to tools	
+        // FIXME move to tools    
         private string NormalizeConciseAndFormalCharge(string conciseS, int formalCharge)
         {
             if (conciseS != null)
@@ -379,7 +380,7 @@ namespace NCDK.LibIO.CML
         /// <returns>count</returns>
         public double GetTotalAtomCount()
         {
-            //nwe23 - Fixed a bug here where getCounts() returns null
+            //nwe23 - Fixed a bug here where GetCounts() returns null
             // for an empty formula, resulting in this crashing rather than
             // returning 0 as expected for empty formula
             double[] counts = GetCounts();

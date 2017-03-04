@@ -54,9 +54,8 @@ namespace NCDK.Beam
     /// <tr><td><see cref="Down"/></td><td>\</td><td>2</td><td><see cref="Up"/></td></tr>
     /// </table>
     /// </summary>
-    /// <author>John May</author>
-    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds,
-    /// OpenSMILES Specification</a></remarks>
+    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</a></remarks>
+    // @author John May
     public class Bond
     {
         /// <summary>Atoms are not bonded. </summary>
@@ -87,11 +86,11 @@ namespace NCDK.Beam
         public static readonly Bond Aromatic = new Bond(":", 1);
 
         /// <summary>
-		/// Directional, single or aromatic bond (currently always single). The bond
-		/// is relative to each endpoint such that the second endpoint is
-		/// <i>above</i> the first or the first end point is <i>below</i> the
-		/// second.
-		/// </summary>
+        /// Directional, single or aromatic bond (currently always single). The bond
+        /// is relative to each endpoint such that the second endpoint is
+        /// <i>above</i> the first or the first end point is <i>below</i> the
+        /// second.
+        /// </summary>
         public static readonly Bond Up = new Bond_Up("/", 1);
 
         public static IEnumerable<Bond> Values = new[]
@@ -149,8 +148,8 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-		/// The token of the bond in the SMILES grammar.
-		/// </summary>
+        /// The token of the bond in the SMILES grammar.
+        /// </summary>
         public string Token => token;
 
         /// <summary>

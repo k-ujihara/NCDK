@@ -33,10 +33,10 @@ using System.Linq;
 
 namespace NCDK.Smiles
 {
-    /**
-     * @author John May
-     * @cdk.module test-smiles
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-smiles
+    /// </summary>
     [TestClass()]
     public class BeamToCDKTest
     {
@@ -86,7 +86,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void oxidanide()
+        public void Oxidanide()
         {
             IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Oxygen).NumOfHydrogens(1).Anion.Build(), 1);
             Assert.AreEqual("O", a.Symbol);
@@ -95,7 +95,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void azaniumAtom()
+        public void AzaniumAtom()
         {
             IAtom a = g2c.ToCDKAtom(AtomBuilder.Aliphatic(Element.Nitrogen).NumOfHydrogens(4).Cation.Build(), 4);
             Assert.AreEqual("N", a.Symbol);
@@ -236,7 +236,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void imidazole()
+        public void Imidazole()
         {
 
             IAtomContainer ac = Convert("c1[nH]cnc1");
@@ -271,7 +271,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void imidazole_kekule()
+        public void Imidazole_kekule()
         {
 
             IAtomContainer ac = Convert("N1C=CN=C1");
@@ -310,11 +310,11 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * (2R)-butan-2-ol
-		 *
-		 * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-		 */
+        /// <summary>
+        /// (2R)-butan-2-ol
+        ///
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
+        /// </summary>
         [TestMethod()]
         public void _2R_butan_2_ol()
         {
@@ -327,15 +327,15 @@ namespace NCDK.Smiles
             ITetrahedralChirality tc = (ITetrahedralChirality)se;
 
             Assert.AreEqual(ac.Atoms[2], tc.ChiralAtom);
-			Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[3], ac.Atoms[4], ac.Atoms[5] }, tc.Ligands));
+            Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[3], ac.Atoms[4], ac.Atoms[5] }, tc.Ligands));
             Assert.AreEqual(TetrahedralStereo.Clockwise, tc.Stereo);
         }
 
-        /**
-         * (2S)-butan-2-ol
-         *
-         * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-         */
+        /// <summary>
+        /// (2S)-butan-2-ol
+        ///
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
+        /// </summary>
         [TestMethod()]
         public void _2S_butan_2_ol()
         {
@@ -352,11 +352,11 @@ namespace NCDK.Smiles
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, tc.Stereo);
         }
 
-        /**
-         * (4as,8as)-decahydronaphthalene-4a,8a-diol
-         *
-         * @cdk.inchi InChI=1/C10H18O2/c11-9-5-1-2-6-10(9,12)8-4-3-7-9/h11-12H,1-8H2/t9-,10+
-         */
+        /// <summary>
+        /// (4as,8as)-decahydronaphthalene-4a,8a-diol
+        ///
+        // @cdk.inchi InChI=1/C10H18O2/c11-9-5-1-2-6-10(9,12)8-4-3-7-9/h11-12H,1-8H2/t9-,10+
+        /// </summary>
         [TestMethod()]
         public void TetrahedralRingClosure()
         {
@@ -394,13 +394,13 @@ namespace NCDK.Smiles
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, tc2.Stereo);
         }
 
-        /**
-         * (E)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
-         */
+        /// <summary>
+        /// (E)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
+        /// </summary>
         [TestMethod()]
-        public void e_1_2_difluroethene()
+        public void E_1_2_difluroethene()
         {
 
             IAtomContainer ac = Convert("F/C=C/F");
@@ -415,13 +415,13 @@ namespace NCDK.Smiles
             Assert.AreEqual(DoubleBondConformation.Opposite, dbs.Stereo);
         }
 
-        /**
-         * (Z)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
-         */
+        /// <summary>
+        /// (Z)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
+        /// </summary>
         [TestMethod()]
-        public void z_1_2_difluroethene()
+        public void Z_1_2_difluroethene()
         {
 
             IAtomContainer ac = Convert("F/C=C\\F");
@@ -436,13 +436,13 @@ namespace NCDK.Smiles
             Assert.AreEqual(DoubleBondConformation.Together, dbs.Stereo);
         }
 
-        /**
-         * (E)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
-         */
+        /// <summary>
+        /// (E)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
+        /// </summary>
         [TestMethod()]
-        public void e_1_2_difluroethene_explicit()
+        public void E_1_2_difluroethene_explicit()
         {
 
             IAtomContainer ac = Convert("F/C([H])=C(\\[H])F");
@@ -458,13 +458,13 @@ namespace NCDK.Smiles
             Assert.AreEqual(DoubleBondConformation.Together, dbs.Stereo);
         }
 
-        /**
-         * (Z)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
-         */
+        /// <summary>
+        /// (Z)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
+        /// </summary>
         [TestMethod()]
-        public void z_1_2_difluroethene_explicit()
+        public void Z_1_2_difluroethene_explicit()
         {
 
             IAtomContainer ac = Convert("FC(\\[H])=C([H])/F");
@@ -564,21 +564,21 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void titleWithTab()
+        public void TitleWithTab()
         {
             Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").GetProperty<string>(CDKPropertyName.TITLE),
                          "caffeine");
         }
 
         [TestMethod()]
-        public void titleWithSpace()
+        public void TitleWithSpace()
         {
             Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").GetProperty<string>(CDKPropertyName.TITLE),
                  "caffeine");
         }
 
         [TestMethod()]
-        public void titleWithMultipleSpace()
+        public void TitleWithMultipleSpace()
         {
             Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").GetProperty<string>(CDKPropertyName.TITLE),
                  "caffeine compound");

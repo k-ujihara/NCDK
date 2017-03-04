@@ -1,6 +1,6 @@
-﻿/**
- * Copyright (C) 2016-2017  Kazuya Ujihara <chemformatter.com>
- */
+﻿//
+// Copyright (C) 2016-2017  Kazuya Ujihara <chemformatter.com>
+//
 
 using System.Collections.Generic;
 using System.Linq;

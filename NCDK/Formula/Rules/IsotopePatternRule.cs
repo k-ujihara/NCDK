@@ -27,18 +27,18 @@ namespace NCDK.Formula.Rules
     /// </summary>
     /// <remarks>
     /// This rule uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>isotopePattern</td>
-    ///     <td>List &lt;Double[]&gt</td>
-    ///     <td>The Isotope Pattern to compare</td>
-    ///   </tr>
-    /// </table>
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term>isotopePattern</term>
+    ///   <term>List &lt;Double[]&gt;</term>
+    ///   <term>The Isotope Pattern to compare</term>
+    /// </item>
+    /// </list>
     /// </remarks> 
     // @cdk.module  formula
     // @author      Miguel Rojas Cherto

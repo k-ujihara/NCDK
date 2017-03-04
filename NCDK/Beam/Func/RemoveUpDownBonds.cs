@@ -37,13 +37,10 @@ namespace NCDK.Beam
     /// <summary>
     /// Given a molecule with explict double bond configurations remove redundant
     /// Up/Down bond. For example the removing redundant up/down labels from of
-    /// {@code N/C(/C)=C\C} produces {@code N/C(C)=C\C}.
+    /// "N/C(/C)=C\C" produces "N/C(C)=C\C".
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class RemoveUpDownBonds : AbstractFunction<Graph, Graph>
+    // @author John May
+    internal sealed class RemoveUpDownBonds : AbstractFunction<Graph, Graph>
     {
         public override Graph Apply(Graph g)
         {
@@ -52,7 +49,7 @@ namespace NCDK.Beam
             // copy atom/topology information this is unchanged
             for (int u = 0; u < g.Order; u++)
             {
-                h.AddAtom(g.GetAtom_(u));
+                h.AddAtom(g.GetAtom(u));
                 h.AddTopology(g.TopologyOf(u));
             }
 
@@ -107,13 +104,11 @@ namespace NCDK.Beam
         /// <summary>
         /// Given a double bond edge traverse the neighbors of both endpoints and
         /// accumulate any explicit replacements in the 'acc' accumulator.
-        ///
+        /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="acc">accumulator for new edges</param>
-        // @.ac.ebi.beam.InvalidSmilesException
-        ///          thrown if the edge could not be converted
-        /// </summary>
+        /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private void RemoveRedundant(Graph g,
                                      Edge e,
                                      int[] ordering,
@@ -153,14 +148,12 @@ namespace NCDK.Beam
         /// <summary>
         /// Given a double bond edge traverse the neighbors of one of the endpoints
         /// and accumulate any explicit replacements in the 'acc' accumulator.
-        ///
+        /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="u">  a endpoint of the edge 'e'</param>
         /// <param name="acc">accumulator for new edges</param>
-        // @.ac.ebi.beam.InvalidSmilesException
-        ///          thrown if the edge could not be converted
-        /// </summary>
+        /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private void RePlaceImplWithExpl(Graph g,
                                       Edge e,
                                       int u,

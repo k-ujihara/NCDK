@@ -114,8 +114,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  The method take a bool checkAromaticity: if the bool is true, it means that
         ///  aromaticity has to be checked.
         ///
-        ///@param  atomContainer  The <see cref="IAtomContainer"/> for which this descriptor is to be calculated
-        ///@return the number of aromatic atoms of this AtomContainer
+        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
+        /// <returns>the number of aromatic atoms of this AtomContainer</returns>
         ///@see #setParameters
         /// </summary>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)

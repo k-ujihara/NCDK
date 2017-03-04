@@ -17,48 +17,49 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Tools.Manipulator;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-    // <p>Ring Double Bond Equivalents (RDBE) or
-    // Double Bond Equivalents (DBE) are calculated from valence values of
-    // elements contained in a formula and should tell the number of bonds - or rings.
-    //  Since this formula will fail for MFs with higher valence states such as
-    //  N(V), P(V), S(IV) or S(VI), this method will focus on the lowest valence state for these elements.</p>
-    //  <p>The equation used is: D = 1 + [0.5 SUM_i(N_i(V_I-2))]</p>
-    //  <p>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
-    //  of atoms of element i, and Vi is the common valence of the atom i.</p>
-    // <p>This rule uses these parameters:
-    // <table border="1">
-    //   <tr>
-    //     <td>Name</td>
-    //     <td>Default</td>
-    //     <td>Description</td>
-    //   </tr>
-    //   <tr>
-    //     <td>charge</td>
-    //     <td>0.0</td>
-    //     <td>The RDBE rule of MolecularFormula</td>
-    //   </tr>
-    // </table>
-     *
+    /// <summary>
+    /// <para>Ring Double Bond Equivalents (RDBE) or
+    /// Double Bond Equivalents (DBE) are calculated from valence values of
+    /// elements contained in a formula and should tell the number of bonds - or rings.
+    /// Since this formula will fail for MFs with higher valence states such as
+    /// N(V), P(V), S(IV) or S(VI), this method will focus on the lowest valence state for these elements.</para>
+    /// <para>The equation used is: D = 1 + [0.5 SUM_i(N_i(V_I-2))]</para>
+    /// <para>where D is the unsaturation, i is the total number of different elements in the composition, N_i the number
+    /// of atoms of element i, and Vi is the common valence of the atom i.</para>
+    /// </summary>
+    /// <remarks>This rule uses these parameters:
+    /// <list type="table">
+    /// <item>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </item>
+    /// <item>
+    ///   <term>charge</term>
+    ///   <term>0.0</term>
+    ///   <term>The RDBE rule of MolecularFormula</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2008-06-11
     // @cdk.githash
-     */
     public class RDBERule : IRule
     {
         private static IDictionary<string, int[]> oxidationStateTable = null;
         private double min = -0.5;
         private double max = 30;
 
-        /**
-        //  Constructor for the RDBE object.
-         */
+        /// <summary>
+        /// Constructor for the RDBE object.
+        /// </summary>
         public RDBERule()
         {
             CreateTable();
@@ -88,12 +89,11 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        /**
-        // Validate the RDBRule of this IMolecularFormula.
-         *
-        // @param formula   Parameter is the IMolecularFormula
-        // @return          A double value meaning 1.0 True, 0.0 False
-         */
+        /// <summary>
+        /// Validate the RDBRule of this IMolecularFormula.
+        /// </summary>
+        /// <param name="formula">Parameter is the IMolecularFormula</param>
+        /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public double Validate(IMolecularFormula formula)
         {
             Trace.TraceInformation("Start validation of ", formula);
@@ -108,19 +108,17 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-        // Validate the ion state. It takes into account that neutral, nonradical compounds
-        // always have an even-numbered pair-wiser arrangement of binding electrons signilizaded
-        // by an integer DBE value. Charged compounds due to soft ionzation techniques
-        // will give an odd number of binding electrons and a fractional DBE (X.05).
-         *
-        // @param formula   Parameter is the IMolecularFormula
-        // @param  value    The RDBE value
-        // @return          True, if corresponds with
-         */
+        /// <summary>
+        /// Validate the ion state. It takes into account that neutral, nonradical compounds
+        /// always have an even-numbered pair-wiser arrangement of binding electrons signilizaded
+        /// by an integer DBE value. Charged compounds due to soft ionzation techniques
+        /// will give an odd number of binding electrons and a fractional DBE (X.05).
+        /// </summary>
+        /// <param name="formula">Parameter is the IMolecularFormula</param>
+        /// <param name="value">The RDBE value</param>
+        /// <returns>True, if corresponds with</returns>
         public bool Validate(IMolecularFormula formula, double value)
         {
-
             double charge = formula.Charge ?? 0;
 
             long iPart = (long)value;
@@ -131,17 +129,15 @@ namespace NCDK.Formula.Rules
                 return true;
             else
                 return false;
-
         }
 
-        /**
-        // Method to extract the Ring Double Bond Equivalents (RDB) value. It test all possible
-        // oxidation states.
-         *
-        // @param formula The IMolecularFormula object
-        // @return        The RDBE value
-        // @see           #CreateTable()
-         */
+        /// <summary>
+        /// Method to extract the Ring Double Bond Equivalents (RDB) value. It test all possible
+        /// oxidation states.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula object</param>
+        /// <returns>The RDBE value</returns>
+        /// <seealso cref="CreateTable"/>
         public List<double> GetRDBEValue(IMolecularFormula formula)
         {
             var RDBEList = new List<double>();
@@ -205,20 +201,19 @@ namespace NCDK.Formula.Rules
             return RDBEList;
         }
 
-        /**
-        // Get the common oxidation state given a atom.
-         *
-        // @param newAtom The IAtom
-        // @return        The oxidation state value
-         */
+        /// <summary>
+        /// Get the common oxidation state given a atom.
+        /// </summary>
+        /// <param name="newAtom">The IAtom</param>
+        /// <returns>The oxidation state value</returns>
         private int[] GetOxidationState(IAtom newAtom)
         {
             return oxidationStateTable[newAtom.Symbol];
         }
 
-        /**
-        // Create the table with the common oxidation states
-         */
+        /// <summary>
+        /// Create the table with the common oxidation states
+        /// </summary>
         private void CreateTable()
         {
             if (oxidationStateTable == null)
@@ -275,53 +270,50 @@ namespace NCDK.Formula.Rules
             private int[] index;
             private bool hasMore = true;
 
-            /**
-           // Create a Combination to enumerate through all subsets of the
-           // supplied Object array, selecting m at a time.
-            *
-           // @param inArray the group to choose from
-           // @param m int the number to select in each choice
-            */
+            /// <summary>
+            /// Create a Combination to enumerate through all subsets of the
+            /// supplied Object array, selecting m at a time.
+            /// </summary>
+            /// <param name="inArray">the group to choose from</param>
+            /// <param name="m">int the number to select in each choice</param>
             public Combinations(object[] inArray, int m)
             {
                 this.inArray = inArray;
                 this.n = inArray.Length;
                 this.m = m;
 
-                /**
-               // index is an array of ints that keep track of the next combination to return.
-
-               // For example, an index on 5 things taken 3 at a time might contain {0 3 4}.
-               // This index will be followed by {1 2 3}. Initially, the index is {0 ... m - 1}.
-                */
+                // index is an array of ints that keep track of the next combination to return.
+                // For example, an index on 5 things taken 3 at a time might contain {0 3 4}.
+                // This index will be followed by {1 2 3}. Initially, the index is {0 ... m - 1}.
                 index = new int[m];
                 for (int i = 0; i < m; i++)
                     index[0] = 0;
             }
 
-            /**
-           // @return true, unless we have already returned the last combination.
-            */
+            /// <summary>
+            /// </summary>
+            /// <returns>true, unless we have already returned the last combination.</returns>
             public bool HasMoreElements()
             {
                 return hasMore;
             }
 
-            /**
-           // Move the index forward a notch. The algorithm finds the rightmost
-           // index element that can be incremented, increments it, and then
-           // changes the elements to the right to each be 1 plus the element on their left.
-           // <p>
-           // For example, if an index of 5 things taken 3 at a time is at {0 3 4}, only the 0 can
-           // be incremented without running out of room. The next index is {1, 1+1, 1+2) or
-           // {1, 2, 3}. This will be followed by {1, 2, 4}, {1, 3, 4}, and {2, 3, 4}.
-           // <p>
-           // The algorithm is from Applied Combinatorics, by Alan Tucker.
-            *
-            */
+            /// <summary>
+            /// Move the index forward a notch. The algorithm finds the rightmost
+            /// index element that can be incremented, increments it, and then
+            /// changes the elements to the right to each be 1 plus the element on their left.
+            /// <para>
+            /// For example, if an index of 5 things taken 3 at a time is at {0 3 4}, only the 0 can
+            /// be incremented without running out of room. The next index is {1, 1+1, 1+2) or
+            /// {1, 2, 3}. This will be followed by {1, 2, 4}, {1, 3, 4}, and {2, 3, 4}.
+            /// </para>
+            /// <para>
+            /// The algorithm is from Applied Combinatorics, by Alan Tucker.
+            /// </para>
+            /// </summary>
             private void MoveIndex()
             {
-                int i = rightmostIndexBelowMax();
+                int i = RightmostIndexBelowMax();
                 if (i >= 0)
                 {
                     index[i] = index[i] + 1;
@@ -332,13 +324,12 @@ namespace NCDK.Formula.Rules
                     hasMore = false;
             }
 
-            /**
-           // @return java.lang.Object, the next combination from the supplied Object array.
-           // <p>
-           // Actually, an array of Objects is returned. The declaration must say just Object,
-           // because the Combinations class implements Enumeration, which declares that the
-           // NextElement() returns a plain Object. Users must cast the returned object to (Object[]).
-            */
+            /// <summary>
+            /// Actually, an array of Objects is returned. The declaration must say just Object,
+            /// because the Combinations class implements Enumeration, which declares that the
+            /// NextElement() returns a plain Object. Users must cast the returned object to (Object[]).
+            /// </summary>
+            /// <returns><see cref="Object"/>, the next combination from the supplied Object array.</returns>
             public object NextElement()
             {
                 if (!hasMore) return null;
@@ -352,10 +343,10 @@ namespace NCDK.Formula.Rules
                 return out_;
             }
 
-            /**
-           // @return int, the index which can be bumped up.
-            */
-            private int rightmostIndexBelowMax()
+            /// <summary>
+            /// </summary>
+            /// <returns>int, the index which can be bumped up.</returns>
+            private int RightmostIndexBelowMax()
             {
                 for (int i = m - 1; i >= 0; i--)
                 {

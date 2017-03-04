@@ -25,13 +25,8 @@
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.Graphs;
 using NCDK.Templates;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
@@ -91,10 +86,10 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Benzene()
         {
@@ -107,10 +102,10 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Benzene()
         {
@@ -167,10 +162,10 @@ namespace NCDK.Graphs
             Assert.IsFalse(paths.IsPrecedingPathTo(-1));
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Norbornane()
         {
@@ -179,10 +174,10 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3 }, paths.GetPathTo(norbornane.Atoms[3])));
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Norbornane()
         {
@@ -191,10 +186,10 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3 }, paths.GetPathTo(3)));
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Spiroundecane()
         {
@@ -203,10 +198,10 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 1, 0, 5, 4, 6, 10, 9 }, paths.GetPathTo(spiroundecane.Atoms[9])));
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Spiroundecane()
         {
@@ -215,10 +210,10 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 1, 0, 5, 4, 6, 10, 9 }, paths.GetPathTo(9)));
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Atom_Pentadecaspiro()
         {
@@ -243,10 +238,10 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestPathTo_Int_Pentadecaspiro()
         {
@@ -636,10 +631,10 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtomsTo_Atom_Benzene()
         {
@@ -657,10 +652,10 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * ensures that when multiple paths are available, one path is still
-         * returned via {@link ShortestPaths#PathTo(IAtom)}
-         */
+        /// <summary>
+        /// ensures that when multiple paths are available, one path is still
+        /// returned via {@link ShortestPaths#PathTo(IAtom)}
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtomsTo_Int_Benzene()
         {
@@ -1299,9 +1294,9 @@ namespace NCDK.Graphs
             Assert.AreEqual(48, paths.GetDistanceTo(1));
         }
 
-        /**
-         * two disconnected 2,2-dimethylpropanes
-         */
+        /// <summary>
+        /// two disconnected 2,2-dimethylpropanes
+        /// </summary>
         private static IAtomContainer Disconnected()
         {
             IAtomContainer container = Simple();
@@ -1309,9 +1304,9 @@ namespace NCDK.Graphs
             return container;
         }
 
-        /**
-         * 2,2-dimethylpropane
-         */
+        /// <summary>
+        /// 2,2-dimethylpropane
+        /// </summary>
         private static IAtomContainer Simple()
         {
 
@@ -1343,9 +1338,9 @@ namespace NCDK.Graphs
 
         }
 
-        /**
-         * norbornane generated with CDKSourceCodeWriter
-         */
+        /// <summary>
+        /// norbornane generated with CDKSourceCodeWriter
+        /// </summary>
         private static IAtomContainer Norbornane
         {
             get
@@ -1392,11 +1387,11 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * pentadecaspiro[5.2.2.2.2.2.2.2.2.2.2.2.2.2.2.5^{48}.2^{45}.2^{42}.2^{39}.2^{36}.2^{33}.2^{30}.2^{27}.2^{24}.2^{21}.2^{18}.2^{15}.2^{12}.2^{9}.2^{6}]henoctacontane
-         *
-         * @cdk.inchi InChI=1S/C81H132/c1-3-7-67(8-4-1)11-15-69(16-12-67)19-23-71(24-20-69)27-31-73(32-28-71)35-39-75(40-36-73)43-47-77(48-44-75)51-55-79(56-52-77)59-63-81(64-60-79)65-61-80(62-66-81)57-53-78(54-58-80)49-45-76(46-50-78)41-37-74(38-42-76)33-29-72(30-34-74)25-21-70(22-26-72)17-13-68(14-18-70)9-5-2-6-10-68/h1-66H2
-         */
+        /// <summary>
+        /// pentadecaspiro[5.2.2.2.2.2.2.2.2.2.2.2.2.2.2.5^{48}.2^{45}.2^{42}.2^{39}.2^{36}.2^{33}.2^{30}.2^{27}.2^{24}.2^{21}.2^{18}.2^{15}.2^{12}.2^{9}.2^{6}]henoctacontane
+        ///
+        // @cdk.inchi InChI=1S/C81H132/c1-3-7-67(8-4-1)11-15-69(16-12-67)19-23-71(24-20-69)27-31-73(32-28-71)35-39-75(40-36-73)43-47-77(48-44-75)51-55-79(56-52-77)59-63-81(64-60-79)65-61-80(62-66-81)57-53-78(54-58-80)49-45-76(46-50-78)41-37-74(38-42-76)33-29-72(30-34-74)25-21-70(22-26-72)17-13-68(14-18-70)9-5-2-6-10-68/h1-66H2
+        /// </summary>
         public IAtomContainer Pentadecaspiro
         {
             get
@@ -1760,11 +1755,11 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * spiro[5.5]undecane
-         *
-         * @cdk.inchi InChI=1S/C11H20/c1-3-7-11(8-4-1)9-5-2-6-10-11/h1-10H2
-         */
+        /// <summary>
+        /// spiro[5.5]undecane
+        ///
+        // @cdk.inchi InChI=1S/C11H20/c1-3-7-11(8-4-1)9-5-2-6-10-11/h1-10H2
+        /// </summary>
         private static IAtomContainer Spiroundecane
         {
             get

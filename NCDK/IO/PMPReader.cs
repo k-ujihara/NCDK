@@ -33,19 +33,16 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-     * Reads an frames from a PMP formated input.
-     * Both compilation and use of this class requires Java 1.4.
-     *
-     * @cdk.module  io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword file format, Polymorph Predictor (tm)
-     *
-     * @author E.L. Willighagen
-     * @cdk.require java1.4+
-     */
+    /// <summary>
+    /// Reads an frames from a PMP formated input.
+    /// Both compilation and use of this class requires Java 1.4.
+    /// </summary>
+    // @cdk.module  io
+    // @cdk.githash
+    // @cdk.iooptions
+    // @cdk.keyword file format, Polymorph Predictor (tm)
+    // @author E.L. Willighagen
+    // @cdk.require java1.4+
     public class PMPReader : DefaultChemObjectReader
     {
         private const string PMP_ZORDER = "ZOrder";
@@ -74,10 +71,10 @@ namespace NCDK.IO
         int bondCounter = 0;
         private RebondTool rebonder;
 
-        /*
-         * construct a new reader from a Reader type object
-         * @param input reader from which input is read
-         */
+        /// <summary>
+        /// construct a new reader from a Reader type object
+        /// <param name="input">reader from which input is read</param>
+        /// </summary>
         public PMPReader(TextReader input)
         {
             this.input = input;
@@ -117,14 +114,12 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * reads the content from a PMP input. It can only return a
-         * IChemObject of type ChemFile
-         *
-         * @param object class must be of type ChemFile
-         *
-         * @see IChemFile
-         */
+        /// <summary>
+        /// reads the content from a PMP input. It can only return a
+        /// IChemObject of type ChemFile
+        /// </summary>
+        /// <param name="object">class must be of type ChemFile</param>
+        /// <seealso cref="IChemFile"/>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -147,15 +142,14 @@ namespace NCDK.IO
             return line;
         }
 
-        /**
-         *  Private method that actually parses the input to read a ChemFile
-         *  object.
-         *
-         *  Each PMP frame is stored as a Crystal in a ChemModel. The PMP
-         *  file is stored as a ChemSequence of ChemModels.
-         *
-         * @return A ChemFile containing the data parsed from input.
-         */
+        /// <summary>
+        ///  Private method that actually parses the input to read a ChemFile
+        ///  object.
+        ///
+        ///  Each PMP frame is stored as a Crystal in a ChemModel. The PMP
+        ///  file is stored as a ChemSequence of ChemModels.
+        /// </summary>
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
@@ -248,8 +242,8 @@ namespace NCDK.IO
                             // define bonds *before* the involved atoms :(
                             // the next lines dump the cache into the atom container
 
-                            //                  	bondids[new int(id)] = new int(molecule.Atoms.Count);
-                            //                  	molecule.Bonds.Add((IBond)chemObject);
+                            //                      bondids[new int(id)] = new int(molecule.Atoms.Count);
+                            //                      molecule.Bonds.Add((IBond)chemObject);
                             int bondsFound = bondids.Count;
                             Debug.WriteLine("Found #bonds: ", bondsFound);
                             Debug.WriteLine("#atom ones: ", bondAtomOnes.Count);
@@ -355,10 +349,8 @@ namespace NCDK.IO
                                     else if (line.StartsWith("%%Space Group"))
                                     {
                                         line = ReadLine().Trim();
-                                        /*
-                                         * standardize space group name. See
-                                         * Crystal.SetSpaceGroup()
-                                         */
+                                        
+                                        // standardize space group name. See Crystal.SetSpaceGroup()
                                         if ("P 21 21 21 (1)".Equals(line))
                                         {
                                             crystal.SpaceGroup = "P 2_1 2_1 2_1";

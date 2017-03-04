@@ -21,11 +21,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Silent
 {
-    /**
-     * Checks the functionality of the {@link ChemObject}.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link ChemObject}.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     [TestClass()]
     public class ChemObjectTest : AbstractChemObjectTest
     {

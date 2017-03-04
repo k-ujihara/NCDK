@@ -31,21 +31,17 @@ using NCDK.Common.Primitives;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
-     * super-set contains the minimum cycle basis (<i>C<sub>B</sub></i>) and the
-     * relevant cycles (<i>C<sub>R</sub></i>) of the provided graph {@cdk.cite
-     * Vismara97}. This class is intend for internal use by other cycle processing
-     * algorithms.
-     *
-     * @author John May
-     * @cdk.module core
-     * @see RelevantCycles
-     */
-#if TEST
-    public 
-#endif
-        class InitialCycles
+    /// <summary>
+    /// Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
+    /// super-set contains the minimum cycle basis (<i>C<sub>B</sub></i>) and the
+    /// relevant cycles (<i>C<sub>R</sub></i>) of the provided graph {@cdk.cite
+    /// Vismara97}. This class is intend for internal use by other cycle processing
+    /// algorithms.
+    /// </summary>
+    /// <seealso cref="RelevantCycles"/>
+    // @author John May
+    // @cdk.module core
+    internal class InitialCycles
     {
         /// <summary>Adjacency list representation of a chemical graph.</summary>
         private readonly int[][] graph;
@@ -59,15 +55,14 @@ namespace NCDK.Graphs
         /// <summary>Index of edges in the graph</summary>
         private readonly BiDiDictionary<Cycle.Edge, int> edges;
 
-        /**
-		 * Initial array size for 'GetOrdering()'. This method sorts vertices by degree
-		 * by counting how many of each degree there is then putting values in place
-		 * directly. This is known as key-value counting and is used in radix
-		 * sorts.
-		 *
-		 * @see <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix
-		 *      Sort</a>
-		 */
+        /// <summary>
+        /// Initial array size for 'GetOrdering()'. This method sorts vertices by degree
+        /// by counting how many of each degree there is then putting values in place
+        /// directly. This is known as key-value counting and is used in radix
+        /// sorts.
+        /// <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix Sort</a>
+        /// </summary>
+        private const int DEFAULT_DEGREE = 4;
 
         /// <summary>Number of vertices which have degree 2.</summary>
         private int nDeg2Vertices;
@@ -75,43 +70,40 @@ namespace NCDK.Graphs
         /// <summary>Limit the size of cycles discovered.</summary>
         private readonly int limit;
 
-        /**
-		 * Is the graph known to be a biconnected component. This allows a small
-		 * optimisation.
-		 */
+        /// <summary>
+        /// Is the graph known to be a biconnected component. This allows a small
+        /// optimisation.
+        /// </summary>
         private readonly bool biconnected;
 
-        /**
-		 * Create a set of initial cycles for the provided graph.
-		 *
-		 * @param graph input graph
-		 * @ the graph was null
-		 */
+        /// <summary>
+        /// Create a set of initial cycles for the provided graph.
+        /// </summary>
+        /// <param name="graph">input graph</param>
+        /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         public InitialCycles(int[][] graph)
             : this(graph, graph == null ? 0 : graph.Length, false)
         {
         }
 
-        /**
-         * Create a set of initial cycles for the provided graph.
-         *
-         * @param graph input graph
-         * @param limit the maximum size of cycle found
-         * @ the graph was null
-         */
+        /// <summary>
+        /// Create a set of initial cycles for the provided graph.
+        /// </summary>
+        /// <param name="graph">input graph</param>
+        /// <param name="limit">the maximum size of cycle found</param>
+        /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         public InitialCycles(int[][] graph, int limit)
             : this(graph, limit, false)
         {
         }
 
-        /**
-		 * Internal constructor - takes a graph and a flag that the graph is a
-		 * biconnected component. This allows a minor optimisation to trigger.
-		 *
-		 * @param graph input graph
-		 * @param biconnected the graph is known to be biconnected
-		 * @ the graph was null
-		 */
+        /// <summary>
+        /// Internal constructor - takes a graph and a flag that the graph is a
+        /// biconnected component. This allows a minor optimisation to trigger.
+        /// </summary>
+        /// <param name="graph">input graph</param>
+        /// <param name="biconnected">the graph is known to be biconnected</param>
+        /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         private InitialCycles(int[][] graph, int limit, bool biconnected)
         {
             if (graph == null)
@@ -145,97 +137,88 @@ namespace NCDK.Graphs
             Compute();
         }
 
-        /**
-		 * Access to graph used to calculate the initial cycle set.
-		 *
-		 * @return the graph
-		 */
+        /// <summary>
+        /// Access to graph used to calculate the initial cycle set.
+        /// </summary>
+        /// <returns>the graph</returns>
         public int[][] Graph => graph;
 
-        /**
-		 * Unique lengths of all cycles found in natural order.
-		 *
-		 * @return lengths of the discovered cycles
-		 */
+        /// <summary>
+        /// Unique lengths of all cycles found in natural order.
+        /// </summary>
+        /// <returns>lengths of the discovered cycles</returns>
         public IEnumerable<int> Lengths => cycles.Keys;
 
-        /**
-		 * Access all the prototype cycles of the given length. If no cycles were
-		 * found of given length an empty list is returned.
-		 *
-		 * @param length desired length of cycles
-		 * @return cycles of the given length
-		 * @see #Lengths
-		 */
-		public IEnumerable<Cycle> GetCyclesOfLength(int length)
+        /// <summary>
+        /// Access all the prototype cycles of the given length. If no cycles were
+        /// found of given length an empty list is returned.
+        /// </summary>
+        /// <param name="length">desired length of cycles</param>
+        /// <returns>cycles of the given length</returns>
+        /// <seealso cref="Lengths"/>
+        public IEnumerable<Cycle> GetCyclesOfLength(int length)
         {
             if (!cycles.ContainsKey(length))
                 return Enumerable.Empty<Cycle>();
             return cycles[length];
         }
 
-        /**
-		 * Construct a list of all cycles.
-		 *
-		 * @return list of cycles
-		 */
+        /// <summary>
+        /// Construct a list of all cycles.
+        /// </summary>
+        /// <returns>list of cycles</returns>
         public IEnumerable<Cycle> GetCycles()
         {
             return cycles.Values;
         }
 
-        /**
-		 * Number of cycles in the initial set.
-		 *
-		 * @return number of cycles
-		 */
+        /// <summary>
+        /// Number of cycles in the initial set.
+        /// </summary>
+        /// <returns>number of cycles</returns>
         public int GetNumberOfCycles()
         {
             return cycles.Count;
         }
 
-        /**
-		 * The number of edges (<i>m</i>) in the graph.
-		 *
-		 * @return number of edges
-		 */
+        /// <summary>
+        /// The number of edges (<i>m</i>) in the graph.
+        /// </summary>
+        /// <returns>number of edges</returns>
         public int GetNumberOfEdges()
         {
             return edges.Count;
         }
 
-        /**
-		 * Access the {@link Edge} at the given index.
-		 *
-		 * @param i index of edge
-		 * @return the edge at the given index
-		 */
+        /// <summary>
+        /// Access the <see cref="Edge"/> at the given index.
+        /// </summary>
+        /// <param name="i">index of edge</param>
+        /// <returns>the edge at the given index</returns>
         public Cycle.Edge GetEdge(int i)
         {
             return edges.InverseGet(i);
         }
 
-        /**
-		 * Lookup the index of the edge formed by the vertices <i>u</i> and
-		 * <i>v</i>.
-		 *
-		 * @param u a vertex adjacent to <i>v</i>
-		 * @param v a vertex adjacent to <i>u</i>
-		 * @return the index of the edge
-		 */
+        /// <summary>
+        /// Lookup the index of the edge formed by the vertices <paramref name="u"/> and
+        /// <paramref name="v"/>.
+        /// </summary>
+        /// <param name="u">a vertex adjacent to <paramref name="v"/></param>
+        /// <param name="v">a vertex adjacent to <paramref name="u"/></param>
+        /// <returns>the index of the edge</returns>
         public int IndexOfEdge(int u, int v)
         {
             return edges[new Cycle.Edge(u, v)];
         }
 
-        /**
-		 * Convert a path of vertices to a binary vector of edges. It is possible to
-		 * convert the vector back to the path using {@see #edge}.
-		 *
-		 * @param path the vertices which define the cycle
-		 * @return vector edges which make up the path
-		 * @see #IndexOfEdge(int, int)
-		 */
+        /// <summary>
+        /// Convert a path of vertices to a binary vector of edges. It is possible to
+        /// convert the vector back to the path using <see cref="edges"/>.
+        /// </summary>
+        /// <param name="path">the vertices which define the cycle</param>
+        /// <returns>vector edges which make up the path</returns>
+        /// <seealso cref="IndexOfEdge(int, int)"/>
         public BitArray ToEdgeVector(int[] path)
         {
             BitArray incidence = new BitArray(edges.Count);
@@ -247,14 +230,13 @@ namespace NCDK.Graphs
             return incidence;
         }
 
-        /**
-		 * Compute the initial cycles. The code corresponds to algorithm 1 from
-		 * {@cdk.cite Vismara97}, where possible the variable names have been kept
-		 * the same.
-		 */
+        /// <summary>
+        /// Compute the initial cycles. The code corresponds to algorithm 1 from
+        /// {@cdk.cite Vismara97}, where possible the variable names have been kept
+        /// the same.
+        /// </summary>
         private void Compute()
         {
-
             int n = graph.Length;
 
             // the set 'S' contains the pairs of vertices adjacent to 'y'
@@ -377,24 +359,22 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * Add a newly discovered initial cycle.
-		 *
-		 * @param cycle the cycle to add
-		 */
+        /// <summary>
+        /// Add a newly discovered initial cycle.
+        /// </summary>
+        /// <param name="cycle">the cycle to add</param>
         private void Add(Cycle cycle)
         {
             if (cycle.Length <= limit) cycles.Add(cycle.Length, cycle);
         }
 
-        /**
-		 * Compute the vertex ordering (π). The ordering is based on the vertex
-		 * degree and {@literal π(x) < π(y) => Deg(x) ≤ Deg(y)}. The ordering
-		 * guarantees the number of elements in <i>C<sub>I</sub></i> is <
-		 * <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of {@cdk.cite Vismara97}.
-		 *
-		 * @return the order of each vertex
-		 */
+        /// <summary>
+        /// Compute the vertex ordering (π). The ordering is based on the vertex
+        /// degree and <![CDATA[π(x) < π(y) => Deg(x) ≤ Deg(y)]]>. The ordering
+        /// guarantees the number of elements in <i>C<sub>I</sub></i> is 
+        /// <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of {@cdk.cite Vismara97}.
+        /// </summary>
+        /// <returns>the order of each vertex</returns>
         private int[] GetOrdering(int[][] graph)
         {
             int n = graph.Length;
@@ -422,15 +402,14 @@ namespace NCDK.Graphs
             return order;
         }
 
-        /**
-		 * Given two paths from a common start vertex <i>r</i> check whether there
-		 * are any intersects. If the paths are different length the shorter of the
-		 * two should be given as <i>p</i>.
-		 *
-		 * @param p a path from <i>r</i>
-		 * @param q a path from <i>r</i>
-		 * @return whether the only intersect is <i>r</i>
-		 */
+        /// <summary>
+        /// Given two paths from a common start vertex <paramref name="r"/> check whether there
+        /// are any intersects. If the paths are different length the shorter of the
+        /// two should be given as <paramref name="p"/>.
+        /// </summary>
+        /// <param name="p">a path from <paramref name="r"/></param>
+        /// <param name="q">a path from <paramref name="r"/></param>
+        /// <returns>whether the only intersect is <paramref name="r"/></returns>
         public static bool GetSingletonIntersect(int[] p, int[] q)
         {
             int n = p.Length;
@@ -439,14 +418,13 @@ namespace NCDK.Graphs
             return true;
         }
 
-        /**
-		 * Join the two paths end on end and ignore the first vertex of the second
-		 * path. {0, 1, 2} and {0, 3, 4} becomes {0, 1, 2, 4, 3}.
-		 *
-		 * @param pathToY first path
-		 * @param pathToZ second path
-		 * @return the paths joined end on end and the last vertex truncated
-		 */
+        /// <summary>
+        /// Join the two paths end on end and ignore the first vertex of the second
+        /// path. {0, 1, 2} and {0, 3, 4} becomes {0, 1, 2, 4, 3}.
+        /// </summary>
+        /// <param name="pathToY">first path</param>
+        /// <param name="pathToZ">second path</param>
+        /// <returns>the paths joined end on end and the last vertex truncated</returns>
         public static int[] Join(int[] pathToY, int[] pathToZ)
         {
             List<int> aa = new List<int>(pathToY);
@@ -454,16 +432,15 @@ namespace NCDK.Graphs
             return aa.ToArray();
         }
 
-        /**
-		 * Join the two paths end on end using 'y'. The first vertex of the second
-		 * path is truncated. {0, 1, 2}, {5} and {0, 3, 4} becomes {0, 1, 2, 5, 4,
-		 * 3}.
-		 *
-		 * @param pathToP first path
-		 * @param y       how to join the two paths
-		 * @param pathToQ second path
-		 * @return the paths joined end on end and the last vertex truncated
-		 */
+        /// <summary>
+        /// Join the two paths end on end using 'y'. The first vertex of the second
+        /// path is truncated. {0, 1, 2}, {5} and {0, 3, 4} becomes {0, 1, 2, 5, 4,
+        /// 3}.
+        /// </summary>
+        /// <param name="pathToP">first path</param>
+        /// <param name="y">how to join the two paths</param>
+        /// <param name="pathToQ">second path</param>
+        /// <returns>the paths joined end on end and the last vertex truncated</returns>
         public static int[] Join(int[] pathToP, int y, int[] pathToQ)
         {
             List<int> aa = new List<int>(pathToP);
@@ -472,35 +449,33 @@ namespace NCDK.Graphs
             return aa.ToArray();
         }
 
-        /**
-		 * Compute the initial cycles of a biconnected graph.
-		 *
-		 * @param graph the biconnected graph
-		 * @return computed initial cycles
-		 * @ the graph was null
-		 */
+        /// <summary>
+        /// Compute the initial cycles of a biconnected graph.
+        /// </summary>
+        /// <param name="graph">the biconnected graph</param>
+        /// <returns>computed initial cycles</returns>
+        /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         public static InitialCycles OfBiconnectedComponent(int[][] graph)
         {
             return OfBiconnectedComponent(graph, graph.Length);
         }
 
-        /**
-		 * Compute the initial cycles of a biconnected graph.
-		 *
-		 * @param graph the biconnected graph
-		 * @param limit maximum size of the cycle to find
-		 * @return computed initial cycles
-		 * @ the graph was null
-		 */
+        /// <summary>
+        /// Compute the initial cycles of a biconnected graph.
+        /// </summary>
+        /// <param name="graph">the biconnected graph</param>
+        /// <param name="limit">maximum size of the cycle to find</param>
+        /// <returns>computed initial cycles</returns>
+        /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         public static InitialCycles OfBiconnectedComponent(int[][] graph, int limit)
         {
             return new InitialCycles(graph, limit, true);
         }
 
-        /**
-		 * Abstract description of a cycle. Stores the path and computes the edge
-		 * vector representation.
-		 */
+        /// <summary>
+        /// Abstract description of a cycle. Stores the path and computes the edge
+        /// vector representation.
+        /// </summary>
         public abstract class Cycle
                 : IComparable<Cycle>
         {
@@ -519,50 +494,44 @@ namespace NCDK.Graphs
                 this.edgeVector = GetEdges(path); // XXX allows static Cycle
             }
 
-            /**
-			 * Provides the edges of <i>path</i>, this method only exists so we can
-			 * refer to the class in a static context.
-			 *
-			 * @param path path of vertices
-			 * @return set of edges
-			 */
+            /// <summary>
+            /// Provides the edges of <i>path</i>, this method only exists so we can
+            /// refer to the class in a static context.
+            /// </summary>
+            /// <param name="path">path of vertices</param>
+            /// <returns>set of edges</returns>
             public abstract BitArray GetEdges(int[] path);
 
-            /**
-			 * Access the edge vector for this cycle.
-			 *
-			 * @return edge vector
-			 */
+            /// <summary>
+            /// Access the edge vector for this cycle.
+            /// </summary>
+            /// <returns>edge vector</returns>
             public virtual BitArray EdgeVector => edgeVector;
 
-            /**
-			 * Access the path of this cycle.
-			 *
-			 * @return the path of the cycle
-			 */
+            /// <summary>
+            /// Access the path of this cycle.
+            /// </summary>
+            /// <returns>the path of the cycle</returns>
             public virtual int[] Path => path;
 
-            /**
-			 * Reconstruct the entire cycle family (may be exponential).
-			 *
-			 * @return all cycles in this family.
-			 */
+            /// <summary>
+            /// Reconstruct the entire cycle family (may be exponential).
+            /// </summary>
+            /// <returns>all cycles in this family.</returns>
             public abstract int[][] GetFamily();
-            
-            /**
-			 * The number of cycles in this prototypes family. This method be used
-			 * to avoid the potentially exponential reconstruction of all the cycles
-			 * using {@link #GetFamily()}.
-			 *
-			 * @return number of cycles
-			 */
+
+            /// <summary>
+            /// The number of cycles in this prototypes family. This method be used
+            /// to avoid the potentially exponential reconstruction of all the cycles
+            /// using <see cref="GetFamily"/>.
+            /// </summary>
+            /// <returns>number of cycles</returns>
             public abstract int SizeOfFamily();
 
-            /**
-			 * The length of the cycles (number of vertices in the path).
-			 *
-			 * @return cycle length
-			 */
+            /// <summary>
+            /// The length of the cycles (number of vertices in the path).
+            /// </summary>
+            /// <returns>cycle length</returns>
             public virtual int Length => path.Length - 1; // first/last vertex repeats
 
             public virtual int CompareTo(Cycle that)
@@ -570,12 +539,12 @@ namespace NCDK.Graphs
                 return Primitive<int>.LexicographicalComparator.Compare(this.path, that.path);
             }
 
-            /**
-             * An even cycle is formed from two shortest paths of the same length
-             * and 'two' edges to a common vertex. The cycle formed by these is
-             * even, 2n + 2 = even.
-             * @see #Compute()
-             */
+            /// <summary>
+            /// An even cycle is formed from two shortest paths of the same length
+            /// and 'two' edges to a common vertex. The cycle formed by these is
+            /// even, 2n + 2 = even.
+            /// </summary>
+            /// <seealso cref="Compute"/>
             public class EvenCycle
                 : Cycle
             {
@@ -621,12 +590,12 @@ namespace NCDK.Graphs
                 }
             }
 
-            /**
-             * An odd cycle is formed from two shortest paths of the same length
-             * and 'one' edge to a common vertex. The cycle formed by these is odd,
-             * 2n + 1 = odd.
-             * @see #Compute()
-             */
+            /// <summary>
+            /// An odd cycle is formed from two shortest paths of the same length
+            /// and 'one' edge to a common vertex. The cycle formed by these is odd,
+            /// 2n + 1 = odd.
+            /// </summary>
+            /// <seealso cref="Compute"/>
             public class OddCycle
                 : Cycle
             {
@@ -672,13 +641,12 @@ namespace NCDK.Graphs
                 }
             }
 
-            /**
-             * A simple value which acts as an immutable unordered tuple for two
-             * primitive integers. This allows to index edges of a graph.
-             */
+            /// <summary>
+            /// A simple value which acts as an immutable unordered tuple for two
+            /// primitive integers. This allows to index edges of a graph.
+            /// </summary>
             public sealed class Edge
             {
-
                 private readonly int v, w;
 
                 public Edge(int v, int w)

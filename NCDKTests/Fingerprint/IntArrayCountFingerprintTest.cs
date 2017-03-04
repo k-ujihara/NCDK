@@ -15,13 +15,13 @@ namespace NCDK.Fingerprint
                 { "A", 1 },
                 { "B", 2 },
                 { "C", 3 },
-			});
+            });
 
             IntArrayCountFingerprint fp2 = new IntArrayCountFingerprint(new Dictionary<string, int>() {
-				{ "A", 1 },
+                { "A", 1 },
                 { "E", 2 },
                 { "F", 3 },
-			});
+            });
 
             IDictionary<int, int> hashCounts = new Dictionary<int, int>();
             for (int i = 0; i < fp1.GetNumOfPopulatedbins(); i++)

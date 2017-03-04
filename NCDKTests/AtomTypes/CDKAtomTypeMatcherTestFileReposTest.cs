@@ -26,14 +26,14 @@ using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests the matching of atom types defined in the
-     * cdk atom type list, using the test files in <code>src/test/data</code>.
-     *
-     * @cdk.module test-core
-     *
-     * @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
-     */
+    /// <summary>
+    /// This class tests the matching of atom types defined in the
+    /// cdk atom type list, using the test files in <code>src/test/data</code>.
+    ///
+    // @cdk.module test-core
+    ///
+    // @see org.openscience.cdk.atomtype.CDKAtomTypeMatcher
+    /// </summary>
     [TestClass()]
     public class CDKAtomTypeMatcherTestFileReposTest : CDKTestCase
     {
@@ -151,7 +151,7 @@ namespace NCDK.AtomTypes
         private TestResults TestFile(string dir, string filename, ISimpleChemObjectReader reader)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(dir + filename);
+            var ins = ResourceLoader.GetAsStream(dir + filename);
             reader.SetReader(ins);
             IAtomContainer mol = null;
             if (reader.Accepts(typeof(IAtomContainer)))
@@ -209,7 +209,7 @@ namespace NCDK.AtomTypes
                 {
                     var connections = mol.GetConnectedBonds(atom);
                     int connectionCount = connections.Count();
-                    //        		int piBondsFound = (int)mol.GetBondOrderSum(atom) - connectionCount;
+                    //                int piBondsFound = (int)mol.GetBondOrderSum(atom) - connectionCount;
                     // there might be missing hydrogens, so: found <= expected
                     if (matched.FormalNeighbourCount != null
                             && connectionCount > matched.FormalNeighbourCount
@@ -221,12 +221,12 @@ namespace NCDK.AtomTypes
                                 + matched.FormalNeighbourCount + " (" + matched.AtomTypeName + ")");
                     }
                     // there might be missing double bonds, so: found <= expected
-                    //        		if (piBondsFound > matched.GetXXXX()) {
-                    //            		results.failed++;
-                    //            		Console.Out.WriteLine("Number of neighbors is too high: " + results.tested + " in file " + filename);
-                    //            		Console.Out.WriteLine("Found: " + atom.FormalNeighbourCount +
-                    //            				           ", expected (max): " + matched.FormalNeighbourCount);
-                    //        		}
+                    //                if (piBondsFound > matched.GetXXXX()) {
+                    //                    results.failed++;
+                    //                    Console.Out.WriteLine("Number of neighbors is too high: " + results.tested + " in file " + filename);
+                    //                    Console.Out.WriteLine("Found: " + atom.FormalNeighbourCount +
+                    //                                       ", expected (max): " + matched.FormalNeighbourCount);
+                    //                }
                 }
             }
             return results;

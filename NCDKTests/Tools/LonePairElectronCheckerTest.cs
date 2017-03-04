@@ -25,24 +25,24 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Tests CDK's Lone Pair Electron checking capabilities in terms of
-     * example molecules.
-     *
-     * @cdk.module     test-standard
-     *
-     * @author         Miguel Rojas
-     * @cdk.created    2006-04-01
-     */
+    /// <summary>
+    /// Tests CDK's Lone Pair Electron checking capabilities in terms of
+    /// example molecules.
+    ///
+    // @cdk.module     test-standard
+    ///
+    // @author         Miguel Rojas
+    // @cdk.created    2006-04-01
+    /// </summary>
     [TestClass()]
     public class LonePairElectronCheckerTest : CDKTestCase
     {
 
         private static LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestAllSaturated_Formaldehyde()
         {
@@ -69,9 +69,9 @@ namespace NCDK.Tools
             Assert.IsTrue(lpcheck.AllSaturated(m));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestAllSaturated_Methanethiol()
         {
@@ -97,9 +97,9 @@ namespace NCDK.Tools
             Assert.IsFalse(lpcheck.AllSaturated(m));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_chloride()
         {
@@ -120,9 +120,9 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol()
         {
@@ -144,9 +144,9 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(c1).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol_AddH()
         {
@@ -169,9 +169,9 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(m.Atoms[0]).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Methyl_alcohol_protonated()
         {
@@ -194,9 +194,9 @@ namespace NCDK.Tools
             Assert.AreEqual(1, m.GetConnectedLonePairs(o).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_methoxide_anion()
         {
@@ -218,9 +218,9 @@ namespace NCDK.Tools
             Assert.AreEqual(3, m.GetConnectedLonePairs(o).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_Ammonia()
         {
@@ -237,9 +237,9 @@ namespace NCDK.Tools
             Assert.AreEqual(1, m.GetConnectedLonePairs(n).Count());
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_methylamine_radical_cation()
         {
@@ -262,9 +262,9 @@ namespace NCDK.Tools
             Assert.AreEqual(0, m.GetConnectedLonePairs(n).Count());
         }
 
-        /**
-         *  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
-         */
+        /// <summary>
+        ///  A unit test for JUnit O=C([H])[C+]([H])[C-]([H])[H]
+        /// </summary>
         [TestMethod()]
         public void TestNewSaturate_withHAdded()
         {

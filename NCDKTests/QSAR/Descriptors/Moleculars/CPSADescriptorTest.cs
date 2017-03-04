@@ -22,6 +22,7 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 using NCDK.Tools.Manipulator;
+
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -41,17 +42,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestCPSA()
         {
             string filename = "NCDK.Data.HIN.benzene.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
             IAtomContainer ac = (IAtomContainer)cList[0];
 
             DoubleArrayResult retval = (DoubleArrayResult)Descriptor.Calculate(ac).GetValue();
-            /*
-             * Console.Out.WriteLine("Num ret = "+retval.Count); for (int i = 0; i <
-             * retval.Count; i++) { Console.Out.WriteLine( retval[i] ); }
-             */
+            // Console.Out.WriteLine("Num ret = "+retval.Count); for (int i = 0; i <
+            // retval.Count; i++) { Console.Out.WriteLine( retval[i] ); }
 
             Assert.AreEqual(0, retval[28], 0.0001);
             Assert.AreEqual(1, retval[27], 0.0001);
@@ -63,7 +62,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestChargedMolecule()
         {
             string filename = "NCDK.Data.MDL.cpsa-charged.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -79,7 +78,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestUnChargedMolecule()
         {
             string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

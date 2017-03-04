@@ -60,7 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             double value2D = ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value;
 
             string filename = "NCDK.Data.MDL.cpsa-uncharged.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

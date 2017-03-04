@@ -25,9 +25,9 @@ using System.IO;
 
 namespace NCDK.StructGen.Stochastic.Operator
 {
-    /**
-     * @cdk.module test-structgen
-     */
+    /// <summary>
+    // @cdk.module test-structgen
+    /// </summary>
     [TestClass()]
     public class CrossoverMachineTest : CDKTestCase
     {
@@ -38,7 +38,7 @@ namespace NCDK.StructGen.Stochastic.Operator
             IAtomContainerSet<IAtomContainer> som;
 
             string filename = "NCDK.Data.Smiles.c10h16isomers.smi";
-            using (Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename))
+            using (Stream ins = ResourceLoader.GetAsStream(filename))
             using (SMILESReader reader = new SMILESReader(ins))
             {
                 som = reader.Read(Silent.ChemObjectBuilder.Instance.CreateAtomContainerSet());
@@ -74,9 +74,9 @@ namespace NCDK.StructGen.Stochastic.Operator
                             IAtomContainer ac = result[l];
                             Assert.IsTrue(ConnectivityChecker.IsConnected(ac), "Result must be connected");
                             Assert.AreEqual(
-								MolecularFormulaManipulator.GetString(MolecularFormulaManipulator.GetMolecularFormula(ac)),
-								correctFormula,
-								"Molecular formula must be the same as" + "of the input");
+                                MolecularFormulaManipulator.GetString(MolecularFormulaManipulator.GetMolecularFormula(ac)),
+                                correctFormula,
+                                "Molecular formula must be the same as" + "of the input");
                             int[] hydrogencountresult = new int[4];
                             int hcounttotal = 0;
                             foreach (var atom in result[l].Atoms)

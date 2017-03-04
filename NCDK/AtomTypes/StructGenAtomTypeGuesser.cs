@@ -23,37 +23,36 @@ using System.Diagnostics;
 
 namespace NCDK.AtomTypes
 {
-    /**
+    /// <summary>
     /// AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
     /// This atom type matcher takes into account formal charge and number of
     /// implicit hydrogens, and requires bond orders to be given.
-     *
+    /// <para>
     /// <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b>
     /// list. If there is not an atom type defined for the tested atom, then null
     /// is returned.
-     *
-    /// @author         egonw
-    /// @cdk.created    2006-09-22
-    /// @cdk.module     structgen
-    /// @cdk.githash
-     */
+    /// </para>
+    /// </summary>
+    // @author         egonw
+    // @cdk.created    2006-09-22
+    // @cdk.module     structgen
+    // @cdk.githash
     public class StructGenAtomTypeGuesser : IAtomTypeGuesser
     {
         private static AtomTypeFactory factory = null;
-        /**
+        /// <summary>
         /// Constructor for the StructGenMatcher object.
-         */
+        /// </summary>
         public StructGenAtomTypeGuesser() { }
 
-        /**
+        /// <summary>
         /// Finds the AtomType matching the Atom's element symbol, formal charge and
         /// hybridization state.
-         *
-        /// @param  atomContainer  AtomContainer
-        /// @param  atom            the target atom
-        /// @exception CDKException Exception thrown if something goes wrong
-        /// @return                 the matching AtomType
-         */
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="atom">the target atom</param>
+        /// <exception cref="CDKException">Exception thrown if something goes wrong</exception>
+        /// <returns>the matching AtomType</returns>
         public IEnumerable<IAtomType> PossibleAtomTypes(IAtomContainer atomContainer, IAtom atom)
         {
             if (factory == null)

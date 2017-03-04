@@ -20,10 +20,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.StructGen.Stochastic.Operator
 {
-    /**
-     * @cdk.module test-structgen
-     */
-	 [TestClass()]
+    /// <summary>
+    // @cdk.module test-structgen
+    /// </summary>
+     [TestClass()]
     public class ChemGraphTest : CDKTestCase
     {
     }

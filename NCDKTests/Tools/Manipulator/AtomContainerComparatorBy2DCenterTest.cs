@@ -24,10 +24,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Test class for {@link org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter}
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Test class for {@link org.openscience.cdk.tools.manipulator.AtomContainerComparatorBy2DCenter}
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class AtomContainerComparatorBy2DCenterTest : CDKTestCase
     {

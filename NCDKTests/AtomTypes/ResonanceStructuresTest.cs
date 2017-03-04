@@ -21,9 +21,9 @@ using NCDK.Default;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ResonanceStructuresTest : CDKTestCase
     {
@@ -37,21 +37,21 @@ namespace NCDK.AtomTypes
             matcher = CDKAtomTypeMatcher.GetInstance(builder);
         }
 
-        /**
-         * Constructor of the ResonanceStructuresTest.
-         */
+        /// <summary>
+        /// Constructor of the ResonanceStructuresTest.
+        /// </summary>
         public ResonanceStructuresTest()
             : base()
         { }
 
 
-        /**
-         * A unit test suite for JUnit. Compound and its fragments to be tested
-         * @throws Exception
-         *
-         * @see       StructureResonanceGeneratorTest#TestGetAllStructures_IAtomContainer()
-         * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Compound and its fragments to be tested
+        // @throws Exception
+        ///
+        // @see       StructureResonanceGeneratorTest#TestGetAllStructures_IAtomContainer()
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        /// </summary>
         [TestMethod()]
         public void TestGetAllStructures_IAtomContainer()
         {
@@ -89,54 +89,54 @@ namespace NCDK.AtomTypes
                 Assert.AreEqual(expectedTypes[i], perceivedType.AtomTypeName, "Incorrect atom type perceived for: " + nextAtom);
             }
             //
-            //		//FRAGMENT_1
-            //		//
-            //		IAtomContainer expectedStructure = builder.CreateAtomContainer();
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
-            //		expectedStructure.Bonds.Add(0,1,BondOrder.Double);
-            //		expectedStructure.Bonds.Add(1,2,BondOrder.Single);
-            //		expectedStructure.Bonds.Add(2,3,BondOrder.Double);
-            //		expectedStructure.Bonds.Add(3,4,BondOrder.Single);
-            //		expectedStructure.Bonds.Add(4,5,BondOrder.Double);
-            //		expectedStructure.Bonds.Add(5,0,BondOrder.Single);
-            //		expectedStructure.Bonds.Add(0,6,BondOrder.Single);
-            //		expectedStructure.Bonds.Add(1,7,BondOrder.Single);
-            //		AddExplicitHydrogens(expectedStructure);
+            //        //FRAGMENT_1
+            //        //
+            //        IAtomContainer expectedStructure = builder.CreateAtomContainer();
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Atoms.Add(builder.NewInstance(typeof(IAtom),"C"));
+            //        expectedStructure.Bonds.Add(0,1,BondOrder.Double);
+            //        expectedStructure.Bonds.Add(1,2,BondOrder.Single);
+            //        expectedStructure.Bonds.Add(2,3,BondOrder.Double);
+            //        expectedStructure.Bonds.Add(3,4,BondOrder.Single);
+            //        expectedStructure.Bonds.Add(4,5,BondOrder.Double);
+            //        expectedStructure.Bonds.Add(5,0,BondOrder.Single);
+            //        expectedStructure.Bonds.Add(0,6,BondOrder.Single);
+            //        expectedStructure.Bonds.Add(1,7,BondOrder.Single);
+            //        AddExplicitHydrogens(expectedStructure);
             //
-            //		string[] expectedTypes1 = {
-            //			"C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
-            //			"C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H",
-            //			"H", "H", "H"
-            //		};
-            //		Assert.AreEqual(expectedTypes.Length, expectedStructure.Atoms.Count);
-            //		for (int i=0; i<expectedTypes1.Length; i++) {
-            //			IAtom nextAtom = expectedStructure.Atoms[i];
-            //			IAtomType perceivedType = matcher.FindMatchingAtomType(expectedStructure, nextAtom);
-            //			Assert.IsNotNull(
-            //				"Missing atom type for: " + nextAtom,
-            //				perceivedType
-            //			);
-            //			Assert.AreEqual(
-            //				"Incorrect atom type perceived for: " + nextAtom,
-            //				expectedTypes1[i], perceivedType.AtomTypeName
-            //			);
-            //		}
+            //        string[] expectedTypes1 = {
+            //            "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2", "C.sp2",
+            //            "C.sp3", "C.sp3", "H", "H", "H", "H", "H", "H", "H",
+            //            "H", "H", "H"
+            //        };
+            //        Assert.AreEqual(expectedTypes.Length, expectedStructure.Atoms.Count);
+            //        for (int i=0; i<expectedTypes1.Length; i++) {
+            //            IAtom nextAtom = expectedStructure.Atoms[i];
+            //            IAtomType perceivedType = matcher.FindMatchingAtomType(expectedStructure, nextAtom);
+            //            Assert.IsNotNull(
+            //                "Missing atom type for: " + nextAtom,
+            //                perceivedType
+            //            );
+            //            Assert.AreEqual(
+            //                "Incorrect atom type perceived for: " + nextAtom,
+            //                expectedTypes1[i], perceivedType.AtomTypeName
+            //            );
+            //        }
         }
 
-        /**
-         * A unit test suite for JUnit. Compound and its fragments to be tested
-         * @throws Exception
-         *
-         * @see       StructureResonanceGeneratorTest#Test12DimethylBenzene()
-         * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Compound and its fragments to be tested
+        // @throws Exception
+        ///
+        // @see       StructureResonanceGeneratorTest#Test12DimethylBenzene()
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
+        /// </summary>
         [TestMethod()]
         public void Test12DimethylBenzene()
         {

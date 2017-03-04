@@ -21,11 +21,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Silent
 {
-    /**
-     * Checks the functionality of {@link Element}.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Checks the functionality of {@link Element}.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     [TestClass()]
     public class ElementTest : AbstractElementTest
     {

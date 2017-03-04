@@ -72,7 +72,7 @@ namespace NCDK.IO
         public void TestRGFileFormat()
         {
             string filename = "NCDK.Data.MDL.rgfile.1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IChemFormat format = new FormatFactory().GuessFormat(ins);
             Assert.AreEqual(format.GetType(), typeof(RGroupQueryFormat));
         }
@@ -86,7 +86,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.1.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -163,7 +163,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.2.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -263,7 +263,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.3.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -308,7 +308,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.4.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -346,7 +346,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.5.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -368,7 +368,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.6.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();
@@ -398,7 +398,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.rgfile.7.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             RGroupQueryReader reader = new RGroupQueryReader(ins);
             RGroupQuery rGroupQuery = (RGroupQuery)reader.Read(new RGroupQuery(Default.ChemObjectBuilder.Instance));
             reader.Close();

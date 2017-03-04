@@ -27,11 +27,11 @@ using System.Linq;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     *
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    ///
+    /// </summary>
     [TestClass()]
     public class PartitionTest : CDKTestCase
     {
@@ -53,7 +53,7 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void cellDataConstructor()
+        public void CellDataConstructor()
         {
             int[][] cellData = new int[][] { new[] { 0, 1 }, new[] { 2, 3, 4 }, new[] { 5, 6 } };
             Partition p = new Partition(cellData);

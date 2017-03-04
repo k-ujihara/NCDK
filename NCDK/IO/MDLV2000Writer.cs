@@ -22,56 +22,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-//namespace NCDK.IO {
-
-//import java.io.TextWriter;
-//import java.io.IOException;
-//import java.io.Stream;
-//import java.io.StreamWriter;
-//import java.io.StringWriter;
-//import java.io.Writer;
-//import java.nio.charset.StandardCharsets;
-//import java.text.NumberFormat;
-//import java.text.SimpleDateFormat;
-//import IList;
-//import java.util.Collection;
-//import java.util.Dictionary;
-//import java.util.IEnumerator;
-//import java.util.SortedDictionary;
-//import IList;
-//import java.util.Locale;
-//import java.util.IDictionary;
-//import java.util.Set;
-//import java.util.SortedDictionary;
-//import java.util.regex.Matcher;
-//import java.util.regex.Pattern;
-
-//import org.openscience.cdk.CDKConstants;
-//import org.openscience.cdk.config.Isotopes;
-//import CDKException;
-//import IAtom;
-//import IAtomContainer;
-//import IBond;
-//import BondOrder;
-//import IChemFile;
-//import IChemModel;
-//import IChemObject;
-//import IChemSequence;
-//import IPseudoAtom;
-//import IStereoElement;
-//import ITetrahedralChirality;
-//import NCDK.IO.Formats.IResourceFormat;
-//import NCDK.IO.Formats.MDLFormat;
-//import org.openscience.cdk.io.setting.BooleanIOSetting;
-//import org.openscience.cdk.io.setting.IOSetting;
-//import org.openscience.cdk.sgroup.Sgroup;
-//import org.openscience.cdk.sgroup.SgroupBracket;
-//import org.openscience.cdk.sgroup.SgroupKey;
-//import org.openscience.cdk.sgroup.SgroupType;
-//import org.openscience.cdk.tools.ILoggingTool;
-//import org.openscience.cdk.tools.LoggingToolFactory;
-//import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
-//import org.openscience.cdk.tools.manipulator.ChemFileManipulator;
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
@@ -89,46 +39,45 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-     * Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
-     * For writing a MDL molfile you can this code:
-     * <pre>
-     * MDLV2000Writer writer = new MDLV2000Writer(
-     *   new FileWriter(new File("output.mol"))
-     * );
-     * writer.Write((IAtomContainer)molecule);
-     * writer.Close();
-     * </pre>
-     * <p/>
-     * <p>The writer has two IO settings: one for writing 2D coordinates, even if
-     * 3D coordinates are given for the written data; the second writes aromatic
-     * bonds as bond type 4, which is, strictly speaking, a query bond type, but
-     * my many tools used to reflect aromaticity. The full IO setting API is
-     * explained in CDK News {@cdk.cite WILLIGHAGEN2004}. One programmatic option
-     * to set the option for writing 2D coordinates looks like:
-     * <pre>
-     * Properties customSettings = new Properties();
-     * customSettings.SetProperty(
-     *  "ForceWriteAs2DCoordinates", "true"
-     * );
-     * PropertiesListener listener =
-     *   new PropertiesListener(customSettings);
-     * writer.Listeners.Add(listener);
-     * </pre>
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     * @cdk.keyword file format, MDL molfile
-     */
+    /// <summary>
+    /// Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
+    /// For writing a MDL molfile you can this code:
+    /// <code>
+    /// MDLV2000Writer writer = new MDLV2000Writer(
+    ///   new FileWriter(new File("output.mol"))
+    /// );
+    /// writer.Write((IAtomContainer)molecule);
+    /// writer.Close();
+    /// </code>
+    /// <p/>
+    /// <para>The writer has two IO settings: one for writing 2D coordinates, even if
+    /// 3D coordinates are given for the written data; the second writes aromatic
+    /// bonds as bond type 4, which is, strictly speaking, a query bond type, but
+    /// my many tools used to reflect aromaticity. The full IO setting API is
+    /// explained in CDK News {@cdk.cite WILLIGHAGEN2004}. One programmatic option
+    /// to set the option for writing 2D coordinates looks like:
+    /// <code>
+    /// Properties customSettings = new Properties();
+    /// customSettings.SetProperty(
+    ///  "ForceWriteAs2DCoordinates", "true"
+    /// );
+    /// PropertiesListener listener =
+    ///   new PropertiesListener(customSettings);
+    /// writer.Listeners.Add(listener);
+    /// </code>
+    /// </summary>
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    // @cdk.keyword file format, MDL molfile
     public class MDLV2000Writer : DefaultChemObjectWriter
     {
         // regular expression to capture R groups with attached numbers
         private static readonly Regex NUMERED_R_GROUP = new Regex("R(\\d+)", RegexOptions.Compiled);
 
-        /**
-		 * Enumeration of all valid radical values.
-		 */
+        /// <summary>
+        /// Enumeration of all valid radical values.
+        /// </summary>
         public class SpinMultiplicity
         {
             public static readonly SpinMultiplicity None = new SpinMultiplicity(0, 0);
@@ -151,13 +100,13 @@ namespace NCDK.IO
                 Value = value;
                 SingleElectrons = singleElectrons;
             }
-            /**
-			 * Create a SpinMultiplicity instance for the specified value.
-			 *
-			 * @param value input value (in the property block)
-			 * @return instance
-			 * @ unknown spin multiplicity value
-			 */
+            /// <summary>
+            /// Create a SpinMultiplicity instance for the specified value.
+            ///
+            /// <param name="value">input value (in the property block)</param>
+            /// <returns>instance</returns>
+            // @ unknown spin multiplicity value
+            /// </summary>
             public static SpinMultiplicity OfValue(int value)
             {
                 switch (value)
@@ -187,10 +136,10 @@ namespace NCDK.IO
         // belonging to the MDLV2000 format, and will be removed when
         // a MDLV2000QueryWriter is written.
 
-        /*
-		 * Should aromatic bonds be written as bond type 4? If true, this makes the
-		 * output a query file.
-		 */
+        /// <summary>
+        /// Should aromatic bonds be written as bond type 4? If true, this makes the
+        /// output a query file.
+        /// </summary>
         private BooleanIOSetting WriteAromaticBondTypes;
 
         /* Should atomic valencies be written in the Query format. */
@@ -199,24 +148,24 @@ namespace NCDK.IO
 
         private TextWriter writer;
 
-        /**
-		 * Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
-		 * to the MDL molfile format.
-		 *
-		 * @param out The Writer to write to
-		 */
+        /// <summary>
+        /// Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
+        /// to the MDL molfile format.
+        ///
+        /// <param name="out">The Writer to write to</param>
+        /// </summary>
         public MDLV2000Writer(TextWriter writer)
         {
             this.writer = writer;
             InitIOSettings();
         }
 
-        /**
-		 * Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
-		 * to a given Stream.
-		 *
-		 * @param output The Stream to write to
-		 */
+        /// <summary>
+        /// Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
+        /// to a given Stream.
+        ///
+        /// <param name="output">The Stream to write to</param>
+        /// </summary>
         public MDLV2000Writer(Stream output)
             : this(new StreamWriter(output, Encoding.UTF8))
         {
@@ -244,9 +193,9 @@ namespace NCDK.IO
             SetWriter(new StreamWriter(stream));
         }
 
-        /**
-		 * Flushes the output and closes this object.
-		 */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();
@@ -265,14 +214,13 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-		 * Writes a {@link IChemObject} to the MDL molfile formated output.
-		 * It can only output ChemObjects of type {@link IChemFile},
-		 * {@link IChemObject} and <see cref="IAtomContainer"/>.
-		 *
-		 * @param object {@link IChemObject} to write
-		 * @see #Accepts(Class)
-		 */
+        /// <summary>
+        /// Writes a <see cref="IChemObject"/> to the MDL molfile formated output.
+        /// It can only output ChemObjects of type <see cref="IChemFile"/>,
+        /// <see cref="IChemObject"/> and <see cref="IAtomContainer"/>.
+        /// </summary>
+        /// <param name="object"><see cref="IChemObject"/> to write</param>
+        /// <see cref="Accepts(Type)"/>
         public override void Write(IChemObject obj)
         {
             CustomizeJob();
@@ -333,11 +281,10 @@ namespace NCDK.IO
             WriteMolecule(bigPile);
         }
 
-        /**
-		 * Writes a Molecule to an Stream in MDL sdf format.
-		 *
-		 * @param container Molecule that is written to an Stream
-		 */
+        /// <summary>
+        /// Writes a Molecule to an Stream in MDL sdf format.
+        /// </summary>
+        /// <param name="container">Molecule that is written to an Stream</param>
         public void WriteMolecule(IAtomContainer container)
         {
             string line = "";
@@ -351,15 +298,13 @@ namespace NCDK.IO
             writer.Write(title);
             writer.WriteLine();
 
-            /*
-			 * From CTX spec This line has the format:
-			 * IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR (FORTRAN:
-			 * A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> ) User's first
-			 * and last initials (l), program name (P), date/time (M/D/Y,H:m),
-			 * dimensional codes (d), scaling factors (S, s), energy (E) if modeling
-			 * program input, internal registry number (R) if input through MDL
-			 * form. A blank line can be substituted for line 2.
-			 */
+            // From CTX spec This line has the format:
+            // IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR (FORTRAN:
+            // A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> ) User's first
+            // and last initials (l), program name (P), date/time (M/D/Y,H:m),
+            // dimensional codes (d), scaling factors (S, s), energy (E) if modeling
+            // program input, internal registry number (R) if input through MDL
+            // form. A blank line can be substituted for line 2.
             writer.Write("  CDK     ");
             writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm"));
             writer.WriteLine();
@@ -1058,50 +1003,50 @@ namespace NCDK.IO
             if (i < NN8 && iterator.MoveNext()) WriteRadicalPattern(iterator, i);
         }
 
-        /**
-		 * Formats an integer to fit into the connection table and changes it
-		 * to a string.
-		 *
-		 * @param i The int to be formated
-		 * @param l Length of the string
-		 * @return The string to be written into the connectiontable
-		 */
+        /// <summary>
+        /// Formats an integer to fit into the connection table and changes it
+        /// to a string.
+        ///
+        /// <param name="i">The int to be formated</param>
+        /// <param name="l">Length of the string</param>
+        /// <returns>The string to be written into the connectiontable</returns>
+        /// </summary>
         protected internal static string FormatMDLInt(int i, int l)
         {
             string s = i.ToString(CultureInfo.InvariantCulture);
             return new string(' ', l - s.Length) + s;
         }
 
-        /**
-		 * Formats a float to fit into the connectiontable and changes it
-		 * to a string.
-		 *
-		 * @param fl The float to be formated
-		 * @return The string to be written into the connectiontable
-		 */
+        /// <summary>
+        /// Formats a float to fit into the connectiontable and changes it
+        /// to a string.
+        ///
+        /// <param name="fl">The float to be formated</param>
+        /// <returns>The string to be written into the connectiontable</returns>
+        /// </summary>
         protected static string FormatMDLFloat(double fl)
         {
             string s = fl.ToString("F4", CultureInfo.InvariantCulture);
             return s.PadLeft(10);
         }
 
-        /**
-		 * Formats a string to fit into the connectiontable.
-		 *
-		 * @param s  The string to be formated
-		 * @param le The length of the string
-		 * @return The string to be written in the connectiontable
-		 */
+        /// <summary>
+        /// Formats a string to fit into the connectiontable.
+        ///
+        /// <param name="s">The string to be formated</param>
+        /// <param name="le">The length of the string</param>
+        /// <returns>The string to be written in the connectiontable</returns>
+        /// </summary>
         protected static string FormatMDLString(string s, int le)
         {
             return (s + new string(' ', le)).Substring(0, le);
         }
 
-        /**
-		 * Initializes IO settings.<br>
-		 * Please note with regards to "WriteAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
-		 * so a 'query file' is created if the container has aromatic bonds and this settings is true.
-		 */
+        /// <summary>
+        /// Initializes IO settings.<br>
+        /// Please note with regards to "WriteAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
+        /// so a 'query file' is created if the container has aromatic bonds and this settings is true.
+        /// </summary>
         private void InitIOSettings()
         {
             ForceWriteAs2DCoords = IOSettings.Add(new BooleanIOSetting("ForceWriteAs2DCoordinates", IOSetting.Importance.Low,

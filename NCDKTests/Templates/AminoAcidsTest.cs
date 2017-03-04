@@ -22,9 +22,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Templates
 {
-    /**
-     * @cdk.module test-pdb
-     */
+    /// <summary>
+    // @cdk.module test-pdb
+    /// </summary>
     [TestClass()]
     public class AminoAcidsTest : CDKTestCase
     {

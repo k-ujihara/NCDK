@@ -23,53 +23,53 @@ using System;
 
 namespace NCDK.IO
 {
-    /**
-     * Interface for classes aimed to handle {@link IChemObjectReader} errors.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author     Egon Willighagen <egonw@users.sf.net>
-     */
+    /// <summary>
+    /// Interface for classes aimed to handle <see cref="IChemObjectReader"/> errors.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author     Egon Willighagen <egonw@users.sf.net>
+    /// </summary>
     public interface IChemObjectReaderErrorHandler
     {
-        /**
-         * Method that should react on an error message send by an
-         * {@link IChemObjectReader}.
-         *
-         * @param message Error found while reading.
-         */
+        /// <summary>
+        /// Method that should react on an error message send by an
+        /// <see cref="IChemObjectReader"/>.
+        ///
+        /// <param name="message">Error found while reading.</param>
+        /// </summary>
          void HandleError(string message);
 
-        /**
-         * Method that should react on an error message send by an
-         * {@link IChemObjectReader}.
-         *
-         * @param message   Error found while reading.
-         * @param exception Exception thrown while reading.
-         */
+        /// <summary>
+        /// Method that should react on an error message send by an
+        /// <see cref="IChemObjectReader"/>.
+        ///
+        /// <param name="message">Error found while reading.</param>
+        /// <param name="exception">Exception thrown while reading.</param>
+        /// </summary>
          void HandleError(string message, Exception exception);
 
-        /**
-         * Method that should react on an error message send by an
-         * {@link IChemObjectReader}.
-         *
-         * @param message  Error found while reading.
-         * @param row      Row in the file where the error is found.
-         * @param colStart Start column in the file where the error is found.
-         * @param colEnd   End column in the file where the error is found.
-         */
+        /// <summary>
+        /// Method that should react on an error message send by an
+        /// <see cref="IChemObjectReader"/>.
+        ///
+        /// <param name="message">Error found while reading.</param>
+        /// <param name="row">Row in the file where the error is found.</param>
+        /// <param name="colStart">Start column in the file where the error is found.</param>
+        /// <param name="colEnd">End column in the file where the error is found.</param>
+        /// </summary>
          void HandleError(string message, int row, int colStart, int colEnd);
 
-        /**
-         * Method that should react on an error message send by an
-         * {@link IChemObjectReader}.
-         *
-         * @param message   Error found while reading.
-         * @param exception Exception thrown while reading.
-         * @param colStart Start column in the file where the error is found.
-         * @param colEnd   End column in the file where the error is found.
-         */
+        /// <summary>
+        /// Method that should react on an error message send by an
+        /// <see cref="IChemObjectReader"/>.
+        ///
+        /// <param name="message">Error found while reading.</param>
+        /// <param name="exception">Exception thrown while reading.</param>
+        /// <param name="colStart">Start column in the file where the error is found.</param>
+        /// <param name="colEnd">End column in the file where the error is found.</param>
+        /// </summary>
          void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
     }
 }

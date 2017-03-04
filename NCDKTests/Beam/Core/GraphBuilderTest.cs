@@ -84,7 +84,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_1_2_difluroethene()
+        public void E_1_2_difluroethene()
         {
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomImpl.AliphaticSubset.Fluorine)
@@ -100,7 +100,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_1_2_difluroethene()
+        public void Z_1_2_difluroethene()
         {
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomImpl.AliphaticSubset.Fluorine)
@@ -190,7 +190,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void resolveConflict3()
+        public void ResolveConflict3()
         {
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomImpl.AliphaticSubset.Carbon)
@@ -246,7 +246,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void impossible_octatetraene()
+        public void Impossible_octatetraene()
         {
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomImpl.AliphaticSubset.Carbon)
@@ -310,7 +310,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void suppress_benzene()
+        public void Suppress_benzene()
         {
             GraphBuilder gb = GraphBuilder.Create(5);
             Assert.AreEqual("C=1C=CC=CC1",
@@ -342,9 +342,9 @@ namespace NCDK.Beam
                    .ConnectWithDoubleBond(2, 3)
                    .ConnectWithSingleBond(3, 4)
                    .CreateExtendedTetrahedral(2).LookingFrom(1)
-					.Neighbors(2, 3, 4)
-					.Winding(Configuration.AL1)
-					.Build();
+                    .Neighbors(2, 3, 4)
+                    .Winding(Configuration.AL1)
+                    .Build();
         }
     }
 }

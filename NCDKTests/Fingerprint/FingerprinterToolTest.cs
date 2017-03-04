@@ -29,9 +29,9 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class FingerprinterToolTest : CDKTestCase
     {

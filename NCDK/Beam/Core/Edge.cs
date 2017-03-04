@@ -34,8 +34,8 @@ using System.Text;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// An edge defines two vertex end points and an associated {@link Bond} label.
-    /// Edges are created from their {@link Bond} label as follows.
+    /// An edge defines two vertex end points and an associated <see cref="Bond"/> label.
+    /// Edges are created from their <see cref="Bond"/> label as follows.
     /// </summary>
     /// <example>
     /// an edge between the vertices 1 and 2 the bond label is implicit
@@ -46,8 +46,8 @@ namespace NCDK.Beam
     /// <code>
     /// Edge e = Bond.Double.CreateEdge(1, 2);
     /// </code></example>
-    /// <author>John May</author>
     /// <seealso cref="Bond"/>
+    // @author John May
     public sealed class Edge
     {
         /// <summary>Endpoints of the edge.</summary>
@@ -56,12 +56,7 @@ namespace NCDK.Beam
         /// <summary>Label on the edge.</summary>
         public Bond Bond { get; set; }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        Edge(int u, int v, Bond bond)
+        internal Edge(int u, int v, Bond bond)
         {
             this.u = u;
             this.v = v;
@@ -69,31 +64,26 @@ namespace NCDK.Beam
             this.Bond = bond;
         }
 
-#if TEST
-        public
-#else
-        internal
-#endif
-        Edge(Edge e)
+        internal Edge(Edge e)
             : this(e.u, e.v, e.Bond)
         {
         }
 
         /// <summary>
-		/// Access either endpoint of the edge. For directional bonds, the endpoint
-		/// can be considered as relative to this vertex.
-		/// </summary>
-		/// <returns>either endpoint</returns>
+        /// Access either endpoint of the edge. For directional bonds, the endpoint
+        /// can be considered as relative to this vertex.
+        /// </summary>
+        /// <returns>either endpoint</returns>
         public int Either()
         {
             return u;
         }
 
         /// <summary>
-		/// Given one endpoint, access the other endpoint of the edge.
-		/// </summary>
-		/// <param name="x">an endpoint of the edge</param>
-		/// <returns>the other endpoint</returns>
+        /// Given one endpoint, access the other endpoint of the edge.
+        /// </summary>
+        /// <param name="x">an endpoint of the edge</param>
+        /// <returns>the other endpoint</returns>
         public int Other(int x)
         {
             return x ^ xor;
@@ -109,15 +99,15 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-		/// Access the bond label relative to a specified endpoint.
-		/// </summary>
-		/// <example><code>
-		/// Edge e = Bond.Up.CreateEdge(2, 3);
-		/// e.Bond(2); // Up
-		/// e.Bond(3); // Down
-		/// </code></example>
-		/// <param name="x">endpoint to which the label is relative to</param>
-		/// <returns>the bond label</returns>
+        /// Access the bond label relative to a specified endpoint.
+        /// </summary>
+        /// <example><code>
+        /// Edge e = Bond.Up.CreateEdge(2, 3);
+        /// e.Bond(2); // Up
+        /// e.Bond(3); // Down
+        /// </code></example>
+        /// <param name="x">endpoint to which the label is relative to</param>
+        /// <returns>the bond label</returns>
         public Bond GetBond(int x)
         {
             if (x == u) return Bond;
@@ -126,9 +116,9 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-		/// Inverse of the edge label but keep the vertices the same.
-		/// </summary>
-		/// <returns>inverse edge</returns>
+        /// Inverse of the edge label but keep the vertices the same.
+        /// </summary>
+        /// <returns>inverse edge</returns>
         public Edge Inverse()
         {
             return Bond.Inverse().CreateEdge(u, v);
@@ -156,7 +146,7 @@ namespace NCDK.Beam
                     (u == o.v && v == o.u && Bond.Equals(o.Bond.Inverse()));
         }
 
-        /// <summary>@inheritDoc</summary>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return new StringBuilder(20).Append('{')

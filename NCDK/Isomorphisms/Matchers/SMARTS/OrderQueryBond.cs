@@ -20,35 +20,29 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches a bond with a certain bond order.
-     *
-     * Daylight spec indicates that if match a single bond
-     * using '-', it should be an aliphatic single bond
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches a bond with a certain bond order.
+    ///
+    /// Daylight spec indicates that if match a single bond
+    /// using '-', it should be an aliphatic single bond
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class OrderQueryBond : SMARTSBond
     {
-        /**
-         * Creates a new instance
-         *
-         * @param order the order of bond
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="order">the order of bond</param>
+        /// </summary>
         public OrderQueryBond(BondOrder order, IChemObjectBuilder builder)
             : base(builder)
         {
             this.Order = order;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#Matches(org
-         * .openscience.cdk.interfaces.IBond)
-         */
         public override bool Matches(IBond bond)
         {
             if (bond.IsAromatic ^ IsAromatic) return false;
@@ -59,10 +53,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             return bond.IsAromatic || bond.Order == Order;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.Bond#ToString()
-         */
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();

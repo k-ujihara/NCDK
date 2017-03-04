@@ -20,12 +20,12 @@ using System;
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * Object that provides access to the calculated descriptor value.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Object that provides access to the calculated descriptor value.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class IntegerResult : IDescriptorResult
     {

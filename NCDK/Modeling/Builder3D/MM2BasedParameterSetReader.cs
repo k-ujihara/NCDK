@@ -25,23 +25,24 @@
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.Tools;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * AtomType list configurator that uses the ParameterSet originally
-     * defined in mm2.prm from tinker. This class was added to be able to port
-     * mm2 to CDK.
-     *
-     * @author         chhoppe
-     * @cdk.created    2004-09-07
-     * @cdk.module     forcefield
-     * @cdk.githash
-     * @cdk.keyword    atom type, MM2
-     */
+    /// <summary>
+    /// AtomType list configurator that uses the ParameterSet originally
+    /// defined in mm2.prm from tinker. This class was added to be able to port
+    /// mm2 to CDK.
+    ///
+    // @author         chhoppe
+    // @cdk.created    2004-09-07
+    // @cdk.module     forcefield
+    // @cdk.githash
+    // @cdk.keyword    atom type, MM2
+    /// </summary>
     public class MM2BasedParameterSetReader
     {
         private string configFile = "NCDK.Modeling.ForceField.Data.mm2.prm";
@@ -51,9 +52,9 @@ namespace NCDK.Modeling.Builder3D
         private IEnumerator<string> st;
         private string key = "";
 
-        /**
-         * Constructor for the MM2BasedParameterSetReader object.
-         */
+        /// <summary>
+        /// Constructor for the MM2BasedParameterSetReader object.
+        /// </summary>
         public MM2BasedParameterSetReader()
         {
             parameterSet = new Dictionary<string, object>();
@@ -65,21 +66,21 @@ namespace NCDK.Modeling.Builder3D
             return parameterSet;
         }
 
-        /**
-         * Sets the file containing the config data.
-         *
-         * @param  ins  The new inputStream type Stream
-         */
+        /// <summary>
+        /// Sets the file containing the config data.
+        ///
+        /// <param name="ins">The new inputStream type Stream</param>
+        /// </summary>
         public void SetInputStream(Stream ins)
         {
             this.ins = ins;
         }
 
-        /**
-         * Read a text based configuration file out of the force field mm2 file
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        /// Read a text based configuration file out of the force field mm2 file
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetForceFieldDefinitions()
         {
             string sid = st.Current; st.MoveNext();
@@ -312,11 +313,11 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         *  Read and stores the atom types in a vector
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Read and stores the atom types in a vector
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetAtomTypes(IChemObjectBuilder builder)
         {
             string name = "";
@@ -354,17 +355,17 @@ namespace NCDK.Modeling.Builder3D
             atomType.MassNumber = MassNumber(an, mass);
             atomType.FormalNeighbourCount = maxbond;
             atomType.Symbol = rootType;
-            var co = System.Drawing.Color.FromArgb(rl, gl, bl);
+            var co = CDKPropertyName.RGB2Int(rl, gl, bl);
             atomType.SetProperty(CDKPropertyName.COLOR, co);
             atomType.AtomTypeName = sid;
             AtomTypes.Add(atomType);
         }
 
-        /**
-         *  Read vdw radius, stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Read vdw radius, stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetvdWaals()
         {
             IList<double> data = new List<double>();
@@ -389,11 +390,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Read vdW pair radius,stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Read vdW pair radius,stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetvdWaalpr()
         {
             IList<double> data = new List<double>();
@@ -418,11 +419,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the bond attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the bond attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetBond()
         {
             IList<double> data = new List<double>();
@@ -448,11 +449,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the bond3 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the bond3 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetBond3()
         {
             IList<double> data = new List<double>();
@@ -478,11 +479,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the bond4 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the bond4 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetBond4()
         {
             IList<double> data = new List<double>();
@@ -508,11 +509,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the angle attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the angle attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetAngle()
         {
             IList<double> data = new List<double>();
@@ -555,11 +556,11 @@ namespace NCDK.Modeling.Builder3D
 
         }
 
-        /**
-         *  Sets the angle3 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the angle3 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetAngle3()
         {
             IList<double> data = new List<double>();
@@ -592,11 +593,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the angle4 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the angle4 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetAngle4()
         {
             IList<double> data = new List<double>();
@@ -629,11 +630,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the strBnd attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the strBnd attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetStrBnd()
         {
             IList<double> data = new List<double>();
@@ -654,11 +655,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the opBend attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the opBend attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetOpBend()
         {
             IList<double> data = new List<double>();
@@ -688,11 +689,11 @@ namespace NCDK.Modeling.Builder3D
 
         }
 
-        /**
-         *  Sets the torsion attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the torsion attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetTorsion()
         {
             IList<double> data = new List<double>();
@@ -737,11 +738,11 @@ namespace NCDK.Modeling.Builder3D
 
         }
 
-        /**
-         *  Sets the torsion4 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the torsion4 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetTorsion4()
         {
             IList<double> data = new List<double>();
@@ -778,11 +779,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the charge attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the charge attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetCharge()
         {
             IList<double> data = new List<double>();
@@ -803,11 +804,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the dipole attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the dipole attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetDipole()
         {
             IList<double> data = new List<double>();
@@ -833,11 +834,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the dipole3 attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the dipole3 attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetDipole3()
         {
             IList<double> data = new List<double>();
@@ -863,11 +864,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the piAtom attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the piAtom attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetPiAtom()
         {
             IList<double> data = new List<double>();
@@ -895,11 +896,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         *  Sets the piBond attribute stored into the parameter set
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Sets the piBond attribute stored into the parameter set
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         private void SetPiBond()
         {
             IList<double> data = new List<double>();
@@ -925,11 +926,11 @@ namespace NCDK.Modeling.Builder3D
             parameterSet[key] = data;
         }
 
-        /**
-         * The main method which parses through the force field configuration file
-         *
-         * @exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        /// The main method which parses through the force field configuration file
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         public void ReadParameterSets(IChemObjectBuilder builder)
         {
             //vdW,vdWp,bond,bond4,bond3,angle,angle4,angle3,
@@ -939,7 +940,7 @@ namespace NCDK.Modeling.Builder3D
 
             if (ins == null)
             {
-                ins = GetType().Assembly.GetManifestResourceStream(configFile);
+                ins = ResourceLoader.GetAsStream(configFile);
             }
             if (ins == null)
             {
@@ -1065,13 +1066,13 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Mass number for a atom with a given atomic number and exact mass.
-         * @param atomicNumber atomic number
-         * @param exactMass exact mass
-         * @return the mass number (or null) if no mass number was found
-         * @throws IOException isotope configuration could not be loaded
-         */
+        /// <summary>
+        /// Mass number for a atom with a given atomic number and exact mass.
+        /// <param name="atomicNumber">atomic number</param>
+        /// <param name="exactMass">exact mass</param>
+        /// <returns>the mass number (or null) if no mass number was found</returns>
+        /// <exception cref="IOException">isotope configuration could not be loaded</exception>
+        /// </summary>
         private int? MassNumber(int atomicNumber, double exactMass)
         {
             string symbol = PeriodicTable.GetSymbol(atomicNumber);

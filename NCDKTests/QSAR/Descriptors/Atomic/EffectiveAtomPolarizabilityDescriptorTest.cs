@@ -60,14 +60,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethyl_chloride()
         {
-            double[] testResult = { 4.8445, 5.824, 4.6165 };/*
-                                                       * from Petra online:
-                                                       * http:
-                                                       * //www2.chemie.uni-erlangen
-                                                       * .
-                                                       * de/services/petra/smiles
-                                                       * .phtml
-                                                       */
+            double[] testResult = { 4.8445, 5.824, 4.6165 };                
+                // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
+
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -86,11 +81,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Allyl_bromide()
         {
-            double testResult = 6.1745; /*
-                                     * from Petra online:
-                                     * http://www2.chemie.uni-
-                                     * erlangen.de/services/petra/smiles.phtml
-                                     */
+            double testResult = 6.1745; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -107,33 +98,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Isopentyl_iodide()
         {
-            double[] testResult = { 8.3585, 6.1118, 6.1118, 9.081, 10.526, 8.69 }; /*
-                                                                              * from
-                                                                              * Petra
-                                                                              * online
-                                                                              * :
-                                                                              * http
-                                                                              * :
-                                                                              * /
-                                                                              * /
-                                                                              * www2
-                                                                              * .
-                                                                              * chemie
-                                                                              * .
-                                                                              * uni
-                                                                              * -
-                                                                              * erlangen
-                                                                              * .
-                                                                              * de
-                                                                              * /
-                                                                              * services
-                                                                              * /
-                                                                              * petra
-                                                                              * /
-                                                                              * smiles
-                                                                              * .
-                                                                              * phtml
-                                                                              */
+            double[] testResult = { 8.3585, 6.1118, 6.1118, 9.081, 10.526, 8.69 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -153,11 +118,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethoxy_ethane()
         {
-            double testResult = 5.207; /*
-                                    * from Petra online:
-                                    * http://www2.chemie.uni-erlangen
-                                    * .de/services/petra/smiles.phtml
-                                    */
+            double testResult = 5.207;  // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -174,16 +135,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Ethanolamine()
         {
-            double[] testResult = { 4.2552, 5.1945, 4.883, 3.595 }; /*
-                                                               * from Petra
-                                                               * online:
-                                                               * http://www2
-                                                               * .chemie
-                                                               * .uni-erlangen
-                                                               * .de
-                                                               * /services/petra
-                                                               * /smiles.phtml
-                                                               */
+            double[] testResult = { 4.2552, 5.1945, 4.883, 3.595 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -202,16 +154,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestPolarizabilityDescriptor_Allyl_mercaptan()
         {
-            double[] testResult = { 5.2995, 6.677, 7.677, 6.2545 }; /*
-                                                               * from Petra
-                                                               * online:
-                                                               * http://www2
-                                                               * .chemie
-                                                               * .uni-erlangen
-                                                               * .de
-                                                               * /services/petra
-                                                               * /smiles.phtml
-                                                               */
+            double[] testResult = { 5.2995, 6.677, 7.677, 6.2545 }; // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
             EffectiveAtomPolarizabilityDescriptor descriptor = new EffectiveAtomPolarizabilityDescriptor();
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);

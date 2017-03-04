@@ -38,11 +38,8 @@ namespace NCDK.Beam
     /// <summary>
     /// Aromaticity perception using AllCycles.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class AllCycles
+    // @author John May
+    internal sealed class AllCycles
     {
         /// <summary>Number of pi electrons for Sp2 atoms.</summary>
         private readonly int[] ps;
@@ -109,12 +106,12 @@ namespace NCDK.Beam
             {
                 if (aromatic[i])
                 {
-                    cpy.AddAtom(org.GetAtom_(i).ToAromaticForm_());
+                    cpy.AddAtom(org.GetAtom(i).AsAromaticForm());
                     cpy.AddFlags(Graph.HAS_AROM);
                 }
                 else
                 {
-                    cpy.AddAtom(org.GetAtom_(i));
+                    cpy.AddAtom(org.GetAtom(i));
                 }
                 cpy.AddTopology(org.TopologyOf(i));
             }

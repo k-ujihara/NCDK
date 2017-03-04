@@ -24,13 +24,13 @@ using System.Text;
 
 namespace NCDK.Tools.Diff.Tree
 {
-    /**
-     * {@link IDifference} between two {@link IChemObject}s.
-     *
-     * @author     egonw
-     * @cdk.module diff
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <see cref="IDifference"/> between two <see cref="IChemObject"/>s.
+    ///
+    // @author     egonw
+    // @cdk.module diff
+    // @cdk.githash
+    /// </summary>
     public class ChemObjectDifference
             : AbstractDifferenceList, IDifferenceList
     {
@@ -42,11 +42,11 @@ namespace NCDK.Tools.Diff.Tree
             this.name = name;
         }
 
-        /**
-         * Returns a {@link string} representation for this {@link IDifference}.
-         *
-         * @return a {@link string}
-         */
+        /// <summary>
+        /// Returns a <see cref="string"/> representation for this <see cref="IDifference"/>.
+        ///
+        /// <returns>a <see cref="string"/></returns>
+        /// </summary>
 
         public override string ToString()
         {

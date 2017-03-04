@@ -32,38 +32,42 @@ using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Aromaticities
 {
-    /**
+    /// <summary>
     /// Electron donation model closely mirroring the Daylight model for use in
     /// generating SMILES. The model was interpreted from various resources and as
     /// such may not match exactly. If you find an inconsistency please add a request
     /// for enhancement to the patch tracker. One known limitation is that this model
-    /// does not currently consider unknown/pseudo atoms '*'. <p/>
-     *
+    /// does not currently consider unknown/pseudo atoms '*'. 
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The model makes a couple of assumptions which it will not correct for.
-    /// Checked assumptions cause the model to throw a runtime exception. <ul>
-    /// <li>there should be no valence errors (unchecked)</li> <li>every atom has a
-    /// set implicit hydrogen count (checked)</li> <li>every bond has defined order,
-    /// single, double etc (checked)</li> <li>atomic number of non-pseudo atoms is
-    /// set (checked)</li> </ul> <p/>
-     *
+    /// Checked assumptions cause the model to throw a runtime exception.
+    /// <list type="bullet">
+    /// <item>there should be no valence errors (unchecked)</item>
+    /// <item>every atom has a set implicit hydrogen count (checked)</item> 
+    /// <item>every bond has defined order, single, double etc (checked)</item> 
+    /// <item>atomic number of non-pseudo atoms is set (checked)</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// The aromaticity model in SMILES was designed to simplify canonicalisation and
     /// express symmetry in a molecule. The contributed electrons can be summarised
-    /// as follows (refer to code for exact specification): <ul> <li>carbon,
-    /// nitrogen, oxygen, phosphorus, sulphur, arsenic and selenium are allow to be
-    /// aromatic</li> <li>atoms should be Sp2 hybridised - not actually computed</li>
-    /// <li>atoms adjacent to a single cyclic pi bond contribute 1 electron</li>
-    /// <li>neutral or negatively charged atoms with a lone pair contribute 2
-    /// electrons</li> <li>exocyclic pi bonds are allowed but if the exocyclic atom
-    /// is more electronegative it consumes an electron. As an example ketone groups
-    /// contribute '0' electrons.</li></ul>
-     *
-    /// @author John May
-    /// @cdk.module standard
-    /// @cdk.githash
-     */
+    /// as follows (refer to code for exact specification): 
+    /// <list type="bullet">
+    /// <item>carbon, nitrogen, oxygen, phosphorus, sulphur, arsenic and selenium are allow to be aromatic</item> 
+    /// <item>atoms should be Sp2 hybridised - not actually computed</item>
+    /// <item>atoms adjacent to a single cyclic pi bond contribute 1 electron</item>
+    /// <item>neutral or negatively charged atoms with a lone pair contribute 2 </item> 
+    /// <item>exocyclic pi bonds are allowed but if the exocyclic atom is more electronegative it consumes an electron. As an example ketone groups contribute '0' electrons.</item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    // @author John May
+    // @cdk.module standard
+    // @cdk.githash
     sealed class DaylightModel : ElectronDonation
     {
-
         private const int Carbon = 6;
         private const int Nitrogen = 7;
         private const int Oxygen = 8;
@@ -73,10 +77,8 @@ namespace NCDK.Aromaticities
         private const int SELENIUM = 34;
 
         /// <inheritdoc/>
-
         public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
         {
-
             int n = container.Atoms.Count;
 
             // we compute values we need for all atoms and then make the decisions
@@ -204,30 +206,32 @@ namespace NCDK.Aromaticities
             return electrons;
         }
 
-        /**
+        /// <summary>
         /// Defines the number of electrons contributed when a pi bond is exocyclic
-        /// (spouting). When an atom is connected to an more electronegative atom
+        /// (spouting). 
+        /// </summary>
+        /// <remarks>
+        /// When an atom is connected to an more electronegative atom
         /// then the electrons are 'pulled' from the ring. The preset conditions are
         /// as follows:
-         *
-        /// <ul> <li>A cyclic carbon with an exocyclic pi bond to anything but carbon
+        /// <list type="bullet">
+        /// <item>A cyclic carbon with an exocyclic pi bond to anything but carbon
         /// contributes 0 electrons. If the exocyclic atom is also a carbon then 1
-        /// electron is contributed.</li> <li>A cyclic 4 valent nitrogen or
+        /// electron is contributed.</item>
+        /// <item>A cyclic 4 valent nitrogen or
         /// phosphorus cation with an exocyclic pi bond will always contribute 1
         /// electron. A 5 valent neutral nitrogen or phosphorus with an exocyclic
-        /// bond to an oxygen contributes 1 electron. </li> <li>A neutral sulphur
-        /// connected to an oxygen contributes 2 electrons</li><li>If none of the
-        /// previous conditions are met the atom is not considered as being able to
-        /// participate in an aromatic system and -1 is returned.</li> </ul>
-         *
-        /// @param element      the element of the cyclic atom
-        /// @param otherElement the element of the exocyclic atom which is connected
-        ///                     to the cyclic atom by a pi bond
-        /// @param charge       the charge of the cyclic atom
-        /// @param nCyclic      the number of cyclic pi bonds adjacent to cyclic
-        ///                     atom
-        /// @return number of contributed electrons
-         */
+        /// bond to an oxygen contributes 1 electron. </item>
+        /// <item>A neutral sulphur connected to an oxygen contributes 2 electrons</item>
+        /// <item>If none of the previous conditions are met the atom is not considered as being able to
+        /// participate in an aromatic system and -1 is returned.</item>
+        /// </list>
+        /// </remarks>
+        /// <param name="element">the element of the cyclic atom</param>
+        /// <param name="otherElement">the element of the exocyclic atom which is connected to the cyclic atom by a pi bond</param>
+        /// <param name="charge">the charge of the cyclic atom</param>
+        /// <param name="nCyclic">the number of cyclic pi bonds adjacent to cyclic atom</param>
+        /// <returns>number of contributed electrons</returns>
         private static int ExocyclicContribution(int element, int otherElement, int charge, int nCyclic)
         {
             switch (element)
@@ -247,14 +251,13 @@ namespace NCDK.Aromaticities
             return -1;
         }
 
-        /**
+        /// <summary>
         /// Is the element specified by the atomic number, allowed to be aromatic by
         /// the daylight specification. Allowed elements are C, N, O, P, S, As, Se
         /// and *. This model allows all except for the unknown ('*') element.
-         *
-        /// @param element atomic number of element
-        /// @return the element can be aromatic
-         */
+        /// </summary>
+        /// <param name="element">atomic number of element</param>
+        /// <returns>the element can be aromatic</returns>
         private static bool AromaticElement(int element)
         {
             switch (element)
@@ -271,14 +274,13 @@ namespace NCDK.Aromaticities
             return false;
         }
 
-        /**
+        /// <summary>
         /// The element has normal valence for the specified charge.
-         *
-        /// @param element atomic number
-        /// @param charge  formal charge
-        /// @param valence bonded electrons
-        /// @return acceptable for this model
-         */
+        /// </summary>
+        /// <param name="element">atomic number</param>
+        /// <param name="charge">formal charge</param>
+        /// <param name="valence">bonded electrons</param>
+        /// <returns>acceptable for this model</returns>
         private static bool Normal(int element, int charge, int valence)
         {
             switch (element)
@@ -303,31 +305,26 @@ namespace NCDK.Aromaticities
             return false;
         }
 
-        /**
-        /// Lookup of the number of valence electrons for the element at a given
-        /// charge.
-         *
-        /// @param element the atomic number of an element
-        /// @param charge  the formal charge on the atom
-        /// @return the valence
-        /// @ encountered an element which the
-        ///                                       valence was not encoded for
-         */
+        /// <summary>
+        /// Lookup of the number of valence electrons for the element at a given charge.
+        /// </summary>
+        /// <param name="element">the atomic number of an element</param>
+        /// <param name="charge">the formal charge on the atom</param>
+        /// <returns>the valence</returns>
+        /// <exception cref="">encountered an element which the valence was not encoded for</exception>
         private int Valence(int element, int charge)
         {
             return Valence(element - charge);
         }
 
-        /**
+        /// <summary>
         /// Lookup of the number of valence electrons for elements near those which
         /// this model considers aromatic. As only the {@link #AromaticElement(int)}
         /// are checked we need only consider elements within a charge range.
-         *
-        /// @param element the atomic number of an element
-        /// @return the valence
-        /// @ encountered an element which the
-        ///                                       valence was not encoded for
-         */
+        /// </summary>
+        /// <param name="element">the atomic number of an element</param>
+        /// <returns>the valence</returns>
+        /// <exception cref="">encountered an element which the valence was not encoded for</exception>
         private int Valence(int element)
         {
             switch (element)
@@ -356,14 +353,13 @@ namespace NCDK.Aromaticities
             throw new NotSupportedException("Valence not yet handled for element with atomic number " + element);
         }
 
-        /**
+        /// <summary>
         /// Get the atomic number as an non-null integer value. Although pseudo atoms
         /// are not considered by this model the pseudo atoms are intercepted to have
         /// non-null atomic number (defaults to 0).
-         *
-        /// @param atom atom to get the element from
-        /// @return the formal charge
-         */
+        /// </summary>
+        /// <param name="atom">atom to get the element from</param>
+        /// <returns>the formal charge</returns>
         private int Element(IAtom atom)
         {
             int? element = atom.AtomicNumber;
@@ -372,12 +368,11 @@ namespace NCDK.Aromaticities
             throw new ArgumentException("Aromaiticty model requires atomic numbers to be set");
         }
 
-        /**
+        /// <summary>
         /// Get the formal charge as an integer value - null defaults to 0.
-         *
-        /// @param atom the atom to get the charge of
-        /// @return the formal charge
-         */
+        /// </summary>
+        /// <param name="atom">the atom to get the charge of</param>
+        /// <returns>the formal charge</returns>
         private int Charge(IAtom atom)
         {
             return atom.FormalCharge ?? 0;

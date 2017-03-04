@@ -23,11 +23,11 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Charges
 {
-    /**
-     * TestSuite that runs all tests.
-     *
-     * @cdk.module test-charges
-     */
+    /// <summary>
+    /// TestSuite that runs all tests.
+    ///
+    // @cdk.module test-charges
+    /// </summary>
     [TestClass()]
     public class ElectronegativityTest : CDKTestCase
     {
@@ -35,18 +35,18 @@ namespace NCDK.Charges
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /**
-         * Constructor of the ElectronegativityTest.
-         */
+        /// <summary>
+        /// Constructor of the ElectronegativityTest.
+        /// </summary>
         public ElectronegativityTest()
             : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestElectronegativity()
         {
@@ -54,11 +54,11 @@ namespace NCDK.Charges
             Assert.IsNotNull(new Electronegativity());
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestElectronegativity_Int_Int()
         {
@@ -66,14 +66,14 @@ namespace NCDK.Charges
             Assert.IsNotNull(new Electronegativity(6, 50));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        ///  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestCalculateSigmaElectronegativity_IAtomContainer_IAtom()
         {
@@ -94,14 +94,14 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         *  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        ///  @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestCalculateSigmaElectronegativity_IAtomContainer_IAtom_Int_Int()
         {
@@ -125,12 +125,12 @@ namespace NCDK.Charges
             }
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetMaxIterations()
         {
@@ -138,12 +138,12 @@ namespace NCDK.Charges
             Assert.AreEqual(6, pe.MaxIterations);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetMaxResonStruc()
         {
@@ -152,12 +152,12 @@ namespace NCDK.Charges
             Assert.AreEqual(50, pe.MaxResonanceStructures);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSetMaxIterations_Int()
         {
@@ -167,12 +167,12 @@ namespace NCDK.Charges
             Assert.AreEqual(maxIter, pe.MaxIterations);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         * @throws Exception
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSetMaxResonStruc_Int()
         {

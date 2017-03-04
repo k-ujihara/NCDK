@@ -17,21 +17,21 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This smarts atom matches aliphatic atom with element symbol specified.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This smarts atom matches aliphatic atom with element symbol specified.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AliphaticSymbolAtom : SMARTSAtom
     {
 
-        /**
-         * Creates a new instance.
-         *
-         * @param symbol the atom symbol
-         */
+        /// <summary>
+        /// Creates a new instance.
+        ///
+        /// <param name="symbol">the atom symbol</param>
+        /// </summary>
         public AliphaticSymbolAtom(string symbol, IChemObjectBuilder builder)
             : base(builder)
         {
@@ -39,22 +39,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             Symbol = symbol;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return !atom.IsAromatic && atom.Symbol.Equals(this.Symbol);
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
-        public override string ToString()
+       public override string ToString()
         {
             return "AliphaticSymbolAtom(" + Symbol + ")";
         }

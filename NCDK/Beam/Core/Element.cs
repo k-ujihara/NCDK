@@ -37,7 +37,8 @@ using System.Text.RegularExpressions;
 namespace NCDK.Beam
 {
     /// <summary>Enumeration of valid OpenSMILES elements.
-    /// 
+    /// </summary>
+    /// <remarks>
     /// <h4>Organic subsets</h4> Several of the elements belong to the organic
     /// subset. Atoms of an organic element type can be written just as their symbol
     /// (see. <a href="http://www.opensmiles.org/opensmiles.html#orgsbst">Organic
@@ -48,7 +49,8 @@ namespace NCDK.Beam
     /// <li><see cref="Fluorine"/></li> <li><see cref="Phosphorus"/></li> <li><see cref="Sulfur"/>
     /// </li> <li><see cref="Chlorine"/></li> <li><see cref="Bromine"/></li> <li><see cref="Iodine"/></li> 
     /// </ul>
-    /// 
+    /// </remarks>
+    /// <example>
     /// <h4>Usage</h4>
     /// 
     /// Elements can be created by either using the value directly or by looking up
@@ -81,11 +83,9 @@ namespace NCDK.Beam
     /// 
     /// string  symbol = e.Symbol;
     /// </code>
-    /// </summary>
-    /// 
-    /// <author>John May</author>
-    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms,
-    ///      OpenSMILES Specification</a></remarks>
+    /// </example>
+    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms, OpenSMILES Specification</a></remarks>
+    // @author John May
     public class Element
     {
         /// <summary>Unspecified/Unknown element (*)</summary>
@@ -599,8 +599,7 @@ namespace NCDK.Beam
             IDictionary<string, ElementCheck> checks = new Dictionary<string, ElementCheck>();
             try
             {
-                using (var ins = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(
-                    typeof(Element), "element-defaults.txt"))
+                using (var ins = ResourceLoader.GetAsStream(typeof(Element), "element-defaults.txt"))
                 using (var br = new StreamReader(ins))
                 {
                     string line = null;
@@ -890,17 +889,16 @@ namespace NCDK.Beam
             }
         }
 
-        /**
-          * Determine the implicit hydrogen count of an organic subset atom
-          * given its bonded valence. The number of implied hydrogens an 
-          * organic (or aromatic) subset atom has is based on it's bonded
-          * valence. The valances for the organic elements (B, C, N, O, P,
-          * S, F, Cl, Br and I) are defined in the OpenSMILES specification.
-          *
-          * @param elem Element
-          * @param v    bonded valence
-          * @return hydrogen count >= 0
-          */
+        /// <summary>
+        /// Determine the implicit hydrogen count of an organic subset atom
+        /// given its bonded valence. The number of implied hydrogens an 
+        /// organic (or aromatic) subset atom has is based on it's bonded
+        /// valence. The valances for the organic elements (B, C, N, O, P,
+        /// S, F, Cl, Br and I) are defined in the OpenSMILES specification.
+        /// </summary>
+        /// <param name="elem">Element</param>
+        /// <param name="v">bonded valence</param>
+        /// <returns>hydrogen count >= 0</returns>
         internal static int NumOfImplicitHydrogens(Element elem, int v)
         {
             var aa = elem;
@@ -937,18 +935,17 @@ namespace NCDK.Beam
             return 0;
         }
 
-        /**
-         * Determine the implicit hydrogen count of an organic subset atom
-         * given its bonded valence. The number of implied hydrogens an 
-         * organic (or aromatic) subset atom has is based on it's bonded
-         * valence. The valances for the organic elements (B, C, N, O, P,
-         * S, F, Cl, Br and I) are defined in the OpenSMILES specification.
-         * For aromatic atoms we only check the first level.
-         *
-         * @param elem Element
-         * @param v    bonded valence
-         * @return hydrogen count >= 0
-         */
+        /// <summary>
+        /// Determine the implicit hydrogen count of an organic subset atom
+        /// given its bonded valence. The number of implied hydrogens an 
+        /// organic (or aromatic) subset atom has is based on it's bonded
+        /// valence. The valances for the organic elements (B, C, N, O, P,
+        /// S, F, Cl, Br and I) are defined in the OpenSMILES specification.
+        /// For aromatic atoms we only check the first level.
+        /// </summary>
+        /// <param name="elem">Element</param>
+        /// <param name="v">bonded valence</param>
+        /// <returns>hydrogen count >= 0</returns>
         internal static int NumOfAromaticImplicitHydrogens(Element elem, int v)
         {
             var aa = elem;

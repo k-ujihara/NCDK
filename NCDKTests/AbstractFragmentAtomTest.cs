@@ -19,19 +19,14 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NCDK;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IFragmentAtom} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IFragmentAtom} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractFragmentAtomTest
         : AbstractPseudoAtomTest
@@ -109,9 +104,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * Overwrites the {@link AbstractPseudoAtomTest} version.
-         */
+        /// <summary>
+        /// Overwrites the {@link AbstractPseudoAtomTest} version.
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(InvalidOperationException))]
         public override void TestSetExactMass_Double()

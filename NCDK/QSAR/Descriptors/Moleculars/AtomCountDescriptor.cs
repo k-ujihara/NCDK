@@ -20,36 +20,36 @@ using NCDK.QSAR.Result;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * IDescriptor based on the number of atoms of a certain element type.
-     *
-     * It is
-     * possible to use the wild card symbol '*' as element type to get the count of
-     * all atoms.
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>elementName</td>
-     *     <td>*</td>
-     *     <td>Symbol of the element we want to count</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value with name <i>nX</i> where <i>X</i> is the atomic symbol.  If *
-     * is specified then the name is <i>nAtom</i>
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-13
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:atomCount
-     */
+    /// <summary>
+    /// IDescriptor based on the number of atoms of a certain element type.
+    ///
+    /// It is
+    /// possible to use the wild card symbol '*' as element type to get the count of
+    /// all atoms.
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>elementName</td>
+    ///     <td>*</td>
+    ///     <td>Symbol of the element we want to count</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value with name <i>nX</i> where <i>X</i> is the atomic symbol.  If *
+    /// is specified then the name is <i>nAtom</i>
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-13
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:atomCount
+    /// </summary>
     public class AtomCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private string elementName = "*";

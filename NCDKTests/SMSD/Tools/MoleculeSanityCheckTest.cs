@@ -25,20 +25,20 @@ using NCDK.Smiles;
 
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * @cdk.module test-smsd
-     * @author Asad
-     */
+    /// <summary>
+    // @cdk.module test-smsd
+    // @author Asad
+    /// </summary>
     [TestClass()]
     public class MoleculeSanityCheckTest
     {
 
         public MoleculeSanityCheckTest() { }
 
-        /**
-         * Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of checkAndCleanMolecule method, of class MoleculeSanityCheck.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestCheckAndCleanMolecule()
         {
@@ -50,10 +50,10 @@ namespace NCDK.SMSD.Tools
             Assert.AreEqual(expResult.Bonds.Count, result.Bonds.Count);
         }
 
-        /**
-         * Test of fixAromaticity method, of class MoleculeSanityCheck.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of fixAromaticity method, of class MoleculeSanityCheck.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestFixAromaticity()
         {

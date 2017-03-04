@@ -82,9 +82,7 @@ namespace NCDK.IO.RandomAccess
 
         protected override IChemObject ProcessContent()
         {
-            /*
-             * return chemObjectReader.Read(builder.CreateAtomContainer());
-             */
+            // return chemObjectReader.Read(builder.CreateAtomContainer());
             //Read(IAtomContainer) doesn't read properties ...
             IChemObject co = chemObjectReader.Read(builder.CreateChemFile());
             if (co is IChemFile)

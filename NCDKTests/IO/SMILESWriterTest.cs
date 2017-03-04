@@ -31,13 +31,13 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer for SMILES files.
-     *
-     * @cdk.module test-smiles
-     *
-     * @see org.openscience.cdk.io.SMILESWriter
-     */
+    /// <summary>
+    /// TestCase for the writer for SMILES files.
+    ///
+    // @cdk.module test-smiles
+    ///
+    // @see org.openscience.cdk.io.SMILESWriter
+    /// </summary>
     [TestClass()]
     public class SMILESWriterTest : ChemObjectIOTest
     {

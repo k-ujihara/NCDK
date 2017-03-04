@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @author John May
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class SimpleAtomCanonicalizerTest
     {

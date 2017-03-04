@@ -33,11 +33,11 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    /// Unit testing for the {@link VFMapper}, {@link VFState}, {@link Match} class.
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public class VFLibTest : CDKTestCase
     {
@@ -198,9 +198,9 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(nextState.HasNextCandidate());
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestItShouldMatchHexaneToHexaneWhenUsingMolecule()
         {

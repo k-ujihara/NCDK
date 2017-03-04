@@ -20,12 +20,12 @@ using System;
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * IDescriptorResult type for bools.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// IDescriptorResult type for bools.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class IntegerArrayResultType : IDescriptorResult
     {

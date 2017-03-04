@@ -28,25 +28,25 @@ using System.IO;
 
 namespace NCDK.Templates
 {
-    /**
-     * Tool that provides templates for the (natural) amino acids.
-     *
-     * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.module  pdb
-     * @cdk.githash
-     * @cdk.keyword templates
-     * @cdk.keyword amino acids, stuctures
-     * @cdk.created 2005-02-08
-     */
+    /// <summary>
+    /// Tool that provides templates for the (natural) amino acids.
+    ///
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.module  pdb
+    // @cdk.githash
+    // @cdk.keyword templates
+    // @cdk.keyword amino acids, stuctures
+    // @cdk.created 2005-02-08
+    /// </summary>
     public class AminoAcids
     {
         private static object syncLock = new object();
 
-        /**
-         * Creates matrix with info about the bonds in the amino acids.
-         * 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
-         * @return info
-         */
+        /// <summary>
+        /// Creates matrix with info about the bonds in the amino acids.
+        /// 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
+        /// <returns>info</returns>
+        /// </summary>
         public static int[][] CreateAABondInfo()
         {
             if (aminoAcids == null)
@@ -92,11 +92,11 @@ namespace NCDK.Templates
         public const string NO_BONDS = "noOfBonds";
         public const string ID = "id";
 
-        /**
-         * Creates amino acid AminoAcid objects.
-         *
-         * @return aminoAcids, a Dictionary containing the amino acids as AminoAcids.
-         */
+        /// <summary>
+        /// Creates amino acid AminoAcid objects.
+        ///
+        /// <returns>aminoAcids, a Dictionary containing the amino acids as AminoAcids.</returns>
+        /// </summary>
         public static AminoAcid[] CreateAAs()
         {
             if (aminoAcids != null)
@@ -114,8 +114,7 @@ namespace NCDK.Templates
                 aminoAcids = new AminoAcid[20];
 
                 IChemFile list = new ChemFile();
-                CMLReader reader = new CMLReader(typeof(AminoAcids).Assembly.GetManifestResourceStream(
-                        "NCDK.Templates.Data.list_aminoacids.cml"));
+                CMLReader reader = new CMLReader(ResourceLoader.GetAsStream("NCDK.Templates.Data.list_aminoacids.cml"));
                 try
                 {
                     list = (IChemFile)reader.Read(list);
@@ -203,10 +202,10 @@ namespace NCDK.Templates
             }
         }
 
-        /**
-         * Returns a Dictionary where the key is one of G, A, V, L, I, S, T, C, M, D,
-         * N, E, Q, R, K, H, F, Y, W and P.
-         */
+        /// <summary>
+        /// Returns a Dictionary where the key is one of G, A, V, L, I, S, T, C, M, D,
+        /// N, E, Q, R, K, H, F, Y, W and P.
+        /// </summary>
         public static IDictionary<string, IAminoAcid> GetHashMapBySingleCharCode()
         {
             IAminoAcid[] monomers = CreateAAs();
@@ -218,10 +217,10 @@ namespace NCDK.Templates
             return map;
         }
 
-        /**
-         * Returns a Dictionary where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
-         * THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
-         */
+        /// <summary>
+        /// Returns a Dictionary where the key is one of GLY, ALA, VAL, LEU, ILE, SER,
+        /// THR, CYS, MET, ASP, ASN, GLU, GLN, ARG, LYS, HIS, PHE, TYR, TRP AND PRO.
+        /// </summary>
         public static IDictionary<string, IAminoAcid> GetHashMapByThreeLetterCode()
         {
             AminoAcid[] monomers = CreateAAs();
@@ -233,10 +232,10 @@ namespace NCDK.Templates
             return map;
         }
 
-        /**
-         * Returns the one letter code of an amino acid given a three letter code.
-         * For example, it will return "V" when "Val" was passed.
-         */
+        /// <summary>
+        /// Returns the one letter code of an amino acid given a three letter code.
+        /// For example, it will return "V" when "Val" was passed.
+        /// </summary>
         public static string ConvertThreeLetterCodeToOneLetterCode(string threeLetterCode)
         {
             AminoAcid[] monomers = CreateAAs();
@@ -250,10 +249,10 @@ namespace NCDK.Templates
             return null;
         }
 
-        /**
-         * Returns the three letter code of an amino acid given a one letter code.
-         * For example, it will return "Val" when "V" was passed.
-         */
+        /// <summary>
+        /// Returns the three letter code of an amino acid given a one letter code.
+        /// For example, it will return "Val" when "V" was passed.
+        /// </summary>
         public static string ConvertOneLetterCodeToThreeLetterCode(string oneLetterCode)
         {
             AminoAcid[] monomers = CreateAAs();

@@ -36,7 +36,7 @@ namespace NCDK.IO.Formats
         }
 
         [TestMethod()]
-        public void matchesMopac2009()
+        public void MatchesMopac2009()
         {
             Assert.IsTrue(((MOPAC2009Format)MOPAC2009Format.Instance).Matches(0, "MOPAC2009"));
         }

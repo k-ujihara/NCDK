@@ -2,11 +2,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula
 {
-    /**
-     * Class testing the IsotopePatternManipulator class.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Class testing the IsotopePatternManipulator class.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class IsotopePatternManipulatorTest : CDKTestCase
     {
@@ -42,11 +42,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * Junit test
-         *
-         * @
-         */
+        /// <summary>
+        /// Junit test
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestSortByIntensity_IsotopePattern()
         {
@@ -74,11 +74,11 @@ namespace NCDK.Formula
             Assert.AreEqual(1, isoNorma.Charge, 0.00001);
         }
 
-        /**
-         * Junit test
-         *
-         * @
-         */
+        /// <summary>
+        /// Junit test
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestSortAndNormalizedByIntensity_IsotopePattern()
         {
@@ -106,11 +106,11 @@ namespace NCDK.Formula
             Assert.AreEqual(1, isoNorma.Charge, 0.001);
         }
 
-        /**
-         * Junit test
-         *
-         * @
-         */
+        /// <summary>
+        /// Junit test
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestSortByMass_IsotopePattern()
         {

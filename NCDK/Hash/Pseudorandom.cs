@@ -24,24 +24,21 @@
 
 namespace NCDK.Hash
 {
-    /**
-     * A pseudorandom number generator.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        abstract class Pseudorandom
+    /// <summary>
+    /// A pseudorandom number generator.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal abstract class Pseudorandom
     {
-        /**
-         * Generate a pseudorandom number for the given seed.
-         *
-         * @param seed seeding value for the random number generator
-         * @return next pseudorandom number
-         */
+        /// <summary>
+        /// Generate a pseudorandom number for the given seed.
+        ///
+        /// <param name="seed">seeding value for the random number generator</param>
+        /// <returns>next pseudorandom number</returns>
+        /// </summary>
         public abstract long Next(long seed);
     }
 }

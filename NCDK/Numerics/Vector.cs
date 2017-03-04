@@ -94,7 +94,7 @@ namespace NCDK.Numerics
             internal byte _byte;
         }
 
-		// Calculates the size of this struct in bytes, by computing the offset of a field in a structure
+        // Calculates the size of this struct in bytes, by computing the offset of a field in a structure
         private static unsafe int InitializeCount()
         {
             VectorSizeHelper vsh;
@@ -180,7 +180,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Byte)(object)value;
+                           ///(basePtr + g) = (Byte)(object)value;
                         }
                     }
                 }
@@ -191,7 +191,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (SByte)(object)value;
+                           ///(basePtr + g) = (SByte)(object)value;
                         }
                     }
                 }
@@ -202,7 +202,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt16)(object)value;
+                           ///(basePtr + g) = (UInt16)(object)value;
                         }
                     }
                 }
@@ -213,7 +213,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int16)(object)value;
+                           ///(basePtr + g) = (Int16)(object)value;
                         }
                     }
                 }
@@ -224,7 +224,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt32)(object)value;
+                           ///(basePtr + g) = (UInt32)(object)value;
                         }
                     }
                 }
@@ -235,7 +235,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int32)(object)value;
+                           ///(basePtr + g) = (Int32)(object)value;
                         }
                     }
                 }
@@ -246,7 +246,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt64)(object)value;
+                           ///(basePtr + g) = (UInt64)(object)value;
                         }
                     }
                 }
@@ -257,7 +257,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int64)(object)value;
+                           ///(basePtr + g) = (Int64)(object)value;
                         }
                     }
                 }
@@ -268,7 +268,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Single)(object)value;
+                           ///(basePtr + g) = (Single)(object)value;
                         }
                     }
                 }
@@ -279,7 +279,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Double)(object)value;
+                           ///(basePtr + g) = (Double)(object)value;
                         }
                     }
                 }
@@ -505,7 +505,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Byte)(object)values[g + index];
+                           ///(basePtr + g) = (Byte)(object)values[g + index];
                         }
                     }
                 }
@@ -516,7 +516,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (SByte)(object)values[g + index];
+                           ///(basePtr + g) = (SByte)(object)values[g + index];
                         }
                     }
                 }
@@ -527,7 +527,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt16)(object)values[g + index];
+                           ///(basePtr + g) = (UInt16)(object)values[g + index];
                         }
                     }
                 }
@@ -538,7 +538,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int16)(object)values[g + index];
+                           ///(basePtr + g) = (Int16)(object)values[g + index];
                         }
                     }
                 }
@@ -549,7 +549,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt32)(object)values[g + index];
+                           ///(basePtr + g) = (UInt32)(object)values[g + index];
                         }
                     }
                 }
@@ -560,7 +560,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int32)(object)values[g + index];
+                           ///(basePtr + g) = (Int32)(object)values[g + index];
                         }
                     }
                 }
@@ -571,7 +571,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (UInt64)(object)values[g + index];
+                           ///(basePtr + g) = (UInt64)(object)values[g + index];
                         }
                     }
                 }
@@ -582,7 +582,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Int64)(object)values[g + index];
+                           ///(basePtr + g) = (Int64)(object)values[g + index];
                         }
                     }
                 }
@@ -593,7 +593,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Single)(object)values[g + index];
+                           ///(basePtr + g) = (Single)(object)values[g + index];
                         }
                     }
                 }
@@ -604,7 +604,7 @@ namespace NCDK.Numerics
                     {
                         for (int g = 0; g < Count; g++)
                         {
-                            *(basePtr + g) = (Double)(object)values[g + index];
+                           ///(basePtr + g) = (Double)(object)values[g + index];
                         }
                     }
                 }
@@ -618,37 +618,37 @@ namespace NCDK.Numerics
                     fixed (Byte* basePtr = &this.register.byte_0)
                     {
 
-                        *(basePtr + 0) = (Byte)(object)values[0 + index];
+                       ///(basePtr + 0) = (Byte)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Byte)(object)values[1 + index];
+                       ///(basePtr + 1) = (Byte)(object)values[1 + index];
 
-                        *(basePtr + 2) = (Byte)(object)values[2 + index];
+                       ///(basePtr + 2) = (Byte)(object)values[2 + index];
 
-                        *(basePtr + 3) = (Byte)(object)values[3 + index];
+                       ///(basePtr + 3) = (Byte)(object)values[3 + index];
 
-                        *(basePtr + 4) = (Byte)(object)values[4 + index];
+                       ///(basePtr + 4) = (Byte)(object)values[4 + index];
 
-                        *(basePtr + 5) = (Byte)(object)values[5 + index];
+                       ///(basePtr + 5) = (Byte)(object)values[5 + index];
 
-                        *(basePtr + 6) = (Byte)(object)values[6 + index];
+                       ///(basePtr + 6) = (Byte)(object)values[6 + index];
 
-                        *(basePtr + 7) = (Byte)(object)values[7 + index];
+                       ///(basePtr + 7) = (Byte)(object)values[7 + index];
 
-                        *(basePtr + 8) = (Byte)(object)values[8 + index];
+                       ///(basePtr + 8) = (Byte)(object)values[8 + index];
 
-                        *(basePtr + 9) = (Byte)(object)values[9 + index];
+                       ///(basePtr + 9) = (Byte)(object)values[9 + index];
 
-                        *(basePtr + 10) = (Byte)(object)values[10 + index];
+                       ///(basePtr + 10) = (Byte)(object)values[10 + index];
 
-                        *(basePtr + 11) = (Byte)(object)values[11 + index];
+                       ///(basePtr + 11) = (Byte)(object)values[11 + index];
 
-                        *(basePtr + 12) = (Byte)(object)values[12 + index];
+                       ///(basePtr + 12) = (Byte)(object)values[12 + index];
 
-                        *(basePtr + 13) = (Byte)(object)values[13 + index];
+                       ///(basePtr + 13) = (Byte)(object)values[13 + index];
 
-                        *(basePtr + 14) = (Byte)(object)values[14 + index];
+                       ///(basePtr + 14) = (Byte)(object)values[14 + index];
 
-                        *(basePtr + 15) = (Byte)(object)values[15 + index];
+                       ///(basePtr + 15) = (Byte)(object)values[15 + index];
 
                     }
                 }
@@ -658,37 +658,37 @@ namespace NCDK.Numerics
                     fixed (SByte* basePtr = &this.register.sbyte_0)
                     {
 
-                        *(basePtr + 0) = (SByte)(object)values[0 + index];
+                       ///(basePtr + 0) = (SByte)(object)values[0 + index];
 
-                        *(basePtr + 1) = (SByte)(object)values[1 + index];
+                       ///(basePtr + 1) = (SByte)(object)values[1 + index];
 
-                        *(basePtr + 2) = (SByte)(object)values[2 + index];
+                       ///(basePtr + 2) = (SByte)(object)values[2 + index];
 
-                        *(basePtr + 3) = (SByte)(object)values[3 + index];
+                       ///(basePtr + 3) = (SByte)(object)values[3 + index];
 
-                        *(basePtr + 4) = (SByte)(object)values[4 + index];
+                       ///(basePtr + 4) = (SByte)(object)values[4 + index];
 
-                        *(basePtr + 5) = (SByte)(object)values[5 + index];
+                       ///(basePtr + 5) = (SByte)(object)values[5 + index];
 
-                        *(basePtr + 6) = (SByte)(object)values[6 + index];
+                       ///(basePtr + 6) = (SByte)(object)values[6 + index];
 
-                        *(basePtr + 7) = (SByte)(object)values[7 + index];
+                       ///(basePtr + 7) = (SByte)(object)values[7 + index];
 
-                        *(basePtr + 8) = (SByte)(object)values[8 + index];
+                       ///(basePtr + 8) = (SByte)(object)values[8 + index];
 
-                        *(basePtr + 9) = (SByte)(object)values[9 + index];
+                       ///(basePtr + 9) = (SByte)(object)values[9 + index];
 
-                        *(basePtr + 10) = (SByte)(object)values[10 + index];
+                       ///(basePtr + 10) = (SByte)(object)values[10 + index];
 
-                        *(basePtr + 11) = (SByte)(object)values[11 + index];
+                       ///(basePtr + 11) = (SByte)(object)values[11 + index];
 
-                        *(basePtr + 12) = (SByte)(object)values[12 + index];
+                       ///(basePtr + 12) = (SByte)(object)values[12 + index];
 
-                        *(basePtr + 13) = (SByte)(object)values[13 + index];
+                       ///(basePtr + 13) = (SByte)(object)values[13 + index];
 
-                        *(basePtr + 14) = (SByte)(object)values[14 + index];
+                       ///(basePtr + 14) = (SByte)(object)values[14 + index];
 
-                        *(basePtr + 15) = (SByte)(object)values[15 + index];
+                       ///(basePtr + 15) = (SByte)(object)values[15 + index];
 
                     }
                 }
@@ -698,21 +698,21 @@ namespace NCDK.Numerics
                     fixed (UInt16* basePtr = &this.register.uint16_0)
                     {
 
-                        *(basePtr + 0) = (UInt16)(object)values[0 + index];
+                       ///(basePtr + 0) = (UInt16)(object)values[0 + index];
 
-                        *(basePtr + 1) = (UInt16)(object)values[1 + index];
+                       ///(basePtr + 1) = (UInt16)(object)values[1 + index];
 
-                        *(basePtr + 2) = (UInt16)(object)values[2 + index];
+                       ///(basePtr + 2) = (UInt16)(object)values[2 + index];
 
-                        *(basePtr + 3) = (UInt16)(object)values[3 + index];
+                       ///(basePtr + 3) = (UInt16)(object)values[3 + index];
 
-                        *(basePtr + 4) = (UInt16)(object)values[4 + index];
+                       ///(basePtr + 4) = (UInt16)(object)values[4 + index];
 
-                        *(basePtr + 5) = (UInt16)(object)values[5 + index];
+                       ///(basePtr + 5) = (UInt16)(object)values[5 + index];
 
-                        *(basePtr + 6) = (UInt16)(object)values[6 + index];
+                       ///(basePtr + 6) = (UInt16)(object)values[6 + index];
 
-                        *(basePtr + 7) = (UInt16)(object)values[7 + index];
+                       ///(basePtr + 7) = (UInt16)(object)values[7 + index];
 
                     }
                 }
@@ -722,21 +722,21 @@ namespace NCDK.Numerics
                     fixed (Int16* basePtr = &this.register.int16_0)
                     {
 
-                        *(basePtr + 0) = (Int16)(object)values[0 + index];
+                       ///(basePtr + 0) = (Int16)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Int16)(object)values[1 + index];
+                       ///(basePtr + 1) = (Int16)(object)values[1 + index];
 
-                        *(basePtr + 2) = (Int16)(object)values[2 + index];
+                       ///(basePtr + 2) = (Int16)(object)values[2 + index];
 
-                        *(basePtr + 3) = (Int16)(object)values[3 + index];
+                       ///(basePtr + 3) = (Int16)(object)values[3 + index];
 
-                        *(basePtr + 4) = (Int16)(object)values[4 + index];
+                       ///(basePtr + 4) = (Int16)(object)values[4 + index];
 
-                        *(basePtr + 5) = (Int16)(object)values[5 + index];
+                       ///(basePtr + 5) = (Int16)(object)values[5 + index];
 
-                        *(basePtr + 6) = (Int16)(object)values[6 + index];
+                       ///(basePtr + 6) = (Int16)(object)values[6 + index];
 
-                        *(basePtr + 7) = (Int16)(object)values[7 + index];
+                       ///(basePtr + 7) = (Int16)(object)values[7 + index];
 
                     }
                 }
@@ -746,13 +746,13 @@ namespace NCDK.Numerics
                     fixed (UInt32* basePtr = &this.register.uint32_0)
                     {
 
-                        *(basePtr + 0) = (UInt32)(object)values[0 + index];
+                       ///(basePtr + 0) = (UInt32)(object)values[0 + index];
 
-                        *(basePtr + 1) = (UInt32)(object)values[1 + index];
+                       ///(basePtr + 1) = (UInt32)(object)values[1 + index];
 
-                        *(basePtr + 2) = (UInt32)(object)values[2 + index];
+                       ///(basePtr + 2) = (UInt32)(object)values[2 + index];
 
-                        *(basePtr + 3) = (UInt32)(object)values[3 + index];
+                       ///(basePtr + 3) = (UInt32)(object)values[3 + index];
 
                     }
                 }
@@ -762,13 +762,13 @@ namespace NCDK.Numerics
                     fixed (Int32* basePtr = &this.register.int32_0)
                     {
 
-                        *(basePtr + 0) = (Int32)(object)values[0 + index];
+                       ///(basePtr + 0) = (Int32)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Int32)(object)values[1 + index];
+                       ///(basePtr + 1) = (Int32)(object)values[1 + index];
 
-                        *(basePtr + 2) = (Int32)(object)values[2 + index];
+                       ///(basePtr + 2) = (Int32)(object)values[2 + index];
 
-                        *(basePtr + 3) = (Int32)(object)values[3 + index];
+                       ///(basePtr + 3) = (Int32)(object)values[3 + index];
 
                     }
                 }
@@ -778,9 +778,9 @@ namespace NCDK.Numerics
                     fixed (UInt64* basePtr = &this.register.uint64_0)
                     {
 
-                        *(basePtr + 0) = (UInt64)(object)values[0 + index];
+                       ///(basePtr + 0) = (UInt64)(object)values[0 + index];
 
-                        *(basePtr + 1) = (UInt64)(object)values[1 + index];
+                       ///(basePtr + 1) = (UInt64)(object)values[1 + index];
 
                     }
                 }
@@ -790,9 +790,9 @@ namespace NCDK.Numerics
                     fixed (Int64* basePtr = &this.register.int64_0)
                     {
 
-                        *(basePtr + 0) = (Int64)(object)values[0 + index];
+                       ///(basePtr + 0) = (Int64)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Int64)(object)values[1 + index];
+                       ///(basePtr + 1) = (Int64)(object)values[1 + index];
 
                     }
                 }
@@ -802,13 +802,13 @@ namespace NCDK.Numerics
                     fixed (Single* basePtr = &this.register.single_0)
                     {
 
-                        *(basePtr + 0) = (Single)(object)values[0 + index];
+                       ///(basePtr + 0) = (Single)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Single)(object)values[1 + index];
+                       ///(basePtr + 1) = (Single)(object)values[1 + index];
 
-                        *(basePtr + 2) = (Single)(object)values[2 + index];
+                       ///(basePtr + 2) = (Single)(object)values[2 + index];
 
-                        *(basePtr + 3) = (Single)(object)values[3 + index];
+                       ///(basePtr + 3) = (Single)(object)values[3 + index];
 
                     }
                 }
@@ -818,9 +818,9 @@ namespace NCDK.Numerics
                     fixed (Double* basePtr = &this.register.double_0)
                     {
 
-                        *(basePtr + 0) = (Double)(object)values[0 + index];
+                       ///(basePtr + 0) = (Double)(object)values[0 + index];
 
-                        *(basePtr + 1) = (Double)(object)values[1 + index];
+                       ///(basePtr + 1) = (Double)(object)values[1 + index];
 
                     }
                 }
@@ -1012,7 +1012,7 @@ namespace NCDK.Numerics
             }
             if (startIndex < 0 || startIndex >= destination.Length)
             {
-				throw new ArgumentOutOfRangeException(nameof(startIndex));
+                throw new ArgumentOutOfRangeException(nameof(startIndex));
             }
             if ((destination.Length - startIndex) < Count)
             {
@@ -4005,90 +4005,125 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        [CLSCompliant(false)]
+
+        
         public static explicit operator Vector<SByte>(Vector<T> value)
         {
             return new Vector<SByte>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        [CLSCompliant(false)]
+
+        
         public static explicit operator Vector<UInt16>(Vector<T> value)
         {
             return new Vector<UInt16>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        
         public static explicit operator Vector<Int16>(Vector<T> value)
         {
             return new Vector<Int16>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        [CLSCompliant(false)]
+
+        
         public static explicit operator Vector<UInt32>(Vector<T> value)
         {
             return new Vector<UInt32>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        
         public static explicit operator Vector<Int32>(Vector<T> value)
         {
             return new Vector<Int32>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        [CLSCompliant(false)]
+
+        
         public static explicit operator Vector<UInt64>(Vector<T> value)
         {
             return new Vector<UInt64>(ref value.register);
         }
 
+
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        
         public static explicit operator Vector<Int64>(Vector<T> value)
         {
             return new Vector<Int64>(ref value.register);
         }
 
-        /// <summary>
-        /// Reinterprets the bits of the given vector into those of another type.
-        /// </summary>
-        /// <param name="value">The source vector</param>
-        /// <returns>The reinterpreted vector.</returns>
-        public static explicit operator Vector<Single>(Vector<T> value)
-        {
-            return new Vector<Single>(ref value.register);
-        }
 
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+
+        
+        public static explicit operator Vector<Single>(Vector<T> value)
+        {
+            return new Vector<Single>(ref value.register);
+        }
+
+
+        /// <summary>
+        /// Reinterprets the bits of the given vector into those of another type.
+        /// </summary>
+        /// <param name="value">The source vector</param>
+        /// <returns>The reinterpreted vector.</returns>
+
+        
         public static explicit operator Vector<Double>(Vector<T> value)
         {
             return new Vector<Double>(ref value.register);
         }
+
 
         #endregion Conversions
 

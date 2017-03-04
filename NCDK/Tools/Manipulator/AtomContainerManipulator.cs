@@ -37,35 +37,35 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Class with convenience methods that provide methods to manipulate
-     * AtomContainer's. For example:
-     * <pre>
-     * AtomContainerManipulator.RePlaceAtomByAtom(container, atom1, atom2);
-     * </pre>
-     * will replace the Atom in the AtomContainer, but in all the ElectronContainer's
-     * it participates too.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author  Egon Willighagen
-     * @cdk.created 2003-08-07
-     */
+    /// <summary>
+    /// Class with convenience methods that provide methods to manipulate
+    /// AtomContainer's. For example:
+    /// <code>
+    /// AtomContainerManipulator.RePlaceAtomByAtom(container, atom1, atom2);
+    /// </code>
+    /// will replace the Atom in the AtomContainer, but in all the ElectronContainer's
+    /// it participates too.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    ///
+    // @author  Egon Willighagen
+    // @cdk.created 2003-08-07
+    /// </summary>
     public class AtomContainerManipulator
     {
-        /**
-         * Extract a substructure from an atom container, in the form of a new
-         * cloned atom container with only the atoms with indices in atomIndices and
-         * bonds that connect these atoms.
-         * <p/>
-         * Note that this may result in a disconnected atom container.
-         *
-         * @param atomContainer the source container to extract from
-         * @param atomIndices the indices of the substructure
-         * @return a cloned atom container with a substructure of the source
-         * @ if the source container cannot be cloned
-         */
+        /// <summary>
+        /// Extract a substructure from an atom container, in the form of a new
+        /// cloned atom container with only the atoms with indices in atomIndices and
+        /// bonds that connect these atoms.
+        /// <p/>
+        /// Note that this may result in a disconnected atom container.
+        ///
+        /// <param name="atomContainer">the source container to extract from</param>
+        /// <param name="atomIndices">the indices of the substructure</param>
+        /// <returns>a cloned atom container with a substructure of the source</returns>
+        // @ if the source container cannot be cloned
+        /// </summary>
         public static IAtomContainer ExtractSubstructure(IAtomContainer atomContainer, params int[] atomIndices)
         {
             IAtomContainer substructure = (IAtomContainer)atomContainer.Clone();
@@ -89,14 +89,14 @@ namespace NCDK.Tools.Manipulator
             return substructure;
         }
 
-        /**
-         * Returns an atom in an atomcontainer identified by id
-         *
-         * @param ac The AtomContainer to search in
-         * @param id The id to search for
-         * @return An atom having id id
-         * @ There is no such atom
-         */
+        /// <summary>
+        /// Returns an atom in an atomcontainer identified by id
+        ///
+        /// <param name="ac">The AtomContainer to search in</param>
+        /// <param name="id">The id to search for</param>
+        /// <returns>An atom having id id</returns>
+        // @ There is no such atom
+        /// </summary>
         public static IAtom GetAtomById(IAtomContainer ac, string id)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -106,15 +106,15 @@ namespace NCDK.Tools.Manipulator
             throw new CDKException("no suc atom");
         }
 
-        /**
-         * Substitute one atom in a container for another adjusting bonds, single electrons, lone pairs, and stereochemistry
-         * as required.
-         *
-         * @param container the container to replace the atom of
-         * @param oldAtom the atom to replace
-         * @param newAtom the atom to insert
-         * @return whether replacement was made
-         */
+        /// <summary>
+        /// Substitute one atom in a container for another adjusting bonds, single electrons, lone pairs, and stereochemistry
+        /// as required.
+        ///
+        /// <param name="container">the container to replace the atom of</param>
+        /// <param name="oldAtom">the atom to replace</param>
+        /// <param name="newAtom">the atom to insert</param>
+        /// <returns>whether replacement was made</returns>
+        /// </summary>
         public static bool RePlaceAtomByAtom(IAtomContainer container, IAtom oldAtom, IAtom newAtom)
         {
             var map = new CDKObjectMap();
@@ -158,12 +158,12 @@ namespace NCDK.Tools.Manipulator
             return true;
         }
 
-        /**
-         * Get the summed charge of all atoms in an AtomContainer
-         *
-         * @param  atomContainer The IAtomContainer to manipulate
-         * @return The summed charges of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the summed charge of all atoms in an AtomContainer
+        ///
+        /// <param name="atomContainer">The IAtomContainer to manipulate</param>
+        /// <returns>The summed charges of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static double GetTotalCharge(IAtomContainer atomContainer)
         {
             double charge = 0.0;
@@ -176,17 +176,17 @@ namespace NCDK.Tools.Manipulator
             return charge;
         }
 
-        /**
-         * Get the summed exact mass of all atoms in an AtomContainer. It
-         * requires isotope information for all atoms to be set. Either set
-         * this information using the {@link IsotopeFactory}, or use the
-         * {@link MolecularFormulaManipulator#GetMajorIsotopeMass(IMolecularFormula)}
-         * method, after converting the <see cref="IAtomContainer"/> to a
-         * {@link IMolecularFormula} with the {@link MolecularFormulaManipulator}.
-         *
-         * @param  atomContainer The IAtomContainer to manipulate
-         * @return The summed exact mass of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the summed exact mass of all atoms in an AtomContainer. It
+        /// requires isotope information for all atoms to be set. Either set
+        /// this information using the <see cref="IsotopeFactory"/>, or use the
+        /// {@link MolecularFormulaManipulator#GetMajorIsotopeMass(IMolecularFormula)}
+        /// method, after converting the <see cref="IAtomContainer"/> to a
+        /// <see cref="IMolecularFormula"/> with the <see cref="MolecularFormulaManipulator"/>.
+        ///
+        /// <param name="atomContainer">The IAtomContainer to manipulate</param>
+        /// <returns>The summed exact mass of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static double GetTotalExactMass(IAtomContainer atomContainer)
         {
             try
@@ -210,13 +210,12 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Returns the molecular mass of the IAtomContainer. For the calculation it
-         * uses the masses of the isotope mixture using natural abundances.
-         *
-         * @param atomContainer
-         * @cdk.keyword mass, molecular
-         */
+        /// <summary>
+        /// Returns the molecular mass of the IAtomContainer. For the calculation it
+        /// uses the masses of the isotope mixture using natural abundances.
+        ///
+        /// <param name="atomContainer">/// @cdk.keyword mass, molecular</param>
+        /// </summary>
         public static double GetNaturalExactMass(IAtomContainer atomContainer)
         {
             try
@@ -245,12 +244,12 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Get the summed natural abundance of all atoms in an AtomContainer
-         *
-         * @param  atomContainer The IAtomContainer to manipulate
-         * @return The summed natural abundance of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the summed natural abundance of all atoms in an AtomContainer
+        ///
+        /// <param name="atomContainer">The IAtomContainer to manipulate</param>
+        /// <returns>The summed natural abundance of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static double GetTotalNaturalAbundance(IAtomContainer atomContainer)
         {
             try
@@ -278,12 +277,12 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Get the total formal charge on a molecule.
-         *
-         * @param atomContainer the atom container to consider
-         * @return The summed formal charges of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the total formal charge on a molecule.
+        ///
+        /// <param name="atomContainer">the atom container to consider</param>
+        /// <returns>The summed formal charges of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static int GetTotalFormalCharge(IAtomContainer atomContainer)
         {
             int chargeP = GetTotalNegativeFormalCharge(atomContainer);
@@ -292,12 +291,12 @@ namespace NCDK.Tools.Manipulator
             return chargeP + chargeN;
         }
 
-        /**
-         * Get the total formal negative charge on a molecule.
-         *
-         * @param atomContainer the atom container to consider
-         * @return The summed negative formal charges of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the total formal negative charge on a molecule.
+        ///
+        /// <param name="atomContainer">the atom container to consider</param>
+        /// <returns>The summed negative formal charges of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static int GetTotalNegativeFormalCharge(IAtomContainer atomContainer)
         {
             int charge = 0;
@@ -309,12 +308,12 @@ namespace NCDK.Tools.Manipulator
             return charge;
         }
 
-        /**
-         * Get the total positive formal charge on a molecule.
-         *
-         * @param atomContainer the atom container to consider
-         * @return The summed positive formal charges of all atoms in this AtomContainer.
-         */
+        /// <summary>
+        /// Get the total positive formal charge on a molecule.
+        ///
+        /// <param name="atomContainer">the atom container to consider</param>
+        /// <returns>The summed positive formal charges of all atoms in this AtomContainer.</returns>
+        /// </summary>
         public static int GetTotalPositiveFormalCharge(IAtomContainer atomContainer)
         {
             int charge = 0;
@@ -326,18 +325,18 @@ namespace NCDK.Tools.Manipulator
             return charge;
         }
 
-        /**
-         * Counts the number of hydrogens on the provided IAtomContainer. As this
-         * method will sum all implicit hydrogens on each atom it is important to
-         * ensure the atoms have already been perceived (and thus have an implicit
-         * hydrogen count) (see. {@link #PercieveAtomTypesAndConfigureAtoms}).
-         *
-         * @param container the container to count the hydrogens on
-         * @return the total number of hydrogens
-         * @see IAtom#ImplicitHydrogenCount
-         * @see #PercieveAtomTypesAndConfigureAtoms
-         * @ if the provided container was null
-         */
+        /// <summary>
+        /// Counts the number of hydrogens on the provided IAtomContainer. As this
+        /// method will sum all implicit hydrogens on each atom it is important to
+        /// ensure the atoms have already been perceived (and thus have an implicit
+        /// hydrogen count) (see. {@link #PercieveAtomTypesAndConfigureAtoms}).
+        ///
+        /// <param name="container">the container to count the hydrogens on</param>
+        /// <returns>the total number of hydrogens</returns>
+        /// @see IAtom#ImplicitHydrogenCount
+        /// <seealso cref="PercieveAtomTypesAndConfigureAtoms"/>
+        // @ if the provided container was null
+        /// </summary>
         public static int GetTotalHydrogenCount(IAtomContainer container)
         {
             if (container == null) throw new ArgumentException("null container provided");
@@ -361,19 +360,19 @@ namespace NCDK.Tools.Manipulator
             return hydrogens;
         }
 
-        /**
-         * Counts the number of implicit hydrogens on the provided IAtomContainer.
-         * As this method will sum all implicit hydrogens on each atom it is
-         * important to ensure the atoms have already been perceived (and thus have
-         * an implicit hydrogen count) (see.
-         * {@link #PercieveAtomTypesAndConfigureAtoms}).
-         *
-         * @param container the container to count the implicit hydrogens on
-         * @return the total number of implicit hydrogens
-         * @see IAtom#ImplicitHydrogenCount
-         * @see #PercieveAtomTypesAndConfigureAtoms
-         * @ if the provided container was null
-         */
+        /// <summary>
+        /// Counts the number of implicit hydrogens on the provided IAtomContainer.
+        /// As this method will sum all implicit hydrogens on each atom it is
+        /// important to ensure the atoms have already been perceived (and thus have
+        /// an implicit hydrogen count) (see.
+        /// {@link #PercieveAtomTypesAndConfigureAtoms}).
+        ///
+        /// <param name="container">the container to count the implicit hydrogens on</param>
+        /// <returns>the total number of implicit hydrogens</returns>
+        /// @see IAtom#ImplicitHydrogenCount
+        /// <seealso cref="PercieveAtomTypesAndConfigureAtoms"/>
+        // @ if the provided container was null
+        /// </summary>
         public static int GetImplicitHydrogenCount(IAtomContainer container)
         {
             if (container == null) throw new ArgumentNullException(nameof(container), "null container provided");
@@ -389,13 +388,13 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Count explicit hydrogens.
-         *
-         * @param atomContainer the atom container to consider
-         * @return The number of explicit hydrogens on the given IAtom.
-         * @ if either the container or atom were null
-         */
+        /// <summary>
+        /// Count explicit hydrogens.
+        ///
+        /// <param name="atomContainer">the atom container to consider</param>
+        /// <returns>The number of explicit hydrogens on the given IAtom.</returns>
+        // @ if either the container or atom were null
+        /// </summary>
         public static int CountExplicitHydrogens(IAtomContainer atomContainer, IAtom atom)
         {
             if (atomContainer == null || atom == null)
@@ -411,13 +410,13 @@ namespace NCDK.Tools.Manipulator
             return hCount;
         }
 
-        /**
-         * Adds explicit hydrogens (without coordinates) to the IAtomContainer,
-         * equaling the number of set implicit hydrogens.
-         *
-         * @param atomContainer the atom container to consider
-         * @cdk.keyword hydrogens, adding
-         */
+        /// <summary>
+        /// Adds explicit hydrogens (without coordinates) to the IAtomContainer,
+        /// equaling the number of set implicit hydrogens.
+        ///
+        /// <param name="atomContainer">the atom container to consider</param>
+        // @cdk.keyword hydrogens, adding
+        /// </summary>
         public static void ConvertImplicitToExplicitHydrogens(IAtomContainer atomContainer)
         {
             IList<IAtom> hydrogens = new List<IAtom>();
@@ -479,9 +478,9 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * @return The summed implicit + explicit hydrogens of the given IAtom.
-         */
+        /// <summary>
+        /// <returns>The summed implicit + explicit hydrogens of the given IAtom.</returns>
+        /// </summary>
         public static int CountHydrogens(IAtomContainer atomContainer, IAtom atom)
         {
             int hCount = atom.ImplicitHydrogenCount ?? 0;
@@ -508,14 +507,14 @@ namespace NCDK.Tools.Manipulator
             return idList;
         }
 
-        /**
-         * Produces an AtomContainer without explicit non stereo-relevant Hs but with H count from one with Hs.
-         * The new molecule is a deep copy.
-         *
-         * @param org The AtomContainer from which to remove the hydrogens
-         * @return              The molecule without non stereo-relevant Hs.
-         * @cdk.keyword         hydrogens, removal
-         */
+        /// <summary>
+        /// Produces an AtomContainer without explicit non stereo-relevant Hs but with H count from one with Hs.
+        /// The new molecule is a deep copy.
+        ///
+        /// <param name="org">The AtomContainer from which to remove the hydrogens</param>
+        /// <returns>The molecule without non stereo-relevant Hs.</returns>
+        // @cdk.keyword         hydrogens, removal
+        /// </summary>
         public static IAtomContainer RemoveNonChiralHydrogens(IAtomContainer org)
         {
             IDictionary<IAtom, IAtom> map = new Dictionary<IAtom, IAtom>(); // maps original atoms to clones.
@@ -530,7 +529,7 @@ namespace NCDK.Tools.Manipulator
                 // Clone/remove this atom?
                 IAtom atom = org.Atoms[i];
                 bool addToRemove = false;
-                if (suppressibleHydrogen(org, atom))
+                if (SuppressibleHydrogen(org, atom))
                 {
                     // test whether connected to a single hetero atom only, otherwise keep
                     if (org.GetConnectedAtoms(atom).Count() == 1)
@@ -659,32 +658,32 @@ namespace NCDK.Tools.Manipulator
             map.Add(atom, clonedAtom);
         }
 
-        /**
-         * Copy the input container and suppress any explicit hydrogens. Only
-         * hydrogens that can be represented as a hydrogen count value on the atom
-         * are suppressed. If a copy is not needed please use {@link
-         * #SuppressHydrogens}.
-         *
-         * @param org the container from which to remove hydrogens
-         * @return a copy of the input with suppressed hydrogens
-         * @see #SuppressHydrogens
-         */
+        /// <summary>
+        /// Copy the input container and suppress any explicit hydrogens. Only
+        /// hydrogens that can be represented as a hydrogen count value on the atom
+        /// are suppressed. If a copy is not needed please use {@link
+        /// #SuppressHydrogens}.
+        ///
+        /// <param name="org">the container from which to remove hydrogens</param>
+        /// <returns>a copy of the input with suppressed hydrogens</returns>
+        /// <seealso cref="SuppressHydrogens"/>
+        /// </summary>
         public static IAtomContainer CopyAndSuppressedHydrogens(IAtomContainer org)
         {
             return SuppressHydrogens((IAtomContainer)org.Clone());
         }
 
-        /**
-         * Suppress any explicit hydrogens in the provided container. Only hydrogens
-         * that can be represented as a hydrogen count value on the atom are
-         * suppressed. The container is updated and no elements are copied, please
-         * use either {@link #CopyAndSuppressedHydrogens} if you would to preserve
-         * the old instance.
-         *
-         * @param org the container from which to remove hydrogens
-         * @return the input for convenience
-         * @see #CopyAndSuppressedHydrogens
-         */
+        /// <summary>
+        /// Suppress any explicit hydrogens in the provided container. Only hydrogens
+        /// that can be represented as a hydrogen count value on the atom are
+        /// suppressed. The container is updated and no elements are copied, please
+        /// use either {@link #CopyAndSuppressedHydrogens} if you would to preserve
+        /// the old instance.
+        ///
+        /// <param name="org">the container from which to remove hydrogens</param>
+        /// <returns>the input for convenience</returns>
+        /// <seealso cref="CopyAndSuppressedHydrogens"/>
+        /// </summary>
         public static IAtomContainer SuppressHydrogens(IAtomContainer org)
         {
 
@@ -718,7 +717,7 @@ namespace NCDK.Tools.Manipulator
             for (int v = 0; v < nOrgAtoms; v++)
             {
                 IAtom atom = org.Atoms[v];
-                if (suppressibleHydrogen(org, graph, v))
+                if (SuppressibleHydrogen(org, graph, v))
                 {
                     hydrogens.Add(atom);
                     IncrementImplHydrogenCount(org.Atoms[graph[v][0]]);
@@ -875,32 +874,32 @@ namespace NCDK.Tools.Manipulator
             return org;
         }
 
-        /**
-         * Create an copy of the {@code org} structure with explicit hydrogens
-         * removed. Stereochemistry is updated but up and down bonds in a depiction
-         * may need to be recalculated (see. StructureDiagramGenerator).
-         *
-         * @param org The AtomContainer from which to remove the hydrogens
-         * @return The molecule without hydrogens.
-         * @cdk.keyword hydrogens, removal, suppress
-         * @see #CopyAndSuppressedHydrogens
-         */
+        /// <summary>
+        /// Create an copy of the {@code org} structure with explicit hydrogens
+        /// removed. Stereochemistry is updated but up and down bonds in a depiction
+        /// may need to be recalculated (see. StructureDiagramGenerator).
+        ///
+        /// <param name="org">The AtomContainer from which to remove the hydrogens</param>
+        /// <returns>The molecule without hydrogens.</returns>
+        // @cdk.keyword hydrogens, removal, suppress
+        /// <seealso cref="CopyAndSuppressedHydrogens"/>
+        /// </summary>
         public static IAtomContainer RemoveHydrogens(IAtomContainer org)
         {
             return CopyAndSuppressedHydrogens(org);
         }
 
-        /**
-         * Is the {@code atom} a suppressible hydrogen and can be represented as
-         * implicit. A hydrogen is suppressible if it is not an ion, not the major
-         * isotope (i.e. it is a deuterium or tritium atom) and is not molecular
-         * hydrogen.
-         *
-         * @param container the structure
-         * @param atom      an atom in the structure
-         * @return the atom is a hydrogen and it can be suppressed (implicit)
-         */
-        private static bool suppressibleHydrogen(IAtomContainer container, IAtom atom)
+        /// <summary>
+        /// Is the {@code atom} a suppressible hydrogen and can be represented as
+        /// implicit. A hydrogen is suppressible if it is not an ion, not the major
+        /// isotope (i.e. it is a deuterium or tritium atom) and is not molecular
+        /// hydrogen.
+        ///
+        /// <param name="container">the structure</param>
+        /// <param name="atom">an atom in the structure</param>
+        /// <returns>the atom is a hydrogen and it can be suppressed (implicit)</returns>
+        /// </summary>
+        private static bool SuppressibleHydrogen(IAtomContainer container, IAtom atom)
         {
             // is the atom a hydrogen
             if (!"H".Equals(atom.Symbol)) return false;
@@ -918,13 +917,13 @@ namespace NCDK.Tools.Manipulator
             return true;
         }
 
-        /**
-         * Increment the implicit hydrogen count of the provided atom. If the atom
-         * was a non-pseudo atom and had an unset hydrogen count an exception is
-         * thrown.
-         *
-         * @param atom an atom to increment the hydrogen count of
-         */
+        /// <summary>
+        /// Increment the implicit hydrogen count of the provided atom. If the atom
+        /// was a non-pseudo atom and had an unset hydrogen count an exception is
+        /// thrown.
+        ///
+        /// <param name="atom">an atom to increment the hydrogen count of</param>
+        /// </summary>
         private static void IncrementImplHydrogenCount(IAtom atom)
         {
             int? hCount = atom.ImplicitHydrogenCount;
@@ -939,18 +938,18 @@ namespace NCDK.Tools.Manipulator
             atom.ImplicitHydrogenCount = hCount + 1;
         }
 
-        /**
-         * Is the {@code atom} a suppressible hydrogen and can be represented as
-         * implicit. A hydrogen is suppressible if it is not an ion, not the major
-         * isotope (i.e. it is a deuterium or tritium atom) and is not molecular
-         * hydrogen.
-         *
-         * @param container the structure
-         * @param graph     adjacent list representation
-         * @param v         vertex (atom index)
-         * @return the atom is a hydrogen and it can be suppressed (implicit)
-         */
-        private static bool suppressibleHydrogen(IAtomContainer container, int[][] graph, int v)
+        /// <summary>
+        /// Is the {@code atom} a suppressible hydrogen and can be represented as
+        /// implicit. A hydrogen is suppressible if it is not an ion, not the major
+        /// isotope (i.e. it is a deuterium or tritium atom) and is not molecular
+        /// hydrogen.
+        ///
+        /// <param name="container">the structure</param>
+        /// <param name="graph">adjacent list representation</param>
+        /// <param name="v">vertex (atom index)</param>
+        /// <returns>the atom is a hydrogen and it can be suppressed (implicit)</returns>
+        /// </summary>
+        private static bool SuppressibleHydrogen(IAtomContainer container, int[][] graph, int v)
         {
 
             IAtom atom = container.Atoms[v];
@@ -969,16 +968,16 @@ namespace NCDK.Tools.Manipulator
             return !"H".Equals(container.Atoms[graph[v][0]].Symbol);
         }
 
-        /**
-         * Finds an neighbor connected to 'atom' which is not 'exclude1'
-         * or 'exclude2'. If no neighbor exists - null is returned.
-         *
-         * @param container structure
-         * @param atom      atom to find a neighbor of
-         * @param exclude1  the neighbor should not be this atom
-         * @param exclude2  the neighbor should also not be this atom
-         * @return a neighbor of 'atom', null if not found
-         */
+        /// <summary>
+        /// Finds an neighbor connected to 'atom' which is not 'exclude1'
+        /// or 'exclude2'. If no neighbor exists - null is returned.
+        ///
+        /// <param name="container">structure</param>
+        /// <param name="atom">atom to find a neighbor of</param>
+        /// <param name="exclude1">the neighbor should not be this atom</param>
+        /// <param name="exclude2">the neighbor should also not be this atom</param>
+        /// <returns>a neighbor of 'atom', null if not found</returns>
+        /// </summary>
         private static IAtom FindOther(IAtomContainer container, IAtom atom, IAtom exclude1, IAtom exclude2)
         {
             foreach (var neighbor in container.GetConnectedAtoms(atom))
@@ -988,30 +987,30 @@ namespace NCDK.Tools.Manipulator
             return null;
         }
 
-        /**
-         * Produces an AtomContainer without explicit Hs but with H count from one with Hs.
-         * Hs bonded to more than one heavy atom are preserved.  The new molecule is a deep copy.
-         *
-         * @return         The mol without Hs.
-         * @cdk.keyword    hydrogens, removal
-         * @deprecated {@link #SuppressHydrogens} will now not removed bridging hydrogens by default
-         */
+        /// <summary>
+        /// Produces an AtomContainer without explicit Hs but with H count from one with Hs.
+        /// Hs bonded to more than one heavy atom are preserved.  The new molecule is a deep copy.
+        ///
+        /// <returns>The mol without Hs.</returns>
+        // @cdk.keyword    hydrogens, removal
+        // @deprecated {@link #SuppressHydrogens} will now not removed bridging hydrogens by default
+        /// </summary>
         [Obsolete]
         public static IAtomContainer RemoveHydrogensPreserveMultiplyBonded(IAtomContainer ac)
         {
             return CopyAndSuppressedHydrogens(ac);
         }
 
-        /**
-         * Produces an AtomContainer without explicit Hs (except those listed) but with H count from one with Hs.
-         * The new molecule is a deep copy.
-         *
-         * @param  preserve  a list of H atoms to preserve.
-         * @return           The mol without Hs.
-         * @cdk.keyword      hydrogens, removal
-         * @deprecated not used by the internal API {@link #SuppressHydrogens} will
-         *             now only suppress hydrogens that can be represent as a h count
-         */
+        /// <summary>
+        /// Produces an AtomContainer without explicit Hs (except those listed) but with H count from one with Hs.
+        /// The new molecule is a deep copy.
+        ///
+        /// <param name="preserve">a list of H atoms to preserve.</param>
+        /// <returns>The mol without Hs.</returns>
+        // @cdk.keyword      hydrogens, removal
+        // @deprecated not used by the internal API {@link #SuppressHydrogens} will
+        ///             now only suppress hydrogens that can be represent as a h count
+        /// </summary>
         [Obsolete]
         private static IAtomContainer RemoveHydrogens(IAtomContainer ac, List<IAtom> preserve)
         {
@@ -1027,7 +1026,7 @@ namespace NCDK.Tools.Manipulator
             {
                 // Clone/remove this atom?
                 IAtom atom = ac.Atoms[i];
-                if (!suppressibleHydrogen(ac, atom) || preserve.Contains(atom))
+                if (!SuppressibleHydrogen(ac, atom) || preserve.Contains(atom))
                 {
                     IAtom a = null;
                     a = (IAtom)atom.Clone();
@@ -1085,9 +1084,9 @@ namespace NCDK.Tools.Manipulator
             return (mol);
         }
 
-        /**
-         * Sets a property on all <code>Atom</code>s in the given container.
-         */
+        /// <summary>
+        /// Sets a property on all <code>Atom</code>s in the given container.
+        /// </summary>
         public static void SetAtomProperties(IAtomContainer container, string propKey, object propVal)
         {
             if (container != null)
@@ -1099,15 +1098,15 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         *  A method to remove ElectronContainerListeners.
-         *  ElectronContainerListeners are used to detect changes
-         *  in ElectronContainers (like bonds) and to notifiy
-         *  registered Listeners in the event of a change.
-         *  If an object looses interest in such changes, it should
-         *  unregister with this AtomContainer in order to improve
-         *  performance of this class.
-         */
+        /// <summary>
+        ///  A method to remove ElectronContainerListeners.
+        ///  ElectronContainerListeners are used to detect changes
+        ///  in ElectronContainers (like bonds) and to notifiy
+        ///  registered Listeners in the event of a change.
+        ///  If an object looses interest in such changes, it should
+        ///  unregister with this AtomContainer in order to improve
+        ///  performance of this class.
+        /// </summary>
         public static void UnregIsterElectronContainerListeners(IAtomContainer container)
         {
             foreach (var electronContainer in container.GetElectronContainers())
@@ -1115,32 +1114,32 @@ namespace NCDK.Tools.Manipulator
                 electronContainer.Listeners.Remove(container);
             }
         }
-        /**
-         *  A method to remove AtomListeners.
-         *  AtomListeners are used to detect changes
-         *  in Atom objects within this AtomContainer and to notifiy
-         *  registered Listeners in the event of a change.
-         *  If an object looses interest in such changes, it should
-         *  unregister with this AtomContainer in order to improve
-         *  performance of this class.
-         */
+        /// <summary>
+        ///  A method to remove AtomListeners.
+        ///  AtomListeners are used to detect changes
+        ///  in Atom objects within this AtomContainer and to notifiy
+        ///  registered Listeners in the event of a change.
+        ///  If an object looses interest in such changes, it should
+        ///  unregister with this AtomContainer in order to improve
+        ///  performance of this class.
+        /// </summary>
         public static void UnregIsterAtomListeners(IAtomContainer container)
         {
             foreach (var atom in container.Atoms)
                 atom.Listeners.Remove(container);
         }
 
-        /**
-         * Compares this AtomContainer with another given AtomContainer and returns
-         * the Intersection between them. <p>
-         *
-         * <b>Important Note</b> : This is not the maximum common substructure.
-         *
-         * @param  container1 an AtomContainer object
-         * @param  container2 an AtomContainer object
-         * @return            An AtomContainer containing the intersection between
-         *                    container1 and container2
-         */
+        /// <summary>
+        /// Compares this AtomContainer with another given AtomContainer and returns
+        /// the Intersection between them. <p>
+        ///
+        /// <b>Important Note</b> : This is not the maximum common substructure.
+        ///
+        /// <param name="container1">an AtomContainer object</param>
+        /// <param name="container2">an AtomContainer object</param>
+        /// <returns>An AtomContainer containing the intersection between</returns>
+        ///                    container1 and container2
+        /// </summary>
         public static IAtomContainer GetIntersection(IAtomContainer container1, IAtomContainer container2)
         {
             IAtomContainer intersection = container1.Builder.CreateAtomContainer();
@@ -1155,61 +1154,61 @@ namespace NCDK.Tools.Manipulator
             return intersection;
         }
 
-        /**
-         * Constructs an array of Atom objects from an AtomContainer.
-         * @param  container The original AtomContainer.
-         * @return The array of Atom objects.
-         */
+        /// <summary>
+        /// Constructs an array of Atom objects from an AtomContainer.
+        /// <param name="container">The original AtomContainer.</param>
+        /// <returns>The array of Atom objects.</returns>
+        /// </summary>
         public static IAtom[] GetAtomArray(IAtomContainer container)
         {
             return container.Atoms.ToArray();
         }
 
-        /**
-         * Constructs an array of Atom objects from a List of Atom objects.
-         * @param  list The original List.
-         * @return The array of Atom objects.
-         */
+        /// <summary>
+        /// Constructs an array of Atom objects from a List of Atom objects.
+        /// <param name="list">The original List.</param>
+        /// <returns>The array of Atom objects.</returns>
+        /// </summary>
         public static IAtom[] GetAtomArray(IEnumerable<IAtom> list)
         {
             return list.ToArray();
         }
 
-        /**
-         * Constructs an array of Bond objects from an AtomContainer.
-         * @param  container The original AtomContainer.
-         * @return The array of Bond objects.
-         */
+        /// <summary>
+        /// Constructs an array of Bond objects from an AtomContainer.
+        /// <param name="container">The original AtomContainer.</param>
+        /// <returns>The array of Bond objects.</returns>
+        /// </summary>
         public static IBond[] GetBondArray(IAtomContainer container)
         {
             return container.Bonds.ToArray();
         }
 
-        /**
-         * Constructs an array of Atom objects from a List of Atom objects.
-         * @param  list The original List.
-         * @return The array of Atom objects.
-         */
+        /// <summary>
+        /// Constructs an array of Atom objects from a List of Atom objects.
+        /// <param name="list">The original List.</param>
+        /// <returns>The array of Atom objects.</returns>
+        /// </summary>
         public static IBond[] GetBondArray(IEnumerable<IBond> list)
         {
             return list.ToArray();
         }
 
-        /**
-         * Constructs an array of Bond objects from an AtomContainer.
-         * @param  container The original AtomContainer.
-         * @return The array of Bond objects.
-         */
+        /// <summary>
+        /// Constructs an array of Bond objects from an AtomContainer.
+        /// <param name="container">The original AtomContainer.</param>
+        /// <returns>The array of Bond objects.</returns>
+        /// </summary>
         public static IElectronContainer[] GetElectronContainerArray(IAtomContainer container)
         {
             return container.GetElectronContainers().ToArray();
         }
 
-        /**
-         * Constructs an array of Atom objects from a List of Atom objects.
-         * @param  list The original List.
-         * @return The array of Atom objects.
-         */
+        /// <summary>
+        /// Constructs an array of Atom objects from a List of Atom objects.
+        /// <param name="list">The original List.</param>
+        /// <returns>The array of Atom objects.</returns>
+        /// </summary>
         public static IElectronContainer[] GetElectronContainerArray(IEnumerable<IElectronContainer> list)
         {
             return list.ToArray();
@@ -1234,17 +1233,16 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Convenience method to perceive atom types for all <code>IAtom</code>s in the
-         * <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
-         * matcher finds a matching atom type, the <code>IAtom</code> will be configured
-         * to have the same properties as the <code>IAtomType</code>. If no matching atom
-         * type is found, no configuration is performed.
-         * <b>This method overwrites existing values.</b>
-         *
-         * @param container
-         * @
-         */
+        /// <summary>
+        /// Convenience method to perceive atom types for all <code>IAtom</code>s in the
+        /// <code>IAtomContainer</code>, using the <code>CDKAtomTypeMatcher</code>. If the
+        /// matcher finds a matching atom type, the <code>IAtom</code> will be configured
+        /// to have the same properties as the <code>IAtomType</code>. If no matching atom
+        /// type is found, no configuration is performed.
+        /// <b>This method overwrites existing values.</b>
+        ///
+        /// <param name="container">/// @</param>
+        /// </summary>
         public static void PercieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -1255,19 +1253,19 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * This method will reset all atom configuration to unset.
-         *
-         * This method is the reverse of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
-         * and after a call to this method all atoms will be "unconfigured".
-         *
-         * Note that it is not a complete reversal of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
-         * since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
-         * by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
-         *
-         * @param container The molecule, whose atoms are to be unconfigured
-         * @see #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)
-         */
+        /// <summary>
+        /// This method will reset all atom configuration to unset.
+        ///
+        /// This method is the reverse of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
+        /// and after a call to this method all atoms will be "unconfigured".
+        ///
+        /// Note that it is not a complete reversal of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
+        /// since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
+        /// by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
+        ///
+        /// <param name="container">The molecule, whose atoms are to be unconfigured</param>
+        /// <seealso cref="PercieveAtomTypesAndConfigureAtoms(IAtomContainer)"/>
+        /// </summary>
         public static void ClearAtomConfigurations(IAtomContainer container)
         {
             foreach (var atom in container.Atoms)
@@ -1289,10 +1287,10 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Returns the sum of bond orders, where a single bond counts as one
-         * <i>single bond equivalent</i>, a double as two, etc.
-         */
+        /// <summary>
+        /// Returns the sum of bond orders, where a single bond counts as one
+        /// <i>single bond equivalent</i>, a double as two, etc.
+        /// </summary>
         public static int GetSingleBondEquivalentSum(IAtomContainer container)
         {
             int sum = 0;
@@ -1312,12 +1310,12 @@ namespace NCDK.Tools.Manipulator
             return BondManipulator.GetMaximumBondOrder(container.Bonds);
         }
 
-        /**
-         * Returns a set of nodes excluding all the hydrogens.
-         *
-         * @return         The heavyAtoms value
-         * @cdk.keyword    hydrogens, removal
-         */
+        /// <summary>
+        /// Returns a set of nodes excluding all the hydrogens.
+        ///
+        /// <returns>The heavyAtoms value</returns>
+        // @cdk.keyword    hydrogens, removal
+        /// </summary>
         public static IList<IAtom> GetHeavyAtoms(IAtomContainer container)
         {
             List<IAtom> newAc = new List<IAtom>();
@@ -1331,16 +1329,16 @@ namespace NCDK.Tools.Manipulator
             return newAc;
         }
 
-        /**
-         * Generates a cloned atomcontainer with all atoms being carbon, all bonds
-         * being single non-aromatic
-         *
-         * @param atomContainer The input atomcontainer
-         * @return The new atomcontainer
-         * @ The atomcontainer cannot be cloned
-         * @deprecated not all attributes are removed producing unexpected results, use
-         *             {@link #anonymise}
-         */
+        /// <summary>
+        /// Generates a cloned atomcontainer with all atoms being carbon, all bonds
+        /// being single non-aromatic
+        ///
+        /// <param name="atomContainer">The input atomcontainer</param>
+        /// <returns>The new atomcontainer</returns>
+        // @ The atomcontainer cannot be cloned
+        // @deprecated not all attributes are removed producing unexpected results, use
+        ///             {@link #anonymise}
+        /// </summary>
         public static IAtomContainer CreateAllCarbonAllSingleNonAromaticBondAtomContainer(IAtomContainer atomContainer)
         {
             IAtomContainer query = (IAtomContainer)atomContainer.Clone();
@@ -1359,14 +1357,14 @@ namespace NCDK.Tools.Manipulator
             return query;
         }
 
-        /**
-         * Anonymise the provided container to single-bonded carbon atoms. No
-         * information other then the connectivity from the original container is
-         * retrained.
-         *
-         * @param src an atom container
-         * @return anonymised container
-         */
+        /// <summary>
+        /// Anonymise the provided container to single-bonded carbon atoms. No
+        /// information other then the connectivity from the original container is
+        /// retrained.
+        ///
+        /// <param name="src">an atom container</param>
+        /// <returns>anonymised container</returns>
+        /// </summary>
         public static IAtomContainer Anonymise(IAtomContainer src)
         {
 
@@ -1391,17 +1389,17 @@ namespace NCDK.Tools.Manipulator
             return dest;
         }
 
-        /**
-         * Create a skeleton copy of the provided structure. The skeleton copy is
-         * similar to an anonymous copy ({@link #anonymise}) except that atom
-         * elements are preserved. All bonds are converted to single bonds and a
-         * 'clean' atom is created for the input elements. The 'clean' atom has
-         * unset charge, mass, and hydrogen count.
-         *
-         * @param src input structure
-         * @return the skeleton copy
-         */
-        public static IAtomContainer skeleton(IAtomContainer src)
+        /// <summary>
+        /// Create a skeleton copy of the provided structure. The skeleton copy is
+        /// similar to an anonymous copy ({@link #anonymise}) except that atom
+        /// elements are preserved. All bonds are converted to single bonds and a
+        /// 'clean' atom is created for the input elements. The 'clean' atom has
+        /// unset charge, mass, and hydrogen count.
+        ///
+        /// <param name="src">input structure</param>
+        /// <returns>the skeleton copy</returns>
+        /// </summary>
+        public static IAtomContainer Skeleton(IAtomContainer src)
         {
 
             IChemObjectBuilder builder = src.Builder;
@@ -1425,14 +1423,14 @@ namespace NCDK.Tools.Manipulator
             return dest;
         }
 
-        /**
-         * Returns the sum of the bond order equivalents for a given IAtom. It
-         * considers single bonds as 1.0, double bonds as 2.0, triple bonds as 3.0,
-         * and quadruple bonds as 4.0.
-         *
-         * @param  atom  The atom for which to calculate the bond order sum
-         * @return       The number of bond order equivalents for this atom
-         */
+        /// <summary>
+        /// Returns the sum of the bond order equivalents for a given IAtom. It
+        /// considers single bonds as 1.0, double bonds as 2.0, triple bonds as 3.0,
+        /// and quadruple bonds as 4.0.
+        ///
+        /// <param name="atom">The atom for which to calculate the bond order sum</param>
+        /// <returns>The number of bond order equivalents for this atom</returns>
+        /// </summary>
         public static double GetBondOrderSum(IAtomContainer container, IAtom atom)
         {
             double count = 0;
@@ -1447,25 +1445,25 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Assigns {@link CDKConstants#SingleOrDouble} flags to the bonds of
-         * a container. The single or double flag indicates uncertainty of bond
-         * order and in this case is assigned to all aromatic bonds (and atoms)
-         * which occur in rings. If any such bonds are found the flag is also set
-         * on the container.
-         *
-         * <blockquote><pre>
-         *     SmilesParser parser = new SmilesParser(...);
-         *     parser.PreservingAromaticity = true;
-         *
-         *     IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
-         *
-         *     AtomContainerManipulator.SingleOrDoubleFlags = biphenyl;
-         * </pre></blockquote>
-         *
-         * @param ac container to which the flags are assigned
-         * @return the input for convenience
-         */
+        /// <summary>
+        /// Assigns {@link CDKConstants#SingleOrDouble} flags to the bonds of
+        /// a container. The single or double flag indicates uncertainty of bond
+        /// order and in this case is assigned to all aromatic bonds (and atoms)
+        /// which occur in rings. If any such bonds are found the flag is also set
+        /// on the container.
+        ///
+        /// <blockquote><code>
+        ///     SmilesParser parser = new SmilesParser(...);
+        ///     parser.PreservingAromaticity = true;
+        ///
+        ///     IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
+        ///
+        ///     AtomContainerManipulator.SingleOrDoubleFlags = biphenyl;
+        /// </code></blockquote>
+        ///
+        /// <param name="ac">container to which the flags are assigned</param>
+        /// <returns>the input for convenience</returns>
+        /// </summary>
         public static IAtomContainer SetSingleOrDoubleFlags(IAtomContainer ac)
         {
             // note - we could check for any aromatic bonds to avoid RingSearch but

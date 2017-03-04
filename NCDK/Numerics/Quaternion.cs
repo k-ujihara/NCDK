@@ -401,7 +401,7 @@ namespace NCDK.Numerics
             double q2z = value1.Z;
             double q2w = value1.W;
 
-            // cross(av, bv)
+            // Cross(av, bv)
             double cx = q1y * q2z - q1z * q2y;
             double cy = q1z * q2x - q1x * q2z;
             double cz = q1x * q2y - q1y * q2x;
@@ -489,7 +489,7 @@ namespace NCDK.Numerics
             double q2z = value2.Z;
             double q2w = value2.W;
 
-            // cross(av, bv)
+            // Cross(av, bv)
             double cx = q1y * q2z - q1z * q2y;
             double cy = q1z * q2x - q1x * q2z;
             double cz = q1x * q2y - q1y * q2x;
@@ -551,7 +551,7 @@ namespace NCDK.Numerics
             //-------------------------------------
             // Multiply part.
 
-            // cross(av, bv)
+            // Cross(av, bv)
             double cx = q1y * q2z - q1z * q2y;
             double cy = q1z * q2x - q1x * q2z;
             double cz = q1x * q2y - q1y * q2x;
@@ -639,7 +639,7 @@ namespace NCDK.Numerics
             double q2z = value2.Z;
             double q2w = value2.W;
 
-            // cross(av, bv)
+            // Cross(av, bv)
             double cx = q1y * q2z - q1z * q2y;
             double cy = q1z * q2x - q1x * q2z;
             double cz = q1x * q2y - q1y * q2x;
@@ -701,7 +701,7 @@ namespace NCDK.Numerics
             //-------------------------------------
             // Multiply part.
 
-            // cross(av, bv)
+            // Cross(av, bv)
             double cx = q1y * q2z - q1z * q2y;
             double cy = q1z * q2x - q1x * q2z;
             double cz = q1x * q2y - q1y * q2x;

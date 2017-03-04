@@ -22,34 +22,34 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  The stabilization of the positive charge
-     *  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and
-     *  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
-     *  obtaining the charges. The method is based following {@cdk.cite Saller85}.
-     *  The value is calculated looking for resonance structures which can stabilize the charge.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>maxIterations</td>
-     *     <td>0</td>
-     *     <td>Number of maximum iterations</td>
-     *   </tr>
-     * </table>
-     *
-     * @author         Miguel Rojas Cherto
-     * @cdk.created    2008-104-31
-     * @cdk.module     qsaratomic
-     * @cdk.set        qsar-descriptors
-     * @cdk.githash
-     * @see StabilizationCharges
-     */
+    /// <summary>
+    ///  The stabilization of the positive charge
+    ///  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and
+    ///  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
+    ///  obtaining the charges. The method is based following {@cdk.cite Saller85}.
+    ///  The value is calculated looking for resonance structures which can stabilize the charge.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>maxIterations</td>
+    ///     <td>0</td>
+    ///     <td>Number of maximum iterations</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author         Miguel Rojas Cherto
+    // @cdk.created    2008-104-31
+    // @cdk.module     qsaratomic
+    // @cdk.set        qsar-descriptors
+    // @cdk.githash
+    /// <seealso cref="StabilizationCharges"/>
+    /// </summary>
     public class StabilizationPlusChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "stabilPlusC" };

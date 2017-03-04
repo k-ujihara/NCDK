@@ -21,13 +21,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the PDBStructure class.
-     *
-     * @cdk.module test-data
-     *
-     * @see PDBStructure
-     */
+    /// <summary>
+    /// Checks the functionality of the PDBStructure class.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="PDBStructure"/>
+    /// </summary>
     [TestClass()]
     public class PDBStructureTest : AbstractPDBStructureTest
     {

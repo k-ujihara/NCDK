@@ -8,15 +8,10 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// see. http://en.wikipedia.org/wiki/Biconnected_component
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    class BiconnectedComponents
+    // @author John May
+    internal class BiconnectedComponents
     {
-
         private int[] depth;
 
         private readonly Graph g;

@@ -30,12 +30,12 @@ using NCDK.Templates;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.Aromaticities {
-    /**
-     * Test the electron contribution using the pi bond only model.
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Test the electron contribution using the pi bond only model.
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class PiBondModelTest {
 
@@ -72,7 +72,7 @@ namespace NCDK.Aromaticities {
         }
 
         [TestMethod()]
-        public void hexamethylidenecyclohexane() {
+        public void Hexamethylidenecyclohexane() {
             Test(CreateFromSmiles("C=C1C(=C)C(=C)C(=C)C(=C)C1=C"), -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1);
         }
 
@@ -92,7 +92,7 @@ namespace NCDK.Aromaticities {
         }
 
         [TestMethod()]
-        public void azulene() {
+        public void Azulene() {
             Test(TestMoleculeFactory.MakeAzulene(), 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
         }
 
@@ -102,7 +102,7 @@ namespace NCDK.Aromaticities {
         }
 
         [TestMethod()]
-        public void thiazole() {
+        public void Thiazole() {
             Test(TestMoleculeFactory.MakeThiazole(), 1, 1, 1, -1, 1);
         }
 
@@ -128,7 +128,7 @@ namespace NCDK.Aromaticities {
         }
 
         [TestMethod()]
-        public void quinone() {
+        public void Quinone() {
             Test(CreateFromSmiles("O=C1C=CC(=O)C=C1"), -1, -1, 1, 1, -1, -1, 1, 1);
         }
 
@@ -148,13 +148,13 @@ namespace NCDK.Aromaticities {
         }
 
         [TestMethod()]
-        public void imidazothiazole() {
+        public void Imidazothiazole() {
             Test(CreateFromSmiles("S1C=CN2C=CN=C12"), -1, 1, 1, -1, 1, 1, 1, 1);
         }
 
         // 1-oxide pyridine
         [TestMethod()]
-        public void oxidepyridine() {
+        public void Oxidepyridine() {
             Test(CreateFromSmiles("O=N1=CC=CC=C1"), -1, 1, 1, 1, 1, 1, 1);
         }
 

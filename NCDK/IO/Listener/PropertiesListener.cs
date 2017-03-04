@@ -23,24 +23,24 @@ using System.IO;
 
 namespace NCDK.IO.Listener
 {
-    /**
-     * Answers the questions by looking up the values in a Properties
-     * object. The question names match the property field names.
-     * If no answer is found in the Property object, or if the value
-     * is invalid, then the default is taken.
-     *
-     * <p>For the GaussianInputWriter the properties file might look like:
-     * <pre>
-     * Basis=6-31g
-     * Method=b3lyp
-     * Command=geometry optimization
-     * </pre>
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// Answers the questions by looking up the values in a Properties
+    /// object. The question names match the property field names.
+    /// If no answer is found in the Property object, or if the value
+    /// is invalid, then the default is taken.
+    ///
+    /// <p>For the GaussianInputWriter the properties file might look like:
+    /// <code>
+    /// Basis=6-31g
+    /// Method=b3lyp
+    /// Command=geometry optimization
+    /// </code>
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     public class PropertiesListener : IReaderListener, IWriterListener
     {
         private NameValueCollection props;
@@ -58,13 +58,13 @@ namespace NCDK.IO.Listener
 
         public void FrameRead(ReaderEvent evt) { }
 
-        /**
-         * Processes the IOSettings by listing the question, giving the options
-         * and asking the user to provide their choice.
-         *
-         * <p>Note: if the input reader is <code>null</code>, then the method
-         * does not wait for an answer, and takes the default.
-         */
+        /// <summary>
+        /// Processes the IOSettings by listing the question, giving the options
+        /// and asking the user to provide their choice.
+        ///
+        /// <p>Note: if the input reader is <code>null</code>, then the method
+        /// does not wait for an answer, and takes the default.
+        /// </summary>
         public void ProcessIOSettingQuestion(IOSetting setting)
         {
             string questionName = setting.Name;

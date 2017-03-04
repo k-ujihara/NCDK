@@ -27,24 +27,21 @@ using System;
 
 namespace NCDK.Hash
 {
-    /**
-     * A generator for atom hash codes where atoms maybe be <i>suppressed</i>. A
-     * common usage would be compute the hash code for a molecule with explicit
-     * hydrogens but ignore any values for the explicit hydrogens. This particularly
-     * useful for stereo-centres where by removing explicit hydrogens could affect
-     * the configuration.
-     *
-     * The suppress atom hashes are returned as '0'.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see org.openscience.cdk.hash.SeedGenerator
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    sealed class SuppressedAtomHashGenerator : AbstractAtomHashGenerator, AtomHashGenerator
+    /// <summary>
+    /// A generator for atom hash codes where atoms maybe be <i>suppressed</i>. A
+    /// common usage would be compute the hash code for a molecule with explicit
+    /// hydrogens but ignore any values for the explicit hydrogens. This particularly
+    /// useful for stereo-centres where by removing explicit hydrogens could affect
+    /// the configuration.
+    ///
+    /// The suppress atom hashes are returned as '0'.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @see org.openscience.cdk.hash.SeedGenerator
+    // @cdk.githash
+    /// </summary>
+    internal sealed class SuppressedAtomHashGenerator : AbstractAtomHashGenerator, AtomHashGenerator
     {
 
         /* a generator for the initial atom seeds */
@@ -56,29 +53,29 @@ namespace NCDK.Hash
         /* number of cycles to include adjacent invariants */
         private readonly int depth;
 
-        /**
-         * Function used to indicate which atoms should be suppressed. One can think
-         * of this as 'masking' out a value.
-         */
+        /// <summary>
+        /// Function used to indicate which atoms should be suppressed. One can think
+        /// of this as 'masking' out a value.
+        /// </summary>
         private readonly AtomSuppression suppression;
 
-        /**
-         * Create a basic hash generator using the provided seed generator to
-         * initialise atom invariants and using the provided stereo factory.
-         *
-         * @param seedGenerator generator to seed the initial values of atoms
-         * @param pseudorandom  pseudorandom number generator used to randomise hash
-         *                      distribution
-         * @param factory       a stereo encoder factory
-         * @param suppression   defines which atoms are suppressed - that is
-         *                      masked from the hash
-         * @param depth         depth of the hashing function, larger values take
-         *                      longer
-         * @throws ArgumentException depth was less then 0
-         * @throws NullPointerException     seed generator or pseudo random was
-         *                                  null
-         * @see org.openscience.cdk.hash.SeedGenerator
-         */
+        /// <summary>
+        /// Create a basic hash generator using the provided seed generator to
+        /// initialise atom invariants and using the provided stereo factory.
+        ///
+        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
+        ///                      distribution
+        /// <param name="factory">a stereo encoder factory</param>
+        /// <param name="suppression">defines which atoms are suppressed - that is</param>
+        ///                      masked from the hash
+        /// <param name="depth">depth of the hashing function, larger values take</param>
+        ///                      longer
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
+        ///                                  null
+        /// @see org.openscience.cdk.hash.SeedGenerator
+        /// </summary>
         public SuppressedAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
                 IStereoEncoderFactory factory, AtomSuppression suppression, int depth)
                 : base(pseudorandom)
@@ -91,22 +88,22 @@ namespace NCDK.Hash
             this.depth = depth;
         }
 
-        /**
-         * Create a basic hash generator using the provided seed generator to
-         * initialise atom invariants and no stereo configuration.
-         *
-         * @param seedGenerator generator to seed the initial values of atoms
-         * @param pseudorandom  pseudorandom number generator used to randomise hash
-         *                      distribution
-         * @param suppression   defines which atoms are suppressed (i.e. masked)
-         *                      from the hash code
-         * @param depth         depth of the hashing function, larger values take
-         *                      longer
-         * @throws ArgumentException depth was less then 0
-         * @throws NullPointerException     seed generator or pseudo random was
-         *                                  null
-         * @see org.openscience.cdk.hash.SeedGenerator
-         */
+        /// <summary>
+        /// Create a basic hash generator using the provided seed generator to
+        /// initialise atom invariants and no stereo configuration.
+        ///
+        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
+        ///                      distribution
+        /// <param name="suppression">defines which atoms are suppressed (i.e. masked)</param>
+        ///                      from the hash code
+        /// <param name="depth">depth of the hashing function, larger values take</param>
+        ///                      longer
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
+        ///                                  null
+        /// @see org.openscience.cdk.hash.SeedGenerator
+        /// </summary>
         public SuppressedAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
                 AtomSuppression suppression, int depth)
                 : this(seedGenerator, pseudorandom, StereoEncoderFactory.EMPTY, suppression, depth)
@@ -119,15 +116,15 @@ namespace NCDK.Hash
             return Generate(seedGenerator.Generate(container), factory.Create(container, graph), graph, suppressed);
         }
 
-        /**
-         * Package-private method for generating the hash for the given molecule.
-         * The initial invariants are passed as to the method along with an
-         * adjacency list representation of the graph.
-         *
-         * @param current initial invariants
-         * @param graph   adjacency list representation
-         * @return hash codes for atoms
-         */
+        /// <summary>
+        /// Package-private method for generating the hash for the given molecule.
+        /// The initial invariants are passed as to the method along with an
+        /// adjacency list representation of the graph.
+        ///
+        /// <param name="current">initial invariants</param>
+        /// <param name="graph">adjacency list representation</param>
+        /// <returns>hash codes for atoms</returns>
+        /// </summary>
         public override long[] Generate(long[] current, IStereoEncoder encoder, int[][] graph, Suppressed suppressed)
         {
 
@@ -178,26 +175,23 @@ namespace NCDK.Hash
             return current;
         }
 
-        /**
-         * Determine the next value of the atom at index <i>v</i>. The value is
-         * calculated by combining the current values of adjacent atoms. When a
-         * duplicate value is found it can not be directly included and is
-         * <i>rotated</i> the number of times it has previously been seen.
-         *
-         * @param graph      adjacency list representation of connected atoms
-         * @param v          the atom to calculate the next value for
-         * @param current    the current values
-         * @param unique     buffer for working out which adjacent values are unique
-         * @param included   buffer for storing the rotated <i>unique</i> value, this
-         *                   value is <i>rotated</i> each time the same value is
-         *                   found.
-         * @param suppressed bit set indicates which atoms are 'suppressed'
-         * @return the next value for <i>v</i>
-         */
-#if TEST
-        public
-#endif
-        long Next(int[][] graph, int v, long[] current, long[] unique, long[] included, Suppressed suppressed)
+        /// <summary>
+        /// Determine the next value of the atom at index <i>v</i>. The value is
+        /// calculated by combining the current values of adjacent atoms. When a
+        /// duplicate value is found it can not be directly included and is
+        /// <i>rotated</i> the number of times it has previously been seen.
+        ///
+        /// <param name="graph">adjacency list representation of connected atoms</param>
+        /// <param name="v">the atom to calculate the next value for</param>
+        /// <param name="current">the current values</param>
+        /// <param name="unique">buffer for working out which adjacent values are unique</param>
+        /// <param name="included">buffer for storing the rotated <i>unique</i> value, this</param>
+        ///                   value is <i>rotated</i> each time the same value is
+        ///                   found.
+        /// <param name="suppressed">bit set indicates which atoms are 'suppressed'</param>
+        /// <returns>the next value for <i>v</i></returns>
+        /// </summary>
+        internal long Next(int[][] graph, int v, long[] current, long[] unique, long[] included, Suppressed suppressed)
         {
 
             if (suppressed.Contains(v)) return current[v];

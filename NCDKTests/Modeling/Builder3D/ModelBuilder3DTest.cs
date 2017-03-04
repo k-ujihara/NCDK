@@ -172,7 +172,7 @@ namespace NCDK.Modeling.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_CCCCCCCCCC_with2d()
         {
-            //Assume.AssumeTrue(runSlowTests());
+            //Assume.AssumeTrue(RunSlowTests());
 
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "CCCCCCCCCC";
@@ -198,7 +198,7 @@ namespace NCDK.Modeling.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.allmol232.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -226,7 +226,7 @@ namespace NCDK.Modeling.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.allmol231.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -366,7 +366,7 @@ namespace NCDK.Modeling.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.bug1241421.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -382,7 +382,7 @@ namespace NCDK.Modeling.Builder3D
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);
             string filename = "NCDK.Data.MDL.reserpine.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var chemFile = reader.Read(new ChemFile());
             reader.Close();

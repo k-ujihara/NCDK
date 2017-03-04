@@ -25,19 +25,17 @@ using System;
 
 namespace NCDK.Events
 {
-    /**
-    // A ChangeListener for the CDK, to be independent from the Swing package.
-     *
+    /// <summary>
+    /// A ChangeListener for the CDK, to be independent from the Swing package.
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-     */
     public interface ICDKSelectionChangeListener
     {
-        /**
-        // Invoked when the target of the listener has changed its state.
-         *
-        // @param   event  The EventObject
-         */
+        /// <summary>
+        /// Invoked when the target of the listener has changed its state.
+        /// </summary>
+        /// <param name="evt">The EventObject</param>
         void StateChanged(EventArgs evt);
     }
 }

@@ -33,24 +33,24 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * A reader for ShelX output (RES) files. It does not read all information.
-     * The list of fields that is read: REM, END, CELL, SPGR.
-     * In additions atoms are read.
-     *
-     * <p>A reader for ShelX files. It currently supports ShelXL.
-     *
-     * <p>The ShelXL format is described on the net:
-     * <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
-     * http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword file format, ShelXL
-     * @author E.L. Willighagen
-     */
+    /// <summary>
+    /// A reader for ShelX output (RES) files. It does not read all information.
+    /// The list of fields that is read: REM, END, CELL, SPGR.
+    /// In additions atoms are read.
+    ///
+    /// <p>A reader for ShelX files. It currently supports ShelXL.
+    ///
+    /// <p>The ShelXL format is described on the net:
+    /// <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
+    /// http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @cdk.keyword file format, ShelXL
+    // @author E.L. Willighagen
+    /// </summary>
     public class ShelXReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -187,11 +187,9 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("CELL"))
                 {
-                    /*
-                     * example: CELL 1.54184 23.56421 7.13203 18.68928 90.0000
-                     * 109.3799 90.0000 CELL 1.54184 7.11174 21.71704 30.95857
-                     * 90.000 90.000 90.000
-                     */
+                    // example: CELL 1.54184 23.56421 7.13203 18.68928 90.0000
+                    // 109.3799 90.0000 CELL 1.54184 7.11174 21.71704 30.95857
+                    // 90.000 90.000 90.000
                     var st = Strings.Tokenize(line);
                     //st[0]; // string command_again
                     //st[1]; // string wavelength
@@ -250,7 +248,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("TIME"))
                 {
-
                     /* 7.2 Reflection data input */
                 }
                 else if (u_command.Equals("HKLF"))
@@ -279,7 +276,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("MERG"))
                 {
-
                     /* 7.3 Atom list and least-squares constraints */
                 }
                 else if (u_command.Equals("SPEC"))
@@ -317,7 +313,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("EQIV"))
                 {
-
                     /* 7.4 The connectivity list */
                 }
                 else if (u_command.Equals("CONN"))
@@ -331,7 +326,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("FREE"))
                 {
-
                     /* 7.5 Least-squares restraints */
                 }
                 else if (u_command.Equals("DFIX"))
@@ -372,7 +366,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("SUMP"))
                 {
-
                     /* 7.6 Least-squares organization */
                 }
                 else if (u_command.Equals("L.S."))
@@ -395,7 +388,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("FVAR"))
                 {
-
                     /* 7.7 Lists and tables */
                 }
                 else if (u_command.Equals("BOND"))
@@ -427,7 +419,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("WPDB"))
                 {
-
                     /* 7.8 Fouriers, peak search and lineprinter plots */
                 }
                 else if (u_command.Equals("FMAP"))
@@ -441,7 +432,6 @@ namespace NCDK.IO
                 }
                 else if (u_command.Equals("MOLE"))
                 {
-
                     /* NOT DOCUMENTED BUT USED BY PLATON */
                 }
                 else if (u_command.Equals("SPGR"))
@@ -461,10 +451,9 @@ namespace NCDK.IO
                 else
                 {
                     //Debug.WriteLine("Assumed to contain an atom: " + line);
-                    /*
-                     * this line gives an atom, because all lines not starting with
-                     * a ShelX command is an atom (that sucks!)
-                     */
+                    
+                    // this line gives an atom, because all lines not starting with
+                    // a ShelX command is an atom (that sucks!)
                     var st = Strings.Tokenize(line);
                     string atype = st[0];
                     //st[1]; // string scatt_factor

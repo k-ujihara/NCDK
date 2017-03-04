@@ -29,94 +29,74 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Interface for bit fingerprint representations.
-     *
+    /// <summary>
+    /// Interface for bit fingerprint representations.
+    /// </summary>
     // @author jonalv
     // @cdk.module     core
     // @cdk.githash
-     */
     public interface IBitFingerprint
     {
-        /**
-		 * Returns the number of bits set to true in the fingerprint.
-		 *
-		 * @return the number of true bits.
-		 */
+        /// <summary>
+        /// The number of bits set to true in the fingerprint.
+        /// </summary>
         int Cardinality { get; }
 
-        /**
-		 * Returns the size of the fingerprint, i.e., the number of hash bins.
-		 *
-		 * @return the size of the fingerprint.
-		 */
+        /// <summary>
+        /// The size of the fingerprint, i.e., the number of hash bins.
+        /// </summary>
         long Count { get; }
 
-        /**
-		 * Performs a logical <b>AND</b> of the bits in this target bit set with
-		 * the bits in the argument fingerprint. This fingerprint is modified so
-		 * that each bit in it has the value <code>true</code> if and only if
-		 * it both initially had the value <code>true</code> and the
-		 * corresponding bit in the fingerprint argument also had the value
-		 * <code>true</code>.
-		 *
-		 * @param  fingerprint the fingerprint with which to perform the AND operation
-		 * @throws {@link ArgumentException} if the two fingerprints are
-		 * not of same size
-		 */
+        /// <summary>
+        /// Performs a logical <b>AND</b> of the bits in this target bit set with
+        /// the bits in the argument fingerprint. This fingerprint is modified so
+        /// that each bit in it has the value <see langword="true"/> if and only if 
+        /// it both initially had the value <see langword="true"/> and the
+        /// corresponding bit in the fingerprint argument also had the value
+        /// <see langword="true"/>.
+        /// </summary>
+        /// <param name="fingerprint">the fingerprint with which to perform the AND operation</param>
+        /// <exception cref="ArgumentException">if the two fingerprints are not of same size</exception>
         void And(IBitFingerprint fingerprint);
 
-        /**
-		 * Performs a logical <b>OR</b> of the bits in this target bit set with
-		 * the bits in the argument fingerprint. This operation can also be seen
-		 * as merging two fingerprints. This fingerprint is modified so
-		 * that each bit in it has the value <code>true</code> if and only if
-		 * it either already had the value <code>true</code> or the corresponding
-		 * bit in the bit set argument has the value <code>true</code>.
-		 *
-		 * @param  fingerprint the fingerprint with which to perform the OR operation
-		 * @throws {@link ArgumentException} if the two fingerprints are
-		 * not of same size
-		 */
+        /// <summary>
+        /// Performs a logical <b>OR</b> of the bits in this target bit set with
+        /// the bits in the argument fingerprint. This operation can also be seen
+        /// as merging two fingerprints. This fingerprint is modified so
+        /// that each bit in it has the value <see langword="true"/> if and only if
+        /// it either already had the value <see langword="true"/> or the corresponding
+        /// bit in the bit set argument has the value <see langword="true"/>.
+        /// </summary>        
+        /// <param name="fingerprint">the fingerprint with which to perform the OR operation</param>
+        /// <exception cref="ArgumentException">if the two fingerprints are not of same size</exception>
         void Or(IBitFingerprint fingerprint);
 
-        /*
-		 * Returns the value of the bit with the specified index. The value
-		 * 
-		 * 
-		 * 
-		 * @param index the index of the bit to return the value for
-		 * @return the value of the bit at <code>index</code>
-		 */
         /// <summary>
-        ///  the value of the bit with the specified index. The value
-        ///  is <see langword="true"/> if the bit with the index <paramref name="index"/>
-        ///  is currently set in this fingerprint; otherwise, the result
-        ///  is <see langword="false"/>.
+        /// The value of the bit with the specified index. The value
+        /// is <see langword="true"/> if the bit with the index <paramref name="index"/>
+        /// is currently set in this fingerprint; otherwise, the result
+        /// is <see langword="false"/>.
         /// </summary>
         /// <param name="index">the index of the bit to return the value for</param>
-        /// <returns>the value of the bit at <code>index</code></returns>
         bool this[int index] { get; set; }
 
-        /**
-		 * Returns a <code>BitArray</code> representation of the fingerprint.
-		 * This might take significantly more memory!
-		 *
-		 * @return the fingerprint as a <code>BitArray</code>
-		 */
+        /// <summary>
+        /// Returns a <see cref="BitArray"/> representation of the fingerprint.
+        /// This might take significantly more memory!
+        /// </summary>
+        /// <returns>the fingerprint as a <see cref="BitArray"/></returns>
         BitArray AsBitSet();
 
-        /**
-		 * Sets the bit at the specified index to true.
-		 * @param i
-		 */
+        /// <summary>
+        /// Sets the bit at the specified index to true.
+        /// <param name="i"></param>
+        /// </summary>
         void Set(int i);
 
-        /**
-		 * Returns a listing of the bits in the fingerprint that are set to true.
-		 *
-		 * @return listing of all bits that are set
-		 */
+        /// <summary>
+        /// Returns a listing of the bits in the fingerprint that are set to true.
+        /// </summary>
+        /// <returns>listing of all bits that are set</returns>
         int[] GetSetbits();
     }
 }

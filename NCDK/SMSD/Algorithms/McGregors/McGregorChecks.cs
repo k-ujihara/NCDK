@@ -27,28 +27,23 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
-    /**
-     * Class to perform check/methods for McGregor class.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class to perform check/methods for McGregor class.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class McGregorChecks
     {
 
-        /**
-         *
-         * @param source
-         * @param target
-         * @param neighborBondNumA
-         * @param neighborBondNumB
-         * @param iBondNeighborAtomsA
-         * @param iBondNeighborAtomsB
-         * @param cBondNeighborsA
-         * @param cBondNeighborsB
-         * @param shouldMatchBonds
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="source">/// @param target</param>
+        /// <param name="neighborBondNumA">/// @param neighborBondNumB</param>
+        /// <param name="iBondNeighborAtomsA">/// @param iBondNeighborAtomsB</param>
+        /// <param name="cBondNeighborsA">/// @param cBondNeighborsB</param>
+        /// <param name="shouldMatchBonds">/// @return</param>
+        /// </summary>
         protected internal static bool IsFurtherMappingPossible(IAtomContainer source, IAtomContainer target,
                 int neighborBondNumA, int neighborBondNumB, IList<int> iBondNeighborAtomsA,
                 IList<int> iBondNeighborAtomsB, IList<string> cBondNeighborsA, IList<string> cBondNeighborsB,
@@ -142,14 +137,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
         }
 
-        /**
-         *
-         * @param mappedAtomsSize
-         * @param atomFromOtherMolecule
-         * @param molecule
-         * @param mappedAtomsOrg
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="mappedAtomsSize">/// @param atomFromOtherMolecule</param>
+        /// <param name="molecule">/// @param mappedAtomsOrg</param>
+        /// <returns>/// </summary></returns>
         protected internal static int SearchCorrespondingAtom(int mappedAtomsSize, int atomFromOtherMolecule, int molecule,
                 IList<int> mappedAtomsOrg)
         {
@@ -171,14 +163,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return correspondingAtom;
         }
 
-        /**
-         *
-         * @param g1A
-         * @param g2A
-         * @param g1B
-         * @param g2B
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g1A">/// @param g2A</param>
+        /// <param name="g1B">/// @param g2B</param>
+        /// <returns>/// </summary></returns>
         protected internal static bool IsAtomMatch(string g1A, string g2A, string g1B, string g2B)
         {
             if ((string.Equals(g1A, g1B, StringComparison.OrdinalIgnoreCase) && string.Equals(g2A, g2B, StringComparison.OrdinalIgnoreCase))
@@ -189,12 +178,9 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /*
-         * Modified function call by ASAD in Java have to check
-         */
+        // Modified function call by ASAD in Java have to check
         protected internal static int RemoveTreeStructure(BinaryTree curStruc)
         {
-
             BinaryTree equalStruc = curStruc.Equal;
             BinaryTree notEqualStruc = curStruc.NotEqual;
             curStruc = null;
@@ -215,11 +201,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
         //Function compaires a structure array with itself. Sometimes a mapping occurs several times within the array.
         //The function eliminates these recurring mappings. Function is called in function best_solution.
         //The function is called by itself as long as the last list element is processed.
-        /**
-         *
-         * @param atomMapping
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="atomMapping">/// @return</param>
+        /// </summary>
         protected internal static IList<int> RemoveRecurringMappings(IList<int> atomMapping)
         {
             bool exist = true;
@@ -249,17 +234,15 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return tempMap;
         }
 
-        /**
-         * The function is called in function partsearch. The function is given a temporary matrix and a position (row/column)
-         * within this matrix. First the function sets all entries to zero, which can be exlcuded in respect to the current
-         * atom by atom matching. After this the function replaces all entries in the same row and column of the current
-         * position by zeros. Only the entry of the current position is set to one.
-         * Return value "count_arcsleft" counts the number of arcs, which are still in the matrix.
-         * @param row
-         * @param column
-         * @param marcs
-         * @param mcGregorHelper
-         */
+        /// <summary>
+        /// The function is called in function partsearch. The function is given a temporary matrix and a position (row/column)
+        /// within this matrix. First the function sets all entries to zero, which can be exlcuded in respect to the current
+        /// atom by atom matching. After this the function replaces all entries in the same row and column of the current
+        /// position by zeros. Only the entry of the current position is set to one.
+        /// Return value "count_arcsleft" counts the number of arcs, which are still in the matrix.
+        /// <param name="row">/// @param column</param>
+        /// <param name="marcs">/// @param mcGregorHelper</param>
+        /// </summary>
         protected internal static void RemoveRedundantArcs(int row, int column, IList<int> marcs, McgregorHelper mcGregorHelper)
         {
             int neighborBondNumA = mcGregorHelper.NeighborBondNumA;
@@ -303,12 +286,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
             marcs[row * neighborBondNumB + column] = 1;
         }
 
-        /**
-         *
-         * @param bondNumber
-         * @param cSet
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="bondNumber">/// @param cSet</param>
+        /// <returns>/// </summary></returns>
         protected internal static List<string> GenerateCSetCopy(int bondNumber, IList<string> cSet)
         {
             List<string> cTabCopy = new List<string>();
@@ -322,12 +303,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return cTabCopy;
         }
 
-        /**
-         *
-         * @param atomContainer
-         * @return
-         * @throws IOException
-         */
+        /// <summary>
+        ///
+        /// <param name="atomContainer">/// @return</param>
+        // @throws IOException
+        /// </summary>
         protected internal static List<string> GenerateCTabCopy(IAtomContainer atomContainer)
         {
             List<string> cTabCopy = new List<string>();
@@ -343,17 +323,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return cTabCopy;
         }
 
-        /**
-         *
-         * @param g1Atom
-         * @param g3Atom
-         * @param g4Atom
-         * @param rowAtom1
-         * @param rowAtom2
-         * @param columnAtom3
-         * @param columnAtom4
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g1Atom">/// @param g3Atom</param>
+        /// <param name="g4Atom">/// @param rowAtom1</param>
+        /// <param name="rowAtom2">/// @param columnAtom3</param>
+        /// <param name="columnAtom4">/// @return</param>
+        /// </summary>
         protected static bool Case1(int g1Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
                 int columnAtom3, int columnAtom4)
         {
@@ -365,17 +341,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /**
-         *
-         * @param g2Atom
-         * @param g3Atom
-         * @param g4Atom
-         * @param rowAtom1
-         * @param rowAtom2
-         * @param columnAtom3
-         * @param columnAtom4
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g2Atom">/// @param g3Atom</param>
+        /// <param name="g4Atom">/// @param rowAtom1</param>
+        /// <param name="rowAtom2">/// @param columnAtom3</param>
+        /// <param name="columnAtom4">/// @return</param>
+        /// </summary>
         protected static bool Case2(int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
                 int columnAtom3, int columnAtom4)
         {
@@ -387,17 +359,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /**
-         *
-         * @param g1Atom
-         * @param g3Atom
-         * @param g2Atom
-         * @param rowAtom1
-         * @param rowAtom2
-         * @param columnAtom3
-         * @param columnAtom4
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g1Atom">/// @param g3Atom</param>
+        /// <param name="g2Atom">/// @param rowAtom1</param>
+        /// <param name="rowAtom2">/// @param columnAtom3</param>
+        /// <param name="columnAtom4">/// @return</param>
+        /// </summary>
         protected static bool Case3(int g1Atom, int g3Atom, int g2Atom, int rowAtom1, int rowAtom2,
                 int columnAtom3, int columnAtom4)
         {
@@ -409,17 +377,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /**
-         *
-         * @param g1Atom
-         * @param g2Atom
-         * @param g4Atom
-         * @param rowAtom1
-         * @param rowAtom2
-         * @param columnAtom3
-         * @param columnAtom4
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g1Atom">/// @param g2Atom</param>
+        /// <param name="g4Atom">/// @param rowAtom1</param>
+        /// <param name="rowAtom2">/// @param columnAtom3</param>
+        /// <param name="columnAtom4">/// @return</param>
+        /// </summary>
         protected static bool Case4(int g1Atom, int g2Atom, int g4Atom, int rowAtom1, int rowAtom2,
                 int columnAtom3, int columnAtom4)
         {
@@ -431,18 +395,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /**
-         *
-         * @param g1Atom
-         * @param g2Atom
-         * @param g3Atom
-         * @param g4Atom
-         * @param rowAtom1
-         * @param rowAtom2
-         * @param columnAtom3
-         * @param columnAtom4
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="g1Atom">/// @param g2Atom</param>
+        /// <param name="g3Atom">/// @param g4Atom</param>
+        /// <param name="rowAtom1">/// @param rowAtom2</param>
+        /// <param name="columnAtom3">/// @param columnAtom4</param>
+        /// <returns>/// </summary></returns>
         protected static bool Cases(int g1Atom, int g2Atom, int g3Atom, int g4Atom, int rowAtom1, int rowAtom2,
                 int columnAtom3, int columnAtom4)
         {
@@ -456,20 +415,14 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return false;
         }
 
-        /**
-         *
-         * @param source
-         * @param target
-         * @param neighborBondNumA
-         * @param neighborBondNumB
-         * @param iBondNeighborAtomsA
-         * @param iBondNeighborAtomsB
-         * @param cBondNeighborsA
-         * @param cBondNeighborsB
-         * @param modifiedARCS
-         * @param shouldMatchBonds
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="source">/// @param target</param>
+        /// <param name="neighborBondNumA">/// @param neighborBondNumB</param>
+        /// <param name="iBondNeighborAtomsA">/// @param iBondNeighborAtomsB</param>
+        /// <param name="cBondNeighborsA">/// @param cBondNeighborsB</param>
+        /// <param name="modifiedARCS">/// @param shouldMatchBonds</param>
+        /// <returns>/// </summary></returns>
         protected internal static List<int> SetArcs(IAtomContainer source, IAtomContainer target, int neighborBondNumA,
                 int neighborBondNumB, List<int> iBondNeighborAtomsA, List<int> iBondNeighborAtomsB,
                 List<string> cBondNeighborsA, List<string> cBondNeighborsB, List<int> modifiedARCS,
@@ -512,13 +465,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return modifiedARCS;
         }
 
-        /**
-         *
-         * @param tempmarcs
-         * @param neighborBondNumA
-         * @param neighborBondNumB
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="tempmarcs">/// @param neighborBondNumA</param>
+        /// <param name="neighborBondNumB">/// @return</param>
+        /// </summary>
         protected internal static int CountArcsLeft(List<int> tempmarcs, int neighborBondNumA, int neighborBondNumB)
         {
             int arcsleft = 0;
@@ -537,15 +488,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return arcsleft;
         }
 
-        /**
-         *
-         * @param correspondingAtom
-         * @param newSymbol
-         * @param neighborBondNum
-         * @param atomContainer
-         * @param cBondNeighbors
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="correspondingAtom">/// @param newSymbol</param>
+        /// <param name="neighborBondNum">/// @param atomContainer</param>
+        /// <param name="cBondNeighbors">/// @return</param>
+        /// </summary>
         protected internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum,
                 IAtomContainer atomContainer, IList<string> cBondNeighbors)
         {
@@ -569,15 +517,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             return 0;
         }
 
-        /**
-         *
-         * @param correspondingAtom
-         * @param newSymbol
-         * @param neighborBondNum
-         * @param iBondNeighbors
-         * @param cBondNeighbors
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <param name="correspondingAtom">/// @param newSymbol</param>
+        /// <param name="neighborBondNum">/// @param iBondNeighbors</param>
+        /// <param name="cBondNeighbors">/// @return</param>
+        /// </summary>
         protected internal static int ChangeCharBonds(int correspondingAtom, string newSymbol, int neighborBondNum,
                 IList<int> iBondNeighbors, IList<string> cBondNeighbors)
         {

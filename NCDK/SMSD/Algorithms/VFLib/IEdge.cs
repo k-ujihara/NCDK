@@ -49,30 +49,30 @@ using NCDK.SMSD.Algorithms.Matchers;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Interface for the Edges (bonds) in graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the Edges (bonds) in graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface IEdge
     {
-        /**
-         * Returns source Node.
-         * @return source node.
-         */
+        /// <summary>
+        /// Returns source Node.
+        /// <returns>source node.</returns>
+        /// </summary>
         INode Source { get; }
 
-        /**
-         * Returns target Node.
-         * @return target Node.
-         */
+        /// <summary>
+        /// Returns target Node.
+        /// <returns>target Node.</returns>
+        /// </summary>
         INode Target { get; }
 
-        /**
-         * Returns bond matcher.
-         * @return Query Bond.
-         */
+        /// <summary>
+        /// Returns bond matcher.
+        /// <returns>Query Bond.</returns>
+        /// </summary>
         VFBondMatcher BondMatcher { get; }
     }
 }

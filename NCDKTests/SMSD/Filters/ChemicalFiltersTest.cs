@@ -27,21 +27,21 @@ using System.Linq;
 
 namespace NCDK.SMSD.Filters
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class ChemicalFiltersTest
     {
         public ChemicalFiltersTest() { }
 
-        /**
-         * Test of sortResultsByStereoAndBondMatch method, of class ChemicalFilters.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of sortResultsByStereoAndBondMatch method, of class ChemicalFilters.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSortResultsByStereoAndBondMatch()
         {
@@ -60,11 +60,11 @@ namespace NCDK.SMSD.Filters
             Assert.AreEqual(1, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of sortResultsByFragments method, of class ChemicalFilters.
-         * @throws InvalidSmilesException
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of sortResultsByFragments method, of class ChemicalFilters.
+        // @throws InvalidSmilesException
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSortResultsByFragments()
         {
@@ -83,10 +83,10 @@ namespace NCDK.SMSD.Filters
             Assert.AreEqual(2, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of sortResultsByEnergies method, of class ChemicalFilters.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of sortResultsByEnergies method, of class ChemicalFilters.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSortResultsByEnergies()
         {
@@ -105,9 +105,9 @@ namespace NCDK.SMSD.Filters
             Assert.AreEqual(2, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of sortMapByValueInAccendingOrder method, of class ChemicalFilters.
-         */
+        /// <summary>
+        /// Test of sortMapByValueInAccendingOrder method, of class ChemicalFilters.
+        /// </summary>
         [TestMethod()]
         public void TestSortMapByValueInAccendingOrder()
         {
@@ -127,9 +127,9 @@ namespace NCDK.SMSD.Filters
             Assert.IsTrue(AreOrderedEqual(expResult, result));
         }
 
-        /**
-         * Test of sortMapByValueInDecendingOrder method, of class ChemicalFilters.
-         */
+        /// <summary>
+        /// Test of sortMapByValueInDecendingOrder method, of class ChemicalFilters.
+        /// </summary>
         [TestMethod()]
         public void TestSortMapByValueInDecendingOrder()
         {
@@ -165,11 +165,11 @@ namespace NCDK.SMSD.Filters
             return true;
         }
 
-        /**
-         * Test of getSortedEnergy method, of class ChemicalFilters.
-         * @throws InvalidSmilesException
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getSortedEnergy method, of class ChemicalFilters.
+        // @throws InvalidSmilesException
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetSortedEnergy()
         {
@@ -184,11 +184,11 @@ namespace NCDK.SMSD.Filters
             Assert.AreEqual(score, smsd1.GetEnergyScore(0));
         }
 
-        /**
-         * Test of getSortedFragment method, of class ChemicalFilters.
-         * @throws InvalidSmilesException
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getSortedFragment method, of class ChemicalFilters.
+        // @throws InvalidSmilesException
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetSortedFragment()
         {
@@ -203,11 +203,11 @@ namespace NCDK.SMSD.Filters
             Assert.AreEqual(score, smsd1.GetFragmentSize(0));
         }
 
-        /**
-         * Test of getStereoMatches method, of class ChemicalFilters.
-         * @throws InvalidSmilesException
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getStereoMatches method, of class ChemicalFilters.
+        // @throws InvalidSmilesException
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetStereoMatches()
         {

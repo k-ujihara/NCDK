@@ -20,9 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-	 * @cdk.module test-formula
-	 */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class MMElementRuleTest : FormulaRuleTest
     {
@@ -35,11 +35,11 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(MMElementRule));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMMElementRule()
         {
@@ -49,11 +49,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
@@ -66,11 +66,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
@@ -89,11 +89,11 @@ namespace NCDK.Formula.Rules
             Assert.AreSame(MMElementRule.RangeMass.Minus1000, objects[1]);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
@@ -107,11 +107,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {

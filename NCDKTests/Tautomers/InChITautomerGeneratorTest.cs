@@ -31,12 +31,12 @@ using System.IO;
 
 namespace NCDK.Tautomers
 {
-    /**
-     * Tests generation of tautomers.
-     * @author Mark Rijnbeek
-     *
-     * @cdk.module test-tautomer
-     */
+    /// <summary>
+    /// Tests generation of tautomers.
+    // @author Mark Rijnbeek
+    ///
+    // @cdk.module test-tautomer
+    /// </summary>
     [TestClass()]
     public class InChITautomerGeneratorTest : CDKTestCase
     {

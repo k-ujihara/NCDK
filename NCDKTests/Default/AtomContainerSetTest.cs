@@ -18,23 +18,17 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the MoleculeSet class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.MoleculeSet
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the MoleculeSet class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.MoleculeSet
+    /// </summary>
+    [TestClass()]
     public class AtomContainerSetTest
         :  AbstractAtomContainerSetTest<IAtomContainer>
     {

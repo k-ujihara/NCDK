@@ -21,102 +21,97 @@ using System;
 
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates properties of InChI Atom.  See <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates properties of InChI Atom.  See <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiAtom
     {
-        /**
-         * Indicates relative rather than absolute isotopic mass. Value
-         * from inchi_api.h.
-         */
-#if TEST
-        public
-#else
-        protected internal 
-#endif
-        const int ISOTOPIC_SHIFT_FLAG = 10000;
+        /// <summary>
+        /// Indicates relative rather than absolute isotopic mass. Value
+        /// from inchi_api.h.
+        /// </summary>
+        protected internal const int ISOTOPIC_SHIFT_FLAG = 10000;
 
-        /**
-         * Atom x-coordinate.
-         */
+        /// <summary>
+        /// Atom x-coordinate.
+        /// </summary>
         public double X { get; private set; }
 
-        /**
-         * Atom y-coordinate.
-         */
+        /// <summary>
+        /// Atom y-coordinate.
+        /// </summary>
         public double Y { get; private set; }
 
-        /**
-         * Atom z-coordinate.
-         */
+        /// <summary>
+        /// Atom z-coordinate.
+        /// </summary>
         public double Z { get; private set; }
 
-        /**
-         * Chemical element symbol eg C, O, Fe, Hg.
-         */
+        /// <summary>
+        /// Chemical element symbol eg C, O, Fe, Hg.
+        /// </summary>
         public string ElementType { get; private set; }
 
-        /**
-         * Number of implicit hydrogens on atom. If set to -1, InChI will add
-         * implicit H automatically.
-         */
+        /// <summary>
+        /// Number of implicit hydrogens on atom. If set to -1, InChI will add
+        /// implicit H automatically.
+        /// </summary>
         public int ImplicitH { get; set; } = -1;
 
-        /**
-         * Number of implicit protiums (isotopic 1-H) on atom.
-         */
+        /// <summary>
+        /// Number of implicit protiums (isotopic 1-H) on atom.
+        /// </summary>
         public int ImplicitProtium { get; set; } = 0;
 
-        /**
-         * Number of implicit deuteriums (isotopic 2-H) on atom.
-         */
+        /// <summary>
+        /// Number of implicit deuteriums (isotopic 2-H) on atom.
+        /// </summary>
         public int ImplicitDeuterium { get; set; } = 0;
 
-        /**
-         * Number of implicit tritiums (isotopic 3-H) on atom.
-         */
+        /// <summary>
+        /// Number of implicit tritiums (isotopic 3-H) on atom.
+        /// </summary>
         public int ImplicitTritium { get; set; } = 0;
 
-        /**
-         * Mass of isotope. If set to 0, no isotopic mass set; otherwise, isotopic
-         * mass, or ISOTOPIC_SHIFT_FLAG + (mass - average atomic mass).
-         */
+        /// <summary>
+        /// Mass of isotope. If set to 0, no isotopic mass set; otherwise, isotopic
+        /// mass, or ISOTOPIC_SHIFT_FLAG + (mass - average atomic mass).
+        /// </summary>
         public int IsotopicMass { get; set; } = 0;
 
-        /**
-         * Radical status of atom.
-         */
+        /// <summary>
+        /// Radical status of atom.
+        /// </summary>
         public INCHI_RADICAL Radical { get; set; } = INCHI_RADICAL.None;
 
-        /**
-         * Charge on atom.
-         */
+        /// <summary>
+        /// Charge on atom.
+        /// </summary>
         public int Charge { get; set; } = 0;
 
-        /**
-         * <p>Create new atom.
-         *
-         * <p>Coordinates and element symbol must be set (unknown
-         * coordinates/dimensions should be set to zero).  All other
-         * parameters are initialised to default values:
-         * <p>
-         * <tt>
-         *    Num Implicit H = 0<br>
-         *    Num Implicit 1H = 0<br>
-         *    Num Implicit 2H = 0<br>
-         *    Num Implicit 3H = 0<br>
-         *    Isotopic mass = 0 (non isotopic)<br>
-         *    Radical status = None  (radical status not defined)
-         * </tt>
-         *
-         * @param x     x-coordinate
-         * @param y     y-coordinate
-         * @param z     z-coordinate
-         * @param el    Chemical element symbol
-         * @ - if the element symbol is null.
-         */
+        /// <summary>
+        /// <p>Create new atom.
+        ///
+        /// <p>Coordinates and element symbol must be set (unknown
+        /// coordinates/dimensions should be set to zero).  All other
+        /// parameters are initialised to default values:
+        /// <p>
+        /// <tt>
+        ///    Num Implicit H = 0<br>
+        ///    Num Implicit 1H = 0<br>
+        ///    Num Implicit 2H = 0<br>
+        ///    Num Implicit 3H = 0<br>
+        ///    Isotopic mass = 0 (non isotopic)<br>
+        ///    Radical status = None  (radical status not defined)
+        /// </tt>
+        ///
+        /// <param name="x">x-coordinate</param>
+        /// <param name="y">y-coordinate</param>
+        /// <param name="z">z-coordinate</param>
+        /// <param name="el">Chemical element symbol</param>
+        // @ - if the element symbol is null.
+        /// </summary>
         public NInchiAtom(double x, double y, double z, string el)
         {
             this.X = x;
@@ -131,28 +126,27 @@ namespace NCDK.NInChI
         }
 
 
-        /**
-         * Convenience method to create a new atom with zero coordinates.
-         * @param el
-         */
+        /// <summary>
+        /// Convenience method to create a new atom with zero coordinates.
+        /// <param name="el">/// </summary></param>
         public NInchiAtom(string el)
             : this(0.0, 0.0, 0.0, el)
         { }
 
-        /**
-         * Sets isotopic mass, relative to standard mass.
-         *
-         * @param shift  Isotopic mass minus average atomic mass
-         */
+        /// <summary>
+        /// Sets isotopic mass, relative to standard mass.
+        ///
+        /// <param name="shift">Isotopic mass minus average atomic mass</param>
+        /// </summary>
         public void SetIsotopicMassShift(int shift)
         {
             this.IsotopicMass = ISOTOPIC_SHIFT_FLAG + shift;
         }
 
-        /**
-         * Generates string representation of information on atom,
-         * for debugging purposes.
-         */
+        /// <summary>
+        /// Generates string representation of information on atom,
+        /// for debugging purposes.
+        /// </summary>
         public string ToDebugString()
         {
             return "InChI Atom: "
@@ -176,9 +170,9 @@ namespace NCDK.NInChI
             return s.Contains(".") ? s : s + ".0";
         }
 
-        /**
-         * Outputs information on atom, for debugging purposes.
-         */
+        /// <summary>
+        /// Outputs information on atom, for debugging purposes.
+        /// </summary>
         public void PrintDebug()
         {
             Console.Out.WriteLine(ToDebugString());

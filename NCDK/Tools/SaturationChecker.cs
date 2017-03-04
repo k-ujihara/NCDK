@@ -32,31 +32,31 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Provides methods for checking whether an atoms valences are saturated with
-     * respect to a particular atom type.
-     *
-     * <p>Important: this class does not deal with hybridization states, which makes
-     * it fail, for example, for situations where bonds are marked as aromatic (either
-     * 1.5 or single an Aromatic).
-     *
-     * @author     steinbeck
-     * @author  Egon Willighagen
-     * @cdk.created    2001-09-04
-     *
-     * @cdk.keyword    saturation
-     * @cdk.keyword    atom, valency
-     *
-     * @cdk.module     valencycheck
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Provides methods for checking whether an atoms valences are saturated with
+    /// respect to a particular atom type.
+    ///
+    /// <p>Important: this class does not deal with hybridization states, which makes
+    /// it fail, for example, for situations where bonds are marked as aromatic (either
+    /// 1.5 or single an Aromatic).
+    ///
+    // @author     steinbeck
+    // @author  Egon Willighagen
+    // @cdk.created    2001-09-04
+    ///
+    // @cdk.keyword    saturation
+    // @cdk.keyword    atom, valency
+    ///
+    // @cdk.module     valencycheck
+    // @cdk.githash
+    /// </summary>
     public class SaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
         AtomTypeFactory structgenATF;
 
-        /**
-         * @param builder the ChemObjectBuilder implementation used to construct the AtomType's.
-         */
+        /// <summary>
+        /// <param name="builder">the ChemObjectBuilder implementation used to construct the AtomType's.</param>
+        /// </summary>
         protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)
         {
             if (structgenATF == null)
@@ -115,9 +115,9 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * Determines of all atoms on the AtomContainer are saturated.
-         */
+        /// <summary>
+        /// Determines of all atoms on the AtomContainer are saturated.
+        /// </summary>
 
         public bool IsSaturated(IAtomContainer container)
         {
@@ -137,10 +137,10 @@ namespace NCDK.Tools
             return true;
         }
 
-        /**
-         * Returns whether a bond is unsaturated. A bond is unsaturated if
-         * <b>both</b> Atoms in the bond are unsaturated.
-         */
+        /// <summary>
+        /// Returns whether a bond is unsaturated. A bond is unsaturated if
+        /// <b>both</b> Atoms in the bond are unsaturated.
+        /// </summary>
         public bool IsUnsaturated(IBond bond, IAtomContainer atomContainer)
         {
 
@@ -153,10 +153,10 @@ namespace NCDK.Tools
             return isUnsaturated;
         }
 
-        /**
-         * Returns whether a bond is saturated. A bond is saturated if
-         * <b>both</b> Atoms in the bond are saturated.
-         */
+        /// <summary>
+        /// Returns whether a bond is saturated. A bond is saturated if
+        /// <b>both</b> Atoms in the bond are saturated.
+        /// </summary>
         public bool IsSaturated(IBond bond, IAtomContainer atomContainer)
         {
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
@@ -168,9 +168,9 @@ namespace NCDK.Tools
             return isSaturated;
         }
 
-        /**
-         * Checks whether an Atom is saturated by comparing it with known AtomTypes.
-         */
+        /// <summary>
+        /// Checks whether an Atom is saturated by comparing it with known AtomTypes.
+        /// </summary>
 
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
@@ -213,13 +213,13 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * Checks if the current atom has exceeded its bond order sum value.
-         *
-         * @param  atom The Atom to check
-         * @param  ac   The atomcontainer context
-         * @return      oversaturated or not
-         */
+        /// <summary>
+        /// Checks if the current atom has exceeded its bond order sum value.
+        ///
+        /// <param name="atom">The Atom to check</param>
+        /// <param name="ac">The atomcontainer context</param>
+        /// <returns>oversaturated or not</returns>
+        /// </summary>
         public bool IsOverSaturated(IAtom atom, IAtomContainer ac)
         {
             var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
@@ -250,13 +250,13 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * Returns the currently maximum formable bond order for this atom.
-         *
-         * @param  atom  The atom to be checked
-         * @param  ac    The AtomContainer that provides the context
-         * @return       the currently maximum formable bond order for this atom
-         */
+        /// <summary>
+        /// Returns the currently maximum formable bond order for this atom.
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <param name="ac">The AtomContainer that provides the context</param>
+        /// <returns>the currently maximum formable bond order for this atom</returns>
+        /// </summary>
         public double GetCurrentMaxBondOrder(IAtom atom, IAtomContainer ac)
         {
             var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
@@ -276,32 +276,32 @@ namespace NCDK.Tools
             return max;
         }
 
-        /**
-         * Resets the bond orders of all atoms to 1.0.
-         */
+        /// <summary>
+        /// Resets the bond orders of all atoms to 1.0.
+        /// </summary>
         public void Unsaturate(IAtomContainer atomContainer)
         {
             foreach (var bond in atomContainer.Bonds)
                 bond.Order = BondOrder.Single;
         }
 
-        /**
-         * Resets the bond order of the Bond to 1.0.
-         */
+        /// <summary>
+        /// Resets the bond order of the Bond to 1.0.
+        /// </summary>
         public void UnsaturateBonds(IAtomContainer container)
         {
             foreach (var bond in container.Bonds)
                 bond.Order = BondOrder.Single;
         }
 
-        /**
-         * Saturates a molecule by setting appropriate bond orders.
-         * This method is known to fail, especially on pyrolle-like compounds.
-         * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-         *
-         * @cdk.keyword bond order, calculation
-         * @cdk.created 2003-10-03
-         */
+        /// <summary>
+        /// Saturates a molecule by setting appropriate bond orders.
+        /// This method is known to fail, especially on pyrolle-like compounds.
+        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        ///
+        // @cdk.keyword bond order, calculation
+        // @cdk.created 2003-10-03
+        /// </summary>
         public void NewSaturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
@@ -338,11 +338,11 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Saturates a set of Bonds in an AtomContainer.
-         * This method is known to fail, especially on pyrolle-like compounds.
-         * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-         */
+        /// <summary>
+        /// Saturates a set of Bonds in an AtomContainer.
+        /// This method is known to fail, especially on pyrolle-like compounds.
+        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// </summary>
         public bool NewSaturate(IBond[] bonds, IAtomContainer atomContainer)
         {
             Debug.WriteLine("Saturating bond set of size: " + bonds.Length);
@@ -433,11 +433,11 @@ namespace NCDK.Tools
             return bondsAreFullySaturated;
         }
 
-        /**
-         * Saturate atom by adjusting its bond orders.
-         * This method is known to fail, especially on pyrolle-like compounds.
-         * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-         */
+        /// <summary>
+        /// Saturate atom by adjusting its bond orders.
+        /// This method is known to fail, especially on pyrolle-like compounds.
+        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        /// </summary>
         public bool NewSaturate(IBond bond, IAtomContainer atomContainer)
         {
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
@@ -485,9 +485,9 @@ namespace NCDK.Tools
             return IsSaturated(bond, atomContainer);
         }
 
-        /**
-         * Determines if the atom can be of type AtomType.
-         */
+        /// <summary>
+        /// Determines if the atom can be of type AtomType.
+        /// </summary>
         public bool CouldMatchAtomType(IAtomContainer atomContainer, IAtom atom, IAtomType atomType)
         {
             Debug.WriteLine("   ... matching atom ", atom.Symbol, " vs ", atomType);
@@ -500,20 +500,16 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * The method is known to fail for certain compounds. For more information, see
-         * cdk.test.limitations package.
-         * This method is known to fail, especially on pyrolle-like compounds.
-         * Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-         *
-         */
+        /// <summary>
+        /// The method is known to fail for certain compounds. For more information, see
+        /// cdk.test.limitations package.
+        /// This method is known to fail, especially on pyrolle-like compounds.
+        /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
+        ///
+        /// </summary>
 
         public void Saturate(IAtomContainer atomContainer)
         {
-            /*
-             * NewSaturate(atomContainer); } public void oldSaturate(AtomContainer
-             * atomContainer)  {
-             */
             for (int i = 1; i < 4; i++)
             {
                 // handle atoms with degree 1 first and then proceed to higher order
@@ -628,42 +624,16 @@ namespace NCDK.Tools
             }
         }
 
-        /*
-         * Recursively fixes bond orders in a molecule for which only connectivities
-         * but no bond orders are know.
-         * @ param molecule The molecule to fix the bond orders for
-         * @ param bond The number of the bond to treat in this recursion step
-         * @ return true if the bond order which was implemented was ok.
-         */
-        /*
-         * private bool recursiveBondOrderFix(Molecule molecule, int bondNumber)
-         * { Atom partner = null; Atom atom = null; Atom[] partners = null;
-         * AtomType[] atomTypes1 = null; AtomType[] atomTypes2 = null; int
-         * maxBondOrder = 0; int oldBondOrder = 0; if (bondNumber <
-         * molecule.Bonds.Count) { Bond bond = molecule.GetBondAt(f); } else {
-         * return true; } atom = bond.GetAtomAt(0); partner = bond.GetAtomAt(1);
-         * atomTypes1 = atf.GetAtomTypes(atom.Symbol,
-         * atf.ATOMTYPE_ID_STRUCTGEN); atomTypes2 =
-         * atf.GetAtomTypes(partner.Symbol, atf.ATOMTYPE_ID_STRUCTGEN);
-         * maxBondOrder = Math.Min(atomTypes1[0].MaxBondOrder,
-         * atomTypes2[0].MaxBondOrder); for (int f = 1; f <= maxBondOrder; f++)
-         * { oldBondOrder = bond.Order bond.Order = f; if
-         * (!IsOverSaturated(atom, molecule) && !IsOverSaturated(partner, molecule))
-         * { if (!recursiveBondOrderFix(molecule, bondNumber + 1)) break; } else {
-         * bond.Order = oldBondOrder; return false; } } return true; }
-         */
-
-        /**
-         * Calculate the number of missing hydrogens by subtracting the number of
-         * bonds for the atom from the expected number of bonds. Charges are included
-         * in the calculation. The number of expected bonds is defined by the AtomType
-         * generated with the AtomTypeFactory.
-         *
-         * @param  atom      Description of the Parameter
-         * @param  container Description of the Parameter
-         * @return           Description of the Return Value
-         * @see              AtomTypeFactory
-         */
+        /// <summary>
+        /// Calculate the number of missing hydrogens by subtracting the number of
+        /// bonds for the atom from the expected number of bonds. Charges are included
+        /// in the calculation. The number of expected bonds is defined by the AtomType
+        /// generated with the AtomTypeFactory.
+        /// </summary>
+        /// <param name="atom">Description of the Parameter</param>
+        /// <param name="container">Description of the Parameter</param>
+        /// <returns>Description of the Return Value</returns>
+        /// <seealso cref="AtomTypeFactory"/>
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, IAtomContainer container)
         {
             return this.CalculateNumberOfImplicitHydrogens(atom, container, false);
@@ -683,17 +653,16 @@ namespace NCDK.Tools
                     throwExceptionForUnknowAtom);
         }
 
-        /**
-         * Calculate the number of missing hydrogens by subtracting the number of
-         * bonds for the atom from the expected number of bonds. Charges are included
-         * in the calculation. The number of expected bonds is defined by the AtomType
-         * generated with the AtomTypeFactory.
-         *
-         * @param  atom      Description of the Parameter
-         * @param  throwExceptionForUnknowAtom  Should an exception be thrown if an unknown atomtype is found or 0 returned ?
-         * @return           Description of the Return Value
-         * @see              AtomTypeFactory
-         */
+        /// <summary>
+        /// Calculate the number of missing hydrogens by subtracting the number of
+        /// bonds for the atom from the expected number of bonds. Charges are included
+        /// in the calculation. The number of expected bonds is defined by the AtomType
+        /// generated with the AtomTypeFactory.
+        /// </summary>
+        /// <param name="atom">Description of the Parameter</param>
+        /// <param name="throwExceptionForUnknowAtom">Should an exception be thrown if an unknown atomtype is found or 0 returned ?</param>
+        /// <returns>Description of the Return Value</returns>
+        /// <seealso cref="AtomTypeFactory"/>
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, double singleElectronSum,
               IEnumerable<IBond> connectedBonds, bool throwExceptionForUnknowAtom)
         {

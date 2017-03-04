@@ -28,29 +28,32 @@ using System.Diagnostics;
 
 namespace NCDK.Geometries.Surface
 {
-    /**
-     * A class representing the solvent accessible surface area surface of a molecule.
-     *
-     * <p>This class is based on the Python implementation of the DCLM method
-     * ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
-     * representing the solvent accessible surface area of a molecule.
-     *
-     * <p>The neighbor list is a simplified version of that
-     * described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
-     * (compared to analytical calculations). The tessellation is slightly different from
-     * that described by McCluskey and uses recursive subdivision starting from an icosahedral
-     * representation.
-     *
-     * <p>The default solvent radius used is 1.4A and setting this to 0 will give the
-     * Van der Waals surface. The accuracy can be increased by increasing the tessellation
-     * level, though the default of 4 is a good balance between accuracy and speed.
-     *
-     * @author      Rajarshi Guha
-     * @cdk.created 2005-05-08
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.bug     1846421
-     */
+    /// <summary>
+    /// A class representing the solvent accessible surface area surface of a molecule.
+    /// </summary>
+    /// <remarks>
+    /// <para>This class is based on the Python implementation of the DCLM method
+    /// ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
+    /// representing the solvent accessible surface area of a molecule.
+    /// </para>
+    /// <para>
+    /// The neighbor list is a simplified version of that
+    /// described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
+    /// (compared to analytical calculations). The tessellation is slightly different from
+    /// that described by McCluskey and uses recursive subdivision starting from an icosahedral
+    /// representation.
+    /// </para>
+    /// <para>
+    /// The default solvent radius used is 1.4A and setting this to 0 will give the
+    /// Van der Waals surface. The accuracy can be increased by increasing the tessellation
+    /// level, though the default of 4 is a good balance between accuracy and speed.
+    /// </para>
+    /// </remarks>
+    // @author      Rajarshi Guha
+    // @cdk.created 2005-05-08
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.bug     1846421
     public class NumericalSurface
     {
         double solventRadius = 1.4;
@@ -60,31 +63,26 @@ namespace NCDK.Geometries.Surface
         double[] areas;
         double[] volumes;
 
-        /**
-         * Constructor to initialize the surface calculation with default values.
-         *
-         * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
-         * of the source distribution. Also uses a tesselation level of 4 and solvent radius of 1.4A.
-         *
-         * @param atomContainer The <see cref="IAtomContainer"/> for which the surface is to be calculated
-         */
+        /// <summary>
+        /// Constructor to initialize the surface calculation with default values.
+        /// This constructor use the Van der Waals radii as defined in <i>NCDK.Config.Data.jmol_atomtypes.txt</i>
+        /// of the source distribution. Also uses a tesselation level of 4 and solvent radius of 1.4A.
+        /// </summary>
+        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which the surface is to be calculated</param>
         public NumericalSurface(IAtomContainer atomContainer)
         {
             this.atoms = AtomContainerManipulator.GetAtomArray(atomContainer);
         }
 
-        /**
-         * Constructor to initialize the surface calculation with user specified values.
-         *
-         * This constructor use the Van der Waals radii as defined in <i>org/openscience/cdk/config/data/jmol_atomtypes.txt</i>
-         * of the source distribution
-         *
-         * @param atomContainer The <see cref="IAtomContainer"/> for which the surface is to be calculated
-         * @param solventRadius The radius of a solvent molecule that is used to extend
-         * the radius of each atom. Setting to 0 gives the Van der Waals surface
-         * @param tesslevel The number of levels that the subdivision algorithm for tessellation
-         * should use
-         */
+        /// <summary>
+        /// Constructor to initialize the surface calculation with user specified values.
+        /// This constructor use the Van der Waals radii as defined in <i>NCDK.Config.Data.jmol_atomtypes.txt</i>
+        /// of the source distribution
+        /// </summary>
+        /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which the surface is to be calculated</param>
+        /// <param name="solventRadius">The radius of a solvent molecule that is used to extend
+        /// the radius of each atom. Setting to 0 gives the Van der Waals surface</param>
+        /// <param name="tesslevel">The number of levels that the subdivision algorithm for tessellation should use</param>
         public NumericalSurface(IAtomContainer atomContainer, double solventRadius, int tesslevel)
         {
             this.solventRadius = solventRadius;
@@ -92,15 +90,14 @@ namespace NCDK.Geometries.Surface
             this.tesslevel = tesslevel;
         }
 
-        /**
-         * Evaluate the surface.
-         *
-         * This method generates the points on the accessible surface area of each atom
-         * as well as calculating the surface area of each atom
-         */
+        /// <summary>
+        /// Evaluate the surface.
+        ///
+        /// This method generates the points on the accessible surface area of each atom
+        /// as well as calculating the surface area of each atom
+        /// </summary>
         public void CalculateSurface()
         {
-
             // invariants
             foreach (var atom in atoms)
             {
@@ -134,11 +131,9 @@ namespace NCDK.Geometries.Surface
             NeighborList nbrlist = new NeighborList(atoms, maxRadius + solventRadius);
             Trace.TraceInformation("Got neighbor list");
 
-            /*
-             * for (int i = 0; i < atoms.Length; i++) { int[] nlist =
-             * nbrlist.GetNeighbors(i); Debug.WriteLine("Atom "+i+": "); for (int j =
-             * 0; j < nlist.Length; j++) Debug.WriteLine(j+" "); Debug.WriteLine(""); }
-             */
+            // for (int i = 0; i < atoms.Length; i++) { int[] nlist =
+            // nbrlist.GetNeighbors(i); Debug.WriteLine("Atom "+i+": "); for (int j =
+            // 0; j < nlist.Length; j++) Debug.WriteLine(j+" "); Debug.WriteLine(""); }
 
             // loop over atoms and get surface points
             this.surfPoints = new List<Vector3>[atoms.Length];
@@ -155,14 +150,13 @@ namespace NCDK.Geometries.Surface
 
         }
 
-        /**
-         * Get an array of all the points on the molecular surface.
-         *
-         * This returns an array of Vector3 objects representing all the points
-         * on the molecular surface
-         *
-         * @return  An array of Vector3 objects
-         */
+        /// <summary>
+        /// Get an array of all the points on the molecular surface.
+        ///
+        /// This returns an array of Vector3 objects representing all the points
+        /// on the molecular surface
+        /// </summary>
+        /// <returns>An array of Vector3 objects</returns>
         public Vector3[] GetAllSurfacePoints()
         {
             int npt = 0;
@@ -182,14 +176,13 @@ namespace NCDK.Geometries.Surface
             return (ret);
         }
 
-        /**
-         * Get an array of the points on the accessible surface of a specific atom.
-         *
-         * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
-         * number of atoms in the AtomContainer that the surface was calculated for
-         * @return  An array of Vector3 objects
-         * @throws CDKException if the atom index is outside the range of allowable indices
-         */
+        /// <summary>
+        /// Get an array of the points on the accessible surface of a specific atom.
+        /// </summary>
+        /// <param name="atomIdx">The index of the atom. Ranges from 0 to n-1, where n is the</param>
+        /// number of atoms in the AtomContainer that the surface was calculated for
+        /// <returns>An array of Vector3 objects</returns>
+        /// <exception cref="CDKException">if the atom index is outside the range of allowable indices</exception>
         public Vector3[] GetSurfacePoints(int atomIdx)
         {
             if (atomIdx >= this.surfPoints.Length)
@@ -203,14 +196,13 @@ namespace NCDK.Geometries.Surface
             return (ret);
         }
 
-        /**
-         * Get the surface area for the specified atom.
-         *
-         * @param atomIdx The index of the atom. Ranges from 0 to n-1, where n is the
-         * number of atoms in the AtomContainer that the surface was calculated for
-         * @return A double representing the accessible surface area of the atom
-         * @throws CDKException if the atom index is outside the range of allowable indices
-         */
+        /// <summary>
+        /// Get the surface area for the specified atom.
+        /// </summary>
+        /// <param name="atomIdx">The index of the atom. Ranges from 0 to n-1, where n is the
+        /// number of atoms in the AtomContainer that the surface was calculated for</param>
+        /// <returns>A double representing the accessible surface area of the atom</returns>
+        /// <exception cref="CDKException">if the atom index is outside the range of allowable indices</exception>
         public double GetSurfaceArea(int atomIdx)
         {
             if (atomIdx >= this.surfPoints.Length)
@@ -220,22 +212,20 @@ namespace NCDK.Geometries.Surface
             return (this.areas[atomIdx]);
         }
 
-        /**
-         * Get an array containing the accessible surface area for each atom.
-         *
-         * @return An array of double giving the surface areas of all the atoms
-         */
+        /// <summary>
+        /// Get an array containing the accessible surface area for each atom.
+        /// </summary>
+        /// <returns>An array of double giving the surface areas of all the atoms</returns>
         public double[] GetAllSurfaceAreas()
         {
             return (this.areas);
         }
 
-        /**
-         * Get the total surface area for the AtomContainer.
-         *
-         * @return A double containing the total surface area of the AtomContainer for
-         * which the surface was calculated for
-         */
+        /// <summary>
+        /// Get the total surface area for the AtomContainer.
+        /// </summary>
+        /// <returns>A double containing the total surface area of the AtomContainer for
+        /// which the surface was calculated for</returns>
         public double GetTotalSurfaceArea()
         {
             double ta = 0.0;
@@ -263,8 +253,7 @@ namespace NCDK.Geometries.Surface
             double vconst = 4.0 / 3.0 * Math.PI / (double)pointDensity;
             double dotp1 = (atom.Point3D.Value.X - cp.X) * sumx + (atom.Point3D.Value.Y - cp.Y) * sumy
                     + (atom.Point3D.Value.Z - cp.Z) * sumz;
-            double volume = vconst * (totalRadius * totalRadius) * dotp1 + (totalRadius * totalRadius * totalRadius)
-                    * points.Length;
+            double volume = vconst * (totalRadius * totalRadius) * dotp1 + (totalRadius * totalRadius * totalRadius) * points.Length;
 
             this.areas[atmIdx] = area;
             this.volumes[atmIdx] = volume;
@@ -277,7 +266,6 @@ namespace NCDK.Geometries.Surface
 
         private Vector3[][] AtomicSurfacePoints(NeighborList nbrlist, int currAtomIdx, IAtom atom, Tessellate tess)
         {
-
             double totalRadius = PeriodicTable.GetVdwRadius(atom.Symbol).Value + solventRadius;
             double totalRadius2 = totalRadius * totalRadius;
             double twiceTotalRadius = 2 * totalRadius;

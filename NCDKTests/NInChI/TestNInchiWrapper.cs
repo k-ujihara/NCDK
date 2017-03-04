@@ -34,7 +34,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getChlorineAtom(string options)
+        private static NInchiInput GetChlorineAtom(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -49,7 +49,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getChlorineIon(string options)
+        private static NInchiInput GetChlorineIon(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -67,7 +67,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getHydrogenChlorideImplicitH(string options)
+        private static NInchiInput GetHydrogenChlorideImplicitH(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -84,7 +84,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getHydrogenChlorideImplicitP(
+        private static NInchiInput GetHydrogenChlorideImplicitP(
                  string options)
         {
             NInchiInput input = new NInchiInput(options);
@@ -102,7 +102,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getHydrogenChlorideImplicitD(
+        private static NInchiInput GetHydrogenChlorideImplicitD(
                  string options)
         {
             NInchiInput input = new NInchiInput(options);
@@ -119,7 +119,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getHydrogenChlorideImplicitT(string options)
+        private static NInchiInput GetHydrogenChlorideImplicitT(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -135,7 +135,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getChlorine37Atom(string options)
+        private static NInchiInput GetChlorine37Atom(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -152,7 +152,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getChlorine37ByIsotopicMassShiftAtom(
+        private static NInchiInput GetChlorine37ByIsotopicMassShiftAtom(
                  string options)
         {
             NInchiInput input = new NInchiInput(options);
@@ -171,7 +171,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getMethylRadical(string options)
+        private static NInchiInput GetMethylRadical(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -185,7 +185,7 @@ namespace NCDK.NInChI
         }
 
 
-        private static NInchiInput getSodiumHydroxide(string options)
+        private static NInchiInput GetSodiumHydroxide(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -207,7 +207,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getEthane(string options)
+        private static NInchiInput GetEthane(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -231,7 +231,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getEthene(string options)
+        private static NInchiInput GetEthene(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -255,7 +255,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getEthyne(string options)
+        private static NInchiInput GetEthyne(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -279,7 +279,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getE12dichloroethene2D(string options)
+        private static NInchiInput GetE12dichloroethene2D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -308,7 +308,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getZ12dichloroethene2D(string options)
+        private static NInchiInput GetZ12dichloroethene2D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -338,7 +338,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput get12dichloroethene0D(string options)
+        private static NInchiInput Get12dichloroethene0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -368,7 +368,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getE12dichloroethene0D(string options)
+        private static NInchiInput GetE12dichloroethene0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -402,7 +402,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getZ12dichloroethene0D(string options)
+        private static NInchiInput GetZ12dichloroethene0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -436,7 +436,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getLAlanine3D(string options)
+        private static NInchiInput GetLAlanine3D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -475,7 +475,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getDAlanine3D(string options)
+        private static NInchiInput GetDAlanine3D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -513,7 +513,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getAlanine2D(string options)
+        private static NInchiInput GetAlanine2D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -552,7 +552,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getLAlanine2Da(string options)
+        private static NInchiInput GetLAlanine2Da(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -587,7 +587,7 @@ namespace NCDK.NInChI
         }
 
 
-        private static NInchiInput getLAlanine2Db(string options)
+        private static NInchiInput GetLAlanine2Db(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -627,7 +627,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getDAlanine2D(string options)
+        private static NInchiInput GetDAlanine2D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -666,7 +666,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getAlanine0D(string options)
+        private static NInchiInput GetAlanine0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -699,7 +699,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getLAlanine0D(string options)
+        private static NInchiInput GetLAlanine0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -736,7 +736,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static NInchiInput getDAlanine0D(string options)
+        private static NInchiInput GetDAlanine0D(string options)
         {
             NInchiInput input = new NInchiInput(options);
 
@@ -767,9 +767,8 @@ namespace NCDK.NInChI
         }
 
 
-        private NInchiInput getNSC7414a(string options)
+        private NInchiInput GetNSC7414a(string options)
         {
-
             NInchiInput input = new NInchiInput(options);
 
             // Generate atoms
@@ -814,38 +813,35 @@ namespace NCDK.NInChI
             return input;
         }
 
-        /*
+    //  -ClnMol-06180618052D
 
-      -ClnMol-06180618052D
+    //11 11  0  0  0  0  0  0  0  0999 V2000
+    //   -1.1292   -0.5292    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    1
+    //   -1.1333   -1.5917    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    2
+    //   -1.1333    0.5333    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    3
+    //   -1.1375   -2.6542    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    4
+    //    0.8375    0.5625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    5
+    //    0.9917   -2.4667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    6
+    //    2.2417   -0.6542    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0    7
+    //    4.3000   -0.5000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0    8
+    //    5.8583    0.9667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    9
+    //    6.0167   -1.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    10
+    //    6.2042   -3.3417    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0    11
+    //  6  4  1  0  0  0  0
+    //  1  2  2  0  0  0  0
+    //  7  5  1  1  0  0  0
+    //  7  6  1  1  0  0  0
+    //  2  4  1  0  0  0  0
+    //  8  7  1  0  0  0  0
+    //  9  8  1  1  0  0  0
+    //  5  3  1  0  0  0  0
+    //  8 10  1  1  0  0  0
+    //  1  3  1  0  0  0  0
+    //11 10  1  0  0  0  0
+    //M  END
+    //>  <ID>
+    //NSC-7414a
 
-    11 11  0  0  0  0  0  0  0  0999 V2000
-       -1.1292   -0.5292    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	1
-       -1.1333   -1.5917    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	2
-       -1.1333    0.5333    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	3
-       -1.1375   -2.6542    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	4
-        0.8375    0.5625    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	5
-        0.9917   -2.4667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	6
-        2.2417   -0.6542    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0	7
-        4.3000   -0.5000    0.0000 C   0  0  1  0  0  0  0  0  0  0  0  0	8
-        5.8583    0.9667    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	9
-        6.0167   -1.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	10
-        6.2042   -3.3417    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0	11
-      6  4  1  0  0  0  0
-      1  2  2  0  0  0  0
-      7  5  1  1  0  0  0
-      7  6  1  1  0  0  0
-      2  4  1  0  0  0  0
-      8  7  1  0  0  0  0
-      9  8  1  1  0  0  0
-      5  3  1  0  0  0  0
-      8 10  1  1  0  0  0
-      1  3  1  0  0  0  0
-    11 10  1  0  0  0  0
-    M  END
-    >  <ID>
-    NSC-7414a
-
-        */
 
         // Test atom handling
 
@@ -855,7 +851,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromChlorineAtom()
         {
-            NInchiInput input = getChlorineAtom("");
+            NInchiInput input = GetChlorineAtom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl", output.Inchi);
@@ -867,7 +863,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromChlorineIon()
         {
-            NInchiInput input = getChlorineIon("");
+            NInchiInput input = GetChlorineIon("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/q-1", output.Inchi);
@@ -879,7 +875,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromChlorine37Atom()
         {
-            NInchiInput input = getChlorine37Atom("");
+            NInchiInput input = GetChlorine37Atom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/i1+2", output.Inchi);
@@ -891,7 +887,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromChlorine37ByIstopicMassShiftAtom()
         {
-            NInchiInput input = getChlorine37ByIsotopicMassShiftAtom("");
+            NInchiInput input = GetChlorine37ByIsotopicMassShiftAtom("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/Cl/i1+2", output.Inchi);
@@ -901,7 +897,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromSodiumHydroxide()
         {
-            NInchiInput input = getSodiumHydroxide("");
+            NInchiInput input = GetSodiumHydroxide("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual("InChI=1S/Na.H2O/h;1H2/q+1;/p-1", output.Inchi);
             Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
@@ -914,7 +910,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitH()
         {
-            NInchiInput input = getHydrogenChlorideImplicitH("");
+            NInchiInput input = GetHydrogenChlorideImplicitH("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H", output.Inchi);
@@ -926,7 +922,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitP()
         {
-            NInchiInput input = getHydrogenChlorideImplicitP("");
+            NInchiInput input = GetHydrogenChlorideImplicitP("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hH", output.Inchi);
@@ -938,7 +934,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitD()
         {
-            NInchiInput input = getHydrogenChlorideImplicitD("");
+            NInchiInput input = GetHydrogenChlorideImplicitD("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hD", output.Inchi);
@@ -950,7 +946,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitT()
         {
-            NInchiInput input = getHydrogenChlorideImplicitT("");
+            NInchiInput input = GetHydrogenChlorideImplicitT("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/ClH/h1H/i/hT", output.Inchi);
@@ -962,7 +958,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromMethylRadical()
         {
-            NInchiInput input = getMethylRadical("");
+            NInchiInput input = GetMethylRadical("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/CH3/h1H3", output.Inchi);
@@ -976,7 +972,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromEthane()
         {
-            NInchiInput input = getEthane("");
+            NInchiInput input = GetEthane("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H6/c1-2/h1-2H3", output.Inchi);
@@ -988,7 +984,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromEthene()
         {
-            NInchiInput input = getEthene("");
+            NInchiInput input = GetEthene("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H4/c1-2/h1-2H2", output.Inchi);
@@ -1000,7 +996,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromEthyne()
         {
-            NInchiInput input = getEthyne("");
+            NInchiInput input = GetEthyne("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2/c1-2/h1-2H", output.Inchi);
@@ -1014,13 +1010,13 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiEandZ12Dichloroethene2D()
         {
-            NInchiInput inputE = getE12dichloroethene2D("");
+            NInchiInput inputE = GetE12dichloroethene2D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
             Assert.AreEqual(INCHI_RET.OKAY, outputE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
                     .Inchi);
 
-            NInchiInput inputZ = getZ12dichloroethene2D("");
+            NInchiInput inputZ = GetZ12dichloroethene2D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
             Assert.AreEqual(INCHI_RET.OKAY, outputZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
@@ -1036,14 +1032,14 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromLandDAlanine3D()
         {
-            NInchiInput inputL = getLAlanine3D("");
+            NInchiInput inputL = GetLAlanine3D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.Inchi);
 
-            NInchiInput inputD = getDAlanine3D("");
+            NInchiInput inputD = GetDAlanine3D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
             Assert.AreEqual(
@@ -1060,7 +1056,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromAlanine2D()
         {
-            NInchiInput input = getAlanine2D("");
+            NInchiInput input = GetAlanine2D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
@@ -1071,7 +1067,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromLAlanine2D()
         {
-            NInchiInput inputL = getLAlanine2Da("");
+            NInchiInput inputL = GetLAlanine2Da("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
             Assert.AreEqual(
@@ -1082,7 +1078,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromDAlanine2D()
         {
-            NInchiInput inputD = getDAlanine2D("");
+            NInchiInput inputD = GetDAlanine2D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
             Assert.AreEqual(
@@ -1098,7 +1094,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiStereoBondDirection1()
         {
-            NInchiInput input = getLAlanine2Da("");
+            NInchiInput input = GetLAlanine2Da("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual(
@@ -1109,7 +1105,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiStereoBondDirection2()
         {
-            NInchiInput inputL = getLAlanine2Db("");
+            NInchiInput inputL = GetLAlanine2Db("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
             Assert.AreEqual(
@@ -1126,21 +1122,21 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromLandDAlanine0D()
         {
-            NInchiInput input = getAlanine0D("");
+            NInchiInput input = GetAlanine0D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual("InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)",
                     output.Inchi);
 
-            NInchiInput inputL = getLAlanine0D("");
+            NInchiInput inputL = GetLAlanine0D("");
             NInchiOutput outputL = NInchiWrapper.GetInchi(inputL);
             Assert.AreEqual(INCHI_RET.OKAY, outputL.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     outputL.Inchi);
 
-            NInchiInput inputD = getDAlanine0D("");
+            NInchiInput inputD = GetDAlanine0D("");
             NInchiOutput outputD = NInchiWrapper.GetInchi(inputD);
             Assert.AreEqual(INCHI_RET.OKAY, outputD.ReturnStatus);
             Assert.AreEqual(
@@ -1155,20 +1151,20 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiEandZ12Dichloroethene0D()
         {
-            NInchiInput input = get12dichloroethene0D("");
+            NInchiInput input = Get12dichloroethene0D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H", output
                             .Inchi);
 
-            NInchiInput inputE = getE12dichloroethene0D("");
+            NInchiInput inputE = GetE12dichloroethene0D("");
             NInchiOutput outputE = NInchiWrapper.GetInchi(inputE);
             Assert.AreEqual(INCHI_RET.OKAY, outputE.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1+", outputE
                     .Inchi);
 
-            NInchiInput inputZ = getZ12dichloroethene0D("");
+            NInchiInput inputZ = GetZ12dichloroethene0D("");
             NInchiOutput outputZ = NInchiWrapper.GetInchi(inputZ);
             Assert.AreEqual(INCHI_RET.OKAY, outputZ.ReturnStatus);
             Assert.AreEqual("InChI=1S/C2H2Cl2/c3-1-2-4/h1-2H/b2-1-", outputZ
@@ -1180,7 +1176,7 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetInchiFromNSC7414a()
         {
-            NInchiInput input = getNSC7414a("");
+            NInchiInput input = GetNSC7414a("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.WARNING, output.ReturnStatus);
             Assert.AreEqual("Omitted undefined stereo", output.Message);
@@ -1225,28 +1221,28 @@ namespace NCDK.NInChI
         // [TestMethod()]
         public void TestGetInchiWithOptions()
         {
-            NInchiInput input = getLAlanine3D("");
+            NInchiInput input = GetLAlanine3D("");
             NInchiOutput output = NInchiWrapper.GetInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     output.Inchi);
 
-            input = getLAlanine3D("-compress");
+            input = GetLAlanine3D("-compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
                     output.Inchi);
 
-            input = getLAlanine3D("/compress");
+            input = GetLAlanine3D("/compress");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual("InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF/tB1/m0/s1",
                     output.Inchi);
 
-            input = getLAlanine3D("-cOMprEsS");
+            input = GetLAlanine3D("-cOMprEsS");
             output = NInchiWrapper.GetInchi(input);
             // debug(output);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
@@ -1810,19 +1806,17 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_KEY_STATUS.INVALID_VERSION, status);
         }
 
-        /* Option doesn't work yet
-        [TestMethod()]
-        @Ignore
-        public void TestGenerateInchiKeyViaOptions()  {
-            JniInchiInput input = getLAlanine3D("-key");
-            JniInchiOutput output = JniInchiWrapper.GetInchi(input);
-            Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
-    //        Assert.AreEqual(null, output.Inchi);
-    //        Assert.AreEqual(null, output.AuxInfo);
-    //        Assert.AreEqual(null, output.Message);
-    //        Assert.AreEqual(null, output.Log);
-        }
-       */
+        // Option doesn't work yet
+        //[TestMethod()]
+        //public void TestGenerateInchiKeyViaOptions()  {
+        //    NInchiInput input = GetLAlanine3D("-key");
+        //    NInchiInput output = NInchiInput.GetInchi(input);
+        //    Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
+        //    Assert.AreEqual(null, output.Inchi);
+        //    Assert.AreEqual(null, output.AuxInfo);
+        //    Assert.AreEqual(null, output.Message);
+        //    Assert.AreEqual(null, output.Log);
+        //}
 
         /// <summary>
         /// Tests thread safety - starts ten threads, and sets them generating InChIs
@@ -1900,7 +1894,6 @@ namespace NCDK.NInChI
             Assert.AreEqual(0, failCount, "Fail count");
         }
 
-
         [TestMethod()]
         public void TestTooManyAtoms()
         {
@@ -1942,14 +1935,13 @@ namespace NCDK.NInChI
         [TestMethod()]
         public void TestGetStdInchi()
         {
-            NInchiInput input = getLAlanine0D("");
+            NInchiInput input = GetLAlanine0D("");
             NInchiOutput output = NInchiWrapper.GetStdInchi(input);
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
             Assert.AreEqual(
                     "InChI=1S/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1",
                     output.Inchi);
         }
-
 
         // Test null inputs
 

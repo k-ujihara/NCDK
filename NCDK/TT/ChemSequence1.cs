@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections;
@@ -41,8 +42,8 @@ namespace NCDK.Default
         {
             chemModels.Add(chemModel);
  
-			chemModel.Listeners.Add(this);
-			NotifyChanged(); 
+            chemModel.Listeners.Add(this);
+            NotifyChanged(); 
         }
 
         public bool Remove(IChemModel chemModel)
@@ -50,7 +51,7 @@ namespace NCDK.Default
             var ret = chemModels.Remove(chemModel);
  
             chemModel.Listeners.Add(this);
-			NotifyChanged(); 
+            NotifyChanged(); 
             return ret;
         }
 
@@ -100,12 +101,12 @@ namespace NCDK.Default
             return clone;
         }
 
-        /**
-         *  Called by objects to which this object has
-         *  registered as a listener.
-         *
-         *@param  event  A change event pointing to the source of the change
-         */
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        ///
+        /// <param name="event">A change event pointing to the source of the change</param>
+        /// </summary>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
@@ -181,12 +182,12 @@ namespace NCDK.Silent
             return clone;
         }
 
-        /**
-         *  Called by objects to which this object has
-         *  registered as a listener.
-         *
-         *@param  event  A change event pointing to the source of the change
-         */
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        ///
+        /// <param name="event">A change event pointing to the source of the change</param>
+        /// </summary>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }

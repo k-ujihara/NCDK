@@ -28,20 +28,17 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Utility methods for chi index calculations.
-     * <p/>
-     * These methods are common to all the types of chi index calculations and can
-     * be used to evaluate path, path-cluster, cluster and chain chi indices.
-     *
-     * @author     Rajarshi Guha
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class ChiIndexUtils
+    /// <summary>
+    /// Utility methods for chi index calculations.
+    /// <p/>
+    /// These methods are common to all the types of chi index calculations and can
+    /// be used to evaluate path, path-cluster, cluster and chain chi indices.
+    ///
+    // @author     Rajarshi Guha
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    /// </summary>
+    internal class ChiIndexUtils
     {
         /// <summary>
         /// Gets the fragments from a target  matching a set of query fragments.
@@ -209,12 +206,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>The empirical delta V if it is present in one of the above</returns>
         ///         environments, -1 otherwise
         /// </summary>
-#if TEST
-        public
-#else
-        protected internal
-#endif 
-            static double DeltavSulphur(IAtom atom, IAtomContainer atomContainer)
+        protected internal static double DeltavSulphur(IAtom atom, IAtomContainer atomContainer)
         {
             if (!atom.Symbol.Equals("S")) return -1;
 

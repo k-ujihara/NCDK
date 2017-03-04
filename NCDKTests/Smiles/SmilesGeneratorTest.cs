@@ -37,18 +37,18 @@ using NCDK.Numerics;
 
 namespace NCDK.Smiles
 {
-    /**
-     * @author         steinbeck
-     * @cdk.created    2004-02-09
-     * @cdk.module     test-smiles
-     */
+    /// <summary>
+    // @author         steinbeck
+    // @cdk.created    2004-02-09
+    // @cdk.module     test-smiles
+    /// </summary>
     [TestClass()]
     public class SmilesGeneratorTest : CDKTestCase
     {
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestSmilesGenerator()
         {
@@ -60,9 +60,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1(=CCC2CC1C2(C)C)C", smiles2);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestEthylPropylPhenantren()
         {
@@ -74,9 +74,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("C=1C=CC(=C2C=CC3=C(C12)C=CC(=C3)CCC)CC", smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestPropylCycloPropane()
         {
@@ -88,10 +88,10 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CC1CCC", smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestAlanin()
         {
@@ -155,11 +155,11 @@ namespace NCDK.Smiles
             Assert.AreEqual("N([C@@](F)(C([H])([H])[H])C(O[H])=O)([H])[H]", smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         [TestMethod()]
         public void TestCIsResorcinol()
         {
@@ -242,11 +242,11 @@ namespace NCDK.Smiles
             Assert.AreEqual("O[C@H]1CCCC[C@H]1O", smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         [TestMethod()]
         public void TestCIsTransDecalin()
         {
@@ -331,11 +331,11 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(smiles3, smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         [TestMethod()]
         public void TestDoubleBondConfiguration()
         {
@@ -410,9 +410,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("S(/C(/F)=C(\\F)/S[H])[H]", smiles1);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestPartitioning()
         {
@@ -431,9 +431,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.IndexOf(".") != -1);
         }
 
-        /**
-         * @cdk.bug 791091
-         */
+        /// <summary>
+        // @cdk.bug 791091
+        /// </summary>
         [TestMethod()]
         public void TestBug791091()
         {
@@ -455,9 +455,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CCN1C", smiles);
         }
 
-        /**
-         * @cdk.bug 590236
-         */
+        /// <summary>
+        // @cdk.bug 590236
+        /// </summary>
         [TestMethod()]
         public void TestBug590236()
         {
@@ -474,11 +474,11 @@ namespace NCDK.Smiles
             Assert.AreEqual("C[13CH3]", smiles);
         }
 
-        /**
-         * A bug reported for JChemPaint.
-         *
-         * @cdk.bug 956923
-         */
+        /// <summary>
+        /// A bug reported for JChemPaint.
+        ///
+        // @cdk.bug 956923
+        /// </summary>
         [TestMethod()]
         public void TestSFBug956923_aromatic()
         {
@@ -531,9 +531,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("[CH]1[CH][CH][CH][CH][CH]1", smiles);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestAtomPermutation()
         {
@@ -562,9 +562,9 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestBondPermutation()
         {
@@ -596,11 +596,9 @@ namespace NCDK.Smiles
 
         private void FixCarbonHCount(IAtomContainer mol)
         {
-            /*
-             * the following line are just a quick fix for this particluar
-             * carbon-only molecule until we have a proper hydrogen count
-             * configurator
-             */
+            // the following line are just a quick fix for this particluar
+            // carbon-only molecule until we have a proper hydrogen count
+            // configurator
             double bondCount = 0;
             IAtom atom;
             for (int f = 0; f < mol.Atoms.Count; f++)
@@ -619,9 +617,9 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestPseudoAtom()
         {
@@ -635,10 +633,10 @@ namespace NCDK.Smiles
             Assert.AreEqual("*", smiles);
         }
 
-        /**
-         *  Test generation of a reaction SMILES. I know, it's a stupid alchemic
-         *  reaction, but it serves its purpose.
-         */
+        /// <summary>
+        ///  Test generation of a reaction SMILES. I know, it's a stupid alchemic
+        ///  reaction, but it serves its purpose.
+        /// </summary>
         [TestMethod()]
         public void TestReactionSMILES()
         {
@@ -662,18 +660,18 @@ namespace NCDK.Smiles
             Assert.AreEqual("C>*>[Au]", smiles);
         }
 
-        /**
-         *  Test generation of a D and L alanin.
-         */
+        /// <summary>
+        ///  Test generation of a D and L alanin.
+        /// </summary>
         [TestMethod()]
         public void TestAlaSMILES()
         {
             string filename = "NCDK.Data.MDL.l-ala.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             filename = "NCDK.Data.MDL.d-ala.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol2 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             SmilesGenerator sg = SmilesGenerator.Isomeric();
@@ -686,18 +684,18 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(smiles2, smiles1);
     }
 
-    /**
-     *  Test some sugars
-     */
+    /// <summary>
+    ///  Test some sugars
+    /// </summary>
     [TestMethod()]
         public void TestSugarSMILES()
         {
             string filename = "NCDK.Data.MDL.D-mannose.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             filename = "NCDK.Data.MDL.D+-glucose.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol2 = reader.Read(new AtomContainer());
             SmilesGenerator sg = SmilesGenerator.Isomeric();
@@ -712,14 +710,14 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(smiles2, smiles1);
         }
 
-        /**
-         *  Test for some rings where the double bond is broken
-         */
+        /// <summary>
+        ///  Test for some rings where the double bond is broken
+        /// </summary>
         [TestMethod()]
         public void TestCycloOctan()
         {
             string filename = "NCDK.Data.MDL.cyclooctan.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
@@ -727,14 +725,14 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1=CCCCCCC1", moleculeSmile);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestCycloOcten()
         {
             string filename = "NCDK.Data.MDL.cycloocten.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
@@ -742,14 +740,14 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1C=CCCCCC1", moleculeSmile);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestCycloOctadien()
         {
             string filename = "NCDK.Data.MDL.cyclooctadien.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
@@ -757,14 +755,14 @@ namespace NCDK.Smiles
             Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
         }
 
-        /**
-         * @cdk.bug 1089770
-         */
+        /// <summary>
+        // @cdk.bug 1089770
+        /// </summary>
         [TestMethod()]
         public void TestSFBug1089770_1()
         {
             string filename = "NCDK.Data.MDL.bug1089770-1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             SmilesGenerator sg = new SmilesGenerator();
@@ -773,14 +771,14 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1CCC2=C(C1)CCC2", moleculeSmile);
         }
 
-        /**
-         * @cdk.bug 1089770
-         */
+        /// <summary>
+        // @cdk.bug 1089770
+        /// </summary>
         [TestMethod()]
         public void TestSFBug1089770_2()
         {
             string filename = "NCDK.Data.MDL.bug1089770-2.mol";
-        var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+        var ins = ResourceLoader.GetAsStream(filename);
         MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
         IAtomContainer mol1 = reader.Read(new AtomContainer());
         SmilesGenerator sg = new SmilesGenerator();
@@ -789,15 +787,15 @@ namespace NCDK.Smiles
         Assert.AreEqual("C=1CCC=CCCC1", moleculeSmile);
         }
 
-        /**
-         * @cdk.bug 1014344
-         */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         // MDL -> CML (slow) -> SMILES round tripping
         [TestMethod()]
         public void TestSFBug1014344()
         {
             string filename = "NCDK.Data.MDL.bug1014344-1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             AddImplicitHydrogens(mol1);
@@ -818,16 +816,16 @@ namespace NCDK.Smiles
         }
 
 
-        /**
-         * @cdk.bug 1014344
-         */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         [TestMethod()]
         public void TestTest()
         {
             string filename_cml = "NCDK.Data.MDL.9554-with-exp-hyd.mol";
             string filename_mol = "NCDK.Data.MDL.9553-with-exp-hyd.mol";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename_cml);
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename_mol);
+            var ins1 = ResourceLoader.GetAsStream(filename_cml);
+            var ins2 = ResourceLoader.GetAsStream(filename_mol);
             MDLV2000Reader reader1 = new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader1.Read(new AtomContainer());
 
@@ -846,14 +844,14 @@ namespace NCDK.Smiles
             Assert.AreNotEqual(moleculeSmile2, moleculeSmile1);
         }
 
-        /**
-         * @cdk.bug 1535055
-         */
+        /// <summary>
+        // @cdk.bug 1535055
+        /// </summary>
         [TestMethod()]
         public void TestSFBug1535055()
         {
             string filename_cml = "NCDK.Data.CML.test1.cml";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename_cml);
+            var ins1 = ResourceLoader.GetAsStream(filename_cml);
             CMLReader reader1 = new CMLReader(ins1);
             IChemFile chemFile = (IChemFile)reader1.Read(new ChemFile());
             Assert.IsNotNull(chemFile);
@@ -874,16 +872,16 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol1SMILES.Contains("nH"));
         }
 
-        /**
-         * @cdk.bug 1014344
-         */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         [TestMethod()]
         public void TestSFBug1014344_1()
         {
             string filename_cml = "NCDK.Data.CML.bug1014344-1.cml";
             string filename_mol = "NCDK.Data.MDL.bug1014344-1.mol";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename_cml);
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename_mol);
+            var ins1 = ResourceLoader.GetAsStream(filename_cml);
+            var ins2 = ResourceLoader.GetAsStream(filename_mol);
             CMLReader reader1 = new CMLReader(ins1);
             IChemFile chemFile = (IChemFile)reader1.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -899,15 +897,15 @@ namespace NCDK.Smiles
             SmilesGenerator sg = new SmilesGenerator();
 
             string moleculeSmile1 = sg.Create(mol1);
-            //		Debug.WriteLine(filename_cml + " -> " + moleculeSmile1);
+            //        Debug.WriteLine(filename_cml + " -> " + moleculeSmile1);
             string moleculeSmile2 = sg.Create(mol2);
-            //		Debug.WriteLine(filename_mol + " -> " + moleculeSmile2);
+            //        Debug.WriteLine(filename_mol + " -> " + moleculeSmile2);
             Assert.AreEqual(moleculeSmile1, moleculeSmile2);
         }
 
-        /**
-         * @cdk.bug 1875946
-         */
+        /// <summary>
+        // @cdk.bug 1875946
+        /// </summary>
         [TestMethod()]
         public void TestPreservingFormalCharge()
         {
@@ -948,9 +946,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.IndexOf("[nH]") >= 0);
         }
 
-        /**
-         * @cdk.bug 1300
-         */
+        /// <summary>
+        // @cdk.bug 1300
+        /// </summary>
         [TestMethod()]
         public void TestDoubleBracketProblem()
         {
@@ -964,9 +962,9 @@ namespace NCDK.Smiles
             Assert.IsFalse(smiles.Contains("[[nH]-]"));
         }
 
-        /**
-         * @cdk.bug 1300
-         */
+        /// <summary>
+        // @cdk.bug 1300
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenOnChargedNitrogen()
         {
@@ -981,14 +979,14 @@ namespace NCDK.Smiles
             Assert.IsTrue(smiles.Contains("[n-]"));
         }
 
-        /**
-         * @cdk.bug 545
-         */
+        /// <summary>
+        // @cdk.bug 545
+        /// </summary>
         [TestMethod()]
         public void TestTimeOut()
         {
             string filename = "NCDK.Data.MDL.24763.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -1001,9 +999,9 @@ namespace NCDK.Smiles
             Console.Out.WriteLine(genSmiles);
         }
 
-        /**
-         * @cdk.bug 2051597
-         */
+        /// <summary>
+        // @cdk.bug 2051597
+        /// </summary>
         [TestMethod()]
         public void TestSFBug2051597()
         {
@@ -1026,9 +1024,9 @@ namespace NCDK.Smiles
             Assert.IsNotNull(cdkRoundTripMol);
         }
 
-        /**
-         * @cdk.bug 2596061
-         */
+        /// <summary>
+        // @cdk.bug 2596061
+        /// </summary>
         [TestMethod()]
         public void TestRoundTripPseudoAtom()
         {
@@ -1040,9 +1038,9 @@ namespace NCDK.Smiles
             Assert.AreEqual(smiles, genSmiles);
         }
 
-        /**
-         * @cdk.bug 2781199
-         */
+        /// <summary>
+        // @cdk.bug 2781199
+        /// </summary>
         [TestMethod()]
         public void TestBug2781199()
         {
@@ -1054,9 +1052,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(genSmiles.IndexOf("H") == -1, "Generated SMILES should not have explicit H: " + genSmiles);
         }
 
-        /**
-         * @cdk.bug 2898032
-         */
+        /// <summary>
+        // @cdk.bug 2898032
+        /// </summary>
         [TestMethod()]
         public void TestCanSmiWithoutConfiguredAtoms()
         {
@@ -1074,9 +1072,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(o1.Equals(o2), "The two canonical SMILES should match");
         }
 
-        /**
-         * @cdk.bug 2898032
-         */
+        /// <summary>
+        // @cdk.bug 2898032
+        /// </summary>
         [TestMethod()]
         public void TestCanSmiWithConfiguredAtoms()
         {
@@ -1098,9 +1096,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(o1.Equals(o2), "The two canonical SMILES should match");
         }
 
-        /**
-         * @cdk.bug 3040273
-         */
+        /// <summary>
+        // @cdk.bug 3040273
+        /// </summary>
         [TestMethod()]
         public void TestBug3040273()
         {
@@ -1138,7 +1136,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void outputOrder()
+        public void OutputOrder()
         {
             IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
@@ -1169,7 +1167,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void outputCanOrder()
+        public void OutputCanOrder()
         {
             IAtomContainer adenine = TestMoleculeFactory.MakeAdenine();
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(adenine);
@@ -1208,9 +1206,9 @@ namespace NCDK.Smiles
             Assert.AreEqual("C[CH2:6]O", SmilesGenerator.Generic().WithAtomClasses().Create(ethanol));
         }
 
-        /**
-         * @cdk.bug 328
-         */
+        /// <summary>
+        // @cdk.bug 328
+        /// </summary>
         [TestMethod()]
         public void Bug328()
         {
@@ -1219,9 +1217,9 @@ namespace NCDK.Smiles
                 Canon("[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl"));
         }
 
-        /**
-         * @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
-         */
+        /// <summary>
+        // @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
+        /// </summary>
         [TestMethod()]
         public void AssignDbStereo()
         {

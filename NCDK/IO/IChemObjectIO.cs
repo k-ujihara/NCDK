@@ -36,25 +36,25 @@ namespace NCDK.IO
     /// Programs need only care about this interface for any kind of IO.
     /// Currently, database IO and file IO is supported.
     /// 
-    /// The easiest way to implement a new {@link IChemObjectReader} is to
-    /// subclass the {@link DefaultChemObjectReader}.
+    /// The easiest way to implement a new <see cref="IChemObjectReader"/> is to
+    /// subclass the <see cref="DefaultChemObjectReader"/>.
     /// </summary>
     // @cdk.module  io
     // @cdk.githash
     /// <seealso cref="DefaultChemObjectReader"/>
-    /// <author>Egon Willighagen &gt;egonw&amp;sci.kun.nl&lt;</author> 
+    // @author Egon Willighagen &gt;egonw&amp;sci.kun.nl&lt; 
     public interface IChemObjectIO : IDisposable
     {
         /// <summary>
-        /// Returns the {@link IResourceFormat} class for this IO class.
+        /// Returns the <see cref="IResourceFormat"/> class for this IO class.
         /// </summary>
         IResourceFormat Format { get; }
 
         /// <summary>
-        /// Returns whether the given {@link IChemObject} can be read or written.
+        /// Returns whether the given <see cref="IChemObject"/> can be read or written.
         /// 
-        // @param classObject {@link IChemObject} of which is tested if it can be handled.
-        // @return true, if the {@link IChemObject} can be handled.
+        // @param classObject <see cref="IChemObject"/> of which is tested if it can be handled.
+        // @return true, if the <see cref="IChemObject"/> can be handled.
         /// </summary>
         bool Accepts(Type type);
 

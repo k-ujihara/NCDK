@@ -18,19 +18,15 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IChemSequence} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IChemSequence} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractChemSequenceTest
         : AbstractChemObjectTest

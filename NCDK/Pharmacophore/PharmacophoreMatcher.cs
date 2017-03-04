@@ -56,11 +56,11 @@ namespace NCDK.Pharmacophore
     /// alternative constraints such as torsions and so on cannot be considered at this point.
     /// <p/>
     /// After a query has been performed one can retrieve the matching groups (as opposed to the matching atoms
-    /// of the target molecule). However since a pharmacophore group (which is an object of class {@link PharmacophoreAtom})
+    /// of the target molecule). However since a pharmacophore group (which is an object of class <see cref="PharmacophoreAtom"/>)
     /// allows you to access the indices of the corresponding atoms in the target molecule, this is not very
     /// difficult.
     /// Example usage:
-    /// <pre>
+    /// <code>
     /// QueryAtomContainer query = new QueryAtomContainer();
     /// <p/>
     /// PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
@@ -97,7 +97,7 @@ namespace NCDK.Pharmacophore
     ///     // OK, matched. Do something
     ///   }
     /// }
-    /// </pre>
+    /// </code>
     ///
     /// <h3>Extensions to SMARTS</h3>
     ///
@@ -109,7 +109,7 @@ namespace NCDK.Pharmacophore
     /// <li> | - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
     /// be a pharmacophore group that is meant to match a 5 membered ring or a 6 membered ring. This cannot be
     /// written in a single ordinary SMARTS pattern. However using this one extension one can write
-    /// <pre>A1AAAA1|A1AAAAA1</pre>
+    /// <code>A1AAAA1|A1AAAAA1</code>
     /// </ul>
     /// </summary>
     /// <seealso cref="PharmacophoreAtom"/>

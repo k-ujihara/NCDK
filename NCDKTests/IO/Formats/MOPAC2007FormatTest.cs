@@ -35,7 +35,7 @@ namespace NCDK.IO.Formats
         }
 
         [TestMethod()]
-        public void matchesMopac2007()
+        public void MatchesMopac2007()
         {
             Assert.IsTrue(((MOPAC2007Format)MOPAC2007Format.Instance).Matches(0, "MOPAC2007"));
         }

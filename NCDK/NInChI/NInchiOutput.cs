@@ -18,33 +18,33 @@
  */
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates output from InChI generation.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates output from InChI generation.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiOutput
     {
         public INCHI_RET ReturnStatus { get; protected internal set; }
 
-        /**
-         * InChI ASCIIZ string
-         */
+        /// <summary>
+        /// InChI ASCIIZ string
+        /// </summary>
         public string Inchi { get; protected internal set; }
 
-        /**
-         * Aux info ASCIIZ string
-         */
+        /// <summary>
+        /// Aux info ASCIIZ string
+        /// </summary>
         public string AuxInfo { get; protected internal set; }
 
-        /**
-         * Error/warning ASCIIZ message
-         */
+        /// <summary>
+        /// Error/warning ASCIIZ message
+        /// </summary>
         public string Message { get; protected internal set; }
 
-        /**
-         * log-file ASCIIZ string, contains a human-readable list of recognized
-         * options and possibly an Error/warning message
-         */
+        /// <summary>
+        /// log-file ASCIIZ string, contains a human-readable list of recognized
+        /// options and possibly an Error/warning message
+        /// </summary>
         public string Log { get; protected internal set; }
 
 

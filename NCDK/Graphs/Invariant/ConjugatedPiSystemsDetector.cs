@@ -21,46 +21,42 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * @author       kaihartmann
-     * @cdk.githash
-     * @cdk.created  2004-09-17
-     * @cdk.module   reaction
-     *
-     * @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
-     */
+    // @author       kaihartmann
+    // @cdk.githash
+    // @cdk.created  2004-09-17
+    // @cdk.module   reaction
+    // @cdk.todo add negatively charged atoms (e.g. O-) to the pi system
     public class ConjugatedPiSystemsDetector
     {
-
-        /**
-         *  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
-         *  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
-         *  before calling this method.
-         *
-         *  <p>An example for detection of Radical Allyl:
-         *  <pre>
-         *	Atom a0 = new Atom("C"); mol.Atoms.Add(a0);
-         *	Atom a1 = new Atom("C"); mol.Atoms.Add(a1);
-         *	Atom a2 = new Atom("C"); mol.Atoms.Add(a2);
-         *	Atom h1 = new Atom("H"); mol.Atoms.Add(h1);
-         *	Atom h2 = new Atom("H"); mol.Atoms.Add(h2);
-         *	Atom h3 = new Atom("H"); mol.Atoms.Add(h3);
-         *	Atom h4 = new Atom("H"); mol.Atoms.Add(h4);
-         *	Atom h5 = new Atom("H"); mol.Atoms.Add(h5);
-         *	mol.Bonds.Add(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-         *	mol.Bonds.Add(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
-         *	mol.Bonds.Add(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
-         *	mol.Bonds.Add(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
-         *	mol.Bonds.Add(mol.Atoms[1], mol.Atoms[5], BondOrder.Single);
-         *	mol.Bonds.Add(mol.Atoms[2], mol.Atoms[6], BondOrder.Single);
-         *	mol.Bonds.Add(mol.Atoms[2], mol.Atoms[7], BondOrder.Single);
-         *	SingleElectron se = new SingleElectron(a2);
-         *	mol.AddElectronContainer(se);
-         *  </pre>
-         *
-         *@param  ac  The AtomContainer for which to detect conjugated pi systems
-         *@return     The set of AtomContainers with conjugated pi systems
-         */
+        /// <summary>
+        ///  Detect all conjugated pi systems in an AtomContainer. This method returns a AtomContainerSet
+        ///  with Atom and Bond objects from the original AtomContainer. The aromaticity has to be known
+        ///  before calling this method.
+        /// </summary>
+        /// <example>
+        /// An example for detection of Radical Allyl:
+        /// <code>
+        ///    Atom a0 = new Atom("C"); mol.Atoms.Add(a0);
+        ///    Atom a1 = new Atom("C"); mol.Atoms.Add(a1);
+        ///    Atom a2 = new Atom("C"); mol.Atoms.Add(a2);
+        ///    Atom h1 = new Atom("H"); mol.Atoms.Add(h1);
+        ///    Atom h2 = new Atom("H"); mol.Atoms.Add(h2);
+        ///    Atom h3 = new Atom("H"); mol.Atoms.Add(h3);
+        ///    Atom h4 = new Atom("H"); mol.Atoms.Add(h4);
+        ///    Atom h5 = new Atom("H"); mol.Atoms.Add(h5);
+        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
+        ///    mol.Bonds.Add(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
+        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
+        ///    mol.Bonds.Add(mol.Atoms[1], mol.Atoms[5], BondOrder.Single);
+        ///    mol.Bonds.Add(mol.Atoms[2], mol.Atoms[6], BondOrder.Single);
+        ///    mol.Bonds.Add(mol.Atoms[2], mol.Atoms[7], BondOrder.Single);
+        ///    SingleElectron se = new SingleElectron(a2);
+        ///    mol.AddElectronContainer(se);
+        ///  </code>
+        /// </example>
+        /// <param name="ac">The AtomContainer for which to detect conjugated pi systems</param>
+        /// <returns>The set of AtomContainers with conjugated pi systems</returns>
         public static IAtomContainerSet<IAtomContainer> Detect(IAtomContainer ac)
         {
             var piSystemSet = ac.Builder.CreateAtomContainerSet();
@@ -129,13 +125,12 @@ namespace NCDK.Graphs.Invariant
             return piSystemSet;
         }
 
-        /**
-         *  Check an Atom whether it may be conjugated or not.
-         *
-         *@param  ac           The AtomContainer containing currentAtom
-         *@param  currentAtom  The Atom to check
-         *@return              -1 if isolated, 0 if conjugated, 1 if cumulative db
-         */
+        /// <summary>
+        ///  Check an Atom whether it may be conjugated or not.
+        /// </summary>
+        /// <param name="ac">The AtomContainer containing currentAtom</param>
+        /// <param name="currentAtom">The Atom to check</param>
+        /// <returns>-1 if isolated, 0 if conjugated, 1 if cumulative db</returns>
         private static int CheckAtom(IAtomContainer ac, IAtom currentAtom)
         {
             int check = -1;
@@ -145,11 +140,8 @@ namespace NCDK.Graphs.Invariant
             {
                 check = 0;
             }
-            else if (currentAtom.FormalCharge == 1 /*
-                                                       * &&
-                                                       * currentAtom.getSymbol
-                                                       * ().Equals("C")
-                                                       */)
+            else if (currentAtom.FormalCharge == 1) 
+                /* && currentAtom.Symbol.Equals("C") */ 
             {
                 check = 0;
             }
@@ -174,7 +166,7 @@ namespace NCDK.Graphs.Invariant
                     check = 0; //// DETECTION of radicals
                 }
                 else if (ac.GetConnectedLonePairs(currentAtom).Any()
-              /* && (currentAtom.Symbol.Equals("N") */)
+                    /* && (currentAtom.Symbol.Equals("N") */)
                 {
                     check = 0; //// DETECTION of  lone pair
                 }

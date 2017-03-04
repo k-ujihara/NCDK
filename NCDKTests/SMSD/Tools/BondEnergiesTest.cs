@@ -25,10 +25,10 @@ using NCDK.Default;
 
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * @author Asad
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    // @author Asad
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public class BondEnergiesTest : CDKTestCase
     {
@@ -39,9 +39,9 @@ namespace NCDK.SMSD.Tools
             Assert.IsNotNull(energies);
         }
 
-        /**
-         * Test of getEnergies method, of class BondEnergies.
-         */
+        /// <summary>
+        /// Test of getEnergies method, of class BondEnergies.
+        /// </summary>
         [TestMethod()]
         public void TestGetEnergies()
         {

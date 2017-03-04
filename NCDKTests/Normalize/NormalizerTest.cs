@@ -22,9 +22,9 @@ using System.Xml.Linq;
 
 namespace NCDK.Normalize
 {
-    /**
-     * @cdk.module test-smiles
-     */
+    /// <summary>
+    // @cdk.module test-smiles
+    /// </summary>
     [TestClass()]
     public class NormalizerTest : CDKTestCase
     {
@@ -40,12 +40,12 @@ namespace NCDK.Normalize
             ac.Bonds.Add(new Bond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double));
             ac.Bonds.Add(new Bond(ac.Atoms[1], ac.Atoms[3], BondOrder.Double));
             var doc = new XDocument();
-			var set = new XElement("replace-set");
+            var set = new XElement("replace-set");
             doc.Add(set);
             var replace = new XElement("replace");
             set.Add(replace);
             replace.Add(new XText("O=N=O"));
-			var replacement = new XElement("replacement");
+            var replacement = new XElement("replacement");
             set.Add(replacement);
             replacement.Add(new XText("[O-][N+]=O"));
             Normalizer.Normalize(ac, doc);

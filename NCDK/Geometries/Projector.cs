@@ -32,8 +32,7 @@ namespace NCDK.Geometries
     // @cdk.githash
     public class Projector
     {
-
-        public static void project2D(IAtomContainer container)
+        public static void Project2D(IAtomContainer container)
         {
             foreach (var atom in container.Atoms)
             {
@@ -48,7 +47,7 @@ namespace NCDK.Geometries
             }
         }
 
-        public static void project2D(IAtomContainer container, IDictionary<IAtom, Vector2> renderingCoordinates)
+        public static void Project2D(IAtomContainer container, IDictionary<IAtom, Vector2> renderingCoordinates)
         {
             foreach (var atom in container.Atoms)
             {

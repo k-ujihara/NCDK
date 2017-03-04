@@ -93,9 +93,9 @@ namespace NCDK.Hash
             return mol;
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C10H18/c1-2-6-10-8-4-3-7-9(10)5-1/h9-10H,1-8H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C10H18/c1-2-6-10-8-4-3-7-9(10)5-1/h9-10H,1-8H2
+        /// </summary>
         public IAtomContainer Decahydronaphthalene()
         {
             IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),

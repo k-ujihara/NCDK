@@ -35,21 +35,21 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Ctab V3000 format output. This writer provides output to the more modern (but less widely
-     * supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
-     * V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
-     * ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
-     * <p/>
-     * Supported Features:
-     * <ul>
-     *     <li>Atom Block, non-query features</li>
-     *     <li>Bond Block, non-query features</li>
-     *     <li>Sgroup Block, partial support for all chemical Sgroups, complete support for: Abbreviations,
-     *     MultipleGroup, SRUs, (Un)ordered Mixtures</li>
-     * </ul>
-     * The 3D block and enhanced stereochemistry is not currently supported.
-     */
+    /// <summary>
+    /// Ctab V3000 format output. This writer provides output to the more modern (but less widely
+    /// supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
+    /// V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
+    /// ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
+    /// <p/>
+    /// Supported Features:
+    /// <ul>
+    ///     <li>Atom Block, non-query features</li>
+    ///     <li>Bond Block, non-query features</li>
+    ///     <li>Sgroup Block, partial support for all chemical Sgroups, complete support for: Abbreviations,
+    ///     MultipleGroup, SRUs, (Un)ordered Mixtures</li>
+    /// </ul>
+    /// The 3D block and enhanced stereochemistry is not currently supported.
+    /// </summary>
     public sealed class MDLV3000Writer : DefaultChemObjectWriter
     {
         private V30LineWriter writer;
@@ -109,15 +109,13 @@ namespace NCDK.IO
                 writer.WriteDirect(title.Substring(0, Math.Min(80, title.Length)));
             writer.WriteDirect('\n');
 
-            /*
-             *  From CTX spec This line has the format:
-             *  IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR (FORTRAN:
-             *  A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> ) User's first
-             *  and last initials (l), program name (P), date/time (M/D/Y,H:m),
-             *  dimensional codes (d), scaling factors (S, s), energy (E) if modeling
-             *  program input, internal registry number (R) if input through MDL
-             *  form. A blank line can be substituted for line 2.
-             */
+            //  From CTX spec This line has the format:
+            //  IIPPPPPPPPMMDDYYHHmmddSSssssssssssEEEEEEEEEEEERRRRRR (FORTRAN:
+            //  A2<--A8--><---A10-->A2I2<--F10.5-><---F12.5--><-I6-> ) User's first
+            //  and last initials (l), program name (P), date/time (M/D/Y,H:m),
+            //  dimensional codes (d), scaling factors (S, s), energy (E) if modeling
+            //  program input, internal registry number (R) if input through MDL
+            //  form. A blank line can be substituted for line 2.
             writer.WriteDirect("  CDK     ");
             writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm"));
             writer.WriteDirect('\n');
@@ -469,11 +467,11 @@ namespace NCDK.IO
             // but really tools should be able to handle output of order parents
             // when reading (we do).
             var a_sgroups = new List<Sgroup>(
-				sgroups
-				.Where(g => g.Type != SgroupType.ExtMulticenter)	// remove non-ctab Sgroups
+                sgroups
+                .Where(g => g.Type != SgroupType.ExtMulticenter)    // remove non-ctab Sgroups
                 .OrderBy(g => g, aSgroupComparator));
-					// going to reorder but keep the originals untouched
-					// don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
+                    // going to reorder but keep the originals untouched
+                    // don't use  sgroups.Sort(aSgroupComparator) because Sort method is not stable sort but OrderBy is stable.
             if (a_sgroups.Count == 0)
                 return;
 
@@ -699,7 +697,7 @@ namespace NCDK.IO
             /// <param name="str">the string</param>
             /// <returns>self-reference for chaining</returns>
             /// <exception cref="">low-level IO error</exception>
-			public V30LineWriter WriteDirect(string str)
+            public V30LineWriter WriteDirect(string str)
             {
                 this.writer.Write(str);
                 return this;
@@ -848,7 +846,7 @@ namespace NCDK.IO
 
             public void Dispose()
             {
-				Close();
+                Close();
             }
         }
     }

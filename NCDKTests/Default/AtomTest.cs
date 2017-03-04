@@ -17,24 +17,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using NCDK.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the AtomTypeFactory
-     *
-     * @cdk.module test-data
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the AtomTypeFactory
+    ///
+    // @cdk.module test-data
+    /// </summary>
+    [TestClass()]
     public class AtomTest
             : AbstractAtomTest
     {
@@ -43,9 +36,9 @@ namespace NCDK.Default
             return new Atom();
         }
 
-        /**
-         * Method to test the Atom(string symbol) method.
-         */
+        /// <summary>
+        /// Method to test the Atom(string symbol) method.
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtom()
         {
@@ -61,9 +54,9 @@ namespace NCDK.Default
             Assert.IsNotNull(a);
         }
 
-        /**
-         * Method to test the Atom(string symbol) method.
-         */
+        /// <summary>
+        /// Method to test the Atom(string symbol) method.
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String()
         {
@@ -74,9 +67,9 @@ namespace NCDK.Default
             Assert.IsNull(a.FractionalPoint3D);
         }
 
-        /**
-         * Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
-         */
+        /// <summary>
+        /// Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String_Point3d()
         {
@@ -89,9 +82,9 @@ namespace NCDK.Default
             Assert.IsNull(a.FractionalPoint3D);
         }
 
-        /**
-         * Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
-         */
+        /// <summary>
+        /// Method to test the Atom(string symbol, javax.vecmath.Vector3 point3D) method.
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtom_String_Point2d()
         {
@@ -104,9 +97,9 @@ namespace NCDK.Default
             Assert.IsNull(a.FractionalPoint3D);
         }
 
-        /**
-         * Method to test the Compare() method.
-         */
+        /// <summary>
+        /// Method to test the Compare() method.
+        /// </summary>
         [TestMethod()]
         public override void TestCompare_Object()
         {

@@ -18,42 +18,36 @@
 namespace NCDK.Smiles.SMARTS.Parser
 {
 
-    /**
-     * An AST node. It represents one type of atomic primitive notation in smarts.
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-04-24
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// An AST node. It represents one type of atomic primitive notation in smarts.
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-04-24
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public
     class ASTPrimitiveAtomExpression : SimpleNode
     {
 
-        /**
-         * Creates a new instance.
-         */
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
         public ASTPrimitiveAtomExpression(int id)
             : base(id)
         {
         }
 
-        /**
-         * Creates a new instance.
-         */
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
         public ASTPrimitiveAtomExpression(SMARTSParser p, int id)
             : base(p, id)
         {
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.smiles.smarts.parser.SimpleNode#jjtAccept(org.openscience
-         * .cdk.smiles.smarts.parser.SMARTSParserVisitor, java.lang.object)
-         */
-        public override object jjtAccept(SMARTSParserVisitor visitor, object data)
+        public override object JJTAccept(SMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }

@@ -67,7 +67,7 @@ namespace NCDK.Isomorphisms
 
         /**
          * Atoms are compatible if the second atom ({@code atom2}) is accepted by
-         * the {@link IQueryAtom}, {@code atom1}.
+         * the <see cref="IQueryAtom"/>, {@code atom1}.
          *
          * @return a matcher which checks query atom compatibility
          */
@@ -89,7 +89,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is
+         * A matcher to use when all atoms are <see cref="IQueryAtom"/>s. {@code atom1} is
          * cast to a query atom and matched against {@code atom2}.
          */
         private sealed class QueryMatcher : AtomMatcher
@@ -104,7 +104,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * A matcher to use when all atoms are {@link IQueryAtom}s. {@code atom1} is
+         * A matcher to use when all atoms are <see cref="IQueryAtom"/>s. {@code atom1} is
          * cast to a query atom and matched against {@code atom2}.
          */
         private sealed class ElementMatcher : AtomMatcher

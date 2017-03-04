@@ -24,21 +24,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class BinaryTreeTest
     {
 
         public BinaryTreeTest() { }
 
-        /**
-         * Test of getValue method, of class BinaryTree.
-         */
+        /// <summary>
+        /// Test of getValue method, of class BinaryTree.
+        /// </summary>
         [TestMethod()]
         public void TestGetValue()
         {
@@ -48,9 +48,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getEqual method, of class BinaryTree.
-         */
+        /// <summary>
+        /// Test of getEqual method, of class BinaryTree.
+        /// </summary>
         [TestMethod()]
         public void TestGetEqual()
         {
@@ -63,9 +63,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setEqual method, of class BinaryTree.
-         */
+        /// <summary>
+        /// Test of setEqual method, of class BinaryTree.
+        /// </summary>
         [TestMethod()]
         public void TestSetEqual()
         {
@@ -78,9 +78,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getNotEqual method, of class BinaryTree.
-         */
+        /// <summary>
+        /// Test of getNotEqual method, of class BinaryTree.
+        /// </summary>
         [TestMethod()]
         public void TestGetNotEqual()
         {
@@ -94,9 +94,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setNotEqual method, of class BinaryTree.
-         */
+        /// <summary>
+        /// Test of setNotEqual method, of class BinaryTree.
+        /// </summary>
         [TestMethod()]
         public void TestSetNotEqual()
         {

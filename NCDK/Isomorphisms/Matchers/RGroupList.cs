@@ -33,7 +33,7 @@ namespace NCDK.Isomorphisms.Matchers
 {
     /**
      * Represents a list of Rgroup substitutes to be associated with some
-     * {@link RGroupQuery}.
+     * <see cref="RGroupQuery"/>.
      *
      * @cdk.module  isomorphism
      * @cdk.githash

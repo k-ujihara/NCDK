@@ -34,42 +34,40 @@ using System.IO;
 
 namespace NCDK.Smiles
 {
-    /**
-	 * Convert a CDK <see cref="IAtomContainer"/> to a Beam graph object for generating
-	 * SMILES. Once converted the Beam ChemicalGraph can be manipulated further to
-	 * generate a standard-from SMILES and/or arrange the vertices in a canonical
-	 * output order.
-	 *
-	 * <b>Important:</b> The conversion respects the implicit hydrogen count and if
-	 * the number of implicit hydrogen ({@link IAtom#ImplicitHydrogenCount}) is
-	 * null an exception will be thrown. To ensure correct conversion please ensure
-	 * all atoms have their implicit hydrogen count set.
-	 *
-	 * <blockquote><pre>
-	 * IAtomContainer m   = ...;
-	 *
-	 * // converter is thread-safe and can be used by multiple threads
-	 * CDKToBeam      c2g = new CDKToBeam();
-	 * ChemicalGraph  g   = c2g.ToBeamGraph(m);
-	 *
-	 * // get the SMILES notation from the Beam graph
-	 * string         smi = g.ToSmiles():
-	 * </pre></blockquote>
-	 *
-	 * @author John May
-	 * @cdk.module smiles
-	 * @cdk.keyword SMILES
-	 * @see <a href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</a>
-	 */
-#if TEST
-    public
-#endif
-    sealed class CDKToBeam {
+    /// <summary>
+    /// Convert a CDK <see cref="IAtomContainer"/> to a Beam graph object for generating
+    /// SMILES. Once converted the Beam ChemicalGraph can be manipulated further to
+    /// generate a standard-from SMILES and/or arrange the vertices in a canonical
+    /// output order.
+    ///
+    /// <b>Important:</b> The conversion respects the implicit hydrogen count and if
+    /// the number of implicit hydrogen ({@link IAtom#ImplicitHydrogenCount}) is
+    /// null an exception will be thrown. To ensure correct conversion please ensure
+    /// all atoms have their implicit hydrogen count set.
+    ///
+    /// <blockquote><code>
+    /// IAtomContainer m   = ...;
+    ///
+    /// // converter is thread-safe and can be used by multiple threads
+    /// CDKToBeam      c2g = new CDKToBeam();
+    /// ChemicalGraph  g   = c2g.ToBeamGraph(m);
+    ///
+    /// // get the SMILES notation from the Beam graph
+    /// string         smi = g.ToSmiles():
+    /// </code></blockquote>
+    ///
+    // @author John May
+    // @cdk.module smiles
+    // @cdk.keyword SMILES
+    // @see <a href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</a>
+    /// </summary>
+    internal sealed class CDKToBeam
+    {
 
-        /**
-		 * Whether to convert the molecule with isotope and stereo information -
-		 * Isomeric SMILES.
-		 */
+        /// <summary>
+        /// Whether to convert the molecule with isotope and stereo information -
+        /// Isomeric SMILES.
+        /// </summary>
         private readonly bool isomeric;
 
         /// <summary>Use aromatic flags.</summary>
@@ -88,57 +86,68 @@ namespace NCDK.Smiles
         public CDKToBeam(bool isomeric)
             : this(isomeric, true)
         {
-		}
+        }
 
-        /**
-		 * Create a convert which will optionally convert isomeric and aromatic
-		 * information from CDK data model.
-		 *
-		 * @param isomeric convert isomeric information
-		 * @param aromatic convert aromatic information
-		 */
+        /// <summary>
+        /// Create a convert which will optionally convert isomeric and aromatic
+        /// information from CDK data model.
+        ///
+        /// <param name="isomeric">convert isomeric information</param>
+        /// <param name="aromatic">convert aromatic information</param>
+        /// </summary>
         public CDKToBeam(bool isomeric, bool aromatic)
            : this(isomeric, aromatic, true)
-         {}
+        { }
 
-        public CDKToBeam(bool isomeric, bool aromatic, bool atomClasses) {
+        public CDKToBeam(bool isomeric, bool aromatic, bool atomClasses)
+        {
             this.isomeric = isomeric;
             this.aromatic = aromatic;
             this.atomClasses = atomClasses;
         }
 
-        /**
-		 * Convert a CDK <see cref="IAtomContainer"/> to a Beam ChemicalGraph. The graph
-		 * can when be written directly as to a SMILES or manipulated further (e.g
-		 * canonical ordering/standard-form and other normalisations).
-		 *
-		 * @param ac an atom container instance
-		 * @return the Beam ChemicalGraph for additional manipulation
-		 */
-        public Graph ToBeamGraph(IAtomContainer ac) {
+        /// <summary>
+        /// Convert a CDK <see cref="IAtomContainer"/> to a Beam ChemicalGraph. The graph
+        /// can when be written directly as to a SMILES or manipulated further (e.g
+        /// canonical ordering/standard-form and other normalisations).
+        ///
+        /// <param name="ac">an atom container instance</param>
+        /// <returns>the Beam ChemicalGraph for additional manipulation</returns>
+        /// </summary>
+        public Graph ToBeamGraph(IAtomContainer ac)
+        {
 
             int order = ac.Atoms.Count;
 
             GraphBuilder gb = GraphBuilder.Create(order);
             IDictionary<IAtom, int> indices = new Dictionary<IAtom, int>(order);
 
-            foreach (var a in ac.Atoms) {
+            foreach (var a in ac.Atoms)
+            {
                 indices[a] = indices.Count;
                 gb.Add(ToBeamAtom(a));
             }
 
-            foreach (var b in ac.Bonds) {
+            foreach (var b in ac.Bonds)
+            {
                 gb.Add(ToBeamEdge(b, indices));
             }
 
             // configure stereo-chemistry by encoding the stereo-elements
-            if (isomeric) {
-                foreach (var se in ac.StereoElements) {
-                    if (se is ITetrahedralChirality) {
+            if (isomeric)
+            {
+                foreach (var se in ac.StereoElements)
+                {
+                    if (se is ITetrahedralChirality)
+                    {
                         AddTetrahedralConfiguration((ITetrahedralChirality)se, gb, indices);
-                    } else if (se is IDoubleBondStereochemistry) {
+                    }
+                    else if (se is IDoubleBondStereochemistry)
+                    {
                         AddGeometricConfiguration((IDoubleBondStereochemistry)se, gb, indices);
-                    } else if (se is ExtendedTetrahedral) {
+                    }
+                    else if (se is ExtendedTetrahedral)
+                    {
                         AddExtendedTetrahedralConfiguration((ExtendedTetrahedral)se, gb, indices);
                     }
                 }
@@ -147,22 +156,23 @@ namespace NCDK.Smiles
             return gb.Build();
         }
 
-        /**
-		 * Convert an CDK {@link IAtom} to a Beam Atom. The symbol and implicit
-		 * hydrogen count are not optional. If the symbol is not supported by the
-		 * SMILES notation (e.g. 'R1') the element will automatically default to
-		 * Unknown ('*').
-		 *
-		 * @param a cdk Atom instance
-		 * @return a Beam atom
-		 * @ the atom had an undefined symbol or implicit
-		 *                              hydrogen count
-		 */
-        public Atom ToBeamAtom(IAtom a) {
+        /// <summary>
+        /// Convert an CDK <see cref="IAtom"/> to a Beam Atom. The symbol and implicit
+        /// hydrogen count are not optional. If the symbol is not supported by the
+        /// SMILES notation (e.g. 'R1') the element will automatically default to
+        /// Unknown ('*').
+        ///
+        /// <param name="a">cdk Atom instance</param>
+        /// <returns>a Beam atom</returns>
+        // @ the atom had an undefined symbol or implicit
+        ///                              hydrogen count
+        /// </summary>
+        public Atom ToBeamAtom(IAtom a)
+        {
 
-             bool aromatic = this.aromatic && a.IsAromatic;
-             int? charge = a.FormalCharge;
-             string symbol = CheckNotNull(a.Symbol, "An atom had an undefined symbol");
+            bool aromatic = this.aromatic && a.IsAromatic;
+            int? charge = a.FormalCharge;
+            string symbol = CheckNotNull(a.Symbol, "An atom had an undefined symbol");
 
             Element element = Element.OfSymbol(symbol);
             if (element == null) element = Element.Unknown;
@@ -171,48 +181,58 @@ namespace NCDK.Smiles
 
             // CDK leaves nulls on pseudo atoms - we need to check this special case
             int? hCount = a.ImplicitHydrogenCount;
-            if (element == Element.Unknown) {
+            if (element == Element.Unknown)
+            {
                 ab.NumOfHydrogens(hCount ?? 0);
-            } else {
+            }
+            else
+            {
                 ab.NumOfHydrogens(CheckNotNull(hCount, "One or more atoms had an undefined number of implicit hydrogens"));
             }
 
             if (charge.HasValue) ab.Charge(charge.Value);
 
             // use the mass number to specify isotope?
-            if (isomeric) {
+            if (isomeric)
+            {
                 int? massNumber = a.MassNumber;
-                if (massNumber.HasValue) {
+                if (massNumber.HasValue)
+                {
                     // XXX: likely causing some overhead but okay for now
-                    try {
+                    try
+                    {
                         IsotopeFactory isotopes = Isotopes.Instance;
                         IIsotope isotope = isotopes.GetMajorIsotope(a.Symbol);
                         if (isotope == null || !isotope.MassNumber.Equals(massNumber)) ab.Isotope(massNumber.Value);
-                    } catch (IOException e) {
+                    }
+                    catch (IOException e)
+                    {
                         throw new ApplicationException("Isotope factory wouldn't load: " + e.Message);
                     }
                 }
             }
 
             int? atomClass = a.GetProperty<int?>(CDKPropertyName.ATOM_ATOM_MAPPING);
-            if (atomClasses && atomClass.HasValue) {
+            if (atomClasses && atomClass.HasValue)
+            {
                 ab.AtomClass(atomClass.Value);
             }
 
             return ab.Build();
         }
 
-        /**
-		 * Convert a CDK {@link IBond} to a Beam edge.
-		 *
-		 * @param b       the CDK bond
-		 * @param indices map of atom indices
-		 * @return a Beam edge
-		 * @ the bond did not have 2 atoms or an
-		 *                                  unsupported order
-		 * @     the bond order was undefined
-		 */
-        public Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices) {
+        /// <summary>
+        /// Convert a CDK <see cref="IBond"/> to a Beam edge.
+        ///
+        /// <param name="b">the CDK bond</param>
+        /// <param name="indices">map of atom indices</param>
+        /// <returns>a Beam edge</returns>
+        // @ the bond did not have 2 atoms or an
+        ///                                  unsupported order
+        // @     the bond order was undefined
+        /// </summary>
+        public Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices)
+        {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
             int u = indices[b.Atoms[0]];
@@ -221,15 +241,15 @@ namespace NCDK.Smiles
             return ToBeamEdgeLabel(b).CreateEdge(u, v);
         }
 
-        /**
-		 * Convert a CDK {@link IBond} to the Beam edge label type.
-		 *
-		 * @param b cdk bond
-		 * @return the edge label for the Beam edge
-		 * @     the bond order was null and the bond was
-		 *                                  not-aromatic
-		 * @ the bond order could not be converted
-		 */
+        /// <summary>
+        /// Convert a CDK <see cref="IBond"/> to the Beam edge label type.
+        ///
+        /// <param name="b">cdk bond</param>
+        /// <returns>the edge label for the Beam edge</returns>
+        // @     the bond order was null and the bond was
+        ///                                  not-aromatic
+        // @ the bond order could not be converted
+        /// </summary>
         private Bond ToBeamEdgeLabel(IBond b)
         {
 
@@ -259,14 +279,15 @@ namespace NCDK.Smiles
                 throw new CDKException("Unsupported bond order: " + order);
         }
 
-        /**
-		 * Add double-bond stereo configuration to the Beam GraphBuilder.
-		 *
-		 * @param dbs     stereo element specifying double-bond configuration
-		 * @param gb      the current graph builder
-		 * @param indices atom indices
-		 */
-        private void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, GraphBuilder gb, IDictionary<IAtom, int> indices) {
+        /// <summary>
+        /// Add double-bond stereo configuration to the Beam GraphBuilder.
+        ///
+        /// <param name="dbs">stereo element specifying double-bond configuration</param>
+        /// <param name="gb">the current graph builder</param>
+        /// <param name="indices">atom indices</param>
+        /// </summary>
+        private void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        {
 
             IBond db = dbs.StereoBond;
             var bs = dbs.Bonds;
@@ -281,21 +302,25 @@ namespace NCDK.Smiles
             int x = indices[bs[0].GetConnectedAtom(db.Atoms[0])];
             int y = indices[bs[1].GetConnectedAtom(db.Atoms[1])];
 
-            if (dbs.Stereo == DoubleBondConformation.Together) {
+            if (dbs.Stereo == DoubleBondConformation.Together)
+            {
                 gb.Geometric(u, v).Together(x, y);
-            } else {
+            }
+            else
+            {
                 gb.Geometric(u, v).Opposite(x, y);
             }
         }
 
-        /**
-		 * Add tetrahedral stereo configuration to the Beam GraphBuilder.
-		 *
-		 * @param tc      stereo element specifying tetrahedral configuration
-		 * @param gb      the current graph builder
-		 * @param indices atom indices
-		 */
-        private void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, IDictionary<IAtom, int> indices) {
+        /// <summary>
+        /// Add tetrahedral stereo configuration to the Beam GraphBuilder.
+        ///
+        /// <param name="tc">stereo element specifying tetrahedral configuration</param>
+        /// <param name="gb">the current graph builder</param>
+        /// <param name="indices">atom indices</param>
+        /// </summary>
+        private void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        {
 
             var ligands = tc.Ligands;
 
@@ -310,15 +335,16 @@ namespace NCDK.Smiles
                     .Winding(tc.Stereo == TetrahedralStereo.Clockwise ? Configuration.Clockwise : Configuration.AntiClockwise).Build();
         }
 
-        /**
-		 * Add extended tetrahedral stereo configuration to the Beam GraphBuilder.
-		 *
-		 * @param et      stereo element specifying tetrahedral configuration
-		 * @param gb      the current graph builder
-		 * @param indices atom indices
-		 */
+        /// <summary>
+        /// Add extended tetrahedral stereo configuration to the Beam GraphBuilder.
+        ///
+        /// <param name="et">stereo element specifying tetrahedral configuration</param>
+        /// <param name="gb">the current graph builder</param>
+        /// <param name="indices">atom indices</param>
+        /// </summary>
         private void AddExtendedTetrahedralConfiguration(ExtendedTetrahedral et, GraphBuilder gb,
-                IDictionary<IAtom, int> indices) {
+                IDictionary<IAtom, int> indices)
+        {
 
             IAtom[] ligands = et.Peripherals;
 

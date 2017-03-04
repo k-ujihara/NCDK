@@ -18,21 +18,21 @@
  */
 namespace NCDK.Maths
 {
-    /**
-	 * Class providing convenience methods for simple mathematical operations.
-	 *
-	 * @cdk.module standard
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Class providing convenience methods for simple mathematical operations.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class MathTools
     {
 
-        /**
-		 * Analog of Math.max that returns the largest double value in an array of doubles.
-		 *
-		 * @param   values  the values to be searched for the largest value among them
-		 * @return   the largest value among a set of given values
-		 */
+        /// <summary>
+        /// Analog of Math.max that returns the largest double value in an array of doubles.
+        ///
+        /// <param name="values">the values to be searched for the largest value among them</param>
+        /// <returns>the largest value among a set of given values</returns>
+        /// </summary>
         public static double Max(double[] values)
         {
             double max = values[0];
@@ -41,12 +41,12 @@ namespace NCDK.Maths
             return max;
         }
 
-        /**
-		 * Analog of Math.min that returns the largest double value in an array of double.
-		 *
-		 * @param   values  the values to be searched for the smallest value among them
-		 * @return   the smallest value among a set of given values
-		 */
+        /// <summary>
+        /// Analog of Math.min that returns the largest double value in an array of double.
+        ///
+        /// <param name="values">the values to be searched for the smallest value among them</param>
+        /// <returns>the smallest value among a set of given values</returns>
+        /// </summary>
         public static double Min(double[] values)
         {
             double min = values[0];
@@ -55,9 +55,9 @@ namespace NCDK.Maths
             return min;
         }
 
-        /**
-		 * Analog of Math.max that returns the largest int value in an array of ints.
-		 **/
+        /// <summary>
+        /// Analog of Math.max that returns the largest int value in an array of ints.
+        ///*/
         public static int Max(int[] values)
         {
             int max = values[0];
@@ -71,9 +71,9 @@ namespace NCDK.Maths
             return max;
         }
 
-        /**
-		 * Analog of Math.max that returns the largest int value in an array of ints.
-		 **/
+        /// <summary>
+        /// Analog of Math.max that returns the largest int value in an array of ints.
+        ///*/
         public static int Min(int[] values)
         {
             int min = values[0];

@@ -48,7 +48,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.ShelX.frame_1.res";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ShelXReader reader = new ShelXReader(ins);
             Crystal crystal = (Crystal)reader.Read(new Crystal());
             reader.Close();

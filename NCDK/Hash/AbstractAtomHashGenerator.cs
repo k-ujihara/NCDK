@@ -27,22 +27,19 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /**
-     * Defines an internal super-class for AtomHashGenerators. The single required
-     * method allows atom hash generators to either ignore 'suppressed' atoms or use
-     * the information.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
-#if TEST
-        public
-#endif
-        abstract class AbstractAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
+    /// <summary>
+    /// Defines an internal super-class for AtomHashGenerators. The single required
+    /// method allows atom hash generators to either ignore 'suppressed' atoms or use
+    /// the information.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
+    internal abstract class AbstractAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
     {
-        /**
-         * Empty BitArray for use when the 'suppressed' atoms are ignored.
-         */
+        /// <summary>
+        /// Empty BitArray for use when the 'suppressed' atoms are ignored.
+        /// </summary>
         readonly BitArray EMPTY_BITSET = new BitArray(0);
 
         public AbstractAtomHashGenerator(Pseudorandom pseudorandom)
@@ -51,16 +48,16 @@ namespace NCDK.Hash
 
         public abstract long[] Generate(IAtomContainer container);
 
-        /**
-         * Internal method invoked by 'molecule' hash generators.
-         *
-         * @param current    the current invariants
-         * @param encoder    encoder used for encoding stereo-chemistry
-         * @param graph      adjacency list representation of the molecule
-         * @param suppressed bit set marks vertices which are 'suppressed' (may be
-         *                   ignored)
-         * @return the atom hash values
-         */
+        /// <summary>
+        /// Internal method invoked by 'molecule' hash generators.
+        ///
+        /// <param name="current">the current invariants</param>
+        /// <param name="encoder">encoder used for encoding stereo-chemistry</param>
+        /// <param name="graph">adjacency list representation of the molecule</param>
+        /// <param name="suppressed">bit set marks vertices which are 'suppressed' (may be</param>
+        ///                   ignored)
+        /// <returns>the atom hash values</returns>
+        /// </summary>
         public abstract long[] Generate(long[] current, IStereoEncoder encoder, int[][] graph, Suppressed suppressed);
     }
 }

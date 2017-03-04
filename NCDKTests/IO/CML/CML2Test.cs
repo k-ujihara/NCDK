@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
+
 namespace NCDK.IO.CML
 {
     /// <summary>
@@ -43,7 +44,7 @@ namespace NCDK.IO.CML
         public void TestFile3()
         {
             string filename = "NCDK.Data.CML.3.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -62,14 +63,14 @@ namespace NCDK.IO.CML
             }
         }
 
-        /**
-         * @cdk.bug 2114987
-         */
+        /// <summary>
+        // @cdk.bug 2114987
+        /// </summary>
         [TestMethod()]
         public void TestCMLTestCase()
         {
             string filename = "NCDK.Data.CML.olaCmlAtomType.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = new ChemFile();
             chemFile = (IChemFile)reader.Read(chemFile);
@@ -86,7 +87,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.COONa.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -120,7 +121,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nitrate.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -154,7 +155,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.cs2a.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -183,7 +184,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.cs2a.mol.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -212,7 +213,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc2dmol.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -241,7 +242,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc2dmol.2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -270,7 +271,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc2dmol.a1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -299,7 +300,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc2dmol.a2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -328,7 +329,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc3dcml.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -357,7 +358,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc2dcml.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -386,7 +387,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc3dmol.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -415,7 +416,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc3dmol.2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -444,7 +445,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc3dmol.a1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -473,7 +474,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nsc3dmol.a2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -497,16 +498,16 @@ namespace NCDK.IO.CML
             Assert.IsFalse(GeometryUtil.Has2DCoordinates(mol));
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLSpect part
-         * of a CML file, while extracting the molecule.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLSpect part
+        /// of a CML file, while extracting the molecule.
+        /// </summary>
         [TestMethod()]
         public void TestCMLSpectMolExtraction()
         {
             string filename = "NCDK.Data.CML.molAndspect.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -530,16 +531,16 @@ namespace NCDK.IO.CML
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(mol));
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLReaction()
         {
             string filename = "NCDK.Data.CML.reaction.2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -564,16 +565,16 @@ namespace NCDK.IO.CML
             Assert.AreEqual(6, reaction.Reactants[0].Atoms.Count);
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLReactionWithAgents()
         {
             string filename = "NCDK.Data.CML.reaction.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -599,16 +600,16 @@ namespace NCDK.IO.CML
             Assert.AreEqual(6, reaction.Reactants[0].Atoms.Count);
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLReactionList()
         {
             string filename = "NCDK.Data.CML.reactionList.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -633,15 +634,15 @@ namespace NCDK.IO.CML
             Assert.AreEqual(6, reaction.Reactants[0].Atoms.Count);
         }
 
-        /**
-         * @cdk.bug 1560486
-         */
+        /// <summary>
+        // @cdk.bug 1560486
+        /// </summary>
         [TestMethod()]
         public void TestCMLWithFormula()
         {
             string filename = "NCDK.Data.CML.cmlWithFormula.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -663,15 +664,15 @@ namespace NCDK.IO.CML
             Assert.AreEqual(32, mol.Bonds.Count);
         }
 
-        /**
-         * Only Molecule with concise MolecularFormula
-         */
+        /// <summary>
+        /// Only Molecule with concise MolecularFormula
+        /// </summary>
         [TestMethod()]
         public void TestCMLConciseFormula()
         {
             string filename = "NCDK.Data.CML.cmlConciseFormula.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -690,18 +691,18 @@ namespace NCDK.IO.CML
 
             // FIXME: REACT: It should return two different formulas
             Assert.AreEqual("[C 18 H 21 Cl 2 Mn 1 N 5 O 1]",
-				Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
+                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
         }
 
-        /**
-         * Only Molecule with concise MolecularFormula
-         */
+        /// <summary>
+        /// Only Molecule with concise MolecularFormula
+        /// </summary>
         [TestMethod()]
         public void TestCMLConciseFormula2()
         {
             string filename = "NCDK.Data.CML.cmlConciseFormula2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -720,19 +721,19 @@ namespace NCDK.IO.CML
 
             // FIXME: REACT: It should return two different formulas
             Assert.AreEqual("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", 
-				Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
+                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLScheme1()
         {
             string filename = "NCDK.Data.CML.reactionScheme.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -764,16 +765,16 @@ namespace NCDK.IO.CML
             }
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLScheme2()
         {
             string filename = "NCDK.Data.CML.reactionScheme.2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -805,16 +806,16 @@ namespace NCDK.IO.CML
             }
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLSchemeStepList1()
         {
             string filename = "NCDK.Data.CML.reactionSchemeStepList.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -847,16 +848,16 @@ namespace NCDK.IO.CML
 
         }
 
-        /**
-         * This test tests whether the CMLReader is able to ignore the CMLReaction part
-         * of a CML file, while extracting the reaction.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to ignore the CMLReaction part
+        /// of a CML file, while extracting the reaction.
+        /// </summary>
         [TestMethod()]
         public void TestCMLStepList()
         {
             string filename = "NCDK.Data.CML.reactionStepList.1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -889,16 +890,16 @@ namespace NCDK.IO.CML
 
         }
 
-        /**
-         * This test tests whether the CMLReader is able to read a reactionscheme object with
-         * references to list of molecules.
-         */
+        /// <summary>
+        /// This test tests whether the CMLReader is able to read a reactionscheme object with
+        /// references to list of molecules.
+        /// </summary>
         [TestMethod()]
         public void TestCMLSchemeMoleculeSet()
         {
             string filename = "NCDK.Data.CML.reactionSchemeMoleculeSet.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -933,14 +934,14 @@ namespace NCDK.IO.CML
                 reaction.Reactants[0].GetProperty<IList<string>>(CDKPropertyName.FORMULA)[0]);
         }
 
-        /**
-         * @cdk.bug 2697568
-         */
+        /// <summary>
+        // @cdk.bug 2697568
+        /// </summary>
         [TestMethod()]
         public void TestReadReactionWithPointersToMoleculeSet()
         {
             string filename = "NCDK.Data.CML.AlanineTree.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = new ChemFile();
             chemFile = (IChemFile)reader.Read(chemFile);
@@ -949,14 +950,14 @@ namespace NCDK.IO.CML
                     [0][0].ReactionSet[0].Reactants[0]);
         }
 
-        /**
-         * @cdk.bug 2697568
-         */
+        /// <summary>
+        // @cdk.bug 2697568
+        /// </summary>
         [TestMethod()]
         public void TestBug2697568()
         {
             string filename = "NCDK.Data.CML.AlanineTreeReverse.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = new ChemFile();
             chemFile = (IChemFile)reader.Read(chemFile);
@@ -965,13 +966,13 @@ namespace NCDK.IO.CML
                     [0][0].ReactionSet[0].Reactants[0]);
         }
 
-        /**
-         */
+        /// <summary>
+        /// </summary>
         [TestMethod()]
         public void TestReactionProperties()
         {
             string filename = "NCDK.Data.CML.reaction.2.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = new ChemFile();
             chemFile = (IChemFile)reader.Read(chemFile);

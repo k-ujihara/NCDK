@@ -21,11 +21,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Config.AtomType
 {
-    /**
-     * Checks the functionality of the {@link OWLAtomTypeMappingHandler}.
-     *
-     * @cdk.module test-atomtype
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link OWLAtomTypeMappingHandler}.
+    ///
+    // @cdk.module test-atomtype
+    /// </summary>
     [TestClass()]
     public class OWLAtomTypeMappingHandlerTest : CDKTestCase
     {

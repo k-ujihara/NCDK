@@ -27,13 +27,13 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Builder
 {
-    /**
-     * Class for building/storing nodes (atoms) in the graph with atom
-     * query capabilities.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class for building/storing nodes (atoms) in the graph with atom
+    /// query capabilities.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class NodeBuilder : INode
     {
 
@@ -41,10 +41,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         private List<IEdge> edgesList;
         private VFAtomMatcher matcher;
 
-        /**
-         * Construct a node for a query atom
-         * @param matcher
-         */
+        /// <summary>
+        /// Construct a node for a query atom
+        /// <param name="matcher">/// </summary></param>
         protected internal NodeBuilder(VFAtomMatcher matcher)
         {
             edgesList = new List<IEdge>();

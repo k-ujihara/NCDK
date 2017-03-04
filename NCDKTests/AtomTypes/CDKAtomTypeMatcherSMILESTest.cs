@@ -22,21 +22,21 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests the matching of atom types defined in the
-     * CDK atom type list, starting from SMILES strings.
-     *
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// This class tests the matching of atom types defined in the
+    /// CDK atom type list, starting from SMILES strings.
+    ///
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class CDKAtomTypeMatcherSMILESTest : AbstractCDKAtomTypeTest
     {
         private static SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         private static CDKAtomTypeMatcher atomTypeMatcher = CDKAtomTypeMatcher.GetInstance(Silent.ChemObjectBuilder.Instance);
 
-        /**
-         * @cdk.bug 2826961
-         */
+        /// <summary>
+        // @cdk.bug 2826961
+        /// </summary>
         [TestMethod()]
         public void TestIdenticalTypes()
         {
@@ -90,9 +90,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * @cdk.bug 2976054
-         */
+        /// <summary>
+        // @cdk.bug 2976054
+        /// </summary>
         [TestMethod()]
         public void TestAnotherNitrogen_SP2()
         {
@@ -107,9 +107,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * @cdk.bug 1294
-         */
+        /// <summary>
+        // @cdk.bug 1294
+        /// </summary>
         [TestMethod()]
         public void TestBug1294()
         {
@@ -130,9 +130,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * @cdk.bug 3093644
-         */
+        /// <summary>
+        // @cdk.bug 3093644
+        /// </summary>
         [TestMethod()]
         public void TestBug3093644()
         {
@@ -198,7 +198,7 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void Test4Sulphur()
         {
-            string smiles = "Br.Br.CS(CCC(N)C#N)C[C@H]1OC([C@H](O)[C@@H]1O)n2cnc3c(N)ncnc23";
+            string smiles = "Br.Br.CS(CCC(N)C#N)C[C@H]1OC([C@H](O)[C@@H]1O)N2cnc3c(N)ncnc23";
 
             IAtomContainer mol = smilesParser.ParseSmiles(smiles);
             IAtomType[] types = atomTypeMatcher.FindMatchingAtomTypes(mol);

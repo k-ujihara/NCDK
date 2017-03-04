@@ -20,17 +20,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Tools.Manipulator;
+
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests the matching of atom types defined in the
-     * CDK atom type list.
-     *
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// This class tests the matching of atom types defined in the
+    /// CDK atom type list.
+    ///
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class CDKAtomTypeMatcherFilesTest : AbstractCDKAtomTypeTest
     {
@@ -40,7 +41,7 @@ namespace NCDK.AtomTypes
         public void TestFile3()
         {
             string filename = "NCDK.Data.CML.3.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
 
@@ -53,14 +54,14 @@ namespace NCDK.AtomTypes
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
         }
 
-        /**
-         * @cdk.bug 3141611
-         */
+        /// <summary>
+        // @cdk.bug 3141611
+        /// </summary>
         [TestMethod()]
         public void TestBug3141611()
         {
             string filename = "NCDK.Data.MDL.error.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
 
@@ -77,7 +78,7 @@ namespace NCDK.AtomTypes
         public void TestOla28()
         {
             string filename = "NCDK.Data.CML.mol28.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
 
@@ -98,7 +99,7 @@ namespace NCDK.AtomTypes
 
             // Read the first file
             string filename = "NCDK.Data.CML.smiles1.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);
@@ -106,7 +107,7 @@ namespace NCDK.AtomTypes
 
             // Read the second file
             filename = "NCDK.Data.CML.smiles2.cml";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new CMLReader(ins);
             chemFile = (IChemFile)reader.Read(new ChemFile());
             Assert.IsNotNull(chemFile);

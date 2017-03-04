@@ -1,4 +1,4 @@
-<#@ include file="..\Config.ttinclude" #>
+<#@ include file="..\..\Config.ttinclude" #>
 
 /* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -49,8 +49,8 @@ namespace NCDK.SMSD
              new[]
             {
                 "Default:Default SMSD algorithm.",
-				"MCSPlus:MCS Plus algorithm.",
-				"VFLibMCS:VF Lib based MCS algorithm.",
+                "MCSPlus:MCS Plus algorithm.",
+                "VFLibMCS:VF Lib based MCS algorithm.",
                 "CDKMCS:CDK UIT MCS.",
                 "SubStructure:Substructure search will return all maps.",
                 "TurboSubStructure:Substructure search will return first map.",

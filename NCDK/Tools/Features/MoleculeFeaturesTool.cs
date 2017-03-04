@@ -23,14 +23,14 @@
  */
 namespace NCDK.Features
 {
-    /**
-     * Utility that helps determine which data features are present.
-     *
-     * @author egonw
-     * @cdk.githash
-     *
-     * @see    DataFeatures
-     */
+    /// <summary>
+    /// Utility that helps determine which data features are present.
+    ///
+    // @author egonw
+    // @cdk.githash
+    ///
+    // @see    DataFeatures
+    /// </summary>
     public class MoleculeFeaturesTool
     {
         public static bool HasPartialCharges(IAtomContainer molecule)
@@ -56,9 +56,9 @@ namespace NCDK.Features
             return false;
         }
 
-        /**
-         * Checks whether all bonds have exactly two atoms.
-         */
+        /// <summary>
+        /// Checks whether all bonds have exactly two atoms.
+        /// </summary>
         public static bool HasGraphRepresentation(IAtomContainer molecule)
         {
             foreach (var bond in molecule.Bonds)

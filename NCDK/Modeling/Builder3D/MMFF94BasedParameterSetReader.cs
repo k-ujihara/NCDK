@@ -24,6 +24,7 @@
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.Tools;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -208,7 +209,7 @@ namespace NCDK.Modeling.Builder3D
             atomType.MassNumber = MassNumber(atomNr, mass);
             atomType.FormalNeighbourCount = maxbond;
             atomType.Symbol = rootType;
-            var co = System.Drawing.Color.FromArgb(rl, gl, bl);
+            var co = CDKPropertyName.RGB2Int(rl, gl, bl);
             atomType.SetProperty(CDKPropertyName.COLOR, co);
             atomType.AtomTypeName = sid;
             atomTypes.Add(atomType);
@@ -249,7 +250,7 @@ namespace NCDK.Modeling.Builder3D
             {
                 throw new IOException("setBond: Malformed Number due to:" + nfe);
             }
-            //		key = "bond" + scode + ";" + sid1 + ";" + sid2;
+            //        key = "bond" + scode + ";" + sid1 + ";" + sid2;
             var key = "bond" + sid1 + ";" + sid2;
             parameterSet[key] = data;
         }
@@ -283,7 +284,7 @@ namespace NCDK.Modeling.Builder3D
                 data.Add(va3);
                 data.Add(va4);
 
-                //			key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
+                //            key = "angle" + scode + ";" + sid1 + ";" + sid2 + ";" + sid3;
                 var key = "angle" + sid1 + ";" + sid2 + ";" + sid3;
                 if (parameterSet.ContainsKey(key))
                 {
@@ -464,9 +465,7 @@ namespace NCDK.Modeling.Builder3D
 
             if (ins == null)
             {
-                var loader = this.GetType().Assembly;
-                Console.Out.WriteLine("loader.getClassName:" + loader.GetType().Name);
-                ins = loader.GetManifestResourceStream(configFile);
+                ins = ResourceLoader.GetAsStream(configFile);
             }
             if (ins == null)
             {
@@ -479,7 +478,7 @@ namespace NCDK.Modeling.Builder3D
 
             if (insvdW == null)
             {
-                insvdW = this.GetType().Assembly.GetManifestResourceStream(configFilevdW);
+                insvdW = ResourceLoader.GetAsStream(configFilevdW);
             }
             if (insvdW == null)
             {
@@ -492,7 +491,7 @@ namespace NCDK.Modeling.Builder3D
 
             if (insDFSB == null)
             {
-                insDFSB = this.GetType().Assembly.GetManifestResourceStream(configFileDFSB);
+                insDFSB = ResourceLoader.GetAsStream(configFileDFSB);
             }
             if (insDFSB == null)
             {

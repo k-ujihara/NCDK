@@ -25,12 +25,12 @@ using NCDK.SMSD.Algorithms.VFLib.Builder;
 
 namespace NCDK.SMSD.Algorithms.Matchers
 {
-    /**
-     * Interface for the AtomMatcher (atoms) in graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the AtomMatcher (atoms) in graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface VFAtomMatcher
     {
         bool Matches(TargetProperties container, IAtom atom);

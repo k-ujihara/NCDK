@@ -103,7 +103,7 @@ namespace NCDK.Modeling.Builder3D
         {
             AtomPlacer3D atmplacer = new AtomPlacer3D();
             IAtomContainer molecule = TestMoleculeFactory.MakeCyclohexane();
-            //		For(IAtom a : m.Atoms) a.IsPlaced = true;
+            //        For(IAtom a : m.Atoms) a.IsPlaced = true;
             for (int i = 0; i < 3; i++)
             {
                 molecule.Atoms[i].IsPlaced = true;

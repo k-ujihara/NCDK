@@ -16,7 +16,7 @@ namespace <#= ns.NS #>
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener, ICloneable
     {
-	    internal bool isAromatic;
+        internal bool isAromatic;
         internal bool isAliphatic;
         internal bool isInRing;
         internal bool isSingleOrDouble;
@@ -66,24 +66,24 @@ namespace <#= ns.NS #>
 
         private void InitAtoms(IEnumerable<IAtom> atoms)
         {
-			if (atoms == null)
-			{
-	            this.atoms = 
+            if (atoms == null)
+            {
+                this.atoms = 
 <# if (!ns.IsSilent) { #>
-			        new List<IAtom>(2);
+                    new List<IAtom>(2);
 <# } else { #>
-				    new ObservableChemObjectCollection<IAtom>(2, this);
+                    new ObservableChemObjectCollection<IAtom>(2, this);
 <# } #>
-			}
-			else
-			{
-					this.atoms = 
+            }
+            else
+            {
+                    this.atoms = 
 <# if (!ns.IsSilent) { #>
-					new List<IAtom>(atoms);
+                    new List<IAtom>(atoms);
 <# } else { #>
                 new ObservableChemObjectCollection<IAtom>(this, atoms);
 <# } #>
-			}
+            }
         }
 
         public virtual IList<IAtom> Atoms => atoms;
@@ -238,8 +238,8 @@ namespace <#= ns.NS #>
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
 
             IBond iclone;
             if (map.BondMap.TryGetValue(this, out iclone))
@@ -275,8 +275,8 @@ namespace <#= ns.NS #>
         public override bool Compare(object obj)
         {
             var bond = obj as Bond;
-			if (bond == null)
-				return false;
+            if (bond == null)
+                return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
         }

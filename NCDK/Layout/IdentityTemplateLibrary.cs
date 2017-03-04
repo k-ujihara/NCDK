@@ -36,36 +36,33 @@ using System.Text;
 
 namespace NCDK.Layout
 {
-    /**
-     * A library for 2D layout templates that are retrieved based on identity. Such a library is useful
-     * for ensure ring systems are laid out in their de facto orientation. Importantly, identity
-     * templates means the library size can be very large but still searched in constant time.
-     *
-     * <pre>{@code
-     *
-     * // load from a resource file on the classpath
-     * IdentityTemplateLibrary lib = IdentityTemplateLibrary.LoadFromResource("/data/ring-templates.smi");
-     *
-     * IAtomContainer container, container2;
-     *
-     * // add to the library
-     * lib.Add(container);
-     *
-     * // assign a layout
-     * bool modified = lib.AssignLayout(container2);
-     *
-     * // store
-     * Stream out = new FileOutputStream("/tmp/lib.smi");
-     * lib.Store(out);
-     * out.Close();
-     * }</pre>
-     *
-     * @author John May
-     */
-#if TEST
-    public
-#endif
-    sealed class IdentityTemplateLibrary
+    /// <summary>
+    /// A library for 2D layout templates that are retrieved based on identity. Such a library is useful
+    /// for ensure ring systems are laid out in their de facto orientation. Importantly, identity
+    /// templates means the library size can be very large but still searched in constant time.
+    ///
+    /// <code>{@code
+    ///
+    /// // load from a resource file on the classpath
+    /// IdentityTemplateLibrary lib = IdentityTemplateLibrary.LoadFromResource("/data/ring-templates.smi");
+    ///
+    /// IAtomContainer container, container2;
+    ///
+    /// // add to the library
+    /// lib.Add(container);
+    ///
+    /// // assign a layout
+    /// bool modified = lib.AssignLayout(container2);
+    ///
+    /// // store
+    /// Stream out = new FileOutputStream("/tmp/lib.smi");
+    /// lib.Store(out);
+    /// out.Close();
+    /// }</code>
+    ///
+    // @author John May
+    /// </summary>
+    internal sealed class IdentityTemplateLibrary
     {
 
         //private static readonly DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
@@ -78,12 +75,12 @@ namespace NCDK.Layout
         {
         }
 
-        /**
-         * Add one template library to another.
-         *
-         * @param library another template library
-         * @return this library with the other one added in (allows chaining)
-         */
+        /// <summary>
+        /// Add one template library to another.
+        ///
+        /// <param name="library">another template library</param>
+        /// <returns>this library with the other one added in (allows chaining)</returns>
+        /// </summary>
         public IdentityTemplateLibrary Add(IdentityTemplateLibrary library)
         {
             foreach (var e in library.templateMap)
@@ -92,15 +89,15 @@ namespace NCDK.Layout
             return this;
         }
 
-        /**
-         * Internal - create a canonical SMILES string temporarily adjusting to default
-         * hydrogen count. This method may be moved to the SMILESGenerator in future.
-         *
-         * @param mol molecule
-         * @param ordering ordering output
-         * @return SMILES
-         * @throws CDKException SMILES could be generate
-         */
+        /// <summary>
+        /// Internal - create a canonical SMILES string temporarily adjusting to default
+        /// hydrogen count. This method may be moved to the SMILESGenerator in future.
+        ///
+        /// <param name="mol">molecule</param>
+        /// <param name="ordering">ordering output</param>
+        /// <returns>SMILES</returns>
+        /// <exception cref="CDKException">SMILES could be generate</exception>
+        /// </summary>
         private string CreateCanonicalSmiles(IAtomContainer mol, int[] ordering)
         {
 
@@ -184,13 +181,13 @@ namespace NCDK.Layout
             return smi;
         }
 
-        /**
-         * Create a library entry from an atom container. Note the entry is not added to the library.
-         *
-         * @param container structure representation
-         * @return a new library entry (not stored).
-         * @see #Add(java.util.Map.Entry)
-         */
+        /// <summary>
+        /// Create a library entry from an atom container. Note the entry is not added to the library.
+        ///
+        /// <param name="container">structure representation</param>
+        /// <returns>a new library entry (not stored).</returns>
+        /// <seealso cref="Add(java.util.Map.Entry)"/>
+        /// </summary>
         public KeyValuePair<string, Vector2[]>? CreateEntry(IAtomContainer container)
         {
             try
@@ -226,14 +223,14 @@ namespace NCDK.Layout
             return null;
         }
 
-        /**
-         * Create a library entry from a SMILES string with the coordinates suffixed in binary. The
-         * entry should be created with {@link #EncodeEntry(java.util.Map.Entry)} and not created
-         * manually. Note, the entry is not added to the library.
-         *
-         * @param str input string
-         * @return library entry
-         */
+        /// <summary>
+        /// Create a library entry from a SMILES string with the coordinates suffixed in binary. The
+        /// entry should be created with {@link #EncodeEntry(java.util.Map.Entry)} and not created
+        /// manually. Note, the entry is not added to the library.
+        ///
+        /// <param name="str">input string</param>
+        /// <returns>library entry</returns>
+        /// </summary>
         public static KeyValuePair<string, Vector2[]> DecodeEntry(string str)
         {
             int i = str.IndexOf(' ');
@@ -241,12 +238,12 @@ namespace NCDK.Layout
             return new KeyValuePair<string, Vector2[]>(str.Substring(0, i), DecodeCoordinates(str.Substring(i + 1)));
         }
 
-        /**
-         * Decode coordinates that have been placed in a byte buffer.
-         *
-         * @param str the string to decode
-         * @return array of coordinates
-         */
+        /// <summary>
+        /// Decode coordinates that have been placed in a byte buffer.
+        ///
+        /// <param name="str">the string to decode</param>
+        /// <returns>array of coordinates</returns>
+        /// </summary>
         public static Vector2[] DecodeCoordinates(string str)
         {
             if (str.StartsWith("|("))
@@ -279,13 +276,13 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Encodes an entry in a compact string representation. The encoded entry is a SMILES string
-         * with the coordinates suffixed in binary.
-         *
-         * @param entry the entry to encode
-         * @return encoded entry
-         */
+        /// <summary>
+        /// Encodes an entry in a compact string representation. The encoded entry is a SMILES string
+        /// with the coordinates suffixed in binary.
+        ///
+        /// <param name="entry">the entry to encode</param>
+        /// <returns>encoded entry</returns>
+        /// </summary>
         public static string EncodeEntry(KeyValuePair<string, Vector2[]> entry)
         {
             StringBuilder sb = new StringBuilder();
@@ -295,12 +292,12 @@ namespace NCDK.Layout
             return sb.ToString();
         }
 
-        /**
-         * Encode coordinates in a string.
-         *
-         * @param points points
-         * @return extended SMILES format coordinates
-         */
+        /// <summary>
+        /// Encode coordinates in a string.
+        ///
+        /// <param name="points">points</param>
+        /// <returns>extended SMILES format coordinates</returns>
+        /// </summary>
         public static string EncodeCoordinates(Vector2[] points)
         {
             StringBuilder sb = new StringBuilder();
@@ -329,33 +326,33 @@ namespace NCDK.Layout
             return v;
         }
 
-        /**
-         * Add a created entry to the library.
-         *
-         * @param entry entry
-         */
+        /// <summary>
+        /// Add a created entry to the library.
+        ///
+        /// <param name="entry">entry</param>
+        /// </summary>
         public void Add(KeyValuePair<string, Vector2[]>? entry)
         {
             if (entry != null) templateMap.Add(entry.Value.Key, entry.Value.Value);
         }
 
-        /**
-         * Create an entry for the provided container and add it to the library.
-         *
-         * @param container structure representation
-         */
+        /// <summary>
+        /// Create an entry for the provided container and add it to the library.
+        ///
+        /// <param name="container">structure representation</param>
+        /// </summary>
         public void Add(IAtomContainer container)
         {
             Add(CreateEntry(container));
         }
 
-        /**
-         * Assign a 2D layout to the atom container using the contents of the library. If multiple
-         * coordinates are available the first is choosen.
-         *
-         * @param container structure representation
-         * @return a layout was assigned
-         */
+        /// <summary>
+        /// Assign a 2D layout to the atom container using the contents of the library. If multiple
+        /// coordinates are available the first is choosen.
+        ///
+        /// <param name="container">structure representation</param>
+        /// <returns>a layout was assigned</returns>
+        /// </summary>
         public bool AssignLayout(IAtomContainer container)
         {
 
@@ -385,13 +382,13 @@ namespace NCDK.Layout
             return false;
         }
 
-        /**
-         * Get all templated coordinates for the provided molecule. The return collection has
-         * coordinates ordered based on the input.
-         *
-         * @param mol molecule (or fragment) to lookup
-         * @return the coordinates
-         */
+        /// <summary>
+        /// Get all templated coordinates for the provided molecule. The return collection has
+        /// coordinates ordered based on the input.
+        ///
+        /// <param name="mol">molecule (or fragment) to lookup</param>
+        /// <returns>the coordinates</returns>
+        /// </summary>
         public ICollection<Vector2[]> GetCoordinates(IAtomContainer mol)
         {
             try
@@ -422,25 +419,25 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Create an empty template library.
-         *
-         * @return an empty template library
-         */
+        /// <summary>
+        /// Create an empty template library.
+        ///
+        /// <returns>an empty template library</returns>
+        /// </summary>
         public static IdentityTemplateLibrary Empty()
         {
             return new IdentityTemplateLibrary();
         }
 
-        /**
-         * Load a template library from a resource on the class path.
-         *
-         * @return loaded template library
-         * @throws java.lang.ArgumentException resource not found or could not be loaded
-         */
+        /// <summary>
+        /// Load a template library from a resource on the class path.
+        ///
+        /// <returns>loaded template library</returns>
+        // @throws java.lang.ArgumentException resource not found or could not be loaded
+        /// </summary>
         public static IdentityTemplateLibrary LoadFromResource(string resource)
         {
-            using (Stream ins = typeof(IdentityTemplateLibrary).Assembly.GetManifestResourceStream(typeof(IdentityTemplateLibrary), resource))
+            using (Stream ins = ResourceLoader.GetAsStream(typeof(IdentityTemplateLibrary), resource))
             {
                 try
                 {
@@ -455,12 +452,12 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Load a template library from an input stream.
-         *
-         * @return loaded template library
-         * @throws java.io.IOException low level IO error
-         */
+        /// <summary>
+        /// Load a template library from an input stream.
+        ///
+        /// <returns>loaded template library</returns>
+        // @throws java.IOException low level IO error
+        /// </summary>
         public static IdentityTemplateLibrary Load(Stream ins)
         {
             using (var br = new StreamReader(ins))
@@ -477,13 +474,13 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Reorder coordinates.
-         *
-         * @param coords coordinates
-         * @param order permutation
-         * @return reordered coordinates
-         */
+        /// <summary>
+        /// Reorder coordinates.
+        ///
+        /// <param name="coords">coordinates</param>
+        /// <param name="order">permutation</param>
+        /// <returns>reordered coordinates</returns>
+        /// </summary>
         public static Vector2[] ReorderCoords(Vector2[] coords, int[] order)
         {
             Vector2[] neworder = new Vector2[coords.Length];
@@ -492,12 +489,12 @@ namespace NCDK.Layout
             return neworder;
         }
 
-        /**
-         * Update the template library - can be called for safety after
-         * each load.
-         *
-         * @param bldr builder
-         */
+        /// <summary>
+        /// Update the template library - can be called for safety after
+        /// each load.
+        ///
+        /// <param name="bldr">builder</param>
+        /// </summary>
         public void Update(IChemObjectBuilder bldr)
         {
             SmilesParser smipar = new SmilesParser(bldr);
@@ -525,12 +522,12 @@ namespace NCDK.Layout
                     templateMap.Add(e.Key, v);
         }
 
-        /**
-         * Store a template library to the provided output stream.
-         *
-         * @param out output stream
-         * @throws IOException low level IO error
-         */
+        /// <summary>
+        /// Store a template library to the provided output stream.
+        ///
+        /// <param name="out">output stream</param>
+        /// <exception cref="IOException">low level IO error</exception>
+        /// </summary>
         public void Store(Stream out_)
         {
             using (var bw = new StreamWriter(out_))

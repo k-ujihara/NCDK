@@ -29,22 +29,22 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This class calculates ATS autocorrelation descriptor, where the weight equal
-     * to the charges.
-     *
-     * @author Federico
-     * @cdk.created 2007-03-01
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     */
+    /// <summary>
+    /// This class calculates ATS autocorrelation descriptor, where the weight equal
+    /// to the charges.
+    ///
+    // @author Federico
+    // @cdk.created 2007-03-01
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    /// </summary>
 
     public class AutocorrelationDescriptorPolarizability : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5" };
 
-        private static double[] listpolarizability(IAtomContainer container, int[][] dmat)
+        private static double[] Listpolarizability(IAtomContainer container, int[][] dmat)
         {
             int natom = container.Atoms.Count;
             double[] polars = new double[natom];
@@ -115,7 +115,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                double[] w = listpolarizability(molecule, distancematrix);
+                double[] w = Listpolarizability(molecule, distancematrix);
                 int natom = molecule.Atoms.Count;
                 double[] polarizabilitySum = new double[5];
 
@@ -181,7 +181,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
          new DescriptorSpecification(
                 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#autoCorrelationPolarizability",
                typeof(AutocorrelationDescriptorPolarizability).FullName, 
-			   "The Chemistry Development Kit");
+               "The Chemistry Development Kit");
 
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(5);
     }

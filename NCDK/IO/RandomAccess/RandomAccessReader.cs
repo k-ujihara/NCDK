@@ -32,17 +32,17 @@ using System.Text;
 
 namespace NCDK.IO.RandomAccess
 {
-    /**
-     * Random access to text files of compounds.
-     * Reads the file as a text and builds an index file, if the index file doesn't already exist.
-     * The index stores offset, length and a third field reserved for future use.
-     * Subsequent access for a record N uses this index to seek the record and return the molecule.
-     * Useful for very big files.
-     *
-     * @author     Nina Jeliazkova <nina@acad.bg>
-     * @cdk.module io
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Random access to text files of compounds.
+    /// Reads the file as a text and builds an index file, if the index file doesn't already exist.
+    /// The index stores offset, length and a third field reserved for future use.
+    /// Subsequent access for a record N uses this index to seek the record and return the molecule.
+    /// Useful for very big files.
+    ///
+    // @author     Nina Jeliazkova <nina@acad.bg>
+    // @cdk.module io
+    // @cdk.githash
+    /// </summary>
     public abstract class RandomAccessReader : DefaultRandomAccessChemObjectReader
     {
         protected Stream raFile;
@@ -50,10 +50,8 @@ namespace NCDK.IO.RandomAccess
         private readonly string filename;
         protected ISimpleChemObjectReader chemObjectReader;
         protected int indexVersion = 1;
-        /*
-         * index[record][0] - record offset in file index[record][1] - record length
-         * index[record][2] - number of atoms (if available)
-         */
+        // index[record][0] - record offset in file index[record][1] - record length
+        // index[record][2] - number of atoms (if available)
         protected long[][] index = null;
         protected int records;
         protected int currentRecord = 0;
@@ -71,14 +69,13 @@ namespace NCDK.IO.RandomAccess
             : this(file, builder, null)
         { }
 
-        /**
-        * Reads the file and builds an index file, if the index file doesn't already exist.
-         *
-         * @param file file the file object containg the molecules to be indexed
-         * @param builder builder a chem object builder
-         * @param listener listen for read event
-         * @ if there is an error during reading
-         */
+        /// <summary>
+        /// Reads the file and builds an index file, if the index file doesn't already exist.
+        /// </summary>
+        /// <param name="file">file the file object containg the molecules to be indexed</param>
+        /// <param name="builder">builder a chem object builder</param>
+        /// <param name="listener">listen for read event</param>
+        /// <exception cref="">if there is an error during reading</exception>
         public RandomAccessReader(string file, IChemObjectBuilder builder, IReaderListener listener)
             : base()
         {
@@ -123,14 +120,14 @@ namespace NCDK.IO.RandomAccess
             }
         }
 
-        /**
-         * Reads the record text content into a string.
-         *
-         * @param record The record number
-         * @return  A string representation of the record
-         * @.io.IOException if error occurs during reading
-         * @.openscience.cdk.exception.CDKException if the record number is invalid
-         */
+        /// <summary>
+        /// Reads the record text content into a string.
+        ///
+        /// <param name="record">The record number</param>
+        /// <returns>A string representation of the record</returns>
+        /// <exception cref="IOException">if error occurs during reading</exception>
+        /// <exception cref="CDKException">if the record number is invalid</exception>
+        /// </summary>
         protected string ReadContent(int record)
         {
             Debug.WriteLine("Current record ", record);
@@ -375,10 +372,6 @@ namespace NCDK.IO.RandomAccess
             return indexFile;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see java.io.IDisposable#Close()
-         */
         public void Close()
         {
             raFile.Close();
@@ -400,10 +393,6 @@ namespace NCDK.IO.RandomAccess
             this.chemObjectReader = chemObjectReader;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see java.util.IEnumerator#HasNext()
-         */
         public bool HasNext()
         {
             return currentRecord < (records - 1);
@@ -440,10 +429,6 @@ namespace NCDK.IO.RandomAccess
             }
         }
 
-        /*
-         * (non-Javadoc)
-         * @see java.util.IEnumerator#Next()
-         */
         public IChemObject Next()
         {
             try
@@ -457,9 +442,6 @@ namespace NCDK.IO.RandomAccess
             }
         }
 
-        /*
-         * (non-Javadoc)
-         */
         public IChemObject Previous()
         {
             try

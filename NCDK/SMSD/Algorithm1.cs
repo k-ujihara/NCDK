@@ -1,19 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -59,17 +46,17 @@ namespace NCDK.SMSD
     {
         public static class O
         {
-			public const int Default = 0;
-			public const int MCSPlus = 1;
-			public const int VFLibMCS = 2;
-			public const int CDKMCS = 3;
-			public const int SubStructure = 4;
-			public const int TurboSubStructure = 5;
-      	
+            public const int Default = 0;
+            public const int MCSPlus = 1;
+            public const int VFLibMCS = 2;
+            public const int CDKMCS = 3;
+            public const int SubStructure = 4;
+            public const int TurboSubStructure = 5;
+          
         }
 
-		private readonly int ordinal;
-		public int Ordinal => ordinal;
+        private readonly int ordinal;
+        public int Ordinal => ordinal;
 
         public override string ToString()
         {
@@ -92,44 +79,44 @@ namespace NCDK.SMSD
             this.ordinal = ordinal;
         }
 
-		public static explicit operator Algorithm(int ordinal)
+        public static explicit operator Algorithm(int ordinal)
         {
             if (!(0 <= ordinal || ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
-			return values[ordinal];
+            return values[ordinal];
         }
 
-		public static explicit operator int(Algorithm obj)
+        public static explicit operator int(Algorithm obj)
         {
             return obj.Ordinal;
         }
 
-		/// <summary>
-		/// Default SMSD algorithm.
-		/// </summary>
+        /// <summary>
+        /// Default SMSD algorithm.
+        /// </summary>
         public static readonly Algorithm Default = new Algorithm(0);
-		/// <summary>
-		/// MCS Plus algorithm.
-		/// </summary>
+        /// <summary>
+        /// MCS Plus algorithm.
+        /// </summary>
         public static readonly Algorithm MCSPlus = new Algorithm(1);
-		/// <summary>
-		/// VF Lib based MCS algorithm.
-		/// </summary>
+        /// <summary>
+        /// VF Lib based MCS algorithm.
+        /// </summary>
         public static readonly Algorithm VFLibMCS = new Algorithm(2);
-		/// <summary>
-		/// CDK UIT MCS.
-		/// </summary>
+        /// <summary>
+        /// CDK UIT MCS.
+        /// </summary>
         public static readonly Algorithm CDKMCS = new Algorithm(3);
-		/// <summary>
-		/// Substructure search will return all maps.
-		/// </summary>
+        /// <summary>
+        /// Substructure search will return all maps.
+        /// </summary>
         public static readonly Algorithm SubStructure = new Algorithm(4);
-		/// <summary>
-		/// Substructure search will return first map.
-		/// </summary>
+        /// <summary>
+        /// Substructure search will return first map.
+        /// </summary>
         public static readonly Algorithm TurboSubStructure = new Algorithm(5);
-		private static readonly Algorithm[] values = new Algorithm[]
-		{
+        private static readonly Algorithm[] values = new Algorithm[]
+        {
             Default, 
             MCSPlus, 
             VFLibMCS, 
@@ -137,34 +124,34 @@ namespace NCDK.SMSD
             SubStructure, 
             TurboSubStructure, 
     
-		};
+        };
         public static System.Collections.Generic.IEnumerable<Algorithm> Values => values;
 
-		/* In order to cause compiling error */
+        /* In order to cause compiling error */
 
-		public static bool operator==(Algorithm a, object b)
+        public static bool operator==(Algorithm a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
-		public static bool operator!=(Algorithm a, object b)
+        public static bool operator!=(Algorithm a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(object a, Algorithm b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator!=(object a, Algorithm b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(Algorithm a, Algorithm b)
         {
-			
+            
             return a.Ordinal == b.Ordinal;
         }
 
@@ -173,11 +160,11 @@ namespace NCDK.SMSD
             return !(a == b);
         }
 
-		public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-	
-			if (!(obj is Algorithm))
-				return false;
+    
+            if (!(obj is Algorithm))
+                return false;
             return this.Ordinal == ((Algorithm)obj).Ordinal;
         }
 

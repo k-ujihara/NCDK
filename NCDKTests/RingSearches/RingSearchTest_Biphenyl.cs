@@ -26,12 +26,12 @@ using NCDK.Templates;
 using System.Collections.Generic;
 
 namespace NCDK.RingSearches {
-    /**
-     * biphenyl ring search unit tests
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// biphenyl ring search unit tests
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_Biphenyl {
 
@@ -62,7 +62,7 @@ namespace NCDK.RingSearches {
 
         [TestMethod()]
         public void TestFUsed() {
-            Assert.AreEqual(0, new RingSearch(biphenyl).FUsed().Length);
+            Assert.AreEqual(0, new RingSearch(biphenyl).Fused().Length);
         }
 
         [TestMethod()]
@@ -86,7 +86,7 @@ namespace NCDK.RingSearches {
         [TestMethod()]
         public void TestFUsedRingFragments() {
             RingSearch search = new RingSearch(biphenyl);
-            IList<IAtomContainer> fused = search.FUsedRingFragments();
+            IList<IAtomContainer> fused = search.FusedRingFragments();
             Assert.AreEqual(0, fused.Count);
         }
     }

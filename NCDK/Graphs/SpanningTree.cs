@@ -20,25 +20,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * Spanning tree of a molecule.
-	 * Used to discover the number of cyclic bonds in order to prevent the
-	 * inefficient AllRingsFinder to run for too long.
-	 *
-	 * @author      Nina Jeliazkova
-	 * @cdk.module  core
-	 * @cdk.githash
-	 * @cdk.dictref blue-obelisk:graphSpanningTree
-	 * @cdk.keyword spanning tree
-	 * @cdk.keyword ring finding
-	 */
+    /// <summary>
+    /// Spanning tree of a molecule.
+    /// Used to discover the number of cyclic bonds in order to prevent the
+    /// inefficient AllRingsFinder to run for too long.
+    /// </summary>
+    // @author      Nina Jeliazkova
+    // @cdk.module  core
+    // @cdk.githash
+    // @cdk.dictref blue-obelisk:graphSpanningTree
+    // @cdk.keyword spanning tree
+    // @cdk.keyword ring finding
     public class SpanningTree
     {
         private const string ATOM_NUMBER = "ST_ATOMNO";
@@ -58,18 +54,16 @@ namespace NCDK.Graphs
         private bool disconnected;
         private bool identifiedBonds;
 
-        /**
-		 * Is the molecule disconnected and has more then one component.
-		 *
-		 * @return the molecule is disconnected
-		 */
+        /// <summary>
+        /// Is the molecule disconnected and has more then one component.
+        /// </summary>
+        /// <returns>the molecule is disconnected</returns>
         public bool IsDisconnected => disconnected;
 
-        /**
-		 * Create a new spanning tree for the provided molecule.
-		 *
-		 * @param atomContainer molecule to make a spanning tree for.
-		 */
+        /// <summary>
+        /// Create a new spanning tree for the provided molecule.
+        /// </summary>
+        /// <param name="atomContainer">molecule to make a spanning tree for.</param>
         public SpanningTree(IAtomContainer atomContainer)
         {
             identifiedBonds = false;
@@ -122,9 +116,9 @@ namespace NCDK.Graphs
             }
         }
 
-        /*
-		 * Kruskal algorithm
-		 */
+        /// <summary>
+        /// Kruskal algorithm
+        /// </summary>
         private void BuildSpanningTree(IAtomContainer atomContainer)
         {
             disconnected = false;
@@ -169,7 +163,7 @@ namespace NCDK.Graphs
             for (int b = 0; b < totalEdgeCount; b++)
                 if (!bondsInTree[b])
                 {
-                    //			edgesRings[edrSize] = atomContainer.GetBondAt(b);
+                    //            edgesRings[edrSize] = atomContainer.GetBondAt(b);
                     edrSize++;
                 }
             cb = Arrays.CreateJagged<int>(edrSize, totalEdgeCount);
@@ -182,11 +176,10 @@ namespace NCDK.Graphs
                 atom.RemoveProperty(ATOM_NUMBER);
         }
 
-        /**
-		 * Access the computed spanning tree of the input molecule.
-		 *
-		 * @return acyclic tree of the input molecule
-		 */
+        /// <summary>
+        /// Access the computed spanning tree of the input molecule.
+        /// </summary>
+        /// <returns>acyclic tree of the input molecule</returns>
         public IAtomContainer GetSpanningTree()
         {
             IAtomContainer container = molecule.Builder.CreateAtomContainer();
@@ -197,17 +190,15 @@ namespace NCDK.Graphs
             return container;
         }
 
-        /**
-		 * Find a path connected <i>a1</i> and <i>a2</i> in the tree. If there was
-		 * an edge between <i>a1</i> and <i>a2</i> this path is a cycle.
-		 *
-		 * @param spt spanning tree
-		 * @param atom1  start of path (source)
-		 * @param atom2  end of path (target)
-		 * @return a path through the spanning tree from the source to the target
-		 * @ thrown if the atom is not in the spanning
-		 *                             tree
-		 */
+        /// <summary>
+        /// Find a path connected <i>a1</i> and <i>a2</i> in the tree. If there was
+        /// an edge between <i>a1</i> and <i>a2</i> this path is a cycle.
+        /// </summary>
+        /// <param name="spt">spanning tree</param>
+        /// <param name="atom1">start of path (source)</param>
+        /// <param name="atom2">end of path (target)</param>
+        /// <returns>a path through the spanning tree from the source to the target</returns>
+        /// <exception cref="NoSuchAtomException">if the atom is not in the spanning tree</exception>
         public IAtomContainer GetPath(IAtomContainer spt, IAtom atom1, IAtom atom2)
         {
             IAtomContainer path = spt.Builder.CreateAtomContainer();
@@ -237,14 +228,13 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * The basic rings of the spanning tree. Using the pruned edges, return any path
-		 * which connects the end points of the pruned edge in the tree. These paths form
-		 * cycles.
-		 *
-		 * @return basic rings
-		 * @ atoms not found in the molecule
-		 */
+        /// <summary>
+        /// The basic rings of the spanning tree. Using the pruned edges, return any path
+        /// which connects the end points of the pruned edge in the tree. These paths form
+        /// cycles.
+        /// </summary>
+        /// <returns>basic rings</returns>
+        /// <exception cref="NoSuchAtomException">atoms not found in the molecule</exception>
         public IRingSet GetBasicRings()
         {
             IRingSet ringset = molecule.Builder.CreateRingSet();
@@ -254,14 +244,13 @@ namespace NCDK.Graphs
             return ringset;
         }
 
-        /**
-		 * Returns an IAtomContainer which contains all the atoms and bonds which
-		 * are involved in ring systems.
-		 *
-		 * @see #GetAllRings()
-		 * @see #GetBasicRings()
-		 * @return the IAtomContainer as described above
-		 */
+        /// <summary>
+        /// Returns an IAtomContainer which contains all the atoms and bonds which
+        /// are involved in ring systems.
+        /// </summary>
+        /// <seealso cref="GetAllRings"/>
+        /// <seealso cref="GetBasicRings"/>
+        /// <returns>the IAtomContainer as described above</returns>
         public IAtomContainer GetCyclicFragmentsContainer()
         {
             IAtomContainer fragContainer = this.molecule.Builder.CreateAtomContainer();
@@ -292,9 +281,9 @@ namespace NCDK.Graphs
             return fragContainer;
         }
 
-        /**
-		 * Identifies whether bonds are cyclic or not. It is used by several other methods.
-		 */
+        /// <summary>
+        /// Identifies whether bonds are cyclic or not. It is used by several other methods.
+        /// </summary>
         private void IdentifyBonds()
         {
             IAtomContainer spt = GetSpanningTree();
@@ -344,14 +333,13 @@ namespace NCDK.Graphs
             identifiedBonds = true;
         }
 
-        /**
-		 * All basic rings and the all pairs of basic rings share at least one edge
-		 * combined.
-		 *
-		 * @return subset of all rings
-		 * @ atom was not found in the molecule
-		 * @see #GetBasicRings()
-		 */
+        /// <summary>
+        /// All basic rings and the all pairs of basic rings share at least one edge
+        /// combined.
+        /// </summary>
+        /// <returns>subset of all rings</returns>
+        /// <exception cref="NoSuchAtomException">atom was not found in the molecule</exception>
+        /// <seealso cref="GetBasicRings"/>
         public IRingSet GetAllRings()
         {
             IRingSet ringset = GetBasicRings();
@@ -375,11 +363,10 @@ namespace NCDK.Graphs
             return ringset;
         }
 
-        /**
-		 * Size of the spanning tree specified as the number of edges in the tree.
-		 *
-		 * @return number of edges in the spanning tree
-		 */
+        /// <summary>
+        /// Size of the spanning tree specified as the number of edges in the tree.
+        /// </summary>
+        /// <returns>number of edges in the spanning tree</returns>
         public int GetSpanningTreeSize()
         {
             return sptSize;
@@ -412,22 +399,20 @@ namespace NCDK.Graphs
             return ring;
         }
 
-        /**
-		 * Number of acyclic bonds.
-		 *
-		 * @return Returns the bondsAcyclicCount.
-		 */
+        /// <summary>
+        /// Number of acyclic bonds.
+        /// </summary>
+        /// <returns>Returns the bondsAcyclicCount.</returns>
         public int GetBondsAcyclicCount()
         {
             if (!identifiedBonds) IdentifyBonds();
             return bondsAcyclicCount;
         }
 
-        /**
-		 * Number of cyclic bonds.
-		 *
-		 * @return Returns the bondsCyclicCount.
-		 */
+        /// <summary>
+        /// Number of cyclic bonds.
+        /// </summary>
+        /// <returns>Returns the bondsCyclicCount.</returns>
         public int GetBondsCyclicCount()
         {
             if (!identifiedBonds) IdentifyBonds();

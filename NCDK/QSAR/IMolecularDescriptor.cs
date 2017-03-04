@@ -20,40 +20,40 @@ using NCDK.QSAR.Result;
 
 namespace NCDK.QSAR
 {
-    /**
-     * Classes that implement this interface are QSAR descriptor calculators
-     * for <see cref="IAtomContainer"/> objects.
-     *
-     * @cdk.module qsar
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Classes that implement this interface are QSAR descriptor calculators
+    /// for <see cref="IAtomContainer"/> objects.
+    ///
+    // @cdk.module qsar
+    // @cdk.githash
+    /// </summary>
     public interface IMolecularDescriptor : IDescriptor
     {
-        /**
-         * Calculates the descriptor value for the given IAtomContainer.
-         *
-         * @param container An <see cref="IAtomContainer"/> for which this descriptor
-         *                  should be calculated
-         * @return An object of <see cref="DescriptorValue"/> that contain the
-         *         calculated value as well as specification details
-         */
+        /// <summary>
+        /// Calculates the descriptor value for the given IAtomContainer.
+        ///
+        /// <param name="container">An <see cref="IAtomContainer"/> for which this descriptor</param>
+        ///                  should be calculated
+        /// <returns>An object of <see cref="DescriptorValue"/> that contain the</returns>
+        ///         calculated value as well as specification details
+        /// </summary>
         DescriptorValue Calculate(IAtomContainer container);
 
-        /**
-         * Returns the specific type of the DescriptorResult object.
-         * The return value from this method really indicates what type of result will
-         * be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-         * can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-         * allows you to do the same thing, without actually calculating the descriptor.
-         *
-         * <p>Additionally, the length indicated by the result type must match the actual
-         * length of a descriptor calculated with the current parameters. Typically, the
-         * length of array result types vary with the values of the parameters. See
-         * <see cref="IDescriptor"/> for more details.
-         *
-         * @return an object that implements the {@link IDescriptorResult} interface indicating
-         *         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-         */
+        /// <summary>
+        /// Returns the specific type of the DescriptorResult object.
+        /// The return value from this method really indicates what type of result will
+        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
+        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
+        /// allows you to do the same thing, without actually calculating the descriptor.
+        ///
+        /// <p>Additionally, the length indicated by the result type must match the actual
+        /// length of a descriptor calculated with the current parameters. Typically, the
+        /// length of array result types vary with the values of the parameters. See
+        /// <see cref="IDescriptor"/> for more details.
+        ///
+        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
+        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
+        /// </summary>
         IDescriptorResult DescriptorResultType { get; }
     }
 }

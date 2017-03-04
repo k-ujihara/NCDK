@@ -44,7 +44,7 @@ namespace NCDK.IO
         private XElement parser;
         private XElement Parser
         {
-			get
+            get
             {
                 if (parser == null)
                 {

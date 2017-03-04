@@ -22,14 +22,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Dict
 {
-    /**
-     * Checks the functionality of the DictRef class.
-     *
-     * @cdk.module test-standard
-     *
-     * @see org.openscience.cdk.dict.DictRef
-     */
-	 [TestClass()]
+    /// <summary>
+    /// Checks the functionality of the DictRef class.
+    /// </summary>
+    /// <seealso cref="DictRef"/>
+    // @cdk.module test-standard
+    [TestClass()]
     public class DictRefTest : CDKTestCase
     {
 

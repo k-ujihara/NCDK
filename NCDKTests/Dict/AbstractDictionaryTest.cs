@@ -20,20 +20,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Dict
 {
-    /**
-	 * @cdk.module test-dict
-	 */
-	[TestClass()]
+    // @cdk.module test-dict
+    [TestClass()]
     public abstract class AbstractDictionaryTest
     {
-        private DictionaryMap testClass;
+        private EntryDictionary testClass;
 
-        protected void SetTestClass(DictionaryMap testClass)
+        protected void SetTestClass(EntryDictionary testClass)
         {
             this.testClass = testClass;
         }
 
-        protected DictionaryMap GetTestClass()
+        protected EntryDictionary GetTestClass()
         {
             return this.testClass;
         }
@@ -47,7 +45,7 @@ namespace NCDK.Dict
         [TestMethod()]
         public void TestNS()
         {
-            DictionaryMap dict = GetTestClass();
+            EntryDictionary dict = GetTestClass();
             Assert.IsNotNull(dict);
             Assert.IsNull(dict.NS);
             dict.NS = "http://www.namespace.example.org/";
@@ -57,16 +55,16 @@ namespace NCDK.Dict
         [TestMethod()]
         public void TestAddEntry()
         {
-            DictionaryMap dict = GetTestClass();
+            EntryDictionary dict = GetTestClass();
             Assert.IsNotNull(dict);
             Assert.AreEqual(0, dict.Count);
-            Assert.IsFalse(dict.HasEntry("someidentifier"));
+            Assert.IsFalse(dict.ContainsKey("someidentifier"));
             Entry entry = new Entry();
             entry.Id = "someidentifier";
             dict.AddEntry(entry);
             Assert.AreEqual(1, dict.Count);
-            Assert.IsTrue(dict.HasEntry("someidentifier"));
-            Assert.AreEqual(entry, dict.GetEntry("someidentifier"));
+            Assert.IsTrue(dict.ContainsKey("someidentifier"));
+            Assert.AreEqual(entry, dict["someidentifier"]);
         }
     }
 }

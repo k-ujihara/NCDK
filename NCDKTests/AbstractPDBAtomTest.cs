@@ -23,17 +23,17 @@ using NCDK.Numerics;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IPDBAtom} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IPDBAtom} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractPDBAtomTest : AbstractAtomTest
     {
-        /**
-		 * Method to test the SetFractional3D() methods.
-		 */
+        /// <summary>
+        /// Method to test the SetFractional3D() methods.
+        /// </summary>
         [TestMethod()]
         public override void TestSetFractionalPoint3d_Point3d()
         {
@@ -75,9 +75,9 @@ namespace NCDK
             Assert.AreEqual(point3d, a.Point3D);
         }
 
-        /**
-		 * Method to test the Clone() method
-		 */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public override void TestClone()
         {
@@ -87,9 +87,9 @@ namespace NCDK
             Assert.IsTrue(clone is IAtom);
         }
 
-        /**
-		 * Method to test the Clone() method
-		 */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public override void TestClone_Point3d()
         {
@@ -100,9 +100,9 @@ namespace NCDK
             Assert.AreEqual(clone.Point3D.Value.X, 2.0, 0.001);
         }
 
-        /**
-		 * Method to test the Clone() method
-		 */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public override void TestClone_FractionalPoint3d()
         {
@@ -113,9 +113,9 @@ namespace NCDK
             Assert.AreEqual(clone.FractionalPoint3D.Value.X, 2.0, 0.001);
         }
 
-        /**
-		 * Method to test whether the class complies with RFC #9.
-		 */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public override void TestToString()
         {
@@ -129,9 +129,9 @@ namespace NCDK
             }
         }
 
-        /**
-		 * Checks that the default charge is set to NaN
-		 */
+        /// <summary>
+        /// Checks that the default charge is set to NaN
+        /// </summary>
         [TestMethod()]
         public override void TestDefaultChargeValue()
         {

@@ -41,9 +41,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
     public class AcidicGroupCountDescriptor 
-		: AbstractMolecularDescriptor, IMolecularDescriptor
+        : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-    	private readonly static string[] SMARTS_STRINGS =
+        private readonly static string[] SMARTS_STRINGS =
         {
             "[$([O;H1]-[C,S,P]=O)]",
             "[$([*;-;!$(*~[*;+])])]",
@@ -140,13 +140,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         public override IDescriptorResult DescriptorResultType => IntegerResultType.Instance;
         public override string[] ParameterNames { get; } 
-			= new string[] { "checkAromaticity" };
+            = new string[] { "checkAromaticity" };
 
         public override object GetParameterType(string name)
         {
             object obj = null;
             if (name.Equals("checkAromaticity")) 
-				obj = true;
+                obj = true;
             return obj;
         }
 

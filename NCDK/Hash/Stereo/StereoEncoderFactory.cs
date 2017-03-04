@@ -23,23 +23,23 @@
  */
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Describes a factory for stereo elements. The factory create encoders for
-     * specific stereo elements.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Describes a factory for stereo elements. The factory create encoders for
+    /// specific stereo elements.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
     public interface IStereoEncoderFactory
     {
-        /**
-         * Create a stereo-encoder for possible stereo-chemical configurations.
-         *
-         * @param container the container
-         * @param graph     adjacency list representation of the container
-         * @return a new stereo encoder
-         */
+        /// <summary>
+        /// Create a stereo-encoder for possible stereo-chemical configurations.
+        ///
+        /// <param name="container">the container</param>
+        /// <param name="graph">adjacency list representation of the container</param>
+        /// <returns>a new stereo encoder</returns>
+        /// </summary>
         IStereoEncoder Create(IAtomContainer container, int[][] graph);
     }
 

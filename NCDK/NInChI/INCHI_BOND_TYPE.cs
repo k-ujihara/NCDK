@@ -20,33 +20,33 @@
 namespace NCDK.NInChI
 {
 
-    /**
-     * Enumeration of InChI bond type definitions.
-     * Corresponds to <tt>inchi_BondType</tt> in <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Enumeration of InChI bond type definitions.
+    /// Corresponds to <tt>inchi_BondType</tt> in <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_BOND_TYPE
     {
         None = 0,
 
-        /**
-         * Single bond.
-         */
+        /// <summary>
+        /// Single bond.
+        /// </summary>
         Single = 1,
 
-        /**
-         * Double bond.
-         */
+        /// <summary>
+        /// Double bond.
+        /// </summary>
         Double = 2,
 
-        /**
-         * Triple bond.
-         */
+        /// <summary>
+        /// Triple bond.
+        /// </summary>
         Triple = 3,
 
-        /**
-         * Alternating (single-double) bond. Avoid where possible.
-         */
+        /// <summary>
+        /// Alternating (single-double) bond. Avoid where possible.
+        /// </summary>
         Altern = 4
     }
 }

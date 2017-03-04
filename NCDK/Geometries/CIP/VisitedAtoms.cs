@@ -24,56 +24,50 @@ using System.Collections.Generic;
 
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Helper class for the {@link CIPTool} to keep track of which atoms have
-     * already been visited.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Helper class for the <see cref="CIPTool"/> to keep track of which atoms have
+    /// already been visited.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
     public class VisitedAtoms
     {
-        /**
-         * {@link List} to hold the visited {@link IAtom}s.
-         */
+        /// <summary>
+        /// <see cref="List"/> to hold the visited <see cref="IAtom"/>s.
+        /// </summary>
         private List<IAtom> visitedItems;
 
-        /**
-         * Creates a new empty list of visited {@link IAtom}s.
-         */
+        /// <summary>
+        /// Creates a new empty list of visited <see cref="IAtom"/>s.
+        /// </summary>
         public VisitedAtoms()
         {
             visitedItems = new List<IAtom>();
         }
 
-        /**
-         * Returns true if the given atom already has been visited.
-         *
-         * @param  atom {@link IAtom} which may have been visited
-         * @return      true if the {@link IAtom} was visited
-         */
+        /// <summary>
+        /// Returns true if the given atom already has been visited.
+        /// </summary>
+        /// <param name="atom"><see cref="IAtom"/> which may have been visited</param>
+        /// <returns>true if the <see cref="IAtom"/> was visited</returns>
         public bool IsVisited(IAtom atom)
         {
             return visitedItems.Contains(atom);
         }
 
-        /**
-         * Marks the given atom as visited.
-         *
-         * @param atom {@link IAtom} that is now marked as visited
-         */
+        /// <summary>
+        /// Marks the given atom as visited.
+        /// </summary>
+        /// <param name="atom"><see cref="IAtom"/> that is now marked as visited</param>
         public void Visited(IAtom atom)
         {
             visitedItems.Add(atom);
         }
 
-        /**
-         * Adds all atoms from the <code>visitedAtoms</code> list to the current
-         * list.
-         *
-         * @param visitedAtoms the {@link VisitedAtoms} from which all atoms are
-         *                     added
-         */
+        /// <summary>
+        /// Adds all atoms from the <code>visitedAtoms</code> list to the current list.
+        /// </summary>
+        /// <param name="visitedAtoms">the <see cref="VisitedAtoms"/> from which all atoms are added</param>
         public void Visited(VisitedAtoms visitedAtoms)
         {
             visitedItems.AddRange(visitedAtoms.visitedItems);

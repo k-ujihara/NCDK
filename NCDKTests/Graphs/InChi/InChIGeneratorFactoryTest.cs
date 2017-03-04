@@ -27,15 +27,12 @@ using NCDK.Tools.Manipulator;
 using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs.InChi
 {
-    /**
-     * @cdk.module test-inchi
-     */
+    /// <summary>
+    // @cdk.module test-inchi
+    /// </summary>
     [TestClass()]
     public class InChIGeneratorFactoryTest
     {
@@ -47,9 +44,9 @@ namespace NCDK.Graphs.InChi
             Assert.IsNotNull(factory);
         }
 
-        /**
-         * Because we are not setting any options, we get an Standard InChI.
-         */
+        /// <summary>
+        /// Because we are not setting any options, we get an Standard InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer()
         {
@@ -62,9 +59,9 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Because we are setting an options, we get a non-standard InChI.
-         */
+        /// <summary>
+        /// Because we are setting an options, we get a non-standard InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_String()
         {
@@ -77,9 +74,9 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Because we are setting no option, we get a Standard InChI.
-         */
+        /// <summary>
+        /// Because we are setting no option, we get a Standard InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_NullString()
         {
@@ -92,9 +89,9 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Because we are setting an options, we get a non-standard InChI.
-         */
+        /// <summary>
+        /// Because we are setting an options, we get a non-standard InChI.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIGenerator_IAtomContainer_List()
         {
@@ -109,9 +106,9 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual("InChI=1/ClH/h1H", gen.Inchi);
         }
 
-        /**
-         * Because we are setting an options, we get a non-standard InChI.
-         */
+        /// <summary>
+        /// Because we are setting an options, we get a non-standard InChI.
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestGetInChIGenerator_IAtomContainer_NullList()
@@ -147,9 +144,9 @@ namespace NCDK.Graphs.InChi
                     Default.ChemObjectBuilder.Instance, (List<string>)null);
         }
 
-        /**
-         * No options set.
-         */
+        /// <summary>
+        /// No options set.
+        /// </summary>
         [TestMethod()]
         public void TestGetInChIToStructure_String_IChemObjectBuilder_List()
         {
@@ -175,9 +172,9 @@ namespace NCDK.Graphs.InChi
 
         }
 
-        /**
-         * Tests the aromatic bonds option in the InChI factory class.
-         */
+        /// <summary>
+        /// Tests the aromatic bonds option in the InChI factory class.
+        /// </summary>
         [TestMethod()]
         public void TestInChIGenerator_AromaticBonds()
         {

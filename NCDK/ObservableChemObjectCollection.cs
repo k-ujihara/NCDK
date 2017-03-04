@@ -1,39 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
 
 namespace NCDK
 {
-    internal class ChemObjectCollection<T>
-        : Collection<T>
-        where T : IChemObject
-    {
-        protected IChemObjectListener Listener { get; private set; }
-
-        public ChemObjectCollection()
-            : this(Array.Empty<T>())
-        {
-        }
-
-        public ChemObjectCollection(IEnumerable<T> objects)
-            : base(objects.ToList())
-        {
-        }
-
-        public bool AllowDuplicate { get; set; } = true;
-
-        protected override void InsertItem(int index, T item)
-        {
-            if (!AllowDuplicate)
-                if (this.Contains(item))
-                    return;
-            base.InsertItem(index, item);
-        }
-    }
-
     internal class ObservableChemObjectCollection<T>
         : IList<T>
         where T : IChemObject

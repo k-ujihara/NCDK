@@ -29,9 +29,9 @@ using System;
 
 namespace NCDK.Stereo
 {
-    /**
-     * @author John May
-     */
+    /// <summary>
+    // @author John May
+    /// </summary>
     [TestClass()]
     public sealed class ExtendedTetrahedralTest
     {
@@ -69,7 +69,7 @@ namespace NCDK.Stereo
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void nonCumulatedAtomThrowsException()
+        public void NonCumulatedAtomThrowsException()
         {
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
@@ -81,7 +81,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void terminalAtomsAreFoundUnordered()
+        public void TerminalAtomsAreFoundUnordered()
         {
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
@@ -96,7 +96,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void terminalAtomsAreFoundOrdered()
+        public void TerminalAtomsAreFoundOrdered()
         {
             IAtomContainer ac = new AtomContainer();
             ac.Atoms.Add(new Atom("C"));
@@ -119,7 +119,7 @@ namespace NCDK.Stereo
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidOperationException))]
-        public void noBuilder()
+        public void NoBuilder()
         {
             IAtom focus = new Mock<IAtom>().Object;
             IAtom[] peripherals = new IAtom[] { new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object, new Mock<IAtom>().Object };
@@ -144,6 +144,6 @@ namespace NCDK.Stereo
 
         // trival access
         [TestMethod()]
-        public void noOperation() { }
+        public void NoOperation() { }
     }
 }

@@ -23,7 +23,7 @@
         public void SetValue(bool scalar)
         {
             Value = scalar.ToString().ToLowerInvariant();
-            DataType = "xsd:bool";
+            DataType = "xsd:boolean";
         }
 
         public void SetValue(double scalar)
@@ -42,6 +42,4 @@
             DataType = "xsd:integer";
         }
     }
-
-
 }

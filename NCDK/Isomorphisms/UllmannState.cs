@@ -39,37 +39,22 @@ namespace NCDK.Isomorphisms
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class UllmannState : State
+    internal sealed class UllmannState : State
     {
         /// <summary>Adjacency list representations.</summary>
-#if TEST
-        public
-#endif
-        readonly int[][] g1, g2;
+        internal readonly int[][] g1, g2;
 
         /// <summary>Query and target bond maps.</summary>
         private readonly EdgeToBondMap bond1, bonds2;
 
         /// <summary>The compatibility matrix.</summary>
-#if TEST
-        public
-#endif
-        readonly CompatibilityMatrix matrix;
+        internal readonly CompatibilityMatrix matrix;
 
         /// <summary>Current mapped values.</summary>
-#if TEST
-        public
-#endif
-        readonly int[] m1, m2;
+        internal readonly int[] m1, m2;
 
         /// <summary>Size of the current mapping.</summary>
-#if TEST
-        public
-#endif
-        int size = 0;
+        internal int size = 0;
 
         /// <summary>How bond semantics are matched.</summary>
         private readonly BondMatcher bondMatcher;

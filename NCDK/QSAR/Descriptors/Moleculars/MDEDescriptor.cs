@@ -28,52 +28,52 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
-     * This class evaluates the 10 MDE descriptors described by Liu et al. and
-     * in addition it calculates variants where O and N are considered (as found in the DEDGE routine
-     * from ADAPT).
-     * <p/>
-     * * The variants are described below:
-     * <center>
-     * <table border=1>
-     * <p/>
-     * <tr>
-     * <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
-     * <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>
-     * <p/>
-     * <td>MDEC-13</td><td> molecular distance edge between all primary and tertiary carbons</td></tr><tr>
-     * <td>MDEC-14</td><td> molecular distance edge between all primary and quaternary carbons </td></tr><tr>
-     * <td>MDEC-22</td><td> molecular distance edge between all secondary carbons </td></tr><tr>
-     * <td>MDEC-23</td><td> molecular distance edge between all secondary and tertiary carbons</td></tr><tr>
-     * <p/>
-     * <td>MDEC-24</td><td> molecular distance edge between all secondary and quaternary carbons </td></tr><tr>
-     * <td>MDEC-33</td><td> molecular distance edge between all tertiary carbons</td></tr><tr>
-     * <td>MDEC-34</td><td> molecular distance edge between all tertiary and quaternary carbons </td></tr><tr>
-     * <td>MDEC-44</td><td> molecular distance edge between all quaternary carbons </td></tr><tr>
-     * <p/>
-     * <td>MDEO-11</td><td> molecular distance edge between all primary oxygens </td></tr><tr>
-     * <td>MDEO-12</td><td> molecular distance edge between all primary and secondary oxygens </td></tr><tr>
-     * <td>MDEO-22</td><td> molecular distance edge between all secondary oxygens </td></tr><tr>
-     * <td>MDEN-11</td><td> molecular distance edge between all primary nitrogens</td></tr><tr>
-     * <p/>
-     * <td>MDEN-12</td><td> molecular distance edge between all primary and secondary nitrogens </td></tr><tr>
-     * <td>MDEN-13</td><td> molecular distance edge between all primary and tertiary niroqens </td></tr><tr>
-     * <td>MDEN-22</td><td> molecular distance edge between all secondary nitroqens </td></tr><tr>
-     * <td>MDEN-23</td><td> molecular distance edge between all secondary and tertiary nitrogens </td></tr><tr>
-     * <p/>
-     * <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
-     * </table>
-     * </center>
-     * <p/>
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2006-09-18
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:mde
-     */
+    /// <summary>
+    /// Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
+    /// This class evaluates the 10 MDE descriptors described by Liu et al. and
+    /// in addition it calculates variants where O and N are considered (as found in the DEDGE routine
+    /// from ADAPT).
+    /// <p/>
+    /// * The variants are described below:
+    /// <center>
+    /// <table border=1>
+    /// <p/>
+    /// <tr>
+    /// <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
+    /// <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>
+    /// <p/>
+    /// <td>MDEC-13</td><td> molecular distance edge between all primary and tertiary carbons</td></tr><tr>
+    /// <td>MDEC-14</td><td> molecular distance edge between all primary and quaternary carbons </td></tr><tr>
+    /// <td>MDEC-22</td><td> molecular distance edge between all secondary carbons </td></tr><tr>
+    /// <td>MDEC-23</td><td> molecular distance edge between all secondary and tertiary carbons</td></tr><tr>
+    /// <p/>
+    /// <td>MDEC-24</td><td> molecular distance edge between all secondary and quaternary carbons </td></tr><tr>
+    /// <td>MDEC-33</td><td> molecular distance edge between all tertiary carbons</td></tr><tr>
+    /// <td>MDEC-34</td><td> molecular distance edge between all tertiary and quaternary carbons </td></tr><tr>
+    /// <td>MDEC-44</td><td> molecular distance edge between all quaternary carbons </td></tr><tr>
+    /// <p/>
+    /// <td>MDEO-11</td><td> molecular distance edge between all primary oxygens </td></tr><tr>
+    /// <td>MDEO-12</td><td> molecular distance edge between all primary and secondary oxygens </td></tr><tr>
+    /// <td>MDEO-22</td><td> molecular distance edge between all secondary oxygens </td></tr><tr>
+    /// <td>MDEN-11</td><td> molecular distance edge between all primary nitrogens</td></tr><tr>
+    /// <p/>
+    /// <td>MDEN-12</td><td> molecular distance edge between all primary and secondary nitrogens </td></tr><tr>
+    /// <td>MDEN-13</td><td> molecular distance edge between all primary and tertiary niroqens </td></tr><tr>
+    /// <td>MDEN-22</td><td> molecular distance edge between all secondary nitroqens </td></tr><tr>
+    /// <td>MDEN-23</td><td> molecular distance edge between all secondary and tertiary nitrogens </td></tr><tr>
+    /// <p/>
+    /// <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
+    /// </table>
+    /// </center>
+    /// <p/>
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2006-09-18
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:mde
+    /// </summary>
     public class MDEDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
@@ -122,7 +122,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
-				"http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
+                "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#mde",
                 typeof(MDEDescriptor).FullName, "The Chemistry Development Kit");
 
         /// <summary>

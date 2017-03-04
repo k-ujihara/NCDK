@@ -24,34 +24,34 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
-    /**
-     *  The calculation of bond-pi Partial charge is calculated
-     *  determining the difference the Partial Pi Charge on atoms
-     *  A and B of a bond. Based in Gasteiger Charge.
-     *  <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>bondPosition</td>
-     *     <td>0</td>
-     *     <td>The position of the target bond</td>
-     *   </tr>
-     * </table>
-     *
-     *
-     * @author      Miguel Rojas
-     * @cdk.created 2006-05-18
-     * @cdk.module  qsarbond
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:bondPartialPiCharge
-     *
-     * @see NCDK.QSAR.Descriptors.Atomic.PartialPiChargeDescriptor
-     */
+    /// <summary>
+    ///  The calculation of bond-pi Partial charge is calculated
+    ///  determining the difference the Partial Pi Charge on atoms
+    ///  A and B of a bond. Based in Gasteiger Charge.
+    ///  <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>bondPosition</td>
+    ///     <td>0</td>
+    ///     <td>The position of the target bond</td>
+    ///   </tr>
+    /// </table>
+    ///
+    ///
+    // @author      Miguel Rojas
+    // @cdk.created 2006-05-18
+    // @cdk.module  qsarbond
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:bondPartialPiCharge
+    ///
+    // @see NCDK.QSAR.Descriptors.Atomic.PartialPiChargeDescriptor
+    /// </summary>
     public class BondPartialPiChargeDescriptor : AbstractBondDescriptor
     {
         private GasteigerPEPEPartialCharges pepe = null;

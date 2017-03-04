@@ -25,20 +25,20 @@ using NCDK.Default;
 
 namespace NCDK.SMSD.Algorithms.Single
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class SingleMappingTest
     {
         public SingleMappingTest() { }
 
-        /**
-         * Test of getOverLaps method, of class SingleMapping.
-         */
+        /// <summary>
+        /// Test of getOverLaps method, of class SingleMapping.
+        /// </summary>
         [TestMethod()]
         public void TestGetOverLaps()
         {

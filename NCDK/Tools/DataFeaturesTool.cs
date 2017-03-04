@@ -26,23 +26,23 @@ using NCDK.Geometries;
 
 namespace NCDK.Tools
 {
-    /**
-     * Utility that helps determine which data features are present.
-     *
-     * @author egonw
-     * @cdk.githash
-     *
-     * @see    org.openscience.cdk.tools.DataFeatures
-     */
+    /// <summary>
+    /// Utility that helps determine which data features are present.
+    ///
+    // @author egonw
+    // @cdk.githash
+    ///
+    // @see    org.openscience.cdk.tools.DataFeatures
+    /// </summary>
     public class DataFeaturesTool
     {
-        /**
-         * Determines the features present in the given <see cref="IAtomContainer"/>.
-         *
-         * @param molecule IAtomContainer to determine the features off
-         *
-         * @return integer representation of the present features
-         */
+        /// <summary>
+        /// Determines the features present in the given <see cref="IAtomContainer"/>.
+        ///
+        /// <param name="molecule">IAtomContainer to determine the features off</param>
+        ///
+        /// <returns>integer representation of the present features</returns>
+        /// </summary>
         public static int GetSupportedDataFeatures(IAtomContainer molecule)
         {
             int features = DataFeatures.None;

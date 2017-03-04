@@ -23,10 +23,9 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiOutputStructure
     {
-
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutputStructure.ReturnStatus'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutputStructure.ReturnStatus'
+        /// </summary>
         [TestMethod()]
         public void TestGetReturnStatus()
         {
@@ -34,9 +33,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_RET.OKAY, output.ReturnStatus);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutputStructure.Message'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutputStructure.Message'
+        /// </summary>
         [TestMethod()]
         public void TestGetMessage()
         {
@@ -45,9 +44,9 @@ namespace NCDK.NInChI
             Assert.AreEqual("Test message", output.Message);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutputStructure.Log'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutputStructure.Log'
+        /// </summary>
         [TestMethod()]
         public void TestGetLog()
         {
@@ -56,9 +55,9 @@ namespace NCDK.NInChI
             Assert.AreEqual("Test log", output.Log);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiOutputStructure.WarningFlags'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiOutputStructure.WarningFlags'
+        /// </summary>
         [TestMethod()]
         public void TestGetWarningFlags()
         {

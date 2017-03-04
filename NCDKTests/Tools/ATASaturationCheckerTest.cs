@@ -25,13 +25,13 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Tools
 {
-    /**
-     * A test class for the AtomTypeAwereSaturationChecker-class
-     *
-     * @author Klas J&ouml;nsson
-     * @cdk.created 2012-04-18
-     * @cdk.module  test-valencycheck
-     */
+    /// <summary>
+    /// A test class for the AtomTypeAwereSaturationChecker-class
+    ///
+    // @author Klas J&ouml;nsson
+    // @cdk.created 2012-04-18
+    // @cdk.module  test-valencycheck
+    /// </summary>
     [TestClass()]
     public class ATASaturationCheckerTest : CDKTestCase
     {
@@ -39,11 +39,11 @@ namespace NCDK.Tools
         private static SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
         private AtomTypeAwareSaturationChecker atasc = new AtomTypeAwareSaturationChecker();
 
-        /**
-         * A test of DecideBondOrder(IAtomContainer) with a molecule we created
-         * from scratch.
-         * @
-         */
+        /// <summary>
+        /// A test of DecideBondOrder(IAtomContainer) with a molecule we created
+        /// from scratch.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestASimpleCarbonRing()
         {
@@ -120,11 +120,11 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A test of DecideBondOrder(IAtomContainer) with a molecule we created
-         * from a SMILES.
-         * @
-         */
+        /// <summary>
+        /// A test of DecideBondOrder(IAtomContainer) with a molecule we created
+        /// from a SMILES.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestQuinone()
         {
@@ -170,11 +170,11 @@ namespace NCDK.Tools
             Assert.AreEqual(mol.Bonds[0].Atoms[1], mol.Bonds[7].Atoms[0]);
         }
 
-        /**
-         * A test of DecideBondOrder(IAtomContainer) with a simple carbon ring we
-         * created from a SMILES.
-         * @
-         */
+        /// <summary>
+        /// A test of DecideBondOrder(IAtomContainer) with a simple carbon ring we
+        /// created from a SMILES.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestASimpleCarbonRing2()
         {
@@ -192,11 +192,11 @@ namespace NCDK.Tools
             Assert.AreEqual(mol.Bonds[5].Order, BondOrder.Single);
         }
 
-        /**
-         * This method tests the AtomTypeAwareSaturnationChecker with a large ring
-         * system.
-         * @
-         */
+        /// <summary>
+        /// This method tests the AtomTypeAwareSaturnationChecker with a large ring
+        /// system.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestALargeRingSystem()
         {
@@ -214,11 +214,11 @@ namespace NCDK.Tools
             Assert.AreEqual(13, doubleBondCount);
         }
 
-        /**
-         * This do the same as the method above, but with five other large ring
-         * systems.
-         * @
-         */
+        /// <summary>
+        /// This do the same as the method above, but with five other large ring
+        /// systems.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestLargeRingSystem1()
         {
@@ -254,10 +254,8 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestADoubleRingWithANitrogenAtom()
         {
-            /*
-             * Should have 4 double bonds and all three bonds to/from the nitrogen
-             * should be single
-             */
+            // Should have 4 double bonds and all three bonds to/from the nitrogen
+            // should be single
             string smiles = "c1ccn2cccc2c1";
             IAtomContainer mol = sp.ParseSmiles(smiles);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureUnsetProperties(mol);
@@ -325,11 +323,11 @@ namespace NCDK.Tools
             Assert.AreEqual(24, doubleBondCount);
         }
 
-        /**
-         * From DeduceBondSystemToolTest
-         *
-         * @
-         */
+        /// <summary>
+        /// From DeduceBondSystemToolTest
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestLargeBioclipseUseCase()
         {
@@ -414,7 +412,7 @@ namespace NCDK.Tools
         public void TestAnOtherRingSystem()
         {
             // Should have 7 double bonds
-            //    	IAtomContainer mol = sp.ParseSmiles("O=c2c1ccccc1c3ccccc23");
+            //        IAtomContainer mol = sp.ParseSmiles("O=c2c1ccccc1c3ccccc23");
             // Should have 6 double bonds
             IAtomContainer mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
@@ -461,7 +459,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase1a()
+        public void MailCase1a()
         {
             IAtomContainer mol = sp.ParseSmiles("o1cccc1");
             atasc.DecideBondOrder(mol, true);
@@ -475,7 +473,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase1b()
+        public void MailCase1b()
         {
             IAtomContainer mol = sp.ParseSmiles("O1cccc1");
             atasc.DecideBondOrder(mol, true);
@@ -489,7 +487,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase3b()
+        public void MailCase3b()
         {
             IAtomContainer mol = sp.ParseSmiles("c1ccccc1Oc1cOcc1");
             atasc.DecideBondOrder(mol, true);
@@ -503,7 +501,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase4()
+        public void MailCase4()
         {
             IAtomContainer mol = sp.ParseSmiles("o2c1ccccc1c3c2cccc3");
             atasc.DecideBondOrder(mol, true);
@@ -517,7 +515,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase5a()
+        public void MailCase5a()
         {
             IAtomContainer mol = sp.ParseSmiles("c5cc2ccc1ccccc1c2c6c4c3ccccc3ccc4ccc56");
             atasc.DecideBondOrder(mol, true);
@@ -531,7 +529,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase5b()
+        public void MailCase5b()
         {
             IAtomContainer mol = sp.ParseSmiles("c1cc2ccc3ccc4ccc5ccc6ccc1c7c2c3c4c5c67");
 
@@ -547,7 +545,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
-        public void mailCase6()
+        public void MailCase6()
         {
             IAtomContainer mol = sp.ParseSmiles("c1ccc2c(c1)cc-3c4c2cccc4-c5c3cccc5");
             atasc.DecideBondOrder(mol, true);
@@ -607,13 +605,11 @@ namespace NCDK.Tools
         {
             IAtomContainer mol = sp.ParseSmiles("cccc");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
-            /*
-             * The SMILES-parser does not seams raise the SingleOrDouble-flag if a
-             * molecule don't have any rings
-             */
+            // The SMILES-parser does not seams raise the SingleOrDouble-flag if a
+            // molecule don't have any rings
             foreach (var bond in mol.Bonds)
                 bond.IsSingleOrDouble = true;
-			
+            
             atasc.DecideBondOrder(mol, false);
 
             int doubleBondCount = 0;
@@ -654,7 +650,7 @@ namespace NCDK.Tools
 
             IBond b0 = new Bond(a0, a1);
             b0.IsSingleOrDouble = true;
-			mol.Bonds.Add(b0);
+            mol.Bonds.Add(b0);
             IBond b1 = new Bond(a1, a2);
             b1.IsSingleOrDouble = true;
             mol.Bonds.Add(b1);
@@ -690,10 +686,7 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestOnlyOneAtom()
         {
-            /*
-             * If all bonds in the molecule are implicit, then it was noticed that
-             * the SatChecker failed
-             */
+            // If all bonds in the molecule are implicit, then it was noticed that the SatChecker failed
             IAtomContainer mol = sp.ParseSmiles("C");
 
             int preBondCount = mol.Bonds.Count;

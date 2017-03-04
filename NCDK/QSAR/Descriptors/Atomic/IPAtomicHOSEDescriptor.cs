@@ -20,6 +20,7 @@ using NCDK.Common.Primitives;
 using NCDK.QSAR.Result;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,35 +28,35 @@ using System.Text;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  This class returns the ionization potential of an atom containing lone
-     *  pair electrons. It is
-     *  based on a decision tree which is extracted from Weka(J48) from
-     *  experimental values. Up to now is only possible predict for
-     *  Cl,Br,I,N,P,O,S Atoms and they are not belong to
-     *  conjugated system or not adjacent to an double bond.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * @author       Miguel Rojas
-     * @cdk.created  2006-05-26
-     * @cdk.module   qsaratomic
-     * @cdk.githash
-     * @cdk.set      qsar-descriptors
-     * @cdk.dictref  qsar-descriptors:ionizationPotential
-     */
+    /// <summary>
+    ///  This class returns the ionization potential of an atom containing lone
+    ///  pair electrons. It is
+    ///  based on a decision tree which is extracted from Weka(J48) from
+    ///  experimental values. Up to now is only possible predict for
+    ///  Cl,Br,I,N,P,O,S Atoms and they are not belong to
+    ///  conjugated system or not adjacent to an double bond.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author       Miguel Rojas
+    // @cdk.created  2006-05-26
+    // @cdk.module   qsaratomic
+    // @cdk.githash
+    // @cdk.set      qsar-descriptors
+    // @cdk.dictref  qsar-descriptors:ionizationPotential
+    /// </summary>
     public class IPAtomicHOSEDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "ipAtomicHOSE" };
@@ -206,11 +207,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     {
                         string path = "NCDK.QSAR.Descriptors.Atomic.Data." + name;
                         string pathS = "NCDK.QSAR.Descriptors.Atomic.Data." + nameS;
-                        var ins = this.GetType().Assembly.GetManifestResourceStream(path);
+                        var ins = ResourceLoader.GetAsStream(path);
                         var insr = new StreamReader(ins);
                         hoseVSenergy = ExtractAttributes(insr);
 
-                        ins = this.GetType().Assembly.GetManifestResourceStream(pathS);
+                        ins = ResourceLoader.GetAsStream(pathS);
                         insr = new StreamReader(ins);
                         hoseVSenergyS = ExtractAttributes(insr);
                     }

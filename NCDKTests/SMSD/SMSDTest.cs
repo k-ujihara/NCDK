@@ -34,22 +34,22 @@ using System.IO;
 
 namespace NCDK.SMSD
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class SMSDTest
     {
 
         public SMSDTest() { }
 
-        /**
-         * Test of init method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of init method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestInit_3args_1()
         {
@@ -64,10 +64,10 @@ namespace NCDK.SMSD
             Assert.IsNotNull(smsd1.ProductMolecule);
         }
 
-        /**
-         * Test of init method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of init method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestInit_3args_2()
         {
@@ -82,10 +82,10 @@ namespace NCDK.SMSD
             Assert.IsNotNull(smsd1.ProductMolecule);
         }
 
-        /**
-         * Test of searchMCS method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of searchMCS method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSearchMCS()
         {
@@ -113,10 +113,10 @@ namespace NCDK.SMSD
             }
         }
 
-        /**
-         * Test of set method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of set method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
@@ -131,11 +131,11 @@ namespace NCDK.SMSD
 
         }
 
-        /**
-         * Test of set method, of class Isomorphism.
-         * @throws CDKException
-         * @throws IOException
-         */
+        /// <summary>
+        /// Test of set method, of class Isomorphism.
+        // @throws CDKException
+        // @throws IOException
+        /// </summary>
         [TestMethod()]
         public void TestSet_String_String()
         {
@@ -144,10 +144,10 @@ namespace NCDK.SMSD
             IAtomContainer query = new AtomContainer();
             IAtomContainer target = new AtomContainer();
 
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(molfile);
+            Stream ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(query);
-            ins = this.GetType().Assembly.GetManifestResourceStream(queryfile);
+            ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(target);
 
@@ -158,10 +158,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(score, smsd1.GetTanimotoSimilarity(), 0.0001);
         }
 
-        /**
-         * Test of set method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of set method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
@@ -177,10 +177,10 @@ namespace NCDK.SMSD
             Assert.IsNotNull(smsd1.GetFirstMapping());
         }
 
-        /**
-         * Test of getAllAtomMapping method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getAllAtomMapping method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
@@ -196,7 +196,7 @@ namespace NCDK.SMSD
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(queryac);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(target);
 
-            //	Calling the main algorithm to perform MCS cearch
+            //    Calling the main algorithm to perform MCS cearch
 
             Aromaticity.CDKLegacy.Apply(queryac);
             Aromaticity.CDKLegacy.Apply(target);
@@ -208,10 +208,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(2, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of getAllMapping method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getAllMapping method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
         {
@@ -232,10 +232,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(2, smsd1.GetAllMapping().Count);
         }
 
-        /**
-         * Test of getFirstAtomMapping method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getFirstAtomMapping method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
@@ -251,10 +251,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(7, smsd1.GetFirstAtomMapping().Count);
         }
 
-        /**
-         * Test of getFirstMapping method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getFirstMapping method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
         {
@@ -270,10 +270,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(7, smsd1.GetFirstMapping().Count);
         }
 
-        /**
-         * Test of setChemFilters method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of setChemFilters method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSetChemFilters()
         {
@@ -287,10 +287,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(1, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of getFragmentSize method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getFragmentSize method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetFragmentSize()
         {
@@ -305,10 +305,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(score, smsd1.GetFragmentSize(0));
         }
 
-        /**
-         * Test of getStereoScore method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getStereoScore method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetStereoScore()
         {
@@ -323,10 +323,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(score, smsd1.GetStereoScore(0));
         }
 
-        /**
-         * Test of getEnergyScore method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getEnergyScore method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetEnergyScore()
         {
@@ -341,10 +341,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(score, smsd1.GetEnergyScore(0));
         }
 
-        /**
-         * Test of getReactantMolecule method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getReactantMolecule method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetReactantMolecule()
         {
@@ -359,10 +359,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(7, smsd1.ReactantMolecule.Atoms.Count);
         }
 
-        /**
-         * Test of getProductMolecule method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of getProductMolecule method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestGetProductMolecule()
         {
@@ -377,10 +377,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(20, smsd1.ProductMolecule.Atoms.Count);
         }
 
-        /**
-         * Test of getTanimotoSimilarity method, of class Isomorphism.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of getTanimotoSimilarity method, of class Isomorphism.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetTanimotoSimilarity()
         {
@@ -396,10 +396,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(score, smsd1.GetTanimotoSimilarity(), 0);
         }
 
-        /**
-         * Test of isStereoMisMatch method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of isStereoMisMatch method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestIsStereoMisMatch()
         {
@@ -413,10 +413,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(false, smsd1.IsStereoMisMatch());
         }
 
-        /**
-         * Test of isSubgraph method, of class Isomorphism.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of isSubgraph method, of class Isomorphism.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestIsSubgraph()
         {
@@ -430,10 +430,10 @@ namespace NCDK.SMSD
             Assert.AreEqual(true, smsd1.IsSubgraph());
         }
 
-        /**
-         * Test of getEuclideanDistance method, of class Isomorphism.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of getEuclideanDistance method, of class Isomorphism.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetEuclideanDistance()
         {
@@ -501,7 +501,7 @@ namespace NCDK.SMSD
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(query);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(target);
 
-            //	Calling the main algorithm to perform MCS cearch
+            //    Calling the main algorithm to perform MCS cearch
 
             Aromaticity.CDKLegacy.Apply(query);
             Aromaticity.CDKLegacy.Apply(target);

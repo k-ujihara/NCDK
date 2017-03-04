@@ -21,6 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,16 +29,15 @@ using System.IO;
 
 namespace NCDK.Dict
 {
-    /**
-	 * Database of dictionaries listing entries with compounds, fragments
-	 * and entities.
-	 *
-	 * @author     Egon Willighagen
-	 * @cdk.githash
-	 * @cdk.created    2003-04-06
-	 * @cdk.keyword    dictionary
-	 * @cdk.module     dict
-	 */
+    /// <summary>
+    /// Database of dictionaries listing entries with compounds, fragments
+    /// and entities.
+    /// </summary>
+    // @author     Egon Willighagen
+    // @cdk.githash
+    // @cdk.created    2003-04-06
+    // @cdk.keyword    dictionary
+    // @cdk.module     dict
     public class DictionaryDatabase
     {
         public const string DICTREFPROPERTYNAME = "NCDK.Dict";
@@ -46,17 +46,17 @@ namespace NCDK.Dict
                 "reaction-processes"                        };
         private string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
 
-        private IDictionary<string, DictionaryMap> dictionaries;
+        private IDictionary<string, EntryDictionary> dictionaries;
 
         public DictionaryDatabase()
         {
             // read dictionaries distributed with CDK
-            dictionaries = new Dictionary<string, DictionaryMap>();
+            dictionaries = new Dictionary<string, EntryDictionary>();
             for (int i = 0; i < dictionaryNames.Length; i++)
             {
                 string name = dictionaryNames[i];
                 string type = dictionaryTypes[i];
-                DictionaryMap dictionary = ReadDictionary("NCDK.Dict.Data." + name, type);
+                EntryDictionary dictionary = ReadDictionary("NCDK.Dict.Data." + name, type);
                 if (dictionary != null)
                 {
                     dictionaries.Add(name.ToLowerInvariant(), dictionary);
@@ -65,9 +65,9 @@ namespace NCDK.Dict
             }
         }
 
-        private DictionaryMap ReadDictionary(string databaseLocator, string type)
+        private EntryDictionary ReadDictionary(string databaseLocator, string type)
         {
-            DictionaryMap dictionary;
+            EntryDictionary dictionary;
             // to distinguish between OWL: QSAR & REACT
             if (type.Contains("_React"))
                 databaseLocator += "." + type.Substring(0, type.Length - 6);
@@ -76,7 +76,7 @@ namespace NCDK.Dict
             Trace.TraceInformation("Reading dictionary from ", databaseLocator);
             try
             {
-                var reader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream(databaseLocator));
+                var reader = new StreamReader(ResourceLoader.GetAsStream(databaseLocator));
                 if (type.Equals("owl"))
                 {
                     dictionary = OWLFile.Unmarshal(reader);
@@ -87,7 +87,7 @@ namespace NCDK.Dict
                 }
                 else
                 { // assume XML using Castor
-                    dictionary = DictionaryMap.Unmarshal(reader);
+                    dictionary = EntryDictionary.Unmarshal(reader);
                 }
             }
             catch (Exception exception)
@@ -99,11 +99,11 @@ namespace NCDK.Dict
             return dictionary;
         }
 
-        /**
-		 * Reads a custom dictionary into the database.
-		 * @param reader The reader from which the dictionary data will be read
-		 * @param name The name of the dictionary
-		 */
+        /// <summary>
+        /// Reads a custom dictionary into the database.
+        /// </summary>
+        /// <param name="reader">The reader from which the dictionary data will be read</param>
+        /// <param name="name">The name of the dictionary</param>
         public void ReadDictionary(TextReader reader, string name)
         {
             name = name.ToLowerInvariant();
@@ -112,7 +112,7 @@ namespace NCDK.Dict
             {
                 try
                 {
-                    DictionaryMap dictionary = DictionaryMap.Unmarshal(reader);
+                    EntryDictionary dictionary = EntryDictionary.Unmarshal(reader);
                     dictionaries.Add(name, dictionary);
                     Debug.WriteLine("  ... loaded and stored");
                 }
@@ -128,28 +128,28 @@ namespace NCDK.Dict
             }
         }
 
-        /**
-		 * Returns a string[] with the names of the known dictionaries.
-		 * @return The names of the dictionaries
-		 */
+        /// <summary>
+        /// Returns a string[] with the names of the known dictionaries.
+        /// </summary>
+        /// <returns>The names of the dictionaries</returns>
         public string[] GetDictionaryNames()
         {
             return dictionaryNames;
         }
 
-        public DictionaryMap GetDictionary(string dictionaryName)
+        public EntryDictionary GetDictionary(string dictionaryName)
         {
             return dictionaries[dictionaryName];
         }
 
-        /**
-		 * Returns a string[] with the id's of all entries in the specified database.
-		 * @return The entry names for the specified dictionary
-		 * @param dictionaryName The name of the dictionary
-		 */
+        /// <summary>
+        /// Returns a string[] with the id's of all entries in the specified database.
+        /// </summary>
+        /// <returns>The entry names for the specified dictionary</returns>
+        /// <param name="dictionaryName">The name of the dictionary</param>
         public IEnumerable<string> GetDictionaryEntries(string dictionaryName)
         {
-            DictionaryMap dictionary = GetDictionary(dictionaryName);
+            EntryDictionary dictionary = GetDictionary(dictionaryName);
             if (dictionary == null)
             {
                 Trace.TraceError("Cannot find requested dictionary");
@@ -157,8 +157,7 @@ namespace NCDK.Dict
             else
             {
                 // FIXME: dummy method that needs an implementation
-                var entries = dictionary.GetEntries();
-                foreach (var entry in entries)
+                foreach (var entry in dictionary.Entries)
                     yield return entry.Label;
             }
             yield break;
@@ -166,13 +165,13 @@ namespace NCDK.Dict
 
         public IEnumerable<Entry> GetDictionaryEntry(string dictionaryName)
         {
-            DictionaryMap dictionary = dictionaries[dictionaryName];
-            return dictionary.GetEntries();
+            EntryDictionary dictionary = dictionaries[dictionaryName];
+            return dictionary.Entries;
         }
 
-        /**
-		 * Returns true if the database contains the dictionary.
-		 */
+        /// <summary>
+        /// Returns true if the database contains the dictionary.
+        /// </summary>
         public bool HasDictionary(string name)
         {
             return dictionaries.ContainsKey(name.ToLowerInvariant());
@@ -183,16 +182,15 @@ namespace NCDK.Dict
             return dictionaries.Keys;
         }
 
-        /**
-		 * Returns true if the given dictionary contains the given
-		 * entry.
-		 */
+        /// <summary>
+        /// Returns true if the given dictionary contains the given entry.
+        /// </summary>
         public bool HasEntry(string dictName, string entryID)
         {
             if (HasDictionary(dictName))
             {
-                DictionaryMap dictionary = dictionaries[dictName];
-                return dictionary.HasEntry(entryID.ToLowerInvariant());
+                EntryDictionary dictionary = dictionaries[dictName];
+                return dictionary.ContainsKey(entryID.ToLowerInvariant());
             }
             else
             {

@@ -20,11 +20,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of <see cref="IAtomContainer"/> implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IAtomContainer"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMoleculeTest : AbstractAtomContainerTest
     {

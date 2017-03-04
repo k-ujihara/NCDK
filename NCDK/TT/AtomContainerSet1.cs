@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* 
  * Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
@@ -49,13 +50,13 @@ using System.Collections;
 
 namespace NCDK.Default
 {
-    /**
-     * A set of AtomContainers.
-     *
-     * @author        hel
-     * @cdk.module    data
-     * @cdk.githash
-     */
+    /// <summary>
+    /// A set of AtomContainers.
+    ///
+    // @author        hel
+    // @cdk.module    data
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class AtomContainerSet<T>
         : ChemObject, IAtomContainerSet<T>, IChemObjectListener, ICloneable
@@ -135,21 +136,21 @@ namespace NCDK.Default
             multipliers.Add(multiplier);
         }
 
-        /**
-         *  Adds all atomContainers in the AtomContainerSet to this container.
-         *
-         * @param  atomContainerSet  The AtomContainerSet
-         */
+        /// <summary>
+        ///  Adds all atomContainers in the AtomContainerSet to this container.
+        ///
+        /// <param name="atomContainerSet">The AtomContainerSet</param>
+        /// </summary>
         public virtual void Add(IAtomContainerSet<T> atomContainerSet)
         {
             foreach (var iter in atomContainerSet)
             {
                 Add(iter);
             }
-            /*
-             * notifyChanged() is called by Add()
-             */
-        }
+            
+            // NotifyChanged() is called by Add()
+		}
+
 
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
@@ -215,20 +216,20 @@ namespace NCDK.Default
 
         public bool IsReadOnly => false;
 
-        /**
-         *  Called by objects to which this object has
-         *  registered as a listener.
-         *
-         * @param  event  A change event pointing to the source of the change
-         */
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        ///
+        /// <param name="event">A change event pointing to the source of the change</param>
+        /// </summary>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
         
-        /**
-         * Sort the AtomContainers and multipliers using a provided Comparator.
-         * @param comparator defines the sorting method
-         */
+        /// <summary>
+        /// Sort the AtomContainers and multipliers using a provided Comparator.
+        /// <param name="comparator">defines the sorting method</param>
+        /// </summary>
         public void Sort(IComparer<T> comparator)
         {
             // need to use boxed primitives as we can't customise sorting of int primitives
@@ -278,13 +279,13 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /**
-     * A set of AtomContainers.
-     *
-     * @author        hel
-     * @cdk.module    data
-     * @cdk.githash
-     */
+    /// <summary>
+    /// A set of AtomContainers.
+    ///
+    // @author        hel
+    // @cdk.module    data
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class AtomContainerSet<T>
         : ChemObject, IAtomContainerSet<T>, IChemObjectListener, ICloneable
@@ -364,21 +365,21 @@ namespace NCDK.Silent
             multipliers.Add(multiplier);
         }
 
-        /**
-         *  Adds all atomContainers in the AtomContainerSet to this container.
-         *
-         * @param  atomContainerSet  The AtomContainerSet
-         */
+        /// <summary>
+        ///  Adds all atomContainers in the AtomContainerSet to this container.
+        ///
+        /// <param name="atomContainerSet">The AtomContainerSet</param>
+        /// </summary>
         public virtual void Add(IAtomContainerSet<T> atomContainerSet)
         {
             foreach (var iter in atomContainerSet)
             {
                 Add(iter);
             }
-            /*
-             * notifyChanged() is called by Add()
-             */
-        }
+            
+            // NotifyChanged() is called by Add()
+		}
+
 
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
@@ -444,20 +445,20 @@ namespace NCDK.Silent
 
         public bool IsReadOnly => false;
 
-        /**
-         *  Called by objects to which this object has
-         *  registered as a listener.
-         *
-         * @param  event  A change event pointing to the source of the change
-         */
+        /// <summary>
+        ///  Called by objects to which this object has
+        ///  registered as a listener.
+        ///
+        /// <param name="event">A change event pointing to the source of the change</param>
+        /// </summary>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
         
-        /**
-         * Sort the AtomContainers and multipliers using a provided Comparator.
-         * @param comparator defines the sorting method
-         */
+        /// <summary>
+        /// Sort the AtomContainers and multipliers using a provided Comparator.
+        /// <param name="comparator">defines the sorting method</param>
+        /// </summary>
         public void Sort(IComparer<T> comparator)
         {
             // need to use boxed primitives as we can't customise sorting of int primitives

@@ -22,40 +22,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using NCDK.Common.Collections;
-using NCDK.Common.Primitives;
 using static NCDK.Common.Base.Preconditions;
 using static NCDK.Graphs.InitialCycles;
 using System.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Determine the uniquely defined essential cycles of a graph. A cycle is
-     * essential if it a member of all minimum cycle bases. If a graph has a single
-     * minimum cycle basis (MCB) then all of its cycles are essential. Unlikely the
-     * {@link RelevantCycles} the number of essential cycles is always polynomial
-     * however may not be able generate the cycle space of a graph.
-     *
-     * @author John May
-     * @cdk.module core
-     * @cdk.githash
-     * @cdk.keyword essential rings
-     * @cdk.keyword essential cycles
-     * @cdk.keyword graph
-     * @cdk.keyword cycles
-     * @cdk.keyword rings
-     * @see RelevantCycles
-     * @see MinimumCycleBasis
-     * @see org.openscience.cdk.ringsearch.SSSRFinder#FindEssentialRings()
-     * @see GraphUtil
-     */
+    /// <summary>
+    /// Determine the uniquely defined essential cycles of a graph. A cycle is
+    /// essential if it a member of all minimum cycle bases. If a graph has a single
+    /// minimum cycle basis (MCB) then all of its cycles are essential. Unlikely the
+    /// <see cref="RelevantCycles"/> the number of essential cycles is always polynomial
+    /// however may not be able generate the cycle space of a graph.
+    /// </summary>
+    /// <seealso cref="RelevantCycles"/>
+    /// <seealso cref="MinimumCycleBasis"/>
+    /// <seealso cref="GraphUtil"/>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
+    // @cdk.keyword essential rings
+    // @cdk.keyword essential cycles
+    // @cdk.keyword graph
+    // @cdk.keyword cycles
+    // @cdk.keyword rings
     public sealed class EssentialCycles
     {
-
         /// <summary>Cycles which are essential.</summary>
         private readonly List<Cycle> essential;
 
@@ -65,36 +60,32 @@ namespace NCDK.Graphs
         /// <summary>An MCB extracted from the relevant cycles.</summary>
         private readonly GreedyBasis basis;
 
-        /**
-         * Determine the essential cycles given a graph. Adjacency list
-         * representation. For maximum performance the graph should be preprocessed
-         * and run on separate biconnected components or fused cycles (see. {@link
-         * org.openscience.cdk.ringsearch.RingSearch}.
-         *
-         * @param graph a molecule graph
-         * @see GraphUtil#ToAdjList(IAtomContainer)
-         * @see org.openscience.cdk.ringsearch.RingSearch
-         */
+        /// <summary>
+        /// Determine the essential cycles given a graph. Adjacency list
+        /// representation. For maximum performance the graph should be preprocessed
+        /// and run on separate biconnected components or fused cycles (see.
+        /// <see cref="RingSearches.RingSearch"/>.
+        /// </summary>
+        /// <param name="graph">a molecule graph</param>
+        /// <seealso cref="GraphUtil.ToAdjList(IAtomContainer)"/>
+        /// <seealso cref="RingSearches.RingSearch"/>
         public EssentialCycles(int[][] graph)
             : this(new InitialCycles(graph))
         { }
 
-
-        /**
-         * Determine the essential cycles from a precomputed set of initial cycles.
-         *
-         * @param initial a molecule graph
-         */
+        /// <summary>
+        /// Determine the essential cycles from a precomputed set of initial cycles.
+        /// </summary>
+        /// <param name="initial">a molecule graph</param>
         internal EssentialCycles(InitialCycles initial)
                 : this(new RelevantCycles(initial), initial)
         { }
 
-        /**
-         * Determine the essential cycles from a precomputed set of initial cycles
-         * and relevant cycles.
-         *
-         * @param initial a molecule graph
-         */
+        /// <summary>
+        /// Determine the essential cycles from a precomputed set of initial cycles
+        /// and relevant cycles.
+        /// </summary>
+        /// <param name="initial">a molecule graph</param>
         internal EssentialCycles(RelevantCycles relevant, InitialCycles initial)
         {
             CheckNotNull(relevant, nameof(relevant), "No RelevantCycles provided");
@@ -113,11 +104,10 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * The paths for each essential cycle.
-         *
-         * @return array of vertex paths
-         */
+        /// <summary>
+        /// The paths for each essential cycle.
+        /// </summary>
+        /// <returns>array of vertex paths</returns>
         public int[][] GetPaths()
         {
             int[][] paths = new int[Count][];
@@ -126,19 +116,17 @@ namespace NCDK.Graphs
             return paths;
         }
 
-        /**
-         * Number of essential cycles.
-         *
-         * @return number of cycles
-         */
+        /// <summary>
+        /// Number of essential cycles.
+        /// </summary>
+        /// <returns>number of cycles</returns>
         public int Count => essential.Count;
 
-        /**
-         * Reconstruct all relevant cycles and group then by length.
-         *
-         * @param relevant precomputed relevant cycles
-         * @return all relevant cycles groped by weight
-         */
+        /// <summary>
+        /// Reconstruct all relevant cycles and group then by length.
+        /// </summary>
+        /// <param name="relevant">precomputed relevant cycles</param>
+        /// <returns>all relevant cycles groped by weight</returns>
         private IEnumerable<IList<Cycle>> GroupByLength(RelevantCycles relevant)
         {
             List<Cycle> cycle_list = new List<Cycle>();
@@ -157,13 +145,12 @@ namespace NCDK.Graphs
             yield break;
         }
 
-        /**
-         * For a list of equal length cycles return those which are members of the
-         * minimum cycle basis.
-         *
-         * @param cycles cycles to add to the basis
-         * @return cycles which were added to the basis
-         */
+        /// <summary>
+        /// For a list of equal length cycles return those which are members of the
+        /// minimum cycle basis.
+        /// </summary>
+        /// <param name="cycles">cycles to add to the basis</param>
+        /// <returns>cycles which were added to the basis</returns>
         private IList<Cycle> GetMembersOfBasis(IEnumerable<Cycle> cycles)
         {
             var ret = new List<Cycle>();
@@ -178,13 +165,12 @@ namespace NCDK.Graphs
             return ret;
         }
 
-        /**
-         * Determines whether the <i>cycle</i> is essential.
-         *
-         * @param candidate a cycle which is a member of the MCB
-         * @param relevant  relevant cycles of the same length as <i>cycle</i>
-         * @return whether the candidate is essential
-         */
+        /// <summary>
+        /// Determines whether the <i>cycle</i> is essential.
+        /// </summary>
+        /// <param name="candidate">a cycle which is a member of the MCB</param>
+        /// <param name="relevant">relevant cycles of the same length as <i>cycle</i></param>
+        /// <returns>whether the candidate is essential</returns>
         private bool IsEssential(Cycle candidate, ICollection<Cycle> relevant)
         {
             // construct an alternative basis with all equal weight relevant cycles
@@ -204,10 +190,10 @@ namespace NCDK.Graphs
             return BitMatrix.From(alternate).Eliminate() < basis.Count;
         }
 
-        /**
-         * Simple class for helping find the essential cycles from the relevant
-         * cycles.
-         */
+        /// <summary>
+        /// Simple class for helping find the essential cycles from the relevant
+        /// cycles.
+        /// </summary>
         private class MyCycle
                 : Cycle
         {
@@ -226,14 +212,12 @@ namespace NCDK.Graphs
             public override int[][] GetFamily() => new int[][] { Path };
 
             /// <inheritdoc/>
-
             public override int SizeOfFamily()
             {
                 return 1;
             }
 
             /// <inheritdoc/>
-
             public override string ToString()
             {
                 return Arrays.ToJavaString(base.Path);
@@ -241,4 +225,3 @@ namespace NCDK.Graphs
         }
     }
 }
-

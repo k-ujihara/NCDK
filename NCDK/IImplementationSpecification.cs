@@ -20,45 +20,45 @@ using System;
 
 namespace NCDK
 {
-    /**
-     * Interface that is used to describe the specification of a certain
-     * implementation of an algorithm.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Interface that is used to describe the specification of a certain
+    /// implementation of an algorithm.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public interface IImplementationSpecification
     {
-        /**
-         * Pointer to a dictionary or ontology describing a unique
-         * algorithm.
-         *
-         * @return the URN pointing to a (virtual) dictionary or ontology.
-         */
+        /// <summary>
+        /// Pointer to a dictionary or ontology describing a unique
+        /// algorithm.
+        ///
+        /// <returns>the URN pointing to a (virtual) dictionary or ontology.</returns>
+        /// </summary>
         string SpecificationReference { get; }
 
-        /**
-         * Human-readable name for the implementation for the algorithm
-         * specified by the reference.
-         *
-         * @return the name of this implementation
-         */
+        /// <summary>
+        /// Human-readable name for the implementation for the algorithm
+        /// specified by the reference.
+        ///
+        /// <returns>the name of this implementation</returns>
+        /// </summary>
         string ImplementationTitle { get; }
 
-        /**
-         * Identifier for this implementation which must include
-         * version information. The format is free.
-         *
-         * @return a free format identifier for this implementation
-         */
+        /// <summary>
+        /// Identifier for this implementation which must include
+        /// version information. The format is free.
+        ///
+        /// <returns>a free format identifier for this implementation</returns>
+        /// </summary>
         string ImplementationIdentifier { get; }
 
-        /**
-         * Human-readable name for the vendor that holds copyright for this
-         * implementation.
-         *
-         * @return the copyright holder of the implementation
-         */
+        /// <summary>
+        /// Human-readable name for the vendor that holds copyright for this
+        /// implementation.
+        ///
+        /// <returns>the copyright holder of the implementation</returns>
+        /// </summary>
         string ImplementationVendor { get; }
     }
 }

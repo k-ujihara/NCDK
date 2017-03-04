@@ -17,13 +17,13 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This class matches aromatic atom with element symbol specified.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This class matches aromatic atom with element symbol specified.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AromaticSymbolAtom : SMARTSAtom
     {
         public AromaticSymbolAtom(string symbol, IChemObjectBuilder builder)

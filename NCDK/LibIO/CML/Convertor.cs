@@ -25,6 +25,7 @@ using NCDK.Dict;
 using NCDK.Geometries;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,13 +35,13 @@ using System.Xml.Linq;
 
 namespace NCDK.LibIO.CML
 {
-    /**
-     * @cdk.module       libiocml
-     * @cdk.githash
-     * @cdk.keyword      CML
-     * @cdk.keyword      class convertor
-     * @cdk.require      java1.5+
-     */
+    /// <summary>
+    // @cdk.module       libiocml
+    // @cdk.githash
+    // @cdk.keyword      CML
+    // @cdk.keyword      class convertor
+    // @cdk.require      java1.5+
+    /// </summary>
     public class Convertor
     {
         public const string NS_CML = "http://www.xml-cml.org/schema";
@@ -51,12 +52,12 @@ namespace NCDK.LibIO.CML
         private bool useCMLIDs;
         private string prefix;
 
-        /**
-         * Constructs a CML convertor.
-         *
-         * @param useCMLIDs Uses object IDs like 'a1' instead of 'a&lt;hash>'.
-         * @param prefix    Namespace prefix to use. If null, then no prefix is used;
-         */
+        /// <summary>
+        /// Constructs a CML convertor.
+        ///
+        /// <param name="useCMLIDs">Uses object IDs like 'a1' instead of 'a&lt;hash>'.</param>
+        /// <param name="prefix">Namespace prefix to use. If null, then no prefix is used;</param>
+        /// </summary>
         public Convertor(bool useCMLIDs, string prefix)
         {
             this.useCMLIDs = useCMLIDs;
@@ -86,7 +87,7 @@ namespace NCDK.LibIO.CML
             try
             {
                 Debug.WriteLine("Starting loading Customizers...");
-                TextReader reader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream(CUSTOMIZERS_LIST));
+                TextReader reader = new StreamReader(ResourceLoader.GetAsStream(this.GetType(), CUSTOMIZERS_LIST));
                 int customizerCount = 0;
                 string customizerName;
                 while ((customizerName = reader.ReadLine()) != null)

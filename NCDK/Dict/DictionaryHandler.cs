@@ -23,19 +23,18 @@ using System.Xml.Linq;
 
 namespace NCDK.Dict
 {
-    /**
+    /// <summary>
     // Class for unmarshalling a dictionary schema file.
-     *
+    /// </summary>
     // @cdk.module     dict
     // @cdk.githash
-     */
     public class DictionaryHandler : XContentHandler
     {
         private bool inEntry = false;
         private bool inMetadataList = false;
         Entry entry;
 
-        DictionaryMap dict;
+        EntryDictionary dict;
 
         public DictionaryHandler() { }
 
@@ -44,7 +43,7 @@ namespace NCDK.Dict
 
         public override void StartDocument()
         {
-            dict = new DictionaryMap();
+            dict = new EntryDictionary();
         }
 
         public override void EndDocument()
@@ -122,6 +121,6 @@ namespace NCDK.Dict
             }
         }
 
-        public DictionaryMap Dictionary => dict;
+        public EntryDictionary Dictionary => dict;
     }
 }

@@ -29,38 +29,38 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms.MCSS
 {
-    /**
-     *  An RMap implements the association between an edge (bond) in G1 and an edge
-     *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
-     *
-     * @author      Stephane Werner, IXELIS <mail@ixelis.net>
-     * @cdk.created 2002-07-24
-     * @cdk.module  standard
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  An RMap implements the association between an edge (bond) in G1 and an edge
+    ///  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
+    ///
+    // @author      Stephane Werner, IXELIS <mail@ixelis.net>
+    // @cdk.created 2002-07-24
+    // @cdk.module  standard
+    // @cdk.githash
+    /// </summary>
     public class RMap
     {
         public int Id1 { get; set; } = 0;
         public int Id2 { get; set; } = 0;
 
-        /**
-         *  Constructor for the RMap.
-         *
-         * @param  id1  number of the edge (bond) in the graph 1
-         * @param  id2  number of the edge (bond) in the graph 2
-         */
+        /// <summary>
+        ///  Constructor for the RMap.
+        ///
+        /// <param name="id1">number of the edge (bond) in the graph 1</param>
+        /// <param name="id2">number of the edge (bond) in the graph 2</param>
+        /// </summary>
         public RMap(int id1, int id2)
         {
             Id1 = id1;
             Id2 = id2;
         }
 
-        /**
-         *  The equals method.
-         *
-         * @param  o  The object to compare.
-         * @return    true=if both ids equal, else false.
-         */
+        /// <summary>
+        ///  The equals method.
+        ///
+        /// <param name="o">The object to compare.</param>
+        /// <returns>true=if both ids equal, else false.</returns>
+        /// </summary>
         public override bool Equals(object o)
         {
             var aa = o as RMap;

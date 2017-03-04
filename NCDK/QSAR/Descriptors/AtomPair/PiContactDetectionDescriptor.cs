@@ -26,42 +26,42 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.AtomPair
 {
-    /**
-     * This class checks if two atoms have pi-contact (this is true when there is
-     * one and the same conjugated pi-system which contains both atoms, or directly
-     * linked neighbours of the atoms).
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>firstAtom</td>
-     *     <td>0</td>
-     *     <td>The position of the first atom</td>
-     *   </tr>
-     *   <tr>
-     *     <td>secondAtom</td>
-     *     <td>0</td>
-     *     <td>The position of the second atom</td>
-     *   </tr>
-     *   <tr>
-     *     <td>checkAromaticity</td>
-     *     <td>false</td>
-     *     <td>True is the aromaticity has to be checked</td>
-     *   </tr>
-     * </table>
-     *
-     * @author         mfe4
-     * @cdk.created    2004-11-03
-     * @cdk.module     qsarmolecular
-     * @cdk.githash
-     * @cdk.set        qsar-descriptors
-     * @cdk.dictref    qsar-descriptors:piContact
-     */
+    /// <summary>
+    /// This class checks if two atoms have pi-contact (this is true when there is
+    /// one and the same conjugated pi-system which contains both atoms, or directly
+    /// linked neighbours of the atoms).
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>firstAtom</td>
+    ///     <td>0</td>
+    ///     <td>The position of the first atom</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>secondAtom</td>
+    ///     <td>0</td>
+    ///     <td>The position of the second atom</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>checkAromaticity</td>
+    ///     <td>false</td>
+    ///     <td>True is the aromaticity has to be checked</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author         mfe4
+    // @cdk.created    2004-11-03
+    // @cdk.module     qsarmolecular
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref    qsar-descriptors:piContact
+    /// </summary>
     public class PiContactDetectionDescriptor : AbstractAtomPairDescriptor, IAtomPairDescriptor
     {
         private static readonly string[] NAMES = { "piContact" };

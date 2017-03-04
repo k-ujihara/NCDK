@@ -60,7 +60,7 @@ namespace NCDK.Isomorphisms.Matchers
          *
          */
         public QueryAtomContainer(IChemObjectBuilder builder)
-			: base()
+            : base()
         {
             Builder = builder;
         }

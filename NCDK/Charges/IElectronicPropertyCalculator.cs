@@ -18,14 +18,12 @@
  */
 namespace NCDK.Charges
 {
-    /**
-    /// Interface for classes that calculate (partial) charges centered
-    /// on atom nuclei.
-     *
-    /// @author      egonw
-    /// @cdk.module  charges
-    /// @cdk.githash
-     */
+    /// <summary>
+    /// Interface for classes that calculate (partial) charges centered on atom nuclei.
+    /// </summary>
+    // @author      egonw
+    // @cdk.module  charges
+    // @cdk.githash
     public interface IElectronicPropertyCalculator
     {
         void CalculateCharges(IAtomContainer container);

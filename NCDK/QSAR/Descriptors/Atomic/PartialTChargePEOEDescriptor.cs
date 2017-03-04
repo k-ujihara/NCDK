@@ -25,36 +25,36 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  <p>The calculation of total partial charges of an heavy atom is based on
-     *  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
-     *  <p>They are obtained by summation of the results of the calculations on
-     *  sigma- and pi-charges. </p>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     *
-     * @author      Miguel Rojas
-     * @cdk.created 2006-04-11
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:PartialTChargePEOE
-     *
-     * @see         GasteigerMarsiliPartialCharges
-     * @see         GasteigerPEPEPartialCharges
-     */
+    /// <summary>
+    ///  <p>The calculation of total partial charges of an heavy atom is based on
+    ///  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
+    ///  <p>They are obtained by summation of the results of the calculations on
+    ///  sigma- and pi-charges. </p>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    ///
+    // @author      Miguel Rojas
+    // @cdk.created 2006-04-11
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:PartialTChargePEOE
+    ///
+    // @see         GasteigerMarsiliPartialCharges
+    // @see         GasteigerPEPEPartialCharges
+    /// </summary>
     public class PartialTChargePEOEDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "pepeT" };

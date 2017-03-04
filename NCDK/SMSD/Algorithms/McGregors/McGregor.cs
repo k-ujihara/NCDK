@@ -25,25 +25,24 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Helper;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
-    /**
-     * Class which reports MCS solutions based on the McGregor algorithm
-     * published in 1982.
-     *
-     *  <p>The SMSD algorithm is described in this paper.
-     * <font color="#FF0000">please refer Rahman <i>et.al. 2009</i></font>
-     *  {@cdk.cite SMSD2009}.
-     *  </p>
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class which reports MCS solutions based on the McGregor algorithm
+    /// published in 1982.
+    ///
+    ///  <p>The SMSD algorithm is described in this paper.
+    /// <font color="#FF0000">please refer Rahman <i>et.al. 2009</i></font>
+    ///  {@cdk.cite SMSD2009}.
+    ///  </p>
+    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public sealed class McGregor
     {
-
         private IAtomContainer source = null;
         private IAtomContainer target = null;
         private BinaryTree last = null;
@@ -61,15 +60,14 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private bool newMatrix = false;
         private bool bondMatch = false;
 
-        /**
-         * Constructor for the McGregor algorithm.
-         * @param source
-         * @param target
-         * @param mappings
-         * @param shouldMatchBonds
-         */
-        public McGregor(IAtomContainer source, IAtomContainer target, IList<IList<int>> mappings,
-                        bool shouldMatchBonds)
+        /// <summary>
+        /// Constructor for the McGregor algorithm.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="mappings"></param>
+        /// <param name="shouldMatchBonds"></param>
+        public McGregor(IAtomContainer source, IAtomContainer target, IList<IList<int>> mappings, bool shouldMatchBonds)
         {
             IsBondMatch = shouldMatchBonds;
             this.source = source;
@@ -90,12 +88,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
             this.newMatrix = false;
         }
 
-        /**
-         * Constructor for the McGregor algorithm.
-         * @param source
-         * @param target
-         * @param mappings
-         */
+        /// <summary>
+        /// Constructor for the McGregor algorithm.
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        /// <param name="mappings"></param>
+        /// </summary>
         public McGregor(IQueryAtomContainer source, IAtomContainer target, IList<IList<int>> mappings)
         {
             IsBondMatch = true;
@@ -117,15 +115,14 @@ namespace NCDK.SMSD.Algorithms.McGregors
             this.newMatrix = false;
         }
 
-        /**
-         * Start McGregor search and extend the mappings if possible.
-         * @param largestMappingSize
-         * @param presentMapping
-         * @throws IOException
-         */
+        /// <summary>
+        /// Start McGregor search and extend the mappings if possible.
+        /// </summary>
+        /// <param name="largestMappingSize"></param>
+        /// <param name="presentMapping"></param>
+        /// <exception cref="IOException"></exception>
         public void StartMcGregorIteration(int largestMappingSize, IDictionary<int, int> presentMapping)
         {
-
             this.globalMCSSize = (largestMappingSize / 2);
             var cTab1Copy = McGregorChecks.GenerateCTabCopy(source);
             var cTab2Copy = McGregorChecks.GenerateCTabCopy(target);
@@ -210,16 +207,16 @@ namespace NCDK.SMSD.Algorithms.McGregors
             McgregorHelper mcGregorHelper = new McgregorHelper(dummy, presentMapping.Count, mappedAtoms,
                     gNeighborBondnumA, gNeighborBondNumB, iBondNeighborsA, iBondNeighborsB, cBondNeighborsA,
                     cBondNeighborsB, gSetBondNumA, gSetBondNumB, iBondSetA, iBondSetB, cBondSetA, cBondSetB);
-            iterator(mcGregorHelper);
+            Iterator(mcGregorHelper);
         }
 
-        /**
-         * Start McGregor search and extend the mappings if possible.
-         * @param largestMappingSize
-         * @param cliqueVector
-         * @param compGraphNodes
-         * @throws IOException
-         */
+        /// <summary>
+        /// Start McGregor search and extend the mappings if possible.
+        /// </summary>
+        /// <param name="largestMappingSize"></param>
+        /// <param name="cliqueVector"></param>
+        /// <param name="compGraphNodes"></param>
+        /// <exception cref="IOException"></exception>
         public void StartMcGregorIteration(int largestMappingSize, IList<int> cliqueVector,
                 IList<int> compGraphNodes)
         {
@@ -319,11 +316,11 @@ namespace NCDK.SMSD.Algorithms.McGregors
             McgregorHelper mcGregorHelper = new McgregorHelper(dummy, mappedAtomCount, mappedAtoms, localNeighborBondnumA,
                     localNeighborBondNumB, iBondNeighborAtomsA, iBondNeighborAtomsB, cBondNeighborsA, cBondNeighborsB,
                     setNumA, setNumB, iBondSetA, iBondSetB, cBondSetA, cBondSetB);
-            iterator(mcGregorHelper);
+            Iterator(mcGregorHelper);
 
         }
 
-        private int iterator(McgregorHelper mcGregorHelper)
+        private int Iterator(McgregorHelper mcGregorHelper)
         {
 
             bool mappingCheckFlag = mcGregorHelper.IsMappingCheckFlag;
@@ -495,7 +492,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
                         newNeighborNumB, newINeighborsA, newINeighborsB, newCNeighborsA, newCNeighborsB,
                         newSetBondNumA, newSetBondNumB, newIBondSetA, newIBondSetB, newCBondSetA, newCBondSetB);
 
-                iterator(newMH);
+                Iterator(newMH);
                 bestarcsCopy.Pop();
                 //            Console.Out.WriteLine("End of the iterator!!!!");
             }
@@ -758,16 +755,16 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         }
 
-        /**
-         * Returns computed mappings.
-         * @return mappings
-         */
+        /// <summary>
+        /// Returns computed mappings.
+        /// <returns>mappings</returns>
+        /// </summary>
         public IList<IList<int>> Mappings => mappings;
 
-        /**
-         * Returns MCS size.
-         * @return MCS size
-         */
+        /// <summary>
+        /// Returns MCS size.
+        /// <returns>MCS size</returns>
+        /// </summary>
         public int MCSSize => this.globalMCSSize;
 
         private void SetFinalMappings(List<int> mappedAtoms, int mappedAtomCount)
@@ -914,10 +911,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
             }
         }
 
-        /*
-         *          * Should bonds match
-         * @return the bondMatch
-         */
         /// <summary>
         /// Should bonds match
         /// </summary>

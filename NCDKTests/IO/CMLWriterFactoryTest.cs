@@ -26,11 +26,11 @@ using NCDK.IO.Formats;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writing files.
-     *
-     * @cdk.module test-libiocml
-     */
+    /// <summary>
+    /// TestCase for the writing files.
+    ///
+    // @cdk.module test-libiocml
+    /// </summary>
     [TestClass()]
     public class CMLWriterFactoryTest
     {

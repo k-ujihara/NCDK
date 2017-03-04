@@ -51,7 +51,7 @@ namespace NCDK.Beam
     ///     .Add(2, 3)
     ///     .Build();
     /// </code></example>
-    /// <author>John May</author>
+    // @author John May
     public sealed class GraphBuilder
     {
         /// <summary>Current we just use the non-public methods of the actual graph object.</summary>
@@ -63,7 +63,7 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Internal constructor.
-		/// </summary>
+        /// </summary>
         /// <param name="nAtoms">expected number of atoms</param>
         private GraphBuilder(int nAtoms)
         {
@@ -79,7 +79,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Add an aliphatic element with the specified number of carbons.
         /// </summary>
-        /// <param name="e">     element</param>
+        /// <param name="e">element</param>
         /// <param name="hCount">number of hydrogens</param>
         /// <returns>graph builder for adding more atoms/connections</returns>
         public GraphBuilder Add(Element e, int hCount)
@@ -95,9 +95,6 @@ namespace NCDK.Beam
         /// <param name="a">the atom to add</param>
         /// <returns>graph builder for adding more atoms/connections</returns>
         public GraphBuilder Add(Atom a)
-            => Add_((Atom_)a);
-
-        internal GraphBuilder Add_(Atom_ a)
         {
             if (g.Order >= valence.Length)
                 valence = Arrays.CopyOf(valence, valence.Length * 2);
@@ -317,7 +314,7 @@ namespace NCDK.Beam
             // original code is foreach (var e in g.GetEdges(u))
             // g.edges can be modified in InvertExistingDirectionalLabels.
             var gEdges = g.GetEdges(u);
-			for (int i = 0; i < gEdges.Count; i++)
+            for (int i = 0; i < gEdges.Count; i++)
             {
                 var e = gEdges[i];
 
@@ -344,7 +341,7 @@ namespace NCDK.Beam
             visited.Set(u, true);
 
             // original code is foreach (var e in g.GetEdges(u))
-			// edges is modified in g.Replace.
+            // edges is modified in g.Replace.
             var gEdges = g.GetEdges(u);
             for (var i = 0; i < gEdges.Count; i++)
             {
@@ -440,7 +437,7 @@ namespace NCDK.Beam
             {
                 if (g.TopologyOf(v).Type == Configuration.Types.None)
                 {
-                    Atom_ atom = g.GetAtom_(v);
+                    Atom atom = g.GetAtom(v);
                     if (Suppressible(atom, valence[v]))
                     {
                         g.SetAtom(v, ToSubset(atom));
@@ -449,7 +446,7 @@ namespace NCDK.Beam
             }
         }
 
-        private Atom_ ToSubset(Atom_ a)
+        private Atom ToSubset(Atom a)
         {
             if (a.IsAromatic())
                 return AtomImpl.AromaticSubset.OfElement(a.Element);
@@ -457,7 +454,7 @@ namespace NCDK.Beam
                 return AtomImpl.AliphaticSubset.OfElement(a.Element);
         }
 
-        private bool Suppressible(Atom_ a, int v)
+        private bool Suppressible(Atom a, int v)
         {
             if (!a.Subset
                     && a.Element.IsOrganic()
@@ -485,7 +482,7 @@ namespace NCDK.Beam
             return g;
         }
 
-        /// <author>John May</author>
+        // @author John May
         public sealed class TetrahedralBuilder
         {
 
@@ -508,8 +505,7 @@ namespace NCDK.Beam
             Configuration config;
 
             /// <summary>
-            /// (internal) - constructor for starting to configure a tetrahedral
-            /// centre.
+            /// (internal) - constructor for starting to configure a tetrahedral centre.
             /// </summary>
             /// <param name="gb">the graph builder (where we came from)</param>
             /// <param name="u"> the vertex to</param>
@@ -609,7 +605,7 @@ namespace NCDK.Beam
             }
         }
 
-        /// <author>John May</author>
+        // @author John May
         public sealed class ExtendedTetrahedralBuilder
         {
             /// <summary>
@@ -631,8 +627,7 @@ namespace NCDK.Beam
             Configuration config;
 
             /// <summary>
-            /// (internal) - constructor for starting to configure a tetrahedral
-            /// centre.
+            /// (internal) - constructor for starting to configure a tetrahedral centre.
             /// </summary>
             /// <param name="gb">the graph builder </param>(where we came from)
             /// <param name="u"> the vertex to</param>
@@ -699,7 +694,7 @@ namespace NCDK.Beam
             }
 
             /// <summary>
-            /// Specify the winding of the {@link #Neighbors(int, int, int)}.
+            /// Specify the winding of the <see cref="Neighbors(int, int, int)"/>.
             /// </summary>
             /// <param name="c">configuration <see cref="Configuration.TH1"/>, <see cref="Configuration.TH2"/>, 
             /// <see cref="Configuration.AntiClockwise"/> or <see cref="Configuration.Clockwise"/></param>

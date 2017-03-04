@@ -27,17 +27,17 @@ using System.Linq;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * Place aliphatic <b>chains</b> with Z matrix method. Please use {@link
-     * ModelBuilder3D} to place general molecules.
-     *
-     * @author         chhoppe
-     * @cdk.keyword    AtomPlacer3D
-     * @cdk.created    2004-10-8
-     * @cdk.module     builder3d
-     * @cdk.githash
-     * @see ModelBuilder3D
-     */
+    /// <summary>
+    /// Place aliphatic <b>chains</b> with Z matrix method. Please use {@link
+    /// ModelBuilder3D} to place general molecules.
+    ///
+    // @author         chhoppe
+    // @cdk.keyword    AtomPlacer3D
+    // @cdk.created    2004-10-8
+    // @cdk.module     builder3d
+    // @cdk.githash
+    /// <seealso cref="ModelBuilder3D"/>
+    /// </summary>
     public class AtomPlacer3D
     {
         private IDictionary<string, object> pSet = null;
@@ -54,28 +54,25 @@ namespace NCDK.Modeling.Builder3D
         private const double DEFAULT_SP2_ANGLE = 120.000;
         private const double DEFAULT_SP_ANGLE = 180.000;
 
-#if TEST
-        public
-#endif
-        AtomPlacer3D() { }
+        internal AtomPlacer3D() { }
 
-        /**
-         *  Initialize the atomPlacer class.
-         *
-         * @param  parameterSet  Force Field parameter as Dictionary
-         */
+        /// <summary>
+        ///  Initialize the atomPlacer class.
+        ///
+        /// <param name="parameterSet">Force Field parameter as Dictionary</param>
+        /// </summary>
         public void Initilize(IDictionary<string, object> parameterSet)
         {
             pSet = parameterSet;
         }
 
-        /**
-         *  Count and find first heavy Atom(s) (non Hydrogens) in a chain.
-         *
-         * @param  molecule the reference molecule for searching the chain
-         * @param  chain  chain to be searched
-         * @return        the atom number of the first heavy atom the number of heavy atoms in the chain
-         */
+        /// <summary>
+        ///  Count and find first heavy Atom(s) (non Hydrogens) in a chain.
+        ///
+        /// <param name="molecule">the reference molecule for searching the chain</param>
+        /// <param name="chain">chain to be searched</param>
+        /// <returns>the atom number of the first heavy atom the number of heavy atoms in the chain</returns>
+        /// </summary>
         public int[] FindHeavyAtomsInChain(IAtomContainer molecule, IAtomContainer chain)
         {
             int[] heavy = { -1, -1 };
@@ -95,12 +92,12 @@ namespace NCDK.Modeling.Builder3D
             return heavy;
         }
 
-        /**
-         *  Mark all atoms in chain as placed. (CDKConstant ISPLACED)
-         *
-         * @param  ac  chain
-         * @return     chain all atoms marked as placed
-         */
+        /// <summary>
+        ///  Mark all atoms in chain as placed. (CDKConstant ISPLACED)
+        ///
+        /// <param name="ac">chain</param>
+        /// <returns>chain all atoms marked as placed</returns>
+        /// </summary>
         public IAtomContainer MarkPlaced(IAtomContainer ac)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -110,13 +107,13 @@ namespace NCDK.Modeling.Builder3D
             return ac;
         }
 
-        /**
-         *  Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
-         *
-         * @param molecule        the reference molecule for the chain
-         * @param  chain          the atoms to be assigned, must be connected
-         * @throws CDKException the 'chain' was not a chain
-         */
+        /// <summary>
+        ///  Method assigns 3D coordinates to the heavy atoms in an aliphatic chain.
+        ///
+        /// <param name="molecule">the reference molecule for the chain</param>
+        /// <param name="chain">the atoms to be assigned, must be connected</param>
+        /// <exception cref="CDKException">the 'chain' was not a chain</exception>
+        /// </summary>
         public void PlaceAliphaticHeavyChain(IAtomContainer molecule, IAtomContainer chain)
         {
             //Debug.WriteLine("******** Place aliphatic Chain *********");
@@ -218,16 +215,16 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
-         * The first Atom end up in the origin, the second on on the x axis, and the third
-         * one in the XY plane. The rest is added by applying the Zmatrix distances, angles
-         * and dihedrals. Assign coordinates directly to the atoms.
-         *
-         * @param  molecule  the molecule to be placed in 3D
-         * @param  flagBranched  marks branched chain
-         * author: egonw,cho
-         */
+        /// <summary>
+        /// Takes the given Z Matrix coordinates and converts them to cartesian coordinates.
+        /// The first Atom end up in the origin, the second on on the x axis, and the third
+        /// one in the XY plane. The rest is added by applying the Zmatrix distances, angles
+        /// and dihedrals. Assign coordinates directly to the atoms.
+        ///
+        /// <param name="molecule">the molecule to be placed in 3D</param>
+        /// <param name="flagBranched">marks branched chain</param>
+        /// author: egonw,cho
+        /// </summary>
 
         public void ZMatrixChainToCartesian(IAtomContainer molecule, bool flagBranched)
         {
@@ -295,12 +292,12 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         *  Gets the hybridisation state of an atom.
-         *
-         *@param  atom1  atom
-         *@return        The hybridisationState value (sp=1;sp2=2;sp3=3)
-         */
+        /// <summary>
+        ///  Gets the hybridisation state of an atom.
+        ///
+        /// <param name="atom1">atom</param>
+        /// <returns>The hybridisationState value (sp=1;sp2=2;sp3=3)</returns>
+        /// </summary>
         private int GetHybridisationState(IAtom atom1)
         {
 
@@ -326,17 +323,17 @@ namespace NCDK.Modeling.Builder3D
             return -1;
         }
 
-        /**
-         *  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
-         *  using existing 2D coordinates.
-         *
-         *@param  bond           the double bond
-         *@param  a              coordinates (Vector2) of atom1 connected to bond
-         *@param  b              coordinates (Vector2) of atom2 connected to bond
-         *@param  c              coordinates (Vector2) of atom3 connected to bond
-         *@param  d              coordinates (Vector2) of atom4 connected to bond
-         *@return                The doubleBondConfiguration2D value
-         */
+        /// <summary>
+        ///  Gets the doubleBondConfiguration2D attribute of the AtomPlacer3D object
+        ///  using existing 2D coordinates.
+        ///
+        /// <param name="bond">the double bond</param>
+        /// <param name="a">coordinates (Vector2) of atom1 connected to bond</param>
+        /// <param name="b">coordinates (Vector2) of atom2 connected to bond</param>
+        /// <param name="c">coordinates (Vector2) of atom3 connected to bond</param>
+        /// <param name="d">coordinates (Vector2) of atom4 connected to bond</param>
+        /// <returns>The doubleBondConfiguration2D value</returns>
+        /// </summary>
         private int GetDoubleBondConfiguration2D(IBond bond, Vector2? aa, Vector2? bb, Vector2? cc, Vector2? dd)
         {
             if (bond.Order != BondOrder.Double)
@@ -363,13 +360,13 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         *  Gets the distanceValue attribute of the parameter set.
-         *
-         * @param  id1            atom1 id
-         * @param  id2            atom2 id
-         * @return                The distanceValue value from the force field parameter set
-         */
+        /// <summary>
+        ///  Gets the distanceValue attribute of the parameter set.
+        ///
+        /// <param name="id1">atom1 id</param>
+        /// <param name="id2">atom2 id</param>
+        /// <returns>The distanceValue value from the force field parameter set</returns>
+        /// </summary>
         public double GetBondLengthValue(string id1, string id2)
         {
             string dkey = "";
@@ -390,14 +387,14 @@ namespace NCDK.Modeling.Builder3D
             return ((IList<double>)pSet[dkey])[0];
         }
 
-        /**
-         *  Gets the angleKey attribute of the AtomPlacer3D object.
-         *
-         * @param  id1            Description of the Parameter
-         * @param  id2            Description of the Parameter
-         * @param  id3            Description of the Parameter
-         * @return                The angleKey value
-         */
+        /// <summary>
+        ///  Gets the angleKey attribute of the AtomPlacer3D object.
+        ///
+        /// <param name="id1">Description of the Parameter</param>
+        /// <param name="id2">Description of the Parameter</param>
+        /// <param name="id3">Description of the Parameter</param>
+        /// <returns>The angleKey value</returns>
+        /// </summary>
         public double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";
@@ -433,13 +430,12 @@ namespace NCDK.Modeling.Builder3D
             return ((IList<double>)pSet[akey])[0];
         }
 
-        /**
-         *  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule.
-         *
-         * @param molecule
-         * @return    The nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour value
-         * author:    steinbeck,cho
-         */
+        /// <summary>
+        ///  Gets the nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour from an atom container or molecule.
+        ///
+        /// <param name="molecule">/// <returns>The nextUnplacedHeavyAtomWithAliphaticPlacedNeighbour value</param></returns>
+        /// author:    steinbeck,cho
+        /// </summary>
         public IAtom GetNextUnplacedHeavyAtomWithAliphaticPlacedNeighbour(IAtomContainer molecule)
         {
             foreach (var bond in molecule.Bonds)
@@ -462,12 +458,12 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         * Find the first unplaced atom.
-         * 
-         * @param molecule molecule being built
-         * @return an unplaced heavy atom, null if none.
-         */
+        /// <summary>
+        /// Find the first unplaced atom.
+        /// 
+        /// <param name="molecule">molecule being built</param>
+        /// <returns>an unplaced heavy atom, null if none.</returns>
+        /// </summary>
         internal IAtom GetUnplacedHeavyAtom(IAtomContainer molecule)
         {
             foreach (var atom in molecule.Atoms)
@@ -478,13 +474,12 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         *  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule.
-         *
-         * @param molecule
-         * @return    The nextUnplacedHeavyAtomWithUnplacedAliphaticNeigbor
-         * author: steinbeck,cho
-         */
+        /// <summary>
+        ///  Gets the nextPlacedHeavyAtomWithAliphaticPlacedNeigbor from an atom container or molecule.
+        ///
+        /// <param name="molecule">/// <returns>The nextUnplacedHeavyAtomWithUnplacedAliphaticNeigbor</param></returns>
+        /// author: steinbeck,cho
+        /// </summary>
         public IAtom GetNextPlacedHeavyAtomWithUnplacedAliphaticNeighbour(IAtomContainer molecule)
         {
             foreach (var bond in molecule.Bonds)
@@ -509,12 +504,12 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         *  Gets the nextPlacedHeavyAtomWithUnplacedRingNeighbour attribute of the AtomPlacer3D object.
-         *
-         * @param molecule  The atom container under consideration
-         * @return          The nextPlacedHeavyAtomWithUnplacedRingNeighbour value
-         */
+        /// <summary>
+        ///  Gets the nextPlacedHeavyAtomWithUnplacedRingNeighbour attribute of the AtomPlacer3D object.
+        ///
+        /// <param name="molecule">The atom container under consideration</param>
+        /// <returns>The nextPlacedHeavyAtomWithUnplacedRingNeighbour value</returns>
+        /// </summary>
         public IAtom GetNextPlacedHeavyAtomWithUnplacedRingNeighbour(IAtomContainer molecule)
         {
             foreach (var bond in molecule.Bonds)
@@ -539,13 +534,13 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         *  Gets the farthestAtom attribute of the AtomPlacer3D object.
-         *
-         * @param  refAtomPoint  Description of the Parameter
-         * @param  ac            Description of the Parameter
-         * @return               The farthestAtom value
-         */
+        /// <summary>
+        ///  Gets the farthestAtom attribute of the AtomPlacer3D object.
+        ///
+        /// <param name="refAtomPoint">Description of the Parameter</param>
+        /// <param name="ac">Description of the Parameter</param>
+        /// <returns>The farthestAtom value</returns>
+        /// </summary>
         public IAtom GetFarthestAtom(Vector3 refAtomPoint, IAtomContainer ac)
         {
             double distance = 0;
@@ -564,13 +559,12 @@ namespace NCDK.Modeling.Builder3D
             return atom;
         }
 
-        /**
-         *  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
-         *
-         * @param molecule
-         * @param  atom  Description of the Parameter
-         * @return       The unplacedRingHeavyAtom value
-         */
+        /// <summary>
+        ///  Gets the unplacedRingHeavyAtom attribute of the AtomPlacer3D object.
+        ///
+        /// <param name="molecule">/// <param name="atom">Description of the Parameter</param></param>
+        /// <returns>The unplacedRingHeavyAtom value</returns>
+        /// </summary>
         public IAtom GetUnplacedRingHeavyAtom(IAtomContainer molecule, IAtom atom)
         {
             var bonds = molecule.GetConnectedBonds(atom);
@@ -586,26 +580,24 @@ namespace NCDK.Modeling.Builder3D
             return connectedAtom;
         }
 
-        /**
-         *  Calculates the geometric center of all placed atoms in the atomcontainer.
-         *
-         * @param molecule
-         * @return    Vector3 the geometric center
-         */
+        /// <summary>
+        ///  Calculates the geometric center of all placed atoms in the atomcontainer.
+        ///
+        /// <param name="molecule">/// <returns>Vector3 the geometric center</param></returns>
+        /// </summary>
         public Vector3 GeometricCenterAllPlacedAtoms(IAtomContainer molecule)
         {
             IAtomContainer allPlacedAtoms = GetAllPlacedAtoms(molecule);
             return GeometryUtil.Get3DCenter(allPlacedAtoms);
         }
 
-        /**
-         *  Returns a placed atom connected to a given atom.
-         *
-         * @param molecule
-         * @param  atom  The Atom whose placed bonding partners are to be returned
-         * @return       a placed heavy atom connected to a given atom
-         * author:      steinbeck
-         */
+        /// <summary>
+        ///  Returns a placed atom connected to a given atom.
+        ///
+        /// <param name="molecule">/// <param name="atom">The Atom whose placed bonding partners are to be returned</param></param>
+        /// <returns>a placed heavy atom connected to a given atom</returns>
+        /// author:      steinbeck
+        /// </summary>
         public IAtom GetPlacedHeavyAtom(IAtomContainer molecule, IAtom atom)
         {
             var bonds = molecule.GetConnectedBonds(atom);
@@ -620,14 +612,13 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         *  Gets the first placed Heavy Atom around atomA which is not atomB.
-         *
-         * @param molecule
-         * @param  atomA  Description of the Parameter
-         * @param  atomB  Description of the Parameter
-         * @return        The placedHeavyAtom value
-         */
+        /// <summary>
+        ///  Gets the first placed Heavy Atom around atomA which is not atomB.
+        ///
+        /// <param name="molecule">/// <param name="atomA">Description of the Parameter</param></param>
+        /// <param name="atomB">Description of the Parameter</param>
+        /// <returns>The placedHeavyAtom value</returns>
+        /// </summary>
         public IAtom GetPlacedHeavyAtom(IAtomContainer molecule, IAtom atomA, IAtom atomB)
         {
             var bonds = molecule.GetConnectedBonds(atomA);
@@ -642,13 +633,12 @@ namespace NCDK.Modeling.Builder3D
             return null;
         }
 
-        /**
-         *  Gets the placed Heavy Atoms connected to an atom.
-         *
-         * @param molecule
-         * @param  atom  The atom the atoms must be connected to.
-         * @return       The placed heavy atoms.
-         */
+        /// <summary>
+        ///  Gets the placed Heavy Atoms connected to an atom.
+        ///
+        /// <param name="molecule">/// <param name="atom">The atom the atoms must be connected to.</param></param>
+        /// <returns>The placed heavy atoms.</returns>
+        /// </summary>
         public IAtomContainer GetPlacedHeavyAtoms(IAtomContainer molecule, IAtom atom)
         {
 
@@ -666,12 +656,12 @@ namespace NCDK.Modeling.Builder3D
             return connectedAtoms;
         }
 
-        /**
-         *  Gets numberOfUnplacedHeavyAtoms (no Flag ISPLACED, no Hydrogens)
-         *
-         * @param  ac AtomContainer
-         * @return #UnplacedAtoms
-         */
+        /// <summary>
+        ///  Gets numberOfUnplacedHeavyAtoms (no Flag ISPLACED, no Hydrogens)
+        ///
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>#UnplacedAtoms</returns>
+        /// </summary>
         public int NumberOfUnplacedHeavyAtoms(IAtomContainer ac)
         {
             int nUnplacedHeavyAtoms = 0;
@@ -685,11 +675,11 @@ namespace NCDK.Modeling.Builder3D
             return nUnplacedHeavyAtoms;
         }
 
-        /**
-         *  Gets the allPlacedAtoms attribute of the AtomPlacer3D object.
-         *
-         * @return    The allPlacedAtoms value
-         */
+        /// <summary>
+        ///  Gets the allPlacedAtoms attribute of the AtomPlacer3D object.
+        ///
+        /// <returns>The allPlacedAtoms value</returns>
+        /// </summary>
         private IAtomContainer GetAllPlacedAtoms(IAtomContainer molecule)
         {
             IAtomContainer placedAtoms = molecule.Builder.CreateAtomContainer();    // Changed by Kaz
@@ -703,12 +693,12 @@ namespace NCDK.Modeling.Builder3D
             return placedAtoms;
         }
 
-        /**
-         *  True is all the atoms in the given AtomContainer have been placed.
-         *
-         * @param  ac  The AtomContainer to be searched
-         * @return     True is all the atoms in the given AtomContainer have been placed
-         */
+        /// <summary>
+        ///  True is all the atoms in the given AtomContainer have been placed.
+        ///
+        /// <param name="ac">The AtomContainer to be searched</param>
+        /// <returns>True is all the atoms in the given AtomContainer have been placed</returns>
+        /// </summary>
         public bool AllHeavyAtomsPlaced(IAtomContainer ac)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -721,74 +711,59 @@ namespace NCDK.Modeling.Builder3D
             return true;
         }
 
-        /**
-         *  Determine if the atom is non-hydrogen and has not been placed.
-         *
-         * @param  atom The atom to be checked
-         * @return      True if the atom is non-hydrogen and has not been placed
-         */
-#if TEST
-        public
-#endif
-        bool IsUnplacedHeavyAtom(IAtom atom)
+        /// <summary>
+        ///  Determine if the atom is non-hydrogen and has not been placed.
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <returns>True if the atom is non-hydrogen and has not been placed</returns>
+        /// </summary>
+        internal bool IsUnplacedHeavyAtom(IAtom atom)
         {
             return (!atom.IsPlaced && IsHeavyAtom(atom));
         }
 
-        /**
-         *  Determine if the atom is non-hydrogen and has been placed.
-         *
-         * @param  atom The atom to be checked
-         * @return      True if the atom is non-hydrogen and has been placed
-         */
-#if TEST
-        public
-#endif
-        bool IsPlacedHeavyAtom(IAtom atom)
+        /// <summary>
+        ///  Determine if the atom is non-hydrogen and has been placed.
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <returns>True if the atom is non-hydrogen and has been placed</returns>
+        /// </summary>
+        internal bool IsPlacedHeavyAtom(IAtom atom)
         {
             return atom.IsPlaced && IsHeavyAtom(atom);
         }
 
-        /**
-         *  Determine if the atom is non-hydrogen and is aliphatic.
-         *
-         * @param  atom The atom to be checked
-         * @return      True if the atom is non-hydrogen and is aliphatic
-         */
-#if TEST
-        public
-#endif
-        bool IsAliphaticHeavyAtom(IAtom atom)
+        /// <summary>
+        ///  Determine if the atom is non-hydrogen and is aliphatic.
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <returns>True if the atom is non-hydrogen and is aliphatic</returns>
+        /// </summary>
+        internal bool IsAliphaticHeavyAtom(IAtom atom)
         {
             return atom.IsAliphatic && IsHeavyAtom(atom);
         }
 
-        /**
-         * Determine if the atom is non-hydrogen and is in a ring.
-         * Ring membership is determined from a property flag only, rather than a ring
-         * membership test
-         *
-         * @param  atom The atom to be checked
-         * @return      True if the atom is non-hydrogen and is in a ring
-         */
-#if TEST
-        public
-#endif
-        bool IsRingHeavyAtom(IAtom atom)
+        /// <summary>
+        /// Determine if the atom is non-hydrogen and is in a ring.
+        /// Ring membership is determined from a property flag only, rather than a ring
+        /// membership test
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <returns>True if the atom is non-hydrogen and is in a ring</returns>
+        /// </summary>
+        internal bool IsRingHeavyAtom(IAtom atom)
         {
             return atom.IsInRing && IsHeavyAtom(atom);
         }
 
-        /**
-         * Determine if the atom is heavy (non-hydrogen).
-         *
-         * @param  atom The atom to be checked
-         * @return      True if the atom is non-hydrogen
-         */
-#if TEST
-        public
-#endif
-        bool IsHeavyAtom(IAtom atom)
+        /// <summary>
+        /// Determine if the atom is heavy (non-hydrogen).
+        ///
+        /// <param name="atom">The atom to be checked</param>
+        /// <returns>True if the atom is non-hydrogen</returns>
+        /// </summary>
+        internal bool IsHeavyAtom(IAtom atom)
         {
             return !atom.Symbol.Equals("H");
         }

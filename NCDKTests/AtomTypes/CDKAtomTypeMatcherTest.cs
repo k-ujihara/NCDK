@@ -3463,7 +3463,7 @@ namespace NCDK.AtomTypes
 
         // @cdk.inchi InChI=1/C3H9NO/c1-4(2,3)5/h1-3H3
         [TestMethod()]
-        public void cid1145()
+        public void Cid1145()
         {
             IAtomContainer mol = new AtomContainer();
             IAtom a1 = mol.Builder.CreateAtom("O");
@@ -6500,9 +6500,9 @@ namespace NCDK.AtomTypes
             AssertAtomTypes(testedAtomTypes, expectedTypesB, mol);
         }
 
-        /**
+        /// <summary>
         // @cdk.inchi InChI=1S/C8H16S/c1-6-3-8-4-7(6)5-9(8)2/h6-9H,3-5H2,1-2H3/t6-,7-,8+/m0/s1
-         */
+        /// </summary>
         [TestMethod()]
         public void TestSulphur4()
         {
@@ -6772,10 +6772,10 @@ namespace NCDK.AtomTypes
             Assert.AreEqual(pyrrole.Atoms[0].Hybridization.Name, "Planar3");
         }
 
-        /**
+        /// <summary>
         // @cdk.inchi InChI=1S/C4H5N/c1-2-4-5-3-1/h1-5H
-         * @
-         */
+        // @
+        /// </summary>
         [TestMethod()]
         public void Test_n_planar3_sp2_aromaticity_explicitH()
         {

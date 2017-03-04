@@ -28,10 +28,10 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class RingMembershipAtomTest
     {
@@ -62,7 +62,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         [TestMethod()]
-        public void none()
+        public void None()
         {
             RingMembershipAtom matcher = new RingMembershipAtom(0, new Mock<IChemObjectBuilder>().Object);
             var mock_atom = new Mock<IAtom>();

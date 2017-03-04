@@ -80,13 +80,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
      *
      *  <p>With the <code>IsSubgraph()</code> method, the second, and only the second
      *  argument <tBond>may</tBond> be atom IQueryAtomContainer, which allows one to do MQL like queries.
-     *  The first IAtomContainer must never be an IQueryAtomContainer. An example:<pre>
+     *  The first IAtomContainer must never be an IQueryAtomContainer. An example:<code>
      *  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
      *  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
      *  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
      *  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
      *  bool isSubstructure = graphContainer.IsSubgraph(atomContainer, query);
-     *  </pre>
+     *  </code>
      *
      *  <p><font color="#FF0000">WARNING</font>:
      *    As atom result of the adjacency perception used in this algorithm
@@ -1383,12 +1383,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
          * @return the timeManager
          */
         [MethodImpl(MethodImplOptions.Synchronized)]
-#if TEST
-        public
-#else
-        internal 
-# endif
-            static TimeManager GetTimeManager()
+        internal static TimeManager GetTimeManager()
         {
             return timeManager;
         }
@@ -1397,12 +1392,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
          * @param aTimeManager the timeManager to set
          */
         [MethodImpl(MethodImplOptions.Synchronized)]
-#if TEST
-        public
-#else
-        internal 
-#endif
-            static void SetTimeManager(TimeManager aTimeManager)
+        internal static void SetTimeManager(TimeManager aTimeManager)
         {
             TimeOut.Instance.Enabled = false;
             timeManager = aTimeManager;

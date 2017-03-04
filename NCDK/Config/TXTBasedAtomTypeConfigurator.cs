@@ -7,7 +7,7 @@ using System.Reflection;
 namespace NCDK.Config
 {
     public class TXTBasedAtomTypeConfigurator
-		: IAtomTypeConfigurator
+        : IAtomTypeConfigurator
     {
         private const string configFile = "NCDK.Config.Data.jmol_atomtypes.txt";
 
@@ -19,7 +19,7 @@ namespace NCDK.Config
         {
             if (Stream == null)
             {
-                Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(configFile);
+                Stream = ResourceLoader.GetAsStream(configFile);
             }
 
             using (var reader = new StreamReader(Stream))
@@ -57,9 +57,7 @@ namespace NCDK.Config
                         atomType.AtomicNumber = atomicNumber;
                         atomType.ExactMass = mass;
                         atomType.CovalentRadius = covalent;
-
-                        var color = System.Drawing.Color.FromArgb(colorR, colorG, colorB);
-                        atomType.SetProperty(CDKPropertyName.COLOR, color);
+                        atomType.SetProperty(CDKPropertyName.COLOR, CDKPropertyName.RGB2Int(colorR, colorG, colorB));
                     }
                     catch (FormatException)
                     {

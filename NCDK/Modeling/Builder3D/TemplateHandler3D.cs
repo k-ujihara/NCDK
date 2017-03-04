@@ -28,6 +28,7 @@ using NCDK.IO.Iterator;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -37,16 +38,16 @@ using System.IO.Compression;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * Helper class for ModelBuilder3D. Handles templates. This is
-     * our layout solution for 3D ring systems
-     *
-     * @author      cho
-     * @author      steinbeck
-     * @cdk.created 2004-09-21
-     * @cdk.module  builder3d
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Helper class for ModelBuilder3D. Handles templates. This is
+    /// our layout solution for 3D ring systems
+    ///
+    // @author      cho
+    // @author      steinbeck
+    // @cdk.created 2004-09-21
+    // @cdk.module  builder3d
+    // @cdk.githash
+    /// </summary>
     public class TemplateHandler3D
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
@@ -76,11 +77,11 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Loads all existing templates into memory.
-         * Template file is a mdl file. Creates a Object Set of Molecules
-         * @throws CDKException The template file cannot be loaded
-         */
+        /// <summary>
+        /// Loads all existing templates into memory.
+        /// Template file is a mdl file. Creates a Object Set of Molecules
+        /// <exception cref="CDKException">The template file cannot be loaded</exception>
+        /// </summary>
         private void LoadTemplates()
         {
             Debug.WriteLine("Loading templates...");
@@ -90,8 +91,7 @@ namespace NCDK.Modeling.Builder3D
 
             try
             {
-                ins = this.GetType().Assembly
-                        .GetManifestResourceStream("NCDK.Modeling.Builder3D.Data.ringTemplateStructures.sdf.gz");
+                ins = ResourceLoader.GetAsStream("NCDK.Modeling.Builder3D.Data.ringTemplateStructures.sdf.gz");
                 fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
                 imdl = new IteratingSDFReader(fin, builder);
             }
@@ -114,7 +114,7 @@ namespace NCDK.Modeling.Builder3D
             //Debug.WriteLine("TEMPLATE Finger");
             try
             {
-                ins = this.GetType().Assembly.GetManifestResourceStream("NCDK.Modeling.Builder3D.Data.ringTemplateFingerprints.txt.gz");
+                ins = ResourceLoader.GetAsStream("NCDK.Modeling.Builder3D.Data.ringTemplateFingerprints.txt.gz");
                 fin = new StreamReader(new GZipStream(ins, CompressionMode.Decompress));
             }
             catch (Exception exc3)
@@ -158,12 +158,12 @@ namespace NCDK.Modeling.Builder3D
             return bitSet;
         }
 
-        /**
-         * Returns the largest (number of atoms) ring set in a molecule.
-         *
-         *@param  ringSystems  RingSystems of a molecule
-         *@return              The largestRingSet
-         */
+        /// <summary>
+        /// Returns the largest (number of atoms) ring set in a molecule.
+        ///
+        /// <param name="ringSystems">RingSystems of a molecule</param>
+        /// <returns>The largestRingSet</returns>
+        /// </summary>
         public IRingSet GetLargestRingSet(List<IRingSet> ringSystems)
         {
             IRingSet largestRingSet = null;
@@ -190,15 +190,15 @@ namespace NCDK.Modeling.Builder3D
             return resultContainer;
         }
 
-        /**
-         * Checks if one of the loaded templates is a substructure in the given
-         * Molecule. If so, it assigns the coordinates from the template to the
-         * respective atoms in the Molecule.
-         *
-         * @param ringSystems       AtomContainer from the ring systems.
-         * @param numberOfRingAtoms Number of atoms in the specified ring
-         * @throws CloneNotSupportedException The atomcontainer cannot be cloned.
-         */
+        /// <summary>
+        /// Checks if one of the loaded templates is a substructure in the given
+        /// Molecule. If so, it assigns the coordinates from the template to the
+        /// respective atoms in the Molecule.
+        ///
+        /// <param name="ringSystems">AtomContainer from the ring systems.</param>
+        /// <param name="numberOfRingAtoms">Number of atoms in the specified ring</param>
+        /// <exception cref="CloneNotSupportedException">The atomcontainer cannot be cloned.</exception>
+        /// </summary>
         public void MapTemplates(IAtomContainer ringSystems, int numberOfRingAtoms)
         {
             if (!templatesLoaded) self.LoadTemplates();
@@ -273,19 +273,19 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Gets the templateCount attribute of the TemplateHandler object.
-         *
-         * @return The templateCount value
-         */
+        /// <summary>
+        /// Gets the templateCount attribute of the TemplateHandler object.
+        ///
+        /// <returns>The templateCount value</returns>
+        /// </summary>
         public int TemplateCount => templates.Count;
 
-        /**
-         *  Gets the templateAt attribute of the TemplateHandler object.
-         *
-         *@param  position  Description of the Parameter
-         *@return The templateAt value
-         */
+        /// <summary>
+        ///  Gets the templateAt attribute of the TemplateHandler object.
+        ///
+        /// <param name="position">Description of the Parameter</param>
+        /// <returns>The templateAt value</returns>
+        /// </summary>
         public IAtomContainer GetTemplateAt(int position)
         {
             return templates[position];

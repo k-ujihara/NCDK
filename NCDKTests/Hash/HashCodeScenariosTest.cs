@@ -34,20 +34,20 @@ using System.IO;
 
 namespace NCDK.Hash
 {
-    /**
-     * This test class provides several scenario tests for the {@literal cdk-hash}
-     * module.
-     *
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    /// This test class provides several scenario tests for the {@literal cdk-hash}
+    /// module.
+    ///
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     public class HashCodeScenariosTest
     {
 
-        /**
-         * Two molecules with identical Racid identification numbers, these hash
-         * codes should be different.
-         */
+        /// <summary>
+        /// Two molecules with identical Racid identification numbers, these hash
+        /// codes should be different.
+        /// </summary>
         [TestMethod()]
         public void Figure2a()
         {
@@ -62,13 +62,13 @@ namespace NCDK.Hash
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * Two molecules with identical Racid identification numbers, these hash
-         * codes should be different.
-         */
+        /// <summary>
+        /// Two molecules with identical Racid identification numbers, these hash
+        /// codes should be different.
+        /// </summary>
         [TestMethod()]
         public void Figure2b()
         {
@@ -83,13 +83,13 @@ namespace NCDK.Hash
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * Two molecules with identical Racid identification numbers, these hash
-         * codes should be different.
-         */
+        /// <summary>
+        /// Two molecules with identical Racid identification numbers, these hash
+        /// codes should be different.
+        /// </summary>
         [TestMethod()]
         public void Figure2c()
         {
@@ -103,14 +103,14 @@ namespace NCDK.Hash
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * These two molecules from the original publication collide when using a
-         * previous hash coding method (Bawden, 81). The hash codes should be
-         * different using this method.
-         */
+        /// <summary>
+        /// These two molecules from the original publication collide when using a
+        /// previous hash coding method (Bawden, 81). The hash codes should be
+        /// different using this method.
+        /// </summary>
         [TestMethod()]
         public void Figure3()
         {
@@ -125,14 +125,14 @@ namespace NCDK.Hash
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * These two molecules have atoms experiencing uniform environments but
-         * where the number of atoms between the molecules is different. This
-         * demonstrates the size the molecule is considered when hashing.
-         */
+        /// <summary>
+        /// These two molecules have atoms experiencing uniform environments but
+        /// where the number of atoms between the molecules is different. This
+        /// demonstrates the size the molecule is considered when hashing.
+        /// </summary>
         [TestMethod()]
         public void Figure7()
         {
@@ -147,14 +147,14 @@ namespace NCDK.Hash
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * These molecules are erroneous structures from a catalogue file, the
-         * German names are the original names as they appear in the catalogue. The
-         * hash code identifies that the two molecules are the same.
-         */
+        /// <summary>
+        /// These molecules are erroneous structures from a catalogue file, the
+        /// German names are the original names as they appear in the catalogue. The
+        /// hash code identifies that the two molecules are the same.
+        /// </summary>
         [TestMethod()]
         public void Figure10()
         {
@@ -171,12 +171,12 @@ namespace NCDK.Hash
             Assert.AreEqual(aHash, bHash, eqMesg(a, b));
         }
 
-        /**
-         * This structure is an example where the Cahn-Ingold-Prelog (CIP) rules can
-         * not discriminate two neighbours of chiral atom. Due to this, the CIP
-         * rules are not used as an atom seed and instead a bootstrap method is
-         * used. Please refer to the original article for the exact method.
-         */
+        /// <summary>
+        /// This structure is an example where the Cahn-Ingold-Prelog (CIP) rules can
+        /// not discriminate two neighbours of chiral atom. Due to this, the CIP
+        /// rules are not used as an atom seed and instead a bootstrap method is
+        /// used. Please refer to the original article for the exact method.
+        /// </summary>
         [TestMethod()]
         public void Figure11()
         {
@@ -196,12 +196,12 @@ namespace NCDK.Hash
                 "If the stereo-centre was perceived then the basic hash should be different from the chiral hash code");
         }
 
-        /**
-         * This scenario demonstrates how stereo-chemistry encoding is invariant
-         * under permutation. A simple molecule 'bromo(chloro)fluoromethane' is
-         * permuted to all 120 possible atom orderings. It is checked that the (R)-
-         * configuration  and (S)- configuration values are invariant
-         */
+        /// <summary>
+        /// This scenario demonstrates how stereo-chemistry encoding is invariant
+        /// under permutation. A simple molecule 'Bromo(chloro)fluoromethane' is
+        /// permuted to all 120 possible atom orderings. It is checked that the (R)-
+        /// configuration  and (S)- configuration values are invariant
+        /// </summary>
         [TestMethod()]
         public void Figure12()
         {
@@ -222,19 +222,19 @@ namespace NCDK.Hash
                 sHashes.Add(stereo.Generate(s));
                 rHashes.Add(stereo.Generate(r));
             }
-            Assert.AreEqual(1, sHashes.Count, "all (S)-bromo(chloro)fluoromethane permutation produce a single hash code");
-            Assert.AreEqual(1, rHashes.Count, "all (R)-bromo(chloro)fluoromethane permutation produce a single hash code");
+            Assert.AreEqual(1, sHashes.Count, "all (S)-Bromo(chloro)fluoromethane permutation produce a single hash code");
+            Assert.AreEqual(1, rHashes.Count, "all (R)-Bromo(chloro)fluoromethane permutation produce a single hash code");
             foreach (var hash in rHashes)
                 sHashes.Add(hash);
             Assert.AreEqual(2, sHashes.Count);
         }
 
-        /**
-         * This molecule has a tetrahedral stereo-centre depends on the
-         * configuration of two double bonds. Swapping the double bond configuration
-         * inverts the tetrahedral stereo-centre (R/S) and produces different hash
-         * codes.
-         */
+        /// <summary>
+        /// This molecule has a tetrahedral stereo-centre depends on the
+        /// configuration of two double bonds. Swapping the double bond configuration
+        /// inverts the tetrahedral stereo-centre (R/S) and produces different hash
+        /// codes.
+        /// </summary>
         [TestMethod()]
         public void Figure13a()
         {
@@ -248,15 +248,15 @@ namespace NCDK.Hash
             long aHash = stereo.Generate(a);
             long bHash = stereo.Generate(b);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * This molecule has double bond stereo chemistry defined only by
-         * differences in the configurations of it's substituents. The two
-         * configurations the bond can take (Z/E) and should produce different hash
-         * codes.
-         */
+        /// <summary>
+        /// This molecule has double bond stereo chemistry defined only by
+        /// differences in the configurations of it's substituents. The two
+        /// configurations the bond can take (Z/E) and should produce different hash
+        /// codes.
+        /// </summary>
         [TestMethod()]
         public void Figure13b()
         {
@@ -267,15 +267,15 @@ namespace NCDK.Hash
 
             MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
 
-            Assert.AreNotEqual(stereo.Generate(a), stereo.Generate(b), nonEqMesg(a, b));
+            Assert.AreNotEqual(stereo.Generate(a), stereo.Generate(b), NonEqMesg(a, b));
         }
 
-        /**
-         * These two structures were found in the original publication as duplicates
-         * in the catalogue of the CHIRON program. The article notes the second name
-         * is likely incorrect but that this is how it appears in the catalogue. The
-         * two molecules are in fact the same and generate the same hash code.
-         */
+        /// <summary>
+        /// These two structures were found in the original publication as duplicates
+        /// in the catalogue of the CHIRON program. The article notes the second name
+        /// is likely incorrect but that this is how it appears in the catalogue. The
+        /// two molecules are in fact the same and generate the same hash code.
+        /// </summary>
         [TestMethod()]
         public void Figure14()
         {
@@ -293,11 +293,11 @@ namespace NCDK.Hash
             Assert.AreEqual(aHash, bHash, eqMesg(a, b));
         }
 
-        /**
-         * These two compounds are connected differently but produce the same basic
-         * hash code. In order to discriminate them we must use the perturbed hash
-         * code.
-         */
+        /// <summary>
+        /// These two compounds are connected differently but produce the same basic
+        /// hash code. In order to discriminate them we must use the perturbed hash
+        /// code.
+        /// </summary>
         [TestMethod()]
         public void Figure15()
         {
@@ -316,15 +316,15 @@ namespace NCDK.Hash
             MoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
             aHash = perturbed.Generate(a);
             bHash = perturbed.Generate(b);
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
         }
 
-        /**
-         * The molecules cubane and cuneane have the same number of atoms all of
-         * which experience the same environment in the first sphere. Using a
-         * non-perturbed hash code, these will hash to the same value. The perturbed
-         * hash code, allows us to discriminate them.
-         */
+        /// <summary>
+        /// The molecules cubane and cuneane have the same number of atoms all of
+        /// which experience the same environment in the first sphere. Using a
+        /// non-perturbed hash code, these will hash to the same value. The perturbed
+        /// hash code, allows us to discriminate them.
+        /// </summary>
         [TestMethod()]
         public void Figure16a()
         {
@@ -343,7 +343,7 @@ namespace NCDK.Hash
 
             aHash = perturbed.Generate(a);
             bHash = perturbed.Generate(b);
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
 
             AtomHashGenerator perturbedAtomic = new HashGeneratorMaker().Elemental().Depth(3).Perturbed().Atomic();
             long[] aHashes = perturbedAtomic.Generate(a);
@@ -363,11 +363,11 @@ namespace NCDK.Hash
             return set;
         }
 
-        /**
-         * A chlorinated cubane and cuneane can not be told apart by the basic hash
-         * code. However using perturbed hash codes is is possible to tell them
-         * apart as well as the 3 different chlorination locations on the cuneane
-         */
+        /// <summary>
+        /// A chlorinated cubane and cuneane can not be told apart by the basic hash
+        /// code. However using perturbed hash codes is is possible to tell them
+        /// apart as well as the 3 different chlorination locations on the cuneane
+        /// </summary>
         [TestMethod()]
         public void Figure16b()
         {
@@ -386,22 +386,22 @@ namespace NCDK.Hash
             long cHash = generator.Generate(c);
             long dHash = generator.Generate(d);
 
-            Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b));
-            Assert.AreNotEqual(aHash, cHash, nonEqMesg(a, c));
-            Assert.AreNotEqual(aHash, dHash, nonEqMesg(a, d));
-            Assert.AreNotEqual(bHash, cHash, nonEqMesg(a, c));
-            Assert.AreNotEqual(bHash, dHash, nonEqMesg(b, d));
-            Assert.AreNotEqual(cHash, dHash, nonEqMesg(c, d));
+            Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
+            Assert.AreNotEqual(aHash, cHash, NonEqMesg(a, c));
+            Assert.AreNotEqual(aHash, dHash, NonEqMesg(a, d));
+            Assert.AreNotEqual(bHash, cHash, NonEqMesg(a, c));
+            Assert.AreNotEqual(bHash, dHash, NonEqMesg(b, d));
+            Assert.AreNotEqual(cHash, dHash, NonEqMesg(c, d));
 
         }
 
-        /**
-         * This scenario demonstrates how the depth influences the hash code. These
-         * two molecules differ only by length of their aliphatic chains. One  has
-         * chains of length 10 and 11 and other of length 11 and 10 (connected the
-         * other way). To tell these apart the depth must be large enough to
-         * propagate  the environments from the ends of both chains.
-         */
+        /// <summary>
+        /// This scenario demonstrates how the depth influences the hash code. These
+        /// two molecules differ only by length of their aliphatic chains. One  has
+        /// chains of length 10 and 11 and other of length 11 and 10 (connected the
+        /// other way). To tell these apart the depth must be large enough to
+        /// propagate  the environments from the ends of both chains.
+        /// </summary>
         [TestMethod()]
         public void Aminotetracosanone()
         {
@@ -423,19 +423,19 @@ namespace NCDK.Hash
                 }
                 else
                 {
-                    Assert.AreNotEqual(aHash, bHash, nonEqMesg(a, b) + " at depth " + depth);
+                    Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b) + " at depth " + depth);
                 }
             }
 
         }
 
-        /**
-         * This test demonstrates that the nine stereo isomers of inositol can be
-         * hashed to the same value or to different values (perturbed).
-         *
-         * @see <a href="http://en.wikipedia.org/wiki/Inositol#Isomers_and_structure">Inositol
-         *      Isomers</a>
-         */
+        /// <summary>
+        /// This test demonstrates that the nine stereo isomers of inositol can be
+        /// hashed to the same value or to different values (perturbed).
+        ///
+        // @see <a href="http://en.wikipedia.org/wiki/Inositol#Isomers_and_structure">Inositol
+        ///      Isomers</a>
+        /// </summary>
         [TestMethod()]
         public void Inositols()
         {
@@ -629,7 +629,7 @@ namespace NCDK.Hash
         }
 
         [TestMethod()]
-        public void suppressedHydrogens()
+        public void SuppressedHydrogens()
         {
 
             List<IAtomContainer> implicits = ExtractSDF("butan-2-ols.sdf", 2);
@@ -639,14 +639,14 @@ namespace NCDK.Hash
             IAtomContainer explicit_ = explicits[0];
 
             MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Molecular();
-            Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+            Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
             MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).SuppressHydrogens().Molecular();
             Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
         }
 
         [TestMethod()]
-        public void suppressedHydrogens_chiral()
+        public void SuppressedHydrogens_chiral()
         {
 
             List<IAtomContainer> implicits = ExtractSDF("butan-2-ols.sdf", 2);
@@ -656,7 +656,7 @@ namespace NCDK.Hash
             IAtomContainer explicit_ = explicits[0];
 
             MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
-            Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+            Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
             MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().SuppressHydrogens().Molecular();
             Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
@@ -693,7 +693,7 @@ namespace NCDK.Hash
                 IAtomContainer implicit_ = implicits[i];
                 IAtomContainer explicit_ = explicits[i];
 
-                Assert.AreEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+                Assert.AreEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
             }
         }
 
@@ -723,14 +723,14 @@ namespace NCDK.Hash
                     IAtomContainer implicit_ = implicits[i];
                     IAtomContainer explicit_ = explicits[i];
 
-                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
                     Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
                 }
             }
         }
 
         [TestMethod()]
-        public void suppressedHydrogens_dicholorethenes()
+        public void SuppressedHydrogens_dicholorethenes()
         {
 
             List<IAtomContainer> implicits = ExtractSDF("dichloroethenes.sdf", 2);
@@ -755,14 +755,14 @@ namespace NCDK.Hash
                     IAtomContainer implicit_ = implicits[i];
                     IAtomContainer explicit_ = explicits[i];
 
-                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
                     Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
                 }
             }
         }
 
         [TestMethod()]
-        public void suppressedHydrogens_allenes()
+        public void SuppressedHydrogens_allenes()
         {
 
             List<IAtomContainer> implicits = ExtractSDF("allene-implicit_-h.sdf", 2);
@@ -787,7 +787,7 @@ namespace NCDK.Hash
                     IAtomContainer implicit_ = implicits[i];
                     IAtomContainer explicit_ = explicits[i];
 
-                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), nonEqMesg(implicit_, explicit_));
+                    Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
                     Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
 
@@ -900,12 +900,12 @@ namespace NCDK.Hash
             Assert.AreEqual(zConfiguration, generator.Generate(dichloroethenes2D[1]));
         }
 
-        /**
-         * Tests demonstrates encoding of stereo specific hash codes (double bond)
-         * using stereo-elements. The hash codes of the molecule with stereo
-         * elements should match those we perceive using 2D coordinates (explicit_
-         * hydrogens)
-         */
+        /// <summary>
+        /// Tests demonstrates encoding of stereo specific hash codes (double bond)
+        /// using stereo-elements. The hash codes of the molecule with stereo
+        /// elements should match those we perceive using 2D coordinates (explicit_
+        /// hydrogens)
+        /// </summary>
         [TestMethod()]
         public void Dichloroethenes_stereoElements_explicitH()
         {
@@ -999,12 +999,12 @@ namespace NCDK.Hash
             Assert.IsTrue(zConfigurations.Contains(generator.Generate(dichloroethenes2D[1])));
         }
 
-        /**
-         * Tests demonstrates encoding of stereo specific hash codes (double bond)
-         * using stereo-elements and suppressing the hydrogens. The hash codes
-         * of the molecule with stereo elements should match those we perceive
-         * using 2D coordinates (implicit_ hydrogens)
-         */
+        /// <summary>
+        /// Tests demonstrates encoding of stereo specific hash codes (double bond)
+        /// using stereo-elements and suppressing the hydrogens. The hash codes
+        /// of the molecule with stereo elements should match those we perceive
+        /// using 2D coordinates (implicit_ hydrogens)
+        /// </summary>
         [TestMethod()]
         public void Dichloroethenes_stereoElements_explicitH_suppressed()
         {
@@ -1104,7 +1104,7 @@ namespace NCDK.Hash
             return (string)mol.GetProperty<string>(CDKPropertyName.TITLE);
         }
 
-        private static string nonEqMesg(IAtomContainer a, IAtomContainer b)
+        private static string NonEqMesg(IAtomContainer a, IAtomContainer b)
         {
             return title(a) + " and " + title(b) + " should have different hash codes";
         }
@@ -1114,16 +1114,16 @@ namespace NCDK.Hash
             return title(a) + " and " + title(b) + " should have the same hash codes";
         }
 
-        /**
-         * Utility for loading SDFs into a List.
-         *
-         * @param path absolute path to SDF (classpath)
-         * @param exp  expected number of structures
-         * @return list of structures
-         */
+        /// <summary>
+        /// Utility for loading SDFs into a List.
+        ///
+        /// <param name="path">absolute path to SDF (classpath)</param>
+        /// <param name="exp">expected number of structures</param>
+        /// <returns>list of structures</returns>
+        /// </summary>
         private List<IAtomContainer> ExtractSDF(string path, int exp)
         {
-            Stream ins = GetType().Assembly.GetManifestResourceStream(path);
+            Stream ins = ResourceLoader.GetAsStream(path);
 
             Assert.IsNotNull(ins, path + " could not be found in classpath");
 

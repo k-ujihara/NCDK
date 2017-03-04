@@ -237,7 +237,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void lonePairAtomSymbol()
+        public void LonePairAtomSymbol()
         {
             Assert.IsTrue(MDLV2000Reader.IsPseudoElement("LP"));
         }

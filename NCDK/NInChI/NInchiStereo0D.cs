@@ -20,35 +20,35 @@ using System;
 
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates properites of InChI Stereo Parity.  See <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates properites of InChI Stereo Parity.  See <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiStereo0D
     {
-        /**
-         * Indicates non-existent (central) atom. Value from inchi_api.h.
-         */
+        /// <summary>
+        /// Indicates non-existent (central) atom. Value from inchi_api.h.
+        /// </summary>
         public const int NO_ATOM = -1;
 
-        /**
-         * Neighbouring atoms.
-         */
+        /// <summary>
+        /// Neighbouring atoms.
+        /// </summary>
         public NInchiAtom[] Neighbors { get; private set; } = new NInchiAtom[4];
 
-        /**
-         * Central atom.
-         */
+        /// <summary>
+        /// Central atom.
+        /// </summary>
         public NInchiAtom CentralAtom { get; private set; }
 
-        /**
-         * Stereo parity type.
-         */
+        /// <summary>
+        /// Stereo parity type.
+        /// </summary>
         public INCHI_STEREOTYPE StereoType { get; private set; }
 
-        /**
-         * Parity.
-         */
+        /// <summary>
+        /// Parity.
+        /// </summary>
         public INCHI_PARITY Parity {
             get;
 #if !DEBUG
@@ -56,31 +56,28 @@ namespace NCDK.NInChI
 #endif
             set; }
 
-        /**
-         * Second parity (for disconnected systems).
-         */
+        /// <summary>
+        /// Second parity (for disconnected systems).
+        /// </summary>
         public INCHI_PARITY DisconnectedParity {
             get;
-#if !TEST
-            private 
-#endif
-            set;
+            internal set;
         } = INCHI_PARITY.None;
 
-        /**
-         * Constructor.  See <tt>inchi_api.h</tt> for details of usage.
-         *
-         * @see CreateNewTetrahedralStereo0D()
-         * @see CreateNewDoublebondStereo0D()
-         *
-         * @param atC    Central atom
-         * @param at0    Neighbour atom 0
-         * @param at1    Neighbour atom 1
-         * @param at2    Neighbour atom 2
-         * @param at3    Neighbour atom 3
-         * @param type          Stereo parity type
-         * @param parity    Parity
-         */
+        /// <summary>
+        /// Constructor.  See <tt>inchi_api.h</tt> for details of usage.
+        ///
+        /// @see CreateNewTetrahedralStereo0D()
+        /// @see CreateNewDoublebondStereo0D()
+        ///
+        /// <param name="atC">Central atom</param>
+        /// <param name="at0">Neighbour atom 0</param>
+        /// <param name="at1">Neighbour atom 1</param>
+        /// <param name="at2">Neighbour atom 2</param>
+        /// <param name="at3">Neighbour atom 3</param>
+        /// <param name="type">Stereo parity type</param>
+        /// <param name="parity">Parity</param>
+        /// </summary>
         public NInchiStereo0D(NInchiAtom atC, NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                  INCHI_STEREOTYPE type, INCHI_PARITY parity)
@@ -101,10 +98,10 @@ namespace NCDK.NInChI
             : this(atC, at0, at1, at2, at3, (INCHI_STEREOTYPE)type, (INCHI_PARITY)parity)
         { }
 
-        /**
-         * Generates string representation of information on stereo parity,
-         * for debugging purposes.
-         */
+        /// <summary>
+        /// Generates string representation of information on stereo parity,
+        /// for debugging purposes.
+        /// </summary>
         public string ToDebugString()
         {
             return ("InChI Stereo0D: "
@@ -116,67 +113,67 @@ namespace NCDK.NInChI
                 );
         }
 
-        /**
-         * Outputs information on stereo parity, for debugging purposes.
-         */
+        /// <summary>
+        /// Outputs information on stereo parity, for debugging purposes.
+        /// </summary>
         public void PrintDebug()
         {
             Console.Out.WriteLine(ToDebugString());
         }
 
-        /**
-         * <p>Convenience method for generating 0D stereo parities at tetrahedral
-         * atom centres.
-         *
-         * <p><b>Usage notes from <i>inchi_api.h</i>:</b>
-         * <pre>
-         *  4 neighbors
-         *
-         *           X                    neighbor[4] : {#W, #X, #Y, #Z}
-         *           |                    central_atom: #A
-         *        W--A--Y                 type        : INCHI_StereoType_Tetrahedral
-         *           |
-         *           Z
-         *  parity: if (X,Y,Z) are clockwize when seen from W then parity is 'e' otherwise 'o'
-         *  Example (see AXYZW above): if W is above the plane XYZ then parity = 'e'
-         *
-         *  3 neighbors
-         *
-         *             Y          Y       neighbor[4] : {#A, #X, #Y, #Z}
-         *            /          /        central_atom: #A
-         *        X--A  (e.g. O=S   )     type        : INCHI_StereoType_Tetrahedral
-         *            \          \
-         *             Z          Z
-         *
-         *  parity: if (X,Y,Z) are clockwize when seen from A then parity is 'e',
-         *                                                         otherwise 'o'
-         *  unknown parity = 'u'
-         *  Example (see AXYZ above): if A is above the plane XYZ then parity = 'e'
-         *  This approach may be used also in case of an implicit H attached to A.
-         *
-         *  ==============================================
-         *  Note. Correspondence to CML 0D stereo parities
-         *  ==============================================
-         *  a list of 4 atoms corresponds to CML atomRefs4
-         *
-         *  tetrahedral atom
-         *  ================
-         *  CML atomParity > 0 <=> INCHI_PARITY_EVEN
-         *  CML atomParity < 0 <=> INCHI_PARITY_ODD
-         *
-         *                               | 1   1   1   1  |  where xW is x-coordinate of
-         *                               | xW  xX  xY  xZ |  atom W, etc. (xyz is a
-         *  CML atomParity = determinant | yW  yX  yY  yZ |  'right-handed' Cartesian
-         *                               | zW  zX  xY  zZ |  coordinate system)
-         * </pre>
-         *
-         * @param atC    Central atom
-         * @param at0    Neighbour atom 0
-         * @param at1    Neighbour atom 1
-         * @param at2    Neighbour atom 2
-         * @param at3    Neighbour atom 3
-         * @param parity Parity
-         */
+        /// <summary>
+        /// <p>Convenience method for generating 0D stereo parities at tetrahedral
+        /// atom centres.
+        ///
+        /// <p><b>Usage notes from <i>inchi_api.h</i>:</b>
+        /// <code>
+        ///  4 neighbors
+        ///
+        ///           X                    neighbor[4] : {#W, #X, #Y, #Z}
+        ///           |                    central_atom: #A
+        ///        W--A--Y                 type        : INCHI_StereoType_Tetrahedral
+        ///           |
+        ///           Z
+        ///  parity: if (X,Y,Z) are clockwize when seen from W then parity is 'e' otherwise 'o'
+        ///  Example (see AXYZW above): if W is above the plane XYZ then parity = 'e'
+        ///
+        ///  3 neighbors
+        ///
+        ///             Y          Y       neighbor[4] : {#A, #X, #Y, #Z}
+        ///            /          /        central_atom: #A
+        ///        X--A  (e.g. O=S   )     type        : INCHI_StereoType_Tetrahedral
+        ///            \          \
+        ///             Z          Z
+        ///
+        ///  parity: if (X,Y,Z) are clockwize when seen from A then parity is 'e',
+        ///                                                         otherwise 'o'
+        ///  unknown parity = 'u'
+        ///  Example (see AXYZ above): if A is above the plane XYZ then parity = 'e'
+        ///  This approach may be used also in case of an implicit H attached to A.
+        ///
+        ///  ==============================================
+        ///  Note. Correspondence to CML 0D stereo parities
+        ///  ==============================================
+        ///  a list of 4 atoms corresponds to CML atomRefs4
+        ///
+        ///  tetrahedral atom
+        ///  ================
+        ///  CML atomParity > 0 &lt;=&gt; INCHI_PARITY_EVEN
+        ///  CML atomParity < 0 &lt;=&gt; INCHI_PARITY_ODD
+        ///
+        ///                               | 1   1   1   1  |  where xW is x-coordinate of
+        ///                               | xW  xX  xY  xZ |  atom W, etc. (xyz is a
+        ///  CML atomParity = determinant | yW  yX  yY  yZ |  'right-handed' Cartesian
+        ///                               | zW  zX  xY  zZ |  coordinate system)
+        /// </code>
+        ///
+        /// <param name="atC">Central atom</param>
+        /// <param name="at0">Neighbour atom 0</param>
+        /// <param name="at1">Neighbour atom 1</param>
+        /// <param name="at2">Neighbour atom 2</param>
+        /// <param name="at3">Neighbour atom 3</param>
+        /// <param name="parity">Parity</param>
+        /// </summary>
         public static NInchiStereo0D CreateNewTetrahedralStereo0D(NInchiAtom atC, NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                 INCHI_PARITY parity)
@@ -185,42 +182,41 @@ namespace NCDK.NInChI
             return stereo;
         }
 
-        /**
-         * <p>Convenience method for generating 0D stereo parities at stereogenic
-         * double bonds.
-         *
-         * <p><b>Usage notes from <i>inchi_api.h</i>:</b>
-         * <pre>
-         *  =============================================
-         *  stereogenic bond >A=B< or cumulene >A=C=C=B<
-         *  =============================================
-         *
-         *                              neighbor[4]  : {#X,#A,#B,#Y} in this order
-         *  X                           central_atom : NO_ATOM
-         *   \            X      Y      type         : INCHI_StereoType_DoubleBond
-         *    A==B         \    /
-         *        \         A==B
-         *         Y
-         *
-         *  parity= 'e'    parity= 'o'   unknown parity = 'u'
-         *
-         *  ==============================================
-         *  Note. Correspondence to CML 0D stereo parities
-         *  ==============================================
-         *
-         *  stereogenic double bond and (not yet defined in CML) cumulenes
-         *  ==============================================================
-         *  CML 'C' (cis)      <=> INCHI_PARITY_ODD
-         *  CML 'T' (trans)    <=> INCHI_PARITY_EVEN
-         * </pre>
-         *
-         * @param at0    Neighbour atom 0
-         * @param at1    Neighbour atom 1
-         * @param at2    Neighbour atom 2
-         * @param at3    Neighbour atom 3
-         * @param parity Parity
-         * @return
-         */
+        /// <summary>
+        /// <p>Convenience method for generating 0D stereo parities at stereogenic
+        /// double bonds.
+        ///
+        /// <p><b>Usage notes from <i>inchi_api.h</i>:</b>
+        /// <code>
+        ///  =============================================
+        ///  stereogenic bond >A=B< or cumulene >A=C=C=B<
+        ///  =============================================
+        ///
+        ///                              neighbor[4]  : {#X,#A,#B,#Y} in this order
+        ///  X                           central_atom : NO_ATOM
+        ///   \            X      Y      type         : INCHI_StereoType_DoubleBond
+        ///    A==B         \    /
+        ///        \         A==B
+        ///         Y
+        ///
+        ///  parity= 'e'    parity= 'o'   unknown parity = 'u'
+        ///
+        ///  ==============================================
+        ///  Note. Correspondence to CML 0D stereo parities
+        ///  ==============================================
+        ///
+        ///  stereogenic double bond and (not yet defined in CML) cumulenes
+        ///  ==============================================================
+        ///  CML 'C' (cis)      &lt;=&gt; INCHI_PARITY_ODD
+        ///  CML 'T' (trans)    &lt;=&gt; INCHI_PARITY_EVEN
+        /// </code>
+        ///
+        /// <param name="at0">Neighbour atom 0</param>
+        /// <param name="at1">Neighbour atom 1</param>
+        /// <param name="at2">Neighbour atom 2</param>
+        /// <param name="at3">Neighbour atom 3</param>
+        /// <param name="parity">Parity</param>
+        /// <returns>/// </summary></returns>
         public static NInchiStereo0D CreateNewDoublebondStereo0D(NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                  INCHI_PARITY parity)

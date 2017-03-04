@@ -22,12 +22,11 @@
  */
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Subclass of {@link Ligand} to which no further recursion must be applied.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Subclass of <see cref="Ligand"/> to which no further recursion must be applied.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
     public class TerminalLigand : Ligand
     {
         public TerminalLigand(IAtomContainer container, VisitedAtoms visitedAtoms, IAtom centralAtom, IAtom ligandAtom)

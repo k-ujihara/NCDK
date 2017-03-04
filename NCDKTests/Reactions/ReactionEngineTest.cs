@@ -22,12 +22,12 @@ using NCDK.Reactions.Types.Parameters;
 
 namespace NCDK.Reactions
 {
-    /**
-     * Tests for ReactionEngine implementations.
-     *
-     * @cdk.module test-reaction
-     */
-	 [TestClass()]
+    /// <summary>
+    /// Tests for ReactionEngine implementations.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
+     [TestClass()]
     public class ReactionEngineTest : CDKTestCase
     {
         public ReactionEngineTest()

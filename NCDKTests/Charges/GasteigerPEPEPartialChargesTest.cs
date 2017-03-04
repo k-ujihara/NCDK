@@ -26,13 +26,13 @@ using System.Collections.Generic;
 
 namespace NCDK.Charges
 {
-    /**
-     * Description of the Class
-     *
-     * @author Miguel Rojas
-     * @cdk.module test-charges
-     * @cdk.created 2008-18-05
-     */
+    /// <summary>
+    /// Description of the Class
+    ///
+    // @author Miguel Rojas
+    // @cdk.module test-charges
+    // @cdk.created 2008-18-05
+    /// </summary>
     [TestClass()]
     public class GasteigerPEPEPartialChargesTest : CDKTestCase
     {
@@ -40,11 +40,11 @@ namespace NCDK.Charges
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /**
-         * A unit test for JUnit with methylenfluoride
-         *
-         * @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-         */
+        /// <summary>
+        /// A unit test for JUnit with methylenfluoride
+        ///
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
+        /// </summary>
         [TestMethod()]
         public void TestCalculateCharges_IAtomContainer()
         {
@@ -69,10 +69,10 @@ namespace NCDK.Charges
             }
         }
 
-        /**
-         * @cdk.bug 2013689
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2013689
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestAromaticBondOrders()
         {
@@ -136,9 +136,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestAssignGasteigerPiPartialCharges_IAtomContainer_Boolean()
         {
@@ -164,9 +164,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetMaxGasteigerIters()
         {
@@ -177,9 +177,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetMaxResoStruc()
         {
@@ -190,9 +190,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetStepSize()
         {
@@ -202,9 +202,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetMaxGasteigerIters_Double()
         {
@@ -216,9 +216,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetMaxResoStruc_Int()
         {
@@ -230,9 +230,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetStepSize()
         {
@@ -244,9 +244,9 @@ namespace NCDK.Charges
 
         }
 
-        /**
-         *
-         */
+        /// <summary>
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestAssignrPiMarsilliFactors_IAtomContainerSet()
         {

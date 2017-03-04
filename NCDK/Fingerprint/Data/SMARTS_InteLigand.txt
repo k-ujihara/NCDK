@@ -777,7 +777,7 @@ Quart_silane: [SiX4]([#6])([#6])([#6])[#6]
 # four C-substituents. non-reactive, non-toxic, in experimental phase for drug development
 
 Non-quart_silane: [SiX4;$([H1]([#6])([#6])[#6]),$([H2]([#6])[#6]),$([H3][#6]),$([H4])]
-# has 1-4 Hydride(s), reactive. Daylight's depictmatch does not add hydrogens automatically to 
+# has 1-4 hydride(s), reactive. Daylight's depictmatch does not add hydrogens automatically to 
 # the free positions at Si, thus Hs had to be added implicitly
 
 Silylmonohalide: [SiX4]([FX1,ClX1,BrX1,IX1])([#6])([#6])[#6]

@@ -18,53 +18,43 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches an aromatic or a single bond, used when no bond is specified between an atom.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches an aromatic or a single bond, used when no bond is specified between an atom.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AromaticOrSingleQueryBond : SMARTSBond
     {
-        /**
-         * Creates a new instance.
-         *
-         */
+        /// <summary>
+        /// Creates a new instance.
+        ///
+        /// </summary>
         public AromaticOrSingleQueryBond(IChemObjectBuilder builder)
             : base(builder)
         {
             IsAromatic = true;
         }
 
-        /**
-         * Creates a new instance
-         *
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// </summary>
         public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
            : base(atom1, atom2, order, builder)
         {
             IsAromatic = true;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#Matches(org
-         * .openscience.cdk.interfaces.IBond)
-         */
         public override bool Matches(IBond bond)
         {
             return bond.IsAromatic || bond.Order == BondOrder.Single;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.Bond#ToString()
-         */
         public override string ToString()
         {
-            return "AromaticOrSingleQueryBond()";
+            return nameof(AromaticOrSingleQueryBond) + "()";
         }
     }
 }

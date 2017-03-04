@@ -24,25 +24,25 @@ using NCDK.Numerics;
 
 namespace NCDK.IO
 {
-    /**
-     * Writer that outputs in the HIN format.
-     *
-     * @author Rajarshi Guha <rajarshi@presidency.com>
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.created 2004-01-27
-     * @cdk.iooptions
-     */
+    /// <summary>
+    /// Writer that outputs in the HIN format.
+    ///
+    // @author Rajarshi Guha <rajarshi@presidency.com>
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.created 2004-01-27
+    // @cdk.iooptions
+    /// </summary>
     public class HINWriter : DefaultChemObjectWriter
     {
 
         private TextWriter writer;
 
-        /**
-         * Constructor.
-         *
-         * @param out the stream to write the HIN file to.
-         */
+        /// <summary>
+        /// Constructor.
+        ///
+        /// <param name="out">the stream to write the HIN file to.</param>
+        /// </summary>
         public HINWriter(TextWriter output)
         {
             this.writer = output;
@@ -69,9 +69,9 @@ namespace NCDK.IO
         }
 
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
 
         public override void Close()
         {
@@ -124,14 +124,14 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * writes all the molecules supplied in a MoleculeSet class to
-         * a single HIN file. You can also supply a single Molecule object
-         * as well
-         *
-         * @param som the set of molecules to write
-         * @.io.IOException if there is a problem writing the molecule
-         */
+        /// <summary>
+        /// writes all the molecules supplied in a MoleculeSet class to
+        /// a single HIN file. You can also supply a single Molecule object
+        /// as well
+        ///
+        /// <param name="som">the set of molecules to write</param>
+        /// <exception cref="IOException">if there is a problem writing the molecule</exception>
+        /// </summary>
         private void WriteAtomContainer(IAtomContainerSet<IAtomContainer> som)
         {
 

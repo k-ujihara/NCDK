@@ -3,23 +3,19 @@ using System.Linq;
 
 namespace NCDK.Formula
 {
-    /**
-    // Class to manipulate IsotopePattern objects.
-     *
+    /// <summary>
+    /// Class to manipulate IsotopePattern objects.
+    /// </summary>
     // @author Miguel Rojas Cherto
-     *
     // @cdk.module  formula
     // @cdk.githash
-     */
     public class IsotopePatternManipulator
     {
-
-        /**
-        // Return the isotope pattern normalized to the highest abundance.
-         *
-        // @param isotopeP  The IsotopePattern object to normalize
-        // @return          The IsotopePattern normalized
-         */
+        /// <summary>
+        /// Return the isotope pattern normalized to the highest abundance.
+        /// </summary>
+        /// <param name="isotopeP">The IsotopePattern object to normalize</param>
+        /// <returns>The IsotopePattern normalized</returns>
         public static IsotopePattern Normalize(IsotopePattern isotopeP)
         {
             IsotopeContainer isoHighest = null;
@@ -52,26 +48,23 @@ namespace NCDK.Formula
             return isoNormalized;
         }
 
-        /**
-        // Return the isotope pattern sorted and normalized by intensity
-        // to the highest abundance.
-         *
-        // @param isotopeP  The IsotopePattern object to sort
-        // @return          The IsotopePattern sorted
-         */
+        /// <summary>
+        /// Return the isotope pattern sorted and normalized by intensity
+        /// to the highest abundance.
+        /// </summary>
+        /// <param name="isotopeP">The IsotopePattern object to sort</param>
+        /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortAndNormalizedByIntensity(IsotopePattern isotopeP)
         {
             IsotopePattern isoNorma = Normalize(isotopeP);
             return SortByIntensity(isoNorma);
         }
 
-        /**
-        // Return the isotope pattern sorted by intensity
-        // to the highest abundance.
-         *
-        // @param isotopeP  The IsotopePattern object to sort
-        // @return          The IsotopePattern sorted
-         */
+        /// <summary>
+        /// Return the isotope pattern sorted by intensity to the highest abundance.
+        /// </summary>
+        /// <param name="isotopeP">The IsotopePattern object to sort</param>
+        /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortByIntensity(IsotopePattern isotopeP)
         {
             IsotopePattern isoSort = (IsotopePattern)isotopeP.Clone();
@@ -93,13 +86,11 @@ namespace NCDK.Formula
             return isoSort;
         }
 
-        /**
-        // Return the isotope pattern sorted by mass
-        // to the highest abundance.
-         *
-        // @param isotopeP  The IsotopePattern object to sort
-        // @return          The IsotopePattern sorted
-         */
+        /// <summary>
+        /// Return the isotope pattern sorted by mass to the highest abundance.
+        /// </summary>
+        /// <param name="isotopeP">The IsotopePattern object to sort</param>
+        /// <returns>The IsotopePattern sorted</returns>
         public static IsotopePattern SortByMass(IsotopePattern isotopeP)
         {
             IsotopePattern isoSort = (IsotopePattern)isotopeP.Clone();

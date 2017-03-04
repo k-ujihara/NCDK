@@ -32,18 +32,13 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Config
 {
-    /**
-    /// A read-only class used by {@link Isotopes} for the natural elements. This class is not to
-    /// be used than by only {@link Isotopes}.
-     *
-    /// @author      egonw
-    /// @cdk.module  core
-    /// @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    sealed class BODRIsotope
+    /// <summary>
+    /// A read-only class used by <see cref="Isotopes"/> for the natural elements. This class is not to be used than by only <see cref="Isotopes"/>.
+    /// </summary>
+    // @author      egonw
+    // @cdk.module  core
+    // @cdk.githash
+    internal sealed class BODRIsotope
         : IIsotope
     {
         private string element;

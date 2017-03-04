@@ -30,28 +30,28 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Evaluates length over breadth descriptors.
-     * <p/>
-     * The current implementation reproduces the results obtained from the LOVERB descriptor
-     * routine in ADAPT. As a result ti does not perform any orientation and only considers the
-     * X & Y extents for a series of rotations about the Z axis (in 10 degree increments).
-     * <p/>
-     * The class gives two descriptors
-     * <ul>
-     * <li>LOBMAX - The maximum L/B ratio
-     * <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area
-     * (defined by the product of the X & Y extents for that orientation)
-     * </ul>
-     * <B>Note:</B> The descriptor assumes that the atoms have been configured.
-     *
-     * @author      Rajarshi Guha
-     * @cdk.created 2006-09-26
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:lengthOverBreadth
-     */
+    /// <summary>
+    /// Evaluates length over breadth descriptors.
+    /// <p/>
+    /// The current implementation reproduces the results obtained from the LOVERB descriptor
+    /// routine in ADAPT. As a result ti does not perform any orientation and only considers the
+    /// X & Y extents for a series of rotations about the Z axis (in 10 degree increments).
+    /// <p/>
+    /// The class gives two descriptors
+    /// <ul>
+    /// <li>LOBMAX - The maximum L/B ratio
+    /// <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area
+    /// (defined by the product of the X & Y extents for that orientation)
+    /// </ul>
+    /// <B>Note:</B> The descriptor assumes that the atoms have been configured.
+    ///
+    // @author      Rajarshi Guha
+    // @cdk.created 2006-09-26
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:lengthOverBreadth
+    /// </summary>
     public class LengthOverBreadthDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };

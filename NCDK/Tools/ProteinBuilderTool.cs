@@ -30,24 +30,24 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Class that facilitates building protein structures. Building DNA and RNA
-     * is done by a complementary class <code>NucleicAcidBuilderTool</code> (to be
-     * written).
-     *
-     * @cdk.module pdb
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class that facilitates building protein structures. Building DNA and RNA
+    /// is done by a complementary class <code>NucleicAcidBuilderTool</code> (to be
+    /// written).
+    ///
+    // @cdk.module pdb
+    // @cdk.githash
+    /// </summary>
     public class ProteinBuilderTool
     {
-        /**
-         * Builds a protein by connecting a new amino acid at the N-terminus of the
-         * given strand.
-         *
-         * @param protein protein to which the strand belongs
-         * @param aaToAdd amino acid to add to the strand of the protein
-         * @param strand  strand to which the protein is added
-         */
+        /// <summary>
+        /// Builds a protein by connecting a new amino acid at the N-terminus of the
+        /// given strand.
+        ///
+        /// <param name="protein">protein to which the strand belongs</param>
+        /// <param name="aaToAdd">amino acid to add to the strand of the protein</param>
+        /// <param name="strand">strand to which the protein is added</param>
+        /// </summary>
         public static IBioPolymer AddAminoAcidAtNTerminus(IBioPolymer protein, IAminoAcid aaToAdd, IStrand strand,
                 IAminoAcid aaToAddTo)
         {
@@ -64,16 +64,16 @@ namespace NCDK.Tools
             return protein;
         }
 
-        /**
-         * Builds a protein by connecting a new amino acid at the C-terminus of the
-         * given strand. The acidic oxygen of the added amino acid is removed so that
-         * additional amino acids can be added savely. But this also means that you
-         * might want to add an oxygen at the end of the protein building!
-         *
-         * @param protein protein to which the strand belongs
-         * @param aaToAdd amino acid to add to the strand of the protein
-         * @param strand  strand to which the protein is added
-         */
+        /// <summary>
+        /// Builds a protein by connecting a new amino acid at the C-terminus of the
+        /// given strand. The acidic oxygen of the added amino acid is removed so that
+        /// additional amino acids can be added savely. But this also means that you
+        /// might want to add an oxygen at the end of the protein building!
+        ///
+        /// <param name="protein">protein to which the strand belongs</param>
+        /// <param name="aaToAdd">amino acid to add to the strand of the protein</param>
+        /// <param name="strand">strand to which the protein is added</param>
+        /// </summary>
         public static IBioPolymer AddAminoAcidAtCTerminus(IBioPolymer protein, IAminoAcid aaToAdd, IStrand strand,
                 IAminoAcid aaToAddTo)
         {
@@ -90,37 +90,37 @@ namespace NCDK.Tools
             return protein;
         }
 
-        /**
-         * Creates a BioPolymer from a sequence of amino acid as identified by a
-         * the sequence of their one letter codes. It uses the {@link Default.ChemObjectBuilder}
-         * to create a data model.
-         *
-         * <p>For example:
-         * <pre>
-         * BioPolymer protein = ProteinBuilderTool.CreateProtein("GAGA");
-         * </pre>
-         *
-         * @see #CreateProtein(string)
-         */
+        /// <summary>
+        /// Creates a BioPolymer from a sequence of amino acid as identified by a
+        /// the sequence of their one letter codes. It uses the {@link Default.ChemObjectBuilder}
+        /// to create a data model.
+        ///
+        /// <p>For example:
+        /// <code>
+        /// BioPolymer protein = ProteinBuilderTool.CreateProtein("GAGA");
+        /// </code>
+        ///
+        /// <seealso cref="CreateProtein(string)"/>
+        /// </summary>
         public static IBioPolymer CreateProtein(string sequence)
         {
             return CreateProtein(sequence, Default.ChemObjectBuilder.Instance);
         }
 
-        /**
-         * Creates a BioPolymer from a sequence of amino acid as identified by a
-         * the sequence of their one letter codes. It uses the given <see cref="IChemObjectBuilder"/>
-         * to create a data model.
-         *
-         * <p>For example:
-         * <pre>
-         * BioPolymer protein = ProteinBuilderTool.CreateProtein(
-         *     "GAGA", Silent.ChemObjectBuilder.Instance
-         * );
-         * </pre>
-         *
-         * @see #CreateProtein(string)
-         */
+        /// <summary>
+        /// Creates a BioPolymer from a sequence of amino acid as identified by a
+        /// the sequence of their one letter codes. It uses the given <see cref="IChemObjectBuilder"/>
+        /// to create a data model.
+        ///
+        /// <p>For example:
+        /// <code>
+        /// BioPolymer protein = ProteinBuilderTool.CreateProtein(
+        ///     "GAGA", Silent.ChemObjectBuilder.Instance
+        /// );
+        /// </code>
+        ///
+        /// <seealso cref="CreateProtein(string)"/>
+        /// </summary>
         public static IBioPolymer CreateProtein(string sequence, IChemObjectBuilder builder)
         {
             IDictionary<string, IAminoAcid> templates = AminoAcids.GetHashMapBySingleCharCode();

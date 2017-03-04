@@ -24,30 +24,27 @@
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Describes the geometric parity of a stereo configuration.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        abstract class GeometricParity
+    /// <summary>
+    /// Describes the geometric parity of a stereo configuration.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal abstract class GeometricParity
     {
 
-        /**
-         * Calculate the geometric parity.
-         *
-         * @return -1 odd, +1 even and 0 none
-         */
+        /// <summary>
+        /// Calculate the geometric parity.
+        ///
+        /// <returns>-1 odd, +1 even and 0 none</returns>
+        /// </summary>
         public abstract int Parity { get; }
 
-        /**
-         * Simple implementation allows us to wrap a predefined parity up for access
-         * later. See {@link TetrahedralElementEncoderFactory} for usage example.
-         */
+        /// <summary>
+        /// Simple implementation allows us to wrap a predefined parity up for access
+        /// later. See <see cref="TetrahedralElementEncoderFactory"/> for usage example.
+        /// </summary>
         private sealed class Predefined : GeometricParity
         {
             int parity;
@@ -64,12 +61,12 @@ namespace NCDK.Hash.Stereo
             }
         }
 
-        /**
-         * Create a geometric parity from a pre-stored value (-1, 0, +1).
-         *
-         * @param parity existing parity
-         * @return instance which when invoked will return the value
-         */
+        /// <summary>
+        /// Create a geometric parity from a pre-stored value (-1, 0, +1).
+        ///
+        /// <param name="parity">existing parity</param>
+        /// <returns>instance which when invoked will return the value</returns>
+        /// </summary>
         public static GeometricParity ValueOf(int parity)
         {
             return new Predefined(parity);

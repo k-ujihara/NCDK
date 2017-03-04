@@ -23,32 +23,32 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
-     * a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
-     * "they are intended to capture different aspects of molecular shape.  Note that hydrogens are ignored.
-     * In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
-     * m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
-     * and let p3 denote the number of paths of length 3".
-     * <p/>
-     * Returns three values in the order
-     * <ol>
-     * <li>Kier1 -  First kappa shape index
-     * <li>Kier2 - Second kappa shape index
-     * <li>Kier3 -  Third kappa (&kappa;) shape index
-     * </ol>
-     * <p/>
-     * <p>This descriptor does not have any parameters.
-     *
-     * @author mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:kierValues
-     * @cdk.keyword Kappe shape index
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Kier and Hall kappa molecular shape indices compare the molecular graph with minimal and maximal molecular graphs;
+    /// a description is given at: http://www.chemcomp.com/Journal_of_CCG/Features/descr.htm#KH :
+    /// "they are intended to capture different aspects of molecular shape.  Note that hydrogens are ignored.
+    /// In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
+    /// m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
+    /// and let p3 denote the number of paths of length 3".
+    /// <p/>
+    /// Returns three values in the order
+    /// <ol>
+    /// <li>Kier1 -  First kappa shape index
+    /// <li>Kier2 - Second kappa shape index
+    /// <li>Kier3 -  Third kappa (&kappa;) shape index
+    /// </ol>
+    /// <p/>
+    /// <p>This descriptor does not have any parameters.
+    ///
+    // @author mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:kierValues
+    // @cdk.keyword Kappe shape index
+    // @cdk.keyword descriptor
+    /// </summary>
     public class KappaShapeIndicesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };

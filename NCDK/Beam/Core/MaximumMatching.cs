@@ -6,37 +6,33 @@ using System.Collections.Generic;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// Maximum matching in general graphs using Edmond's Blossom Algorithm. This
-    /// implementation was adapted D Eppstein's python code (<a
-    /// href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
+    /// Maximum matching in general graphs using Edmond's Blossom Algorithm. 
+    /// </summary>
+    /// <para>
+    /// This implementation was adapted D Eppstein's python code 
+    /// (<a href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
     /// which provides efficient tree traversal and handling of blossoms. The
     /// implementation may be quite daunting as a general introduction to the ideas.
-    /// Personally I found <a href="http://www.keithschwarz.com/interesting/">Keith
-    /// Schwarz</a> version very informative when starting to understand the
-    /// workings. <p/>
-    ///
+    /// Personally I found <a href="http://www.keithschwarz.com/interesting/">Keith Schwarz</a> 
+    /// version very informative when starting to understand the workings. 
+    /// </para>
+    /// <para>
     /// An asymptotically better algorithm is described by Micali and Vazirani (1980)
     /// and is similar to bipartite matching (<a href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp</a>)
     /// where by multiple augmenting paths are discovered at once. In general though
     /// this version is very fast - particularly if given an existing matching to
-    /// start from. Even the very simple {@link ArbitraryMatching} eliminates many
+    /// start from. Even the very simple <see cref="ArbitraryMatching"/> eliminates many
     /// loop iterations particularly at the start when all length 1 augmenting paths
     /// are discovered.
-    ///
-    /// <author>John May</author>
-    // @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom
-    ///      algorithm, Wikipedia</a>
-    // @see <a href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp,
-    ///      Wikipedia</a>
-    // @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation
-    ///      from Vazirani on his and Micali O(|E|/// Sqrt(|V|)) algorithm</a>
-    /// </summary>
-#if TEST
-    public
-#endif
-    sealed class MaximumMatching
+    /// </para>
+    /// <list type="bullet">
+    /// <item><a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</a></item>
+    /// <item><a href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp, Wikipedia</a></item>
+    /// <item><a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</a></item>
+    /// </list>
+    // @author John May
+    internal sealed class MaximumMatching
     {
-
         /// <summary>The graph we are matching on.</summary>
         private readonly Graph graph;
 
@@ -109,12 +105,10 @@ namespace NCDK.Beam
         /// Find an augmenting path an alternate it's matching. If an augmenting path
         /// was found then the search must be restarted. If a blossom was detected
         /// the blossom is contracted and the search continues.
-        ///
-        /// <returns>an augmenting path was found</returns>
         /// </summary>
+        /// <returns>an augmenting path was found</returns>
         private bool Augment()
         {
-
             // reset data structures
             Arrays.Fill(even, nil);
             Arrays.Fill(odd, nil);
@@ -181,19 +175,18 @@ namespace NCDK.Beam
         /// An edge was found which connects two 'even' vertices in the forest. If
         /// the vertices have the same root we have a blossom otherwise we have
         /// identified an augmenting path. This method checks for these cases and
-        /// responds accordingly. <p/>
-        ///
+        /// responds accordingly. 
+        /// <para>
         /// If an augmenting path was found - then it's edges are alternated and the
         /// method returns true. Otherwise if a blossom was found - it is contracted
         /// and the search continues.
-        ///
+        /// </para>
+        /// </summary>
         /// <param name="v">endpoint of an edge</param>
         /// <param name="w">another endpoint of an edge</param>
         /// <returns>a path was augmented</returns>
-        /// </summary>
         private bool Check(int v, int w)
         {
-
             // self-loop (within blossom) ignored
             if (uf.Connected(v, w))
                 return false;
@@ -208,7 +201,6 @@ namespace NCDK.Beam
             // from v/w along the tree
             while (true)
             {
-
                 vCurr = Parent(vAncestors, vCurr);
                 wCurr = Parent(wAncestors, wCurr);
 
@@ -252,11 +244,10 @@ namespace NCDK.Beam
         /// <summary>
         /// Access the next ancestor in a tree of the forest. Note we go back two
         /// places at once as we only need check 'even' vertices.
-        ///
+        /// </summary>
         /// <param name="ancestors">temporary set which fills up the path we traversed</param>
         /// <param name="curr">     the current even vertex in the tree</param>
         /// <returns>the next 'even' vertex</returns>
-        /// </summary>
         private int Parent(BitArray ancestors, int curr)
         {
             curr = uf.Find(curr);
@@ -270,11 +261,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create a new blossom for the specified 'bridge' edge.
-        ///
-        /// <param name="v">   adjacent to w</param>
-        /// <param name="w">   adjacent to v</param>
-        /// <param name="base">connected to the stem </param>(common ancestor of v and w)
         /// </summary>
+        /// <param name="v">adjacent to w</param>
+        /// <param name="w">adjacent to v</param>
+        /// <param name="base">connected to the stem (common ancestor of v and w)</param>
         private void Blossom(int v, int w, int base_)
         {
             base_ = uf.Find(base_);
@@ -295,14 +285,12 @@ namespace NCDK.Beam
         /// collapsing vertices and point any 'odd' vertices to the correct 'bridge'
         /// edge. We do this by indexing the birdie to each vertex in the 'bridges'
         /// map.
-        ///
-        /// <param name="v">   an endpoint of the blossom bridge</param>
-        /// <param name="w">   another endpoint of the blossom bridge</param>
-        /// <param name="base">the base of the blossom</param>
         /// </summary>
+        /// <param name="v">an endpoint of the blossom bridge</param>
+        /// <param name="w">another endpoint of the blossom bridge</param>
+        /// <param name="base">the base of the blossom</param>
         private int[] BlossomSupports(int v, int w, int base_)
         {
-
             int n = 0;
             path[n++] = uf.Find(v);
             Tuple b = Tuple.Of(v, w);
@@ -322,9 +310,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Augment all ancestors in the tree of vertex 'v'.
-        ///
-        /// <param name="v">the leaf to augment from</param>
         /// </summary>
+        /// <param name="v">the leaf to augment from</param>
         private void Augment(int v)
         {
             int n = BuildPath(path, 0, v, nil);
@@ -338,22 +325,19 @@ namespace NCDK.Beam
         /// Builds the path backwards from the specified 'start' vertex until the
         /// 'goal'. If the path reaches a blossom then the path through the blossom
         /// is lifted to the original graph.
-        ///
-        /// <param name="path"> path storage</param>
-        /// <param name="i">    offset </param>(in path)
-        /// <param name="start">start vertex</param>
-        /// <param name="goal"> end vertex</param>
-        /// <returns>the number of items set to the path</returns>[].
         /// </summary>
+        /// <param name="path">path storage</param>
+        /// <param name="i">offset (in path)</param>
+        /// <param name="start">start vertex</param>
+        /// <param name="goal">end vertex</param>
+        /// <returns>the number of items set to the <paramref name="path"/>[].</returns>
         private int BuildPath(int[] path, int i, int start, int goal)
         {
             while (true)
             {
-
                 // lift the path through the contracted blossom
                 while (odd[start] != nil)
                 {
-
                     Tuple bridge = bridges[start];
 
                     // add to the path from the bridge down to where 'start'
@@ -384,13 +368,12 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Utility to maximise an existing matching of the provided graph.
-        ///
+        /// </summary>
         /// <param name="g">a graph</param>
         /// <param name="m">matching on the graph, will me modified</param>
         /// <param name="n">current matching cardinality</param>
         /// <param name="s">subset of vertices to match</param>
         /// <returns>the maximal matching on the graph</returns>
-        /// </summary>
         public static int Maximise(Graph g, Matching m, int n, IntSet s)
         {
             MaximumMatching mm = new MaximumMatching(g, m, n, s);
@@ -399,11 +382,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Utility to maximise an existing matching of the provided graph.
-        ///
+        /// </summary>
         /// <param name="g">a graph</param>
         /// <param name="m">matching on the graph</param>
         /// <returns>the maximal matching on the graph</returns>
-        /// </summary>
         public static int Maximise(Graph g, Matching m, int n)
             {
             return Maximise(g, m, n, IntSet.Universe);
@@ -411,13 +393,12 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Utility to get the maximal matching of the specified graph.
-        ///
+        /// </summary>
         /// <param name="g">a graph</param>
         /// <returns>the maximal matching on the graph</returns>
-        /// </summary>
         public static Matching Maximal(Graph g)
         {
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             Maximise(g, m, 0);
             return m;
         }
@@ -435,9 +416,8 @@ namespace NCDK.Beam
 
             /// <summary>
             /// Create a queue of size 'n'.
-            ///
-            /// <param name="n">size of the queue</param>
             /// </summary>
+            /// <param name="n">size of the queue</param>
             public FixedSizeQueue(int n)
             {
                 vs = new int[n];
@@ -445,9 +425,8 @@ namespace NCDK.Beam
 
             /// <summary>
             /// Add an element to the queue.
-            ///
-            // @param e
             /// </summary>
+            /// <param name="e"></param>
            public void Enqueue(int e)
             {
                 vs[n++] = e;
@@ -455,18 +434,15 @@ namespace NCDK.Beam
 
             /// <summary>
             /// Poll the first element from the queue.
-            ///
-            /// <returns>the first element</returns>.
             /// </summary>
+            /// <returns>the first element</returns>.
             public int Poll()
             {
                 return vs[i++];
             }
 
             /// <summary>
-            /// Check if the queue has any items.
-            ///
-            /// <returns>the queue is empty</returns>
+            /// The queue is empty.
             /// </summary>
             public bool IsEmpty => i == n;
 

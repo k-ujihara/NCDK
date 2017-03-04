@@ -148,7 +148,7 @@ namespace NCDK.IO.CML
                             }
                             else if (atti.Name.LocalName.Equals("dictRef"))
                             {
-                                //                        	cdo.SetObjectProperty("Molecule", "dictRef", atts.GetValue(i));
+                                //                            cdo.SetObjectProperty("Molecule", "dictRef", atts.GetValue(i));
                                 // FIXME: has no equivalent in ChemFileCDO
                             }
                         }
@@ -231,7 +231,7 @@ namespace NCDK.IO.CML
                 StoreData();
                 if (xpath.Count == 1)
                 {
-                    //	        	cdo.EndObject("Molecule");
+                    //                cdo.EndObject("Molecule");
                     if (currentMolecule is IAtomContainer)
                     {
                         Debug.WriteLine("Adding molecule to set");
@@ -474,7 +474,7 @@ namespace NCDK.IO.CML
             }
             if (atomCounter > 0)
             {
-                //        	cdo.StartObject("PDBMonomer");
+                //            cdo.StartObject("PDBMonomer");
                 currentMonomer = currentChemFile.Builder.CreatePDBMonomer();
             }
 
@@ -512,7 +512,7 @@ namespace NCDK.IO.CML
                     else
                     {
                         //                    cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
-                        //               	 FIXME: is a guess, Atom.title is not found in ChemFileCDO
+                        //                    FIXME: is a guess, Atom.title is not found in ChemFileCDO
                         currentAtom.SetProperty(CDKPropertyName.TITLE, (string)eltitles[i]);
                     }
                 }
@@ -575,14 +575,14 @@ namespace NCDK.IO.CML
                 if (hasPartialCharge)
                 {
                     Debug.WriteLine("Storing partial atomic charge...");
-                    //          	cdo.SetObjectProperty("Atom", "partialCharge",
-                    //          	(string)partialCharges[i]);
+                    //              cdo.SetObjectProperty("Atom", "partialCharge",
+                    //              (string)partialCharges[i]);
                     currentAtom.Charge = double.Parse((string)partialCharges[i]);
                 }
 
                 if (hasHCounts)
                 {
-                    //          	cdo.SetObjectProperty("Atom", "hydrogenCount", (string)hCounts[i]);
+                    //              cdo.SetObjectProperty("Atom", "hydrogenCount", (string)hCounts[i]);
                     // FIXME: the hCount in CML is the total of implicit *and* explicit
                     currentAtom.ImplicitHydrogenCount = int.Parse((string)hCounts[i]);
                 }
@@ -665,7 +665,7 @@ namespace NCDK.IO.CML
                 ((IPDBMonomer)currentMonomer).ICode = ((IPDBAtom)currentAtom).ICode;
                 ((IPDBPolymer)currentMolecule).AddAtom(((IPDBAtom)currentAtom), currentMonomer, currentStrand);
             }
-            //		cdo.EndObject("PDBMonomer");
+            //        cdo.EndObject("PDBMonomer");
             // nothing done in the CDO for this event
             if (elid.Count > 0)
             {

@@ -234,7 +234,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
 
             /// <inheritdoc/>
-			public override bool Matches(IAtom atom)
+            public override bool Matches(IAtom atom)
             {
                 return left.Matches(atom) || right.Matches(atom);
             }

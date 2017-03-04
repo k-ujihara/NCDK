@@ -1,19 +1,6 @@
 ﻿
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 namespace NCDK
 {
     /// <summary>
@@ -23,18 +10,18 @@ namespace NCDK
     {
         public static class O
         {
-			public const int Unset = 0;
-			public const int Single = 1;
-			public const int Double = 2;
-			public const int Triple = 3;
-			public const int Quadruple = 4;
-			public const int Quintuple = 5;
-			public const int Sextuple = 6;
-      	
+            public const int Unset = 0;
+            public const int Single = 1;
+            public const int Double = 2;
+            public const int Triple = 3;
+            public const int Quadruple = 4;
+            public const int Quintuple = 5;
+            public const int Sextuple = 6;
+          
         }
 
-		private readonly int ordinal;
-		public int Ordinal => ordinal;
+        private readonly int ordinal;
+        public int Ordinal => ordinal;
 
         public override string ToString()
         {
@@ -58,14 +45,14 @@ namespace NCDK
             this.ordinal = ordinal;
         }
 
-		public static explicit operator BondOrder(int ordinal)
+        public static explicit operator BondOrder(int ordinal)
         {
             if (!(0 <= ordinal || ordinal < values.Length))
                 throw new System.ArgumentOutOfRangeException();
-			return values[ordinal];
+            return values[ordinal];
         }
 
-		public static explicit operator int(BondOrder obj)
+        public static explicit operator int(BondOrder obj)
         {
             return obj.Ordinal;
         }
@@ -77,8 +64,8 @@ namespace NCDK
         public static readonly BondOrder Quadruple = new BondOrder(4);
         public static readonly BondOrder Quintuple = new BondOrder(5);
         public static readonly BondOrder Sextuple = new BondOrder(6);
-		private static readonly BondOrder[] values = new BondOrder[]
-		{
+        private static readonly BondOrder[] values = new BondOrder[]
+        {
             Unset, 
             Single, 
             Double, 
@@ -87,34 +74,34 @@ namespace NCDK
             Quintuple, 
             Sextuple, 
     
-		};
+        };
         public static System.Collections.Generic.IEnumerable<BondOrder> Values => values;
 
-		/* In order to cause compiling error */
+        /* In order to cause compiling error */
 
-		public static bool operator==(BondOrder a, object b)
+        public static bool operator==(BondOrder a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
-		public static bool operator!=(BondOrder a, object b)
+        public static bool operator!=(BondOrder a, object b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(object a, BondOrder b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator!=(object a, BondOrder b)
         {
-			throw new System.Exception();
-		}
+            throw new System.Exception();
+        }
 
         public static bool operator==(BondOrder a, BondOrder b)
         {
-			
+            
             return a.Ordinal == b.Ordinal;
         }
 
@@ -123,11 +110,11 @@ namespace NCDK
             return !(a == b);
         }
 
-		public override bool Equals(object obj)
+        public override bool Equals(object obj)
         {
-	
-			if (!(obj is BondOrder))
-				return false;
+    
+            if (!(obj is BondOrder))
+                return false;
             return this.Ordinal == ((BondOrder)obj).Ordinal;
         }
 
@@ -141,11 +128,11 @@ namespace NCDK
             var o = (BondOrder)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
-		/// <summary>
-		/// A numeric value for the number of bonded electron pairs.
-		/// </summary>
+        /// <summary>
+        /// A numeric value for the number of bonded electron pairs.
+        /// </summary>
         public int Numeric => (int)Ordinal;
 
-		public bool IsUnset => this.Ordinal == 0;
+        public bool IsUnset => this.Ordinal == 0;
     }
 }

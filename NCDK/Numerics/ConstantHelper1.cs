@@ -35,7 +35,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Byte*)&value) = (Byte)0xff;
+                   ///((Byte*)&value) = (Byte)0xff;
                 }
             }
             return value;
@@ -49,7 +49,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((SByte*)&value) = (SByte)0xff;
+                   ///((SByte*)&value) = (SByte)0xff;
                 }
             }
             return value;
@@ -63,7 +63,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((UInt16*)&value) = (UInt16)0xffff;
+                   ///((UInt16*)&value) = (UInt16)0xffff;
                 }
             }
             return value;
@@ -77,7 +77,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Int16*)&value) = (Int16)0xffff;
+                   ///((Int16*)&value) = (Int16)0xffff;
                 }
             }
             return value;
@@ -91,7 +91,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((UInt32*)&value) = (UInt32)0xffffffff;
+                   ///((UInt32*)&value) = (UInt32)0xffffffff;
                 }
             }
             return value;
@@ -105,7 +105,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Int32*)&value) = (Int32)0xffffffff;
+                   ///((Int32*)&value) = (Int32)0xffffffff;
                 }
             }
             return value;
@@ -119,7 +119,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((UInt64*)&value) = (UInt64)0xffffffffffffffff;
+                   ///((UInt64*)&value) = (UInt64)0xffffffffffffffff;
                 }
             }
             return value;
@@ -133,7 +133,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Int64*)&value) = (Int64)0xffffffffffffffff;
+                   ///((Int64*)&value) = (Int64)0xffffffffffffffff;
                 }
             }
             return value;
@@ -147,7 +147,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Int32*)&value) = (Int32)0xffffffff;
+                   ///((Int32*)&value) = (Int32)0xffffffff;
                 }
             }
             return value;
@@ -161,7 +161,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((Int64*)&value) = (Int64)0xffffffffffffffff;
+                   ///((Int64*)&value) = (Int64)0xffffffffffffffff;
                 }
             }
             return value;

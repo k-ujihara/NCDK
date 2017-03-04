@@ -26,12 +26,12 @@ using NCDK.Templates;
 using System.Collections.Generic;
 
 namespace NCDK.RingSearches {
-    /**
-     * ring search unit tests for a fused system
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// ring search unit tests for a fused system
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class RingSearchTest_Fused
     {
@@ -57,7 +57,7 @@ namespace NCDK.RingSearches {
         public void TestFUsed()
         {
             RingSearch ringSearch = new RingSearch(fusedRings);
-            Assert.AreEqual(1, ringSearch.FUsed().Length);
+            Assert.AreEqual(1, ringSearch.Fused().Length);
         }
 
         [TestMethod()]
@@ -86,7 +86,7 @@ namespace NCDK.RingSearches {
         public void TestFUsedRingFragments()
         {
             RingSearch ringSearch = new RingSearch(fusedRings);
-            IList<IAtomContainer> fragments = ringSearch.FUsedRingFragments();
+            IList<IAtomContainer> fragments = ringSearch.FusedRingFragments();
             Assert.AreEqual(1, fragments.Count);
             IAtomContainer fragment = fragments[0];
             foreach (var atom in fusedRings.Atoms)

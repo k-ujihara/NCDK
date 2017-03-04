@@ -28,22 +28,22 @@ using System.Linq;
 
 namespace NCDK.Hash
 {
-    /**
-     * Enumeration of atom encoders for seeding atomic hash codes. Generally these
-     * encoders return the direct value or a prime number if that value is null.
-     * These encoders are considered <i>basic</i> as the values generated are all in
-     * the same range. Better encoding can be achieved by assigning discrete values
-     * a section of the prime number table. However, In practice using a
-     * pseudorandom number generator to distribute the encoded values provides a
-     * good distribution.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see ConjugatedAtomEncoder
-     * @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers
-     *      archive</a>
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Enumeration of atom encoders for seeding atomic hash codes. Generally these
+    /// encoders return the direct value or a prime number if that value is null.
+    /// These encoders are considered <i>basic</i> as the values generated are all in
+    /// the same range. Better encoding can be achieved by assigning discrete values
+    /// a section of the prime number table. However, In practice using a
+    /// pseudorandom number generator to distribute the encoded values provides a
+    /// good distribution.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// <seealso cref="ConjugatedAtomEncoder"/>
+    // @see <a href="http://www.bigprimes.net/archive/prime/">Prime numbers
+    ///      archive</a>
+    // @cdk.githash
+    /// </summary>
     public sealed class BasicAtomEncoder : AtomEncoder, IComparable<BasicAtomEncoder>
     {
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);

@@ -37,37 +37,34 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Fingerprint.Model
 {
-    /**
-    //  <ul>
-     *	<li>Bayesian models using fingerprints: provides model creation, analysis, prediction and
-    //  serialisation.</li>
-    //  
-    //  <li>Uses a variation of the classic Bayesian model, using a Laplacian correction, which sums log
-    //  values of ratios rather than multiplying them together. This is an effective way to work with large
-    //  numbers of fingerprints without running into extreme numerical precision issues, but it also means
-    //  that the outgoing predictor is an arbitrary value rather than a probability, which introduces
-    //  the need for an additional calibration step prior to interpretation.</li>
-    //  
-    //  <li>For more information about the method, see:
-     *		J. Chem. Inf. Model, v.46, pp.1124-1133 (2006)
-     *		J. Biomol. Screen., v.10, pp.682-686 (2005)
-     *		Molec. Divers., v.10, pp.283-299 (2006)</li>
-     *
-    //  <li>Currently only the CircularFingerprinter fingerprints are supported (i.e. ECFP_n and FCFP_n).</li>
-     *
-    //  <li>Model building is done by selecting the fingerprinting method and folding size, then providing
-    //  a series of molecules & responses. Individual model contributions are kept around in order to
-    //  produce the analysis data (e.g. the ROC curve), but is discarded during serialise/deserialise
-    //  cycles.
-    //  
-    //  <li>Fingerprint "folding" is optional, but recommended, because it places an upper limit on the model
-    //  size. If folding is not used (folding=0) then the entire 32-bits are used, which means that in the
-    //  diabolical case, the number of Bayesian contributions that needs to be stored is 4 billion. In practice
-    //  the improvement in predictivity tends to plateaux out at around 1024 bits, so values of 2048 or 4096
-    //  are generally safe. Folding values must be integer powers of 2.</li>
-     *
-    //  </ul>
-    //  
+    /// <summary>
+    /// Bayesian models using fingerprints: provides model creation, analysis, prediction and serialisation.
+    /// </summary>
+    /// <remarks>
+    /// <para>Uses a variation of the classic Bayesian model, using a Laplacian correction, which sums log
+    /// values of ratios rather than multiplying them together. This is an effective way to work with large
+    /// numbers of fingerprints without running into extreme numerical precision issues, but it also means
+    /// that the outgoing predictor is an arbitrary value rather than a probability, which introduces
+    /// the need for an additional calibration step prior to interpretation.</para>
+    /// 
+    /// <para>For more information about the method, see:
+    ///         J. Chem. Inf. Model, v.46, pp.1124-1133 (2006)
+    ///         J. Biomol. Screen., v.10, pp.682-686 (2005)
+    ///         Molec. Divers., v.10, pp.283-299 (2006)</para>
+    /// 
+    /// <para>Currently only the CircularFingerprinter fingerprints are supported (i.e. ECFP_n and FCFP_n).</para>
+    /// 
+    /// <para>Model building is done by selecting the fingerprinting method and folding size, then providing
+    /// a series of molecules &amp; responses. Individual model contributions are kept around in order to
+    /// produce the analysis data (e.g. the ROC curve), but is discarded during serialise/deserialise
+    /// cycles.</para>
+    /// 
+    /// <para>Fingerprint "folding" is optional, but recommended, because it places an upper limit on the model
+    /// size. If folding is not used (folding=0) then the entire 32-bits are used, which means that in the
+    /// diabolical case, the number of Bayesian contributions that needs to be stored is 4 billion. In practice
+    /// the improvement in predictivity tends to plateaux out at around 1024 bits, so values of 2048 or 4096
+    /// are generally safe. Folding values must be integer powers of 2.</para>
+    /// </remarks>
     // @author         am.clark
     // @cdk.created    2015-01-05
     // @cdk.keyword    fingerprint
@@ -75,68 +72,51 @@ namespace NCDK.Fingerprint.Model
     // @cdk.keyword    model
     // @cdk.module     standard
     // @cdk.githash
-     */
     public class Bayesian
     {
         private int classType;
         private int folding = 0;
 
-        // incoming hash codes: actual values, and subsumed values are {#active,#total}
+        /// incoming hash codes: actual values, and subsumed values are {#active,#total}
         private int numActive = 0;
         protected IDictionary<int, int[]> inHash = new Dictionary<int, int[]>();
-#if TEST
-        public
-#else
-        protected
-#endif
-        List<int[]> training = new List<int[]>();
+        protected internal List<int[]> training = new List<int[]>();
         protected List<bool> activity = new List<bool>();
 
-        // built model: contributions for each hash code
-#if TEST
-        public
-#else
-        protected
-#endif
-        IDictionary<int, double> contribs = new Dictionary<int, double>();
-#if TEST
-        public
-#else
-        protected
-#endif
-        double lowThresh = 0, highThresh = 0;
+        /// built model: contributions for each hash code
+        protected internal IDictionary<int, double> contribs = new Dictionary<int, double>();
+        protected internal double lowThresh = 0, highThresh = 0;
         protected double range = 0, invRange = 0;                            // cached to speed up scaling calibration
 
-        // self-validation metrics: can optionally be calculated after a build
+        /// self-validation metrics: can optionally be calculated after a build
         protected double[] estimates = null;
         protected double[] rocX = null, rocY = null;                          // between 0..1, and rounded to modest precision
         protected string rocType = null;
         protected double rocAUC = double.NaN;
         protected int trainingSize = 0, trainingActives = 0;                     // this is serialised, while the actual training set is not
 
-        // optional text attributes (serialisable)
+        /// optional text attributes (serialisable)
         private string noteTitle = null, noteOrigin = null;
         private string[] noteComments = null;
 
         private static readonly Regex PTN_HASHLINE = new Regex("^(-?\\d+)=([\\d\\.Ee-]+)", RegexOptions.Compiled);
 
-        // ----------------- public methods -----------------
+        /// ----------------- public methods -----------------
 
-        /**
-        // Instantiate a Bayesian model with no data.
-        // 
-        // @param classType one of the CircularFingerprinter.CLASS_* constants
-         */
+        /// <summary>
+        /// Instantiate a Bayesian model with no data.
+        /// </summary>
+        /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
         public Bayesian(int classType)
         {
             this.classType = classType;
         }
 
-        /**
-        // Instantiate a Bayesian model with no data.
-        // 	 * @param classType one of the CircularFingerprinter.CLASS_* constants
-        // @param folding the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding
-         */
+        /// <summary>
+        /// Instantiate a Bayesian model with no data.
+        /// </summary>
+        /// <param name="classType">one of the CircularFingerprinter.CLASS_* constants</param>
+        /// <param name="folding">the maximum number of fingerprint bits, which must be a power of 2 (e.g. 1024, 2048) or 0 for no folding</param>
         public Bayesian(int classType, int folding)
         {
             this.classType = classType;
@@ -154,27 +134,22 @@ namespace NCDK.Fingerprint.Model
                 throw new ArithmeticException("Fingerprint folding " + folding + " invalid: must be 0 or power of 2.");
         }
 
-        /**
-        // Access to the fingerprint type.
-        // 
-        // @return fingerprint class, one of CircularFingerprinter.CLASS_*
-         */
+        /// <summary>
+        /// Access to the fingerprint type, one of <see cref="CircularFingerprinter"/>.CLASS_*.
+        /// </summary>
         public int ClassType => classType;
 
-        /**
-        // Access to the fingerprint folding extent.
-        // 
-        // @return folding extent, either 0 (for none) or a power of 2
-         */
+        /// <summary>
+        /// Access to the fingerprint folding extent, either 0 (for none) or a power of 2.
+        /// </summary>
         public int Folding => folding;
 
-        /**
-        // Appends a new row to the model source data, which consists of a molecule and whether or not it
-        // is considered active.
-        // 
-        // @param mol molecular structure, which must be non-blank
-        // @param active whether active or not
-         */
+        /// <summary>
+        /// Appends a new row to the model source data, which consists of a molecule and whether or not it
+        /// is considered active.
+        /// </summary>
+        /// <param name="mol">molecular structure, which must be non-blank</param>
+        /// <param name="active">whether active or not</param>
         public void AddMolecule(IAtomContainer mol, bool active)
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
@@ -198,7 +173,7 @@ namespace NCDK.Fingerprint.Model
             foreach (var h in hashset)
                 hashes[p++] = h;
 
-            // record the processed information for model building purposes		
+            // record the processed information for model building purposes        
             if (active) numActive++;
             training.Add(hashes);
             activity.Add(active);
@@ -213,11 +188,11 @@ namespace NCDK.Fingerprint.Model
             }
         }
 
-        /**
-        // Performs that Bayesian model generation, using the {molecule:activity} pairs that have been submitted up to this
-        // point. Once this method has finished, the object can be used to generate predictions, validation data or to
-        // serialise for later use.
-         */
+        /// <summary>
+        /// Performs that Bayesian model generation, using the {molecule:activity} pairs that have been submitted up to this
+        /// point. Once this method has finished, the object can be used to generate predictions, validation data or to
+        /// serialise for later use.
+        /// </summary>
         public void Build()
         {
             trainingSize = training.Count; // for posterity
@@ -258,14 +233,13 @@ namespace NCDK.Fingerprint.Model
             invRange = range > 0 ? 1 / range : 0;
         }
 
-        /**
-        // For a given molecule, determines its fingerprints and uses them to calculate a Bayesian prediction. Note that this
-        // value is unscaled, and so it only has relative meaning within the confines of the model, i.e. higher is more likely to
-        // be active.
-        // 
-        // @param mol molecular structure which cannot be blank or null
-        // @return predictor value
-         */
+        /// <summary>
+        /// For a given molecule, determines its fingerprints and uses them to calculate a Bayesian prediction. Note that this
+        /// value is unscaled, and so it only has relative meaning within the confines of the model, i.e. higher is more likely to
+        /// be active.
+        /// </summary>
+        /// <param name="mol">molecular structure which cannot be blank or null</param>
+        /// <returns>predictor value</returns>
         public double Predict(IAtomContainer mol)
         {
             if (mol == null || mol.Atoms.Count == 0) throw new CDKException("Molecule cannot be blank or null.");
@@ -294,15 +268,14 @@ namespace NCDK.Fingerprint.Model
             return val;
         }
 
-        /**
-        // Converts a raw Bayesian prediction and transforms it into a probability-like range, i.e. most values within the domain
-        // are between 0..1, and assigning a cutoff of activie = scaled_prediction > 0.5 is reasonable. The transform (scale/translation)
-        // is determined by the ROC-analysis, if any. The resulting value can be used as a probability by capping the values so that
-        // 0 <= p <= 1.
-        // 
-        // @param pred raw prediction, as provided by the Predict(..) method
-        // @return scaled prediction	
-         */
+        /// <summary>
+        /// Converts a raw Bayesian prediction and transforms it into a probability-like range, i.e. most values within the domain
+        /// are between 0..1, and assigning a cutoff of activie = scaled_prediction &gt; 0.5 is reasonable. The transform (scale/translation)
+        /// is determined by the ROC-analysis, if any. The resulting value can be used as a probability by capping the values so that
+        /// 0 &lt;= p &lt;= 1.
+        /// </summary>
+        /// <param name="pred">raw prediction, as provided by the Predict(..) method</param>
+        /// <returns>scaled prediction</returns>
         public double ScalePredictor(double pred)
         {
             // special case: if there is no differentiation scale, it's either above or below (typically happens only with tiny models)
@@ -311,11 +284,11 @@ namespace NCDK.Fingerprint.Model
             return (pred - lowThresh) * invRange;
         }
 
-        /**
-        // Produces an ROC validation set, using the inputs provided prior to the model building, using leave-one-out. Note that
-        // this should only be used for small datasets, since it is very thorough, and scales as O(N^2) relative to training set
-        // size.
-         */
+        /// <summary>
+        /// Produces an ROC validation set, using the inputs provided prior to the model building, using leave-one-out. Note that
+        /// this should only be used for small datasets, since it is very thorough, and scales as O(N^2) relative to training set
+        /// size.
+        /// </summary>
         public void ValidateLeaveOneOut()
         {
             int sz = training.Count;
@@ -326,31 +299,31 @@ namespace NCDK.Fingerprint.Model
             rocType = "leave-one-out";
         }
 
-        /**
-        // Produces a ROC validation set by partitioning the inputs into 5 groups, and performing five separate 80% in/20% out
-        // model simulations. This is quite efficient, and takes approximately 5 times as long as building the original
-        // model: it should be used for larger datasets.
-         */
+        /// <summary>
+        /// Produces a ROC validation set by partitioning the inputs into 5 groups, and performing five separate 80% in/20% out
+        /// model simulations. This is quite efficient, and takes approximately 5 times as long as building the original
+        /// model: it should be used for larger datasets.
+        /// </summary>
         public void ValidateFiveFold()
         {
             rocType = "five-fold";
             ValidateNfold(5);
         }
 
-        /**
-        // Produces a ROC validation set by partitioning the inputs into 3 groups, and performing three separate 66% in/33% out
-        // model simulations. This is quite efficient, and takes approximately 3 times as long as building the original
-        // model: it should be used for larger datasets.
-         */
+        /// <summary>
+        /// Produces a ROC validation set by partitioning the inputs into 3 groups, and performing three separate 66% in/33% out
+        /// model simulations. This is quite efficient, and takes approximately 3 times as long as building the original
+        /// model: it should be used for larger datasets.
+        /// </summary>
         public void ValidateThreeFold()
         {
             rocType = "three-fold";
             ValidateNfold(3);
         }
 
-        /**
-        // Clears out the training set, to free up memory.
-         */
+        /// <summary>
+        /// Clears out the training set, to free up memory.
+        /// </summary>
         public void ClearTraining()
         {
             training.Clear();
@@ -439,14 +412,13 @@ namespace NCDK.Fingerprint.Model
             }
         }
 
-        /**
-        // Converts the current model into a serialised string representation. The serialised form omits the original data
-        // that was used to build the model, but otherwise contains all of the information necessary to recreate the model
-        // and use it to make predictions against new molecules. The format used is a concise text-based format that is
-        // easy to recognise by its prefix, and is reasonably efficient with regard to storage space.
-        // 
-        // @return serialised model
-         */
+        /// <summary>
+        /// Converts the current model into a serialised string representation. The serialised form omits the original data
+        /// that was used to build the model, but otherwise contains all of the information necessary to recreate the model
+        /// and use it to make predictions against new molecules. The format used is a concise text-based format that is
+        /// easy to recognise by its prefix, and is reasonably efficient with regard to storage space.
+        /// </summary>
+        /// <returns>serialised model</returns>
         public string Serialise()
         {
             StringBuilder buff = new StringBuilder();
@@ -502,12 +474,11 @@ namespace NCDK.Fingerprint.Model
             return buff.ToString();
         }
 
-        /**
-        // Converts a given string into a Bayesian model instance, or throws an exception if it is not valid.
-        // 
-        // @param str string containing the serialised model
-        // @return instantiated model that can be used for predictions
-         */
+        /// <summary>
+        /// Converts a given string into a Bayesian model instance, or throws an exception if it is not valid.
+        /// </summary>
+        /// <param name="str">string containing the serialised model</param>
+        /// <returns>instantiated model that can be used for predictions</returns>
         public static Bayesian Deserialise(string str)
         {
             var rdr = new StringReader(str);
@@ -516,13 +487,12 @@ namespace NCDK.Fingerprint.Model
             return model;
         }
 
-        /**
-        // Reads the incoming stream and attempts to convert it into an instantiated model. The input most be compatible
-        // with the format used by the Serialise() method, otherwise an exception will be thrown.
-        // 
-        // @param str string containing the serialised model
-        // @return instantiated model that can be used for predictions
-         */
+        /// <summary>
+        /// Reads the incoming stream and attempts to convert it into an instantiated model. The input most be compatible
+        /// with the format used by the Serialise() method, otherwise an exception will be thrown.
+        /// </summary>
+        /// <param name="str">string containing the serialised model</param>
+        /// <returns>instantiated model that can be used for predictions</returns>
         public static Bayesian Deserialise(TextReader rdr)
         {
             string line = rdr.ReadLine();
@@ -653,9 +623,9 @@ namespace NCDK.Fingerprint.Model
             return model;
         }
 
-        // ----------------- private methods -----------------
+        /// ----------------- private methods -----------------
 
-        // estimate leave-one-out predictor for a given training entry
+        /// estimate leave-one-out predictor for a given training entry
         private double SingleLeaveOneOut(int N)
         {
             bool exclActive = activity[N];
@@ -680,7 +650,7 @@ namespace NCDK.Fingerprint.Model
             return val;
         }
 
-        // performs cross-validation, splitting into N different segments
+        /// performs cross-validation, splitting into N different segments
         private void ValidateNfold(int nsegs)
         {
             int sz = training.Count;
@@ -703,8 +673,8 @@ namespace NCDK.Fingerprint.Model
             CalculateROC();
         }
 
-        // generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
-        // that is not implied by the current skein
+        /// generates a contribution model based on all the training set for which (n%div)!=seg; e.g. for 5-fold, it would use the 80% of the training set
+        /// that is not implied by the current skein
         private IDictionary<int, double> BuildPartial(int[] order, int seg, int div)
         {
             int sz = training.Count;
@@ -743,7 +713,7 @@ namespace NCDK.Fingerprint.Model
             return segContribs;
         }
 
-        // using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
+        /// using contributions build from some partial section of the training set, uses that to estimate for an untrained entry
         private double EstimatePartial(int[] order, int N, IDictionary<int, double> segContrib)
         {
             double val = 0;
@@ -755,7 +725,6 @@ namespace NCDK.Fingerprint.Model
             }
             return val;
         }
-
 
         private class EstimatesComparator : IComparer<int>
         {
@@ -773,13 +742,13 @@ namespace NCDK.Fingerprint.Model
             }
         }
 
-        // assumes estimates already calculated, fills in the ROC data
+        /// assumes estimates already calculated, fills in the ROC data
         private void CalculateROC()
         {
             // sort the available estimates, and take midpoints 
             int sz = training.Count;
 
-            //int[] idx=Vec.idxSort(estimates);
+            //int[] idx=Vec.IdxSort(estimates);
             int[] idx = new int[sz];
             for (int n = 0; n < sz; n++)
                 idx[n] = n;
@@ -864,7 +833,7 @@ namespace NCDK.Fingerprint.Model
             rocY = Resize(gy, gsz);
         }
 
-        // rederives the low/high thresholds, using ROC curve data: once the analysis is complete, the midpoint will be the optimum balance 
+        /// rederives the low/high thresholds, using ROC curve data: once the analysis is complete, the midpoint will be the optimum balance 
         private void CalibrateThresholds(double[] x, double[] y, double[] t)
         {
             int sz = t.Length;
@@ -884,7 +853,7 @@ namespace NCDK.Fingerprint.Model
             invRange = range > 0 ? 1 / range : 0;
         }
 
-        // convenience functions	
+        /// convenience functions    
         private double[] Resize(double[] arr, int sz)
         {
             double[] ret = new double[sz];

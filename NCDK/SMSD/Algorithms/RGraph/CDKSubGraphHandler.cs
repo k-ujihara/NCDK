@@ -31,13 +31,13 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     * This class acts as a handler class for {@link CDKMCS} algorithm.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class acts as a handler class for <see cref="CDKMCS"/> algorithm.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class CDKSubGraphHandler : AbstractSubGraph, IMCSBase
     {
 
@@ -51,12 +51,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
         private List<IDictionary<int, int>> allMCS = null;
 
         //~--- constructors -------------------------------------------------------
-        /*
-         * Creates a new instance of MappingHandler
-         */
+        /// <summary>
+        /// Creates a new instance of MappingHandler
+        /// </summary>
         public CDKSubGraphHandler()
         {
-
             this.allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
             this.firstAtomMCS = new Dictionary<IAtom, IAtom>();
             this.firstMCS = new SortedDictionary<int, int>();
@@ -77,7 +76,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         public override bool IsSubgraph(bool shouldMatchBonds)
         {
-
             CDKRMapHandler rmap = new CDKRMapHandler();
 
             try
@@ -93,7 +91,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 {
                     rOnPFlag = true;
                     rmap.CalculateSubGraphs(source, target, shouldMatchBonds);
-
                 }
                 else
                 {
@@ -105,7 +102,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 SetAllAtomMapping();
                 SetFirstMapping();
                 SetFirstAtomMapping();
-
             }
             catch (CDKException)
             {
@@ -152,7 +148,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void SetAllMapping()
         {
-
             //int count_final_sol = 1;
             //Console.Out.WriteLine("Output of the final FinalMappings: ");
             try
@@ -164,7 +159,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
                     SortedDictionary<int, int> atomMappings = new SortedDictionary<int, int>();
                     foreach (var solutions in finalSolution)
                     {
-
                         int iIndex = solutions.Key;
                         int jIndex = solutions.Value;
 
@@ -188,7 +182,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
             {
                 //ex.GetCause();
             }
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -202,7 +195,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 IDictionary<IAtom, IAtom> atomMappings = new Dictionary<IAtom, IAtom>();
                 foreach (var solutions in finalSolution)
                 {
-
                     int iIndex = solutions.Key;
                     int jIndex = solutions.Value;
 
@@ -221,12 +213,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void SetFirstMapping()
         {
-
             if (allMCS.Count != 0)
             {
                 firstMCS = new SortedDictionary<int, int>(allMCS[0]);
             }
-
         }
 
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -236,7 +226,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
             {
                 firstAtomMCS = new Dictionary<IAtom, IAtom>(allAtomMCS[0]);
             }
-
         }
 
         public IList<IDictionary<int, int>> GetAllMapping()

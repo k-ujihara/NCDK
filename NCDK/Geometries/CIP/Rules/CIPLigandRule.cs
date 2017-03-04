@@ -24,19 +24,17 @@ using System;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * Compares to {@link ILigand}s based on CIP sequences sub rules. The used CIP sub rules are:
-     * <ol>
-     *   <li>{@link MassNumberRule}</li>
-     *   <li>{@link AtomicNumberRule}</li>
-     * </ol>
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Compares to <see cref="ILigand"/>s based on CIP sequences sub rules. The used CIP sub rules are:
+    /// <list type="bullet">
+    /// <item><see cref="MassNumberRule"/></item>
+    /// <item><see cref="AtomicNumberRule"/></item>
+    /// </list>
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
     public class CIPLigandRule : ISequenceSubRule<ILigand>
     {
-
         CombinedAtomicMassNumberRule numberRule = new CombinedAtomicMassNumberRule();
 
         public int Compare(ILigand ligand1, ILigand ligand2)
@@ -81,9 +79,9 @@ namespace NCDK.Geometries.CIP.Rules
                 return 0;
         }
 
-        /**
-         * Order the ligands from high to low precedence according to atomic and mass numbers.
-         */
+        /// <summary>
+        /// Order the ligands from high to low precedence according to atomic and mass numbers.
+        /// </summary>
         private ILigand[] Order(ILigand[] ligands)
         {
             ILigand[] newLigands = new ILigand[ligands.Length];

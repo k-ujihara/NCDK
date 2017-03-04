@@ -20,11 +20,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * Tests for RadicalSiteRearrangementMechanism implementations.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// Tests for RadicalSiteRearrangementMechanism implementations.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class RadicalSiteRearrangementMechanismTest : ReactionMechanismTest
     {
@@ -41,12 +41,12 @@ namespace NCDK.Reactions.Mechanisms
             Assert.IsNotNull(mechanism);
         }
 
-        /**
-         * Junit test.
-         * TODDO: REACT: add an example
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Junit test.
+        /// TODDO: REACT: add an example
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()
         {

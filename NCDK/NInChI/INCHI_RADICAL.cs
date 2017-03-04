@@ -19,31 +19,31 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * Enumeration of InChI radical definitions.
-     * Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Enumeration of InChI radical definitions.
+    /// Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_RADICAL
     {
-        /**
-         * No radical status recorded.
-         */
+        /// <summary>
+        /// No radical status recorded.
+        /// </summary>
         None = 0,
 
-        /**
-         * Singlet.
-         */
+        /// <summary>
+        /// Singlet.
+        /// </summary>
         Singlet = 1,
 
-        /**
-         * Doublet.
-         */
+        /// <summary>
+        /// Doublet.
+        /// </summary>
         Doublet = 2,
 
-        /**
-         * Triplet.
-         */
+        /// <summary>
+        /// Triplet.
+        /// </summary>
         Triplet = 3,
     }
 }

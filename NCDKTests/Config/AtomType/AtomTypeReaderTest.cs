@@ -23,11 +23,11 @@ using System.Linq;
 
 namespace NCDK.Config.AtomType
 {
-    /**
-     * Checks the functionality of the AtomTypeReader.
-     *
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// Checks the functionality of the AtomTypeReader.
+    ///
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class AtomTypeReaderTest : CDKTestCase
     {
@@ -129,7 +129,7 @@ namespace NCDK.Config.AtomType
                     + "  xsi:schemaLocation=\"http://www.xml-cml.org/schema/cml2/core ../../io/cml/data/cmlAll.xsd\"\n"
                     + "  id=\"mol2\" title=\"MOL2 AtomTypes\">                                                      \n"
                     + "                                                                                             \n"
-                    + " <atomType id=\"C\">\n" + "	<!-- for example in CC-->\n"
+                    + " <atomType id=\"C\">\n" + "    <!-- for example in CC-->\n"
                     + "   <atom elementType=\"C\" formalCharge=\"0\">\n"
                     + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:maxBondOrder\">1.0</scalar>\n"
                     + "     <scalar dataType=\"xsd:double\" dictRef=\"cdk:bondOrderSum\">4.0</scalar>\n"

@@ -21,34 +21,34 @@ using NCDK.QSAR.Result;
 using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic {
-    /**
-     * Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity.
-     * The used approach is given by <pre>X = a + bq + c(q*q)</pre> where a, b, and c are
-     * the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
-     * calculation it uses the {@link Electronegativity} class.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>maxIterations</td>
-     *     <td>0</td>
-     *     <td>Number of maximum iterations</td>
-     *   </tr>
-     * </table>
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:sigmaElectronegativity
-     * @see Electronegativity
-     */
+    /// <summary>
+    /// Atomic descriptor that reflects that Gasteiger-Marsili sigma electronegativity.
+    /// The used approach is given by <code>X = a + bq + c(q*q)</code> where a, b, and c are
+    /// the Gasteiger-Marsili parameters and q is the sigma charge. For the actual
+    /// calculation it uses the <see cref="Electronegativity"/> class.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>maxIterations</td>
+    ///     <td>0</td>
+    ///     <td>Number of maximum iterations</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:sigmaElectronegativity
+    /// <seealso cref="Electronegativity"/>
+    /// </summary>
     public class SigmaElectronegativityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor {
         /// <summary>Number of maximum iterations*/
         private int maxIterations = 0;

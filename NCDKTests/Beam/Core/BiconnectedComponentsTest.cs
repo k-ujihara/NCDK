@@ -45,7 +45,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void bridged()
+        public void Bridged()
         {
             Graph g = Graph.FromSmiles("C1CC2CCC1C2");
             BiconnectedComponents bc = new BiconnectedComponents(g);

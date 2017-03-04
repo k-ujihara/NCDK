@@ -26,14 +26,14 @@ using System.Diagnostics;
 
 namespace NCDK.IO
 {
-    /**
-	 * TestCase for the reading INChI files using one test file.
-	 *
-	 * @cdk.module test-extra
-	 *
-	 * @see org.openscience.cdk.io.INChIReader
-	 * @cdk.require java1.4+
-	 */
+    /// <summary>
+    /// TestCase for the reading INChI files using one test file.
+    ///
+    // @cdk.module test-extra
+    ///
+    // @see org.openscience.cdk.io.INChIReader
+    // @cdk.require java1.4+
+    /// </summary>
     [TestClass()]
     public class INChIReaderTest : SimpleChemObjectReaderTest
     {
@@ -48,16 +48,16 @@ namespace NCDK.IO
             Assert.IsTrue(ChemObjectIOToTest.Accepts(typeof(ChemFile)));
         }
 
-        /**
-		 * Test a INChI 1.1Beta file containing the two tautomers
-		 * of guanine.
-		 */
+        /// <summary>
+        /// Test a INChI 1.1Beta file containing the two tautomers
+        /// of guanine.
+        /// </summary>
         [TestMethod()]
         public void TestGuanine()
         {
             string filename = "NCDK.Data.InChI.guanine.inchi.xml";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             INChIReader reader = new INChIReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
 

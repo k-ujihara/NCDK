@@ -3,19 +3,19 @@ using System;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     public class BondBasedConfigurationTest
     {
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void nonDoubleBond()
+        public void NonDoubleBond()
         {
             Graph g = Graph.FromSmiles("CCCC");
             BondBasedConfiguration.ConfigurationOf(g, 0, 1, 2, 3);
         }
 
         [TestMethod()]
-        public void opposite1()
+        public void Opposite1()
         {
             Graph g = Graph.FromSmiles("F/C=C/F");
             Assert.AreEqual(
@@ -24,7 +24,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void opposite2()
+        public void Opposite2()
         {
             Graph g = Graph.FromSmiles("F\\C=C\\F");
             Assert.AreEqual(
@@ -33,7 +33,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void together1()
+        public void Together1()
         {
             Graph g = Graph.FromSmiles("F/C=C\\F");
             Assert.AreEqual(
@@ -42,7 +42,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void together2()
+        public void Together2()
         {
             Graph g = Graph.FromSmiles("F\\C=C/F");
             Assert.AreEqual(

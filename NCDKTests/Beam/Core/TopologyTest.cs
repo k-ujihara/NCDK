@@ -108,7 +108,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_tetrahedral()
+        public void ImplicitToExplicit_tetrahedral()
         {
             // N[C@]([H])(C)C(=O)O
             Graph g = new Graph(7);
@@ -132,7 +132,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_tetrahedralImplicitH()
+        public void ImplicitToExplicit_tetrahedralImplicitH()
         {
 
             // N[C@]([H])(C)C(=O)O
@@ -155,7 +155,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_sulfoxide()
+        public void ImplicitToExplicit_sulfoxide()
         {
             // C[S@](CC)=O
             Graph g = new Graph(5);
@@ -176,7 +176,7 @@ namespace NCDK.Beam
 
         // CCCCC[P@@]1CCC[C@H]1[C@@H]2CCCP2CCCCC CID 59836513
         [TestMethod()]
-        public void implicitToExplicit_phosphorus()
+        public void ImplicitToExplicit_phosphorus()
         {
             // C[P@@](CC)O
             Graph g = new Graph(5);
@@ -196,7 +196,7 @@ namespace NCDK.Beam
         }
 
     [TestMethod()]
-        public void implicitToExplicit_allene()
+        public void ImplicitToExplicit_allene()
         {
 
             // OC(Cl)=[C@]=C(C)F
@@ -221,7 +221,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_trigonalBipyramidal()
+        public void ImplicitToExplicit_trigonalBipyramidal()
         {
             // O=C[As@](F)(Cl)(Br)S
             Graph g = new Graph(7);
@@ -245,7 +245,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_octahedral()
+        public void ImplicitToExplicit_octahedral()
         {
             // S[Co@@](F)(Cl)(Br)(I)C=O
             Graph g = new Graph(8);
@@ -271,27 +271,27 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_Unknown()
+        public void ImplicitToExplicit_Unknown()
         {
             Assert.AreEqual(Configuration.Unknown, Topology.ToExplicit(new Graph(0), 0, Configuration.Unknown));
         }
 
         [TestMethod()]
-        public void implicitToExplicit_th1_th2()
+        public void ImplicitToExplicit_th1_th2()
         {
             Assert.AreEqual(Configuration.TH1, Topology.ToExplicit(new Graph(0), 0, Configuration.TH1));
             Assert.AreEqual(Configuration.TH2, Topology.ToExplicit(new Graph(0), 0, Configuration.TH2));
         }
 
         [TestMethod()]
-        public void implicitToExplicit_al1_al2()
+        public void ImplicitToExplicit_al1_al2()
         {
             Assert.AreEqual(Configuration.AL1, Topology.ToExplicit(new Graph(0), 0, Configuration.AL1));
             Assert.AreEqual(Configuration.AL2, Topology.ToExplicit(new Graph(0), 0, Configuration.AL2));
         }
 
         [TestMethod()]
-        public void implicitToExplicit_tbs()
+        public void ImplicitToExplicit_tbs()
         {
             foreach (var c in Configuration.Values)
             {
@@ -301,7 +301,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitToExplicit_ohs()
+        public void ImplicitToExplicit_ohs()
         {
             foreach (var c in Configuration.Values)
             {

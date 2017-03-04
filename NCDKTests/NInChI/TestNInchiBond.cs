@@ -31,9 +31,9 @@ namespace NCDK.NInChI
             return new NInchiBond(atO, atT, INCHI_BOND_TYPE.Double);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.JniInchiBond(JniInchiAtom, JniInchiAtom, INCHI_BOND_TYPE, INCHI_BOND_STEREO)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.JniInchiBond(JniInchiAtom, JniInchiAtom, INCHI_BOND_TYPE, INCHI_BOND_STEREO)'
+        /// </summary>
         [TestMethod()]
         public void TestJniInchiBondJniInchiAtomJniInchiAtomINCHI_BOND_TYPEINCHI_BOND_STEREO()
         {
@@ -44,9 +44,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_BOND_STEREO.DoubleEither, bond.BondStereo);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.JniInchiBond(JniInchiAtom, JniInchiAtom, INCHI_BOND_TYPE)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.JniInchiBond(JniInchiAtom, JniInchiAtom, INCHI_BOND_TYPE)'
+        /// </summary>
         [TestMethod()]
         public void TestJniInchiBondJniInchiAtomJniInchiAtomINCHI_BOND_TYPE()
         {
@@ -57,9 +57,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_BOND_STEREO.None, bond.BondStereo);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.setStereoDefinition(INCHI_BOND_STEREO)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.SetStereoDefinition(INCHI_BOND_STEREO)'
+        /// </summary>
         [TestMethod()]
         public void TestSetStereoDefinition()
         {
@@ -69,9 +69,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_BOND_STEREO.DoubleEither, bond.BondStereo);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.OriginAtom'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.OriginAtom'
+        /// </summary>
         [TestMethod()]
         public void TestGetOriginAtom()
         {
@@ -81,9 +81,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(atT, bond.OriginAtom);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.TargetAtom'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.TargetAtom'
+        /// </summary>
         [TestMethod()]
         public void TestGetTargetAtom()
         {
@@ -93,9 +93,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(atO, bond.TargetAtom);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.BondType'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.BondType'
+        /// </summary>
         [TestMethod()]
         public void TestGetBondType()
         {
@@ -105,9 +105,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_BOND_TYPE.Single, bond.BondType);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiBond.BondStereo'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiBond.BondStereo'
+        /// </summary>
         [TestMethod()]
         public void TestGetBondStereo()
         {

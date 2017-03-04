@@ -26,21 +26,21 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class RingManipulator
     {
 
-        /**
-         * Marks the ring aromatic if all atoms and all bonds are aromatic.
-         *
-         * The method assumes that aromaticity of atoms and bonds have been
-         * detected beforehand
-         *
-         * @param ring The ring to examine
-         */
+        /// <summary>
+        /// Marks the ring aromatic if all atoms and all bonds are aromatic.
+        ///
+        /// The method assumes that aromaticity of atoms and bonds have been
+        /// detected beforehand
+        ///
+        /// <param name="ring">The ring to examine</param>
+        /// </summary>
         public static void MarkAromaticRings(IRing ring)
         {
             // return as soon as the conditions are not met:

@@ -29,22 +29,22 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * Helper tool to create IChemObjectWriters.
-     *
-     * @author Egon Willighagen <ewilligh@uni-koeln.de>
-     * @cdk.module io
-     * @cdk.githash
-     **/
+    /// <summary>
+    /// Helper tool to create IChemObjectWriters.
+    ///
+    // @author Egon Willighagen <ewilligh@uni-koeln.de>
+    // @cdk.module io
+    // @cdk.githash
+    ///*/
     public class WriterFactory
     {
         private const string IO_FORMATS_LIST = "NCDK.io-formats.set";
         private static List<IChemFormat> formats = null;
         private static IDictionary<string, System.Type> registeredReaders; // Type is IChemObjectWriter
 
-        /**
-         * Constructs a ChemObjectIOInstantionTests.
-         */
+        /// <summary>
+        /// Constructs a ChemObjectIOInstantionTests.
+        /// </summary>
         public WriterFactory()
         {
             registeredReaders = new Dictionary<string, System.Type>(); // Type is IChemObjectWriter
@@ -59,15 +59,15 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Finds IChemFormats that provide a container for serialization for the
-         * given features. The syntax of the integer is explained in the DataFeatures class.
-         *
-         * @param  features the data features for which a IChemFormat is searched
-         * @return          an array of IChemFormat's that can contain the given features
-         *
-         * @see    org.openscience.cdk.tools.DataFeatures
-         */
+        /// <summary>
+        /// Finds IChemFormats that provide a container for serialization for the
+        /// given features. The syntax of the integer is explained in the DataFeatures class.
+        ///
+        /// <param name="features">the data features for which a IChemFormat is searched</param>
+        /// <returns>an array of IChemFormat's that can contain the given features</returns>
+        ///
+        /// @see    org.openscience.cdk.tools.DataFeatures
+        /// </summary>
         public IChemFormat[] FindChemFormats(int features)
         {
             if (formats == null) LoadFormats();
@@ -96,8 +96,7 @@ namespace NCDK.IO
                 try
                 {
                     Debug.WriteLine("Starting loading Formats...");
-                    var reader = new StreamReader(this.GetType().Assembly
-                            .GetManifestResourceStream(IO_FORMATS_LIST));
+                    var reader = new StreamReader(ResourceLoader.GetAsStream(IO_FORMATS_LIST));
                     int formatCount = 0;
                     string formatName;
                     while ((formatName = reader.ReadLine()) != null)
@@ -138,9 +137,9 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Creates a new IChemObjectWriter based on the given IChemFormat.
-         */
+        /// <summary>
+        /// Creates a new IChemObjectWriter based on the given IChemFormat.
+        /// </summary>
         public IChemObjectWriter CreateWriter(IChemFormat format)
         {
             if (format != null)

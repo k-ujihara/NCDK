@@ -26,21 +26,21 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * Unit tests for the {@link RandomNumber}.
-     *
-     * @author John May
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    /// Unit tests for the {@link RandomNumber}.
+    ///
+    // @author John May
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class RandomNumberTest
     {
         private RandomNumber rn = new RandomNumber();
 
-        /**
-         * Tests the pseudorandom number generation to make sure we alway generate
-         * the same "next" random number.
-         */
+        /// <summary>
+        /// Tests the pseudorandom number generation to make sure we alway generate
+        /// the same "next" random number.
+        /// </summary>
         [TestMethod()]
         public void TestGenerateMersenneTwisterRandomNumber()
         {

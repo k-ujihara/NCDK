@@ -22,39 +22,39 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  IDescriptor based on the weight of atoms of a certain element type.
-     *
-     *  If the wild-card symbol *
-     *  is specified, the returned value is the molecular weight.
-     *  If an invalid element symbol is specified, the return value is
-     *  0 and no exception is thrown
-     *  <p>
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>elementSymbol</td>
-     *     <td>*</td>
-     *     <td>If *, returns the molecular weight, otherwise the weight for the given element</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
-     * or <i>MW</i> if * is specified as a parameter.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-13
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:weight
-     */
+    /// <summary>
+    ///  IDescriptor based on the weight of atoms of a certain element type.
+    ///
+    ///  If the wild-card symbol *
+    ///  is specified, the returned value is the molecular weight.
+    ///  If an invalid element symbol is specified, the return value is
+    ///  0 and no exception is thrown
+    ///  <p>
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>elementSymbol</td>
+    ///     <td>*</td>
+    ///     <td>If *, returns the molecular weight, otherwise the weight for the given element</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
+    /// or <i>MW</i> if * is specified as a parameter.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-13
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:weight
+    /// </summary>
     public class WeightDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private string elementName = "*";

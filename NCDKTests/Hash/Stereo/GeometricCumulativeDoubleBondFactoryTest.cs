@@ -27,14 +27,14 @@ using NCDK.Default;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Some isolated test of the cumulative encoder factory, check out {@link
-     * org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
-     * allene and cumulene.
-     *
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    /// Some isolated test of the cumulative encoder factory, check out {@link
+    /// org.openscience.cdk.hash.HashCodeScenariosTest} for actual examples encoding
+    /// allene and cumulene.
+    ///
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class GeometricCumulativeDoubleBondFactoryTest
     {

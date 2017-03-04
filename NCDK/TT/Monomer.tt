@@ -17,9 +17,9 @@ namespace <#= ns.NS #>
         private string monomerType;
 
         /// <summary>The name of this monomer (e.g. Trp42).</summary>
-		public string MonomerName
+        public string MonomerName
         {
-			get { return monomerName; }
+            get { return monomerName; }
             set
             {
                 monomerName = value;

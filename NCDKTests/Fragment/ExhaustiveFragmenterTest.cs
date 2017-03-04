@@ -24,11 +24,11 @@ using System.Linq;
 
 namespace NCDK.Fragment
 {
-    /**
-     * Test exhaustive fragmenter.
-     *
-     * @cdk.module test-fragment
-     */
+    /// <summary>
+    /// Test exhaustive fragmenter.
+    ///
+    // @cdk.module test-fragment
+    /// </summary>
     [TestClass()]
     public class ExhaustiveFragmenterTest : CDKTestCase
     {

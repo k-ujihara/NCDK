@@ -19,45 +19,42 @@
  */
 using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
+using NCDK.Graphs.Invariant;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Graphs.Canon
 {
-    /**
-     * Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
-     * The tool does not produce the lexicographic smallest labelling on the graph
-     * and should not be used as a robust canonical labelling tool. To canonical
-     * label a graph please use {@link InChINumbersTools} or {@link
-     * CanonicalLabeler}. To determine equivalent classes of atoms please use {@link
-     * HuLuIndexTool} or one of the discrete refines available in the 'cdk-group'
-     * module.
-     *
-     * @author shk3
-     * @cdk.module standard
-     * @cdk.githash
-     * @cdk.created 2003-06-30
-     * @cdk.keyword Morgan number
-     * @see InChINumbersTools
-     * @see CanonicalLabeler
-     * @see HuLuIndexTool
-     */
-    public class MorganNumbersTools {
-
+    /// <summary>
+    /// Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
+    /// The tool does not produce the lexicographic smallest labelling on the graph
+    /// and should not be used as a robust canonical labelling tool. To canonical
+    /// label a graph please use <see cref="InChINumbersTools"/> or <see cref="CanonicalLabeler"/>.
+    /// To determine equivalent classes of atoms please use <see cref="HuLuIndexTool"/>
+    /// or one of the discrete refines available in the 'cdk-group'
+    /// module.
+    /// </summary>
+    /// <seealso cref="InChINumbersTools"/>
+    /// <seealso cref="CanonicalLabeler"/>
+    /// <seealso cref="HuLuIndexTool"/>
+    // @author shk3
+    // @cdk.module standard
+    // @cdk.githash
+    // @cdk.created 2003-06-30
+    // @cdk.keyword Morgan number
+    public class MorganNumbersTools
+    {
         /// <summary>Default size of adjacency lists.</summary>
         private const int INITIAL_DEGREE = 4;
 
-        /**
-		 * Makes an array containing the morgan numbers of the atoms of
-		 * atomContainer. These number are the extended connectivity values and not
-		 * the lexicographic smallest labelling on the graph.
-		 *
-		 * @param molecule the molecule to analyse.
-		 * @return The morgan numbers value.
-		 */
-        public static long[] GetMorganNumbers(IAtomContainer molecule) {
-
+        /// <summary>
+        /// Makes an array containing the morgan numbers of the atoms of
+        /// atomContainer. These number are the extended connectivity values and not
+        /// the lexicographic smallest labelling on the graph.
+        /// </summary>
+        /// <param name="molecule">the molecule to analyse.</param>
+        /// <returns>The morgan numbers value.</returns>
+        public static long[] GetMorganNumbers(IAtomContainer molecule)
+        {
             int order = molecule.Atoms.Count;
 
             long[] currentInvariants = new long[order];
@@ -74,7 +71,8 @@ namespace NCDK.Graphs.Canon
 
             // build the graph and initialise the current connectivity
             // value to the number of connected non-hydrogens
-            foreach (var bond in molecule.Bonds) {
+            foreach (var bond in molecule.Bonds)
+            {
                 int u = molecule.Atoms.IndexOf(bond.Atoms[0]);
                 int v = molecule.Atoms.IndexOf(bond.Atoms[1]);
                 graph[u] = Ints.EnsureCapacity(graph[u], degree[u] + 1, INITIAL_DEGREE);
@@ -86,15 +84,18 @@ namespace NCDK.Graphs.Canon
             }
 
             // iteratively sum the connectivity values for each vertex
-            for (int i = 0; i < order; i++) {
+            for (int i = 0; i < order; i++)
+            {
                 Array.Copy(currentInvariants, 0, previousInvariants, 0, order);
-                for (int u = 0; u < order; u++) {
+                for (int u = 0; u < order; u++)
+                {
                     currentInvariants[u] = 0;
 
                     // for each of the vertices adjacent to 'u' sum their
                     // previous connectivity value
                     int[] neighbors = graph[u];
-                    for (int j = 0; j < degree[u]; j++) {
+                    for (int j = 0; j < degree[u]; j++)
+                    {
                         int v = neighbors[j];
                         currentInvariants[u] += previousInvariants[v] * nonHydrogens[v];
                     }
@@ -103,19 +104,20 @@ namespace NCDK.Graphs.Canon
             return currentInvariants;
         }
 
-        /**
-		 * Makes an array containing the morgan numbers+element symbol of the atoms
-		 * of {@code atomContainer}. This method puts the element symbol before the
-		 * morgan number, useful for finding out how many different rests are
-		 * connected to an atom.
-		 *
-		 * @param atomContainer The atomContainer to analyse.
-		 * @return The morgan numbers value.
-		 */
-        public static string[] GetMorganNumbersWithElementSymbol(IAtomContainer atomContainer) {
+        /// <summary>
+        /// Makes an array containing the morgan numbers+element symbol of the atoms
+        /// of <paramref name="atomContainer"/>. This method puts the element symbol before the
+        /// morgan number, useful for finding out how many different rests are
+        /// connected to an atom.
+        /// </summary>
+        /// <param name="atomContainer">The atomContainer to analyse.</param>
+        /// <returns>The morgan numbers value.</returns>
+        public static string[] GetMorganNumbersWithElementSymbol(IAtomContainer atomContainer)
+        {
             long[] morgannumbers = GetMorganNumbers(atomContainer);
             string[] morgannumberswithelement = new string[morgannumbers.Length];
-            for (int i = 0; i < morgannumbers.Length; i++) {
+            for (int i = 0; i < morgannumbers.Length; i++)
+            {
                 morgannumberswithelement[i] = atomContainer.Atoms[i].Symbol + "-" + morgannumbers[i];
             }
             return (morgannumberswithelement);

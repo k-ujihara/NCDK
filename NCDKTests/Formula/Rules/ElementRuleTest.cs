@@ -21,9 +21,9 @@ using NCDK.Default;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class ElementRuleTest : FormulaRuleTest
     {
@@ -37,11 +37,11 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(ElementRule));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestElementRule()
         {
@@ -51,11 +51,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
@@ -82,11 +82,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {
@@ -107,11 +107,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(mfRange.GetIsotopeCountMax(new Isotope("C")), mfRange2.GetIsotopeCountMax(new Isotope("C")));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse()
         {
@@ -125,11 +125,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidFalse_SetParam()
         {
@@ -148,11 +148,11 @@ namespace NCDK.Formula.Rules
             Assert.AreEqual(0.0, rule.Validate(formula), 0.0001);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefaultValidTrue()
         {

@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using NCDK.Formula;
 using NCDK.Stereo;
@@ -24,10 +25,10 @@ using NCDK.Numerics;
 
 namespace NCDK.Default
 {
-	public sealed class ChemObjectBuilder
-		: IChemObjectBuilder
-	{
-		public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
+    public sealed class ChemObjectBuilder
+        : IChemObjectBuilder
+    {
+        public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
 
         public T Create<T>() where T : IAtomContainer, new() => new T();
 
@@ -93,7 +94,7 @@ namespace NCDK.Default
         public IRing CreateRing() => new Ring();
         public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
         public IRing CreateRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-		public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
+        public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
         public IRingSet CreateRingSet() => new RingSet();
         public ISubstance CreateSubstance() => new Substance();
         public ISingleElectron CreateSingleElectron() => new SingleElectron();
@@ -111,14 +112,14 @@ namespace NCDK.Default
         public IMolecularFormula CreateMolecularFormula() => new MolecularFormula();
         public IMolecularFormulaSet CreateMolecularFormulaSet() => new MolecularFormulaSet();
         public IMolecularFormulaSet CreateMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-	}
+    }
 }
 namespace NCDK.Silent
 {
-	public sealed class ChemObjectBuilder
-		: IChemObjectBuilder
-	{
-		public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
+    public sealed class ChemObjectBuilder
+        : IChemObjectBuilder
+    {
+        public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
 
         public T Create<T>() where T : IAtomContainer, new() => new T();
 
@@ -184,7 +185,7 @@ namespace NCDK.Silent
         public IRing CreateRing() => new Ring();
         public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
         public IRing CreateRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-		public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
+        public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
         public IRingSet CreateRingSet() => new RingSet();
         public ISubstance CreateSubstance() => new Substance();
         public ISingleElectron CreateSingleElectron() => new SingleElectron();
@@ -202,5 +203,5 @@ namespace NCDK.Silent
         public IMolecularFormula CreateMolecularFormula() => new MolecularFormula();
         public IMolecularFormulaSet CreateMolecularFormulaSet() => new MolecularFormulaSet();
         public IMolecularFormulaSet CreateMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-	}
+    }
 }

@@ -22,19 +22,17 @@
  */
 namespace NCDK
 {
-    /**
-	 * Helper class to provide general information about this CDK library.
-	 *
-	 * @cdk.module core
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Helper class to provide general information about this CDK library.
+    /// </summary>
+    // @cdk.module core
+    // @cdk.githash
     public class CDK
     {
-        /**
-		 * Returns the version of this CDK library.
-		 *
-		 * @return A {@link string} representation of the version number.
-		 */
+        /// <summary>
+        /// Returns the version of this CDK library.
+        /// </summary>
+        /// <returns>A <see cref="string"/> representation of the version number.</returns>
         public static string Version => "0.0.1 based on cdk-1.5.13";
     }
 }

@@ -31,21 +31,20 @@ using System.Linq;
 
 namespace NCDK.Fragment
 {
-    /**
-    // Generate fragments exhaustively.
-    // <p/>
-    // This fragmentation scheme simply breaks single non-ring bonds. By default
-    // fragments smaller than 6 atoms in size are not considered, but this can be
-    // changed by the user. Side chains are retained.
-     *
+    /// <summary>
+    /// Generate fragments exhaustively.
+    /// </summary>
+    /// <remarks>
+    /// This fragmentation scheme simply breaks single non-ring bonds. By default
+    /// fragments smaller than 6 atoms in size are not considered, but this can be
+    /// changed by the user. Side chains are retained.
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module  fragment
     // @cdk.githash
     // @cdk.keyword fragment
-     */
     public class ExhaustiveFragmenter : IFragmenter
     {
-
         private const int DEFAULT_MIN_FRAG_SIZE = 6;
 
         IDictionary<string, IAtomContainer> fragMap;
@@ -56,9 +55,9 @@ namespace NCDK.Fragment
         /// </summary>
         public int MinimumFragmentSize { get; set; } = 6;
 
-        /**
-        // Instantiate fragmenter with default minimum fragment size.
-         */
+        /// <summary>
+        /// Instantiate fragmenter with default minimum fragment size.
+        /// </summary>
         public ExhaustiveFragmenter()
                 : this(DEFAULT_MIN_FRAG_SIZE)
         { }
@@ -74,11 +73,10 @@ namespace NCDK.Fragment
             smilesGenerator = SmilesGenerator.Unique().Aromatic();
         }
 
-        /**
-        // Generate fragments for the input molecule.
-         *
-        // @param atomContainer The input molecule.
-         */
+        /// <summary>
+        /// Generate fragments for the input molecule.
+        /// </summary>
+        /// <param name="atomContainer">The input molecule.</param>
         public void GenerateFragments(IAtomContainer atomContainer)
         {
             fragMap.Clear();
@@ -87,7 +85,6 @@ namespace NCDK.Fragment
 
         private List<IAtomContainer> Run(IAtomContainer atomContainer)
         {
-
             List<IAtomContainer> fragments = new List<IAtomContainer>();
 
             if (atomContainer.Bonds.Count < 3) return fragments;
@@ -181,21 +178,19 @@ namespace NCDK.Fragment
             return splitableBonds;
         }
 
-        /*
-        // Get the fragments generated as SMILES strings.
-         *
-        // @return a string[] of the fragments.
-         */
+        /// <summary>
+        /// Get the fragments generated as SMILES strings.
+        /// </summary>
+        /// <returns>a string[] of the fragments.</returns>
         public IEnumerable<string> GetFragments()
         {
             return fragMap.Keys;
         }
 
-        /**
-        // Get the fragments generated as <see cref="IAtomContainer"/> objects..
-         *
-        // @return a IAtomContainer[] of the fragments.
-         */
+        /// <summary>
+        /// Get the fragments generated as <see cref="IAtomContainer"/> objects..
+        /// </summary>
+        /// <returns>a IAtomContainer[] of the fragments.</returns>
         public IEnumerable<IAtomContainer> GetFragmentsAsContainers()
         {
             return fragMap.Values;

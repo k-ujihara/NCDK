@@ -46,7 +46,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.ASN.PubChem.sid577309.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PCSubstanceXMLReader reader = new PCSubstanceXMLReader(ins);
             IAtomContainer molecule = reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);

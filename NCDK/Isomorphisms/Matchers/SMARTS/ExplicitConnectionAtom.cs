@@ -19,26 +19,26 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Match an atom with the defined degree. The degree is also referred to as the
-     * explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
-     *
-     * @cdk.module smarts
-     * @cdk.keyword SMARTS
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Match an atom with the defined degree. The degree is also referred to as the
+    /// explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
+    ///
+    // @cdk.module smarts
+    // @cdk.keyword SMARTS
+    // @cdk.githash
+    /// </summary>
     public sealed class ExplicitConnectionAtom : SMARTSAtom
     {
 
         /// <summary>Number of explicit connections.</summary>
         private int degree;
 
-        /**
-         * Create a query atom for matching the degree of an atom. The degree is the
-         * number connected atoms.
-         */
+        /// <summary>
+        /// Create a query atom for matching the degree of an atom. The degree is the
+        /// number connected atoms.
+        /// </summary>
         public ExplicitConnectionAtom(int degree, IChemObjectBuilder builder)
-			: base(builder)
+            : base(builder)
         {
             this.degree = degree;
         }

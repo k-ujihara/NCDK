@@ -51,48 +51,48 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Interface for the Node (atomss) in graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the Node (atomss) in graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface INode
     {
-        /**
-         * Returns Neighbors count.
-         * @return Neighbors count.
-         */
+        /// <summary>
+        /// Returns Neighbors count.
+        /// <returns>Neighbors count.</returns>
+        /// </summary>
         int CountNeighbors();
 
-        /**
-         * Returns neighbors.
-         * @return Iterable INode.
-         */
+        /// <summary>
+        /// Returns neighbors.
+        /// <returns>Iterable INode.</returns>
+        /// </summary>
         IEnumerable<INode> Neighbors();
 
-        /**
-         * Returns Query Atom.
-         * @return Query Atom.
-         */
+        /// <summary>
+        /// Returns Query Atom.
+        /// <returns>Query Atom.</returns>
+        /// </summary>
         VFAtomMatcher AtomMatcher { get; }
 
-        /**
-         * Returns List of Edges.
-         * @return edges.
-         */
+        /// <summary>
+        /// Returns List of Edges.
+        /// <returns>edges.</returns>
+        /// </summary>
         IList<IEdge> GetEdges();
 
-        /**
-         * Adds edge to the edge list.
-         * @param edge add an edge.
-         */
+        /// <summary>
+        /// Adds edge to the edge list.
+        /// <param name="edge">add an edge.</param>
+        /// </summary>
         void AddEdge(EdgeBuilder edge);
 
-        /**
-         * Adds neighbor to the Neighbors List.
-         * @param node add a node.
-         */
+        /// <summary>
+        /// Adds neighbor to the Neighbors List.
+        /// <param name="node">add a node.</param>
+        /// </summary>
         void AddNeighbor(NodeBuilder node);
     }
 }

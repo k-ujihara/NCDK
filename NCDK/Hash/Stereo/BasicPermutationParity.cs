@@ -26,28 +26,25 @@ using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * A basic implementation suitable for determining the parity of the indicates a
-     * provided sub-array.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    sealed class BasicPermutationParity : PermutationParity
+    /// <summary>
+    /// A basic implementation suitable for determining the parity of the indicates a
+    /// provided sub-array.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal sealed class BasicPermutationParity : PermutationParity
     {
         private readonly int[] indices;
 
-        /**
-         * Create a permutation parity for the provided indices.
-         *
-         * @param indices sub-array of indices
-         * @throws NullPointerException     the provided indices were null
-         * @throws ArgumentException less then two indices provided
-         */
+        /// <summary>
+        /// Create a permutation parity for the provided indices.
+        ///
+        /// <param name="indices">sub-array of indices</param>
+        /// <exception cref="NullPointerException">    the provided indices were null</exception>
+        /// <exception cref="ArgumentException">less then two indices provided</exception>
+        /// </summary>
         public BasicPermutationParity(int[] indices)
         {
             if (indices == null) throw new ArgumentNullException("no indices[] provided");
@@ -57,12 +54,12 @@ namespace NCDK.Hash.Stereo
             this.indices = indices;
         }
 
-        /**
-         * The number values to check is typically small ({@literal < 5}) and thus
-         * we use brute-force to count the number of inversions.
-         *
-         * @inheritDoc
-         */
+        /// <summary>
+        /// The number values to check is typically small ({@literal < 5}) and thus
+        /// we use brute-force to count the number of inversions.
+        ///
+        // @inheritDoc
+        /// </summary>
         public override int Parity(long[] current)
         {
             int count = 0;

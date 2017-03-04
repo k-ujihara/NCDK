@@ -27,20 +27,17 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Calculate the geometric configuration of a double bond. The configuration is
-     * provided as a parity (+1,-1) where +1 indicates the substituents are on
-     * <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
-     * on the same side (Z or cis).
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        sealed class DoubleBond3DParity : GeometricParity
+    /// <summary>
+    /// Calculate the geometric configuration of a double bond. The configuration is
+    /// provided as a parity (+1,-1) where +1 indicates the substituents are on
+    /// <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
+    /// on the same side (Z or cis).
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal sealed class DoubleBond3DParity : GeometricParity
     {
         // coordinates of the double bond atoms:
         // x       w
@@ -48,14 +45,14 @@ namespace NCDK.Hash.Stereo
         //   u = v
         private Vector3 u, v, x, w;
 
-        /**
-         * Create a new double bond parity for the 2D coordinates of the atoms.
-         *
-         * @param left             one atom of the double bond
-         * @param right            the other atom of a double bond
-         * @param leftSubstituent  the substituent atom connected to the left atom
-         * @param rightSubstituent the substituent atom connected to the right atom
-         */
+        /// <summary>
+        /// Create a new double bond parity for the 2D coordinates of the atoms.
+        ///
+        /// <param name="left">one atom of the double bond</param>
+        /// <param name="right">the other atom of a double bond</param>
+        /// <param name="leftSubstituent">the substituent atom connected to the left atom</param>
+        /// <param name="rightSubstituent">the substituent atom connected to the right atom</param>
+        /// </summary>
         public DoubleBond3DParity(Vector3 left, Vector3 right, Vector3 leftSubstituent, Vector3 rightSubstituent)
         {
             this.u = left;
@@ -64,11 +61,11 @@ namespace NCDK.Hash.Stereo
             this.w = rightSubstituent;
         }
 
-        /**
-         * Calculate the configuration of the double bond as a parity.
-         *
-         * @return opposite (+1), together (-1)
-         */
+        /// <summary>
+        /// Calculate the configuration of the double bond as a parity.
+        ///
+        /// <returns>opposite (+1), together (-1)</returns>
+        /// </summary>
         public override int Parity
         {
             get
@@ -96,37 +93,37 @@ namespace NCDK.Hash.Stereo
             }
         }
 
-        /**
-         * Create a vector by specifying the source and destination coordinates.
-         *
-         * @param src  start point of the vector
-         * @param dest end point of the vector
-         * @return a new vector
-         */
+        /// <summary>
+        /// Create a vector by specifying the source and destination coordinates.
+        ///
+        /// <param name="src">start point of the vector</param>
+        /// <param name="dest">end point of the vector</param>
+        /// <returns>a new vector</returns>
+        /// </summary>
         private static double[] ToVector(Vector3 src, Vector3 dest)
         {
             return new double[] { dest.X - src.X, dest.Y - src.Y, dest.Z - src.Z };
         }
 
-        /**
-         * Dot product of two 3D coordinates
-         *
-         * @param u either 3D coordinates
-         * @param v other 3D coordinates
-         * @return the dot-product
-         */
+        /// <summary>
+        /// Dot product of two 3D coordinates
+        ///
+        /// <param name="u">either 3D coordinates</param>
+        /// <param name="v">other 3D coordinates</param>
+        /// <returns>the dot-product</returns>
+        /// </summary>
         private static double Dot(double[] u, double[] v)
         {
             return (u[0] * v[0]) + (u[1] * v[1]) + (u[2] * v[2]);
         }
 
-        /**
-         * Cross product of two 3D coordinates
-         *
-         * @param u either 3D coordinates
-         * @param v other 3D coordinates
-         * @return the cross-product
-         */
+        /// <summary>
+        /// Cross product of two 3D coordinates
+        ///
+        /// <param name="u">either 3D coordinates</param>
+        /// <param name="v">other 3D coordinates</param>
+        /// <returns>the cross-product</returns>
+        /// </summary>
         private static double[] CrossProduct(double[] u, double[] v)
         {
             return new double[] { (u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1]) };

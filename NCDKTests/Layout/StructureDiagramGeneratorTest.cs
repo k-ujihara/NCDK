@@ -34,14 +34,14 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     *  A set of test cases for the StructureDiagramGenerator
-     *
-     * @cdk.module test-sdg
-     *
-     *@author     steinbeck
-     *@cdk.created    August 29, 2003
-     */
+    /// <summary>
+    ///  A set of test cases for the StructureDiagramGenerator
+    ///
+    // @cdk.module test-sdg
+    ///
+    ///@author     steinbeck
+    ///@cdk.created    August 29, 2003
+    /// </summary>
     [TestClass()]
     public class StructureDiagramGeneratorTest : CDKTestCase
     {
@@ -62,7 +62,7 @@ namespace NCDK.Layout
         public void VisualBugPMR()
         {
             string filename = "NCDK.Data.CML.SL0016a.cml";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -72,30 +72,30 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception Exception  thrown if something goes wrong
-         *@cdk.bug 1670871
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> thrown if something goes wrong</exception>
+        ///@cdk.bug 1670871
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBugLecture2007()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            //IAtomContainer mol = sp.ParseSmiles("Oc1nc(nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
+            //IAtomContainer mol = sp.ParseSmiles("Oc1nc(Nc2c(nn(c12)C)CCC)c3cc(ccc3(OCC))S(=O)(=O)N4CCN(C)CC4");
             IAtomContainer mol = sp.ParseSmiles("O=C(N1CCN(CC1)CCCN(C)C)C3(C=2C=CC(=CC=2)C)(CCCCC3)");
 
             //IAtomContainer mol = sp.ParseSmiles("C1CCC1CCCCCCCC1CC1");
 
             IAtomContainer ac = Layout(mol);
-            //		MoleculeViewer2D.Display(new AtomContainer(ac), false);
+            //        MoleculeViewer2D.Display(new AtomContainer(ac), false);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestAlphaPinene()
@@ -122,9 +122,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(mol));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBiphenyl()
@@ -134,9 +134,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void Test4x3CondensedRings()
@@ -146,9 +146,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestPhenylEthylBenzene()
@@ -158,9 +158,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestSpiroRings()
@@ -170,9 +170,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestMethylDecaline()
@@ -182,9 +182,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBranchedAliphatic()
@@ -194,9 +194,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestDiamantane()
@@ -206,12 +206,12 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         *
-         *@exception  Exception  thrown if something goes wrong
-         *@cdk.bug 1670871
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        ///
+        /// <exception cref="Exception"> thrown if something goes wrong</exception>
+        ///@cdk.bug 1670871
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1670871()
@@ -223,9 +223,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestEthylCyclohexane()
@@ -235,9 +235,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBicycloRings()
@@ -247,9 +247,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         public IAtomContainer MakeJhao3()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -257,9 +257,9 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         public IAtomContainer MakeJhao4()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -267,9 +267,9 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBenzene()
@@ -280,9 +280,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         * @cdk.bug 780545
-         */
+        /// <summary>
+        // @cdk.bug 780545
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug780545()
@@ -293,9 +293,9 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         * @cdk.bug 1598409
-         */
+        /// <summary>
+        // @cdk.bug 1598409
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1598409()
@@ -306,23 +306,23 @@ namespace NCDK.Layout
             Layout(cdkMol);
         }
 
-        /**
-         * @cdk.bug 1572062
-         */
+        /// <summary>
+        // @cdk.bug 1572062
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1572062()
         {
             string filename = "NCDK.Data.MDL.sdg_test.mol";
 
-            //		set up molecule reader
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            //        set up molecule reader
+            Stream ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
 
-            //		read molecule
+            //        read molecule
             IAtomContainer molecule = molReader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
 
-            //		rebuild 2D coordinates
+            //        rebuild 2D coordinates
             for (int i = 0; i < 10; i++)
             {
                 Layout(molecule);
@@ -330,9 +330,9 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         * @cdk.bug 884993
-         */
+        /// <summary>
+        // @cdk.bug 884993
+        /// </summary>
         public void TestBug884993()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -341,11 +341,11 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /**
-         * Test for bug #1677912 "SDG JUnit test hangs"
-         * The SMILES parsing takes hence a longer timeout.
-         * @cdk.bug 1677912
-         */
+        /// <summary>
+        /// Test for bug #1677912 "SDG JUnit test hangs"
+        /// The SMILES parsing takes hence a longer timeout.
+        // @cdk.bug 1677912
+        /// </summary>
         [TestMethod()]
         [Timeout(10000)]
         public void TestBug1677912SDGHangs()
@@ -361,9 +361,9 @@ namespace NCDK.Layout
             // Test completed, no timeout occured
         }
 
-        /**
-         * @cdk.bug 1714794
-         */
+        /// <summary>
+        // @cdk.bug 1714794
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1714794()
@@ -638,47 +638,47 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /**
-         * @cdk.bug 1750968
-         */
+        /// <summary>
+        // @cdk.bug 1750968
+        /// </summary>
         public IAtomContainer MakeBug1750968()
         {
             string filename = "NCDK.Data.MDL.bug_1750968.mol";
 
-            //		set up molecule reader
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            //        set up molecule reader
+            Stream ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLReader(ins, ChemObjectReaderModes.Strict);
 
-            //		read molecule
+            //        read molecule
             return molReader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
         }
 
-        /**
-         * Test for StructureDiagramGenerator bug #1772609 "NPE with bridged rings in SDG/RingPlacer".
-         * In method RingPlacer.PlaceBridgedRing(...) it could happen, that not all atoms of an unplaced
-         * ring were selected for placing. Thus, those atoms later lacked 2D coordinates (they were null)
-         * and the RingPlacer crashed with a NullPointerException such as:
-         *
-         * java.lang.NullPointerException
-         *   at javax.vecmath.Tuple2d.<init>(Tuple2d.java:66)
-         *   at javax.vecmath.Vector2.<init>(Vector2.java:74)
-         *   at org.openscience.cdk.layout.RingPlacer.PlaceFUsedRing(RingPlacer.java:379)
-         *   at org.openscience.cdk.layout.RingPlacer.PlaceRing(RingPlacer.java:99)
-         *   at org.openscience.cdk.layout.RingPlacer.PlaceConnectedRings(RingPlacer.java:663)
-         *   at org.openscience.cdk.layout.StructureDiagramGenerator.LayoutRingSet(StructureDiagramGenerator.java:516)
-         *   at org.openscience.cdk.layout.StructureDiagramGenerator.GenerateCoordinates(StructureDiagramGenerator.java:379)
-         *   at org.openscience.cdk.layout.StructureDiagramGenerator.GenerateCoordinates(StructureDiagramGenerator.java:445)
-         *
-         * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-         * @cdk.bug 1772609
-         */
+        /// <summary>
+        /// Test for StructureDiagramGenerator bug #1772609 "NPE with bridged rings in SDG/RingPlacer".
+        /// In method RingPlacer.PlaceBridgedRing(...) it could happen, that not all atoms of an unplaced
+        /// ring were selected for placing. Thus, those atoms later lacked 2D coordinates (they were null)
+        /// and the RingPlacer crashed with a NullPointerException such as:
+        ///
+        /// java.lang.NullPointerException
+        ///   at javax.vecmath.Tuple2d.<init>(Tuple2d.java:66)
+        ///   at javax.vecmath.Vector2.<init>(Vector2.java:74)
+        ///   at org.openscience.cdk.layout.RingPlacer.PlaceFUsedRing(RingPlacer.java:379)
+        ///   at org.openscience.cdk.layout.RingPlacer.PlaceRing(RingPlacer.java:99)
+        ///   at org.openscience.cdk.layout.RingPlacer.PlaceConnectedRings(RingPlacer.java:663)
+        ///   at org.openscience.cdk.layout.StructureDiagramGenerator.LayoutRingSet(StructureDiagramGenerator.java:516)
+        ///   at org.openscience.cdk.layout.StructureDiagramGenerator.GenerateCoordinates(StructureDiagramGenerator.java:379)
+        ///   at org.openscience.cdk.layout.StructureDiagramGenerator.GenerateCoordinates(StructureDiagramGenerator.java:445)
+        ///
+        /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        // @cdk.bug 1772609
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestNPEWithBridgedRingsBug1772609()
         {
             // set up molecule reader
             string filename = "NCDK.Data.MDL.bug1772609.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
 
             // read molecule
@@ -700,21 +700,21 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Test for bug #1784850 "SDG hangs in infinite loop".
-         * Fixed by correcting the safteyCounter check.
-         *
-         * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-         * @exception Exception is thown if something goes wrong
-         * @cdk.bug 1784850
-         */
+        /// <summary>
+        /// Test for bug #1784850 "SDG hangs in infinite loop".
+        /// Fixed by correcting the safteyCounter check.
+        ///
+        /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        /// <exception cref="Exception">is thown if something goes wrong</exception>
+        // @cdk.bug 1784850
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1784850InfiniteLoop()
         {
             // set up molecule reader
             string filename = "NCDK.Data.MDL.bug1784850.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader molReader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
 
             // read molecule
@@ -726,13 +726,13 @@ namespace NCDK.Layout
             // test completed, no timeout occured
         }
 
-        /**
-        * For the SMILES compound below (the largest molecule in Chembl) a
-        * handful of atoms had invalid (NaN) Double coordinates.
-        *
-        * @throws Exception if the test failed
-        * @cdk.bug 2842445
-        */
+        /// <summary>
+       /// For the SMILES compound below (the largest molecule in Chembl) a
+       /// handful of atoms had invalid (NaN) Double coordinates.
+       ///
+       /// <exception cref="Exception">if the test failed</exception>
+       // @cdk.bug 2842445
+       /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug2843445NaNCoords()
@@ -766,12 +766,12 @@ namespace NCDK.Layout
             Assert.AreEqual(0, invalidCoordCount, "No 2d coordinates should be NaN");
         }
 
-        /**
-         * The following SMILES compound gets null cordinates.
-         *
-         * @throws Exception if the test failed
-         * @cdk.bug 1234
-         */
+        /// <summary>
+        /// The following SMILES compound gets null cordinates.
+        ///
+        /// <exception cref="Exception">if the test failed</exception>
+        // @cdk.bug 1234
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         [ExpectedException(typeof(CDKException), AllowDerivedTypes = true)]
@@ -795,11 +795,11 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         * Tests case where calling generateExperimentalCoordinates threw an NPE.
-         *
-         * @cdk.bug 1269
-         */
+        /// <summary>
+        /// Tests case where calling generateExperimentalCoordinates threw an NPE.
+        ///
+        // @cdk.bug 1269
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1269()
@@ -813,11 +813,11 @@ namespace NCDK.Layout
             SDG.GenerateExperimentalCoordinates(new Vector2(0, 1));
         }
 
-        /**
-         * Does the SDG handle non-connected molecules?
-         *
-         * @cdk.bug 1279
-         */
+        /// <summary>
+        /// Does the SDG handle non-connected molecules?
+        ///
+        // @cdk.bug 1279
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1279()
@@ -904,7 +904,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void handleFragments()
+        public void HandleFragments()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CCOCC.o1cccc1");
@@ -914,7 +914,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void ionicBondsInAlCl3()
+        public void IonicBondsInAlCl3()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[Al+3].[Cl-].[Cl-].[Cl-]");
@@ -936,7 +936,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void ionicBondsInK2CO3()
+        public void IonicBondsInK2CO3()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[K+].[O-]C(=O)[O-].[K+]");
@@ -955,7 +955,7 @@ namespace NCDK.Layout
 
         // subjective... since the real structure is lattice but looks better than a grid
         [TestMethod()]
-        public void ionicBondsInLiAlH4()
+        public void IonicBondsInLiAlH4()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[Li+].[Al+3].[Cl-].[Cl-].[Cl-].[Cl-]");
@@ -974,7 +974,7 @@ namespace NCDK.Layout
         }
 
         [TestMethod()]
-        public void ionicBondsInSodiumBenzoate()
+        public void IonicBondsInSodiumBenzoate()
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("[Na+].[O-]C(=O)c1ccccc1");

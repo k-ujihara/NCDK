@@ -1322,7 +1322,7 @@ namespace NCDK.Numerics
             //
             // C is Cofactor matrix of M, where,
             //           i + j
-            // C   = (-1)      * Det(M  )
+            // C   = (-1)     /// Det(M  )
             //  ij                    ij
             //
             //     [ a b c d ]
@@ -1524,9 +1524,9 @@ namespace NCDK.Numerics
                     pVectorBasis[1] = (Vector3*)&matTemp.M21;
                     pVectorBasis[2] = (Vector3*)&matTemp.M31;
 
-                    *(pVectorBasis[0]) = new Vector3(matrix.M11, matrix.M12, matrix.M13);
-                    *(pVectorBasis[1]) = new Vector3(matrix.M21, matrix.M22, matrix.M23);
-                    *(pVectorBasis[2]) = new Vector3(matrix.M31, matrix.M32, matrix.M33);
+                   ///(pVectorBasis[0]) = new Vector3(matrix.M11, matrix.M12, matrix.M13);
+                   ///(pVectorBasis[1]) = new Vector3(matrix.M21, matrix.M22, matrix.M23);
+                   ///(pVectorBasis[2]) = new Vector3(matrix.M31, matrix.M32, matrix.M33);
 
                     scale.X = pVectorBasis[0]->Length();
                     scale.Y = pVectorBasis[1]->Length();
@@ -1587,10 +1587,10 @@ namespace NCDK.Numerics
 
                     if (pfScales[a] < EPSILON)
                     {
-                        *(pVectorBasis[a]) = pCanonicalBasis[a];
+                       ///(pVectorBasis[a]) = pCanonicalBasis[a];
                     }
 
-                    *pVectorBasis[a] = Vector3.Normalize(*pVectorBasis[a]);
+                   ///pVectorBasis[a] = Vector3.Normalize(*pVectorBasis[a]);
 
                     if (pfScales[b] < EPSILON)
                     {
@@ -1640,17 +1640,17 @@ namespace NCDK.Numerics
                         }
                         #endregion
 
-                        *pVectorBasis[b] = Vector3.Cross(*pVectorBasis[a], *(pCanonicalBasis + cc));
+                       ///pVectorBasis[b] = Vector3.Cross(*pVectorBasis[a], *(pCanonicalBasis + cc));
                     }
 
-                    *pVectorBasis[b] = Vector3.Normalize(*pVectorBasis[b]);
+                   ///pVectorBasis[b] = Vector3.Normalize(*pVectorBasis[b]);
 
                     if (pfScales[c] < EPSILON)
                     {
-                        *pVectorBasis[c] = Vector3.Cross(*pVectorBasis[a], *pVectorBasis[b]);
+                       ///pVectorBasis[c] = Vector3.Cross(*pVectorBasis[a], *pVectorBasis[b]);
                     }
 
-                    *pVectorBasis[c] = Vector3.Normalize(*pVectorBasis[c]);
+                   ///pVectorBasis[c] = Vector3.Normalize(*pVectorBasis[c]);
 
                     det = matTemp.GetDeterminant();
 
@@ -1659,7 +1659,7 @@ namespace NCDK.Numerics
                     {
                         // switch coordinate system by negating the scale and inverting the basis vector on the x-axis
                         pfScales[a] = -pfScales[a];
-                        *pVectorBasis[a] = -(*pVectorBasis[a]);
+                       ///pVectorBasis[a] = -(*pVectorBasis[a]);
 
                         det = -det;
                     }

@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Text;
@@ -39,7 +40,7 @@ namespace NCDK.Default
         internal bool isAliphatic;
         internal bool isAromatic;
         internal bool isInRing;
-		internal bool isReactiveCenter;
+        internal bool isReactiveCenter;
 
         public AtomType(string elementSymbol)
             : base(elementSymbol)
@@ -205,7 +206,7 @@ namespace NCDK.Default
             }
         }
 
-		public virtual bool IsReactiveCenter
+        public virtual bool IsReactiveCenter
         {
             get { return isReactiveCenter; }
             set 
@@ -221,13 +222,13 @@ namespace NCDK.Default
             sb.Append("AtomType(").Append(GetHashCode());
             if (AtomTypeName != null)
                 sb.Append(", N:").Append(AtomTypeName);
-            if (!MaxBondOrder.IsUnset)
+            if (MaxBondOrder != BondOrder.Unset)
                 sb.Append(", MBO:").Append(MaxBondOrder);
             if (BondOrderSum != null)
                 sb.Append(", BOS:").Append(BondOrderSum);
             if (FormalCharge != null)
                 sb.Append(", FC:").Append(FormalCharge);
-            if (!Hybridization.IsUnset)
+            if (Hybridization != Hybridization.Unset)
                 sb.Append(", H:").Append(Hybridization);
             if (FormalNeighbourCount != null)
                 sb.Append(", NC:").Append(FormalNeighbourCount);
@@ -269,7 +270,7 @@ namespace NCDK.Silent
         internal bool isAliphatic;
         internal bool isAromatic;
         internal bool isInRing;
-		internal bool isReactiveCenter;
+        internal bool isReactiveCenter;
 
         public AtomType(string elementSymbol)
             : base(elementSymbol)
@@ -422,7 +423,7 @@ namespace NCDK.Silent
             }
         }
 
-		public virtual bool IsReactiveCenter
+        public virtual bool IsReactiveCenter
         {
             get { return isReactiveCenter; }
             set 
@@ -437,13 +438,13 @@ namespace NCDK.Silent
             sb.Append("AtomType(").Append(GetHashCode());
             if (AtomTypeName != null)
                 sb.Append(", N:").Append(AtomTypeName);
-            if (!MaxBondOrder.IsUnset)
+            if (MaxBondOrder != BondOrder.Unset)
                 sb.Append(", MBO:").Append(MaxBondOrder);
             if (BondOrderSum != null)
                 sb.Append(", BOS:").Append(BondOrderSum);
             if (FormalCharge != null)
                 sb.Append(", FC:").Append(FormalCharge);
-            if (!Hybridization.IsUnset)
+            if (Hybridization != Hybridization.Unset)
                 sb.Append(", H:").Append(Hybridization);
             if (FormalNeighbourCount != null)
                 sb.Append(", NC:").Append(FormalNeighbourCount);

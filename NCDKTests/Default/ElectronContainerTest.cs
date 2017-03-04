@@ -18,21 +18,16 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the {@link ElectronContainer} class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.ElectronContainer
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link ElectronContainer} class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.ElectronContainer
+    /// </summary>
     [TestClass()]
     public class ElectronContainerTest : AbstractElectronContainerTest
     {

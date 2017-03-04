@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace NCDK.Default
             relation[1] = objectTwo;
         }
 
-		public IChemObject this[int index] => relation[index];
+        public IChemObject this[int index] => relation[index];
 
         public IEnumerable<IChemObject> GetRelatedChemObjects()
         {
@@ -65,7 +66,7 @@ namespace NCDK.Silent
             relation[1] = objectTwo;
         }
 
-		public IChemObject this[int index] => relation[index];
+        public IChemObject this[int index] => relation[index];
 
         public IEnumerable<IChemObject> GetRelatedChemObjects()
         {

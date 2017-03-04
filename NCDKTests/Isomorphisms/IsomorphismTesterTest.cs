@@ -26,12 +26,12 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Checks the functionality of the IsomorphismTester
-     *
-     * @cdk.module test-standard
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the IsomorphismTester
+    ///
+    // @cdk.module test-standard
+    /// </summary>
+    [TestClass()]
     public class IsomorphismTesterTest : CDKTestCase
     {
 

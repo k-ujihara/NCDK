@@ -20,38 +20,38 @@ using NCDK.Config;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * Interface for {@link IAtomTypeMatcher} unit tests. It provides various methods
-     * to allow such unit test classes to extend {@link AbstractAtomTypeTest} and
-     * take advantage of the functionality that abstract class provides.
-     *
-     * @cdk.githash
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// Interface for {@link IAtomTypeMatcher} unit tests. It provides various methods
+    /// to allow such unit test classes to extend {@link AbstractAtomTypeTest} and
+    /// take advantage of the functionality that abstract class provides.
+    ///
+    // @cdk.githash
+    // @cdk.module test-core
+    /// </summary>
     public interface IAtomTypeTest
     {
-        /**
-         * Returns a name for the atom type scheme being tested.
-         *
-         * @return a string of the name.
-         */
+        /// <summary>
+        /// Returns a name for the atom type scheme being tested.
+        ///
+        /// <returns>a string of the name.</returns>
+        /// </summary>
         string AtomTypeListName { get; }
 
-        /**
-         * Returns an {@link AtomTypeFactory} instance for the atom type scheme
-         * being tested. It is used to provide a list of atom types the scheme
-         * defines.
-         *
-         * @return an {@link AtomTypeFactory} instance
-         */
+        /// <summary>
+        /// Returns an {@link AtomTypeFactory} instance for the atom type scheme
+        /// being tested. It is used to provide a list of atom types the scheme
+        /// defines.
+        ///
+        /// <returns>an {@link AtomTypeFactory} instance</returns>
+        /// </summary>
         AtomTypeFactory GetFactory();
 
-        /**
-         * The {@link IAtomTypeMatcher} being tested.
-         *
-         * @param builder the <see cref="IChemObjectBuilder"/> used to create atom types.
-         * @return return an {@link IAtomTypeMatcher} instance
-         */
+        /// <summary>
+        /// The {@link IAtomTypeMatcher} being tested.
+        ///
+        /// <param name="builder">the <see cref="IChemObjectBuilder"/> used to create atom types.</param>
+        /// <returns>return an {@link IAtomTypeMatcher} instance</returns>
+        /// </summary>
         IAtomTypeMatcher GetAtomTypeMatcher(IChemObjectBuilder builder);
     }
 }

@@ -31,10 +31,10 @@ using System.Linq;
 
 namespace NCDK.Aromaticities
 {
-    /**
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class AromaticityTest
     {
@@ -57,7 +57,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void quinone()
+        public void Quinone()
         {
             Assert.AreEqual(0, cdk.FindBonds(type(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count);
             Assert.AreEqual(6, cdkExo.FindBonds(type(CreateFromSmiles("O=C1C=CC(=O)C=C1"))).Count);
@@ -65,7 +65,7 @@ namespace NCDK.Aromaticities
         }
 
         [TestMethod()]
-        public void azulene()
+        public void Azulene()
         {
             Assert.AreEqual(10, cdk.FindBonds(type(CreateFromSmiles("C1=CC2=CC=CC=CC2=C1"))).Count);
             Assert.AreEqual(10, daylight.FindBonds(CreateFromSmiles("C1=CC2=CC=CC=CC2=C1")).Count);
@@ -73,7 +73,7 @@ namespace NCDK.Aromaticities
 
         // 4-oxo-1H-pyridin-1-ide
         [TestMethod()]
-        public void oxypyridinide()
+        public void Oxypyridinide()
         {
             Assert.AreEqual(0, cdk.FindBonds(type(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count);
             Assert.AreEqual(0, cdkExo.FindBonds(type(CreateFromSmiles("O=C1C=C[N-]C=C1"))).Count);
@@ -152,9 +152,9 @@ namespace NCDK.Aromaticities
             Assert.AreEqual(4, Aromaticity.ElectronSum(new int[] { 0, 1, 2, 3, 0 }, new int[] { 1, 1, 1, 1 }, new int[] { 0, 1, 2, 3 }));
         }
 
-        /**
-         * @cdk.bug 736
-         */
+        /// <summary>
+        // @cdk.bug 736
+        /// </summary>
         [TestMethod()]
         public void EnsureConsistentRepresentation()
         {

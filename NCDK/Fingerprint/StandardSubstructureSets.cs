@@ -1,36 +1,32 @@
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Default sets of atom containers aimed for use with the substructure.
-     *
+    /// <summary>
+    /// Default sets of atom containers aimed for use with the substructure.
+    /// </summary>
     // @author egonw
-     *
     // @cdk.module fingerprint
     // @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class StandardSubstructureSets
+    internal class StandardSubstructureSets
     {
         private static string[] smarts = null;
 
-        /**
-        // The functional groups.
-         *
-        // @return A set of the functional groups.
-        // @ if there is an error parsing SMILES for the functional groups
-         */
+        /// <summary>
+        /// The functional groups.
+        /// </summary>
+        /// <returns>A set of the functional groups.</returns>
+        /// <exception cref="Exception">if there is an error parsing SMILES for the functional groups</exception>
         public static string[] GetFunctionalGroupSMARTS()
         {
             if (smarts != null) return smarts;
 
             string filename = "NCDK.Fingerprint.Data.SMARTS_InteLigand.txt";
-            Stream ins = typeof(StandardSubstructureSets).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             TextReader reader = new StreamReader(ins);
 
             List<string> tmp = new List<string>();

@@ -20,18 +20,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Generic CTab Sgroup (substructure group) that stores all other types of group. This representation
-     * is allows reading from CTfiles (e.g. Molfile, SDfile).
-     * <p/>
-     * The class uses a key-value store for Sgroup attributes simplifying both input and output.
-     */
+    /// <summary>
+    /// Generic CTab Sgroup (substructure group) that stores all other types of group. This representation
+    /// is allows reading from CTfiles (e.g. Molfile, SDfile).
+    /// </summary>
+    /// <remarks>
+    /// The class uses a key-value store for Sgroup attributes simplifying both input and output.
+    /// </remarks>
     public class Sgroup
     {
         /// <summary>
@@ -53,9 +52,9 @@ namespace NCDK.SGroups
 
         private readonly IDictionary<SgroupKey, object> attributes = new SortedDictionary<SgroupKey, object>();
 
-        /**
-		 * Create a new generic Sgroup.
-		 */
+        /// <summary>
+        /// Create a new generic Sgroup.
+        /// </summary>
         public Sgroup()
         {
             Atoms = new HashSet<IAtom>();
@@ -64,11 +63,10 @@ namespace NCDK.SGroups
             Type = SgroupType.CtabGeneric;
         }
 
-        /**
-		 * Copy constructor.
-		 *
-		 * @param org original Sgroup instance
-		 */
+        /// <summary>
+        /// Copy constructor.
+        /// </summary>
+        /// <param name="org">original Sgroup instance</param>
         Sgroup(Sgroup org)
         {
             Atoms = new HashSet<IAtom>(org.Atoms);
@@ -77,16 +75,15 @@ namespace NCDK.SGroups
             this.attributes = new Dictionary<SgroupKey, object>(org.attributes);
         }
 
-        /**
-		 * Access all the attribute keys of this Sgroup.
-		 *
-		 * @return attribute keys
-		 */
+        /// <summary>
+        /// Access all the attribute keys of this Sgroup.
+        /// </summary>
+        /// <returns>attribute keys</returns>
         public ICollection<SgroupKey> AttributeKeys => attributes.Keys;
 
-        /**
-		 * The type of the Sgroup.
-		 */
+        /// <summary>
+        /// The type of the Sgroup.
+        /// </summary>
         public SgroupType Type
         {
             set
@@ -100,63 +97,57 @@ namespace NCDK.SGroups
             }
         }
 
-        /**
-         * Add a bond to this Sgroup.
-         *
-         * @param atom the atom
-         */
+        /// <summary>
+        /// Add a bond to this Sgroup.
+        /// </summary>
+        /// <param name="atom">the atom</param>
         public void Add(IAtom atom)
         {
             Atoms.Add(atom);
         }
 
-        /**
-         * Add a bond to this Sgroup. The bond list
-         *
-         * @param bond bond to add
-         */
+        /// <summary>
+        /// Add a bond to this Sgroup. The bond list
+        /// </summary>
+        /// <param name="bond">bond to add</param>
         public void Add(IBond bond)
         {
             Bonds.Add(bond);
         }
 
-        /**
-         * Add a parent Sgroup.
-         *
-         * @param parent parent sgroup
-         */
+        /// <summary>
+        /// Add a parent Sgroup.
+        /// </summary>
+        /// <param name="parent">parent sgroup</param>
         public void AddParent(Sgroup parent)
         {
             Parents.Add(parent);
         }
 
-        /**
-         * Remove the specified parent associations from this Sgroup.
-         *
-         * @param parents parent associations
-         */
+        /// <summary>
+        /// Remove the specified parent associations from this Sgroup.
+        /// </summary>
+        /// <param name="parents">parent associations</param>
         public void RemoveParents(IEnumerable<Sgroup> parents)
         {
             foreach (var p in parents)
                 Parents.Remove(p);
         }
 
-        /**
-         * Store an attribute for the Sgroup.
-         *
-         * @param key attribute key
-         * @param val attribute value
-         */
+        /// <summary>
+        /// Store an attribute for the Sgroup.
+        /// </summary>
+        /// <param name="key">attribute key</param>
+        /// <param name="val">attribute value</param>
         public void PutValue(SgroupKey key, object val)
         {
             attributes[key] = val;
         }
 
-        /**
-         * Access an attribute for the Sgroup.
-         *
-         * @param key attribute key
-         */
+        /// <summary>
+        /// Access an attribute for the Sgroup.
+        /// </summary>
+        /// <param name="key">attribute key</param>
         public object GetValue(SgroupKey key)
         {
             object o;
@@ -165,40 +156,37 @@ namespace NCDK.SGroups
             return o;
         }
 
-        /**
-         * Access the subscript value.
-         *
-         * @return subscript value (or null if not present)
-         */
+        /// <summary>
+        /// Access the subscript value.
+        /// </summary>
+        /// <returns>subscript value (or null if not present)</returns>
         public string Subscript
         {
             get { return (string)GetValue(SgroupKey.CtabSubScript); }
             set { PutValue(SgroupKey.CtabSubScript, value); }
         }
 
-        /**
-		 * Add a bracket for this Sgroup.
-		 *
-		 * @param bracket sgroup bracket
-		 */
+        /// <summary>
+        /// Add a bracket for this Sgroup.
+        /// </summary>
+        /// <param name="bracket">sgroup bracket</param>
         public void AddBracket(SgroupBracket bracket)
         {
             IList<SgroupBracket> brackets = (IList<SgroupBracket>)GetValue(SgroupKey.CtabBracket);
             if (brackets == null)
             {
-                PutValue(SgroupKey.CtabBracket,
-                         brackets = new List<SgroupBracket>(2));
+                brackets = new List<SgroupBracket>(2);
+                PutValue(SgroupKey.CtabBracket, brackets);
             }
             brackets.Add(bracket);
         }
 
-        /**
-         * Downcast this, maybe generic, Sgroup to a specific concrete implementation. This
-         * method should be called on load by a reader once all data has been added to the sgroup.
-         *
-         * @param <T> return type
-         * @return downcast instance
-         */
+        /// <summary>
+        /// Downcast this, maybe generic, Sgroup to a specific concrete implementation. This
+        /// method should be called on load by a reader once all data has been added to the sgroup.
+        /// </summary>
+        /// <typeparam name="T">return type</typeparam>
+        /// <returns>downcast instance</returns>
         public T Downcast<T>() where T : Sgroup
         {
             // ToDo - Implement

@@ -29,26 +29,26 @@ using System.Diagnostics;
 using System.IO;
 
 namespace NCDK.IO {
-    /**
-     * Converts a Molecule into CDK source code that would build the same
-     * molecule. It's typical use is:
-     * <pre>
-     * StringWriter stringWriter = new StringWriter();
-     * ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
-     * writer.Write((Molecule)molecule);
-     * writer.Close();
-     * Console.Out.Write(stringWriter.ToString());
-     * </pre>
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author  Egon Willighagen <egonw@sci.kun.nl>
-     * @cdk.created 2003-10-01
-     *
-     * @cdk.keyword file format, CDK source code
-     * @cdk.iooptions
-     */
+    /// <summary>
+    /// Converts a Molecule into CDK source code that would build the same
+    /// molecule. It's typical use is:
+    /// <code>
+    /// StringWriter stringWriter = new StringWriter();
+    /// ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
+    /// writer.Write((Molecule)molecule);
+    /// writer.Close();
+    /// Console.Out.Write(stringWriter.ToString());
+    /// </code>
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author  Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.created 2003-10-01
+    ///
+    // @cdk.keyword file format, CDK source code
+    // @cdk.iooptions
+    /// </summary>
     public class NCDKSourceCodeWriter : DefaultChemObjectWriter {
         private TextWriter writer;
 

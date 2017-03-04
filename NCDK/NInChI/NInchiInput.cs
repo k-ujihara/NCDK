@@ -20,66 +20,63 @@ using System.Collections.Generic;
 
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates structure input for InChI generation.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates structure input for InChI generation.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiInput : NInchiStructure
     {
-        /**
-         * Options string,
-         */
+        /// <summary>
+        /// Options string,
+        /// </summary>
         public string Options {
             get;
-#if !TEST
-            protected 
-#endif
-            set;
+            protected internal set;
         }
 
-        /**
-         * Constructor.
-         * @
-         */
+        /// <summary>
+        /// Constructor.
+        // @
+        /// </summary>
         public NInchiInput()
         {
             Options = "";
         }
 
-        /**
-         * Constructor.
-         * @param opts    Options string.
-         * @
-         */
+        /// <summary>
+        /// Constructor.
+        /// <param name="opts">Options string.</param>
+        // @
+        /// </summary>
         public NInchiInput(string opts)
         {
             Options = opts == null ? "" : NInchiWrapper.CheckOptions(opts);
         }
 
-        /**
-         * Constructor.
-         * @param opts    List of options.
-         * @
-         */
+        /// <summary>
+        /// Constructor.
+        /// <param name="opts">List of options.</param>
+        // @
+        /// </summary>
         public NInchiInput(IList<INCHI_OPTION> opts)
         {
             Options = NInchiWrapper.CheckOptions(opts);
         }
 
-        /**
-         * Constructor.
-         * @
-         */
+        /// <summary>
+        /// Constructor.
+        // @
+        /// </summary>
         public NInchiInput(NInchiStructure struct_)
             : this()
         {
             SetStructure(struct_);
         }
 
-        /**
-         * Constructor.
-         * @
-         */
+        /// <summary>
+        /// Constructor.
+        // @
+        /// </summary>
         public NInchiInput(NInchiStructure struct_, string opts)
             : this(opts)
         {

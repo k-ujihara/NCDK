@@ -36,15 +36,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     public abstract class MolecularDescriptorTest : DescriptorTest<IMolecularDescriptor>
     {
         private static DictionaryDatabase dictDB = new DictionaryDatabase();
-        private static DictionaryMap dict = dictDB.GetDictionary("descriptor-algorithms");
+        private static EntryDictionary dict = dictDB.GetDictionary("descriptor-algorithms");
 
         public MolecularDescriptorTest() { }
 
         [TestMethod()]
         public void TestDescriptorIdentifierExistsInOntology()
         {
-            Entry ontologyEntry = dict.GetEntry(Descriptor.Specification.SpecificationReference
-                    .Substring(dict.NS.ToString().Length).ToLowerInvariant());
+            Entry ontologyEntry = dict[Descriptor.Specification.SpecificationReference.Substring(dict.NS.ToString().Length).ToLowerInvariant()];
             Assert.IsNotNull(ontologyEntry);
         }
 
@@ -104,7 +103,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 Assert.IsNotNull(names[i], "A descriptor label may not be null.");
                 Assert.AreNotSame(0, names[i].Length, "The label string must not be empty.");
-                //        	Console.Out.WriteLine("Label: " + names[i]);
+                //            Console.Out.WriteLine("Label: " + names[i]);
             }
             Assert.IsNotNull(v.GetValue());
             int valueCount = v.GetValue().Length;

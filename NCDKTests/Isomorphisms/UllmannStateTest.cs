@@ -29,10 +29,10 @@ using NCDK.Templates;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class UllmannStateTest
     {
@@ -244,10 +244,10 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(state.MMax(), state.g2.Length);
         }
 
-        /**
-         * Create a state for matching benzene to naphthalene Benzene:
-         * InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-         */
+        /// <summary>
+        /// Create a state for matching benzene to naphthalene Benzene:
+        /// InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
+        /// </summary>
         UllmannState CreateBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             IAtomContainer container1 = TestMoleculeFactory.MakeBenzene();

@@ -8,13 +8,9 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Utility to localise aromatic bonds.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class Localise
+    // @author John May
+    internal sealed class Localise
     {
         public static Graph GenerateKekuleForm(Graph g, BitArray subset, BitArray aromatic, bool inplace)
         {
@@ -23,7 +19,7 @@ namespace NCDK.Beam
             // gives us a perfect matching if not we maximise it
             // with Edmonds' algorithm
 
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             int n = BitArrays.Cardinality(subset);
             int nMatched = ArbitraryMatching.Initial(g, m, subset);
             if (nMatched < n)
@@ -46,7 +42,7 @@ namespace NCDK.Beam
             localised.SetFlags(delocalised.GetFlags() & ~Graph.HAS_AROM);
             for (int u = 0; u < delocalised.Order; u++)
             {
-                localised.AddAtom(delocalised.GetAtom_(u).ToAliphaticForm_());
+                localised.AddAtom(delocalised.GetAtom(u).AsAliphaticForm());
                 localised.AddTopology(delocalised.TopologyOf(u));
                 int d = delocalised.Degree(u);
                 for (int j = 0; j < d; ++j)
@@ -106,7 +102,7 @@ namespace NCDK.Beam
             g.SetFlags(g.GetFlags() & ~Graph.HAS_AROM);
             for (int u = BitArrays.NextSetBit(aromatic, 0); u >= 0; u = BitArrays.NextSetBit(aromatic, u + 1))
             {
-                g.SetAtom(u, g.GetAtom_(u).ToAliphaticForm_());
+                g.SetAtom(u, g.GetAtom(u).AsAliphaticForm());
                 int deg = g.Degree(u);
                 for (int j = 0; j < deg; ++j)
                 {
@@ -173,12 +169,9 @@ namespace NCDK.Beam
             return undecided;
         }
 
-#if TEST
-        public
-#endif
-        static bool Predetermined(Graph g, int v)
+        internal static bool Predetermined(Graph g, int v)
         {
-            Atom_ a = g.GetAtom_(v);
+            Atom a = g.GetAtom(v);
 
             int q = a.Charge;
             int deg = g.Degree(v) + g.ImplHCount(v);
@@ -240,19 +233,13 @@ namespace NCDK.Beam
             return false;
         }
 
-#if TEST
-        public
-#endif
-        static bool InSmallRing(Graph g, Edge e)
+        internal static bool InSmallRing(Graph g, Edge e)
         {
             BitArray visit = new BitArray(g.Order);
             return InSmallRing(g, e.Either(), e.Other(e.Either()), e.Other(e.Either()), 1, new BitArray(g.Order));
         }
 
-#if TEST
-        public
-#endif
-        static bool InSmallRing(Graph g, int v, int prev, int t, int d, BitArray visit)
+        internal static bool InSmallRing(Graph g, int v, int prev, int t, int d, BitArray visit)
         {
             if (d > 7)
                 return false;
@@ -343,7 +330,7 @@ namespace NCDK.Beam
             if (!ordered)
                 g = g.Sort(new Graph.CanOrderFirst());
 
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             int n = BitArrays.Cardinality(subset);
             int nMatched = ArbitraryMatching.Dfs(g, m, subset);
             if (nMatched < n)
@@ -367,14 +354,13 @@ namespace NCDK.Beam
             return g;
         }
 
-        /**
-         * Resonate double bonds in a cyclic system such that given a molecule with the same ordering
-         * produces the same resonance assignment. This procedure provides a canonical kekuluﾃｩ
-         * representation for conjugated rings.
-         *
-         * @param g graph
-         * @return the input graph (same reference)
-         */
+        /// <summary>
+        /// Resonate double bonds in a cyclic system such that given a molecule with the same ordering
+        /// produces the same resonance assignment. This procedure provides a canonical Kekulé
+        /// representation for conjugated rings.
+        /// </summary>
+        /// <param name="g">graph</param>
+        /// <returns>the input graph (same reference)</returns>
         public static Graph Resonate(Graph g)
         {
             return Resonate(g, new BiconnectedComponents(g).Cyclic, false);

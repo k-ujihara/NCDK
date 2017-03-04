@@ -24,28 +24,28 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /**
-     * Refiner for atom containers, which refines partitions of the bonds to
-     * equitable partitions. Used by the {@link BondDiscretePartitionRefiner}.
-     *
-     * @author maclean
-     * @cdk.module group
-     *
-     */
+    /// <summary>
+    /// Refiner for atom containers, which refines partitions of the bonds to
+    /// equitable partitions. Used by the <see cref="BondDiscretePartitionRefiner"/>.
+    ///
+    // @author maclean
+    // @cdk.module group
+    ///
+    /// </summary>
     public class BondEquitablePartitionRefiner : AbstractEquitablePartitionRefiner,
             IEquitablePartitionRefiner
     {
 
-        /**
-         * A reference to the discrete refiner, which has the connectivity info.
-         */
+        /// <summary>
+        /// A reference to the discrete refiner, which has the connectivity info.
+        /// </summary>
         private BondDiscretePartitionRefiner discreteRefiner;
 
-        /**
-         * Make an equitable partition refiner using the supplied connection table.
-         *
-         * @param discreteRefiner the connections between vertices
-         */
+        /// <summary>
+        /// Make an equitable partition refiner using the supplied connection table.
+        ///
+        /// <param name="discreteRefiner">the connections between vertices</param>
+        /// </summary>
         public BondEquitablePartitionRefiner(BondDiscretePartitionRefiner discreteRefiner)
         {
             this.discreteRefiner = discreteRefiner;

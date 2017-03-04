@@ -30,7 +30,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class ExplicitToImplicitTest {
 

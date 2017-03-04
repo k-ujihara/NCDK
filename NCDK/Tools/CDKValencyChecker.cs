@@ -26,14 +26,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
-    /**
-     * Assumes CDK atom types to be detected and adds missing hydrogens based on the
-     * atom typing.
-     *
-     * @author     egonw
-     * @cdk.module valencycheck
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Assumes CDK atom types to be detected and adds missing hydrogens based on the
+    /// atom typing.
+    ///
+    // @author     egonw
+    // @cdk.module valencycheck
+    // @cdk.githash
+    /// </summary>
     public class CDKValencyChecker : IValencyChecker
     {
 

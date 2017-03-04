@@ -21,11 +21,11 @@ using NCDK.Default;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of <see cref="ISubstance"/> implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="ISubstance"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractSubstanceTest
         : AbstractAtomContainerSetTest<IAtomContainer>

@@ -30,10 +30,10 @@ using System.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class MatchingTest
     {
@@ -105,7 +105,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public void imperfectArbitaryMatching()
+        public void ImperfectArbitaryMatching()
         {
             Matching matching = Matching.WithCapacity(5);
             BitArray subset = new BitArray(5);

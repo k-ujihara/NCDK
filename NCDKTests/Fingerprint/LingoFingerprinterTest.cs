@@ -27,9 +27,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-smiles
-     */
+    /// <summary>
+    // @cdk.module test-smiles
+    /// </summary>
     [TestClass()]
     public class LingoFingerprinterTest : AbstractFingerprinterTest
     {

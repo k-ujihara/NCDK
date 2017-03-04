@@ -26,88 +26,77 @@ using System.Diagnostics;
 
 namespace NCDK.Graphs.InChi
 {
-    /**
-     * <p>This class generates the IUPAC International Chemical Identifier (InChI) for
-     * a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
-     *
-     * <p>If the atom container has 3D coordinates for all of its atoms then they
-     * will be used, otherwise 2D coordinates will be used if available.
-     *
-     * <p><i>Spin multiplicities and some aspects of stereochemistry are not
-     * currently handled completely.</i>
-     *
-     * <h3>Example usage</h3>
-     *
-     * <code>// Generate factory -  if native code does not load</code><br>
-     * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
-     * <code>// Get InChIGenerator</code><br>
-     * <code>InChIGenerator gen = factory.GetInChIGenerator(container);</code><br>
-     * <code></code><br>
-     * <code>INCHI_RET ret = gen.ReturnStatus;</code><br>
-     * <code>if (ret == INCHI_RET.WARNING) {</code><br>
-     * <code>  // InChI generated, but with warning message</code><br>
-     * <code>  Console.Out.WriteLine("InChI warning: " + gen.Message);</code><br>
-     * <code>} else if (ret != INCHI_RET.OKAY) {</code><br>
-     * <code>  // InChI generation failed</code><br>
-     * <code>  throw new CDKException("InChI failed: " + ret.ToString()</code><br>
-     * <code>    + " [" + gen.Message + "]");</code><br>
-     * <code>}</code><br>
-     * <code></code><br>
-     * <code>string inchi = gen.Inchi;</code><br>
-     * <code>string auxinfo = gen.AuxInfo;</code><br>
-     * <p><tt><b>
-     * TODO: distinguish between singlet and undefined spin multiplicity<br/>
-     * TODO: double bond and allene parities<br/>
-     * TODO: problem recognising bond stereochemistry<br/>
-     * </b></tt>
-     *
-     * @author Sam Adams
-     *
-     * @cdk.module inchi
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This class generates the IUPAC International Chemical Identifier (InChI) for
+    /// a CDK IAtomContainer. It places calls to a JNI wrapper for the InChI C++ library.
+    /// </summary>
+    /// <remarks><para>If the atom container has 3D coordinates for all of its atoms then they
+    /// will be used, otherwise 2D coordinates will be used if available.</para>
+    /// <para>Spin multiplicities and some aspects of stereochemistry are not
+    /// currently handled completely.</para>
+    /// </remarks>
+    /// <example>
+    /// Example usage
+    /// <code>
+    /// // Generate factory -  if native code does not load
+    /// InChIGeneratorFactory factory = new InChIGeneratorFactory();
+    /// // Get InChIGenerator
+    /// InChIGenerator gen = factory.GetInChIGenerator(container);
+    /// 
+    /// INCHI_RET ret = gen.ReturnStatus;
+    /// if (ret == INCHI_RET.WARNING) {
+    ///   // InChI generated, but with warning message
+    ///   Console.Out.WriteLine("InChI warning: " + gen.Message);
+    /// } else if (ret != INCHI_RET.OKAY) {
+    ///   // InChI generation failed
+    ///   throw new CDKException("InChI failed: " + ret.ToString()
+    ///     + " [" + gen.Message + "]");
+    /// }
+    /// 
+    /// string inchi = gen.Inchi;
+    /// string auxinfo = gen.AuxInfo;
+    /// </code>
+    /// </example>
+    /// TODO: distinguish between singlet and undefined spin multiplicity<br/>
+    /// TODO: double bond and allene parities<br/>
+    /// TODO: problem recognising bond stereochemistry<br/>
+    // @author Sam Adams
+    // @cdk.module inchi
+    // @cdk.githash
     public class InChIGenerator
     {
-
         protected NInchiInput input;
 
         protected NInchiOutput output;
 
         private readonly bool auxNone;
 
-        /**
-		 * AtomContainer instance refers to.
-		 */
+        /// <summary>
+        /// AtomContainer instance refers to.
+        /// </summary>
         protected IAtomContainer atomContainer;
 
-        /**
-		 * <p>Constructor. Generates InChI from CDK AtomContainer.
-		 *
-		 * <p>Reads atoms, bonds etc from atom container and converts to format
-		 * InChI library requires, then calls the library.
-		 *
-		 * @param atomContainer      AtomContainer to generate InChI for.
-		 * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-		 * @.openscience.cdk.exception.CDKException if there is an
-		 * error during InChI generation
-		 */
+        /// <summary>
+        /// Constructor. Generates InChI from CDK AtomContainer.
+        /// <para>Reads atoms, bonds etc from atom container and converts to format
+        /// InChI library requires, then calls the library.</para>
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
+        /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
+        /// <exception cref="CDKException">if there is an error during InChI generation</exception>
         protected internal InChIGenerator(IAtomContainer atomContainer, bool ignoreAromaticBonds)
             : this(atomContainer, new[] { INCHI_OPTION.AuxNone }, ignoreAromaticBonds)
         { }
 
-        /**
-		 * <p>Constructor. Generates InChI from CDK AtomContainer.
-		 *
-		 * <p>Reads atoms, bonds etc from atom container and converts to format
-		 * InChI library requires, then calls the library.
-		 *
-		 * @param atomContainer      AtomContainer to generate InChI for.
-		 * @param options   Space delimited string of options to pass to InChI library.
-		 *                  Each option may optionally be preceded by a command line
-		 *                  switch (/ or -).
-		 * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-		 * @
-		 */
+        /// <summary>
+        /// Constructor. Generates InChI from CDK AtomContainer.
+        /// <para>Reads atoms, bonds etc from atom container and converts to format
+        /// InChI library requires, then calls the library.</para>
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
+        /// <param name="options">Space delimited string of options to pass to InChI library.
+        ///     Each option may optionally be preceded by a command line switch (/ or -).</param>
+        /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
         protected internal InChIGenerator(IAtomContainer atomContainer, string options, bool ignoreAromaticBonds)
         {
             try
@@ -122,17 +111,14 @@ namespace NCDK.Graphs.InChi
             }
         }
 
-        /**
-		 * <p>Constructor. Generates InChI from CDK AtomContainer.
-		 *
-		 * <p>Reads atoms, bonds etc from atom container and converts to format
-		 * InChI library requires, then calls the library.
-		 *
-		 * @param atomContainer     AtomContainer to generate InChI for.
-		 * @param options           List of INCHI_OPTION.
-		 * @param ignoreAromaticBonds if aromatic bonds should be treated as bonds of type single and double
-		 * @
-		 */
+        /// <summary>
+        /// Constructor. Generates InChI from CDK AtomContainer.
+        /// <para>Reads atoms, bonds etc from atom container and converts to format
+        /// InChI library requires, then calls the library.</para>
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
+        /// <param name="options">List of INCHI_OPTION.</param>
+        /// <param name="ignoreAromaticBonds">if aromatic bonds should be treated as bonds of type single and double</param>
         protected internal InChIGenerator(IAtomContainer atomContainer, IEnumerable<INCHI_OPTION> options, bool ignoreAromaticBonds)
         {
             try
@@ -147,14 +133,12 @@ namespace NCDK.Graphs.InChi
             }
         }
 
-        /**
-		 * <p>Reads atoms, bonds etc from atom container and converts to format
-		 * InChI library requires, then places call for the library to generate
-		 * the InChI.
-		 *
-		 * @param atomContainer      AtomContainer to generate InChI for.
-		 * @
-		 */
+        /// <summary>
+        /// Reads atoms, bonds etc from atom container and converts to format
+        /// InChI library requires, then places call for the library to generate
+        /// the InChI.
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
         private void GenerateInchiFromCDKAtomContainer(IAtomContainer atomContainer, bool ignore)
         {
             this.atomContainer = atomContainer;
@@ -567,21 +551,21 @@ namespace NCDK.Graphs.InChi
             objs[j] = tmp;
         }
 
-        /**
-		 * Gets return status from InChI process.  OKAY and WARNING indicate
-		 * InChI has been generated, in all other cases InChI generation
-		 * has failed.
-		 */
+        /// <summary>
+        /// Gets return status from InChI process.  OKAY and WARNING indicate
+        /// InChI has been generated, in all other cases InChI generation
+        /// has failed.
+        /// </summary>
         public INCHI_RET ReturnStatus => output.ReturnStatus;
 
-        /**
-		 * Gets generated InChI string.
-		 */
+        /// <summary>
+        /// Gets generated InChI string.
+        /// </summary>
         public string Inchi => output.Inchi;
 
-        /**
-         * Gets generated InChIKey string.
-         */
+        /// <summary>
+        /// Gets generated InChIKey string.
+        /// </summary>
         public string GetInchiKey()
         {
             NInchiOutputKey key;
@@ -603,9 +587,9 @@ namespace NCDK.Graphs.InChi
             }
         }
 
-        /**
-         * Gets auxillary information.
-         */
+        /// <summary>
+        /// Gets auxillary information.
+        /// </summary>
         public string AuxInfo
         {
             get
@@ -618,14 +602,14 @@ namespace NCDK.Graphs.InChi
             }
         }
 
-        /**
-         * Gets generated (error/warning) messages.
-         */
+        /// <summary>
+        /// Gets generated (error/warning) messages.
+        /// </summary>
         public string Message => output.Message;
 
-        /**
-         * Gets generated log.
-         */
+        /// <summary>
+        /// Gets generated log.
+        /// </summary>
         public string Log => output.Log;
     }
 }

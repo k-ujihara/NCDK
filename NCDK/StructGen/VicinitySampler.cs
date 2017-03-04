@@ -29,24 +29,24 @@ using System.Diagnostics;
 
 namespace NCDK.StructGen
 {
-    /**
-     * The VicinitySampler is a generator of constitutional isomers. It needs to be
-     * provided with a starting constitution and it makes random moves in
-     * constitutional space from there. This generator was first suggested by
-     * Faulon {@cdk.cite FAU96}.
-     *
-     * @cdk.keyword  structure generator
-     * @cdk.module   structgen
-     * @cdk.githash
-     * @cdk.bug      1632610
-     */
+    /// <summary>
+    /// The VicinitySampler is a generator of constitutional isomers. It needs to be
+    /// provided with a starting constitution and it makes random moves in
+    /// constitutional space from there. This generator was first suggested by
+    /// Faulon {@cdk.cite FAU96}.
+    ///
+    // @cdk.keyword  structure generator
+    // @cdk.module   structgen
+    // @cdk.githash
+    // @cdk.bug      1632610
+    /// </summary>
     public class VicinitySampler
     {
-        /**
-         * Choose any possible quadruple of the set of atoms
-         * in ac and establish all of the possible bonding schemes according to
-         * Faulon's equations.
-         */
+        /// <summary>
+        /// Choose any possible quadruple of the set of atoms
+        /// in ac and establish all of the possible bonding schemes according to
+        /// Faulon's equations.
+        /// </summary>
         public static IEnumerable<IAtomContainer> Sample(IAtomContainer ac)
         {
             Debug.WriteLine("RandomGenerator->Mutate() Start");
@@ -127,10 +127,7 @@ namespace NCDK.StructGen
                             }
                             if (nonZeroBondsCounter > 1)
                             {
-                                /*
-                                 * Compute the range for b11 (see Faulons formulae
-                                 * for details)
-                                 */
+                                // Compute the range for b11 (see Faulons formulae for details)
 
                                 cmax[0] = 0;
                                 cmax[1] = a11 - a22;

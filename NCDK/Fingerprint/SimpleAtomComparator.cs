@@ -26,23 +26,18 @@ using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // <P> This code returns a sorted set of atoms for a container according to its
-    // symbol and hybridization states. This will aid in finding a deterministic
-    // path rather than Stochastic one. </P>
-     *
+    /// <summary>
+    /// This code returns a sorted set of atoms for a container according to its
+    /// symbol and hybridization states. This will aid in finding a deterministic
+    /// path rather than Stochastic one. 
+    /// </summary>
     // @author Syed Asad Rahman (2012)
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-     *
-     */
     [Serializable]
-#if TEST
-	public
-#endif
-    class SimpleAtomComparator : IComparer<IAtom>
+    internal class SimpleAtomComparator : IComparer<IAtom>
     {
         public int Compare(IAtom o1, IAtom o2)
         {

@@ -29,10 +29,10 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class Tetrahedral2DParityTest
     {
@@ -54,11 +54,11 @@ namespace NCDK.Hash.Stereo
             new Tetrahedral2DParity(new Vector2[4], new int[0]);
         }
 
-        /**
-         * aminoethanol (explicit H) hatch bond on hydrogen (none,none,none,down)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) hatch bond on hydrogen (none,none,none,down)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_NNND()
         {
@@ -72,11 +72,11 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(Clockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) wedge on hydrogen (none,none,none,up)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) wedge on hydrogen (none,none,none,up)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_NNNU()
         {
@@ -90,12 +90,12 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(AntiClockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) with no wedge/hatch bonds
-         * (none,none,none,none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) with no wedge/hatch bonds
+        /// (none,none,none,none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_NNNN()
         {
@@ -109,12 +109,12 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(None, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) with a wedge bond on non hydrogens
-         * (up,up,up,none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) with a wedge bond on non hydrogens
+        /// (up,up,up,none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_UUUN()
         {
@@ -128,12 +128,12 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(Clockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) with a wedge bond on non hydrogens
-         * (down,down,down,none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) with a wedge bond on non hydrogens
+        /// (down,down,down,none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_DDDN()
         {
@@ -147,12 +147,12 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(AntiClockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) with a wedge bond on all atoms (up,up,up,up) -
-         * makes no sense
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) with a wedge bond on all atoms (up,up,up,up) -
+        /// makes no sense
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_UUUU()
         {
@@ -166,12 +166,12 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(None, parity.Parity);
         }
 
-        /**
-         * aminoethanol (explicit H) with a hatch bond on all atoms
-         * (down,down,down,down) - makes no sense
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (explicit H) with a hatch bond on all atoms
+        /// (down,down,down,down) - makes no sense
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Four_DDDD()
         {
@@ -185,11 +185,11 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(None, parity.Parity);
         }
 
-        /**
-         * aminoethanol (implicit H) (up,none,none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (implicit H) (up,none,none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Three_UNN()
         {
@@ -203,11 +203,11 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(Clockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (implicit H) (up,up,up)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (implicit H) (up,up,up)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Three_UUU()
         {
@@ -221,11 +221,11 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(Clockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (implicit H) (down, none, none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (implicit H) (down, none, none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Three_DNN()
         {
@@ -239,11 +239,11 @@ namespace NCDK.Hash.Stereo
             Assert.AreEqual(AntiClockwise, parity.Parity);
         }
 
-        /**
-         * aminoethanol (implicit H) (down, none, none)
-         *
-         * @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
-         */
+        /// <summary>
+        /// aminoethanol (implicit H) (down, none, none)
+        ///
+        // @cdk.inchi InChI=1S/C2H7NO/c1-2(3)4/h2,4H,3H2,1H3/t2-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void TestParity_Three_DDD()
         {

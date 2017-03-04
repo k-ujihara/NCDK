@@ -17,20 +17,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the AtomContainer.
-     *
-     * @cdk.module test-data
-     */
+    /// <summary>
+    /// Checks the functionality of the AtomContainer.
+    ///
+    // @cdk.module test-data
+    /// </summary>
     [TestClass()]
     public class AtomContainerTest
         : AbstractAtomContainerTest

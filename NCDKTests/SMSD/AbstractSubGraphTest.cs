@@ -27,11 +27,11 @@ using NCDK.SMSD.Tools;
 
 namespace NCDK.SMSD
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public abstract class AbstractSubGraphTest
     {
@@ -39,10 +39,10 @@ namespace NCDK.SMSD
 
         public AbstractSubGraphTest() { }
 
-        /**
-         * Test of isSubgraph method, of class AbstractSubGraph.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of isSubgraph method, of class AbstractSubGraph.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public virtual void TestIsSubgraph()
         {

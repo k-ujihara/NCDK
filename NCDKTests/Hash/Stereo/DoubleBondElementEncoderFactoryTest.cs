@@ -30,19 +30,19 @@ using System.Reflection;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * See. {@link org.openscience.cdk.hash.HashCodeScenariosTest} for test which show
-     * example usage.
-     *
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    /// See. {@link org.openscience.cdk.hash.HashCodeScenariosTest} for test which show
+    /// example usage.
+    ///
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class DoubleBondElementEncoderFactoryTest
     {
 
         [TestMethod()]
-        public void opposite()
+        public void Opposite()
         {
 
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;

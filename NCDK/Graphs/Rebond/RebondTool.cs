@@ -25,24 +25,21 @@ using NCDK.Numerics;
 
 namespace NCDK.Graphs.Rebond
 {
-    /**
-     * Provides tools to rebond a molecule from 3D coordinates only.
-     * The algorithm uses an efficient algorithm using a
-     * Binary Space Partitioning Tree (Bspt). It requires that the
-     * atom types are configured such that the covalent bond radii
-     * for all atoms are set. The AtomTypeFactory can be used for this.
-     *
-     * @cdk.keyword rebonding
-     * @cdk.keyword bond, recalculation
-     * @cdk.dictref blue-obelisk:rebondFrom3DCoordinates
-     *
-     * @author      Miguel Howard
-     * @cdk.created 2003-05-23
-     * @cdk.module  standard
-     * @cdk.githash
-     *
-     * @see org.openscience.cdk.graph.rebond.Bspt
-     */
+    /// <summary>
+    /// Provides tools to rebond a molecule from 3D coordinates only.
+    /// The algorithm uses an efficient algorithm using a
+    /// Binary Space Partitioning Tree (Bspt). It requires that the
+    /// atom types are configured such that the covalent bond radii
+    /// for all atoms are set. The AtomTypeFactory can be used for this.
+    /// </summary>
+    /// <seealso cref="Bspt{T}"/>
+    // @cdk.keyword rebonding
+    // @cdk.keyword bond, recalculation
+    // @cdk.dictref blue-obelisk:rebondFrom3DCoordinates
+    // @author      Miguel Howard
+    // @cdk.created 2003-05-23
+    // @cdk.module  standard
+    // @cdk.githash
     public class RebondTool
     {
         private double maxCovalentRadius;
@@ -59,11 +56,11 @@ namespace NCDK.Graphs.Rebond
             this.bspt = null;
         }
 
-        /**
-         * Rebonding using a Binary Space Partition Tree. Note, that any bonds
-         * defined will be deleted first. It assumes the unit of 3D space to
-         * be 1 &Acircle;ngstrom.
-         */
+        /// <summary>
+        /// Rebonding using a Binary Space Partition Tree. Note, that any bonds
+        /// defined will be deleted first. It assumes the unit of 3D space to
+        /// be 1 Ångstrom.
+        /// </summary>
         public void Rebond(IAtomContainer container)
         {
             container.RemoveAllBonds();
@@ -87,9 +84,9 @@ namespace NCDK.Graphs.Rebond
                 BondAtom(container, atom);
             }
         }
-        /**
-         * Rebonds one atom by looking up nearby atom using the binary space partition tree.
-         */
+        /// <summary>
+        /// Rebonds one atom by looking up nearby atom using the binary space partition tree.
+        /// </summary>
         private void BondAtom(IAtomContainer container, IAtom atom)
         {
             double myCovalentRadius = atom.CovalentRadius.Value;
@@ -110,11 +107,10 @@ namespace NCDK.Graphs.Rebond
             }
         }
 
-        /**
-         * Returns the bond order for the bond. At this moment, it only returns
-         * 0 or 1, but not 2 or 3, or aromatic bond order.
-         */
-
+        /// <summary>
+        /// Returns the bond order for the bond. At this moment, it only returns
+        /// 0 or 1, but not 2 or 3, or aromatic bond order.
+        /// </summary>
         private bool IsBonded(double covalentRadiusA, double covalentRadiusB, double distance2)
         {
             double maxAcceptable = covalentRadiusA + covalentRadiusB + bondTolerance;

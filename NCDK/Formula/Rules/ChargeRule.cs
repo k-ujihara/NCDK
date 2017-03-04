@@ -20,40 +20,38 @@ using System.Diagnostics;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-    // This class validate if the charge in the IMolecularFormula correspond with
-    // a specific value. As default it is defined as neutral == 0.0.
-     *
-     *
-    // <p>This rule uses these parameters:
-    // <table border="1">
-    //   <tr>
-    //     <td>Name</td>
-    //     <td>Default</td>
-    //     <td>Description</td>
-    //   </tr>
-    //   <tr>
-    //     <td>charge</td>
-    //     <td>0.0</td>
-    //     <td>The Charge of MolecularFormula</td>
-    //   </tr>
-    // </table>
-     *
+    /// <summary>
+    /// This class validate if the charge in the IMolecularFormula correspond with
+    /// a specific value. As default it is defined as neutral == 0.0.
+    /// </summary>
+    /// <remarks>
+    /// This rule uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term>charge</term>
+    ///   <term>0.0</term>
+    ///   <term>The Charge of MolecularFormula</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-     */
     public class ChargeRule : IRule
     {
         private double charge = 0.0;
 
-        /**
-        //  Constructor for the ChargeRule object.
-         *
-        //  @throws IOException            If an error occurs when reading atom type information
-        //  @throws ClassNotFoundException If an error occurs during tom typing
-         */
+        /// <summary>
+        /// Constructor for the ChargeRule object.
+        /// </summary>
+        /// <exception cref="IOException">           If an error occurs when reading atom type information</exception>
+        /// <exception cref="ClassNotFoundException">If an error occurs during tom typing</exception>
         public ChargeRule() { }
 
         /// <summary>
@@ -78,12 +76,11 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        /**
-        // Validate the charge of this IMolecularFormula.
-         *
-        // @param formula   Parameter is the IMolecularFormula
-        // @return          A double value meaning 1.0 True, 0.0 False
-         */
+        /// <summary>
+        /// Validate the charge of this IMolecularFormula.
+        /// </summary>
+        /// <param name="formula">Parameter is the IMolecularFormula</param>
+        /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public double Validate(IMolecularFormula formula)
         {
             Trace.TraceInformation("Start validation of ", formula);

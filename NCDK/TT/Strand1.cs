@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2004-2007  Martin Eklund <martin.eklund@farmbio.uu.se>
  *
@@ -61,9 +62,9 @@ namespace NCDK.Default
     public class Strand 
         : AtomContainer, IStrand
     {
-	    private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
-		/// <summary>
+        /// <summary>
         /// The strand name.
         /// </summary>
         public string StrandName { get; set; } = "";
@@ -71,16 +72,16 @@ namespace NCDK.Default
         /// <summary>
         ///  The strand type.
         /// </summary>
-		public string StrandType { get; set; }
+        public string StrandType { get; set; }
 
-		public Strand()
+        public Strand()
             : base()
         {
-			Monomer oMonomer = new Monomer();
+            Monomer oMonomer = new Monomer();
             oMonomer.MonomerName = "";
             oMonomer.MonomerType = "Unknown";
             monomers.Add("", oMonomer);
-		}
+        }
 
         /// <summary>
         /// Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
@@ -97,7 +98,7 @@ namespace NCDK.Default
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-		public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
+        public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
             base.Add(oAtom);
@@ -157,7 +158,7 @@ namespace NCDK.Default
             return monomers.Keys;
         }
 
-	    public void RemoveMonomer(string name)
+        public void RemoveMonomer(string name)
         {
             if (monomers.ContainsKey(name))
             {
@@ -211,9 +212,9 @@ namespace NCDK.Silent
     public class Strand 
         : AtomContainer, IStrand
     {
-	    private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
-		/// <summary>
+        /// <summary>
         /// The strand name.
         /// </summary>
         public string StrandName { get; set; } = "";
@@ -221,16 +222,16 @@ namespace NCDK.Silent
         /// <summary>
         ///  The strand type.
         /// </summary>
-		public string StrandType { get; set; }
+        public string StrandType { get; set; }
 
-		public Strand()
+        public Strand()
             : base()
         {
-			Monomer oMonomer = new Monomer();
+            Monomer oMonomer = new Monomer();
             oMonomer.MonomerName = "";
             oMonomer.MonomerType = "Unknown";
             monomers.Add("", oMonomer);
-		}
+        }
 
         /// <summary>
         /// Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
@@ -247,7 +248,7 @@ namespace NCDK.Silent
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-		public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
+        public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
             base.Add(oAtom);
@@ -307,7 +308,7 @@ namespace NCDK.Silent
             return monomers.Keys;
         }
 
-	    public void RemoveMonomer(string name)
+        public void RemoveMonomer(string name)
         {
             if (monomers.ContainsKey(name))
             {

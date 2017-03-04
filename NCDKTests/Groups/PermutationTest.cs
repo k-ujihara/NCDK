@@ -26,11 +26,11 @@ using System;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     *
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    ///
+    /// </summary>
     [TestClass()]
     public class PermutationTest : CDKTestCase
     {

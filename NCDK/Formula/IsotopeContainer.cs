@@ -2,15 +2,13 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Formula
 {
-    /**
-    // This class defines a isotope container. It contains in principle a
-    // IMolecularFormula, a mass and intensity/abundance value.
-     *
+    /// <summary>
+    /// This class defines a isotope container. It contains in principle a
+    /// IMolecularFormula, a mass and intensity/abundance value.
+    /// </summary>
     // @author Miguel Rojas Cherto
-     *
     // @cdk.module  formula
     // @cdk.githash
-     */
     public class IsotopeContainer
     {
         public IsotopeContainer()

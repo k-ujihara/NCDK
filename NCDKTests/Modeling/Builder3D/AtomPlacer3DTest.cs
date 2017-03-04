@@ -29,36 +29,37 @@ using System.IO;
 using System.Linq;
 using NCDK.Numerics;
 
+
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * Tests for AtomPlacer3D
-     *
-     * @cdk.module test-builder3d
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Tests for AtomPlacer3D
+    ///
+    // @cdk.module test-builder3d
+    // @cdk.githash
+    /// </summary>
     [TestClass()]
     public class AtomPlacer3DTest : CDKTestCase
     {
 
         bool standAlone = false;
 
-        /**
-         *  Sets the standAlone attribute
-         *
-         *@param  standAlone  The new standAlone value
-         */
+        /// <summary>
+        ///  Sets the standAlone attribute
+        ///
+        /// <param name="standAlone">The new standAlone value</param>
+        /// </summary>
         public void SetStandAlone(bool standAlone)
         {
             this.standAlone = standAlone;
         }
 
-        /**
-         * Create a test molecule (alpha-pinene).
-         * This code has been inlined from MoleculeFactory.java
-         *
-         * @return the created test molecule
-         */
+        /// <summary>
+        /// Create a test molecule (alpha-pinene).
+        /// This code has been inlined from MoleculeFactory.java
+        ///
+        /// <returns>the created test molecule</returns>
+        /// </summary>
         private IAtomContainer MakeAlphaPinene()
         {
             IAtomContainer mol = new Silent.AtomContainer();
@@ -128,7 +129,7 @@ namespace NCDK.Modeling.Builder3D
         public void TestFindHeavyAtomsInChain_IAtomContainer_IAtomContainer()
         {
             string filename = "NCDK.Data.MDL.allmol232.mol";
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             // TODO: shk3-cleanuptests: best to use the STRICT IO mode here
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
@@ -156,11 +157,11 @@ namespace NCDK.Modeling.Builder3D
             Assert.AreEqual(10, count);
         }
 
-        /**
-         * Demonstrate bug where AtomPlacer3D().NumberOfUnplacedHeavyAtoms() counts
-         * explicit hydrogens as heavy atoms.
-         *
-         */
+        /// <summary>
+        /// Demonstrate bug where AtomPlacer3D().NumberOfUnplacedHeavyAtoms() counts
+        /// explicit hydrogens as heavy atoms.
+        ///
+        /// </summary>
         [TestMethod()]
         public virtual void TestNumberOfUnplacedHeavyAtoms_IAtomContainerWithExplicitHydrogens()
         {

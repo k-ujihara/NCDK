@@ -105,7 +105,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             Assert.AreEqual(testResult, result, 0.001);
         }
 
-		 /// <summary>
+         /// <summary>
          /// A unit test for JUnit with Ethoxy ethane
          /// </summary>
         [TestMethod()]
@@ -124,7 +124,7 @@ namespace NCDK.QSAR.Descriptors.Bonds
             }
         }
 
-		 /// <summary>
+         /// <summary>
          /// A unit test for JUnit with Ethanolamine
          /// </summary>
         [TestMethod()]

@@ -15,7 +15,7 @@ namespace FaulonSignatures.Simple
 
         public IEnumerator<SimpleGraph> GetEnumerator()
         {
-			while (base.HasNext())
+            while (base.HasNext())
             {
                 int[] nextPermutation = base.GetNextPermutation();
                 yield return new SimpleGraph(graph, nextPermutation);

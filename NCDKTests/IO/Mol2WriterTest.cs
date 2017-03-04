@@ -30,13 +30,13 @@ using System.Linq;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer MOL2 writer.
-     *
-     * @cdk.module test-io
-     * @see Mol2Writer
-     * @see SMILES2Mol2WriterTest
-     */
+    /// <summary>
+    /// TestCase for the writer MOL2 writer.
+    ///
+    // @cdk.module test-io
+    /// <seealso cref="Mol2Writer"/>
+    /// <seealso cref="SMILES2Mol2WriterTest"/>
+    /// </summary>
     [TestClass()]
     public class Mol2WriterTest : ChemObjectIOTest
     {
@@ -50,11 +50,11 @@ namespace NCDK.IO
             Assert.IsTrue(writer.Accepts(typeof(AtomContainer)));
         }
 
-        /**
-         * @
-         * @
-         * @cdk.bug 2675188
-         */
+        /// <summary>
+        // @
+        // @
+        // @cdk.bug 2675188
+        /// </summary>
         //@Ignore("moved to SMILES2Mol2WriterTest")
         public void TestWriter1()
         {
@@ -105,18 +105,18 @@ namespace NCDK.IO
             Assert.IsTrue(swriter.ToString().IndexOf("4 5 4 1") > 0);
         }
 
-        /**
-         * This test just ensures that Mol2Writer does not throw an NPE.
-         *
-         * It does not test whether the output is correct or not.
-         * @
-         * @cdk.bug 3315503
-         */
+        /// <summary>
+        /// This test just ensures that Mol2Writer does not throw an NPE.
+        ///
+        /// It does not test whether the output is correct or not.
+        // @
+        // @cdk.bug 3315503
+        /// </summary>
         [TestMethod()]
         public void TestMissingAtomType()
         {
             string filename = "NCDK.Data.MDL.ligand-1a0i.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

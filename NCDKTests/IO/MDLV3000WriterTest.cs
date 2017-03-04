@@ -34,7 +34,7 @@ namespace NCDK.IO
     public class MDLV3000WriterTest
     {
         [TestMethod()]
-        public void outputValencyWhenNeeded()
+        public void OutputValencyWhenNeeded()
         {
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(new Atom("Na"));
@@ -47,7 +47,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void outputFormalCharge()
+        public void OutputFormalCharge()
         {
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(new Atom("O"));
@@ -62,7 +62,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void outputMassNumber()
+        public void OutputMassNumber()
         {
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(new Atom("H"));
@@ -78,7 +78,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void outputRadical()
+        public void OutputRadical()
         {
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
@@ -355,7 +355,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void RoundTripSRU()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
             {
                 IAtomContainer mol = mdlr.Read(new AtomContainer());
                 string res = WriteToStr(mol);
@@ -372,35 +372,35 @@ namespace NCDK.IO
         [TestMethod()]
         public void RoundTripExpandedAbbrv()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
             {
                 IAtomContainer mol = mdlr.Read(new AtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains(
-					"M  V30 1 SUP 0 ATOMS=(6 6 19 20 21 22 23) XBONDS=(1 5) ESTATE=E LABEL=Ph\n" +
-					"M  V30 2 SUP 0 ATOMS=(6 8 14 15 16 17 18) XBONDS=(1 7) ESTATE=E LABEL=Ph\n" +
-					"M  V30 3 SUP 0 ATOMS=(6 7 9 10 11 12 13) XBONDS=(1 6) ESTATE=E LABEL=Ph\n"));
+                    "M  V30 1 SUP 0 ATOMS=(6 6 19 20 21 22 23) XBONDS=(1 5) ESTATE=E LABEL=Ph\n" +
+                    "M  V30 2 SUP 0 ATOMS=(6 8 14 15 16 17 18) XBONDS=(1 7) ESTATE=E LABEL=Ph\n" +
+                    "M  V30 3 SUP 0 ATOMS=(6 7 9 10 11 12 13) XBONDS=(1 6) ESTATE=E LABEL=Ph\n"));
             }
         }
 
         [TestMethod()]
         public void RoundTripOrderMixtures()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-ord-mixture.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-ord-mixture.mol")))
             {
                 IAtomContainer mol = mdlr.Read(new AtomContainer());
                 string res = WriteToStr(mol);
                 Assert.IsTrue(res.Contains(
-					"M  V30 1 FOR 0 ATOMS=(24 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21-\n" +
+                    "M  V30 1 FOR 0 ATOMS=(24 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21-\n" +
                     "M  V30  22 23 24) BRKXYZ=(9 -6.9786 -1.9329 0 -6.9786 4.5847 0 0 0 0) BRKXYZ=(-\n" +
-					"M  V30 9 1.9402 4.5847 0 1.9402 -1.9329 0 0 0 0)\n"));
+                    "M  V30 9 1.9402 4.5847 0 1.9402 -1.9329 0 0 0 0)\n"));
                 Assert.IsTrue(res.Contains(
-					"M  V30 2 COM 0 ATOMS=(13 1 2 3 4 5 6 7 8 9 10 11 12 13) PARENT=1 BRKXYZ=(9 -6.-\n" +
-					"M  V30 5661 -1.1668 0 -6.5661 3.7007 0 0 0 0) BRKXYZ=(9 -2.5532 3.7007 0 -2.55-\n" +
-					"M  V30 32 -1.1668 0 0 0 0) COMPNO=1\n"));
+                    "M  V30 2 COM 0 ATOMS=(13 1 2 3 4 5 6 7 8 9 10 11 12 13) PARENT=1 BRKXYZ=(9 -6.-\n" +
+                    "M  V30 5661 -1.1668 0 -6.5661 3.7007 0 0 0 0) BRKXYZ=(9 -2.5532 3.7007 0 -2.55-\n" +
+                    "M  V30 32 -1.1668 0 0 0 0) COMPNO=1\n"));
                 Assert.IsTrue(res.Contains(
-					"M  V30 3 COM 0 ATOMS=(11 14 15 16 17 18 19 20 21 22 23 24) PARENT=1 BRKXYZ=(9 -\n" +
-					"M  V30 -1.8257 -1.5204 0 -1.8257 4.1722 0 0 0 0) BRKXYZ=(9 1.4727 4.1722 0 1.4-\n" +
+                    "M  V30 3 COM 0 ATOMS=(11 14 15 16 17 18 19 20 21 22 23 24) PARENT=1 BRKXYZ=(9 -\n" +
+                    "M  V30 -1.8257 -1.5204 0 -1.8257 4.1722 0 0 0 0) BRKXYZ=(9 1.4727 4.1722 0 1.4-\n" +
                     "M  V30 727 -1.5204 0 0 0 0) COMPNO=2\n"));
             }
         }

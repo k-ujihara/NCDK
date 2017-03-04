@@ -34,7 +34,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             SetDescriptor(typeof(VAdjMaDescriptor));
         }
 
-        public void ignoreCalculate_IAtomContainer()
+        public void IgnoreCalculate_IAtomContainer()
         {
             Assert.Fail("Not tested");
         }

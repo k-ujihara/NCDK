@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestGravitationalIndex()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

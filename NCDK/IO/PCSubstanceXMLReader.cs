@@ -141,9 +141,9 @@ namespace NCDK.IO
 
         private IAtomContainer ReadMolecule()
         {
-			foreach (var elm in Parser.Descendants())
+            foreach (var elm in Parser.Descendants())
             {
-				if (elm.Name.Equals(PubChemXMLHelper.Name_EL_PCCOMPOUND))
+                if (elm.Name.Equals(PubChemXMLHelper.Name_EL_PCCOMPOUND))
                 {
                     return parserHelper.ParseMolecule(elm, builder);
                 }

@@ -1,4 +1,4 @@
-/**
+/*
  *
  * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
  *
@@ -24,19 +24,19 @@
  */
 namespace NCDK.SMSD
 {
-    /**
-     * Interface for MCS search algorithm.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for MCS search algorithm.
+    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public abstract class AbstractMCSAlgorithm
     {
-        /**
-         * Initialise the MCS search algorithm. Each MCS algorithm should contain
-         * this method.
-         * @param shouldMatchBonds bond match
-         */
+        /// <summary>
+        /// Initialise the MCS search algorithm. Each MCS algorithm should contain
+        /// this method.
+        /// </summary>
+        /// <param name="shouldMatchBonds">bond match</param>
         public abstract void SearchMCS(bool shouldMatchBonds);
     }
 }

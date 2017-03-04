@@ -27,13 +27,13 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer XYZ files using one test file.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.XYZWriter
-     */
+    /// <summary>
+    /// TestCase for the writer XYZ files using one test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.XYZWriter
+    /// </summary>
     [TestClass()]
     public class XYZWriterTest : ChemObjectIOTest
     {
@@ -73,9 +73,9 @@ namespace NCDK.IO
             Assert.AreEqual(4, lineCount);
         }
 
-        /**
-         * @cdk.bug 2215774
-         */
+        /// <summary>
+        // @cdk.bug 2215774
+        /// </summary>
         [TestMethod()]
         public void TestWriting_Point2d()
         {
@@ -94,9 +94,9 @@ namespace NCDK.IO
             Assert.IsTrue(output.Contains("0.000000\t 0.000000\t 0.000000"));
         }
 
-        /**
-         * @cdk.bug 2215775
-         */
+        /// <summary>
+        // @cdk.bug 2215775
+        /// </summary>
         [TestMethod()]
         public void TestSixDecimalOuput()
         {

@@ -26,38 +26,38 @@ using System.Collections.Generic;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Enumeration of Ctab Sgroup types.
-     * <p/>
-     * <br/>
-     * <b>Display shortcuts</b>
-     * <ul>
-     * <li>SUP, abbreviation Sgroup (formerly called superatom)</li>
-     * <li>MUL, multiple group</li>
-     * <li>GEN, generic</li>
-     * </ul>
-     * <b>Polymers</b>
-     * <ul>
-     * <li>SRU, SRU type</li>
-     * <li>MON, monomer</li>
-     * <li>MER, Mer type</li>
-     * <li>COP, copolymer</li>
-     * <li>CRO, crosslink</li>
-     * <li>MOD, modification</li>
-     * <li>GRA, graft</li>
-     * <li>Any, any polymer</li> 
-     * </ul>
-     * <b>Components, Mixtures, and formulations</b>
-     * <ul>
-     * <li>COM, component</li>
-     * <li>MIX, mixture</li>
-     * <li>FOR, formulation</li>
-     * </ul>
-     * <b>Non-chemical</b>
-     * <ul>
-     * <li>DAT, data Sgroup</li>
-     * </ul>
-     */
+    /// <summary>
+    /// Enumeration of Ctab Sgroup types.
+    /// <p/>
+    /// <br/>
+    /// <b>Display shortcuts</b>
+    /// <ul>
+    /// <li>SUP, abbreviation Sgroup (formerly called superatom)</li>
+    /// <li>MUL, multiple group</li>
+    /// <li>GEN, generic</li>
+    /// </ul>
+    /// <b>Polymers</b>
+    /// <ul>
+    /// <li>SRU, SRU type</li>
+    /// <li>MON, monomer</li>
+    /// <li>MER, Mer type</li>
+    /// <li>COP, copolymer</li>
+    /// <li>CRO, crosslink</li>
+    /// <li>MOD, modification</li>
+    /// <li>GRA, graft</li>
+    /// <li>Any, any polymer</li> 
+    /// </ul>
+    /// <b>Components, Mixtures, and formulations</b>
+    /// <ul>
+    /// <li>COM, component</li>
+    /// <li>MIX, mixture</li>
+    /// <li>FOR, formulation</li>
+    /// </ul>
+    /// <b>Non-chemical</b>
+    /// <ul>
+    /// <li>DAT, data Sgroup</li>
+    /// </ul>
+    /// </summary>
     public class SgroupType
     {
         public enum O

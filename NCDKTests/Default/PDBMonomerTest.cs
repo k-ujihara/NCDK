@@ -21,13 +21,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the PDBMonomer class.
-     *
-     * @cdk.module test-data
-     *
-     * @see PDBPolymer
-     */
+    /// <summary>
+    /// Checks the functionality of the PDBMonomer class.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="PDBPolymer"/>
+    /// </summary>
     [TestClass()]
     public class PDBMonomerTest : AbstractPDBMonomerTest
     {

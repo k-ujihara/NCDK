@@ -26,18 +26,18 @@ using static NCDK.LibIO.CML.CMLElement;
 
 namespace NCDK.LibIO.CML
 {
-    /**
-     * Customize persistence of MDMolecule by adding support for residues and charge groups.
-     *
-     * @author ola
-     * @cdk.module libiomd
-     * @cdk.githash
-     *
-     * @cdk.set       libio-cml-customizers
-     */
+    /// <summary>
+    /// Customize persistence of MDMolecule by adding support for residues and charge groups.
+    ///
+    // @author ola
+    // @cdk.module libiomd
+    // @cdk.githash
+    ///
+    // @cdk.set       libio-cml-customizers
+    /// </summary>
     public class MDMoleculeCustomizer : ICMLCustomizer
     {
-		internal static readonly XNamespace NS_MD = "http://www.bioclipse.net/mdmolecule/";
+        internal static readonly XNamespace NS_MD = "http://www.bioclipse.net/mdmolecule/";
 
         /// <summary>
         /// No customization for bonds.
@@ -100,8 +100,8 @@ namespace NCDK.LibIO.CML
                         for (int i = 0; i < residue.Atoms.Count; i++)
                         {
                             CMLAtom cmlAtom = new CMLAtom();
-                            //            			Console.Out.WriteLine("atom ID: "+ residue.Atoms[i].Id);
-                            //            			cmlAtom.AddAttribute(new Attribute("ref", residue.Atoms[i].Id));
+                            //                        Console.Out.WriteLine("atom ID: "+ residue.Atoms[i].Id);
+                            //                        cmlAtom.AddAttribute(new Attribute("ref", residue.Atoms[i].Id));
                             // the next thing is better, but  exception
                             //
                             // setRef to keep consistent usage

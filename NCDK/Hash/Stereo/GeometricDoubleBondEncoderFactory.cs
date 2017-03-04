@@ -29,32 +29,32 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * A stereo encoder factory encoding double bond configurations by 2D and 3D
-     * coordinates. This factory will attempt to encode all double bonds that meet
-     * the following conditions. Are not {@literal -N=N-} bonds, non-cumulated,
-     * non-query and have each double bonded atom has at least one substituent. In
-     * future the encoding rules may be more strict or even configurable but
-     * currently they may be over zealous when encoding configurations with 3D
-     * coordinates. <br/><p/> This class is intended to be used with a the hash
-     * encoding classes and is easier used via the {@link org.openscience.cdk.hash.HashGeneratorMaker}.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     * @see org.openscience.cdk.hash.HashGeneratorMaker
-     */
+    /// <summary>
+    /// A stereo encoder factory encoding double bond configurations by 2D and 3D
+    /// coordinates. This factory will attempt to encode all double bonds that meet
+    /// the following conditions. Are not {@literal -N=N-} bonds, non-cumulated,
+    /// non-query and have each double bonded atom has at least one substituent. In
+    /// future the encoding rules may be more strict or even configurable but
+    /// currently they may be over zealous when encoding configurations with 3D
+    /// coordinates. <br/><p/> This class is intended to be used with a the hash
+    /// encoding classes and is easier used via the {@link org.openscience.cdk.hash.HashGeneratorMaker}.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    // @see org.openscience.cdk.hash.HashGeneratorMaker
+    /// </summary>
     public sealed class GeometricDoubleBondEncoderFactory : IStereoEncoderFactory
     {
 
-        /**
-         * Create a stereo encoder for all potential 2D and 3D double bond stereo
-         * configurations.
-         *
-         * @param container an atom container
-         * @param graph     adjacency list representation of the container
-         * @return a new encoder for tetrahedral elements
-         */
+        /// <summary>
+        /// Create a stereo encoder for all potential 2D and 3D double bond stereo
+        /// configurations.
+        ///
+        /// <param name="container">an atom container</param>
+        /// <param name="graph">adjacency list representation of the container</param>
+        /// <returns>a new encoder for tetrahedral elements</returns>
+        /// </summary>
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
         {
 
@@ -86,20 +86,20 @@ namespace NCDK.Hash.Stereo
             return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
         }
 
-        /**
-         * Create a new encoder for the specified left and right atoms. The parent
-         * is the atom which is connected by a double bond to the left and right
-         * atom. For simple double bonds the parent of each is the other atom, in
-         * cumulenes the parents are not the same.
-         *
-         * @param container   the molecule
-         * @param left        the left atom
-         * @param leftParent  the left atoms parent (usually {@literal right})
-         * @param right       the right atom
-         * @param rightParent the right atoms parent (usually {@literal left})
-         * @param graph       adjacency list representation of the molecule
-         * @return a stereo encoder (or null)
-         */
+        /// <summary>
+        /// Create a new encoder for the specified left and right atoms. The parent
+        /// is the atom which is connected by a double bond to the left and right
+        /// atom. For simple double bonds the parent of each is the other atom, in
+        /// cumulenes the parents are not the same.
+        ///
+        /// <param name="container">the molecule</param>
+        /// <param name="left">the left atom</param>
+        /// <param name="leftParent">the left atoms parent (usually {@literal right})</param>
+        /// <param name="right">the right atom</param>
+        /// <param name="rightParent">the right atoms parent (usually {@literal left})</param>
+        /// <param name="graph">adjacency list representation of the molecule</param>
+        /// <returns>a stereo encoder (or null)</returns>
+        /// </summary>
         internal static IStereoEncoder NewEncoder(IAtomContainer container, IAtom left, IAtom leftParent, IAtom right,
                 IAtom rightParent, int[][] graph)
         {
@@ -143,27 +143,24 @@ namespace NCDK.Hash.Stereo
             return null;
         }
 
-        /**
-         * Generate a new geometric parity (2D or 3D) for the given molecule and
-         * atom indices. This method ensure that 2D and 3D coordinates are available
-         * on the specified atoms and returns null if the 2D or 3D coordinates are
-         * not fully available.
-         *
-         * @param mol a molecule
-         * @param l   left double bonded atom
-         * @param r   right double bonded atom
-         * @param l1  first substituent atom of <i>l</i>
-         * @param l2  second substituent atom of <i>l</i> or <i>l</i> if there is
-         *            none
-         * @param r1  first substituent atom of <i>r</i>
-         * @param r2  second substituent atom of <i>r</i> or <i>r</i> if there is
-         *            none
-         * @return geometric parity or null
-         */
-#if TEST
-        public
-#endif
-        static GeometricParity Geometric(IAtomContainer mol, int l, int r, int l1, int l2, int r1, int r2)
+        /// <summary>
+        /// Generate a new geometric parity (2D or 3D) for the given molecule and
+        /// atom indices. This method ensure that 2D and 3D coordinates are available
+        /// on the specified atoms and returns null if the 2D or 3D coordinates are
+        /// not fully available.
+        ///
+        /// <param name="mol">a molecule</param>
+        /// <param name="l">left double bonded atom</param>
+        /// <param name="r">right double bonded atom</param>
+        /// <param name="l1">first substituent atom of <i>l</i></param>
+        /// <param name="l2">second substituent atom of <i>l</i> or <i>l</i> if there is</param>
+        ///            none
+        /// <param name="r1">first substituent atom of <paramref name="r"/></param>
+        /// <param name="r2">second substituent atom of <paramref name="r"/> or <paramref name="r"/> if there is</param>
+        ///            none
+        /// <returns>geometric parity or null</returns>
+        /// </summary>
+        internal static GeometricParity Geometric(IAtomContainer mol, int l, int r, int l1, int l2, int r1, int r2)
         {
             // we need all points for 2D as they may be skewed, i.e.
             //
@@ -195,25 +192,22 @@ namespace NCDK.Hash.Stereo
 
         }
 
-        /**
-         * Create a permutation parity for the given neighbors. The neighbor list
-         * should include the other double bonded atom but in the last index.
-         *
-         * <pre>
-         * c3
-         *  \
-         *   c2 = c1  = [c3,c4,c1]
-         *  /
-         * c4
-         * </pre>
-         *
-         * @param neighbors neighbors of a double bonded atom specified by index
-         * @return a new permutation parity
-         */
-#if TEST
-        public
-#endif
-        static PermutationParity Permutation(int[] neighbors)
+        /// <summary>
+        /// Create a permutation parity for the given neighbors. The neighbor list
+        /// should include the other double bonded atom but in the last index.
+        ///
+        /// <code>
+        /// c3
+        ///  \
+        ///   c2 = c1  = [c3,c4,c1]
+        ///  /
+        /// c4
+        /// </code>
+        ///
+        /// <param name="neighbors">neighbors of a double bonded atom specified by index</param>
+        /// <returns>a new permutation parity</returns>
+        /// </summary>
+        internal static PermutationParity Permutation(int[] neighbors)
         {
             if (neighbors.Length == 2)
                 return PermutationParity.IDENTITY;
@@ -222,18 +216,15 @@ namespace NCDK.Hash.Stereo
             return new BasicPermutationParity(xNeighbors);
         }
 
-        /**
-         * Utility method for shifting a specified value in an index to the back
-         * (see {@link #Permutation(int[])}).
-         *
-         * @param neighbors list of neighbors
-         * @param v         the value to shift to the back
-         * @return <i>neighbors</i> array
-         */
-#if TEST
-        public
-#endif
-        static int[] MoveToBack(int[] neighbors, int v)
+        /// <summary>
+        /// Utility method for shifting a specified value in an index to the back
+        /// (see {@link #Permutation(int[])}).
+        ///
+        /// <param name="neighbors">list of neighbors</param>
+        /// <param name="v">the value to shift to the back</param>
+        /// <returns><i>neighbors</i> array</returns>
+        /// </summary>
+        internal static int[] MoveToBack(int[] neighbors, int v)
         {
             int j = 0;
             for (int i = 0; i < neighbors.Length; i++)
@@ -247,20 +238,17 @@ namespace NCDK.Hash.Stereo
             return neighbors;
         }
 
-        /**
-         * Test whether we accept atom and it's connected bonds for inclusion in a
-         * double bond configuration. This method checks for query bonds (up/down)
-         * as well as double bond counts. If there is more then one double bond in
-         * the connect bonds then it cannot have Z/E configuration.
-         *
-         * @param atom  a double bonded atom
-         * @param bonds all bonds connected to the atom
-         * @return whether the atom is accepted for configuration
-         */
-#if TEST
-        public
-#endif
-        static bool Accept(IAtom atom, IEnumerable<IBond> bonds)
+        /// <summary>
+        /// Test whether we accept atom and it's connected bonds for inclusion in a
+        /// double bond configuration. This method checks for query bonds (up/down)
+        /// as well as double bond counts. If there is more then one double bond in
+        /// the connect bonds then it cannot have Z/E configuration.
+        ///
+        /// <param name="atom">a double bonded atom</param>
+        /// <param name="bonds">all bonds connected to the atom</param>
+        /// <returns>whether the atom is accepted for configuration</returns>
+        /// </summary>
+        internal static bool Accept(IAtom atom, IEnumerable<IBond> bonds)
         {
 
             int dbCount = 0;

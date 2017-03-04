@@ -179,9 +179,9 @@ namespace NCDK
             Assert.AreNotSame((short)0, chemObject.GetFlagValue());
         }
 
-        /**
-         * Different flags are reflected by different numbers.
-         */
+        /// <summary>
+        /// Different flags are reflected by different numbers.
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetFlagValueDifferentFlags()
         {
@@ -192,9 +192,9 @@ namespace NCDK
             Assert.AreNotSame(chemObject.GetFlagValue(), chemObject2.GetFlagValue());
         }
 
-        /**
-         * The number is always the same for the same flag.
-         */
+        /// <summary>
+        /// The number is always the same for the same flag.
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetFlagValueSameFlag()
         {
@@ -310,9 +310,9 @@ namespace NCDK
             Assert.IsTrue(atom.Compare(chemObject2.GetProperties().First(pair => pair.Key.Equals("atom")).Value));
         }
 
-        /**
-         * @cdk.bug 2975800
-         */
+        /// <summary>
+        // @cdk.bug 2975800
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_PropertyNull()
         {

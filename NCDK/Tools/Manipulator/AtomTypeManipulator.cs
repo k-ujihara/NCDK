@@ -26,25 +26,25 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-	 * Class with utilities for the <code>AtomType</code> class.
-	 * - changed 21/7/05 by cho: add properties for mmff94 atom type
-	 *
-	 * @author     mfe4
-	 * @author     egonw
-	 * @cdk.module standard
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Class with utilities for the <code>AtomType</code> class.
+    /// - changed 21/7/05 by cho: add properties for mmff94 atom type
+    ///
+    // @author     mfe4
+    // @author     egonw
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class AtomTypeManipulator
     {
-        /**
-		 * Method that assign properties to an atom given a particular atomType.
-		 * An <code>ArgumentException</code> is thrown if the given <code>IAtomType</code>
-		 * is null. <b>This method overwrites non-null values.</b>
-		 *
-		 * @param  atom     Atom to configure
-		 * @param  atomType AtomType. Must not be null.
-		 */
+        /// <summary>
+        /// Method that assign properties to an atom given a particular atomType.
+        /// An <code>ArgumentException</code> is thrown if the given <code>IAtomType</code>
+        /// is null. <b>This method overwrites non-null values.</b>
+        ///
+        /// <param name="atom">Atom to configure</param>
+        /// <param name="atomType">AtomType. Must not be null.</param>
+        /// </summary>
         public static void Configure(IAtom atom, IAtomType atomType)
         {
             if (atomType == null)
@@ -98,14 +98,13 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-		 * Method that assign properties to an atom given a particular atomType.
-		 * An {@link ArgumentException} is thrown if the given {@link IAtomType}
-		 * is null. <b>This method only sets null values.</b>
-		 *
-		 * @param  atom     Atom to configure
-		 * @param  atomType AtomType. Must not be null.
-		 */
+        /// <summary>
+        /// Method that assign properties to an atom given a particular atomType.
+        /// <b>This method only sets null values.</b>
+        /// </summary>
+        /// <param name="atom">Atom to configure</param>
+        /// <param name="atomType">AtomType. Must not be null.</param>
+        /// <exception cref="ArgumentException">if the given <see cref="IAtomType"/> is null.</exception>
         public static void ConfigureUnsetProperties(IAtom atom, IAtomType atomType)
         {
             if (atomType == null)

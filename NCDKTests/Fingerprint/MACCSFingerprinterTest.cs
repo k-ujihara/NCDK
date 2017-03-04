@@ -31,9 +31,9 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class MACCSFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -112,11 +112,11 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(FingerprinterTool.IsSubset(bs2, bs3));
         }
 
-        /**
-         * Using MACCS keys, these molecules are not considered substructures
-         * and should only be used for similarity. This is because the MACCS
-         * fragments match hydrogen counts.
-         */
+        /// <summary>
+        /// Using MACCS keys, these molecules are not considered substructures
+        /// and should only be used for similarity. This is because the MACCS
+        /// fragments match hydrogen counts.
+        /// </summary>
         [TestMethod()]
         public override void TestBug706786()
         {

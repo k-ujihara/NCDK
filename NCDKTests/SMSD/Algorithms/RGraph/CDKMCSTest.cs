@@ -34,16 +34,17 @@ using NCDK.SMSD.Tools;
 using NCDK.Templates;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.IO;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     * @cdk.module test-smsd
-     * @author     Syed Asad Rahman
-     * @cdk.require java1.5+
-     */
+    /// <summary>
+    // @cdk.module test-smsd
+    // @author     Syed Asad Rahman
+    // @cdk.require java1.5+
+    /// </summary>
     [TestClass()]
     public class CDKMCSTest : CDKTestCase
     {
@@ -74,10 +75,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /**
-         * @cdk.bug 1708336
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 1708336
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSFBug1708336()
         {
@@ -204,10 +205,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             QueryAtomContainer query1 = null;
             QueryAtomContainer query2 = null;
 
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(molfile);
+            Stream ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(mol);
-            ins = this.GetType().Assembly.GetManifestResourceStream(queryfile);
+            ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(temp);
             query1 = QueryAtomContainerCreator.CreateBasicQueryContainer(temp);
@@ -224,10 +225,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /**
-         * @cdk.bug 1110537
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 1110537
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestGetOverlaps_IAtomContainer_IAtomContainer()
         {
@@ -236,9 +237,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             IAtomContainer mol1 = new AtomContainer();
             IAtomContainer mol2 = new AtomContainer();
 
-            Stream ins1 = this.GetType().Assembly.GetManifestResourceStream(file1);
+            Stream ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
-            Stream ins2 = this.GetType().Assembly.GetManifestResourceStream(file2);
+            Stream ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
@@ -260,10 +261,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(11, ((AtomContainer)list[0]).Atoms.Count);
         }
 
-        /**
-         * @cdk.bug 999330
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 999330
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSFBug999330()
         {
@@ -272,9 +273,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             IAtomContainer mol1 = new AtomContainer();
             IAtomContainer mol2 = new AtomContainer();
 
-            Stream ins1 = this.GetType().Assembly.GetManifestResourceStream(file1);
+            Stream ins1 = ResourceLoader.GetAsStream(file1);
             new MDLV2000Reader(ins1, ChemObjectReaderModes.Strict).Read(mol1);
-            Stream ins2 = this.GetType().Assembly.GetManifestResourceStream(file2);
+            Stream ins2 = ResourceLoader.GetAsStream(file2);
             new MDLV2000Reader(ins2, ChemObjectReaderModes.Strict).Read(mol2);
             AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(mol2);
             permutor.MoveNext();
@@ -345,10 +346,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsTrue(CDKMCS.IsIsomorph(target, query, true), "C1CCCC1 should be a isomorph of O1C=CC=C1");
         }
 
-        /**
-         * @cdk.bug 1633201
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 1633201
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestFirstArgumentMustNotBeAnQueryAtomContainer()
         {
@@ -368,10 +369,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * @cdk.bug 2888845
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2888845
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching1()
         {
@@ -390,10 +391,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(matches, atomMappings);
         }
 
-        /**
-         * @cdk.bug 2888845
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 2888845
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSingleAtomMatching2()
         {
@@ -419,9 +420,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(matches, atomMappings);
         }
 
-        /**
-         * Test of getTimeManager method, of class CDKMCS.
-         */
+        /// <summary>
+        /// Test of getTimeManager method, of class CDKMCS.
+        /// </summary>
         [TestMethod()]
         public void TestGetTimeManager()
         {
@@ -429,9 +430,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsNotNull(expResult);
         }
 
-        /**
-         * Test of setTimeManager method, of class CDKMCS.
-         */
+        /// <summary>
+        /// Test of setTimeManager method, of class CDKMCS.
+        /// </summary>
         [TestMethod()]
         public void TestSetTimeManager()
         {

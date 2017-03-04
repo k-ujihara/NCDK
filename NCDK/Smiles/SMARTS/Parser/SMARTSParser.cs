@@ -25,50 +25,50 @@ using static NCDK.Smiles.SMARTS.Parser.SMARTSParserTreeConstants;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * This parser implements a nearly complete subset of the SMARTS syntax as defined on
-     * <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
-     * Daylight website</a>. 
-     *
-     * <p>Example code using SMARTS substructure search looks like:
-     * <pre>
-     * SmilesParser sp = new SmilesParser();
-     * AtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-     * QueryAtomContainer query = SMARTSParser.Parse("C*C");
-     * bool queryMatch = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
-     * </pre>
-     *
-     * <p>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
-     * subset.
-     *
-     * This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)
-     * <p>To get the AST, the code looks like:
-     * <pre>
-     * SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
-     * ASTStart = parser.Start();
-     * </pre>
-     *
-     * @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
-     *
-     * @author      Dazhi Jiao
-     * @cdk.created 2007-04-23
-     * @cdk.githash
-     *
-     * @cdk.require ant1.6
-     * @cdk.module  smarts
-     *
-     * @cdk.keyword SMARTS
-     * @cdk.keyword substructure search
-     */
+    /// <summary>
+    /// This parser implements a nearly complete subset of the SMARTS syntax as defined on
+    /// <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
+    /// Daylight website</a>. 
+    ///
+    /// <p>Example code using SMARTS substructure search looks like:
+    /// <code>
+    /// SmilesParser sp = new SmilesParser();
+    /// AtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
+    /// QueryAtomContainer query = SMARTSParser.Parse("C*C");
+    /// bool queryMatch = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
+    /// </code>
+    ///
+    /// <p>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
+    /// subset.
+    ///
+    /// This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)
+    /// <p>To get the AST, the code looks like:
+    /// <code>
+    /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
+    /// ASTStart = parser.Start();
+    /// </code>
+    ///
+    // @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
+    ///
+    // @author      Dazhi Jiao
+    // @cdk.created 2007-04-23
+    // @cdk.githash
+    ///
+    // @cdk.require ant1.6
+    // @cdk.module  smarts
+    ///
+    // @cdk.keyword SMARTS
+    // @cdk.keyword substructure search
+    /// </summary>
     public class SMARTSParser/*@bgen(jjtree)*/
     {/*@bgen(jjtree)*/
         protected JJTSMARTSParserState jjtree = new JJTSMARTSParserState();
         private int componentId = 0;
 
-        /**
-         * This method parses a Smarts string and returns an instance of 
-         * <code>QueryAtomContainer</code>
-         */
+        /// <summary>
+        /// This method parses a Smarts string and returns an instance of 
+        /// <code>QueryAtomContainer</code>
+        /// </summary>
         public static QueryAtomContainer Parse(string smarts, IChemObjectBuilder builder)
         {
             QueryAtomContainer container = null;
@@ -79,7 +79,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 ASTStart start = parser.Start();
                 SmartsQueryVisitor visitor
                     = new SmartsQueryVisitor(builder);
-                container = (QueryAtomContainer)start.jjtAccept(visitor, null);
+                container = (QueryAtomContainer)start.JJTAccept(visitor, null);
             }
             catch (ParseException exception)
             {
@@ -89,63 +89,63 @@ namespace NCDK.Smiles.SMARTS.Parser
             return container;
         }
 
-        /**
-         *                     Start ::= <ReactionExpression> <#_WS>
-         *        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
-         *                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
-         *           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
-         *          SmartsExpression ::= <AtomExpression> ( 
-                                            ( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
-                                            ( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
-                      AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
-         *                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
-         *                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
-         *       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
-         *       ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
-         *                   NotBond ::= [ "!" ] <SimpleBond>
-         *                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
-         *    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
-         *                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ] 
-         *          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
-         *              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
-         * ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
-         * ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
-         *             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
-         * RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
-         *   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
-         *                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
-         *                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
-         *                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
-         *                     Digit ::= ( "0" - "9")
-         *        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
-         *                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
-         *                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
-         *                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
-         *                               "HF" | "TA" | "RE" | "OS" | "IR" | "PT" | "AU" | "HG" | "TL" | "PB" | "BI" |
-         *                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
-         *                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
-         *                               "c" | "o" | "n" | "p" | "as" | "se" ]
-         */
+        /// <summary>
+        ///                     Start ::= <ReactionExpression> <#_WS>
+        ///        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
+        ///                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
+        ///           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
+        ///          SmartsExpression ::= <AtomExpression> ( 
+        ///                                ( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
+        ///                                ( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
+        ///          AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
+        ///                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
+        ///                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
+        ///       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
+        ///       ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
+        ///                   NotBond ::= [ "!" ] <SimpleBond>
+        ///                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
+        ///    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
+        ///                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ] 
+        ///          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
+        ///              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
+        /// ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
+        /// ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
+        ///             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
+        /// RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
+        ///   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
+        ///                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
+        ///                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
+        ///                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
+        ///                     Digit ::= ( "0" - "9")
+        ///        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+        ///                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
+        ///                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
+        ///                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
+        ///                               "HF" | "TA" | "RE" | "OS" | "IR" | "PT" | "AU" | "HG" | "TL" | "PB" | "BI" |
+        ///                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
+        ///                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
+        ///                               "c" | "o" | "n" | "p" | "as" | "se" ]
+        /// </summary>
         public ASTStart Start()
         {
             /*@bgen(jjtree) Start */
             ASTStart jjtn000 = new ASTStart(JJTSTART); 
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ReactionExpression();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case WS:
-                        jj_consume_token(WS);
+                        Jj_consume_token(WS);
                         break;
                     case 0:
-                        jj_consume_token(0);
+                        Jj_consume_token(0);
                         break;
                     default:
                         jj_la1[0] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
                 jjtree.CloseNodeScope(jjtn000, true);
@@ -188,7 +188,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Reaction */
             ASTReaction jjtn000 = new ASTReaction(JJTREACTION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
@@ -219,7 +219,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                         {
                             case 147:
-                                jj_consume_token(147);
+                                Jj_consume_token(147);
                                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                                 {
                                     case c:
@@ -257,17 +257,17 @@ namespace NCDK.Smiles.SMARTS.Parser
                         }
                         break;
                     case 148:
-                        jj_consume_token(148);
+                        Jj_consume_token(148);
                         GroupExpression();
-                        jj_consume_token(148);
+                        Jj_consume_token(148);
                         break;
                     case 147:
-                        jj_consume_token(147);
+                        Jj_consume_token(147);
                         GroupExpression();
                         break;
                     default:
                         jj_la1[3] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
             }
@@ -306,13 +306,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Group */
             ASTGroup jjtn000 = new ASTGroup(JJTGROUP);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case L_PAREN:
-                        jj_consume_token(L_PAREN);
+                        Jj_consume_token(L_PAREN);
                         SmartsExpression();
                         ((ASTSmarts)jjtree.PeekNode()).ComponentId = ++componentId;
                         while (true)
@@ -326,14 +326,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     jj_la1[4] = jj_gen;
                                     goto break_label_1;
                             }
-                            jj_consume_token(149);
+                            Jj_consume_token(149);
                             SmartsExpression();
                             // same component grouping
                             ((ASTSmarts)jjtree.PeekNode()).ComponentId = componentId;
                         }
                         break_label_1:;
 
-                        jj_consume_token(R_PAREN);
+                        Jj_consume_token(R_PAREN);
                         break;
                     case c:
                     case n:
@@ -360,7 +360,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         break;
                     default:
                         jj_la1[5] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
                 while (true)
@@ -374,11 +374,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                             jj_la1[6] = jj_gen;
                             goto break_label_2;
                     }
-                    jj_consume_token(149);
+                    Jj_consume_token(149);
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
                         case L_PAREN:
-                            jj_consume_token(L_PAREN);
+                            Jj_consume_token(L_PAREN);
                             SmartsExpression();
                             ((ASTSmarts)jjtree.PeekNode()).ComponentId = ++componentId;
                             label_3:
@@ -393,14 +393,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                                         jj_la1[7] = jj_gen;
                                         goto break_label_3;
                                 }
-                                jj_consume_token(149);
+                                Jj_consume_token(149);
                                 SmartsExpression();
                                 // same component grouping
                                 ((ASTSmarts)jjtree.PeekNode()).ComponentId = componentId;
                             }
                             break_label_3:
                             ;
-                            jj_consume_token(R_PAREN);
+                            Jj_consume_token(R_PAREN);
                             break;
                         case c:
                         case n:
@@ -427,7 +427,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             break;
                         default:
                             jj_la1[8] = jj_gen;
-                            jj_consume_token(-1);
+                            Jj_consume_token(-1);
                             throw new ParseException();
                     }
                 }
@@ -469,7 +469,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Smarts */
             ASTSmarts jjtn000 = new ASTSmarts(JJTSMARTS);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); ASTAtom atom;
+            jjtree.OpenNodeScope(jjtn000); ASTAtom atom;
             int ringIdToken;
             try
             {
@@ -584,19 +584,19 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                                     {
                                         case DIGIT:
-                                            jj_consume_token(DIGIT);
+                                            Jj_consume_token(DIGIT);
                                             ringIdToken = token.image[0] - '0';
                                             break;
                                         case 150:
-                                            jj_consume_token(150);
-                                            jj_consume_token(DIGIT);
+                                            Jj_consume_token(150);
+                                            Jj_consume_token(DIGIT);
                                             ringIdToken = 10 * (token.image[0] - '0');
-                                            jj_consume_token(DIGIT);
+                                            Jj_consume_token(DIGIT);
                                             ringIdToken += token.image[0] - '0';
                                             break;
                                         default:
                                             jj_la1[11] = jj_gen;
-                                            jj_consume_token(-1);
+                                            Jj_consume_token(-1);
                                             throw new ParseException();
                                     }
                                     ASTLowAndBond bond = null;
@@ -604,10 +604,10 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     if (jjtree.PeekNode() is ASTLowAndBond)
                                     {
                                         bond = (ASTLowAndBond)jjtree.PopNode(); // pop the bond
-                                        ringId.jjtAddChild(bond, 0);
+                                        ringId.JJTAddChild(bond, 0);
                                     }
                                     ringId.RingId = ringIdToken;
-                                    atom.jjtAddChild(ringId, atom.jjtGetNumChildren());
+                                    atom.JJTAddChild(ringId, atom.JJTGetNumChildren());
                                     break;
                                 case c:
                                 case n:
@@ -634,12 +634,12 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     break;
                                 default:
                                     jj_la1[12] = jj_gen;
-                                    jj_consume_token(-1);
+                                    Jj_consume_token(-1);
                                     throw new ParseException();
                             }
                             break;
                         case L_PAREN:
-                            jj_consume_token(L_PAREN);
+                            Jj_consume_token(L_PAREN);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
                                 case NOT:
@@ -661,11 +661,11 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     break;
                             }
                             SmartsExpression();
-                            jj_consume_token(R_PAREN);
+                            Jj_consume_token(R_PAREN);
                             break;
                         default:
                             jj_la1[14] = jj_gen;
-                            jj_consume_token(-1);
+                            Jj_consume_token(-1);
                             throw new ParseException();
                     }
                 }
@@ -707,7 +707,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Atom */
             ASTAtom jjtn000 = new ASTAtom(JJTATOM);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); Token firstToken;
+            jjtree.OpenNodeScope(jjtn000); Token firstToken;
             Token secondToken;
             Token rightBracket;
             ASTAtomicMass massNode = null;
@@ -716,7 +716,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case L_BRACKET:
-                        jj_consume_token(L_BRACKET);
+                        Jj_consume_token(L_BRACKET);
                         token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION);
                         firstToken = GetToken(1);
                         secondToken = GetToken(2);
@@ -737,7 +737,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             topNode.InsertLeafChild(massNode);
                             jjtree.PushNode(topNode);
                         }
-                        jj_consume_token(R_BRACKET);
+                        Jj_consume_token(R_BRACKET);
                         token_source.SwitchTo(SMARTSParserConstants.Default); rightBracket = token;
                         Token HToken = null;
                         // If the LowAndExpression is "[H]", change it to an ExplicitAtom
@@ -793,7 +793,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         break;
                     default:
                         jj_la1[16] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
                 jjtree.CloseNodeScope(jjtn000, true);
@@ -836,14 +836,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) LowAndBond */
             ASTLowAndBond jjtn000 = new ASTLowAndBond(JJTLOWANDBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 OrBond();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case L_AND:
-                        jj_consume_token(L_AND);
+                        Jj_consume_token(L_AND);
                         LowAndBond();
                         break;
                     default:
@@ -886,14 +886,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) OrBond */
             ASTOrBond jjtn000 = new ASTOrBond(JJTORBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ExplicitHighAndBond();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case OR:
-                        jj_consume_token(OR);
+                        Jj_consume_token(OR);
                         OrBond();
                         break;
                     default:
@@ -936,14 +936,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ExplicitHighAndBond */
             ASTExplicitHighAndBond jjtn000 = new ASTExplicitHighAndBond(JJTEXPLICITHIGHANDBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ImplicitHighAndBond();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case H_AND:
-                        jj_consume_token(H_AND);
+                        Jj_consume_token(H_AND);
                         ExplicitHighAndBond();
                         break;
                     default:
@@ -986,7 +986,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ImplicitHighAndBond */
             ASTImplicitHighAndBond jjtn000 = new ASTImplicitHighAndBond(JJTIMPLICITHIGHANDBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 NotBond();
@@ -1046,13 +1046,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) NotBond */
             ASTNotBond jjtn000 = new ASTNotBond(JJTNOTBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case NOT:
-                        jj_consume_token(NOT);
+                        Jj_consume_token(NOT);
                         jjtn000.Type = SMARTSParserConstants.NOT;
                         break;
                     default:
@@ -1096,50 +1096,50 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) SimpleBond */
             ASTSimpleBond jjtn000 = new ASTSimpleBond(JJTSIMPLEBOND);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                if (jj_2_1(2))
+                if (Jj_2_1(2))
                 {
-                    jj_consume_token(S_BOND);
+                    Jj_consume_token(S_BOND);
                 }
                 else
                 {
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
                         case UP_S_BOND:
-                            jj_consume_token(UP_S_BOND);
+                            Jj_consume_token(UP_S_BOND);
                             break;
                         case DN_S_BOND:
-                            jj_consume_token(DN_S_BOND);
+                            Jj_consume_token(DN_S_BOND);
                             break;
                         case UP_OR_UNSPECIFIED_S_BOND:
-                            jj_consume_token(UP_OR_UNSPECIFIED_S_BOND);
+                            Jj_consume_token(UP_OR_UNSPECIFIED_S_BOND);
                             break;
                         case DN_OR_UNSPECIFIED_S_BOND:
-                            jj_consume_token(DN_OR_UNSPECIFIED_S_BOND);
+                            Jj_consume_token(DN_OR_UNSPECIFIED_S_BOND);
                             break;
                         case D_BOND:
-                            jj_consume_token(D_BOND);
+                            Jj_consume_token(D_BOND);
                             break;
                         case T_BOND:
-                            jj_consume_token(T_BOND);
+                            Jj_consume_token(T_BOND);
                             break;
                         case DOLLAR:
-                            jj_consume_token(DOLLAR);
+                            Jj_consume_token(DOLLAR);
                             break;
                         case AR_BOND:
-                            jj_consume_token(AR_BOND);
+                            Jj_consume_token(AR_BOND);
                             break;
                         case ANY_BOND:
-                            jj_consume_token(ANY_BOND);
+                            Jj_consume_token(ANY_BOND);
                             break;
                         case R_BOND:
-                            jj_consume_token(R_BOND);
+                            Jj_consume_token(R_BOND);
                             break;
                         default:
                             jj_la1[22] = jj_gen;
-                            jj_consume_token(-1);
+                            Jj_consume_token(-1);
                             throw new ParseException();
                     }
                 }
@@ -1161,74 +1161,74 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ExplicitAtom */
             ASTExplicitAtom jjtn000 = new ASTExplicitAtom(JJTEXPLICITATOM);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case B:
-                        jj_consume_token(B);
+                        Jj_consume_token(B);
                         break;
                     case C:
-                        jj_consume_token(C);
+                        Jj_consume_token(C);
                         break;
                     case N:
-                        jj_consume_token(N);
+                        Jj_consume_token(N);
                         break;
                     case O:
-                        jj_consume_token(O);
+                        Jj_consume_token(O);
                         break;
                     case P:
-                        jj_consume_token(P);
+                        Jj_consume_token(P);
                         break;
                     case S:
-                        jj_consume_token(S);
+                        Jj_consume_token(S);
                         break;
                     case F:
-                        jj_consume_token(F);
+                        Jj_consume_token(F);
                         break;
                     case CL:
-                        jj_consume_token(CL);
+                        Jj_consume_token(CL);
                         break;
                     case BR:
-                        jj_consume_token(BR);
+                        Jj_consume_token(BR);
                         break;
                     case I:
-                        jj_consume_token(I);
+                        Jj_consume_token(I);
                         break;
                     case WILDCARD:
-                        jj_consume_token(WILDCARD);
+                        Jj_consume_token(WILDCARD);
                         break;
                     case A:
-                        jj_consume_token(A);
+                        Jj_consume_token(A);
                         break;
                     case a:
-                        jj_consume_token(a);
+                        Jj_consume_token(a);
                         break;
                     case c:
-                        jj_consume_token(c);
+                        Jj_consume_token(c);
                         break;
                     case n:
-                        jj_consume_token(n);
+                        Jj_consume_token(n);
                         break;
                     case o:
-                        jj_consume_token(o);
+                        Jj_consume_token(o);
                         break;
                     case s:
-                        jj_consume_token(s);
+                        Jj_consume_token(s);
                         break;
                     case p:
-                        jj_consume_token(p);
+                        Jj_consume_token(p);
                         break;
                     case se:
-                        jj_consume_token(se);
+                        Jj_consume_token(se);
                         break;
                     case as_:
-                        jj_consume_token(as_);
+                        Jj_consume_token(as_);
                         break;
                     default:
                         jj_la1[23] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
                 jjtree.CloseNodeScope(jjtn000, true);
@@ -1251,14 +1251,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) LowAndExpression */
             ASTLowAndExpression jjtn000 = new ASTLowAndExpression(JJTLOWANDEXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 OrExpression();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case L_AND:
-                        jj_consume_token(L_AND);
+                        Jj_consume_token(L_AND);
                         LowAndExpression();
                         break;
                     default:
@@ -1301,14 +1301,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) OrExpression */
             ASTOrExpression jjtn000 = new ASTOrExpression(JJTOREXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ExplicitHighAndExpression();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case OR:
-                        jj_consume_token(OR);
+                        Jj_consume_token(OR);
                         OrExpression();
                         break;
                     default:
@@ -1351,14 +1351,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ExplicitHighAndExpression */
             ASTExplicitHighAndExpression jjtn000 = new ASTExplicitHighAndExpression(JJTEXPLICITHIGHANDEXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ImplicitHighAndExpression();
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case H_AND:
-                        jj_consume_token(H_AND);
+                        Jj_consume_token(H_AND);
                         ExplicitHighAndExpression();
                         break;
                     default:
@@ -1401,7 +1401,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ImplicitHighAndExpression */
             ASTImplicitHighAndExpression jjtn000 = new ASTImplicitHighAndExpression(JJTIMPLICITHIGHANDEXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 NotExpression();
@@ -1592,13 +1592,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) NotExpression */
             ASTNotExpression jjtn000 = new ASTNotExpression(JJTNOTEXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); jjtn000.Type = SMARTSParserConstants.Default;
+            jjtree.OpenNodeScope(jjtn000); jjtn000.Type = SMARTSParserConstants.Default;
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case NOT:
-                        jj_consume_token(NOT);
+                        Jj_consume_token(NOT);
                         jjtn000.Type = SMARTSParserConstants.NOT;
                         break;
                     default:
@@ -1755,7 +1755,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         break;
                     default:
                         jj_la1[29] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
             }
@@ -1794,14 +1794,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) RecursiveSmartsExpression */
             ASTRecursiveSmartsExpression jjtn000 = new ASTRecursiveSmartsExpression(JJTRECURSIVESMARTSEXPRESSION);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(DOLLAR);
-                jj_consume_token(L_PAREN);
+                Jj_consume_token(DOLLAR);
+                Jj_consume_token(L_PAREN);
                 token_source.SwitchTo(SMARTSParserConstants.Default);
                 GroupExpression();
-                jj_consume_token(R_PAREN);
+                Jj_consume_token(R_PAREN);
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
                 token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION);
@@ -2019,7 +2019,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     break;
                 default:
                     jj_la1[30] = jj_gen;
-                    jj_consume_token(-1);
+                    Jj_consume_token(-1);
                     throw new ParseException();
             }
         }
@@ -2029,10 +2029,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) TotalHCount */
             ASTTotalHCount jjtn000 = new ASTTotalHCount(JJTTOTALHCOUNT);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(H);
+                Jj_consume_token(H);
                 jjtn000.Count = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2040,7 +2040,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_5:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2074,10 +2074,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ImplicitHCount */
             ASTImplicitHCount jjtn000 = new ASTImplicitHCount(JJTIMPLICITHCOUNT);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(h);
+                Jj_consume_token(h);
                 jjtn000.Count = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2085,7 +2085,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_6:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2119,10 +2119,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) ExplicitConnectivity */
             ASTExplicitConnectivity jjtn000 = new ASTExplicitConnectivity(JJTEXPLICITCONNECTIVITY);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(D);
+                Jj_consume_token(D);
                 jjtn000.NumOfConnection = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2130,7 +2130,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_7:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2164,14 +2164,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) AtomicNumber */
             ASTAtomicNumber jjtn000 = new ASTAtomicNumber(JJTATOMICNUMBER);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(T_BOND);
+                Jj_consume_token(T_BOND);
                 label_8:
                 while (true)
                 {
-                    jj_consume_token(DIGIT);
+                    Jj_consume_token(DIGIT);
                     digits.Append(token.image);
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
@@ -2202,11 +2202,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) HybrdizationNumber */
             ASTHybrdizationNumber jjtn000 = new ASTHybrdizationNumber(JJTHYBRDIZATIONNUMBER);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(CARET);
-                jj_consume_token(DIGIT);
+                Jj_consume_token(CARET);
+                Jj_consume_token(DIGIT);
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
                 int tmp = int.Parse(token.image);
@@ -2227,12 +2227,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Charge */
             ASTCharge jjtn000 = new ASTCharge(JJTCHARGE);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                if (jj_2_2(2))
+                if (Jj_2_2(2))
                 {
-                    jj_consume_token(PLUS);
+                    Jj_consume_token(PLUS);
                     jjtn000.IsPositive = true; jjtn000.Charge = 1;
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
@@ -2240,7 +2240,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             label_9:
                             while (true)
                             {
-                                jj_consume_token(DIGIT);
+                                Jj_consume_token(DIGIT);
                                 digits.Append(token.image);
                                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                                 {
@@ -2265,7 +2265,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
                         case S_BOND:
-                            jj_consume_token(S_BOND);
+                            Jj_consume_token(S_BOND);
                             jjtn000.IsPositive = false; jjtn000.Charge = 1;
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2273,7 +2273,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     label_10:
                                     while (true)
                                     {
-                                        jj_consume_token(DIGIT);
+                                        Jj_consume_token(DIGIT);
                                         digits.Append(token.image);
                                         switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                                         {
@@ -2294,92 +2294,92 @@ namespace NCDK.Smiles.SMARTS.Parser
                             }
                             break;
                         case 151:
-                            jj_consume_token(151);
+                            Jj_consume_token(151);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 2;
                             break;
                         case 152:
-                            jj_consume_token(152);
+                            Jj_consume_token(152);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 3;
                             break;
                         case 153:
-                            jj_consume_token(153);
+                            Jj_consume_token(153);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 4;
                             break;
                         case 154:
-                            jj_consume_token(154);
+                            Jj_consume_token(154);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 5;
                             break;
                         case 155:
-                            jj_consume_token(155);
+                            Jj_consume_token(155);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 6;
                             break;
                         case 156:
-                            jj_consume_token(156);
+                            Jj_consume_token(156);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 7;
                             break;
                         case 157:
-                            jj_consume_token(157);
+                            Jj_consume_token(157);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = false; jjtn000.Charge = 8;
                             break;
                         case 158:
-                            jj_consume_token(158);
+                            Jj_consume_token(158);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 2;
                             break;
                         case 159:
-                            jj_consume_token(159);
+                            Jj_consume_token(159);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 3;
                             break;
                         case 160:
-                            jj_consume_token(160);
+                            Jj_consume_token(160);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 4;
                             break;
                         case 161:
-                            jj_consume_token(161);
+                            Jj_consume_token(161);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 5;
                             break;
                         case 162:
-                            jj_consume_token(162);
+                            Jj_consume_token(162);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 6;
                             break;
                         case 163:
-                            jj_consume_token(163);
+                            Jj_consume_token(163);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 7;
                             break;
                         case 164:
-                            jj_consume_token(164);
+                            Jj_consume_token(164);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 8;
                             break;
                         default:
                             jj_la1[42] = jj_gen;
-                            jj_consume_token(-1);
+                            Jj_consume_token(-1);
                             throw new ParseException();
                     }
                 }
@@ -2398,10 +2398,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) RingConnectivity */
             ASTRingConnectivity jjtn000 = new ASTRingConnectivity(JJTRINGCONNECTIVITY);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(x);
+                Jj_consume_token(x);
                 jjtn000.NumOfConnection = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2409,7 +2409,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_11:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
                                 case DIGIT:
@@ -2442,15 +2442,15 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) PeriodicGroupNumber */
             ASTPeriodicGroupNumber jjtn000 = new ASTPeriodicGroupNumber(JJTPERIODICGROUPNUMBER);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(G);
+                Jj_consume_token(G);
 
                 label_12:
                 while (true)
                 {
-                    jj_consume_token(DIGIT);
+                    Jj_consume_token(DIGIT);
                     digits.Append(token.image);
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
@@ -2483,10 +2483,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) TotalConnectivity */
             ASTTotalConnectivity jjtn000 = new ASTTotalConnectivity(JJTTOTALCONNECTIVITY);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(X);
+                Jj_consume_token(X);
                 jjtn000.NumOfConnection = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2494,7 +2494,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_13:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2528,10 +2528,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Valence */
             ASTValence jjtn000 = new ASTValence(JJTVALENCE);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(v);
+                Jj_consume_token(v);
                 jjtn000.Order = 1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2539,7 +2539,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_14:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2573,10 +2573,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) RingMembership */
             ASTRingMembership jjtn000 = new ASTRingMembership(JJTRINGMEMBERSHIP);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(R);
+                Jj_consume_token(R);
                 jjtn000.NumOfMembership = -1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2584,7 +2584,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_15:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2618,10 +2618,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) SmallestRingSize */
             ASTSmallestRingSize jjtn000 = new ASTSmallestRingSize(JJTSMALLESTRINGSIZE);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(r);
+                Jj_consume_token(r);
                 jjtn000.Size = -1;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
@@ -2629,7 +2629,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         label_16:
                         while (true)
                         {
-                            jj_consume_token(DIGIT);
+                            Jj_consume_token(DIGIT);
                             digits.Append(token.image);
                             switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                             {
@@ -2663,10 +2663,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Aliphatic */
             ASTAliphatic jjtn000 = new ASTAliphatic(JJTALIPHATIC);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(A);
+                Jj_consume_token(A);
             }
             finally
             {
@@ -2682,10 +2682,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) NonCHHeavyAtom */
             ASTNonCHHeavyAtom jjtn000 = new ASTNonCHHeavyAtom(JJTNONCHHEAVYATOM);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(HX);
+                Jj_consume_token(HX);
             }
             finally
             {
@@ -2701,10 +2701,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Aromatic */
             ASTAromatic jjtn000 = new ASTAromatic(JJTAROMATIC);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(a);
+                Jj_consume_token(a);
             }
             finally
             {
@@ -2720,10 +2720,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) AnyAtom */
             ASTAnyAtom jjtn000 = new ASTAnyAtom(JJTANYATOM);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
-                jj_consume_token(WILDCARD);
+                Jj_consume_token(WILDCARD);
             }
             finally
             {
@@ -2739,13 +2739,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) AtomicMass */
             ASTAtomicMass jjtn000 = new ASTAtomicMass(JJTATOMICMASS);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
                 label_17:
                 while (true)
                 {
-                    jj_consume_token(DIGIT);
+                    Jj_consume_token(DIGIT);
                     digits.Append(token.image);
                     switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                     {
@@ -2776,11 +2776,11 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) RingIdentifier */
             ASTRingIdentifier jjtn000 = new ASTRingIdentifier(JJTRINGIDENTIFIER);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 LowAndBond();
-                jj_consume_token(DIGIT);
+                Jj_consume_token(DIGIT);
             }
             catch (Exception jjte000)
             {
@@ -2817,15 +2817,15 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Chirality */
             ASTChirality jjtn000 = new ASTChirality(JJTCHIRALITY);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                jj_consume_token(R_BOND);
+                Jj_consume_token(R_BOND);
                 jjtn000.IsClockwise = false;
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case R_BOND:
-                        jj_consume_token(R_BOND);
+                        Jj_consume_token(R_BOND);
                         jjtn000.IsClockwise = true;
                         break;
                     default:
@@ -2835,7 +2835,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case Q_MARK:
-                        jj_consume_token(Q_MARK);
+                        Jj_consume_token(Q_MARK);
                         jjtn000.IsUnspecified = true;
                         break;
                     default:
@@ -2857,341 +2857,341 @@ namespace NCDK.Smiles.SMARTS.Parser
             /*@bgen(jjtree) Element */
             ASTElement jjtn000 = new ASTElement(JJTELEMENT);
             bool jjtc000 = true;
-            jjtree.openNodeScope(jjtn000);
+            jjtree.OpenNodeScope(jjtn000);
             try
             {
                 switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
                 {
                     case HE:
-                        jj_consume_token(HE);
+                        Jj_consume_token(HE);
                         break;
                     case LI:
-                        jj_consume_token(LI);
+                        Jj_consume_token(LI);
                         break;
                     case BE:
-                        jj_consume_token(BE);
+                        Jj_consume_token(BE);
                         break;
                     case NE:
-                        jj_consume_token(NE);
+                        Jj_consume_token(NE);
                         break;
                     case NA:
-                        jj_consume_token(NA);
+                        Jj_consume_token(NA);
                         break;
                     case MG:
-                        jj_consume_token(MG);
+                        Jj_consume_token(MG);
                         break;
                     case AL:
-                        jj_consume_token(AL);
+                        Jj_consume_token(AL);
                         break;
                     case SI:
-                        jj_consume_token(SI);
+                        Jj_consume_token(SI);
                         break;
                     case AR:
-                        jj_consume_token(AR);
+                        Jj_consume_token(AR);
                         break;
                     case CA:
-                        jj_consume_token(CA);
+                        Jj_consume_token(CA);
                         break;
                     case SC:
-                        jj_consume_token(SC);
+                        Jj_consume_token(SC);
                         break;
                     case TI:
-                        jj_consume_token(TI);
+                        Jj_consume_token(TI);
                         break;
                     case CR:
-                        jj_consume_token(CR);
+                        Jj_consume_token(CR);
                         break;
                     case MN:
-                        jj_consume_token(MN);
+                        Jj_consume_token(MN);
                         break;
                     case FE:
-                        jj_consume_token(FE);
+                        Jj_consume_token(FE);
                         break;
                     case CO:
-                        jj_consume_token(CO);
+                        Jj_consume_token(CO);
                         break;
                     case NI:
-                        jj_consume_token(NI);
+                        Jj_consume_token(NI);
                         break;
                     case CU:
-                        jj_consume_token(CU);
+                        Jj_consume_token(CU);
                         break;
                     case ZN:
-                        jj_consume_token(ZN);
+                        Jj_consume_token(ZN);
                         break;
                     case GA:
-                        jj_consume_token(GA);
+                        Jj_consume_token(GA);
                         break;
                     case GE:
-                        jj_consume_token(GE);
+                        Jj_consume_token(GE);
                         break;
                     case AS:
-                        jj_consume_token(AS);
+                        Jj_consume_token(AS);
                         break;
                     case SE:
-                        jj_consume_token(SE);
+                        Jj_consume_token(SE);
                         break;
                     case BR:
-                        jj_consume_token(BR);
+                        Jj_consume_token(BR);
                         break;
                     case KR:
-                        jj_consume_token(KR);
+                        Jj_consume_token(KR);
                         break;
                     case RB:
-                        jj_consume_token(RB);
+                        Jj_consume_token(RB);
                         break;
                     case SR:
-                        jj_consume_token(SR);
+                        Jj_consume_token(SR);
                         break;
                     case ZR:
-                        jj_consume_token(ZR);
+                        Jj_consume_token(ZR);
                         break;
                     case NB:
-                        jj_consume_token(NB);
+                        Jj_consume_token(NB);
                         break;
                     case MO:
-                        jj_consume_token(MO);
+                        Jj_consume_token(MO);
                         break;
                     case TC:
-                        jj_consume_token(TC);
+                        Jj_consume_token(TC);
                         break;
                     case RU:
-                        jj_consume_token(RU);
+                        Jj_consume_token(RU);
                         break;
                     case RH:
-                        jj_consume_token(RH);
+                        Jj_consume_token(RH);
                         break;
                     case PD:
-                        jj_consume_token(PD);
+                        Jj_consume_token(PD);
                         break;
                     case AG:
-                        jj_consume_token(AG);
+                        Jj_consume_token(AG);
                         break;
                     case CD:
-                        jj_consume_token(CD);
+                        Jj_consume_token(CD);
                         break;
                     case IN:
-                        jj_consume_token(IN);
+                        Jj_consume_token(IN);
                         break;
                     case SN:
-                        jj_consume_token(SN);
+                        Jj_consume_token(SN);
                         break;
                     case SB:
-                        jj_consume_token(SB);
+                        Jj_consume_token(SB);
                         break;
                     case TE:
-                        jj_consume_token(TE);
+                        Jj_consume_token(TE);
                         break;
                     case XE:
-                        jj_consume_token(XE);
+                        Jj_consume_token(XE);
                         break;
                     case CS:
-                        jj_consume_token(CS);
+                        Jj_consume_token(CS);
                         break;
                     case BA:
-                        jj_consume_token(BA);
+                        Jj_consume_token(BA);
                         break;
                     case LA:
-                        jj_consume_token(LA);
+                        Jj_consume_token(LA);
                         break;
                     case HF:
-                        jj_consume_token(HF);
+                        Jj_consume_token(HF);
                         break;
                     case TA:
-                        jj_consume_token(TA);
+                        Jj_consume_token(TA);
                         break;
                     case W:
-                        jj_consume_token(W);
+                        Jj_consume_token(W);
                         break;
                     case RE:
-                        jj_consume_token(RE);
+                        Jj_consume_token(RE);
                         break;
                     case OS:
-                        jj_consume_token(OS);
+                        Jj_consume_token(OS);
                         break;
                     case IR:
-                        jj_consume_token(IR);
+                        Jj_consume_token(IR);
                         break;
                     case PT:
-                        jj_consume_token(PT);
+                        Jj_consume_token(PT);
                         break;
                     case AU:
-                        jj_consume_token(AU);
+                        Jj_consume_token(AU);
                         break;
                     case HG:
-                        jj_consume_token(HG);
+                        Jj_consume_token(HG);
                         break;
                     case TL:
-                        jj_consume_token(TL);
+                        Jj_consume_token(TL);
                         break;
                     case PB:
-                        jj_consume_token(PB);
+                        Jj_consume_token(PB);
                         break;
                     case BI:
-                        jj_consume_token(BI);
+                        Jj_consume_token(BI);
                         break;
                     case PO:
-                        jj_consume_token(PO);
+                        Jj_consume_token(PO);
                         break;
                     case AT:
-                        jj_consume_token(AT);
+                        Jj_consume_token(AT);
                         break;
                     case RN:
-                        jj_consume_token(RN);
+                        Jj_consume_token(RN);
                         break;
                     case FR:
-                        jj_consume_token(FR);
+                        Jj_consume_token(FR);
                         break;
                     case RA:
-                        jj_consume_token(RA);
+                        Jj_consume_token(RA);
                         break;
                     case AC:
-                        jj_consume_token(AC);
+                        Jj_consume_token(AC);
                         break;
                     case TH:
-                        jj_consume_token(TH);
+                        Jj_consume_token(TH);
                         break;
                     case PA:
-                        jj_consume_token(PA);
+                        Jj_consume_token(PA);
                         break;
                     case CL:
-                        jj_consume_token(CL);
+                        Jj_consume_token(CL);
                         break;
                     case B:
-                        jj_consume_token(B);
+                        Jj_consume_token(B);
                         break;
                     case C:
-                        jj_consume_token(C);
+                        Jj_consume_token(C);
                         break;
                     case N:
-                        jj_consume_token(N);
+                        Jj_consume_token(N);
                         break;
                     case O:
-                        jj_consume_token(O);
+                        Jj_consume_token(O);
                         break;
                     case F:
-                        jj_consume_token(F);
+                        Jj_consume_token(F);
                         break;
                     case P:
-                        jj_consume_token(P);
+                        Jj_consume_token(P);
                         break;
                     case S:
-                        jj_consume_token(S);
+                        Jj_consume_token(S);
                         break;
                     case K:
-                        jj_consume_token(K);
+                        Jj_consume_token(K);
                         break;
                     case V:
-                        jj_consume_token(V);
+                        Jj_consume_token(V);
                         break;
                     case Y:
-                        jj_consume_token(Y);
+                        Jj_consume_token(Y);
                         break;
                     case I:
-                        jj_consume_token(I);
+                        Jj_consume_token(I);
                         break;
                     case U:
-                        jj_consume_token(U);
+                        Jj_consume_token(U);
                         break;
                     case c:
-                        jj_consume_token(c);
+                        Jj_consume_token(c);
                         break;
                     case o:
-                        jj_consume_token(o);
+                        Jj_consume_token(o);
                         break;
                     case n:
-                        jj_consume_token(n);
+                        Jj_consume_token(n);
                         break;
                     case s:
-                        jj_consume_token(s);
+                        Jj_consume_token(s);
                         break;
                     case p:
-                        jj_consume_token(p);
+                        Jj_consume_token(p);
                         break;
                     case as_:
-                        jj_consume_token(as_);
+                        Jj_consume_token(as_);
                         break;
                     case se:
-                        jj_consume_token(se);
+                        Jj_consume_token(se);
                         break;
                     case PU:
-                        jj_consume_token(PU);
+                        Jj_consume_token(PU);
                         break;
                     case AM:
-                        jj_consume_token(AM);
+                        Jj_consume_token(AM);
                         break;
                     case CM:
-                        jj_consume_token(CM);
+                        Jj_consume_token(CM);
                         break;
                     case BK:
-                        jj_consume_token(BK);
+                        Jj_consume_token(BK);
                         break;
                     case CF:
-                        jj_consume_token(CF);
+                        Jj_consume_token(CF);
                         break;
                     case ES:
-                        jj_consume_token(ES);
+                        Jj_consume_token(ES);
                         break;
                     case FM:
-                        jj_consume_token(FM);
+                        Jj_consume_token(FM);
                         break;
                     case MD:
-                        jj_consume_token(MD);
+                        Jj_consume_token(MD);
                         break;
                     case NO:
-                        jj_consume_token(NO);
+                        Jj_consume_token(NO);
                         break;
                     case LR:
-                        jj_consume_token(LR);
+                        Jj_consume_token(LR);
                         break;
                     case NP:
-                        jj_consume_token(NP);
+                        Jj_consume_token(NP);
                         break;
                     case CE:
-                        jj_consume_token(CE);
+                        Jj_consume_token(CE);
                         break;
                     case ND:
-                        jj_consume_token(ND);
+                        Jj_consume_token(ND);
                         break;
                     case PM:
-                        jj_consume_token(PM);
+                        Jj_consume_token(PM);
                         break;
                     case SM:
-                        jj_consume_token(SM);
+                        Jj_consume_token(SM);
                         break;
                     case EU:
-                        jj_consume_token(EU);
+                        Jj_consume_token(EU);
                         break;
                     case GD:
-                        jj_consume_token(GD);
+                        Jj_consume_token(GD);
                         break;
                     case TB:
-                        jj_consume_token(TB);
+                        Jj_consume_token(TB);
                         break;
                     case DY:
-                        jj_consume_token(DY);
+                        Jj_consume_token(DY);
                         break;
                     case HO:
-                        jj_consume_token(HO);
+                        Jj_consume_token(HO);
                         break;
                     case ER:
-                        jj_consume_token(ER);
+                        Jj_consume_token(ER);
                         break;
                     case TM:
-                        jj_consume_token(TM);
+                        Jj_consume_token(TM);
                         break;
                     case YB:
-                        jj_consume_token(YB);
+                        Jj_consume_token(YB);
                         break;
                     case LU:
-                        jj_consume_token(LU);
+                        Jj_consume_token(LU);
                         break;
                     case PR:
-                        jj_consume_token(PR);
+                        Jj_consume_token(PR);
                         break;
                     default:
                         jj_la1[57] = jj_gen;
-                        jj_consume_token(-1);
+                        Jj_consume_token(-1);
                         throw new ParseException();
                 }
                 jjtree.CloseNodeScope(jjtn000, true);
@@ -3207,52 +3207,52 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        private bool jj_2_1(int xla)
+        private bool Jj_2_1(int xla)
         {
             jj_la = xla; jj_lastpos = jj_scanpos = token;
-            try { return !jj_3_1(); }
+            try { return !Jj_3_1(); }
             catch (LookaheadSuccess) { return true; }
-            finally { jj_save(0, xla); }
+            finally { Jj_save(0, xla); }
         }
 
-        private bool jj_2_2(int xla)
+        private bool Jj_2_2(int xla)
         {
             jj_la = xla; jj_lastpos = jj_scanpos = token;
-            try { return !jj_3_2(); }
+            try { return !Jj_3_2(); }
             catch (LookaheadSuccess) { return true; }
-            finally { jj_save(1, xla); }
+            finally { Jj_save(1, xla); }
         }
 
-        private bool jj_3R_19()
+        private bool Jj_3R_19()
         {
-            if (jj_scan_token(DIGIT)) return true;
+            if (Jj_scan_token(DIGIT)) return true;
             return false;
         }
 
-        private bool jj_3R_18()
+        private bool Jj_3R_18()
         {
             Token xsp;
-            if (jj_3R_19()) return true;
+            if (Jj_3R_19()) return true;
             while (true)
             {
                 xsp = jj_scanpos;
-                if (jj_3R_19()) { jj_scanpos = xsp; break; }
+                if (Jj_3R_19()) { jj_scanpos = xsp; break; }
             }
             return false;
         }
 
-        private bool jj_3_1()
+        private bool Jj_3_1()
         {
-            if (jj_scan_token(S_BOND)) return true;
+            if (Jj_scan_token(S_BOND)) return true;
             return false;
         }
 
-        private bool jj_3_2()
+        private bool Jj_3_2()
         {
-            if (jj_scan_token(PLUS)) return true;
+            if (Jj_scan_token(PLUS)) return true;
             Token xsp;
             xsp = jj_scanpos;
-            if (jj_3R_18()) jj_scanpos = xsp;
+            if (Jj_3R_18()) jj_scanpos = xsp;
             return false;
         }
 
@@ -3276,49 +3276,49 @@ namespace NCDK.Smiles.SMARTS.Parser
         static private int[] jj_la1_5;
         static SMARTSParser()
         {
-            jj_la1_init_0();
-            jj_la1_init_1();
-            jj_la1_init_2();
-            jj_la1_init_3();
-            jj_la1_init_4();
-            jj_la1_init_5();
+            Jj_la1_init_0();
+            Jj_la1_init_1();
+            Jj_la1_init_2();
+            Jj_la1_init_3();
+            Jj_la1_init_4();
+            Jj_la1_init_5();
         }
-        private static void jj_la1_init_0()
+        private static void Jj_la1_init_0()
         {
             unchecked
             {
                 jj_la1_0 = new int[] { 0x3, (int)0xffff0000, 0x0, (int)0xffff0000, 0x0, (int)0xffff0000, 0x0, 0x0, (int)0xffff0000, (int)0xffffffe0, 0xffe0, 0x0, (int)0xffff0000, 0xffe0, (int)0xffffffe0, 0x0, (int)0xffff0000, 0x4, 0x10, 0x8, 0xffe0, 0x20, 0xff80, (int)0xffff0000, 0x4, 0x10, 0x8, (int)0xffff9060, 0x20, (int)0xffff9040, (int)0xffff9040, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8000, 0x0, (int)0xffff0000, };
             }
         }
-        private static void jj_la1_init_1()
+        private static void Jj_la1_init_1()
         {
             unchecked
             {
                 jj_la1_1 = new int[] { 0x0, 0x18f, 0x0, 0x18f, 0x0, 0x18f, 0x0, 0x0, 0x18f, 0x9cf, 0x800, 0x40, 0xcf, 0x800, 0x9cf, 0x40, 0x8f, 0x0, 0x0, 0x0, 0x800, 0x0, 0x800, 0xf, 0x0, 0x0, 0x0, (int)0xfffff81f, 0x0, (int)0xfffff81f, (int)0xfffff01f, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x0, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x0, 0x20, (int)0xff800001, };
             }
         }
-        private static void jj_la1_init_2()
+        private static void Jj_la1_init_2()
         {
             unchecked
             {
                 jj_la1_2 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, 0x0, (int)0xffffffff, (int)0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, };
             }
         }
-        private static void jj_la1_init_3()
+        private static void Jj_la1_init_3()
         {
             unchecked
             {
                 jj_la1_3 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, 0x0, (int)0xffffffff, (int)0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, };
             }
         }
-        private static void jj_la1_init_4()
+        private static void Jj_la1_init_4()
         {
             unchecked
             {
                 jj_la1_4 = new int[] { 0x0, 0x0, 0x80000, 0x180000, 0x200000, 0x0, 0x200000, 0x200000, 0x0, 0x400000, 0x0, 0x400000, 0x400000, 0x0, 0x400000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xff87ffff, 0x0, (int)0xff87ffff, (int)0xff87ffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xff800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7ffff, };
             }
         }
-        private static void jj_la1_init_5()
+        private static void Jj_la1_init_5()
         {
             jj_la1_5 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1f, 0x0, 0x1f, 0x1f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, };
         }
@@ -3408,7 +3408,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
         }
 
-        private Token jj_consume_token(int kind)
+        private Token Jj_consume_token(int kind)
         {
             Token oldToken;
             if ((oldToken = token).next != null) token = token.next;
@@ -3439,7 +3439,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
          private sealed class LookaheadSuccess : Exception { }
         readonly private LookaheadSuccess jj_ls = new LookaheadSuccess();
-        private bool jj_scan_token(int kind)
+        private bool Jj_scan_token(int kind)
         {
             if (jj_scanpos == jj_lastpos)
             {
@@ -3461,7 +3461,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 int i = 0; Token tok = token;
                 while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
-                if (tok != null) jj_add_error_token(kind, i);
+                if (tok != null) Jj_add_error_token(kind, i);
             }
             if (jj_scanpos.kind != kind) return true;
             if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
@@ -3505,7 +3505,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         private int[] jj_lasttokens = new int[100];
         private int jj_endpos;
 
-        private void jj_add_error_token(int kind, int pos)
+        private void Jj_add_error_token(int kind, int pos)
         {
             if (pos >= 100) return;
             if (pos == jj_endpos + 1)
@@ -3593,8 +3593,8 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
             }
             jj_endpos = 0;
-            jj_rescan_token();
-            jj_add_error_token(0, 0);
+            Jj_rescan_token();
+            Jj_add_error_token(0, 0);
             int[][] exptokseq = new int[jj_expentries.Count][];
             for (int i = 0; i < jj_expentries.Count; i++)
             {
@@ -3613,7 +3613,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
         }
 
-        private void jj_rescan_token()
+        private void Jj_rescan_token()
         {
             jj_rescan = true;
             for (int i = 0; i < 2; i++)
@@ -3628,8 +3628,8 @@ namespace NCDK.Smiles.SMARTS.Parser
                             jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
                             switch (i)
                             {
-                                case 0: jj_3_1(); break;
-                                case 1: jj_3_2(); break;
+                                case 0: Jj_3_1(); break;
+                                case 1: Jj_3_2(); break;
                             }
                         }
                         p = p.next;
@@ -3640,7 +3640,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             jj_rescan = false;
         }
 
-        private void jj_save(int index, int xla)
+        private void Jj_save(int index, int xla)
         {
             JJCalls p = jj_2_rtns[index];
             while (p.gen > jj_gen)

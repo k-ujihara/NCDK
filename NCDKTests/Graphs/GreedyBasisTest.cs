@@ -25,24 +25,17 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Common.Collections;
-using NCDK.Graphs;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using static NCDK.Graphs.InitialCycles;
-using static NCDK.Graphs.InitialCyclesTest;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author John May
-     * @cdk.module test-core
-     */
-	[TestClass()]
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
+    [TestClass()]
     public class GreedyBasisTest
     {
 
@@ -73,12 +66,12 @@ namespace NCDK.Graphs
             GreedyBasis basis = new GreedyBasis(2, 0);
             Assert.IsTrue(basis.Members.Count == 0);
             basis.AddAll(new[] { c1.Object, c2.Object });
-			Assert.IsTrue(basis.Members.Contains(c1.Object));
+            Assert.IsTrue(basis.Members.Contains(c1.Object));
             Assert.IsTrue(basis.Members.Contains(c2.Object));
         }
 
         [TestMethod()]
-		[ExpectedException(typeof(NotSupportedException))]
+        [ExpectedException(typeof(NotSupportedException))]
         public virtual void UnmodifiableMembers()
         {
             var c1 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
@@ -94,7 +87,7 @@ namespace NCDK.Graphs
             var c2 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             var c3 = new Mock<Cycle>((InitialCycles)null, (ShortestPaths)null, (int[])null);
             c1.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("111000000000"));
-            c2.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("000111000000"));	// fixed CDK's bug
+            c2.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("000111000000"));    // fixed CDK's bug
             c3.SetupGet(c => c.EdgeVector).Returns(BitArrays.FromString("011110000000"));
             c1.SetupGet(c => c.Length).Returns(3);
             c2.SetupGet(c => c.Length).Returns(3);

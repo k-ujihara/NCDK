@@ -161,6 +161,131 @@ namespace NCDK.Config
         public static readonly Elements Ununoctium = new Elements("Ununoctium", 118, "Uuo", 0, 0, null, null, null);
         #endregion
 
+        public static class O
+        {
+            #region
+            public const int Unknown = 0;
+            public const int Hydrogen = 1;
+            public const int Helium = 2;
+            public const int Lithium = 3;
+            public const int Beryllium = 4;
+            public const int Boron = 5;
+            public const int Carbon = 6;
+            public const int Nitrogen = 7;
+            public const int Oxygen = 8;
+            public const int Fluorine = 9;
+            public const int Neon = 10;
+            public const int Sodium = 11;
+            public const int Magnesium = 12;
+            public const int Aluminium = 13;
+            public const int Silicon = 14;
+            public const int Phosphorus = 15;
+            public const int Sulfur = 16;
+            public const int Chlorine = 17;
+            public const int Argon = 18;
+            public const int Potassium = 19;
+            public const int Calcium = 20;
+            public const int Scandium = 21;
+            public const int Titanium = 22;
+            public const int Vanadium = 23;
+            public const int Chromium = 24;
+            public const int Manganese = 25;
+            public const int Iron = 26;
+            public const int Cobalt = 27;
+            public const int Nickel = 28;
+            public const int Copper = 29;
+            public const int Zinc = 30;
+            public const int Gallium = 31;
+            public const int Germanium = 32;
+            public const int Arsenic = 33;
+            public const int Selenium = 34;
+            public const int Bromine = 35;
+            public const int Krypton = 36;
+            public const int Rubidium = 37;
+            public const int Strontium = 38;
+            public const int Yttrium = 39;
+            public const int Zirconium = 40;
+            public const int Niobium = 41;
+            public const int Molybdenum = 42;
+            public const int Technetium = 43;
+            public const int Ruthenium = 44;
+            public const int Rhodium = 45;
+            public const int Palladium = 46;
+            public const int Silver = 47;
+            public const int Cadmium = 48;
+            public const int Indium = 49;
+            public const int Tin = 50;
+            public const int Antimony = 51;
+            public const int Tellurium = 52;
+            public const int Iodine = 53;
+            public const int Xenon = 54;
+            public const int Caesium = 55;
+            public const int Barium = 56;
+            public const int Lanthanum = 57;
+            public const int Cerium = 58;
+            public const int Praseodymium = 59;
+            public const int Neodymium = 60;
+            public const int Promethium = 61;
+            public const int Samarium = 62;
+            public const int Europium = 63;
+            public const int Gadolinium = 64;
+            public const int Terbium = 65;
+            public const int Dysprosium = 66;
+            public const int Holmium = 67;
+            public const int Erbium = 68;
+            public const int Thulium = 69;
+            public const int Ytterbium = 70;
+            public const int Lutetium = 71;
+            public const int Hafnium = 72;
+            public const int Tantalum = 73;
+            public const int Tungsten = 74;
+            public const int Rhenium = 75;
+            public const int Osmium = 76;
+            public const int Iridium = 77;
+            public const int Platinum = 78;
+            public const int Gold = 79;
+            public const int Mercury = 80;
+            public const int Thallium = 81;
+            public const int Lead = 82;
+            public const int Bismuth = 83;
+            public const int Polonium = 84;
+            public const int Astatine = 85;
+            public const int Radon = 86;
+            public const int Francium = 87;
+            public const int Radium = 88;
+            public const int Actinium = 89;
+            public const int Thorium = 90;
+            public const int Protactinium = 91;
+            public const int Uranium = 92;
+            public const int Neptunium = 93;
+            public const int Plutonium = 94;
+            public const int Americium = 95;
+            public const int Curium = 96;
+            public const int Berkelium = 97;
+            public const int Californium = 98;
+            public const int Einsteinium = 99;
+            public const int Fermium = 100;
+            public const int Mendelevium = 101;
+            public const int Nobelium = 102;
+            public const int Lawrencium = 103;
+            public const int Rutherfordium = 104;
+            public const int Dubnium = 105;
+            public const int Seaborgium = 106;
+            public const int Bohrium = 107;
+            public const int Hassium = 108;
+            public const int Meitnerium = 109;
+            public const int Darmstadtium = 110;
+            public const int Roentgenium = 111;
+            public const int Copernicium = 112;
+            public const int Ununtrium = 113;
+            public const int Flerovium = 114;
+            public const int Ununpentium = 115;
+            public const int Livermorium = 116;
+            public const int Ununseptium = 117;
+            public const int Ununoctium = 118;
+            #endregion
+        }
+
         public string Name { get; private set; }
 
         /// <summary>
@@ -213,7 +338,7 @@ namespace NCDK.Config
         /// <summary>
         /// Lookup elements by atomic number.
         /// </summary>
-        internal static readonly Elements[] Values = new Elements[] {
+        public static readonly Elements[] Values = new Elements[] {
             Unknown,
             Hydrogen,
             Helium,
@@ -428,10 +553,10 @@ namespace NCDK.Config
         /// </summary>
         /// <example>
         /// <code>
-        /// Elements e = Elements.ofString("c");
-        /// Elements e = Elements.ofString("C");
-        /// Elements e = Elements.ofString("Carbon");
-        /// Elements e = Elements.ofString("carbon");
+        /// Elements e = Elements.OfString("c");
+        /// Elements e = Elements.OfString("C");
+        /// Elements e = Elements.OfString("Carbon");
+        /// Elements e = Elements.OfString("carbon");
         /// </code></example>
         /// <param name="str">input string</param>
         /// <returns>an element, or <see cref="Unknown"/></returns>

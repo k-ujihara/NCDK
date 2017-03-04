@@ -48,7 +48,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void implicitHCentre()
+        public void ImplicitHCentre()
         {
 
             RoundTrip("[C@@H](N)(O)C");
@@ -98,32 +98,32 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void ring_closures1()
+        public void Ring_closures1()
         {
             RoundTrip("C1=CN=CC2=NC=N[C@@H]21");
         }
 
         [TestMethod()]
-        public void ring_closures2()
+        public void Ring_closures2()
         {
             RoundTrip("C1=CN=CC2=NC=N[C@H]21");
         }
 
         [TestMethod()]
-        public void ring_closures3()
+        public void Ring_closures3()
         {
             RoundTrip("C1=CC(=CC2=NC(=N[C@@H]21)C(F)(F)F)N");
         }
 
         [TestMethod()]
-        public void ring_closures4()
+        public void Ring_closures4()
         {
             RoundTrip("C1=CC(=CC2=NC(=N[C@H]21)C(F)(F)F)N");
         }
 
 
         [TestMethod()]
-        public void lowRingNumberOrder()
+        public void LowRingNumberOrder()
         {
             RoundTrip("C1=CC2=CC=CC=C2C=C1");
         }
@@ -135,13 +135,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void highRingNumberOrder()
+        public void HighRingNumberOrder()
         {
             RoundTrip("C1CC2CCC3=C4C2=C5C1CCC6=C5C7=C8C(C=C9CCC%10CCC%11CCC%12=CC(=C3)C(C%13=C8C9=C%10C%11=C%12%13)=C47)=C6");
         }
 
         [TestMethod()]
-        public void bondTypeOnFirstAtom1()
+        public void BondTypeOnFirstAtom1()
         {
             string smi = "C1C=CC=CC=1";
             string exp = "C=1C=CC=CC1";
@@ -149,7 +149,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void bondTypeOnFirstAtom2()
+        public void BondTypeOnFirstAtom2()
         {
             string smi = "C=1C=CC=CC1";
             string exp = "C=1C=CC=CC1";
@@ -157,7 +157,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void bondTypeOnFirstAtom3()
+        public void BondTypeOnFirstAtom3()
         {
             string smi = "C=1C=CC=CC=1";
             string exp = "C=1C=CC=CC1";
@@ -190,7 +190,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void reuseNumbering()
+        public void ReuseNumbering()
         {
             Generator generator = new Generator(Graph.FromSmiles("c1cc1c2ccc2"),
                                                 new Generator.ReuseRingNumbering(1));
@@ -268,7 +268,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void resetRingNumbersBetweenComponents1()
+        public void ResetRingNumbersBetweenComponents1()
         {
             Graph g = Graph.FromSmiles("C1CC1.C1CC1");
             Assert.AreEqual("C1CC1.C1CC1",
@@ -276,7 +276,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void resetRingNumbersBetweenComponents2()
+        public void ResetRingNumbersBetweenComponents2()
         {
             Graph g = Graph.FromSmiles("C1CC1.C1CC1");
             Assert.AreEqual("C1CC1.C1CC1",
@@ -285,7 +285,7 @@ namespace NCDK.Beam
 
 
         [TestMethod()]
-        public void reusingNumbering()
+        public void ReusingNumbering()
         {
             Generator.RingNumbering rnums = new Generator.ReuseRingNumbering(0);
             for (int i = 0; i < 50; i++)
@@ -312,7 +312,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void iterativeNumbering()
+        public void IterativeNumbering()
         {
             Generator.RingNumbering rnums = new Generator.IterativeRingNumbering(0);
             for (int i = 0; i < 50; i++)
@@ -372,9 +372,9 @@ namespace NCDK.Beam
         /// <summary>
         ///Generate random permutations of the molecule.
         /// </summary>
-        ///@param input input SMILES
-        ///@param n     number of generations (how many molecules to produce)
-        ///@return a single SMILES string of disconnected molecules (input) randomly
+        /// <param name="input">input SMILES</param>
+        /// <param name="n">number of generations (how many molecules to produce)</param>
+        /// <returns>a single SMILES string of disconnected molecules (input) randomly</returns>
         ///        permuted
         ///@ the input SMILES was invalid
         private static string RandomPermutations(string input, int n)

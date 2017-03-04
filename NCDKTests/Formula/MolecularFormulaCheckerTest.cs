@@ -25,11 +25,11 @@ using System.IO;
 
 namespace NCDK.Formula
 {
-    /**
-     * Checks the functionality of the MolecularFormulaChecker.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaChecker.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaCheckerTest : CDKTestCase
     {
@@ -37,10 +37,10 @@ namespace NCDK.Formula
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private IsotopeFactory ifac;
 
-        /**
-         *  Constructor for the MolecularFormulaCheckerTest object.
-         *
-         */
+        /// <summary>
+        ///  Constructor for the MolecularFormulaCheckerTest object.
+        ///
+        /// </summary>
         public MolecularFormulaCheckerTest()
             : base()
         {
@@ -54,22 +54,22 @@ namespace NCDK.Formula
             }
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaChecker_List()
         {
             Assert.IsNotNull(new MolecularFormulaChecker(new List<IRule>()));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetRules()
         {
@@ -79,11 +79,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(MFChecker.Rules);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValidSum_IMolecularFormula()
         {
@@ -101,11 +101,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValid_NOT()
         {
@@ -125,11 +125,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValid_IMolecularFormula()
         {
@@ -149,11 +149,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValid_NOT_2Rules()
         {
@@ -176,11 +176,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValidSum_True_2Rules()
         {
@@ -200,11 +200,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsValid_True_2Rules()
         {

@@ -58,26 +58,7 @@ namespace NCDK.Config
         private void ReadConfiguration(string fileName, IChemObjectBuilder builder)
         {
             Trace.TraceInformation("Reading config file from " + fileName);
-            var ins = Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName);
-            if (ins == null)
-            {
-                if (File.Exists(fileName))
-                {
-                    try
-                    {
-                        ins = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    }
-                    catch (Exception exception)
-                    {
-                        Trace.TraceError(exception.Message);
-                        Debug.WriteLine(exception);
-                    }
-                }
-                else
-                {
-                    Trace.TraceError("no stream and no file");
-                }
-            }
+            var ins = ResourceLoader.GetAsStream(fileName);
 
             string format = Path.GetExtension(fileName);
             switch (format)
@@ -90,6 +71,7 @@ namespace NCDK.Config
                     format = XML_EXTENSION;
                     break;
             }
+
             ReadConfiguration(ins, format, builder);
         }
 

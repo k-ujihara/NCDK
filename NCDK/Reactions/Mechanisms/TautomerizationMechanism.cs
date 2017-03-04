@@ -43,9 +43,9 @@ namespace NCDK.Reactions.Mechanisms
          * @param atomContainerSet
          * @param atomList    The list of atoms taking part in the mechanism. Only allowed fourth atoms.
          * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
-         * 					  The first bond is the bond to decrease the order and the second is the bond
-         * 				      to increase the order
-         * 					  It is the bond which is moved
+         *                       The first bond is the bond to decrease the order and the second is the bond
+         *                       to increase the order
+         *                       It is the bond which is moved
          * @return            The Reaction mechanism
          *
          */

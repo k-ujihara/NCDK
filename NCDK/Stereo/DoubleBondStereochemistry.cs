@@ -28,15 +28,15 @@ using System.Linq;
 
 namespace NCDK.Stereo
 {
-    /**
-	 * Stereochemistry specification for double bonds. See {@link IDoubleBondStereochemistry} for
-	 * further details.
-	 *
-	 * @cdk.module core
-	 * @cdk.githash
-	 *
-	 * @see IDoubleBondStereochemistry
-	 */
+    /// <summary>
+    /// Stereochemistry specification for double bonds. See <see cref="IDoubleBondStereochemistry"/> for
+    /// further details.
+    ///
+    // @cdk.module core
+    // @cdk.githash
+    ///
+    /// <seealso cref="IDoubleBondStereochemistry"/>
+    /// </summary>
     public class DoubleBondStereochemistry
         : IDoubleBondStereochemistry
     {
@@ -45,10 +45,10 @@ namespace NCDK.Stereo
         private IBond stereoBond;
         public IChemObjectBuilder Builder { get; set; }
 
-        /**
-         * Creates a new double bond stereo chemistry. The path of length three is defined by
-         * <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
-         */
+        /// <summary>
+        /// Creates a new double bond stereo chemistry. The path of length three is defined by
+        /// <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
+        /// </summary>
         public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {
             if (ligandBonds.Count() > 2) throw new ArgumentException("expected two ligand bonds");

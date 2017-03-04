@@ -21,10 +21,9 @@ namespace FaulonSignatures
         private readonly SortedSet<int> vertexIndices;
 
         /// <summary>
-        /// Make a symmetry class for the signature string 
-        /// <code>signatureString</code>.
-        /// <param name="signatureString">the signature string for this symmetry class</param>
+        /// Make a symmetry class for the signature string <paramref name="signatureString"/>.
         /// </summary>
+        /// <param name="signatureString">the signature string for this symmetry class</param>
         public SymmetryClass(string signatureString)
         {
             this.signatureString = signatureString;
@@ -60,9 +59,8 @@ namespace FaulonSignatures
 
         /// <summary>
         /// Add a vertex index to the list.
-        /// 
-        /// <param name="vertexIndex">the vertex index to add</param>
         /// </summary>
+        /// <param name="vertexIndex">the vertex index to add</param>
         public void AddIndex(int vertexIndex)
         {
             this.vertexIndices.Add(vertexIndex);
@@ -72,9 +70,9 @@ namespace FaulonSignatures
         /// If the vertex indexed by <code>vertexIndex</code> is in the symmetry 
         /// class then return the smaller of it and the lowest element. If it is not
         /// in the symmetry class, return -1.
-        /// 
-        /// <param name="vertexIndex">/// @return</param>
         /// </summary>
+        /// <param name="vertexIndex"></param>
+        /// <returns></returns>
         public int GetMinimal(int vertexIndex, List<int> used)
         {
             int min = -1;

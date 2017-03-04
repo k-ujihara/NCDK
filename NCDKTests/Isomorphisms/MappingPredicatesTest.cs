@@ -29,10 +29,10 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class MappingPredicatesTest
     {

@@ -33,8 +33,8 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>4alpha,10beta-Bis(acetyloxy)-13alpha-[(2S,3S)-3-(benzoylamino)-2-hydroxy-3-phenylpropanoyloxy]-1,7beta-dihydroxy-9-oxo-5beta,20-epoxytax-11-en-2alpha-yl benzoate</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>4alpha,10beta-bis(acetyloxy)-13alpha-[(2S,3S)-3-(benzoylamino)-2-hydroxy-3-phenylpropanoyloxy]-1,7beta-dihydroxy-9-oxo-5beta,20-epoxytax-11-en-2alpha-yl benzoate</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>5beta,20-Epoxy-1,2-alpha,4,7beta,10beta,13alpha-hexahydroxytax-11-en-9-one 4,10-diacetate 2-benzoate 13-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>CHEBI:45863</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Paclitaxel</PC-Substance_synonyms_E>
@@ -701,16 +701,16 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>(2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-1,2a,3,4,4a,6,9,10,11,12,12a,12b-Dodecahydro-4,6,9,11,12,12b-hexahydroxy-4a,8,13,13-tetramethyl-7,11-methano-5H-Cyclodeca(3,4)Benz(1,2-b)oxet-5-one 6,12b-diacetate, 12-benzoate, 9-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-1,2a,3,4,4a,6,9,10,11,12,12a,12b-Dodecahydro-4,6,9,11,12,12b-hexahydroxy-4a,8,13,13-tetramethyl-7,11-methano-5H-cyclodeca(3,4)benz(1,2-b)oxet-5-one 6,12b-diacetate, 12-benzoate, 9-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>33069-62-4</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>5beta,20-Epoxy-1,2-alpha,4,7beta,10beta,13alpha-hexahydroxytax-11-en-9-one 4,10-diacetate 2-benzoate 13-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>ABI 007</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>ABI-007</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Abraxane</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>BMS 181339-01</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR-(2a-alpha,4-beta,4a-beta,6-beta,9-Alpha(alpha-R*,beta-S*),11-alpha,12-alpha,12a-alpha, 12b-alpha))-</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR-(2a-alpha,4-beta,4a-beta,6-beta,9-alpha(alpha-R*,beta-S*),11-alpha,12-alpha,12a-alpha, 12b-alpha))-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Capxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>DRG-0190</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Ebetaxel</PC-Substance_synonyms_E>
@@ -1394,9 +1394,9 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>(2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-1,2a,3,4,4a,6,9,10,11,12,12a,12b-Dodecahydro 4,6,9,11,12,12b-hexahydroxy-4a,8,13,13-tetramethyl-7,11-methano 5Hcyclodeca(3,4)Benz(1,2-b)oxet-5-one 6,12b-diacetate,</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-1,2a,3,4,4a,6,9,10,11,12,12a,12b-Dodecahydro 4,6,9,11,12,12b-hexahydroxy-4a,8,13,13-tetramethyl-7,11-methano 5Hcyclodeca(3,4)benz(1,2-b)oxet-5-one 6,12b-diacetate,</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alpha R*,betaS*),11alpha,12alpha,12balpha))-beta-(Benzoylamino)-alpha-hydroxybenzenepropanoic acid 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, (alphaR,betaS)- (9CI)</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, [2aR-[2aalpha,4beta,4abeta,6beta,9alpha(aR*,betaS*),11alpha,12alpha,12aalpha,12balpha]]-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>12-benzoate, 9-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
@@ -1407,8 +1407,8 @@
       <PC-Substance_synonyms_E>ABI-007</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Abraxane</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>BMS 181339-01</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Capxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>DRG-0190</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Ebetaxel</PC-Substance_synonyms_E>
@@ -2127,7 +2127,7 @@
       <PC-Substance_synonyms_E>AIDS-002657</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>AIDS002657</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>BMS-181339-01</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, b-(benzoylamino)-.alpha.-hydroxy-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, (aR,bS)-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, b-(benzoylamino)-.alpha.-hydroxy-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, (aR,bS)-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC125973</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Paclitaxel</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Plaxicel</PC-Substance_synonyms_E>
@@ -9015,8 +9015,8 @@
     </PC-Substance_source>
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>71610-00-9</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-hydroxy-beta-(((2E)-2-methyl-1-oxo-2-butenyl)amino)-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (alphaR,betaS)-</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-hydroxy-beta-((2-methyl-1-oxo-2-butenyl)amino)-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(aR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-hydroxy-beta-(((2E)-2-methyl-1-oxo-2-butenyl)amino)-, (2aR,4S,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (alphaR,betaS)-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-hydroxy-beta-((2-methyl-1-oxo-2-butenyl)amino)-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(aR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Cephalomannine</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC 318735</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Taxol B</PC-Substance_synonyms_E>
@@ -11643,7 +11643,7 @@
       <PC-Substance_synonyms_E>160511-46-6</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>4-Deacetyl-taxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>4-Deacetyltaxol</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid,beta-(benzoylamino)-alpha-hydroxy-, 6-(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11,12b-trihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid,beta-(benzoylamino)-alpha-hydroxy-, 6-(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11,12b-trihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR-(2aalpha,4beta,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_xref>
       <PC-XRefData>
@@ -12927,8 +12927,8 @@
       <PC-Substance_synonyms_E>7-Epitaxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>7-epi-Paclitaxel</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>7-epi-Taxol</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-,     (2aR,4R,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-Bis(acetyloxy)-12-(benzoyloxy)-    2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (alphaR,betaS)-</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR-     (2aalpha,4alpha,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-,     (2aR,4R,4aS,6R,9S,11S,12S,12aR,12bS)-6,12b-bis(acetyloxy)-12-(benzoyloxy)-    2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (alphaR,betaS)-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, beta-(benzoylamino)-alpha-hydroxy-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR-     (2aalpha,4alpha,4abeta,6beta,9alpha(alphaR*,betaS*),11alpha,12alpha,12aalpha,12balpha))-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Epitaxol</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_xref>
@@ -14669,7 +14669,7 @@
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>2'-Acetyltaxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>92950-40-8</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-(acetyloxy)-beta-(benzoylamino)-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-Cyclodeca(3,4)Benz(1,2-b)oxet-9-yl ester, (2aR</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, alpha-(acetyloxy)-beta-(benzoylamino)-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)-2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy-4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca(3,4)benz(1,2-b)oxet-9-yl ester, (2aR</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Taxol 2'-acetate</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_xref>
@@ -20514,7 +20514,7 @@
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>33069-62-4</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>7,11-Methano-5H-cyclodeca[3,4]benz[1,2-b]oxete,benzenepropanoic acid deriv.</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, .beta.-(benzoylamino)- .alpha.-hydroxy-, 6,12b-Bis(acetyl oxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b,- dodecahydro-4,11- dihydroxy-4a,8,13,13-tetramethyl-5-oxo- 7,11-methano- 1H-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, [2aR- [2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(alpha. R*,.beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, .beta.-(benzoylamino)- .alpha.-hydroxy-, 6,12b-bis(acetyl oxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b,- dodecahydro-4,11- dihydroxy-4a,8,13,13-tetramethyl-5-oxo- 7,11-methano- 1H-cyclodeca[3,4]benz[1,2-b]oxet-9-yl ester, [2aR- [2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(alpha. R*,.beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC125973</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>PACLITAXEL</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Tax-11-en-9-one, 5.beta.,20-epoxy-1,2.alpha.,4,7.beta., 10.beta.,13.alpha.- hexahydroxy-, 4,10-diacetate 2- benzoate,13-ester with (2R,3S)-N-benzoyl-3-phenylisoserine</PC-Substance_synonyms_E>
@@ -21217,7 +21217,7 @@
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>2'-Glutaryltaxol, sodium salt</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC607859</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Pentanedioic acid, mono[2-benzoylamino-1-[[6,12b-Bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, sodium salt</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Pentanedioic acid, mono[2-benzoylamino-1-[[6,12b-bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, sodium salt</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Taxol, 2'-glutarate, sodium salt</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_comment>
@@ -21974,7 +21974,7 @@
     </PC-Substance_source>
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>81924-74-5</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, .alpha.-(acetyloxy)-.beta.- (benzoylamino)-, 4,6,12b-Tris(acetyloxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-11-hydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca [3,4]benz[1,2-b]oxet-9-yl ester, [2aR-[2a.alpha.,4.beta., 4a.beta.,6.beta.,9.alpha.(.alpha.R*,.beta.S*),11.alpha.,12a,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, .alpha.-(acetyloxy)-.beta.- (benzoylamino)-, 4,6,12b-tris(acetyloxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-11-hydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca [3,4]benz[1,2-b]oxet-9-yl ester, [2aR-[2a.alpha.,4.beta., 4a.beta.,6.beta.,9.alpha.(.alpha.R*,.beta.S*),11.alpha.,12a,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC358826</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>TAXOL, 7,2'-DIACETATE,</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
@@ -25690,7 +25690,7 @@
     </PC-Substance_source>
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>2'-Glutaryltaxol-3-(dimethylamino)propylamide</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Benzenepropanoic acid, .beta.-(benzoylamino)-.alpha.- [[5-[[3-(dimethylamino)propyl]amino]-1,5-dioxopentyl]oxy]-, 6,12b-Bis(acetyloxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yl ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Benzenepropanoic acid, .beta.-(benzoylamino)-.alpha.- [[5-[[3-(dimethylamino)propyl]amino]-1,5-dioxopentyl]oxy]-, 6,12b-bis(acetyloxy)-12-(benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yl ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC608832</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>TAXOL, 2'-N-[3-(DIMETHYLAMINO)PROPYL]GLUTARAMATE</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
@@ -32124,7 +32124,7 @@
     </PC-Substance_source>
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>2'-Succinyltaxol, compd. with 2,2',2''- nitrilotris(ethanol)</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Butanedioic acid, mono[2-benzoylamino-1-[[6,12b-Bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, compd. with 2,2',2''-nitrilotris(ethanol)</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Butanedioic acid, mono[2-benzoylamino-1-[[6,12b-bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, compd. with 2,2',2''-nitrilotris(ethanol)</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC605266</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Taxol, 2'-succinate, compd. with 2,2',2''- nitrilotris(ethanol)</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
@@ -32961,7 +32961,7 @@
     <PC-Substance_synonyms>
       <PC-Substance_synonyms_E>2'-Glutaryltaxol, triethanolamine salt</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>NSC607860</PC-Substance_synonyms_E>
-      <PC-Substance_synonyms_E>Pentanedioic acid, mono[2-benzoylamino-1-[[6,12b-Bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, compd. with 2,2',2''-nitrilotris(ethanol)</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>Pentanedioic acid, mono[2-benzoylamino-1-[[6,12b-bis(acetyloxy)-12- (benzoyloxy)- 2a,3,4,4a,5,6,9,10,11,12,12a,12b-dodecahydro-4,11-dihydroxy- 4a,8,13,13-tetramethyl-5-oxo-7,11-methano-1H-cyclodeca[3,4] benz[1,2-b]oxet-9-yloxy]carbonyl]-2-phenylethyl] ester, [2aR-[2a.alpha.,4.beta.,4a.beta.,6.beta.,9.alpha.(.alpha.R*, .beta.S*),11.alpha.,12.alpha.,12a.alpha.,12b.alpha.]]-, compd. with 2,2',2''-nitrilotris(ethanol)</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Taxol, 2'-glutarate, compd. with 2,2',2''-nitrilotris(ethanol)</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_comment>
@@ -33829,7 +33829,7 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>10-Deacetyl-7,10-Bis(glycinyl)-N-debenzoyl-N-(tert-butoxycarbonyl)taxol</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>10-Deacetyl-7,10-bis(glycinyl)-N-debenzoyl-N-(tert-butoxycarbonyl)taxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>133524-75-1</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_xref>
@@ -33869,7 +33869,7 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>10-Deacetyl-7,10-Bis(4-carboxy-1-oxobutyl)-N-debenzoyl-N-(tert-butoxycarbonyl)taxol</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>10-Deacetyl-7,10-bis(4-carboxy-1-oxobutyl)-N-debenzoyl-N-(tert-butoxycarbonyl)taxol</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>133524-74-0</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>
     <PC-Substance_xref>
@@ -40574,7 +40574,7 @@
       </PC-Source>
     </PC-Substance_source>
     <PC-Substance_synonyms>
-      <PC-Substance_synonyms_E>(2alpha,5beta,7beta,10beta,13alpha)-4,10-Bis(acetyloxy)-1,7-dihydroxy-13-({(2R,3S)-2-hydroxy-3-phenyl-3-[(phenylcarbonyl)amino]propanoyl}oxy)-9-oxo-5,20-epoxytax-11-en-2-yl benzoate</PC-Substance_synonyms_E>
+      <PC-Substance_synonyms_E>(2alpha,5beta,7beta,10beta,13alpha)-4,10-bis(acetyloxy)-1,7-dihydroxy-13-({(2R,3S)-2-hydroxy-3-phenyl-3-[(phenylcarbonyl)amino]propanoyl}oxy)-9-oxo-5,20-epoxytax-11-en-2-yl benzoate</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>33069-62-4</PC-Substance_synonyms_E>
       <PC-Substance_synonyms_E>Paclitaxel</PC-Substance_synonyms_E>
     </PC-Substance_synonyms>

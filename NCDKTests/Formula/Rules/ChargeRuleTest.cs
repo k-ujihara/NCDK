@@ -20,9 +20,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class ChargeRuleTest : FormulaRuleTest
     {
@@ -35,11 +35,11 @@ namespace NCDK.Formula.Rules
             SetRule(typeof(ChargeRule));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestChargeRule()
         {
@@ -48,11 +48,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
@@ -66,11 +66,11 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestSetParameters()
         {

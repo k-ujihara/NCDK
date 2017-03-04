@@ -21,44 +21,44 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Topological descriptor characterizing the carbon connectivity.
-     * <p/>
-     * The class calculates 9 descriptors in the following order
-     * <ul>
-     * <li>C1SP1 triply hound carbon bound to one other carbon
-     * <li>C2SP1	triply bound carbon bound to two other carbons
-     * <li>C1SP2	doubly hound carbon bound to one other carbon
-     * <li>C2SP2	doubly bound carbon bound to two other carbons
-     * <li>C3SP2	doubly bound carbon bound to three other carbons
-     * <li>C1SP3	singly bound carbon bound to one other carbon
-     * <li>C2SP3	singly bound carbon bound to two other carbons
-     * <li>C3SP3	singly bound carbon bound to three other carbons
-     * <li>C4SP3	singly bound carbon bound to four other carbons
-     * </ul>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td></td>
-     * <td></td>
-     * <td>no parameters</td>
-     * </tr>
-     * </table>
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2007-09-28
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:carbonTypes
-     * @cdk.keyword topological bond order ctypes
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Topological descriptor characterizing the carbon connectivity.
+    /// <p/>
+    /// The class calculates 9 descriptors in the following order
+    /// <ul>
+    /// <li>C1SP1 triply hound carbon bound to one other carbon
+    /// <li>C2SP1    triply bound carbon bound to two other carbons
+    /// <li>C1SP2    doubly hound carbon bound to one other carbon
+    /// <li>C2SP2    doubly bound carbon bound to two other carbons
+    /// <li>C3SP2    doubly bound carbon bound to three other carbons
+    /// <li>C1SP3    singly bound carbon bound to one other carbon
+    /// <li>C2SP3    singly bound carbon bound to two other carbons
+    /// <li>C3SP3    singly bound carbon bound to three other carbons
+    /// <li>C4SP3    singly bound carbon bound to four other carbons
+    /// </ul>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td></td>
+    /// <td></td>
+    /// <td>no parameters</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2007-09-28
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:carbonTypes
+    // @cdk.keyword topological bond order ctypes
+    // @cdk.keyword descriptor
+    /// </summary>
     public class CarbonTypesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3" };

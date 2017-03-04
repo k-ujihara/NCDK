@@ -5,10 +5,10 @@ using System.Text;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    /// </summary>
     public class AtomContainerPrinter
     {
 
@@ -64,7 +64,7 @@ namespace NCDK.Groups
                     int a1 = atomContainer.Atoms.IndexOf(bond.Atoms[1]);
                     int pA0 = permutation[a0];
                     int pA1 = permutation[a1];
-                    char o = bondOrderToChar(bond.Order);
+                    char o = BondOrderToChar(bond.Order);
                     if (sortEdges)
                     {
                         string edgeString;
@@ -112,7 +112,7 @@ namespace NCDK.Groups
             return sb.ToString();
         }
 
-        private static char bondOrderToChar(BondOrder order)
+        private static char BondOrderToChar(BondOrder order)
         {
             switch (order.Ordinal)
             {

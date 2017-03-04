@@ -40,7 +40,7 @@ namespace NCDK.Templates
             return mol;
         }
 
-        public static IAtomContainer getIsopentane(IChemObjectBuilder builder)
+        public static IAtomContainer GetIsopentane(IChemObjectBuilder builder)
         {
             IAtomContainer mol = builder.CreateAtomContainer();
             mol.Atoms.Add(builder.CreateAtom("C"));
@@ -56,7 +56,7 @@ namespace NCDK.Templates
             return mol;
         }
 
-        public static IAtomContainer getIsohexane(IChemObjectBuilder builder)
+        public static IAtomContainer GetIsohexane(IChemObjectBuilder builder)
         {
             IAtomContainer mol = builder.CreateAtomContainer();
             mol.Atoms.Add(builder.CreateAtom("C"));

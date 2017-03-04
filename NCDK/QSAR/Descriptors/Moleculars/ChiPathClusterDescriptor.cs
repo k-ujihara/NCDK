@@ -28,39 +28,39 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Evaluates chi path cluster descriptors.
-     * <p/>
-     * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
-     * It utilizes the graph isomorphism code of the CDK to find fragments matching
-     * SMILES strings representing the fragments corresponding to each type of chain.
-     * <p/>
-     * The order of the values returned is
-     * <ol>
-     * <li>SPC-4 - Simple path cluster, order 4
-     * <li>SPC-5 - Simple path cluster, order 5
-     * <li>SPC-6 - Simple path cluster, order 6
-     * <li>VPC-4 - Valence path cluster, order 4
-     * <li>VPC-5 - Valence path cluster, order 5
-     * <li>VPC-6 - Valence path cluster, order 6
-     * </ol>
-     * <p/>
-     * <p/>
-     * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
-     * the various fragments. As a result calculations may be slow. In addition, recent
-     * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
-     * branches etc.) whereas these descriptors use the older more complex fragment
-     * definitions.
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2006-11-13
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:chiPathCluster
-     * @cdk.keyword chi path cluster index
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Evaluates chi path cluster descriptors.
+    /// <p/>
+    /// The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
+    /// It utilizes the graph isomorphism code of the CDK to find fragments matching
+    /// SMILES strings representing the fragments corresponding to each type of chain.
+    /// <p/>
+    /// The order of the values returned is
+    /// <ol>
+    /// <li>SPC-4 - Simple path cluster, order 4
+    /// <li>SPC-5 - Simple path cluster, order 5
+    /// <li>SPC-6 - Simple path cluster, order 6
+    /// <li>VPC-4 - Valence path cluster, order 4
+    /// <li>VPC-5 - Valence path cluster, order 5
+    /// <li>VPC-6 - Valence path cluster, order 6
+    /// </ol>
+    /// <p/>
+    /// <p/>
+    /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+    /// the various fragments. As a result calculations may be slow. In addition, recent
+    /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
+    /// branches etc.) whereas these descriptors use the older more complex fragment
+    /// definitions.
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2006-11-13
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:chiPathCluster
+    // @cdk.keyword chi path cluster index
+    // @cdk.keyword descriptor
+    /// </summary>
     public class ChiPathClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;

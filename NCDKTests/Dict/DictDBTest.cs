@@ -22,13 +22,11 @@ using System.Linq;
 
 namespace NCDK.Dict
 {
-    /**
-     * Checks the functionality of the DictionaryDatabase class.
-     *
-     * @cdk.module test-dict
-     *
-     * @see org.openscience.cdk.dict.DictionaryDatabase
-     */
+    /// <summary>
+    /// Checks the functionality of the DictionaryDatabase class.
+    /// </summary>
+    /// <seealso cref="DictionaryDatabase"/>
+    // @cdk.module test-dict
     [TestClass()]
     public class DictDBTest : CDKTestCase
     {
@@ -54,7 +52,7 @@ namespace NCDK.Dict
         {
             DictionaryDatabase db = new DictionaryDatabase();
             var dict = db.GetDictionary("descriptor-algorithms");
-            Entry entry = dict.GetEntry("apol");
+            Entry entry = dict["apol"];
             Assert.IsNotNull(entry);
             Assert.AreEqual("Atomic Polarizabilities", entry.Label);
             string def = entry.Definition;
@@ -67,7 +65,7 @@ namespace NCDK.Dict
         {
             DictionaryDatabase db = new DictionaryDatabase();
             var dict = db.GetDictionary("reaction-processes");
-            Entry entry = dict.GetEntry("AdductionProtonLP".ToLowerInvariant());
+            Entry entry = dict["AdductionProtonLP".ToLowerInvariant()];
             Assert.IsNotNull(entry);
             Assert.AreEqual("Adduction Proton from Lone Pair Orbitals", entry.Label);
             string def = entry.Definition;

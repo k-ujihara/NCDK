@@ -26,14 +26,14 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    /**
-     * Super class for <b>all</b> CDK TestCase implementations that ensures that
-     * the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
-     *
-     * @cdk.module test
-     *
-     * @see        CDKTestCase
-     */
+    /// <summary>
+    /// Super class for <b>all</b> CDK TestCase implementations that ensures that
+    /// the LoggingTool is configured. This is the JUnit4 version of CDKTestCase.
+    ///
+    // @cdk.module test
+    ///
+    // @see        CDKTestCase
+    /// </summary>
     [TestClass()]
     public class CDKTestCase
     {
@@ -73,14 +73,14 @@ namespace NCDK
                 Assert.Fail();
         }
 
-        /**
-         * Compares two Vector2 objects, and asserts that the XY coordinates
-         * are identical within the given error.
-         *
-         * @param p1    first Vector2
-         * @param p2    second Vector2
-         * @param error maximal allowed error
-         */
+        /// <summary>
+        /// Compares two Vector2 objects, and asserts that the XY coordinates
+        /// are identical within the given error.
+        ///
+        /// <param name="p1">first Vector2</param>
+        /// <param name="p2">second Vector2</param>
+        /// <param name="error">maximal allowed error</param>
+        /// </summary>
         public virtual void AssertAreEqual(Vector2? p1, Vector2? p2, double error)
         {
             if (p1 == p2)
@@ -91,14 +91,14 @@ namespace NCDK
             Assert.AreEqual(p1.Value.Y, p2.Value.Y, error);
         }
 
-        /**
-         * Compares two Vector3 objects, and asserts that the XY coordinates
-         * are identical within the given error.
-         *
-         * @param p1    first Vector3
-         * @param p2    second Vector3
-         * @param error maximal allowed error
-         */
+        /// <summary>
+        /// Compares two Vector3 objects, and asserts that the XY coordinates
+        /// are identical within the given error.
+        ///
+        /// <param name="p1">first Vector3</param>
+        /// <param name="p2">second Vector3</param>
+        /// <param name="error">maximal allowed error</param>
+        /// </summary>
         public virtual void AssertAreEqual(Vector3? p1, Vector3? p2, double error)
         {
             if (p1 == p2)
@@ -110,12 +110,12 @@ namespace NCDK
             Assert.AreEqual(p1.Value.Z, p2.Value.Z, error);
         }
 
-        /**
-         * Tests method that asserts that for all atoms an reasonable CDK atom
-         * type can be perceived.
-         *
-         * @param container IAtomContainer to test atom types of
-         */
+        /// <summary>
+        /// Tests method that asserts that for all atoms an reasonable CDK atom
+        /// type can be perceived.
+        ///
+        /// <param name="container">IAtomContainer to test atom types of</param>
+        /// </summary>
         public virtual void AssertAtomTypesPerceived(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -126,26 +126,26 @@ namespace NCDK
             }
         }
 
-        /**
-         * Convenience method that perceives atom types (CDK scheme) and
-         * adds explicit hydrogens accordingly. It does not create 2D or 3D
-         * coordinates for the new hydrogens.
-         *
-         * @param container to which explicit hydrogens are added.
-         */
+        /// <summary>
+        /// Convenience method that perceives atom types (CDK scheme) and
+        /// adds explicit hydrogens accordingly. It does not create 2D or 3D
+        /// coordinates for the new hydrogens.
+        ///
+        /// <param name="container">to which explicit hydrogens are added.</param>
+        /// </summary>
         protected void AddExplicitHydrogens(IAtomContainer container)
         {
             AddImplicitHydrogens(container);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);
         }
 
-        /**
-         * Convenience method that perceives atom types (CDK scheme) and
-         * adds implicit hydrogens accordingly. It does not create 2D or 3D
-         * coordinates for the new hydrogens.
-         *
-         * @param container to which implicit hydrogens are added.
-         */
+        /// <summary>
+        /// Convenience method that perceives atom types (CDK scheme) and
+        /// adds implicit hydrogens accordingly. It does not create 2D or 3D
+        /// coordinates for the new hydrogens.
+        ///
+        /// <param name="container">to which implicit hydrogens are added.</param>
+        /// </summary>
         protected virtual void AddImplicitHydrogens(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -168,13 +168,13 @@ namespace NCDK
             }
         }
 
-        /**
-         * Convenience method to check that all bond orders are single
-         * and all heavy atoms are aromatic (and that all explicit
-         * hydrogens are not aromatic).
-         *
-         * @param container the atom container to check
-         */
+        /// <summary>
+        /// Convenience method to check that all bond orders are single
+        /// and all heavy atoms are aromatic (and that all explicit
+        /// hydrogens are not aromatic).
+        ///
+        /// <param name="container">the atom container to check</param>
+        /// </summary>
         protected void AssertAllSingleAndAromatic(IAtomContainer container)
         {
             foreach (var bond in container.Bonds)
@@ -189,62 +189,62 @@ namespace NCDK
             }
         }
 
-        /**
-         * Convenience method to check the atom symbols
-         * of a molecule.
-         *
-         * @param symbols an array of the expected atom symbols
-         * @param container the atom container to check
-         */
+        /// <summary>
+        /// Convenience method to check the atom symbols
+        /// of a molecule.
+        ///
+        /// <param name="symbols">an array of the expected atom symbols</param>
+        /// <param name="container">the atom container to check</param>
+        /// </summary>
         protected void AssertAtomSymbols(string[] symbols, IAtomContainer container)
         {
             for (int i = 0; i < container.Atoms.Count; i++)
                 Assert.AreEqual(symbols[i], container.Atoms[i].Symbol);
         }
 
-        /**
-         * Convenience method to check the hybridization states
-         * of a molecule.
-         *
-         * @param hybridizations an array of the expected hybridization states
-         * @param container the atom container to check
-         */
+        /// <summary>
+        /// Convenience method to check the hybridization states
+        /// of a molecule.
+        ///
+        /// <param name="hybridizations">an array of the expected hybridization states</param>
+        /// <param name="container">the atom container to check</param>
+        /// </summary>
         protected void AssertHybridizations(Hybridization[] hybridizations, IAtomContainer container)
         {
             for (int i = 0; i < container.Atoms.Count; i++)
                 Assert.AreEqual(hybridizations[i], container.Atoms[i].Hybridization);
         }
 
-        /**
-         * Convenience method to check the hydrogen counts
-         * of a molecule.
-         *
-         * @param hydrogenCounts an array of the expected hydrogenCounts
-         * @param container the atom container to check
-         */
+        /// <summary>
+        /// Convenience method to check the hydrogen counts
+        /// of a molecule.
+        ///
+        /// <param name="hydrogenCounts">an array of the expected hydrogenCounts</param>
+        /// <param name="container">the atom container to check</param>
+        /// </summary>
         protected void AssertHydrogenCounts(int[] hydrogenCounts, IAtomContainer container)
         {
             for (int i = 0; i < container.Atoms.Count; i++)
                 Assert.AreEqual(hydrogenCounts[i], container.Atoms[i].ImplicitHydrogenCount.Value);
         }
 
-        /**
-         * Asserts that the given string has zero .Length.
-         *
-         * @param string string to test the .Length of.
-         */
+        /// <summary>
+        /// Asserts that the given string has zero .Length.
+        ///
+        /// <param name="string">string to test the .Length of.</param>
+        /// </summary>
         public virtual void AssertZeroLength(string testString)
         {
             Assert.IsNotNull(testString, "Expected a non-null string.");
             Assert.AreEqual(0, testString.Length, $"Expected a zero-.Length string, but found '{testString}'");
         }
 
-        /**
-         * Asserts that the given string consists of a single line, and thus
-         * does not contain any '\r' and/or '\n' characters.
-         *
-         * @param string string to test.
-         */
+        /// <summary>
+        /// Asserts that the given string consists of a single line, and thus
+        /// does not contain any '\r' and/or '\n' characters.
+        ///
+        /// <param name="string">string to test.</param>
+        /// </summary>
         public virtual void AssertOneLiner(string testString)
         {
             Assert.IsNotNull(testString, "Expected a non-null string.");
@@ -256,14 +256,14 @@ namespace NCDK
             }
         }
 
-        /**
-         * This test allows people to use the {@link TestMethod} annotation for
-         * methods that are testing in other classes than identified with {@link TestClass}.
-         * Bit of a workaround for the current set up, but useful in situations where
-         * a methods is rather untestable, such as SAXHandler's EndElement() methods.
-         *
-         * <p>Should be used only in these rare cases.
-         */
+        /// <summary>
+        /// This test allows people to use the {@link TestMethod} annotation for
+        /// methods that are testing in other classes than identified with {@link TestClass}.
+        /// Bit of a workaround for the current set up, but useful in situations where
+        /// a methods is rather untestable, such as SAXHandler's EndElement() methods.
+        ///
+        /// <p>Should be used only in these rare cases.
+        /// </summary>
         [TestMethod()]
         public virtual void TestedByOtherClass()
         {
@@ -271,12 +271,12 @@ namespace NCDK
             Assert.IsTrue(true);
         }
 
-        /**
-         * Asserts that the given subString is present in the fullString.
-         *
-         * @param fullString string which should contain the subString
-         * @param subString string that must be present in the fullString
-         */
+        /// <summary>
+        /// Asserts that the given subString is present in the fullString.
+        ///
+        /// <param name="fullString">string which should contain the subString</param>
+        /// <param name="subString">string that must be present in the fullString</param>
+        /// </summary>
         public virtual void AssertContains(string fullString, string subString)
         {
             Assert.IsNotNull(fullString, "Expected a non-null string to test contains against.");

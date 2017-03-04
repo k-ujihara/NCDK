@@ -18,16 +18,16 @@
 namespace NCDK.Smiles.SMARTS.Parser
 {
 
-    /**
-     * An AST tree visitor. It is a prototype that translate Smarts to MQL.
-     * It is far from fully functioning.
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-04-24
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS AST
-     */
+    /// <summary>
+    /// An AST tree visitor. It is a prototype that translate Smarts to MQL.
+    /// It is far from fully functioning.
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-04-24
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS AST
+    /// </summary>
     public class Smarts2MQLVisitor : SMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)
@@ -52,47 +52,47 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTStart node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         public object Visit(ASTReaction node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         public object Visit(ASTGroup node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         public object Visit(ASTSmarts node, object data)
         {
             string local = "";
-            for (int i = 0; i < node.jjtGetNumChildren(); i++)
+            for (int i = 0; i < node.JJTGetNumChildren(); i++)
             {
-                Node child = node.jjtGetChild(i);
+                Node child = node.JJTGetChild(i);
                 if (child is ASTAtom)
                 {
-                    local = (string)child.jjtAccept(this, local);
+                    local = (string)child.JJTAccept(this, local);
                 }
                 else if (child is ASTLowAndBond)
                 {
                     i++;
-                    Node nextChild = node.jjtGetChild(i); // the next child should
+                    Node nextChild = node.JJTGetChild(i); // the next child should
                                                           // be another smarts
-                    string bond = (string)child.jjtAccept(this, local);
+                    string bond = (string)child.JJTAccept(this, local);
                     local = local + bond;
-                    local = (string)nextChild.jjtAccept(this, local);
+                    local = (string)nextChild.JJTAccept(this, local);
                 }
                 else if (child is ASTSmarts)
                 { // implicit single bond
                     if (!"".Equals(local)) local = local + "-";
-                    local = (string)child.jjtAccept(this, local);
+                    local = (string)child.JJTAccept(this, local);
                 }
                 else if (child is ASTExplicitAtom)
                 {
                     if (!"".Equals(local)) local = local + "-";
-                    local = (string)child.jjtAccept(this, local);
+                    local = (string)child.JJTAccept(this, local);
                 }
             }
             return data + local;
@@ -102,35 +102,35 @@ namespace NCDK.Smiles.SMARTS.Parser
         // logical bonds
         public object Visit(ASTLowAndBond node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTOrBond node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTExplicitHighAndBond node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTImplicitHighAndBond node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         // TODO: Accept only one bond. Need to find out whether MQL supports
         // logical bonds
         public object Visit(ASTNotBond node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         public object Visit(ASTSimpleBond node, object data)
@@ -175,12 +175,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            string left = (string)node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.jjtGetChild(1).jjtAccept(this, data);
+            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -197,12 +197,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTOrExpression node, object data)
         {
-            string left = (string)node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.jjtGetChild(1).jjtAccept(this, data);
+            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -220,12 +220,12 @@ namespace NCDK.Smiles.SMARTS.Parser
         // TODO: the precedence needs to be addressed
         public object Visit(ASTExplicitHighAndExpression node, object data)
         {
-            string left = (string)node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.jjtGetChild(1).jjtAccept(this, data);
+            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -243,12 +243,12 @@ namespace NCDK.Smiles.SMARTS.Parser
         //  TODO: the precedence needs to be addressed
         public object Visit(ASTImplicitHighAndExpression node, object data)
         {
-            string left = (string)node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            string left = (string)node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            string right = (string)node.jjtGetChild(1).jjtAccept(this, data);
+            string right = (string)node.JJTGetChild(1).JJTAccept(this, data);
             if ("".Equals(left))
             {
                 return right;
@@ -275,9 +275,9 @@ namespace NCDK.Smiles.SMARTS.Parser
                 Not = false;
             }
             string str = "";
-            for (int i = 0; i < node.jjtGetNumChildren(); i++)
+            for (int i = 0; i < node.JJTGetNumChildren(); i++)
             {
-                str += node.jjtGetChild(i).jjtAccept(this, data);
+                str += node.JJTGetChild(i).JJTAccept(this, data);
             }
             return str;
         }

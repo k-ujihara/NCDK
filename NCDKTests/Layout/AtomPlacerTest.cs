@@ -29,10 +29,10 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * @author maclean
-     * @cdk.module test-sdg
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-sdg
+    /// </summary>
     [TestClass()]
     public class AtomPlacerTest : CDKTestCase
     {

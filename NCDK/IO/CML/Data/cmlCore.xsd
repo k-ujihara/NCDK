@@ -111,8 +111,8 @@ XSLT validation error: <val:value-of select="$error"/>
       <div class="description">
       </div>
       <div class="example">
-        <pre>
-        </pre>
+        <code>
+        </code>
       </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -127,19 +127,19 @@ XSLT validation error: <val:value-of select="$error"/>
     <xsd:documentation>
       <div class="summary">A reference to an existing atom</div>
       <div class="example">
-         <pre>&lt;molecule id="m1"&gt;
+         <code>&lt;molecule id="m1"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1"/&gt;
   &lt;/atomArray&gt;
   &lt;electron id="e1" atomRef="a1"/&gt;
 &lt;/molecule&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
     <xsd:appinfo>
       <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="atomRef">
         <sch:rule context="bond[@atomRefs2] | stereo[@atomRefs2]">
-          <sch:assert diagnostics="atomRefFormat" test="//atom/@id=substring-before(normalize-Space(@atomRef), ' ')">atom in atomRef must point to existing atom</sch:assert>
+          <sch:assert diagnostics="atomRefFormat" test="//atom/@id=substring-before(normalize-space(@atomRef), ' ')">atom in atomRef must point to existing atom</sch:assert>
         </sch:rule>
       </sch:pattern>
       <sch:diagnostics>
@@ -159,7 +159,7 @@ XSLT validation error: <val:value-of select="$error"/>
     <xsd:documentation>
       <div class="summary">A reference to two distinct existing atoms in order</div>
       <div class="example">
-        <pre>&lt;molecule id="m1"&gt;
+        <code>&lt;molecule id="m1"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1"/&gt;  
     &lt;atom id="a2"/&gt;
@@ -168,15 +168,15 @@ XSLT validation error: <val:value-of select="$error"/>
     &lt;bond atomRefs2="a1 a2"/&gt;
   &lt;/bondArray&gt;
 &lt;/molecule&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
     <xsd:appinfo>
       <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="atomRefs2">
         <sch:rule context="bond[@atomRefs2] | stereo[@atomRefs2]">
-          <sch:assert diagnostics="atomRef2Format" test="Not(substring-before(normalize-Space(@atomRefs2), ' ')                =substring-after(normalize-Space(@atomRefs2), ' '))">atoms in atomRefs must be distinct</sch:assert>
-          <sch:assert diagnostics="atomRef2Format" test="//atom/@id=substring-before(normalize-Space(@atomRefs2), ' ')">first atom in atomRefs2 must point to existing atom</sch:assert>
-          <sch:assert diagnostics="atomRef2Format" test="//atom/@id=substring-after(normalize-Space(@atomRefs2), ' ')">second atom in atomRefs2 must point to existing atom</sch:assert>
+          <sch:assert diagnostics="atomRef2Format" test="not(substring-before(normalize-space(@atomRefs2), ' ')                =substring-after(normalize-space(@atomRefs2), ' '))">atoms in atomRefs must be distinct</sch:assert>
+          <sch:assert diagnostics="atomRef2Format" test="//atom/@id=substring-before(normalize-space(@atomRefs2), ' ')">first atom in atomRefs2 must point to existing atom</sch:assert>
+          <sch:assert diagnostics="atomRef2Format" test="//atom/@id=substring-after(normalize-space(@atomRefs2), ' ')">second atom in atomRefs2 must point to existing atom</sch:assert>
         </sch:rule>
       </sch:pattern>
       <sch:diagnostics>
@@ -197,7 +197,7 @@ XSLT validation error: <val:value-of select="$error"/>
          <xsd:documentation>
       <div class="summary">A reference to three distinct existing atoms in order</div>
       <div class="example">
-       <pre>&lt;molecule id="m1"&gt;
+       <code>&lt;molecule id="m1"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1"/&gt;  
     &lt;atom id="a2"/&gt;
@@ -206,18 +206,18 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;angle atomRefs3="a1 a2 a3" units="degrees"&gt;123.4&lt;/angle&gt;
 &lt;/molecule&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
          <xsd:appinfo>
             <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="atomRefs3">
                <sch:rule context="angle[@atomRefs3]">
-                  <sch:assert test="//atom/@id=substring-before(normalize-Space(@atomRefs3), ' ')">first atom in atomRefs3 must point to existing atom</sch:assert>
-                  <sch:assert test="//atom/@id=substring-before(substring-after(normalize-Space(@atomRefs3), ' '), ' ')">second atom in atomRefs3 must point to existing atom</sch:assert>
-                  <sch:assert test="//atom/@id=substring-after(substring-after(normalize-Space(@atomRefs3), ' '), ' ')">third atom in atomRefs3 must point to existing atom</sch:assert>
-                  <sch:assert test="Not(substring-before(normalize-Space(@atomRefs3), ' ')                 =substring-after(substring-after(normalize-Space(@atomRefs3), ' '), ' '))">atoms 1/3 in atomRefs3 must be distinct</sch:assert>
-                  <sch:assert test="Not(substring-before(normalize-Space(@atomRefs3), ' ')                 =substring-before(substring-after(normalize-Space(@atomRefs3), ' '), ' '))">atoms 1/2 in atomRefs3 must be distinct</sch:assert>
-                  <sch:assert test="Not(substring-after(substring-after(normalize-Space(@atomRefs3), ' '), ' ')                 =substring-before(substring-after(normalize-Space(@atomRefs3), ' '), ' '))">atoms 2/3 in atomRefs3 must be distinct</sch:assert>
+                  <sch:assert test="//atom/@id=substring-before(normalize-space(@atomRefs3), ' ')">first atom in atomRefs3 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-before(substring-after(normalize-space(@atomRefs3), ' '), ' ')">second atom in atomRefs3 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-after(substring-after(normalize-space(@atomRefs3), ' '), ' ')">third atom in atomRefs3 must point to existing atom</sch:assert>
+                  <sch:assert test="not(substring-before(normalize-space(@atomRefs3), ' ')                 =substring-after(substring-after(normalize-space(@atomRefs3), ' '), ' '))">atoms 1/3 in atomRefs3 must be distinct</sch:assert>
+                  <sch:assert test="not(substring-before(normalize-space(@atomRefs3), ' ')                 =substring-before(substring-after(normalize-space(@atomRefs3), ' '), ' '))">atoms 1/2 in atomRefs3 must be distinct</sch:assert>
+                  <sch:assert test="not(substring-after(substring-after(normalize-space(@atomRefs3), ' '), ' ')                 =substring-before(substring-after(normalize-space(@atomRefs3), ' '), ' '))">atoms 2/3 in atomRefs3 must be distinct</sch:assert>
                </sch:rule>
             </sch:pattern>
          </xsd:appinfo>
@@ -233,7 +233,7 @@ XSLT validation error: <val:value-of select="$error"/>
          <xsd:documentation>
       <div class="summary">A reference to four distinct existing atoms in order</div>
       <div class="example">
-       <pre>&lt;molecule id="m1"&gt;
+       <code>&lt;molecule id="m1"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1"/&gt;  
     &lt;atom id="a2"/&gt;
@@ -243,16 +243,16 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;torsion atomRefs4="a1 a2 a3 a4" units="degrees"&gt;123.4&lt;/torsion&gt;
 &lt;/molecule&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
          <xsd:appinfo>
             <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="atomRefs4">
                <sch:rule context="torsion[@atomRefs4] | atomParity[@atomRefs4]">
-                  <sch:assert test="//atom/@id=substring-before(normalize-Space(@atomRefs4), ' ')">first atom in atomRefs4 must point to existing atom</sch:assert>
-                  <sch:assert test="//atom/@id=substring-before(substring-after(normalize-Space(@atomRefs4), ' '), ' ')">second atom in atomRefs4 must point to existing atom</sch:assert>
-                  <sch:assert test="//atom/@id=substring-before(substring-after(substring-after(normalize-Space(@atomRefs4), ' '), ' '), ' ')">third atom in atomRefs4 must point to existing atom</sch:assert>
-                  <sch:assert test="//atom/@id=substring-after(substring-after(substring-after(normalize-Space(@atomRefs4), ' '), ' '), ' ')">fourth atom in atomRefs4 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-before(normalize-space(@atomRefs4), ' ')">first atom in atomRefs4 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-before(substring-after(normalize-space(@atomRefs4), ' '), ' ')">second atom in atomRefs4 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-before(substring-after(substring-after(normalize-space(@atomRefs4), ' '), ' '), ' ')">third atom in atomRefs4 must point to existing atom</sch:assert>
+                  <sch:assert test="//atom/@id=substring-after(substring-after(substring-after(normalize-space(@atomRefs4), ' '), ' '), ' ')">fourth atom in atomRefs4 must point to existing atom</sch:assert>
  have to hack non-equivalence - with 6 assertions
             </sch:rule>
             </sch:pattern>
@@ -275,13 +275,13 @@ XSLT validation error: <val:value-of select="$error"/>
          It can also be used for arrays of atomIDTypes such as in complex setereochemistry,
          geometrical definitions, atom groupings, etc.</p> </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;molecule id="m1"&gt;
   &lt;atomArray atomID="a2 a4 a6"  
       elementType="O N S"/&gt;
 &lt;/molecule&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
          <xsd:appinfo>
@@ -308,7 +308,7 @@ XSLT validation error: <val:value-of select="$error"/>
          be typed as XML IDs since they may not validate.</p>
          </div>
    <div class="example">
-   <pre>&lt;cml&gt;
+   <code>&lt;cml&gt;
   &lt;molecule id="m1"&gt;
     &lt;atomArray&gt;
 &lt;!-- this atom might be referenced as m1:a2. This is not formally
@@ -326,7 +326,7 @@ XSLT validation error: <val:value-of select="$error"/>
 &lt;/cml&gt;
   
     
-</pre>
+</code>
          </div>
       </xsd:documentation>
       <xsd:appinfo>
@@ -346,7 +346,7 @@ XSLT validation error: <val:value-of select="$error"/>
            </div>
 
       <div class="example">
-       <pre>
+       <code>
 &lt;bondArray&gt;
   &lt;bond id="b1" atomRefs2="a3 a8" order="D"&gt;
     &lt;electron bondRef="b1"/&gt;
@@ -357,13 +357,13 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/bond&gt;
 &lt;/bondArray&gt;
 
-       </pre>
+       </code>
       </div>
     </xsd:documentation>
     <xsd:appinfo>
       <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="bondRef">
         <sch:rule context="bond[@bondRefs2] | stereo[@bondRefs2]">
-          <sch:assert diagnostics="bondRefFormat" test="//bond/@id=substring-before(normalize-Space(@bondRef), ' ')">bond in bondRef must point to existing bond</sch:assert>
+          <sch:assert diagnostics="bondRefFormat" test="//bond/@id=substring-before(normalize-space(@bondRef), ' ')">bond in bondRef must point to existing bond</sch:assert>
         </sch:rule>
       </sch:pattern>
       <sch:diagnostics>
@@ -390,8 +390,8 @@ XSLT validation error: <val:value-of select="$error"/>
          It can also be used for arrays of bondIDTypes such as in complex stereochemistry,
          geometrical definitions, bond groupings, etc.</p> </div>
       <div class="example">
-       <pre>
-       </pre>
+       <code>
+       </code>
       </div>
          </xsd:documentation>
          <xsd:appinfo>
@@ -414,13 +414,13 @@ XSLT validation error: <val:value-of select="$error"/>
          </p> 
       </div>
       <div class="example">
-        <pre>&lt;atomArray&gt;
+        <code>&lt;atomArray&gt;
   &lt;atom id="a1" elementType="C"/&gt;
   &lt;atom id="a2" elementType="N"/&gt;
   &lt;atom id="a3" elementType="Pb"/&gt;
   &lt;atom id="a4" elementType="Dummy"/&gt;
 &lt;/atomArray&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -565,8 +565,8 @@ XSLT validation error: <val:value-of select="$error"/>
             <p>Instances of this type will
          be used in array-style representation of atoms.</p> </div>
       <div class="example">
-       <pre>&lt;atomArray elementType="O N S Pb"/&gt;
-</pre>
+       <code>&lt;atomArray elementType="O N S Pb"/&gt;
+</code>
       </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -582,13 +582,13 @@ XSLT validation error: <val:value-of select="$error"/>
          This has no relation to its
          calculated (fractional) charge.</p> </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;atomArray&gt;
   &lt;atom id="a1" elementType="N" formalCharge="+1"/&gt;
   &lt;atom id="a2" elementType="O" formalCharge="-1"/&gt;
 &lt;/atomArray&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -605,7 +605,7 @@ XSLT validation error: <val:value-of select="$error"/>
             by a formal charge. NO brackets or other nesting is allowed.</p>
       </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;stm:list xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
   &lt;formula id="methane" concise="C 1 H 4"/&gt;
   &lt;formula id="chloroacetate" concise="Cl 1 H 2 C 2 O 2 -1"/&gt;
@@ -616,7 +616,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/formula&gt;
 &lt;/stm:list&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
          <xsd:appinfo>
@@ -641,7 +641,7 @@ XSLT validation error: <val:value-of select="$error"/>
       should not be used where hydrogen atoms bridge 2 or more atoms.</p>
       </div>
       <div class="example">
-       <pre>
+       <code>
 
 &lt;atom id="a1" title="O3'" elementType="O" 
   formalCharge="1" hydrogenCount="1"
@@ -657,7 +657,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;electron id="e1" atomRef="a1" count="2"/&gt;
 &lt;/atom&gt;
 
-       </pre>
+       </code>
       </div>
       </xsd:documentation>
    </xsd:annotation>
@@ -812,7 +812,7 @@ XSLT validation error: <val:value-of select="$error"/>
       attribute  which links to a dictionary
          </p> </div>
          <div class="example">
-         <pre>&lt;bondArray&gt;
+         <code>&lt;bondArray&gt;
   &lt;bond id="b1" atomRefs2="a3 a8" order="D"&gt;
     &lt;electron bondRef="b1"/&gt;
     &lt;stereo&gt;C&lt;/stereo&gt;
@@ -821,7 +821,7 @@ XSLT validation error: <val:value-of select="$error"/>
     &lt;stereo convention="MDL" conventionValue="6"/&gt;
   &lt;/bond&gt;
 &lt;/bondArray&gt;
-</pre>
+</code>
          </div>
       </xsd:documentation>
    </xsd:annotation>
@@ -883,7 +883,7 @@ XSLT validation error: <val:value-of select="$error"/>
       <xsd:documentation>
         <div class="summary">A reference to an atom.</div> 
         <div class="description">Typical use would be a bond with only one atom 
-	(e.g. the other end is to a bond or electrons)</div> 
+    (e.g. the other end is to a bond or electrons)</div> 
       </xsd:documentation>
     </xsd:annotation>
   </xsd:attribute>
@@ -963,8 +963,8 @@ XSLT validation error: <val:value-of select="$error"/>
         <p>Re-used by <a href="el.angle">angle</a></p>
       </div>
       <div class="example">
-       <pre>&lt;scalar dataType="nonNegativeAngleType"&gt;123&lt;/scalar&gt;  
-</pre>
+       <code>&lt;scalar dataType="nonNegativeAngleType"&gt;123&lt;/scalar&gt;  
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -983,12 +983,12 @@ XSLT validation error: <val:value-of select="$error"/>
         <p>Re-used by <a href="el.crystal">crystal</a></p>
       </div>
       <div class="example">
-       <pre>  &lt;crystal z="4"&gt;
+       <code>  &lt;crystal z="4"&gt;
     &lt;stm:scalar title="alpha" units="degrees"&gt;70.123&lt;/stm:scalar&gt;
     &lt;stm:scalar title="beta" units="degrees"&gt;80.456&lt;/stm:scalar&gt;
     &lt;stm:scalar title="gamma" units="degrees"&gt;90.789&lt;/stm:scalar&gt;
   &lt;/crystal&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -1010,7 +1010,7 @@ XSLT validation error: <val:value-of select="$error"/>
         mass, volumes, moles, percentages, or rations (e.g. ppm). </p>
       </div>
       <div class="example">
-        <pre>&lt;substanceList id="s1"&gt;
+        <code>&lt;substanceList id="s1"&gt;
   &lt;amount units="units:ml"&gt;100&lt;/amount&gt;
   &lt;substance id="s1"&gt;
     &lt;amount units="units:l"&gt;1&lt;/amount&gt;
@@ -1021,7 +1021,7 @@ XSLT validation error: <val:value-of select="$error"/>
     &lt;molecule id="nacl" formula="Na 1 O 1 H 1"/&gt;
   &lt;/substance&gt;
 &lt;/substanceList&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -1048,7 +1048,7 @@ XSLT validation error: <val:value-of select="$error"/>
         z-matrix).</li>
         </ul>
       </div>
-      <div class="example"><pre>&lt;molecule id="m1"&gt;
+      <div class="example"><code>&lt;molecule id="m1"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1"/&gt;
     &lt;atom id="a2"/&gt;
@@ -1056,7 +1056,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/atomArray&gt;
   &lt;angle units="degrees" atomRefs3="a1 a2 a3"&gt;123.4&lt;/angle&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -1085,7 +1085,7 @@ XSLT validation error: <val:value-of select="$error"/>
         It is almost always contained within <tt>atomArray</tt>.
         </p>
          </div>
-          <div class="example"><pre>
+          <div class="example"><code>
 &lt;atom id="a1" title="O3'" elementType="O" 
   formalCharge="1" hydrogenCount="1"
   isotope="17" occupancy="0.7" 
@@ -1099,7 +1099,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;atomParity atomRefs4="a3 a7 a2 a4"&gt;1&lt;/atomParity&gt;
   &lt;electron id="e1" atomRef="a1" count="2"/&gt;
 &lt;/atom&gt;
-</pre></div>
+</code></div>
          </xsd:documentation>
          <xsd:appinfo>
          </xsd:appinfo>
@@ -1127,10 +1127,10 @@ XSLT validation error: <val:value-of select="$error"/>
          </xsd:choice>
 <!-- CML-1 (deprecated) -->
          <xsd:choice minOccurs="0" maxOccurs="unbounded">
-	   <xsd:element ref="float" minOccurs="0" maxOccurs="unbounded"/>
-	   <xsd:element ref="integer" minOccurs="0" maxOccurs="unbounded"/>
-	   <xsd:element ref="string" minOccurs="0" maxOccurs="unbounded"/>
-	 </xsd:choice>
+       <xsd:element ref="float" minOccurs="0" maxOccurs="unbounded"/>
+       <xsd:element ref="integer" minOccurs="0" maxOccurs="unbounded"/>
+       <xsd:element ref="string" minOccurs="0" maxOccurs="unbounded"/>
+     </xsd:choice>
      </xsd:choice>
     
          <xsd:attributeGroup id="el.atom.id" ref="mandatoryId"/>
@@ -1332,11 +1332,11 @@ XSLT validation error: <val:value-of select="$error"/>
                </ul>
                <p>The attributes are directly related to the scalar attributes under
         <a href="el.atom">atom</a> which should be consulted for more info.</p>
-	<p>NOTE: The CML-1 specifications are also supported but are deprecated</p>
-	</div>
+    <p>NOTE: The CML-1 specifications are also supported but are deprecated</p>
+    </div>
     <div class="example">
       <p>Example - these are exactly equivalent representations</p>
-       <pre>
+       <code>
 &lt;stm:list xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1" elementType="O" hydrogenCount="1"/&gt;
@@ -1350,7 +1350,7 @@ XSLT validation error: <val:value-of select="$error"/>
     hydrogenCount="1 1 3"/&gt;
 &lt;/stm:list&gt;
 
-       </pre>
+       </code>
     </div>
     </xsd:documentation>
       </xsd:annotation>
@@ -1359,11 +1359,11 @@ XSLT validation error: <val:value-of select="$error"/>
             <xsd:element ref="atom" maxOccurs="unbounded"/>
             <xsd:element ref="array" minOccurs="0" maxOccurs="unbounded"/>
 <!-- CML-1 (deprecated) -->
-	    <xsd:choice minOccurs="0" maxOccurs="unbounded">
-	      <xsd:element ref="floatArray" minOccurs="0" maxOccurs="unbounded"/>
-	      <xsd:element ref="integerArray" minOccurs="0" maxOccurs="unbounded"/>
-	      <xsd:element ref="stringArray" minOccurs="0" maxOccurs="unbounded"/>
-	    </xsd:choice>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="floatArray" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="integerArray" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="stringArray" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:choice>
          </xsd:choice>
 
          <xsd:attributeGroup ref="tit_id_conv_dictGroup"/>
@@ -1506,22 +1506,22 @@ XSLT validation error: <val:value-of select="$error"/>
         two or more atoms are coincident or the configuration is planar). The
         sign is the sign of the chiral volume created by the four atoms (a1, a2,
         a3, a4):</p>
-            <pre>
+            <code>
        |  1  1  1  1 |
        | x1 x2 x3 x4 |
        | y1 y2 y3 y4 |
        | z1 z2 z3 z4 |
-        </pre>
+        </code>
             <p>Note that <tt>atomParity</tt> cannot be used with the *Array syntax for
         atoms.</p>
       </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;atom id="a1"&gt;
   &lt;atomParity atomRefs4="a3 a5 a2 a9"&gt;1&lt;/atomParity&gt;
 &lt;/atom&gt;
 
-       </pre>
+       </code>
       </div>
     </xsd:documentation>
     <xsd:appinfo>
@@ -1550,10 +1550,10 @@ XSLT validation error: <val:value-of select="$error"/>
           bond information. Bond must refer to at least two atoms (using 
           <a href="st.atomRefs2Type">atomRefs2</a>) 
           but may also refer to more for multicentre bonds. Bond is often EMPTY but
-          may contain <a href="el.electron">electron</a>, <a href="el.Length">length</a> 
+          may contain <a href="el.electron">electron</a>, <a href="el.length">length</a> 
           or <a href="el.stereo">stereo</a> elements.</p></div>
       <div class="example">
-       <pre>
+       <code>
 &lt;bondArray&gt;
   &lt;bond id="b1" atomRefs2="a3 a8" order="D"&gt;
     &lt;electron bondRef="b1"/&gt;
@@ -1564,10 +1564,10 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/bond&gt;
 &lt;/bondArray&gt;
 
-       </pre>
+       </code>
       </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;!-- Zeise's salt: Cl3Pt(CH2=CH2)--&gt;
 &lt;atomArray&gt;
   &lt;atom id="pt1" elementType="Pt"/&gt;
@@ -1585,7 +1585,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;bond id="b5" atomRefs="pt1" bondRefs="b1"/&gt;
 &lt;/bondArray&gt;
 
-       </pre>
+       </code>
       </div>
        </xsd:documentation>
          <xsd:appinfo>
@@ -1609,10 +1609,10 @@ XSLT validation error: <val:value-of select="$error"/>
           <val:comment>Validate Bonds</val:comment>
           <val:template match="bond">
           <val:comment>Atom Refs for 2-atom bond</val:comment>
-            <val:variable name="at1" select="substring-before(normalize-Space(@atomRefs2),' ')"/>
-            <val:variable name="at2" select="substring-after(normalize-Space(@atomRefs2),' ')"/>
+            <val:variable name="at1" select="substring-before(normalize-space(@atomRefs2),' ')"/>
+            <val:variable name="at2" select="substring-after(normalize-space(@atomRefs2),' ')"/>
             <val:comment>Do both atoms exist in current molecule context?</val:comment>
-            <val:if test="Not(Key('atoms', $at1))">
+            <val:if test="not(key('atoms', $at1))">
               <val:call-template name="error">
                 <val:with-param name="error">BOND (<val:value-of select="@id"/>): ATOMREF not found: <val:value-of select="$at1"/></val:with-param>
               </val:call-template>
@@ -1658,12 +1658,12 @@ XSLT validation error: <val:value-of select="$error"/>
          </xsd:choice>
 <!-- CML-1 (deprecated) -->
          <xsd:choice minOccurs="0" maxOccurs="unbounded">
-	   <xsd:element ref="float" minOccurs="0" maxOccurs="unbounded"/>
-	   <xsd:element ref="integer" minOccurs="0" maxOccurs="unbounded"/>
-	   <xsd:element ref="string" minOccurs="0" maxOccurs="unbounded"/>
-	 </xsd:choice>
+       <xsd:element ref="float" minOccurs="0" maxOccurs="unbounded"/>
+       <xsd:element ref="integer" minOccurs="0" maxOccurs="unbounded"/>
+       <xsd:element ref="string" minOccurs="0" maxOccurs="unbounded"/>
+     </xsd:choice>
        </xsd:choice>
-	 
+     
          <xsd:attributeGroup ref="tit_id_conv_dictGroup"/>
          <xsd:attributeGroup ref="ref"/> 
          <xsd:attribute name="atomRefs2" type="atomRefs2Type">
@@ -1747,7 +1747,7 @@ XSLT validation error: <val:value-of select="$error"/>
                </div>
            <div class="example">
             <p>Example - these are exactly equivalent representations</p>
-            <pre>
+            <code>
 &lt;stm:list xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
   &lt;bondArray&gt;
     &lt;bond id="b1" atomRefs2="a1 a2" 
@@ -1761,13 +1761,13 @@ XSLT validation error: <val:value-of select="$error"/>
     order="1 2 1"/&gt;
 &lt;/stm:list&gt; 
 
-            </pre>
+            </code>
         </div>
          </xsd:documentation>
          <xsd:appinfo>
             <sch:pattern xmlns="http://www.ascc.net/xml/schematron" name="bondArray">
                <sch:rule context="bondArray">
-                  <sch:report test="local-Name()='bondArray'">TEST cannot mix <tt>bond</tt> and array approaches (atomRef2)</sch:report>
+                  <sch:report test="local-name()='bondArray'">TEST cannot mix <tt>bond</tt> and array approaches (atomRef2)</sch:report>
                   <sch:report test="bond and @atomRef2">cannot mix <tt>bond</tt> and array approaches (atomRef2)</sch:report>
                </sch:rule>
             </sch:pattern>
@@ -1778,11 +1778,11 @@ XSLT validation error: <val:value-of select="$error"/>
             <xsd:element ref="bond" maxOccurs="unbounded"/>
             <xsd:element ref="array" minOccurs="0" maxOccurs="unbounded"/>
 <!-- CML-1 (deprecated) -->
-	    <xsd:choice minOccurs="0" maxOccurs="unbounded">
-	      <xsd:element ref="floatArray" minOccurs="0" maxOccurs="unbounded"/>
-	      <xsd:element ref="integerArray" minOccurs="0" maxOccurs="unbounded"/>
-	      <xsd:element ref="stringArray" minOccurs="0" maxOccurs="unbounded"/>
-	    </xsd:choice>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+          <xsd:element ref="floatArray" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="integerArray" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="stringArray" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:choice>
          </xsd:choice>
 
          <xsd:attributeGroup ref="tit_id_conv_dictGroup"/>
@@ -1830,7 +1830,7 @@ XSLT validation error: <val:value-of select="$error"/>
              components. Can be nested</p>
              </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;cml id="c1" title="demo of cml subelements"
   xmlns:cmlr="http://www.xml-cml.org/schema/reaction"
   xmlns:cmls="http://www.xml-cml.org/schema/spectrum"
@@ -1862,7 +1862,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/stm:list&gt;
 &lt;/cml&gt;  
 
-       </pre>
+       </code>
       </div>
       </xsd:documentation>
    </xsd:annotation>
@@ -1890,7 +1890,7 @@ XSLT validation error: <val:value-of select="$error"/>
      <p>There are precisely SIX child <tt>scalar</tt>s to represent the cell lengths
      and angles in that order. There are no default values; </p></div>
    <div class="example">
-    <pre>
+    <code>
 &lt;molecule id="m1"&gt;
   &lt;crystal z="4"&gt;
     &lt;stm:scalar title="a" errorValue="0.001" units="angstrom"&gt;4.500&lt;/stm:scalar&gt;
@@ -1907,7 +1907,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/atomArray&gt;
 &lt;/molecule&gt;
 
-    </pre>
+    </code>
    </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -1920,7 +1920,7 @@ XSLT validation error: <val:value-of select="$error"/>
       fixed by symmetry. The order is fixed as a,b,c,alpha,gamma,beta and software can
       neglect any title or dictRef attributes. Error estimates can be given if required.
       Any units can be used, but the defaults are Angstrom (10^-10 m) and degrees.
-	</div>
+    </div>
             </xsd:documentation>
          </xsd:annotation>
        </xsd:element>
@@ -1954,7 +1954,7 @@ XSLT validation error: <val:value-of select="$error"/>
             atoms or bonds
         </p></div>
        <div class="example">
-       <pre>
+       <code>
 &lt;molecule id="m1"&gt;
   &lt;atomArray atomID="a1 a2 a3 a4 a5 a6"/&gt;
   &lt;bondArray 
@@ -1967,7 +1967,7 @@ XSLT validation error: <val:value-of select="$error"/>
       atomRefs="a1 a2 a3 a4 a5 a6"/&gt;
 &lt;/molecule&gt;
 
-       </pre>
+       </code>
       </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -2014,7 +2014,7 @@ XSLT validation error: <val:value-of select="$error"/>
         their counts, which must be explicit. </p>
       </div>
       <div class="example">
-       <pre>
+       <code>
 &lt;cml&gt;
   &lt;molecule id="sulfuric acid"&gt;
     &lt;formula concise="H 2 S 1 O 4"/&gt;
@@ -2034,7 +2034,7 @@ XSLT validation error: <val:value-of select="$error"/>
   &lt;/molecule&gt;
 &lt;/cml&gt;
 
-       </pre>
+       </code>
       </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -2075,7 +2075,7 @@ XSLT validation error: <val:value-of select="$error"/>
       </xsd:complexType>
    </xsd:element>
 
-      <xsd:element name="length" id="el.Length">  
+      <xsd:element name="length" id="el.length">  
       <xsd:annotation>
          <xsd:documentation>
       <div class="summary">A length between two atoms</div>
@@ -2083,11 +2083,11 @@ XSLT validation error: <val:value-of select="$error"/>
             <p/>
       </div>
       <div class="example">
-       <pre>&lt;molecule id="m1"&gt;
+       <code>&lt;molecule id="m1"&gt;
   &lt;atomArray atomID="a1 a2 a3"/&gt;
   &lt;length atomRefs2="a3 a1"&gt;1.534&lt;/length&gt;
 &lt;/molecule&gt;
-</pre>
+</code>
       </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -2134,7 +2134,7 @@ XSLT validation error: <val:value-of select="$error"/>
         Within this can be string/float/integer and other nested lists</p>
         </div>
         <div class="example">
-        <pre>&lt;molecule id="dummyId"&gt;
+        <code>&lt;molecule id="dummyId"&gt;
   &lt;atomArray&gt;
     &lt;atom id="a1" elementType="C" 
       hydrogenCount="0" x2="6.1964" y2="8.988"/&gt;
@@ -2168,7 +2168,7 @@ XSLT validation error: <val:value-of select="$error"/>
     &lt;bond atomRefs2="a16 a29" order="2"/&gt;
   &lt;/bondArray&gt;
 &lt;/molecule&gt;
-</pre>
+</code>
         </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -2198,7 +2198,7 @@ XSLT validation error: <val:value-of select="$error"/>
              <xsd:element ref="matrix" minOccurs="0" maxOccurs="unbounded"/>
              <xsd:element ref="list" minOccurs="0" maxOccurs="unbounded"/>
            </xsd:sequence>
-	 </xsd:sequence>
+     </xsd:sequence>
          <xsd:attributeGroup ref="dictRef"/> 
          <xsd:attributeGroup ref="convention"/>  
          <xsd:attributeGroup ref="title"/> 
@@ -2262,7 +2262,7 @@ XSLT validation error: <val:value-of select="$error"/>
               </xsd:documentation>
             </xsd:annotation>
          </xsd:attribute>
-         <xsd:attribute id="el.atom.symmetryOriented" name="symmetryOriented" type="xsd:bool">
+         <xsd:attribute id="el.atom.symmetryOriented" name="symmetryOriented" type="xsd:boolean">
            <xsd:annotation>
              <xsd:documentation>
                <div class="summary">Is the molecule oriented to the symmetry</div>
@@ -2297,14 +2297,14 @@ XSLT validation error: <val:value-of select="$error"/>
 validate <tt>name</tt>s.</p>
       </div>
       <div class="example">
-        <pre>
+        <code>
 &lt;molecule&gt;
   &lt;name convention="INN"&gt;aspirin&lt;/name&gt;
   &lt;name convention="IUPAC"&gt;2-acetoxybenzoic acid&lt;/name&gt;
   &lt;name convention="trivial"&gt;acetylsalicylic acid&lt;/name&gt;
 &lt;/molecule&gt;
 
-        </pre>
+        </code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -2355,7 +2355,7 @@ validate <tt>name</tt>s.</p>
         <p>the <tt>atomRefs</tt> and <tt>atomRefs4</tt> attributes cannot be used
         simultaneously.</p></div>
         <div class="example">
-        <pre>
+        <code>
 &lt;bondArray&gt;
   &lt;bond id="b1" atomRefs2="a3 a8" order="D"&gt;
     &lt;electron bondRef="b1"/&gt;
@@ -2366,7 +2366,7 @@ validate <tt>name</tt>s.</p>
   &lt;/bond&gt;
 &lt;/bondArray&gt;
 
-        </pre>
+        </code>
         </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -2407,10 +2407,10 @@ validate <tt>name</tt>s.</p>
       <p>The amount of a substance is controlled by the optional <tt>amount</tt> child</p>
       </div>
       <div class="example">
-        <pre>&lt;substance title="ethanol" id="ethanol"&gt;
+        <code>&lt;substance title="ethanol" id="ethanol"&gt;
   &lt;amount units="unit:l"&gt;1.2&lt;/amount&gt;
 &lt;/substance&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -2480,7 +2480,7 @@ validate <tt>name</tt>s.</p>
         Although apparently longwinded it is precise and fully machine-interpretable</p>
     </div>
     <div class="example">
-       <pre>
+       <code>
 &lt;substanceList id="s1"&gt;
   &lt;amount units="units:ml"&gt;100&lt;/amount&gt;
   &lt;substance id="s1"&gt;
@@ -2493,7 +2493,7 @@ validate <tt>name</tt>s.</p>
   &lt;/substance&gt;
 &lt;/substanceList&gt;
 
-       </pre>
+       </code>
     </div>
   </xsd:documentation>
       </xsd:annotation>
@@ -2567,7 +2567,7 @@ validate <tt>name</tt>s.</p>
          <tt>symmetryOriented</tt> for this purpose.</p>
         </div>
         <div class="example">
-        <pre>&lt;symmetry pointGroup="C2v" id="s1"&gt;
+        <code>&lt;symmetry pointGroup="C2v" id="s1"&gt;
   &lt;stm:matrix id="e" rows="3" columns="3"&gt;
     1 0 0
     0 1 0
@@ -2589,7 +2589,7 @@ validate <tt>name</tt>s.</p>
     0 0 1
   &lt;/stm:matrix&gt;
 &lt;/symmetry&gt;
-</pre>
+</code>
         </div>
          </xsd:documentation>
       </xsd:annotation>
@@ -2647,13 +2647,13 @@ validate <tt>name</tt>s.</p>
          <p>Note that the order of atoms is important.</p>
    </div>
    <div class="example">
-    <pre>
+    <code>
 &lt;molecule id="m1"&gt;
   &lt;atomArray atomID="a1 a2 a3 a4"/&gt;
   &lt;torsion atomRefs4="a4 a2 a3 a1" units="degrees"&gt;123&lt;/torsion&gt;
 &lt;/molecule&gt;
 
-    </pre>
+    </code>
    </div>
       </xsd:documentation>
    </xsd:annotation>
@@ -2715,7 +2715,7 @@ validate <tt>name</tt>s.</p>
       it is NOT a generic URI.</p>
       </div>
         <div class="example">
-        <pre>
+        <code>
 &lt;list&gt;
 &lt;!-- dictRef is of namespaceRefType --&gt;
   &lt;scalar dictRef="chem:mpt"&gt;123&lt;/scalar&gt;  
@@ -2723,7 +2723,7 @@ validate <tt>name</tt>s.</p>
   &lt;scalar dictRef="mpt23"&gt;123&lt;/scalar&gt;  
 &lt;/list&gt;
 
-        </pre>
+        </code>
       </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -2776,15 +2776,15 @@ validate <tt>name</tt>s.</p>
         </div>
   
         <div class="example">
-         <pre>&lt;scalar dataType="xsd:float" title="surfaceArea" 
+         <code>&lt;scalar dataType="xsd:float" title="surfaceArea" 
   dictRef="cmlPhys:surfArea" 
   xmlns:cmlPhys="http://www.xml-cml.org/dict/physical"
   units="units:cm2"&gt;50&lt;/scalar&gt;
-</pre>
+</code>
         </div>
 
         <div class="example">
-   <pre>&lt;stm:list xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
+   <code>&lt;stm:list xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
   &lt;stm:observation&gt;
     &lt;p&gt;We observed &lt;object count="3" dictRef="foo:p1"/&gt; 
       constructing dwellings of different material&lt;/p&gt;
@@ -2795,7 +2795,7 @@ validate <tt>name</tt>s.</p>
     &lt;stm:description class="scientificName"&gt;Sus scrofa&lt;/stm:description&gt;
   &lt;/stm:entry&gt;
 &lt;/stm:list&gt;
-</pre>
+</code>
         </div>
        </xsd:documentation>
     </xsd:annotation>
@@ -2820,7 +2820,7 @@ validate <tt>name</tt>s.</p>
       <xsd:documentation>
         <div class="summary">An attribute providing a mandatory unique ID for an element</div>
         <div class="description">This is a horrible hack. It should be possible to add 'required' to
-	the attributeGroup where used... (Maybe it is and I am still fighting Schema Wars)
+    the attributeGroup where used... (Maybe it is and I am still fighting Schema Wars)
         </div>
       </xsd:documentation>
     </xsd:annotation>
@@ -2876,9 +2876,9 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         </div>
  
         <div class="example">
-          <pre>&lt;bond convention="fooChem" order="-5"
+          <code>&lt;bond convention="fooChem" order="-5"
    xmlns:fooChem="http://www.fooChem/conventions"/&gt;
-</pre>
+</code>
         </div>
       </xsd:documentation>
     </xsd:annotation>
@@ -2892,8 +2892,8 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         <div class="summary">A title on an element.</div> 
         <div class="description">No controlled value.</div> 
         <div class="example">
-          <pre>&lt;action title="turn on heat" start="T09:00:00" convention="xsd"/&gt;
-</pre>
+          <code>&lt;action title="turn on heat" start="T09:00:00" convention="xsd"/&gt;
+</code>
         </div>
       </xsd:documentation>
     </xsd:annotation>
@@ -2914,7 +2914,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          In arrays and matrices, it may be useful to set a separate delimiter</p> 
       </div>
       <div class="example">
-        <pre>
+        <code>
 
 &lt;list&gt;
   &lt;array dataType="xsd:decimal"
@@ -2923,7 +2923,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
       &gt;/1.2 3.4/3.2 4.5/6.7 23.1/&lt;/array&gt;
 &lt;/list&gt;
 
-        </pre>
+        </code>
        </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -2945,7 +2945,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          </div>
 
          <div class="example">
-           <pre>
+           <code>
 &lt;list&gt;
   &lt;array dataType="xsd:decimal"&gt;1.2,3.4,1.2   
     3.2,4.5,7.3   6.7,23.1,5.6 &lt;/array&gt;
@@ -2953,7 +2953,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
   &gt;/1.2 3.4 3.3/3.2 4.5 4.5/6.7 23.1 5.6/&lt;/array&gt;
 &lt;/list&gt;
 
-           </pre>
+           </code>
          </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -2971,19 +2971,19 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
       <div class="description">
         <p>An array of coordinateComponents for a single coordinate
          where these all refer to an X-coordinate (NOT x,y,z) 
-	Instances of this type will
+    Instances of this type will
       be used in array-style representation of 2-D or 3-D coordinates.</p>
       <p>Currently no machine validation</p>
       <p>Currently not used in STMML, but re-used by CML (see example)</p>
       </div>
       <div class="example">
-        <pre>
+        <code>
 &lt;cml:atomArray 
   xmlns:cml="http://www.xml-cml.org/schema/cml2/core"
   x2="1.2 2.3 4.5 6.7"/&gt;
   
 
-        </pre>
+        </code>
       </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -3004,7 +3004,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          </div>
 
          <div class="example">
-           <pre>
+           <code>
 &lt;list&gt;
 &lt;object title="frog" count="10"/&gt;
 &lt;action title="step3" count="3"&gt;
@@ -3012,7 +3012,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
 &lt;/action&gt;
 &lt;/list&gt;
 
-           </pre>
+           </code>
          </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -3044,9 +3044,9 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          </div>
 
          <div class="example">
-           <pre>
+           <code>
 &lt;list xmlns="http://www.xml-cml.org/schema/cml2/core"&gt;
-  &lt;scalar dataType="xsd:bool" title="she loves me"&gt;true&lt;/scalar&gt;
+  &lt;scalar dataType="xsd:boolean" title="she loves me"&gt;true&lt;/scalar&gt;
   &lt;scalar dataType="xsd:float" title="x"&gt;23.2&lt;/scalar&gt;
   &lt;scalar dataType="xsd:duration" title="egg timer"&gt;PM4&lt;/scalar&gt;
   &lt;scalar dataType="xsd:dateTime" title="current data and time"&gt;2001-02-01:00:30&lt;/scalar&gt;
@@ -3062,7 +3062,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
   &lt;scalar dataType="xsd:nonPositiveInteger" title="zero"&gt;0&lt;/scalar&gt;
 &lt;/list&gt;
 
-           </pre>
+           </code>
          </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -3070,7 +3070,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
     <xsd:simpleType>
       <xsd:restriction base="xsd:string">
         <xsd:enumeration value="xsd:string"/>
-       <xsd:enumeration value="xsd:bool"/>
+       <xsd:enumeration value="xsd:boolean"/>
        <xsd:enumeration value="xsd:float"/>
        <xsd:enumeration value="xsd:double"/>
        <xsd:enumeration value="xsd:decimal"/>
@@ -3143,14 +3143,14 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         the application.</p>
       </div>
       <div class="example">
-        <pre>
+        <code>
 &lt;array size="4"  dataType="xsd:string" delimiter="|"&gt;|A|B12||D and   E|&lt;/array&gt;
 
 
  <em>The values in the array are</em>
   "A", "B12", "" (empty string) and "D and   E" 
  <em>note the spaces</em>
-        </pre>
+        </code>
       </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -3172,14 +3172,14 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
       </div>
 
       <div class="example">
-        <pre>
+        <code>
 &lt;unitType id="energy" name="energy"&gt;
   &lt;dimension name="length" power="2"/&gt;
   &lt;dimension name="mass" power="1"/&gt;
   &lt;dimension name="time" power="-2"/&gt;
 &lt;/unitType&gt;
 
-        </pre>
+        </code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -3213,14 +3213,14 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
       </div>
 
       <div class="example">
-         <pre>&lt;scalar 
+         <code>&lt;scalar 
     dataType="xsd:decimal" 
     errorValue="1.0" 
     errorBasis="observedStandardDeviation" 
     title="body weight"
     dictRef="zoo:bodywt"
     units="units:g"&gt;34.3&lt;/scalar&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -3245,14 +3245,14 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          be added through <a href="at.errorBasisType">errorBasisType</a>.</p>
       </div>
       <div class="example">
-        <pre>&lt;scalar 
+        <code>&lt;scalar 
     dataType="xsd:decimal" 
     errorValue="1.0" 
     errorBasis="observedStandardDeviation" 
     title="body weight"
     dictRef="zoo:bodywt"
     units="units:g"&gt;34.3&lt;/scalar&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -3272,9 +3272,9 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          </div>
 
         <div class="example">
-           <pre>&lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
+           <code>&lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
   x2="1.2 2.3 3.4 5.6"/&gt;
-</pre>
+</code>
          </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -3291,11 +3291,11 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
             STM Schema, but re-used in CML</p> 
          </div>
          <div class="example">
-           <pre>
+           <code>
 &lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
   atomID="a1 o2 b33 n21"/&gt;
 
-           </pre>
+           </code>
          </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -3312,11 +3312,11 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         <p>Not machine-validatable</p>
       </div>
       <div class="example">
-        <pre>
+        <code>
 &lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
   hydrogenCount="3 1 0 2"/&gt;
 
-        </pre>
+        </code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -3330,13 +3330,13 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
        <div class="description"><p>Allowed <tt>matrix</tt> types.
        These are mainly square matrices</p></div>
       <div class="example">
-      <pre>
+      <code>
 &lt;matrix id="m1" title="mattrix-1" dictRef="foo:bar"
   rows="3" columns="3" dataType="xsd:decimal" 
   delimiter="|" matrixType="squareSymmetric" units="unit:m"
   &gt;|1.1|1.2|1.3|1.2|2.2|2.3|1.3|2.3|3.3!&lt;/matrix&gt;
 
-      </pre>
+      </code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -3358,12 +3358,12 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         <xsd:annotation>
           <xsd:documentation>
             <div class="description">Square. Elements are zero below the diagonal
-            <pre>
+            <code>
 1 2 3 4
 0 3 5 6
 0 0 4 8
 0 0 0 2
-      </pre>
+      </code>
             </div>
           </xsd:documentation>
         </xsd:annotation>
@@ -3723,8 +3723,8 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          <p>The type of the minimum is the same as the quantity to which it refers - numeric,
          date and string are currently allowed</p>
          </div>
-          <div class="example"><pre>&lt;scalar dataType="xsd:float" max="20" min="12"&gt;15&lt;/scalar&gt;
-</pre></div>
+          <div class="example"><code>&lt;scalar dataType="xsd:float" max="20" min="12"&gt;15&lt;/scalar&gt;
+</code></div>
         </xsd:documentation>
       </xsd:annotation>
       <xsd:restriction base="xsd:string">
@@ -3748,8 +3748,8 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
        <p>The type of the maximum is the same as the quantity to which it refers - numeric,
        date and string are currently allowed</p>
        </div>
-       <div class="example"><pre>&lt;scalar dataType="xsd:float" max="20" min="12"&gt;15&lt;/scalar&gt;
-</pre></div>
+       <div class="example"><code>&lt;scalar dataType="xsd:float" max="20" min="12"&gt;15&lt;/scalar&gt;
+</code></div>
       </xsd:documentation>
     </xsd:annotation>
     <xsd:restriction base="xsd:string">
@@ -3780,9 +3780,9 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          embedded whitespace or may be empty (zero-length), a non-whitespace
          single-character delimiter must be used. At present no machine validation</p> 
          </div>
-           <div class="example"><pre>&lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
+           <div class="example"><code>&lt;atomArray xmlns="http://www.xml-cml.org/schema/cml2/core"
   title="atom1 n23 ligand"/&gt;
-</pre></div>
+</code></div>
         </xsd:documentation>
       </xsd:annotation>
       <xsd:restriction base="xsd:string">
@@ -3799,7 +3799,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
           <p>Distinguish carefully from <a href="st.unitType">unitType</a>
           which is an element describing a type of a unit in a <a href="el.unitList">unitList</a> 
           </p></div>
-           <div class="example"><pre>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
+           <div class="example"><code>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
 
 &lt;!-- ======================================================================= --&gt;
 &lt;!-- ========================= fundamental types =========================== --&gt;
@@ -3903,7 +3903,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
 &lt;/stm:unit&gt;
 
 &lt;/stm:unitList&gt;
-</pre></div>
+</code></div>
         </xsd:documentation>
       </xsd:annotation>
       <xsd:restriction base="xsd:string"/>
@@ -3930,11 +3930,11 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
         <div class="summary">A delimiter character for arrays and matrices</div>
         <div class="description">By default array components ('elements' in the non-XML sense) are whitespace-separated.
         This fails for components with embedded whitespace or missing completely:
-        <pre>
+        <code>
         Example:
         In the protein database ' CA' and 'CA' are different atom types, and and array could be:
         &lt;array delimiter="/" dictRef="pdb:atomTypes"&gt;/ N/ CA/CA/ N/&lt;/array&gt; 
-        </pre>
+        </code>
         Note that the array starts and ends with the delimiter, which must be chosen to avoid accidental use. There is currently no syntax for escaping delimiters.
         </div>
       </xsd:documentation>
@@ -4002,7 +4002,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
    </div>
  
    <div class="example">
-     <pre>
+     <code>
 &lt;cml&gt;
   &lt;molecule id="m1"&gt;
     &lt;atomArray&gt;
@@ -4013,7 +4013,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
   &lt;html:p&gt;The action of &lt;molecule ref="#m1"/&gt; on cardiac muscle ...&lt;/html:p&gt;
 &lt;/cml&gt;
 
-     </pre>
+     </code>
    </div>
    </xsd:documentation>
   </xsd:annotation>
@@ -4092,7 +4092,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
 <div class="example">
 <p>An example in XSLT where an element <tt>foo</tt> calls a bespoke
          template</p>.
-         <pre>
+         <code>
 &lt;s:appinfo 
   xmlns:s="http://www.xml-cml.org/schema/cml2/core"
   xmlns="http://www.w3.org/1999/XSL/Transform"&gt;
@@ -4101,7 +4101,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
   &lt;/template&gt;
 &lt;/s:appinfo&gt;
 
-         </pre>
+         </code>
          </div>
 </xsd:documentation>
           </xsd:annotation>
@@ -4118,7 +4118,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
           <div class="description">Semantics undefined</div>
 
           <div class="example">
-            <pre>&annotation1.html;</pre>
+            <code>&annotation1.html;</code>
           </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -4146,17 +4146,17 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
       </div>
 
       <div class="example">
-        <pre>&lt;entry term="matrix" xmlns="http://www.xml-cml.org/schema/stmml"&gt;
+        <code>&lt;entry term="matrix" xmlns="http://www.xml-cml.org/schema/stmml"&gt;
   &lt;annotation&gt;
     &lt;documentation&gt;&lt;!--This refers to mathematical matrices--&gt;&gt;&lt;/documentation&gt;
     &lt;appinfo&gt;&lt;!-- ...some code to describe and support matrices ... --&gt;&lt;/appinfo&gt;
   &lt;/annotation&gt;
 &lt;/entry&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
-	 
+     
   <xsd:complexType mixed="true">
     <xsd:choice minOccurs="0" maxOccurs="unbounded">
       <xsd:element ref="documentation"/>
@@ -4169,7 +4169,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
           <div class="summary">Source of the annotation</div>
           <div class="description">Semantics undefined</div>
           <div class="example">
-            <pre>&annotation1.html;</pre>
+            <code>&annotation1.html;</code>
           </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -4191,7 +4191,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
             can be encoded as strings (i.e. XSD-like datatypes) and are concatenated as
             string content. The size of the array should always be &gt;= 1.
          </p>
-         <p>The default delimiter is whitespace. The <tt>normalize-Space()</tt> function of
+         <p>The default delimiter is whitespace. The <tt>normalize-space()</tt> function of
          XSLT could be used to normalize all whitespace to single spaces and this would not affect
          the value of the array elements. To extract the elements <tt>java.lang.StringTokenizer</tt>
          could be used. If the elements themselves contain whitespace then a different delimiter
@@ -4216,20 +4216,20 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
          syntax in a later version.</p>
         </div>
 <div class="example">
-<pre>&lt;array size="5" title="value" 
+<code>&lt;array size="5" title="value" 
   dataType="xsd:decimal"&gt;  1.23 2.34 3.45 4.56 5.67&lt;/array&gt;
-</pre>
+</code>
          <p>the <tt>size</tt> attribute is not mandatory but provides a useful validity
          check): </p>
         </div>
 <div class="example">
-<pre>&lt;array size="5" title="initials" dataType="xsd:string" 
+<code>&lt;array size="5" title="initials" dataType="xsd:string" 
   delimiter="/"&gt;/A B//C/D-E/F/&lt;/array&gt;
-</pre>
+</code>
 <p>Note that the second array-element is the empty string ''.</p>
         </div>
 <div class="example">
-<pre>&lt;array title="mass" size="4"
+<code>&lt;array title="mass" size="4"
   units="unit:g"
   errorBasis="observedStandardDeviation"
   minValues="10 11 10 9"
@@ -4237,7 +4237,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
   errorValues="1 2 1 1"
   dataType="xsd:float"&gt;11 12.5 10.9 10.2
 &lt;/array&gt;
-</pre>
+</code>
       </div>
        </xsd:documentation>
    </xsd:annotation>
@@ -4300,7 +4300,7 @@ so that a convention for <tt>molecule</tt> would by default extend to its <tt>bo
 
         <div class="example">
          <em>From IUPAC Dictionary of Medicinal Chemistry</em>
-           <pre>&lt;entry id="a7" term="Allosteric enzyme"&gt;
+           <code>&lt;entry id="a7" term="Allosteric enzyme"&gt;
   &lt;definition&gt;An &lt;a href="#e3"&gt;enzyme&lt;/a&gt;
 that contains a region to which small, regulatory molecules
 ("effectors") may bind in addition to and separate from the
@@ -4313,17 +4313,17 @@ which case the effector is an activator, or reduced, in which case
 it is a de-activator or inhibitor.
   &lt;/description&gt;
 &lt;/entry&gt;
-</pre>
+</code>
          </div>
         </xsd:documentation>
        </xsd:annotation>
-	 
+     
     <xsd:complexType mixed="true">
       <xsd:sequence minOccurs="0" maxOccurs="unbounded">
         <xsd:any processContents="lax"/>
       </xsd:sequence>
 <!--      <xsd:attributeGroup ref="source"/>-->
-      <xsd:attribute name="class" type="xsd:string" id="att.typeof(description)">
+      <xsd:attribute name="class" type="xsd:string" id="att.description.class">
         <xsd:annotation>
           <xsd:documentation>
             <div class="description"><p>The type of this information. This is not controlled, but examples
@@ -4353,7 +4353,7 @@ it is a de-activator or inhibitor.
         <a href="el.unit">units</a>s.</p>
       </div>
     <div class="example">
-       <pre>
+       <code>
 &lt;unitType id="energy" name="energy"&gt;
   &lt;dimension name="length" power="1"/&gt;
   &lt;dimension name="mass" power="1"/&gt;
@@ -4361,7 +4361,7 @@ it is a de-activator or inhibitor.
 &lt;/unitType&gt;
 
 
-       </pre>
+       </code>
     </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -4410,17 +4410,17 @@ it is a de-activator or inhibitor.
          </div>
 
          <div class="example">
-           <pre>
+           <code>
 &lt;stm:documentation id="source"
 xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
 Transcribed from IUPAC website
 &lt;/stm:documentation&gt;
 
-           </pre>
+           </code>
          </div>
        </xsd:documentation>
      </xsd:annotation>
-	 
+     
     <xsd:complexType mixed="true">
       <xsd:sequence minOccurs="0" maxOccurs="unbounded">
         <xsd:any processContents="lax"/>
@@ -4442,11 +4442,11 @@ Transcribed from IUPAC website
       act as the root element in an STM document.</p>
       </div>
       <div class="example">
-      <pre>&lt;list&gt;
+      <code>&lt;list&gt;
   &lt;array title="animals" dataType="xsd:string"&gt;frog bear toad&lt;/array&gt;
   &lt;scalar title="weight" dataType="xsd:float"&gt;3.456&lt;/scalar&gt;
 &lt;/list&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -4461,11 +4461,11 @@ Transcribed from IUPAC website
           <div class="summary">Type of the list</div>
           <div class="description">Semeantics undefined.</div>
           <div class="example">
-            <pre>&lt;list&gt;
+            <code>&lt;list&gt;
   &lt;array title="animals" dataType="xsd:string"&gt;frog bear toad&lt;/array&gt;
   &lt;scalar title="weight" dataType="xsd:float"&gt;3.456&lt;/scalar&gt;
 &lt;/list&gt;
-</pre>
+</code>
           </div>
         </xsd:documentation>
       </xsd:annotation>
@@ -4495,13 +4495,13 @@ Transcribed from IUPAC website
      validate and process the type of matrix.</p>
       </div>
         <div class="example">
-        <pre>
+        <code>
 &lt;matrix id="m1" title="mattrix-1" dictRef="foo:bar"
   rows="3" columns="3" dataType="xsd:decimal" 
   delimiter="|" matrixType="squareSymmetric" units="unit:m"
   &gt;|1.1|1.2|1.3|1.2|2.2|2.3|1.3|2.3|3.3!&lt;/matrix&gt;
 
-        </pre>
+        </code>
         </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -4584,7 +4584,7 @@ Transcribed from IUPAC website
       (i.e. a string for adding further information - this is not controlled).</p>
     </div>
       <div class="example">
-      <pre>&lt;list&gt;
+      <code>&lt;list&gt;
   &lt;metadataList&gt;
     &lt;metadata name="dc:coverage" content="Europe"/&gt;
     &lt;metadata name="dc:description" content="Ornithological chemistry"/&gt;
@@ -4610,7 +4610,7 @@ Transcribed from IUPAC website
     &lt;metadata name="cmlm:identifier" content="smiles:O=C1C=C(C)C(C)(C)C(C)=C1"/&gt;
   &lt;/metadataList&gt;
 &lt;/list&gt;
-</pre>
+</code>
       </div>
     </xsd:documentation>
   </xsd:annotation>
@@ -4640,7 +4640,7 @@ Transcribed from IUPAC website
     <xsd:annotation>
       <xsd:documentation>
         <div class="summary">A general container for metadata elements</div>
-        <div class="example"><pre>&lt;list&gt;
+        <div class="example"><code>&lt;list&gt;
   &lt;metadataList&gt;
     &lt;metadata name="dc:coverage" content="Europe"/&gt;
     &lt;metadata name="dc:description" content="Ornithological chemistry"/&gt;
@@ -4666,7 +4666,7 @@ Transcribed from IUPAC website
     &lt;metadata name="cmlm:identifier" content="smiles:O=C1C=C(C)C(C)(C)C(C)=C1"/&gt;
   &lt;/metadataList&gt;
 &lt;/list&gt;
-</pre></div>
+</code></div>
       </xsd:documentation>
     </xsd:annotation>
 
@@ -4700,7 +4700,7 @@ Transcribed from IUPAC website
       </div>
 
       <div class="example">
-        <pre>
+        <code>
 &lt;scalar 
     dataType="xsd:decimal" 
     errorValue="1.0" 
@@ -4709,7 +4709,7 @@ Transcribed from IUPAC website
     dictRef="zoo:bodywt"
     units="units:g"&gt;34.3&lt;/scalar&gt;
 
-        </pre>
+        </code>
       </div>
      </xsd:documentation>
    </xsd:annotation>
@@ -4743,7 +4743,7 @@ Transcribed from IUPAC website
         <li/>
         </ul>
         <p>Example:</p>
-        <pre>
+        <code>
 &lt;unit id="units:fahr" name="fahrenheit" parentSI="units:K"
   multiplierToSI="0.55555555555555555" 
   constantToSI="-17.777777777777777777"&gt;
@@ -4751,7 +4751,7 @@ Transcribed from IUPAC website
       meteorology&lt;/description&gt;
 &lt;/unit&gt;
 
-        </pre>
+        </code>
       </div>
       </xsd:documentation>
       <xsd:appinfo>
@@ -4808,10 +4808,10 @@ Transcribed from IUPAC website
         <xsd:annotation>
           <xsd:documentation>
            <div class="summary"><p>The amount to add to a quantity in non-SI units to
-	  convert its representation to SI Units. 
-	  This is applied <b>after</b> <tt>multiplierToSI</tt>.
-	 necessarily zero for SI units.
-	</p>
+      convert its representation to SI Units. 
+      This is applied <b>after</b> <tt>multiplierToSI</tt>.
+     necessarily zero for SI units.
+    </p>
           </div>
          </xsd:documentation>
         </xsd:annotation>
@@ -4826,7 +4826,7 @@ Transcribed from IUPAC website
       <xsd:documentation>
         <div class="summary">A container for several unit entries</div>
         <div class="description">Usually forms the complete units dictionary (along with metadata)</div>
-        <div class="example"><pre>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
+        <div class="example"><code>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
 
 &lt;!-- ======================================================================= --&gt;
 &lt;!-- ========================= fundamental types =========================== --&gt;
@@ -4930,11 +4930,11 @@ Transcribed from IUPAC website
 &lt;/stm:unit&gt;
 
 &lt;/stm:unitList&gt;
-</pre></div>
-        <div class="example"><pre>&lt;stm:unitList 
+</code></div>
+        <div class="example"><code>&lt;stm:unitList 
     xmlns:stm="http://www.xml-cml.org/schema/stmml"
     dictRef="unit" href="units.xml" /&gt;
-</pre></div>
+</code></div>
          </xsd:documentation>
        </xsd:annotation>
 
@@ -4973,7 +4973,7 @@ Transcribed from IUPAC website
           which is primarily used for attributes describing the units that elements 
           carry</p></div>
          <div class="example">
-       <pre>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
+       <code>&lt;stm:unitList xmlns:stm="http://www.xml-cml.org/schema/stmml"&gt;
 
 &lt;!-- ======================================================================= --&gt;
 &lt;!-- ========================= fundamental types =========================== --&gt;
@@ -5077,7 +5077,7 @@ Transcribed from IUPAC website
 &lt;/stm:unit&gt;
 
 &lt;/stm:unitList&gt;
-</pre>
+</code>
       </div>
        </xsd:documentation>
           </xsd:annotation>
@@ -5106,7 +5106,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5138,7 +5138,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -5164,7 +5164,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5196,7 +5196,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -5223,7 +5223,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5255,7 +5255,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -5281,7 +5281,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5313,7 +5313,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -5340,7 +5340,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5372,7 +5372,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>
@@ -5394,7 +5394,7 @@ Transcribed from IUPAC website
       <div class="summary">CML-1 dataType (DEPRECATED)</div>
       <div class="description">
       </div>
-      <div class="example"><pre>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
+      <div class="example"><code>&lt;molecule xmlns="http://www.xml-cml.org" id="formamide"&gt;
     &lt;atomArray&gt;
         &lt;stringArray builtin="atomId"&gt;H1 C1 O1 N1 Me1 Me2&lt;/stringArray&gt;
         &lt;stringArray builtin="elementType"&gt;H  C  O  N  C   C&lt;/stringArray&gt;
@@ -5426,7 +5426,7 @@ Transcribed from IUPAC website
     &lt;string title="location"&gt;Storeroom 12.3&lt;/string&gt;
   &lt;/list&gt;
 &lt;/molecule&gt;
-</pre></div>
+</code></div>
     </xsd:documentation>
   </xsd:annotation>
   <xsd:complexType>

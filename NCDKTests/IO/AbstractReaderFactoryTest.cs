@@ -39,7 +39,7 @@ namespace NCDK.IO
 
         internal void ExpectReader(string filename, IResourceFormat expectedFormat, int expectedAtomCount, int expectedBondCount)
         {
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Assert.IsNotNull(ins, "Cannot find file: " + filename);
             if (expectedFormat is IChemFormatMatcher)
             {

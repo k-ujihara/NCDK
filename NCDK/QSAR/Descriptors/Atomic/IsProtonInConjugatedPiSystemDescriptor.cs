@@ -23,30 +23,30 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  This class evaluates if a proton is joined to a conjugated system.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table>
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>checkAromaticity</td>
-     *     <td>false</td>
-     *     <td>True is the aromaticity has to be checked</td>
-     *   </tr>
-     * </table>
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
-     */
+    /// <summary>
+    ///  This class evaluates if a proton is joined to a conjugated system.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table>
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>checkAromaticity</td>
+    ///     <td>false</td>
+    ///     <td>True is the aromaticity has to be checked</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:isProtonInConjugatedPiSystem
+    /// </summary>
     public class IsProtonInConjugatedPiSystemDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "protonInConjSystem" };

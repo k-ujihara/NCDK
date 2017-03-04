@@ -22,13 +22,13 @@ using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * JUnit test routines for the SMARTS parser.
-     *
-     * @author Egon Willighagen
-     * @cdk.module test-smarts
-     * @cdk.require ant1.6
-     */
+    /// <summary>
+    /// JUnit test routines for the SMARTS parser.
+    ///
+    // @author Egon Willighagen
+    // @cdk.module test-smarts
+    // @cdk.require ant1.6
+    /// </summary>
     public class ParserTest : CDKTestCase
     {
 
@@ -93,9 +93,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.IsTrue(atom is SMARTSAtom);
         }
 
-        /**
-         * @cdk.bug 1760967
-         */
+        /// <summary>
+        // @cdk.bug 1760967
+        /// </summary>
         [TestMethod()]
         public void TestSingleBond()
         {
@@ -152,9 +152,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             Assert.IsTrue(bond is AnyOrderQueryBond);
         }
 
-        /**
-         * @cdk.bug 2786624
-         */
+        /// <summary>
+        // @cdk.bug 2786624
+        /// </summary>
         [TestMethod()]
         public void Test2LetterSMARTS()
         {
@@ -1779,9 +1779,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             Parse("C\r");
         }
 
-        /**
-         * @cdk.bug 909
-         */
+        /// <summary>
+        // @cdk.bug 909
+        /// </summary>
         [TestMethod()]
         public void Bug909()
         {

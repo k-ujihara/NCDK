@@ -23,13 +23,13 @@ using NCDK.Tools.Diff.Tree;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IElement} implementations.
-     *
-     * @cdk.module test-interfaces
-     *
-     * @see org.openscience.cdk.Element
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IElement} implementations.
+    ///
+    // @cdk.module test-interfaces
+    ///
+    // @see org.openscience.cdk.Element
+    /// </summary>
     [TestClass()]
     public abstract class AbstractElementTest : AbstractChemObjectTest
     {

@@ -26,35 +26,34 @@ using NCDK.Stereo;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * Tool class for checking whether the (sub)structure in an
-	 * AtomContainer is connected.
-	 * To check whether an AtomContainer is connected this code
-	 * can be used:
-	 * <pre>
-	 *  bool isConnected = ConnectivityChecker.IsConnected(atomContainer);
-	 * </pre>
-	 *
-	 * <p>A disconnected AtomContainer can be fragmented into connected
-	 * fragments by using code like:
-	 * <pre>
-	 *   MoleculeSet fragments = ConnectivityChecker.PartitionIntoMolecules(disconnectedContainer);
-	 *   int fragmentCount = fragments.Count();
-	 * </pre>
-	 *
-	 * @cdk.module standard
-	 * @cdk.githash
-	 *
-	 * @cdk.keyword connectivity
-	 */
+    /// <summary>
+    /// Tool class for checking whether the (sub)structure in an
+    /// AtomContainer is connected.
+    /// </summary>
+    /// <example>
+    /// To check whether an AtomContainer is connected this code
+    /// can be used:
+    /// <code>
+    ///  bool isConnected = ConnectivityChecker.IsConnected(atomContainer);
+    /// </code>
+    ///
+    /// A disconnected AtomContainer can be fragmented into connected
+    /// fragments by using code like:
+    /// <code>
+    ///   MoleculeSet fragments = ConnectivityChecker.PartitionIntoMolecules(disconnectedContainer);
+    ///   int fragmentCount = fragments.Count();
+    /// </code>
+    /// </example>
+    // @cdk.module standard
+    // @cdk.githash
+    // @cdk.keyword connectivity
     public class ConnectivityChecker
     {
-        /**
-		 * Check whether a set of atoms in an <see cref="IAtomContainer"/> is connected.
-		 *
-		 * @param   atomContainer  The <see cref="IAtomContainer"/> to be check for connectedness
-		 * @return                 true if the <see cref="IAtomContainer"/> is connected
-		 */
+        /// <summary>
+        /// Check whether a set of atoms in an <see cref="IAtomContainer"/> is connected.
+        /// </summary>
+        /// <param name="atomContainer">The <see cref="IAtomContainer"/> to be check for connectedness</param>
+        /// <returns>true if the <see cref="IAtomContainer"/> is connected</returns>
         public static bool IsConnected(IAtomContainer atomContainer)
         {
             // with one atom or less, we define it to be connected, as there is no
@@ -65,14 +64,12 @@ namespace NCDK.Graphs
             return cc.NComponents == 1;
         }
 
-        /**
-		 * Partitions the atoms in an AtomContainer into covalently connected components.
-		 *
-		 * @param   container  The AtomContainer to be partitioned into connected components, i.e. molecules
-		 * @return                 A MoleculeSet.
-		 *
-		 * @cdk.dictref   blue-obelisk:graphPartitioning
-		 */
+        /// <summary>
+        /// Partitions the atoms in an AtomContainer into covalently connected components.
+        /// </summary>
+        /// <param name="container">The AtomContainer to be partitioned into connected components, i.e. molecules</param>
+        /// <returns>A MoleculeSet.</returns>
+        // @cdk.dictref   blue-obelisk:graphPartitioning
         public static IAtomContainerSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
             ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
@@ -132,4 +129,4 @@ namespace NCDK.Graphs
         }
     }
 }
-		
+        

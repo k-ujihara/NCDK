@@ -421,7 +421,7 @@
         <definition rdf:parseType='Literal'>
             This class calculates the atomic softness of a given atom.
         </definition>
-	    <description rdf:parseType='Literal'>
+        <description rdf:parseType='Literal'>
             Inductive atomic softness of an atom in a polyatomic system can be defined
             as as charge delocalizing ability.
             This descriptor is described by Cherkasov
@@ -1211,7 +1211,7 @@
     </definition>
     <description rdf:parseType='Literal'>
         As defined by Daylight website, <bibtex:cite ref="DAY01"/>, a H-bond acceptor
-	must have an N-H bond, an O-H bond, or a F-H bond
+    must have an N-H bond, an O-H bond, or a F-H bond
     </description>
       <isClassifiedAs rdf:resource="electronicDescriptor"/>
     <isClassifiedAs rdf:resource="molecularDescriptor"/>

@@ -57,7 +57,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             string fnzip = "NCDK.Data.CDD.aromring_validation.zip";
             Trace.TraceInformation("Loading source content: " + fnzip);
-            using (var ins = this.GetType().Assembly.GetManifestResourceStream(fnzip))
+            using (var ins = ResourceLoader.GetAsStream(fnzip))
             {
                 Validate(ins);
             }
@@ -96,7 +96,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     basefn = "0" + basefn;
                 byte[] molBytes;
                 if (!content.TryGetValue(basefn + ".mol", out molBytes))
-					break;
+                    break;
 
                 AtomContainer mol = new AtomContainer();
                 using (var mdl = new MDLV2000Reader(new MemoryStream(molBytes)))

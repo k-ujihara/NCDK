@@ -31,12 +31,12 @@ using System.IO;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * TestCase for the reading MDL mol files using one test file.
-     *
-     * @cdk.module test-io
-     * @see org.openscience.cdk.io.MDLReader
-     */
+    /// <summary>
+    /// TestCase for the reading MDL mol files using one test file.
+    ///
+    // @cdk.module test-io
+    // @see org.openscience.cdk.io.MDLReader
+    /// </summary>
     [TestClass()]
     public class IteratingSDFReaderTest : CDKTestCase
     {
@@ -45,7 +45,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.test2.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -66,7 +66,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.test2.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             var streamReader = new StreamReader(ins); // { public bool Ready()  {    return false;     }   };
 
             IteratingSDFReader reader = new IteratingSDFReader(streamReader, Default.ChemObjectBuilder.Instance);
@@ -89,7 +89,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.test.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
             var etor = reader.GetEnumerator();
             Assert.IsTrue(etor.MoveNext());
@@ -106,7 +106,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.test.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
             var etor = reader.GetEnumerator();
@@ -124,7 +124,7 @@ namespace NCDK.IO.Iterator
         public void TestMultipleEntryFields()
         {
             string filename = "NCDK.Data.MDL.test.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             using (var reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance))
             {
                 var tor = reader.GetEnumerator();
@@ -142,7 +142,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.bug682233.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -162,7 +162,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.singleMol.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -182,7 +182,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.MDL.emptyStructures.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var obj in reader)
@@ -203,15 +203,15 @@ namespace NCDK.IO.Iterator
             reader.Close();
         }
 
-        /**
-         * @cdk.bug 2692107
-         */
+        /// <summary>
+        // @cdk.bug 2692107
+        /// </summary>
         [TestMethod()]
         public void TestZeroZCoordinates()
         {
             string filename = "NCDK.Data.MDL.nozcoord.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             var prop = new NameValueCollection();
             prop["ForceReadAs3DCoordinates"] = "true";
             PropertiesListener listener = new PropertiesListener(prop);
@@ -237,7 +237,7 @@ namespace NCDK.IO.Iterator
             // First test unforced 3D coordinates
             string filename = "NCDK.Data.MDL.no3dStructures.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             IAtomContainer mol = null;
@@ -256,7 +256,7 @@ namespace NCDK.IO.Iterator
 
             // Now test forced 3D coordinates
             Trace.TraceInformation("Testing: " + filename);
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
             reader.Listeners.Add(new MyListener());
             reader.CustomizeJob();
@@ -295,14 +295,12 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        /**
-         * @cdk.bug 3488307
-         */
+        // @cdk.bug 3488307
         [TestMethod()]
         public void TestBrokenSDF()
         {
             string path = "NCDK.Data.MDL.bug3488307.sdf";
-            Stream in_ = GetType().Assembly.GetManifestResourceStream(path);
+            Stream in_ = ResourceLoader.GetAsStream(path);
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IteratingSDFReader reader = new IteratingSDFReader(in_, builder);
 
@@ -323,9 +321,8 @@ namespace NCDK.IO.Iterator
         [TestMethod()]
         public void TestV3000MolfileFormat()
         {
-
             string path = "NCDK.Data.MDL.molV3000.mol";
-            Stream in_ = this.GetType().Assembly.GetManifestResourceStream(path);
+            Stream in_ = ResourceLoader.GetAsStream(path);
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IteratingSDFReader reader = new IteratingSDFReader(in_, builder);
 

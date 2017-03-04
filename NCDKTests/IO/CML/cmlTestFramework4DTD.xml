@@ -2,10 +2,10 @@
 <!DOCTYPE list SYSTEM "../../../io/cml/data/cml1_0_1.dtd" []>
 <list title="Regression tests for valid DTD documents for CML 1.x">
 
-  <!-- JFragmentsTest.Test2dCoord() -->
+  <!-- JFragmentsTest.test2dCoord() -->
   <molecule id='m1'><atomArray><atom id='a1'><coordinate2 builtin="xy2">84 138</coordinate2></atom></atomArray></molecule>
 
-  <!-- JFragmentsTest.TestBondArrayCML1() -->
+  <!-- JFragmentsTest.testBondArrayCML1() -->
   <molecule title="NSC 25">
    <atomArray>
     <stringArray builtin="atomId">a1 a2 a3 a4 a5 a6 a7 a8 a9 a10 a11 a12 a13</stringArray>

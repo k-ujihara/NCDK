@@ -1,4 +1,4 @@
-﻿<#@ include file="Config.ttinclude" #>
+﻿<#@ include file="..\Config.ttinclude" #>
 
 namespace NCDK
 {
@@ -21,8 +21,8 @@ namespace NCDK
                 "UpInverted:A bond pointing up of which the end atom is the stereocenter and the start atom is above the drawing plane.", 
                 "Down:A bond pointing down of which the start atom is the stereocenter and the end atom is below the drawing plane.",
                 "DownInverted:A bond pointing down of which the end atom is the stereocenter and the start atom is below the drawing plane.",
-                "UpOrDown:A bond for which there is stereochemistry, we just do not know if it is UP or DOWN. The start atom is the stereocenter.",
-                "UpOrDownInverted:A bond for which there is stereochemistry, we just do not know if it is UP or DOWN. The end atom is the stereocenter.",
+                "UpOrDown:A bond for which there is stereochemistry, we just do not know if it is UP or Down. The start atom is the stereocenter.",
+                "UpOrDownInverted:A bond for which there is stereochemistry, we just do not know if it is UP or Down. The end atom is the stereocenter.",
                 "EOrZ:Indication that this double bond has a fixed, but unknown E/Z configuration.",
                 "E:Indication that this double bond has a E configuration.",
                 "Z:Indication that this double bond has a Z configuration.",

@@ -23,15 +23,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD.Global
 {
-    /**
-     * Unit testing for the {@link TimeOut} class.
-     *
-     * @author     egonw
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    /// Unit testing for the {@link TimeOut} class.
+    ///
+    // @author     egonw
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class TimeOutTest
     {
@@ -52,9 +52,9 @@ namespace NCDK.SMSD.Global
             Assert.AreEqual(0.2, timeOut.Time, 0.0001);
         }
 
-        /**
-         * Test of Time method, of class TimeOut.
-         */
+        /// <summary>
+        /// Test of Time method, of class TimeOut.
+        /// </summary>
         [TestMethod()]
         public void TestGetTimeOut()
         {
@@ -65,9 +65,9 @@ namespace NCDK.SMSD.Global
             Assert.AreEqual(expResult, result, 10.0);
         }
 
-        /**
-         * Test of isTimeOutFlag method, of class TimeOut.
-         */
+        /// <summary>
+        /// Test of isTimeOutFlag method, of class TimeOut.
+        /// </summary>
         [TestMethod()]
         public void TestIsTimeOutFlag()
         {
@@ -79,9 +79,9 @@ namespace NCDK.SMSD.Global
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setTimeOutFlag method, of class TimeOut.
-         */
+        /// <summary>
+        /// Test of setTimeOutFlag method, of class TimeOut.
+        /// </summary>
         [TestMethod()]
         public void TestSetTimeOutFlag()
         {

@@ -22,25 +22,25 @@ using NCDK.Default;
 
 namespace NCDK.Tools
 {
-    /**
-     * Test suite for testing deduce-bond-order implementations.
-     * This suite tests deduction from hybridization rich starting
-     * points, excluding, but optional, implicit or explicit
-     * hydrogen counts.
-     *
-     * @author      egonw
-     * @cdk.module  test-valencycheck
-     * @cdk.created 2006-08-16
-     */
+    /// <summary>
+    /// Test suite for testing deduce-bond-order implementations.
+    /// This suite tests deduction from hybridization rich starting
+    /// points, excluding, but optional, implicit or explicit
+    /// hydrogen counts.
+    ///
+    // @author      egonw
+    // @cdk.module  test-valencycheck
+    // @cdk.created 2006-08-16
+    /// </summary>
     [TestClass()]
     public class DeduceBondOrderTestFromExplicitHydrogens : CDKTestCase
     {
 
         private IDeduceBondOrderTool dboTool = new SaturationChecker();
 
-        /**
-         * Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C2H2/c1-2/h1-2H</div>.
+        /// </summary>
         [TestMethod()]
         public void TestAcetylene()
         {
@@ -66,9 +66,9 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Triple, bond1.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C2H4O/c1-2-3/h2H,1H3</div>.
+        /// </summary>
         [TestMethod()]
         public void TestKeto()
         {
@@ -99,9 +99,9 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Double, bond2.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C2H6O/c1-2-3/h3H,2H2,1H3</div>.
+        /// </summary>
         [TestMethod()]
         public void TestEnol()
         {
@@ -133,11 +133,11 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Single, bond2.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C4H6/c1-3-4-2/h3-4H,1-2H2</div>.
+        /// </summary>
         [TestMethod()]
-        public void xtestButadiene()
+        public void XtestButadiene()
         {
             IAtomContainer enol = new AtomContainer();
 
@@ -173,9 +173,9 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Double, bond3.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C6H4O2/c7-5-1-2-6(8)4-3-5/h1-4H</div>.
+        /// </summary>
         [TestMethod()]
         public void TestQuinone()
         {
@@ -236,9 +236,9 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Double, bond8.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H</div>.
+        /// </summary>
         [TestMethod()]
         public void TestBenzene()
         {
@@ -297,9 +297,9 @@ namespace NCDK.Tools
                     .Order.Numeric + bond6.Order.Numeric); // around atom6
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H</div>.
+        /// </summary>
         [TestMethod()]
         public void TestPyrrole()
         {
@@ -346,11 +346,11 @@ namespace NCDK.Tools
             Assert.AreEqual(BondOrder.Single, bond5.Order);
         }
 
-        /**
-         * Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
-         */
+        /// <summary>
+        /// Test <div class="inchi">InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H</div>.
+        /// </summary>
         //@Ignore("previously disabled 'xtest'")
-        public void xtestPyridine()
+        public void XtestPyridine()
         {
             IAtomContainer enol = new AtomContainer();
 

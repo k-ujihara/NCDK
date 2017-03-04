@@ -33,19 +33,19 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *
-     * Small ring descriptors: these are based on enumeration of all the small rings (sizes 3 to 9) in a molecule,
-     * which can be obtained quickly and deterministically.
-     *
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     *
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:smallrings
-     * @cdk.keyword smallrings
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    ///
+    /// Small ring descriptors: these are based on enumeration of all the small rings (sizes 3 to 9) in a molecule,
+    /// which can be obtained quickly and deterministically.
+    ///
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    ///
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:smallrings
+    // @cdk.keyword smallrings
+    // @cdk.keyword descriptor
+    /// </summary>
     public class SmallRingDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)
@@ -247,7 +247,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     if (ringBlock[n] > 0)
                     {
                         path[0] = n;
-                        recursiveRingFind(path, 1, rsz, ringBlock[n], rings);
+                        RecursiveRingFind(path, 1, rsz, ringBlock[n], rings);
                     }
             }
             smallRings = rings.ToArray();
@@ -338,7 +338,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         // hunt for ring recursively: start with a partially defined path, and go exploring
-        private void recursiveRingFind(int[] path, int psize, int capacity, int rblk, List<int[]> rings)
+        private void RecursiveRingFind(int[] path, int psize, int capacity, int rblk, List<int[]> rings)
         {
             // not enough atoms yet, so look for new possibilities
             if (psize < capacity)
@@ -361,7 +361,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                         for (int i = 0; i < psize; i++)
                             newPath[i] = path[i];
                         newPath[psize] = adj;
-                        recursiveRingFind(newPath, psize + 1, capacity, rblk, rings);
+                        RecursiveRingFind(newPath, psize + 1, capacity, rblk, rings);
                     }
                 }
                 return;

@@ -27,30 +27,30 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * A stereo encoder factory for tetrahedral centres. This factory generates
-     * {@link StereoEncoder}s for centres with specified by 2D and 3D coordinates.
-     * The required preconditions are the central atom must have 3/4 neighboring
-     * atoms, Sp3 hybridization and no query bonds (e.g. wiggly). If there is at
-     * least one up/down bond and all required atoms have coordinates a new 2D
-     * encoder is created. If the there are no stereo bonds (up/down) and all
-     * required atoms have 3D coordinates then a new 3D encoder is created.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
+    /// <summary>
+    /// A stereo encoder factory for tetrahedral centres. This factory generates
+    /// <see cref="StereoEncoder"/>s for centres with specified by 2D and 3D coordinates.
+    /// The required preconditions are the central atom must have 3/4 neighboring
+    /// atoms, Sp3 hybridization and no query bonds (e.g. wiggly). If there is at
+    /// least one up/down bond and all required atoms have coordinates a new 2D
+    /// encoder is created. If the there are no stereo bonds (up/down) and all
+    /// required atoms have 3D coordinates then a new 3D encoder is created.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
     public class GeometricTetrahedralEncoderFactory : IStereoEncoderFactory
     {
 
-        /**
-         * Create a stereo encoder for all potential 2D and 3D tetrahedral
-         * elements.
-         *
-         * @param container an atom container
-         * @param graph     adjacency list representation of the container
-         * @return a new encoder for tetrahedral elements
-         */
+        /// <summary>
+        /// Create a stereo encoder for all potential 2D and 3D tetrahedral
+        /// elements.
+        ///
+        /// <param name="container">an atom container</param>
+        /// <param name="graph">adjacency list representation of the container</param>
+        /// <returns>a new encoder for tetrahedral elements</returns>
+        /// </summary>
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
         {
 
@@ -106,16 +106,16 @@ namespace NCDK.Hash.Stereo
             return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
         }
 
-        /**
-         * Create the geometric part of an encoder
-         *
-         * @param elevationMap temporary map to store the bond elevations (2D)
-         * @param bonds        list of bonds connected to the atom at i
-         * @param i            the central atom (index)
-         * @param adjacent     adjacent atoms (indices)
-         * @param container    container
-         * @return geometric parity encoder (or null)
-         */
+        /// <summary>
+        /// Create the geometric part of an encoder
+        ///
+        /// <param name="elevationMap">temporary map to store the bond elevations (2D)</param>
+        /// <param name="bonds">list of bonds connected to the atom at i</param>
+        /// <param name="i">the central atom (index)</param>
+        /// <param name="adjacent">adjacent atoms (indices)</param>
+        /// <param name="container">container</param>
+        /// <returns>geometric parity encoder (or null)</returns>
+        /// </summary>
         private static GeometricParity Geometric(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i,
                 int[] adjacent, IAtomContainer container)
         {
@@ -126,16 +126,16 @@ namespace NCDK.Hash.Stereo
             return null;
         }
 
-        /**
-         * Create the geometric part of an encoder of 2D configurations
-         *
-         * @param elevationMap temporary map to store the bond elevations (2D)
-         * @param bonds        list of bonds connected to the atom at i
-         * @param i            the central atom (index)
-         * @param adjacent     adjacent atoms (indices)
-         * @param container    container
-         * @return geometric parity encoder (or null)
-         */
+        /// <summary>
+        /// Create the geometric part of an encoder of 2D configurations
+        ///
+        /// <param name="elevationMap">temporary map to store the bond elevations (2D)</param>
+        /// <param name="bonds">list of bonds connected to the atom at i</param>
+        /// <param name="i">the central atom (index)</param>
+        /// <param name="adjacent">adjacent atoms (indices)</param>
+        /// <param name="container">container</param>
+        /// <returns>geometric parity encoder (or null)</returns>
+        /// </summary>
         private static GeometricParity Geometric2D(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i,
                 int[] adjacent, IAtomContainer container)
         {
@@ -171,14 +171,14 @@ namespace NCDK.Hash.Stereo
 
         }
 
-        /**
-         * Create the geometric part of an encoder of 3D configurations
-         *
-         * @param i         the central atom (index)
-         * @param adjacent  adjacent atoms (indices)
-         * @param container container
-         * @return geometric parity encoder (or null)
-         */
+        /// <summary>
+        /// Create the geometric part of an encoder of 3D configurations
+        ///
+        /// <param name="i">the central atom (index)</param>
+        /// <param name="adjacent">adjacent atoms (indices)</param>
+        /// <param name="container">container</param>
+        /// <returns>geometric parity encoder (or null)</returns>
+        /// </summary>
         private static GeometricParity Geometric3D(int i, int[] adjacent, IAtomContainer container)
         {
 
@@ -208,24 +208,24 @@ namespace NCDK.Hash.Stereo
 
         }
 
-        /**
-         * check whether the atom is Sp3 hybridization
-         *
-         * @param atom an atom
-         * @return whether the atom is Sp3
-         */
+        /// <summary>
+        /// check whether the atom is Sp3 hybridization
+        ///
+        /// <param name="atom">an atom</param>
+        /// <returns>whether the atom is Sp3</returns>
+        /// </summary>
         private static bool Sp3(IAtom atom)
         {
             return Hybridization.SP3.Equals(atom.Hybridization);
         }
 
-        /**
-         * access the number of stereo bonds in the provided bond list.
-         *
-         * @param bonds input list
-         * @return number of Up/Down bonds in the list, -1 if a query bond was
-         *         found
-         */
+        /// <summary>
+        /// access the number of stereo bonds in the provided bond list.
+        ///
+        /// <param name="bonds">input list</param>
+        /// <returns>number of Up/Down bonds in the list, -1 if a query bond was</returns>
+        ///         found
+        /// </summary>
         private static int GetNumPfStereoBonds(IEnumerable<IBond> bonds)
         {
             int count = 0;
@@ -252,14 +252,14 @@ namespace NCDK.Hash.Stereo
             return count;
         }
 
-        /**
-         * Maps the input bonds to a map of Atom->Elevation where the elevation is
-         * whether the bond is off the plane with respect to the central atom.
-         *
-         * @param atom  central atom
-         * @param bonds bonds connected to the central atom
-         * @param map   map to load with elevation values (can be reused)
-         */
+        /// <summary>
+        /// Maps the input bonds to a map of Atom->Elevation where the elevation is
+        /// whether the bond is off the plane with respect to the central atom.
+        ///
+        /// <param name="atom">central atom</param>
+        /// <param name="bonds">bonds connected to the central atom</param>
+        /// <param name="map">map to load with elevation values (can be reused)</param>
+        /// </summary>
         private static void MakeElevationMap(IAtom atom, IEnumerable<IBond> bonds, IDictionary<IAtom, int> map)
         {
             map.Clear();

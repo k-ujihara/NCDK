@@ -26,42 +26,39 @@ using System;
 
 namespace NCDK.Hash
 {
-    /**
-     * An abstract hash function providing several utility methods to be used by
-     * other hashing functions.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class AbstractHashGenerator
+    /// <summary>
+    /// An abstract hash function providing several utility methods to be used by
+    /// other hashing functions.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal class AbstractHashGenerator
     {
         /* pseudorandom number generator */
         private readonly Pseudorandom pseudorandom;
 
-        /**
-         * Construct an abstract hash function providing the pseudorandom number
-         * generator.
-         *
-         * @param pseudorandom a pseudorandom number generator
-         * @throws NullPointerException the pseudorandom number generator was null
-         */
+        /// <summary>
+        /// Construct an abstract hash function providing the pseudorandom number
+        /// generator.
+        ///
+        /// <param name="pseudorandom">a pseudorandom number generator</param>
+        /// <exception cref="NullPointerException">the pseudorandom number generator was null</exception>
+        /// </summary>
         public AbstractHashGenerator(Pseudorandom pseudorandom)
         {
             if (pseudorandom == null) throw new ArgumentNullException("null pseduorandom number generator provided");
             this.pseudorandom = pseudorandom;
         }
 
-        /**
-         * Create a copy of the array of long values.
-         *
-         * @param src original values
-         * @return copy of the original values
-         * @see Arrays#CopyOf(long[], int)
-         */
+        /// <summary>
+        /// Create a copy of the array of long values.
+        ///
+        /// <param name="src">original values</param>
+        /// <returns>copy of the original values</returns>
+        /// @see Arrays#CopyOf(long[], int)
+        /// </summary>
         public static long[] Copy(long[] src)
         {
             var ret = new long[src.Length];
@@ -69,39 +66,39 @@ namespace NCDK.Hash
             return ret;
         }
 
-        /**
-         * Copy the values from the source (src) array to the destination (dest).
-         *
-         * @param src  source values
-         * @param dest destination of the source copy
-         * @see System#Arraycopy(Object, int, Object, int, int);
-         */
+        /// <summary>
+        /// Copy the values from the source (src) array to the destination (dest).
+        ///
+        /// <param name="src">source values</param>
+        /// <param name="dest">destination of the source copy</param>
+        /// @see System#Arraycopy(Object, int, Object, int, int);
+        /// </summary>
         public static void Copy(long[] src, long[] dest)
         {
             Array.Copy(src, 0, dest, 0, dest.Length);
         }
 
-        /**
-         * Generate the next random number.
-         *
-         * @param seed a {@literal long} value to seed a pseudorandom number
-         *             generator
-         * @return next pseudorandom number
-         */
+        /// <summary>
+        /// Generate the next random number.
+        ///
+        /// <param name="seed">a {@literal long} value to seed a pseudorandom number</param>
+        ///             generator
+        /// <returns>next pseudorandom number</returns>
+        /// </summary>
         public long Rotate(long seed)
         {
             return pseudorandom.Next(seed);
         }
 
-        /**
-         * Rotate a <i>value</i>, <i>n</i> times. The rotation uses a pseudorandom
-         * number generator to sequentially generate values seed on the previous
-         * value.
-         *
-         * @param value the {@literal long} value to rotate
-         * @param n     the number of times to rotate the value
-         * @return the {@literal long} value rotated the specified number of times
-         */
+        /// <summary>
+        /// Rotate a <i>value</i>, <i>n</i> times. The rotation uses a pseudorandom
+        /// number generator to sequentially generate values seed on the previous
+        /// value.
+        ///
+        /// <param name="value">the {@literal long} value to rotate</param>
+        /// <param name="n">the number of times to rotate the value</param>
+        /// <returns>the {@literal long} value rotated the specified number of times</returns>
+        /// </summary>
         public long Rotate(long value, int n)
         {
             while (n-- > 0)
@@ -109,36 +106,36 @@ namespace NCDK.Hash
             return value;
         }
 
-        /**
-         * Returns the value of the lowest three bits. This value is between 0 and 7
-         * inclusive.
-         *
-         * @param value a {@literal long} value
-         * @return the {@literal int} value of the lowest three bits.
-         */
+        /// <summary>
+        /// Returns the value of the lowest three bits. This value is between 0 and 7
+        /// inclusive.
+        ///
+        /// <param name="value">a {@literal long} value</param>
+        /// <returns>the {@literal int} value of the lowest three bits.</returns>
+        /// </summary>
         public static int LowestThreeBits(long value)
         {
             return (int)(value & 0x7);
         }
 
-        /**
-         * Distribute the provided value across the set of {@literal long} values.
-         *
-         * @param value a {@literal long} value to distribute
-         * @return the {@literal long} value distributed a set amount
-         */
+        /// <summary>
+        /// Distribute the provided value across the set of {@literal long} values.
+        ///
+        /// <param name="value">a {@literal long} value to distribute</param>
+        /// <returns>the {@literal long} value distributed a set amount</returns>
+        /// </summary>
         public long Distribute(long value)
         {
             // rotate 1-8 times
             return Rotate(value, 1 + LowestThreeBits(value));
         }
 
-        /**
-         * Convert an IAtomContainer to an adjacency list.
-         *
-         * @param container the container to convert
-         * @return adjacency list representation
-         */
+        /// <summary>
+        /// Convert an IAtomContainer to an adjacency list.
+        ///
+        /// <param name="container">the container to convert</param>
+        /// <returns>adjacency list representation</returns>
+        /// </summary>
         public static int[][] ToAdjList(IAtomContainer container)
         {
 

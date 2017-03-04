@@ -8,7 +8,7 @@
 *                        OSO, H3N, CSP2, and ZINC
 *
 * Aliphatic types that are not assigned patterns in this file are:              
-* - CSP2 GENERIC SP2 Carbon
+* - CSP2 GENERIC SP2 CARBON
 * - ZINC DIPOSITIVE ZINC 
 * - NN=C NITROGEN IN N-N=C
 [CX4r3] CR3R

@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- * 			  John May <jwmay@users.sf.net>
+ *               John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -22,52 +22,47 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 
-using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Describes a path graph (<b>P-Graph</b>) to find all cycles in a graph
-     * {@cdk.cite HAN96}.
-     *
-     * @author John May
-     * @cdk.keyword cycle
-     * @cdk.keyword ring
-     * @cdk.keyword all cycles
-     * @cdk.keyword all rings
-     * @cdk.keyword path graph
-     * @cdk.keyword p-graph
-     * @cdk.module core
-     */
+    /// <summary>
+    /// Describes a path graph (<b>P-Graph</b>) to find all cycles in a graph
+    /// {@cdk.cite HAN96}.
+    /// </summary>
+    // @author John May
+    // @cdk.keyword cycle
+    // @cdk.keyword ring
+    // @cdk.keyword all cycles
+    // @cdk.keyword all rings
+    // @cdk.keyword path graph
+    // @cdk.keyword p-graph
+    // @cdk.module core
     abstract class PathGraph
     {
-        /**
-         * The current degree of vertex <i>x</i>. The degree provides an upper bound
-         * on the number of new edges that could be introduced by {@link
-         * #Remove(int, IList)}. The number of new edges is at most
-         * <i>d</i>(<i>d</i>-1)/2 where d is the degree of the vertex being
-         * removed.
-         *
-         * @param x a vertex
-         * @return degree
-         * @see #Remove(int, IList)
-         */
+        /// <summary>
+        /// The current degree of vertex <paramref name="x"/>. The degree provides an upper bound
+        /// on the number of new edges that could be introduced by
+        /// <see cref="Remove(int, IList{int[]})"/>. The number of new edges is at most
+        /// <i>d</i>(<i>d</i>-1)/2 where d is the degree of the vertex being
+        /// removed.
+        /// </summary>
+        /// <param name="x">a vertex</param>
+        /// <returns>degree</returns>
+        /// <seealso cref="Remove(int, IList)"/>
         public abstract int Degree(int x);
 
-        /**
-		 * Remove vertex <i>x</i> from the P-graph and reduce all incident edges.Any
-		 * newly discovered cycles are added to the provided list of <i>cycles</i>.
-		 * Removing a vertex with a large number of incident edges may create many
-		 * edges in the graph. To avoid generating a potentially exponential number
-		 * of cycles checking the {@link #Degree(int)} of a vertex before removal
-		 * can provide a fast fail approach.
-		 *
-		 * @param x      a vertex
-		 * @param cycles a list to add newly discovered cycles to
-		 * @see #Degree(int)
-		 */
-        public abstract void Remove(int x, List<int[]> cycles);
+        /// <summary>
+        /// Remove vertex <paramref name="x"/> from the P-graph and reduce all incident edges.Any
+        /// newly discovered cycles are added to the provided list of <paramref name="cycles"/>.
+        /// Removing a vertex with a large number of incident edges may create many
+        /// edges in the graph. To avoid generating a potentially exponential number
+        /// of cycles checking the <see cref="Degree(int)"/> of a vertex before removal
+        /// can provide a fast fail approach.
+        /// </summary>
+        /// <param name="x">a vertex</param>
+        /// <param name="cycles">a list to add newly discovered cycles to</param>
+        /// <seealso cref="Degree(int)"/>
+        public abstract void Remove(int x, IList<int[]> cycles);
     }
 }

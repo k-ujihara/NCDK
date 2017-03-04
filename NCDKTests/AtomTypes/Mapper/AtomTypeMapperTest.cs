@@ -20,12 +20,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.AtomTypes.Mapper
 {
-    /**
-     * This class tests the mapper that maps CDK atom types to other atom type
-     * schemes.
-     *
-     * @cdk.module test-atomtype
-     */
+    /// <summary>
+    /// This class tests the mapper that maps CDK atom types to other atom type
+    /// schemes.
+    ///
+    // @cdk.module test-atomtype
+    /// </summary>
     [TestClass()]
     public class AtomTypeMapperTest : CDKTestCase
     {
@@ -40,9 +40,9 @@ namespace NCDK.AtomTypes.Mapper
         [TestMethod()]
         public void TestGetInstance_String_InputStream()
         {
-            AtomTypeMapper mapper = AtomTypeMapper.GetInstance("NCDK.Dict.Data.cdk-sybyl-mappings.owl", this
-                    .GetType().Assembly
-                    .GetManifestResourceStream("NCDK.Dict.Data.cdk-sybyl-mappings.owl"));
+            AtomTypeMapper mapper = AtomTypeMapper.GetInstance(
+                "NCDK.Dict.Data.cdk-sybyl-mappings.owl",  
+                ResourceLoader.GetAsStream("NCDK.Dict.Data.cdk-sybyl-mappings.owl"));
             Assert.IsNotNull(mapper);
         }
 

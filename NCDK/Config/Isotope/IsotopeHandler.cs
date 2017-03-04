@@ -46,11 +46,6 @@ namespace NCDK.Config.Isotope
     // @cdk.githash
     public class IsotopeHandler : XContentHandler
     {
-        private static readonly XNamespace NS_CML2 = "http://www.xml-cml.org/schema";
-        private static readonly XName XName_isotope = NS_CML2 + "isotope";
-        private static readonly XName XName_isotopeList = NS_CML2 + "isotopeList";
-        private static readonly XName XName_scalar = NS_CML2 + "scalar";
-
         private List<IIsotope> isotopes;
 
         private IIsotope workingIsotope;
@@ -83,37 +78,39 @@ namespace NCDK.Config.Isotope
         public override void EndElement(XElement element)
         {
             Debug.WriteLine($"end element: {element.ToString()}");
-            if (XName_isotope.Equals(element.Name))
+            switch (element.Name.LocalName)
             {
-                if (workingIsotope != null) isotopes.Add(workingIsotope);
-                workingIsotope = null;
-            }
-            else if (XName_isotopeList.Equals(element.Name))
-            {
-                currentElement = null;
-            }
-            else if (XName_scalar.Equals(element.Name))
-            {
-                try
-                {
-                    if ("bo:exactMass".Equals(dictRef))
+                case "isotope":
+                    if (workingIsotope != null) isotopes.Add(workingIsotope);
+                    workingIsotope = null;
+                    break;
+                case "isotopeList":
+                    currentElement = null;
+                    break;
+                case "scalar":
+                    try
                     {
-                        workingIsotope.ExactMass = double.Parse(element.Value);
+                        if ("bo:exactMass".Equals(dictRef))
+                        {
+                            workingIsotope.ExactMass = double.Parse(element.Value);
+                        }
+                        else if ("bo:atomicNumber".Equals(dictRef))
+                        {
+                            workingIsotope.AtomicNumber = int.Parse(element.Value);
+                        }
+                        else if ("bo:relativeAbundance".Equals(dictRef))
+                        {
+                            workingIsotope.NaturalAbundance = double.Parse(element.Value);
+                        }
                     }
-                    else if ("bo:atomicNumber".Equals(dictRef))
+                    catch (FormatException exception)
                     {
-                        workingIsotope.AtomicNumber = int.Parse(element.Value);
+                        Trace.TraceError($"The {dictRef} value is incorrect: {element.Value}");
+                        Debug.WriteLine(exception);
                     }
-                    else if ("bo:relativeAbundance".Equals(dictRef))
-                    {
-                        workingIsotope.NaturalAbundance = double.Parse(element.Value);
-                    }
-                }
-                catch (FormatException exception)
-                {
-                    Trace.TraceError($"The {dictRef} value is incorrect: {element.Value}");
-                    Debug.WriteLine(exception);
-                }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -121,19 +118,21 @@ namespace NCDK.Config.Isotope
         {
             dictRef = "";
             Debug.WriteLine($"startElement: {element.ToString()}");
-            if (XName_isotope.Equals(element.Name))
+            switch (element.Name.LocalName)
             {
-                workingIsotope = CreateIsotopeOfElement(currentElement, element);
-            }
-            else if (XName_isotopeList.Equals(element.Name))
-            {
-                currentElement = GetElementSymbol(element);
-            }
-            else if (XName_scalar.Equals(element.Name))
-            {
-                var att = element.Attribute("dictRef");
-                if (att != null)
-                    dictRef = att.Value;
+                case "isotope":
+                    workingIsotope = CreateIsotopeOfElement(currentElement, element);
+                    break;
+                case "isotopeList":
+                    currentElement = GetElementSymbol(element);
+                    break;
+                case "scalar":
+                    var att = element.Attribute("dictRef");
+                    if (att != null)
+                        dictRef = att.Value;
+                    break;
+                default:
+                    break;
             }
         }
 

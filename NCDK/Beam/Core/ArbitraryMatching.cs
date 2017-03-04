@@ -12,20 +12,17 @@ namespace NCDK.Beam
     /// through augmentation.
     /// </summary>
     // @author John May
-#if TEST
-    public
-#endif
-    sealed class ArbitraryMatching
+    internal sealed class ArbitraryMatching
     {
-        /**
-         * Create an arbitrary matching on the subset of vertices ('s') of provided
-         * graph. The provided matching should be empty.
-         *
-         * @param g graph to match
-         * @param m empty matching (presumed)
-         * @param s subset of vertices
-         * @return number of vertices matched
-         */
+        /// <summary>
+        /// Create an arbitrary matching on the subset of vertices ('s') of provided
+        /// graph. The provided matching should be empty.
+        ///
+        /// <param name="g">graph to match</param>
+        /// <param name="m">empty matching (presumed)</param>
+        /// <param name="s">subset of vertices</param>
+        /// <returns>number of vertices matched</returns>
+        /// </summary>
         public static int Initial(Graph g, Matching m, BitArray s)
         {
             int nMatched = 0;
@@ -114,17 +111,17 @@ namespace NCDK.Beam
             return nMatched;
         }
 
-        /**
-         * When precisely two vertices are unmatched we only need to find a single
-         * augmenting path. Rather than run through edmonds with blossoms etc we
-         * simple do a targest DFS for the path.
-         *
-         * @param g        graph
-         * @param m        matching
-         * @param nMatched current matching cardinality must be |s|-nMathced == 2
-         * @param s        subset size
-         * @return new match cardinality
-         */
+        /// <summary>
+        /// When precisely two vertices are unmatched we only need to find a single
+        /// augmenting path. Rather than run through edmonds with blossoms etc we
+        /// simple do a targest DFS for the path.
+        ///
+        /// <param name="g">graph</param>
+        /// <param name="m">matching</param>
+        /// <param name="nMatched">current matching cardinality must be |s|-nMathced == 2</param>
+        /// <param name="s">subset size</param>
+        /// <returns>new match cardinality</returns>
+        /// </summary>
         public static int AugmentOnce(Graph g, Matching m, int nMatched, BitArray s)
         {
 

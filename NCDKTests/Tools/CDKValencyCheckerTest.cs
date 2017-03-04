@@ -24,14 +24,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
-    /**
-     * Tests CDK's valency checker capabilities in terms of example molecules.
-     *
-     * @cdk.module  test-valencycheck
-     *
-     * @author      Egon Willighagen <egonw@users.sf.net>
-     * @cdk.created 2007-07-28
-     */
+    /// <summary>
+    /// Tests CDK's valency checker capabilities in terms of example molecules.
+    ///
+    // @cdk.module  test-valencycheck
+    ///
+    // @author      Egon Willighagen <egonw@users.sf.net>
+    // @cdk.created 2007-07-28
+    /// </summary>
     [TestClass()]
     public class CDKValencyCheckerTest : CDKTestCase
     {
@@ -123,9 +123,9 @@ namespace NCDK.Tools
             Assert.IsFalse(checker.IsSaturated(mol));
         }
 
-        /**
-         * Tests if the saturation checker considers negative charges.
-         */
+        /// <summary>
+        /// Tests if the saturation checker considers negative charges.
+        /// </summary>
         [TestMethod()]
         public void TestIsSaturated_NegativelyChargedOxygen()
         {
@@ -151,10 +151,10 @@ namespace NCDK.Tools
             Assert.IsTrue(checker.IsSaturated(mol));
         }
 
-        /**
-         * Tests if the saturation checker considers positive
-         * charges.
-         */
+        /// <summary>
+        /// Tests if the saturation checker considers positive
+        /// charges.
+        /// </summary>
         [TestMethod()]
         public void TestIsSaturated_PositivelyChargedNitrogen()
         {
@@ -180,9 +180,9 @@ namespace NCDK.Tools
             Assert.IsTrue(checker.IsSaturated(mol));
         }
 
-        /**
-         * Test sulfuric acid.
-         */
+        /// <summary>
+        /// Test sulfuric acid.
+        /// </summary>
         [TestMethod()]
         public void TestBug772316()
         {
@@ -213,9 +213,9 @@ namespace NCDK.Tools
             Assert.IsTrue(checker.IsSaturated(mol));
         }
 
-        /**
-         * Tests if the saturation checker gets a proton right.
-         */
+        /// <summary>
+        /// Tests if the saturation checker gets a proton right.
+        /// </summary>
         [TestMethod()]
         public void TestIsSaturated_Proton()
         {
@@ -229,9 +229,9 @@ namespace NCDK.Tools
             Assert.IsTrue(checker.IsSaturated(mol));
         }
 
-        /** TODO: check who added this test. I think Miguel; it seems to be a
-         *  resonance structure.
-         */
+        /// <summary> TODO: check who added this test. I think Miguel; it seems to be a
+        ///  resonance structure.
+        /// </summary>
         [TestMethod()]
         public void Test1()
         {

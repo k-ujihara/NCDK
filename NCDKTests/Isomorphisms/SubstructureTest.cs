@@ -29,15 +29,15 @@ using static NCDK.CDKPropertyName;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A collection of substructure integration tests. These give a high-level view
-     * of what we expect to match. To run these tests the subclass should {@link
-     * #Create(IAtomContainer)} a pattern for the
-     * input.
-     *
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    /// A collection of substructure integration tests. These give a high-level view
+    /// of what we expect to match. To run these tests the subclass should {@link
+    /// #Create(IAtomContainer)} a pattern for the
+    /// input.
+    ///
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public abstract class SubstructureTest
     {

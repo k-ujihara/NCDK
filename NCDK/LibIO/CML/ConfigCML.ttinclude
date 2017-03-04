@@ -15,52 +15,52 @@
 <#@ import namespace="System.Text.RegularExpressions" #>
 
 <#+
-	public string ToFirstCapital(string str)
-	{
-		return str.Substring(0, 1).ToUpper() + str.Substring(1);
-	}
-
-	public string ToXName_CML(string name)
-	{
-		return "XName_CML_" + name;
-	}
-
-	public string ToAttName(string name)
-	{
-		return "Attribute_" + name;
-	}
-
-	public void MakeCMLClass(string name)
-	{
-		MakeCMLClass(name, false);
-	}
-
-	public void MakeCMLClass(string name, bool withOld)
-	{
-		string className = "CML" + ToFirstCapital(name);
-		string xname = ToXName_CML(name);
-#>
-	public partial class <#= className #> : CMLElement
+    public string ToFirstCapital(string str)
     {
-		public <#= className #>()
+        return str.Substring(0, 1).ToUpper() + str.Substring(1);
+    }
+
+    public string ToXName_CML(string name)
+    {
+        return "XName_CML_" + name;
+    }
+
+    public string ToAttName(string name)
+    {
+        return "Attribute_" + name;
+    }
+
+    public void MakeCMLClass(string name)
+    {
+        MakeCMLClass(name, false);
+    }
+
+    public void MakeCMLClass(string name, bool withOld)
+    {
+        string className = "CML" + ToFirstCapital(name);
+        string xname = ToXName_CML(name);
+#>
+    public partial class <#= className #> : CMLElement
+    {
+        public <#= className #>()
             : base(<#= xname #>)
         { }
 <#+
-		if (withOld)
-		{
+        if (withOld)
+        {
 #>
         public <#= className #>(<#= className #> old)
             : base(old)
-        { }		
+        { }        
 <#+
-		}
-		MakeStrAtt("title");
-		MakeStrAtt("convention");
-		MakeStrAtt("dictRef");
+        }
+        MakeStrAtt("title");
+        MakeStrAtt("convention");
+        MakeStrAtt("dictRef");
 #>
     }
 <#+
-	}
+    }
 #>
 
 <#+
@@ -77,7 +77,7 @@
             set { SetAttributeValue(<#= ToAttName(name) #>, Concat(value)); }
         }
 <#+ 
-	}
+    }
 #>
 
 <#+
@@ -94,7 +94,7 @@
             set { SetAttributeValue(<#= ToAttName(name) #>, value); }
         }
 <#+ 
-	}
+    }
 #>
 
 
@@ -108,7 +108,7 @@
             set { SetAttributeValue(<#= ToAttName(name) #>, value.ToString()); }
         }
 <#+ 
-	}
+    }
 #>
 
 <#+
@@ -121,5 +121,5 @@
             set { SetAttributeValue(<#= ToAttName(name) #>, value); }
         }
 <#+ 
-	}
+    }
 #>

@@ -29,6 +29,7 @@ using NCDK.Tools.Manipulator;
 using System.Diagnostics;
 using System.Linq;
 
+
 namespace NCDK.IO.CML {
     /// <summary>
     /// TestCase for reading CML 2 files using a few test files in data/cmltest.
@@ -159,9 +160,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual("Glu55", ((PseudoAtom)roundTrippedAtom).Label);
         }
 
-        /**
-         * @cdk.bug 1455346
-         */
+        /// <summary>
+        // @cdk.bug 1455346
+        /// </summary>
         [TestMethod()]
         public void TestChemModel()
         {
@@ -199,9 +200,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.FormalCharge, roundTrippedAtom.FormalCharge);
         }
 
-        /**
-         * @cdk.bug 1713398
-         */
+        /// <summary>
+        // @cdk.bug 1713398
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount()
         {
@@ -217,9 +218,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.ImplicitHydrogenCount, roundTrippedAtom.ImplicitHydrogenCount);
         }
 
-        /**
-         * @cdk.bug 1713398
-         */
+        /// <summary>
+        // @cdk.bug 1713398
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount_UNSET()
         {
@@ -281,9 +282,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.MassNumber, roundTrippedAtom.MassNumber);
         }
 
-        /**
-         * @cdk.bug 1014344
-         */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         //@Ignore("Functionality not yet implemented - exact mass can not be written/read")
         public void TestIsotope_ExactMass()
         {
@@ -300,9 +301,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.ExactMass.Value, roundTrippedAtom.ExactMass.Value, 0.01);
         }
 
-        /**
-         * @cdk.bug 1014344
-         */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         //@Ignore("Functionality not yet implemented - natural abundance can not be written/read")
         public void TestIsotope_Abundance()
         {
@@ -319,10 +320,10 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(atom.NaturalAbundance.Value, roundTrippedAtom.NaturalAbundance.Value, 0.01);
         }
 
-        /**
-         * Test roundtripping of MassNumber.
-         * @
-         */
+        /// <summary>
+        /// Test roundtripping of MassNumber.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestMassNumber()
         {
@@ -421,9 +422,9 @@ namespace NCDK.IO.CML {
             Assert.AreEqual(bond.Order, roundTrippedBond.Order);
         }
 
-        /**
-         * @cdk.bug 1713398
-         */
+        /// <summary>
+        // @cdk.bug 1713398
+        /// </summary>
         [TestMethod()]
         public void TestBondAromatic_Double()
         {
@@ -561,11 +562,11 @@ namespace NCDK.IO.CML {
             }
         }
 
-        /**
-         * Tests of bond order information is stored even when aromaticity is given.
-         *
-         * @
-         */
+        /// <summary>
+        /// Tests of bond order information is stored even when aromaticity is given.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestAromaticity()
         {
@@ -601,12 +602,12 @@ namespace NCDK.IO.CML {
             }
         }
 
-        /**
-         * Tests whether the custom atom properties survive the CML round-trip
-         * @
-         *
-         * @cdk.bug 1930029
-         */
+        /// <summary>
+        /// Tests whether the custom atom properties survive the CML round-trip
+        // @
+        ///
+        // @cdk.bug 1930029
+        /// </summary>
         [TestMethod()]
         public void TestAtomProperty()
         {
@@ -621,8 +622,8 @@ namespace NCDK.IO.CML {
             }
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
-            //Assert.AreEqual(convertor.cdkMoleculeToCMLMolecule(mol).ToXML(),
-            //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).ToXML());
+            //Assert.AreEqual(convertor.CDKMoleculeToCMLMolecule(mol).ToXML(),
+            //       convertor.CDKMoleculeToCMLMolecule(roundTrippedMol).ToXML());
 
             foreach (var a in roundTrippedMol.Atoms)
             {
@@ -635,12 +636,12 @@ namespace NCDK.IO.CML {
             }
         }
 
-        /**
-         * Tests whether the custom bond properties survive the CML round-trip
-         * @
-         *
-         * @cdk.bug 1930029
-         */
+        /// <summary>
+        /// Tests whether the custom bond properties survive the CML round-trip
+        // @
+        ///
+        // @cdk.bug 1930029
+        /// </summary>
         [TestMethod()]
         public void TestBondProperty()
         {
@@ -654,8 +655,8 @@ namespace NCDK.IO.CML {
             }
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
-            //Assert.AreEqual(convertor.cdkMoleculeToCMLMolecule(mol).ToXML(),
-            //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).ToXML());
+            //Assert.AreEqual(convertor.CDKMoleculeToCMLMolecule(mol).ToXML(),
+            //       convertor.CDKMoleculeToCMLMolecule(roundTrippedMol).ToXML());
 
             foreach (var b in roundTrippedMol.Bonds)
             {
@@ -668,12 +669,12 @@ namespace NCDK.IO.CML {
             }
         }
 
-        /**
-         * Tests whether the custom molecule properties survive the CML round-trip
-         * @
-         *
-         * @cdk.bug 1930029
-         */
+        /// <summary>
+        /// Tests whether the custom molecule properties survive the CML round-trip
+        // @
+        ///
+        // @cdk.bug 1930029
+        /// </summary>
         [TestMethod()]
         public void TestMoleculeProperty()
         {
@@ -686,8 +687,8 @@ namespace NCDK.IO.CML {
                 mol.SetProperty(key[i], value[i]);
             }
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
-            //Assert.AreEqual(convertor.cdkMoleculeToCMLMolecule(mol).ToXML(),
-            //	   convertor.cdkMoleculeToCMLMolecule(roundTrippedMol).ToXML());
+            //Assert.AreEqual(convertor.CDKMoleculeToCMLMolecule(mol).ToXML(),
+            //       convertor.CDKMoleculeToCMLMolecule(roundTrippedMol).ToXML());
             for (int i = 0; i < key.Length; i++)
             {
                 var actual = roundTrippedMol.GetProperty<object>(key[i]);
@@ -713,14 +714,14 @@ namespace NCDK.IO.CML {
             Assert.IsNotNull(newList[1]);
         }
 
-        /**
-         * @cdk.bug 1930029
-         */
+        /// <summary>
+        // @cdk.bug 1930029
+        /// </summary>
         [TestMethod()]
         public void TestAtomProperties()
         {
             string filename = "NCDK.Data.CML.custompropertiestest.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemFile)new ChemFile());
             reader.Close();
@@ -732,10 +733,10 @@ namespace NCDK.IO.CML {
             }
         }
 
-        /**
-         * Test roundtripping of Unset property (Hydrogencount).
-         * @
-         */
+        /// <summary>
+        /// Test roundtripping of Unset property (Hydrogencount).
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestUnSetHydrogenCount()
         {

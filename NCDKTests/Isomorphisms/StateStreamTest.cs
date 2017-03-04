@@ -30,10 +30,10 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class StateStreamTest
     {
@@ -92,14 +92,14 @@ namespace NCDK.Isomorphisms
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 9, 8, 7, 2, 1, 0 }, it.Current)); it.MoveNext();
         }
 
-        /**
-         * Create a sub state for matching benzene to naphthalene
-         *
-         *
-         * Benzene: InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-         *
-         * Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-         */
+        /// <summary>
+        /// Create a sub state for matching benzene to naphthalene
+        ///
+        ///
+        /// Benzene: InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+        ///
+        /// Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
+        /// </summary>
         VFSubState CreateBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             IAtomContainer container1 = TestMoleculeFactory.MakeBenzene();
@@ -111,13 +111,13 @@ namespace NCDK.Isomorphisms
             return new VFSubState(container1, container2, g1, g2, bonds1, bonds2, atomMatcher, bondMatcher);
         }
 
-        /**
-         * Create a sub state for matching naphthalene to benzene
-         *
-         * Benzene: InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-         *
-         * Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-         */
+        /// <summary>
+        /// Create a sub state for matching naphthalene to benzene
+        ///
+        /// Benzene: InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+        ///
+        /// Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
+        /// </summary>
         VFSubState CreateNaphthaleneToBenzene(AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             IAtomContainer container1 = TestMoleculeFactory.MakeNaphthalene();

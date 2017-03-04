@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
-	[TestClass()]
+    [TestClass()]
     public class Gaussian03FormatTest : ChemFormatMatcherTest
     {
         public Gaussian03FormatTest()

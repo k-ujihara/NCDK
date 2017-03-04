@@ -26,26 +26,26 @@ using System.Diagnostics;
 
 namespace NCDK.Reactions
 {
-    /**
-     * <p>The base class for all chemical reactions objects in this cdk.
-     * It provides methods for adding parameters</p>
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2008-02-01
-     * @cdk.module     reaction
-     * @cdk.set        reaction-types
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <p>The base class for all chemical reactions objects in this cdk.
+    /// It provides methods for adding parameters</p>
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2008-02-01
+    // @cdk.module     reaction
+    // @cdk.set        reaction-types
+    // @cdk.githash
+    /// </summary>
     public class ReactionEngine
     {
-        private DictionaryMap dictionary;
+        private EntryDictionary dictionary;
         public Dictionary<string, object> ParamsMap { get; set; }
         public IReactionMechanism Mechanism { get; set; }
 
-        /**
-         * Constructor of the ReactionEngine object.
-         */
+        /// <summary>
+        /// Constructor of the ReactionEngine object.
+        /// </summary>
         public ReactionEngine()
         {
             try
@@ -63,11 +63,11 @@ namespace NCDK.Reactions
 
         }
 
-        /**
-         * Extract the mechanism necessary for this reaction.
-         *
-         * @param entry  The EntryReact object
-         */
+        /// <summary>
+        /// Extract the mechanism necessary for this reaction.
+        ///
+        /// <param name="entry">The EntryReact object</param>
+        /// </summary>
         private void ExtractMechanism(EntryReact entry)
         {
             string mechanismName = "NCDK.Reactions.Mechanisms." + entry.Mechanism;
@@ -88,13 +88,13 @@ namespace NCDK.Reactions
             }
         }
 
-        /**
-         * Open the Dictionary OWLReact.
-         *
-         * @param nameDict  Name of the Dictionary
-         * @param reaction  The IReactionProcess
-         * @return          The entry for this reaction
-         */
+        /// <summary>
+        /// Open the Dictionary OWLReact.
+        ///
+        /// <param name="nameDict">Name of the Dictionary</param>
+        /// <param name="reaction">The IReactionProcess</param>
+        /// <returns>The entry for this reaction</returns>
+        /// </summary>
         private EntryReact InitiateDictionary(string nameDict, IReactionProcess reaction)
         {
             DictionaryDatabase db = new DictionaryDatabase();
@@ -102,12 +102,12 @@ namespace NCDK.Reactions
             string entryString = reaction.Specification.SpecificationReference;
             entryString = entryString.Substring(entryString.IndexOf('#') + 1);
 
-            return (EntryReact)dictionary.GetEntry(entryString.ToLowerInvariant());
+            return (EntryReact)dictionary[entryString.ToLowerInvariant()];
         }
 
-        /**
-         * Creates a map with the name and type of the parameters.
-         */
+        /// <summary>
+        /// Creates a map with the name and type of the parameters.
+        /// </summary>
         private void InitiateParameterMap2(EntryReact entry)
         {
             var paramDic = entry.ParameterClass;
@@ -144,12 +144,12 @@ namespace NCDK.Reactions
         /// <remarks>Must be done before calling calculate as the parameters influence the calculation outcome.</remarks>
         public IList<IParameterReact> ParameterList { get; set; }
 
-        /**
-         * Return the IParameterReact if it exists given the class.
-         *
-         * @param paramClass The class
-         * @return           The IParameterReact
-         */
+        /// <summary>
+        /// Return the IParameterReact if it exists given the class.
+        ///
+        /// <param name="paramClass">The class</param>
+        /// <returns>The IParameterReact</returns>
+        /// </summary>
         public IParameterReact GetParameterClass(Type paramClass)
         {
             foreach (var ipr in ParameterList)

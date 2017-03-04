@@ -20,56 +20,53 @@ using System.Collections.Generic;
 
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates input for InChI to structure conversion.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates input for InChI to structure conversion.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiInputInchi
     {
-        /**
-         * InChI ASCIIZ string to be converted to a strucure
-         */
+        /// <summary>
+        /// InChI ASCIIZ string to be converted to a strucure
+        /// </summary>
         public string Inchi { get; set; }
 
-        /**
-         * InChI options: space-delimited
-         */
+        /// <summary>
+        /// InChI options: space-delimited
+        /// </summary>
         public string Options 
         {
             get;
-#if !TEST
-            protected 
-#endif
-            set;
+            protected internal set;
         }
 
-        /**
-         * Constructor.
-         * @param inchi InChI string
-         * @param opts  Options
-         */
+        /// <summary>
+        /// Constructor.
+        /// <param name="inchi">InChI string</param>
+        /// <param name="opts">Options</param>
+        /// </summary>
         public NInchiInputInchi(string inchi)
         {
             this.Inchi = inchi;
             this.Options = "";
         }
 
-        /**
-         * Constructor.
-         * @param inchi    InChI string
-         * @param opts    Options
-         */
+        /// <summary>
+        /// Constructor.
+        /// <param name="inchi">InChI string</param>
+        /// <param name="opts">Options</param>
+        /// </summary>
         public NInchiInputInchi(string inchi, string opts)
         {
             this.Inchi = inchi;
             this.Options = NInchiWrapper.CheckOptions(opts);
         }
 
-        /**
-         * Constructor.
-         * @param inchi    InChI string
-         * @param opts    Options
-         */
+        /// <summary>
+        /// Constructor.
+        /// <param name="inchi">InChI string</param>
+        /// <param name="opts">Options</param>
+        /// </summary>
         public NInchiInputInchi(string inchi, IList<INCHI_OPTION> opts)
         {
             Inchi = inchi;

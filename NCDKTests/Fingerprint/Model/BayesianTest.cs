@@ -30,6 +30,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,10 +39,10 @@ using System.Linq;
 
 namespace NCDK.Fingerprint.Model
 {
-    /**
-     * Validation test for the Bayesian model building & serialisation.
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Validation test for the Bayesian model building & serialisation.
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class BayesianTest
     {
@@ -104,44 +105,42 @@ namespace NCDK.Fingerprint.Model
 
         // ----------------- public methods -----------------
 
-        /*
-         * temporary: standalone test public static void Main(string[] argv) {new
-         * BayesianTest().Run();} public void Run() {
-         * WriteLine("Beginning Bayesian model test..."); try {
-         * CheckFP(REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,0,REF_ECFP6_0);
-         * checkFP
-         * (REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,1024,REF_ECFP6_1024);
-         * CheckTextFields(); ConfirmPredictions("Tiny.sdf",8,8,0,0);
-         * ConfirmPredictions("Small.sdf",6,12,0,6);
-         * CompareFolding("FoldedProbes.sdf"
-         * ,"ECFP6/0",CircularFingerprinter.CLASS_ECFP6,0);
-         * CompareFolding("FoldedProbes.sdf"
-         * ,"ECFP6/1024",CircularFingerprinter.CLASS_ECFP6,1024);
-         * CompareFolding("FoldedProbes.sdf"
-         * ,"ECFP6/32768",CircularFingerprinter.CLASS_ECFP6,32768);
-         * CompareFolding("FoldedProbes.sdf"
-         * ,"FCFP6/0",CircularFingerprinter.CLASS_FCFP6,0);
-         * runTest("Binders.sdf","active"
-         * ,CircularFingerprinter.CLASS_ECFP6,1024,0,"Binders-ECFP6-1024-loo.bayesian"
-         * );
-         * runTest("Binders.sdf","active",CircularFingerprinter.CLASS_ECFP6,32768,
-         * 5,"Binders-ECFP6-32768-xv5.bayesian");
-         * runTest("Binders.sdf","active",CircularFingerprinter
-         * .CLASS_FCFP6,0,0,"Binders-FCFP6-0-loo.bayesian");
-         * runTest("MLProbes.sdf","Lipinski score"
-         * ,CircularFingerprinter.CLASS_ECFP6,
-         * 1024,0,"MLProbes-ECFP6-1024-loo.bayesian");
-         * runTest("MLProbes.sdf","Lipinski score"
-         * ,CircularFingerprinter.CLASS_ECFP6,
-         * 32768,5,"MLProbes-ECFP6-32768-xv5.bayesian");
-         * runTest("MLProbes.sdf","Lipinski score"
-         * ,CircularFingerprinter.CLASS_FCFP6,0,0,"MLProbes-FCFP6-0-loo.bayesian");
-         * runTest
-         * ("MLProbes.sdf","Lipinski score",CircularFingerprinter.CLASS_FCFP6,
-         * 256,3,"MLProbes-FCFP6-256-xv3.bayesian"); } catch (CDKException ex) {
-         * WriteLine("** Test failed **"); Console.Out.WriteLine(ex.StackTrace); return; }
-         * WriteLine("Model test complete."); }
-         */
+        // temporary: standalone test public static void Main(string[] argv) {new
+        // BayesianTest().Run();} public void Run() {
+        // WriteLine("Beginning Bayesian model test..."); try {
+        // CheckFP(REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,0,REF_ECFP6_0);
+        // checkFP
+        // (REF_MOLECULE,CircularFingerprinter.CLASS_ECFP6,1024,REF_ECFP6_1024);
+        // CheckTextFields(); ConfirmPredictions("Tiny.sdf",8,8,0,0);
+        // ConfirmPredictions("Small.sdf",6,12,0,6);
+        // CompareFolding("FoldedProbes.sdf"
+        // ,"ECFP6/0",CircularFingerprinter.CLASS_ECFP6,0);
+        // CompareFolding("FoldedProbes.sdf"
+        // ,"ECFP6/1024",CircularFingerprinter.CLASS_ECFP6,1024);
+        // CompareFolding("FoldedProbes.sdf"
+        // ,"ECFP6/32768",CircularFingerprinter.CLASS_ECFP6,32768);
+        // CompareFolding("FoldedProbes.sdf"
+        // ,"FCFP6/0",CircularFingerprinter.CLASS_FCFP6,0);
+        // RunTest("Binders.sdf","active"
+        // ,CircularFingerprinter.CLASS_ECFP6,1024,0,"Binders-ECFP6-1024-loo.bayesian"
+        // );
+        // RunTest("Binders.sdf","active",CircularFingerprinter.CLASS_ECFP6,32768,
+        // 5,"Binders-ECFP6-32768-xv5.bayesian");
+        // RunTest("Binders.sdf","active",CircularFingerprinter
+        // .CLASS_FCFP6,0,0,"Binders-FCFP6-0-loo.bayesian");
+        // RunTest("MLProbes.sdf","Lipinski score"
+        // ,CircularFingerprinter.CLASS_ECFP6,
+        // 1024,0,"MLProbes-ECFP6-1024-loo.bayesian");
+        // RunTest("MLProbes.sdf","Lipinski score"
+        // ,CircularFingerprinter.CLASS_ECFP6,
+        // 32768,5,"MLProbes-ECFP6-32768-xv5.bayesian");
+        // RunTest("MLProbes.sdf","Lipinski score"
+        // ,CircularFingerprinter.CLASS_FCFP6,0,0,"MLProbes-FCFP6-0-loo.bayesian");
+        // runTest
+        // ("MLProbes.sdf","Lipinski score",CircularFingerprinter.CLASS_FCFP6,
+        // 256,3,"MLProbes-FCFP6-256-xv3.bayesian"); } catch (CDKException ex) {
+        // WriteLine("** Test failed **"); Console.Out.WriteLine(ex.StackTrace); return; }
+        // WriteLine("Model test complete."); }
 
         [TestMethod()]
         public void TestFingerprints()
@@ -186,10 +185,10 @@ namespace NCDK.Fingerprint.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of binding data to compare to reference data");
 
-            runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian");
-            runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 1024, 0, "Binders-ECFP6-1024-loo.bayesian");
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
                 "Binders-ECFP6-32768-xv5.bayesian");
-            runTest("Binders.sdf", "active", CircularFingerprinter.CLASS_FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian");
+            RunTest("Binders.sdf", "active", CircularFingerprinter.CLASS_FCFP6, 0, 0, "Binders-FCFP6-0-loo.bayesian");
         }
 
         [TestMethod()]
@@ -198,13 +197,13 @@ namespace NCDK.Fingerprint.Model
         {
             Trace.TraceInformation("Bayesian/Fingerprints test: using dataset of molecular probes to compare to reference data");
 
-            runTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 1024, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 1024, 0,
                 "MLProbes-ECFP6-1024-loo.bayesian");
-            runTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_ECFP6, 32768, 5,
                 "MLProbes-ECFP6-32768-xv5.bayesian");
-            runTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 0, 0,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 0, 0,
                 "MLProbes-FCFP6-0-loo.bayesian");
-            runTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 256, 3,
+            RunTest("MLProbes.sdf", "Lipinski score", CircularFingerprinter.CLASS_FCFP6, 256, 3,
                 "MLProbes-FCFP6-256-xv3.bayesian");
         }
 
@@ -230,8 +229,8 @@ namespace NCDK.Fingerprint.Model
                     }
             if (!same)
             {
-                WriteLine("    ** calculated: " + ArrayStr(calcHash));
-                WriteLine("    ** reference:  " + ArrayStr(refHash));
+                WriteLine("    ///* calculated: " + ArrayStr(calcHash));
+                WriteLine("    ///* reference:  " + ArrayStr(refHash));
                 throw new CDKException("Hashes differ.");
             }
         }
@@ -281,7 +280,7 @@ namespace NCDK.Fingerprint.Model
 
             try
             {
-                using (Stream in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.CDD." + sdfile))
+                using (Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
                     IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
 
@@ -345,7 +344,7 @@ namespace NCDK.Fingerprint.Model
             bool failed = false;
             try
             {
-                using (Stream in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.CDD." + sdfile))
+                using (Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
                     IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
 
@@ -363,9 +362,9 @@ namespace NCDK.Fingerprint.Model
 
                         if (!gotHashes.Equals(reqHashes))
                         {
-                            WriteLine("    ** mismatch at row " + row);
-                            WriteLine("    ** calc: " + gotHashes);
-                            WriteLine("    ** want: " + reqHashes);
+                            WriteLine("    ///* mismatch at row " + row);
+                            WriteLine("    ///* calc: " + gotHashes);
+                            WriteLine("    ///* want: " + reqHashes);
                             failed = true;
                         }
                     }
@@ -386,14 +385,14 @@ namespace NCDK.Fingerprint.Model
 
         // performs a bulk test: loads an SDfile, builds a model with the given parameters, and compares it to a reference model
         // that has been previously serialised
-        private void runTest(string sdfile, string actvField, int classType, int folding, int xval, string modelFN)
+        private void RunTest(string sdfile, string actvField, int classType, int folding, int xval, string modelFN)
         {
             WriteLine("[" + modelFN + "]");
             WriteLine("    Loading " + sdfile);
 
             try
             {
-                Stream in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.CDD." + sdfile);
+                Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
                 IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
                 Bayesian model = new Bayesian(classType, folding);
 
@@ -427,8 +426,7 @@ namespace NCDK.Fingerprint.Model
                 WriteLine("    Parsing reference model");
 
                 //FileReader frdr=new FileReader(modelFN);
-                var mrdr = new StreamReader(this.GetType().Assembly
-                        .GetManifestResourceStream("NCDK.Data.CDD." + modelFN));
+                var mrdr = new StreamReader(ResourceLoader.GetAsStream("NCDK.Data.CDD." + modelFN));
                 Bayesian ref_ = Bayesian.Deserialise(mrdr);
                 mrdr.Close();
 
@@ -437,37 +435,37 @@ namespace NCDK.Fingerprint.Model
                 bool failed = false;
                 if (model.Folding != ref_.Folding)
                 {
-                    WriteLine("    ** reference folding size=" + ref_.Folding);
+                    WriteLine("    ///* reference folding size=" + ref_.Folding);
                     failed = true;
                 }
                 if (model.TrainingSize != ref_.TrainingSize)
                 {
-                    WriteLine("    ** reference training size=" + ref_.TrainingSize);
+                    WriteLine("    ///* reference training size=" + ref_.TrainingSize);
                     failed = true;
                 }
                 if (model.TrainingActives != ref_.TrainingActives)
                 {
-                    WriteLine("    ** reference training actives=" + ref_.TrainingActives);
+                    WriteLine("    ///* reference training actives=" + ref_.TrainingActives);
                     failed = true;
                 }
                 if (!model.ROCType.Equals(ref_.ROCType))
                 {
-                    WriteLine("    ** reference ROC type=" + ref_.ROCType);
+                    WriteLine("    ///* reference ROC type=" + ref_.ROCType);
                     failed = true;
                 }
                 if (!DblEqual(model.ROCAUC, ref_.ROCAUC))
                 {
-                    WriteLine("    ** reference ROC AUC=" + ref_.ROCAUC);
+                    WriteLine("    ///* reference ROC AUC=" + ref_.ROCAUC);
                     failed = true;
                 }
                 if (Math.Abs(model.lowThresh - ref_.lowThresh) > 0.00000000000001)
                 {
-                    WriteLine("    ** reference lowThresh=" + ref_.lowThresh + " different to calculated " + model.lowThresh);
+                    WriteLine("    ///* reference lowThresh=" + ref_.lowThresh + " different to calculated " + model.lowThresh);
                     failed = true;
                 }
                 if (Math.Abs(model.highThresh - ref_.highThresh) > 0.00000000000001)
                 {
-                    WriteLine("    ** reference highThresh=" + ref_.highThresh + " different to calculated "
+                    WriteLine("    ///* reference highThresh=" + ref_.highThresh + " different to calculated "
                             + model.highThresh);
                     failed = true;
                 }
@@ -476,20 +474,20 @@ namespace NCDK.Fingerprint.Model
                 IDictionary<int, double> mbits = model.contribs, rbits = ref_.contribs;
                 if (mbits.Count != rbits.Count)
                 {
-                    WriteLine("    ** model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
+                    WriteLine("    ///* model has " + mbits.Count + " contribution bits, reference has " + rbits.Count);
                     failed = true;
                 }
                 foreach (var h in mbits.Keys)
                     if (!rbits.ContainsKey(h))
                     {
-                        WriteLine("    ** model hash bit " + h + " not found in reference");
+                        WriteLine("    ///* model hash bit " + h + " not found in reference");
                         failed = true;
                         break; // one is enough
                     }
                 foreach (var h in rbits.Keys)
                     if (!mbits.ContainsKey(h))
                     {
-                        WriteLine("    ** reference hash bit " + h + " not found in model");
+                        WriteLine("    ///* reference hash bit " + h + " not found in model");
                         failed = true;
                         break; // one is enough
                     }
@@ -499,7 +497,7 @@ namespace NCDK.Fingerprint.Model
                         double c1 = mbits[h], c2 = rbits[h];
                         if (!DblEqual(c1, c2))
                         {
-                            WriteLine("    ** contribution for bit " + h + ": model=" + c1 + ", reference=" + c2);
+                            WriteLine("    ///* contribution for bit " + h + ": model=" + c1 + ", reference=" + c2);
                             failed = true;
                             break; // one is enough
                         }

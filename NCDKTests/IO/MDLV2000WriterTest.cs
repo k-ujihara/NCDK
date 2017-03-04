@@ -36,13 +36,13 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer MDL mol files using one test file.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.MDLV2000Writer
-     */
+    /// <summary>
+    /// TestCase for the writer MDL mol files using one test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.MDLV2000Writer
+    /// </summary>
     [TestClass()]
     public class MDLV2000WriterTest : ChemObjectIOTest
     {
@@ -58,10 +58,10 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /**
-         * @cdk.bug 890456
-         * @cdk.bug 1524466
-         */
+        /// <summary>
+        // @cdk.bug 890456
+        // @cdk.bug 1524466
+        /// </summary>
         [TestMethod()]
         public void TestBug890456()
         {
@@ -77,9 +77,9 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("M  END") != -1);
         }
 
-        /**
-         * @cdk.bug 1212219
-         */
+        /// <summary>
+        // @cdk.bug 1212219
+        /// </summary>
         [TestMethod()]
         public void TestBug1212219()
         {
@@ -116,7 +116,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void nonDefaultValence_fe_iii()
+        public void NonDefaultValence_fe_iii()
         {
             IAtomContainer container = new AtomContainer();
             IAtom fe1 = new Atom("Fe");
@@ -145,9 +145,9 @@ namespace NCDK.IO
             Assert.IsTrue(output.IndexOf("0  0  0  0  0  0  0  0  0 15  0  0") != -1);
         }
 
-        /**
-         * Tests if string atom atom mappings are parsed correctly
-         */
+        /// <summary>
+        /// Tests if string atom atom mappings are parsed correctly
+        /// </summary>
         [TestMethod()]
         public void TestWriteStringAtomAtomMapping()
         {
@@ -163,9 +163,9 @@ namespace NCDK.IO
             Assert.IsTrue(output.Contains("0  0  0  0  0  0  0  0  0 15  0  0"));
         }
 
-        /**
-         * Tests if non-valid atom atom mappings are ignored by the reader.
-         */
+        /// <summary>
+        /// Tests if non-valid atom atom mappings are ignored by the reader.
+        /// </summary>
         [TestMethod()]
         public void TestWriteInvalidAtomAtomMapping()
         {
@@ -184,17 +184,17 @@ namespace NCDK.IO
             Assert.IsTrue(m.Success);
         }
 
-        /**
-         * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
-         * When a molecule contains an IPseudoAtom without specifying the atom label
-         * the MDLWriter generates invalid output as it prints the zero-length atom
-         * label.
-         * This was fixed with letting PseudoAtom have a default label of '*'.
-         *
-         * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-         *
-         * @cdk.bug 1778479
-         */
+        /// <summary>
+        /// Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
+        /// When a molecule contains an IPseudoAtom without specifying the atom label
+        /// the MDLWriter generates invalid output as it prints the zero-length atom
+        /// label.
+        /// This was fixed with letting PseudoAtom have a default label of '*'.
+        ///
+        /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        ///
+        // @cdk.bug 1778479
+        /// </summary>
         [TestMethod()]
         public void TestBug1778479()
         {
@@ -329,9 +329,9 @@ namespace NCDK.IO
             Assert.IsTrue(output.Contains("title1; title2"));
         }
 
-        /**
-         * Test correct output of R-groups, using the hash (#) and a separate RGP line.
-         */
+        /// <summary>
+        /// Test correct output of R-groups, using the hash (#) and a separate RGP line.
+        /// </summary>
         [TestMethod()]
         public void TestRGPLine()
         {
@@ -364,9 +364,9 @@ namespace NCDK.IO
             Assert.IsTrue(-1 != output.IndexOf("M  RGP  1   1  12"), "Test for RGP line");
         }
 
-        /**
-         * Test writing of comments made on individual atoms into an Atom Value lines.
-         */
+        /// <summary>
+        /// Test writing of comments made on individual atoms into an Atom Value lines.
+        /// </summary>
         [TestMethod()]
         public void TestAtomValueLine()
         {
@@ -391,11 +391,11 @@ namespace NCDK.IO
 
         }
 
-        /**
-         * Test option to write aromatic bonds with bond type "4".
-         * Please note: bond type values 4 through 8 are for SSS queries only.
-         * @
-         */
+        /// <summary>
+        /// Test option to write aromatic bonds with bond type "4".
+        /// Please note: bond type values 4 through 8 are for SSS queries only.
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestAromaticBondType4()
         {
@@ -431,7 +431,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAtomParity()
         {
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.mol_testAtomParity.mol");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -450,7 +450,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWritePseudoAtoms()
         {
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.pseudoatoms.sdf");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -466,10 +466,10 @@ namespace NCDK.IO
             Assert.IsTrue(output.IndexOf("Leu") != -1);
         }
 
-        /**
-         * @cdk.bug 1263
-         * @
-         */
+        /// <summary>
+        // @cdk.bug 1263
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestWritePseudoAtoms_LongLabel()
         {
@@ -495,9 +495,9 @@ namespace NCDK.IO
 
         }
 
-        /**
-         * Checks that null atom labels are handled correctly.
-         */
+        /// <summary>
+        /// Checks that null atom labels are handled correctly.
+        /// </summary>
         [TestMethod()]
         public void TestWritePseudoAtoms_nullLabel()
         {
@@ -522,10 +522,10 @@ namespace NCDK.IO
 
         }
 
-        /**
-         * When there are more then 16 R Groups these should be wrapped
-         * @
-         */
+        /// <summary>
+        /// When there are more then 16 R Groups these should be wrapped
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestRGPLine_Multiline()
         {
@@ -587,7 +587,7 @@ namespace NCDK.IO
         public void TestSingleSingletRadical()
         {
 
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.singleSingletRadical.mol");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -608,7 +608,7 @@ namespace NCDK.IO
         public void TestSingleDoubletRadical()
         {
 
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.singleDoubletRadical.mol");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -632,7 +632,7 @@ namespace NCDK.IO
         public void TestSingleTripletRadical()
         {
 
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.singleTripletRadical.mol");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -653,7 +653,7 @@ namespace NCDK.IO
         public void TestMultipleRadicals()
         {
 
-            Stream in_ = GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.multipleRadicals.mol");
+            Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -695,10 +695,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupRepeatUnitRoundTrip()
+        public void SgroupRepeatUnitRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -710,10 +710,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupBracketStylesRoundTrip()
+        public void SgroupBracketStylesRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -724,10 +724,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupUnorderedMixtureRoundTrip()
+        public void SgroupUnorderedMixtureRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-unord-mixture.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-unord-mixture.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -738,10 +738,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupCopolymerRoundTrip()
+        public void SgroupCopolymerRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-ran-copolymer.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-ran-copolymer.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -752,10 +752,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupExpandedAbbreviationRoundTrip()
+        public void SgroupExpandedAbbreviationRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -766,10 +766,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupParentAtomListRoundTrip()
+        public void SgroupParentAtomListRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.ChEBI_81539.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_81539.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -780,10 +780,10 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void sgroupOrderedMixtureRoundTrip()
+        public void SgroupOrderedMixtureRoundTrip()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-ord-mixture.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-ord-mixture.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -798,7 +798,7 @@ namespace NCDK.IO
         public void RoundtripAtomParityExpH()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.tetrahedral-parity-withExpH.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.tetrahedral-parity-withExpH.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -811,7 +811,7 @@ namespace NCDK.IO
         public void RoundtripAtomParityImplH()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 mdlw.Write(mdlr.Read(new AtomContainer()));
@@ -824,7 +824,7 @@ namespace NCDK.IO
         public void RoundtripAtomParityImplModified()
         {
             StringWriter sw = new StringWriter();
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol")))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol")))
             using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
             {
                 AtomContainer mol = mdlr.Read(new AtomContainer());

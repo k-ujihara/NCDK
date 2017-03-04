@@ -21,9 +21,9 @@ using NCDK.Default;
 
 namespace NCDK.Validate
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class ProblemMarkerTest : CDKTestCase
     {
@@ -35,54 +35,54 @@ namespace NCDK.Validate
         public void TestUnMarkWithError_IChemObject()
         {
             IChemObject obj = new ChemObject();
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
             ProblemMarker.MarkWithError(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
             ProblemMarker.UnMarkWithError(obj);
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
         }
 
         [TestMethod()]
         public void TestUnMarkWithWarning_IChemObject()
         {
             IChemObject obj = new ChemObject();
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.MarkWithWarning(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.UnMarkWithWarning(obj);
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
         }
 
         [TestMethod()]
         public void TestUnMark_IChemObject()
         {
             IChemObject obj = new ChemObject();
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.MarkWithWarning(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.MarkWithError(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
             ProblemMarker.Unmark(obj);
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
         }
 
         [TestMethod()]
         public void TestMarkWithError_IChemObject()
         {
             IChemObject obj = new ChemObject();
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
             ProblemMarker.MarkWithError(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ERROR_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.ErrorMarker));
         }
 
         [TestMethod()]
         public void TestMarkWithWarning_IChemObject()
         {
             IChemObject obj = new ChemObject();
-            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
             ProblemMarker.MarkWithWarning(obj);
-            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WARNING_MARKER));
+            Assert.IsNotNull(obj.GetProperty<bool?>(ProblemMarker.WarningMarker));
         }
     }
 }

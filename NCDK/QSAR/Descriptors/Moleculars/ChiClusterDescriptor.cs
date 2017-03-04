@@ -28,40 +28,40 @@ using System.Collections.Generic;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Evaluates chi cluster descriptors.
-     * <p/>
-     * The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
-     * It utilizes the graph isomorphism code of the CDK to find fragments matching
-     * SMILES strings representing the fragments corresponding to each type of chain.
-     * <p/>
-     * The order of the values returned is
-     * <ol>
-     * <li>SC-3 - Simple cluster, order 3
-     * <li>SC-4 - Simple cluster, order 4
-     * <li>SC-5 - Simple cluster, order 5
-     * <li>SC-6 - Simple cluster, order 6
-     * <li>VC-3 - Valence cluster, order 3
-     * <li>VC-4 - Valence cluster, order 4
-     * <li>VC-5 - Valence cluster, order 5
-     * <li>VC-6 - Valence cluster, order 6
-     * </ol>
-     * <p/>
-     * <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
-     * the various fragments. As a result calculations may be slow. In addition, recent
-     * versions of Molconn-Z use simplified fragment definitions (i.e., rings without
-     * branches etc.) whereas these descriptors use the older more complex fragment
-     * definitions.
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2006-11-13
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:chiCluster
-     * @cdk.keyword chi cluster index
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Evaluates chi cluster descriptors.
+    /// <p/>
+    /// The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
+    /// It utilizes the graph isomorphism code of the CDK to find fragments matching
+    /// SMILES strings representing the fragments corresponding to each type of chain.
+    /// <p/>
+    /// The order of the values returned is
+    /// <ol>
+    /// <li>SC-3 - Simple cluster, order 3
+    /// <li>SC-4 - Simple cluster, order 4
+    /// <li>SC-5 - Simple cluster, order 5
+    /// <li>SC-6 - Simple cluster, order 6
+    /// <li>VC-3 - Valence cluster, order 3
+    /// <li>VC-4 - Valence cluster, order 4
+    /// <li>VC-5 - Valence cluster, order 5
+    /// <li>VC-6 - Valence cluster, order 6
+    /// </ol>
+    /// <p/>
+    /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
+    /// the various fragments. As a result calculations may be slow. In addition, recent
+    /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
+    /// branches etc.) whereas these descriptors use the older more complex fragment
+    /// definitions.
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2006-11-13
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:chiCluster
+    // @cdk.keyword chi cluster index
+    // @cdk.keyword descriptor
+    /// </summary>
     public class ChiClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;

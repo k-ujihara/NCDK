@@ -19,15 +19,16 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class ChemFileManipulatorTest : CDKTestCase
     {
@@ -85,7 +86,7 @@ namespace NCDK.Tools.Manipulator
         {
             string filename = "NCDK.Data.MDL.prev2000.sd";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());

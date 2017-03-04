@@ -21,13 +21,14 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Templates;
+
 using System;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class AllRingsFinderTest : CDKTestCase
     {
@@ -62,9 +63,9 @@ namespace NCDK.RingSearches
             Assert.AreEqual(6, ringSet.Count);
         }
 
-        /**
-         * @cdk.bug 746067
-         */
+        /// <summary>
+        // @cdk.bug 746067
+        /// </summary>
         [TestMethod()]
         public void TestBondsWithinRing()
         {
@@ -129,7 +130,7 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = new AllRingsFinder();
 
             string filename = "NCDK.Data.MDL.porphyrin.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -149,7 +150,7 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = AllRingsFinder.UsingThreshold(AllRingsFinder.Threshold.PubChem_994);
 
             string filename = "NCDK.Data.MDL.ring_03419.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -168,7 +169,7 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = new AllRingsFinder();
 
             string filename = "NCDK.Data.MDL.choloylcoa.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -186,7 +187,7 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = new AllRingsFinder();
 
             string filename = "NCDK.Data.MDL.azulene.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -197,9 +198,9 @@ namespace NCDK.RingSearches
             Assert.AreEqual(3, ringSet.Count);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C90H74O28/c91-48-18-8-36(28-58(48)101)81-64(107)34-35-4-3-6-43(80(35)114-81)66-44-14-24-55(98)72(87(44)115-83(75(66)108)38-10-20-50(93)60(103)30-38)68-46-16-26-57(100)74(89(46)117-85(77(68)110)40-12-22-52(95)62(105)32-40)70-47-17-27-56(99)73(90(47)118-86(79(70)112)41-13-23-53(96)63(106)33-41)69-45-15-25-54(97)71(88(45)116-84(78(69)111)39-11-21-51(94)61(104)31-39)67-42-5-1-2-7-65(42)113-82(76(67)109)37-9-19-49(92)59(102)29-37/h1-33,64,66-70,75-79,81-86,91-112H,34H2
+        /// </summary>
         [TestMethod()]
         public void TestBigMoleculeWithIsolatedRings()
         {
@@ -207,7 +208,7 @@ namespace NCDK.RingSearches
             AllRingsFinder arf = new AllRingsFinder();
 
             string filename = "NCDK.Data.CML.isolated_ringsystems.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
@@ -233,24 +234,24 @@ namespace NCDK.RingSearches
             Assert.AreEqual(6, ringSize[10]);
         }
 
-        /**
-         * This test takes a very long time. It was to ensure that
-         * AllRingsFinder actually stops for the given examples.
-         * And it does, after a very long time.
-         * So, the test is commented out because of its long runtime.
-         *
-         * @cdk.bug 777488
-         */
+        /// <summary>
+        /// This test takes a very long time. It was to ensure that
+        /// AllRingsFinder actually stops for the given examples.
+        /// And it does, after a very long time.
+        /// So, the test is commented out because of its long runtime.
+        ///
+        // @cdk.bug 777488
+        /// </summary>
         [TestMethod()]
         public void TestBug777488()
         {
-            //Assume.AssumeTrue(runSlowTests());
+            //Assume.AssumeTrue(RunSlowTests());
 
             //string filename = "data/Bug646.cml";
             string filename = "NCDK.Data.CML.testBug777488-1-AllRingsFinder.cml";
             //string filename = "data/NCI_diversity_528.mol.cml";
             //string filename = "data/NCI_diversity_978.mol.cml";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -308,7 +309,7 @@ namespace NCDK.RingSearches
             IRingSet ringSet = null;
             AllRingsFinder arf = new AllRingsFinder();
             string filename = "NCDK.Data.MDL.ring_03419.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -324,7 +325,7 @@ namespace NCDK.RingSearches
             IRingSet ringSet = null;
             AllRingsFinder arf = new AllRingsFinder();
             string filename = "NCDK.Data.MDL.four-ring-5x10.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -341,7 +342,7 @@ namespace NCDK.RingSearches
             IRingSet ringSet = null;
             AllRingsFinder arf = new AllRingsFinder();
             string filename = "NCDK.Data.MDL.four-ring-5x10.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IChemSequence seq = chemFile[0];

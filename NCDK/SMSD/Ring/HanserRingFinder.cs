@@ -50,24 +50,24 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Ring
 {
-    /**
-     * Finds the Set of all Rings. This is an implementation of the algorithm
-     * published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
-     * fragments listed in this article. The concept is that a regular molecular
-     * graph is first converted into a path graph (refer PathGraph.java),
-     * i.e. a graph where the edges are actually paths. This can list several
-     * nodes that are implicitly connecting the two nodes between the path
-     * is formed (refer PathEdge.java).
-     *
-     * The paths that join source and sink node are step by step fused and the joined
-     * nodes are deleted from the path graph (collapsed path). What remains is a graph
-     * of paths that have the same start and endpoint and are thus rings (source=sink=ring).
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
-     *
-     */
+    /// <summary>
+    /// Finds the Set of all Rings. This is an implementation of the algorithm
+    /// published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
+    /// fragments listed in this article. The concept is that a regular molecular
+    /// graph is first converted into a path graph (refer PathGraph.java),
+    /// i.e. a graph where the edges are actually paths. This can list several
+    /// nodes that are implicitly connecting the two nodes between the path
+    /// is formed (refer PathEdge.java).
+    ///
+    /// The paths that join source and sink node are step by step fused and the joined
+    /// nodes are deleted from the path graph (collapsed path). What remains is a graph
+    /// of paths that have the same start and endpoint and are thus rings (source=sink=ring).
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
+    ///
+    /// </summary>
     public class HanserRingFinder : RingFinder
     {
 
@@ -78,13 +78,12 @@ namespace NCDK.SMSD.Ring
             rings = new List<IList<IAtom>>();
         }
 
-        /**
-         * Returns a collection of rings.
-         *
-         * @param  molecule
-         * @return a {@link Collection} of {@link List}s containing one ring each
-         * @see org.openscience.cdk.smsd.ring.RingFinder#FindRings(IAtomContainer)
-         */
+        /// <summary>
+        /// Returns a collection of rings.
+        ///
+        /// <param name="molecule">/// <returns>a <see cref="Collection"/> of <see cref="List"/>s containing one ring each</param></returns>
+        /// @see org.openscience.cdk.smsd.ring.RingFinder#FindRings(IAtomContainer)
+        /// </summary>
         public IEnumerable<IList<IAtom>> FindRings(IAtomContainer molecule)
         {
             if (molecule == null) return null;
@@ -105,12 +104,11 @@ namespace NCDK.SMSD.Ring
             return rings;
         }
 
-        /**
-         * Returns Ring set based on Hanser Ring Finding method
-         * @param molecule
-         * @return report collected the rings
-         * @see org.openscience.cdk.smsd.ring.RingFinder#GetRingSet(IAtomContainer)
-         */
+        /// <summary>
+        /// Returns Ring set based on Hanser Ring Finding method
+        /// <param name="molecule">/// <returns>report collected the rings</param></returns>
+        /// @see org.openscience.cdk.smsd.ring.RingFinder#GetRingSet(IAtomContainer)
+        /// </summary>
         public IRingSet GetRingSet(IAtomContainer molecule)
         {
 

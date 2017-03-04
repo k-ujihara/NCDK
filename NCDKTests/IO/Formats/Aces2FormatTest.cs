@@ -25,7 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
-	[TestClass()]
+    [TestClass()]
     public class Aces2FormatTest : ChemFormatMatcherTest
     {
         public Aces2FormatTest()

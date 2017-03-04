@@ -22,13 +22,13 @@ using System.IO;
 namespace NCDK.IO
 {
 
-    /**
-     * Abstract class that ChemObjectReader's can implement to have it
-     * take care of basic stuff, like managing the ReaderListeners.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Abstract class that ChemObjectReader's can implement to have it
+    /// take care of basic stuff, like managing the ReaderListeners.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    /// </summary>
     public abstract class DefaultChemObjectWriter : ChemObjectIO, IChemObjectWriter
     {
         public abstract void SetWriter(Stream writer);

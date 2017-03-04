@@ -18,21 +18,16 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the Element class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.Element
-     */
+    /// <summary>
+    /// Checks the functionality of the Element class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.Element
+    /// </summary>
     [TestClass()]
     public class ElementTest : AbstractElementTest
     {

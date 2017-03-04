@@ -4,6 +4,7 @@ using NCDK.Config;
 using System;
 using System.Linq;
 
+
 namespace NCDK.Config
 {
     [TestClass()]
@@ -20,7 +21,7 @@ namespace NCDK.Config
         public virtual void TestReadAtomTypes_IChemObjectBuilder()
         {
             var configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
-            var ins = typeof(CDKBasedAtomTypeConfigurator).Assembly.GetManifestResourceStream(configFile);
+            var ins = ResourceLoader.GetAsStream(typeof(CDKBasedAtomTypeConfigurator), configFile);
             var configurator = new CDKBasedAtomTypeConfigurator();
             configurator.Stream = ins;
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);

@@ -18,48 +18,29 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches an aromatic bond.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches an aromatic bond.
+    /// </summary>
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
     public class AromaticQueryBond : SMARTSBond {
-        /**
-         * Creates a new instance.
-         *
-         */
         public AromaticQueryBond(IChemObjectBuilder builder)
             : base(builder)
         {
             IsAromatic = true;
         }
 
-        /**
-         * Creates a new instance
-         *
-         */
         public AromaticQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
             : base(atom1, atom2, order, builder)
         {
             IsAromatic = true;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#Matches(org
-         * .openscience.cdk.interfaces.IBond)
-         */
         public override bool Matches(IBond bond) {
             return bond.IsAromatic;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.Bond#ToString()
-         */
         public override string ToString() {
             return "AromaticQueryBond()";
         }

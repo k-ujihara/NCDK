@@ -28,18 +28,15 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static NCDK.Graphs.InitialCycles;
 using NCDK.Common.Base;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * @author John May
-	 * @cdk.module test-core
-	 */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class BitMatrixTests
     {
@@ -222,7 +219,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void duplicates()
+        public virtual void Duplicates()
         {
             // ensure duplicates are handled
             BitMatrix m = new BitMatrix(9, 3);
@@ -233,7 +230,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void xor()
+        public virtual void Xor()
         {
             BitArray s = BitArrays.FromString("00011");
             BitArray t = BitArrays.FromString("10010");

@@ -18,32 +18,26 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Formula
 {
-    /**
-     * Checks the functionality of the AdductFormula.
-     *
-     * @cdk.module test-data
-     *
-     * @see AdductFormula
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the AdductFormula.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="AdductFormula"/>
+    /// </summary>
+    [TestClass()]
     public class AdductFormulaTest : AbstractAdductFormulaTest
     {
         protected override IChemObjectBuilder Builder => Default.ChemObjectBuilder.Instance;
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAdductFormula()
         {
@@ -51,11 +45,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(mfS);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAdductFormula_IMolecularFormula()
         {

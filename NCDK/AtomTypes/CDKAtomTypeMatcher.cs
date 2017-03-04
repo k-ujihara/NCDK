@@ -72,8 +72,6 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /// <inheritdoc/>
-
         public IAtomType[] FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
             return FindMatchingAtomTypes(atomContainer, null);
@@ -108,8 +106,6 @@ namespace NCDK.AtomTypes
             }
             return types;
         }
-
-        /// <inheritdoc/>
 
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
@@ -1368,19 +1364,16 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        /**
-		 * Determines whether the bonds (up to two spheres away) are only to non
-		 * hetroatoms. Currently used in N.planar3 perception of (e.g. pyrrole).
-		 *
-		 * @param atom an atom to test
-		 * @param container container of the atom
-		 *
-		 * @return whether the atom's only bonds are to heteroatoms
-		 * @see #PerceiveNitrogens(IAtomContainer, IAtom)
-		 */
+        /// <summary>
+        /// Determines whether the bonds (up to two spheres away) are only to non
+        /// hetroatoms. Currently used in N.planar3 perception of (e.g. pyrrole).
+        /// </summary>
+        /// <param name="atom">an atom to test</param>
+        /// <param name="container">container of the atom</param>
+        /// <returns>whether the atom's only bonds are to heteroatoms</returns>
+        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom)"/>
         private bool IsSingleHeteroAtom(IAtom atom, IAtomContainer container)
         {
-
             IEnumerable<IAtom> connected = container.GetConnectedAtoms(atom);
 
             foreach (var atom1 in connected)
@@ -1409,7 +1402,6 @@ namespace NCDK.AtomTypes
             }
 
             return true;
-
         }
 
         private bool IsRingAtom(IAtom atom, IAtomContainer atomContainer, RingSearch searcher)
@@ -1460,12 +1452,12 @@ namespace NCDK.AtomTypes
             return count;
         }
 
-        /**
-		 * Filter a bond list keeping only bonds between heavy atoms.
-		 *
-		 * @param bonds a list of bond
-		 * @return the bond list only with heavy bonds
-		 */
+        /// <summary>
+        /// Filter a bond list keeping only bonds between heavy atoms.
+        ///
+        /// <param name="bonds">a list of bond</param>
+        /// <returns>the bond list only with heavy bonds</returns>
+        ////
         private IList<IBond> HeavyBonds(IEnumerable<IBond> bonds)
         {
             IList<IBond> heavy = new List<IBond>(bonds.Count());
@@ -3488,16 +3480,14 @@ namespace NCDK.AtomTypes
             return false;
         }
 
-        /**
-		 * Count the number of doubly bonded atoms.
-		 *
-		 * @param container the molecule in which to look
-		 * @param atom the atom being looked at
-		 * @param order the desired bond order of the attached bonds
-		 * @param symbol If not null, then it only counts the double bonded atoms which
-		 *               match the given symbol.
-		 * @return the number of doubly bonded atoms
-		 */
+        /// <summary>
+        /// Count the number of doubly bonded atoms.
+        /// </summary>
+        /// <param name="container">the molecule in which to look</param>
+        /// <param name="atom">the atom being looked at</param>
+        /// <param name="order">the desired bond order of the attached bonds</param>
+        /// <param name="symbol">If not null, then it only counts the double bonded atoms which match the given symbol.</param>
+        /// <returns>the number of doubly bonded atoms</returns>
         private int CountAttachedBonds(IEnumerable<IBond> connectedBondss, IAtom atom, BondOrder order, string symbol)
         {
             var connectedBonds = connectedBondss.ToArray();

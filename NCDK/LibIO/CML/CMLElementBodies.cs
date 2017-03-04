@@ -3,32 +3,19 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 namespace NCDK.LibIO.CML
 {
-	public partial class CMLElement
-	{
+    public partial class CMLElement
+    {
         public string Id
         {
             get { return Attribute(Attribute_id)?.Value; }
             set { SetAttributeValue(Attribute_id, value); }
         }
-	}
+    }
 
-	public partial class CMLLabel
-	{
+    public partial class CMLLabel
+    {
         public string DictRef
         {
             get { return Attribute(Attribute_dictRef)?.Value; }
@@ -39,10 +26,10 @@ namespace NCDK.LibIO.CML
             get { return Attribute(Attribute_objectClass)?.Value; }
             set { SetAttributeValue(Attribute_objectClass, value); }
         }
-	}
+    }
 
-	public partial class CMLAtom
-	{
+    public partial class CMLAtom
+    {
         public string Ref
         {
             get { return Attribute(Attribute_ref)?.Value; }
@@ -154,10 +141,10 @@ namespace NCDK.LibIO.CML
             }
             set { SetAttributeValue(Attribute_zFract, value); }
         }
-	}
+    }
 
-	public partial class CMLBond
-	{
+    public partial class CMLBond
+    {
         public string Ref
         {
             get { return Attribute(Attribute_ref)?.Value; }
@@ -186,28 +173,28 @@ namespace NCDK.LibIO.CML
             }
             set { SetAttributeValue(Attribute_atomRefs2, Concat(value)); }
         }
-	}
+    }
 
-	public partial class CMLAtomArray
-	{
+    public partial class CMLAtomArray
+    {
         public string Ref
         {
             get { return Attribute(Attribute_ref)?.Value; }
             set { SetAttributeValue(Attribute_ref, value); }
         }
-	}
-	
-	public partial class CMLBondArray
-	{
+    }
+    
+    public partial class CMLBondArray
+    {
         public string Ref
         {
             get { return Attribute(Attribute_ref)?.Value; }
             set { SetAttributeValue(Attribute_ref, value); }
         }
-	}
+    }
 
-	public partial class CMLFormula
-	{
+    public partial class CMLFormula
+    {
         public double Count
         {
             get
@@ -227,7 +214,7 @@ namespace NCDK.LibIO.CML
             get { return Attribute(Attribute_inline)?.Value; }
             set { SetAttributeValue(Attribute_inline, value); }
         }
-	}
+    }
 
     public partial class CMLProperty
     {
@@ -345,8 +332,8 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_state, value); }
         }
     }
-	
-	public partial class CMLReactantList
+    
+    public partial class CMLReactantList
     {
         public string Ref
         {
@@ -405,8 +392,8 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_state, value); }
         }
     }
-	
-	public partial class CMLProductList
+    
+    public partial class CMLProductList
     {
         public string Ref
         {
@@ -470,8 +457,8 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_state, value); }
         }
     }
-	
-	public partial class CMLSubstanceList
+    
+    public partial class CMLSubstanceList
     {
         public string Ref
         {
@@ -490,7 +477,7 @@ namespace NCDK.LibIO.CML
         }
     }
 
-	public partial class CMLCrystal
+    public partial class CMLCrystal
     {
         public int Z
         {

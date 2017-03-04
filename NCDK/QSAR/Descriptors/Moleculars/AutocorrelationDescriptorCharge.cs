@@ -25,21 +25,21 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This class calculates ATS autocorrelation descriptor, where the weight equal
-     * to the charges.
-     *
-     * @author      Federico
-     * @cdk.created 2007-02-27
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     */
+    /// <summary>
+    /// This class calculates ATS autocorrelation descriptor, where the weight equal
+    /// to the charges.
+    ///
+    // @author      Federico
+    // @cdk.created 2007-02-27
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    /// </summary>
     public class AutocorrelationDescriptorCharge : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5" };
 
-        private static double[] listcharges(IAtomContainer container)
+        private static double[] Listcharges(IAtomContainer container)
         {
             int natom = container.Atoms.Count;
             double[] charges = new double[natom];
@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
             try
             {
-                double[] w = listcharges(container);
+                double[] w = Listcharges(container);
                 int natom = container.Atoms.Count;
                 int[][] distancematrix = TopologicalMatrix.GetMatrix(container);
 

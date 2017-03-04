@@ -18,22 +18,17 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the ReactionSet class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.ReactionSet
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the ReactionSet class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.ReactionSet
+    /// </summary>
+    [TestClass()]
     public class ReactionSetTest
         : AbstractReactionSetTest
     {

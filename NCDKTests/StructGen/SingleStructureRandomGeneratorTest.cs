@@ -25,9 +25,9 @@ using System;
 
 namespace NCDK.StructGen
 {
-    /**
-     * @cdk.module test-structgen
-     */
+    /// <summary>
+    // @cdk.module test-structgen
+    /// </summary>
     public class SingleStructureRandomGeneratorTest
     {
 
@@ -46,7 +46,7 @@ namespace NCDK.StructGen
             ssrg.SetAtomContainer(ac);
         }
 
-        private bool showIt(IAtomContainer molecule, string name)
+        private bool ShowIt(IAtomContainer molecule, string name)
         {
             StructureDiagramGenerator sdg = new StructureDiagramGenerator();
             sdg.Molecule = (IAtomContainer)molecule.Clone();
@@ -64,11 +64,9 @@ namespace NCDK.StructGen
 
         private void FixCarbonHCount(IAtomContainer mol)
         {
-            /*
-             * the following line are just a quick fix for this particluar
-             * carbon-only molecule until we have a proper hydrogen count
-             * configurator
-             */
+            // the following line are just a quick fix for this particluar
+            // carbon-only molecule until we have a proper hydrogen count
+            // configurator
             double bondCount = 0;
             IAtom atom;
             for (int f = 0; f < mol.Atoms.Count; f++)
@@ -85,7 +83,7 @@ namespace NCDK.StructGen
         //    public void ActionPerformed(ActionEvent e) {
         //        try {
         //            IAtomContainer ac = ssrg.Generate();
-        //            showIt(ac, "Randomly generated for " + mf);
+        //            ShowIt(ac, "Randomly generated for " + mf);
         //        } catch (Exception ex) {
         //            Console.Error.WriteLine(ex.Message);
         //        }

@@ -27,10 +27,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 namespace NCDK.Isomorphisms
 {
-    /**
-	 * @author John May
-	 * @cdk.module test-isomorphism
-	 */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class CompatibilityMatrixTest
     {

@@ -49,69 +49,69 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Interface for the mappings (mapped objects).
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the mappings (mapped objects).
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface IMapper
     {
 
-        /**
-         * checks if a map exits for a molecule.
-         * @param molecule molecule
-         * @return true/false.
-         */
+        /// <summary>
+        /// checks if a map exits for a molecule.
+        /// <param name="molecule">molecule</param>
+        /// <returns>true/false.</returns>
+        /// </summary>
         bool HasMap(IAtomContainer molecule);
 
-        /**
-         * Returns solution map count.
-         * @param target target molecule.
-         * @return map count.
-         */
+        /// <summary>
+        /// Returns solution map count.
+        /// <param name="target">target molecule.</param>
+        /// <returns>map count.</returns>
+        /// </summary>
         int CountMaps(IAtomContainer target);
 
-        /**
-         * Returns all solution map.
-         * @param target molecule.
-         * @return get maps.
-         */
+        /// <summary>
+        /// Returns all solution map.
+        /// <param name="target">molecule.</param>
+        /// <returns>get maps.</returns>
+        /// </summary>
         IList<IDictionary<INode, IAtom>> GetMaps(IAtomContainer target);
 
-        /**
-         * Returns first solution map.
-         * @param target molecule.
-         * @return get first map.
-         */
+        /// <summary>
+        /// Returns first solution map.
+        /// <param name="target">molecule.</param>
+        /// <returns>get first map.</returns>
+        /// </summary>
         IDictionary<INode, IAtom> GetFirstMap(IAtomContainer target);
 
-        /**
-         * checks if a map exits for a molecule.
-         * @param molecule molecule
-         * @return true/false.
-         */
+        /// <summary>
+        /// checks if a map exits for a molecule.
+        /// <param name="molecule">molecule</param>
+        /// <returns>true/false.</returns>
+        /// </summary>
         bool HasMap(TargetProperties molecule);
 
-        /**
-         * Returns solution map count.
-         * @param target target molecule.
-         * @return map count.
-         */
+        /// <summary>
+        /// Returns solution map count.
+        /// <param name="target">target molecule.</param>
+        /// <returns>map count.</returns>
+        /// </summary>
         int CountMaps(TargetProperties target);
 
-        /**
-         * Returns all solution map.
-         * @param target molecule.
-         * @return get maps.
-         */
+        /// <summary>
+        /// Returns all solution map.
+        /// <param name="target">molecule.</param>
+        /// <returns>get maps.</returns>
+        /// </summary>
         IList<IDictionary<INode, IAtom>> GetMaps(TargetProperties target);
 
-        /**
-         * Returns first solution map.
-         * @param target molecule.
-         * @return get first map.
-         */
+        /// <summary>
+        /// Returns first solution map.
+        /// <param name="target">molecule.</param>
+        /// <returns>get first map.</returns>
+        /// </summary>
         IDictionary<INode, IAtom> GetFirstMap(TargetProperties target);
     }
 }

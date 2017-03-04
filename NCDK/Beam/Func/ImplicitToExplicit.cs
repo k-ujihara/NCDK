@@ -27,20 +27,14 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.Beam
 {
     /// <summary>
     /// Convert a chemical graph with implicit edge labels to one with explicit
     /// single or aromatic edge labels.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class ImplicitToExplicit : AbstractFunction<Graph, Graph>
+    // @author John May
+    internal sealed class ImplicitToExplicit : AbstractFunction<Graph, Graph>
     {
         /// <summary>
         /// Transform all implicit to explicit bonds. The original graph is
@@ -56,7 +50,7 @@ namespace NCDK.Beam
             // copy atom/topology information
             for (int u = 0; u < g.Order; u++)
             {
-                h.AddAtom(g.GetAtom_(u));
+                h.AddAtom(g.GetAtom(u));
                 h.AddTopology(g.TopologyOf(u));
             }
 
@@ -87,8 +81,8 @@ namespace NCDK.Beam
             if (e.Bond == Bond.Implicit)
             {
                 return new Edge(u, v,
-                                Type(g.GetAtom_(u),
-                                     g.GetAtom_(v)));
+                                Type(g.GetAtom(u),
+                                     g.GetAtom(v)));
             }
             return e;
         }
@@ -101,7 +95,7 @@ namespace NCDK.Beam
         /// <param name="u">an atom</param>
         /// <param name="v">another atom </param>(connected to u)
         /// <returns>the bond type</returns>
-        public static Bond Type(Atom_ u, Atom_ v)
+        public static Bond Type(Atom u, Atom v)
         {
             return u.IsAromatic() && v.IsAromatic() ? Bond.Aromatic : Bond.Single;
         }

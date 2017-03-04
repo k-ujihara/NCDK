@@ -29,13 +29,13 @@ using NCDK.Templates;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * These are isolated tests - really difficult to isolate the behaviour here
-     * but will add.
-     *
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    /// These are isolated tests - really difficult to isolate the behaviour here
+    /// but will add.
+    ///
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class VFSubStateTest
     {
@@ -102,11 +102,11 @@ namespace NCDK.Isomorphisms
             Assert.IsFalse(state.Feasible(0, 0)); // 0,0 is infeasible
         }
 
-        /**
-         * Create a sub state for matching benzene to naphthalene
-         * Benzene:     InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
-         * Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-         */
+        /// <summary>
+        /// Create a sub state for matching benzene to naphthalene
+        /// Benzene:     InChI=1/C6H6/c1-2-4-6-5-3-1/h1-6H
+        /// Naphthalene: InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
+        /// </summary>
         VFSubState CreateBenzeneToNaphthalene(AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             IAtomContainer container1 = TestMoleculeFactory.MakeBenzene();

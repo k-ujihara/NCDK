@@ -20,45 +20,34 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher checks the formal charge of the Atom.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher checks the formal charge of the Atom.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class FormalChargeAtom : SMARTSAtom
     {
-        /**
-         * Creates a new instance
-         *
-         * @param charge
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="charge">/// </summary></param>
         public FormalChargeAtom(int charge, IChemObjectBuilder builder)
             : base(builder)
         {
             this.formalCharge = charge;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return atom.FormalCharge == this.formalCharge;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();
-            s.Append("FormalChargeAtom(");
+            s.Append(nameof(FormalChargeAtom) + "(");
             s.Append(this.GetHashCode()).Append(", ");
             s.Append("C:").Append(this.formalCharge);
             s.Append(')');

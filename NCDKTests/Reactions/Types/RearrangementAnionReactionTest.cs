@@ -30,60 +30,53 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>IReactionProcess which participate in movement resonance.
-     * This reaction could be represented as [A-]-B=C => A=B-[C-]. Due to
-     * the negative charge of the atom A, the double bond in position 2 is
-     * displaced.</p>
-     * <pre>
-     *  var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new RearrangementAnion1Reaction();
-     *  Dictionary<string,Object> params = new Dictionary<string,Object>();
-            params.Put("hasActiveCenter",bool.FALSE);;
-        type.Parameters = params;
-     *  var setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter bool.TRUE</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2006-05-05
-     * @cdk.module     test-reaction
-     * @cdk.set        reaction-types
-     *
-     **/
-    /**
-     * TestSuite that runs a test for the RearrangementAnionReactionTest.
-     * Generalized Reaction: [A-]-B=C => A=B-[C-].
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// <para>IReactionProcess which participate in movement resonance.
+    /// This reaction could be represented as [A-]-B=C => A=B-[C-]. Due to
+    /// the negative charge of the atom A, the double bond in position 2 is
+    /// displaced.</para>
+    /// </summary>
+    /// <example><code>
+    /// var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
+    /// setOfReactants.Add(new AtomContainer());
+    /// IReactionProcess type = new RearrangementAnion1Reaction();
+    /// Dictionary<string,Object> params = new Dictionary<string,Object>();
+    /// params.Put("hasActiveCenter",bool.FALSE);;
+    /// type.Parameters = params;
+    /// var setOfReactions = type.Initiate(setOfReactants, null);
+    /// </code>
+    /// We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point
+    /// <code>
+    /// atoms[0].IsReactiveCenter = true;
+    /// </code>
+    /// <para>Moreover you must put the parameter bool.TRUE</para>
+    /// <para>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</para>
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// TestSuite that runs a test for the RearrangementAnionReactionTest.
+    /// Generalized Reaction: [A-]-B=C => A=B-[C-].
+    /// </remarks>
+    // @author         Miguel Rojas
+    // @cdk.created    2006-05-05
+    // @cdk.module     test-reaction
+    // @cdk.set        reaction-types
     [TestClass()]
     public class RearrangementAnionReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
         public RearrangementAnionReactionTest()
         {
             SetReaction(typeof(RearrangementAnionReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestRearrangementAnionReaction()
         {
@@ -91,14 +84,12 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: [C-]-C=C-C => C=C-[C-]-C
-         * Automatic search of the center active.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: [C-]-C=C-C => C=C-[C-]-C
+        /// Automatic search of the center active.
+        /// </summary>
+        /// <returns>The test suite</returns>
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             IReactionProcess type = new RearrangementAnionReaction();
@@ -131,12 +122,10 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: [C-]-C=C-C => C=C-[C-]-C
-         * Manually put of the centre active.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: [C-]-C=C-C => C=C-[C-]-C
+        /// Manually put of the centre active.
+        /// </summary>
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -177,11 +166,6 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -219,11 +203,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[1].IsReactiveCenter);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestMapping()
         {
@@ -258,12 +237,10 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: [F+]=C1-[C-]-C=C-C=C1 => [F+]=C1-[C=]-C-[C-]-C=C1
-         * Automatic search of the center active.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: [F+]=C1-[C-]-C=C-C=C1 => [F+]=C1-[C=]-C-[C-]-C=C1
+        /// Automatic search of the center active.
+        /// </summary>
         [TestMethod()]
         public void TestAutomaticSearchCentreActiveExample3()
         {
@@ -369,21 +346,20 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(12, setOfReactions[0].Mappings.Count);
         }
 
-        /**
-         * Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
-         */
+        /// <summary>
+        /// Test to recognize if this IAtomContainer_1 matches correctly into the CDKAtomTypes.
+        /// </summary>
         [TestMethod()]
         public void TestAtomTypesAtomContainer1()
         {
             IAtomContainer moleculeTest = GetExampleReactants()[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeTest);
             MakeSureAtomTypesAreRecognized(moleculeTest);
-
         }
 
-        /**
-         * Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
-         */
+        /// <summary>
+        /// Test to recognize if this IAtomContainer_2 matches correctly into the CDKAtomTypes.
+        /// </summary>
         [TestMethod()]
         public void TestAtomTypesAtomContainer2()
         {
@@ -393,11 +369,10 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * get the molecule 1: [C-]-C=C-C
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// get the molecule 1: [C-]-C=C-C
+        /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -425,11 +400,10 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -458,12 +432,11 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+        /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        /// <exception cref="CDKException"></exception>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

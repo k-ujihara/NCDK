@@ -35,11 +35,11 @@ namespace NCDK.Stereo
     public class FischerRecognitionTest
     {
 
-        /**
-         * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
+        /// </summary>
         [TestMethod()]
-        public void recogniseRightHandedGlyceraldehyde()
+        public void RecogniseRightHandedGlyceraldehyde()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
@@ -72,11 +72,11 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[4], m.Atoms[5], m.Atoms[6]);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/m1/s1
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/m1/s1
+        /// </summary>
         [TestMethod()]
-        public void recogniseLeftHandedGlyceraldehyde()
+        public void RecogniseLeftHandedGlyceraldehyde()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
@@ -109,11 +109,11 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[6], m.Atoms[5], m.Atoms[4]);
         }
 
-        /**
-         * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
+        /// </summary>
         [TestMethod()]
-        public void recogniseRightHandedGlyceraldehydeWithImplicitHydrogen()
+        public void RecogniseRightHandedGlyceraldehydeWithImplicitHydrogen()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
@@ -144,11 +144,11 @@ namespace NCDK.Stereo
                                     m.Atoms[0], m.Atoms[4], m.Atoms[5], m.Atoms[1]);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4-,5-,6-/m1/s1
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4-,5-,6-/m1/s1
+        /// </summary>
         [TestMethod()]
-        public void mannitol()
+        public void Mannitol()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 2, -0.53d, 6.25d));
@@ -205,7 +205,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void obtainCardinalBonds()
+        public void ObtainCardinalBonds()
         {
 
             IAtom focus = Atom("C", 0, 0.80d, 0.42d);
@@ -231,12 +231,12 @@ namespace NCDK.Stereo
             Assert.IsTrue(Compares.AreDeepEqual(actual, expected));
         }
 
-        /**
-         * In reality, bonds may not be perfectly orthogonal. Here the N, E, S, and
-         * W atoms are all slightly offset from the focus.
-         */
+        /// <summary>
+        /// In reality, bonds may not be perfectly orthogonal. Here the N, E, S, and
+        /// W atoms are all slightly offset from the focus.
+        /// </summary>
         [TestMethod()]
-        public void obtainNonPerfectCardinalBonds()
+        public void ObtainNonPerfectCardinalBonds()
         {
 
             IAtom focus = Atom("C", 0, -0.40d, 3.37d);
@@ -521,12 +521,12 @@ namespace NCDK.Stereo
             Assert.IsNull(element);
         }
 
-        /**
-         * asperaculin A (CHEBI:68202)
-         * @cdk.inchi InChI=1S/C15H20O5/c1-12(2)6-13(3)7-19-10(16)9-15(13)8(12)4-5-14(15,18)11(17)20-9/h8-9,18H,4-7H2,1-3H3/t8-,9+,13+,14+,15?/m0/s1 
-         */
+        /// <summary>
+        /// asperaculin A (CHEBI:68202)
+        // @cdk.inchi InChI=1S/C15H20O5/c1-12(2)6-13(3)7-19-10(16)9-15(13)8(12)4-5-14(15,18)11(17)20-9/h8-9,18H,4-7H2,1-3H3/t8-,9+,13+,14+,15?/m0/s1 
+        /// </summary>
         [TestMethod()]
-        public void ignoreCyclicStereocenters()
+        public void IgnoreCyclicStereocenters()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 6.87d, -5.59d));
@@ -586,12 +586,12 @@ namespace NCDK.Stereo
             Assert.IsTrue(recogniser.Recognise(new[] { Projection.Fischer }).Count == 0);
         }
 
-        /**
-         * atrolactic acid (CHEBI:50392)
-         * @cdk.inchi InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)
-         */
+        /// <summary>
+        /// atrolactic acid (CHEBI:50392)
+        // @cdk.inchi InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)
+        /// </summary>
         [TestMethod()]
-        public void horizontalBondsMustBeTerminal()
+        public void HorizontalBondsMustBeTerminal()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 12.71d, -16.51d));

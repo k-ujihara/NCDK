@@ -29,50 +29,46 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}. <p> While the current
-    // implementation converts ring closure symbols to 0's it does not convert 2-letter element symbols
-    // to single letters (ala OpenEye).
-     *
+    /// <summary>
+    /// An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
+    /// </summary>
+    /// <remarks>
+    /// While the current
+    /// implementation converts ring closure symbols to 0's it does not convert 2-letter element symbols
+    /// to single letters (ala OpenEye).
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module smiles
     // @cdk.keyword fingerprint
     // @cdk.keyword hologram
     // @cdk.githash
-     */
     public class LingoFingerprinter : IFingerprinter
     {
-
         private readonly int n;
         private readonly SmilesGenerator gen = SmilesGenerator.Unique().Aromatic();
         private readonly Regex DIGITS = new Regex("[0-9]+", RegexOptions.Compiled);
+        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(), Cycles.Or(Cycles.All(), Cycles.Relevant));
 
-        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(),
-                                                                Cycles.Or(Cycles.All(), Cycles.Relevant));
-
-        /**
-        // Initialize the fingerprinter with a defult substring length of 4.
-         */
+        /// <summary>
+        /// Initialize the fingerprinter with a defult substring length of 4.
+        /// </summary>
         public LingoFingerprinter()
             : this(4)
         { }
 
-        /**
-        // Initialize the fingerprinter.
-         *
-        // @param n The length of substrings to consider
-         */
+        /// <summary>
+        /// Initialize the fingerprinter.
+        /// </summary>
+        /// <param name="n">The length of substrings to consider</param>
         public LingoFingerprinter(int n)
         {
             this.n = n;
         }
 
-
         public IBitFingerprint GetBitFingerprint(IAtomContainer iAtomContainer)
         {
             return FingerprinterTool.MakeBitFingerprint(GetRawFingerprint(iAtomContainer));
         }
-
 
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {

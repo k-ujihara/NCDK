@@ -32,7 +32,7 @@ namespace NCDK.Pharmacophore
         static PharmacophoreMatcherTest()
         {
             string filename = "NCDK.Data.MDL.pcoretest1.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var reader = new IteratingMDLConformerReader(ins, Silent.ChemObjectBuilder.Instance).GetEnumerator();
             if (reader.MoveNext())
                 conformers = (ConformerContainer)reader.Current;
@@ -204,7 +204,7 @@ namespace NCDK.Pharmacophore
         public void TestCNSPcore()
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
@@ -233,7 +233,7 @@ namespace NCDK.Pharmacophore
         public void TestMatchingBonds()
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
@@ -269,7 +269,7 @@ namespace NCDK.Pharmacophore
         public void TestAngleMatch1()
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
@@ -294,7 +294,7 @@ namespace NCDK.Pharmacophore
         public void TestAngleMatch2()
         {
             string filename = "NCDK.Data.MDL.cnssmarts.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             IteratingSDFReader reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
 
             PharmacophoreQuery query = new PharmacophoreQuery();
@@ -398,7 +398,7 @@ namespace NCDK.Pharmacophore
             matcher.SetPharmacophoreQuery(query);
 
             string filename = "NCDK.Data.PCore.multismartpcore.sdf";
-            Stream ins = typeof(PharmacophoreMatcherTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var reader = new IteratingSDFReader(ins, Silent.ChemObjectBuilder.Instance);
             var enumerator = reader.GetEnumerator();
 

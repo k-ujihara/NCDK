@@ -26,13 +26,13 @@ using System.Diagnostics;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the reading XYZ files using a test file.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.XYZReader
-     */
+    /// <summary>
+    /// TestCase for the reading XYZ files using a test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.XYZReader
+    /// </summary>
     [TestClass()]
     public class XYZReaderTest : SimpleChemObjectReaderTest
     {
@@ -52,7 +52,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.XYZ.viagra.xyz";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             XYZReader reader = new XYZReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -85,7 +85,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.XYZ.viagra_withComment.xyz";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             XYZReader reader = new XYZReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

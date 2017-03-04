@@ -36,35 +36,35 @@ namespace NCDK.Groups
      *
      * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
      *
-     * <pre>
+     * <code>
      *     IAtomContainer ac = ... // get an atom container somehow
      *     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
      *     PermutationGroup autG = refiner.GetAutomorphismGroup(ac);
      *     foreach (var automorphism in autG.All()) {
      *         ... // do something with the permutation
      *     }
-     * </pre>
+     * </code>
      *
      * <p>Another is to check an atom container to see if it is canonical:</p>
      *
-     * <pre>
+     * <code>
      *     IAtomContainer ac = ... // get an atom container somehow
      *     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
      *     if (refiner.IsCanonical(ac)) {
      *         ... // do something with the atom container
      *     }
-     * </pre>
+     * </code>
      *
      * Note that it is not necessary to call {@link #Refine(IAtomContainer)} before
      * either of these methods. However if both the group and the canonical check
      * are required, then the code should be:
      *
-     * <pre>
+     * <code>
      *     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
      *     refiner.Refine(ac);
      *     bool isCanon = refiner.IsCanonical();
      *     PermutationGroup autG = refiner.GetAutomorphismGroup();
-     * </pre>
+     * </code>
      *
      * This way, the refinement is not carried out multiple times. Finally, remember
      * to call {@link #reset} if the refiner is re-used on multiple structures.

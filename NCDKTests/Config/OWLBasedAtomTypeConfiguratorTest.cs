@@ -20,7 +20,7 @@ namespace NCDK.Config
         public virtual void TestReadAtomTypes_IChemObjectBuilder()
         {
             var configFile = "NCDK.Dict.Data.cdk-atom-types.owl";
-            var ins = typeof(OWLBasedAtomTypeConfigurator).Assembly.GetManifestResourceStream(configFile);
+            var ins = ResourceLoader.GetAsStream(configFile);
             var configurator = new OWLBasedAtomTypeConfigurator();
             configurator.Stream = ins;
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);

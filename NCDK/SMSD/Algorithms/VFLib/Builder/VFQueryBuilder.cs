@@ -53,12 +53,12 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Builder
 {
-    /**
-     * Class for parsing and generating query graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class for parsing and generating query graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFQueryBuilder : IQuery
     {
 
@@ -66,9 +66,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         private IList<IEdge> edgesList;
         private IDictionary<INode, IAtom> nodeBondMap;
 
-        /**
-         * Constructor for VF Query Builder
-         */
+        /// <summary>
+        /// Constructor for VF Query Builder
+        /// </summary>
         public VFQueryBuilder()
         {
             nodesList = new List<INode>();
@@ -91,11 +91,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             return nodesList[index];
         }
 
-        /**
-         * Return a node for a given atom else return null
-         * @param atom
-         * @return Node in the graph for a given atom
-         */
+        /// <summary>
+        /// Return a node for a given atom else return null
+        /// <param name="atom">/// <returns>Node in the graph for a given atom</param></returns>
+        /// </summary>
         public INode GetNode(IAtom atom)
         {
 
@@ -135,12 +134,11 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             return null;
         }
 
-        /**
-         * Add and return a node for a query atom
-         * @param matcher
-         * @param atom
-         * @return added Node
-         */
+        /// <summary>
+        /// Add and return a node for a query atom
+        /// <param name="matcher">/// @param atom</param>
+        /// <returns>added Node</returns>
+        /// </summary>
         public INode AddNode(VFAtomMatcher matcher, IAtom atom)
         {
             NodeBuilder node = new NodeBuilder(matcher);
@@ -164,13 +162,11 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             return edgesList.Count;
         }
 
-        /**
-         * Construct and return an edge for a given query and target node
-         * @param source
-         * @param target
-         * @param matcher
-         * @return connected edges
-         */
+        /// <summary>
+        /// Construct and return an edge for a given query and target node
+        /// <param name="source">/// @param target</param>
+        /// <param name="matcher">/// <returns>connected edges</param></returns>
+        /// </summary>
         public IEdge Connect(INode source, INode target, VFBondMatcher matcher)
         {
             NodeBuilder sourceImpl = (NodeBuilder)source;

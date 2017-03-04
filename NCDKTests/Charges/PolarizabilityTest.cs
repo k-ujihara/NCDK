@@ -21,21 +21,21 @@ using NCDK.Smiles;
 
 namespace NCDK.Charges
 {
-    /**
-     *  Description of the Class
-     *
-     * @cdk.module test-charges
-     *
-     *@author     chhoppe
-     *@cdk.created    2004-11-04
-     */
+    /// <summary>
+    ///  Description of the Class
+    ///
+    // @cdk.module test-charges
+    ///
+    ///@author     chhoppe
+    ///@cdk.created    2004-11-04
+    /// </summary>
     [TestClass()]
     public class PolarizabilityTest : CDKTestCase
     {
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         [TestMethod()]
         public void TestGetPolarizabilitiyFactorForAtom_IAtomContainer_IAtom()
         {
@@ -48,9 +48,9 @@ namespace NCDK.Charges
             Assert.IsNotNull(result);
         }
 
-        /**
-         *  A unit test for JUnit with n,n-dimethyl ethylendiamine
-         */
+        /// <summary>
+        ///  A unit test for JUnit with n,n-dimethyl ethylendiamine
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Int_Boolean()
         {
@@ -64,9 +64,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult[1], result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit
-         */
+        /// <summary>
+        ///  A unit test for JUnit
+        /// </summary>
         //@Ignore
         //[TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_IAtomContainer_IAtom_Boolean_IntInt()
@@ -74,9 +74,9 @@ namespace NCDK.Charges
             Assert.Fail("Not tested yet");
         }
 
-        /**
-         *  A unit test for JUnit with n,n-dimethyl ethylendiamine
-         */
+        /// <summary>
+        ///  A unit test for JUnit with n,n-dimethyl ethylendiamine
+        /// </summary>
         [TestMethod()]
         public void TestCalculateBondPolarizability_IAtomContainer_IBond()
         {
@@ -87,9 +87,9 @@ namespace NCDK.Charges
             Assert.IsNotNull(result);
         }
 
-        /**
-         *  A unit test for JUnit with methane
-         */
+        /// <summary>
+        ///  A unit test for JUnit with methane
+        /// </summary>
         [TestMethod()]
         public void TestCalculateKJMeanMolecularPolarizability()
         {
@@ -101,9 +101,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult, result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Ethyl chloride
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Ethyl chloride
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethyl_chloride()
         {
@@ -115,9 +115,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult, result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Allyl bromide
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Allyl bromide
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_bromide()
         {
@@ -129,9 +129,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult, result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Isopentyl iodide
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Isopentyl iodide
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Isopentyl_iodide()
         {
@@ -143,9 +143,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult, result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Ethoxy ethane
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Ethoxy ethane
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethoxy_ethane()
         {
@@ -157,16 +157,13 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult, result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Ethanolamine
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Ethanolamine
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Ethanolamine()
         {
-            double[] testResult = { 4.26, 3.60 }; /*
-                                             * from thesis Wolfgang Hanebeck,
-                                             * TUM
-                                             */
+            double[] testResult = { 4.26, 3.60 }; // from thesis Wolfgang Hanebeck, TUM
             Polarizability pol = new Polarizability();
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("NCCO");
@@ -176,9 +173,9 @@ namespace NCDK.Charges
             Assert.AreEqual(testResult[0], result, 0.01);
         }
 
-        /**
-         *  A unit test for JUnit with Allyl mercaptan
-         */
+        /// <summary>
+        ///  A unit test for JUnit with Allyl mercaptan
+        /// </summary>
         [TestMethod()]
         public void TestCalculateGHEffectiveAtomPolarizability_Allyl_mercaptan()
         {

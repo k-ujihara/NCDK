@@ -16,20 +16,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Config.AtomType;
+
 using System.Collections.Generic;
 using System.IO;
 
 namespace NCDK.AtomTypes.Mapper
 {
-    /**
-    /// An <code>AtomTypeMapper</code> allows the mapping of atom types between atom type
+    /// <summary>
+    /// An <see cref="AtomTypeMapper"/> allows the mapping of atom types between atom type
     /// schemes. For example, it allows to convert atom types from the CDK scheme to the
     /// Sybyl scheme; using this approach it is possible to use the CDK atom type perception
     /// algorithm and write the resulting atom types using the Sybyl atom type scheme.
-     *
-    /// @cdk.module atomtype
-    /// @cdk.githash
-     */
+    /// </summary>
+    // @cdk.module atomtype
+    // @cdk.githash
     public class AtomTypeMapper
     {
         private static IDictionary<string, AtomTypeMapper> mappers = new Dictionary<string, AtomTypeMapper>();
@@ -41,7 +41,7 @@ namespace NCDK.AtomTypes.Mapper
         private AtomTypeMapper(string mappingFile)
         {
             this.mappingFile = mappingFile;
-            Stream stream = this.GetType().Assembly.GetManifestResourceStream(mappingFile);
+            Stream stream = ResourceLoader.GetAsStream(this.GetType(), mappingFile);
             OWLAtomTypeMappingReader reader = new OWLAtomTypeMappingReader(new StreamReader(stream));
             mappings = reader.ReadAtomTypeMappings();
         }
@@ -53,14 +53,13 @@ namespace NCDK.AtomTypes.Mapper
             mappings = reader.ReadAtomTypeMappings();
         }
 
-        /**
+        /// <summary>
         /// Instantiates an atom type to atom type mapping, based on the given mapping file.
         /// For example, the mapping file <code>org.openscience.cdk.config.data.cdk-sybyl-mappings.owl</code>
         /// which defines how CDK atom types are mapped to Sybyl atom types.
-         *
-        /// @param  mappingFile File name of the OWL file defining the atom type to atom type mappings.
-        /// @return             An instance of AtomTypeMapper for the given mapping file.
-         */
+        /// </summary>
+        /// <param name="mappingFile">File name of the OWL file defining the atom type to atom type mappings.</param>
+        /// <returns>An instance of AtomTypeMapper for the given mapping file.</returns>
         public static AtomTypeMapper GetInstance(string mappingFile)
         {
             if (!mappers.ContainsKey(mappingFile))
@@ -70,13 +69,12 @@ namespace NCDK.AtomTypes.Mapper
             return mappers[mappingFile];
         }
 
-        /**
-        /// Instantiates an atom type to atom type mapping, based on the given {@link Stream}.
-         *
-        /// @param  mappingFile Name of the {@link Stream} defining the atom type to atom type mappings.
-        /// @param  stream      the {@link Stream} from which the mappings as read
-        /// @return             An instance of AtomTypeMapper for the given mapping file.
-         */
+        /// <summary>
+        /// Instantiates an atom type to atom type mapping, based on the given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="mappingFile">Name of the <see cref="Stream"/> defining the atom type to atom type mappings.</param>
+        /// <param name="stream">the <see cref="Stream"/> from which the mappings as read</param>
+        /// <returns>An instance of AtomTypeMapper for the given mapping file.</returns>
         public static AtomTypeMapper GetInstance(string mappingFile, Stream stream)
         {
             if (!mappers.ContainsKey(mappingFile))
@@ -86,24 +84,23 @@ namespace NCDK.AtomTypes.Mapper
             return mappers[mappingFile];
         }
 
-        /**
+        /// <summary>
         /// Maps an atom type from one scheme to another, as specified in the input used when creating
-        /// this {@link AtomTypeMapper} instance.
-         *
-        /// @param   type atom type to map to the target schema
-        /// @return  atom type name in the target schema
-         */
+        /// this <see cref="AtomTypeMapper"/> instance.
+        /// </summary>
+        ///
+        /// <param name="type">atom type to map to the target schema</param>
+        /// <returns>atom type name in the target schema</returns>
         public string MapAtomType(string type)
         {
             return mappings[type];
         }
 
-        /**
+        /// <summary>
         /// Returns the name of this mapping. In case of file inputs, it returns the filename,
-        /// but when the input was an {@link Stream} then the name is less well defined.
-         *
-        /// @return the name of the mapping represented by this {@link AtomTypeMapper}.
-         */
+        /// but when the input was an <see cref="Stream"/> then the name is less well defined.
+        /// </summary>
+        /// <returns>the name of the mapping represented by this <see cref="AtomTypeMapper"/>.</returns>
         public string Mapping => mappingFile;
     }
 }

@@ -31,18 +31,18 @@ using System;
 
 namespace NCDK.IO
 {
-    /**
-     * Provides some basic functionality for readers and writers. This includes
-     * managing the {@link IChemObjectIOListener}'s and managing of {@link IOSetting}'s.
-     * The IOSettings are managed via the {@link SettingManager} class with most
-     * method's wrapped to more descriptive method names (e.g.
-     * {@link SettingManager#Get(string)} is invoked by {@link #GetSetting(string)}).
-     *
-     * @author johnmay
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.created 20.03.2012
-     */
+    /// <summary>
+    /// Provides some basic functionality for readers and writers. This includes
+    /// managing the <see cref="IChemObjectIOListener"/>'s and managing of <see cref="IOSetting"/>'s.
+    /// The IOSettings are managed via the <see cref="SettingManager"/> class with most
+    /// method's wrapped to more descriptive method names (e.g.
+    /// {@link SettingManager#Get(string)} is invoked by {@link #GetSetting(string)}).
+    ///
+    // @author johnmay
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.created 20.03.2012
+    /// </summary>
     public abstract class ChemObjectIO : IChemObjectIO
     {
         /// <summary>

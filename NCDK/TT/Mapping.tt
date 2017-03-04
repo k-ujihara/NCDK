@@ -21,7 +21,7 @@ namespace <#= ns.NS #>
             relation[1] = objectTwo;
         }
 
-		public IChemObject this[int index] => relation[index];
+        public IChemObject this[int index] => relation[index];
 
         public IEnumerable<IChemObject> GetRelatedChemObjects()
         {

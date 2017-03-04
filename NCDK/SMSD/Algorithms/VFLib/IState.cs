@@ -50,78 +50,78 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * Interface for the storing the states of the mapping in the VF algorithm.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the storing the states of the mapping in the VF algorithm.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface IState
     {
 
-        /**
-         * Returns the current mapping of query atoms onto target atoms.
-         * This map is shared among all states obtained through nextState.
-         *
-         * @return the current mapping of query atoms onto target atoms
-         */
+        /// <summary>
+        /// Returns the current mapping of query atoms onto target atoms.
+        /// This map is shared among all states obtained through nextState.
+        ///
+        /// <returns>the current mapping of query atoms onto target atoms</returns>
+        /// </summary>
         IDictionary<INode, IAtom> GetMap();
 
-        /**
-         * Returns true if another candidate match can be found or
-         * false otherwise.
-         *
-         * @return true if another candidate mapping can be found or
-         * false otherwise.
-         */
+        /// <summary>
+        /// Returns true if another candidate match can be found or
+        /// false otherwise.
+        ///
+        /// <returns>true if another candidate mapping can be found or</returns>
+        /// false otherwise.
+        /// </summary>
         bool HasNextCandidate();
 
-        /**
-         * Returns the next candidate match.
-         *
-         * @return the next candidate match.
-         */
+        /// <summary>
+        /// Returns the next candidate match.
+        ///
+        /// <returns>the next candidate match.</returns>
+        /// </summary>
         Match NextCandidate();
 
-        /**
-         * Returns true if the given match will work with the current
-         * map, or false otherwise.
-         *
-         * @param match the match to consider
-         * @return true if the given match will work with the current
-         * map, or false otherwise.
-         */
+        /// <summary>
+        /// Returns true if the given match will work with the current
+        /// map, or false otherwise.
+        ///
+        /// <param name="match">the match to consider</param>
+        /// <returns>true if the given match will work with the current</returns>
+        /// map, or false otherwise.
+        /// </summary>
         bool IsMatchFeasible(Match match);
 
-        /**
-         * Returns true if all atoms in the query molecule have been
-         * mapped.
-         *
-         * @return true if all atoms in the query molecule have been
-         * mapped.
-         */
+        /// <summary>
+        /// Returns true if all atoms in the query molecule have been
+        /// mapped.
+        ///
+        /// <returns>true if all atoms in the query molecule have been</returns>
+        /// mapped.
+        /// </summary>
         bool IsGoal { get; }
 
-        /**
-         * Returns true if no match will come from this IState.
-         *
-         * @return true if no match will come from this IState
-         */
+        /// <summary>
+        /// Returns true if no match will come from this IState.
+        ///
+        /// <returns>true if no match will come from this IState</returns>
+        /// </summary>
         bool IsDead { get; }
 
-        /**
-         * Returns a state in which the atoms in match have been
-         * added to the current mapping.
-         *
-         * @param match the match to consider.
-         * @return  a state in which the atoms in match have been
-         * added to the current mapping.
-         */
+        /// <summary>
+        /// Returns a state in which the atoms in match have been
+        /// added to the current mapping.
+        ///
+        /// <param name="match">the match to consider.</param>
+        /// <returns>a state in which the atoms in match have been</returns>
+        /// added to the current mapping.
+        /// </summary>
         IState NextState(Match match);
 
-        /**
-         * Returns this IState's atom map to its original condition.
-         */
+        /// <summary>
+        /// Returns this IState's atom map to its original condition.
+        /// </summary>
         void BackTrack();
     }
 }

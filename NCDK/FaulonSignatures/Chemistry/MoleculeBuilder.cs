@@ -45,9 +45,6 @@ namespace FaulonSignatures.Chemistry
             return this.molecule;
         }
 
-        public Molecule GetMolecule()
-        {
-            return this.molecule;
-        }
+        public Molecule Molecule => this.molecule;
     }
 }

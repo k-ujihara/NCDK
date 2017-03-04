@@ -31,11 +31,12 @@ using NCDK.Tools.Diff;
 using System.Collections;
 using System.Collections.Generic;
 
+
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class ExtendedFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -117,11 +118,11 @@ namespace NCDK.Fingerprint
             Assert.IsFalse(FingerprinterTool.IsSubset(bs1, bs));
         }
 
-        /*
-         * this test only works with allringsfinder in fingerprinter shk3 2008-8-7:
-         * With the change of the extended fingerprinter in r11932, this works by
-         * default
-         */
+        /// <summary>
+        /// this test only works with allringsfinder in fingerprinter shk3 2008-8-7:
+        /// With the change of the extended fingerprinter in r11932, this works by
+        /// default
+        /// </summary>
         [TestMethod()]
         public void TestDifferentRingFinders()
         {
@@ -172,11 +173,11 @@ namespace NCDK.Fingerprint
             Assert.IsFalse(FingerprinterTool.IsSubset(bs, bs1));
         }
 
-        /*
-         * this tests if a system with three single rings is not found (it should
-         * not) if looking for a system with three condensed rings using the
-         * fingerprint
-         */
+        /// <summary>
+        /// this tests if a system with three single rings is not found (it should
+        /// not) if looking for a system with three condensed rings using the
+        /// fingerprint
+        /// </summary>
         [TestMethod()]
         public void TestCondensedSingle()
         {
@@ -381,22 +382,22 @@ namespace NCDK.Fingerprint
 
         }
 
-        /*
-         * The power of the extended fingerprinter could not distinguish these
-         * before the change in r11932
-         */
+        /// <summary>
+        /// The power of the extended fingerprinter could not distinguish these
+        /// before the change in r11932
+        /// </summary>
         [TestMethod()]
         public void TestChebi()
         {
             IAtomContainer searchmol = null;
             IAtomContainer findmol = null;
             string filename = "NCDK.Data.MDL.chebisearch.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             searchmol = reader.Read(new AtomContainer());
             reader.Close();
             filename = "NCDK.Data.MDL.chebifind.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
             findmol = reader.Read(new AtomContainer());
             reader.Close();
@@ -409,11 +410,11 @@ namespace NCDK.Fingerprint
             Assert.IsFalse(isSubset2);
         }
 
-        /**
-         * @cdk.bug 2219597
-         * @
-         * @throws CloneNotSupportedException
-         */
+        /// <summary>
+        // @cdk.bug 2219597
+        // @
+        // @throws CloneNotSupportedException
+        /// </summary>
         [TestMethod()]
         public void TestMoleculeInvariance()
         {

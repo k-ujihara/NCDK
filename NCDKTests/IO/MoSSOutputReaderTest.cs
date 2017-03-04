@@ -25,10 +25,10 @@ using NCDK.Default;
 namespace NCDK.IO
 {
     // @cdk.module test-smiles
-	[TestClass()]
+    [TestClass()]
     public class MoSSOutputReaderTest : SimpleChemObjectReaderTest
     {
-        protected override string testFile => "NCDK.Data.MOPAC.ethylene.dat.out";
+        protected override string testFile => "NCDK.Data.MoSS.TKO.mossoutput";
         static readonly MoSSOutputReader simpleReader = new MoSSOutputReader();
         protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
 
@@ -43,7 +43,7 @@ namespace NCDK.IO
         public void TestExampleFile_MolReading()
         {
             string filename = "NCDK.Data.MoSS.TKO.mossoutput";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
             var moleculeSet = new AtomContainerSet<IAtomContainer>();
             moleculeSet = reader.Read(moleculeSet);
@@ -59,7 +59,7 @@ namespace NCDK.IO
         public void TestExampleFile_SupportColumns()
         {
             string filename = "NCDK.Data.MoSS.TKO.mossoutput";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MoSSOutputReader reader = new MoSSOutputReader(ins);
             var moleculeSet = new AtomContainerSet<IAtomContainer>();
             moleculeSet = reader.Read(moleculeSet);

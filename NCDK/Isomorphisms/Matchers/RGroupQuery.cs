@@ -33,32 +33,32 @@ using System.Text.RegularExpressions;
 namespace NCDK.Isomorphisms.Matchers
 {
     /**
-	 * Represents information contained in a Symyx RGfile (R-group query file).<br>
-	 * It contains a root structure (the scaffold if you like), a map with
-	 * R-group definitions (each of which can contain multiple substitutes) and
-	 * a map with attachment points. The attachment points define a connection
-	 * order for the substitutes, which is relevant when an Rgroup is connected
-	 * to the scaffold with more than one bond.
-	 * <P>
-	 * This class can also be used to produce all the valid configurations
-	 * for the combination of its root,definitions and conditions.
-	 * <P>
-	 * This Javadoc does not contain a code sample how to create a new RGroupQuery
-	 * from scratch, because a sensible RGroupQuery has quite a few attributes to be set
-	 * including a root plus a bunch of substituents, which are all atom containers.
-	 * So that would be a lot of sample code here. <br>
-	 * The best way to get a feel for the way the RGroup objects are populated is to
-	 * run the RGroupQueryReaderTest and look at the sample
-	 * input RGroup query files contained in the CDK and how they translate into
-	 * RGroupXX objects. The JChempaint application can visualize the input files for you.
-	 *
-	 * @cdk.module  isomorphism
-	 * @cdk.githash
-	 * @cdk.keyword Rgroup
-	 * @cdk.keyword R group
-	 * @cdk.keyword R-group
-	 * @author Mark Rijnbeek
-	 */
+     * Represents information contained in a Symyx RGfile (R-group query file).<br>
+     * It contains a root structure (the scaffold if you like), a map with
+     * R-group definitions (each of which can contain multiple substitutes) and
+     * a map with attachment points. The attachment points define a connection
+     * order for the substitutes, which is relevant when an Rgroup is connected
+     * to the scaffold with more than one bond.
+     * <P>
+     * This class can also be used to produce all the valid configurations
+     * for the combination of its root,definitions and conditions.
+     * <P>
+     * This Javadoc does not contain a code sample how to create a new RGroupQuery
+     * from scratch, because a sensible RGroupQuery has quite a few attributes to be set
+     * including a root plus a bunch of substituents, which are all atom containers.
+     * So that would be a lot of sample code here. <br>
+     * The best way to get a feel for the way the RGroup objects are populated is to
+     * run the RGroupQueryReaderTest and look at the sample
+     * input RGroup query files contained in the CDK and how they translate into
+     * RGroupXX objects. The JChempaint application can visualize the input files for you.
+     *
+     * @cdk.module  isomorphism
+     * @cdk.githash
+     * @cdk.keyword Rgroup
+     * @cdk.keyword R group
+     * @cdk.keyword R-group
+     * @author Mark Rijnbeek
+     */
     [Serializable]
     public class RGroupQuery : QueryChemObject, IChemObject, IRGroupQuery
     {
@@ -85,11 +85,11 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Returns all R# type atoms (pseudo atoms) found in the root structure
-		 * for a certain provided RGgroup number.<p>
-		 * @param rgroupNumber R# number, 1..32
-		 * @return list of (pseudo) atoms with the provided rgroupNumber as label
-		 */
+         * Returns all R# type atoms (pseudo atoms) found in the root structure
+         * for a certain provided RGgroup number.<p>
+         * @param rgroupNumber R# number, 1..32
+         * @return list of (pseudo) atoms with the provided rgroupNumber as label
+         */
         public IList<IAtom> GetRgroupQueryAtoms(int? rgroupNumber)
         {
 
@@ -117,9 +117,9 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Returns all R# type atoms (pseudo atoms) found in the root structure.
-		 * @return list of (pseudo) R# atoms
-		 */
+         * Returns all R# type atoms (pseudo atoms) found in the root structure.
+         * @return list of (pseudo) R# atoms
+         */
         public IList<IAtom> GetAllRgroupQueryAtoms()
         {
             return GetRgroupQueryAtoms(null);
@@ -128,10 +128,10 @@ namespace NCDK.Isomorphisms.Matchers
         private static Regex validLabelPattern = new Regex("^R\\d+$", RegexOptions.Compiled);
 
         /**
-		 * Validates a Pseudo atom's label to be valid RGroup query label (R1..R32).
-		 * @param Rxx R-group label like R1 or R10
-		 * @return true if R1..R32, otherwise false
-		 */
+         * Validates a Pseudo atom's label to be valid RGroup query label (R1..R32).
+         * @param Rxx R-group label like R1 or R10
+         * @return true if R1..R32, otherwise false
+         */
         public static bool IsValidRgroupQueryLabel(string Rxx)
         {
             var match = validLabelPattern.Match(Rxx);
@@ -254,9 +254,9 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Recursive function to produce valid configurations
-		 * for {@link #GetAllConfigurations()}.
-		 */
+         * Recursive function to produce valid configurations
+         * for {@link #GetAllConfigurations()}.
+         */
         private void FindConfigurationsRecursively(IList<int> rGroupNumbers, IList<IList<int>> occurrences,
                 IList<int> occurIndexes, IList<int[]> distributions, IList<IList<RGroup>> substitutes, int level,
                 IList<IAtomContainer> result)
@@ -454,17 +454,17 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Finds valid distributions for a given R# group and it occurrence
-		 * condition taken from the LOG line.<br>
-		 * For example: if we have three Rn group atoms, and ">2" for
-		 * the occurrence, then there are fours possible ways to make a
-		 * distribution: 3 ways to put in two atoms, and one way
-		 * to put in all 3 atoms. Etc.
-		 * @param occur
-		 * @param candidate
-		 * @param distributions
-		 * @param level
-		 */
+         * Finds valid distributions for a given R# group and it occurrence
+         * condition taken from the LOG line.<br>
+         * For example: if we have three Rn group atoms, and ">2" for
+         * the occurrence, then there are fours possible ways to make a
+         * distribution: 3 ways to put in two atoms, and one way
+         * to put in all 3 atoms. Etc.
+         * @param occur
+         * @param candidate
+         * @param distributions
+         * @param level
+         */
         private void FindDistributions(int occur, int[] candidate, IList<int[]> distributions, int level)
         {
             if (level != candidate.Length)
@@ -490,27 +490,27 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Maps the distribution of an R-group to all possible substitute combinations.
-		 * This is best illustrated by an example.<br>
-		 * Say R2 occurs twice in the root, and has condition >0. So a valid
-		 * output configuration can have either one or two substitutes.
-		 * The distributions will have been calculated to be the following
-		 * solutions: [0,1], [1,0], [1,1]   <br>
-		 * To start with [1,1], assume two possible substitutes have been
-		 * defined for R2, namely *C=O and *C-N. Then the distribution [1,1]
-		 * should lead to four mappings:   <br>
-		 * [*C=O,*C=O], [*C-N,*C-N], [*C=O,*C-N], [*C-N,*C=O].    <br>
-		 * These mappings are generated in this function, as well as the other valid mappings
-		 * for [0,1] and [1,0]: <br>
-		 * [*C=O,null], [*C-N,null], [null,*C=O], [null,*C-N].   <br>
-		 * So the example would have this function produce eight mappings (result list size==8).
-		 *
-		 * @param rgpList
-		 * @param listOffset
-		 * @param distribution
-		 * @param mapping
-		 * @param result
-		 */
+         * Maps the distribution of an R-group to all possible substitute combinations.
+         * This is best illustrated by an example.<br>
+         * Say R2 occurs twice in the root, and has condition >0. So a valid
+         * output configuration can have either one or two substitutes.
+         * The distributions will have been calculated to be the following
+         * solutions: [0,1], [1,0], [1,1]   <br>
+         * To start with [1,1], assume two possible substitutes have been
+         * defined for R2, namely *C=O and *C-N. Then the distribution [1,1]
+         * should lead to four mappings:   <br>
+         * [*C=O,*C=O], [*C-N,*C-N], [*C=O,*C-N], [*C-N,*C=O].    <br>
+         * These mappings are generated in this function, as well as the other valid mappings
+         * for [0,1] and [1,0]: <br>
+         * [*C=O,null], [*C-N,null], [null,*C=O], [null,*C-N].   <br>
+         * So the example would have this function produce eight mappings (result list size==8).
+         *
+         * @param rgpList
+         * @param listOffset
+         * @param distribution
+         * @param mapping
+         * @param result
+         */
         private void MapSubstitutes(RGroupList rgpList, int listOffset, int[] distribution, RGroup[] mapping,
                 IList<IList<RGroup>> result)
         {
@@ -540,11 +540,11 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Helper method, used to help construct a configuration.
-		 * @param atom
-		 * @param container
-		 * @return the array position of atom in container
-		 */
+         * Helper method, used to help construct a configuration.
+         * @param atom
+         * @param container
+         * @return the array position of atom in container
+         */
         private int GetAtomPosition(IAtom atom, IAtomContainer container)
         {
             for (int i = 0; i < container.Atoms.Count; i++)
@@ -558,11 +558,11 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Helper method, used to help construct a configuration.
-		 * @param bond
-		 * @param container
-		 * @return the array position of the bond in the container
-		 */
+         * Helper method, used to help construct a configuration.
+         * @param bond
+         * @param container
+         * @return the array position of the bond in the container
+         */
         private int GetBondPosition(IBond bond, IAtomContainer container)
         {
             for (int i = 0; i < container.Bonds.Count; i++)
@@ -576,12 +576,12 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Helper method to see if an array is all zeroes or not.
-		 * Used to check if the distribution of substitutes over an R-group
-		 * is all zeroes, meaning there will be no substitution done.
-		 * @param arr
-		 * @return true if arr's values are all zero.
-		 */
+         * Helper method to see if an array is all zeroes or not.
+         * Used to check if the distribution of substitutes over an R-group
+         * is all zeroes, meaning there will be no substitution done.
+         * @param arr
+         * @return true if arr's values are all zero.
+         */
         private bool AllZeroArray(int[] arr)
         {
             foreach (var flag in arr)
@@ -590,17 +590,17 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         /**
-		 * Checks whether IF..THEN conditions that can be set for the R-groups are met.
-		 * It is used to filter away invalid configurations in {@link #findConfigurationsRecursively}.
-		 * <P>
-		 * Scenario: suppose R1 is substituted 0 times, whereas R2 is substituted.
-		 * Also suppose there is a condition IF R2 THEN R1. Because R1 does not
-		 * occur but R2 does, the IF..THEN condition is not met: this function
-		 * will return false, the configuration should be discarded.
-		 * @param rGroupNumbers
-		 * @param distributions
-		 * @return true if all IF..THEN RGroup conditions are met.
-		 */
+         * Checks whether IF..THEN conditions that can be set for the R-groups are met.
+         * It is used to filter away invalid configurations in {@link #findConfigurationsRecursively}.
+         * <P>
+         * Scenario: suppose R1 is substituted 0 times, whereas R2 is substituted.
+         * Also suppose there is a condition IF R2 THEN R1. Because R1 does not
+         * occur but R2 does, the IF..THEN condition is not met: this function
+         * will return false, the configuration should be discarded.
+         * @param rGroupNumbers
+         * @param distributions
+         * @return true if all IF..THEN RGroup conditions are met.
+         */
         private bool CheckIfThenConditionsMet(IList<int> rGroupNumbers, IList<int[]> distributions)
         {
             for (int outer = 0; outer < rGroupNumbers.Count; outer++)

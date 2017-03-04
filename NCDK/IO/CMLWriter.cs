@@ -35,46 +35,46 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Serializes a {@link IAtomContainerSet} or a <see cref="IAtomContainer"/> object to CML 2 code.
-     * Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
-     * Output can be redirected to other Writer objects like {@link StringWriter}
-     * and {@link FileWriter}. An example:
-     *
-     * <pre>
-     *   StringWriter output = new StringWriter();
-     *   bool makeFragment = true;
-     *   CMLWriter cmlwriter = new CMLWriter(output, makeFragment);
-     *   cmlwriter.Write(molecule);
-     *   cmlwriter.Close();
-     *   string cmlcode = output.ToString();
-     * </pre>
-     *
-     * <p>Output to a file called "molecule.cml" can done with:
-     *
-     * <pre>
-     *   FileWriter output = new FileWriter("molecule.cml");
-     *   CMLWriter cmlwriter = new CMLWriter(output);
-     *   cmlwriter.Write(molecule);
-     *   cmlwriter.Close();
-     * </pre>
-     *
-     * <p>For atoms it outputs: coordinates, element type and formal charge.
-     * For bonds it outputs: order, atoms (2, or more) and wedges.
-     *
-     * @cdk.module       libiocml
-     * @cdk.githash
-     * @cdk.require      java1.5+
-     * @cdk.bug          1565563
-     * @cdk.iooptions
-     *
-     * @see java.io.FileWriter
-     * @see java.io.StringWriter
-     *
-     * @author Egon Willighagen
-     *
-     * @cdk.keyword file format, CML
-     */
+    /// <summary>
+    /// Serializes a <see cref="IAtomContainerSet"/> or a <see cref="IAtomContainer"/> object to CML 2 code.
+    /// Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
+    /// Output can be redirected to other Writer objects like <see cref="StringWriter"/>
+    /// and <see cref="FileWriter"/>. An example:
+    ///
+    /// <code>
+    ///   StringWriter output = new StringWriter();
+    ///   bool makeFragment = true;
+    ///   CMLWriter cmlwriter = new CMLWriter(output, makeFragment);
+    ///   cmlwriter.Write(molecule);
+    ///   cmlwriter.Close();
+    ///   string cmlcode = output.ToString();
+    /// </code>
+    ///
+    /// <p>Output to a file called "molecule.cml" can done with:
+    ///
+    /// <code>
+    ///   FileWriter output = new FileWriter("molecule.cml");
+    ///   CMLWriter cmlwriter = new CMLWriter(output);
+    ///   cmlwriter.Write(molecule);
+    ///   cmlwriter.Close();
+    /// </code>
+    ///
+    /// <p>For atoms it outputs: coordinates, element type and formal charge.
+    /// For bonds it outputs: order, atoms (2, or more) and wedges.
+    ///
+    // @cdk.module       libiocml
+    // @cdk.githash
+    // @cdk.require      java1.5+
+    // @cdk.bug          1565563
+    // @cdk.iooptions
+    ///
+    // @see java.io.FileWriter
+    // @see java.io.StringWriter
+    ///
+    // @author Egon Willighagen
+    ///
+    // @cdk.keyword file format, CML
+    /// </summary>
     public class CMLWriter : DefaultChemObjectWriter
     {
         private Stream output;
@@ -124,13 +124,13 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Constructs a new CMLWriter class. Output will be stored in the Writer
-         * class given as parameter. The CML code will be valid CML code with a
-         * XML header. Only one object can be stored.
-         *
-         * @param writer Writer to redirect the output to.
-         */
+        /// <summary>
+        /// Constructs a new CMLWriter class. Output will be stored in the Writer
+        /// class given as parameter. The CML code will be valid CML code with a
+        /// XML header. Only one object can be stored.
+        ///
+        /// <param name="writer">Writer to redirect the output to.</param>
+        /// </summary>
         public CMLWriter(TextWriter writer)
         {
             // Stream doesn't handle encoding - the serializers read/write in the same format we're okay
@@ -171,9 +171,9 @@ namespace NCDK.IO
             this.output = output;
         }
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             if (output != null) output.Close();

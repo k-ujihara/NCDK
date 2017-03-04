@@ -30,12 +30,12 @@ using System.Diagnostics;
 
 namespace NCDK.Templates
 {
-    /**
-	 * This class contains methods for generating simple organic molecules and is
-	 * copy of {@link MoleculeFactory} for use in tests.
-	 *
-	 * @cdk.module test-data
-	 */
+    /// <summary>
+    /// This class contains methods for generating simple organic molecules and is
+    /// copy of {@link MoleculeFactory} for use in tests.
+    ///
+    // @cdk.module test-data
+    /// </summary>
     public class TestMoleculeFactory
     {
         private static void MolAddBond(IAtomContainer mol, int a, int b, BondOrder order)
@@ -72,15 +72,15 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Generate an Alkane (chain of carbons with no hydrogens) of a given length.
-		 *
-		 * <p>This method was written by Stephen Tomkinson.
-		 *
-		 * @param chainLength The number of carbon atoms to have in the chain.
-		 * @return A molecule containing a bonded chain of carbons.
-		 * @cdk.created 2003-08-15
-		 */
+        /// <summary>
+        /// Generate an Alkane (chain of carbons with no hydrogens) of a given length.
+        ///
+        /// <p>This method was written by Stephen Tomkinson.
+        ///
+        /// <param name="chainLength">The number of carbon atoms to have in the chain.</param>
+        /// <returns>A molecule containing a bonded chain of carbons.</returns>
+        // @cdk.created 2003-08-15
+        /// </summary>
         public static IAtomContainer MakeAlkane(int chainLength)
         {
             IAtomContainer currentChain = new AtomContainer();
@@ -121,11 +121,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns cyclohexene without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
-		 */
+        /// <summary>
+        /// Returns cyclohexene without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C6H10/c1-2-4-6-5-3-1/h1-2H,3-6H2
+        /// </summary>
         public static IAtomContainer MakeCyclohexene()
         {
             IAtomContainer mol = new AtomContainer();
@@ -145,11 +145,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns cyclohexane without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
-		 */
+        /// <summary>
+        /// Returns cyclohexane without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C6H12/c1-2-4-6-5-3-1/h1-6H2
+        /// </summary>
         public static IAtomContainer MakeCyclohexane()
         {
             IAtomContainer mol = new AtomContainer();
@@ -169,11 +169,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns cyclopentane without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
-		 */
+        /// <summary>
+        /// Returns cyclopentane without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C5H10/c1-2-4-5-3-1/h1-5H2
+        /// </summary>
         public static IAtomContainer MakeCyclopentane()
         {
             IAtomContainer mol = new AtomContainer();
@@ -191,11 +191,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns cyclobutane without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
-		 */
+        /// <summary>
+        /// Returns cyclobutane without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H8/c1-2-4-3-1/h1-4H2
+        /// </summary>
         public static IAtomContainer MakeCyclobutane()
         {
             IAtomContainer mol = new AtomContainer();
@@ -211,11 +211,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns cyclobutadiene without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
-		 */
+        /// <summary>
+        /// Returns cyclobutadiene without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H4/c1-2-4-3-1/h1-4H
+        /// </summary>
         public static IAtomContainer MakeCyclobutadiene()
         {
             IAtomContainer mol = new AtomContainer();
@@ -250,11 +250,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns biphenyl without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
-		 */
+        /// <summary>
+        /// Returns biphenyl without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
+        /// </summary>
         public static IAtomContainer MakeBiphenyl()
         {
             IAtomContainer mol = new AtomContainer();
@@ -577,11 +577,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns azulene without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
-		 */
+        /// <summary>
+        /// Returns azulene without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C10H8/c1-2-5-9-7-4-8-10(9)6-3-1/h1-8H
+        /// </summary>
         public static IAtomContainer MakeAzulene()
         {
             IAtomContainer mol = new AtomContainer();
@@ -611,11 +611,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns indole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
-		 */
+        /// <summary>
+        /// Returns indole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C8H7N/c1-2-4-8-7(3-1)5-6-9-8/h1-6,9H
+        /// </summary>
         public static IAtomContainer MakeIndole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -643,11 +643,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyrrole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-		 */
+        /// <summary>
+        /// Returns pyrrole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
+        /// </summary>
         public static IAtomContainer MakePyrrole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -666,11 +666,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyrrole anion without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
-		 */
+        /// <summary>
+        /// Returns pyrrole anion without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H4N/c1-2-4-5-3-1/h1-4H/q-1
+        /// </summary>
         public static IAtomContainer MakePyrroleAnion()
         {
             IAtomContainer mol = new AtomContainer();
@@ -691,11 +691,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns imidazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
-		 */
+        /// <summary>
+        /// Returns imidazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H4N2/c1-2-5-3-4-1/h1-3H,(H,4,5)/f/h4H
+        /// </summary>
         public static IAtomContainer MakeImidazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -714,11 +714,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyrazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
-		 */
+        /// <summary>
+        /// Returns pyrazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
+        /// </summary>
         public static IAtomContainer MakePyrazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -737,11 +737,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns 1,2,4-triazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
-		 */
+        /// <summary>
+        /// Returns 1,2,4-triazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H4N2/c1-2-4-5-3-1/h1-3H,(H,4,5)/f/h4H
+        /// </summary>
         public static IAtomContainer Make124Triazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -760,11 +760,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns 1,2,3-triazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
-		 */
+        /// <summary>
+        /// Returns 1,2,3-triazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C2H3N3/c1-2-4-5-3-1/h1-2H,(H,3,4,5)/f/h5H
+        /// </summary>
         public static IAtomContainer Make123Triazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -783,11 +783,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns tetrazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
-		 */
+        /// <summary>
+        /// Returns tetrazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)/f/h4H
+        /// </summary>
         public static IAtomContainer MakeTetrazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -806,11 +806,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns Oxazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
-		 */
+        /// <summary>
+        /// Returns Oxazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H3NO/c1-2-5-3-4-1/h1-3H
+        /// </summary>
         public static IAtomContainer MakeOxazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -829,11 +829,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns Isoxazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
-		 */
+        /// <summary>
+        /// Returns Isoxazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
+        /// </summary>
         public static IAtomContainer MakeIsoxazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -852,11 +852,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns isothiazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
-		 */
+        /// <summary>
+        /// Returns isothiazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H3NS/c1-2-4-5-3-1/h1-3H
+        /// </summary>
         public static IAtomContainer MakeIsothiazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -875,11 +875,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns thiadiazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
-		 */
+        /// <summary>
+        /// Returns thiadiazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C2H2N2S/c1-3-4-2-5-1/h1-2H
+        /// </summary>
         public static IAtomContainer MakeThiadiazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -898,11 +898,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns oxadiazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
-		 */
+        /// <summary>
+        /// Returns oxadiazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C2H2N2O/c1-3-4-2-5-1/h1-2H
+        /// </summary>
         public static IAtomContainer MakeOxadiazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -921,11 +921,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyridine without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
-		 */
+        /// <summary>
+        /// Returns pyridine without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H3NO/c1-2-4-5-3-1/h1-3H
+        /// </summary>
         public static IAtomContainer MakePyridine()
         {
             IAtomContainer mol = new AtomContainer();
@@ -946,11 +946,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyridine oxide without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
-		 */
+        /// <summary>
+        /// Returns pyridine oxide without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
+        /// </summary>
         public static IAtomContainer MakePyridineOxide()
         {
             IAtomContainer mol = new AtomContainer();
@@ -975,11 +975,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyrimidine without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
-		 */
+        /// <summary>
+        /// Returns pyrimidine without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H4N2/c1-2-5-4-6-3-1/h1-4H
+        /// </summary>
         public static IAtomContainer MakePyrimidine()
         {
             IAtomContainer mol = new AtomContainer();
@@ -1000,11 +1000,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns pyridazine without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
-		 */
+        /// <summary>
+        /// Returns pyridazine without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
+        /// </summary>
         public static IAtomContainer MakePyridazine()
         {
             IAtomContainer mol = new AtomContainer();
@@ -1025,11 +1025,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns triazine without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
-		 */
+        /// <summary>
+        /// Returns triazine without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C4H4N2/c1-2-4-6-5-3-1/h1-4H
+        /// </summary>
         public static IAtomContainer MakeTriazine()
         {
             IAtomContainer mol = new AtomContainer();
@@ -1050,11 +1050,11 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * Returns thiazole without explicit hydrogens.
-		 *
-		 * @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
-		 */
+        /// <summary>
+        /// Returns thiazole without explicit hydrogens.
+        ///
+        // @cdk.inchi InChI=1/C3H3NS/c1-2-5-3-4-1/h1-3H
+        /// </summary>
         public static IAtomContainer MakeThiazole()
         {
             IAtomContainer mol = new AtomContainer();
@@ -1082,10 +1082,10 @@ namespace NCDK.Templates
             mol.Add(new Atom("C")); // 3
             mol.Add(new Atom("C")); // 4
             mol.Add(new Atom("C")); // 5
-                                    //		mol.Add(new Atom("C")); // 6
-                                    //		mol.Add(new Atom("C")); // 7
-                                    //		mol.Add(new Atom("C")); // 8
-                                    //		mol.Add(new Atom("C")); // 9
+                                    //        mol.Add(new Atom("C")); // 6
+                                    //        mol.Add(new Atom("C")); // 7
+                                    //        mol.Add(new Atom("C")); // 8
+                                    //        mol.Add(new Atom("C")); // 9
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1093,11 +1093,11 @@ namespace NCDK.Templates
             MolAddBond(mol, 3, 4, BondOrder.Single); // 4
             MolAddBond(mol, 4, 5, BondOrder.Single); // 5
             MolAddBond(mol, 5, 0, BondOrder.Single); // 6
-                                                     //		MolAddBond(mol, 5, 6, BondOrder.Single); // 7
-                                                     //		MolAddBond(mol, 6, 7, BondOrder.Single); // 8
-                                                     //		MolAddBond(mol, 7, 4, BondOrder.Single); // 9
-                                                     //		MolAddBond(mol, 8, 0, BondOrder.Single); // 10
-                                                     //		MolAddBond(mol, 9, 1, BondOrder.Single); // 11
+                                                     //        MolAddBond(mol, 5, 6, BondOrder.Single); // 7
+                                                     //        MolAddBond(mol, 6, 7, BondOrder.Single); // 8
+                                                     //        MolAddBond(mol, 7, 4, BondOrder.Single); // 9
+                                                     //        MolAddBond(mol, 8, 0, BondOrder.Single); // 10
+                                                     //        MolAddBond(mol, 9, 1, BondOrder.Single); // 11
 
             return mol;
         }
@@ -1274,9 +1274,9 @@ namespace NCDK.Templates
 
         }
 
-        /**
-		 * @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
-		 */
+        /// <summary>
+        // @cdk.inchi InChI=1/C5H5N5/c6-4-3-5(9-1-7-3)10-2-8-4/h1-2H,(H3,6,7,8,9,10)/f/h7H,6H2
+        /// </summary>
         public static IAtomContainer MakeAdenine()
         {
             IAtomContainer mol = new AtomContainer(); // Adenine
@@ -1336,9 +1336,9 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
-		 */
+        /// <summary>
+        /// InChI=1/C10H8/c1-2-6-10-8-4-3-7-9(10)5-1/h1-8H
+        /// </summary>
         [TestMethod()]
         public static IAtomContainer MakeNaphthalene()
         {
@@ -1399,9 +1399,9 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
-		 */
+        /// <summary>
+        // @cdk.inchi InChI=1/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
+        /// </summary>
         [TestMethod()]
         public static IAtomContainer MakeAnthracene()
         {
@@ -1484,10 +1484,10 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * octacyclo[17.2.2.2¹,⁴.2⁴,⁷.2⁷,¹⁰.2¹⁰,¹³.2¹³,¹⁶.2¹⁶,¹⁹]pentatriacontane
-		 * @cdk.inchi InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
-		 */
+        /// <summary>
+        /// octacyclo[17.2.2.2¹,⁴.2⁴,⁷.2⁷,¹⁰.2¹⁰,¹³.2¹³,¹⁶.2¹⁶,¹⁹]pentatriacontane
+        // @cdk.inchi InChI=1/C35H56/c1-2-30-6-3-29(1)4-7-31(8-5-29)13-15-33(16-14-31)21-23-35(24-22-33)27-25-34(26-28-35)19-17-32(11-9-30,12-10-30)18-20-34/h1-28H2
+        /// </summary>
         [TestMethod()]
         public static IAtomContainer MakeCyclophaneLike()
         {
@@ -1685,10 +1685,10 @@ namespace NCDK.Templates
             return mol;
         }
 
-        /**
-		 * octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
-		 * @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
-		 */
+        /// <summary>
+        /// octacyclo[24.2.2.2²,⁵.2⁶,⁹.2¹⁰,¹³.2¹⁴,¹⁷.2¹⁸,²¹.2²²,²⁵]dotetracontane
+        // @cdk.inchi InChI=1/C42H70/c1-2-30-4-3-29(1)31-5-7-33(8-6-31)35-13-15-37(16-14-35)39-21-23-41(24-22-39)42-27-25-40(26-28-42)38-19-17-36(18-20-38)34-11-9-32(30)10-12-34/h29-42H,1-28H2
+        /// </summary>
         [TestMethod()]
         public static IAtomContainer MakeGappedCyclophaneLike()
         {

@@ -22,17 +22,17 @@ using NCDK.Default;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Checks the functionality of the IsomorphismTester
-     *
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    /// Checks the functionality of the IsomorphismTester
+    ///
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class AnyOrderQueryBondTest : CDKTestCase
     {
-        /**
-         * @cdk.bug 1305
-         */
+        /// <summary>
+        // @cdk.bug 1305
+        /// </summary>
         [TestMethod()]
         public void TestMatches()
         {

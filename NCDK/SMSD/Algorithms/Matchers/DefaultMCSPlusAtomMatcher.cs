@@ -49,12 +49,12 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.Matchers
 {
-    /**
-     * Checks if atom is matching between query and target molecules.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Checks if atom is matching between query and target molecules.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class DefaultMCSPlusAtomMatcher : AtomMatcher
     {
         private int maximumNeighbors;
@@ -75,9 +75,9 @@ namespace NCDK.SMSD.Algorithms.Matchers
             }
         }
 
-        /**
-         * Constructor
-         */
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DefaultMCSPlusAtomMatcher()
         {
             this.qAtom = null;
@@ -85,12 +85,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
             maximumNeighbors = -1;
         }
 
-        /**
-         * Constructor
-         * @param queryContainer query atom container
-         * @param atom query atom
-         * @param shouldMatchBonds bond matching flag
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryContainer">query atom container</param>
+        /// <param name="atom">query atom</param>
+        /// <param name="shouldMatchBonds">bond matching flag</param>
+        /// </summary>
         public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom atom, bool shouldMatchBonds)
             : this()
         {
@@ -102,11 +102,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
             //        Console.Out.WriteLine("MAX allowed " + maximumNeighbors);
         }
 
-        /**
-         * Constructor
-         * @param smartQueryAtom query atom
-         * @param container
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="smartQueryAtom">query atom</param>
+        /// <param name="container">/// </summary></param>
         public DefaultMCSPlusAtomMatcher(IQueryAtom smartQueryAtom, IQueryAtomContainer container)
             : this()
         {
@@ -114,13 +113,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
             this.symbol = smartQueryAtom.Symbol;
         }
 
-        /**
-         * Constructor
-         * @param queryContainer query atom container
-         * @param template query atom
-         * @param blockedPositions
-         * @param shouldMatchBonds bond matching flag
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryContainer">query atom container</param>
+        /// <param name="template">query atom</param>
+        /// <param name="blockedPositions">/// <param name="shouldMatchBonds">bond matching flag</param></param>
+        /// </summary>
         public DefaultMCSPlusAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
                 bool shouldMatchBonds)
             : this(queryContainer, template, shouldMatchBonds)
@@ -129,18 +127,17 @@ namespace NCDK.SMSD.Algorithms.Matchers
                     - blockedPositions;
         }
 
-        /**
-         *
-         * @param maximum numbers of connected atoms allowed
-         */
+        /// <summary>
+        ///
+        /// <param name="maximum">numbers of connected atoms allowed</param>
+        /// </summary>
         public void SetMaximumNeighbors(int maximum)
         {
             this.maximumNeighbors = maximum;
         }
 
-        /**
-         * @param symbol
-         */
+        /// <summary>
+        /// <param name="symbol">/// </summary></param>
         public void SetSymbol(string symbol)
         {
             this.symbol = symbol;
@@ -171,8 +168,8 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return atom.ImplicitHydrogenCount ?? 0;
         }
 
-        /** {@inheritDoc}
-         */
+        /// <summary> {@inheritDoc}
+        /// </summary>
         public bool Matches(IAtomContainer targetContainer, IAtom targetAtom)
         {
             if (smartQueryAtom != null && qAtom == null)

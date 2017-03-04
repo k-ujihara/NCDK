@@ -37,13 +37,13 @@ namespace NCDK.Groups
      * <p>
      * So if G is a group on X = {0, 1, 2, 3, ..., n-1}, then:
      *
-     * <pre>
+     * <code>
      *      G<sub>0</sub> = {g &isin; G  : g(0) = 0}
      *      G<sub>1</sub> = {g &isin; G<sub>0</sub> : g(1) = 1}
      *      G<sub>2</sub> = {g &isin; G<sub>1</sub> : g(2) = 2}
      *      ...
      *      G<sub>n-1</sub> = {g in G<sub>n-2</sub> : g(n - 1) = n - 1} = {I}
-     * </pre>
+     * </code>
      *
      * and G<sub>0</sub>, G<sub>1</sub>, G<sub>2</sub>, ..., G<sub>n-1</sub> are
      * subgroups of G.
@@ -317,10 +317,10 @@ namespace NCDK.Groups
          */
         public void Apply(Backtracker backtracker)
         {
-            this.backtrack(0, new Permutation(size), backtracker);
+            this.Backtrack(0, new Permutation(size), backtracker);
         }
 
-        private void backtrack(int l, Permutation g, Backtracker backtracker)
+        private void Backtrack(int l, Permutation g, Backtracker backtracker)
         {
             if (backtracker.IsFinished())
             {
@@ -337,7 +337,7 @@ namespace NCDK.Groups
                     Permutation h = this.permutations[l][i];
                     if (h != null)
                     {
-                        backtrack(l + 1, g.Multiply(h), backtracker);
+                        Backtrack(l + 1, g.Multiply(h), backtracker);
                     }
                 }
             }

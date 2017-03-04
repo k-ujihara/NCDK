@@ -34,26 +34,26 @@ using System.Diagnostics;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Tool that tries to deduce bond orders based on connectivity and hybridization
-     * for a number of common ring systems of up to seven-membered rings. It assumes
-     * that atom types have been perceived before that class is used.
-     *
-     * <p>The calculation can be interrupted with {@link #SetInterrupted(bool)},
-     * but assumes that this class is not used in a threaded fashion. When a calculation
-     * is interrupted, the bool is reset to false.
-     *
-     * @author Todd Martin
-     * @cdk.module smiles
-     * @cdk.githash
-     * @cdk.keyword bond order
-     *
-     * @cdk.bug 1895805
-     * @cdk.bug 1931262
-     *
-     * @cdk.threadnonsafe
-     * @deprecated Use the newer {@link org.openscience.cdk.aromaticity.Kekulization}
-     */
+    /// <summary>
+    /// Tool that tries to deduce bond orders based on connectivity and hybridization
+    /// for a number of common ring systems of up to seven-membered rings. It assumes
+    /// that atom types have been perceived before that class is used.
+    ///
+    /// <p>The calculation can be interrupted with {@link #SetInterrupted(bool)},
+    /// but assumes that this class is not used in a threaded fashion. When a calculation
+    /// is interrupted, the bool is reset to false.
+    ///
+    // @author Todd Martin
+    // @cdk.module smiles
+    // @cdk.githash
+    // @cdk.keyword bond order
+    ///
+    // @cdk.bug 1895805
+    // @cdk.bug 1931262
+    ///
+    // @cdk.threadnonsafe
+    // @deprecated Use the newer {@link org.openscience.cdk.aromaticity.Kekulization}
+    /// </summary>
     [Obsolete]
     public class DeduceBondSystemTool
     {
@@ -67,32 +67,32 @@ namespace NCDK.SGroups
         /// </summary>
         public bool Interrupted;
 
-        /**
-         * Constructor for the DeduceBondSystemTool object.
-         */
+        /// <summary>
+        /// Constructor for the DeduceBondSystemTool object.
+        /// </summary>
         public DeduceBondSystemTool()
         {
             allRingsFinder = new AllRingsFinder();
         }
 
-        /**
-         * Constructor for the DeduceBondSystemTool object accepting a custom {@link AllRingsFinder}.
-         *
-         * @param ringFinder a custom {@link AllRingsFinder}.
-         */
+        /// <summary>
+        /// Constructor for the DeduceBondSystemTool object accepting a custom <see cref="AllRingsFinder"/>.
+        ///
+        /// <param name="ringFinder">a custom <see cref="AllRingsFinder"/>.</param>
+        /// </summary>
         public DeduceBondSystemTool(AllRingsFinder ringFinder)
         {
             allRingsFinder = ringFinder;
         }
 
-        /**
-         * Determines if, according to the algorithms implemented in this class, the given
-         * AtomContainer has properly distributed double bonds.
-         *
-         * @param  m <see cref="IAtomContainer"/> to check the bond orders for.
-         * @return true, if bond orders are properly distributed
-         * @ thrown when something went wrong
-         */
+        /// <summary>
+        /// Determines if, according to the algorithms implemented in this class, the given
+        /// AtomContainer has properly distributed double bonds.
+        ///
+        /// <param name="m"><see cref="IAtomContainer"/> to check the bond orders for.</param>
+        /// <returns>true, if bond orders are properly distributed</returns>
+        // @ thrown when something went wrong
+        /// </summary>
         public bool IsOK(IAtomContainer m)
         {
             // OK, we take advantage here from the fact that this class does not take
@@ -109,13 +109,13 @@ namespace NCDK.SGroups
             return StructureOK && count == 0;
         }
 
-        /**
-         * Added missing bond orders based on atom type information.
-         *
-         * @param atomContainer <see cref="IAtomContainer"/> for which to distribute double bond orders
-         * @return a <see cref="IAtomContainer"/> with assigned double bonds.
-         * @ if something went wrong.
-         */
+        /// <summary>
+        /// Added missing bond orders based on atom type information.
+        ///
+        /// <param name="atomContainer"><see cref="IAtomContainer"/> for which to distribute double bond orders</param>
+        /// <returns>a <see cref="IAtomContainer"/> with assigned double bonds.</returns>
+        // @ if something went wrong.
+        /// </summary>
         public IAtomContainer FixAromaticBondOrders(IAtomContainer atomContainer)
         {
             // OK, we take advantage here from the fact that this class does not take
@@ -165,13 +165,13 @@ namespace NCDK.SGroups
 
             IAtomContainerSet<IAtomContainer> som = atomContainer.Builder.CreateAtomContainerSet();
 
-            //		int number=1; // total number of possibilities
+            //        int number=1; // total number of possibilities
             //
-            //		for (int ii=0;ii<=MasterList.Count-1;ii++) {
-            //		List ringlist=(List)MasterList[ii];
-            //		number*=ringlist.Count;
-            //		}
-            //		Debug.WriteLine("number= "+number);
+            //        for (int ii=0;ii<=MasterList.Count-1;ii++) {
+            //        List ringlist=(List)MasterList[ii];
+            //        number*=ringlist.Count;
+            //        }
+            //        Debug.WriteLine("number= "+number);
 
             int[] choices;
 
@@ -332,7 +332,7 @@ namespace NCDK.SGroups
             mal.Add(al9);
             mal.Add(al10);
 
-            //		mal.Add(al11);
+            //        mal.Add(al11);
 
             MasterList.Add(mal);
 
@@ -523,7 +523,7 @@ namespace NCDK.SGroups
                     {
                         if (atom.FormalCharge == 0)
                         {
-                            //						Debug.WriteLine(mol.GetBondOrderSum(a));
+                            //                        Debug.WriteLine(mol.GetBondOrderSum(a));
                             if (atomContainer.GetBondOrderSum(atom) == 4)
                             {
                                 count++; //
@@ -644,10 +644,10 @@ namespace NCDK.SGroups
                     {
                         IList<IList<string>> ringlist2 = MasterList[j];
                         IList<string> bondlist = ringlist2[choices[j]];
-                        //					Debug.WriteLine(j+"\t"+choices[j]);
+                        //                    Debug.WriteLine(j+"\t"+choices[j]);
                         ApplyBonds(mnew, bondlist);
                     }
-                    //				Debug.WriteLine("");
+                    //                Debug.WriteLine("");
 
                     if (IsStructureOK(mnew))
                     {
@@ -723,12 +723,12 @@ namespace NCDK.SGroups
                     RingManipulator.MarkAromaticRings(ring);
                 }
 
-                //			Figure out which rings we want to make sure are aromatic:
+                //            Figure out which rings we want to make sure are aromatic:
                 bool[] Check = this.FindRingsToCheck(ringSet);
 
-                //			for (int i=0;i<=Check.Length-1;i++) {
-                //			Debug.WriteLine(i+"\t"+rs[i].Atoms.Count+"\t"+Check[i]);
-                //			}
+                //            for (int i=0;i<=Check.Length-1;i++) {
+                //            Debug.WriteLine(i+"\t"+rs[i].Atoms.Count+"\t"+Check[i]);
+                //            }
 
                 for (int i = 0; i <= ringSet.Count - 1; i++)
                 {
@@ -749,7 +749,7 @@ namespace NCDK.SGroups
 
                         if (!ring.IsAromatic)
                         {
-                            //						Debug.WriteLine(counter+"\t"+"ring not aromatic"+"\t"+r.Atoms.Count);
+                            //                        Debug.WriteLine(counter+"\t"+"ring not aromatic"+"\t"+r.Atoms.Count);
                             return false;
                         }
                     }
@@ -764,15 +764,15 @@ namespace NCDK.SGroups
 
         }
 
-        /**
-         * Remove rings.
-         * <p/>
-         * Removes rings which do not have all sp2/planar3 aromatic atoms and also gets rid of rings that have more than
-         * 7 or less than 5 atoms in them.
-         *
-         * @param m The AtomContainer from which we want to remove rings
-         * @return The set of reduced rings
-         */
+        /// <summary>
+        /// Remove rings.
+        /// <p/>
+        /// Removes rings which do not have all sp2/planar3 aromatic atoms and also gets rid of rings that have more than
+        /// 7 or less than 5 atoms in them.
+        ///
+        /// <param name="m">The AtomContainer from which we want to remove rings</param>
+        /// <returns>The set of reduced rings</returns>
+        /// </summary>
         private IRingSet RemoveExtraRings(IAtomContainer m)
         {
 
@@ -889,12 +889,12 @@ namespace NCDK.SGroups
             return Check;
         }
 
-        /**
-         * Stores an IRingSet corresponding to a AtomContainer using the bond numbers.
-         *
-         * @param mol      The IAtomContainer for which to store the IRingSet.
-         * @param ringSet  The IRingSet to store
-         */
+        /// <summary>
+        /// Stores an IRingSet corresponding to a AtomContainer using the bond numbers.
+        ///
+        /// <param name="mol">The IAtomContainer for which to store the IRingSet.</param>
+        /// <param name="ringSet">The IRingSet to store</param>
+        /// </summary>
         private void StoreRingSystem(IAtomContainer mol, IRingSet ringSet)
         {
             listOfRings = new List<int[]>(); // this is a list of int arrays
@@ -908,12 +908,12 @@ namespace NCDK.SGroups
             }
         }
 
-        /**
-         * Recovers a RingSet corresponding to a AtomContainer that has been
-         * stored by StoreRingSystem().
-         *
-         * @param mol      The IAtomContainer for which to recover the IRingSet.
-         */
+        /// <summary>
+        /// Recovers a RingSet corresponding to a AtomContainer that has been
+        /// stored by StoreRingSystem().
+        ///
+        /// <param name="mol">The IAtomContainer for which to recover the IRingSet.</param>
+        /// </summary>
         private IRingSet RecoverRingSystem(IAtomContainer mol)
         {
             IRingSet ringSet = mol.Builder.CreateRingSet();

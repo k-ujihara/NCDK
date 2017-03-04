@@ -22,47 +22,46 @@ using System.Collections.Generic;
 
 namespace NCDK.Formula
 {
-    /**
-	 *  Class defining a expanded molecular formula object. The Isotopes don't have
-	 *  a fix occurrence in the MolecularFormula but they have a range.<p>
-	 *  With this class man can define a MolecularFormula which contains certain IIsotope
-	 *  with a maximum and minimum occurrence.
-	 *
-	 *  Examples:
-	 * <ul>
-	 *   <li><code>[C(1-5)H(4-10)]-</code></li>
-	 * </ul>
-	 *
-	 * @cdk.module  formula
-	 * @author      miguelrojasch
-	 * @cdk.created 2007-11-20
-	 * @cdk.keyword molecular formula
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Class defining a expanded molecular formula object. The Isotopes don't have
+    /// a fix occurrence in the MolecularFormula but they have a range.
+    /// <para>
+    /// With this class man can define a MolecularFormula which contains certain IIsotope
+    /// with a maximum and minimum occurrence.
+    /// </para>
+    /// </summary>
+    /// <remarks>
+    /// Examples:
+    /// <list type="bullet">
+    /// <item><c>[C(1-5)H(4-10)]-</c></item>
+    /// </list>
+    /// </remarks>
+    // @cdk.module  formula
+    // @author      miguelrojasch
+    // @cdk.created 2007-11-20
+    // @cdk.keyword molecular formula
+    // @cdk.githash
     public class MolecularFormulaRange : ICloneable
     {
-
         private IDictionary<IIsotope, int> isotopesMax;
         private IDictionary<IIsotope, int> isotopesMin;
 
-        /**
-		 *  Constructs an empty MolecularFormulaExpand.
-		 */
+        /// <summary>
+        /// Constructs an empty MolecularFormulaExpand.
+        /// </summary>
         public MolecularFormulaRange()
         {
             isotopesMax = new Dictionary<IIsotope, int>();
             isotopesMin = new Dictionary<IIsotope, int>();
         }
 
-        /**
-		 *  Adds an Isotope to this MolecularFormulaExpand in a number of
-		 *  maximum and minimum occurrences allowed.
-		 *
-		 * @param  isotope  The isotope to be added to this MolecularFormulaExpand
-		 * @param  countMax The maximal number of occurrences to add
-		 * @param  countMin The minimal number of occurrences to add
-		 *
-		 */
+        /// <summary>
+        /// Adds an Isotope to this MolecularFormulaExpand in a number of
+        /// maximum and minimum occurrences allowed.
+        /// </summary>
+        /// <param name="isotope">The isotope to be added to this MolecularFormulaExpand</param>
+        /// <param name="countMax">The maximal number of occurrences to add</param>
+        /// <param name="countMin">The minimal number of occurrences to add</param>
         public void Add(IIsotope isotope, int countMin, int countMax)
         {
             bool flag = false;
@@ -83,14 +82,13 @@ namespace NCDK.Formula
             }
         }
 
-        /**
-		 *  True, if the MolecularFormulaExpand contains the given IIsotope.
-		 *  The method looks for other isotopes which has the same
-		 *  symbol, natural abundance and exact mass.
-		 *
-		 * @param  isotope  The IIsotope this MolecularFormula is searched for
-		 * @return          True, if the MolecularFormula contains the given isotope object
-		 */
+        /// <summary>
+        /// True, if the MolecularFormulaExpand contains the given IIsotope.
+        /// The method looks for other isotopes which has the same
+        /// symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotope">The IIsotope this MolecularFormula is searched for</param>
+        /// <returns>True, if the MolecularFormula contains the given isotope object</returns>
         public bool Contains(IIsotope isotope)
         {
             foreach (var thisIsotope in GetIsotopes())
@@ -103,49 +101,45 @@ namespace NCDK.Formula
             return false;
         }
 
-        /**
-		 *  Checks a set of Nodes for the maximal occurrence of the isotope in the
-		 *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
-		 *  does not exist.
-		 *
-		 * @param   isotope          The IIsotope to look for
-		 * @return                   The occurrence of this isotope in this IMolecularFormula
-		 */
+        /// <summary>
+        /// Checks a set of Nodes for the maximal occurrence of the isotope in the
+        /// MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
+        /// does not exist.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to look for</param>
+        /// <returns>The occurrence of this isotope in this IMolecularFormula</returns>
         public int GetIsotopeCountMax(IIsotope isotope)
         {
             return !Contains(isotope) ? -1 : isotopesMax[GetIsotope(isotope)];
         }
 
-        /**
-		 *  Checks a set of Nodes for the minimal occurrence of the isotope in the
-		 *  MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
-		 *  does not exist.
-		 *
-		 * @param   isotope          The IIsotope to look for
-		 * @return                   The occurrence of this isotope in this IMolecularFormula
-		 */
+        /// <summary>
+        /// Checks a set of Nodes for the minimal occurrence of the isotope in the
+        /// MolecularFormulaExpand from a particular isotope. It returns -1 if the Isotope
+        /// does not exist.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to look for</param>
+        /// <returns>The occurrence of this isotope in this IMolecularFormula</returns>
         public int GetIsotopeCountMin(IIsotope isotope)
         {
             return !Contains(isotope) ? -1 : isotopesMin[GetIsotope(isotope)];
         }
 
-        /**
-		 *  Checks a set of Nodes for the number of different isotopes in the
-		 *  MolecularFormulaExpand.
-		 *
-		 * @return        The the number of different isotopes in this MolecularFormulaExpand
-		 */
+        /// <summary>
+        /// Checks a set of Nodes for the number of different isotopes in the
+        /// MolecularFormulaExpand.
+        /// </summary>
+        /// <returns>The the number of different isotopes in this MolecularFormulaExpand</returns>
         public int Count => isotopesMax.Count;
 
-        /**
-		 *  Get the isotope instance given an IIsotope. The instance is those
-		 *  that has the isotope with the same symbol, natural abundance and
-		 *  exact mass.
-		 *
-		 * @param  isotope The IIsotope for looking for
-		 * @return         The IIsotope instance
-		 * @see            #isotopes
-		 */
+        /// <summary>
+        /// Get the isotope instance given an IIsotope. The instance is those
+        /// that has the isotope with the same symbol, natural abundance and
+        /// exact mass.
+        /// </summary>
+        /// <param name="isotope">The IIsotope for looking for</param>
+        /// <returns>The IIsotope instance</returns>
+        /// <seealso cref="GetIsotopes"/>
         private IIsotope GetIsotope(IIsotope isotope)
         {
             foreach (var thisIsotope in GetIsotopes())
@@ -161,20 +155,19 @@ namespace NCDK.Formula
         /// <returns>The isotopes in this MolecularFormulaExpand</returns>
         public IEnumerable<IIsotope> GetIsotopes() => isotopesMax.Keys;
 
-        /**
-		 * Removes all isotopes of this molecular formula.
-		 */
+        /// <summary>
+        /// Removes all isotopes of this molecular formula.
+        /// </summary>
         public void Clear()
         {
             isotopesMax.Clear();
             isotopesMin.Clear();
         }
 
-        /**
-		 *  Removes the given isotope from the MolecularFormulaExpand.
-		 *
-		 * @param isotope  The IIsotope to be removed
-		 */
+        /// <summary>
+        /// Removes the given isotope from the MolecularFormulaExpand.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to be removed</param>
         public void Remove(IIsotope isotope)
         {
             {
@@ -187,12 +180,11 @@ namespace NCDK.Formula
             }
         }
 
-        /**
-		 * Clones this MolecularFormulaExpand object and its content. I should
-		 * integrate into ChemObject.
-		 *
-		 * @return    The cloned object
-		 */
+        /// <summary>
+        /// Clones this MolecularFormulaExpand object and its content. I should
+        /// integrate into ChemObject.
+        /// </summary>
+        /// <returns>The cloned object</returns>
         public virtual object Clone()
         {
             MolecularFormulaRange clone = new MolecularFormulaRange();
@@ -203,14 +195,13 @@ namespace NCDK.Formula
             return clone;
         }
 
-        /**
-		 * Compare to IIsotope. The method doesn't compare instance but if they
-		 * have the same symbol, natural abundance and exact mass.
-		 *
-		 * @param isotopeOne   The first Isotope to compare
-		 * @param isotopeTwo   The second Isotope to compare
-		 * @return             True, if both isotope are the same
-		 */
+        /// <summary>
+        /// Compare to IIsotope. The method doesn't compare instance but if they
+        /// have the same symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotopeOne">The first Isotope to compare</param>
+        /// <param name="isotopeTwo">The second Isotope to compare</param>
+        /// <returns>True, if both isotope are the same</returns>
         private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             if (!isotopeOne.Symbol.Equals(isotopeTwo.Symbol)) return false;

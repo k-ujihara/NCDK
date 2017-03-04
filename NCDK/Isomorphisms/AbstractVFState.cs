@@ -27,65 +27,37 @@ using NCDK.Common.Collections;
 namespace NCDK.Isomorphisms
 {
     /**
-	 * A state for the Vento-Foggia (VF) algorithm. The state allows adding and
-	 * removing of mappings as well as generating the new candidate mappings {@link
-	 * #NextN(int)} and {@link #NextM(int, int)}. The feasibility check is left for
-	 * subclasses to implement.
-	 *
-	 * @author John May
-	 * @cdk.module isomorphism
-	 */
-#if TEST
-    public
-#endif
-    abstract class AbstractVFState : State
+     * A state for the Vento-Foggia (VF) algorithm. The state allows adding and
+     * removing of mappings as well as generating the new candidate mappings {@link
+     * #NextN(int)} and {@link #NextM(int, int)}. The feasibility check is left for
+     * subclasses to implement.
+     *
+     * @author John May
+     * @cdk.module isomorphism
+     */
+    internal abstract class AbstractVFState : State
     {
         /// <summary>Value indicates a vertex is unmapped.</summary>
-#if TEST
-        public
-#else
-        protected
-#endif
-        const int UNMAPPED = -1;
+        protected internal const int UNMAPPED = -1;
 
         /// <summary>Adjacency list representation of the containers.</summary>
-#if TEST
-        public
-#else
-        protected
-#endif
-        readonly int[][] g1, g2;
+        protected internal readonly int[][] g1, g2;
 
         /// <summary>Mapping - m1 is the the mapping from g1 to g1, m2 is from g2 to g1.</summary>
-#if TEST
-        public
-#else
-        protected
-#endif
-            readonly int[] m1, m2;
+        protected internal readonly int[] m1, m2;
 
         /// <summary>The (terminal) vertices which are adjacent to each mapped pair.</summary>
-#if TEST
-        public
-#else
-        protected
-#endif
-        readonly int[] t1, t2;
+        protected internal readonly int[] t1, t2;
 
         /// <summary>Size of current solution - the number of vertices matched.</summary>
-#if TEST
-        public
-#else
-        protected
-#endif
-         int size;
+        protected internal int size;
 
         /**
-		 * Create a state which will be used to match g1 in g2.
-		 *
-		 * @param g1 find this graph
-		 * @param g2 search this graph
-		 */
+         * Create a state which will be used to match g1 in g2.
+         *
+         * @param g1 find this graph
+         * @param g2 search this graph
+         */
         public AbstractVFState(int[][] g1, int[][] g2)
         {
             this.g1 = g1;
@@ -100,15 +72,15 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Given the current query candidate (n), find the next candidate. The next
-		 * candidate is the next vertex > n (in some ordering) that is unmapped and
-		 * is adjacent to a mapped vertex (terminal). If there is no such vertex
-		 * (disconnected) the next unmapped vertex is returned. If there are no more
-		 * candidates m == |V| of G1.
-		 *
-		 * @param n previous candidate n
-		 * @return the next value of n
-		 */
+         * Given the current query candidate (n), find the next candidate. The next
+         * candidate is the next vertex > n (in some ordering) that is unmapped and
+         * is adjacent to a mapped vertex (terminal). If there is no such vertex
+         * (disconnected) the next unmapped vertex is returned. If there are no more
+         * candidates m == |V| of G1.
+         *
+         * @param n previous candidate n
+         * @return the next value of n
+         */
 
         public sealed override int NextN(int n)
         {
@@ -121,15 +93,15 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Given the current target candidate (m), find the next candidate. The next
-		 * candidate is the next vertex > m (in some ordering) that is unmapped and
-		 * is adjacent to a mapped vertex (terminal). If there is no such vertex
-		 * (disconnected) the next unmapped vertex is returned. If there are no more
-		 * candidates m == |V| of G2.
-		 *
-		 * @param m previous candidate m
-		 * @return the next value of m
-		 */
+         * Given the current target candidate (m), find the next candidate. The next
+         * candidate is the next vertex > m (in some ordering) that is unmapped and
+         * is adjacent to a mapped vertex (terminal). If there is no such vertex
+         * (disconnected) the next unmapped vertex is returned. If there are no more
+         * candidates m == |V| of G2.
+         *
+         * @param m previous candidate m
+         * @return the next value of m
+         */
 
         public sealed override int NextM(int n, int m)
         {
@@ -183,13 +155,13 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-		 * Is the candidate pair {n, m} feasible. Verifies if the adding candidate
-		 * pair {n, m} to the state would lead to an invalid mapping.
-		 *
-		 * @param n query vertex
-		 * @param m target vertex
-		 * @return the mapping is feasible
-		 */
+         * Is the candidate pair {n, m} feasible. Verifies if the adding candidate
+         * pair {n, m} to the state would lead to an invalid mapping.
+         *
+         * @param n query vertex
+         * @param m target vertex
+         * @return the mapping is feasible
+         */
         public abstract bool Feasible(int n, int m);
 
         /// <inheritdoc/>

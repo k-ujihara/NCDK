@@ -1,6 +1,5 @@
 namespace FaulonSignatures.Simple
 {
-
     public class SimpleGraphFactory
     {
         public static SimpleGraph Make4Cube()

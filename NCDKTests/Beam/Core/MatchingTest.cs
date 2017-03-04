@@ -11,13 +11,13 @@ namespace NCDK.Beam
     {
         [TestMethod()] public void IsEmptyTest()
         {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             Assert.AreEqual(0, matching.GetMatches().Count());
         }
 
-        [TestMethod()] public void basic()
+        [TestMethod()] public void Basic()
         {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             matching.Match(0, 1);
             matching.Match(2, 3);
             Assert.AreEqual(2, matching.GetMatches().Count());
@@ -29,7 +29,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Adjusted()
         {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             matching.Match(0, 1);
             matching.Match(2, 3);
             matching.Match(1, 2); // 0-1 and 2-3 should not be 
@@ -44,7 +44,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()] public void Adjusted_contains() {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             matching.Match(0, 1);
             matching.Match(2, 3);
             matching.Match(1, 2); // 0-1 and 2-3 should not be 
@@ -56,7 +56,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()] public void Adjusted_other() {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             matching.Match(0, 1);
             matching.Match(2, 3);
             matching.Match(1, 2); // 0-1 and 2-3 should not be 
@@ -67,7 +67,7 @@ namespace NCDK.Beam
 
         [TestMethod()][ExpectedException(typeof(ArgumentException))]
         public void Adjusted_other_invalid() {
-            Matching matching = Matching.Empty(Graph.FromSmiles("CCCCC"));
+            Matching matching = Matching.CreateEmpty(Graph.FromSmiles("CCCCC"));
             matching.Match(0, 1);
             matching.Match(2, 3);
             matching.Match(1, 2); // 0-1 and 2-3 should not be 

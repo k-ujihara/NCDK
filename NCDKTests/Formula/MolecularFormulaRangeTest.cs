@@ -22,32 +22,32 @@ using System.Collections.Generic;
 
 namespace NCDK.Formula
 {
-    /**
-     * Checks the functionality of the MolecularFormulaRange.
-     *
-     * @cdk.module test-formula
-     *
-     * @see MolecularFormula
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaRange.
+    ///
+    // @cdk.module test-formula
+    ///
+    /// <seealso cref="MolecularFormula"/>
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaRangeTest : CDKTestCase
     {
 
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  Constructor for the MolecularFormulaRangeTest object.
-         *
-         */
+        /// <summary>
+        ///  Constructor for the MolecularFormulaRangeTest object.
+        ///
+        /// </summary>
         public MolecularFormulaRangeTest()
             : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaRange()
         {
@@ -57,11 +57,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(mfRange);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCount()
         {
@@ -71,11 +71,11 @@ namespace NCDK.Formula
             Assert.AreEqual(0, mfRange.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAddIsotope_IIsotope_int_int()
         {
@@ -87,11 +87,11 @@ namespace NCDK.Formula
             Assert.AreEqual(2, mfRange.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestAddIsotope2()
         {
@@ -107,11 +107,11 @@ namespace NCDK.Formula
             Assert.AreEqual(3, mfRange.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCountMax_IIsotope()
         {
@@ -127,11 +127,11 @@ namespace NCDK.Formula
             Assert.AreEqual(10, mfRange.GetIsotopeCountMax(h1));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCountMin_IIsotope()
         {
@@ -149,11 +149,11 @@ namespace NCDK.Formula
             Assert.AreEqual(-1, mfRange.GetIsotopeCountMin(flu));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCountMin_IIsotope2()
         {
@@ -173,11 +173,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCountMin_IIsotope3()
         {
@@ -203,11 +203,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetIsotopeCountMin_IIsotope4()
         {
@@ -235,11 +235,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestIsotopes()
         {
@@ -257,11 +257,11 @@ namespace NCDK.Formula
             Assert.AreEqual(2, counter);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestContains_IIsotope()
         {
@@ -282,11 +282,11 @@ namespace NCDK.Formula
             Assert.IsFalse(mfRange.Contains(h2));
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         public void TestRemoveIsotope_IIsotope()
         {
 
@@ -307,11 +307,11 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemoveAllIsotopes()
         {
@@ -333,12 +333,12 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit. Only test whether the
-         * MolecularFormula are correctly cloned.
-         *
-         * @return    The test suite
-        */
+        /// <summary>
+        /// A unit test suite for JUnit. Only test whether the
+        /// MolecularFormula are correctly cloned.
+        ///
+        /// <returns>The test suite</returns>
+       /// </summary>
         [TestMethod()]
         public void TestClone()
         {
@@ -349,10 +349,10 @@ namespace NCDK.Formula
 
         }
 
-        /**
-         * A unit test suite for JUnit. Only test whether
-         * the MolecularFormula are correctly cloned.
-        */
+        /// <summary>
+        /// A unit test suite for JUnit. Only test whether
+        /// the MolecularFormula are correctly cloned.
+       /// </summary>
         [TestMethod()]
         public void TestClone_Isotopes()
         {

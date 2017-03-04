@@ -27,12 +27,12 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * Checks the functionality of the MorganNumberTools.
-     *
-     * @cdk.module test-standard
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the MorganNumberTools.
+    ///
+    // @cdk.module test-standard
+    /// </summary>
+    [TestClass()]
     public class MorganNumbersToolsTest : CDKTestCase
     {
 
@@ -73,14 +73,14 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-         * @cdk.bug 2846213
-         */
+        /// <summary>
+        // @cdk.bug 2846213
+        /// </summary>
         [TestMethod()]
         public void TestBug2846213()
         {
             string filename = "NCDK.Data.MDL.bug2846213.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile) reader.Read((ChemObject) new ChemFile());
             IAtomContainer ac = ChemFileManipulator.GetAllAtomContainers(chemFile).First();

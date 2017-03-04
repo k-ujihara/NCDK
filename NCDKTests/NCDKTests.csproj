@@ -30,7 +30,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -617,7 +617,7 @@
     <Compile Include="Dict\AbstractEntryTest.cs" />
     <Compile Include="Dict\DictDBReactTest.cs" />
     <Compile Include="Dict\DictDBTest.cs" />
-    <Compile Include="Dict\DictionaryTest.cs" />
+    <Compile Include="Dict\EntryDictionaryTest.cs" />
     <Compile Include="Dict\EntryReactTest.cs" />
     <Compile Include="Dict\EntryTest.cs" />
     <Compile Include="Dict\OWLFileTest.cs" />
@@ -1048,7 +1048,7 @@
     <Compile Include="Geometries\Alignments\KabschAlignmentTest.cs" />
     <Compile Include="Geometries\RDFCalculatorTest.cs" />
     <Compile Include="Graphs\Invariant\EquivalentClassPartitionerTest.cs" />
-    <Compile Include="Indexes\CASNumberTest.cs" />
+    <Compile Include="Indices\CASNumberTest.cs" />
     <Compile Include="Pharmacophore\PharmacophoreUtilityTest.cs" />
     <Compile Include="QSAR\DescriptorSpecificationTest.cs" />
     <Compile Include="QSAR\DescriptorValueTest.cs" />

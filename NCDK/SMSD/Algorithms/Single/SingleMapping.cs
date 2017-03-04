@@ -27,13 +27,13 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.Single
 {
-    /**
-     * This class handles single atom mapping.
-     * Either query and/or target molecule with single atom is mapped by this class.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class handles single atom mapping.
+    /// Either query and/or target molecule with single atom is mapped by this class.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class SingleMapping
     {
         private IAtomContainer source = null;
@@ -41,25 +41,18 @@ namespace NCDK.SMSD.Algorithms.Single
         private List<IDictionary<IAtom, IAtom>> mappings = null;
         private IDictionary<int, double> connectedBondOrder = null;
 
-        /**
-         * Default
-         */
+        /// <summary>
+        /// Default
+        /// </summary>
         public SingleMapping() { }
 
-        /**
-         * Returns single mapping solutions.
-         * @param source
-         * @param target
-         * @param removeHydrogen
-         * @return Mappings
-         * @throws CDKException
-         */
-#if TEST
-		public
-#else
-        protected 
-#endif
-		IList<IDictionary<IAtom, IAtom>> GetOverLaps(IAtomContainer source, IAtomContainer target, bool removeHydrogen)
+        /// <summary>
+        /// Returns single mapping solutions.
+        /// <param name="source">/// @param target</param>
+        /// <param name="removeHydrogen">/// <returns>Mappings</param></returns>
+        // @throws CDKException
+        /// </summary>
+        protected internal IList<IDictionary<IAtom, IAtom>> GetOverLaps(IAtomContainer source, IAtomContainer target, bool removeHydrogen)
         {
             mappings = new List<IDictionary<IAtom, IAtom>>();
             connectedBondOrder = new SortedDictionary<int, double>();
@@ -79,21 +72,13 @@ namespace NCDK.SMSD.Algorithms.Single
             return mappings;
         }
 
-        /**
-         * Returns single mapping solutions.
-         * @param source
-         * @param target
-         * @param removeHydrogen
-         * @return Mappings
-         * @throws CDKException
-         */
-#if TEST
-        public
-#else
-        protected 
-#endif
-		IList<IDictionary<IAtom, IAtom>> GetOverLaps(IQueryAtomContainer source, IAtomContainer target,
-                bool removeHydrogen)
+        /// <summary>
+        /// Returns single mapping solutions.
+        /// <param name="source">/// @param target</param>
+        /// <param name="removeHydrogen">/// <returns>Mappings</param></returns>
+        // @throws CDKException
+        /// </summary>
+        protected internal IList<IDictionary<IAtom, IAtom>> GetOverLaps(IQueryAtomContainer source, IAtomContainer target, bool removeHydrogen)
         {
             mappings = new List<IDictionary<IAtom, IAtom>>();
             connectedBondOrder = new SortedDictionary<int, double>();

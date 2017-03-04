@@ -29,27 +29,24 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-    // A set of static utility classes for geometric calculations on {@link IBond}s.
-    // The methods for detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
-     *
+    /// <summary>
+    /// A set of static utility classes for geometric calculations on <see cref="IBond"/>s.
+    /// The methods for detecting stereo configurations are described in CDK news, vol 2, p. 64 - 66.
+    /// </summary>
     // @author      shk3
     // @cdk.created 2005-08-04
     // @cdk.module  standard
     // @cdk.githash
-     */
     public class BondTools
     {
+        /// FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
 
-        // FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
-
-        /**
-        //  Tells if a certain bond is center of a valid double bond configuration.
-         *
-        // @param  container  The atomcontainer.
-        // @param  bond       The bond.
-        // @return            true=is a potential configuration, false=is not.
-         */
+        /// <summary>
+        /// Tells if a certain bond is center of a valid double bond configuration.
+        /// </summary>
+        /// <param name="container">The atomcontainer.</param>
+        /// <param name="bond">The bond.</param>
+        /// <returns>true=is a potential configuration, false=is not.</returns>
         public static bool IsValidDoubleBondConfiguration(IAtomContainer container, IBond bond)
         {
             //IAtom[] atoms = bond.GetAtoms();
@@ -79,18 +76,17 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-        //  Says if two atoms are in cis or trans position around a double bond.
-        //  The atoms have to be given to the method like this:  firstOuterAtom - firstInnerAtom = secondInnterAtom - secondOuterAtom
-         *
-        // @param  firstOuterAtom    See above.
-        // @param  firstInnerAtom    See above.
-        // @param  secondInnerAtom   See above.
-        // @param  secondOuterAtom   See above.
-        // @param  ac                The atom container the atoms are in.
-        // @return                   true=trans, false=cis.
-        // @exception  CDKException  The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)
-         */
+        /// <summary>
+        /// Says if two atoms are in cis or trans position around a double bond.
+        /// The atoms have to be given to the method like this:  firstOuterAtom - firstInnerAtom = secondInnterAtom - secondOuterAtom
+        /// </summary>
+        /// <param name="firstOuterAtom">See above.</param>
+        /// <param name="firstInnerAtom">See above.</param>
+        /// <param name="secondInnerAtom">See above.</param>
+        /// <param name="secondOuterAtom">See above.</param>
+        /// <param name="ac">The atom container the atoms are in.</param>
+        /// <returns>true=trans, false=cis.</returns>
+        /// <exception cref="CDKException"> The atoms are not in a double bond configuration (no double bond in the middle, same atoms on one side)</exception>
         public static bool IsCisTrans(IAtom firstOuterAtom, IAtom firstInnerAtom, IAtom secondInnerAtom,
                 IAtom secondOuterAtom, IAtomContainer ac)
         {
@@ -103,15 +99,14 @@ namespace NCDK.Geometries
             return firstDirection == secondDirection;
         }
 
-        /**
-        //  Says if an atom is on the left side of a another atom seen from a certain
-        //  atom or not.
-         *
-        // @param  whereIs   The atom the position of which is returned
-        // @param  viewFrom  The atom from which to look
-        // @param  viewTo    The atom to which to look
-        // @return           true=is left, false = is not
-         */
+        /// <summary>
+        /// Says if an atom is on the left side of a another atom seen from a certain
+        /// atom or not.
+        /// </summary>
+        /// <param name="whereIs">The atom the position of which is returned</param>
+        /// <param name="viewFrom">The atom from which to look</param>
+        /// <param name="viewTo">The atom to which to look</param>
+        /// <returns>true=is left, false = is not</returns>
         public static bool IsLeft(IAtom whereIs, IAtom viewFrom, IAtom viewTo)
         {
             double angle = GiveAngleBothMethods(viewFrom, viewTo, whereIs, false);
@@ -125,20 +120,18 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-        // Returns true if the two atoms are within the distance fudge
-        // factor of each other.
-         *
-        // @param  atom1                Description of Parameter
-        // @param  atom2                Description of Parameter
-        // @param  distanceFudgeFactor  Description of Parameter
-        // @return                      Description of the Returned Value
-        // @cdk.keyword                 join-the-dots
-        // @cdk.keyword                 bond creation
-         */
+        /// <summary>
+        /// Returns true if the two atoms are within the distance fudge
+        /// factor of each other.
+        /// </summary>
+        /// <param name="atom1">Description of Parameter</param>
+        /// <param name="atom2">Description of Parameter</param>
+        /// <param name="distanceFudgeFactor">Description of Parameter</param>
+        /// <returns>Description of the Returned Value</returns>
+       // @cdk.keyword                 join-the-dots
+       // @cdk.keyword                 bond creation
         public static bool CloseEnoughToBond(IAtom atom1, IAtom atom2, double distanceFudgeFactor)
         {
-
             if (atom1 != atom2)
             {
                 double distanceBetweenAtoms = (atom1.Point3D.Value - atom2.Point3D.Value).Length();
@@ -151,18 +144,17 @@ namespace NCDK.Geometries
             return false;
         }
 
-        /**
-        //  Gives the angle between two lines starting at atom from and going to to1
-        //  and to2. If bool=false the angle starts from the middle line and goes from
-        //  0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If
-        //  bool=true the angle goes from 0 to 2PI.
-         *
-        // @param  from  the atom to view from.
-        // @param  to1   first direction to look in.
-        // @param  to2   second direction to look in.
-        // @param  bool  true=angle is 0 to 2PI, false=angel is -PI to PI.
-        // @return       The angle in rad.
-         */
+        /// <summary>
+        /// Gives the angle between two lines starting at atom from and going to to1
+        /// and to2. If bool=false the angle starts from the middle line and goes from
+        /// 0 to PI or 0 to -PI if the to2 is on the left or right side of the line. If
+        /// bool=true the angle goes from 0 to 2PI.
+        /// </summary>
+        /// <param name="from">the atom to view from.</param>
+        /// <param name="to1">first direction to look in.</param>
+        /// <param name="to2">second direction to look in.</param>
+        /// <param name="bool">true=angle is 0 to 2PI, false=angel is -PI to PI.</param>
+        /// <returns>The angle in rad.</returns>
         public static double GiveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, bool bool_)
         {
             return GiveAngleBothMethods(from.Point2D.Value, to1.Point2D.Value, to2.Point2D.Value, bool_);
@@ -200,17 +192,16 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-        //  Says if an atom is the end of a double bond configuration
-         *
-        // @param  atom                     The atom which is the end of configuration
-        // @param  container                The atomContainer the atom is in
-        // @param  parent                   The atom we came from
-        // @param  doubleBondConfiguration  The array indicating where double bond
-        //      configurations are specified (this method ensures that there is
-        //      actually the possibility of a double bond configuration)
-        // @return                          false=is not end of configuration, true=is
-         */
+        /// <summary>
+        /// Says if an atom is the end of a double bond configuration
+        /// </summary>
+        /// <param name="atom">The atom which is the end of configuration</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <param name="parent">The atom we came from</param>
+        /// <param name="doubleBondConfiguration">The array indicating where double bond
+        ///     configurations are specified (this method ensures that there is
+        ///     actually the possibility of a double bond configuration)</param>
+        /// <returns>false=is not end of configuration, true=is</returns>
         private static bool IsEndOfDoubleBond(IAtomContainer container, IAtom atom, IAtom parent,
                 bool[] doubleBondConfiguration)
         {
@@ -267,17 +258,16 @@ namespace NCDK.Geometries
             return (false);
         }
 
-        /**
-        //  Says if an atom is the start of a double bond configuration
-         *
-        // @param  a                        The atom which is the start of configuration
-        // @param  container                The atomContainer the atom is in
-        // @param  parent                   The atom we came from
-        // @param  doubleBondConfiguration  The array indicating where double bond
-        //      configurations are specified (this method ensures that there is
-        //      actually the possibility of a double bond configuration)
-        // @return                          false=is not start of configuration, true=is
-         */
+        /// <summary>
+        /// Says if an atom is the start of a double bond configuration
+        /// </summary>
+        /// <param name="a">The atom which is the start of configuration</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <param name="parent">The atom we came from</param>
+        /// <param name="doubleBondConfiguration">The array indicating where double bond
+        ///     configurations are specified (this method ensures that there is
+        ///     actually the possibility of a double bond configuration)</param>
+        /// <returns>false=is not start of configuration, true=is</returns>
         private static bool IsStartOfDoubleBond(IAtomContainer container, IAtom a, IAtom parent,
                 bool[] doubleBondConfiguration)
         {
@@ -330,16 +320,15 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-        //  Says if an atom as a center of a tetrahedral chirality.
-        //  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-        //  are no wedge bonds around a potential stereo center, it will not be found.
-         *
-         *@param  atom          The atom which is the center
-         *@param  container  The atomContainer the atom is in
-         *@return            0=is not tetrahedral;>1 is a certain depiction of
-        //      tetrahedrality (evaluated in parse chain)
-         */
+        /// <summary>
+        /// Says if an atom as a center of a tetrahedral chirality.
+        /// This method uses wedge bonds. 3D coordinates are not taken into account. If there
+        /// are no wedge bonds around a potential stereo center, it will not be found.
+        /// </summary>
+        /// <param name="atom">The atom which is the center</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <returns>0=is not tetrahedral;>1 is a certain depiction of
+        ///     tetrahedrality (evaluated in parse chain)</returns>
         public static int IsTetrahedral(IAtomContainer container, IAtom atom, bool strict)
         {
             var atoms = container.GetConnectedAtoms(atom);
@@ -395,15 +384,14 @@ namespace NCDK.Geometries
             return 0;
         }
 
-        /**
-        //  Says if an atom as a center of a trigonal-bipyramidal or actahedral
-        //  chirality. This method uses wedge bonds. 3D coordinates are not taken into account. If there
-        //  are no wedge bonds around a potential stereo center, it will not be found.
-         *
-         *@param  atom          The atom which is the center
-         *@param  container  The atomContainer the atom is in
-         *@return            true=is square planar, false=is not
-         */
+        /// <summary>
+        /// Says if an atom as a center of a trigonal-bipyramidal or actahedral
+        /// chirality. This method uses wedge bonds. 3D coordinates are not taken into account. If there
+        /// are no wedge bonds around a potential stereo center, it will not be found.
+        /// </summary>
+        /// <param name="atom">The atom which is the center</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <returns>true=is square planar, false=is not</returns>
         public static int IsTrigonalBipyramidalOrOctahedral(IAtomContainer container, IAtom atom)
         {
             var atoms = container.GetConnectedAtoms(atom).ToList();
@@ -438,15 +426,14 @@ namespace NCDK.Geometries
             return 0;
         }
 
-        /**
-        //  Says if an atom as a center of any valid stereo configuration or not.
-        //  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-        //  are no wedge bonds around a potential stereo center, it will not be found.
-         *
-         *@param  stereoAtom          The atom which is the center
-         *@param  container  The atomContainer the atom is in
-         *@return            true=is a stereo atom, false=is not
-         */
+        /// <summary>
+        /// Says if an atom as a center of any valid stereo configuration or not.
+        /// This method uses wedge bonds. 3D coordinates are not taken into account. If there
+        /// are no wedge bonds around a potential stereo center, it will not be found.
+        /// </summary>
+        /// <param name="stereoAtom">The atom which is the center</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <returns>true=is a stereo atom, false=is not</returns>
         public static bool IsStereo(IAtomContainer container, IAtom stereoAtom)
         {
             var atoms = container.GetConnectedAtoms(stereoAtom).ToList();
@@ -553,15 +540,14 @@ namespace NCDK.Geometries
             return (true);
         }
 
-        /**
-        //  Says if an atom as a center of a square planar chirality.
-        //  This method uses wedge bonds. 3D coordinates are not taken into account. If there
-        //  are no wedge bonds around a potential stereo center, it will not be found.
-         *
-         *@param  atom          The atom which is the center
-         *@param  container  The atomContainer the atom is in
-         *@return            true=is square planar, false=is not
-         */
+        /// <summary>
+        /// Says if an atom as a center of a square planar chirality.
+        /// This method uses wedge bonds. 3D coordinates are not taken into account. If there
+        /// are no wedge bonds around a potential stereo center, it will not be found.
+        /// </summary>
+        /// <param name="atom">The atom which is the center</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <returns>true=is square planar, false=is not</returns>
         public static bool IsSquarePlanar(IAtomContainer container, IAtom atom)
         {
             List<IAtom> atoms = container.GetConnectedAtoms(atom).ToList();
@@ -589,15 +575,14 @@ namespace NCDK.Geometries
             return up == 2 && down == 2 && !StereosAreOpposite(container, atom);
         }
 
-        /**
-        //  Says if of four atoms connected two one atom the up and down bonds are
-        //  opposite or not, i. e.if it's tetrehedral or square planar. The method
-        //  does not check if there are four atoms and if two or up and two are down
-         *
-         *@param  atom          The atom which is the center
-         *@param  container  The atomContainer the atom is in
-         *@return            true=are opposite, false=are not
-         */
+        /// <summary>
+        /// Says if of four atoms connected two one atom the up and down bonds are
+        /// opposite or not, i. e.if it's tetrehedral or square planar. The method
+        /// does not check if there are four atoms and if two or up and two are down
+        /// </summary>
+        /// <param name="atom">The atom which is the center</param>
+        /// <param name="container">The atomContainer the atom is in</param>
+        /// <returns>true=are opposite, false=are not</returns>
         public static bool StereosAreOpposite(IAtomContainer container, IAtom atom)
         {
             List<IAtom> atoms = container.GetConnectedAtoms(atom).ToList();
@@ -612,27 +597,25 @@ namespace NCDK.Geometries
             return stereoOpposite == stereoOne;
         }
 
-        /**
-        //  Calls giveAngleBothMethods with bool = true.
-         *
-         *@param  from  the atom to view from
-         *@param  to1   first direction to look in
-         *@param  to2   second direction to look in
-         *@return       The angle in rad from 0 to 2*PI
-         */
+        /// <summary>
+        /// Calls giveAngleBothMethods with bool = true.
+        /// </summary>
+        /// <param name="from">the atom to view from</param>
+        /// <param name="to1">first direction to look in</param>
+        /// <param name="to2">second direction to look in</param>
+        /// <returns>The angle in rad from 0 to 2*PI</returns>
         public static double giveAngle(IAtom from, IAtom to1, IAtom to2)
         {
             return (GiveAngleBothMethods(from, to1, to2, true));
         }
 
-        /**
-        //  Calls giveAngleBothMethods with bool = false.
-         *
-         *@param  from  the atom to view from
-         *@param  to1   first direction to look in
-         *@param  to2   second direction to look in
-         *@return       The angle in rad from -PI to PI
-         */
+        /// <summary>
+        /// Calls giveAngleBothMethods with bool = false.
+        /// </summary>
+        /// <param name="from">the atom to view from</param>
+        /// <param name="to1">first direction to look in</param>
+        /// <param name="to2">second direction to look in</param>
+        /// <returns>The angle in rad from -PI to PI</returns>
         public static double GiveAngleFromMiddle(IAtom from, IAtom to1, IAtom to2)
         {
             return (GiveAngleBothMethods(from, to1, to2, false));

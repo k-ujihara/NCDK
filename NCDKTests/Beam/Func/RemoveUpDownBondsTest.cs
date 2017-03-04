@@ -31,12 +31,12 @@ using System.Linq;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class RemoveUpDownBondsTest
     {
         [TestMethod()]
-        public void e_butene_expH()
+        public void E_butene_expH()
         {
             Transform("C\\C(\\[H])=C\\C",
                       "C\\C([H])=C\\C",
@@ -53,7 +53,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_butene_expH()
+        public void Z_butene_expH()
         {
             Transform("C\\C(\\[H])=C/C",
                       "C\\C([H])=C/C",
@@ -70,7 +70,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH()
+        public void E_e_hexadiene_expH()
         {
             Transform("C\\C(\\[H])=C(/[H])\\C(\\[H])=C(/[H])\\C",
                       "C\\C([H])=C(/[H])\\C([H])=C(/[H])C",
@@ -78,7 +78,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH2()
+        public void E_e_hexadiene_expH2()
         {
             Transform("[H]\\C(\\C(\\[H])=C(\\C)/[H])=C(/C)\\[H]",
                       "[H]\\C(\\C([H])=C(\\C)[H])=C(/C)[H]",
@@ -86,7 +86,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH3()
+        public void E_e_hexadiene_expH3()
         {
             Transform("[H]/C(/C(=C(/C)\\[H])[H])=C(/[H])\\C",
                       "[H]/C(/C(=C(/C)[H])[H])=C(/[H])C",
@@ -94,7 +94,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH4()
+        public void E_e_hexadiene_expH4()
         {
             Transform("C\\C(\\[H])=C(/[H])\\C(=C(/[H])\\C)\\[H]",
                       "C\\C([H])=C(/[H])\\C(=C(/[H])C)[H]",
@@ -102,7 +102,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH5()
+        public void E_e_hexadiene_expH5()
         {
             Transform("[H]/C(/C)=C(/[H])\\C(\\[H])=C(/[H])\\C",
                       "[H]/C(C)=C(/[H])\\C([H])=C(/[H])C",
@@ -110,7 +110,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_permute()
+        public void E_e_hexadiene_permute()
         {
             string input = "C\\C(=C(\\C(=C(/[H])\\C)\\[H])/[H])\\[H]";
             int[] p = new int[] { 7, 2, 4, 1, 3, 6, 8, 9, 0, 5 };
@@ -127,7 +127,7 @@ namespace NCDK.Beam
 
         static void Transform(string smi, params string[] exps)
         {
-			var actual = Generator.Generate(new RemoveUpDownBonds()
+            var actual = Generator.Generate(new RemoveUpDownBonds()
                                                          .Apply(Parser.Parse(smi)));
             Assert.IsTrue(exps.Contains(actual));
         }

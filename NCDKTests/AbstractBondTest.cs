@@ -25,16 +25,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NCDK.Numerics;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IBond} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IBond"/> implementations.
+    /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractBondTest
         : AbstractElectronContainerTest
@@ -411,11 +408,10 @@ namespace NCDK
             Assert.AreEqual(BondStereo.Up, clone.Stereo);
         }
 
-        /**
-         * Test for RFC #9
-         */
+        /// <summary>
+        /// Test for RFC #9
+        /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IBond bond = (IBond)NewChemObject();

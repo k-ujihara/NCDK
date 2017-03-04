@@ -23,19 +23,19 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-     * This class defines regression tests that should ensure that the source code
-     * of the org.openscience.cdk.geometry.CrystalGeometryTools is not broken.
-     * All methods that start with test are regression tests, e.g.
-     * <code>TestNotionalToCartesian()</code>.
-     *
-     * @cdk.module test-standard
-     *
-     * @author     Egon Willighagen
-     * @cdk.created    2003-08-19
-     *
-     * @see org.openscience.cdk.geometry.CrystalGeometryTools
-     */
+    /// <summary>
+    /// This class defines regression tests that should ensure that the source code
+    /// of the org.openscience.cdk.geometry.CrystalGeometryTools is not broken.
+    /// All methods that start with test are regression tests, e.g.
+    /// <code>TestNotionalToCartesian()</code>.
+    ///
+    // @cdk.module test-standard
+    ///
+    // @author     Egon Willighagen
+    // @cdk.created    2003-08-19
+    ///
+    // @see org.openscience.cdk.geometry.CrystalGeometryTools
+    /// </summary>
     [TestClass()]
     public class CrystalGeometryToolsTest : CDKTestCase
     {
@@ -44,12 +44,12 @@ namespace NCDK.Geometries
         {
         }
 
-        /**
-         * This method tests the conversion of notional coordinates to
-         * cartesian coordinates. The test assumes that the
-         * <code>CrystalGeometryTools.NotionalToCartesian()</code> methods
-         * places the a axis on the x axis and the b axis in the xy plane.
-         */
+        /// <summary>
+        /// This method tests the conversion of notional coordinates to
+        /// cartesian coordinates. The test assumes that the
+        /// <code>CrystalGeometryTools.NotionalToCartesian()</code> methods
+        /// places the a axis on the x axis and the b axis in the xy plane.
+        /// </summary>
         [TestMethod()]
         public void TestNotionalToCartesian_Double_double_double_double_double_double()
         {
@@ -80,10 +80,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(11.2477, c.Length(), 0.0001);
         }
 
-        /**
-         * This method tests the conversion of cartesian coordinates to
-         * notional coordinates.
-         */
+        /// <summary>
+        /// This method tests the conversion of cartesian coordinates to
+        /// notional coordinates.
+        /// </summary>
         [TestMethod()]
         public void TestCartesianToNotional_Vector3d_Vector3d_Vector3d()
         {
@@ -99,10 +99,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(90.0, notionalCoords[5], 0.001);
         }
 
-        /**
-         * This method tests the conversion of atomic fractional coordinates to
-         * cartesian coordinates.
-         */
+        /// <summary>
+        /// This method tests the conversion of atomic fractional coordinates to
+        /// cartesian coordinates.
+        /// </summary>
         [TestMethod()]
         public void TestFractionalToCartesian_Vector3d_Vector3d_Vector3d_Point3d()
         {
@@ -116,10 +116,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(2.25, cartCoord.Z, 0.001);
         }
 
-        /**
-         * This method tests the conversion of atomic fractional coordinates to
-         * cartesian coordinates. The specific numbers are taken from 9603.res.
-         */
+        /// <summary>
+        /// This method tests the conversion of atomic fractional coordinates to
+        /// cartesian coordinates. The specific numbers are taken from 9603.res.
+        /// </summary>
         [TestMethod()]
         public void TestFractionalToCartesian2()
         {
@@ -135,10 +135,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(7.171, cartCoords.Z, 0.001);
         }
 
-        /**
-         * This method tests the conversion of atomic cartesian coordinates to
-         * fractional coordinates.
-         */
+        /// <summary>
+        /// This method tests the conversion of atomic cartesian coordinates to
+        /// fractional coordinates.
+        /// </summary>
         [TestMethod()]
         public void TestCartesianToFractional_Vector3d_Vector3d_Vector3d_Point3d()
         {
@@ -152,9 +152,9 @@ namespace NCDK.Geometries
             Assert.AreEqual(0.75, fractCoord.Z, 0.001);
         }
 
-        /**
-         * This method tests the calculation of axis lengths.
-         */
+        /// <summary>
+        /// This method tests the calculation of axis lengths.
+        /// </summary>
         [TestMethod()]
         public void TestCalcAxisLength()
         {
@@ -163,10 +163,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(Math.Sqrt(3.0), length, 0.001);
         }
 
-        /**
-         * This method tests the calculation of axis lengths too, like
-         * <code>TestCalcAxisLength()</code>.
-         */
+        /// <summary>
+        /// This method tests the calculation of axis lengths too, like
+        /// <code>TestCalcAxisLength()</code>.
+        /// </summary>
         [TestMethod()]
         public void TestCalcAxisLength2()
         {
@@ -181,9 +181,9 @@ namespace NCDK.Geometries
             Assert.AreEqual(1.0, length, 0.001);
         }
 
-        /**
-         * This method tests the calculation of the angle between two axes.
-         */
+        /// <summary>
+        /// This method tests the calculation of the angle between two axes.
+        /// </summary>
         [TestMethod()]
         public void TestCalcAngle()
         {
@@ -193,9 +193,9 @@ namespace NCDK.Geometries
             Assert.AreEqual(90.0, angle, 0.001);
         }
 
-        /**
-         * This method tests the calculation of the angle between two axes too.
-         */
+        /// <summary>
+        /// This method tests the calculation of the angle between two axes too.
+        /// </summary>
         [TestMethod()]
         public void TestCalcAngle2()
         {
@@ -205,10 +205,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(45.0, angle, 0.001);
         }
 
-        /**
-         * This method tests the calculation of the angle between one axis
-         * and itself, which should be zero by definition.
-         */
+        /// <summary>
+        /// This method tests the calculation of the angle between one axis
+        /// and itself, which should be zero by definition.
+        /// </summary>
         [TestMethod()]
         public void TestCalcAngle3()
         {
@@ -217,10 +217,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(0.0, angle, 0.001);
         }
 
-        /**
-         * This method tests the conversion of notional coordinates to
-         * cartesian and back to notional.
-         */
+        /// <summary>
+        /// This method tests the conversion of notional coordinates to
+        /// cartesian and back to notional.
+        /// </summary>
         [TestMethod()]
         public void TestRoundTripUnitCellNotionalCoordinates()
         {
@@ -237,10 +237,10 @@ namespace NCDK.Geometries
             Assert.AreEqual(110.5, notionalCoords[5], 0.001);
         }
 
-        /**
-         * This method tests whether two times inversion of the axes
-         * gives back the original axes.
-         */
+        /// <summary>
+        /// This method tests whether two times inversion of the axes
+        /// gives back the original axes.
+        /// </summary>
         [TestMethod()]
         public void TestCalcInvertedAxes_Vector3d_Vector3d_Vector3d()
         {

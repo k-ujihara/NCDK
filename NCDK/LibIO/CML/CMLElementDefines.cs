@@ -3,24 +3,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 namespace NCDK.LibIO.CML
 {
-	public partial class CMLArray : CMLElement
+    public partial class CMLArray : CMLElement
     {
-		public CMLArray()
+        public CMLArray()
             : base(XName_CML_array)
         { }
         public string Title
@@ -39,14 +26,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLAtom : CMLElement
+    public partial class CMLAtom : CMLElement
     {
-		public CMLAtom()
+        public CMLAtom()
             : base(XName_CML_atom)
         { }
         public CMLAtom(CMLAtom old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -63,9 +50,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLAtomArray : CMLElement
+    public partial class CMLAtomArray : CMLElement
     {
-		public CMLAtomArray()
+        public CMLAtomArray()
             : base(XName_CML_atomArray)
         { }
         public string Title
@@ -84,14 +71,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLBond : CMLElement
+    public partial class CMLBond : CMLElement
     {
-		public CMLBond()
+        public CMLBond()
             : base(XName_CML_bond)
         { }
         public CMLBond(CMLBond old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -108,9 +95,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLBondArray : CMLElement
+    public partial class CMLBondArray : CMLElement
     {
-		public CMLBondArray()
+        public CMLBondArray()
             : base(XName_CML_bondArray)
         { }
         public string Title
@@ -129,14 +116,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLBondStereo : CMLElement
+    public partial class CMLBondStereo : CMLElement
     {
-		public CMLBondStereo()
+        public CMLBondStereo()
             : base(XName_CML_bondStereo)
         { }
         public CMLBondStereo(CMLBondStereo old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -153,14 +140,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLBondType : CMLElement
+    public partial class CMLBondType : CMLElement
     {
-		public CMLBondType()
+        public CMLBondType()
             : base(XName_CML_bondType)
         { }
         public CMLBondType(CMLBondType old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -177,9 +164,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLCml : CMLElement
+    public partial class CMLCml : CMLElement
     {
-		public CMLCml()
+        public CMLCml()
             : base(XName_CML_cml)
         { }
         public string Title
@@ -198,9 +185,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLCrystal : CMLElement
+    public partial class CMLCrystal : CMLElement
     {
-		public CMLCrystal()
+        public CMLCrystal()
             : base(XName_CML_crystal)
         { }
         public string Title
@@ -219,9 +206,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLFormula : CMLElement
+    public partial class CMLFormula : CMLElement
     {
-		public CMLFormula()
+        public CMLFormula()
             : base(XName_CML_formula)
         { }
         public string Title
@@ -240,14 +227,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLIdentifier : CMLElement
+    public partial class CMLIdentifier : CMLElement
     {
-		public CMLIdentifier()
+        public CMLIdentifier()
             : base(XName_CML_identifier)
         { }
         public CMLIdentifier(CMLIdentifier old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -264,9 +251,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLList : CMLElement
+    public partial class CMLList : CMLElement
     {
-		public CMLList()
+        public CMLList()
             : base(XName_CML_list)
         { }
         public string Title
@@ -285,9 +272,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLMetadata : CMLElement
+    public partial class CMLMetadata : CMLElement
     {
-		public CMLMetadata()
+        public CMLMetadata()
             : base(XName_CML_metadata)
         { }
         public string Title
@@ -306,9 +293,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLMetadataList : CMLElement
+    public partial class CMLMetadataList : CMLElement
     {
-		public CMLMetadataList()
+        public CMLMetadataList()
             : base(XName_CML_metadataList)
         { }
         public string Title
@@ -327,9 +314,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLMolecule : CMLElement
+    public partial class CMLMolecule : CMLElement
     {
-		public CMLMolecule()
+        public CMLMolecule()
             : base(XName_CML_molecule)
         { }
         public string Title
@@ -348,14 +335,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLMoleculeList : CMLElement
+    public partial class CMLMoleculeList : CMLElement
     {
-		public CMLMoleculeList()
+        public CMLMoleculeList()
             : base(XName_CML_moleculeList)
         { }
         public CMLMoleculeList(CMLMoleculeList old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -372,9 +359,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLProperty : CMLElement
+    public partial class CMLProperty : CMLElement
     {
-		public CMLProperty()
+        public CMLProperty()
             : base(XName_CML_property)
         { }
         public string Title
@@ -393,9 +380,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLPropertyList : CMLElement
+    public partial class CMLPropertyList : CMLElement
     {
-		public CMLPropertyList()
+        public CMLPropertyList()
             : base(XName_CML_propertyList)
         { }
         public string Title
@@ -414,14 +401,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReaction : CMLElement
+    public partial class CMLReaction : CMLElement
     {
-		public CMLReaction()
+        public CMLReaction()
             : base(XName_CML_reaction)
         { }
         public CMLReaction(CMLReaction old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -438,14 +425,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReactionList : CMLElement
+    public partial class CMLReactionList : CMLElement
     {
-		public CMLReactionList()
+        public CMLReactionList()
             : base(XName_CML_reactionList)
         { }
         public CMLReactionList(CMLReactionList old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -462,14 +449,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReactionScheme : CMLElement
+    public partial class CMLReactionScheme : CMLElement
     {
-		public CMLReactionScheme()
+        public CMLReactionScheme()
             : base(XName_CML_reactionScheme)
         { }
         public CMLReactionScheme(CMLReactionScheme old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -486,14 +473,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReactionStep : CMLElement
+    public partial class CMLReactionStep : CMLElement
     {
-		public CMLReactionStep()
+        public CMLReactionStep()
             : base(XName_CML_reactionStep)
         { }
         public CMLReactionStep(CMLReactionStep old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -510,14 +497,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReactant : CMLElement
+    public partial class CMLReactant : CMLElement
     {
-		public CMLReactant()
+        public CMLReactant()
             : base(XName_CML_reactant)
         { }
         public CMLReactant(CMLReactant old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -534,14 +521,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLReactantList : CMLElement
+    public partial class CMLReactantList : CMLElement
     {
-		public CMLReactantList()
+        public CMLReactantList()
             : base(XName_CML_reactantList)
         { }
         public CMLReactantList(CMLReactantList old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -558,14 +545,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLProduct : CMLElement
+    public partial class CMLProduct : CMLElement
     {
-		public CMLProduct()
+        public CMLProduct()
             : base(XName_CML_product)
         { }
         public CMLProduct(CMLProduct old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -582,14 +569,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLProductList : CMLElement
+    public partial class CMLProductList : CMLElement
     {
-		public CMLProductList()
+        public CMLProductList()
             : base(XName_CML_productList)
         { }
         public CMLProductList(CMLProductList old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -606,14 +593,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLSubstance : CMLElement
+    public partial class CMLSubstance : CMLElement
     {
-		public CMLSubstance()
+        public CMLSubstance()
             : base(XName_CML_substance)
         { }
         public CMLSubstance(CMLSubstance old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -630,14 +617,14 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLSubstanceList : CMLElement
+    public partial class CMLSubstanceList : CMLElement
     {
-		public CMLSubstanceList()
+        public CMLSubstanceList()
             : base(XName_CML_substanceList)
         { }
         public CMLSubstanceList(CMLSubstanceList old)
             : base(old)
-        { }		
+        { }        
         public string Title
         {
             get { return Attribute(Attribute_title)?.Value; }
@@ -654,9 +641,9 @@ namespace NCDK.LibIO.CML
             set { SetAttributeValue(Attribute_dictRef, value); }
         }
     }
-	public partial class CMLScalar : CMLElement
+    public partial class CMLScalar : CMLElement
     {
-		public CMLScalar()
+        public CMLScalar()
             : base(XName_CML_scalar)
         { }
         public string Title

@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections;
@@ -50,7 +51,7 @@ namespace NCDK.Default
             chemSequence.Listeners.Add(this);
             chemSequences.Add(chemSequence);
  
-			NotifyChanged(); 
+            NotifyChanged(); 
         }
 
         public void Clear()
@@ -86,15 +87,15 @@ namespace NCDK.Default
             chemSequence.Listeners.Add(this);
             chemSequences.Insert(index, chemSequence);
  
-			NotifyChanged(); 
+            NotifyChanged(); 
         }
 
         public bool Remove(IChemSequence chemSequence)
         {
             bool ret = chemSequences.Remove(chemSequence);
  
-			chemSequence.Listeners.Remove(this);
-			NotifyChanged(); 
+            chemSequence.Listeners.Remove(this);
+            NotifyChanged(); 
             return ret;
         }
 
@@ -103,7 +104,7 @@ namespace NCDK.Default
             chemSequences[index].Listeners.Remove(this);
             chemSequences.RemoveAt(index);
  
-			NotifyChanged(); 
+            NotifyChanged(); 
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -124,7 +125,7 @@ namespace NCDK.Default
                     sb.Append(chemSequence.ToString());
                 }
             }
-			sb.Append(')');
+            sb.Append(')');
             return sb.ToString(); 
         }
 
@@ -228,7 +229,7 @@ namespace NCDK.Silent
                     sb.Append(chemSequence.ToString());
                 }
             }
-			sb.Append(')');
+            sb.Append(')');
             return sb.ToString(); 
         }
 

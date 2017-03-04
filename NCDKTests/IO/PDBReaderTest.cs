@@ -29,15 +29,13 @@ using System.Linq;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the PDBReader class.
-     *
-     * @cdk.module test-pdb
-     *
-     * @author      Edgar Luttmann <edgar@uni-paderborn.de>
-     * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.created 2001-08-09
-     */
+    /// <summary>
+    /// TestCase for the PDBReader class.
+    /// </summary>
+    // @cdk.module test-pdb
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.created 2001-08-09
     [TestClass()]
     public class PDBReaderTest : SimpleChemObjectReaderTest
     {
@@ -45,12 +43,10 @@ namespace NCDK.IO
         static readonly PDBReader simpleReader = new PDBReader();
         protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
 
-        /**
-         * Test to see if PDB files with CONECT records are handled properly.
-         *
-         * @
-         * @cdk.bug 2046633
-         */
+        /// <summary>
+        /// Test to see if PDB files with CONECT records are handled properly.
+        /// </summary>
+        // @cdk.bug 2046633
         [TestMethod()]
         public void TestConnectRecords()
         {
@@ -73,12 +69,10 @@ namespace NCDK.IO
             Assert.IsNotNull(obj);
             int bondCount = ((IChemFile)obj)[0][0].MoleculeSet[0]
                     .Bonds.Count;
-            /*
-             * if ReadConnectSection=true and UseRebondTool=false then bondCount ==
-             * 1 (from just the CONECT) else if ReadConnectSection=false and
-             * UseRebondTool=true then bondCount == 3 (just atoms within bonding
-             * distance)
-             */
+            // if ReadConnectSection=true and UseRebondTool=false then bondCount ==
+            // 1 (from just the CONECT) else if ReadConnectSection=false and
+            // UseRebondTool=true then bondCount == 3 (just atoms within bonding
+            // distance)
             Assert.AreEqual(1, bondCount);
         }
 
@@ -116,7 +110,7 @@ namespace NCDK.IO
         public void TestPDBFileCoffein()
         {
             string filename = "NCDK.Data.PDB.coffeine.pdb";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             ISimpleChemObjectReader oReader = new PDBReader(ins);
             Assert.IsNotNull(oReader);
@@ -177,14 +171,14 @@ namespace NCDK.IO
             Assert.AreEqual(0.0, oAtom.TempFactor.Value, 0);
         }
 
-        /**
-         * Tests reading a protein PDB file.
-         */
+        /// <summary>
+        /// Tests reading a protein PDB file.
+        /// </summary>
         [TestMethod()]
         public void TestProtein()
         {
             string filename = "NCDK.Data.PDB.Test-1crn.pdb";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             ISimpleChemObjectReader reader = new PDBReader(ins);
             Assert.IsNotNull(reader);
@@ -223,7 +217,6 @@ namespace NCDK.IO
             Assert.AreEqual("13", atom.ResSeq);
             Assert.AreEqual(1.0, atom.Occupancy.Value, 0.001);
             Assert.AreEqual(6.84, atom.TempFactor.Value, 0.001);
-
         }
 
         public IChemFile GetChemFileFromString(string data)
@@ -246,7 +239,7 @@ namespace NCDK.IO
 
         public IChemFile GetChemFile(string filename, bool useRebond)
         {
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             return GetChemFile(new PDBReader(ins), useRebond);
         }
 
@@ -300,7 +293,7 @@ namespace NCDK.IO
         public void Test114D()
         {
             string filename = "NCDK.Data.PDB.114D.pdb";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             ISimpleChemObjectReader reader = new PDBReader(ins);
             Assert.IsNotNull(reader);
@@ -355,7 +348,6 @@ namespace NCDK.IO
 
             // PDB validation
             Assert.AreEqual(0, pdb.GetStructures().Count());
-
         }
 
         [TestMethod()]
@@ -435,7 +427,7 @@ namespace NCDK.IO
         public void Test1D66()
         {
             string filename = "NCDK.Data.PDB.1D66.pdb";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
 
             ISimpleChemObjectReader reader = new PDBReader(ins);
             Assert.IsNotNull(reader);
@@ -607,17 +599,14 @@ namespace NCDK.IO
             // PDB Structures validation
             //Should have 6 helices
             Assert.AreEqual(6, pdb.GetStructures().Count());
-
         }
 
-        /**
-         * @cdk.bug 489
-         */
+        // @cdk.bug 489
         [TestCategory("SlowTest")]
         [TestMethod()]
         public void ReadFinalPump()
         {
-            IChemFile chemFile = new PDBReader(GetType().Assembly.GetManifestResourceStream(GetType(), "finalPump96.09.06.pdb")).Read(new ChemFile());
+            IChemFile chemFile = new PDBReader(ResourceLoader.GetAsStream(GetType(), "finalPump96.09.06.pdb")).Read(new ChemFile());
         }
     }
 }

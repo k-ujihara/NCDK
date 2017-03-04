@@ -68,7 +68,7 @@ namespace NCDK.Beam
     ///                     .AtomClass(1)
     ///                     .Build();
     /// </code></example>
-    /// <author>John May</author>
+    // @author John May
     public sealed class AtomBuilder
     {
         private readonly Element element;

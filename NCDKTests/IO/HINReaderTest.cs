@@ -51,7 +51,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.HIN.benzene.hin";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -78,7 +78,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.HIN.molecule2.hin";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -105,7 +105,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.HIN.multiple.hin";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             HINReader reader = new HINReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -127,7 +127,7 @@ namespace NCDK.IO
         public void TestIsConnectedFromHINFile()
         {
             string filename = "NCDK.Data.HIN.connectivity1.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();
@@ -142,7 +142,7 @@ namespace NCDK.IO
         public void TestAromaticRingsLine()
         {
             string filename = "NCDK.Data.HIN.bug2984581.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();
@@ -155,7 +155,7 @@ namespace NCDK.IO
         public void TestReadAromaticRingsKeyword()
         {
             string filename = "NCDK.Data.HIN.arorings.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             IChemFile content = reader.Read(new ChemFile());
             reader.Close();

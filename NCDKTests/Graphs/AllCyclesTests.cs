@@ -1,11 +1,5 @@
 ﻿using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Graphs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
@@ -15,7 +9,7 @@ namespace NCDK.Graphs
         static PrivateType AllCyclesType = new PrivateType(typeof(AllCycles));
 
         [TestMethod()]
-        public virtual void rank()
+        public virtual void Rank()
         {
             // given vertices based on degree
             int[][] g = new int[][]{ new int [] {0, 0, 0, 0}, // 5th
@@ -46,7 +40,7 @@ namespace NCDK.Graphs
 
         [TestMethod()]
         [Timeout(50)]
-            public virtual void impractical()
+            public virtual void Impractical()
         {
             // k12 - ouch
             AllCycles ac = new AllCycles(RegularPathGraphTests.CompleteGraphOfSize(12), 12, 100);

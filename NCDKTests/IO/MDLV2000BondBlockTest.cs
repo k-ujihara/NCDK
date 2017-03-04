@@ -175,7 +175,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void cIsOrTrans()
+        public void CisOrTrans()
         {
             string input = "  1  3  2  3  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -184,7 +184,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void cIsOrTransByCoordinates()
+        public void CisOrTransByCoordinates()
         {
             string input = "  1  3  2  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -221,7 +221,7 @@ namespace NCDK.IO
 
         [TestMethod()]
         [ExpectedException(typeof(CDKException))]
-        public void cIsOrTransSingleBond()
+        public void CisOrTransSingleBond()
         {
             string input = "  1  3  1  3  0  0  0";
             reader.ReaderMode = ChemObjectReaderModes.Strict;
@@ -229,7 +229,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void longLine()
+        public void LongLine()
         {
             string input = "  1  3  1  0  0  0  0  0  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -242,7 +242,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void longLineWithPadding()
+        public void LongLineWithPadding()
         {
             string input = "  1  3  1  0  0  0  0    ";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -255,7 +255,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void shortLine()
+        public void ShortLine()
         {
             string input = "  1  3  1  0";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -268,7 +268,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void shortLineWithPadding()
+        public void ShortLineWithPadding()
         {
             string input = "  1  3  1  0       ";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);
@@ -281,7 +281,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void shortLineNoStereo()
+        public void ShortLineNoStereo()
         {
             string input = "  1  3  1";
             IBond bond = reader.ReadBondFast(input, builder, atoms, new int[atoms.Length], 1);

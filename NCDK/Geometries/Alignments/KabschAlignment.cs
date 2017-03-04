@@ -28,63 +28,66 @@ using System.Linq;
 
 namespace NCDK.Geometries.Alignments
 {
-    /**
-     * Aligns two structures to minimize the RMSD using the Kabsch algorithm.
-     *
-     * <p>This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
-     * and evaluates the optimal rotation matrix (U) to minimize the RMSD between the two structures.
-     * Since the algorithm assumes that the number of points are the same in the two structures
-     * it is the job of the caller to pass the proper number of atoms from the two structures. Constructors
-     * which take whole <code>AtomContainer</code>'s are provided but they should have the same number
-     * of atoms.
-     * The algorithm allows for the use of atom weightings and by default all points are given a weight of 1.0
-     *
-     * <p>Example usage can be:
-     * <pre>
-     * AtomContainer ac1, ac2;
-     *
-     * try {
-     *    KabschAlignment sa = new KabschAlignment(ac1.getAtoms(),ac2.getAtoms());
-     *    sa.Align();
-     *    Console.Out.WriteLine(sa.RMSD);
-     * } catch (CDKException e){}
-     * </pre>
-     * In many cases, molecules will be aligned based on some common substructure.
-     * In this case the center of masses calculated during alignment refer to these
-     * substructures rather than the whole molecules. To superimpose the molecules
-     * for display, the second molecule must be rotated and translated by calling
-     * <code>rotateAtomContainer</code>. However, since this will also translate the
-     * second molecule, the first molecule should also be translated to the center of mass
-     * of the substructure specified for this molecule. This center of mass can be obtained
-     * by a call to <code>getCenterOfMass</code> and then manually translating the coordinates.
-     * Thus an example would be
-     * <pre>
-     * AtomContainer ac1, ac2;  // whole molecules
-     * Atom[] a1, a2;           // some subset of atoms from the two molecules
-     * KabschAlignment sa;
-     *
-     * try {
-     *    sa = new KabschAlignment(a1,a2);
-     *    sa.Align();
-     * } catch (CDKException e){}
-     *
-     * Vector3 cm1 = sa.CenterOfMass;
-     * for (int i = 0; i &lt; ac1.Atoms.Count; i++) {
-     *    Atom a = ac1.getAtomAt(i);
-     *    a.setX3d( a.Point3D.X - cm1.X );
-     *    a.setY3d( a.Point3D.Y - cm1.Y );
-     *    a.setY3d( a.Point3D.Z - cm1.Z );
-     * }
-     * sa.RotateAtomContainer(ac2);
-     *
-     * // display the two AtomContainer's
-     *</pre>
-     *
-     * @author           Rajarshi Guha
-     * @cdk.created      2004-12-11
-     * @cdk.dictref      blue-obelisk:alignmentKabsch
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Aligns two structures to minimize the RMSD using the Kabsch algorithm.
+    /// </summary>
+    /// <remarks>
+    /// This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
+    /// and evaluates the optimal rotation matrix (U) to minimize the RMSD between the two structures.
+    /// Since the algorithm assumes that the number of points are the same in the two structures
+    /// it is the job of the caller to pass the proper number of atoms from the two structures. Constructors
+    /// which take whole <c>AtomContainer</c>'s are provided but they should have the same number
+    /// of atoms.
+    /// The algorithm allows for the use of atom weightings and by default all points are given a weight of 1.0,
+    /// </remarks>
+    /// <example>
+    /// Example usage can be:
+    /// <code>
+    /// AtomContainer ac1, ac2;
+    ///
+    /// try 
+    /// {
+    ///    KabschAlignment sa = new KabschAlignment(ac1.GetAtoms(),ac2.GetAtoms());
+    ///    sa.Align();
+    ///    Console.Out.WriteLine(sa.RMSD);
+    /// } 
+    /// catch (CDKException e){}
+    /// </code>
+    /// In many cases, molecules will be aligned based on some common substructure.
+    /// In this case the center of masses calculated during alignment refer to these
+    /// substructures rather than the whole molecules. To superimpose the molecules
+    /// for display, the second molecule must be rotated and translated by calling
+    /// <see cref="RotateAtomContainer(IAtomContainer)"/>. However, since this will also translate the
+    /// second molecule, the first molecule should also be translated to the center of mass
+    /// of the substructure specified for this molecule. This center of mass can be obtained
+    /// by a call to <see cref="CenterOfMass"/> and then manually translating the coordinates.
+    /// Thus an example would be
+    /// <code>
+    /// AtomContainer ac1, ac2;  // whole molecules
+    /// Atom[] a1, a2;           // some subset of atoms from the two molecules
+    /// KabschAlignment sa;
+    ///
+    /// try {
+    ///    sa = new KabschAlignment(a1,a2);
+    ///    sa.Align();
+    /// } catch (CDKException e){}
+    ///
+    /// Vector3 cm1 = sa.CenterOfMass;
+    /// for (int i = 0; i &lt; ac1.Atoms.Count; i++) {
+    ///    Atom a = ac1.GetAtomAt(i);
+    ///    a.SetX3d( a.Point3D.X - cm1.X );
+    ///    a.SetY3d( a.Point3D.Y - cm1.Y );
+    ///    a.SetY3d( a.Point3D.Z - cm1.Z );
+    /// }
+    /// sa.RotateAtomContainer(ac2);
+    ///
+    /// // display the two AtomContainer's
+    ///</code>
+    ///</example>
+    // @author           Rajarshi Guha
+    // @cdk.created      2004-12-11
+    // @cdk.dictref      blue-obelisk:alignmentKabsch
+    // @cdk.githash
     public class KabschAlignment
     {
         /// <summary>
@@ -186,17 +189,13 @@ namespace NCDK.Geometries.Alignments
             return (new Vector3(x / totalmass, y / totalmass, z / totalmass));
         }
 
-        /**
-         * Sets up variables for the alignment algorithm.
-         *
-         * The algorithm allows for atom weighting and the default is 1.0 for all
-         * atoms.
-         *
-         * @param al1 An array of {@link Atom} objects
-         * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
-         *            so that the RMDS is minimized to the coordinates of the first array
-         * @throws CDKException if the number of Atom's are not the same in the two arrays
-         */
+        /// <summary>
+        /// Sets up variables for the alignment algorithm.
+        /// The algorithm allows for atom weighting and the default is 1.0 for all atoms.
+        /// </summary>
+        /// <param name="al1">An array of <see cref="IAtom"/> objects</param>
+        /// <param name="al2">An array of <see cref="IAtom"/> objects. This array will have its coordinates rotated so that the RMDS is minimized to the coordinates of the first array</param>
+        /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays</exception>
         public KabschAlignment(IAtom[] al1, IAtom[] al2)
         {
             if (al1.Length != al2.Length)
@@ -215,16 +214,15 @@ namespace NCDK.Geometries.Alignments
                 this.wts[i] = 1.0;
         }
 
-        /**
-         * Sets up variables for the alignment algorithm.
-         *
-         * @param al1 An array of {@link Atom} objects
-         * @param al2 An array of {@link Atom} objects. This array will have its coordinates rotated
-         *            so that the RMDS is minimized to the coordinates of the first array
-         * @param wts A vector atom weights.
-         * @throws CDKException if the number of Atom's are not the same in the two arrays or
-         *                         length of the weight vector is not the same as the Atom arrays
-         */
+        /// <summary>
+        /// Sets up variables for the alignment algorithm.
+        /// </summary>
+        /// <param name="al1">An array of <see cref="IAtom"/> objects</param>
+        /// <param name="al2">An array of <see cref="IAtom"/> objects. This array will have its coordinates rotated
+        ///            so that the RMDS is minimized to the coordinates of the first array</param>
+        /// <param name="wts">A vector atom weights.</param>
+        /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays or
+        ///                         length of the weight vector is not the same as the Atom arrays</exception>
         public KabschAlignment(IAtom[] al1, IAtom[] al2, double[] wts)
         {
             if (al1.Length != al2.Length)
@@ -245,17 +243,15 @@ namespace NCDK.Geometries.Alignments
             this.atwt2 = GetAtomicMasses(al2);
         }
 
-        /**
-         * Sets up variables for the alignment algorithm.
-         *
-         * The algorithm allows for atom weighting and the default is 1.0 for all
-         * atoms.
-         *
-         * @param ac1 An {@link IAtomContainer}
-         * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-         *            so that the RMDS is minimized to the coordinates of the first one
-         * @throws CDKException if the number of atom's are not the same in the two AtomContainer's
-         */
+        /// <summary>
+        /// Sets up variables for the alignment algorithm.
+        /// The algorithm allows for atom weighting and the default is 1.0 for all
+        /// atoms.
+        /// </summary>
+        /// <param name="ac1">An <see cref="IAtomContainer"/></param>
+        /// <param name="ac2">An <see cref="IAtomContainer"/>. This AtomContainer will have its coordinates rotated
+        ///            so that the RMDS is minimized to the coordinates of the first one</param>
+        /// <exception cref="CDKException">if the number of atom's are not the same in the two AtomContainer's</exception>
         public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2)
         {
             if (ac1.Atoms.Count != ac2.Atoms.Count)
@@ -273,16 +269,15 @@ namespace NCDK.Geometries.Alignments
             this.atwt2 = GetAtomicMasses(ac2);
         }
 
-        /**
-         * Sets up variables for the alignment algorithm.
-         *
-         * @param ac1 An {@link IAtomContainer}
-         * @param ac2 An {@link IAtomContainer}. This AtomContainer will have its coordinates rotated
-         *            so that the RMDS is minimized to the coordinates of the first one
-         * @param wts A vector atom weights.
-         * @throws CDKException if the number of atom's are not the same in the two AtomContainer's or
-         *                         length of the weight vector is not the same as number of atoms.
-         */
+        /// <summary>
+        /// Sets up variables for the alignment algorithm.
+        /// </summary>
+        /// <param name="ac1">An <see cref="IAtomContainer"/></param>
+        /// <param name="ac2">An <see cref="IAtomContainer"/>. This AtomContainer will have its coordinates rotated
+        ///            so that the RMDS is minimized to the coordinates of the first one</param>
+        /// <param name="wts">A vector atom weights.</param>
+        /// <exception cref="CDKException">if the number of atom's are not the same in the two AtomContainer's or
+        ///                         length of the weight vector is not the same as number of atoms.</exception>
         public KabschAlignment(IAtomContainer ac1, IAtomContainer ac2, double[] wts)
         {
             if (ac1.Atoms.Count != ac2.Atoms.Count)
@@ -303,12 +298,12 @@ namespace NCDK.Geometries.Alignments
             this.atwt2 = GetAtomicMasses(ac2);
         }
 
-        /**
-         * Perform an alignment.
-         *
-         * This method aligns to set of atoms which should have been specified
-         * prior to this call
-         */
+        /// <summary>
+        /// Perform an alignment.
+        ///
+        /// This method aligns to set of atoms which should have been specified
+        /// prior to this call
+        /// </summary>
         public void Align()
         {
             Matrix<double> tmp;
@@ -447,49 +442,47 @@ namespace NCDK.Geometries.Alignments
             for (int i = 0; i < this.npoint; i++)
             {
                 this.rp[i] = new Vector3(
-					RotationMatrix[0][0] * p2[i].X + RotationMatrix[0][1] * p2[i].Y + RotationMatrix[0][2] * p2[i].Z, 
-					RotationMatrix[1][0] * p2[i].X + RotationMatrix[1][1] * p2[i].Y + RotationMatrix[1][2] * p2[i].Z, 
-					RotationMatrix[2][0] * p2[i].X + RotationMatrix[2][1] * p2[i].Y + RotationMatrix[2][2] * p2[i].Z);
+                    RotationMatrix[0][0] * p2[i].X + RotationMatrix[0][1] * p2[i].Y + RotationMatrix[0][2] * p2[i].Z,
+                    RotationMatrix[1][0] * p2[i].X + RotationMatrix[1][1] * p2[i].Y + RotationMatrix[1][2] * p2[i].Z,
+                    RotationMatrix[2][0] * p2[i].X + RotationMatrix[2][1] * p2[i].Y + RotationMatrix[2][2] * p2[i].Z);
             }
 
             // ... then eval rms
             double rms = 0;
             for (int i = 0; i < this.npoint; i++)
             {
-                rms += (p1[i].X - this.rp[i].X) * (p1[i].X - this.rp[i].X) + (p1[i].Y - this.rp[i].Y)
-                        * (p1[i].Y - this.rp[i].Y) + (p1[i].Z - this.rp[i].Z) * (p1[i].Z - this.rp[i].Z);
+                rms += (p1[i].X - this.rp[i].X) * (p1[i].X - this.rp[i].X) + (p1[i].Y - this.rp[i].Y) * (p1[i].Y - this.rp[i].Y) + (p1[i].Z - this.rp[i].Z) * (p1[i].Z - this.rp[i].Z);
             }
             this.RMSD = Math.Sqrt(rms / this.npoint);
         }
 
-        /**
-         * Returns the center of mass for the first molecule or fragment used in the calculation.
-         *
-         * This method is useful when using this class to align the coordinates
-         * of two molecules and them displaying them superimposed. Since the center of
-         * mass used during the alignment may not be based on the whole molecule (in
-         * general common substructures are aligned), when preparing molecules for display
-         * the first molecule should be translated to the center of mass. Then displaying the
-         * first molecule and the rotated version of the second one will result in superimposed
-         * structures.
-         *
-         * @return A Vector3 containing the coordinates of the center of mass
-         */
+        /// <summary>
+        /// The center of mass for the first molecule or fragment used in the calculation.
+        /// </summary>
+        /// <remarks>
+        /// This method is useful when using this class to align the coordinates
+        /// of two molecules and them displaying them superimposed. Since the center of
+        /// mass used during the alignment may not be based on the whole molecule (in
+        /// general common substructures are aligned), when preparing molecules for display
+        /// the first molecule should be translated to the center of mass. Then displaying the
+        /// first molecule and the rotated version of the second one will result in superimposed
+        /// structures.
+        /// </remarks>
         public Vector3 CenterOfMass => this.cm1;
 
-        /**
-         * Rotates the {@link IAtomContainer} coordinates by the rotation matrix.
-         *
-         * In general if you align a subset of atoms in a AtomContainer
-         * this function can be applied to the whole AtomContainer to rotate all
-         * atoms. This should be called with the second AtomContainer (or Atom[])
-         * that was passed to the constructor.
-         *
-         * Note that the AtomContainer coordinates also get translated such that the
-         * center of mass of the original fragment used to calculate the alignment is at the origin.
-         *
-         * @param ac The {@link IAtomContainer} whose coordinates are to be rotated
-         */
+        /// <summary>
+        /// Rotates the <see cref="IAtomContainer"/> coordinates by the rotation matrix.
+        ///
+        /// In general if you align a subset of atoms in a AtomContainer
+        /// this function can be applied to the whole AtomContainer to rotate all
+        /// atoms. This should be called with the second AtomContainer (or Atom[])
+        /// that was passed to the constructor.
+        /// </summary>
+        /// <remarks>
+        /// Note that the AtomContainer coordinates also get translated such that the
+        /// center of mass of the original fragment used to calculate the alignment is at the origin.
+        /// </remarks>
+        /// <param name="ac">The <see cref="IAtomContainer"/> whose coordinates are to be rotated</param>
         public void RotateAtomContainer(IAtomContainer ac)
         {
             Vector3[] p = GetPoint3DArray(ac);
@@ -503,8 +496,8 @@ namespace NCDK.Geometries.Alignments
                 // do the actual rotation
                 ac.Atoms[i].Point3D =
                         new Vector3(
-							RotationMatrix[0][0] * p[i].X + RotationMatrix[0][1] * p[i].Y + RotationMatrix[0][2] * p[i].Z, 
-							RotationMatrix[1][0] * p[i].X + RotationMatrix[1][1] * p[i].Y + RotationMatrix[1][2] * p[i].Z,
+                            RotationMatrix[0][0] * p[i].X + RotationMatrix[0][1] * p[i].Y + RotationMatrix[0][2] * p[i].Z,
+                            RotationMatrix[1][0] * p[i].X + RotationMatrix[1][1] * p[i].Y + RotationMatrix[1][2] * p[i].Z,
                             RotationMatrix[2][0] * p[i].X + RotationMatrix[2][1] * p[i].Y + RotationMatrix[2][2] * p[i].Z);
             }
         }

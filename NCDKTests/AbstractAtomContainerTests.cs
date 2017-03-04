@@ -24,11 +24,11 @@ using System.Linq;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of the AtomContainer.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of the AtomContainer.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAtomContainerTest
         : AbstractChemObjectTest
@@ -79,9 +79,9 @@ namespace NCDK
             Assert.IsFalse(listener.Changed); // but no change event should happen
         }
 
-        /**
-         * Only test whether the atoms are correctly cloned.
-         */
+        /// <summary>
+        /// Only test whether the atoms are correctly cloned.
+        /// </summary>
         [TestMethod()]
         public override void TestClone()
         {
@@ -367,13 +367,13 @@ namespace NCDK
             Assert.AreEqual(1, acetone.GetConnectedBonds(c3).Count());
         }
 
-        /**
-         * Unit test to ensure that the stereo elements remain intact on cloning a
-         * container. This test ensures tetrahedral chirality is preserved
-         *
-         * @cdk.bug 1264
-         * @
-         */
+        /// <summary>
+        /// Unit test to ensure that the stereo elements remain intact on cloning a
+        /// container. This test ensures tetrahedral chirality is preserved
+        ///
+        // @cdk.bug 1264
+        // @
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_IStereoElement_Tetrahedral()
         {
@@ -439,13 +439,13 @@ namespace NCDK
             Assert.AreSame(clone.Atoms[0], cloneChirality.ChiralAtom, "incorrect chiral atom");
         }
 
-        /**
-         * Unit test to ensure that the stereo elements remain intact on cloning a
-         * container. This test ensures DoubleBondStereochemistry is preserved
-         *
-         * @cdk.bug 1264
-         * @
-         */
+        /// <summary>
+        /// Unit test to ensure that the stereo elements remain intact on cloning a
+        /// container. This test ensures DoubleBondStereochemistry is preserved
+        ///
+        // @cdk.bug 1264
+        // @
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_IStereoElement_DoubleBond()
         {
@@ -502,13 +502,13 @@ namespace NCDK
             Assert.AreEqual(clonedDBStereo.StereoBond, clone.Bonds[0], "incorrect chiral atom");
         }
 
-        /**
-         * Unit test to ensure that the stereo elements remain intact on cloning a
-         * container. This test ensures AtomParity is preserved
-         *
-         * @cdk.bug 1264
-         * @
-         */
+        /// <summary>
+        /// Unit test to ensure that the stereo elements remain intact on cloning a
+        /// container. This test ensures AtomParity is preserved
+        ///
+        // @cdk.bug 1264
+        // @
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_IStereoElement_AtomParity()
         {
@@ -895,11 +895,11 @@ namespace NCDK
             Assert.AreEqual(0, container.Atoms.Count);
             Assert.AreEqual(0, container.Bonds.Count);
         }
-        /**
-         * Unit test ensures that stereo-elements are removed from a container
-         * when {@link IAtomContainer#RemoveAllElements()} is invoked.
-         * @cdk.bug 1270
-         */
+        /// <summary>
+        /// Unit test ensures that stereo-elements are removed from a container
+        /// when {@link IAtomContainer#RemoveAllElements()} is invoked.
+        // @cdk.bug 1270
+        /// </summary>
         [TestMethod()]
         public virtual void TestRemoveAllElements_StereoElements()
         {

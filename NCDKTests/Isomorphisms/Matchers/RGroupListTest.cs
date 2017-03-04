@@ -26,12 +26,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList},
-     * in particular setting valid 'occurrence' strings.
-     *
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link org.openscience.cdk.isomorphism.matchers.RGroupList},
+    /// in particular setting valid 'occurrence' strings.
+    ///
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class RGroupListTest : CDKTestCase
     {

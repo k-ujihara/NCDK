@@ -144,7 +144,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             {
                 Debug.WriteLine(ex1);
                 return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), DescriptorNames, 
-					new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
+                    new CDKException($"Problems with IsotopeFactory due to {ex1.ToString()}", ex1));
             }
         }
 

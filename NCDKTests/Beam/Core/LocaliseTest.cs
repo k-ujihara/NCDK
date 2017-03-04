@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class LocaliseTest
     {
         [TestMethod()]
@@ -19,7 +19,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quinone()
+        public void Quinone()
         {
             Test("oc1ccc(o)cc1", "O=C1C=CC(=O)C=C1");
             Test("O=c1ccc(=O)cc1", "O=C1C=CC(=O)C=C1");
@@ -40,7 +40,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalid_acyclic_chain()
+        public void Invalid_acyclic_chain()
         {
             Test("ccc", "n/a");
         }
@@ -85,7 +85,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void imidazole()
+        public void Imidazole()
         {
             Test("c1c[nH]cn1", "C1=C[NH]C=N1");
         }
@@ -109,13 +109,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void thiophene()
+        public void Thiophene()
         {
             Test("s1cccc1", "S1C=CC=C1");
         }
 
         [TestMethod()]
-        public void imidazol_3_ium()
+        public void Imidazol_3_ium()
         {
             Test("c1c[nH+]c[nH]1", "C1=C[NH+]=C[NH]1");
         }
@@ -146,7 +146,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void hexamethylidenecyclohexane()
+        public void Hexamethylidenecyclohexane()
         {
             Test("cc1c(c)c(c)c(c)c(c)c1c", "C=C1C(=C)C(=C)C(=C)C(=C)C1=C");
             Test("C=c1c(=C)c(=C)c(=C)c(=C)c1=C", "C=C1C(=C)C(=C)C(=C)C(=C)C1=C");
@@ -154,7 +154,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void eMolecules492140() 
+        public void EMolecules492140() 
         {
             Test("c1ccc2c(c1)c1[n-]c2/N=c/2\\[n-]c(c3c2cccc3)/N=c/2\\[n-]/c(=N\\c3[n-]/c(=N\\1)/c1ccccc31)/c1c2cccc1.[Cu+4] 492140", "n/a");
         }
@@ -175,14 +175,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void thiophene_oxide()
+        public void Thiophene_oxide()
         {
             Test("O=s1cccc1",
                  "O=S1C=CC=C1");
         }
 
         [TestMethod()]
-        public void tellurophene()
+        public void Tellurophene()
         {
             Test("[Te]1cccc1", "[Te]1C=CC=C1");
             Test("[te]1cccc1", "[Te]1C=CC=C1");
@@ -254,7 +254,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void imidazole_invalid()
+        public void Imidazole_invalid()
         {
             Test("c1nc2ccccc2n1", "n/a");
         }
@@ -287,7 +287,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void hexaoxane()
+        public void Hexaoxane()
         {
             Test("o1ooooo1", "O1OOOOO1");
         }
@@ -305,7 +305,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void bo_25756()
+        public void Bo_25756()
         {
             Test("Nc1c2c3ccccc3c4cccc(cc1)c24",
                  "NC1=C2C3=CC=CC=C3C=4C=CC=C(C=C1)C24");  // "NC1=C2C3=CC=CC=C3C4=CC=CC(C=C1)=C24");
@@ -314,14 +314,14 @@ namespace NCDK.Beam
         /* Examples from http://www.daylight.com/dayhtml_tutorials/languages/smiles/smiles_examples.html */
 
         [TestMethod()]
-        public void viagra()
+        public void Viagra()
         {
             Test("CCc1nn(C)c2c(=O)[nH]c(nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4",
                  "CCC1=NN(C)C=2C(=O)[NH]C(=NC12)C3=CC(=CC=C3OCC)S(=O)(=O)N4CCN(C)CC4");
         }
 
         [TestMethod()]
-        public void xanax()
+        public void Xanax()
         {
             Test("Cc1nnc2CN=C(c3ccccc3)c4cc(Cl)ccc4-n12",
                  "CC1=NN=C2CN=C(C3=CC=CC=C3)C4=CC(Cl)=CC=C4N12");
@@ -356,7 +356,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void vioxx()
+        public void Vioxx()
         {
             Test("CS(=O)(=O)c1ccc(cc1)C2=C(C(=O)OC2)c3ccccc3",
                  "CS(=O)(=O)C1=CC=C(C=C1)C2=C(C(=O)OC2)C3=CC=CC=C3");
@@ -370,14 +370,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void lipitor()
+        public void Lipitor()
         {
             Test("CC(C)c1c(C(=O)Nc2ccccc2)c(c(c3ccc(F)cc3)n1CC[C@@H]4C[C@@H](O)CC(=O)O4)c5ccccc5",
                  "CC(C)C1=C(C(=O)NC2=CC=CC=C2)C(=C(C3=CC=C(F)C=C3)N1CC[C@@H]4C[C@@H](O)CC(=O)O4)C5=CC=CC=C5");
         }
 
         [TestMethod()]
-        public void cialis()
+        public void Cialis()
         {
             Test("CN1CC(=O)N2[C@@H](c3[nH]c4ccccc4c3C[C@@H]2C1=O)c5ccc6OCOc6c5",
                  "CN1CC(=O)N2[C@@H](C=3[NH]C4=CC=CC=C4C3C[C@@H]2C1=O)C5=CC=C6OCOC6=C5");
@@ -398,14 +398,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quinine()
+        public void Quinine()
         {
             Test("COc1ccc2nccc([C@@H](O)[C@H]3C[C@@H]4CCN3C[C@@H]4C=C)c2c1",
                  "COC1=CC=C2N=CC=C([C@@H](O)[C@H]3C[C@@H]4CCN3C[C@@H]4C=C)C2=C1");
         }
 
         [TestMethod()]
-        public void lysergicAcid()
+        public void LysergicAcid()
         {
             Test("CN1C[C@@H](C=C2[C@H]1Cc3c[nH]c4cccc2c34)C(=O)O",
                  "CN1C[C@@H](C=C2[C@H]1CC3=C[NH]C4=CC=CC2=C34)C(=O)O");
@@ -426,14 +426,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void heroin()
+        public void Heroin()
         {
             Test("CN1CC[C@]23[C@H]4Oc5c3c(C[C@@H]1[C@@H]2C=C[C@@H]4OC(=O)C)ccc5OC(=O)C",
                  "CN1CC[C@@]23[C@H]4OC5=C2C(C[C@@H]1[C@@H]3C=C[C@@H]4OC(=O)C)=CC=C5OC(=O)C");
         }
 
         [TestMethod()]
-        public void nicotine()
+        public void Nicotine()
         {
             Test("CN1CCC[C@H]1c2cccnc2",
                  "CN1CCC[C@H]1C2=CC=CN=C2");
@@ -448,7 +448,7 @@ namespace NCDK.Beam
 
         // N,N-Diallylmelamine 
         [TestMethod()]
-        public void ncs4420()
+        public void Ncs4420()
         {
             Test("[nH2]c1nc(nc(n1)n(Ccc)Ccc)[nH2]",
                  "[NH2]C1=NC(=NC(=N1)N(CC=C)CC=C)[NH2]");
@@ -464,14 +464,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void sulphur_cation()
+        public void Sulphur_cation()
         {
             Test("CC(C)(C)c1cc2c3[s-](oc2=O)oc(=O)c3c1",
                  "CC(C)(C)C1=CC2=C3[S-](OC2=O)OC(=O)C3=C1");
         }
 
         [TestMethod()]
-        public void nitrogenRadical()
+        public void NitrogenRadical()
         {
             Test("c1cc(c([n+]c1)N)[N+](=O)[O-]",
                  "C1=CC(=C([N+]=C1)N)[N+](=O)[O-]");

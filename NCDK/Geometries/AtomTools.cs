@@ -36,18 +36,16 @@ namespace NCDK.Geometries
     {
         public readonly static double TETRAHEDRAL_ANGLE = 2.0 * Math.Acos(1.0 / Math.Sqrt(3.0));
 
-        /**
-         * Generate coordinates for all atoms which are singly bonded and have
-         * no coordinates. This is useful when hydrogens are present but have
-         * no coordinates. It knows about C, O, N, S only and will give tetrahedral or
-         * trigonal geometry elsewhere. Bond lengths are computed from covalent radii
-         * if available. Angles are tetrahedral or trigonal
-         *
-         * @param atomContainer the set of atoms involved
-         *
-         * @cdk.keyword coordinate calculation
-         * @cdk.keyword 3D model
-         */
+        /// <summary>
+        /// Generate coordinates for all atoms which are singly bonded and have
+        /// no coordinates. This is useful when hydrogens are present but have
+        /// no coordinates. It knows about C, O, N, S only and will give tetrahedral or
+        /// trigonal geometry elsewhere. Bond lengths are computed from covalent radii
+        /// if available. Angles are tetrahedral or trigonal
+        /// </summary>
+        /// <param name="atomContainer">the set of atoms involved</param>
+       // @cdk.keyword coordinate calculation
+       // @cdk.keyword 3D model
         public static void add3DCoordinates1(IAtomContainer atomContainer)
         {
             // atoms without coordinates
@@ -101,15 +99,14 @@ namespace NCDK.Geometries
             }
         }
 
-        /**
-         * Rescales Point2 so that length 1-2 is sum of covalent radii.
-         * if covalent radii cannot be found, use bond length of 1.0
-         *
-         * @param  atom1  stationary atom
-         * @param  atom2  movable atom
-         * @param  point2 coordinates for atom 2
-         * @return        new coords for atom 2
-         */
+        /// <summary>
+        /// Rescales Point2 so that length 1-2 is sum of covalent radii.
+        /// if covalent radii cannot be found, use bond length of 1.0
+        /// </summary>
+        /// <param name="atom1">stationary atom</param>
+        /// <param name="atom2">movable atom</param>
+        /// <param name="point2">coordinates for atom 2</param>
+        /// <returns>new coords for atom 2</returns>
         public static Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
         {
             Vector3 point1 = atom1.Point3D.Value;
@@ -122,52 +119,47 @@ namespace NCDK.Geometries
             return newPoint;
         }
 
-        /**
-         * Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
-         * Initially designed for hydrogens. The ligands of refAtom are identified
-         * and those with 3D coordinates used to generate the new points. (This
-         * allows structures with partially known 3D coordinates to be used, as when
-         * groups are added.)
-         * "Bent" and "non-planar" groups can be formed by taking a subset of the
-         * calculated points. Thus R-NH2 could use 2 of the 3 points calculated
-         * from (1,iii)
-         * nomenclature: A is point to which new ones are "attached".
-         *     A may have ligands B, C...
-         *     B may have ligands J, K..
-         *     points X1, X2... are returned
-         * The cases (see individual routines, which use idealised geometry by default):
-         * (0) zero ligands of refAtom. The resultant points are randomly oriented:
-         *    (i) 1 points  required; +x,0,0
-         *    (ii) 2 points: use +x,0,0 and -x,0,0
-         *    (iii) 3 points: equilateral triangle in xy plane
-         *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x
-         * (1a) 1 ligand(B) of refAtom which itself has a ligand (J)
-         *    (i) 1 points  required; vector along AB vector
-         *    (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
-         *    (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J
-         * (1b) 1 ligand(B) of refAtom which has no other ligands. A random J is
-         * generated and (1a) applied
-         * (2) 2 ligands(B, C) of refAtom A
-         *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
-         *        linear, no points
-         *    (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i
-         * (3) 3 ligands(B, C, D) of refAtom A
-         *    (i) 1 points  required; if A, B, C, D coplanar, no points.
-         *       else vector is resultant of BA, CA, DA
-
-         * fails if atom itself has no coordinates or >4 ligands
-         *
-         * @param atomContainer describing the ligands of refAtom. It could be the
-         * whole molecule, or could be a selected subset of ligands
-         * @param refAtom (A) to which new ligands coordinates could be added
-         * @param length A-X length
-         * @param angle B-A-X angle (used in certain cases)
-         * @return Point3D[] points calculated. If request could not be fulfilled (e.g.
-         * too many atoms, or strange geometry, returns empty array (zero length,
-         * not null)
-         *
-         * @cdk.keyword coordinate generation
-         */
+        /// <summary>
+        /// Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
+        /// Initially designed for hydrogens. The ligands of refAtom are identified
+        /// and those with 3D coordinates used to generate the new points. (This
+        /// allows structures with partially known 3D coordinates to be used, as when
+        /// groups are added.)
+        /// </summary>
+        /// <remarks>
+        /// "Bent" and "non-planar" groups can be formed by taking a subset of the
+        /// calculated points. Thus R-NH2 could use 2 of the 3 points calculated
+        /// from (1,iii)
+        /// nomenclature: A is point to which new ones are "attached".
+        ///     A may have ligands B, C...
+        ///     B may have ligands J, K..
+        ///     points X1, X2... are returned
+        /// The cases (see individual routines, which use idealised geometry by default):
+        /// (0) zero ligands of refAtom. The resultant points are randomly oriented:
+        ///    (i) 1 points  required; +x,0,0
+        ///    (ii) 2 points: use +x,0,0 and -x,0,0
+        ///    (iii) 3 points: equilateral triangle in xy plane
+        ///    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x
+        /// (1a) 1 Ligand(B) of refAtom which itself has a ligand (J)
+        ///    (i) 1 points  required; vector along AB vector
+        ///    (ii) 2 points: 2 vectors in ABJ plane, staggered and eclipsed wrt J
+        ///    (iii) 3 points: 1 staggered wrt J, the others +- gauche wrt J
+        /// (1b) 1 Ligand(B) of refAtom which has no other ligands. A random J is
+        /// generated and (1a) applied
+        /// (2) 2 Ligands(B, C) of refAtom A
+        ///    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is linear, no points
+        ///    (ii) 2 points: 2 vectors at angle ang, whose resultant is 2i
+        /// (3) 3 Ligands(B, C, D) of refAtom A
+        ///    (i) 1 points  required; if A, B, C, D coplanar, no points.
+        ///       else vector is resultant of BA, CA, DA
+        /// fails if atom itself has no coordinates or >4 ligands
+        /// </remarks>
+        /// <param name="atomContainer">describing the ligands of refAtom. It could be the whole molecule, or could be a selected subset of ligands</param>
+        /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle (used in certain cases)</param>
+        /// <returns>Point3D[] points calculated. If request could not be fulfilled (e.g. too many atoms, or strange geometry, returns empty array (zero length, not null)</returns>
+       // @cdk.keyword coordinate generation
         public static Vector3?[] Calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle)
         {
             var newPoints = new Vector3?[0];
@@ -230,21 +222,20 @@ namespace NCDK.Geometries
             return newPoints;
         }
 
-        /**
-         * Calculates substituent points.
-         * Calculate substituent points for
-         * (0) zero ligands of aPoint. The resultant points are randomly oriented:
-         *    (i) 1 points  required; +x,0,0
-         *    (ii) 2 points: use +x,0,0 and -x,0,0
-         *    (iii) 3 points: equilateral triangle in xy plane
-         *    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
-         *
-         * @param aPoint to which substituents are added
-         * @param nwanted number of points to calculate (1-4)
-         * @param length from aPoint
-         *
-         * @return Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        /// Calculates substituent points.
+        /// Calculate substituent points for
+        ///
+        /// (0) zero ligands of aPoint. The resultant points are randomly oriented:
+        ///    (i) 1 points  required; +x,0,0
+        ///    (ii) 2 points: use +x,0,0 and -x,0,0
+        ///    (iii) 3 points: equilateral triangle in xy plane
+        ///    (iv) 4 points x,x,x, x,-x,-x, -x,x,-x, -x,-x,x where 3x**2 = bond length
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="nwanted">number of points to calculate (1-4)</param>
+        /// <param name="length">from aPoint</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public static Vector3?[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
         {
             var points = new Vector3?[0];
@@ -275,23 +266,21 @@ namespace NCDK.Geometries
             return points;
         }
 
-        /**
-         * Calculate new point(s) X in a B-A system to form B-A-X.
-         * Use C as reference for * staggering about the B-A bond
-         *
-         * (1a) 1 ligand(B) of refAtom (A) which itself has a ligand (C)
-         *    (i) 1 points  required; vector along AB vector
-         *    (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
-         *    (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C
-         * If C is null, a random non-colinear C is generated
-         *
-         * @param aPoint to which substituents are added
-         * @param nwanted number of points to calculate (1-3)
-         * @param length A-X length
-         * @param angle B-A-X angle
-         *
-         * @return Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        /// Calculate new Point(s) X in a B-A system to form B-A-X.
+        /// Use C as reference for * staggering about the B-A bond
+        ///
+        /// (1a) 1 Ligand(B) of refAtom (A) which itself has a ligand (C)
+        ///    (i) 1 points  required; vector along AB vector
+        ///    (ii) 2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C
+        ///    (iii) 3 points: 1 staggered wrt C, the others +- gauche wrt C
+        /// If C is null, a random non-colinear C is generated
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="nwanted">number of points to calculate (1-3)</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public static Vector3?[] Calculate3DCoordinates1(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted, double length, double angle)
         {
             var points = new Vector3?[nwanted];
@@ -332,23 +321,21 @@ namespace NCDK.Geometries
             return points;
         }
 
-        /**
-         * Calculate new point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
-         *
-         * (2) 2 ligands(B, C) of refAtom A
-         *    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
-         *        linear, no points
-         *    (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
-         *
-         * @param aPoint to which substituents are added
-         * @param bPoint first ligand of A
-         * @param cPoint second ligand of A
-         * @param nwanted number of points to calculate (1-2)
-         * @param length A-X length
-         * @param angle B-A-X angle
-         *
-         * @return Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        /// Calculate new Point(s) X in a B-A-C system. It forms form a B-A(-C)-X system.
+        ///
+        /// (2) 2 Ligands(B, C) of refAtom A
+        ///    (i) 1 points  required; vector in ABC plane bisecting AB, AC. If ABC is
+        ///        linear, no points
+        ///    (ii) 2 points: 2 points X1, X2, X1-A-X2 = angle about 2i vector
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="bPoint">first ligand of A</param>
+        /// <param name="cPoint">second ligand of A</param>
+        /// <param name="nwanted">number of points to calculate (1-2)</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public static Vector3?[] Calculate3DCoordinates2(Vector3? aPoint, Vector3? bPoint, Vector3? cPoint, int nwanted,
                 double length, double angle)
         {
@@ -379,21 +366,19 @@ namespace NCDK.Geometries
             return newPoints;
         }
 
-        /**
-         * Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
-         *
-         * (3) 3 ligands(B, C, D) of refAtom A
-         *    (i) 1 points  required; if A, B, C, D coplanar, no points.
-         *       else vector is resultant of BA, CA, DA
-         *
-         * @param aPoint to which substituents are added
-         * @param bPoint first ligand of A
-         * @param cPoint second ligand of A
-         * @param dPoint third ligand of A
-         * @param length A-X length
-         *
-         * @return Vector3 nwanted points (or null if failed (coplanar))
-         */
+        /// <summary>
+        /// Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X system.
+        ///
+        /// (3) 3 Ligands(B, C, D) of refAtom A
+        ///    (i) 1 points  required; if A, B, C, D coplanar, no points.
+        ///       else vector is resultant of BA, CA, DA
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="bPoint">first ligand of A</param>
+        /// <param name="cPoint">second ligand of A</param>
+        /// <param name="dPoint">third ligand of A</param>
+        /// <param name="length">A-X length</param>
+        /// <returns>Vector3 nwanted points (or null if failed (coplanar))</returns>
         public static Vector3? Calculate3DCoordinates3(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, Vector3 dPoint, double length)
         {
             Vector3 v1 = aPoint - bPoint;
@@ -409,7 +394,7 @@ namespace NCDK.Geometries
             return point;
         }
 
-        // gets a point not on vector a...b; this can be used to define a plan or cross products
+        /// gets a point not on vector a...b; this can be used to define a plan or cross products
         private static Vector3 GetNonColinearVector(Vector3 ab)
         {
             Vector3 cr = Vector3.Cross(ab, Vector3.UnitX);

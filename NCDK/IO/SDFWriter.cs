@@ -31,38 +31,38 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
-     * complemented by properties.
-     *
-     * @cdk.module  io
-     * @cdk.githash
-     * @cdk.iooptions
-     * @cdk.keyword file format, MDL SD file
-     */
+    /// <summary>
+    /// Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
+    /// complemented by properties.
+    ///
+    // @cdk.module  io
+    // @cdk.githash
+    // @cdk.iooptions
+    // @cdk.keyword file format, MDL SD file
+    /// </summary>
     public class SDFWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
         private BooleanIOSetting writerProperties;
         private ICollection<string> propertiesToWrite;
 
-        /**
-         * Constructs a new SDFWriter that writes to the given {@link Writer}.
-         *
-         * @param   out  The {@link Writer} to write to
-         */
+        /// <summary>
+        /// Constructs a new SDFWriter that writes to the given <see cref="Writer"/>.
+        ///
+        /// <param name="out">The <see cref="Writer"/> to write to</param>
+        /// </summary>
         public SDFWriter(TextWriter out_)
         {
             this.writer = out_;
             InitIOSettings();
         }
 
-        /**
-         * Constructs a new MDLWriter that can write to a given
-         * {@link Stream}.
-         *
-         * @param   output  The {@link Stream} to write to
-         */
+        /// <summary>
+        /// Constructs a new MDLWriter that can write to a given
+        /// <see cref="Stream"/>.
+        ///
+        /// <param name="output">The <see cref="Stream"/> to write to</param>
+        /// </summary>
         public SDFWriter(Stream output)
             : this(new StreamWriter(output))
         { }
@@ -71,11 +71,11 @@ namespace NCDK.IO
                 : this(new StringWriter())
         { }
 
-        /**
-         * Constructs a new SDFWriter that writes to the given {@link Writer}.
-         *
-         * @param out The {@link Writer} to write to
-         */
+        /// <summary>
+        /// Constructs a new SDFWriter that writes to the given <see cref="Writer"/>.
+        ///
+        /// <param name="out">The <see cref="Writer"/> to write to</param>
+        /// </summary>
         public SDFWriter(TextWriter out_, ICollection<string> propertiesToWrite)
         {
             writer = out_;
@@ -83,19 +83,19 @@ namespace NCDK.IO
             this.propertiesToWrite = propertiesToWrite;
         }
 
-        /**
-         * Constructs a new SdfWriter that can write to a given
-         * {@link Stream}.
-         *
-         * @param output The {@link Stream} to write to
-         */
+        /// <summary>
+        /// Constructs a new SdfWriter that can write to a given
+        /// <see cref="Stream"/>.
+        ///
+        /// <param name="output">The <see cref="Stream"/> to write to</param>
+        /// </summary>
         public SDFWriter(Stream output, ICollection<string> propertiesToWrite)
                 : this(new StreamWriter(output), propertiesToWrite)
         { }
 
-        /**
-         * Writes SD-File to a string including the given properties
-         */
+        /// <summary>
+        /// Writes SD-File to a string including the given properties
+        /// </summary>
         public SDFWriter(ICollection<string> propertiesToWrite)
                 : this(new StringWriter(), propertiesToWrite)
         { }
@@ -112,9 +112,9 @@ namespace NCDK.IO
             SetWriter(new StreamWriter(output));
         }
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();
@@ -129,15 +129,15 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * Writes a IChemObject to the MDL SD file formated output. It can only
-         * output IChemObjects of type {@link IChemFile}, {@link IAtomContainerSet}
-         * and {@link IAtomContainerSet}.
-         *
-         * @param object an acceptable {@link IChemObject}
-         *
-         * @see #Accepts(Class)
-         */
+        /// <summary>
+        /// Writes a IChemObject to the MDL SD file formated output. It can only
+        /// output IChemObjects of type <see cref="IChemFile"/>, <see cref="IAtomContainerSet"/>
+        /// and <see cref="IAtomContainerSet"/>.
+        ///
+        /// <param name="object">an acceptable <see cref="IChemObject"/></param>
+        ///
+        /// <seealso cref="Accepts(Class)"/>
+        /// </summary>
         public override void Write(IChemObject obj)
         {
             try
@@ -177,11 +177,11 @@ namespace NCDK.IO
                     "Only supported is writing of ChemFile, MoleculeSet, AtomContainer and Molecule objects.");
         }
 
-        /**
-         * Writes an {@link IAtomContainerSet}.
-         *
-         * @param   som  the {@link IAtomContainerSet} to serialize
-         */
+        /// <summary>
+        /// Writes an <see cref="IAtomContainerSet"/>.
+        ///
+        /// <param name="som">the <see cref="IAtomContainerSet"/> to serialize</param>
+        /// </summary>
         private void WriteMoleculeSet(IAtomContainerSet<IAtomContainer> som)
         {
             foreach (var mol in som)
@@ -239,10 +239,10 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * A list of properties used by CDK algorithms which must never be
-         * serialized into the SD file format.
-         */
+        /// <summary>
+        /// A list of properties used by CDK algorithms which must never be
+        /// serialized into the SD file format.
+        /// </summary>
         private static List<string> cdkInternalProperties = new List<string>();
 
         static SDFWriter()

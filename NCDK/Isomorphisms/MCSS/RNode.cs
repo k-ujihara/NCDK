@@ -31,20 +31,20 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms.MCSS
 {
-    /**
-     *  Node of the resolution graph (RGraph) An RNode represents an association
-     *  between two edges of the source graphs G1 and G2 that are compared. Two
-     *  edges may be associated if they have at least one common feature. The
-     *  association is defined outside this class. The node keeps tracks of the ID
-     *  of the mapped edges (in an RMap), of its neighbours in the RGraph it belongs
-     *  to and of the set of incompatible nodes (nodes that may not be along with
-     *  this node in the same solution)
-     *
-     * @author      Stephane Werner from IXELIS mail@ixelis.net
-     * @cdk.created 2002-07-17
-     * @cdk.module  standard
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Node of the resolution graph (RGraph) An RNode represents an association
+    ///  between two edges of the source graphs G1 and G2 that are compared. Two
+    ///  edges may be associated if they have at least one common feature. The
+    ///  association is defined outside this class. The node keeps tracks of the ID
+    ///  of the mapped edges (in an RMap), of its neighbours in the RGraph it belongs
+    ///  to and of the set of incompatible nodes (nodes that may not be along with
+    ///  this node in the same solution)
+    ///
+    // @author      Stephane Werner from IXELIS mail@ixelis.net
+    // @cdk.created 2002-07-17
+    // @cdk.module  standard
+    // @cdk.githash
+    /// </summary>
     public class RNode
     {
         /// <summary>
@@ -62,24 +62,24 @@ namespace NCDK.Isomorphisms.MCSS
         /// </summary>
         public BitArray Forbidden { get; set; } = null;
 
-        /**
-         *  Constructor for the RNode object.
-         *
-         *@param  id1  number of the bond in the graph 1
-         *@param  id2  number of the bond in the graph 2
-         */
+        /// <summary>
+        ///  Constructor for the RNode object.
+        ///
+        /// <param name="id1">number of the bond in the graph 1</param>
+        /// <param name="id2">number of the bond in the graph 2</param>
+        /// </summary>
         public RNode(int id1, int id2)
         {
             RMap = new RMap(id1, id2);
             Extension = new BitArray(0);
             Forbidden = new BitArray(0);
         }
-		
-        /**
-         *  Returns a string representation of the RNode.
-         *
-         *@return    the string representation of the RNode
-         */
+        
+        /// <summary>
+        ///  Returns a string representation of the RNode.
+        ///
+        /// <returns>the string representation of the RNode</returns>
+        /// </summary>
         public override string ToString()
         {
             return ("id1 : " + RMap.Id1 + ", id2 : " + RMap.Id2 + "\n" 

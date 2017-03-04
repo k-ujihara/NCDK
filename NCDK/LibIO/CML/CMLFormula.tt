@@ -1,50 +1,50 @@
 ﻿// .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara
 
-<#@ include file="..\..\Config.ttinclude" #>
+<#@ include file="..\..\..\Config.ttinclude" #>
 
 namespace NCDK.LibIO.CML
 {
     public partial class CMLFormula
     {
-		public struct Types : System.IComparable
-		{
+        public struct Types : System.IComparable
+        {
 <# 
-			GenerateEnumBody(
-				"Types", 
-				 new[]
-				{
-					"NOPUNCTUATION(NoPunctuation):the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.",
-					"ELEMENT_COUNT_WHITESPACE(Element Count Whitespace):another simple representation. an input-only format. parsing is also fragile as charge sematics are not defined. Not recommended for output.",
-					"ELEMENT_WHITESPACE_COUNT(Element Whitespace Count):Yet another simple representation. an input-only format. Element counts of 1 should always be given. Fragile as charge field is likely to be undefined. Not recommended for output.",
-					"CONCISE(CML Concise):the format used in concise. recommended as the main output form. Element counts of 1 should always be given. the charge shoudl always be included. See concise.xsd and formulaType.xsd for syntax.",
-					"MULTIPLIED_ELEMENT_COUNT_WHITESPACE(Multiplied Element Whitespace Count):multipliers for moieties. an input only format. JUMBO will try to parse this correctly but no guarantee is given.", 
-					"NESTEDBRACKETS(NestedBrackets):hierarchical formula. an input-only format. JUMBO will try to parse this correctly but no guarantee is given.",
-					"IUPAC(IUPAC):an input only format. JUMBO will not yet parse this correctly. comments from IUCr", 
-					"MOIETY(Moiety):Moiety, used by IUCr. an input-only format. moieties assumed to be comma separated then ELEMENT_COUNT_WHITESPACE, with optional brackets and post or pre-multipliers", 
-					"SUBMOIETY(SubMoiety):SubMoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA",
-					"STRUCTURAL(STRUCTURAL):Structural, used by IUCr. not currently implemented, I think. probably the same as nested brackets",
-					"ANY(Any):any of the above. input-only.",
-				},
-				true
-			);
+            GenerateEnumBody(
+                "Types", 
+                 new[]
+                {
+                    "NOPUNCTUATION(NoPunctuation):the simplest representation. an input-only format. parsing is possible but fragile. The charge semantics are not defined. Not recommended for output.",
+                    "ELEMENT_COUNT_WHITESPACE(Element Count Whitespace):another simple representation. an input-only format. parsing is also fragile as charge sematics are not defined. Not recommended for output.",
+                    "ELEMENT_WHITESPACE_COUNT(Element Whitespace Count):Yet another simple representation. an input-only format. Element counts of 1 should always be given. Fragile as charge field is likely to be undefined. Not recommended for output.",
+                    "CONCISE(CML Concise):the format used in concise. recommended as the main output form. Element counts of 1 should always be given. the charge shoudl always be included. See concise.xsd and formulaType.xsd for syntax.",
+                    "MULTIPLIED_ELEMENT_COUNT_WHITESPACE(Multiplied Element Whitespace Count):multipliers for moieties. an input only format. JUMBO will try to parse this correctly but no guarantee is given.", 
+                    "NESTEDBRACKETS(NestedBrackets):hierarchical formula. an input-only format. JUMBO will try to parse this correctly but no guarantee is given.",
+                    "IUPAC(IUPAC):an input only format. JUMBO will not yet parse this correctly. comments from IUCr", 
+                    "MOIETY(Moiety):Moiety, used by IUCr. an input-only format. moieties assumed to be comma separated then ELEMENT_COUNT_WHITESPACE, with optional brackets and post or pre-multipliers", 
+                    "SUBMOIETY(SubMoiety):SubMoiety, used by IUCr. the part of a moiety within the brackets assumed to b ELEMENT_OPTIONALCOUNT followed by optional FORMULA",
+                    "STRUCTURAL(STRUCTURAL):Structural, used by IUCr. not currently implemented, I think. probably the same as nested brackets",
+                    "ANY(Any):any of the above. input-only.",
+                },
+                true
+            );
 #>
-		}
+        }
 
-		public struct Sorts : System.IComparable
-		{
+        public struct Sorts : System.IComparable
+        {
 <# 
-			GenerateEnumBody(
-				"Sorts", 
-				 new[]
-				{
-					"ALPHABETIC_ELEMENTS(Alphabetic Elements):sort alphabetically. output only. Not sure where this is",
-					"CHFIRST(C and H first):C H and then alphabetically. (output only)",
-				},
-				true
-			);
+            GenerateEnumBody(
+                "Sorts", 
+                 new[]
+                {
+                    "ALPHABETIC_ELEMENTS(Alphabetic Elements):sort alphabetically. output only. Not sure where this is",
+                    "CHFIRST(C and H first):C H and then alphabetically. (output only)",
+                },
+                true
+            );
 #>
-		}
-	}
+        }
+    }
 }
 

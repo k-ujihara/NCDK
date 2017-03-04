@@ -47,7 +47,7 @@ namespace NCDK.Reactions.Mechanisms
          *                    is the atom which receives the atom1 and the third is the atom which loss
          *                    the first atom
          * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond.
-         * 					  It is the bond which is moved
+         *                       It is the bond which is moved
          * @return            The Reaction mechanism
          *
          */

@@ -30,27 +30,27 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author     Egon Willighagen
-     * @cdk.created    2003-07-24
-     *
-     * @cdk.keyword    file format, MDL RXN
-     */
+    /// <summary>
+    /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author     Egon Willighagen
+    // @cdk.created    2003-07-24
+    ///
+    // @cdk.keyword    file format, MDL RXN
+    /// </summary>
     public class MDLRXNReader : DefaultChemObjectReader
     {
         TextReader input = null;
 
-        /**
-         * Constructs a new MDLReader that can read Molecule from a given Reader.
-         *
-         * @param  in  The Reader to read from
-         */
+        /// <summary>
+        /// Constructs a new MDLReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// </summary>
         public MDLRXNReader(TextReader ins)
             : this(ins, ChemObjectReaderModes.Relaxed)
         {
@@ -97,16 +97,16 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-          * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-          * this (from file, database, internet etc). If the specific implementation
-          * does not support a specific IChemObject it will throw an Exception.
-          *
-          * @param  object                              The object that subclasses
-          *      IChemObject
-          * @return                                     The IChemObject read
-          * @exception  CDKException
-          */
+        /// <summary>
+         /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
+         /// this (from file, database, internet etc). If the specific implementation
+         /// does not support a specific IChemObject it will throw an Exception.
+         ///
+         /// <param name="object">The object that subclasses</param>
+         ///      IChemObject
+         /// <returns>The IChemObject read</returns>
+         // @exception  CDKException
+         /// </summary>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -153,12 +153,12 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-        * Read a ChemFile from a file in MDL RDF format.
-        *
-        * @param  chemFile The IChemFile
-        * @return          The IChemFile that was read from the RDF file.
-        */
+        /// <summary>
+       /// Read a ChemFile from a file in MDL RDF format.
+       ///
+       /// <param name="chemFile">The IChemFile</param>
+       /// <returns>The IChemFile that was read from the RDF file.</returns>
+       /// </summary>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
@@ -169,12 +169,12 @@ namespace NCDK.IO
             return chemFile;
         }
 
-        /**
-        * Read a IChemModel from a file in MDL RDF format.
-        *
-        * @param  chemModel The IChemModel
-        * @return           The IChemModel that was read from the RDF file
-        */
+        /// <summary>
+       /// Read a IChemModel from a file in MDL RDF format.
+       ///
+       /// <param name="chemModel">The IChemModel</param>
+       /// <returns>The IChemModel that was read from the RDF file</returns>
+       /// </summary>
         private IChemModel ReadChemModel(IChemModel chemModel)
         {
             IReactionSet setOfReactions = chemModel.ReactionSet;
@@ -186,12 +186,12 @@ namespace NCDK.IO
             return chemModel;
         }
 
-        /**
-        * Read a IReactionSet from a file in MDL RDF format.
-        *
-        * @param  setOfReactions The IReactionSet
-        * @return                The IReactionSet that was read from the RDF file
-        */
+        /// <summary>
+       /// Read a IReactionSet from a file in MDL RDF format.
+       ///
+       /// <param name="setOfReactions">The IReactionSet</param>
+       /// <returns>The IReactionSet that was read from the RDF file</returns>
+       /// </summary>
         private IReactionSet ReadReactionSet(IReactionSet setOfReactions)
         {
 
@@ -285,11 +285,11 @@ namespace NCDK.IO
             return setOfReactions;
         }
 
-        /**
-         * Read a Reaction from a file in MDL RXN format
-         *
-         * @return  The Reaction that was read from the MDL file.
-         */
+        /// <summary>
+        /// Read a Reaction from a file in MDL RXN format
+        ///
+        /// <returns>The Reaction that was read from the MDL file.</returns>
+        /// </summary>
         private IReaction ReadReaction(IChemObjectBuilder builder)
         {
             Debug.WriteLine("Reading new reaction");
@@ -324,9 +324,8 @@ namespace NCDK.IO
                     Debug.WriteLine("File is empty, returning empty reaction");
                     return reaction;
                 }
-                /*
-                 * this line contains the number of reactants and products
-                 */
+                
+                // this line contains the number of reactants and products
                 var tokens = Strings.Tokenize(countsLine);
                 reactantCount = int.Parse(tokens[0]);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");

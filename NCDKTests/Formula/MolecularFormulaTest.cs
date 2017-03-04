@@ -18,32 +18,27 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Formula
 {
-    /**
-     * Checks the functionality of the MolecularFormula.
-     *
-     * @cdk.module test-data
-     *
-     * @see MolecularFormula
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormula.
+    ///
+    // @cdk.module test-data
+    ///
+    /// <seealso cref="MolecularFormula"/>
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaTest : AbstractMolecularFormulaTest
     {
         protected override IChemObjectBuilder Builder
             => Default.ChemObjectBuilder.Instance;
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMolecularFormula() {
 

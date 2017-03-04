@@ -21,22 +21,21 @@ using System;
 
 namespace NCDK.Reactions
 {
-    /**
-     * Tests for IReactionProcess implementations.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// Tests for IReactionProcess implementations.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public abstract class ReactionMechanismTest : CDKTestCase
     {
         protected IReactionMechanism reactionMechanism;
 
-        /**
-         * Defining reaction mechanism.
-         *
-         * @param descriptorClass
-         * @throws Exception
-         */
+        /// <summary>
+        /// Defining reaction mechanism.
+        ///
+        /// <param name="descriptorClass">/// @throws Exception</param>
+        /// </summary>
         public void SetMechanism(Type descriptorClass)
         {
             if (reactionMechanism == null)
@@ -50,20 +49,20 @@ namespace NCDK.Reactions
             }
         }
 
-        /**
-         * Makes sure that the extending class has set the super.descriptor.
-         * Each extending class should have this bit of code (JUnit3 formalism):
-         * <pre>
-         * public void SetUp() {
-         *   // Pass a Class, not an Object!
-         *   SetDescriptor(typeof(SomeDescriptor));
-         * }
-         *
-         * <p>The unit tests in the extending class may use this instance, but
-         * are not required.
-         *
-         * </pre>
-         */
+        /// <summary>
+        /// Makes sure that the extending class has set the super.descriptor.
+        /// Each extending class should have this bit of code (JUnit3 formalism):
+        /// <pre>
+        /// public void SetUp() {
+        ///   // Pass a Class, not an Object!
+        ///   SetDescriptor(typeof(SomeDescriptor));
+        /// }
+        ///
+        /// <p>The unit tests in the extending class may use this instance, but
+        /// are not required.
+        ///
+        /// </pre>
+        /// </summary>
         [TestMethod()]
         public void TestHasSetSuperDotDescriptor()
         {

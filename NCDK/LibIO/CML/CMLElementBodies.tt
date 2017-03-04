@@ -4,103 +4,103 @@
 
 namespace NCDK.LibIO.CML
 {
-	public partial class CMLElement
-	{
+    public partial class CMLElement
+    {
 <#
-		MakeStrAtt("id");
+        MakeStrAtt("id");
 #>
-	}
+    }
 
-	public partial class CMLLabel
-	{
+    public partial class CMLLabel
+    {
 <#
-		MakeStrAtt("dictRef");
-		MakeStrAtt("objectClass");
+        MakeStrAtt("dictRef");
+        MakeStrAtt("objectClass");
 #>
-	}
+    }
 
-	public partial class CMLAtom
-	{
+    public partial class CMLAtom
+    {
 <#
-		MakeStrAtt("ref");
-		MakeDblAtt("count");
-		MakeStrAtt("elementType");
-		MakeIntAtt("formalCharge");
-		MakeIntAtt("hydrogenCount");
-		MakeIntAtt("isotopeNumber");
-		MakeIntAtt("spinMultiplicity");
-		MakeDblAtt("x2");
-		MakeDblAtt("y2");
-		MakeDblAtt("x3");
-		MakeDblAtt("y3");
-		MakeDblAtt("z3");
-		MakeDblAtt("xFract");
-		MakeDblAtt("yFract");
-		MakeDblAtt("zFract");
+        MakeStrAtt("ref");
+        MakeDblAtt("count");
+        MakeStrAtt("elementType");
+        MakeIntAtt("formalCharge");
+        MakeIntAtt("hydrogenCount");
+        MakeIntAtt("isotopeNumber");
+        MakeIntAtt("spinMultiplicity");
+        MakeDblAtt("x2");
+        MakeDblAtt("y2");
+        MakeDblAtt("x3");
+        MakeDblAtt("y3");
+        MakeDblAtt("z3");
+        MakeDblAtt("xFract");
+        MakeDblAtt("yFract");
+        MakeDblAtt("zFract");
 #>
-	}
+    }
 
-	public partial class CMLBond
-	{
+    public partial class CMLBond
+    {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("order");
-		MakeStrsAtt("atomRefs");
-		MakeStrsAtt("atomRefs2");
+        MakeStrAtt("ref");
+        MakeStrAtt("order");
+        MakeStrsAtt("atomRefs");
+        MakeStrsAtt("atomRefs2");
 #>
-	}
+    }
 
-	public partial class CMLAtomArray
-	{
+    public partial class CMLAtomArray
+    {
 <#
-		MakeStrAtt("ref");
+        MakeStrAtt("ref");
 #>
-	}
-	
-	public partial class CMLBondArray
-	{
+    }
+    
+    public partial class CMLBondArray
+    {
 <#
-		MakeStrAtt("ref");
+        MakeStrAtt("ref");
 #>
-	}
+    }
 
-	public partial class CMLFormula
-	{
+    public partial class CMLFormula
+    {
 <#
-		MakeDblAtt("count");
-		MakeIntAtt("formalCharge");
-		//  customize version for concise
-		MakeStrAtt("inline");
+        MakeDblAtt("count");
+        MakeIntAtt("formalCharge");
+        //  customize version for concise
+        MakeStrAtt("inline");
 #>
-	}
+    }
 
     public partial class CMLProperty
     {
 <#
-		MakeStrAtt("ref");
+        MakeStrAtt("ref");
 #>
     }
 
     public partial class CMLPropertyList
     {
 <#
-		MakeStrAtt("ref");
+        MakeStrAtt("ref");
 #>
     }
 
     public partial class CMLScalar
     {
 <#
-		MakeStrAtt("dataType");
-		MakeDblAtt("errorValue");
-		MakeStrAtt("errorBasis");
-		MakeStrAtt("min");
-		MakeStrAtt("max");
-		MakeStrAtt("ref");
-		MakeStrAtt("units");
-		MakeStrAtt("unitType");
-		MakeDblAtt("constantToSI");
-		MakeDblAtt("multiplierToSI");
+        MakeStrAtt("dataType");
+        MakeDblAtt("errorValue");
+        MakeStrAtt("errorBasis");
+        MakeStrAtt("min");
+        MakeStrAtt("max");
+        MakeStrAtt("ref");
+        MakeStrAtt("units");
+        MakeStrAtt("unitType");
+        MakeDblAtt("constantToSI");
+        MakeDblAtt("multiplierToSI");
 #>
     }
 
@@ -108,67 +108,67 @@ namespace NCDK.LibIO.CML
     public partial class CMLReactant
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeDblAtt("count");
-		MakeDblAtt("state");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeDblAtt("count");
+        MakeDblAtt("state");
 #>
     }
-	
-	public partial class CMLReactantList
+    
+    public partial class CMLReactantList
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeDblAtt("count");
-		MakeStrAtt("state");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeDblAtt("count");
+        MakeStrAtt("state");
 #>
     }
 
     public partial class CMLProduct
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeDblAtt("count");
-		MakeDblAtt("state");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeDblAtt("count");
+        MakeDblAtt("state");
 #>
     }
-	
-	public partial class CMLProductList
+    
+    public partial class CMLProductList
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeDblAtt("count");
-		MakeStrAtt("state");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeDblAtt("count");
+        MakeStrAtt("state");
 #>
     }
 
     public partial class CMLSubstance
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeStrAtt("type");
-		MakeDblAtt("count");
-		MakeDblAtt("state");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeStrAtt("type");
+        MakeDblAtt("count");
+        MakeDblAtt("state");
 #>
     }
-	
-	public partial class CMLSubstanceList
+    
+    public partial class CMLSubstanceList
     {
 <#
-		MakeStrAtt("ref");
-		MakeStrAtt("role");
-		MakeStrAtt("type");
+        MakeStrAtt("ref");
+        MakeStrAtt("role");
+        MakeStrAtt("type");
 #>
     }
 
-	public partial class CMLCrystal
+    public partial class CMLCrystal
     {
 <#
-		MakeIntAtt("z");
+        MakeIntAtt("z");
 #>
     }
 }

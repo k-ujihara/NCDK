@@ -21,7 +21,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Maths
 {
     // @cdk.module test-standard
-	[TestClass()]
+    [TestClass()]
     public class FortranFormatTest : CDKTestCase
     {
         public FortranFormatTest()

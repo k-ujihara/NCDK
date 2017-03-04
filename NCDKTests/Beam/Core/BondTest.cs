@@ -32,12 +32,12 @@ using static NCDK.Beam.Bond;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class BondTest
     {
 
         [TestMethod()]
-        public void dotElectrons()
+        public void DotElectrons()
         {
             Assert.AreEqual(Dot.Order, 0);
         }
@@ -49,7 +49,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void doubleElectrons()
+        public void DoubleElectrons()
         {
             Assert.AreEqual(Bond.Double.Order, 2);
         }
@@ -61,7 +61,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quadrupleElectrons()
+        public void QuadrupleElectrons()
         {
             Assert.AreEqual(Bond.Quadruple.Order, 4);
         }
@@ -73,19 +73,19 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void upElectrons()
+        public void UpElectrons()
         {
             Assert.AreEqual(Bond.Up.Order, 1);
         }
 
         [TestMethod()]
-        public void downElectrons()
+        public void DownElectrons()
         {
             Assert.AreEqual(Bond.Down.Order, 1);
         }
 
         [TestMethod()]
-        public void dotInverse()
+        public void DotInverse()
         {
             Assert.AreEqual(Bond.Dot.Inverse(), Bond.Dot);
         }
@@ -97,7 +97,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void doubleInverse()
+        public void DoubleInverse()
         {
             Assert.AreEqual(Bond.Double.Inverse(), Bond.Double);
         }
@@ -109,7 +109,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quadrupleInverse()
+        public void QuadrupleInverse()
         {
             Assert.AreEqual(Bond.Quadruple.Inverse(), Bond.Quadruple);
         }
@@ -121,25 +121,25 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void upInverse()
+        public void UpInverse()
         {
             Assert.AreEqual(Bond.Up.Inverse(), Bond.Down);
         }
 
         [TestMethod()]
-        public void downInverse()
+        public void DownInverse()
         {
             Assert.AreEqual(Bond.Down.Inverse(), Bond.Up);
         }
 
         [TestMethod()]
-        public void implicitInverse()
+        public void ImplicitInverse()
         {
             Assert.AreEqual(Bond.Implicit.Inverse(), Bond.Implicit);
         }
 
         [TestMethod()]
-        public void dotSymbol()
+        public void DotSymbol()
         {
             Assert.AreEqual(Bond.Dot.Token, ".");
         }
@@ -151,7 +151,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void doubleSymbol()
+        public void DoubleSymbol()
         {
             Assert.AreEqual(Bond.Double.Token, "=");
         }
@@ -163,7 +163,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quadrupleSymbol()
+        public void QuadrupleSymbol()
         {
             Assert.AreEqual(Bond.Quadruple.Token, "$");
         }
@@ -175,19 +175,19 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void upSymbol()
+        public void UpSymbol()
         {
             Assert.AreEqual(Bond.Up.Token, "/");
         }
 
         [TestMethod()]
-        public void downSymbol()
+        public void DownSymbol()
         {
             Assert.AreEqual(Bond.Down.Token, "\\");
         }
 
         [TestMethod()]
-        public void implicitSymbol()
+        public void ImplicitSymbol()
         {
             Assert.AreEqual(Bond.Implicit.Token, "");
         }

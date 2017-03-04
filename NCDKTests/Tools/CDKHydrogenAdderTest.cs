@@ -26,17 +26,18 @@ using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace NCDK.Tools
 {
-    /**
-	 * Tests CDK's hydrogen adding capabilities in terms of
-	 * example molecules.
-	 *
-	 * @cdk.module  test-valencycheck
-	 *
-	 * @author      Egon Willighagen <egonw@users.sf.net>
-	 * @cdk.created 2007-07-28
-	 */
+    /// <summary>
+    /// Tests CDK's hydrogen adding capabilities in terms of
+    /// example molecules.
+    ///
+    // @cdk.module  test-valencycheck
+    ///
+    // @author      Egon Willighagen <egonw@users.sf.net>
+    // @cdk.created 2007-07-28
+    /// </summary>
     [TestClass()]
     public class CDKHydrogenAdderTest : CDKTestCase
     {
@@ -328,10 +329,10 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestHalogens()
         {
-            halogenTest("I");
-            halogenTest("F");
-            halogenTest("Cl");
-            halogenTest("Br");
+            HalogenTest("I");
+            HalogenTest("F");
+            HalogenTest("Cl");
+            HalogenTest("Br");
         }
 
         [TestMethod()]
@@ -343,7 +344,7 @@ namespace NCDK.Tools
             NegativeHalogenTest("Br");
         }
 
-        private void halogenTest(string halogen)
+        private void HalogenTest(string halogen)
         {
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom(halogen);
@@ -642,16 +643,16 @@ namespace NCDK.Tools
             Assert.AreEqual(5, AtomContainerManipulator.GetTotalHydrogenCount(mol));
         }
 
-        /**
-		 * @cdk.bug 1727373
-		 *
-		 */
+        /// <summary>
+        // @cdk.bug 1727373
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestBug1727373()
         {
             IAtomContainer molecule = null;
             string filename = "NCDK.Data.MDL.carbocations.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             molecule = reader.Read(new AtomContainer());
             FindAndConfigureAtomTypesForAllAtoms(molecule);
@@ -662,14 +663,14 @@ namespace NCDK.Tools
             Assert.AreEqual(2, molecule.Atoms[3].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @cdk.bug 1575269
-		 */
+        /// <summary>
+        // @cdk.bug 1575269
+        /// </summary>
         [TestMethod()]
         public void TestBug1575269()
         {
             string filename = "NCDK.Data.MDL.furan.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = reader.Read(new AtomContainer());
             FindAndConfigureAtomTypesForAllAtoms(molecule);
@@ -684,7 +685,7 @@ namespace NCDK.Tools
         public void TestImpHByAtom()
         {
             string filename = "NCDK.Data.MDL.furan.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = reader.Read(new AtomContainer());
             FindAndConfigureAtomTypesForAllAtoms(molecule);
@@ -728,14 +729,14 @@ namespace NCDK.Tools
             Assert.AreEqual(0, na.ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @cdk.bug 1244612
-		 */
+        /// <summary>
+        // @cdk.bug 1244612
+        /// </summary>
         [TestMethod()]
         public void TestSulfurCompound_ImplicitHydrogens()
         {
             string filename = "NCDK.Data.MDL.sulfurCompound.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             IList<IAtomContainer> containersList = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
@@ -758,9 +759,9 @@ namespace NCDK.Tools
             Assert.AreEqual(3, atomContainer_0.GetConnectedAtoms(sulfur).Count());
         }
 
-        /**
-		 * @cdk.bug 1627763
-		 */
+        /// <summary>
+        // @cdk.bug 1627763
+        /// </summary>
         [TestMethod()]
         public void TestBug1627763()
         {

@@ -28,31 +28,31 @@ using System.Diagnostics;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * TestCase for reading CML files using a few test files
-     * in data/cmltest as found in the Jmol distribution
-     * (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
-     *
-     * @cdk.module test-io
-     */
+    /// <summary>
+    /// TestCase for reading CML files using a few test files
+    /// in data/cmltest as found in the Jmol distribution
+    /// (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public class JmolTest : CDKTestCase
     {
-        /**
-         * Now come the actual tests...
-         */
+        /// <summary>
+        /// Now come the actual tests...
+        /// </summary>
 
-        /**
-         * Special CML characteristics:
-         * <ul><li> &lt;crystal></li></ul>
-         */
+        /// <summary>
+        /// Special CML characteristics:
+        /// <ul><li> &lt;crystal></li></ul>
+        /// </summary>
         [TestMethod()]
         public void TestEstron()
         {
             string filename = "NCDK.Data.CML.estron.cml";
             Trace.TraceInformation("Testing: " + filename);
             IChemFile chemFile;
-            using (var ins = this.GetType().Assembly.GetManifestResourceStream(filename))
+            using (var ins = ResourceLoader.GetAsStream(filename))
             using (var reader = new CMLReader(ins))
             {
                 chemFile = reader.Read(new ChemFile());
@@ -81,16 +81,16 @@ namespace NCDK.IO.CML
             Assert.IsTrue(c.Z != 0.0);
         }
 
-        /**
-         * Special CML characteristics:
-         * - Jmol Animation
-         */
+        /// <summary>
+        /// Special CML characteristics:
+        /// - Jmol Animation
+        /// </summary>
         //@Ignore("It is broken, but not used, AFAIK")
         public void TestAnimation()
         {
             string filename = "NCDK.Data.CML.SN1_reaction.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -114,15 +114,15 @@ namespace NCDK.IO.CML
             Assert.IsTrue(GeometryUtil.Has3DCoordinates(mol));
         }
 
-        /**
-         * No special CML code, just regression test for Jmol releases
-         */
+        /// <summary>
+        /// No special CML code, just regression test for Jmol releases
+        /// </summary>
         [TestMethod()]
         public void TestMethanolTwo()
         {
             string filename = "NCDK.Data.CML.methanol2.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -146,15 +146,15 @@ namespace NCDK.IO.CML
             Assert.IsTrue(GeometryUtil.Has3DCoordinates(mol));
         }
 
-        /**
-         * No special CML code, just regression test for Jmol releases
-         */
+        /// <summary>
+        /// No special CML code, just regression test for Jmol releases
+        /// </summary>
         [TestMethod()]
         public void TestMethanolOne()
         {
             string filename = "NCDK.Data.CML.methanol1.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

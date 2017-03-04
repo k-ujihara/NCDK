@@ -32,7 +32,7 @@ namespace NCDK.Geometries
     // @cdk.created 2005-01-14
     public interface IRDFWeightFunction
     {
-		/// <summary>
+        /// <summary>
         /// Calculates the weight for the interaction between the two atoms.
         /// </summary>
         /// <param name="atom">First atom.</param>

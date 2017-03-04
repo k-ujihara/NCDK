@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Beam
@@ -7,11 +6,8 @@ namespace NCDK.Beam
     /// Given a chemical graph with 0 or more atoms. Convert that graph to one where
     /// all atoms are fully specified bracket atoms.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class FromSubsetAtoms
+    // @author John May
+    internal sealed class FromSubsetAtoms
         : AbstractFunction<Graph, Graph>
     {
         public override Graph Apply(Graph g)
@@ -20,7 +16,7 @@ namespace NCDK.Beam
 
             for (int u = 0; u < g.Order; u++)
             {
-                h.AddAtom(FromSubset(g.GetAtom_(u),
+                h.AddAtom(FromSubset(g.GetAtom(u),
                                      BondOrderSum(g.GetEdges(u), g),
                                      g.Degree(u)));
                 h.AddTopology(g.TopologyOf(u));
@@ -44,7 +40,7 @@ namespace NCDK.Beam
             return sum;
         }
 
-        public static Atom_ FromSubset(Atom_ a, int sum, int deg)
+        public static Atom FromSubset(Atom a, int sum, int deg)
         {
             // atom is already a non-subset atom
             if (!a.Subset)

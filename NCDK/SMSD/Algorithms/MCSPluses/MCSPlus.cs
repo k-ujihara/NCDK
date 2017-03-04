@@ -31,13 +31,13 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /**
-     * This class handles MCS plus algorithm which is a combination of
-     * c-clique algorithm and McGregor algorithm.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class handles MCS plus algorithm which is a combination of
+    /// c-clique algorithm and McGregor algorithm.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class MCSPlus
     {
         /// <summary>
@@ -48,23 +48,23 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         private static TimeManager timeManager = null;
 
-        /**
-         * @return the timeout
-         */
+        /// <summary>
+        /// <returns>the timeout</returns>
+        /// </summary>
         protected static double GetTimeOut() => TimeOut.Instance.Time;
 
-        /**
-         * @return the timeManager
-         */
+        /// <summary>
+        /// <returns>the timeManager</returns>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static TimeManager GetTimeManager()
         {
             return timeManager;
         }
 
-        /**
-         * @param aTimeManager the timeManager to set
-         */
+        /// <summary>
+        /// <param name="aTimeManager">the timeManager to set</param>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected internal static void SetTimeManager(TimeManager aTimeManager)
         {
@@ -72,20 +72,13 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             timeManager = aTimeManager;
         }
 
-        /**
-         *
-         * @param ac1
-         * @param ac2
-         * @param shouldMatchBonds
-         * @return
-         * @throws CDKException
-         */
-#if TEST
-        public
-#else
-        internal  
-#endif
-            IList<IList<int>> GetOverlaps(IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
+        /// <summary>
+        ///
+        /// <param name="ac1">/// @param ac2</param>
+        /// <param name="shouldMatchBonds">/// @return</param>
+        // @throws CDKException
+        /// </summary>
+        internal IList<IList<int>> GetOverlaps(IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
         {
             Deque<IList<int>> maxCliqueSet = null;
             IList<IList<int>> mappings = new List<IList<int>>();
@@ -126,10 +119,8 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
                         mappings = ExactMapping.ExtractMapping(mappings, compGraphNodes, cliqueList);
                     }
                     maxCliqueSet.Pop();
-#if !TEST
                     if (IsTimeOut())
                         break;
-#endif
                 }
             }
             catch (IOException ex)

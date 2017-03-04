@@ -22,30 +22,30 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Checks the functionality of the MolecularFormulaRangeManipulator.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaRangeManipulator.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaRangeManipulatorTest : CDKTestCase
     {
 
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  Constructor for the MolecularFormulaRangeManipulatorTest object.
-         *
-         */
+        /// <summary>
+        ///  Constructor for the MolecularFormulaRangeManipulatorTest object.
+        ///
+        /// </summary>
         public MolecularFormulaRangeManipulatorTest()
             : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetRange_IMolecularFormulaSet()
         {
@@ -87,11 +87,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMaximalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {
@@ -134,11 +134,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMinimalFormula_MolecularFormulaRange_IChemObjectBuilder()
         {

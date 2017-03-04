@@ -31,7 +31,7 @@ namespace <#= ns.NS #>
         {
             if (!Contains(oAtom))
             {
-                base.Add(oAtom);	// this calls notify
+                base.Add(oAtom);    // this calls notify
 
                 if (oMonomer != null)
                 { // Not sure what's better here...throw nullpointer exception?

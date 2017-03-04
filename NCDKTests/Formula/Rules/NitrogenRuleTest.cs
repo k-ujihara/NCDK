@@ -21,9 +21,9 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class NitrogenRuleTest : FormulaRuleTest
     {

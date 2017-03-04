@@ -36,13 +36,9 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// An exception thrown when parsing malformed SMILES.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class InvalidSmilesException : IOException
+    // @author John May
+    internal sealed class InvalidSmilesException : IOException
     {
         public InvalidSmilesException(string message, CharBuffer buffer)
             : this(message, buffer, 0)
@@ -59,18 +55,15 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Displays the character buffer and marks on the next line the current
-        /// position in the buffer.
-        ///
-        /// <blockquote><pre>
+        /// Displays the character buffer and marks on the next line the current position in the buffer.
+        /// </summary>
+        /// <remarks>
         /// invalid bracket atom:
         /// C[CCCC
-        ///    ^
-        /// </pre></blockquote>
-        ///
+        ///   ^
+        /// </remarks>
         /// <param name="buffer">a character buffer</param>
         /// <returns>a </returns>3 line string showing the buffer and it's current position
-        /// </summary>
         static string Display(CharBuffer buffer, int offset)
         {
             StringBuilder sb = new StringBuilder();
@@ -85,14 +78,12 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Utility for invalid bracket atom error.
-        ///
+        /// </summary>
         /// <param name="buffer">the current buffer</param>
         /// <returns>the invalid smiles exception with buffer information</returns>
-        /// </summary>
         public static InvalidSmilesException InvalidBracketAtom(CharBuffer buffer)
         {
-            return new InvalidSmilesException("Invalid bracket atom, [ <isotope>? <symbol> <chiral>? <hcount>? <charge>? <class>? ]:",
-                                              buffer);
+            return new InvalidSmilesException("Invalid bracket atom, [ <isotope>? <symbol> <chiral>? <hcount>? <charge>? <class>? ]:", buffer);
         }
     }
 }

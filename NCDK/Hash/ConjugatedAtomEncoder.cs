@@ -28,52 +28,49 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Hash
 {
-    /**
-     * An atom encoder which takes several atom encodes and combines the encodings
-     * into a single encoder. The order of the encoders matter and for persistent
-     * results should be ordered before construction.
-     *
-     * <blockquote><pre>
-     * // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
-     * AtomEncoder encoder = new ConjugatedAtomEncoder(Arrays.asList(ATOMIC_NUMBER,
-     *                                                               FORMAL_CHARGE));
-     *
-     * // convenience constructor using var-args
-     * AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-     *                                                    FORMAL_CHARGE);
-     *
-     * // specifying a custom encoder
-     * AtomEncoder encoder =
-     *   ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-     *                                FORMAL_CHARGE,
-     *                                new AtomEncoder(){
-     *                                  public int Encode(IAtom a, IAtomContainer c){
-     *                                    return a.Symbol.HashCode();
-     *                                  }
-     *                                });
-     *
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module hash
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    sealed class ConjugatedAtomEncoder : AtomEncoder
+    /// <summary>
+    /// An atom encoder which takes several atom encodes and combines the encodings
+    /// into a single encoder. The order of the encoders matter and for persistent
+    /// results should be ordered before construction.
+    ///
+    /// <example><code>
+    /// // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
+    /// AtomEncoder encoder = new ConjugatedAtomEncoder(Arrays.asList(ATOMIC_NUMBER,
+    ///                                                               FORMAL_CHARGE));
+    ///
+    /// // convenience constructor using var-args
+    /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
+    ///                                                    FORMAL_CHARGE);
+    ///
+    /// // specifying a custom encoder
+    /// AtomEncoder encoder =
+    ///   ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
+    ///                                FORMAL_CHARGE,
+    ///                                new AtomEncoder(){
+    ///                                  public int Encode(IAtom a, IAtomContainer c){
+    ///                                    return a.Symbol.HashCode();
+    ///                                  }
+    ///                                });
+    ///
+    /// </code></example>
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @cdk.githash
+    /// </summary>
+    internal sealed class ConjugatedAtomEncoder : AtomEncoder
     {
         /* ordered list of encoders */
         private readonly IList<AtomEncoder> encoders;
 
-        /**
-         * Create a new conjugated encoder for the specified list of atom encoders.
-         * The encoders are combined in an order dependant manner.
-         *
-         * @param encoders non-empty list of encoders
-         * @throws NullPointerException     the list of encoders was null
-         * @throws ArgumentException the list of encoders was empty
-         */
+        /// <summary>
+        /// Create a new conjugated encoder for the specified list of atom encoders.
+        /// The encoders are combined in an order dependant manner.
+        ///
+        /// <param name="encoders">non-empty list of encoders</param>
+        /// <exception cref="NullPointerException">    the list of encoders was null</exception>
+        /// <exception cref="ArgumentException">the list of encoders was empty</exception>
+        /// </summary>
         public ConjugatedAtomEncoder(IList<AtomEncoder> encoders)
         {
             if (encoders == null) throw new ArgumentNullException("null list of encoders");
@@ -89,21 +86,21 @@ namespace NCDK.Hash
             return hash;
         }
 
-        /**
-         * Convenience method for creating a conjugated encoder from one or more
-         * {@link AtomEncoder}s.
-         *
-         * <blockquote><pre>
-         * // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
-         * AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-         *                                                    FORMAL_CHARGE);
-         * </pre></blockquote>
-         *
-         * @param encoder  the first encoder
-         * @param encoders the other encoders
-         * @return a new conjugated encoder
-         * @throws NullPointerException either argument was null
-         */
+        /// <summary>
+        /// Convenience method for creating a conjugated encoder from one or more
+        /// <see cref="AtomEncoder"/>s.
+        ///
+        /// <example><code>
+        /// // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
+        /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
+        ///                                                    FORMAL_CHARGE);
+        /// </code></example>
+        ///
+        /// <param name="encoder">the first encoder</param>
+        /// <param name="encoders">the other encoders</param>
+        /// <returns>a new conjugated encoder</returns>
+        /// <exception cref="NullPointerException">either argument was null</exception>
+        /// </summary>
         public static AtomEncoder Create(AtomEncoder encoder, params AtomEncoder[] encoders)
         {
             if (encoder == null || encoders == null) throw new ArgumentNullException("null encoders provided");

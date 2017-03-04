@@ -22,22 +22,22 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  Class that returns the complexity of a system. The complexity is defined as {@cdk.cite Nilakantan06}:
-     *  <pre>
-     *  C=Abs(B^2-A^2+A)+H/100
-     *  </pre>
-     *  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
-     *
-     * <p>This descriptor uses no parameters.
-     *
-     * @author      chhoppe from EUROSCREEN
-     * @cdk.created 2006-8-22
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:NilaComplexity
-     */
+    /// <summary>
+    ///  Class that returns the complexity of a system. The complexity is defined as {@cdk.cite Nilakantan06}:
+    ///  <code>
+    ///  C=Abs(B^2-A^2+A)+H/100
+    ///  </code>
+    ///  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
+    ///
+    /// <p>This descriptor uses no parameters.
+    ///
+    // @author      chhoppe from EUROSCREEN
+    // @cdk.created 2006-8-22
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:NilaComplexity
+    /// </summary>
     public class FragmentComplexityDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "fragC" };

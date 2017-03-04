@@ -27,11 +27,11 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     * @cdk.module test-smsd
-     * @author     Syed Asad Rahman
-     * @cdk.require java1.5+
-     */
+    /// <summary>
+    // @cdk.module test-smsd
+    // @author     Syed Asad Rahman
+    // @cdk.require java1.5+
+    /// </summary>
     [TestClass()]
     public class CDKRMapHandlerTest
     {
@@ -40,9 +40,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         public CDKRMapHandlerTest() { }
 
-        /**
-         * Test of getSource method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of getSource method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetSource()
         {
@@ -52,9 +52,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setSource method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of setSource method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestSetSource()
         {
@@ -64,9 +64,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getTarget method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of getTarget method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetTarget()
         {
@@ -76,9 +76,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setTarget method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of setTarget method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestSetTarget()
         {
@@ -88,9 +88,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of calculateOverlapsAndReduce method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of calculateOverlapsAndReduce method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestCalculateOverlapsAndReduce()
         {
@@ -103,9 +103,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsNotNull(FinalMappings.Instance.Count);
         }
 
-        /**
-         * Test of calculateOverlapsAndReduceExactMatch method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of calculateOverlapsAndReduceExactMatch method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestCalculateOverlapsAndReduceExactMatch()
         {
@@ -119,9 +119,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsNotNull(FinalMappings.Instance.Count);
         }
 
-        /**
-         * Test of getMappings method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of getMappings method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetMappings()
         {
@@ -135,9 +135,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(2, result.Count);
         }
 
-        /**
-         * Test of setMappings method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of setMappings method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestSetMappings()
         {
@@ -152,9 +152,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.IsNotNull(instance.Mappings);
         }
 
-        /**
-         * Test of isTimeoutFlag method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of isTimeoutFlag method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestIsTimeoutFlag()
         {
@@ -165,9 +165,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of setTimeoutFlag method, of class CDKRMapHandler.
-         */
+        /// <summary>
+        /// Test of setTimeoutFlag method, of class CDKRMapHandler.
+        /// </summary>
         [TestMethod()]
         public void TestSetTimeoutFlag()
         {

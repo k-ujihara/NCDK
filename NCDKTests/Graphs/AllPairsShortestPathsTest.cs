@@ -29,10 +29,10 @@ using System;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author John May
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class AllPairsShortestPathsTest
     {

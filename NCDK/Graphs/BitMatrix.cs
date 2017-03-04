@@ -23,7 +23,6 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
@@ -32,40 +31,33 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Mutable bit matrix which can eliminate linearly dependent rows and check
-     * which rows were eliminated. These operations are useful when constructing a
-     * cycle basis. From a graph we can represent the cycles as a binary vector of
-     * incidence (edges). When processing cycles as these vectors we determine
-     * whether a cycle can be made of other cycles in our basis. In the example
-     * below each row can be made by XORing the other two rows.
-     *
-     * <blockquote><pre>
-     * 1:   111000111   (can be made by 2 XOR 3)
-     * 2:   111000000   (can be made by 1 XOR 3)
-     * 3:   000000111   (can be made by 1 XOR 2)
-     * </pre></blockquote>
-     *
-     * <blockquote><pre>
-     * BitMatrix m = new BitMatrix(9, 3);
-     * m.Add(ToBitArray("111000111"));
-     * m.Add(ToBitArray("111000000"));
-     * m.Add(ToBitArray("111000000"));
-     * if (m.Eliminate() < 3){
-     *   // rows are not independent
-     * }
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module core
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    sealed class BitMatrix
+    /// <summary>
+    /// Mutable bit matrix which can eliminate linearly dependent rows and check
+    /// which rows were eliminated. These operations are useful when constructing a
+    /// cycle basis. From a graph we can represent the cycles as a binary vector of
+    /// incidence (edges). When processing cycles as these vectors we determine
+    /// whether a cycle can be made of other cycles in our basis. In the example
+    /// below each row can be made by XORing the other two rows.
+    /// </summary>
+    /// <example><para>
+    /// 1:   111000111   (can be made by 2 XOR 3)
+    /// 2:   111000000   (can be made by 1 XOR 3)
+    /// 3:   000000111   (can be made by 1 XOR 2)
+    /// </para>
+    /// <code>
+    /// BitMatrix m = new BitMatrix(9, 3);
+    /// m.Add(ToBitArray("111000111"));
+    /// m.Add(ToBitArray("111000000"));
+    /// m.Add(ToBitArray("111000000"));
+    /// if (m.Eliminate() &lt; 3) {
+    ///   // rows are not independent
+    /// }
+    /// </code></example>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
+    internal sealed class BitMatrix
     {
-
         /// <summary>rows of the matrix.</summary>
         private readonly BitArray[] rows;
 
@@ -81,14 +73,13 @@ namespace NCDK.Graphs
         /// <summary>current number of rows.</summary>
         private int m;
 
-        /**
-		 * Create a new bit matrix with the given number of columns and rows. Note
-		 * the rows is the <i>maximum</i> number of rows we which to store. The
-		 * actual row count only increases with {@link #Add(java.util.BitArray)}.
-		 *
-		 * @param columns number of columns
-		 * @param rows    number of rows
-		 */
+        /// <summary>
+        /// Create a new bit matrix with the given number of columns and rows. Note
+        /// the rows is the <i>maximum</i> number of rows we which to store. The
+        /// actual row count only increases with <see cref="Add(BitArray)"/>.
+        /// </summary>
+        /// <param name="columns">number of columns</param>
+        /// <param name="rows">number of rows</param>
         public BitMatrix(int columns, int rows)
         {
             this.n = columns;
@@ -97,14 +88,13 @@ namespace NCDK.Graphs
             this.indices = new int[rows];
         }
 
-        /**
-		 * Swap the rows {@literal i} and {@literal j}, the swap is kept track of
-		 * internally allowing {@link #Row(int)} and {@link #Eliminated(int)} to
-		 * access the index of the original row.
-		 *
-		 * @param i row index
-		 * @param j row index
-		 */
+        /// <summary>
+        /// Swap the rows <paramref name="i"/> and <paramref name="j"/>, the swap is kept track of
+        /// internally allowing <see cref="Row(int)"/> and <see cref="Eliminated(int)"/> to
+        /// access the index of the original row.
+        /// </summary>
+        /// <param name="i">row index</param>
+        /// <param name="j">row index</param>
         public void Swap(int i, int j)
         {
             BitArray row = rows[i];
@@ -115,12 +105,11 @@ namespace NCDK.Graphs
             indices[j] = k;
         }
 
-        /**
-		 * Find the current index of row {@literal j}.
-		 *
-		 * @param j original row index to find
-		 * @return the index now or < 0 if not found
-		 */
+        /// <summary>
+        /// Find the current index of row <paramref name="j"/>.
+        /// </summary>
+        /// <param name="j">original row index to find</param>
+        /// <returns>the index now or &lt; 0 if not found</returns>
         private int RowIndex(int j)
         {
             for (int i = 0; i < indices.Length; i++)
@@ -130,25 +119,23 @@ namespace NCDK.Graphs
             return -1;
         }
 
-        /**
-		 * Access the row which was added at index {@literal j}.
-		 *
-		 * @param j index of row
-		 * @return the row which was added at index j
-		 */
+        /// <summary>
+        /// Access the row which was added at index <paramref name="j"/>.
+        /// </summary>
+        /// <param name="j">index of row</param>
+        /// <returns>the row which was added at index <paramref name="j"/></returns>
         public BitArray Row(int j)
         {
             return rows[RowIndex(j)];
         }
 
-        /**
-		 * Check whether the row which was added at index {@literal j} has been
-		 * eliminated. {@link #Eliminate()} should be invoked first.
-		 *
-		 * @param j row index
-		 * @return whether the row was eliminated
-		 * @see #Eliminate()
-		 */
+        /// <summary>
+        /// Check whether the row which was added at index <paramref name="j"/> has been
+        /// eliminated. <see cref="Eliminate"/> should be invoked first.
+        /// </summary>
+        /// <param name="j">row index</param>
+        /// <returns>whether the row was eliminated</returns>
+        /// <seealso cref="Eliminate"/>
         public bool Eliminated(int j)
         {
             return BitArrays.IsEmpty(Row(j));
@@ -160,11 +147,11 @@ namespace NCDK.Graphs
             m = 0;
         }
 
-        /**
-		 * Add a row to the matrix.
-		 *
-		 * @param row the row
-		 */
+        /// <summary>
+        /// Add a row to the matrix.
+        ///
+        /// <param name="row">the row</param>
+        /// </summary>
         public void Add(BitArray row)
         {
             if (m >= max) throw new IndexOutOfRangeException("initalise matrix with more rows");
@@ -173,28 +160,25 @@ namespace NCDK.Graphs
             m++;
         }
 
-        /**
-		 * Eliminate rows from the matrix which can be made by linearly combinations
-		 * of other rows.
-		 *
-		 * @return rank of the matrix
-		 * @see #Eliminated(int)
-		 */
+        /// <summary>
+        /// Eliminate rows from the matrix which can be made by linearly combinations
+        /// of other rows.
+        /// </summary>
+        /// <returns>rank of the matrix</returns>
+        /// <seealso cref="Eliminated(int)"/>
         public int Eliminate()
         {
             return Eliminate(0, 0);
         }
 
-        /**
-		 * Gaussian elimination.
-		 *
-		 * @param x current column index
-		 * @param y current row index
-		 * @return the rank of the matrix
-		 */
+        /// <summary>
+        /// Gaussian elimination.
+        /// </summary>
+        /// <param name="x">current column index</param>
+        /// <param name="y">current row index</param>
+        /// <returns>the rank of the matrix</returns>
         private int Eliminate(int x, int y)
         {
-
             while (x < n && y < m)
             {
 
@@ -218,17 +202,13 @@ namespace NCDK.Graphs
             return y;
         }
 
-        /**
-		 * Index of the the first row after {@literal y} where {@literal x} is set.
-		 *
-		 * @param x column index
-		 * @param y row index
-		 * @return the first index where {@literal x} is set, index is < 0 if none
-		 */
-#if TEST
-        public
-#endif
-        int IndexOf(int x, int y)
+        /// <summary>
+        /// Index of the the first row after <paramref name="y"/> where <paramref name="x"/> is set.
+        /// </summary>
+        /// <param name="x">column index</param>
+        /// <param name="y">row index</param>
+        /// <returns>the first index where <paramref name="x"/> is set, index is &lt; 0 if none</returns>
+        internal int IndexOf(int x, int y)
         {
             for (int j = y; j < m; j++)
             {
@@ -253,30 +233,27 @@ namespace NCDK.Graphs
             return sb.ToString();
         }
 
-        /**
-		 * Utility method xors the vectors {@literal u} and {@literal v}. Neither
-		 * input is modified.
-		 *
-		 * @param u a bit set
-		 * @param v a bit set
-		 * @return the 'xor' of {@literal u} and {@literal v}
-		 */
-#if TEST
-        public
-#endif
-        static BitArray Xor(BitArray u, BitArray v)
+        /// <summary>
+        /// Utility method xors the vectors {@literal u} and {@literal v}. Neither
+        /// input is modified.
+        ///
+        /// <param name="u">a bit set</param>
+        /// <param name="v">a bit set</param>
+        /// <returns>the 'xor' of {@literal u} and {@literal v}</returns>
+        /// </summary>
+        internal static BitArray Xor(BitArray u, BitArray v)
         {
             BitArray w = (BitArray)u.Clone();
             w.Xor(v);
             return w;
         }
 
-        /**
-		 * Simple creation of a BitMatrix from a collection of cycles.
-		 *
-		 * @param cycles cycles to create the matrix from
-		 * @return instance of a BitMatrix for the cycles
-		 */
+        /// <summary>
+        /// Simple creation of a BitMatrix from a collection of cycles.
+        ///
+        /// <param name="cycles">cycles to create the matrix from</param>
+        /// <returns>instance of a BitMatrix for the cycles</returns>
+        /// </summary>
         public static BitMatrix From(IEnumerable<Cycle> cycles)
         {
 
@@ -293,15 +270,15 @@ namespace NCDK.Graphs
             return matrix;
         }
 
-        /**
-		 * Simple creation of a BitMatrix from a collection of cycles. The final
-		 * cycle will be added as the last row of the matrix. The <i>cycle</i>
-		 * should no be found in <i>cycles</i>.
-		 *
-		 * @param cycles cycles to create
-		 * @param cycle  final cycle to add
-		 * @return instance of a BitMatrix for the cycles
-		 */
+        /// <summary>
+        /// Simple creation of a BitMatrix from a collection of cycles. The final
+        /// cycle will be added as the last row of the matrix. The <i>cycle</i>
+        /// should no be found in <i>cycles</i>.
+        ///
+        /// <param name="cycles">cycles to create</param>
+        /// <param name="cycle">final cycle to add</param>
+        /// <returns>instance of a BitMatrix for the cycles</returns>
+        /// </summary>
         public static BitMatrix From(IEnumerable<Cycle> cycles, Cycle cycle)
         {
 

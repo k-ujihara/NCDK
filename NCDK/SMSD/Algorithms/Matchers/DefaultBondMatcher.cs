@@ -49,12 +49,12 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.Matchers
 {
-    /**
-     * Checks if a bond is matching between query and target molecules.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Checks if a bond is matching between query and target molecules.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class DefaultBondMatcher : BondMatcher
     {
         private IBond queryBond = null;
@@ -62,9 +62,9 @@ namespace NCDK.SMSD.Algorithms.Matchers
         private int unsaturation = 0;
         private bool shouldMatchBonds = false;
 
-        /**
-         * Constructor
-         */
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DefaultBondMatcher()
         {
             this.queryBond = null;
@@ -73,12 +73,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
             shouldMatchBonds = false;
         }
 
-        /**
-         * Constructor
-         * @param queryMol query Molecule
-         * @param queryBond query Molecule
-         * @param shouldMatchBonds bond match flag
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryMol">query Molecule</param>
+        /// <param name="queryBond">query Molecule</param>
+        /// <param name="shouldMatchBonds">bond match flag</param>
+        /// </summary>
         public DefaultBondMatcher(IAtomContainer queryMol, IBond queryBond, bool shouldMatchBonds)
                 : base()
         {
@@ -87,22 +87,22 @@ namespace NCDK.SMSD.Algorithms.Matchers
             IsBondMatchFlag = shouldMatchBonds;
         }
 
-        /**
-         * Constructor
-         * @param queryBond query Molecule
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryBond">query Molecule</param>
+        /// </summary>
         public DefaultBondMatcher(IQueryBond queryBond)
                 : base()
         {
             this.smartQueryBond = queryBond;
         }
 
-        /** {@inheritDoc}
-         *
-         * @param targetContainer target container
-         * @param targetBond target bond
-         * @return true if bonds match
-         */
+        /// <summary> {@inheritDoc}
+        ///
+        /// <param name="targetContainer">target container</param>
+        /// <param name="targetBond">target bond</param>
+        /// <returns>true if bonds match</returns>
+        /// </summary>
         public bool Matches(IAtomContainer targetContainer, IBond targetBond)
         {
             if (this.smartQueryBond != null && queryBond == null)
@@ -127,11 +127,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return false;
         }
 
-        /**
-         * Return true if a bond is matched between query and target
-         * @param targetBond
-         * @return
-         */
+        /// <summary>
+        /// Return true if a bond is matched between query and target
+        /// <param name="targetBond">/// @return</param>
+        /// </summary>
         private bool IsBondTypeMatch(IBond targetBond)
         {
             int reactantBondType = queryBond.Order.Numeric;

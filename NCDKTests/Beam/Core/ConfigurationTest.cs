@@ -73,84 +73,84 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void noTHNumber()
+        public void NoTHNumber()
         {
             Configuration.Read(CharBuffer.FromString("@TH"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidTHNumber()
+        public void InvalidTHNumber()
         {
             Configuration.Read(CharBuffer.FromString("@TH5"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void noSPNumber()
+        public void NoSPNumber()
         {
             Configuration.Read(CharBuffer.FromString("@SP"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidSPNumber()
+        public void InvalidSPNumber()
         {
             Configuration.Read(CharBuffer.FromString("@SP4"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void noALNumber()
+        public void NoALNumber()
         {
             Configuration.Read(CharBuffer.FromString("@AL"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidALNumber()
+        public void InvalidALNumber()
         {
             Configuration.Read(CharBuffer.FromString("@AL3"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void noTBNumber()
+        public void NoTBNumber()
         {
             Configuration.Read(CharBuffer.FromString("@TB"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidLoTBNumber()
+        public void InvalidLoTBNumber()
         {
             Configuration.Read(CharBuffer.FromString("@TB0"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidHiTBNumber()
+        public void InvalidHiTBNumber()
         {
             Configuration.Read(CharBuffer.FromString("@TB21"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void noOHNumber()
+        public void NoOHNumber()
         {
             Configuration.Read(CharBuffer.FromString("@OH"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidLoOHNumber()
+        public void InvalidLoOHNumber()
         {
             Configuration.Read(CharBuffer.FromString("@OH0"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalidHiOHNumber()
+        public void InvalidHiOHNumber()
         {
             Configuration.Read(CharBuffer.FromString("@OH31"));
         }
@@ -163,28 +163,28 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void incompleteTHorTB()
+        public void IncompleteTHorTB()
         {
             Configuration.Read(CharBuffer.FromString("@T"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void incompleteSP()
+        public void IncompleteSP()
         {
             Configuration.Read(CharBuffer.FromString("@S"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void incompleteOH()
+        public void IncompleteOH()
         {
             Configuration.Read(CharBuffer.FromString("@O"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void incompleteAL()
+        public void IncompleteAL()
         {
             Configuration.Read(CharBuffer.FromString("@A"));
         }

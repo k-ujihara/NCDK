@@ -25,22 +25,22 @@ using System.Text;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * Low weight alternative to Sun's Stack class.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @cdk.keyword stack
-     */
+    /// <summary>
+    /// Low weight alternative to Sun's Stack class.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @cdk.keyword stack
+    /// </summary>
     public class CMLModuleStack
     {
         ICMLModule[] stack = new ICMLModule[64];
         int sp = 0;
 
-        /**
-         * Adds an entry to the stack.
-         */
+        /// <summary>
+        /// Adds an entry to the stack.
+        /// </summary>
         public void Push(ICMLModule item)
         {
             if (sp == stack.Length)
@@ -54,21 +54,21 @@ namespace NCDK.IO.CML
 
         public int Length => sp;
 
-        /**
-         * Retrieves and deletes to last added entry.
-         *
-         * @see #Current
-         */
+        /// <summary>
+        /// Retrieves and deletes to last added entry.
+        ///
+        /// <seealso cref="Current"/>
+        /// </summary>
         public ICMLModule Pop()
         {
             return stack[--sp];
         }
 
-        /**
-         * Returns the last added entry.
-         *
-         * @see #Pop()
-         */
+        /// <summary>
+        /// Returns the last added entry.
+        ///
+        /// <seealso cref="Pop"/>
+        /// </summary>
         public ICMLModule Current
         {
             get
@@ -84,9 +84,9 @@ namespace NCDK.IO.CML
             }
         }
 
-        /**
-         * Returns a string representation of the stack.
-         */
+        /// <summary>
+        /// Returns a string representation of the stack.
+        /// </summary>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -99,25 +99,25 @@ namespace NCDK.IO.CML
             return sb.ToString();
         }
 
-        /**
-         * Convenience method to check the last added elements.
-         */
+        /// <summary>
+        /// Convenience method to check the last added elements.
+        /// </summary>
         public bool EndsWith(ICMLModule lastElement)
         {
             return stack[sp - 1].Equals(lastElement);
         }
 
-        /**
-         * Convenience method to check the last two added elements.
-         */
+        /// <summary>
+        /// Convenience method to check the last two added elements.
+        /// </summary>
         public bool EndsWith(ICMLModule oneButLast, ICMLModule lastElement)
         {
             return EndsWith(lastElement) && stack[sp - 2].Equals(oneButLast);
         }
 
-        /**
-         * Convenience method to check the last three added elements.
-         */
+        /// <summary>
+        /// Convenience method to check the last three added elements.
+        /// </summary>
         public bool EndsWith(ICMLModule twoButLast, ICMLModule oneButLast, ICMLModule lastElement)
         {
             return EndsWith(oneButLast, lastElement) && stack[sp - 3].Equals(twoButLast);

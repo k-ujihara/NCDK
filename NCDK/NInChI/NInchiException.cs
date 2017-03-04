@@ -21,36 +21,36 @@ using System;
 namespace NCDK.NInChI
 {
 
-    /**
-     * Exception thrown by JniInchi.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Exception thrown by JniInchi.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiException : Exception
     {
 
 
-        /**
-         * Constructor.
-         */
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public NInchiException()
 
                 : base()
         { }
 
-        /**
-         * Constructs a new exception with the specified detail message.
-         *
-         * @param message  the detail message.
-         */
+        /// <summary>
+        /// Constructs a new exception with the specified detail message.
+        ///
+        /// <param name="message">the detail message.</param>
+        /// </summary>
         public NInchiException(string message)
                 : base(message)
         { }
 
-        /**
-         * Constructs a new exception with the specified cause.
-         *
-         * @param ex    the cause.
-         */
+        /// <summary>
+        /// Constructs a new exception with the specified cause.
+        ///
+        /// <param name="ex">the cause.</param>
+        /// </summary>
         public NInchiException(Exception ex)
                 : base(ex.Message, ex)
         { }

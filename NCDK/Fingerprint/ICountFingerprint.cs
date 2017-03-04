@@ -23,81 +23,72 @@
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Interface for count fingerprint representations. The fingerprint is
-    // regarded as a list of hashes and a list of counts where the the list of
-    // counts keeps track of how many times the corresponding hash is found in
-    // the fingerprint. So index refers to position in the list. The list must
-    // be sorted in natural order (ascending).
-     *
+    /// <summary>
+    /// Interface for count fingerprint representations. The fingerprint is
+    /// regarded as a list of hashes and a list of counts where the the list of
+    /// counts keeps track of how many times the corresponding hash is found in
+    /// the fingerprint. So index refers to position in the list. The list must
+    /// be sorted in natural order (ascending).
+    /// </summary>
     // @author jonalv
     // @cdk.module     core
     // @cdk.githash
-     */
     public interface ICountFingerprint
     {
-        /**
-        // Returns the number of bits of this fingerprint.
-         *
-        // @return the size of the fingerprint.
-         */
+        /// <summary>
+        /// The number of bits of this fingerprint.
+        /// </summary>
         long Count { get; }
 
-        /**
-        // Returns the number of bins that are populated. This number is typically smaller
-        // then the total number of bins.
-         *
-        // @return the number of populated bins
-        // @see    #Size()
-         */
+        /// <summary>
+        /// Returns the number of bins that are populated. This number is typically smaller
+        /// then the total number of bins.
+        /// </summary>
+        /// <returns>the number of populated bins</returns>
+        /// <see cref="Count"/>
         int GetNumOfPopulatedbins();
 
-        /**
-        // Returns the count value for the bin with the given index.
-         *
-        // @param index the index of the bin to return the number of hits for.
-        // @return the count for the bin with given index.
-         */
+        /// <summary>
+        /// Returns the count value for the bin with the given index.
+        /// </summary>
+        /// <param name="index">the index of the bin to return the number of hits for.</param>
+        /// <returns>the count for the bin with given index.</returns>
         int GetCount(int index);
 
-        /**
-        // Returns the hash corresponding to the given index in the fingerprint.
-         *
-        // @param index the index of the bin to return the hash for.
-        // @return the hash for the bin with the given index.
-         */
+        /// <summary>
+        /// Returns the hash corresponding to the given index in the fingerprint.
+        /// </summary>
+        /// <param name="index">the index of the bin to return the hash for.</param>
+        /// <returns>the hash for the bin with the given index.</returns>
         int GetHash(int index);
 
-        /**
-        // Merge all from <code>fp</code> into the current fingerprint.
-         *
-        // @param fp to be merged
-         */
+        /// <summary>
+        /// Merge all from <code>fp</code> into the current fingerprint.
+        /// </summary>
+        /// <param name="fp">to be merged</param>
         void Merge(ICountFingerprint fp);
 
-        /**
-        // Changes behaviour, if true is given the count fingerprint will
-        // behave as a bit fingerprint and return 0 or 1 for counts.
-         *
-        // @param behaveAsBitFingerprint
-         */
+        /// <summary>
+        /// Changes behaviour, if true is given the count fingerprint will
+        /// behave as a bit fingerprint and return 0 or 1 for counts.
+        /// </summary>
+        /// <param name="behaveAsBitFingerprint"></param>
         void SetBehaveAsBitFingerprint(bool behaveAsBitFingerprint);
 
-        /**
-        // Whether the fingerprint contains the given hash.
-         *
-        // @param hash
-        // @return true if the fingerprint contains the given hash, otherwise false.
-         */
+        /// <summary>
+        /// Whether the fingerprint contains the given hash.
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns>true if the fingerprint contains the given hash, otherwise false.</returns>
         bool HasHash(int hash);
 
-        /**
-        // Get the number of times a certain hash exists in the fingerprint.
-         *
-        // @param hash
-        // @return the number associated with the given hash
-         */
+        /// <summary>
+        /// Get the number of times a certain hash exists in the fingerprint.
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns>the number associated with the given hash</returns>
         int GetCountForHash(int hash);
     }
 }
+
 

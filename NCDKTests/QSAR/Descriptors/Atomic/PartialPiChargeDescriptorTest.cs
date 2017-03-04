@@ -105,12 +105,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
@@ -231,12 +231,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }
@@ -277,12 +277,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.3);
             }
         }
@@ -321,12 +321,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.2);
             }
         }
@@ -368,12 +368,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.08);
             }
         }
@@ -399,12 +399,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.1);
             }
         }
@@ -517,12 +517,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //			if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.15);
             }
         }
@@ -551,12 +551,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 Assert.IsNotNull(result);
 
                 /* TODO:REACT: revision */
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.03);
             }
         }
@@ -614,12 +614,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
                 Assert.IsNotNull(result);
 
-                //			if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.02);
             }
         }
@@ -645,19 +645,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
                 double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
                 Assert.IsNotNull(result);
 
-                //			TODO: REACT: revision
-                //	        if(testResult[i] == 0.0)
-                //				IsTrue(result == 0.0);
-                //			else {
-                //				IsTrue(result != 0.0);
-                //				AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
-                //			}
+                //            TODO: REACT: revision
+                //            if(testResult[i] == 0.0)
+                //                IsTrue(result == 0.0);
+                //            else {
+                //                IsTrue(result != 0.0);
+                //                AreEqual(GetSign(testResult[i]),GetSign(result), 0.00001);
+                //            }
                 Assert.AreEqual(testResult[i], result, 0.29);
             }
         }
 
         /// <summary>
-        ///  A unit test for JUnit with  c1ccc(cc1)n3c4ccccc4(c2ccccc23)
+        ///  A unit test for JUnit with  c1ccc(cc1)N3c4ccccc4(c2ccccc23)
         /// </summary>
         //  @cdk.bug   1959099
         //  @cdk.inchi
@@ -666,7 +666,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-            IAtomContainer mol = sp.ParseSmiles("c1ccc(cc1)n3c4ccccc4(c2ccccc23)");
+            IAtomContainer mol = sp.ParseSmiles("c1ccc(cc1)N3c4ccccc4(c2ccccc23)");
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
             AddExplicitHydrogens(mol);
             lpcheck.Saturate(mol);

@@ -25,21 +25,21 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     * The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE).
-     *
-     * This descriptor has no parameters. The result of this descriptor is a vector of 5 values, corresponding
-     * to a maximum of four protons for any given atom. If an atom has fewer than four protons, the remaining values
-     * are set to double.NaN. Also note that the values for the neighbors are not returned in a particular order
-     * (though the order is fixed for multiple runs for the same atom).
-     *
-     * @author mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module qsaratomic
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:protonPartialCharge
-     */
+    /// <summary>
+    /// The calculation of partial charges of an heavy atom and its protons is based on Gasteiger Marsili (PEOE).
+    ///
+    /// This descriptor has no parameters. The result of this descriptor is a vector of 5 values, corresponding
+    /// to a maximum of four protons for any given atom. If an atom has fewer than four protons, the remaining values
+    /// are set to double.NaN. Also note that the values for the neighbors are not returned in a particular order
+    /// (though the order is fixed for multiple runs for the same atom).
+    ///
+    // @author mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module qsaratomic
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:protonPartialCharge
+    /// </summary>
     public class ProtonTotalPartialChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
@@ -101,8 +101,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 peoe = new GasteigerMarsiliPartialCharges();
                 peoe.MaxGasteigerIterations = 6;
-                //	HydrogenAdder hAdder = new HydrogenAdder();
-                //	hAdder.AddExplicitHydrogensToSatisfyValency(mol);
+                //    HydrogenAdder hAdder = new HydrogenAdder();
+                //    hAdder.AddExplicitHydrogensToSatisfyValency(mol);
                 peoe.AssignGasteigerMarsiliSigmaPartialCharges(clone, true);
             }
             catch (Exception exception)

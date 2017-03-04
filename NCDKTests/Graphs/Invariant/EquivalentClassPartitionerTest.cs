@@ -24,6 +24,7 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
+
 using System.Linq;
 
 namespace NCDK.Graphs.Invariant
@@ -236,16 +237,16 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("111111222222222222111111", strEquivalent);
         }
 
-        /**
-         * @cdk.bug 3513954
-         * @throws Exception
-         */
+        /// <summary>
+        // @cdk.bug 3513954
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPseudoAtoms()
         {
             string filename = "NCDK.Data.MDL.pseudoatoms.sdf";
 
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             mol = reader.Read(mol);
@@ -265,15 +266,15 @@ namespace NCDK.Graphs.Invariant
             int[] classes = partitioner.GetTopoEquivClassbyHuXu(mol);
         }
 
-        /**
-         * Test if aromatic bonds are being considered as such.
-         * Azulene has an aromatic outer ring and if bonds are considered only as a sequence of single and double bonds
-         * then the atoms closing the rings will be assigned to different classes (and all other atoms as well) because
-         * there will be a different number of single and double bonds on opposite sides of the symmetry axis.
-         *
-         * @throws Exception
-         * @cdk.bug 3562476
-         */
+        /// <summary>
+        /// Test if aromatic bonds are being considered as such.
+        /// Azulene has an aromatic outer ring and if bonds are considered only as a sequence of single and double bonds
+        /// then the atoms closing the rings will be assigned to different classes (and all other atoms as well) because
+        /// there will be a different number of single and double bonds on opposite sides of the symmetry axis.
+        ///
+        // @throws Exception
+        // @cdk.bug 3562476
+        /// </summary>
         [TestMethod()]
         public void TestAromaticSystem()
         {
@@ -295,11 +296,11 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("1232145654", strEquivalent, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in alpha-pinene
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in alpha-pinene
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestAlphaPinene()
         {
@@ -318,13 +319,13 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("1234567899", strEquivalent, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in pyrimidine
-         * Tests if the position of the single and double bonds in an aromatic ring matter
-         * to assign a class.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in pyrimidine
+        /// Tests if the position of the single and double bonds in an aromatic ring matter
+        /// to assign a class.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPyrimidine()
         {
@@ -343,12 +344,12 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("123214", strEquivalent, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in biphenyl,
-         * a molecule with two aromatic systems. It has 2 symmetry axis.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in biphenyl,
+        /// a molecule with two aromatic systems. It has 2 symmetry axis.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestBiphenyl()
         {
@@ -367,14 +368,14 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual("123432123432", strEquivalent, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in imidazole,
-         * an aromatic molecule with a proton that can be exchanged between two aromatic nitrogens.
-         * The method should have failed because only one tautomer is considered,
-         * but there is no priority class for nodes of type ArNH to distinguish the nitrogens.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in imidazole,
+        /// an aromatic molecule with a proton that can be exchanged between two aromatic nitrogens.
+        /// The method should have failed because only one tautomer is considered,
+        /// but there is no priority class for nodes of type ArNH to distinguish the nitrogens.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestImidazole()
         {

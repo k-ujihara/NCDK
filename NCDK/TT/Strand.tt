@@ -48,9 +48,9 @@ namespace <#= ns.NS #>
     public class Strand 
         : AtomContainer, IStrand
     {
-	    private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
+        private IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();
 
-		/// <summary>
+        /// <summary>
         /// The strand name.
         /// </summary>
         public string StrandName { get; set; } = "";
@@ -58,16 +58,16 @@ namespace <#= ns.NS #>
         /// <summary>
         ///  The strand type.
         /// </summary>
-		public string StrandType { get; set; }
+        public string StrandType { get; set; }
 
-		public Strand()
+        public Strand()
             : base()
         {
-			Monomer oMonomer = new Monomer();
+            Monomer oMonomer = new Monomer();
             oMonomer.MonomerName = "";
             oMonomer.MonomerType = "Unknown";
             monomers.Add("", oMonomer);
-		}
+        }
 
         /// <summary>
         /// Adds the atom oAtom without specifying a Monomer or a Strand. Therefore the
@@ -84,7 +84,7 @@ namespace <#= ns.NS #>
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-		public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
+        public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
             base.Add(oAtom);
@@ -144,7 +144,7 @@ namespace <#= ns.NS #>
             return monomers.Keys;
         }
 
-	    public void RemoveMonomer(string name)
+        public void RemoveMonomer(string name)
         {
             if (monomers.ContainsKey(name))
             {

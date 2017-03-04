@@ -18,22 +18,17 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the Ring class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.Ring
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the Ring class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.Ring
+    /// </summary>
+    [TestClass()]
     public class RingTest
         : AbstractRingTest
     {

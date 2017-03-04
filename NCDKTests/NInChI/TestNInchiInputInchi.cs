@@ -23,9 +23,9 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiInputInchi
     {
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiInputInchi.Options'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiInputInchi.Options'
+        /// </summary>
         [TestMethod()]
         public void TestGetOptions()
         {
@@ -34,9 +34,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(NInchiWrapper.FlagChar + "compress", input.Options);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiInputInchi.Inchi'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiInputInchi.Inchi'
+        /// </summary>
         [TestMethod()]
         public void TestGetInchi()
         {

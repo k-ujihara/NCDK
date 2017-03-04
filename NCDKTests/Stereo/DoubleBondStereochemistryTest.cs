@@ -27,9 +27,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
-    /**
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class DoubleBondStereochemistryTest : CDKTestCase
     {
@@ -37,9 +37,9 @@ namespace NCDK.Stereo
         private static IAtomContainer molecule;
         private static IBond[] ligands;
 
-        /**
-         * This method creates <i>E</i>-but-2-ene.
-         */
+        /// <summary>
+        /// This method creates <i>E</i>-but-2-ene.
+        /// </summary>
         static DoubleBondStereochemistryTest()
         {
             molecule = new AtomContainer();
@@ -53,14 +53,14 @@ namespace NCDK.Stereo
             ligands = new IBond[] { molecule.Bonds[0], molecule.Bonds[2] };
         }
 
-        /**
-         * Unit test ensures an exception is thrown if more the two elements are
-         * passed to the constructor. When IDoubleBondStereoChemistry.Bonds
-         * is invoked the fixed size array is copied to an array of size 2. If
-         * more then 2 bonds are given they would be truncated.
-         *
-         * @cdk.bug 1273
-         */
+        /// <summary>
+        /// Unit test ensures an exception is thrown if more the two elements are
+        /// passed to the constructor. When IDoubleBondStereoChemistry.Bonds
+        /// is invoked the fixed size array is copied to an array of size 2. If
+        /// more then 2 bonds are given they would be truncated.
+        ///
+        // @cdk.bug 1273
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstructor_TooManyBonds()

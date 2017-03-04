@@ -27,10 +27,10 @@ using System.Linq;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author John May
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class EdgeShortCyclesTest
     {
@@ -183,9 +183,9 @@ namespace NCDK.Graphs
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(expected, paths));
         }
 
-        /**
-         * @cdk.inchi InChI=1/C20H32/c1-2-18-6-3-17(1)4-7-19(8-5-17)13-15-20(11-9-18,12-10-18)16-14-19/h1-16H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C20H32/c1-2-18-6-3-17(1)4-7-19(8-5-17)13-15-20(11-9-18,12-10-18)16-14-19/h1-16H2
+        /// </summary>
         static int[][] Cyclophanelike1()
         {
             return new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3, 15, 17}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0, 6, 10}, new[] {5, 7}, new[] {6, 8},
@@ -193,9 +193,9 @@ namespace NCDK.Graphs
                 new[] {16, 2}, new[] {13, 19}, new[] {18, 8}};
         }
 
-        /**
-         * @cdk.inchi InChI=1/C24H40/c1-2-18-4-3-17(1)19-5-7-21(8-6-19)23-13-15-24(16-14-23)22-11-9-20(18)10-12-22/h17-24H,1-16H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C24H40/c1-2-18-4-3-17(1)19-5-7-21(8-6-19)23-13-15-24(16-14-23)22-11-9-20(18)10-12-22/h17-24H,1-16H2
+        /// </summary>
         static int[][] Cyclophanelike2()
         {
             return new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3, 21}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0, 6}, new[] {5, 7, 11}, new[] {6, 8}, new[] {7, 9},

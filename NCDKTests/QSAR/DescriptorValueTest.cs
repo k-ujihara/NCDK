@@ -21,9 +21,9 @@ using NCDK.QSAR.Result;
 
 namespace NCDK.QSAR
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class DescriptorValueTest : CDKTestCase
     {

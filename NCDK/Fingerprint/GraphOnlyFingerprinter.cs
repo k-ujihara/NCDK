@@ -25,26 +25,23 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Specialized version of the {@link Fingerprinter} which does not take bond orders
-    // into account.
-     *
+    /// <summary>
+    /// Specialized version of the <see cref="Fingerprinter"/> which does not take bond orders
+    /// into account.
+    /// </summary>
+    /// <seealso cref="Fingerprinter"/>
     // @author         egonw
     // @cdk.created    2007-01-11
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     standard
     // @cdk.githash
-     *
-    // @see            org.openscience.cdk.fingerprint.Fingerprinter
-     */
     public class GraphOnlyFingerprinter : Fingerprinter
     {
-
-        /**
-        // Creates a fingerprint generator of length <code>defaultSize</code>
-        // and with a search depth of <code>defaultSearchDepth</code>.
-         */
+        /// <summary>
+        /// Creates a fingerprint generator of length <see cref="Fingerprinter.DEFAULT_SIZE"/>
+        /// and with a search depth of <see cref="Fingerprinter.DEFAULT_SEARCH_DEPTH"/>.
+        /// </summary>
         public GraphOnlyFingerprinter()
             : base(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH)
         { }
@@ -57,14 +54,12 @@ namespace NCDK.Fingerprint
                 : base(size, searchDepth)
         { }
 
-        /**
-        // Gets the bondSymbol attribute of the Fingerprinter class. Because we do
-        // not consider bond orders to be important, we just return "";
-         *
-        // @param  bond  Description of the Parameter
-        // @return       The bondSymbol value
-         */
-
+        /// <summary>
+        /// Gets the bondSymbol attribute of the Fingerprinter class. Because we do
+        /// not consider bond orders to be important, we just return "";
+        /// </summary>
+        /// <param name="bond">Description of the Parameter</param>
+        /// <returns>The bondSymbol value</returns>
         protected override string GetBondSymbol(IBond bond)
         {
             return "";

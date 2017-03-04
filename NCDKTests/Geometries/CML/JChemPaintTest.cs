@@ -27,13 +27,13 @@ using System.Diagnostics;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * TestCase for reading CML files using a few test files
-     * in data/cmltest as found in the JChemPaint distribution
-     * (http://jchempaint.sf.org/).
-     *
-     * @cdk.module test-io
-     */
+    /// <summary>
+    /// TestCase for reading CML files using a few test files
+    /// in data/cmltest as found in the JChemPaint distribution
+    /// (http://jchempaint.sf.org/).
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public class JChemPaintTest : CDKTestCase
     {
@@ -45,7 +45,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.COONa.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -69,15 +69,15 @@ namespace NCDK.IO.CML
             Assert.IsTrue(GeometryUtil.Has3DCoordinates(mol));
         }
 
-        /**
-         * This one tests reading of output from the WWMM matrix (KEGG collection).
-         */
+        /// <summary>
+        /// This one tests reading of output from the WWMM matrix (KEGG collection).
+        /// </summary>
         [TestMethod()]
         public void TestWWMMOutput()
         {
             string filename = "NCDK.Data.CML.keggtest.cml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

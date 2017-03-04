@@ -29,28 +29,21 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Maximum matching in general graphs using Edmond's Blossom Algorithm
-     * {@cdk.cite Edmonds65}. <p/>
-     *
-     * This implementation was adapted from D Eppstein's python implementation (<a
-     * href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
-     * providing efficient tree traversal and handling of blossoms. <p/>
-     *
-     * @author John May
-     * @see <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom
-     * algorithm, Wikipedia</a>
-     * @see <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation
-     * from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</a>
-     *
-     * @cdk.module standard
-     */
-#if TEST
-    public
-#endif
-    sealed class EdmondsMaximumMatching
+    /// <summary>
+    /// Maximum matching in general graphs using Edmond's Blossom Algorithm
+    /// {@cdk.cite Edmonds65}. <p/>
+    /// </summary>
+    /// <remarks>
+    /// This implementation was adapted from D Eppstein's python implementation 
+    /// (<a href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
+    /// providing efficient tree traversal and handling of blossoms.
+    /// <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</a>
+    /// <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</a>
+    /// </remarks>
+    // @author John May
+    // @cdk.module standard
+    internal sealed class EdmondsMaximumMatching
     {
-
         /// <summary>The graph we are matching on.</summary>
         private readonly int[][] graph;
 
@@ -74,31 +67,27 @@ namespace NCDK.Graphs
         /// <summary>Union-Find to store blossoms.</summary>
         private DisjointSetForest dsf;
 
-        /**
-         * IDictionary stores the bridges of the blossom - indexed by with support
-         * vertices.
-         */
+        /// <summary>
+        /// IDictionary stores the bridges of the blossom - indexed by with support vertices.
+        /// </summary>
         private readonly IDictionary<int, Tuple> bridges = new Dictionary<int, Tuple>();
 
         /// <summary>Temporary array to fill with path information.</summary>
         private readonly int[] path;
 
-        /**
-         * Temporary bit sets when walking down 'trees' to check for
-         * paths/blossoms.
-         */
+        /// <summary>
+        /// Temporary bit sets when walking down 'trees' to check for paths/blossoms.
+        /// </summary>
         private readonly BitArray vAncestors, wAncestors;
 
-        /**
-         * Internal constructor.
-         *
-         * @param graph    adjacency list graph representation
-         * @param matching the matching of the graph
-         * @param subset   subset a subset of vertices
-         */
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        /// <param name="graph">adjacency list graph representation</param>
+        /// <param name="matching">the matching of the graph</param>
+        /// <param name="subset">subset a subset of vertices</param>
         private EdmondsMaximumMatching(int[][] graph, Matching matching, BitArray subset)
         {
-
             this.graph = graph;
             this.matching = matching;
             this.subset = subset;
@@ -118,16 +107,14 @@ namespace NCDK.Graphs
             while (ExistAugmentingPath()) ;
         }
 
-        /**
-         * Find an augmenting path an alternate it's matching. If an augmenting path
-         * was found then the search must be restarted. If a blossom was detected
-         * the blossom is contracted and the search continues.
-         *
-         * @return an augmenting path was found
-         */
+        /// <summary>
+        /// Find an augmenting path an alternate it's matching. If an augmenting path
+        /// was found then the search must be restarted. If a blossom was detected
+        /// the blossom is contracted and the search continues.
+        /// </summary>
+        /// <returns>an augmenting path was found</returns>
         private bool ExistAugmentingPath()
         {
-
             // reset data structures
             Arrays.Fill(even, NIL);
             Arrays.Fill(odd, NIL);
@@ -154,7 +141,6 @@ namespace NCDK.Graphs
 
                 foreach (var w in graph[v])
                 {
-
                     if (!subset[w]) continue;
 
                     // the endpoints of the edge are both at even levels in the
@@ -186,23 +172,22 @@ namespace NCDK.Graphs
             return false;
         }
 
-        /**
-         * An edge was found which connects two 'even' vertices in the forest. If
-         * the vertices have the same root we have a blossom otherwise we have
-         * identified an augmenting path. This method checks for these cases and
-         * responds accordingly. <p/>
-         *
-         * If an augmenting path was found - then it's edges are alternated and the
-         * method returns true. Otherwise if a blossom was found - it is contracted
-         * and the search continues.
-         *
-         * @param v endpoint of an edge
-         * @param w another endpoint of an edge
-         * @return a path was augmented
-         */
+        /// <summary>
+        /// An edge was found which connects two 'even' vertices in the forest. If
+        /// the vertices have the same root we have a blossom otherwise we have
+        /// identified an augmenting path. This method checks for these cases and
+        /// responds accordingly. 
+        /// </summary>
+        /// <remarks>
+        /// If an augmenting path was found - then it's edges are alternated and the
+        /// method returns true. Otherwise if a blossom was found - it is contracted
+        /// and the search continues.
+        /// </remarks>
+        /// <param name="v">endpoint of an edge</param>
+        /// <param name="w">another endpoint of an edge</param>
+        /// <returns>a path was augmented</returns>
         private bool Check(int v, int w)
         {
-
             // self-loop (within blossom) ignored
             if (dsf.GetRoot(v) == dsf.GetRoot(w)) return false;
 
@@ -257,14 +242,13 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * Access the next ancestor in a tree of the forest. Note we go back two
-         * places at once as we only need check 'even' vertices.
-         *
-         * @param ancestors temporary set which fills up the path we traversed
-         * @param curr      the current even vertex in the tree
-         * @return the next 'even' vertex
-         */
+        /// <summary>
+        /// Access the next ancestor in a tree of the forest. Note we go back two
+        /// places at once as we only need check 'even' vertices.
+        /// </summary>
+        /// <param name="ancestors">temporary set which fills up the path we traversed</param>
+        /// <param name="curr">the current even vertex in the tree</param>
+        /// <returns>the next 'even' vertex</returns>
         private int GetNExtEvenVertex(BitArray ancestors, int curr)
         {
             curr = dsf.GetRoot(curr);
@@ -275,13 +259,12 @@ namespace NCDK.Graphs
             return dsf.GetRoot(odd[parent]);
         }
 
-        /**
-         * Create a new blossom for the specified 'bridge' edge.
-         *
-         * @param v    adjacent to w
-         * @param w    adjacent to v
-         * @param base connected to the stem (common ancestor of v and w)
-         */
+        /// <summary>
+        /// Create a new blossom for the specified 'bridge' edge.
+        /// </summary>
+        /// <param name="v">adjacent to w</param>
+        /// <param name="w">adjacent to v</param>
+        /// <param name="base_">connected to the stem (common ancestor of <paramref name="v"/> and <paramref name="w"/>)</param>
         private void CreatebBlossom(int v, int w, int base_)
         {
             base_ = dsf.GetRoot(base_);
@@ -296,20 +279,18 @@ namespace NCDK.Graphs
             even[dsf.GetRoot(base_)] = even[base_];
         }
 
-        /**
-         * Creates the blossom 'supports' for the specified blossom 'bridge' edge
-         * (v, w). We travel down each side to the base of the blossom ('base')
-         * collapsing vertices and point any 'odd' vertices to the correct 'bridge'
-         * edge. We do this by indexing the birdie to each vertex in the 'bridges'
-         * map.
-         *
-         * @param v    an endpoint of the blossom bridge
-         * @param w    another endpoint of the blossom bridge
-         * @param base the base of the blossom
-         */
+        /// <summary>
+        /// Creates the blossom 'supports' for the specified blossom 'bridge' edge
+        /// (<paramref name="v"/>, <paramref name="w"/>). We travel down each side to the base of the blossom ('<paramref name="base_"/>')
+        /// collapsing vertices and point any 'odd' vertices to the correct 'bridge'
+        /// edge. We do this by indexing the birdie to each vertex in the 'bridges'
+        /// map.
+        /// </summary>
+        /// <param name="v">an endpoint of the blossom bridge</param>
+        /// <param name="w">another endpoint of the blossom bridge</param>
+        /// <param name="base_">the base of the blossom</param>
         private int[] BlossomSupports(int v, int w, int base_)
         {
-
             int n = 0;
             path[n++] = dsf.GetRoot(v);
             Tuple b = new Tuple(v, w);
@@ -327,11 +308,10 @@ namespace NCDK.Graphs
             return Arrays.CopyOf(path, n);
         }
 
-        /**
-         * Augment all ancestors in the tree of vertex 'v'.
-         *
-         * @param v the leaf to augment from
-         */
+        /// <summary>
+        /// Augment all ancestors in the tree of vertex 'v'.
+        /// </summary>
+        /// <param name="v">the leaf to augment from</param>
         private void Augment(int v)
         {
             int n = BuildPath(path, 0, v, NIL);
@@ -341,26 +321,23 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * Builds the path backwards from the specified 'start' vertex until the
-         * 'goal'. If the path reaches a blossom then the path through the blossom
-         * is lifted to the original graph.
-         *
-         * @param path  path storage
-         * @param i     offset (in path)
-         * @param start start vertex
-         * @param goal  end vertex
-         * @return the number of items set to the path[].
-         */
+        /// <summary>
+        /// Builds the path backwards from the specified 'start' vertex until the
+        /// 'goal'. If the path reaches a blossom then the path through the blossom
+        /// is lifted to the original graph.
+        /// </summary>
+        /// <param name="path">path storage</param>
+        /// <param name="i">offset (in path)</param>
+        /// <param name="start">start vertex</param>
+        /// <param name="goal">end vertex</param>
+        /// <returns>the number of items set to the path[].</returns>
         private int BuildPath(int[] path, int i, int start, int goal)
         {
             while (true)
             {
-
                 // lift the path through the contracted blossom
                 while (odd[start] != NIL)
                 {
-
                     Tuple bridge = bridges[start];
 
                     // add to the path from the bridge down to where 'start'
@@ -387,13 +364,12 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * Reverse a section of a fixed size array.
-         *
-         * @param path a path
-         * @param i    start index
-         * @param j    end index
-         */
+        /// <summary>
+        /// Reverse a section of a fixed size array.
+        /// </summary>
+        /// <param name="path">a path</param>
+        /// <param name="i">start index</param>
+        /// <param name="j">end index</param>
         private static void Reverse(int[] path, int i, int j)
         {
             while (i < j)
@@ -406,37 +382,34 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * Attempt to maximise the provided matching over a subset of vertices in a
-         * graph.
-         *
-         * @param matching the independent edge set to maximise
-         * @param graph    adjacency list graph representation
-         * @param subset   subset of vertices
-         * @return the matching
-         */
+        /// <summary>
+        /// Attempt to maximise the provided matching over a subset of vertices in a
+        /// graph.
+        /// </summary>
+        /// <param name="matching">the independent edge set to maximise</param>
+        /// <param name="graph">adjacency list graph representation</param>
+        /// <param name="subset">subset of vertices</param>
+        /// <returns>the matching</returns>
         public static Matching Maxamise(Matching matching, int[][] graph, BitArray subset)
         {
             new EdmondsMaximumMatching(graph, matching, subset);
             return matching;
         }
 
-        /**
-         * Storage and indexing of a two int values.
-         */
+        /// <summary>
+        /// Storage and indexing of a two int values.
+        /// </summary>
         private sealed class Tuple
         {
-
             /// <summary>Values.</summary>
             public int First { get; private set; }
             public int Second { get; private set; }
 
-            /**
-             * Create a new tuple.
-             *
-             * @param first  a value
-             * @param second another value
-             */
+            /// <summary>
+            /// Create a new tuple.
+            /// </summary>
+            /// <param name="first">a value</param>
+            /// <param name="second">another value</param>
             public Tuple(int first, int second)
             {
                 First = first;
@@ -444,14 +417,12 @@ namespace NCDK.Graphs
             }
 
             /// <inheritdoc/>
-
             public override int GetHashCode()
             {
                 return 31 * First + Second;
             }
 
             /// <inheritdoc/>
-
             public override bool Equals(object o)
             {
                 if (this == o) return true;

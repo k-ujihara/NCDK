@@ -25,54 +25,47 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 { 
-	/**
-	 * This matches recursive smarts atoms.
-	 *
-	 * @cdk.module smarts
-	 * @cdk.githash
-	 * @cdk.keyword SMARTS
-	 */
-	public sealed class RecursiveSmartsAtom : SMARTSAtom
+    /// <summary>
+    /// This matches recursive smarts atoms.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
+    public sealed class RecursiveSmartsAtom : SMARTSAtom
     {
-		/// <summary>The IQueryAtomContainer created by parsing the recursive smarts</summary>
-		private readonly IQueryAtomContainer                  query;
+        /// <summary>The IQueryAtomContainer created by parsing the recursive smarts</summary>
+        private readonly IQueryAtomContainer                  query;
 
-		/// <summary>Query cache.</summary>
-		private readonly Dictionary<IAtomContainer, BitArray> cache;
+        /// <summary>Query cache.</summary>
+        private readonly Dictionary<IAtomContainer, BitArray> cache;
 
-		/**
-		 * Creates a new instance
-		 *
-		 * @param query
-		 */
-		public RecursiveSmartsAtom(IQueryAtomContainer query)
-			: base(query.Builder)
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="query">/// </summary></param>
+        public RecursiveSmartsAtom(IQueryAtomContainer query)
+            : base(query.Builder)
         {
-			this.query = query;
+            this.query = query;
             this.cache = new Dictionary<IAtomContainer, BitArray>();
-		}
+        }
 
-		/*
-		 * (non-Javadoc)
-		 * @see
-		 * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-		 * .openscience.cdk.interfaces.IAtom)
-		 */
-		public override bool Matches(IAtom atom)
+        public override bool Matches(IAtom atom)
         {
-			if (!((IQueryAtom) query.Atoms[0]).Matches(atom)) return false;
+            if (!((IQueryAtom) query.Atoms[0]).Matches(atom)) return false;
 
-			if (query.Atoms.Count == 1) return true;
+            if (query.Atoms.Count == 1) return true;
 
-			IAtomContainer target = Invariants(atom).Target;
+            IAtomContainer target = Invariants(atom).Target;
 
             BitArray v;
-			if (!cache.TryGetValue(target, out v))
+            if (!cache.TryGetValue(target, out v))
             {
                 BitArray hits = new BitArray(0);
                 foreach (var mapping in Ullmann.FindSubstructure(query).MatchAll(target)
-					.Where(n => new SmartsStereoMatch(query, target).Apply(n))
-					.Where(n => new ComponentGrouping(query, target).Apply(n)))
+                    .Where(n => new SmartsStereoMatch(query, target).Apply(n))
+                    .Where(n => new ComponentGrouping(query, target).Apply(n)))
                 {
                     BitArrays.SetValue(hits, mapping[0], true);
                 }
@@ -81,6 +74,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             }
 
             return BitArrays.GetValue(v, target.Atoms.IndexOf(atom));
-		}
-	}
+        }
+    }
 }

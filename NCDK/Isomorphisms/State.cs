@@ -24,89 +24,85 @@
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Defines a state for matching (subgraph-)isomorphism from a query graph
-     * (<i>G1</i>) to a target graph (<i>G2</i>). The mutable state allows
-     * generation and adding and removal of mappings. A mapping {n, m} indicates a
-     * query vertex (from <i>G1</i>), n, is paired (mapped) with the target vertex,
-     * m (from <i>G2</i>). Candidate pairs are generated using {@link #NextN(int)}
-     * and {@link #NextM(int)}. Each candidate pair {n, m} is then {@link #add}ed if
-     * the mapping was feasible.
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
-#if TEST
-    public
-#endif
-    abstract class State
+    /// <summary>
+    /// Defines a state for matching (subgraph-)isomorphism from a query graph
+    /// (<i>G1</i>) to a target graph (<i>G2</i>). The mutable state allows
+    /// generation and adding and removal of mappings. A mapping {n, m} indicates a
+    /// query vertex (from <i>G1</i>), n, is paired (mapped) with the target vertex,
+    /// m (from <i>G2</i>). Candidate pairs are generated using {@link #NextN(int)}
+    /// and {@link #NextM(int)}. Each candidate pair {n, m} is then {@link #add}ed if
+    /// the mapping was feasible.
+    ///
+    // @author John May
+    // @cdk.module isomorphism
+    /// </summary>
+    internal abstract class State
     {
-
-        /**
-         * Given the previous candidate generate the next query candidate. The first
-         * candidate passed is always -1.
-         *
-         * @param n the previous candidate
-         * @return next candidate
-         */
+        /// <summary>
+        /// Given the previous candidate generate the next query candidate. The first
+        /// candidate passed is always -1.
+        ///
+        /// <param name="n">the previous candidate</param>
+        /// <returns>next candidate</returns>
+        /// </summary>
         public abstract int NextN(int n);
 
-        /**
-         * Given the previous candidate generate the next target candidate. The
-         * first candidate passed is always -1.
-         *
-         * @param n the current n vertex
-         * @param m the previous candidate
-         * @return next candidate
-         */
+        /// <summary>
+        /// Given the previous candidate generate the next target candidate. The
+        /// first candidate passed is always -1.
+        ///
+        /// <param name="n">the current n vertex</param>
+        /// <param name="m">the previous candidate</param>
+        /// <returns>next candidate</returns>
+        /// </summary>
         public abstract int NextM(int n, int m);
 
-        /**
-         * The max query candidate (number of vertices in the query).
-         *
-         * @return <i>|V| ∈ G1</i>
-         */
+        /// <summary>
+        /// The max query candidate (number of vertices in the query).
+        ///
+        /// <returns><i>|V| ∈ G1</i></returns>
+        /// </summary>
         public abstract int NMax();
 
-        /**
-         * The max target candidate (number of vertices in the target).
-         *
-         * @return <i>|V| ∈ G2</i>
-         */
+        /// <summary>
+        /// The max target candidate (number of vertices in the target).
+        ///
+        /// <returns><i>|V| ∈ G2</i></returns>
+        /// </summary>
         public abstract int MMax();
 
-        /**
-         * Add a mapping between n (a vertex G1) and m (a vertex in G2). If the
-         * mapping was not feasible the mapping is not added.
-         *
-         * @param n a vertex in G1
-         * @param m a vertex in G2
-         * @return the mapping was added
-         */
+        /// <summary>
+        /// Add a mapping between n (a vertex G1) and m (a vertex in G2). If the
+        /// mapping was not feasible the mapping is not added.
+        ///
+        /// <param name="n">a vertex in G1</param>
+        /// <param name="m">a vertex in G2</param>
+        /// <returns>the mapping was added</returns>
+        /// </summary>
         public abstract bool Add(int n, int m);
 
-        /**
-         * Remove a mapping (backtrack) between n (a vertex G1) and m (a vertex in
-         * G2).
-         *
-         * @param n a vertex in G1
-         * @param m a vertex in G2
-         */
+        /// <summary>
+        /// Remove a mapping (backtrack) between n (a vertex G1) and m (a vertex in
+        /// G2).
+        ///
+        /// <param name="n">a vertex in G1</param>
+        /// <param name="m">a vertex in G2</param>
+        /// </summary>
         public abstract void Remove(int n, int m);
 
-        /**
-         * Access a copy of the current mapping.
-         *
-         * @return mapping of vertices from <i>G1</i> to <i>G2</i>
-         */
+        /// <summary>
+        /// Access a copy of the current mapping.
+        ///
+        /// <returns>mapping of vertices from <i>G1</i> to <i>G2</i></returns>
+        /// </summary>
         public abstract int[] Mapping();
 
-        /**
-         * Current size of the state. If <i>size</i> is the current number of mapped
-         * candidates.
-         *
-         * @return the size of the state
-         */
+        /// <summary>
+        /// Current size of the state. If <i>size</i> is the current number of mapped
+        /// candidates.
+        ///
+        /// <returns>the size of the state</returns>
+        /// </summary>
         public abstract int Count { get; }
     }
 }

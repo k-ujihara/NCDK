@@ -28,43 +28,43 @@ using NCDK.Numerics;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Representation of an Sgroup bracket.
-     */
+    /// <summary>
+    /// Representation of an Sgroup bracket.
+    /// </summary>
     public class SgroupBracket
     {
         private Vector2 p1, p2;
 
-        /**
-         * Create an Sgroup bracket.
-         *
-         * @param x1 first x coord
-         * @param y1 first y coord
-         * @param x2 second x coord
-         * @param y2 second y coord
-         */
+        /// <summary>
+        /// Create an Sgroup bracket.
+        ///
+        /// <param name="x1">first x coord</param>
+        /// <param name="y1">first y coord</param>
+        /// <param name="x2">second x coord</param>
+        /// <param name="y2">second y coord</param>
+        /// </summary>
         public SgroupBracket(double x1, double y1, double x2, double y2)
         {
             this.p1 = new Vector2(x1, y1);
             this.p2 = new Vector2(x2, y2);
         }
 
-        /**
-         * First point of the bracket (x1,y1).
-         *
-         * @return first point
-         */
+        /// <summary>
+        /// First point of the bracket (x1,y1).
+        ///
+        /// <returns>first point</returns>
+        /// </summary>
         public Vector2 FirstPoint
         {
             get { return p1; }
             set { p1 = value; }
         }
 
-        /**
-         * Second point of the bracket (x2,y2).
-         *
-         * @return second point
-         */
+        /// <summary>
+        /// Second point of the bracket (x2,y2).
+        ///
+        /// <returns>second point</returns>
+        /// </summary>
         public Vector2 SecondPoint
         {
             get { return p2; }

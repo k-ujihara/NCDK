@@ -11,7 +11,7 @@ namespace NCDK.IO
     /// </summary>
     // @cdk.module test-io
     // @author Christoph Steinbeck
-	[TestClass()]
+    [TestClass()]
     public class Gaussian98ReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
@@ -33,7 +33,7 @@ namespace NCDK.IO
             object obj = null;
             int shieldingCounter = 0;
             string filename = "NCDK.Data.Gaussian.g98ReaderNMRTest.log";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             TextReader inputReader = new StreamReader(ins);
             Gaussian98Reader g98Reader = new Gaussian98Reader(inputReader);
             ChemFile chemFile = (ChemFile)g98Reader.Read(new ChemFile());

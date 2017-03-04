@@ -23,43 +23,43 @@ using NCDK.Numerics;
 
 namespace NCDK.Tools.Diff.Tree
 {
-    /**
-     * {@link IDifference} between two {@link Object}s which contains one or more child
-     * {@link IDifference} objects.
-     *
-     * @author     egonw
-     * @cdk.module diff
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <see cref="IDifference"/> between two <see cref="Object"/>s which contains one or more child
+    /// <see cref="IDifference"/> objects.
+    ///
+    // @author     egonw
+    // @cdk.module diff
+    // @cdk.githash
+    /// </summary>
     public interface IDifferenceList : IDifference
     {
-        /**
-         * Adds a new {@link IDifference} as child to this tree. For example, an {@link IAtom} difference
-         * would have a child difference for {@link Vector2}.
-         *
-         * @param childDiff child {@link IDifference} to add to this {@link IDifference}
-         */
+        /// <summary>
+        /// Adds a new <see cref="IDifference"/> as child to this tree. For example, an <see cref="IAtom"/> difference
+        /// would have a child difference for <see cref="Vector2"/>.
+        ///
+        /// <param name="childDiff">child <see cref="IDifference"/> to add to this <see cref="IDifference"/></param>
+        /// </summary>
         void AddChild(IDifference childDiff);
 
-        /**
-         * Adds multiple {@link IDifference}s as child to this tree.
-         *
-         * @param children a {@link List} of {@link IDifference}s to add to this {@link IDifference}
-         */
+        /// <summary>
+        /// Adds multiple <see cref="IDifference"/>s as child to this tree.
+        ///
+        /// <param name="children">a <see cref="List"/> of <see cref="IDifference"/>s to add to this <see cref="IDifference"/></param>
+        /// </summary>
         void AddChildren(IEnumerable<IDifference> children);
 
-        /**
-         * Returns an {@link IEnumerable} of {@link IDifference} for all childs of this {@link IDifference}.
-         *
-         * @return an {@link IEnumerable} implementation with all children
-         */
+        /// <summary>
+        /// Returns an <see cref="IEnumerable"/> of <see cref="IDifference"/> for all childs of this <see cref="IDifference"/>.
+        ///
+        /// <returns>an <see cref="IEnumerable"/> implementation with all children</returns>
+        /// </summary>
         IEnumerable<IDifference> GetChildren();
 
-        /**
-         * Returns the number of children of this {@link IDifference}.
-         *
-         * @return an int reflecting the number of children
-         */
+        /// <summary>
+        /// Returns the number of children of this <see cref="IDifference"/>.
+        ///
+        /// <returns>an int reflecting the number of children</returns>
+        /// </summary>
         int ChildCount();
     }
 }

@@ -24,16 +24,12 @@ using NCDK.Tools;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * Compares to {@link ILigand}s based on atomic numbers.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class AtomicNumberRule : ISequenceSubRule<ILigand>
+    /// <summary>
+    /// Compares to <see cref="ILigand"/>s based on atomic numbers.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
+    internal class AtomicNumberRule : ISequenceSubRule<ILigand>
     {
         public int Compare(ILigand ligand1, ILigand ligand2)
         {

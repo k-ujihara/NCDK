@@ -40,7 +40,7 @@ namespace NCDK.Stereo
     {
 
         [TestMethod()]
-        public void haworthAnticlockwise()
+        public void HaworthAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Left, Left, Left, Left, Left, Left },
@@ -55,7 +55,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void haworthClockwise()
+        public void HaworthClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Right, Right, Right, Right, Right, Right },
@@ -70,7 +70,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void chairAnticlockwise()
+        public void ChairAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Left, Right, Right, Left, Right, Right },
@@ -85,7 +85,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void chairClockwise()
+        public void ChairClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Left, Left, Right, Left, Left, Right },
@@ -100,7 +100,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void boatAnticlockwise()
+        public void BoatAnticlockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Right, Right, Right, Left, Left, Right },
@@ -115,7 +115,7 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
         }
 
         [TestMethod()]
-        public void boatClockwise()
+        public void BoatClockwise()
         {
             Assert.IsTrue(Compares.AreDeepEqual(
                 new Turn[] { Left, Right, Right, Left, Left, Left },
@@ -129,9 +129,9 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
         })));
         }
 
-        /**
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+        /// </summary>
         [TestMethod()]
         public void betaDGlucose_Haworth()
         {
@@ -189,9 +189,9 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
                                     m.Atoms[7], m.Atoms[5], m.Atoms[0], m.Atoms[1]);
         }
 
-        /**
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+        /// </summary>
         [TestMethod()]
         public void betaDGlucose_Chair()
         {
@@ -250,9 +250,9 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
                                     m.Atoms[0], m.Atoms[5], m.Atoms[10], m.Atoms[1]);
         }
 
-        /**
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+        /// </summary>
         [TestMethod()]
         public void betaDGlucoseWithExplicitHydrogens_Haworth()
         {
@@ -321,12 +321,12 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
 
         }
 
-        /**
-         * Example from: http://www.google.com/patents/WO2008025160A1?cl=en
-         * @cdk.inchi InChI=1S/C13H26O5/c1-4-10-7-11(17-6-5-16-3)9(2)18-12(8-14)13(10)15/h9-15H,4-8H2,1-3H3/t9-,10+,11+,12+,13-/m0/s1
-         */
+        /// <summary>
+        /// Example from: http://www.google.com/patents/WO2008025160A1?cl=en
+        // @cdk.inchi InChI=1S/C13H26O5/c1-4-10-7-11(17-6-5-16-3)9(2)18-12(8-14)13(10)15/h9-15H,4-8H2,1-3H3/t9-,10+,11+,12+,13-/m0/s1
+        /// </summary>
         [TestMethod()]
-        public void oxpene()
+        public void Oxpene()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 1.39d, 3.65d));
@@ -393,9 +393,9 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
                                     m.Atoms[12], m.Atoms[3], m.Atoms[0], m.Atoms[1]);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C10H16N5O13P3/c11-8-5-9(13-2-12-8)15(3-14-5)10-7(17)6(16)4(26-10)1-25-30(21,22)28-31(23,24)27-29(18,19)20/h2-4,6-7,10,16-17H,1H2,(H,21,22)(H,23,24)(H2,11,12,13)(H2,18,19,20)/t4-,6-,7-,10-/m1/s1
+        /// </summary>
         [TestMethod()]
         public void Atp_Haworth()
         {
@@ -489,12 +489,12 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
                                     m.Atoms[30], m.Atoms[3], m.Atoms[4], m.Atoms[0]);
         }
 
-        /**
-         * avoid false positive
-         * @cdk.inchi InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2
-         */
+        /// <summary>
+        /// avoid false positive
+        // @cdk.inchi InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2
+        /// </summary>
         [TestMethod()]
-        public void hexopyranose()
+        public void Hexopyranose()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, 0.00d, 2.48d));
@@ -529,13 +529,13 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
             Assert.IsTrue(recon.Recognise(new[] { Projection.Haworth }).Count == 0);
         }
 
-        /**
-         * Given a chair projection of beta-D-glucose we rotate it from -80 -> +80
-         * and check the interpretation is the same. Going upside down inverts all
-         * configurations.
-         * 
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5?,6-/s2
-         */
+        /// <summary>
+        /// Given a chair projection of beta-D-glucose we rotate it from -80 -> +80
+        /// and check the interpretation is the same. Going upside down inverts all
+        /// configurations.
+        /// 
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5?,6-/s2
+        /// </summary>
         [TestMethod()]
         public void betaDGlucose_Chair_Rotated()
         {
@@ -603,12 +603,12 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
             }
         }
 
-        /**
-         * p-menthane (CHEBI:25826)
-         * @cdk.inchi InChI=1S/C10H20/c1-8(2)10-6-4-9(3)5-7-10/h8-10H,4-7H2,1-3H3
-         */
+        /// <summary>
+        /// p-menthane (CHEBI:25826)
+        // @cdk.inchi InChI=1S/C10H20/c1-8(2)10-6-4-9(3)5-7-10/h8-10H,4-7H2,1-3H3
+        /// </summary>
         [TestMethod()]
-        public void haworthFalsePositive()
+        public void HaworthFalsePositive()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 2, -0.71d, 0.41d));
@@ -641,12 +641,12 @@ CyclicCarbohydrateRecognition.Turns(new Vector2[]{
             Assert.IsTrue(elements.Count == 0);
         }
 
-        /**
-         * prolinate (CHEBI:32871)
-         * @cdk.cite InChI=1S/C5H9NO2/c7-5(8)4-2-1-3-6-4/h4,6H,1-3H2,(H,7,8)/p-1
-         */
+        /// <summary>
+        /// prolinate (CHEBI:32871)
+        // @cdk.cite InChI=1S/C5H9NO2/c7-5(8)4-2-1-3-6-4/h4,6H,1-3H2,(H,7,8)/p-1
+        /// </summary>
         [TestMethod()]
-        public void requireAtLeastTwoProjectedSubstituents()
+        public void RequireAtLeastTwoProjectedSubstituents()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("O", 0, -0.71d, 1.24d));

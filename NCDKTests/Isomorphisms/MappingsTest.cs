@@ -26,15 +26,15 @@ using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Smiles;
-using NCDK.Util;
+
 using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class MappingsTest
     {
@@ -312,7 +312,7 @@ namespace NCDK.Isomorphisms
         }
 
         [TestMethod()]
-        public void iterator()
+        public void Iterator()
         {
             var m_iterable = new Mock<IEnumerable<int[]>>(); var iterable = m_iterable.Object;
             var m_iterator = new Mock<IEnumerator<int[]>>(); var iterator = m_iterator.Object;

@@ -23,17 +23,15 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Charges
 {
-    /**
+    /// <summary>
     /// Assigns charges to atom types.
-     *
-    /// @author      chhoppe
-    /// @cdk.created 2004-11-03
-    /// @cdk.module  charges
-    /// @cdk.githash
-     */
+    /// </summary>
+    // @author      chhoppe
+    // @cdk.created 2004-11-03
+    // @cdk.module  charges
+    // @cdk.githash
     public class AtomTypeCharges : IChargeCalculator
     {
-
         HOSECodeGenerator hcg = new HOSECodeGenerator();
         Regex pOC = new Regex("O-[1][-];=?+C[(]=?+O.*+", RegexOptions.Compiled);
         Regex pOP = new Regex("O-[1][-];=?+P.*+", RegexOptions.Compiled);
@@ -41,12 +39,12 @@ namespace NCDK.Charges
         Regex p_p = new Regex("[A-Za-z]{1,2}+[-][0-6].?+[+].*+", RegexOptions.Compiled);
         Regex p_n = new Regex("[A-Za-z]{1,2}+[-][0-6].?+[-].*+", RegexOptions.Compiled);
 
-        /**
+        /// <summary>
         ///  Constructor for the AtomTypeCharges object.
-         */
+        /// </summary>
         AtomTypeCharges() { }
 
-        /**
+        /// <summary>
         ///  Sets initial charges for atom types.
         /// +1 for cationic atom types
         /// -1 for anionic atom types
@@ -55,14 +53,11 @@ namespace NCDK.Charges
         /// sulfanilic oxygen -0.5
         /// or to formal charge (which must be determined elsewhere or set manually)
         /// polycations are not handled by this approach
-         *
-         *@param  atomContainer  AtomContainer
-         *@return                AtomContainer with set charges
-         *@exception  Exception  Description of the Exception
-         */
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <returns>AtomContainer with set charges</returns>
         public IAtomContainer SetCharges(IAtomContainer atomContainer)
         {
-
             atomContainer = SetInitialCharges(atomContainer);
             return atomContainer;
         }
@@ -84,13 +79,12 @@ namespace NCDK.Charges
             return hosecode;
         }
 
-        /**
+        /// <summary>
         ///  Sets the initialCharges attribute of the AtomTypeCharges object.
-         *
-         *@param  ac                AtomContainer
-         *@return                   AtomContainer with (new) partial charges
-         *@exception  CDKException  Description of the Exception
-         */
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>AtomContainer with (new) partial charges</returns>
+        /// <exception cref="CDKException"></exception>
         private IAtomContainer SetInitialCharges(IAtomContainer ac)
         {
             Match matOC = null;
@@ -108,7 +102,7 @@ namespace NCDK.Charges
                 }
                 catch (CDKException ex1)
                 {
-                    throw new CDKException("Could not build HOSECode from atom " + i + " due to " + ex1.ToString(), ex1);
+                    throw new CDKException($"Could not build HOSECode from atom {i} due to {ex1.ToString()}", ex1);
                 }
                 hoseCode = RemoveAromaticityFlagsFromHoseCode(hoseCode);
 
@@ -154,8 +148,7 @@ namespace NCDK.Charges
             }
             catch (Exception exception)
             {
-                throw new CDKException("Could not calculate Gasteiger-Marsili PEPE charges: " + exception.Message,
-                        exception);
+                throw new CDKException($"Could not calculate Gasteiger-Marsili PEPE charges: {exception.Message}", exception);
             }
         }
     }

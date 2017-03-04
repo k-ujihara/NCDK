@@ -33,16 +33,14 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     * This class acts as a handler class for {@link CDKMCS} algorithm.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class acts as a handler class for <see cref="CDKMCS"/> algorithm.
+    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class CDKMCSHandler : AbstractMCSAlgorithm, IMCSBase
     {
-
         //    //~--- fields -------------------------------------------------------------
         private IAtomContainer source;
         private IAtomContainer target;
@@ -53,12 +51,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
         private List<IDictionary<int, int>> allMCS = null;
 
         //~--- constructors -------------------------------------------------------
-        /*
-         * Creates a new instance of MappingHandler
-         */
+        /// <summary>
+        /// Creates a new instance of MappingHandler
+        /// </summary>
         public CDKMCSHandler()
         {
-
             this.allAtomMCS = new List<IDictionary<IAtom, IAtom>>();
             this.firstAtomMCS = new Dictionary<IAtom, IAtom>();
             this.firstMCS = new SortedDictionary<int, int>();
@@ -111,14 +108,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         *
-         * @param mol
-         * @param mcss
-         * @param shouldMatchBonds
-         * @return IMolecule Set
-         * @throws CDKException
-         */
+        /// <summary>
+        /// </summary>
+        /// <param name="mol"></param>
+        /// <param name="mcss"></param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>IMolecule Set</returns>
+        /// <exception cref="CDKException"></exception>
         protected IAtomContainerSet GetUncommon(IAtomContainer mol, IAtomContainer mcss, bool shouldMatchBonds)
         {
             List<int> atomSerialsToDelete = new List<int>();
@@ -155,7 +151,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
         [MethodImpl(MethodImplOptions.Synchronized)]
         private void SetAllMapping()
         {
-
             //int count_final_sol = 1;
             //Console.Out.WriteLine("Output of the final FinalMappings: ");
             try

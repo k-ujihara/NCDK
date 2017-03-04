@@ -24,30 +24,27 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Graphs.Matrix
 {
-    /**
-     * Calculator for a adjacency matrix representation of this AtomContainer. An
-     * adjacency matrix is a matrix of quare NxN matrix, where N is the number of
-     * atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
-     * and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
-     * See {@cdk.cite TRI92}.
-     *
-     * @cdk.module  core
-     * @cdk.githash
-     * @cdk.keyword adjacency matrix
-     *
-     * @author      steinbeck
-     * @cdk.created 2004-07-04
-     * @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
-     */
+    /// <summary>
+    /// Calculator for a adjacency matrix representation of this AtomContainer. An
+    /// adjacency matrix is a matrix of quare NxN matrix, where N is the number of
+    /// atoms in the AtomContainer. The element i,j of the matrix is 1, if the i-th
+    /// and the j-th atom in the atomcontainer share a bond. Otherwise it is zero.
+    /// See {@cdk.cite TRI92}.
+    /// </summary>
+    // @cdk.module  core
+    // @cdk.githash
+    // @cdk.keyword adjacency matrix
+    // @author      steinbeck
+    // @cdk.created 2004-07-04
+    // @cdk.dictref blue-obelisk:calculateAdjecencyMatrix
     public class AdjacencyMatrix
         : IGraphMatrix
     {
-        /**
-         * Returns the adjacency matrix for the given AtomContainer.
-         *
-         * @param  container The AtomContainer for which the matrix is calculated
-         * @return           An adjacency matrix representing this AtomContainer
-         */
+        /// <summary>
+        /// Returns the adjacency matrix for the given AtomContainer.
+        /// </summary>
+        /// <param name="container">The AtomContainer for which the matrix is calculated</param>
+        /// <returns>An adjacency matrix representing this AtomContainer</returns>
         public static int[][] GetMatrix(IAtomContainer container)
         {
             IBond bond;

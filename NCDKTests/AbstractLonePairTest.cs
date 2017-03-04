@@ -22,14 +22,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link ILonePair} implementations.
-     *
-     * @see org.openscience.cdk.LonePair
-     *
-     * @cdk.module test-interfaces
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of {@link ILonePair} implementations.
+    ///
+    // @see org.openscience.cdk.LonePair
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
+    [TestClass()]
     public abstract class AbstractLonePairTest
             : AbstractElectronContainerTest
     {
@@ -108,9 +108,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * The electron count of an LP is always exactly 2.
-         */
+        /// <summary>
+        /// The electron count of an LP is always exactly 2.
+        /// </summary>
         [TestMethod()]
         public override void TestSetElectronCount_Integer()
         {

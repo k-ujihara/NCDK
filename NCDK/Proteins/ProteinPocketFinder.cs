@@ -46,14 +46,14 @@ namespace NCDK.Proteins
     {
         public int SolvantValue { get; set; } = 0;
         public int ProteinInterior { get; set; } = -1;
-        public int PocketSize { get; set; } = 100;				// # datapoints needed to form a pocket
-        public double RAtom { get; set; } = 1.5;				// default atom radius
+        public int PocketSize { get; set; } = 100;                // # datapoints needed to form a pocket
+        public double RAtom { get; set; } = 1.5;                // default atom radius
         public double RSolvent { get; set; } = 1.4;         // default solvant radius
         public double LatticeConstant { get; set; } = 0.5;
         public int MinPSPocket { get; set; } = 2;
         public int MinPSCluster { get; set; } = 2;
         public double LinkageRadius { get; set; } = 1;
-        public double AtomCheckRadius { get; set; } = 0;	// variable to reduce the atom radius search points
+        public double AtomCheckRadius { get; set; } = 0;    // variable to reduce the atom radius search points
         public IBioPolymer Protein { get; set; } = null;
         public string VanDerWaalsFile { get; set; } = "NCDK.Config.Data.pdb_atomtypes.xml";
         public double[][][] Grid { get; set; } = null;
@@ -71,7 +71,7 @@ namespace NCDK.Proteins
             ReadBioPolymer(biopolymerFile);
             if (cubicGrid)
             {
-                createCubicGrid();
+                CreateCubicGrid();
             }
         }
 
@@ -82,7 +82,7 @@ namespace NCDK.Proteins
             gridGenerator.LatticeConstant = this.LatticeConstant;
             if (cubicGrid)
             {
-                createCubicGrid();
+                CreateCubicGrid();
             }
             else
             {
@@ -182,9 +182,9 @@ namespace NCDK.Proteins
         /**
          * Method creates a cubic grid with the grid generator class.
          */
-        public void createCubicGrid()
+        public void CreateCubicGrid()
         {
-            //		Debug.WriteLine("	CREATE CUBIC GRID");
+            //        Debug.WriteLine("    CREATE CUBIC GRID");
             gridGenerator.SetDimension(FindGridBoundaries(), true);
             gridGenerator.GenerateGrid();
             this.Grid = gridGenerator.Grid;
@@ -201,7 +201,7 @@ namespace NCDK.Proteins
          */
         public void assignProteinToGrid()
         {
-            //		logger.debug.print("	ASSIGN PROTEIN TO GRID");
+            //        logger.debug.Print("    ASSIGN PROTEIN TO GRID");
             // 1. Step: Set all grid points to solvent accessible
             this.Grid = gridGenerator.InitializeGrid(this.Grid, 0);
             // 2. Step Grid points inaccessible to solvent are assigend a value of -1
@@ -253,13 +253,13 @@ namespace NCDK.Proteins
                 }
             }// for atoms.Length
 
-            //		Debug.WriteLine("- checkGridPoints>" + checkGridPoints
-            //				+ " ProteinGridPoints>" + proteinAtomCount);
+            //        Debug.WriteLine("- checkGridPoints>" + checkGridPoints
+            //                + " ProteinGridPoints>" + proteinAtomCount);
         }
 
         public void debuggCheckPSPEvent()
         {
-            Debug.WriteLine("	debugg_checkPSPEvent");
+            Debug.WriteLine("    debugg_checkPSPEvent");
             int[] dim = gridGenerator.Dim;
             // int pspMin=0;
             int[] pspEvents = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -350,9 +350,9 @@ namespace NCDK.Proteins
             // 3. Step scan allong x,y,z axis and the diagonals, if PSP event add +1
             // to grid cell
             int[] dim = gridGenerator.Dim;
-            //		Debug.WriteLine("	SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
-            //				+ this.grid[0].Length + " grid point sum:" + this.grid.Length
-            //				* this.grid[0].Length * this.grid[0][0].Length);
+            //        Debug.WriteLine("    SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
+            //                + this.grid[0].Length + " grid point sum:" + this.grid.Length
+            //                * this.grid[0].Length * this.grid[0][0].Length);
             axisScanX(dim[2], dim[1], dim[0]);// x-Axis
             axisScanY(dim[2], dim[0], dim[1]);// y-Axis
             axisScanZ(dim[0], dim[1], dim[2]);// z-Axis
@@ -375,7 +375,7 @@ namespace NCDK.Proteins
          */
         private void SortPockets()
         {
-            //		Debug.WriteLine("	SORT POCKETS Start#:" + pockets.Count);
+            //        Debug.WriteLine("    SORT POCKETS Start#:" + pockets.Count);
             var hashPockets = new Dictionary<int, IList<int>>();
             IList<Vector3> pocket;
             var sortPockets = new List<IList<Vector3>>(Pockets.Count);
@@ -401,30 +401,30 @@ namespace NCDK.Proteins
             for (int i = keys.Count - 1; i >= 0; i--)
             {
                 var value = hashPockets[keys[i]];
-                //			Debug.WriteLine("key:" + i + " Value" + keys[i]
-                //					+ " #Pockets:" + value.Count);
+                //            Debug.WriteLine("key:" + i + " Value" + keys[i]
+                //                    + " #Pockets:" + value.Count);
                 for (int j = 0; j < value.Count; j++)
                 {
                     sortPockets.Add(Pockets[value[j]]);
                 }
             }
-            //		Debug.WriteLine("	SORT POCKETS End#:" + sortPockets.Count);
+            //        Debug.WriteLine("    SORT POCKETS End#:" + sortPockets.Count);
             Pockets = sortPockets;
         }
 
         /**
          * Method which finds the pocket, with a simple nearest neighbour clustering. The points
          * which should be clustered or form a pocket can be determined with:
-         * 	minPSPocket, minPSCluster, linkageRadius, and pocketSize.
+         *     minPSPocket, minPSCluster, linkageRadius, and pocketSize.
          */
         private void FindPockets()
         {
             int[] dim = gridGenerator.Dim;
-            //		Debug.WriteLine("	FIND POCKETS>dimx:" + dim[0] + " dimy:" + dim[1]
-            //				+ " dimz:" + dim[2] + " linkageRadius>" + linkageRadius
-            //				+ " latticeConstant>" + latticeConstant + " pocketSize:"
-            //				+ pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
-            //				+ minPSCluster);
+            //        Debug.WriteLine("    FIND POCKETS>dimx:" + dim[0] + " dimy:" + dim[1]
+            //                + " dimz:" + dim[2] + " linkageRadius>" + linkageRadius
+            //                + " latticeConstant>" + latticeConstant + " pocketSize:"
+            //                + pocketSize + " minPSPocket:" + minPSPocket + " minPSCluster:"
+            //                + minPSCluster);
             //int pointsVisited = 0;//Debugging
             //int significantPointsVisited = 0;//Debugging
             for (int x = 0; x < dim[0]; x++)
@@ -433,13 +433,13 @@ namespace NCDK.Proteins
                 {
                     for (int z = 0; z < dim[2]; z++)
                     {
-                        // logger.debug.print(" x:"+x+" y:"+y+" z:"+z);
+                        // logger.debug.Print(" x:"+x+" y:"+y+" z:"+z);
                         Vector3 start = new Vector3(x, y, z);
                         //pointsVisited++;
                         if (this.Grid[x][y][z] >= MinPSPocket & !visited.ContainsKey(x + "." + y + "." + z))
                         {
                             List<Vector3> subPocket = new List<Vector3>();
-                            // logger.debug.print("new Point: "+grid[x][y][z]);
+                            // logger.debug.Print("new Point: "+grid[x][y][z]);
                             //significantPointsVisited++;
                             // Debug.WriteLine("visited:"+pointsVisited);
                             subPocket = this.clusterPSPPocket(start, subPocket, dim);
@@ -457,15 +457,15 @@ namespace NCDK.Proteins
                 }
 
             }
-            //		try {
-            //			Debug.WriteLine("	->>>> #pockets:" + pockets.Count
-            //					+ " significantPointsVisited:" + significantPointsVisited
-            //					+ " keys:" + visited.Count + " PointsVisited:"
-            //					+ pointsVisited);
-            //		} catch (Exception ex1) {
-            //			logger.debug
-            //					.println("Problem in System.out due to " + ex1.ToString());
-            //		}
+            //        try {
+            //            Debug.WriteLine("    ->>>> #pockets:" + pockets.Count
+            //                    + " significantPointsVisited:" + significantPointsVisited
+            //                    + " keys:" + visited.Count + " PointsVisited:"
+            //                    + pointsVisited);
+            //        } catch (Exception ex1) {
+            //            logger.debug
+            //                    .Println("Problem in System.out due to " + ex1.ToString());
+            //        }
 
         }
 
@@ -570,7 +570,7 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanXZY(int dimK, int dimL, int dimM)
         {
             // x min ->x max;left upper corner z+y max->min//1
-            //Debug.WriteLine("	diagonalAxisScanXZY");
+            //Debug.WriteLine("    diagonalAxisScanXZY");
             if (dimM < dimL)
             {
                 dimL = dimM;
@@ -631,7 +631,7 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanYZX(int dimK, int dimL, int dimM)
         {
             // y min -> y max; right lower corner zmax->zmin, xmax ->min//4
-            // logger.debug.print(" diagonalAxisScanYZX");
+            // logger.debug.Print(" diagonalAxisScanYZX");
             //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
@@ -692,7 +692,7 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanYXZ(int dimK, int dimL, int dimM)
         {
             // y min -> y max; left lower corner z max->min, x min->max//2
-            // logger.debug.print(" diagonalAxisScanYXZ");
+            // logger.debug.Print(" diagonalAxisScanYXZ");
             //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
@@ -757,7 +757,7 @@ namespace NCDK.Proteins
         public void DiagonalAxisScanXYZ(int dimK, int dimL, int dimM)
         {
             // x min -> xmax;left lower corner z max->min, y min->max//3
-            // logger.debug.print(" diagonalAxisScanXYZ");
+            // logger.debug.Print(" diagonalAxisScanXYZ");
             //int gridPoints = 0;//Debugging
             if (dimM < dimL)
             {
@@ -822,7 +822,7 @@ namespace NCDK.Proteins
         public void axisScanX(int dimK, int dimL, int dimM)
         {
             // z,y,x
-            //		logger.debug.print("	diagonalAxisScanX");
+            //        logger.debug.Print("    diagonalAxisScanX");
             //int gridPoints = 0;//Debugging
             List<Vector3> line = new List<Vector3>();
             int pspEvent = 0;
@@ -862,7 +862,7 @@ namespace NCDK.Proteins
                     }
                 }
             }
-            //		Debug.WriteLine(" #gridPoints>" + gridPoints);
+            //        Debug.WriteLine(" #gridPoints>" + gridPoints);
         }
 
         /**
@@ -1014,7 +1014,7 @@ namespace NCDK.Proteins
         /**
          * Method writes the PSP points (>=minPSPocket) to pmesh format.
          */
-        public void pspGridToPmesh(string outPutFileName)
+        public void PspGridToPmesh(string outPutFileName)
         {
             try
             {
@@ -1029,7 +1029,7 @@ namespace NCDK.Proteins
         /**
          * Method writes the protein grid points to pmesh format.
          */
-        public void proteinGridToPmesh(string outPutFileName)
+        public void ProteinGridToPmesh(string outPutFileName)
         {
             try
             {

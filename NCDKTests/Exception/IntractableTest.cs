@@ -26,22 +26,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Exceptions
 {
-    /**
-     * @author John May
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class IntractableTest
     {
         [TestMethod()]
-        public void timeout()
+        public void Timeout()
         {
             Intractable e = new Intractable(12);
             Assert.AreEqual("Operation did not finish after 12 ms.", e.Message);
         }
 
         [TestMethod()]
-        public void timeoutWithDesc()
+        public void TimeoutWithDesc()
         {
             Intractable e = new Intractable("MCS", 200);
             Assert.AreEqual("MCS did not finish after 200 ms.", e.Message);

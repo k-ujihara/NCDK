@@ -28,10 +28,10 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-	 * @author John May
-	 * @cdk.module test-standard
-	 */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class CanonTest
     {
@@ -51,14 +51,14 @@ namespace NCDK.Graphs.Invariant
             Assert.IsTrue(Compares.AreEqual(new long[] { 1, 7, 5, 3, 2, 4, 6 }, labels));
         }
 
-        /**
-		 * Ensure we consider the previous rank when we shatter ranks. This molecule
-		 * has a carbons/sulphurs which experience the same environment. We must
-		 * consider that they are different (due to their initial label) but not
-		 * their environment.
-		 *
-		 * @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
-		 */
+        /// <summary>
+        /// Ensure we consider the previous rank when we shatter ranks. This molecule
+        /// has a carbons/sulphurs which experience the same environment. We must
+        /// consider that they are different (due to their initial label) but not
+        /// their environment.
+        ///
+        // @cdk.inchi InChI=1/C2H4S5/c1-3-4-2-6-7-5-1/h1-2H2
+        /// </summary>
         [TestMethod()]
         public void Lenthionine_symmetry()
         {
@@ -72,7 +72,7 @@ namespace NCDK.Graphs.Invariant
         {
             IAtomContainer m = Smi("CCO");
             long[] exp = new long[] { 1065731, 1082114, 541697 };
-            long[] act = Canon.basicInvariants(m, ToAdjList(m));
+            long[] act = Canon.BasicInvariants(m, ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(exp, act));
         }
 
@@ -81,23 +81,23 @@ namespace NCDK.Graphs.Invariant
         {
             IAtomContainer m = Smi("OC1=CC=CC=C1");
             long[] exp = new long[] { 541697, 836352, 819969, 819969, 819969, 819969, 819969 };
-            long[] act = Canon.basicInvariants(m, ToAdjList(m));
+            long[] act = Canon.BasicInvariants(m, ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(exp, act));
         }
 
         [TestMethod()]
-        public void terminalExplicitHydrogensAreNotIncluded()
+        public void TerminalExplicitHydrogensAreNotIncluded()
         {
             IAtomContainer m = Smi("C/C=C(/C)C[H]");
-            bool[] mask = Canon.terminalHydrogens(m, GraphUtil.ToAdjList(m));
+            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false, false, false, false, false, true }, mask));
         }
 
         [TestMethod()]
-        public void bridgingExplicitHydrogensAreIncluded()
+        public void BridgingExplicitHydrogensAreIncluded()
         {
             IAtomContainer m = Smi("B1[H]B[H]1");
-            bool[] mask = Canon.terminalHydrogens(m, GraphUtil.ToAdjList(m));
+            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false, false, false, false }, mask));
         }
 
@@ -105,7 +105,7 @@ namespace NCDK.Graphs.Invariant
         public void ExplicitHydrogensIonsAreIncluded()
         {
             IAtomContainer m = Smi("[H+]");
-            bool[] mask = Canon.terminalHydrogens(m, GraphUtil.ToAdjList(m));
+            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { false }, mask));
         }
 
@@ -113,7 +113,7 @@ namespace NCDK.Graphs.Invariant
         public void MolecularHydrogensAreNotIncluded()
         {
             IAtomContainer m = Smi("[H][H]");
-            bool[] mask = Canon.terminalHydrogens(m, GraphUtil.ToAdjList(m));
+            bool[] mask = Canon.TerminalHydrogens(m, GraphUtil.ToAdjList(m));
             Assert.IsTrue(Compares.AreEqual(new bool[] { true, true }, mask));
         }
 

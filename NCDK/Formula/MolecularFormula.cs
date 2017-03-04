@@ -16,47 +16,43 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Formula
 {
-    /**
-    // Class defining a molecular formula object. It maintains
-    // a list of list {@link IIsotope}.
-     *
-    // <p>Examples:
-    // <ul>
-    //   <li><code>[C<sub>5</sub>H<sub>5</sub>]-</code></li>
-    //   <li><code>C<sub>6</sub>H<sub>6</sub></code></li>
-    //   <li><code><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></code></li>
-    // </ul>
-     *
+    /// <summary>
+    /// Class defining a molecular formula object. It maintains a list of list <see cref="IIsotope"/>.
+    /// </summary>
+    /// <remarks>
+    /// Examples:
+    /// <list type="bullet">
+    /// <item>[C<sub>5</sub>H<sub>5</sub>]-</item>
+    /// <item>C<sub>6</sub>H<sub>6</sub></item>
+    /// <item><sup>12</sup>C<sub>5</sub><sup>13</sup>CH<sub>6</sub></item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  data
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-     */
     public class MolecularFormula : IMolecularFormula
     {
         private IDictionary<IIsotope, int?> isotopes;
 
-        /**
-        //  The partial charge of the molecularFormula. The default value is double.NaN.
-         */
+        /// <summary>
+        /// The partial charge of the molecularFormula. The default value is double.NaN.
+        /// </summary>
         public int? Charge { get; set; } = null;
 
-        /**
-        //  A hashtable for the storage of any kind of properties of this IChemObject.
-         */
+        /// <summary>
+        /// A hashtable for the storage of any kind of properties of this IChemObject.
+        /// </summary>
         private IDictionary<string, object> properties = new Dictionary<string, object>();
 
-        /**
-        //  Constructs an empty MolecularFormula.
-         */
+        /// <summary>
+        /// Constructs an empty MolecularFormula.
+        /// </summary>
         public MolecularFormula()
         {
             isotopes = new Dictionary<IIsotope, int?>(new IsotopeComparer(this));
@@ -82,12 +78,11 @@ namespace NCDK.Formula
             }
         }
 
-        /**
-        // Adds an molecularFormula to this MolecularFormula.
-         *
-        // @param  formula  The molecularFormula to be added to this chemObject
-        // @return          The IMolecularFormula
-         */
+        /// <summary>
+        /// Adds an molecularFormula to this MolecularFormula.
+        /// </summary>
+        /// <param name="formula">The molecularFormula to be added to this chemObject</param>
+        /// <returns>The IMolecularFormula</returns>
         public IMolecularFormula Add(IMolecularFormula formula)
         {
             foreach (var newIsotope in formula.Isotopes)
@@ -104,24 +99,20 @@ namespace NCDK.Formula
             return this;
         }
 
-        /**
-        //  Adds an Isotope to this MolecularFormula one time.
-         *
-        // @param  isotope  The isotope to be added to this MolecularFormula
-        // @see             #Isotopes.Add(IIsotope, int)
-         */
+        /// <summary>
+        /// Adds an Isotope to this MolecularFormula one time.
+        /// </summary>
+        /// <param name="isotope">The isotope to be added to this MolecularFormula</param>
         public IMolecularFormula Add(IIsotope isotope)
         {
             return Add(isotope, 1);
         }
 
-        /**
-        //  Adds an Isotope to this MolecularFormula in a number of occurrences.
-         *
-        // @param  isotope  The isotope to be added to this MolecularFormula
-        // @param  count    The number of occurrences to add
-        // @see             #Isotopes.Add(IIsotope)
-         */
+        /// <summary>
+        /// Adds an Isotope to this MolecularFormula in a number of occurrences.
+        /// </summary>
+        /// <param name="isotope">The isotope to be added to this MolecularFormula</param>
+        /// <param name="count">The number of occurrences to add</param>
         public IMolecularFormula Add(IIsotope isotope, int count)
         {
             foreach (var thisIsotope in isotopes)
@@ -136,57 +127,47 @@ namespace NCDK.Formula
             return this;
         }
 
-        /**
-        //  True, if the MolecularFormula contains the given IIsotope object and not
-        //  the instance. The method looks for other isotopes which has the same
-        //  symbol, natural abundance and exact mass.
-         *
-        // @param  isotope  The IIsotope this MolecularFormula is searched for
-        // @return          True, if the MolecularFormula contains the given isotope object
-         */
+        /// <summary>
+        /// True, if the MolecularFormula contains the given IIsotope object and not
+        /// the instance. The method looks for other isotopes which has the same
+        /// symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotope">The IIsotope this MolecularFormula is searched for</param>
+        /// <returns>True, if the MolecularFormula contains the given isotope object</returns>
         public virtual bool Contains(IIsotope isotope)
             => isotopes.ContainsKey(isotope);
 
-        /**
-        //  Checks a set of Nodes for the occurrence of the isotope in the
-        //  IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
-         *
-        // @param   isotope          The IIsotope to look for
-        // @return                   The occurrence of this isotope in this IMolecularFormula
-        // @see                      #Isotopes.Count
-         */
+        /// <summary>
+        /// Checks a set of Nodes for the occurrence of the isotope in the
+        /// IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to look for</param>
+        /// <returns>The occurrence of this isotope in this IMolecularFormula</returns>
         public int GetCount(IIsotope isotope)
             => !Contains(isotope) ? 0 : isotopes[isotope] ?? 0;
 
-        /**
-        //  Checks a set of Nodes for the number of different isotopes in the
-        //  IMolecularFormula.
-         *
-        // @return        The the number of different isotopes in this IMolecularFormula
-        // @see           #Isotopes.Count(IIsotope)
-         */
+        /// <summary>
+        /// The the number of different isotopes in this IMolecularFormula.
+        /// </summary>
         public int Count => isotopes.Count;
 
-        /**
-        //  Returns an IEnumerator for looping over all isotopes in this IMolecularFormula.
-         *
-        // @return    An IEnumerator with the isotopes in this IMolecularFormula
-         */
+        /// <summary>
+        /// An IEnumerator with the isotopes in this IMolecularFormula.
+        /// </summary>
         public IEnumerable<IIsotope> Isotopes => isotopes.Keys;
 
-        /**
-        // Removes all isotopes of this molecular formula.
-         */
+        /// <summary>
+        /// Removes all isotopes of this molecular formula.
+        /// </summary>
         public void Clear()
         {
             isotopes.Clear();
         }
 
-        /**
-        //  Removes the given isotope from the MolecularFormula.
-         *
-        // @param isotope  The IIsotope to be removed
-         */
+        /// <summary>
+        /// Removes the given isotope from the MolecularFormula.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to be removed</param>
         public void Remove(IIsotope isotope)
         {
             isotopes.Remove(isotope);
@@ -198,16 +179,16 @@ namespace NCDK.Formula
         /// <returns>The cloned object</returns>
         public object Clone()
         {
-            //		/* it is not a super class of chemObject */
-            //		MolecularFormula clone = (MolecularFormula) base.Clone();
+            //        /* it is not a super class of chemObject */
+            //        MolecularFormula clone = (MolecularFormula) base.Clone();
             //        // start from scratch
-            //		clone.Clear();
+            //        clone.Clear();
             //        // clone all isotopes
-            //		IEnumerator<IIsotope> iterIso = this.Isotopes;
-            //		while(iterIso.MoveNext()){
-            //			IIsotope isotope = iterIso.Next();
-            //			clone.Isotopes.Add((IIsotope) isotope.Clone(),Isotopes.Count(isotope));
-            //		}
+            //        IEnumerator<IIsotope> iterIso = this.Isotopes;
+            //        while(iterIso.MoveNext()){
+            //            IIsotope isotope = iterIso.Next();
+            //            clone.Isotopes.Add((IIsotope) isotope.Clone(),Isotopes.Count(isotope));
+            //        }
 
             MolecularFormula clone = new MolecularFormula();
             foreach (var isotope_count in isotopes)
@@ -221,38 +202,30 @@ namespace NCDK.Formula
         public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
 
 
-        /**
-        //  Sets a property for a IChemObject. I should
-        // integrate into ChemObject.
-         *
-         *@param  description  An object description of the property (most likely a
-        //      unique string)
-         *@param  property     An object with the property itself
-         *@see                 #GetProperty
-         *@see                 #removeProperty
-         */
+        /// <summary>
+        /// Sets a property for a IChemObject. I should integrate into ChemObject.
+        /// </summary>
+        /// <param name="description">An object description of the property (most likely a unique string)</param>
+        /// <param name="property">An object with the property itself</param>
+        /// <seealso cref="GetProperty(string)"/>
+        /// <seealso cref="RemoveProperty(string)"/>
         public virtual void SetProperty(string key, object value)
         {
             properties[key] = value;
         }
 
-        /**
-        //  Removes a property for a IChemObject. I should
-        // integrate into ChemObject.
-         *
-         *@param  description  The object description of the property (most likely a
-        //      unique string)
-         *@see                 #setProperty
-         *@see                 #GetProperty
-         */
+        /// <summary>
+        /// Removes a property for a IChemObject. I should integrate into ChemObject.
+        /// </summary>
+        /// <param name="description">The object description of the property (most likely a unique string)</param>
+        /// <seealso cref="SetProperty(string, object)"/>
+        /// <seealso cref="GetProperty(string)"/>
         public virtual void RemoveProperty(string description)
         {
             properties.Remove(description);
         }
 
-        /**
-        // @inheritDoc
-         */
+        /// <inheritdoc/>
         public virtual object GetProperty(string key)
         {
             object property;
@@ -261,22 +234,19 @@ namespace NCDK.Formula
             return null;
         }
 
-        /**
-        //  Returns a IDictionary with the IChemObject's properties.I should
-        // integrate into ChemObject.
-         *
-         *@return    The object's properties as an Dictionary
-         *@see       #setProperties
-         */
+        /// <summary>
+        /// Returns a IDictionary with the IChemObject's properties.I should integrate into ChemObject.
+        /// </summary>
+        /// <returns>The object's properties as an Dictionary</returns>
+        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{string, object}})"/>
         public virtual IDictionary<string, object> GetProperties()
             => properties;
 
-        /**
-        //  Sets the properties of this object.
-         *
-         *@param  properties  a Dictionary specifying the property values
-         *@see                #getProperties
-         */
+        /// <summary>
+        /// Sets the properties of this object.
+        /// </summary>
+        /// <param name="properties">a Dictionary specifying the property values</param>
+        /// <seealso cref="GetProperties"/>
         public void SetProperties(IEnumerable<KeyValuePair<string, object>> properties)
         {
             this.properties = new Dictionary<string, object>();
@@ -284,20 +254,14 @@ namespace NCDK.Formula
                 this.properties.Add(pair);
         }
 
-        /**
-        // Compare to IIsotope. The method doesn't compare instance but if they
-        // have the same symbol, natural abundance and exact mass.
-         *
-        // @param isotopeOne   The first Isotope to compare
-        // @param isotopeTwo   The second Isotope to compare
-        // @return             True, if both isotope are the same
-         */
-#if TEST
-        public
-#else
-        protected
-#endif
-        bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
+        /// <summary>
+        /// Compare to IIsotope. The method doesn't compare instance but if they
+        /// have the same symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotopeOne">The first Isotope to compare</param>
+        /// <param name="isotopeTwo">The second Isotope to compare</param>
+        /// <returns>True, if both isotope are the same</returns>
+        internal protected bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             double? natAbund1 = isotopeOne.NaturalAbundance;
             double? natAbund2 = isotopeTwo.NaturalAbundance;

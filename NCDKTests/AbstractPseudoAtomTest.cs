@@ -24,11 +24,11 @@ using NCDK.Common.Mathematics;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IPseudoAtom} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IPseudoAtom} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractPseudoAtomTest : AbstractAtomTest
     {
@@ -123,9 +123,9 @@ namespace NCDK
             AssertAreEqual(twoD, a.Point2D.Value, 0.0001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()
@@ -135,9 +135,9 @@ namespace NCDK
             Assert.IsTrue(clone is IPseudoAtom);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public override void TestToString()
         {
@@ -150,14 +150,14 @@ namespace NCDK
             }
         }
 
-        /**
-         * Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
-         * We decided to let the pseudo atoms have a default label of '*'.
-         *
-         * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-         *
-         * @cdk.bug 1778479
-         */
+        /// <summary>
+        /// Test for bug #1778479 "MDLWriter writes empty PseudoAtom label string".
+        /// We decided to let the pseudo atoms have a default label of '*'.
+        ///
+        /// Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        ///
+        // @cdk.bug 1778479
+        /// </summary>
         [TestMethod()]
         public virtual void TestBug1778479DefaultLabel()
         {
@@ -166,10 +166,10 @@ namespace NCDK
             Assert.AreEqual("*", atom.Label, "Test for PseudoAtom's default label");
         }
 
-        /**
-         * Overwrite the method in {@link AbstractAtomTest} to always
-         * expect zero hydrogen counts.
-         */
+        /// <summary>
+        /// Overwrite the method in {@link AbstractAtomTest} to always
+        /// expect zero hydrogen counts.
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone_HydrogenCount()
@@ -183,10 +183,10 @@ namespace NCDK
             Assert.AreEqual(3, clone.ImplicitHydrogenCount.Value);
         }
 
-        /**
-         * Overwrite the method in {@link AbstractAtomTest} to always
-         * expect zero hydrogen counts.
-         */
+        /// <summary>
+        /// Overwrite the method in {@link AbstractAtomTest} to always
+        /// expect zero hydrogen counts.
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetHydrogenCount()
         {
@@ -199,10 +199,10 @@ namespace NCDK
             Assert.IsNull(a.ImplicitHydrogenCount);
         }
 
-        /**
-         * Overwrite the method in {@link AbstractAtomTypeTest} to always
-         * expect zero stereo parity.
-         */
+        /// <summary>
+        /// Overwrite the method in {@link AbstractAtomTypeTest} to always
+        /// expect zero stereo parity.
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone_StereoParity()

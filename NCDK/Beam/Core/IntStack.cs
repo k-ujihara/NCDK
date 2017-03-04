@@ -35,19 +35,12 @@ using static NCDK.Beam.Configuration;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// A lightweight stack data structure for primitive 'int' types. For general
-    /// purpose programming {@link java.util.ArrayDeque} is preferred (note {@link
-    /// java.util.Stack} is synchronised).
-    ///
-    /// <author>John May</author>
-    // @see java.util.ArrayDeque
+    /// A lightweight stack data structure for primitive 'int' types.
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class IntStack
+    // @author John May
+    // @see java.util.ArrayDeque
+    internal sealed class IntStack
     {
-
         /// <summary>Storage of values.</summary>
         private int[] xs;
 
@@ -64,7 +57,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Push the value {@literal x} on to the stack.
+        /// Push the value <paramref name="x"/> on to the stack.
         ///
         /// <param name="x">value to push</param>
         /// </summary>

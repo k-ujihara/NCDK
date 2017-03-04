@@ -35,19 +35,16 @@ namespace NCDK.Isomorphisms
      * (MCS) but could easily be extended to handle such cases. <p/> The class
      * implements the Guava predicate and can be used easily filter the mappings.
      *
-     * <blockquote><pre>{@code
+     * <blockquote><code>{@code
      * Predicate<int[]> f              = new StereoMatch(query, target);
      * Iterable<int[]>  mappings       = ...; // from subgraph isomorphism etc.
      * Iterable<int[]>  stereoMappings = Iterables.Filter(mappings, f);
-     * }</pre></blockquote>
+     * }</code></blockquote>
      *
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class StereoMatch : NCDK.Common.Base.Predicate<int[]>
+    internal sealed class StereoMatch : NCDK.Common.Base.Predicate<int[]>
     {
         /// <summary>Query and target contains.</summary>
         private readonly IAtomContainer query, target;
@@ -71,12 +68,7 @@ namespace NCDK.Isomorphisms
          * @param query query container
          * @param target target container
          */
-#if TEST
-        public
-#else
-        internal
-#endif
-        StereoMatch(IAtomContainer query, IAtomContainer target)
+        internal StereoMatch(IAtomContainer query, IAtomContainer target)
         {
             this.query = query;
             this.target = target;
@@ -308,7 +300,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Create an index of atoms for the provided {@code container}.
+         * Create an index of atoms for the provided <paramref name="container"/>.
          *
          * @param container the container to index the atoms of
          * @return the index/lookup of atoms to the index they appear
@@ -322,7 +314,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Index the stereo elements of the {@code container} into the the {@code
+         * Index the stereo elements of the <paramref name="container"/> into the the {@code
          * elements} and {@code types} arrays. The {@code map} is used for looking
          * up the index of atoms.
          *

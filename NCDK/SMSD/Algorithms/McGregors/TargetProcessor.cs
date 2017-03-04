@@ -26,12 +26,12 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
-    /**
-     * Class to handle mappings of target molecule based on the query.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class to handle mappings of target molecule based on the query.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class TargetProcessor
     {
 
@@ -50,19 +50,14 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private List<int> newINeighborsA;
         private List<string> newCNeighborsA;
 
-        /**
-         *
-         * @param cTab1Copy
-         * @param cTab2Copy
-         * @param signArray
-         * @param neighborBondnumB
-         * @param setBondnumB
-         * @param iBondNeighborsB
-         * @param cBondNeighborsB
-         * @param newNeighborNumA
-         * @param newINeighborsA
-         * @param newCNeighborsA
-         */
+        /// <summary>
+        ///
+        /// <param name="cTab1Copy">/// @param cTab2Copy</param>
+        /// <param name="signArray">/// @param neighborBondnumB</param>
+        /// <param name="setBondnumB">/// @param iBondNeighborsB</param>
+        /// <param name="cBondNeighborsB">/// @param newNeighborNumA</param>
+        /// <param name="newINeighborsA">/// @param newCNeighborsA</param>
+        /// </summary>
         protected internal TargetProcessor(List<string> cTab1Copy, List<string> cTab2Copy, string[] signArray,
                 int neighborBondnumB, int setBondnumB, List<int> iBondNeighborsB, List<string> cBondNeighborsB,
                 int newNeighborNumA, List<int> newINeighborsA, List<string> newCNeighborsA)
@@ -123,18 +118,13 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         }
 
-        /**
-         *
-         * @param setNumB
-         * @param unmappedAtomsMolB
-         * @param newMappingSize
-         * @param iBondSetB
-         * @param cBondSetB
-         * @param newMapping
-         * @param counter
-         * @param newIBondSetB
-         * @param newCBondSetB
-         */
+        /// <summary>
+        ///
+        /// <param name="setNumB">/// @param unmappedAtomsMolB</param>
+        /// <param name="newMappingSize">/// @param iBondSetB</param>
+        /// <param name="cBondSetB">/// @param newMapping</param>
+        /// <param name="counter">/// @param newIBondSetB</param>
+        /// <param name="newCBondSetB">/// </summary></param>
         protected internal void Process(int setNumB, IList<int> unmappedAtomsMolB, int newMappingSize,
                 IList<int> iBondSetB, IList<string> cBondSetB, IList<int> newMapping, int counter,
                 IList<int> newIBondSetB, IList<string> newCBondSetB)
@@ -359,31 +349,29 @@ namespace NCDK.SMSD.Algorithms.McGregors
             cBondNeighborsB.Add("X");
         }
 
-        /**
-         *
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <returns>/// </summary></returns>
         protected internal List<string> CTab1 => this.cTab1Copy;
 
-        /**
-         *
-         * @return
-         */
+        /// <summary>
+        ///
+        /// <returns>/// </summary></returns>
         protected internal List<string> CTab2 => this.cTab2Copy;
 
-        /**
-         *
-         * @return number of remaining molecule A bonds after the clique search,
-         * which are neighbors of the MCS
-         *
-         */
+        /// <summary>
+        ///
+        /// <returns>number of remaining molecule A bonds after the clique search,</returns>
+        /// which are neighbors of the MCS
+        ///
+        /// </summary>
         protected internal int NeighborBondNumB => this.neighborBondNumB;
 
-        /**
-         *
-         * @return number of remaining molecule A bonds after the clique search,
-         * which aren't neighbors
-         */
+        /// <summary>
+        ///
+        /// <returns>number of remaining molecule A bonds after the clique search,</returns>
+        /// which aren't neighbors
+        /// </summary>
         protected internal int BondNumB => this.setBondNumB;
 
         internal List<int> IBondNeighboursB => this.iBondNeighborsB;

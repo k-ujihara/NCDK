@@ -23,9 +23,9 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiInput
     {
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiInput.Options'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiInput.Options'
+        /// </summary>
         [TestMethod()]
         public void TestGetOptions()
         {

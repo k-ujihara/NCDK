@@ -21,22 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * TODO To change the template for this generated type comment go to
-     * Window - Preferences - Java - Code Style - Code Templates
-     *
-     * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.module test-data
-     */
-	[TestClass()]
+    /// <summary>
+    /// TODO To change the template for this generated type comment go to
+    /// Window - Preferences - Java - Code Style - Code Templates
+    ///
+    // @author     Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.module test-data
+    /// </summary>
+    [TestClass()]
     public class StrandTest : AbstractStrandTest
     {
         public override IChemObject NewChemObject()

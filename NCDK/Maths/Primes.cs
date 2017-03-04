@@ -26,15 +26,15 @@ using System;
 
 namespace NCDK.Maths
 {
-    /**
-	 * @cdk.module standard
-	 * @cdk.githash
-	 *
-	 * @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
-	 * @cdk.created 2002-02-26
-	 *
-	 * @cdk.keyword prime numbers
-	 */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    ///
+    // @author  Oliver Horlacher <oliver.horlacher@therastrat.com>
+    // @cdk.created 2002-02-26
+    ///
+    // @cdk.keyword prime numbers
+    /// </summary>
     [Obsolete]
     public class Primes
     {
@@ -173,11 +173,11 @@ namespace NCDK.Maths
                 19447, 19457, 19463, 19469, 19471, 19477, 19483, 19489, 19501, 19507, 19531, 19541, 19543, 19553, 19559,
                 19571, 19577, 19583, 19597, 19603, 19609, 19661, 19681, 19687, 19697};
 
-        /**
-		 * Returns the i-th prime number in the sequence of
-		 * all prime numbers below 19700. The first in the sequence
-		 * (n=0) is the prime number 2.
-		 */
+        /// <summary>
+        /// Returns the i-th prime number in the sequence of
+        /// all prime numbers below 19700. The first in the sequence
+        /// (n=0) is the prime number 2.
+        /// </summary>
         public static int GetPrimeAt(int index)
         {
             if (index < 0 || index > PRIMES.Length - 1) throw new IndexOutOfRangeException("out of range " + index);

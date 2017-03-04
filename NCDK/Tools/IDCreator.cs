@@ -27,20 +27,20 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Class that provides methods to give unique IDs to ChemObjects.
-     * Methods are implemented for Atom, Bond, AtomContainer, AtomContainerSet
-     * and Reaction. It will only create missing IDs. If you want to create new
-     * IDs for all ChemObjects, you need to delete them first.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author   Egon Willighagen
-     * @cdk.created  2003-04-01
-     *
-     * @cdk.keyword  id, creation
-     */
+    /// <summary>
+    /// Class that provides methods to give unique IDs to ChemObjects.
+    /// Methods are implemented for Atom, Bond, AtomContainer, AtomContainerSet
+    /// and Reaction. It will only create missing IDs. If you want to create new
+    /// IDs for all ChemObjects, you need to delete them first.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    ///
+    // @author   Egon Willighagen
+    // @cdk.created  2003-04-01
+    ///
+    // @cdk.keyword  id, creation
+    /// </summary>
     public abstract class IDCreator
     {
 
@@ -66,51 +66,51 @@ namespace NCDK.Tools
         private const string CHEMSEQUENCE_PREFIX = "seq";
         private const string CHEMFILE_PREFIX = "file";
 
-        /**
-         * Old ID generation policy - to generate IDs unique over the entire set
-         */
+        /// <summary>
+        /// Old ID generation policy - to generate IDs unique over the entire set
+        /// </summary>
         public const int SET_UNIQUE_POLICY = 0;
 
-        /**
-         * New ID generation policy - to generate IDs unique only in a molecule
-         */
+        /// <summary>
+        /// New ID generation policy - to generate IDs unique only in a molecule
+        /// </summary>
         public const int OBJECT_UNIQUE_POLICY = 1;
 
-        /**
-         * Internal flag identifying the IDs generation policy. The old policy
-         * is to generate IDs so that in a sequence of several molecules all the
-         * atoms and bonds will receive the unique IDs even across molecules, i.e.
-         * in a set of 2 molecules the first atom of the first molecule will be "a1"
-         * while the first atom of the second molecule will be "aX" where X equals
-         * to the number of atoms in the first molecule plus 1.
-         * <br/>
-         * The new policy is to keep the singularity of IDs only within a single
-         * molecule, i.e. in a set of two molecules first atoms of each will be "a1".
-         */
+        /// <summary>
+        /// Internal flag identifying the IDs generation policy. The old policy
+        /// is to generate IDs so that in a sequence of several molecules all the
+        /// atoms and bonds will receive the unique IDs even across molecules, i.e.
+        /// in a set of 2 molecules the first atom of the first molecule will be "a1"
+        /// while the first atom of the second molecule will be "aX" where X equals
+        /// to the number of atoms in the first molecule plus 1.
+        /// <br/>
+        /// The new policy is to keep the singularity of IDs only within a single
+        /// molecule, i.e. in a set of two molecules first atoms of each will be "a1".
+        /// </summary>
         private static int policy = SET_UNIQUE_POLICY;
 
-        /**
-         * Alters the policy of ID generation. The IDCreator should in any case
-         * preserve the already existing IDs therefore if one of objects already
-         * has an ID set, this ID will be skipped in all the cases when attempting to
-         * generate a new ID value
-         * @param policy new policy to be used
-         * @see #OBJECT_UNIQUE_POLICY
-         * @see #SET_UNIQUE_POLICY
-         */
+        /// <summary>
+        /// Alters the policy of ID generation. The IDCreator should in any case
+        /// preserve the already existing IDs therefore if one of objects already
+        /// has an ID set, this ID will be skipped in all the cases when attempting to
+        /// generate a new ID value
+        /// <param name="policy">new policy to be used</param>
+        /// <seealso cref="OBJECT_UNIQUE_POLICY"/>
+        /// <seealso cref="SET_UNIQUE_POLICY"/>
+        /// </summary>
         public static void SetIDPolicy(int policy)
         {
             IDCreator.policy = policy;
         }
 
-        /**
-         * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
-         * scheme often used in CML. Supports IAtomContainer, IAtomContainerSet,
-         * IChemFile, IChemModel, IChemSequence, IReaction, IReactionSet,
-         * and derived interfaces.
-         *
-         * @param  chemObject IChemObject to create IDs for.
-         */
+        /// <summary>
+        /// Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
+        /// scheme often used in CML. Supports IAtomContainer, IAtomContainerSet,
+        /// IChemFile, IChemModel, IChemSequence, IReaction, IReactionSet,
+        /// and derived interfaces.
+        ///
+        /// <param name="chemObject">IChemObject to create IDs for.</param>
+        /// </summary>
         public static void CreateIDs(IChemObject chemObject)
         {
             if (chemObject == null) return;
@@ -147,10 +147,10 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Reset the counters so that we keep generating simple IDs within
-         * single chem object or a set of them
-         */
+        /// <summary>
+        /// Reset the counters so that we keep generating simple IDs within
+        /// single chem object or a set of them
+        /// </summary>
         private static void ReSetCounters()
         {
             atomCount = 0;
@@ -164,12 +164,12 @@ namespace NCDK.Tools
             chemFileCount = 0;
         }
 
-        /**
-         * Sets the ID on the object and adds it to the tabu list.
-         *
-         * @param object   IChemObject to set the ID for
-         * @param tabuList Tabu list to add the ID to
-         */
+        /// <summary>
+        /// Sets the ID on the object and adds it to the tabu list.
+        ///
+        /// <param name="object">IChemObject to set the ID for</param>
+        /// <param name="tabuList">Tabu list to add the ID to</param>
+        /// </summary>
         private static int SetId(string prefix, int identifier, IChemObject obj, IList<string> tabuList)
         {
             identifier += 1;
@@ -182,12 +182,12 @@ namespace NCDK.Tools
             return identifier;
         }
 
-        /**
-         * Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
-         * scheme often used in CML.
-         *
-         * @see #CreateIDs(IChemObject)
-         */
+        /// <summary>
+        /// Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
+        /// scheme often used in CML.
+        ///
+        /// <seealso cref="CreateIDs(IChemObject)"/>
+        /// </summary>
         private static void CreateIDsForAtomContainer(IAtomContainer container, IList<string> tabuList)
         {
             if (tabuList == null) tabuList = AtomContainerManipulator.GetAllIDs(container);
@@ -229,12 +229,12 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
-         * scheme often used in CML. It will also set id's for all AtomContainers, naming
-         * them m1, m2, etc.
-         * It will not the AtomContainerSet itself.
-         */
+        /// <summary>
+        /// Labels the Atom's and Bond's in each AtomContainer using the a1, a2, b1, b2
+        /// scheme often used in CML. It will also set id's for all AtomContainers, naming
+        /// them m1, m2, etc.
+        /// It will not the AtomContainerSet itself.
+        /// </summary>
         private static void CreateIDsForAtomContainerSet(IAtomContainerSet<IAtomContainer> containerSet, IList<string> tabuList)
         {
             if (tabuList == null) tabuList = AtomContainerSetManipulator.GetAllIDs(containerSet).ToList();
@@ -257,10 +257,10 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
-         * accordingly, when no ID is given.
-         */
+        /// <summary>
+        /// Labels the reactants and products in the Reaction m1, m2, etc, and the atoms
+        /// accordingly, when no ID is given.
+        /// </summary>
         private static void CreateIDsForReaction(IReaction reaction, IList<string> tabuList)
         {
             if (tabuList == null) tabuList = ReactionManipulator.GetAllIDs(reaction);

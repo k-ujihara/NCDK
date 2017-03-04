@@ -20,15 +20,15 @@ using System.Text;
 namespace NCDK.Smiles.SMARTS.Parser
 {
 
-    /**
-     * An AST Tree visitor. It dumps the whole AST tree into console
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-04-24
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS AST
-     */
+    /// <summary>
+    /// An AST Tree visitor. It dumps the whole AST tree into console
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-04-24
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS AST
+    /// </summary>
     public class SmartsDumpVisitor : SMARTSParserVisitor
     {
 

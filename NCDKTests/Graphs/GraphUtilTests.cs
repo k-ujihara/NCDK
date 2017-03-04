@@ -21,16 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using NCDK.Graphs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
@@ -38,7 +32,7 @@ namespace NCDK.Graphs
     public class GraphUtilTests
     {
         [TestMethod()]
-        public virtual void sequentialSubgraph()
+        public virtual void SequentialSubgraph()
         {
             int[][] graph = new int[][] { new int[] { 1, 2 }, new int[] { 0, 2 }, new int[] { 0, 1 } };
             int[][] subgraph = GraphUtil.Subgraph(graph, new int[] { 0, 1 });
@@ -57,7 +51,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void resizeSubgraph()
+        public virtual void ResizeSubgraph()
         {
             int[][] graph = new int[][] {
                 new int[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14},
@@ -216,10 +210,10 @@ namespace NCDK.Graphs
             GraphUtil.ToAdjList(null);
         }
 
-        /**
-         * 2,2-dimethylpropane
-         * @cdk.inchi InChI=1S/C5H12/c1-5(2,3)4/h1-4H3
-         */
+        /// <summary>
+        /// 2,2-dimethylpropane
+        // @cdk.inchi InChI=1S/C5H12/c1-5(2,3)4/h1-4H3
+        /// </summary>
         private static IAtomContainer Simple
         {
             get

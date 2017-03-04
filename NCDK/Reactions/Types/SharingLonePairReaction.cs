@@ -23,70 +23,70 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>IReactionProcess which participate in movement resonance.
-     * This reaction could be represented as [A+]-B| => A=[B+]. Due to
-     * deficiency of charge of the atom A, the lone pair electron of the atom A is
-     * desplaced.</p>
-     * <p>Make sure that the molecule has the correspond lone pair electrons
-     * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
-     *
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new SharingLonePairReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2006-05-05
-     * @cdk.module     reaction
-     * @cdk.githash
-     * @cdk.set        reaction-types
-     *
-     **/
+    /// <summary>
+    /// <para>IReactionProcess which participate in movement resonance.
+    /// This reaction could be represented as [A+]-B| => A=[B+]. Due to
+    /// deficiency of charge of the atom A, the lone pair electron of the atom A is
+    /// desplaced.</para>
+    /// <para>Make sure that the molecule has the correspond lone pair electrons
+    /// for each atom. You can use the method: <code> LonePairElectronChecker </code>
+    ///
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new SharingLonePairReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</para>
+    ///
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2006-05-05
+    // @cdk.module     reaction
+    // @cdk.githash
+    // @cdk.set        reaction-types
+    ///
+    ///*/
     public class SharingLonePairReaction : ReactionEngine, IReactionProcess
     {
 
-        /**
-         * Constructor of the SharingLonePairReaction object.
-         *
-         */
+        /// <summary>
+        /// Constructor of the SharingLonePairReaction object.
+        ///
+        /// </summary>
         public SharingLonePairReaction() { }
 
-        /**
-         *  Gets the specification attribute of the SharingLonePairReaction object.
-         *
-         *@return    The specification value
-         */
+        /// <summary>
+        ///  Gets the specification attribute of the SharingLonePairReaction object.
+        ///
+        /// <returns>The specification value</returns>
+        /// </summary>
 
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#SharingLonePair", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *
-         *@exception  CDKException  Description of the Exception
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        ///
+        ///
+        /// <exception cref="CDKException"> Description of the Exception</exception>
 
-         * @param  reactants         reactants of the reaction.
-        * @param  agents            agents of the reaction (Must be in this case null).
-         */
+        /// <param name="reactants">reactants of the reaction.</param>
+       /// <param name="agents">agents of the reaction (Must be in this case null).</param>
+        /// </summary>
 
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
@@ -104,10 +104,8 @@ namespace NCDK.Reactions.Types
 
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+
+            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -150,18 +148,18 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with [A+]-B|.
-         * <pre>
-         * A: Atom with positive charge
-         * -: Single bond
-         * B: Atom with lone pair electrons
-         *  </pre>
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with [A+]-B|.
+        /// <code>
+        /// A: Atom with positive charge
+        /// -: Single bond
+        /// B: Atom with lone pair electrons
+        ///  </code>
+        ///
+        /// <param name="reactant">The molecule to set the activity</param>
+        // @
+        /// </summary>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)

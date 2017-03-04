@@ -3,11 +3,11 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Formula
 {
-    /**
-     * Class testing the IsotopePatternSimilarity class.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Class testing the IsotopePatternSimilarity class.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class IsotopePatternSimilarityTest : CDKTestCase
     {
@@ -33,11 +33,11 @@ namespace NCDK.Formula
             Assert.IsNotNull(is_);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetTolerance()
         {
@@ -46,11 +46,11 @@ namespace NCDK.Formula
             Assert.AreEqual(0.001, is_.Tolerance, 0.000001);
         }
 
-        /**
-         * Histidine example
-         *
-         * @
-         */
+        /// <summary>
+        /// Histidine example
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestCompare_IsotopePattern_IsotopePattern()
         {
@@ -70,11 +70,11 @@ namespace NCDK.Formula
             Assert.AreNotSame(0.0, score);
         }
 
-        /**
-         * Histidine example
-         *
-         * @
-         */
+        /// <summary>
+        /// Histidine example
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestSelectingMF()
         {
@@ -108,11 +108,11 @@ namespace NCDK.Formula
             Assert.AreEqual("C6H10N3O2", mfString);
         }
 
-        /**
-         * Real example. Lipid PC
-         *
-         * @
-         */
+        /// <summary>
+        /// Real example. Lipid PC
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestExperiment()
         {

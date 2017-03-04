@@ -23,36 +23,36 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Sum of the absolute value of the difference between atomic polarizabilities
-     *  of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
-     * http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm
-     *
-     * This descriptor assumes 2-centered bonds.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value with name <i>bpol</i>.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-13
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:bpol
-     */
+    /// <summary>
+    /// Sum of the absolute value of the difference between atomic polarizabilities
+    ///  of all bonded atoms in the molecule (including implicit hydrogens) with polarizabilities taken from
+    /// http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm
+    ///
+    /// This descriptor assumes 2-centered bonds.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value with name <i>bpol</i>.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-13
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:bpol
+    /// </summary>
     public class BPolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */

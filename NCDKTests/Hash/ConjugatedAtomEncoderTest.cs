@@ -28,10 +28,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     public class ConjugatedAtomEncoderTest
     {
 
@@ -49,9 +49,9 @@ namespace NCDK.Hash
             new ConjugatedAtomEncoder(new AtomEncoder[0]);
         }
 
-        /**
-         * ensure we can modify the order after we have constructed the conjunction
-         */
+        /// <summary>
+        /// ensure we can modify the order after we have constructed the conjunction
+        /// </summary>
         [TestMethod()]
         public void TestConstruction_Modification()
         {

@@ -23,33 +23,33 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  This descriptor returns 1 if the protons is directly bonded to an aromatic system,
-     *  it returns 2 if the distance between aromatic system and proton is 2 bonds,
-     *  and it return 0 for other positions. It is needed to use addExplicitHydrogensToSatisfyValency method.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table>
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>checkAromaticity</td>
-     *     <td>false</td>
-     *     <td>True is the aromaticity has to be checked</td>
-     *   </tr>
-     *
-     * </table>
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
-     */
+    /// <summary>
+    ///  This descriptor returns 1 if the protons is directly bonded to an aromatic system,
+    ///  it returns 2 if the distance between aromatic system and proton is 2 bonds,
+    ///  and it return 0 for other positions. It is needed to use addExplicitHydrogensToSatisfyValency method.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table>
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>checkAromaticity</td>
+    ///     <td>false</td>
+    ///     <td>True is the aromaticity has to be checked</td>
+    ///   </tr>
+    ///
+    /// </table>
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:isProtonInAromaticSystem
+    /// </summary>
     public class IsProtonInAromaticSystemDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "protonInArmaticSystem" };

@@ -25,24 +25,24 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Class with convenience methods that provide methods from
-     * methods from ChemObjects within the ChemSequence.
-     *
-     * @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class with convenience methods that provide methods from
+    /// methods from ChemObjects within the ChemSequence.
+    ///
+    // @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class ChemSequenceManipulator
     {
 
-        /**
-         * Get the total number of atoms inside an IChemSequence.
-         *
-         * @param sequence   The IChemSequence object.
-         * @return           The number of Atom objects inside.
-         */
+        /// <summary>
+        /// Get the total number of atoms inside an IChemSequence.
+        ///
+        /// <param name="sequence">The IChemSequence object.</param>
+        /// <returns>The number of Atom objects inside.</returns>
+        /// </summary>
         public static int GetAtomCount(IChemSequence sequence)
         {
             int count = 0;
@@ -53,12 +53,12 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Get the total number of bonds inside an IChemSequence.
-         *
-         * @param sequence   The IChemSequence object.
-         * @return           The number of Bond objects inside.
-         */
+        /// <summary>
+        /// Get the total number of bonds inside an IChemSequence.
+        ///
+        /// <param name="sequence">The IChemSequence object.</param>
+        /// <returns>The number of Bond objects inside.</returns>
+        /// </summary>
         public static int GetBondCount(IChemSequence sequence)
         {
             int count = 0;
@@ -69,9 +69,9 @@ namespace NCDK.Tools.Manipulator
             return count;
         }
 
-        /**
-         * Returns all the AtomContainer's of a ChemSequence.
-         */
+        /// <summary>
+        /// Returns all the AtomContainer's of a ChemSequence.
+        /// </summary>
         public static List<IAtomContainer> GetAllAtomContainers(IChemSequence sequence)
         {
             List<IAtomContainer> acList = new List<IAtomContainer>();
@@ -82,11 +82,11 @@ namespace NCDK.Tools.Manipulator
             return acList;
         }
 
-        /**
-         * Returns a List of all IChemObject inside a ChemSequence.
-         *
-         * @return  A List of all ChemObjects.
-         */
+        /// <summary>
+        /// Returns a List of all IChemObject inside a ChemSequence.
+        ///
+        /// <returns>A List of all ChemObjects.</returns>
+        /// </summary>
         public static List<IChemObject> GetAllChemObjects(IChemSequence sequence)
         {
             List<IChemObject> list = new List<IChemObject>();

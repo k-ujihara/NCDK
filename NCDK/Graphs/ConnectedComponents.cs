@@ -6,21 +6,21 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Compute the connected components of an adjacency list.
-     *
-     * <blockquote><pre>
-     *     int[][]             g          = GraphUtil.ToAdjList(Container(l
-     *     ConnectedComponents cc         = new ConnectedComponents(g);
-     *     int[]               components = cc.Components();
-     *     for (int v = 0; v < g.Length; v++)
-     *         components[v];
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module core
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Compute the connected components of an adjacency list.
+    /// </summary>
+    /// <example>
+    /// <code>
+    ///     int[][]             g          = GraphUtil.ToAdjList(Container(l
+    ///     ConnectedComponents cc         = new ConnectedComponents(g);
+    ///     int[]               components = cc.Components();
+    ///     for (int v = 0; v &lt; g.Length; v++)
+    ///         components[v];
+    /// </code>
+    /// </example>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
     public sealed class ConnectedComponents
     {
         /// <summary>Adjacency-list representation of a graph.</summary>
@@ -35,11 +35,10 @@ namespace NCDK.Graphs
         /// <summary>The number remaining vertices.</summary>
         private int remaining;
 
-        /**
-         * Compute the connected components of an adjacency list, {@code g}.
-         *
-         * @param g graph (adjacency list representation)
-         */
+        /// <summary>
+        /// Compute the connected components of an adjacency list, <paramref name="g"/>.
+        /// </summary>
+        /// <param name="g">graph (adjacency list representation)</param>
         public ConnectedComponents(int[][] g)
         {
             this.g = g;
@@ -49,12 +48,11 @@ namespace NCDK.Graphs
                 if (component[i] == 0) Visit(i, ++components);
         }
 
-        /**
-         * Visit a vertex and mark it a member of component {@code c}.
-         *
-         * @param v vertex
-         * @param c component
-         */
+        /// <summary>
+        /// Visit a vertex and mark it a member of component <paramref name="c"/>.
+        /// </summary>
+        /// <param name="v">vertex</param>
+        /// <param name="c">component</param>
         private void Visit(int v, int c)
         {
             remaining--;
@@ -63,11 +61,10 @@ namespace NCDK.Graphs
                 if (component[w] == 0) Visit(w, c);
         }
 
-        /**
-         * Access the components each vertex belongs to.
-         *
-         * @return component labels
-         */
+        /// <summary>
+        /// Access the components each vertex belongs to.
+        /// </summary>
+        /// <returns>component labels</returns>
         public int[] Components()
         {
             return Arrays.CopyOf(component, component.Length);

@@ -26,11 +26,11 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    /**
-     * TestCase for {@link IReaction} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// TestCase for <see cref="IReaction"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractReactionTest
         : AbstractChemObjectTest
@@ -315,9 +315,9 @@ namespace NCDK
             Assert.AreEqual(ReactionDirection.Forward, reaction.Direction);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public virtual void TestToString()
         {

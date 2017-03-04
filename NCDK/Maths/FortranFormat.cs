@@ -26,28 +26,28 @@ namespace NCDK.Maths
 {
 
 
-    /**
-     * Converts a string representation of a Fortran double to a double.
-     *
-     * <p>A modified version of the <code>atof</code> method provided in the Core Java
-     * books by Cay S. Horstmann & Gary Cornell.  The main difference
-     * here is that we scan for Fortran double precision characters
-     * ('D' and 'd') which often cause the C versions of atof to
-     * barf.
-     *
-     * @author Dan Gezelter
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Converts a string representation of a Fortran double to a double.
+    ///
+    /// <p>A modified version of the <code>atof</code> method provided in the Core Java
+    /// books by Cay S. Horstmann & Gary Cornell.  The main difference
+    /// here is that we scan for Fortran double precision characters
+    /// ('D' and 'd') which often cause the C versions of atof to
+    /// barf.
+    ///
+    // @author Dan Gezelter
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class FortranFormat
     {
 
-        /**
-         * Converts a string of digits to an double.
-         *
-         * @param s a string denoting a double
-         */
+        /// <summary>
+        /// Converts a string of digits to an double.
+        ///
+        /// <param name="s">a string denoting a double</param>
+        /// </summary>
         public static double Atof(string s)
         {
             int i = 0;

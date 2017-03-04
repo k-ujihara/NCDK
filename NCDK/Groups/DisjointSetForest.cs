@@ -24,28 +24,28 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Groups
 {
-    /**
-     * Implementation of a union-find data structure, largely copied from
-     * code due to Derrick Stolee.
-     *
-     * @author maclean
-     * @cdk.module standard
-     * @cdk.keyword union-find
-     */
+    /// <summary>
+    /// Implementation of a union-find data structure, largely copied from
+    /// code due to Derrick Stolee.
+    ///
+    // @author maclean
+    // @cdk.module standard
+    // @cdk.keyword union-find
+    /// </summary>
     public class DisjointSetForest
     {
-        /**
-         * The sets stored as pointers to their parents. The root of each
-         * set is stored as the negated size of the set - ie a set of size
-         * 5 with a root element 2 will mean forest[2] = -5.
-         */
+        /// <summary>
+        /// The sets stored as pointers to their parents. The root of each
+        /// set is stored as the negated size of the set - ie a set of size
+        /// 5 with a root element 2 will mean forest[2] = -5.
+        /// </summary>
         private int[] forest;
 
-        /**
-         * Initialize a disjoint set forest with a number of elements.
-         *
-         * @param numberOfElements the number of elements in the forest
-         */
+        /// <summary>
+        /// Initialize a disjoint set forest with a number of elements.
+        ///
+        /// <param name="numberOfElements">the number of elements in the forest</param>
+        /// </summary>
         public DisjointSetForest(int numberOfElements)
         {
             forest = new int[numberOfElements];
@@ -55,23 +55,23 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Get the value of the forest at this index - note that this will <i>not</i>
-         * necessarily give the set for that element : use {@link #getSets} after
-         * union-ing elements.
-         *
-         * @param i the index in the forest
-         * @return the value at this index
-         */
+        /// <summary>
+        /// Get the value of the forest at this index - note that this will <i>not</i>
+        /// necessarily give the set for that element : use {@link #getSets} after
+        /// union-ing elements.
+        ///
+        /// <param name="i">the index in the forest</param>
+        /// <returns>the value at this index</returns>
+        /// </summary>
         public int this[int i] => forest[i];
 
-        /**
-         * Travel up the tree that this element is in, until the root of the set
-         * is found, and return that root.
-         *
-         * @param element the starting point
-         * @return the root of the set containing element
-         */
+        /// <summary>
+        /// Travel up the tree that this element is in, until the root of the set
+        /// is found, and return that root.
+        ///
+        /// <param name="element">the starting point</param>
+        /// <returns>the root of the set containing element</returns>
+        /// </summary>
         public int GetRoot(int element)
         {
             if (forest[element] < 0)
@@ -84,12 +84,12 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Union these two elements - in other words, put them in the same set.
-         *
-         * @param elementX an element
-         * @param elementY an element
-         */
+        /// <summary>
+        /// Union these two elements - in other words, put them in the same set.
+        ///
+        /// <param name="elementX">an element</param>
+        /// <param name="elementY">an element</param>
+        /// </summary>
         public void MakeUnion(int elementX, int elementY)
         {
             int xRoot = GetRoot(elementX);
@@ -112,11 +112,11 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Retrieve the sets as 2D-array of ints.
-         *
-         * @return the sets
-         */
+        /// <summary>
+        /// Retrieve the sets as 2D-array of ints.
+        ///
+        /// <returns>the sets</returns>
+        /// </summary>
         public int[][] GetSets()
         {
             int n = 0;

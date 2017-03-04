@@ -22,12 +22,12 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IRing} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of <see cref="IRing"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
+    [TestClass()]
     public abstract class AbstractRingTest
         : AbstractAtomContainerTest
     {

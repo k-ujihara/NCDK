@@ -23,26 +23,26 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher checks the number of ring connections of the checked Atom with
-     * other Atom's. This cannot be matched without prepossessing Atom - {@link
-     * SMARTSAtomInvariants}. The ring connectivity is encoded in smarts using
-     * {@code x<NUMBER>}.
-     *
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher checks the number of ring connections of the checked Atom with
+    /// other Atom's. This cannot be matched without prepossessing Atom - {@link
+    /// SMARTSAtomInvariants}. The ring connectivity is encoded in smarts using
+    /// {@code x<NUMBER>}.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public sealed class TotalRingConnectionAtom : SMARTSAtom
     {
         /// <summary>Number of rings.</summary>
         private readonly int ringConnectivity;
 
-        /**
-         * Create a matcher for the number of rings an atom belongs to.
-         *
-         * @param ringConnectivity number of ring bonds this atom is adjacent to
-         */
+        /// <summary>
+        /// Create a matcher for the number of rings an atom belongs to.
+        ///
+        /// <param name="ringConnectivity">number of ring bonds this atom is adjacent to</param>
+        /// </summary>
         public TotalRingConnectionAtom(int ringConnectivity, IChemObjectBuilder builder)
             : base(builder)
         {

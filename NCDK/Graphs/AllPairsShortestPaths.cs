@@ -23,68 +23,60 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using NCDK.Common.Collections;
 using System.Collections.ObjectModel;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * Utility to determine the shortest paths between all pairs of atoms in a
-	 * molecule.
-	 *
-	 * <blockquote><pre>
-	 * IAtomContainer        benzene = MoleculeFactory.MakeBenzene();
-	 * AllPairsShortestPaths apsp    = new AllPairsShortestPaths(benzene);
-	 *
-	 * for (int i = 0; i &lt; benzene.Atoms.Count; i++) {
-	 *
-	 *     // only to half the comparisons, we can reverse the
-	 *     // path[] to get all j to i
-	 *     for (int j = i + 1; j &lt; benzene.Atoms.Count; j++) {
-	 *
-	 *         // reconstruct shortest path from i to j
-	 *         int[] path = apsp.From(i).PathTo(j);
-	 *
-	 *         // reconstruct all shortest paths from i to j
-	 *         int[][] paths = apsp.From(i).PathsTo(j);
-	 *
-	 *         // reconstruct the atoms in the path from i to j
-	 *         IAtom[] atoms = apsp.From(i).GetAtomsTo(j);
-	 *
-	 *         // access the number of paths from i to j
-	 *         int nPaths = apsp.From(i).nPathsTo(j);
-	 *
-	 *         // access the distance from i to j
-	 *         int distance = apsp.From(i).nPathsTo(j);
-	 *
-	 *     }
-	 * }
-	 * </pre></blockquote>
-	 *
-	 * @author John May
-	 * @cdk.module core
-	 * @cdk.githash
-	 * @see ShortestPaths
-	 */
+    /// <summary>
+    /// Utility to determine the shortest paths between all pairs of atoms in a molecule.
+    /// </summary>
+    /// <example>
+    /// <cdoe>
+    /// IAtomContainer        benzene = MoleculeFactory.MakeBenzene();
+    /// AllPairsShortestPaths apsp    = new AllPairsShortestPaths(benzene);
+    ///
+    /// for (int i = 0; i &lt; benzene.Atoms.Count; i++) {
+    ///
+    ///     // only to half the comparisons, we can reverse the
+    ///     // path[] to get all j to i
+    ///     for (int j = i + 1; j &lt; benzene.Atoms.Count; j++) {
+    ///
+    ///         // reconstruct shortest path from i to j
+    ///         int[] path = apsp.From(i).PathTo(j);
+    ///
+    ///         // reconstruct all shortest paths from i to j
+    ///         int[][] paths = apsp.From(i).PathsTo(j);
+    ///
+    ///         // reconstruct the atoms in the path from i to j
+    ///         IAtom[] atoms = apsp.From(i).GetAtomsTo(j);
+    ///
+    ///         // access the number of paths from i to j
+    ///         int nPaths = apsp.From(i).NPathsTo(j);
+    ///
+    ///         // access the distance from i to j
+    ///         int distance = apsp.From(i).NPathsTo(j);
+    ///
+    ///     }
+    /// }
+    /// </cdoe>
+    /// </example>
+    /// <seealso cref="ShortestPaths"/>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
     public sealed class AllPairsShortestPaths {
-
         private readonly IAtomContainer container;
         private readonly ShortestPaths[] shortestPaths;
 
-        /**
-		 * Create a new all shortest paths utility for an <see cref="IAtomContainer"/>.
-		 *
-		 * @param container the molecule of which to find the shortest paths
-		 */
+        /// <summary>
+        /// Create a new all shortest paths utility for an <see cref="IAtomContainer"/>.
+        /// </summary>
+        /// <param name="container">the molecule of which to find the shortest paths</param>
         public AllPairsShortestPaths(IAtomContainer container) {
-
             // ToAdjList performs null check
             int[][] adjacent = GraphUtil.ToAdjList(container);
-
             int n = container.Atoms.Count;
-
             this.container = container;
             this.shortestPaths = new ShortestPaths[n];
 
@@ -95,59 +87,56 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * Access the shortest paths object for provided start vertex.
-		 *
-		 * <blockquote><pre>
-		 * AllPairsShortestPaths apsp = ...;
-		 *
-		 * // access explicitly
-		 * ShortestPaths sp = asp.From(0);
-		 *
-		 * // or chain method calls
-		 * int[] path = asp.From(0).PathTo(5);
-		 * </pre></blockquote>
-		 *
-		 * @param start the start vertex of the path
-		 * @return The shortest paths from the given state vertex
-		 * @see ShortestPaths
-		 */
+        /// <summary>
+        /// Access the shortest paths object for provided start vertex.
+        /// </summary>
+        /// <example><code>
+        /// AllPairsShortestPaths apsp = ...;
+        ///
+        /// // access explicitly
+        /// ShortestPaths sp = asp.From(0);
+        ///
+        /// // or chain method calls
+        /// int[] path = asp.From(0).PathTo(5);
+        /// </code>
+        /// </example>
+        /// <param name="start">the start vertex of the path</param>
+        /// <returns>The shortest paths from the given state vertex</returns>
+        /// <seealso cref="ShortestPaths"/>
         public ShortestPaths From(int start) {
             return (start < 0 || start >= shortestPaths.Length) ? EMPTY_SHORTEST_PATHS : shortestPaths[start];
         }
 
-        /**
-		 * Access the shortest paths object for provided start atom.
-		 *
-		 * <blockquote><pre>
-		 * AllPairsShortestPaths apsp = ...;
-		 * IAtom start, end = ...;
-		 *
-		 * // access explicitly
-		 * ShortestPaths sp = asp.From(start);
-		 *
-		 * // or chain the method calls together
-		 *
-		 * // first path from start to end atom
-		 * int[] path = asp.From(start).PathTo(end);
-		 *
-		 * // first atom path from start to end atom
-		 * IAtom[] atoms = asp.From(start).AtomTo(end);
-		 * </pre></blockquote>
-		 *
-		 * @param start the start atom of the path
-		 * @return The shortest paths from the given state vertex
-		 * @see ShortestPaths
-		 */
+        /// <summary>
+        /// Access the shortest paths object for provided start atom.
+        /// </summary>
+        /// <example><code>
+        /// AllPairsShortestPaths apsp = ...;
+        /// IAtom start, end = ...;
+        ///
+        /// // access explicitly
+        /// ShortestPaths sp = asp.From(start);
+        ///
+        /// // or chain the method calls together
+        ///
+        /// // first path from start to end atom
+        /// int[] path = asp.From(start).PathTo(end);
+        ///
+        /// // first atom path from start to end atom
+        /// IAtom[] atoms = asp.From(start).AtomTo(end);
+        /// </code></example>
+        /// <param name="start">the start atom of the path</param>
+        /// <returns>The shortest paths from the given state vertex</returns>
+        /// <seealso cref="ShortestPaths"/>
         public ShortestPaths From(IAtom start) {
             // currently container.Atoms.IndexOf() return -1 when null
             return From(container.Atoms.IndexOf(start));
         }
 
-        /**
-		 * an empty atom container so we can handle invalid vertices/atoms better.
-		 * Not very pretty but we can't access the domain model from cdk-core.
-		 */
+        /// <summary>
+        /// an empty atom container so we can handle invalid vertices/atoms better.
+        /// Not very pretty but we can't access the domain model from cdk-core.
+        /// </summary>
         private static readonly IAtomContainer EMPTY_CONTAINER = new EmptyAtomContainer();
 
         private class EmptyAtomContainer
@@ -346,11 +335,10 @@ namespace NCDK.Graphs
             { throw new InvalidOperationException("not supported"); }
         }
 
-		/**
-		 * pseudo shortest-paths - when an invalid atom is given. this will always
-		 * return 0 .Length paths and distances.
-		 */
-		private static readonly ShortestPaths  EMPTY_SHORTEST_PATHS = new ShortestPaths(new int[0][], EMPTY_CONTAINER, 0);
-
-	}
+        /// <summary>
+        /// pseudo shortest-paths - when an invalid atom is given. this will always
+        /// return 0 .Length paths and distances.
+        /// </summary>
+        private static readonly ShortestPaths  EMPTY_SHORTEST_PATHS = new ShortestPaths(new int[0][], EMPTY_CONTAINER, 0);
+    }
 }

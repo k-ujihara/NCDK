@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using NCDK.Reactions.Mechanisms;
 using NCDK.Reactions.Types.Parameters;
 using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
@@ -24,75 +25,62 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>IReactionProcess which produces a protonation to double bond.
-     * As most commonly encountered, this reaction results in the formal migration
-     * of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</p>
-     *
-     * <pre>A=B + [H+] => [A+]-B-H</pre>
-     *
-     * <p>Below you have an example how to initiate the mechanism.</p>
-     * <p>It is processed by the AdductionPBMechanism class</p>
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new AdductionProtonLPReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to specify the reaction in a fixed point.</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not specified then the reaction process will
-     * try to find automatically the possible reaction centers.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2008-02-11
-     * @cdk.module     reaction
-     * @cdk.set        reaction-types
-     * @cdk.githash
-     *
-     * @see AdductionPBMechanism
-     **/
+    /// <summary>
+    /// IReactionProcess which produces a protonation to double bond.
+    /// As most commonly encountered, this reaction results in the formal migration
+    /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond
+    /// </summary>
+    /// <example>
+    /// <para>A=B + [H+] => [A+]-B-H</para>
+    ///
+    /// <para>Below you have an example how to initiate the mechanism.</para>
+    /// <para>It is processed by the AdductionPBMechanism class</para>
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new AdductionProtonLPReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to specify the reaction in a fixed point.</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not specified then the reaction process will
+    /// try to find automatically the possible reaction centers.</para>
+    /// </example>
+    /// <seealso cref="AdductionPBMechanism"/>
+    // @author         Miguel Rojas
+    // @cdk.created    2008-02-11
+    // @cdk.module     reaction
+    // @cdk.set        reaction-types
+    // @cdk.githash
     public class AdductionProtonPBReaction : ReactionEngine, IReactionProcess
     {
-
-        /**
-         * Constructor of the AdductionProtonPBReaction object.
-         *
-         */
+        /// <summary>
+        /// Constructor of the AdductionProtonPBReaction object.
         public AdductionProtonPBReaction() { }
 
-        /**
-         *  Gets the specification attribute of the AdductionProtonPBReaction object.
-         *
-         *@return    The specification value
-         */
-
+        /// <summary>
+        /// Gets the specification attribute of the AdductionProtonPBReaction object.
+        /// </summary>
+        /// <returns>The specification value</returns>
         public ReactionSpecification Specification => new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonPB", 
                     this.GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *
-         *@exception  CDKException  Description of the Exception
-
-         * @param  reactants         reactants of the reaction
-        * @param  agents            agents of the reaction (Must be in this case null)
-         */
-
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        /// </summary>
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <param name="reactants">reactants of the reaction</param>
+        /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
             Debug.WriteLine("initiate reaction: AdductionProtonPBReaction");
 
             if (reactants.Count != 1)
@@ -107,10 +95,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -131,11 +116,8 @@ namespace NCDK.Reactions.Types
                             && !reactant.GetConnectedLonePairs(bondi.Atoms[0]).Any()
                             && !reactant.GetConnectedLonePairs(bondi.Atoms[1]).Any())
                     {
-
-                        /**/
                         for (int j = 0; j < 2; j++)
                         {
-
                             var atomList = new List<IAtom>();
                             if (j == 0)
                             {
@@ -165,24 +147,19 @@ namespace NCDK.Reactions.Types
                                 continue;
                             else
                                 setOfReactions.Add(reaction);
-
                         }
-
                     }
-
                 }
             }
 
             return setOfReactions;
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with X=Y.
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with X=Y.
+        /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             if (AtomContainerManipulator.GetTotalCharge(reactant) != 0) return;

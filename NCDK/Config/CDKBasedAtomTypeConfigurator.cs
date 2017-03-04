@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -20,7 +18,7 @@ namespace NCDK.Config
         public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
             if (Stream == null)
-                Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(configFile);
+                Stream = ResourceLoader.GetAsStream(configFile);
 
             return new AtomTypeReader(Stream).ReadAtomTypes(builder);
         }

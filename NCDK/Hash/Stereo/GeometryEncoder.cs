@@ -26,17 +26,14 @@ using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Given a geometric parity and a permutation parity encode the parity of the
-     * combination at the specified stereo centre indices.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
-#if TEST
-    public
-#endif
-        sealed class GeometryEncoder : IStereoEncoder
+    /// <summary>
+    /// Given a geometric parity and a permutation parity encode the parity of the
+    /// combination at the specified stereo centre indices.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
+    internal sealed class GeometryEncoder : IStereoEncoder
     {
 
         /* value for a clockwise configuration */
@@ -54,15 +51,15 @@ namespace NCDK.Hash.Stereo
         /* index to encode */
         private readonly int[] centres;
 
-        /**
-         * Create a new encoder for multiple stereo centres (specified as an
-         * array).
-         *
-         * @param centres     the stereo centres which will be configured
-         * @param permutation calculator for permutation parity
-         * @param geometric   geometric calculator
-         * @throws ArgumentException if the centres[] were empty
-         */
+        /// <summary>
+        /// Create a new encoder for multiple stereo centres (specified as an
+        /// array).
+        ///
+        /// <param name="centres">the stereo centres which will be configured</param>
+        /// <param name="permutation">calculator for permutation parity</param>
+        /// <param name="geometric">geometric calculator</param>
+        /// <exception cref="ArgumentException">if the centres[] were empty</exception>
+        /// </summary>
         public GeometryEncoder(int[] centres, PermutationParity permutation, GeometricParity geometric)
         {
             if (centres.Length == 0) throw new ArgumentException("no centres[] provided");
@@ -72,28 +69,28 @@ namespace NCDK.Hash.Stereo
             Array.Copy(centres, this.centres, centres.Length);
         }
 
-        /**
-         * Convenience method to create a new encoder for a single stereo centre.
-         *
-         * @param centre      a stereo centre which will be configured
-         * @param permutation calculator for permutation parity
-         * @param geometric   geometric calculator
-         * @throws ArgumentException if the centres[] were empty
-         */
+        /// <summary>
+        /// Convenience method to create a new encoder for a single stereo centre.
+        ///
+        /// <param name="centre">a stereo centre which will be configured</param>
+        /// <param name="permutation">calculator for permutation parity</param>
+        /// <param name="geometric">geometric calculator</param>
+        /// <exception cref="ArgumentException">if the centres[] were empty</exception>
+        /// </summary>
         public GeometryEncoder(int centre, PermutationParity permutation, GeometricParity geometric)
             : this(new int[] { centre }, permutation, geometric)
         { }
 
-        /**
-         * Encodes the {@code centres[]} specified in the constructor as either
-         * clockwise/anticlockwise or none. If there is a permutation parity but no
-         * geometric parity then we can not encode the configuration and 'true' is
-         * returned to indicate the perception is done. If there is no permutation
-         * parity this may changed with the next {@code current[]} values and so
-         * 'false' is returned.
-         *
-         * @inheritDoc
-         */
+        /// <summary>
+        /// Encodes the {@code centres[]} specified in the constructor as either
+        /// clockwise/anticlockwise or none. If there is a permutation parity but no
+        /// geometric parity then we can not encode the configuration and 'true' is
+        /// returned to indicate the perception is done. If there is no permutation
+        /// parity this may changed with the next {@code current[]} values and so
+        /// 'false' is returned.
+        ///
+        // @inheritDoc
+        /// </summary>
         public bool Encode(long[] current, long[] next)
         {
 

@@ -47,15 +47,15 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }
 
-        /**
-         * @cdk.bug 1849925
-         */
+        /// <summary>
+        // @cdk.bug 1849925
+        /// </summary>
         [TestMethod()]
         public void TestReadReactions1()
         {
             string filename1 = "NCDK.Data.MDL.reaction_v3.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNV3000Reader reader1 = new MDLRXNV3000Reader(ins1, ChemObjectReaderModes.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);

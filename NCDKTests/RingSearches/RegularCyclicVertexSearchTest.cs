@@ -24,21 +24,16 @@
 using NCDK.Common.Base;
 using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.RingSearches;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * unit tests for the small to medium graphs
-     *
-     * @author John May
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// unit tests for the small to medium graphs
+    ///
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class RegularCyclicVertexSearchTest
     {
@@ -121,12 +116,12 @@ namespace NCDK.RingSearches
             CyclicVertexSearch search = new RegularCyclicVertexSearch(Arrays.CreateJagged<int>(0, 0));
             Assert.IsTrue(Compares.AreDeepEqual(new int[0], search.Cyclic()));
             Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Isolated()));
-            Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.FUsed()));
+            Assert.IsTrue(Compares.AreDeepEqual(Arrays.CreateJagged<int>(0, 0), search.Fused()));
         }
 
-        /**
-         * C1CCC2(CC1)CCCCC2
-         */
+        /// <summary>
+        /// C1CCC2(CC1)CCCCC2
+        /// </summary>
         [TestMethod()]
         public virtual void TestIsolated_Spiro()
         {
@@ -139,9 +134,9 @@ namespace NCDK.RingSearches
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 5, 6, 7, 8, 9, 10 }, isolated[1]));
         }
 
-        /**
-         * C1CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CCC3(CCC4(CCC5(CCC6(CCCCC6)CC5)CC4)CC3)CC2)CC1
-         */
+        /// <summary>
+        /// C1CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CC1)CCC1(CC2)CCC2(CCC3(CCC4(CCC5(CCC6(CCCCC6)CC5)CC4)CC3)CC2)CC1
+        /// </summary>
         [TestMethod()]
         public virtual void TestIsolated_SpiroMedium()
         {
@@ -185,9 +180,9 @@ namespace NCDK.RingSearches
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 6, 7, 8, 9, 10, 11 }, isolated[1]));
         }
 
-        /**
-         * C(C1CCCCC1)C1CCCCC1
-         */
+        /// <summary>
+        /// C(C1CCCCC1)C1CCCCC1
+        /// </summary>
         [TestMethod()]
         public virtual void TestIsolated_BenzylBenzene()
         {
@@ -215,25 +210,25 @@ namespace NCDK.RingSearches
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 6, 7, 8, 9, 10, 11 }, isolated[1]));
         }
 
-        /**
-         * C1CC2CCC1CC2
-         */
+        /// <summary>
+        /// C1CC2CCC1CC2
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed()
         {
             int[][] g = new int[][] { new[] { 1, 5, 6 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4, 7 }, new[] { 3, 5 }, new[] { 0, 4 }, new[] { 0, 7 }, new[] { 6, 3 } };
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(g.Length, fused[0].Length);
         }
 
-        /**
-         * two fused systems which are edge disjoint with respect to each other but
-         * have a (non cyclic) edge which connects them C1CC2(CCC1CC2)C12CCC(CC1)CC2
-         */
+        /// <summary>
+        /// two fused systems which are edge disjoint with respect to each other but
+        /// have a (non cyclic) edge which connects them C1CC2(CCC1CC2)C12CCC(CC1)CC2
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_BiocycloEdgeLinked()
         {
@@ -242,18 +237,18 @@ namespace NCDK.RingSearches
                         new[]{9, 13, 14, 3}, new[] {8, 10}, new[] {9, 11}, new[] {10, 12, 15}, new[] {11, 13}, new[] {8, 12}, new[] {8, 15}, new[] {11, 14}};
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(2, fused.Length);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, fused[0]));
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 8, 9, 10, 11, 12, 13, 14, 15 }, fused[1]));
         }
 
-        /**
-         * two fused systems which are edge disjoint with respect to each other
-         * however in between the two fused cycle systems there is a single non
-         * cyclic vertex which is adjacent to both C(C12CCC(CC1)CC2)C12CCC(CC1)CC2
-         */
+        /// <summary>
+        /// two fused systems which are edge disjoint with respect to each other
+        /// however in between the two fused cycle systems there is a single non
+        /// cyclic vertex which is adjacent to both C(C12CCC(CC1)CC2)C12CCC(CC1)CC2
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_BiocycloVertexLinked()
         {
@@ -262,16 +257,16 @@ namespace NCDK.RingSearches
                        new[] {8, 10}, new[] {9, 11, 14}, new[] {10, 12}, new[] {11, 13}, new[] {12, 8, 15, 16}, new[] {10, 15}, new[] {14, 13}, new[] {13, 2}};
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(2, fused.Length);
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 0, 1, 2, 3, 4, 5, 6, 7 }, fused[0]));
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 8, 9, 10, 11, 12, 13, 14, 15 }, fused[1]));
         }
 
-        /**
-         * C1CCC2CCCCC2C1
-         */
+        /// <summary>
+        /// C1CCC2CCCCC2C1
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_OrthoFused()
         {
@@ -279,15 +274,15 @@ namespace NCDK.RingSearches
             int[][] g = new int[][] { new[] { 1, 5 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5, 7 }, new[] { 0, 6, 4 }, new[] { 5, 9 }, new[] { 4, 8 }, new[] { 7, 9 }, new[] { 6, 8 } };
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(g.Length, fused[0].Length);
         }
 
-        /**
-         * C1CCC2CC3CCCCC3CC2C1
-         */
+        /// <summary>
+        /// C1CCC2CC3CCCCC3CC2C1
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_BiorthoFused()
         {
@@ -296,15 +291,15 @@ namespace NCDK.RingSearches
                         new[] {6, 8}, new[] {1, 11}, new[] {10, 12}, new[] {11, 13}, new[] {2, 12}};
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(g.Length, fused[0].Length);
         }
 
-        /**
-         * C1CC23CCC4(CC2)CCC2(CCCC5(CCCC6(CCC7(CCCC8(CCC9(CC8)CCC8(CCCC%10(CCCC%11(CCC(C1)(CC%11)C3)C%10)C8)CC9)C7)CC6)C5)C2)CC4
-         */
+        /// <summary>
+        /// C1CC23CCC4(CC2)CCC2(CCCC5(CCCC6(CCC7(CCCC8(CCC9(CC8)CCC8(CCCC%10(CCCC%11(CCC(C1)(CC%11)C3)C%10)C8)CC9)C7)CC6)C5)C2)CC4
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_Cylclophane()
         {
@@ -318,15 +313,15 @@ namespace NCDK.RingSearches
                         new[] {49, 52}, new[] {51, 53}, new[] {52, 54}, new[] {53, 55, 56, 57}, new[] {49, 54}, new[] {54, 59}, new[] {54, 58}, new[] {42, 57}, new[] {42, 56}};
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(g.Length, fused[0].Length);
         }
 
-        /**
-         * CHEBI:33128
-         */
+        /// <summary>
+        /// CHEBI:33128
+        /// </summary>
         [TestMethod()]
         public virtual void TestFUsed_Fullerene()
         {
@@ -341,7 +336,7 @@ namespace NCDK.RingSearches
                         new[] {56, 45, 58}, new[] {57, 48, 59}, new[] {58, 51, 55}};
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
             int[][] isolated = search.Isolated();
-            int[][] fused = search.FUsed();
+            int[][] fused = search.Fused();
             Assert.AreEqual(0, isolated.Length);
             Assert.AreEqual(1, fused.Length);
             Assert.AreEqual(g.Length, fused[0].Length);

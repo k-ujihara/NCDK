@@ -30,14 +30,14 @@ using System;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-     * Ensure the atom types of the validation suite (http://server.ccl.net/cca/data/MMFF94/) are
-     * correctly assigned.
-     *
-     * @author John May
-     */
+    /// <summary>
+    /// Ensure the atom types of the validation suite (http://server.ccl.net/cca/data/MMFF94/) are
+    /// correctly assigned.
+    ///
+    // @author John May
+    /// </summary>
     // [TestCategory("SlowTest")] // waiting on SlowTest patch
-	[TestClass()]
+    [TestClass()]
     public class MmffAtomTypeValidationSuiteTest : AbstractMmffAtomTypeValidationSuiteTest
     {
 

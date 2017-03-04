@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Labelling
 {
-    /**
-     * @cdk.module smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    /// </summary>
     public class AbstractReactionLabeller
     {
-        /**
-         * A nasty hack necessary to get around a bug in the CDK
-         */
+        /// <summary>
+        /// A nasty hack necessary to get around a bug in the CDK
+        /// </summary>
         private bool fixAtomMappingCastType = false;
 
         private void FixAtomMapping(IAtomContainer canonicalForm)
@@ -105,12 +105,11 @@ namespace NCDK.SMSD.Labelling
             }
         }
 
-        /**
-         * Clone and Sort the mappings based on the order of the first object
-         * in the mapping (which is assumed to be the reactant).
-         *
-         * @param reaction
-         */
+        /// <summary>
+        /// Clone and Sort the mappings based on the order of the first object
+        /// in the mapping (which is assumed to be the reactant).
+        ///
+        /// <param name="reaction">/// </summary></param>
         private void CloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
             IDictionary<IAtomContainer, int[]> permutationMap)
         {

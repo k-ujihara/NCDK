@@ -22,12 +22,12 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests that a second atom typing results in the same atom
-     * types as the first perception.
-     *
-     * @cdk.module test-core
-     */
+    /// <summary>
+    /// This class tests that a second atom typing results in the same atom
+    /// types as the first perception.
+    ///
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class RepeatedCDKAtomTypeMatcherSMILESTest : CDKTestCase
     {
@@ -37,70 +37,70 @@ namespace NCDK.AtomTypes
         [TestMethod()]
         public void TestSMILES()
         {
-            typeAndRetype("C=1N=CNC=1");
+            TypeAndRetype("C=1N=CNC=1");
         }
 
         [TestMethod()]
         public void TestSMILES2()
         {
-            typeAndRetype("OCN1C=CN=C1");
+            TypeAndRetype("OCN1C=CN=C1");
         }
 
         [TestMethod()]
         public void TestSMILES3()
         {
-            typeAndRetype("OC(=O)N1C=CN=C1");
+            TypeAndRetype("OC(=O)N1C=CN=C1");
         }
 
         [TestMethod()]
         public void TestSMILES4()
         {
-            typeAndRetype("CN(C)CCC1=CNC2=C1C=C(C=C2)CC1NC(=O)OC1");
+            TypeAndRetype("CN(C)CCC1=CNC2=C1C=C(C=C2)CC1NC(=O)OC1");
         }
 
         [TestMethod()]
         public void TestSMILES5()
         {
-            typeAndRetype("CN(C)CCC1=CNc2c1cc(cc2)CC1NC(=O)OC1");
+            TypeAndRetype("CN(C)CCC1=CNc2c1cc(cc2)CC1NC(=O)OC1");
         }
 
         [TestMethod()]
         public void TestSMILES6()
         {
-            typeAndRetype("c1c2cc[NH]cc2nc1");
+            TypeAndRetype("c1c2cc[NH]cc2nc1");
         }
 
         [TestMethod()]
         public void TestSMILES7()
         {
-            typeAndRetype("c1cnc2s[cH][cH]n12");
+            TypeAndRetype("c1cnc2s[cH][cH]n12");
         }
 
         [TestMethod()]
         public void TestSMILES8()
         {
-            typeAndRetype("Cl[Pt]1(Cl)(Cl)(Cl)NC2CCCCC2N1");
+            TypeAndRetype("Cl[Pt]1(Cl)(Cl)(Cl)NC2CCCCC2N1");
         }
 
         [TestMethod()]
         public void TestSMILES9()
         {
-            typeAndRetype("[Pt](Cl)(Cl)(N)N");
+            TypeAndRetype("[Pt](Cl)(Cl)(N)N");
         }
 
         [TestMethod()]
         public void TestSMILES10()
         {
-            typeAndRetype("CN(C)(=O)CCC=C2c1ccccc1CCc3ccccc23");
+            TypeAndRetype("CN(C)(=O)CCC=C2c1ccccc1CCc3ccccc23");
         }
 
         [TestMethod()]
         public void TestSMILES11()
         {
-            typeAndRetype("CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34");
+            TypeAndRetype("CCCN1CC(CSC)CC2C1Cc3c[nH]c4cccc2c34");
         }
 
-        private void typeAndRetype(string smiles)
+        private void TypeAndRetype(string smiles)
         {
             IAtomContainer mol = smilesParser.ParseSmiles(smiles);
             IAtomType[] types = atomTypeMatcher.FindMatchingAtomTypes(mol);

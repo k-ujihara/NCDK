@@ -63,8 +63,8 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Returns the largest (number of atoms) ring set in a molecule
         ///
-        ///@param  ringSystems  RingSystems of a molecule
-        ///@return              The largestRingSet
+        /// <param name="ringSystems">RingSystems of a molecule</param>
+        /// <returns>The largestRingSet</returns>
         /// </summary>
         public static IRingSet GetLargestRingSet(IList<IRingSet> ringSystems)
         {
@@ -164,10 +164,7 @@ namespace NCDK.Tools.Manipulator
             {
                 /* Take each ring */
                 ring1 = (IRing)ringSet[i];
-                /*
-                 * look at each Atom in this ring whether it is part of any other
-                 * ring
-                 */
+                // look at each Atom in this ring whether it is part of any other ring
                 for (int j = 0; j < ring1.Atoms.Count; j++)
                 {
                     atom1 = ring1.Atoms[j];
@@ -236,9 +233,9 @@ namespace NCDK.Tools.Manipulator
         public static bool RingAlreadyInSet(IRing newRing, IRingSet ringSet)
         {
             IRing ring;
-            //		  IBond[] bonds;
-            //		  IBond[] newBonds;
-            //		  IBond bond;
+            //          IBond[] bonds;
+            //          IBond[] newBonds;
+            //          IBond bond;
             int equalCount;
             bool equals;
             for (int f = 0; f < ringSet.Count; f++)
@@ -248,7 +245,7 @@ namespace NCDK.Tools.Manipulator
                 ring = (IRing)ringSet[f];
 
                 //              bonds = ring.Bonds;
-                //			  newBonds = newRing.Bonds;
+                //              newBonds = newRing.Bonds;
 
                 if (ring.Bonds.Count == newRing.Bonds.Count)
                 {

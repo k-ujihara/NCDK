@@ -36,10 +36,7 @@ namespace NCDK.Isomorphisms
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class StateStream : IEnumerable<int[]>
+    internal sealed class StateStream : IEnumerable<int[]>
     {
 
         /// <summary>A mapping state.</summary>

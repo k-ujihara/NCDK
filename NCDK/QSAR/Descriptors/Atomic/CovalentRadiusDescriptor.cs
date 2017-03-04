@@ -23,30 +23,30 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  This class returns the covalent radius of a given atom.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * @author         Miguel Rojas
-     * @cdk.created    2006-05-17
-     * @cdk.module     qsaratomic
-     * @cdk.githash
-     * @cdk.set        qsar-descriptors
-     * @cdk.dictref qsar-descriptors:covalentradius
-     */
+    /// <summary>
+    ///  This class returns the covalent radius of a given atom.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author         Miguel Rojas
+    // @cdk.created    2006-05-17
+    // @cdk.module     qsaratomic
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref qsar-descriptors:covalentradius
+    /// </summary>
     public class CovalentRadiusDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private AtomTypeFactory factory = null;

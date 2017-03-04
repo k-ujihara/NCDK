@@ -26,27 +26,27 @@ using NCDK.Numerics;
 
 namespace NCDK.IO
 { 
-    /**
-     * Reads an object from HIN formated input.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author  Rajarshi Guha <rajarshi.guha@gmail.com>
-     * @cdk.created 2004-01-27
-     *
-     * @cdk.keyword file format, HIN
-     * @cdk.iooptions
-     */
+    /// <summary>
+    /// Reads an object from HIN formated input.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author  Rajarshi Guha <rajarshi.guha@gmail.com>
+    // @cdk.created 2004-01-27
+    ///
+    // @cdk.keyword file format, HIN
+    // @cdk.iooptions
+    /// </summary>
     public class HINReader : DefaultChemObjectReader {
 
         private TextReader input;
 
-        /**
-         * Construct a new reader from a Reader type object
-         *
-         * @param input reader from which input is read
-         */
+        /// <summary>
+        /// Construct a new reader from a Reader type object
+        ///
+        /// <param name="input">reader from which input is read</param>
+        /// </summary>
         public HINReader(TextReader input) {
             this.input = input;
         }
@@ -88,14 +88,14 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * Reads the content from a HIN input. It can only return a
-         * IChemObject of type ChemFile
-         *
-         * @param object class must be of type ChemFile
-         *
-         * @see org.openscience.cdk.ChemFile
-         */
+        /// <summary>
+        /// Reads the content from a HIN input. It can only return a
+        /// IChemObject of type ChemFile
+        ///
+        /// <param name="object">class must be of type ChemFile</param>
+        ///
+        /// @see org.openscience.cdk.ChemFile
+        /// </summary>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile) {
@@ -115,16 +115,16 @@ namespace NCDK.IO
                 return ("");
         }
 
-        /**
-         *  Private method that actually parses the input to read a ChemFile
-         *  object. In its current state it is able to read all the molecules
-         *  (if more than one is present) in the specified HIN file. These are
-         *  placed in a MoleculeSet object which in turn is placed in a ChemModel
-         *  which in turn is placed in a ChemSequence object and which is finally
-         *  placed in a ChemFile object and returned to the user.
-         *
-         * @return A ChemFile containing the data parsed from input.
-         */
+        /// <summary>
+        ///  Private method that actually parses the input to read a ChemFile
+        ///  object. In its current state it is able to read all the molecules
+        ///  (if more than one is present) in the specified HIN file. These are
+        ///  placed in a MoleculeSet object which in turn is placed in a ChemModel
+        ///  which in turn is placed in a ChemSequence object and which is finally
+        ///  placed in a ChemFile object and returned to the user.
+        ///
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
+        /// </summary>
         private IChemFile ReadChemFile(IChemFile file) {
             IChemSequence chemSequence = file.Builder.CreateChemSequence();
             IChemModel chemModel = file.Builder.CreateChemModel();

@@ -18,13 +18,13 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches a bond of any order.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches a bond of any order.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AnyOrderQueryBond : SMARTSBond
     {
         public AnyOrderQueryBond(IChemObjectBuilder builder)
@@ -32,35 +32,24 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         {
         }
 
-        /**
-         * Creates a new instance.
-         *
-         * @param atom1
-         * @param atom2
-         */
+        /// <summary>
+        /// Creates a new instance.
+        ///
+        /// <param name="atom1">/// @param atom2</param>
+        /// </summary>
         public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
             : base(atom1, atom2, order, builder)
         {
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#Matches(org
-         * .openscience.cdk.interfaces.IBond)
-         */
         public override bool Matches(IBond bond)
         {
             return bond != null; // any bond order is fine
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.Bond#ToString()
-         */
         public override string ToString()
         {
-            return "AnyOrderQueryBond()";
+            return nameof(AnyOrderQueryBond) + "()";
         }
     }
 }

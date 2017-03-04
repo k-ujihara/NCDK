@@ -51,12 +51,12 @@ using NCDK.SMSD.Algorithms.VFLib.Builder;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Query
 {
-    /**
-     * This class creates an template for MCS/substructure query.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class creates an template for MCS/substructure query.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class QueryCompiler : IQueryCompiler
     {
 
@@ -64,48 +64,44 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
         private IQueryAtomContainer queryMolecule = null;
         private bool shouldMatchBonds = true;
 
-        /**
-         * Construct query object from the molecule
-         * @param molecule
-         * @param shouldMatchBonds
-         */
+        /// <summary>
+        /// Construct query object from the molecule
+        /// <param name="molecule">/// @param shouldMatchBonds</param>
+        /// </summary>
         public QueryCompiler(IAtomContainer molecule, bool shouldMatchBonds)
         {
             this.molecule = molecule;
             this.IsBondMatchFlag = shouldMatchBonds;
         }
 
-        /**
-         * Construct query object from the molecule
-         * @param molecule
-         */
+        /// <summary>
+        /// Construct query object from the molecule
+        /// <param name="molecule">/// </summary></param>
         public QueryCompiler(IQueryAtomContainer molecule)
         {
             this.SetQueryMolecule(molecule);
         }
 
-        /**
-         * Set Molecule
-         * @param molecule
-         */
+        /// <summary>
+        /// Set Molecule
+        /// <param name="molecule">/// </summary></param>
         private void SetMolecule(IAtomContainer molecule)
         {
             this.molecule = molecule;
         }
 
-        /**
-         * Set Molecule
-         * @param molecule
-         */
+        /// <summary>
+        /// Set Molecule
+        /// <param name="molecule">/// </summary></param>
         private void SetQueryMolecule(IQueryAtomContainer molecule)
         {
             this.queryMolecule = molecule;
         }
 
-        /**
-         * Return molecule
-         * @return Atom Container
-         */
+        /// <summary>
+        /// Return molecule
+        /// <returns>Atom Container</returns>
+        /// </summary>
         private IAtomContainer Molecule => queryMolecule == null ? molecule : queryMolecule;
 
         public IQuery Compile()
@@ -176,9 +172,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
             return new DefaultVFBondMatcher(bond);
         }
 
-        /**
-         * @return the shouldMatchBonds
-         */
+        /// <summary>
+        /// <returns>the shouldMatchBonds</returns>
+        /// </summary>
         private bool IsBondMatchFlag
         {
             get

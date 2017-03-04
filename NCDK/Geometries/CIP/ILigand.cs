@@ -22,52 +22,44 @@
  */
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
-     * have precedence over another.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
+    /// have precedence over another.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
     public interface ILigand
     {
-
-        /**
-         * <see cref="IAtomContainer"/> of which this ligand is part.
-         *
-         * @return the IAtomContainer
-         */
+        /// <summary>
+        /// <see cref="IAtomContainer"/> of which this ligand is part.
+        /// </summary>
+        /// <returns>the IAtomContainer</returns>
         IAtomContainer GetAtomContainer();
 
-        /**
-         * The central {@link IAtom} to which this ligand is connected via one {@link IBond}.
-         *
-         * @return the central atom
-         */
+        /// <summary>
+        /// The central <see cref="IAtom"/> to which this ligand is connected via one <see cref="IBond"/>.
+        /// </summary>
+        /// <returns>the central atom</returns>
         IAtom GetCentralAtom();
 
-        /**
-         * {@link IAtom} of the ligand that is connected to the central {@link IAtom} via
-         * one {@link IBond}.
-         *
-         * @return the ligand atom
-         */
+        /// <summary>
+        /// <see cref="IAtom"/> of the ligand that is connected to the central <see cref="IAtom"/> via
+        /// one <see cref="IBond"/>.
+        /// </summary>
+        /// <returns>the ligand atom</returns>
         IAtom GetLigandAtom();
 
-        /**
-         * Returns a list of visitedAtoms.
-         *
-         * @return a {@link VisitedAtoms} list with visited atoms
-         */
+        /// <summary>
+        /// Returns a list of visitedAtoms.
+        /// </summary>
+        /// <returns>a <see cref="VisitedAtoms"/> list with visited atoms</returns>
         VisitedAtoms GetVisitedAtoms();
 
-        /**
-         * Returns a true if the atom has been visited before.
-         *
-         * @param  atom the atom to be analyzed
-         * @return true if the {@link IAtom} is the chiral atom, or part of the
-         *              ligand
-         */
+        /// <summary>
+        /// Returns a true if the atom has been visited before.
+        /// </summary>
+        /// <param name="atom">the atom to be analyzed</param>
+        /// <returns>true if the <see cref="IAtom"/> is the chiral atom, or part of the ligand</returns>
         bool IsVisited(IAtom atom);
     }
 }

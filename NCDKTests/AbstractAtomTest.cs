@@ -24,17 +24,17 @@ using NCDK.Numerics;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IAtom} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IAtom"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAtomTest : AbstractAtomTypeTest
     {
-        /**
-         * Method to test the get/SetCharge() methods.
-         */
+        /// <summary>
+        /// Method to test the get/SetCharge() methods.
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetCharge_Double()
         {
@@ -51,9 +51,9 @@ namespace NCDK
             TestSetCharge_Double();
         }
 
-        /**
-         * Method to test the get/SetHydrogenCount() methods.
-         */
+        /// <summary>
+        /// Method to test the get/SetHydrogenCount() methods.
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetImplicitHydrogenCount_Integer()
         {
@@ -72,9 +72,9 @@ namespace NCDK
             Assert.IsNull(a.ImplicitHydrogenCount);
         }
 
-        /**
-         * Method to test the SetFractional3D() methods.
-         */
+        /// <summary>
+        /// Method to test the SetFractional3D() methods.
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetFractionalPoint3d_Point3d()
         {
@@ -101,7 +101,7 @@ namespace NCDK
             IAtom a = (IAtom)NewChemObject();
             a.Point3D = point3d;
             Assert.IsNotNull(a.Point3D); 
-			AssertAreEqual(point3d, a.Point3D.Value, 0.001);
+            AssertAreEqual(point3d, a.Point3D.Value, 0.001);
         }
 
         [TestMethod()]
@@ -136,9 +136,9 @@ namespace NCDK
             Assert.AreEqual(point2d, a.Point2D);
         }
 
-        /**
-         * Method to test the get/SetHydrogenCount() methods.
-         */
+        /// <summary>
+        /// Method to test the get/SetHydrogenCount() methods.
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetStereoParity_Integer()
         {
@@ -155,9 +155,9 @@ namespace NCDK
             TestSetStereoParity_Integer();
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()
@@ -172,9 +172,9 @@ namespace NCDK
             Assert.AreEqual(0, diff.Length);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_Point2d()
         {
@@ -184,9 +184,9 @@ namespace NCDK
             Assert.AreEqual(clone.Point2D.Value.X, 2.0, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_Point3d()
         {
@@ -196,9 +196,9 @@ namespace NCDK
             Assert.AreEqual(clone.Point3D.Value.X, 2.0, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_FractionalPoint3d()
         {
@@ -208,9 +208,9 @@ namespace NCDK
             Assert.AreEqual(clone.FractionalPoint3D.Value.X, 2.0, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_HydrogenCount()
         {
@@ -223,9 +223,9 @@ namespace NCDK
             Assert.AreEqual(3, clone.ImplicitHydrogenCount.Value);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_StereoParity()
         {
@@ -238,9 +238,9 @@ namespace NCDK
             Assert.AreEqual(3, clone.StereoParity.Value);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_Charge()
         {
@@ -253,9 +253,9 @@ namespace NCDK
             Assert.AreEqual(1.0, clone.Charge.Value, 0.001);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()
@@ -278,9 +278,9 @@ namespace NCDK
             Assert.IsTrue(description.Contains("F3D"));
         }
 
-        /**
-         * Checks that the default charge is set to NaN
-         */
+        /// <summary>
+        /// Checks that the default charge is set to NaN
+        /// </summary>
         [TestMethod()]
         public virtual void TestDefaultChargeValue()
         {

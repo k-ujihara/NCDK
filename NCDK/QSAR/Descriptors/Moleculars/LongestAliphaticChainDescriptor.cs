@@ -26,31 +26,31 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  Class that returns the number of atoms in the longest aliphatic chain.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>checkRingSystem</td>
-     *     <td>false</td>
-     *     <td>True is the CDKConstant.ISINRING has to be set</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value named <i>nAtomLAC</i>
-     * @author      chhoppe from EUROSCREEN
-     * @cdk.created 2006-1-03
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:largestAliphaticChain
-     */
+    /// <summary>
+    ///  Class that returns the number of atoms in the longest aliphatic chain.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>checkRingSystem</td>
+    ///     <td>false</td>
+    ///     <td>True is the CDKConstant.ISINRING has to be set</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value named <i>nAtomLAC</i>
+    // @author      chhoppe from EUROSCREEN
+    // @cdk.created 2006-1-03
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:largestAliphaticChain
+    /// </summary>
     public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkRingSystem = false;
@@ -233,7 +233,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
 
             //for (int i=0;i<aliphaticChain.Atoms.Count;i++){
-            //	Debug.WriteLine("container-->atom:"+i+" Nr: "+container.Atoms.IndexOf(aliphaticChain.GetAtomAt(i))+" maxBondOrder:"+aliphaticChain.GetMaximumBondOrder(aliphaticChain.GetAtomAt(i))+" Aromatic:"+aliphaticChain.GetAtomAt(i).IsAromatic+" Ring:"+aliphaticChain.GetAtomAt(i).IsInRing+" FormalCharge:"+aliphaticChain.GetAtomAt(i).FormalCharge+" Charge:"+aliphaticChain.GetAtomAt(i).Charge+" Flag:"+aliphaticChain.GetAtomAt(i).IsVisited);
+            //    Debug.WriteLine("container-->atom:"+i+" Nr: "+container.Atoms.IndexOf(aliphaticChain.GetAtomAt(i))+" maxBondOrder:"+aliphaticChain.GetMaximumBondOrder(aliphaticChain.GetAtomAt(i))+" Aromatic:"+aliphaticChain.GetAtomAt(i).IsAromatic+" Ring:"+aliphaticChain.GetAtomAt(i).IsInRing+" FormalCharge:"+aliphaticChain.GetAtomAt(i).FormalCharge+" Charge:"+aliphaticChain.GetAtomAt(i).Charge+" Flag:"+aliphaticChain.GetAtomAt(i).IsVisited);
             //}
             //Debug.WriteLine("BondCount:"+aliphaticChain.Bonds.Count);
             if (aliphaticChain.Bonds.Count == 0)
@@ -248,12 +248,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  particular sphere, which usually consists of one start atom, and searches
         ///  for a pi system.
         ///
-        ///@param  container                                              The AtomContainer to
+        /// <param name="container">The AtomContainer to</param>
         ///      be searched
-        ///@param  sphere                                          A sphere of atoms to
+        /// <param name="sphere">A sphere of atoms to</param>
         ///      start the search with
-        ///@param  path                                          A vector which stores the atoms belonging to the pi system
-        ///@exception  CDKException  Description of the
+        /// <param name="path">A vector which stores the atoms belonging to the pi system</param>
+        /// <exception cref="CDKException"> Description of the</exception>
         ///      Exception
         /// </summary>
         private void BreadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path)

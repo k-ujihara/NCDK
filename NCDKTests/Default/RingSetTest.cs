@@ -18,21 +18,16 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the RingSet class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.RingSet
-     */
+    /// <summary>
+    /// Checks the functionality of the RingSet class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.RingSet
+    /// </summary>
     [TestClass()]
     public class RingSetTest : AbstractRingSetTest
     {
@@ -41,7 +36,7 @@ namespace NCDK.Default
             return new RingSet();
         }
 
-		public override IRing NewContainerObject()
+        public override IRing NewContainerObject()
         {
             return new Ring();
         }

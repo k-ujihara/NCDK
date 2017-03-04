@@ -24,24 +24,24 @@ using System;
 
 namespace NCDK
 {
-    /**
+    /// <summary>
     /// Event fired by cdk classes to their registered listeners
     /// in case something changes within them.
-     *
-    /// @cdk.module data
-    /// @cdk.githash
-     */
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    /// </summary>
     public class ChemObjectChangeEventArgs
         : EventArgs
     {
         public object Source { get; private set; }
 
-        /**
+        /// <summary>
         /// Constructs a ChemObjectChangeEvent with a reference
         /// to the object where it originated.
-         *
-        /// @param   source The reference to the object where this change event originated
-         */
+        ///
+        /// <param name="source">The reference to the object where this change event originated</param>
+        /// </summary>
         public ChemObjectChangeEventArgs(object source)
             : base()
         {

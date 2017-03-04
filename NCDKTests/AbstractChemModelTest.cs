@@ -21,12 +21,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IChemModel} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of <see cref="IChemModel"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
+    [TestClass()]
     public abstract class AbstractChemModelTest
         : AbstractChemObjectTest
     {
@@ -354,7 +354,7 @@ namespace NCDK
             }
 
             [TestMethod()]
-			public void OnStateChanged(ChemObjectChangeEventArgs e)
+            public void OnStateChanged(ChemObjectChangeEventArgs e)
             {
                 Changed = true;
             }
@@ -426,7 +426,7 @@ namespace NCDK
             IChemModel model = (IChemModel)NewChemObject();
             IChemObjectBuilder builder = model.Builder;
 
-            IRing container = builder.CreateRing();	// NCDK does not allow to add Ring to RingSet
+            IRing container = builder.CreateRing();    // NCDK does not allow to add Ring to RingSet
             IRingSet ringset = builder.CreateRingSet();
 
             Assert.IsTrue(model.IsEmpty);

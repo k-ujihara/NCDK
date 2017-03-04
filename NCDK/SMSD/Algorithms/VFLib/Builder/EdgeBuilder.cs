@@ -24,13 +24,13 @@ using NCDK.SMSD.Algorithms.Matchers;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Builder
 {
-    /**
-     * Class for building/storing edges (bonds) in the graph with bond
-     * query capabilities.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class for building/storing edges (bonds) in the graph with bond
+    /// query capabilities.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class EdgeBuilder : IEdge
     {
         private NodeBuilder source;

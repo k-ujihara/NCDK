@@ -26,12 +26,12 @@ using NCDK.Templates;
 using System.Collections.Generic;
 
 namespace NCDK.RingSearches {
-    /**
-     * ring search unit tests for a branched aliphatic compounds
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// ring search unit tests for a branched aliphatic compounds
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_NonCyclic {
 
@@ -58,7 +58,7 @@ namespace NCDK.RingSearches {
 
         [TestMethod()]
         public void TestFUsed() {
-            Assert.AreEqual(0, new RingSearch(nonCyclic).FUsed().Length);
+            Assert.AreEqual(0, new RingSearch(nonCyclic).Fused().Length);
         }
 
         [TestMethod()]
@@ -73,7 +73,7 @@ namespace NCDK.RingSearches {
 
         [TestMethod()]
         public void TestFUsedRingFragments() {
-            Assert.IsTrue(new RingSearch(nonCyclic).FUsedRingFragments().Count == 0);
+            Assert.IsTrue(new RingSearch(nonCyclic).FusedRingFragments().Count == 0);
         }
     }
 }

@@ -21,17 +21,17 @@ using NCDK.Reactions.Types.Parameters;
 
 namespace NCDK.Types.Parameters
 {
-    /**
-     * Tests for SetReactionCenter implementations.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// Tests for SetReactionCenter implementations.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class SetReactionCenterTest : CDKTestCase
     {
-        /**
-         *  Constructor for the SetReactionCenterTest object.
-         */
+        /// <summary>
+        ///  Constructor for the SetReactionCenterTest object.
+        /// </summary>
         public SetReactionCenterTest()
             : base()
         { }

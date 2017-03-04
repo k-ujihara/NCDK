@@ -26,12 +26,12 @@ using System.Collections.Generic;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * benzylbenzene ring search unit tests
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// benzylbenzene ring search unit tests
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_BenzylBenzene
     {
@@ -78,7 +78,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFUsed()
         {
-            Assert.AreEqual(0, new RingSearch(benzylbenzene).FUsed().Length);
+            Assert.AreEqual(0, new RingSearch(benzylbenzene).Fused().Length);
         }
 
         [TestMethod()]
@@ -105,13 +105,13 @@ namespace NCDK.RingSearches
         public void TestFUsedRingFragments()
         {
             RingSearch search = new RingSearch(benzylbenzene);
-            IList<IAtomContainer> fused = search.FUsedRingFragments();
+            IList<IAtomContainer> fused = search.FusedRingFragments();
             Assert.AreEqual(0, fused.Count);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C13H12/c1-3-7-12(8-4-1)11-13-9-5-2-6-10-13/h1-10H,11H2
+        /// </summary>
         public static IAtomContainer Benzylbenzene()
         {
             IAtomContainer mol = new AtomContainer();

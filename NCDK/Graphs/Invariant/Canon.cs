@@ -24,73 +24,67 @@
 
 using NCDK.Common.Collections;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-	 * An implementation based on the canon algorithm {@cdk.cite WEI89}. The
-	 * algorithm uses an initial set of of invariants which are assigned a rank.
-	 * Equivalent ranks are then shattered using an unambiguous function (in this
-	 * case, the product of primes of adjacent ranks). Once no more equivalent ranks
-	 * can be shattered ties are artificially broken and rank shattering continues.
-	 * Unlike the original description rank stability is not maintained reducing
-	 * the number of values to rank at each stage to only those which are equivalent.
-	 * <p/>
-	 *
-	 * The initial set of invariants is basic and are - <i>
-	 * "sufficient for the purpose of obtaining unique notation for simple SMILES,
-	 *  but it is not necessarily a “complete” set. No “perfect” set of invariants
-	 *  is known that will distinguish all possible graph asymmetries. However,
-	 *  for any given set of structures, a set of invariants can be devised to
-	 *  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
-	 *  producer should not be considered a complete canonical labelled but in
-	 *  practice performs well. For a more accurate and computationally expensive
-	 *  labelling, please using the {@link InChINumbersTools}.
-	 *
-	 * <blockquote><pre>
-	 * IAtomContainer m = ...;
-	 * int[][]        g = GraphUtil.ToAdjList(m);
-	 *
-	 * // obtain canon labelling
-	 * long[] labels = Canon.Label(m, g);
-	 *
-	 * // obtain symmetry classes
-	 * long[] labels = Canon.Symmetry(m, g);
-	 * </pre></blockquote>
-	 *
-	 * @author John May
-	 * @cdk.module standard
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// An implementation based on the canon algorithm {@cdk.cite WEI89}. The
+    /// algorithm uses an initial set of of invariants which are assigned a rank.
+    /// Equivalent ranks are then shattered using an unambiguous function (in this
+    /// case, the product of primes of adjacent ranks). Once no more equivalent ranks
+    /// can be shattered ties are artificially broken and rank shattering continues.
+    /// Unlike the original description rank stability is not maintained reducing
+    /// the number of values to rank at each stage to only those which are equivalent.
+    /// </summary>
+    /// <remarks>
+    /// The initial set of invariants is basic and are - <i>
+    /// "sufficient for the purpose of obtaining unique notation for simple SMILES,
+    ///  but it is not necessarily a “complete” set. No “perfect” set of invariants
+    ///  is known that will distinguish all possible graph asymmetries. However,
+    ///  for any given set of structures, a set of invariants can be devised to
+    ///  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
+    ///  producer should not be considered a complete canonical labelled but in
+    ///  practice performs well. For a more accurate and computationally expensive
+    ///  labelling, please using the <see cref="InChINumbersTools"/>.
+    /// <code>
+    /// <example><code>
+    /// IAtomContainer m = ...;
+    /// int[][]        g = GraphUtil.ToAdjList(m);
+    ///
+    /// // obtain canon labelling
+    /// long[] labels = Canon.Label(m, g);
+    ///
+    /// // obtain symmetry classes
+    /// long[] labels = Canon.Symmetry(m, g);
+    /// </code>
+    ///</remarks>
+    // @author John May
+    // @cdk.module standard
+    // @cdk.githash
     public sealed class Canon
     {
-
         private const int N_PRIMES = 10000;
-        /**
-		 * Graph, adjacency list representation.
-		 */
+        /// <summary>
+        /// Graph, adjacency list representation.
+        /// </summary>
         private readonly int[][] g;
 
-        /**
-		 * Storage of canon labelling and symmetry classes.
-		 */
+        /// <summary>
+        /// Storage of canon labelling and symmetry classes.
+        /// </summary>
         private readonly long[] labelling, symmetry;
 
         /// <summary>Only compute the symmetry classes.</summary>
         private bool symOnly = false;
 
-        /**
-		 * Create a canon labelling for the graph (g) with the specified
-		 * invariants.
-		 *
-		 * @param g         a graph (adjacency list representation)
-		 * @param hydrogens binary vector of terminal hydrogens
-		 * @param partition an initial partition of the vertices
-		 */
+        /// <summary>
+        /// Create a canon labelling for the graph (g) with the specified invariants.
+        /// </summary>
+        /// <param name="g">a graph (adjacency list representation)</param>
+        /// <param name="hydrogens">binary vector of terminal hydrogens</param>
+        /// <param name="partition">an initial partition of the vertices</param>
         private Canon(int[][] g, long[] partition, bool[] hydrogens, bool symOnly)
         {
             this.g = g;
@@ -99,80 +93,73 @@ namespace NCDK.Graphs.Invariant
             symmetry = Refine(labelling, hydrogens);
         }
 
-        /**
-		 * Compute the canonical labels for the provided structure. The labelling
-		 * does not consider isomer information or stereochemistry. The current
-		 * implementation does not fully distinguish all structure topologies
-		 * but in practise performs well in the majority of cases. A complete
-		 * canonical labelling can be obtained using the {@link InChINumbersTools}
-		 * but is computationally much more expensive.
-		 *
-		 * @param container structure
-		 * @param g         adjacency list graph representation
-		 * @return the canonical labelling
-		 * @see EquivalentClassPartitioner
-		 * @see InChINumbersTools
-		 */
+        /// <summary>
+        /// Compute the canonical labels for the provided structure. The labelling
+        /// does not consider isomer information or stereochemistry. The current
+        /// implementation does not fully distinguish all structure topologies
+        /// but in practise performs well in the majority of cases. A complete
+        /// canonical labelling can be obtained using the <see cref="InChINumbersTools"/>
+        /// but is computationally much more expensive.
+        /// </summary>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
+        /// <returns>the canonical labelling</returns>
+        /// <seealso cref="EquivalentClassPartitioner"/>
+        /// <seealso cref="InChINumbersTools"/>
         public static long[] Label(IAtomContainer container, int[][] g)
         {
-            return Label(container, g, basicInvariants(container, g));
+            return Label(container, g, BasicInvariants(container, g));
         }
 
-        /**
-		 * Compute the canonical labels for the provided structure. The labelling
-		 * does not consider isomer information or stereochemistry. This method
-		 * allows provision of a custom array of initial invariants.
-		 *
-		 * <p/>
-		 * The current
-		 * implementation does not fully distinguish all structure topologies
-		 * but in practise performs well in the majority of cases. A complete
-		 * canonical labelling can be obtained using the {@link InChINumbersTools}
-		 * but is computationally much more expensive.
-		 *
-		 * @param container  structure
-		 * @param g          adjacency list graph representation
-		 * @param invariants initial invariants
-		 * @return the canonical labelling
-		 * @see EquivalentClassPartitioner
-		 * @see InChINumbersTools
-		 */
+        /// <summary>
+        /// Compute the canonical labels for the provided structure. The labelling
+        /// does not consider isomer information or stereochemistry. This method
+        /// allows provision of a custom array of initial invariants.
+        /// </summary>
+        /// <remarks>
+        /// The current
+        /// implementation does not fully distinguish all structure topologies
+        /// but in practise performs well in the majority of cases. A complete
+        /// canonical labelling can be obtained using the <see cref="InChINumbersTools"/>
+        /// but is computationally much more expensive.
+        /// </remarks>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
+        /// <param name="invariants">initial invariants</param>
+        /// <returns>the canonical labelling</returns>
+        /// <seealso cref="EquivalentClassPartitioner"/>
+        /// <seealso cref="InChINumbersTools"/>
         public static long[] Label(IAtomContainer container, int[][] g, long[] invariants)
         {
             if (invariants.Length != g.Length)
                 throw new ArgumentException("number of invariants != number of atoms");
-            return new Canon(g, invariants, terminalHydrogens(container, g), false).labelling;
+            return new Canon(g, invariants, TerminalHydrogens(container, g), false).labelling;
         }
 
-        /**
-		 * Compute the symmetry classes for the provided structure. There are known
-		 * examples where symmetry is incorrectly found. The {@link
-		 * EquivalentClassPartitioner} gives more accurate symmetry perception but
-		 * this method is very quick and in practise successfully portions the
-		 * majority of chemical structures.
-		 *
-		 * @param container structure
-		 * @param g         adjacency list graph representation
-		 * @return symmetry classes
-		 * @see EquivalentClassPartitioner
-		 */
+        /// <summary>
+        /// Compute the symmetry classes for the provided structure. There are known
+        /// examples where symmetry is incorrectly found. The {@link
+        /// EquivalentClassPartitioner} gives more accurate symmetry perception but
+        /// this method is very quick and in practise successfully portions the
+        /// majority of chemical structures.
+        /// </summary>
+        /// <param name="container">structure</param>
+        /// <param name="g">adjacency list graph representation</param>
+        /// <returns>symmetry classes</returns>
+        /// <seealso cref="EquivalentClassPartitioner"/>
         public static long[] Symmetry(IAtomContainer container, int[][] g)
         {
-            return new Canon(g, basicInvariants(container, g), terminalHydrogens(container, g), true).symmetry;
+            return new Canon(g, BasicInvariants(container, g), TerminalHydrogens(container, g), true).symmetry;
         }
 
-        /**
-		 * Internal - refine invariants to a canonical labelling and
-		 * symmetry classes.
-		 *
-		 * @param invariants the invariants to refine (canonical labelling gets
-		 *                   written here)
-		 * @param hydrogens  binary vector of terminal hydrogens
-		 * @return the symmetry classes
-		 */
+        /// <summary>
+        /// Internal - refine invariants to a canonical labelling and symmetry classes.
+        /// </summary>
+        /// <param name="invariants">the invariants to refine (canonical labelling gets written here)</param>
+        /// <param name="hydrogens">binary vector of terminal hydrogens</param>
+        /// <returns>the symmetry classes</returns>
         private long[] Refine(long[] invariants, bool[] hydrogens)
         {
-
             int ord = g.Length;
 
             InvariantRanker ranker = new InvariantRanker(ord);
@@ -205,7 +192,7 @@ namespace NCDK.Graphs.Invariant
 
                 // refine the initial invariants using product of primes from
                 // adjacent ranks
-                while ((n = ranker.rank(currVs, nextVs, nnu, curr, prev)) > m && n < ord)
+                while ((n = ranker.Rank(currVs, nextVs, nnu, curr, prev)) > m && n < ord)
                 {
                     nnu = 0;
                     for (int i = 0; i < ord && nextVs[i] >= 0; i++)
@@ -219,7 +206,6 @@ namespace NCDK.Graphs.Invariant
 
                 if (symmetry == null)
                 {
-
                     // After symmetry classes have been found without hydrogens we add
                     // back in the hydrogens and assign ranks. We don't refine the
                     // partition until the next time round the while loop to avoid
@@ -233,7 +219,7 @@ namespace NCDK.Graphs.Invariant
                             hydrogens[i] = false;
                         }
                     }
-                    n = ranker.rank(currVs, nextVs, nnu, curr, prev);
+                    n = ranker.Rank(currVs, nextVs, nnu, curr, prev);
                     symmetry = Arrays.CopyOf(prev, ord);
 
                     // Update the buffer of non-unique vertices as hydrogens next
@@ -263,14 +249,13 @@ namespace NCDK.Graphs.Invariant
             return symmetry;
         }
 
-        /**
-		 * Compute the prime product of the values (ranks) for the given
-		 * adjacent neighbors (ws).
-		 *
-		 * @param ws    indices (adjacent neighbors)
-		 * @param ranks invariant ranks
-		 * @return the prime product
-		 */
+        /// <summary>
+        /// Compute the prime product of the values (ranks) for the given
+        /// adjacent neighbors (ws).
+        /// </summary>
+        /// <param name="ws">indices (adjacent neighbors)</param>
+        /// <param name="ranks">invariant ranks</param>
+        /// <returns>the prime product</returns>
         private long PrimeProduct(int[] ws, long[] ranks, bool[] hydrogens)
         {
             long prod = 1;
@@ -284,37 +269,34 @@ namespace NCDK.Graphs.Invariant
             return prod;
         }
 
-        /**
-		 * Generate the initial invariants for each atom in the {@code container}.
-		 * The labels use the invariants described in {@cdk.cite WEI89}. <p/>
-		 *
-		 * The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
-		 * where:
-		 * <ul>
-		 *     <li>0: padding</li>
-		 *     <li>x: number of connections</li>
-		 *     <li>X: number of non-hydrogens bonds</li>
-		 *     <li>e: atomic number</li>
-		 *     <li>s: sign of charge</li>
-		 *     <li>c: absolute charge</li>
-		 *     <li>h: number of attached hydrogens</li>
-		 * </ul>
-		 *
-		 * <b>Important: These invariants are <i>basic</i> and there are known
-		 * examples they don't distinguish. One trivial example to consider is
-		 * {@code [O]C=O} where both oxygens have no hydrogens and a single
-		 * connection but the atoms are not equivalent. Including a better
-		 * initial partition is more expensive</b>
-		 *
-		 * @param container an atom container to generate labels for
-		 * @param graph     graph representation (adjacency list)
-		 * @return initial invariants
-		 * @ an atom had unset atomic number, hydrogen
-		 *                              count or formal charge
-		 */
-        public static long[] basicInvariants(IAtomContainer container, int[][] graph)
+        /// <summary>
+        /// Generate the initial invariants for each atom in the <paramref name="container"/>.
+        /// The labels use the invariants described in {@cdk.cite WEI89}. 
+        /// </summary>
+        /// <remarks>
+        /// The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
+        /// where:
+        /// <list type="bullet">
+        ///     <item>0: padding</item>
+        ///     <item>x: number of connections</item>
+        ///     <item>X: number of non-hydrogens bonds</item>
+        ///     <item>e: atomic number</item>
+        ///     <item>s: sign of charge</item>
+        ///     <item>c: absolute charge</item>
+        ///     <item>h: number of attached hydrogens</item>
+        /// </list>
+        /// <b>Important: These invariants are <i>basic</i> and there are known
+        /// examples they don't distinguish. One trivial example to consider is
+        /// "[O]C=O" where both oxygens have no hydrogens and a single
+        /// connection but the atoms are not equivalent. Including a better
+        /// initial partition is more expensive</b>
+        /// </remarks>
+        /// <param name="container">an atom container to generate labels for</param>
+        /// <param name="graph">graph representation (adjacency list)</param>
+        /// <returns>initial invariants</returns>
+        /// <exception cref="">an atom had unset atomic number, hydrogen count or formal charge</exception>
+        public static long[] BasicInvariants(IAtomContainer container, int[][] graph)
         {
-
             long[] labels = new long[graph.Length];
 
             for (int v = 0; v < graph.Length; v++)
@@ -349,14 +331,12 @@ namespace NCDK.Graphs.Invariant
             return labels;
         }
 
-        /**
-		 * Access atomic number of atom defaulting to 0 for pseudo atoms.
-		 *
-		 * @param atom an atom
-		 * @return the atomic number
-		 * @ the atom was non-pseudo at did not have an
-		 *                              atomic number
-		 */
+        /// <summary>
+        /// Access atomic number of atom defaulting to 0 for pseudo atoms.
+        /// </summary>
+        /// <param name="atom">an atom</param>
+        /// <returns>the atomic number</returns>
+        /// <exception cref="">the atom was non-pseudo at did not have an atomic number</exception>
         private static int GetAtomicNumber(IAtom atom)
         {
             int? elem = atom.AtomicNumber;
@@ -365,15 +345,12 @@ namespace NCDK.Graphs.Invariant
             throw new NullReferenceException("a non-pseudoatom had unset atomic number");
         }
 
-        /**
-		 * Access implicit hydrogen count of the atom defaulting to 0 for pseudo
-		 * atoms.
-		 *
-		 * @param atom an atom
-		 * @return the implicit hydrogen count
-		 * @ the atom was non-pseudo at did not have an
-		 *                              implicit hydrogen count
-		 */
+        /// <summary>
+        /// Access implicit hydrogen count of the atom defaulting to 0 for pseudo atoms.
+        /// </summary>
+        /// <param name="atom">an atom</param>
+        /// <returns>the implicit hydrogen count</returns>
+        /// <exception cref="">the atom was non-pseudo at did not have an implicit hydrogen count</exception>
         private static int GetImplH(IAtom atom)
         {
             int? h = atom.ImplicitHydrogenCount;
@@ -382,12 +359,11 @@ namespace NCDK.Graphs.Invariant
             throw new NullReferenceException("a non-pseudoatom had unset hydrogen count");
         }
 
-        /**
-		 * Access formal charge of an atom defaulting to 0 if undefined.
-		 *
-		 * @param atom an atom
-		 * @return the formal charge
-		 */
+        /// <summary>
+        /// Access formal charge of an atom defaulting to 0 if undefined.
+        /// </summary>
+        /// <param name="atom">an atom</param>
+        /// <returns>the formal charge</returns>
         private static int Charge(IAtom atom)
         {
             int? charge = atom.FormalCharge;
@@ -395,15 +371,13 @@ namespace NCDK.Graphs.Invariant
             return 0;
         }
 
-        /**
-		 * Locate explicit hydrogens that are attached to exactly one other atom.
-		 *
-		 * @param ac a structure
-		 * @return binary set of terminal hydrogens
-		 */
-        public static bool[] terminalHydrogens(IAtomContainer ac, int[][] g)
+        /// <summary>
+        /// Locate explicit hydrogens that are attached to exactly one other atom.
+        /// </summary>
+        /// <param name="ac">a structure</param>
+        /// <returns>binary set of terminal hydrogens</returns>
+        public static bool[] TerminalHydrogens(IAtomContainer ac, int[][] g)
         {
-
             bool[] hydrogens = new bool[ac.Atoms.Count];
 
             // we specifically don't check for null atomic number, this must be set.
@@ -416,16 +390,16 @@ namespace NCDK.Graphs.Invariant
             return hydrogens;
         }
 
-        /**
-		 * The first 10,000 primes.
-		 */
+        /// <summary>
+        /// The first 10,000 primes.
+        /// </summary>
         private static readonly int[] PRIMES = LoadPrimes();
 
         private static int[] LoadPrimes()
         {
             try
             {
-                using (var srm = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(typeof(Canon), "primes.dat"))
+                using (var srm = ResourceLoader.GetAsStream(typeof(Canon), "primes.dat"))
                 using (var br = new StreamReader(srm))
                 {
                     int[] primes = new int[N_PRIMES];

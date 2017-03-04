@@ -27,16 +27,16 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class SuppressedTest
     {
 
         [TestMethod()]
-        public void none()
+        public void None()
         {
             Suppressed suppressed = Suppressed.None;
             for (int i = 0; i < 1000; i++)

@@ -29,23 +29,19 @@ using System.Linq;
 
 namespace NCDK.Aromaticities
 {
-    /**
+    /// <summary>
     /// A simple aromatic model which only allows cyclic pi-bonds to contribute to an
     /// aromatic system. Lone pairs are not considered and as such molecules like
     /// furan and pyrrole are non-aromatic. This model is suitable for storing
     /// aromaticity in the MDL/Mol2 file formats.
-     *
-    /// @author John May
-    /// @cdk.module standard
-     */
+    /// </summary>
+    // @author John May
+    // @cdk.module standard
     sealed class PiBondModel : ElectronDonation
     {
-
         /// <inheritdoc/>
-
         public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
         {
-
             int n = container.Atoms.Count;
             int[] electrons = new int[n];
             int[] piBonds = new int[n];

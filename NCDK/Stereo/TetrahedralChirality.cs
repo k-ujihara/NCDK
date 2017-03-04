@@ -27,15 +27,15 @@ using System.Text;
 
 namespace NCDK.Stereo
 {
-    /**
-	 * Stereochemistry specification for quadrivalent atoms. See {@link ITetrahedralChirality} for
-	 * further details.
-	 *
-	 * @cdk.module core
-	 * @cdk.githash
-	 *
-	 * @see ITetrahedralChirality
-	 */
+    /// <summary>
+    /// Stereochemistry specification for quadrivalent atoms. See <see cref="ITetrahedralChirality"/> for
+    /// further details.
+    ///
+    // @cdk.module core
+    // @cdk.githash
+    ///
+    /// <seealso cref="ITetrahedralChirality"/>
+    /// </summary>
     public class TetrahedralChirality
         : ITetrahedralChirality
     {
@@ -44,13 +44,13 @@ namespace NCDK.Stereo
         private TetrahedralStereo stereo;
         public IChemObjectBuilder Builder { get; set; }
 
-        /**
-		 * Constructor to create a new {@link ITetrahedralChirality} implementation instance.
-		 *
-		 * @param chiralAtom  The chiral {@link IAtom}.
-		 * @param ligandAtoms The ligand atoms around the chiral atom.
-		 * @param chirality   The {@link Stereo} chirality.
-		 */
+        /// <summary>
+        /// Constructor to create a new <see cref="ITetrahedralChirality"/> implementation instance.
+        ///
+        /// <param name="chiralAtom">The chiral <see cref="IAtom"/>.</param>
+        /// <param name="ligandAtoms">The ligand atoms around the chiral atom.</param>
+        /// <param name="chirality">The <see cref="Stereo"/> chirality.</param>
+        /// </summary>
         public TetrahedralChirality(IAtom chiralAtom, IEnumerable<IAtom> ligandAtoms, TetrahedralStereo chirality)
         {
             this.chiralAtom = chiralAtom;

@@ -30,10 +30,10 @@ using NCDK.Common.Collections;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class AbstractVFStateTest
     {
@@ -249,12 +249,12 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(2, state.Count);
         }
 
-        public AbstractVFState Create(int g1Size, int g2Size)
+        internal AbstractVFState Create(int g1Size, int g2Size)
         {
             return Create(Arrays.CreateJagged<int>(g1Size, 0), Arrays.CreateJagged<int>(g2Size, 0));
         }
 
-        public AbstractVFState Create(int[][] g1, int[][] g2)
+        internal AbstractVFState Create(int[][] g1, int[][] g2)
         {
             return new VFState(g1, g2, true);
         }

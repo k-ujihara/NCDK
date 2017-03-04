@@ -33,25 +33,25 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * A reader for Symyx' Rgroup files (RGFiles).
-     * An RGfile describes a single molecular query with Rgroups.
-     * Each RGfile is a combination of Ctabs defining the root molecule and each
-     * member of each Rgroup in the query.
-     *
-     * <p>The RGFile format is described in the manual
-     * <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">
-     * "CTFile Formats"</a> , Chapter 5.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword Rgroup
-     * @cdk.keyword R group
-     * @cdk.keyword R-group
-     * @author Mark Rijnbeek
-     */
+    /// <summary>
+    /// A reader for Symyx' Rgroup files (RGFiles).
+    /// An RGfile describes a single molecular query with Rgroups.
+    /// Each RGfile is a combination of Ctabs defining the root molecule and each
+    /// member of each Rgroup in the query.
+    ///
+    /// <para>The RGFile format is described in the manual
+    /// <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">
+    /// "CTFile Formats"</a> , Chapter 5.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @cdk.keyword Rgroup
+    // @cdk.keyword R group
+    // @cdk.keyword R-group
+    // @author Mark Rijnbeek
+    /// </summary>
     public class RGroupQueryReader : DefaultChemObjectReader
     {
         /// <summary>
@@ -66,36 +66,36 @@ namespace NCDK.IO
 
         TextReader input = null;
 
-        /**
-         * Default constructor, input not set.
-         */
+        /// <summary>
+        /// Default constructor, input not set.
+        /// </summary>
         public RGroupQueryReader()
             : this(new StringReader(""))
         { }
 
-        /**
-         * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
-         * from a given Stream.
-         * @param in The Stream to read from.
-         */
+        /// <summary>
+        /// Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
+        /// from a given Stream.
+        /// <param name="in">The Stream to read from.</param>
+        /// </summary>
         public RGroupQueryReader(Stream ins)
             : this(new StreamReader(ins))
         { }
 
-        /**
-         * Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
-         * from a given Reader.
-         * @param  in  The Reader to read from.
-         */
+        /// <summary>
+        /// Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
+        /// from a given Reader.
+        /// <param name="in">The Reader to read from.</param>
+        /// </summary>
         public RGroupQueryReader(TextReader ins)
         {
             input = ins;
         }
 
-        /**
-         * Sets the input Reader.
-         * @param input Reader object
-         */
+        /// <summary>
+        /// Sets the input Reader.
+        /// <param name="input">Reader object</param>
+        /// </summary>
         public override void SetReader(TextReader input)
         {
             this.input = (TextReader)input;
@@ -119,12 +119,12 @@ namespace NCDK.IO
             input.Close();
         }
 
-        /**
-         * Check input IChemObject and proceed to parse.
-         * Accepts/returns IChemObject of type RGroupQuery only.
-         * @return IChemObject read from file
-         * @param object class must be of type RGroupQuery
-         */
+        /// <summary>
+        /// Check input IChemObject and proceed to parse.
+        /// Accepts/returns IChemObject of type RGroupQuery only.
+        /// <returns>IChemObject read from file</returns>
+        /// <param name="object">class must be of type RGroupQuery</param>
+        /// </summary>
         public override T Read<T>(T obj)
         {
             return (T)Read((IChemObject)obj);
@@ -142,14 +142,14 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Parse the RGFile. Uses of {@link org.openscience.cdk.io.MDLV2000Reader}
-         * to parse individual $CTAB blocks.
-         *
-         * @param rGroupQuery empty
-         * @return populated query
-         * @
-         */
+        /// <summary>
+        /// Parse the RGFile. Uses of {@link org.openscience.cdk.io.MDLV2000Reader}
+        /// to parse individual $CTAB blocks.
+        ///
+        /// <param name="rGroupQuery">empty</param>
+        /// <returns>populated query</returns>
+        // @
+        /// </summary>
         private RGroupQuery ParseRGFile(RGroupQuery rGroupQuery)
         {
             IChemObjectBuilder defaultChemObjectBuilder = rGroupQuery.Builder;
@@ -158,12 +158,10 @@ namespace NCDK.IO
             /* Variable to capture the LOG Line(s) */
             IDictionary<int, RGroupLogic> logicDefinitions = new Dictionary<int, RGroupLogic>();
 
-            /*
-             * Variable to captures attachment order for Rgroups. Contains: - pseudo
-             * atom (Rgroup) - map with (integer,bond) meaning "bond" has attachment
-             * order "integer" (1,2,3) for the Rgroup The order is based on the atom
-             * block, unless there is an AAL line for the pseudo atom.
-             */
+            // Variable to captures attachment order for Rgroups. Contains: - pseudo
+            // atom (Rgroup) - map with (integer,bond) meaning "bond" has attachment
+            // order "integer" (1,2,3) for the Rgroup The order is based on the atom
+            // block, unless there is an AAL line for the pseudo atom.
             IDictionary<IAtom, IDictionary<int, IBond>> attachmentPoints = new Dictionary<IAtom, IDictionary<int, IBond>>();
 
             try
@@ -234,7 +232,7 @@ namespace NCDK.IO
                 //Atom attachment order: parse AAL lines first
                 using (var rootLinesReader = new StringReader(rootStr))
                 { 
-					while ((line = rootLinesReader.ReadLine()) != null)
+                    while ((line = rootLinesReader.ReadLine()) != null)
                     {
                         if (line.StartsWith("M  AAL"))
                         {
@@ -451,13 +449,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Checks that a given line starts as expected, according to RGFile format.
-         * @param line
-         * @param expect
-         * @param lineCount
-         * @
-         */
+        /// <summary>
+        /// Checks that a given line starts as expected, according to RGFile format.
+        /// <param name="line">/// @param expect</param>
+        /// <param name="lineCount">/// @</param>
+        /// </summary>
         private void CheckLineBeginsWith(string line, string expect, int lineCount)
         {
             if (line == null)

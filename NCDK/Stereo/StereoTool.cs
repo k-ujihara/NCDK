@@ -26,70 +26,70 @@ using NCDK.Numerics;
 
 namespace NCDK.Stereo
 {
-    /**
-     * Methods to determine or check the stereo class of a set of atoms.
-     *
-     * Some of these methods were adapted from Jmol's smiles search package.
-     *
-     * @author maclean
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Methods to determine or check the stereo class of a set of atoms.
+    ///
+    /// Some of these methods were adapted from Jmol's smiles search package.
+    ///
+    // @author maclean
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class StereoTool
     {
 
-        /**
-         * Currently unused, but intended for the StereoTool to indicate what it
-         * 'means' by an assignment of some atoms to a class.
-         *
-         */
+        /// <summary>
+        /// Currently unused, but intended for the StereoTool to indicate what it
+        /// 'means' by an assignment of some atoms to a class.
+        ///
+        /// </summary>
         public enum StereoClass
         {
             Tetrahedral, SQUARE_PLANAR, TRIGONAL_BIPYRAMIDAL, OCTAHEDRAL
         }
 
-        /**
-         * The handedness of a tetrahedron, in terms of the point-plane distance
-         * of three of the corners, compared to the fourth.
-         *
-         * PLUS indices a positive point-plane distance,
-         * MINUS is a negative point-plane distance.
-         */
+        /// <summary>
+        /// The handedness of a tetrahedron, in terms of the point-plane distance
+        /// of three of the corners, compared to the fourth.
+        ///
+        /// PLUS indices a positive point-plane distance,
+        /// MINUS is a negative point-plane distance.
+        /// </summary>
         public enum TetrahedralSign
         {
             PLUS, MINUS
         }
 
-        /**
-         * The shape that four atoms take in a plane.
-         */
+        /// <summary>
+        /// The shape that four atoms take in a plane.
+        /// </summary>
         public enum SquarePlanarShape
         {
             U_SHAPE, FOUR_SHAPE, Z_SHAPE
         }
 
-        /**
-         * The maximum angle in radians for two lines to be 'diaxial'.
-         * Where 0.95 is about 172 degrees.
-         */
+        /// <summary>
+        /// The maximum angle in radians for two lines to be 'diaxial'.
+        /// Where 0.95 is about 172 degrees.
+        /// </summary>
         public const double MAX_AXIS_ANGLE = 0.95;
 
-        /**
-         * The maximum tolerance for the normal calculated during colinearity.
-         */
+        /// <summary>
+        /// The maximum tolerance for the normal calculated during colinearity.
+        /// </summary>
         public const double MIN_COLINEAR_NORMAL = 0.05;
 
         public const double PLANE_TOLERANCE = 0.05;
 
-        /**
-         * Checks these four atoms for square planarity.
-         *
-         * @param atomA an atom in the plane
-         * @param atomB an atom in the plane
-         * @param atomC an atom in the plane
-         * @param atomD an atom in the plane
-         * @return true if all the atoms are in the same plane
-         */
+        /// <summary>
+        /// Checks these four atoms for square planarity.
+        ///
+        /// <param name="atomA">an atom in the plane</param>
+        /// <param name="atomB">an atom in the plane</param>
+        /// <param name="atomC">an atom in the plane</param>
+        /// <param name="atomD">an atom in the plane</param>
+        /// <returns>true if all the atoms are in the same plane</returns>
+        /// </summary>
         public static bool IsSquarePlanar(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD)
         {
             Vector3 pointA = atomA.Point3D.Value;
@@ -119,19 +119,19 @@ namespace NCDK.Stereo
             return StereoTool.AllCoplanar(normal, pointC, pointD);
         }
 
-        /**
-         * <p>Given four atoms (assumed to be in the same plane), returns the
-         * arrangement of those atoms in that plane.</p>
-         *
-         * <p>The 'shapes' returned represent arrangements that look a little like
-         * the characters 'U', '4', and 'Z'.</p>
-         *
-         * @param atomA an atom in the plane
-         * @param atomB an atom in the plane
-         * @param atomC an atom in the plane
-         * @param atomD an atom in the plane
-         * @return the shape (U/4/Z)
-         */
+        /// <summary>
+        /// <p>Given four atoms (assumed to be in the same plane), returns the
+        /// arrangement of those atoms in that plane.</p>
+        ///
+        /// <p>The 'shapes' returned represent arrangements that look a little like
+        /// the characters 'U', '4', and 'Z'.</p>
+        ///
+        /// <param name="atomA">an atom in the plane</param>
+        /// <param name="atomB">an atom in the plane</param>
+        /// <param name="atomC">an atom in the plane</param>
+        /// <param name="atomD">an atom in the plane</param>
+        /// <returns>the shape (U/4/Z)</returns>
+        /// </summary>
         public static SquarePlanarShape GetSquarePlanarShape(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD)
         {
             Vector3 pointA = atomA.Point3D.Value;
@@ -180,15 +180,15 @@ namespace NCDK.Stereo
             }
         }
 
-        /**
-         * Check that all the points in the list are coplanar (in the same plane)
-         * as the plane defined by the planeNormal and the pointInPlane.
-         *
-         * @param planeNormal the normal to the plane
-         * @param pointInPlane any point know to be in the plane
-         * @param points an array of points to test
-         * @return false if any of the points is not in the plane
-         */
+        /// <summary>
+        /// Check that all the points in the list are coplanar (in the same plane)
+        /// as the plane defined by the planeNormal and the pointInPlane.
+        ///
+        /// <param name="planeNormal">the normal to the plane</param>
+        /// <param name="pointInPlane">any point know to be in the plane</param>
+        /// <param name="points">an array of points to test</param>
+        /// <returns>false if any of the points is not in the plane</returns>
+        /// </summary>
         public static bool AllCoplanar(Vector3 planeNormal, Vector3 pointInPlane, params Vector3[] points)
         {
             foreach (var point in points)
@@ -206,18 +206,18 @@ namespace NCDK.Stereo
             return true;
         }
 
-        /**
-         * Checks these 7 atoms to see if they are at the points of an octahedron.
-         *
-         * @param atomA one of the axial atoms
-         * @param atomB the central atom
-         * @param atomC one of the equatorial atoms
-         * @param atomD one of the equatorial atoms
-         * @param atomE one of the equatorial atoms
-         * @param atomF one of the equatorial atoms
-         * @param atomG the other axial atom
-         * @return true if the geometry is octahedral
-         */
+        /// <summary>
+        /// Checks these 7 atoms to see if they are at the points of an octahedron.
+        ///
+        /// <param name="atomA">one of the axial atoms</param>
+        /// <param name="atomB">the central atom</param>
+        /// <param name="atomC">one of the equatorial atoms</param>
+        /// <param name="atomD">one of the equatorial atoms</param>
+        /// <param name="atomE">one of the equatorial atoms</param>
+        /// <param name="atomF">one of the equatorial atoms</param>
+        /// <param name="atomG">the other axial atom</param>
+        /// <returns>true if the geometry is octahedral</returns>
+        /// </summary>
         public static bool IsOctahedral(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, IAtom atomE, IAtom atomF,
                 IAtom atomG)
         {
@@ -244,17 +244,17 @@ namespace NCDK.Stereo
             return Vector3.Dot(normal, vectorAB) < 0;
         }
 
-        /**
-         * Checks these 6 atoms to see if they form a trigonal-bipyramidal shape.
-         *
-         * @param atomA one of the axial atoms
-         * @param atomB the central atom
-         * @param atomC one of the equatorial atoms
-         * @param atomD one of the equatorial atoms
-         * @param atomE one of the equatorial atoms
-         * @param atomF the other axial atom
-         * @return true if the geometry is trigonal-bipyramidal
-         */
+        /// <summary>
+        /// Checks these 6 atoms to see if they form a trigonal-bipyramidal shape.
+        ///
+        /// <param name="atomA">one of the axial atoms</param>
+        /// <param name="atomB">the central atom</param>
+        /// <param name="atomC">one of the equatorial atoms</param>
+        /// <param name="atomD">one of the equatorial atoms</param>
+        /// <param name="atomE">one of the equatorial atoms</param>
+        /// <param name="atomF">the other axial atom</param>
+        /// <returns>true if the geometry is trigonal-bipyramidal</returns>
+        /// </summary>
         public static bool IsTrigonalBipyramidal(IAtom atomA, IAtom atomB, IAtom atomC, IAtom atomD, IAtom atomE,
                 IAtom atomF)
         {
@@ -287,16 +287,16 @@ namespace NCDK.Stereo
             }
         }
 
-        /**
-         * Take four atoms, and return TetrahedralStereo.Clockwise or TetrahedralStereo.AntiClockwise.
-         * The first atom is the one pointing towards the observer.
-         *
-         * @param atom1 the atom pointing towards the observer
-         * @param atom2 the second atom (points away)
-         * @param atom3 the third atom (points away)
-         * @param atom4 the fourth atom (points away)
-         * @return clockwise or anticlockwise
-         */
+        /// <summary>
+        /// Take four atoms, and return TetrahedralStereo.Clockwise or TetrahedralStereo.AntiClockwise.
+        /// The first atom is the one pointing towards the observer.
+        ///
+        /// <param name="atom1">the atom pointing towards the observer</param>
+        /// <param name="atom2">the second atom (points away)</param>
+        /// <param name="atom3">the third atom (points away)</param>
+        /// <param name="atom4">the fourth atom (points away)</param>
+        /// <returns>clockwise or anticlockwise</returns>
+        /// </summary>
         public static TetrahedralStereo GetStereo(IAtom atom1, IAtom atom2, IAtom atom3, IAtom atom4)
         {
 
@@ -314,18 +314,18 @@ namespace NCDK.Stereo
             }
         }
 
-        /**
-         * Gets the tetrahedral handedness of four atoms - three of which form the
-         * 'base' of the tetrahedron, and the other the apex. Note that it assumes
-         * a right-handed coordinate system, and that the points {A,B,C} are in
-         * a counter-clockwise order in the plane they share.
-         *
-         * @param baseAtomA the first atom in the base of the tetrahedron
-         * @param baseAtomB the second atom in the base of the tetrahedron
-         * @param baseAtomC the third atom in the base of the tetrahedron
-         * @param apexAtom the atom in the point of the tetrahedron
-         * @return the sign of the tetrahedron
-         */
+        /// <summary>
+        /// Gets the tetrahedral handedness of four atoms - three of which form the
+        /// 'base' of the tetrahedron, and the other the apex. Note that it assumes
+        /// a right-handed coordinate system, and that the points {A,B,C} are in
+        /// a counter-clockwise order in the plane they share.
+        ///
+        /// <param name="baseAtomA">the first atom in the base of the tetrahedron</param>
+        /// <param name="baseAtomB">the second atom in the base of the tetrahedron</param>
+        /// <param name="baseAtomC">the third atom in the base of the tetrahedron</param>
+        /// <param name="apexAtom">the atom in the point of the tetrahedron</param>
+        /// <returns>the sign of the tetrahedron</returns>
+        /// </summary>
         public static TetrahedralSign GetHandedness(IAtom baseAtomA, IAtom baseAtomB, IAtom baseAtomC, IAtom apexAtom)
         {
             Vector3 pointA = baseAtomA.Point3D.Value;
@@ -361,16 +361,14 @@ namespace NCDK.Stereo
             }
         }
 
-        /**
-         * Checks the three supplied points to see if they fall on the same line.
-         * It does this by finding the normal to an arbitrary pair of lines between
-         * the points (in fact, A-B and A-C) and checking that its length is 0.
-         *
-         * @param ptA
-         * @param ptB
-         * @param ptC
-         * @return true if the tree points are on a straight line
-         */
+        /// <summary>
+        /// Checks the three supplied points to see if they fall on the same line.
+        /// It does this by finding the normal to an arbitrary pair of lines between
+        /// the points (in fact, A-B and A-C) and checking that its length is 0.
+        ///
+        /// <param name="ptA">/// @param ptB</param>
+        /// <param name="ptC">/// <returns>true if the tree points are on a straight line</param></returns>
+        /// </summary>
         public static bool IsColinear(Vector3 ptA, Vector3 ptB, Vector3 ptC)
         {
             Vector3 vectorAB = new Vector3();
@@ -387,15 +385,15 @@ namespace NCDK.Stereo
             return baCrossACLen < StereoTool.MIN_COLINEAR_NORMAL;
         }
 
-        /**
-         * Given a normalized normal for a plane, any point in that plane, and
-         * a point, will return the distance between the plane and that point.
-         *
-         * @param planeNormal the normalized plane normal
-         * @param pointInPlane an arbitrary point in that plane
-         * @param point the point to measure
-         * @return the signed distance to the plane
-         */
+        /// <summary>
+        /// Given a normalized normal for a plane, any point in that plane, and
+        /// a point, will return the distance between the plane and that point.
+        ///
+        /// <param name="planeNormal">the normalized plane normal</param>
+        /// <param name="pointInPlane">an arbitrary point in that plane</param>
+        /// <param name="point">the point to measure</param>
+        /// <returns>the signed distance to the plane</returns>
+        /// </summary>
         public static double SignedDistanceToPlane(Vector3 planeNormal, Vector3 pointInPlane, Vector3 point)
         {
             if (planeNormal == null) return double.NaN;
@@ -405,19 +403,19 @@ namespace NCDK.Stereo
             return Vector3.Dot(planeNormal, pointPointDiff);
         }
 
-        /**
-         * <p>Given three points (A, B, C), makes the vectors A-B and A-C, and makes
-         * the cross product of these two vectors; this has the effect of making a
-         * third vector at right angles to AB and AC.</p>
-         *
-         * <p>NOTE : the returned normal is normalized; that is, it has been
-         * divided by its length.</p>
-         *
-         * @param ptA the 'middle' point
-         * @param ptB one of the end points
-         * @param ptC one of the end points
-         * @return the vector at right angles to AB and AC
-         */
+        /// <summary>
+        /// <p>Given three points (A, B, C), makes the vectors A-B and A-C, and makes
+        /// the cross product of these two vectors; this has the effect of making a
+        /// third vector at right angles to AB and AC.</p>
+        ///
+        /// <p>NOTE : the returned normal is normalized; that is, it has been
+        /// divided by its length.</p>
+        ///
+        /// <param name="ptA">the 'middle' point</param>
+        /// <param name="ptB">one of the end points</param>
+        /// <param name="ptC">one of the end points</param>
+        /// <returns>the vector at right angles to AB and AC</returns>
+        /// </summary>
         public static Vector3 GetNormal(Vector3 ptA, Vector3 ptB, Vector3 ptC)
         {
             Vector3 vectorAB = new Vector3();

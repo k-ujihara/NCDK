@@ -23,12 +23,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * Unit testing for the {@link LabelContainer} class.
-     *
-     * @author     Syed Asad Rahman
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    /// Unit testing for the {@link LabelContainer} class.
+    ///
+    // @author     Syed Asad Rahman
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public class LabelContainerTest
     {
@@ -39,9 +39,9 @@ namespace NCDK.SMSD.Helper
             Assert.IsNotNull(LabelContainer.Instance);
         }
 
-        /**
-         * Test of addLabel method, of class LabelContainer.
-         */
+        /// <summary>
+        /// Test of addLabel method, of class LabelContainer.
+        /// </summary>
         [TestMethod()]
         public void TestAddLabel()
         {
@@ -53,9 +53,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expectedValue, instance.GetLabelID("R3"));
         }
 
-        /**
-         * Test of getLabelID method, of class LabelContainer.
-         */
+        /// <summary>
+        /// Test of getLabelID method, of class LabelContainer.
+        /// </summary>
         [TestMethod()]
         public void TestGetLabelID()
         {
@@ -66,9 +66,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expectedValue, instance.GetLabelID("R3"));
         }
 
-        /**
-         * Test of getLabel method, of class LabelContainer.
-         */
+        /// <summary>
+        /// Test of getLabel method, of class LabelContainer.
+        /// </summary>
         [TestMethod()]
         public void TestGetLabel()
         {
@@ -80,9 +80,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(label, result);
         }
 
-        /**
-         * Test of getSize method, of class LabelContainer.
-         */
+        /// <summary>
+        /// Test of getSize method, of class LabelContainer.
+        /// </summary>
         [TestMethod()]
         public void TestGetSize()
         {

@@ -51,7 +51,7 @@ namespace NCDK.Pharmacophore
         /// <param name="atom2">The second pharmacophore group</param>
         /// <param name="lower">The lower bound of the distance between the two groups</param>
         /// <param name="upper">The upper bound of the distance between the two groups</param>
-         // @see #PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)
+         /// <seealso cref="PharmacophoreQueryBond(PharmacophoreQueryAtom,PharmacophoreQueryAtom,double)"/>
         public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double lower, double upper)
             : base(atom1, atom2)
         {
@@ -73,7 +73,7 @@ namespace NCDK.Pharmacophore
         /// <param name="atom1">The first pharmacophore group</param>
         /// <param name="atom2">The second pharmacophore group</param>
         /// <param name="distance">The exact distance between the two groups</param>
-         // @see #PharmacophoreQueryBond(PharmacophoreQueryAtom, PharmacophoreQueryAtom, double, double)
+         /// <seealso cref="PharmacophoreQueryBond(PharmacophoreQueryAtom, PharmacophoreQueryAtom, double, double)"/>
         public PharmacophoreQueryBond(PharmacophoreQueryAtom atom1, PharmacophoreQueryAtom atom2, double distance)
             : base(atom1, atom2)
         {

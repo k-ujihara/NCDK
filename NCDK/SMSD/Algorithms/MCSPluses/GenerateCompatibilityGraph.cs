@@ -31,13 +31,13 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /**
-     * This class generates compatibility graph between query and target molecule.
-     * It also markes edges in the compatibility graph as c-edges or d-edges.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class generates compatibility graph between query and target molecule.
+    /// It also markes edges in the compatibility graph as c-edges or d-edges.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public sealed class GenerateCompatibilityGraph
     {
 
@@ -51,21 +51,19 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         private IAtomContainer target = null;
         private bool shouldMatchBonds = false;
 
-        /**
-        * Default constructor added
-        */
+        /// <summary>
+       /// Default constructor added
+       /// </summary>
         public GenerateCompatibilityGraph()
         {
 
         }
 
-        /**
-         * Generates a compatibility graph between two molecules
-         * @param source
-         * @param target
-         * @param shouldMatchBonds
-         * @throws java.io.IOException
-         */
+        /// <summary>
+        /// Generates a compatibility graph between two molecules
+        /// <param name="source">/// @param target</param>
+        /// <param name="shouldMatchBonds">/// @throws java.IOException</param>
+        /// </summary>
         public GenerateCompatibilityGraph(IAtomContainer source, IAtomContainer target, bool shouldMatchBonds)
         {
             IsMatchBond = shouldMatchBonds;
@@ -166,12 +164,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return basicAtoms;
         }
 
-        /**
-         * Generate Compatibility Graph Nodes
-         *
-         * @return
-         * @throws IOException
-         */
+        /// <summary>
+        /// Generate Compatibility Graph Nodes
+        ///
+        /// <returns>/// @throws IOException</returns>
+        /// </summary>
         internal int CompatibilityGraphNodes()
         {
 
@@ -208,12 +205,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return 0;
         }
 
-        /**
-         * Generate Compatibility Graph Nodes Bond Insensitive
-         *
-         * @return
-         * @throws IOException
-         */
+        /// <summary>
+        /// Generate Compatibility Graph Nodes Bond Insensitive
+        ///
+        /// <returns>/// @throws IOException</returns>
+        /// </summary>
         internal int CompatibilityGraph()
         {
             int compGraphNodesListSize = compGraphNodes.Count;
@@ -267,11 +263,10 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             }
         }
 
-        /**
-         * compGraphNodesCZero is used to build up of the edges of the compatibility graph
-         * @return
-         * @throws IOException
-         */
+        /// <summary>
+        /// compGraphNodesCZero is used to build up of the edges of the compatibility graph
+        /// <returns>/// @throws IOException</returns>
+        /// </summary>
         internal int CompatibilityGraphNodesIfCEdgeIsZero()
         {
 
@@ -307,13 +302,12 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             return countNodes;
         }
 
-        /**
-         * compatibilityGraphCEdgeZero is used to
-         * build up of the edges of the
-         * compatibility graph BIS
-         * @return
-         * @throws IOException
-         */
+        /// <summary>
+        /// compatibilityGraphCEdgeZero is used to
+        /// build up of the edges of the
+        /// compatibility graph BIS
+        /// <returns>/// @throws IOException</returns>
+        /// </summary>
         internal int CompatibilityGraphCEdgeZero()
         {
 

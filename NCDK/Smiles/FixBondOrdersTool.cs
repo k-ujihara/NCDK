@@ -34,34 +34,33 @@ using System.Diagnostics;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Class to Fix bond orders at present for Aromatic Rings only.
-     *
-     * Contains one public function: KekuliseAromaticRings(IAtomContainer molecule)
-     * <ul>
-     * <li>Analyses which rings are marked aromatic/SP2/Planar3
-     * <li>Splits rings into groups containing independent sets of single/fused rings
-     * <li>Loops over each ring group
-     * <li>Uses an adjacency matrix of bonds (rows) and atoms (columns) to represent
-     * each fused ring system
-     * <li>Scans the adjacency matrix for bonds for which there
-     * is no order choice (eg - both bonds to the NH of pyrrole must be single)
-     * <li>All choices made to match valency against bonds used (including implicit H atoms)
-     * <li>Solves other bonds as possible - dependent on previous choices - makes free
-     * (random) choices only where necessary and possible
-     * <li>Makes assumption that where there is a choice in bond order
-     * (not forced by previous choices) - either choice is consistent with correct solution
-     *
-     * <li>Requires molecule with all rings to be solved being marked aromatic
-     * (SP2/Planar3 atoms). All bonds to non-ring atoms need to be fully defined
-     * (including implicit H atoms)
-     * </ul>
-     *
-     * @author Kevin Lawson
-     * @author Lucy Entwistle
-     * @cdk.module smiles
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class to Fix bond orders at present for Aromatic Rings only.
+    ///
+    /// Contains one public function: KekuliseAromaticRings(IAtomContainer molecule)
+    /// <ul>
+    /// <li>Analyses which rings are marked aromatic/SP2/Planar3
+    /// <li>Splits rings into groups containing independent sets of single/fused rings
+    /// <li>Loops over each ring group
+    /// <li>Uses an adjacency matrix of bonds (rows) and atoms (columns) to represent
+    /// each fused ring system
+    /// <li>Scans the adjacency matrix for bonds for which there
+    /// is no order choice (eg - both bonds to the NH of pyrrole must be single)
+    /// <li>All choices made to match valency against bonds used (including implicit H atoms)
+    /// <li>Solves other bonds as possible - dependent on previous choices - makes free
+    /// (random) choices only where necessary and possible
+    /// <li>Makes assumption that where there is a choice in bond order
+    /// (not forced by previous choices) - either choice is consistent with correct solution
+    ///
+    /// <li>Requires molecule with all rings to be solved being marked aromatic
+    /// (SP2/Planar3 atoms). All bonds to non-ring atoms need to be fully defined
+    /// (including implicit H atoms)
+    /// </ul>
+    /// </summary>
+    // @author Kevin Lawson
+    // @author Lucy Entwistle
+    // @cdk.module smiles
+    // @cdk.githash
     public class FixBondOrdersTool
     {
         /// <summary>
@@ -143,17 +142,17 @@ namespace NCDK.SGroups
             }
         }
 
-        /**
-         * Constructor for the FixBondOrdersTool object.
-         */
+        /// <summary>
+        /// Constructor for the FixBondOrdersTool object.
+        /// </summary>
         public FixBondOrdersTool() { }
 
-        /**
-         * kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
-         * @param molecule The <see cref="IAtomContainer"/> to kekulise
-         * @return The <see cref="IAtomContainer"/> with kekule structure
-         * @
-         */
+        /// <summary>
+        /// kekuliseAromaticRings - function to add double/single bond order information for molecules having rings containing all atoms marked SP2 or Planar3 hybridisation.
+        /// <param name="molecule">The <see cref="IAtomContainer"/> to kekulise</param>
+        /// <returns>The <see cref="IAtomContainer"/> with kekule structure</returns>
+        // @
+        /// </summary>
         public IAtomContainer KekuliseAromaticRings(IAtomContainer molecule)
         {
             IAtomContainer mNew = null;
@@ -265,13 +264,13 @@ namespace NCDK.SGroups
             return mNew;
         }
 
-        /**
-         * Removes rings which do not have all sp2/planar3 aromatic atoms.
-         * and also gets rid of rings that have more than 8 atoms in them.
-         *
-         * @param m The <see cref="IAtomContainer"/> from which we want to remove rings
-         * @return The set of reduced rings
-         */
+        /// <summary>
+        /// Removes rings which do not have all sp2/planar3 aromatic atoms.
+        /// and also gets rid of rings that have more than 8 atoms in them.
+        ///
+        /// <param name="m">The <see cref="IAtomContainer"/> from which we want to remove rings</param>
+        /// <returns>The set of reduced rings</returns>
+        /// </summary>
         private IRingSet RemoveExtraRings(IAtomContainer m)
         {
 
@@ -304,13 +303,13 @@ namespace NCDK.SGroups
             return rs;
         }
 
-        /**
-         * Stores an {@link IRingSet} corresponding to a molecule using the bond numbers.
-         *
-         * @param mol The IAtomContainer for which to store the IRingSet.
-         * @param ringSet The IRingSet to store
-         * @return The List of int arrays for the bond numbers of each ringSet
-         */
+        /// <summary>
+        /// Stores an <see cref="IRingSet"/> corresponding to a molecule using the bond numbers.
+        ///
+        /// <param name="mol">The IAtomContainer for which to store the IRingSet.</param>
+        /// <param name="ringSet">The IRingSet to store</param>
+        /// <returns>The List of int arrays for the bond numbers of each ringSet</returns>
+        /// </summary>
 
         private IList<int[]> GetRingSystem(IAtomContainer mol, IRingSet ringSet)
         {
@@ -329,12 +328,11 @@ namespace NCDK.SGroups
             return bondsArray;
         }
 
-        /**
-         * Assigns a set of rings to groups each sharing a bond.
-         *
-         * @param rBondsArray
-         * @return A List of Lists each containing the ring indices of a set of fused rings
-         */
+        /// <summary>
+        /// Assigns a set of rings to groups each sharing a bond.
+        ///
+        /// <param name="rBondsArray">/// <returns>A List of Lists each containing the ring indices of a set of fused rings</param></returns>
+        /// </summary>
         private IList<IList<int>> AssignRingGroups(IList<int[]> rBondsArray)
         {
             IList<IList<int>> ringGroups;
@@ -417,12 +415,11 @@ namespace NCDK.SGroups
             return false;
         }
 
-        /**
-         * Sets all bonds in an {@link IRingSet} to single order.
-         * @param ringGroup
-         * @param ringSet
-         * @return True for success
-         */
+        /// <summary>
+        /// Sets all bonds in an <see cref="IRingSet"/> to single order.
+        /// <param name="ringGroup">/// @param ringSet</param>
+        /// <returns>True for success</returns>
+        /// </summary>
         private bool SetAllRingBondsSingleOrder(IList<int> ringGroup, IRingSet ringSet)
         {
             foreach (var i in ringGroup)
@@ -435,14 +432,13 @@ namespace NCDK.SGroups
             return true;
         }
 
-        /**
-         * Gets the List of atom nos corresponding to a particular set of fused rings.
-         *
-         * @param <see cref="IAtomContainer"/> molecule
-         * @param ringGroup
-         * @param {@link IRingSet} ringSet
-         * @return List of atom numbers for each set
-         */
+        /// <summary>
+        /// Gets the List of atom nos corresponding to a particular set of fused rings.
+        ///
+        // @param <see cref="IAtomContainer"/> molecule
+        /// <param name="ringGroup">/// @param <see cref="IRingSet"/> ringSet</param>
+        /// <returns>List of atom numbers for each set</returns>
+        /// </summary>
         private IList<int> GetAtomNosForRingGroup(IAtomContainer molecule, IList<int> ringGroup, IRingSet ringSet)
         {
             List<int> atc = new List<int>();
@@ -466,14 +462,13 @@ namespace NCDK.SGroups
             return atc;
         }
 
-        /**
-         * Gets the List of bond nos corresponding to a particular set of fused rings.
-         *
-         * @param <see cref="IAtomContainer"/> molecule
-         * @param ringGroup
-         * @param {@link IRingSet} ringSet
-         * @return List of bond numbers for each set
-         */
+        /// <summary>
+        /// Gets the List of bond nos corresponding to a particular set of fused rings.
+        ///
+        // @param <see cref="IAtomContainer"/> molecule
+        /// <param name="ringGroup">/// @param <see cref="IRingSet"/> ringSet</param>
+        /// <returns>List of bond numbers for each set</returns>
+        /// </summary>
         private IList<int> GetBondNosForRingGroup(IAtomContainer molecule, IList<int> ringGroup, IRingSet ringSet)
         {
             List<int> btc = new List<int>();
@@ -497,13 +492,12 @@ namespace NCDK.SGroups
             return btc;
         }
 
-        /**
-         * Gets List of atom number pairs for each bond in a list of bonds for the molecule.
-         *
-         * @param <see cref="IAtomContainer"/> molecule
-         * @param bondsToCheck
-         * @return List of atom pairs
-         */
+        /// <summary>
+        /// Gets List of atom number pairs for each bond in a list of bonds for the molecule.
+        ///
+        // @param <see cref="IAtomContainer"/> molecule
+        /// <param name="bondsToCheck">/// <returns>List of atom pairs</param></returns>
+        /// </summary>
         private IList<int[]> GetAtomNoPairsForRingGroup(IAtomContainer molecule, IList<int> bondsToCheck)
         {
             List<int[]> aptc = new List<int[]>();
@@ -517,14 +511,13 @@ namespace NCDK.SGroups
             return aptc;
         }
 
-        /**
-         * Function to set up an array of integers corresponding to indicate how many free valencies need fulfilling for each atom through ring bonds.
-         *
-         * @param <see cref="IAtomContainer"/> molecule
-         * @param atomsToCheck
-         * @param M
-         * @return The List of free valencies available for extra ring bonding
-         */
+        /// <summary>
+        /// Function to set up an array of integers corresponding to indicate how many free valencies need fulfilling for each atom through ring bonds.
+        ///
+        // @param <see cref="IAtomContainer"/> molecule
+        /// <param name="atomsToCheck">/// @param M</param>
+        /// <returns>The List of free valencies available for extra ring bonding</returns>
+        /// </summary>
         private IList<int> GetFreeValenciesForRingGroup(IAtomContainer molecule, IList<int> atomsToCheck, Matrix M,
                 IRingSet rs)
         {
@@ -576,31 +569,28 @@ namespace NCDK.SGroups
             return fvtc;
         }
 
-        /**
-         * Function to solve the adjacency Matrix.
-         * Returns true/false on success/failure.
-         * Passed a reference to an array of bond orders to be filled in.
-         * Passed a setup Matrix M indicating the atoms that are part of each bond.
-         * The system v = Mb represents the set of equations: valence[atomA] = SUM
-         * OF ( M[A][B]*bondOrder[bondB] ) where M[A][B] = 1 if atom A is part of
-         * bond B, and M[A][B] = 0 otherwise. Use the system to solve bondOrder. For
-         * example if atom 1 has free valence 2, and is part of bonds 5 and 6, we
-         * know that B5 = 1, B6 = 1 if then also, atom 2 has free valence 3, and is
-         * part of bond 5 and bond 9, we know, from the solved equation above that
-         * B9 = 2. And so forth.
-         *
-         * If nothing can be deduced from previously solved equations, the code
-         * assigns a 1 to the first unknown bond it finds in the bondOrder array and
-         * continues.
-         *
-         * @param M
-         * @param atomNos
-         * @param bondNos
-         * @param freeValencies
-         * @param atomNoPairs
-         * @param bondOrder
-         * @return True or false for success or failure
-         */
+        /// <summary>
+        /// Function to solve the adjacency Matrix.
+        /// Returns true/false on success/failure.
+        /// Passed a reference to an array of bond orders to be filled in.
+        /// Passed a setup Matrix M indicating the atoms that are part of each bond.
+        /// The system v = Mb represents the set of equations: valence[atomA] = SUM
+        /// OF ( M[A][B]*bondOrder[bondB] ) where M[A][B] = 1 if atom A is part of
+        /// bond B, and M[A][B] = 0 otherwise. Use the system to solve bondOrder. For
+        /// example if atom 1 has free valence 2, and is part of bonds 5 and 6, we
+        /// know that B5 = 1, B6 = 1 if then also, atom 2 has free valence 3, and is
+        /// part of bond 5 and bond 9, we know, from the solved equation above that
+        /// B9 = 2. And so forth.
+        ///
+        /// If nothing can be deduced from previously solved equations, the code
+        /// assigns a 1 to the first unknown bond it finds in the bondOrder array and
+        /// continues.
+        ///
+        /// <param name="M">/// @param atomNos</param>
+        /// <param name="bondNos">/// @param freeValencies</param>
+        /// <param name="atomNoPairs">/// @param bondOrder</param>
+        /// <returns>True or false for success or failure</returns>
+        /// </summary>
         private bool SolveMatrix(Matrix M, IList<int> atomNos, IList<int> bondNos, IList<int> freeValencies,
                 IList<int[]> atomNoPairs, IList<int> bondOrder)
         {
@@ -622,7 +612,7 @@ namespace NCDK.SGroups
                         if (M[j, k] == 1)
                         {
                             bondOrder[k] = 1;
-							solved.Add(k);
+                            solved.Add(k);
                         }
                     }
                     solvedRow.Add(j);
@@ -641,12 +631,10 @@ namespace NCDK.SGroups
                 }
             }
 
-            /*
-             * thisRun indicates whether any bonds have been solved on this run
-             * through the Matrix. Loop continues until all bonds have been solved
-             * or there is a run where no bonds were solved, showing that the
-             * structure is unsolvable.
-             */
+            // thisRun indicates whether any bonds have been solved on this run
+            // through the Matrix. Loop continues until all bonds have been solved
+            // or there is a run where no bonds were solved, showing that the
+            // structure is unsolvable.
             int thisRun = 1;
             while (solvedRow.Count != M.GetRows() && thisRun == 1)
             {
@@ -693,7 +681,7 @@ namespace NCDK.SGroups
                                             if (M[j, k] == 1 && solved.Contains(k) == false)
                                             {
                                                 bondOrder[k] = 1;
-												solved.Add(k);
+                                                solved.Add(k);
                                             }
                                         }
                                         solvedRow.Add(j);
@@ -740,9 +728,9 @@ namespace NCDK.SGroups
                         }
                         if (bondOrder[j] == 0 && badChoice == 0)
                         {
-                            //                            javax.swing.JOptionPane.showMessageDialog(null, j);
+                            //                            javax.swing.JOptionPane.ShowMessageDialog(null, j);
                             bondOrder[j] = 1;
-							ring = 0;
+                            ring = 0;
                             thisRun = 1;
                             solved.Add(j);
                         }

@@ -33,17 +33,17 @@ using System.Text;
 
 namespace NCDK.Smiles
 {
-    /**
-	 * This is used to hold the invariance numbers for the canonical labeling of
-	 * <see cref="IAtomContainer"/>s.
-	 *
-	 * @cdk.module standard
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// This is used to hold the invariance numbers for the canonical labeling of
+    /// <see cref="IAtomContainer"/>s.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class InvPair
     {
-        /** The description used to set the invariance numbers in the atom's property*/
+        /// <summary> The description used to set the invariance numbers in the atom's property*/
         public const string INVARIANCE_PAIR = "InvariancePair";
         public const string CANONICAL_LABEL = "CanonicalLabel";
 

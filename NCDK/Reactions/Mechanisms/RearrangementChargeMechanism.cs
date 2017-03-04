@@ -48,9 +48,9 @@ namespace NCDK.Reactions.Mechanisms
          *                    The first atom is the atom which must contain the charge to be moved, the second
          *                    is the atom which is in the middle and the third is the atom which acquires the new charge
          * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
-         * 					  The first bond is the bond to increase the order and the second is the bond
-         * 				      to decrease the order
-         * 					  It is the bond which is moved
+         *                       The first bond is the bond to increase the order and the second is the bond
+         *                       to decrease the order
+         *                       It is the bond which is moved
          * @return            The Reaction mechanism
          *
          */

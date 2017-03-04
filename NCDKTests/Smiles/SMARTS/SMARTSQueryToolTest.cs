@@ -29,20 +29,20 @@ using System.Linq;
 
 namespace NCDK.Smiles.SMARTS
 {
-    /**
-     * JUnit test routines for the SMARTS substructure search.
-     *
-     * @author Rajarshi Guha
-     * @cdk.module test-smarts
-     * @cdk.require ant1.6
-     */
+    /// <summary>
+    /// JUnit test routines for the SMARTS substructure search.
+    ///
+    // @author Rajarshi Guha
+    // @cdk.module test-smarts
+    // @cdk.require ant1.6
+    /// </summary>
     public class SMARTSQueryToolTest : CDKTestCase
     {
 
-        /**
-         * @throws CDKException
-         * @cdk.bug 2788357
-         */
+        /// <summary>
+        // @throws CDKException
+        // @cdk.bug 2788357
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
         public void TestLexicalError()
@@ -163,14 +163,14 @@ namespace NCDK.Smiles.SMARTS
             Assert.AreEqual(1, umatch.Count);
         }
 
-        /**
-         * Note that we don't test the generated SMILES against the
-         * molecule obtained from the factory since the factory derived
-         * molecule does not have an explicit hydrogen, which it really should
-         * have.
-         *
-         * @cdk.bug 1985811
-         */
+        /// <summary>
+        /// Note that we don't test the generated SMILES against the
+        /// molecule obtained from the factory since the factory derived
+        /// molecule does not have an explicit hydrogen, which it really should
+        /// have.
+        ///
+        // @cdk.bug 1985811
+        /// </summary>
         [TestMethod()]
         public void TestIndoleAgainstItself()
         {
@@ -188,9 +188,9 @@ namespace NCDK.Smiles.SMARTS
             Assert.IsTrue(querytool.Matches(indole));
         }
 
-        /**
-         * @cdk.bug 2149621
-         */
+        /// <summary>
+        // @cdk.bug 2149621
+        /// </summary>
         [TestMethod()]
         public void TestMethane()
         {

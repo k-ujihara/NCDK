@@ -28,38 +28,35 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /**
-     * Defines a structure which indicates whether a vertex (int id) is suppressed
-     * when computing an atomic/molecular hash code.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
-#if TEST
-    public
-#endif
-        abstract class Suppressed
+    /// <summary>
+    /// Defines a structure which indicates whether a vertex (int id) is suppressed
+    /// when computing an atomic/molecular hash code.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
+    internal abstract class Suppressed
     {
-        /**
-         * Is the vertex 'i' contained in the vertices which should be suppressed.
-         *
-         * @param i vertex index
-         * @return the vertex is supressed
-         */
+        /// <summary>
+        /// Is the vertex 'i' contained in the vertices which should be suppressed.
+        ///
+        /// <param name="i">vertex index</param>
+        /// <returns>the vertex is supressed</returns>
+        /// </summary>
         public abstract bool Contains(int i);
 
-        /**
-         * The total number of suppressed vertices.
-         *
-         * @return number of suppressed vertices 0 .. |V|
-         */
+        /// <summary>
+        /// The total number of suppressed vertices.
+        ///
+        /// <returns>number of suppressed vertices 0 .. |V|</returns>
+        /// </summary>
         public abstract int Count { get; }
 
-        /**
-         * Access which vertices are suppressed as a fixed-size array.
-         *
-         * @return the suppressed vertices
-         */
+        /// <summary>
+        /// Access which vertices are suppressed as a fixed-size array.
+        ///
+        /// <returns>the suppressed vertices</returns>
+        /// </summary>
         public abstract int[] ToArray();
 
         /// <summary>Default 'empty' implementation always returns false.</summary>
@@ -70,22 +67,22 @@ namespace NCDK.Hash
             public override int[] ToArray() => new int[0];
         }
 
-        /**
-         * Implementation where the suppressed vertices are indicated with a
-         * BitArray.
-         */
+        /// <summary>
+        /// Implementation where the suppressed vertices are indicated with a
+        /// BitArray.
+        /// </summary>
         private sealed class SuppressedBitSet : Suppressed
         {
 
             /// <summary>Bits indicate suppressed vertices.</summary>
             private readonly BitArray set;
 
-            /**
-             * Create a new suppressed instance with the specified vertices
-             * suppressed.
-             *
-             * @param set bits indicates suppressed
-             */
+            /// <summary>
+            /// Create a new suppressed instance with the specified vertices
+            /// suppressed.
+            ///
+            /// <param name="set">bits indicates suppressed</param>
+            /// </summary>
             internal SuppressedBitSet(BitArray set)
             {
                 this.set = set;
@@ -108,19 +105,19 @@ namespace NCDK.Hash
         /// <summary>default implementation.</summary>
         private static readonly Empty empty = new Empty();
 
-        /**
-         * Access a suppressed implementation where no vertices are suppressed.
-         *
-         * @return implementation where all vertices are unsuppressed
-         */
+        /// <summary>
+        /// Access a suppressed implementation where no vertices are suppressed.
+        ///
+        /// <returns>implementation where all vertices are unsuppressed</returns>
+        /// </summary>
         public static Suppressed None = empty;
 
-        /**
-         * Create a suppressed implementation for the provided BitArray.
-         *
-         * @param set bits indicated suppressed vertices
-         * @return implementation using the BitArray to lookup suppressed vertices
-         */
+        /// <summary>
+        /// Create a suppressed implementation for the provided BitArray.
+        ///
+        /// <param name="set">bits indicated suppressed vertices</param>
+        /// <returns>implementation using the BitArray to lookup suppressed vertices</returns>
+        /// </summary>
         public static Suppressed FromBitSet(BitArray set)
         {
             return new SuppressedBitSet(set);

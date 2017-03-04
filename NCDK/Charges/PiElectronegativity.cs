@@ -21,50 +21,42 @@ using System.Linq;
 
 namespace NCDK.Charges
 {
-    /**
+    /// <summary>
     /// Calculation of the electronegativity of orbitals of a molecule
     /// by the method Gasteiger based on electronegativity is given by X = a + bq + c(q*q).
-     *
-    /// @author       Miguel Rojas Cherto
-    /// @cdk.created  2008-104-31
-    /// @cdk.module   charges
-    /// @cdk.keyword  electronegativity
-    /// @cdk.githash
-     */
+    /// </summary>
+    // @author       Miguel Rojas Cherto
+    // @cdk.created  2008-104-31
+    // @cdk.module   charges
+    // @cdk.keyword  electronegativity
+    // @cdk.githash
     public class PiElectronegativity
     {
-
         private GasteigerMarsiliPartialCharges peoe = null;
         private GasteigerPEPEPartialCharges pepe = null;
 
-        /// <summary>
-        /// The maximum number of Iterations.
-        /// </summary>
+        /// <summary>The maximum number of Iterations.</summary>
         public int MaxIterations { get; set; } = 6;
 
-        /**Number of maximum resonance structures*/
-        /// <summary>
-        /// The maximum number of resonance structures.
-        /// </summary>
+        /// <summary>Number of maximum resonance structures</summary>
         public int MaxResonanceStructures { get; set; } = 50;
 
         private IAtomContainer molPi;
         private IAtomContainer acOldP;
         private double[][] gasteigerFactors;
 
-        /**
+        /// <summary>
         /// Constructor for the PiElectronegativity object.
-         */
+        /// </summary>
         public PiElectronegativity()
             : this(6, 50)
         { }
 
-        /**
+        /// <summary>
         /// Constructor for the Electronegativity object.
-         *
-        /// @param maxIterations         The maximal number of Iteration
-        /// @param maxResonStruc         The maximal number of Resonance Structures
-         */
+        /// </summary>
+        /// <param name="maxIterations">The maximal number of Iteration</param>
+        /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
         public PiElectronegativity(int maxIterations, int maxResonStruc)
         {
             peoe = new GasteigerMarsiliPartialCharges();
@@ -73,30 +65,25 @@ namespace NCDK.Charges
             MaxResonanceStructures = maxResonStruc;
         }
 
-        /**
+        /// <summary>
         /// calculate the electronegativity of orbitals pi.
-         *
-        /// @param ac                    IAtomContainer
-        /// @param atom                  atom for which effective atom electronegativity should be calculated
-         *
-        /// @return piElectronegativity
-         */
+        /// </summary>
+        /// <param name="ac">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
+        /// <returns>piElectronegativity</returns>
         public double CalculatePiElectronegativity(IAtomContainer ac, IAtom atom)
         {
-
             return CalculatePiElectronegativity(ac, atom, MaxIterations, MaxResonanceStructures);
         }
 
-        /**
+        /// <summary>
         /// calculate the electronegativity of orbitals pi.
-         *
-        /// @param ac                    IAtomContainer
-        /// @param atom                  atom for which effective atom electronegativity should be calculated
-        /// @param maxIterations         The maximal number of Iteration
-        /// @param maxResonStruc         The maximal number of Resonance Structures
-         *
-        /// @return piElectronegativity
-         */
+        /// </summary>
+        /// <param name="ac">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
+        /// <param name="maxIterations">The maximal number of Iteration</param>
+        /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
+        /// <returns>piElectronegativity</returns>
         public double CalculatePiElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc)
         {
             MaxIterations = maxIterations;

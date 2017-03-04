@@ -24,27 +24,27 @@
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Bridging class between the SMARTS matcher and the parser/query tool. The
-     * class are currently split across different packages. This classes temporary
-     * functionality is to expose package private functionality through a single
-     * location.
-     *
-     * @author John May
-     * @cdk.module smarts
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Bridging class between the SMARTS matcher and the parser/query tool. The
+    /// class are currently split across different packages. This classes temporary
+    /// functionality is to expose package private functionality through a single
+    /// location.
+    ///
+    // @author John May
+    // @cdk.module smarts
+    // @cdk.githash
+    /// </summary>
     public sealed class SmartsMatchers
     {
 
-        /**
-         * Do not use - temporary method until the SMARTS packages are cleaned up.
-         *
-         * Prepares a target molecule for matching with SMARTS.
-         *
-         * @param container the container to initialise
-         * @param ringQuery whether the smarts will check ring size queries
-         */
+        /// <summary>
+        /// Do not use - temporary method until the SMARTS packages are cleaned up.
+        ///
+        /// Prepares a target molecule for matching with SMARTS.
+        ///
+        /// <param name="container">the container to initialise</param>
+        /// <param name="ringQuery">whether the smarts will check ring size queries</param>
+        /// </summary>
         public static void Prepare(IAtomContainer container, bool ringQuery)
         {
             if (ringQuery)

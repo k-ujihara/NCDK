@@ -29,63 +29,61 @@ using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Generates a Pubchem fingerprint for a molecule.
-    // <p/>
-    // These fingerprints are described
-    // <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">
-    // here</a> and are of the structural key type, of length 881. See
-    // {@link org.openscience.cdk.fingerprint.Fingerprinter} for a
-    // more detailed description of fingerprints in general. This implementation is
-    // based on the domain code made available by the NCGC
-    // <a href="http://www.ncgc.nih.gov/pub/openhts/code/NCGC_PubChemFP.java.txt">
-    // here</a>
-    // <p/>
-    // <p/>
-    // A fingerprint is generated for an AtomContainer with this code: <pre>
-    //   Molecule molecule = new Molecule();
-    //   PubchemFingerprinter fprinter = new PubchemFingerprinter();
-    //   BitArray fingerprint = fprinter.GetBitFingerprint(molecule);
-    //   fprinter.GetSize(); // returns 881
-    //   fingerprint.Length; // returns the highest set bit
-    // </pre>
-    // Note that the fingerprinter assumes that you have detected aromaticity and
-    // atom types before evaluating the fingerprint. Also the fingerprinter
-    // expects that explicit H's are present
-    // <p/>
-    // Note that this fingerprint is not particularly fast, as it will perform
-    // ring detection using {@link org.openscience.cdk.ringsearch.AllRingsFinder}
-    // as well as multiple SMARTS queries.
-    // <p/>
-    // Some SMARTS patterns have been modified from the original code, since they
-    // were based on explicit H matching. As a result, we replace the explicit H's
-    // with a query of the #N&!H0 where N is the atomic number. Thus bit 344 was
-    // originally <code>[#6](~[#6])([H])</code> but is written here as
-    // <code>[#6&!H0]~[#6]</code>. In some cases, where the H count can be reduced
-    // to single possibility we directly use that H count. An example is bit 35,
-    // which was <code>[#6](~[#6])(~[#6])(~[#6])([H])</code> and is rewritten as
-    // <code>[#6H1](~[#6])(~[#6])(~[#6]</code>.
-    // <p/>
-     *
-    // <b>Warning - this class is not thread-safe and uses stores intermediate steps
-    // internally. Please use a seperate instance of the class for each thread.</b>
-     *
+    /// <summary>
+    /// Generates a Pubchem fingerprint for a molecule.
+    /// These fingerprints are described
+    /// <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt"> here</a> and are of the structural key type, of length 881. 
+    /// See <see cref="Fingerprinter"/> for a more detailed description of fingerprints in general. This implementation is
+    /// based on the domain code made available by the NCGC
+    /// <a href="http://www.ncgc.nih.gov/pub/openhts/code/NCGC_PubChemFP.java.txt">here</a>.
+    /// </summary>
+    /// <example>
+    /// A fingerprint is generated for an AtomContainer with this code: 
+    /// <code>
+    ///   Molecule molecule = new Molecule();
+    ///   PubchemFingerprinter fprinter = new PubchemFingerprinter();
+    ///   BitArray fingerprint = fprinter.GetBitFingerprint(molecule);
+    ///   fprinter.GetSize(); // returns 881
+    ///   fingerprint.Length; // returns the highest set bit
+    /// </code>
+    /// </example>
+    /// <remarks>
+    /// <para>
+    /// Note that the fingerprinter assumes that you have detected aromaticity and
+    /// atom types before evaluating the fingerprint. Also the fingerprinter
+    /// expects that explicit H's are present
+    /// </para>
+    /// <para>
+    /// Note that this fingerprint is not particularly fast, as it will perform
+    /// ring detection using <see cref="RingSearches.AllRingsFinder"/>
+    /// as well as multiple SMARTS queries.
+    /// </para>
+    /// <para>
+    /// Some SMARTS patterns have been modified from the original code, since they
+    /// were based on explicit H matching. As a result, we replace the explicit H's
+    /// with a query of the #N&amp;!H0 where N is the atomic number. Thus bit 344 was
+    /// originally <c>[#6](~[#6])([H])</c> but is written here as
+    /// <c>[#6&amp;!H0]~[#6]</c>. In some cases, where the H count can be reduced
+    /// to single possibility we directly use that H count. An example is bit 35,
+    /// which was <c>[#6](~[#6])(~[#6])(~[#6])([H])</c> and is rewritten as
+    /// <c>[#6H1](~[#6])(~[#6])(~[#6]</c>.
+    /// </para>
+    /// <para>
+    /// <b>Warning - this class is not thread-safe and uses stores intermediate steps
+    /// internally. Please use a seperate instance of the class for each thread.</b>
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
     // @cdk.threadnonsafe
-     */
-#if TEST
-    public
-#endif
-    class PubchemFingerprinter : IFingerprinter
+    internal class PubchemFingerprinter : IFingerprinter
     {
-
-        /**
-        // Number of bits in this fingerprint.
-         */
+        /// <summary>
+        /// Number of bits in this fingerprint.
+        /// </summary>
         const int FP_SIZE = 881;
 
         private byte[] m_bits;
@@ -98,19 +96,16 @@ namespace NCDK.Fingerprint
             m_bits = new byte[(FP_SIZE + 7) >> 3];
         }
 
-        /**
-        // Calculate 881 bit Pubchem fingerprint for a molecule.
-        // <p/>
-        // See
-        // <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
-        // for a description of each bit position.
-         *
-        // @param atomContainer the molecule to consider
-        // @return the fingerprint
-        // @ if there is an error during substructure
-        // searching or atom typing
-        // @see #GetFingerprintAsBytes()
-         */
+        /// <summary>
+        /// Calculate 881 bit Pubchem fingerprint for a molecule.
+        /// </summary>
+        /// <remarks>
+        /// See <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.txt">here</a>
+        /// for a description of each bit position.</remarks>
+        /// <param name="atomContainer">the molecule to consider</param>
+        /// <returns>the fingerprint</returns>
+        /// <exception cref="CDKException">if there is an error during substructure searching or atom typing</exception>
+        /// <see cref="GetFingerprintAsBytes"/>
         public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer)
         {
             GenerateFp(atomContainer);
@@ -358,26 +353,24 @@ namespace NCDK.Fingerprint
             return (m_bits[bit >> 3] & (byte)MASK[bit % 8]) != 0;
         }
 
-        /**
-        // Returns the fingerprint generated for a molecule as a byte[].
-        // <p/>
-        // Note that this should be immediately called after calling
-        // {@link #GetBitFingerprint(IAtomContainer)}
-         *
-        // @return The fingerprint as a byte array
-        // @see #GetBitFingerprint(IAtomContainer)
-         */
+        /// <summary>
+        /// Returns the fingerprint generated for a molecule as a byte[].
+        /// </summary>
+        /// <remarks>
+        /// Note that this should be immediately called after calling <see cref="GetRawFingerprint(IAtomContainer)"/>.
+        /// </remarks>
+        /// <returns>The fingerprint as a byte array</returns>
+        /// <seealso cref="GetRawFingerprint(IAtomContainer)"/>
         public byte[] GetFingerprintAsBytes()
         {
             return m_bits;
         }
 
-        /**
-        // Returns a fingerprint from a Base64 encoded Pubchem fingerprint.
-         *
-        // @param enc The Base64 encoded fingerprint
-        // @return A BitArray corresponding to the input fingerprint
-         */
+        /// <summary>
+        /// Returns a fingerprint from a Base64 encoded Pubchem fingerprint.
+        /// </summary>
+        /// <param name="enc">The Base64 encoded fingerprint</param>
+        /// <returns>A BitArray corresponding to the input fingerprint</returns>
         public static BitArray Decode(string enc)
         {
             byte[] fp = Base64Decode(enc);
@@ -392,8 +385,8 @@ namespace NCDK.Fingerprint
                 throw new ArgumentException("Input is not a proper PubChem base64 encoded fingerprint");
             }
 
-            // note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
-            // isn't needed when decoding
+            /// note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
+            /// isn't needed when decoding
             PubchemFingerprinter pc = new PubchemFingerprinter(null);
             for (int i = 0; i < pc.m_bits.Length; ++i)
             {
@@ -408,7 +401,7 @@ namespace NCDK.Fingerprint
             return ret;
         }
 
-        // the first four bytes contains the length of the fingerprint
+        /// the first four bytes contains the length of the fingerprint
         private string Encode()
         {
             byte[] pack = new byte[4 + m_bits.Length];
@@ -426,7 +419,7 @@ namespace NCDK.Fingerprint
 
         private static string BASE64_LUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvwxyz0123456789+/=";
 
-        // based on NCBI C implementation
+        /// based on NCBI C implementation
         private static string Base64Encode(byte[] data)
         {
             char[] c64 = new char[data.Length * 4 / 3 + 5];
@@ -453,7 +446,7 @@ namespace NCDK.Fingerprint
             return new string(c64);
         }
 
-        // based on NCBI C implementation
+        /// based on NCBI C implementation
         private static byte[] Base64Decode(string data)
         {
             int len = data.Length;
@@ -530,10 +523,8 @@ namespace NCDK.Fingerprint
 
         static readonly int[] MASK = new int[] { 0x80, 0x40, 0x20, 0x10, 0x08, 0x04, 0x02, 0x01 };
 
-        /*
         // Section 1: Hierarchic Element Counts - These bs test for the presence or
         // count of individual chemical atoms represented by their atomic symbol.
-         */
         private static void CountElements(byte[] fp, IAtomContainer mol)
         {
             int b;
@@ -771,14 +762,12 @@ namespace NCDK.Fingerprint
             if (ce.GetCount("U") >= 1) fp[b >> 3] |= (byte)MASK[b % 8];
         }
 
-        /*
         // Section 2: Rings in a canonic ESSR ring set-These bs test for the
         // presence or count of the described chemical ring system. An ESSR ring is
         // any ring which does not share three consecutive atoms with any other ring
         // in the chemical structure. For example, naphthalene has three ESSR rings
         // (two phenyl fragments and the 10-membered envelope), while biphenyl will
         // yield a count of only two ESSR rings.
-         */
         private static void CountRings(byte[] fp, IAtomContainer mol)
         {
             RingsCounter cr = new RingsCounter(mol);
@@ -1107,10 +1096,8 @@ namespace NCDK.Fingerprint
             var cs = new SubstructuresCounter(this, mol);
             int b;
 
-            /*
             // Section 3: Simple atom pairs. These bits test for the presence of
             // patterns of bonded atom pairs, regardless of bond order or count.
-             */
             b = 263;
             if (cs.CountSubstructure("[Li&!H0]") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
             b = 264;
@@ -1240,11 +1227,9 @@ namespace NCDK.Fingerprint
             b = 326;
             if (cs.CountSubstructure("[#33]~[#33]") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
 
-            /*
             // Section 4: Simple atom nearest neighbors. These bits test for the
             // presence of atom nearest neighbor patterns, regardless of bond order
             // or count, but where bond aromaticity (denoted by "~") is significant.
-             */
             b = 327;
             if (cs.CountSubstructure("[#6](~Br)(~[#6])") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
             b = 328;
@@ -1424,13 +1409,11 @@ namespace NCDK.Fingerprint
             b = 415;
             if (cs.CountSubstructure("[#14](~[#6])(~[#6])") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
 
-            /*
             // Section 5: Detailed atom neighborhoods - These bits test for the
             // presence of detailed atom neighborhood patterns, regardless of count,
             // but where bond orders are specific, bond aromaticity matches both
             // single and double bonds, and where "-", "=", and "#" matches a single
             // bond, double bond, and triple bond order, respectively.
-             */
 
             b = 416;
             if (cs.CountSubstructure("[#6]=,:[#6]") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
@@ -1521,12 +1504,10 @@ namespace NCDK.Fingerprint
             b = 459;
             if (cs.CountSubstructure("[#16](=,:[#8])(=,:[#8])") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
 
-            /*
             // Section 6: Simple SMARTS patterns - These bits test for the presence
             // of simple SMARTS patterns, regardless of count, but where bond orders
             // are specific and bond aromaticity matches both single and double
             // bonds.
-             */
             b = 460;
             if (cs.CountSubstructure("[#6]-,:[#6]-,:[#6]#[#6]") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
             b = 461;
@@ -2046,11 +2027,9 @@ namespace NCDK.Fingerprint
             b = 712;
             if (cs.CountSubstructure("[#6]-,:[#6](-,:[#6])-,:[#6](-,:[#6])-,:[#6]") > 0) fp[b >> 3] |= (byte)MASK[b % 8];
 
-            /*
             // Section 7: Complex SMARTS patterns - These bits test for the presence
             // of complex SMARTS patterns, regardless of count, but where bond
             // orders and bond aromaticity are specific.
-             */
 
             b = 713;
             if (cs.CountSubstructure("[#6]c1ccc([#6])cc1") > 0) fp[b >> 3] |= (byte)MASK[b % 8];

@@ -22,34 +22,26 @@
  *  */
 using NCDK.Common.Mathematics;
 using System;
-using System.Collections.Generic;
 using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-     * A set of static methods for working with crystal coordinates.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author  Egon Willighagen <egonw@sci.kun.nl>
-     *
-     * @cdk.keyword fractional coordinates, crystal
-     */
+    /// <summary>
+    /// A set of static methods for working with crystal coordinates.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    // @author  Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.keyword fractional coordinates, crystal
     public class CrystalGeometryTools
     {
-
-        /**
-         * Inverts three cell axes.
-         *
-         * @return         a 3x3 matrix with the three Cartesian vectors representing
-         *                 the unit cell axes. The a axis is the first row.
-         */
+        /// <summary>
+        /// Inverts three cell axes.
+        /// </summary>
+        /// <returns>a 3x3 matrix with the three Cartesian vectors representing the unit cell axes. The a axis is the first row.</returns>
         public static Vector3[] CalcInvertedAxes(Vector3 aAxis, Vector3 bAxis, Vector3 cAxis)
         {
-            double det = aAxis.X * bAxis.Y * cAxis.Z - aAxis.X * bAxis.Z * cAxis.Y - aAxis.Y * bAxis.X * cAxis.Z + aAxis.Y
-                    * bAxis.Z * cAxis.X + aAxis.Z * bAxis.X * cAxis.Y - aAxis.Z * bAxis.Y * cAxis.X;
+            double det = aAxis.X * bAxis.Y * cAxis.Z - aAxis.X * bAxis.Z * cAxis.Y - aAxis.Y * bAxis.X * cAxis.Z + aAxis.Y * bAxis.Z * cAxis.X + aAxis.Z * bAxis.X * cAxis.Y - aAxis.Z * bAxis.Y * cAxis.X;
             Vector3[] invaxes = new Vector3[3];
             invaxes[0] = new Vector3();
             invaxes[0].X = (bAxis.Y * cAxis.Z - bAxis.Z * cAxis.Y) / det;
@@ -68,9 +60,7 @@ namespace NCDK.Geometries
             return invaxes;
         }
 
-        /**
-         * @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
-         */
+        // @cdk.dictref blue-obelisk:convertCartesianIntoFractionalCoordinates
         public static Vector3 CartesianToFractional(Vector3 aAxis, Vector3 bAxis, Vector3 cAxis, Vector3 cartPoint)
         {
             Vector3[] invaxis = CalcInvertedAxes(aAxis, bAxis, cAxis);
@@ -81,9 +71,7 @@ namespace NCDK.Geometries
             return frac;
         }
 
-        /**
-         * @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
-         */
+        // @cdk.dictref blue-obelisk:convertFractionIntoCartesianCoordinates
         public static Vector3 FractionalToCartesian(Vector3 aAxis, Vector3 bAxis, Vector3 cAxis, Vector3 frac)
         {
             Vector3 cart = new Vector3();
@@ -93,30 +81,26 @@ namespace NCDK.Geometries
             return cart;
         }
 
-        /**
-         * Calculates Cartesian vectors for unit cell axes from axes lengths and angles
-         * between axes.
-         *
-         * <p>To calculate Cartesian coordinates, it places the a axis on the x axes,
-         * the b axis in the xy plane, making an angle gamma with the a axis, and places
-         * the c axis to fulfill the remaining constraints. (See also
-         * <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the
-         * CCL archive</a>.)
-         *
-         * @param alength   length of the a axis
-         * @param blength   length of the b axis
-         * @param clength   length of the c axis
-         * @param alpha     angle between b and c axes in degrees
-         * @param beta      angle between a and c axes in degrees
-         * @param gamma     angle between a and b axes in degrees
-         * @return          an array of Vector3 objects with the three Cartesian vectors representing
-         *                  the unit cell axes.
-         *
-         * @cdk.keyword  notional coordinates
-         * @cdk.dictref  blue-obelisk:convertNotionalIntoCartesianCoordinates
-         */
-        public static Vector3[] NotionalToCartesian(double alength, double blength, double clength, double alpha,
-                double beta, double gamma)
+        /// <summary>
+        /// Calculates Cartesian vectors for unit cell axes from axes lengths and angles
+        /// between axes.
+        /// <para>
+        /// To calculate Cartesian coordinates, it places the a axis on the x axes,
+        /// the b axis in the xy plane, making an angle gamma with the a axis, and places
+        /// the c axis to fulfill the remaining constraints. (See also
+        /// <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the CCL archive</a>.)
+        /// </para>
+        /// </summary>
+        /// <param name="alength">length of the a axis</param>
+        /// <param name="blength">length of the b axis</param>
+        /// <param name="clength">length of the c axis</param>
+        /// <param name="alpha">angle between b and c axes in degrees</param>
+        /// <param name="beta">angle between a and c axes in degrees</param>
+        /// <param name="gamma">angle between a and b axes in degrees</param>
+        /// <returns>an array of Vector3 objects with the three Cartesian vectors representing the unit cell axes.</returns>
+       // @cdk.keyword  notional coordinates
+       // @cdk.dictref  blue-obelisk:convertNotionalIntoCartesianCoordinates
+        public static Vector3[] NotionalToCartesian(double alength, double blength, double clength, double alpha, double beta, double gamma)
         {
             Vector3[] axes = new Vector3[3];
 
@@ -142,11 +126,7 @@ namespace NCDK.Geometries
 
             /* 3. now the c axis, with more complex maths */
             axes[2] = new Vector3();
-            double volume = alength
-                    * blength
-                    * clength
-                    * Math.Sqrt(1.0 - cosalpha * cosalpha - cosbeta * cosbeta - cosgamma * cosgamma + 2.0 * cosalpha
-                            * cosbeta * cosgamma);
+            double volume = alength * blength * clength * Math.Sqrt(1.0 - cosalpha * cosalpha - cosbeta * cosbeta - cosgamma * cosgamma + 2.0 * cosalpha * cosbeta * cosgamma);
             axes[2].X = (clength * cosbeta);
             axes[2].Y = (clength * (cosalpha - cosbeta * cosgamma) / singamma);
             axes[2].Z = (volume / (alength * blength * singamma));
@@ -154,9 +134,7 @@ namespace NCDK.Geometries
             return axes;
         }
 
-        /**
-         * @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
-         */
+        // @cdk.dictref  blue-obelisk:convertCartesianIntoNotionalCoordinates
         public static double[] CartesianToNotional(Vector3 aAxis, Vector3 bAxis, Vector3 cAxis)
         {
             double[] notionalCoords = new double[6];
@@ -169,11 +147,10 @@ namespace NCDK.Geometries
             return notionalCoords;
         }
 
-        /**
-         * Determines if this model contains fractional (crystal) coordinates.
-         *
-         * @return  bool indication that 3D coordinates are available
-         */
+        /// <summary>
+        /// Determines if this model contains fractional (crystal) coordinates.
+        /// </summary>
+        /// <returns>bool indication that 3D coordinates are available</returns>
         public static bool HasCrystalCoordinates(IAtomContainer container)
         {
             foreach (var atom in container.Atoms)
@@ -182,9 +159,9 @@ namespace NCDK.Geometries
             return true;
         }
 
-        /**
-         * Creates Cartesian coordinates for all Atoms in the Crystal.
-         */
+        /// <summary>
+        /// Creates Cartesian coordinates for all Atoms in the Crystal.
+        /// </summary>
         public static void FractionalToCartesian(ICrystal crystal)
         {
             Vector3 aAxis = crystal.A;

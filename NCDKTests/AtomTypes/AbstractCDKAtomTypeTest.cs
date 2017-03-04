@@ -21,14 +21,14 @@ using NCDK.Config;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * Helper class that all atom type matcher test classes must implement.
-     * It keeps track of the atom types which have been tested, to ensure
-     * that all atom types are tested.
-     *
-     * @cdk.module test-core
-     * @cdk.bug    1890702
-     */
+    /// <summary>
+    /// Helper class that all atom type matcher test classes must implement.
+    /// It keeps track of the atom types which have been tested, to ensure
+    /// that all atom types are tested.
+    ///
+    // @cdk.module test-core
+    // @cdk.bug    1890702
+    /// </summary>
     [TestClass()]
     abstract public class AbstractCDKAtomTypeTest : AbstractAtomTypeTest
     {

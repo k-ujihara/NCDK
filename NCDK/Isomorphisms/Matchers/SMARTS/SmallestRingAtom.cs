@@ -24,29 +24,29 @@
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Match an atom in a specific size ring. The ring size is specified by {@code
-     * r<NUMBER>} in a SMARTS pattern. This term is non-portable, depending on the
-     * set of rings chosen and which ring sizes are used. The default implementation
-     * (Daylight) only stores the smallest ring each atom belongs to whilst other
-     * implementations may store multiple values. A more portable term is the
-     * ring connectivity which is specified as {@code x<NUMBER>}.
-     *
-     * @cdk.module smarts
-     * @cdk.keyword SMARTS
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Match an atom in a specific size ring. The ring size is specified by {@code
+    /// r<NUMBER>} in a SMARTS pattern. This term is non-portable, depending on the
+    /// set of rings chosen and which ring sizes are used. The default implementation
+    /// (Daylight) only stores the smallest ring each atom belongs to whilst other
+    /// implementations may store multiple values. A more portable term is the
+    /// ring connectivity which is specified as {@code x<NUMBER>}.
+    ///
+    // @cdk.module smarts
+    // @cdk.keyword SMARTS
+    // @cdk.githash
+    /// </summary>
     public sealed class SmallestRingAtom : SMARTSAtom
     {
 
         /// <summary>Ring size to check.</summary>
         private int ringSize;
 
-        /**
-         * Creates a matcher for specified ring size.
-         *
-         * @param ringSize size of the ring to check.
-         */
+        /// <summary>
+        /// Creates a matcher for specified ring size.
+        ///
+        /// <param name="ringSize">size of the ring to check.</param>
+        /// </summary>
         public SmallestRingAtom(int ringSize, IChemObjectBuilder builder)
             : base(builder)
         {

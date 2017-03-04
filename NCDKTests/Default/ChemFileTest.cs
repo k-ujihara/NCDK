@@ -17,22 +17,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the {@link ChemFile} class.
-     *
-     * @cdk.module test-data
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the {@link ChemFile} class.
+    ///
+    // @cdk.module test-data
+    /// </summary>
+    [TestClass()]
     public class ChemFileTest : AbstractChemFileTest
     {
         public override IChemObject NewChemObject()

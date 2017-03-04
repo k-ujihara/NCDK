@@ -21,9 +21,9 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * @cdk.module test-pdb
-     */
+    /// <summary>
+    // @cdk.module test-pdb
+    /// </summary>
     [TestClass()]
     public class ProteinBuilderToolTest : CDKTestCase
     {

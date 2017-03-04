@@ -25,162 +25,162 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD
 {
-    /**
-     * Interface for all MCS algorithms.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for all MCS algorithms.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public abstract class AbstractMCS
     {
-       /**
-         * initialize query and target molecules.
-         *
-         * @param source query mol
-         * @param target target mol
-         * @param removeHydrogen true if remove H (implicit) before mapping
-         * @param cleanAndConfigureMolecule eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc
-         * @throws CDKException
-         */
+       /// <summary>
+        /// initialize query and target molecules.
+        ///
+        /// <param name="source">query mol</param>
+        /// <param name="target">target mol</param>
+        /// <param name="removeHydrogen">true if remove H (implicit) before mapping</param>
+        /// <param name="cleanAndConfigureMolecule">eg: percieveAtomTypesAndConfigureAtoms, detect aromaticity etc</param>
+        // @throws CDKException
+        /// </summary>
         public abstract void Init(IAtomContainer source, IAtomContainer target, bool removeHydrogen,
                 bool cleanAndConfigureMolecule);
 
-        /**
-         * initialize query and target molecules.
-         *
-         * Note: Here its assumed that hydrogens are implicit
-         * and user has called these two methods
-         * percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector
-         * before initializing calling this method.
-         *
-         * @param source query mol
-         * @param target target mol
-         * @throws CDKException
-         */
+        /// <summary>
+        /// initialize query and target molecules.
+        ///
+        /// Note: Here its assumed that hydrogens are implicit
+        /// and user has called these two methods
+        /// percieveAtomTypesAndConfigureAtoms and CDKAromicityDetector
+        /// before initializing calling this method.
+        ///
+        /// <param name="source">query mol</param>
+        /// <param name="target">target mol</param>
+        // @throws CDKException
+        /// </summary>
         public abstract void Init(IQueryAtomContainer source, IAtomContainer target);
 
-        /**
-         * initialize query and target molecules.
-         *
-         * @param stereoFilter set true to rank the solutions as per stereo matches
-         * @param fragmentFilter set true to return matches with minimum fragments
-         * @param energyFilter set true to return matches with minimum bond changes
-         * based on the bond breaking energy
-         */
+        /// <summary>
+        /// initialize query and target molecules.
+        ///
+        /// <param name="stereoFilter">set true to rank the solutions as per stereo matches</param>
+        /// <param name="fragmentFilter">set true to return matches with minimum fragments</param>
+        /// <param name="energyFilter">set true to return matches with minimum bond changes</param>
+        /// based on the bond breaking energy
+        /// </summary>
         public abstract void SetChemFilters(bool stereoFilter, bool fragmentFilter, bool energyFilter);
 
-        /**
-         * Returns summation energy score of the disorder if the MCS is removed
-         * from the target and query graph. Amongst the solutions, a solution
-         * with lowest energy score is preferred.
-         *
-         * @param key Index of the mapping solution
-         * @return Total bond breaking energy required to remove the mapped part
-         */
+        /// <summary>
+        /// Returns summation energy score of the disorder if the MCS is removed
+        /// from the target and query graph. Amongst the solutions, a solution
+        /// with lowest energy score is preferred.
+        ///
+        /// <param name="key">Index of the mapping solution</param>
+        /// <returns>Total bond breaking energy required to remove the mapped part</returns>
+        /// </summary>
         public abstract double? GetEnergyScore(int key);
 
-        /**
-         * Returns number of fragment generated in the solution space,
-         * if the MCS is removed from the target and query graph.
-         * Amongst the solutions, a solution with lowest fragment size
-         * is preferred.
-         *
-         * @param key Index of the mapping solution
-         * @return Fragment Count(s) generated after removing the mapped parts
-         */
+        /// <summary>
+        /// Returns number of fragment generated in the solution space,
+        /// if the MCS is removed from the target and query graph.
+        /// Amongst the solutions, a solution with lowest fragment size
+        /// is preferred.
+        ///
+        /// <param name="key">Index of the mapping solution</param>
+        /// <returns>Fragment Count(s) generated after removing the mapped parts</returns>
+        /// </summary>
         public abstract int? GetFragmentSize(int key);
 
-        /**
-         *
-         * Returns modified target molecule on which mapping was
-         * performed.
-         *
-         *
-         * @return return modified product Molecule
-         */
+        /// <summary>
+        ///
+        /// Returns modified target molecule on which mapping was
+        /// performed.
+        ///
+        ///
+        /// <returns>return modified product Molecule</returns>
+        /// </summary>
         public abstract IAtomContainer ProductMolecule { get; }
 
-        /**
-         * Returns modified query molecule on which mapping was
-         * performed.
-         *
-         * @return return modified reactant Molecule
-         */
+        /// <summary>
+        /// Returns modified query molecule on which mapping was
+        /// performed.
+        ///
+        /// <returns>return modified reactant Molecule</returns>
+        /// </summary>
         public abstract IAtomContainer ReactantMolecule { get; }
 
-        /**
-         * Returns a number which denotes the quality of the mcs.
-         * A solution with highest stereo score is preferred over other
-         * scores.
-         * @param key Index of the mapping solution
-         * @return true if no stereo mismatch occurs
-         * else false if stereo mismatch occurs
-         */
+        /// <summary>
+        /// Returns a number which denotes the quality of the mcs.
+        /// A solution with highest stereo score is preferred over other
+        /// scores.
+        /// <param name="key">Index of the mapping solution</param>
+        /// <returns>true if no stereo mismatch occurs</returns>
+        /// else false if stereo mismatch occurs
+        /// </summary>
         public abstract int? GetStereoScore(int key);
 
-        /**
-         *
-         * Returns true if mols have different stereo
-         * chemistry else false if no stereo mismatch.
-         *
-         * @return true if mols have different stereo
-         * chemistry else false if no stereo mismatch.
-         * true if stereo mismatch occurs
-         * else true if stereo mismatch occurs.
-         */
+        /// <summary>
+        ///
+        /// Returns true if mols have different stereo
+        /// chemistry else false if no stereo mismatch.
+        ///
+        /// <returns>true if mols have different stereo</returns>
+        /// chemistry else false if no stereo mismatch.
+        /// true if stereo mismatch occurs
+        /// else true if stereo mismatch occurs.
+        /// </summary>
         public abstract bool IsStereoMisMatch();
 
-        /**
-         * Checks if query is a subgraph of the target.
-         * Returns true if query is a subgraph of target else false
-         * @return true if query molecule is a subgraph of the target molecule
-         */
+        /// <summary>
+        /// Checks if query is a subgraph of the target.
+        /// Returns true if query is a subgraph of target else false
+        /// <returns>true if query molecule is a subgraph of the target molecule</returns>
+        /// </summary>
         public abstract bool IsSubgraph();
 
-        /**
-         * Returns Tanimoto similarity between query and target molecules
-         * (Score is between 0-min and 1-max).
-         *
-         * @return Tanimoto Similarity between 0 and 1
-         * @throws IOException
-         */
+        /// <summary>
+        /// Returns Tanimoto similarity between query and target molecules
+        /// (Score is between 0-min and 1-max).
+        ///
+        /// <returns>Tanimoto Similarity between 0 and 1</returns>
+        // @throws IOException
+        /// </summary>
         public abstract double GetTanimotoSimilarity();
 
-        /**
-         * Returns Euclidean Distance between query and target molecule.
-         * @return Euclidean Distance (lower the score, better the match)
-         * @throws IOException
-         */
+        /// <summary>
+        /// Returns Euclidean Distance between query and target molecule.
+        /// <returns>Euclidean Distance (lower the score, better the match)</returns>
+        // @throws IOException
+        /// </summary>
         public abstract double GetEuclideanDistance();
 
-        /**
-         * Returns all plausible mappings between query and target molecules
-         * Each map in the list has atom-atom equivalence of the mappings
-         * between query and target molecule i.e. map.Key for the query
-         * and map.Value for the target molecule.
-         * @return All possible MCS atom Mappings
-         */
+        /// <summary>
+        /// Returns all plausible mappings between query and target molecules
+        /// Each map in the list has atom-atom equivalence of the mappings
+        /// between query and target molecule i.e. map.Key for the query
+        /// and map.Value for the target molecule.
+        /// <returns>All possible MCS atom Mappings</returns>
+        /// </summary>
         public abstract IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping();
 
-        /**
-         * Returns all plausible mappings between query and target molecules
-         * Each map in the list has atom-atom equivalence index of the mappings
-         * between query and target molecule i.e. map.Key for the query
-         * and map.Value for the target molecule.
-         * @return All possible MCS Mapping Index
-         */
+        /// <summary>
+        /// Returns all plausible mappings between query and target molecules
+        /// Each map in the list has atom-atom equivalence index of the mappings
+        /// between query and target molecule i.e. map.Key for the query
+        /// and map.Value for the target molecule.
+        /// <returns>All possible MCS Mapping Index</returns>
+        /// </summary>
         public abstract IList<IDictionary<int, int>> GetAllMapping();
 
-        /**
-         * Returns one of the best matches with atoms mapped.
-         * @return Best Atom Mapping
-         */
+        /// <summary>
+        /// Returns one of the best matches with atoms mapped.
+        /// <returns>Best Atom Mapping</returns>
+        /// </summary>
         public abstract IDictionary<IAtom, IAtom> GetFirstAtomMapping();
 
-        /**
-         * Returns one of the best matches with atom indexes mapped.
-         * @return Best Mapping Index
-         */
+        /// <summary>
+        /// Returns one of the best matches with atom indexes mapped.
+        /// <returns>Best Mapping Index</returns>
+        /// </summary>
         public abstract IDictionary<int, int> GetFirstMapping();
 
         /// <summary>

@@ -33,55 +33,55 @@ namespace NCDK.Beam
     /// <summary>
     /// Unit tests verify correct handling of charge for bracket atoms.
     /// </summary>
-    /// <author>John May</author>
-	[TestClass()]
+    // @author John May
+    [TestClass()]
     public class ParsingAtomChargeTest
     {
 
         [TestMethod()]
-        public void implicitPlusOne()
+        public void ImplicitPlusOne()
         {
             Verify("+", +1);
         }
 
         [TestMethod()]
-        public void implicitPlusTwo()
+        public void ImplicitPlusTwo()
         {
             Verify("++", +2);
         }
 
         [TestMethod()]
-        public void implicitPlusThree()
+        public void ImplicitPlusThree()
         {
             Verify("+++", +3);
         }
 
         [TestMethod()]
-        public void implicitPlusFour()
+        public void ImplicitPlusFour()
         {
             Verify("++++", +4);
         }
 
         [TestMethod()]
-        public void implicitMinusOne()
+        public void ImplicitMinusOne()
         {
             Verify("-", -1);
         }
 
         [TestMethod()]
-        public void implicitMinusTwo()
+        public void ImplicitMinusTwo()
         {
             Verify("--", -2);
         }
 
         [TestMethod()]
-        public void implicitMinusThree()
+        public void ImplicitMinusThree()
         {
             Verify("---", -3);
         }
 
         [TestMethod()]
-        public void implicitMinusFour()
+        public void ImplicitMinusFour()
         {
             Verify("----", -4);
         }
@@ -111,7 +111,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void noCharge()
+        public void NoCharge()
         {
             CharBuffer buffer = CharBuffer.FromString(":");
             Assert.AreEqual(Parser.ReadCharge(buffer), 0);
@@ -162,7 +162,7 @@ namespace NCDK.Beam
 
         // An implementation is required to accept charges in the range -15 to +15
         [TestMethod()]
-        public void rangeCheck()
+        public void RangeCheck()
         {
             for (int i = -15; i <= 15; i++)
                 Verify((i > 0 ? "+" : "") + i.ToString(), i);

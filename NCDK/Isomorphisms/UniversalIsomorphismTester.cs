@@ -46,23 +46,23 @@ namespace NCDK.Isomorphisms
      *  The constraint flexibility allows a number of interesting queries.
      *  The substructure analysis relies on the RGraph generic class (see: RGraph)
      *  This class implements the link between the RGraph model and the
-     *  the CDK model in this way the {@link RGraph} remains independent and may be used
+     *  the CDK model in this way the <see cref="RGraph"/> remains independent and may be used
      *  in other contexts.
      *
      *  <p>This algorithm derives from the algorithm described in
      *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
      *
      *  <p>With the {@link #IsSubgraph(IAtomContainer, IAtomContainer)} method,
-     *  the second, and only the second argument <b>may</b> be a {@link IQueryAtomContainer},
+     *  the second, and only the second argument <b>may</b> be a <see cref="IQueryAtomContainer"/>,
      *  which allows one to do SMARTS or MQL like queries.
-     *  The first <see cref="IAtomContainer"/> must never be an {@link IQueryAtomContainer}.
-     *  An example:<pre>
+     *  The first <see cref="IAtomContainer"/> must never be an <see cref="IQueryAtomContainer"/>.
+     *  An example:<code>
      *  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
      *  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
      *  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
      *  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
      *  bool isSubstructure = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
-     *  </pre>
+     *  </code>
      *
      *  <p><font color="#FF0000">WARNING</font>:
      *    As a result of the adjacency perception used in this algorithm
@@ -125,8 +125,8 @@ namespace NCDK.Isomorphisms
         /**
          * Tests if g1 and g2 are isomorph.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     true if the 2 molecule are isomorph
          * @throws     CDKException if the first molecule is an instance of IQueryAtomContainer
          */
@@ -163,8 +163,8 @@ namespace NCDK.Isomorphisms
         /**
          * Returns the first isomorph mapping found or null.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     the first isomorph mapping found projected of g1. This is a List of RMap objects containing Ids of matching bonds.
          */
         public IList<RMap> GetIsomorphMap(IAtomContainer g1, IAtomContainer g2)
@@ -185,11 +185,11 @@ namespace NCDK.Isomorphisms
         /**
          * Returns the first isomorph 'atom mapping' found for g2 in g1.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     the first isomorph atom mapping found projected on g1.
          * This is a List of RMap objects containing Ids of matching atoms.
-         * @ if the first molecules is not an instance of {@link IQueryAtomContainer}
+         * @ if the first molecules is not an instance of <see cref="IQueryAtomContainer"/>
          */
         public IList<RMap> GetIsomorphAtomsMap(IAtomContainer g1, IAtomContainer g2)
         {
@@ -215,8 +215,8 @@ namespace NCDK.Isomorphisms
          * Returns all the isomorph 'mappings' found between two
          * atom containers.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     the list of all the 'mappings'
          */
         public IList<IList<RMap>> GetIsomorphMaps(IAtomContainer g1, IAtomContainer g2)
@@ -229,10 +229,10 @@ namespace NCDK.Isomorphisms
 
         /**
          * Returns all the subgraph 'bond mappings' found for g2 in g1.
-         * This is an {@link List} of {@link List}s of {@link RMap} objects.
+         * This is an <see cref="List"/> of <see cref="List"/>s of <see cref="RMap"/> objects.
          *
          * Note that if the query molecule is a single atom, then bond mappings
-         * cannot be defined. In such a case, the {@link RMap} object refers directly to
+         * cannot be defined. In such a case, the <see cref="RMap"/> object refers directly to
          * atom - atom mappings. Thus RMap.id1 is the index of the target atom
          * and RMap.id2 is the index of the matching query atom (in this case,
          * it will always be 0). Note that in such a case, there is no need
@@ -240,8 +240,8 @@ namespace NCDK.Isomorphisms
          * though if it is called, then the
          * return value is simply the same as the return value of this method.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     the list of all the 'mappings' found projected of g1
          *
          * @see #MakeAtomsMapsOfBondsMaps(List, IAtomContainer, IAtomContainer)
@@ -254,10 +254,10 @@ namespace NCDK.Isomorphisms
         /**
          * Returns the first subgraph 'bond mapping' found for g2 in g1.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
-         * @return     the first subgraph bond mapping found projected on g1. This is a {@link List} of
-         *             {@link RMap} objects containing Ids of matching bonds.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
+         * @return     the first subgraph bond mapping found projected on g1. This is a <see cref="List"/> of
+         *             <see cref="RMap"/> objects containing Ids of matching bonds.
          */
         public IList<RMap> GetSubgraphMap(IAtomContainer g1, IAtomContainer g2)
         {
@@ -275,12 +275,12 @@ namespace NCDK.Isomorphisms
         /**
          * Returns all subgraph 'atom mappings' found for g2 in g1, where g2 must be a substructure
          * of g1. If it is not a substructure, null will be returned.
-         * This is an {@link List} of {@link List}s of {@link RMap} objects.
+         * This is an <see cref="List"/> of <see cref="List"/>s of <see cref="RMap"/> objects.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  substructure to be mapped. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  substructure to be mapped. May be an <see cref="IQueryAtomContainer"/>.
          * @return     all subgraph atom mappings found projected on g1. This is a
-         *             {@link List} of {@link RMap} objects containing Ids of matching atoms.
+         *             <see cref="List"/> of <see cref="RMap"/> objects containing Ids of matching atoms.
          */
         public IList<IList<RMap>> GetSubgraphAtomsMaps(IAtomContainer g1, IAtomContainer g2)
         {
@@ -301,10 +301,10 @@ namespace NCDK.Isomorphisms
          * Returns the first subgraph 'atom mapping' found for g2 in g1, where g2 must be a substructure
          * of g1. If it is not a substructure, null will be returned.
          *
-         * @param  g1 first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2 substructure to be mapped. May be an {@link IQueryAtomContainer}.
+         * @param  g1 first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2 substructure to be mapped. May be an <see cref="IQueryAtomContainer"/>.
          * @return    the first subgraph atom mapping found projected on g1.
-         *            This is a {@link List} of {@link RMap} objects containing Ids of matching atoms.
+         *            This is a <see cref="List"/> of <see cref="RMap"/> objects containing Ids of matching atoms.
          */
         public IList<RMap> GetSubgraphAtomsMap(IAtomContainer g1, IAtomContainer g2)
         {
@@ -326,8 +326,8 @@ namespace NCDK.Isomorphisms
         /**
          * Tests if g2 a subgraph of g1.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     true if g2 a subgraph on g1
          */
         public bool IsSubgraph(IAtomContainer g1, IAtomContainer g2)
@@ -370,8 +370,8 @@ namespace NCDK.Isomorphisms
         /**
          * Returns all the maximal common substructure between two atom containers.
          *
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @return     the list of all the maximal common substructure
          *             found projected of g1 (list of AtomContainer )
          */
@@ -390,7 +390,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Transforms an AtomContainer into a {@link BitArray} (which's size = number of bond
+         * Transforms an AtomContainer into a <see cref="BitArray"/> (which's size = number of bond
          * in the atomContainer, all the bit are set to true).
          *
          * @param  ac  <see cref="IAtomContainer"/> to transform
@@ -417,7 +417,7 @@ namespace NCDK.Isomorphisms
         //          Internal methods
 
         /**
-         * Builds the {@link RGraph} ( resolution graph ), from two atomContainer
+         * Builds the <see cref="RGraph"/> ( resolution graph ), from two atomContainer
          * (description of the two molecules to compare)
          * This is the interface point between the CDK model and
          * the generic MCSS algorithm based on the RGRaph.
@@ -435,12 +435,12 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * General {@link RGraph} parsing method (usually not used directly)
+         * General <see cref="RGraph"/> parsing method (usually not used directly)
          * This method is the entry point for the recursive search
          * adapted to the atom container input.
          *
-         * @param  g1                first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2                second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  g1                first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2                second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @param  c1                initial condition ( bonds from g1 that
          *                           must be contains in the solution )
          * @param  c2                initial condition ( bonds from g2 that
@@ -448,7 +448,7 @@ namespace NCDK.Isomorphisms
          * @param  findAllStructure  if false stop at the first structure found
          * @param  findAllMap        if true search all the 'mappings' for one same
          *                           structure
-         * @return                   a List of Lists of {@link RMap} objects that represent the search solutions
+         * @return                   a List of Lists of <see cref="RMap"/> objects that represent the search solutions
          */
         public IList<IList<RMap>> Search(IAtomContainer g1, IAtomContainer g2, BitArray c1, BitArray c2,
                 bool findAllStructure, bool findAllMap)
@@ -514,7 +514,7 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         * Checks that {@link IQueryAtom}'s correctly match consistently.
+         * Checks that <see cref="IQueryAtom"/>'s correctly match consistently.
          *
          * @param bondmap bond mapping
          * @param g1 target graph
@@ -541,11 +541,11 @@ namespace NCDK.Isomorphisms
         //    Manipulation tools
 
         /**
-         * Projects a list of {@link RMap} on a molecule.
+         * Projects a list of <see cref="RMap"/> on a molecule.
          *
          * @param  rMapList  the list to project
          * @param  g         the molecule on which project
-         * @param  id        the id in the {@link RMap} of the molecule g
+         * @param  id        the id in the <see cref="RMap"/> of the molecule g
          * @return           an AtomContainer
          */
         public static IAtomContainer Project(IList<RMap> rMapList, IAtomContainer g, int id)
@@ -649,9 +649,9 @@ namespace NCDK.Isomorphisms
         /**
          *  Checks for single atom cases before doing subgraph/isomorphism search.
          *
-         * @param  g1  AtomContainer to match on. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  AtomContainer as query. May be an {@link IQueryAtomContainer}.
-         * @return     {@link List} of {@link List} of {@link RMap} objects for the Atoms (not Bonds!), null if no single atom case
+         * @param  g1  AtomContainer to match on. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  AtomContainer as query. May be an <see cref="IQueryAtomContainer"/>.
+         * @return     <see cref="List"/> of <see cref="List"/> of <see cref="RMap"/> objects for the Atoms (not Bonds!), null if no single atom case
          * @throws     CDKException if the first molecule is an instance of IQueryAtomContainer
         */
         public static IList<RMap> CheckSingleAtomCases(IAtomContainer g1, IAtomContainer g2)
@@ -711,9 +711,9 @@ namespace NCDK.Isomorphisms
          *  Get(Subgraph|Ismorphism)Maps methods.
          *
          * @param  l   The list produced by the getMap method.
-         * @param  g1  The first atom container. Must not be a {@link IQueryAtomContainer}.
-         * @param  g2  The second one (first and second as in getMap). May be an {@link IQueryAtomContainer}.
-         * @return     A List of {@link List}s of {@link RMap} objects of matching Atoms.
+         * @param  g1  The first atom container. Must not be a <see cref="IQueryAtomContainer"/>.
+         * @param  g2  The second one (first and second as in getMap). May be an <see cref="IQueryAtomContainer"/>.
+         * @return     A List of <see cref="List"/>s of <see cref="RMap"/> objects of matching Atoms.
          */
         public static IList<IList<RMap>> MakeAtomsMapsOfBondsMaps(IList<IList<RMap>> l, IAtomContainer g1, IAtomContainer g2)
         {
@@ -735,9 +735,9 @@ namespace NCDK.Isomorphisms
          *  Get(Subgraph|Ismorphism)IDictionary methods.
          *
          * @param  l   The list produced by the getMap method.
-         * @param  g1  first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  g2  second molecule. May be an {@link IQueryAtomContainer}.
-         * @return     The mapping found projected on g1. This is a {@link List} of {@link RMap} objects
+         * @param  g1  first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  g2  second molecule. May be an <see cref="IQueryAtomContainer"/>.
+         * @return     The mapping found projected on g1. This is a <see cref="List"/> of <see cref="RMap"/> objects
          *             containing Ids of matching atoms.
          */
         public static IList<RMap> MakeAtomsMapOfBondsMap(IList<RMap> l, IAtomContainer g1, IAtomContainer g2)
@@ -807,12 +807,12 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         *  Builds  the nodes of the {@link RGraph} ( resolution graph ), from
+         *  Builds  the nodes of the <see cref="RGraph"/> ( resolution graph ), from
          *  two atom containers (description of the two molecules to compare)
          *
          * @param  gr   the target RGraph
-         * @param  ac1   first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  ac2   second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  ac1   first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  ac2   second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @ if it takes too long to identify overlaps
          */
         private static void NodeConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2)
@@ -881,14 +881,14 @@ namespace NCDK.Isomorphisms
         }
 
         /**
-         *  Build edges of the {@link RGraph}s.
+         *  Build edges of the <see cref="RGraph"/>s.
          *  This method create the edge of the RGraph and
          *  calculates the incompatibility and neighborhood
          *  relationships between RGraph nodes.
          *
          * @param  gr   the rGraph
-         * @param  ac1   first molecule. Must not be an {@link IQueryAtomContainer}.
-         * @param  ac2   second molecule. May be an {@link IQueryAtomContainer}.
+         * @param  ac1   first molecule. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  ac2   second molecule. May be an <see cref="IQueryAtomContainer"/>.
          * @ if it takes too long to get the overlaps
          */
         private static void ArcConstructor(RGraph gr, IAtomContainer ac1, IAtomContainer ac2)
@@ -1087,10 +1087,10 @@ namespace NCDK.Isomorphisms
          *  number of nitrogen atoms in the query is larger than that of the supergraph
          *  it cannot be part of it.
          *
-         * @param  ac1  the supergraph to be checked. Must not be an {@link IQueryAtomContainer}.
-         * @param  ac2  the subgraph to be tested for. May be an {@link IQueryAtomContainer}.
+         * @param  ac1  the supergraph to be checked. Must not be an <see cref="IQueryAtomContainer"/>.
+         * @param  ac2  the subgraph to be tested for. May be an <see cref="IQueryAtomContainer"/>.
          * @return    true if the subgraph ac2 has a chance to be a subgraph of ac1
-         * @ if the first molecule is an instance of {@link IQueryAtomContainer}
+         * @ if the first molecule is an instance of <see cref="IQueryAtomContainer"/>
          */
         private static bool TestSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
         {

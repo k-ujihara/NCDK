@@ -34,117 +34,117 @@ using static NCDK.SGroups.CxSmilesState.Radical;
 
 namespace NCDK.Smiles
 {
-    /**
-     * Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
-     *
-     * <b>Example usage</b><p/>
-     *
-     * <blockquote><pre>
-     * try {
-     *     SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-     *     IAtomContainer m   = sp.ParseSmiles("c1ccccc1");
-     * } catch (InvalidSmilesException e) {
-     *     Console.Error.WriteLine(e.Message);
-     * }
-     * </pre>
-     * </blockquote><p/>
-     *
-     * <b>Reading Aromatic SMILES</b><p/>
-     *
-     * Aromatic SMILES are automatically kekulised producing a structure with
-     * assigned bond orders. The aromatic specification on the atoms is maintained
-     * from the SMILES even if the structures are not considered aromatic. For
-     * example 'c1ccc1' will correctly have two pi bonds assigned but the
-     * atoms/bonds will still be flagged as aromatic. Recomputing or clearing the
-     * aromaticty will remove these erroneous flags. If a kekulé structure could not
-     * be assigned this is considered an error. The most common example is the
-     * omission of hydrogens on aromatic nitrogens (aromatic pyrrole is specified as
-     * '[nH]1cccc1' not 'n1cccc1'). These structures can not be corrected without
-     * modifying their formula. If there are multiple locations a hydrogen could be
-     * placed the returned structure would differ depending on the atom input order.
-     * If you wish to skip the kekulistation (not recommended) then it can be
-     * disabled with {@link #kekulise}. SMILES can be verified for validity with the
-     * <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.<p/>
-     *
-     * <b>Unsupported Features</b><p/>
-     *
-     * The following features are not supported by this parser. <ul> <li>variable
-     * order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
-     * The predefined order required by this parser follows the <a
-     * href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification
-     * of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</li>
-     * <li>atom class indication - <i>this information is loaded but not annotated
-     * on the structure</i> </li> <li>extended tetrahedral stereochemistry
-     * (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
-     * <li>octahedral stereochemistry</li> </il>
-     *
-     * <b>Atom Class</b><p/>
-     *
-     * The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
-     * property.
-     *
-     * <blockquote><pre>
-     *
-     * SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-     * IAtomContainer m   = sp.ParseSmiles("c1[cH:5]cccc1");
-     * Integer        c1  = m.Atoms[1]
-     *                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // 5
-     * Integer        c2  = m.Atoms[2]
-     *                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // null
-     *
-     * </pre>
-     * </blockquote><p/>
-     *
-     *
-     * @author Christoph Steinbeck
-     * @author Egon Willighagen
-     * @author John May
-     * @cdk.module smiles
-     * @cdk.githash
-     * @cdk.created 2002-04-29
-     * @cdk.keyword SMILES, parser
-     */
+    /// <summary>
+    /// Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
+    ///
+    /// <b>Example usage</b><p/>
+    ///
+    /// <blockquote><code>
+    /// try {
+    ///     SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    ///     IAtomContainer m   = sp.ParseSmiles("c1ccccc1");
+    /// } catch (InvalidSmilesException e) {
+    ///     Console.Error.WriteLine(e.Message);
+    /// }
+    /// </code>
+    /// </blockquote><p/>
+    ///
+    /// <b>Reading Aromatic SMILES</b><p/>
+    ///
+    /// Aromatic SMILES are automatically kekulised producing a structure with
+    /// assigned bond orders. The aromatic specification on the atoms is maintained
+    /// from the SMILES even if the structures are not considered aromatic. For
+    /// example 'c1ccc1' will correctly have two pi bonds assigned but the
+    /// atoms/bonds will still be flagged as aromatic. Recomputing or clearing the
+    /// aromaticty will remove these erroneous flags. If a kekulé structure could not
+    /// be assigned this is considered an error. The most common example is the
+    /// omission of hydrogens on aromatic nitrogens (aromatic pyrrole is specified as
+    /// '[nH]1cccc1' not 'n1cccc1'). These structures can not be corrected without
+    /// modifying their formula. If there are multiple locations a hydrogen could be
+    /// placed the returned structure would differ depending on the atom input order.
+    /// If you wish to skip the kekulistation (not recommended) then it can be
+    /// disabled with {@link #kekulise}. SMILES can be verified for validity with the
+    /// <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.<p/>
+    ///
+    /// <b>Unsupported Features</b><p/>
+    ///
+    /// The following features are not supported by this parser. <ul> <li>variable
+    /// order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
+    /// The predefined order required by this parser follows the <a
+    /// href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification
+    /// of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</li>
+    /// <li>atom class indication - <i>this information is loaded but not annotated
+    /// on the structure</i> </li> <li>extended tetrahedral stereochemistry
+    /// (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
+    /// <li>octahedral stereochemistry</li> </il>
+    ///
+    /// <b>Atom Class</b><p/>
+    ///
+    /// The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+    /// property.
+    ///
+    /// <blockquote><code>
+    ///
+    /// SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+    /// IAtomContainer m   = sp.ParseSmiles("c1[cH:5]cccc1");
+    /// Integer        c1  = m.Atoms[1]
+    ///                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // 5
+    /// Integer        c2  = m.Atoms[2]
+    ///                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // null
+    ///
+    /// </code>
+    /// </blockquote><p/>
+    ///
+    ///
+    // @author Christoph Steinbeck
+    // @author Egon Willighagen
+    // @author John May
+    // @cdk.module smiles
+    // @cdk.githash
+    // @cdk.created 2002-04-29
+    // @cdk.keyword SMILES, parser
+    /// </summary>
     public sealed class SmilesParser
     {
-        /**
-         * The builder determines which CDK domain objects to create.
-         */
+        /// <summary>
+        /// The builder determines which CDK domain objects to create.
+        /// </summary>
         private readonly IChemObjectBuilder builder;
 
-        /**
-         * Direct converter from Beam to CDK.
-         */
+        /// <summary>
+        /// Direct converter from Beam to CDK.
+        /// </summary>
         private readonly BeamToCDK beamToCDK;
 
-        /**
-         * Kekulise the molecule on load. Generally this is a good idea as a
-         * lower-case symbols in a SMILES do not really mean 'aromatic' but rather
-         * 'conjugated'. Loading with kekulise 'on' will automatically assign
-         * bond orders (if possible) using an efficient algorithm from the
-         * underlying Beam library (soon to be added to CDK).
-         */
+        /// <summary>
+        /// Kekulise the molecule on load. Generally this is a good idea as a
+        /// lower-case symbols in a SMILES do not really mean 'aromatic' but rather
+        /// 'conjugated'. Loading with kekulise 'on' will automatically assign
+        /// bond orders (if possible) using an efficient algorithm from the
+        /// underlying Beam library (soon to be added to CDK).
+        /// </summary>
         private bool kekulise = true;
 
-        /**
-         * Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with
-         * the specified builder.
-         *
-         * @param builder used to create the CDK domain objects
-         */
+        /// <summary>
+        /// Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with
+        /// the specified builder.
+        ///
+        /// <param name="builder">used to create the CDK domain objects</param>
+        /// </summary>
         public SmilesParser(IChemObjectBuilder builder)
         {
             this.builder = builder;
             this.beamToCDK = new BeamToCDK(builder);
         }
 
-        /**
-         * Parse a reaction SMILES.
-         *
-         * @param smiles The SMILES string to parse
-         * @return An instance of {@link IReaction}
-         * @ if the string cannot be parsed
-         * @see #ParseSmiles(string)
-         */
+        /// <summary>
+        /// Parse a reaction SMILES.
+        ///
+        /// <param name="smiles">The SMILES string to parse</param>
+        /// <returns>An instance of <see cref="IReaction"/></returns>
+        // @ if the string cannot be parsed
+        /// <seealso cref="ParseSmiles(string)"/>
+        /// </summary>
         public IReaction ParseReactionSmiles(string smiles)
         {
 
@@ -213,13 +213,13 @@ namespace NCDK.Smiles
             return reaction;
         }
 
-        /**
-         * Parses a SMILES string and returns a structure (<see cref="IAtomContainer"/>).
-         *
-         * @param smiles A SMILES string
-         * @return A structure representing the provided SMILES
-         * @ thrown when the SMILES string is invalid
-         */
+        /// <summary>
+        /// Parses a SMILES string and returns a structure (<see cref="IAtomContainer"/>).
+        ///
+        /// <param name="smiles">A SMILES string</param>
+        /// <returns>A structure representing the provided SMILES</returns>
+        // @ thrown when the SMILES string is invalid
+        /// </summary>
         public IAtomContainer ParseSmiles(string smiles)
         {
             return ParseSmiles(smiles, false);
@@ -261,12 +261,12 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         * Safely parses an integer from a string and will not fail if a number is missing.
-         *
-         * @param val value
-         * @return the integer value
-         */
+        /// <summary>
+        /// Safely parses an integer from a string and will not fail if a number is missing.
+        ///
+        /// <param name="val">value</param>
+        /// <returns>the integer value</returns>
+        /// </summary>
         private int ParseIntSafe(string val)
         {
             try
@@ -279,12 +279,12 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         * Parses CXSMILES layer and set attributes for atoms and bonds on the provided molecule.
-         *
-         * @param title SMILES title field
-         * @param mol   molecule
-         */
+        /// <summary>
+        /// Parses CXSMILES layer and set attributes for atoms and bonds on the provided molecule.
+        ///
+        /// <param name="title">SMILES title field</param>
+        /// <param name="mol">molecule</param>
+        /// </summary>
         private void ParseMolCXSMILES(string title, IAtomContainer mol)
         {
             CxSmilesState cxstate;
@@ -311,12 +311,12 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         * Parses CXSMILES layer and set attributes for atoms and bonds on the provided reaction.
-         *
-         * @param title SMILES title field
-         * @param rxn   parsed reaction
-         */
+        /// <summary>
+        /// Parses CXSMILES layer and set attributes for atoms and bonds on the provided reaction.
+        ///
+        /// <param name="title">SMILES title field</param>
+        /// <param name="rxn">parsed reaction</param>
+        /// </summary>
         private void ParseRxnCXSMILES(string title, IReaction rxn)
         {
             CxSmilesState cxstate;
@@ -364,13 +364,13 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         * Handle fragment grouping of a reaction that specifies certain disconnected components
-         * are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
-         *
-         * @param rxn reaction
-         * @param cxstate state
-         */
+        /// <summary>
+        /// Handle fragment grouping of a reaction that specifies certain disconnected components
+        /// are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
+        ///
+        /// <param name="rxn">reaction</param>
+        /// <param name="cxstate">state</param>
+        /// </summary>
         private void HandleFragmentGrouping(IReaction rxn, CxSmilesState cxstate)
         {
             // repartition/merge fragments
@@ -453,15 +453,15 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-         * Transfers the CXSMILES state onto the CDK atom/molecule data-structures.
-         *
-         * @param bldr      chem-object builder
-         * @param atoms     atoms parsed from the molecule or reaction. Reaction molecules are list
-         *                  left to right.
-         * @param atomToMol look-up of atoms to molecules when connectivity/sgroups need modification
-         * @param cxstate   the CXSMILES state to read from
-         */
+        /// <summary>
+        /// Transfers the CXSMILES state onto the CDK atom/molecule data-structures.
+        ///
+        /// <param name="bldr">chem-object builder</param>
+        /// <param name="atoms">atoms parsed from the molecule or reaction. Reaction molecules are list</param>
+        ///                  left to right.
+        /// <param name="atomToMol">look-up of atoms to molecules when connectivity/sgroups need modification</param>
+        /// <param name="cxstate">the CXSMILES state to read from</param>
+        /// </summary>
         private void AssignCxSmilesInfo(IChemObjectBuilder bldr,
                                         IChemObject chemObj,
                                         IList<IAtom> atoms,
@@ -704,38 +704,38 @@ namespace NCDK.Smiles
                 e.Key.SetProperty(CDKPropertyName.CTAB_SGROUPS, new List<Sgroup>(e.Value));
         }
 
-        /**
-         * Makes the Smiles parser set aromaticity as provided in the Smiles itself,
-         * without detecting it. Default false. Atoms will not be typed when set to
-         * true.
-         *
-         * @param preservingAromaticity bool to indicate if aromaticity is to be
-         *                              preserved.
-         * @see #kekulise
-         */
+        /// <summary>
+        /// Makes the Smiles parser set aromaticity as provided in the Smiles itself,
+        /// without detecting it. Default false. Atoms will not be typed when set to
+        /// true.
+        ///
+        /// <param name="preservingAromaticity">bool to indicate if aromaticity is to be</param>
+        ///                              preserved.
+        /// <seealso cref="kekulise"/>
+        /// </summary>
         [Obsolete]
         public void SetPreservingAromaticity(bool preservingAromaticity)
         {
             this.kekulise = !preservingAromaticity;
         }
 
-        /**
-         * Gets the (default false) setting to preserve aromaticity as provided in
-         * the Smiles itself.
-         *
-         * @return true or false indicating if aromaticity is preserved.
-         */
+        /// <summary>
+        /// Gets the (default false) setting to preserve aromaticity as provided in
+        /// the Smiles itself.
+        ///
+        /// <returns>true or false indicating if aromaticity is preserved.</returns>
+        /// </summary>
         [Obsolete]
         public bool IsPreservingAromaticity => !kekulise;
 
-        /**
-         * Indicated whether structures should be automatically kekulised if they
-         * are provided as aromatic. Kekulisation is on by default but can be
-         * turned off if it is believed the structures can be handled without
-         * assigned bond orders (not recommended).
-         *
-         * @param kekulise should structures be kekulised
-         */
+        /// <summary>
+        /// Indicated whether structures should be automatically kekulised if they
+        /// are provided as aromatic. Kekulisation is on by default but can be
+        /// turned off if it is believed the structures can be handled without
+        /// assigned bond orders (not recommended).
+        ///
+        /// <param name="kekulise">should structures be kekulised</param>
+        /// </summary>
         public void Kekulise(bool kekulise)
         {
             this.kekulise = kekulise;

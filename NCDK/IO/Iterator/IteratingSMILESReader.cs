@@ -29,27 +29,27 @@ using System.Diagnostics;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * Iterating SMILES file reader. It allows to iterate over all molecules
-     * in the SMILES file, without being read into memory all. Suitable
-     * for very large SMILES files. These SMILES files are expected to have one
-     * molecule on each line. If a line could not be parsed and empty molecule is
-     * returned and the property {@link #BAD_SMILES_INPUT} is set to the attempted
-     * input. The error is also logged.
-     *
-     * <p>For parsing each SMILES it still uses the normal SMILESReader.
-     *
-     * @cdk.module smiles
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @see org.openscience.cdk.io.SMILESReader
-     *
-     * @author     Egon Willighagen <egonw@sci.kun.nl>
-     * @cdk.created    2004-12-16
-     *
-     * @cdk.keyword    file format, SMILES
-     */
+    /// <summary>
+    /// Iterating SMILES file reader. It allows to iterate over all molecules
+    /// in the SMILES file, without being read into memory all. Suitable
+    /// for very large SMILES files. These SMILES files are expected to have one
+    /// molecule on each line. If a line could not be parsed and empty molecule is
+    /// returned and the property {@link #BAD_SMILES_INPUT} is set to the attempted
+    /// input. The error is also logged.
+    ///
+    /// <p>For parsing each SMILES it still uses the normal SMILESReader.
+    ///
+    // @cdk.module smiles
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @see org.openscience.cdk.io.SMILESReader
+    ///
+    // @author     Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.created    2004-12-16
+    ///
+    // @cdk.keyword    file format, SMILES
+    /// </summary>
     public class IteratingSMILESReader : DefaultIteratingChemObjectReader<IAtomContainer>
     {
         private TextReader input;
@@ -60,14 +60,14 @@ namespace NCDK.IO.Iterator
         /// <summary>Store the problem input as a property.</summary>
         public const string BAD_SMILES_INPUT = "bad.smiles.input";
 
-        /**
-         * Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
-         *
-         * @param  in  The Reader to read from
-         * @param builder The builder to use
-         * @see org.openscience.cdk.Default.ChemObjectBuilder
-         * @see org.openscience.cdk.silent.Silent.ChemObjectBuilder
-         */
+        /// <summary>
+        /// Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// <param name="builder">The builder to use</param>
+        /// @see org.openscience.cdk.Default.ChemObjectBuilder
+        /// @see org.openscience.cdk.silent.Silent.ChemObjectBuilder
+        /// </summary>
         public IteratingSMILESReader(TextReader ins, IChemObjectBuilder builder)
         {
             sp = new SmilesParser(builder);
@@ -75,28 +75,28 @@ namespace NCDK.IO.Iterator
             this.builder = builder;
         }
 
-        /**
-         * Constructs a new IteratingSMILESReader that can read Molecule from a given Stream and IChemObjectBuilder.
-         *
-         * @param in      The input stream
-         * @param builder The builder
-         */
+        /// <summary>
+        /// Constructs a new IteratingSMILESReader that can read Molecule from a given Stream and IChemObjectBuilder.
+        ///
+        /// <param name="in">The input stream</param>
+        /// <param name="builder">The builder</param>
+        /// </summary>
         public IteratingSMILESReader(Stream ins, IChemObjectBuilder builder)
            : this(new StreamReader(ins), builder)
         { }
 
-        /**
-         * Get the format for this reader.
-         *
-         * @return An instance of {@link NCDK.IO.Formats.SMILESFormat}
-         */
+        /// <summary>
+        /// Get the format for this reader.
+        ///
+        /// <returns>An instance of {@link NCDK.IO.Formats.SMILESFormat}</returns>
+        /// </summary>
         public override IResourceFormat Format => SMILESFormat.Instance;
 
-        /**
-         * Checks whether there is another molecule to read.
-         *
-         * @return  true if there are molecules to read, false otherwise
-         */
+        /// <summary>
+        /// Checks whether there is another molecule to read.
+        ///
+        /// <returns>true if there are molecules to read, false otherwise</returns>
+        /// </summary>
 
         public override IEnumerator<IAtomContainer> GetEnumerator()
         {
@@ -122,13 +122,13 @@ namespace NCDK.IO.Iterator
             yield break;
         }
 
-        /**
-         * Obtain the suffix after a line containing SMILES. The suffix follows
-         * any ' ' or '\t' termination characters.
-         *
-         * @param line input line
-         * @return the suffix - or an empty line
-         */
+        /// <summary>
+        /// Obtain the suffix after a line containing SMILES. The suffix follows
+        /// any ' ' or '\t' termination characters.
+        ///
+        /// <param name="line">input line</param>
+        /// <returns>the suffix - or an empty line</returns>
+        /// </summary>
         private string Suffix(string line)
         {
             for (int i = 0; i < line.Length; i++)
@@ -139,12 +139,12 @@ namespace NCDK.IO.Iterator
             return "";
         }
 
-        /**
-         * Read the SMILES given in the input line - or return an empty container.
-         *
-         * @param line input line
-         * @return the read container (or an empty one)
-         */
+        /// <summary>
+        /// Read the SMILES given in the input line - or return an empty container.
+        ///
+        /// <param name="line">input line</param>
+        /// <returns>the read container (or an empty one)</returns>
+        /// </summary>
         private IAtomContainer ReadSmiles(string line)
         {
             try
@@ -160,11 +160,11 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        /**
-         * Close the reader.
-         *
-         * @ if there is an error during closing
-         */
+        /// <summary>
+        /// Close the reader.
+        ///
+        // @ if there is an error during closing
+        /// </summary>
 
         public override void Close()
         {

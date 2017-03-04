@@ -21,17 +21,17 @@ using NCDK.Reactions.Types.Parameters;
 
 namespace NCDK.Types.Parameters
 {
-    /**
-     * Tests for ParameterReact implementations.
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// Tests for ParameterReact implementations.
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class ParameterReactTest : CDKTestCase
     {
-        /**
-         *  Constructor for the ParameterReactTest object.
-         */
+        /// <summary>
+        ///  Constructor for the ParameterReactTest object.
+        /// </summary>
         public ParameterReactTest()
             : base()
         { }

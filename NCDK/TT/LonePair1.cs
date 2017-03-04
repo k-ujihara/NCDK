@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -42,16 +43,16 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    /**
-     * A LonePair is an orbital primarily located with one Atom, containing
-     * two electrons.
-     *
-     * @cdk.module data
-     * @cdk.githash
-     *
-     * @cdk.keyword orbital
-     * @cdk.keyword lone-pair
-     */
+    /// <summary>
+    /// A LonePair is an orbital primarily located with one Atom, containing
+    /// two electrons.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @cdk.keyword orbital
+    // @cdk.keyword lone-pair
+    /// </summary>
     [Serializable]
     public class LonePair
         : ElectronContainer, ILonePair, ICloneable
@@ -62,36 +63,36 @@ namespace NCDK.Default
         /// <summary>The atom with which this lone pair is associated.</summary>
         protected IAtom atom;
 
-        /**
-         * Constructs an unconnected lone pair.
-         *
-         */
+        /// <summary>
+        /// Constructs an unconnected lone pair.
+        ///
+        /// </summary>
         public LonePair()
         {
             this.atom = null;
         }
 
-        /**
-         * Constructs an lone pair on an Atom.
-         *
-         * @param atom  Atom to which this lone pair is connected
-         */
+        /// <summary>
+        /// Constructs an lone pair on an Atom.
+        ///
+        /// <param name="atom">Atom to which this lone pair is connected</param>
+        /// </summary>
         public LonePair(IAtom atom)
         {
             this.atom = atom;
         }
 
-        /**
-         * The number of electrons in a LonePair.
-         */
+        /// <summary>
+        /// The number of electrons in a LonePair.
+        /// </summary>
         public override int? ElectronCount
         {
             get { return this.electronCount; }
         }
 
-        /**
-         * The associated Atom.
-         */
+        /// <summary>
+        /// The associated Atom.
+        /// </summary>
         public IAtom Atom
         {
             get { return atom; }
@@ -101,12 +102,12 @@ namespace NCDK.Default
                  NotifyChanged();             }
         }
 
-        /**
-         * Returns true if the given atom participates in this lone pair.
-         *
-         * @param   atom  The atom to be tested if it participates in this bond
-         * @return     true if this lone pair is associated with the atom
-         */
+        /// <summary>
+        /// Returns true if the given atom participates in this lone pair.
+        ///
+        /// <param name="atom">The atom to be tested if it participates in this bond</param>
+        /// <returns>true if this lone pair is associated with the atom</returns>
+        /// </summary>
         public bool Contains(IAtom atom)
         {
             return (this.atom == atom);
@@ -119,12 +120,12 @@ namespace NCDK.Default
             return clone;
         }
 
-        /**
-         * Returns a one line string representation of this LonePair.
-         * This method is conform RFC #9.
-         *
-         * @return    The string representation of this LonePair
-         */
+        /// <summary>
+        /// Returns a one line string representation of this LonePair.
+        /// This method is conform RFC #9.
+        ///
+        /// <returns>The string representation of this LonePair</returns>
+        /// </summary>
         public override string ToString()
         {
             StringBuilder resultString = new StringBuilder();
@@ -142,16 +143,16 @@ namespace NCDK.Default
 
 namespace NCDK.Silent
 {
-    /**
-     * A LonePair is an orbital primarily located with one Atom, containing
-     * two electrons.
-     *
-     * @cdk.module data
-     * @cdk.githash
-     *
-     * @cdk.keyword orbital
-     * @cdk.keyword lone-pair
-     */
+    /// <summary>
+    /// A LonePair is an orbital primarily located with one Atom, containing
+    /// two electrons.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @cdk.keyword orbital
+    // @cdk.keyword lone-pair
+    /// </summary>
     [Serializable]
     public class LonePair
         : ElectronContainer, ILonePair, ICloneable
@@ -162,36 +163,36 @@ namespace NCDK.Silent
         /// <summary>The atom with which this lone pair is associated.</summary>
         protected IAtom atom;
 
-        /**
-         * Constructs an unconnected lone pair.
-         *
-         */
+        /// <summary>
+        /// Constructs an unconnected lone pair.
+        ///
+        /// </summary>
         public LonePair()
         {
             this.atom = null;
         }
 
-        /**
-         * Constructs an lone pair on an Atom.
-         *
-         * @param atom  Atom to which this lone pair is connected
-         */
+        /// <summary>
+        /// Constructs an lone pair on an Atom.
+        ///
+        /// <param name="atom">Atom to which this lone pair is connected</param>
+        /// </summary>
         public LonePair(IAtom atom)
         {
             this.atom = atom;
         }
 
-        /**
-         * The number of electrons in a LonePair.
-         */
+        /// <summary>
+        /// The number of electrons in a LonePair.
+        /// </summary>
         public override int? ElectronCount
         {
             get { return this.electronCount; }
         }
 
-        /**
-         * The associated Atom.
-         */
+        /// <summary>
+        /// The associated Atom.
+        /// </summary>
         public IAtom Atom
         {
             get { return atom; }
@@ -201,12 +202,12 @@ namespace NCDK.Silent
                             }
         }
 
-        /**
-         * Returns true if the given atom participates in this lone pair.
-         *
-         * @param   atom  The atom to be tested if it participates in this bond
-         * @return     true if this lone pair is associated with the atom
-         */
+        /// <summary>
+        /// Returns true if the given atom participates in this lone pair.
+        ///
+        /// <param name="atom">The atom to be tested if it participates in this bond</param>
+        /// <returns>true if this lone pair is associated with the atom</returns>
+        /// </summary>
         public bool Contains(IAtom atom)
         {
             return (this.atom == atom);
@@ -219,12 +220,12 @@ namespace NCDK.Silent
             return clone;
         }
 
-        /**
-         * Returns a one line string representation of this LonePair.
-         * This method is conform RFC #9.
-         *
-         * @return    The string representation of this LonePair
-         */
+        /// <summary>
+        /// Returns a one line string representation of this LonePair.
+        /// This method is conform RFC #9.
+        ///
+        /// <returns>The string representation of this LonePair</returns>
+        /// </summary>
         public override string ToString()
         {
             StringBuilder resultString = new StringBuilder();

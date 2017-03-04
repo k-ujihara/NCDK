@@ -28,35 +28,35 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Stereo
 {
-    /**
-     * Verifies the types of atoms accepted as exhibiting stereo chemistry.
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Verifies the types of atoms accepted as exhibiting stereo chemistry.
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class StereocentersTest
     {
 
         [TestMethod()]
-        public void boron_v4_anion()
+        public void Boron_v4_anion()
         {
 
             CreateTetrahedral("[BH-](C)(N)O");
             CreateTetrahedral("[B-](C)(N)(O)CC");
 
-            none("[BH2-](C)(C)");
-            none("[BH3-](C)");
-            none("[BH4-]");
+            None("[BH2-](C)(C)");
+            None("[BH3-](C)");
+            None("[BH4-]");
 
-            none("[B-](=C)(=C)(=C)(=C)"); // abnormal valence
-            none("[B-](=C)(=C)");
-            none("[B-](=C)(C)(C)(C)");
+            None("[B-](=C)(=C)(=C)(=C)"); // abnormal valence
+            None("[B-](=C)(=C)");
+            None("[B-](=C)(C)(C)(C)");
 
-            none("B(C)");
-            none("B(C)(N)");
-            none("B(C)(N)O");
-            none("B(C)(N)(O)CC"); // abnormal valence
+            None("B(C)");
+            None("B(C)(N)");
+            None("B(C)(N)O");
+            None("B(C)(N)(O)CC"); // abnormal valence
         }
 
         [TestMethod()]
@@ -68,27 +68,27 @@ namespace NCDK.Stereo
             CreateTetrahedral("C(C)(N)(O)CC");
 
             // reject when > 1 hydrogen or < 4 neighbors
-            none("C");
-            none("C(C)");
-            none("C(C)(N)");
-            none("C(=C)(C)N");
+            None("C");
+            None("C(C)");
+            None("C(C)(N)");
+            None("C(=C)(C)N");
             Bicoordinate("C(=CC)=CC");
-            none("C(=C)(=C)(=C)=C"); // nb abnormal valence
-            none("C#N");
+            None("C(=C)(=C)(=C)=C"); // nb abnormal valence
+            None("C#N");
         }
 
         [TestMethod()]
         public void Carbon_cation()
         {
-            none("[C+](C)(N)(O)");
-            none("[C+](C)(N)(O)CC"); // nb abnormal valence
+            None("[C+](C)(N)(O)");
+            None("[C+](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
         public void Carbon_anion()
         {
-            none("[C-](C)(N)(O)");
-            none("[C-](C)(N)(O)CC"); // nb abnormal valence
+            None("[C-](C)(N)(O)");
+            None("[C-](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
@@ -97,190 +97,190 @@ namespace NCDK.Stereo
             CreateTetrahedral("[SiH](C)(N)(O)");
             CreateTetrahedral("[Si](C)(N)(O)CC");
 
-            none("[Si](=C)(C)C");
-            none("[Si](=C)=C");
-            none("[Si](#C)C");
+            None("[Si](=C)(C)C");
+            None("[Si](=C)=C");
+            None("[Si](#C)C");
         }
 
         [TestMethod()]
         public void Silicon_cation()
         {
-            none("[Si+](C)(N)(O)");
-            none("[Si+](C)(N)(O)CC"); // nb abnormal valence
+            None("[Si+](C)(N)(O)");
+            None("[Si+](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
         public void Silicon_anion()
         {
-            none("[Si-](C)(N)(O)");
-            none("[Si-](C)(N)(O)CC"); // nb abnormal valence
+            None("[Si-](C)(N)(O)");
+            None("[Si-](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
-        public void germanium_v4_neutral()
+        public void Germanium_v4_neutral()
         {
             CreateTetrahedral("[GeH](C)(N)(O)");
             CreateTetrahedral("[Ge](C)(N)(O)CC");
 
-            none("[Ge](=C)(C)C");
-            none("[Ge](=C)=C");
-            none("[Ge](#C)C");
+            None("[Ge](=C)(C)C");
+            None("[Ge](=C)=C");
+            None("[Ge](#C)C");
         }
 
         [TestMethod()]
-        public void germanium_cation()
+        public void Germanium_cation()
         {
-            none("[Ge+](C)(N)(O)");
-            none("[Ge+](C)(N)(O)CC"); // nb abnormal valence
+            None("[Ge+](C)(N)(O)");
+            None("[Ge+](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
-        public void germanium_anion()
+        public void Germanium_anion()
         {
-            none("[Ge-](C)(N)(O)");
-            none("[Ge-](C)(N)(O)CC"); // nb abnormal valence
+            None("[Ge-](C)(N)(O)");
+            None("[Ge-](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
-        public void tin_v4_neutral()
+        public void Tin_v4_neutral()
         {
             CreateTetrahedral("[SnH](C)(N)(O)");
             CreateTetrahedral("[Sn](C)(N)(O)CC");
 
-            none("[Sn](=C)(C)C");
-            none("[Sn](=C)=C");
-            none("[Sn](#C)C");
+            None("[Sn](=C)(C)C");
+            None("[Sn](=C)=C");
+            None("[Sn](#C)C");
         }
 
         [TestMethod()]
-        public void tin_cation()
+        public void Tin_cation()
         {
-            none("[Sn+](C)(N)(O)");
-            none("[Sn+](C)(N)(O)CC"); // nb abnormal valence
+            None("[Sn+](C)(N)(O)");
+            None("[Sn+](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
-        public void tin_anion()
+        public void Tin_anion()
         {
-            none("[Sn-](C)(N)(O)");
-            none("[Sn-](C)(N)(O)CC"); // nb abnormal valence
+            None("[Sn-](C)(N)(O)");
+            None("[Sn-](C)(N)(O)CC"); // nb abnormal valence
         }
 
         [TestMethod()]
-        public void nitrogen_v3_neutral()
+        public void Nitrogen_v3_neutral()
         {
 
             // nitrogen inversion -> reject
-            none("N");
-            none("N(C)(N)(O)");
-            none("N(=C)(C)");
+            None("N");
+            None("N(C)(N)(O)");
+            None("N(=C)(C)");
         }
 
         [TestMethod()]
-        public void nitrogen_v3_neutral_in_small_ring()
+        public void Nitrogen_v3_neutral_in_small_ring()
         {
             CreateTetrahedral("N(C)(C1)O1");
             CreateTetrahedral("N(C)(C1)C1C");
         }
 
         [TestMethod()]
-        public void nitrogen_v3_neutral_in_larger_ring()
+        public void Nitrogen_v3_neutral_in_larger_ring()
         {
-            none("N(C)(C1)CCCC1"); // n.b. equivalence checked later
-            none("N(C)(C1)CCCC1C");
+            None("N(C)(C1)CCCC1"); // n.b. equivalence checked later
+            None("N(C)(C1)CCCC1C");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void nitrogen_v3_neutral_reject_H()
+        public void Nitrogen_v3_neutral_reject_H()
         {
-            none("N(C1)C1"); // n.b. equivalence checked later
-            none("N(C1)C1C");
+            None("N(C1)C1"); // n.b. equivalence checked later
+            None("N(C1)C1C");
         }
 
         [TestMethod()]
-        public void nitrogen_v4_cation()
+        public void Nitrogen_v4_cation()
         {
             CreateTetrahedral("[N+](C)(N)(O)CC");
-            none("[N+](=C)(C)C");
-            none("[N+](=C)=C");
-            none("[N+](#C)C");
+            None("[N+](=C)(C)C");
+            None("[N+](=C)=C");
+            None("[N+](#C)C");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void nitrogen_v4_cation_reject_h()
+        public void Nitrogen_v4_cation_reject_h()
         {
-            none("[NH+](=C)(C)C");
-            none("[NH2+](C)C");
-            none("[NH3+]C");
-            none("[NH4+]");
+            None("[NH+](=C)(C)C");
+            None("[NH2+](C)C");
+            None("[NH3+]C");
+            None("[NH4+]");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void nitrogen_v4_cation_reject_h_on_terminal()
+        public void Nitrogen_v4_cation_reject_h_on_terminal()
         {
-            none("[N+](N)([NH])(C)CC");
-            none("[N+](O)([O])(C)CC");
-            none("[N+](S)([S])(C)CC");
-            none("[N+]([SeH])([Se])(C)C");
-            none("[N+]([TeH])([Te])(C)C");
+            None("[N+](N)([NH])(C)CC");
+            None("[N+](O)([O])(C)CC");
+            None("[N+](S)([S])(C)CC");
+            None("[N+]([SeH])([Se])(C)C");
+            None("[N+]([TeH])([Te])(C)C");
         }
 
         [TestMethod()]
-        public void nitrogen_v5_neutral()
+        public void Nitrogen_v5_neutral()
         {
             CreateTetrahedral("N(=C)(C)(N)O");
-            none("N(=C)(=C)C");
-            none("N(#C)=C");
+            None("N(=C)(=C)C");
+            None("N(#C)=C");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void nitrogen_v5_neutral_reject_h()
+        public void Nitrogen_v5_neutral_reject_h()
         {
-            none("N(=C)(C)(C)");
-            none("N(=C)(C)");
-            none("N(=C)");
+            None("N(=C)(C)(C)");
+            None("N(=C)(C)");
+            None("N(=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void nitrogen_v5_neutral_reject_h_on_terminal()
+        public void Nitrogen_v5_neutral_reject_h_on_terminal()
         {
-            none("N(N)(=N)(C)CC");
-            none("N(O)(=O)(C)CC");
-            none("N(S)(=S)(C)CC");
-            none("N([SeH])(=[Se])(C)C");
-            none("N([TeH])(=[Te])(C)C");
+            None("N(N)(=N)(C)CC");
+            None("N(O)(=O)(C)CC");
+            None("N(S)(=S)(C)CC");
+            None("N([SeH])(=[Se])(C)C");
+            None("N([TeH])(=[Te])(C)C");
         }
 
         // n.b. undocumented by the InChI tech manual
@@ -288,36 +288,36 @@ namespace NCDK.Stereo
         public void Phosphorus_v3_neutral()
         {
             CreateTetrahedral("P(C)(N)(O)");
-            none("P(=C)(C)");
-            none("P(#C)");
+            None("P(=C)(C)");
+            None("P(#C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v3_neutral_reject_H()
         {
-            none("P(C)(C)");
-            none("P(C)");
-            none("P");
+            None("P(C)(C)");
+            None("P(C)");
+            None("P");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v3_neutral_reject_h_on_terminal()
         {
-            none("P(N)([NH4])C");
-            none("P(S)([SH4])C");
+            None("P(N)([NH4])C");
+            None("P(S)([SH4])C");
 
         }
 
@@ -325,465 +325,465 @@ namespace NCDK.Stereo
         public void Phosphorus_v4_cation()
         {
             CreateTetrahedral("[P+](C)(N)(O)CC");
-            none("[P+](=C)(C)C");
-            none("[P+](=C)=C");
-            none("[P+](#C)C");
+            None("[P+](=C)(C)C");
+            None("[P+](=C)=C");
+            None("[P+](#C)C");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor. Since InChI software v.
-         * 1.02-standard (2009), phosphines and arsines are always treated as
-         * stereogenic even with H atom neighbors
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor. Since InChI software v.
+        /// 1.02-standard (2009), phosphines and arsines are always treated as
+        /// stereogenic even with H atom neighbors
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v4_cation_Accept_h()
         {
             CreateTetrahedral("[PH+](C)(N)O");
-            none("[PH2+](C)C");
-            none("[PH3+]C");
-            none("[PH4+]");
+            None("[PH2+](C)C");
+            None("[PH3+]C");
+            None("[PH4+]");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v4_cation_reject_h_on_terminal()
         {
-            none("[P+](N)([N])(C)CC");
-            none("[P+](O)([O])(C)CC");
-            none("[P+](S)([S])(C)CC");
-            none("[P+]([SeH])([Se])(C)CC");
-            none("[P+]([TeH])([Te])(C)CC");
+            None("[P+](N)([N])(C)CC");
+            None("[P+](O)([O])(C)CC");
+            None("[P+](S)([S])(C)CC");
+            None("[P+]([SeH])([Se])(C)CC");
+            None("[P+]([TeH])([Te])(C)CC");
         }
 
         [TestMethod()]
         public void Phosphorus_v5_neutral()
         {
             CreateTetrahedral("P(=C)(C)(N)O");
-            none("P(=C)(=C)C");
-            none("P(#C)=C");
+            None("P(=C)(=C)C");
+            None("P(#C)=C");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v5_neutral_reject_h()
         {
-            none("P(=C)(C)(C)");
-            none("P(=C)(C)");
-            none("P(=C)");
+            None("P(=C)(C)(C)");
+            None("P(=C)(C)");
+            None("P(=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Phosphorus_v5_neutral_reject_h_on_terminal()
         {
-            none("P(=N)(N)(C)CC");
-            none("P(=O)(O)(C)CC");
-            none("P(=S)(S)(C)CC");
-            none("P(=[Se])([SeH])(C)C");
-            none("P(=[Te])([TeH])(C)C");
+            None("P(=N)(N)(C)CC");
+            None("P(=O)(O)(C)CC");
+            None("P(=S)(S)(C)CC");
+            None("P(=[Se])([SeH])(C)C");
+            None("P(=[Te])([TeH])(C)C");
         }
 
         [TestMethod()]
         public void Arsenic_v4_cation()
         {
             CreateTetrahedral("[As+](C)(N)(O)CC");
-            none("[As+](=C)(C)(C)");
-            none("[As+](=C)(=C)");
-            none("[As+](#C)(C)");
+            None("[As+](=C)(C)(C)");
+            None("[As+](=C)(=C)");
+            None("[As+](#C)(C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor. Since InChI software v.
-         * 1.02-standard (2009), phosphines and arsines are always treated as
-         * stereogenic even with H atom neighbors
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor. Since InChI software v.
+        /// 1.02-standard (2009), phosphines and arsines are always treated as
+        /// stereogenic even with H atom neighbors
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Arsenic_v4_cation_Accept_h()
         {
             CreateTetrahedral("[AsH+](C)(N)O");
-            none("[AsH2+](C)C");
-            none("[AsH3+]C");
-            none("[AsH4+]");
+            None("[AsH2+](C)C");
+            None("[AsH3+]C");
+            None("[AsH4+]");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void Arsenic_v4_cation_reject_h_on_terminal()
         {
-            none("[As+](N)([N])(C)CC");
-            none("[As+](O)([O])(C)CC");
-            none("[As+](S)([S])(C)CC");
-            none("[As+]([SeH])([Se])(C)CC");
-            none("[As+]([TeH])([Te])(C)CC");
+            None("[As+](N)([N])(C)CC");
+            None("[As+](O)([O])(C)CC");
+            None("[As+](S)([S])(C)CC");
+            None("[As+]([SeH])([Se])(C)CC");
+            None("[As+]([TeH])([Te])(C)CC");
         }
 
         [TestMethod()]
-        public void sulphur_4v_neutral()
+        public void Sulphur_4v_neutral()
         {
             CreateTetrahedral("S(=O)(C)CC");
-            none("S(C)(N)(O)CC");
+            None("S(C)(N)(O)CC");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_4v_neutral_reject_h()
+        public void Sulphur_4v_neutral_reject_h()
         {
-            none("S(=O)(C)");
-            none("S(=O)");
+            None("S(=O)(C)");
+            None("S(=O)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_4v_neutral_reject_h_on_terminal()
+        public void Sulphur_4v_neutral_reject_h_on_terminal()
         {
-            none("S(=N)(N)C");
-            none("S(=O)(O)C");
-            none("S(=S)(S)C");
-            none("S(=[Se])([SeH])C");
-            none("S(=[Te])([TeH])C");
+            None("S(=N)(N)C");
+            None("S(=O)(O)C");
+            None("S(=S)(S)C");
+            None("S(=[Se])([SeH])C");
+            None("S(=[Te])([TeH])C");
 
             CreateTetrahedral("S(=O)(S)N");
         }
 
         [TestMethod()]
-        public void sulphur_3v_cation()
+        public void Sulphur_3v_cation()
         {
             CreateTetrahedral("[S+](C)(N)(O)");
-            none("[S+](=C)(C)");
+            None("[S+](=C)(C)");
         }
 
         [TestMethod()]
-        public void sulphur_1v_anion()
+        public void Sulphur_1v_anion()
         {
-            none("[S-](C)");
+            None("[S-](C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_3v_cation_reject_h()
+        public void Sulphur_3v_cation_reject_h()
         {
-            none("[SH+](C)(C)");
-            none("[SH2+](C)");
+            None("[SH+](C)(C)");
+            None("[SH2+](C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_3v_cation_reject_h_on_terminal()
+        public void Sulphur_3v_cation_reject_h_on_terminal()
         {
-            none("[S+](N)([N])(C)");
-            none("[S+](O)([O])(C)");
-            none("[S+]([SeH])([Se])(C)");
-            none("[S+]([TeH])([Te])(C)");
+            None("[S+](N)([N])(C)");
+            None("[S+](O)([O])(C)");
+            None("[S+]([SeH])([Se])(C)");
+            None("[S+]([TeH])([Te])(C)");
 
             CreateTetrahedral("[S+](O)(OC)(C)");
             CreateTetrahedral("[S+](OC)(OC)(C)");
         }
 
         [TestMethod()]
-        public void sulphur_6v_neutral()
+        public void Sulphur_6v_neutral()
         {
             CreateTetrahedral("S(=C)(=CC)(C)(CC)");
-            none("S(=C)(C)(CC)(CCC)(CCCC)");
-            none("S(C)(C)(CC)(CCCC)(CCCC)(CCCCC)");
+            None("S(=C)(C)(CC)(CCC)(CCCC)");
+            None("S(C)(C)(CC)(CCCC)(CCCC)(CCCCC)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_6v_neutral_reject_h()
+        public void Sulphur_6v_neutral_reject_h()
         {
-            none("S(=C)(=C)(C)");
-            none("S(=C)(=C)");
+            None("S(=C)(=C)(C)");
+            None("S(=C)(=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_6v_neutral_reject_h_on_terminal()
+        public void Sulphur_6v_neutral_reject_h_on_terminal()
         {
-            none("S(=N)(=C)(N)(C)");
-            none("S(=O)(=C)(O)(C)");
-            none("S(=S)(=C)(S)(C)");
-            none("S(=[Se])(=C)([SeH])(C)");
-            none("S(=[Te])(=C)([TeH])(C)");
+            None("S(=N)(=C)(N)(C)");
+            None("S(=O)(=C)(O)(C)");
+            None("S(=S)(=C)(S)(C)");
+            None("S(=[Se])(=C)([SeH])(C)");
+            None("S(=[Te])(=C)([TeH])(C)");
 
             CreateTetrahedral("S(=O)(=N)(S)(C)");
         }
 
         [TestMethod()]
-        public void sulphur_5v_cation()
+        public void Sulphur_5v_cation()
         {
             CreateTetrahedral("[S+](=C)(N)(O)(C)");
-            none("[S+](C)(C)(C)(C)(C)");
+            None("[S+](C)(C)(C)(C)(C)");
         }
 
         [TestMethod()]
-        public void sulphur_3v_anion()
+        public void Sulphur_3v_anion()
         {
-            none("[S-](C)(C)(C)");
-            none("[S-](=C)(C)");
+            None("[S-](C)(C)(C)");
+            None("[S-](=C)(C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_5v_cation_reject_h()
+        public void Sulphur_5v_cation_reject_h()
         {
-            none("[SH+](=C)(CC)(CCC)");
-            none("[SH2+](=C)(C)");
-            none("[SH3+](=C)");
+            None("[SH+](=C)(CC)(CCC)");
+            None("[SH2+](=C)(C)");
+            None("[SH3+](=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void sulphur_5v_cation_reject_h_on_terminal()
+        public void Sulphur_5v_cation_reject_h_on_terminal()
         {
-            none("[S+](=N)(N)(C)(CC)");
-            none("[S+](=O)(O)(C)(CC)");
-            none("[S+](=[Se])([SeH])(C)(CC)");
-            none("[S+](=[Te])([TeH])(C)(CC)");
+            None("[S+](=N)(N)(C)(CC)");
+            None("[S+](=O)(O)(C)(CC)");
+            None("[S+](=[Se])([SeH])(C)(CC)");
+            None("[S+](=[Te])([TeH])(C)(CC)");
 
             CreateTetrahedral("[S+](=O)(N)(C)(CC)");
             CreateTetrahedral("[S+](=O)(N)(S)(CC)");
         }
 
         [TestMethod()]
-        public void selenium_4v_neutral()
+        public void Selenium_4v_neutral()
         {
             CreateTetrahedral("[Se](=O)(C)(CC)");
-            none("[Se](C)(CC)(CCC)(CCCC)");
+            None("[Se](C)(CC)(CCC)(CCCC)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_4v_neutral_reject_h()
+        public void Selenium_4v_neutral_reject_h()
         {
-            none("[SeH](=O)(C)");
-            none("[SeH2](=O)");
+            None("[SeH](=O)(C)");
+            None("[SeH2](=O)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_4v_neutral_reject_h_on_terminal()
+        public void Selenium_4v_neutral_reject_h_on_terminal()
         {
-            none("[Se](=N)(N)C");
-            none("[Se](=O)(O)C");
-            none("[Se](=S)(S)C");
-            none("[Se](=[Se])([SeH])C");
-            none("[Se](=[Te])([TeH])C");
+            None("[Se](=N)(N)C");
+            None("[Se](=O)(O)C");
+            None("[Se](=S)(S)C");
+            None("[Se](=[Se])([SeH])C");
+            None("[Se](=[Te])([TeH])C");
 
             CreateTetrahedral("[Se](=O)(S)N");
         }
 
         [TestMethod()]
-        public void selenium_3v_cation()
+        public void Selenium_3v_cation()
         {
             CreateTetrahedral("[Se+](C)(CC)(CCC)");
-            none("[Se+](=C)(C)");
+            None("[Se+](=C)(C)");
         }
 
         [TestMethod()]
-        public void selenium_1v_anion()
+        public void Selenium_1v_anion()
         {
-            none("[Se-](C)");
+            None("[Se-](C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_3v_cation_reject_h()
+        public void Selenium_3v_cation_reject_h()
         {
-            none("[SeH+](C)(C)");
-            none("[SeH2+](C)");
+            None("[SeH+](C)(C)");
+            None("[SeH2+](C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_3v_cation_reject_h_on_terminal()
+        public void Selenium_3v_cation_reject_h_on_terminal()
         {
-            none("[Se+](N)(=N)(C)C");
-            none("[Se+](O)(=O)(C)C");
-            none("[Se+](O)(=O)(C)C");
-            none("[Se+]([SeH])(=[Se])(C)C");
-            none("[Se+]([TeH])(=[Te])(C)C");
+            None("[Se+](N)(=N)(C)C");
+            None("[Se+](O)(=O)(C)C");
+            None("[Se+](O)(=O)(C)C");
+            None("[Se+]([SeH])(=[Se])(C)C");
+            None("[Se+]([TeH])(=[Te])(C)C");
 
             CreateTetrahedral("[Se+](O)(=N)([SeH])C");
             CreateTetrahedral("[Se+](O)(=N)(C)CC");
         }
 
         [TestMethod()]
-        public void selenium_6v_neutral()
+        public void Selenium_6v_neutral()
         {
             CreateTetrahedral("[Se](=C)(=CC)(C)(CC)");
-            none("[Se](=C)(C)(CC)(CCC)(CCCC)");
-            none("[Se](C)(C)(CC)(CCC)(CCCC)(CCCC)");
+            None("[Se](=C)(C)(CC)(CCC)(CCCC)");
+            None("[Se](C)(C)(CC)(CCC)(CCCC)(CCCC)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_6v_neutral_reject_h()
+        public void Selenium_6v_neutral_reject_h()
         {
-            none("[SeH](=C)(=C)(C)");
-            none("[SeH2](=C)(=C)");
+            None("[SeH](=C)(=C)(C)");
+            None("[SeH2](=C)(=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_6v_neutral_reject_h_on_terminal()
+        public void Selenium_6v_neutral_reject_h_on_terminal()
         {
-            none("[Se](=N)(=N)(N)(C)");
-            none("[Se](=O)(=O)(O)(C)");
-            none("[Se](=S)(=S)(S)(C)");
-            none("[Se](=[Se])(=[Se])([SeH])(C)");
-            none("[Se](=[Te])(=[Te])([TeH])(C)");
+            None("[Se](=N)(=N)(N)(C)");
+            None("[Se](=O)(=O)(O)(C)");
+            None("[Se](=S)(=S)(S)(C)");
+            None("[Se](=[Se])(=[Se])([SeH])(C)");
+            None("[Se](=[Te])(=[Te])([TeH])(C)");
 
             CreateTetrahedral("[Se](=O)(=N)(S)(C)");
         }
 
         [TestMethod()]
-        public void selenium_5v_cation()
+        public void Selenium_5v_cation()
         {
             CreateTetrahedral("[Se+](=C)(CC)(CCC)(CCCC)");
-            none("[Se+](C)(CC)(CCC)(CCCC)(CCCCC)");
+            None("[Se+](C)(CC)(CCC)(CCCC)(CCCCC)");
         }
 
         [TestMethod()]
-        public void selenium_3v_anion()
+        public void Selenium_3v_anion()
         {
-            none("[Se-](C)(C)(C)");
-            none("[Se-](=C)(C)");
+            None("[Se-](C)(C)(C)");
+            None("[Se-](=C)(C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (a) A terminal H atom neighbor
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (a) A terminal H atom neighbor
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_5v_cation_reject_h()
+        public void Selenium_5v_cation_reject_h()
         {
-            none("[SeH+](=C)(C)(CC)");
-            none("[SeH2+](=C)(C)");
-            none("[SeH3+](=C)");
+            None("[SeH+](=C)(C)(CC)");
+            None("[SeH2+](=C)(C)");
+            None("[SeH3+](=C)");
         }
 
-        /**
-         * An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
-         * if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
-         * connected by any kind of bond, where X is O, S, Se, Te, or N.
-         *
-         * @
-         */
+        /// <summary>
+        /// An atom or positive ion N, P, As, S, or Se is not treated as stereogenic
+        /// if it has - (b) At least two terminal neighbors, XHm and XHn, (n+m>0)
+        /// connected by any kind of bond, where X is O, S, Se, Te, or N.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
-        public void selenium_5v_cation_reject_h_on_terminal()
+        public void Selenium_5v_cation_reject_h_on_terminal()
         {
-            none("[Se+](=N)(N)(C)(CC)");
-            none("[Se+](=O)(O)(C)(CC)");
-            none("[Se+](=[Se])([SeH])(C)(CC)");
-            none("[Se+](=[Te])([TeH])(C)(CC)");
+            None("[Se+](=N)(N)(C)(CC)");
+            None("[Se+](=O)(O)(C)(CC)");
+            None("[Se+](=[Se])([SeH])(C)(CC)");
+            None("[Se+](=[Te])([TeH])(C)(CC)");
 
             CreateTetrahedral("[Se+](=O)(N)(C)(CC)");
             CreateTetrahedral("[Se+](=O)(N)(S)(CC)");
@@ -797,9 +797,9 @@ namespace NCDK.Stereo
             Geometric("C(=CC)C");
             Geometric("[CH](=CC)C");
             Geometric("C([H])(=CC)C");
-            none("[CH2](=CC)");
+            None("[CH2](=CC)");
             Bicoordinate("C(=C)(=CC)");
-            none("C(#CC)C");
+            None("C(#CC)C");
         }
 
         [TestMethod()]
@@ -807,66 +807,66 @@ namespace NCDK.Stereo
         {
             Geometric("[SiH](=[SiH]C)C");
             Geometric("[Si]([H])(=[SiH]C)C");
-            none("[Si](=C)(=CC)");
-            none("[Si](#CC)C");
+            None("[Si](=C)(=CC)");
+            None("[Si](#CC)C");
         }
 
         [TestMethod()]
-        public void germanium_neutral_geometric()
+        public void Germanium_neutral_geometric()
         {
             Geometric("[GeH](=[GeH]C)C");
             Geometric("[Ge]([H])(=[GeH]C)C");
-            none("[Ge](=C)(=CC)");
-            none("[Ge](#CC)C");
+            None("[Ge](=C)(=CC)");
+            None("[Ge](#CC)C");
         }
 
         [TestMethod()]
-        public void nitrogen_neutral_geometric()
+        public void Nitrogen_neutral_geometric()
         {
             Geometric("N(=NC)C");
-            none("N(=NC)");
-            none("N(=N)C");
-            none("N(=N)");
+            None("N(=NC)");
+            None("N(=N)C");
+            None("N(=N)");
         }
 
         [TestMethod()]
-        public void nitrogen_cation_geometric()
+        public void Nitrogen_cation_geometric()
         {
             Geometric("[NH+](=[NH+]C)C");
             Geometric("[N+]([H])(=[NH+]C)C");
-            none("[NH2+](=[NH+]C)C");
+            None("[NH2+](=[NH+]C)C");
         }
 
         // assert the first atom of the SMILES is accepted as a tetrahedral center
         void CreateTetrahedral(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.Type.Tetracoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tetracoordinate, smi + " was not accepted");
         }
 
         // assert the first atom of the SMILES is accepted as a geometric center
         void Geometric(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.Type.Tricoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Tricoordinate, smi + " was not accepted");
         }
 
         // assert the first atom of the SMILES is accepted as a bicoordinate center
         void Bicoordinate(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.Type.Bicoordinate, smi + " was not accepted");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.Bicoordinate, smi + " was not accepted");
         }
 
         // assert the first atom of the SMILES is non stereogenic
-        void none(string smi)
+        void None(string smi)
         {
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            Test(sp.ParseSmiles(smi), Stereocenters.Type.None, smi + " was not rejected");
+            Test(sp.ParseSmiles(smi), Stereocenters.CoordinateTypes.None, smi + " was not rejected");
         }
 
         // check if the first atom of the container is accepted
-        void Test(IAtomContainer container, Stereocenters.Type type, string mesg)
+        void Test(IAtomContainer container, Stereocenters.CoordinateTypes type, string mesg)
         {
             Assert.AreEqual(Stereocenters.Of(container).ElementType(0), type, mesg);
             AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(container);

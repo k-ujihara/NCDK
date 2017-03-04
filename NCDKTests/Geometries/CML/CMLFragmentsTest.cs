@@ -28,14 +28,14 @@ using System.Text;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * Atomic tests for reading CML documents. All tested CML strings are valid CML 2,
-     * as can be determined in cdk/src/org.openscience.cdk/io/cml/cmlTestFramework.xml.
-     *
-     * @cdk.module test-io
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// Atomic tests for reading CML documents. All tested CML strings are valid CML 2,
+    /// as can be determined in cdk/src/org.openscience.cdk/io/cml/cmlTestFramework.xml.
+    ///
+    // @cdk.module test-io
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     [TestClass()]
     public class CMLFragmentsTest : CDKTestCase
     {
@@ -448,9 +448,9 @@ namespace NCDK.IO.CML
             return chemFile;
         }
 
-        /**
-         * Tests whether the file is indeed a single molecule file
-         */
+        /// <summary>
+        /// Tests whether the file is indeed a single molecule file
+        /// </summary>
         private IAtomContainer CheckForSingleMoleculeFile(IChemFile chemFile)
         {
             return CheckForXMoleculeFile(chemFile, 1);

@@ -28,34 +28,29 @@ using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Generates an extended fingerprint for a given <see cref="IAtomContainer"/>, that
-     *:the {@link Fingerprinter} with additional bits describing ring
-    // features.
-     *
+    /// <summary>
+    /// Generates an extended fingerprint for a given <see cref="IAtomContainer"/>, that
+    /// the <see cref="Fingerprinter"/> with additional bits describing ring
+    /// features.
+    /// </summary>
+    /// <see cref="Fingerprinter"/>
     // @author         shk3
     // @cdk.created    2006-01-13
     // @cdk.keyword    fingerprint
     // @cdk.keyword    similarity
     // @cdk.module     fingerprint
     // @cdk.githash
-     *
-    // @see            org.openscience.cdk.fingerprint.Fingerprinter
-     */
-#if TEST
-	public
-#endif
-    class ExtendedFingerprinter : IFingerprinter
+    internal class ExtendedFingerprinter : IFingerprinter
     {
 
         private const int RESERVED_BITS = 25;
 
         private Fingerprinter fingerprinter = null;
 
-        /**
-        // Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
-        // and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
-         */
+        /// <summary>
+        /// Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
+        /// and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
+        /// </summary>
         public ExtendedFingerprinter()
             : this(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH)
         { }
@@ -64,30 +59,28 @@ namespace NCDK.Fingerprint
            : this(size, Fingerprinter.DEFAULT_SEARCH_DEPTH)
         { }
 
-        /**
-        // Constructs a fingerprint generator that creates fingerprints of
-        // the given size, using a generation algorithm with the given search
-        // depth.
-         *
-        // @param  size        The desired size of the fingerprint
-        // @param  searchDepth The desired depth of search
-         */
+        /// <summary>
+        /// Constructs a fingerprint generator that creates fingerprints of
+        /// the given size, using a generation algorithm with the given search
+        /// depth.
+        /// </summary>
+        /// <param name="size">The desired size of the fingerprint</param>
+        /// <param name="searchDepth">The desired depth of search</param>
         public ExtendedFingerprinter(int size, int searchDepth)
         {
             this.fingerprinter = new Fingerprinter(size - RESERVED_BITS, searchDepth);
         }
 
-        /**
-        // Generates a fingerprint of the default size for the given
-        // AtomContainer, using path and ring metrics. It contains the
-        // informations from GetBitFingerprint() and bits which tell if the structure
-        // has 0 rings, 1 or less rings, 2 or less rings ... 10 or less rings
-        // (referring to smallest set of smallest rings) and bits which tell if
-        // there is a fused ring system with 1,2...8 or more rings in it
-         *
-         *@param container The AtomContainer for which a Fingerprint is generated
-         *@return a bit fingerprint for the given <code>IAtomContainer</code>.
-         */
+        /// <summary>
+        /// Generates a fingerprint of the default size for the given
+        /// AtomContainer, using path and ring metrics. It contains the
+        /// informations from GetBitFingerprint() and bits which tell if the structure
+        /// has 0 rings, 1 or less rings, 2 or less rings ... 10 or less rings
+        /// (referring to smallest set of smallest rings) and bits which tell if
+        /// there is a fused ring system with 1,2...8 or more rings in it
+        /// </summary>
+        /// <param name="container">The AtomContainer for which a Fingerprint is generated</param>
+        /// <returns>a bit fingerprint for the given <see cref="IAtomContainer"/>.</returns>
         public IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             return this.GetBitFingerprint(container, null, null);
@@ -99,25 +92,21 @@ namespace NCDK.Fingerprint
             throw new NotSupportedException();
         }
 
-        /**
-        // Generates a fingerprint of the default size for the given
-        // AtomContainer, using path and ring metrics. It contains the
-        // informations from GetBitFingerprint() and bits which tell if the structure
-        // has 0 rings, 1 or less rings, 2 or less rings ... 10 or less rings and
-        // bits which tell if there is a fused ring system with 1,2...8 or more
-        // rings in it. The RingSet used is passed via rs parameter. This must be
-        // a smallesSetOfSmallestRings. The List must be a list of all ring
-        // systems in the molecule.
-         *
-        // @param     atomContainer The AtomContainer for which a Fingerprint is
-        //                          generated
-        // @param     ringSet       An SSSR RingSet of ac (if not available, use
-        //                          GetExtendedFingerprint(AtomContainer ac),
-        //                          which does the calculation)
-        // @param     rslist        A list of all ring systems in ac
-        // @exception CDKException  for example if input can not be cloned.
-        // @return a BitArray representing the fingerprint
-         */
+        /// <summary>
+        /// Generates a fingerprint of the default size for the given
+        /// AtomContainer, using path and ring metrics. It contains the
+        /// informations from GetBitFingerprint() and bits which tell if the structure
+        /// has 0 rings, 1 or less rings, 2 or less rings ... 10 or less rings and
+        /// bits which tell if there is a fused ring system with 1,2...8 or more
+        /// rings in it. The RingSet used is passed via rs parameter. This must be
+        /// a smallesSetOfSmallestRings. The List must be a list of all ring
+        /// systems in the molecule.
+        /// </summary>
+        /// <param name="atomContainer">The AtomContainer for which a Fingerprint is generated</param>
+        /// <param name="ringSet">An SSSR RingSet of ac (if not available, use GetExtendedFingerprint(AtomContainer ac), which does the calculation)</param>
+        /// <param name="rslist">A list of all ring systems in ac</param>
+        /// <exception cref="CDKException">for example if input can not be cloned.</exception>
+        /// <returns>a BitArray representing the fingerprint</returns>
         public IBitFingerprint GetBitFingerprint(IAtomContainer atomContainer, IRingSet ringSet, IList<IRingSet> rslist)
         {
             IAtomContainer container;

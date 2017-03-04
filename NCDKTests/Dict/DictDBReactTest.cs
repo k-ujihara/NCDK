@@ -23,13 +23,11 @@ using System.Linq;
 
 namespace NCDK.Dict
 {
-    /**
-     * Checks the functionality of the dictionary reaction-processes class.
-     *
-     * @cdk.module test-dict
-     *
-     * @see org.openscience.cdk.dict.DictionaryDatabase
-     */
+    /// <summary>
+    /// Checks the functionality of the dictionary reaction-processes class.
+    /// </summary>
+    /// <seealso cref="DictionaryDatabase"/>
+    // @cdk.module test-dict
     [TestClass()]
     public class DictDBReactTest : CDKTestCase
     {
@@ -45,18 +43,16 @@ namespace NCDK.Dict
         {
             DictionaryDatabase db = new DictionaryDatabase();
             var dict = db.GetDictionary("reaction-processes");
-            var entries = dict.GetEntries().ToList();
+            var entries = dict.Entries.ToList();
             var idList = new List<string>();
             idList.Add(entries[0].Id);
             for (int i = 1; i < entries.Count; i++)
             {
-                //    		System.Console.Out.WriteLine(entries[i].Id);
+                //            System.Console.Out.WriteLine(entries[i].Id);
                 if (!idList.Contains(entries[i].Id))
                     idList.Add(entries[i].Id);
                 else
-                    Assert.IsFalse(
-                            idList.Contains(entries[i].Id),
-                            $"The entry is contained {entries[i]}  two times");
+                    Assert.IsFalse(idList.Contains(entries[i].Id), $"The entry is contained {entries[i]}  two times");
             }
         }
     }

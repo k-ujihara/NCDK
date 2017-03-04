@@ -33,7 +33,7 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                    *((<#= GetIntegralEquivalent(type).Name #>*)&value) = (<#=GetIntegralEquivalent(type).Name#>)<#= hexValue #>;
+                   ///((<#= GetIntegralEquivalent(type).Name #>*)&value) = (<#=GetIntegralEquivalent(type).Name#>)<#= hexValue #>;
                 }
             }
             return value;

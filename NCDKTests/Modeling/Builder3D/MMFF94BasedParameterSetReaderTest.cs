@@ -32,7 +32,7 @@ namespace NCDK.Modeling.Builder3D
     // @author danielszisz
     // @version 04/16/2012
     // @cdk.module test-forcefield
-	[TestClass()]
+    [TestClass()]
     public class MMFF94BasedParameterSetReaderTest
     {
         [TestMethod()]
@@ -59,7 +59,7 @@ namespace NCDK.Modeling.Builder3D
             //TODO testing
 
             //bond
-            //		string scode = "0";
+            //        string scode = "0";
             string sid1 = "C";
             string sid2 = "C";
             string slen = "1.508";
@@ -76,7 +76,7 @@ namespace NCDK.Modeling.Builder3D
             bonddata.Add((double)(double.Parse(sbci)));
 
             //strbnd
-            //		scode = "0";
+            //        scode = "0";
             sid1 = "C";
             sid2 = "C";
             string sid3 = "C";
@@ -104,7 +104,7 @@ namespace NCDK.Modeling.Builder3D
             angledata.Add((double)(double.Parse(value4)));
 
             //torsion
-            //	    scode = "0";
+            //        scode = "0";
             sid1 = "HC";
             sid2 = "C";
             sid3 = "C";

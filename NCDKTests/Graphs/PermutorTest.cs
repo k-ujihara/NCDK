@@ -1,19 +1,13 @@
 using NCDK.Common.Base;
-using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author maclean
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class PermutorTest
     {

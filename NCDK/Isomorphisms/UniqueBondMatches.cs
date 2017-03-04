@@ -31,22 +31,19 @@ namespace NCDK.Isomorphisms
 {
     /**
      * A predicate for filtering atom-mapping results for those which cover unique
-     * edges. This class is intended for use with {@link Pattern}.
+     * edges. This class is intended for use with <see cref="Pattern"/>.
      *
-     * <blockquote><pre>{@code
+     * <blockquote><code>{@code
      *     Pattern     pattern = Ullmann.FindSubstructure(query);
      *     List<int[]> unique  = FluentIterable.Of(patter.MatchAll(target))
      *                                         .Filter(new UniqueBondMatches())
      *                                         .ToList();
-     * }</pre></blockquote>
+     * }</code></blockquote>
      *
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class UniqueBondMatches : NCDK.Common.Base.Predicate<int[]>
+    internal sealed class UniqueBondMatches : NCDK.Common.Base.Predicate<int[]>
     {
 
         /// <summary>Which mappings have we seen already.</summary>

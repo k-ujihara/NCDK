@@ -261,9 +261,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(4.56, ((DoubleResult)Descriptor.Calculate(mol).GetValue()).Value, 1.0); //at:  16
         }
 
-        /**
-         * @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/C23H20N2O3S/c26-22-21(16-17-29(28)20-14-8-3-9-15-20)23(27)25(19-12-6-2-7-13-19)24(22)18-10-4-1-5-11-18/h1-15,21H,16-17H2
+        /// </summary>
         [TestMethod()]
         public void Test1822()
         {

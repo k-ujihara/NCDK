@@ -31,7 +31,7 @@ namespace NCDK.Smiles
 {
     /// <summary>
     /// Convert the Beam toolkit object model to the CDK. Currently the aromatic
-    /// bonds from SMILES are loaded as singly bonded {@link IBond}s with the {@link
+    /// bonds from SMILES are loaded as singly bonded <see cref="IBond"/>s with the {@link
     /// org.openscience.cdk.CDKConstants#ISAROMATIC} flag set.
     /// </summary>
     /// <example><code>
@@ -48,10 +48,7 @@ namespace NCDK.Smiles
     /// <remarks><a href="http://johnmay.github.io/beam">Beam SMILES Toolkit</a></remarks>
     // @author John May
     // @cdk.module smiles
-#if TEST
-    public
-#endif
-    sealed class BeamToCDK
+    internal sealed class BeamToCDK
     {
         /// <summary>The builder used to create the CDK objects.</summary>
         private readonly IChemObjectBuilder builder;
@@ -273,7 +270,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Create a new CDK {@link IAtom} from the Beam Atom.
+        /// Create a new CDK <see cref="IAtom"/> from the Beam Atom.
         /// </summary>
         /// <param name="beamAtom">an Atom from the Beam ChemicalGraph</param>
         /// <param name="hCount">hydrogen count for the atom</param>
@@ -295,7 +292,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Create a new CDK {@link IAtom} from the Beam Atom. If the element is
+        /// Create a new CDK <see cref="IAtom"/> from the Beam Atom. If the element is
         /// unknown (i.e. '*') then an pseudo atom is created.
         /// </summary>
         /// <param name="atom">an Atom from the Beam Graph</param>

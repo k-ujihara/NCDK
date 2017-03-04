@@ -20,15 +20,14 @@ using System;
 
 namespace NCDK.AtomTypes
 {
-    /**
+    /// <summary>
     /// Determines the EState atom types.
-     *
-    /// @author Todd Martin
-    /// @author nick
-    /// @cdk.module standard
-    /// @cdk.githash
-    /// @cdk.keyword atom type, E-state
-     */
+    /// </summary>
+    // @author Todd Martin
+    // @author nick
+    // @cdk.module standard
+    // @cdk.githash
+    // @cdk.keyword atom type, E-state
     public class EStateAtomTypeMatcher : IAtomTypeMatcher
     {
         IRingSet ringSet = null;
@@ -36,7 +35,7 @@ namespace NCDK.AtomTypes
         public IRingSet RingSet
         {
             get { return ringSet; }
-			set
+            set
             {
                 ringSet = value;
             }
@@ -56,7 +55,6 @@ namespace NCDK.AtomTypes
 
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
-
             IAtomType atomType = null;
             try
             {
@@ -78,7 +76,6 @@ namespace NCDK.AtomTypes
 
                     if (atom.IsAromatic && attached.IsAromatic)
                     {
-
                         bool SameRing = InSameAromaticRing(atomContainer, atom, attached, ringSet);
 
                         if (SameRing)
@@ -101,7 +98,6 @@ namespace NCDK.AtomTypes
                     }
                     else
                     {
-
                         if (b.Order == BondOrder.Single) NumSingleBonds2++;
                         if (b.Order == BondOrder.Double) NumDoubleBonds2++;
                         if (b.Order == BondOrder.Triple) NumTripleBonds2++;

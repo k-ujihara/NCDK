@@ -8,11 +8,8 @@ namespace NCDK.Beam
     /// Given a chemical graph with 0 or more atoms. Convert that graph to one where
     /// fully specified bracket atoms which can be specified as organic subsets.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class ToSubsetAtoms : AbstractFunction<Graph, Graph>
+    // @author John May
+    internal sealed class ToSubsetAtoms : AbstractFunction<Graph, Graph>
     {
         public override Graph Apply(Graph g)
         {
@@ -27,11 +24,11 @@ namespace NCDK.Beam
 
                 if (t.Type == Configuration.Types.None)
                 {
-                    h.AddAtom(ToSubset(g.GetAtom_(u), g, u));
+                    h.AddAtom(ToSubset(g.GetAtom(u), g, u));
                 }
                 else
                 {
-                    h.AddAtom(g.GetAtom_(u));
+                    h.AddAtom(g.GetAtom(u));
                     h.AddTopology(t);
                 }
             }
@@ -43,7 +40,7 @@ namespace NCDK.Beam
             return h;
         }
 
-        public static Atom_ ToSubset(Atom_ a, Graph g, int u)
+        public static Atom ToSubset(Atom a, Graph g, int u)
         {
             // atom is already a subset atom
             if (a.Subset)
@@ -57,7 +54,7 @@ namespace NCDK.Beam
             if (a.Charge != 0 || a.AtomClass != 0 || a.Isotope >= 0)
                 return a;
 
-            Atom_ subset = a.IsAromatic() ? AtomImpl.AromaticSubset.OfElement(a.Element)
+            Atom subset = a.IsAromatic() ? AtomImpl.AromaticSubset.OfElement(a.Element)
                                        : AtomImpl.AliphaticSubset.OfElement(a.Element);
 
             // does the implied availableElectrons from the bond Order sum match that

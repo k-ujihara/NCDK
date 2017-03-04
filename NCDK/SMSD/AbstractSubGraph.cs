@@ -22,21 +22,21 @@
  */
 namespace NCDK.SMSD
 {
-    /**
-     * Interface class for reporting only substructure searches.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface class for reporting only substructure searches.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public abstract class AbstractSubGraph
     {
 
-        /**
-         * Initialise the Subgraph search algorithm. Each Subgraph algorithm
-         * should contain this method.
-         * @return true if Query/reactant is a subgraph of Target/product
-         * else false
-         */
+        /// <summary>
+        /// Initialise the Subgraph search algorithm. Each Subgraph algorithm
+        /// should contain this method.
+        /// <returns>true if Query/reactant is a subgraph of Target/product</returns>
+        /// else false
+        /// </summary>
         public abstract bool IsSubgraph(bool bondMatch);
     }
 }

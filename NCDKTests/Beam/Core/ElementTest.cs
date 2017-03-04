@@ -39,7 +39,7 @@ namespace NCDK.Beam
     {
 
         [TestMethod()]
-        public void organicSymbols()
+        public void OrganicSymbols()
         {
             Assert.AreEqual(Element.OfSymbol("B"), Boron);
             Assert.AreEqual(Element.OfSymbol("C"), Carbon);
@@ -76,7 +76,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void invalidSymbol()
+        public void InvalidSymbol()
         {
             Assert.IsNull(Element.OfSymbol("J"));
         }
@@ -128,13 +128,13 @@ namespace NCDK.Beam
 
         // now deprecated
         [ExpectedException(typeof(InvalidOperationException))]
-        public void inorganicHydrogens()
+        public void InorganicHydrogens()
         {
             Calcium.NumOfImplicitHydrogens(0);
         }
 
         [TestMethod()]
-        public void boronHydrogens()
+        public void BoronHydrogens()
         {
             Assert.AreEqual(Boron.NumOfImplicitHydrogens(0), 3);
             Assert.AreEqual(Boron.NumOfImplicitHydrogens(1), 2);
@@ -156,7 +156,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void nitrogenHydrogens()
+        public void NitrogenHydrogens()
         {
             Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(0), 3);
             Assert.AreEqual(Nitrogen.NumOfImplicitHydrogens(1), 2);
@@ -168,7 +168,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void oxygenHydrogens()
+        public void OxygenHydrogens()
         {
             Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(0), 2);
             Assert.AreEqual(Oxygen.NumOfImplicitHydrogens(1), 1);
@@ -189,7 +189,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void sulfurHydrogens()
+        public void SulfurHydrogens()
         {
             Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(0), 2);
             Assert.AreEqual(Sulfur.NumOfImplicitHydrogens(1), 1);
@@ -202,7 +202,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void halogenHydrogens()
+        public void HalogenHydrogens()
         {
             foreach (var e in new[] { Fluorine, Chlorine, Bromine, Iodine })
             {

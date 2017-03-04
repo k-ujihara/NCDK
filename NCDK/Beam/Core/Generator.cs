@@ -37,14 +37,11 @@ using System.Text;
 namespace NCDK.Beam
 {
     /// <summary>
-    /// Generate a SMILES line notation for a given chemical graph.
-    ///
-    /// <author>John May</author>
+    /// (internal) Generate a SMILES line notation for a given chemical graph.
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class Generator
+    // @author John May
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public sealed class Generator
     {
         private readonly Graph g;
         private readonly StringBuilder sb;
@@ -58,9 +55,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create a new generator the given chemical graph.
-        ///
-        /// <param name="g">chemical graph</param>
         /// </summary>
+        /// <param name="g">chemical graph</param>
         public Generator(Graph g, RingNumbering rnums)
             : this(g, new int[g.Order], rnums)
         {
@@ -68,10 +64,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create a new generator the given chemical graph.
-        ///
-        /// <param name="g">chemical graph</param>
-        /// <param name="visitedAt">the index of the atom in the output         </param>
         /// </summary>
+        /// <param name="g">chemical graph</param>
+        /// <param name="visitedAt">the index of the atom in the output</param>
         Generator(Graph g, int[] visitedAt, RingNumbering rnums)
         {
             this.g = g;
@@ -125,14 +120,13 @@ namespace NCDK.Beam
         /// <summary>
         /// First traversal of the molecule assigns ring bonds (numbered later) and
         /// configures topologies.
-        ///
+        /// </summary>
         /// <param name="u">the vertex to visit</param>
         /// <param name="p">the atom we came from</param>
-        /// </summary>
         void Prepare(int u, int p)
         {
             visitedAt[u] = nVisit++;
-            tokens[u] = g.GetAtom_(u).Token;
+            tokens[u] = g.GetAtom(u).Token;
 
             int d = g.Degree(u);
             for (int j = 0; j < d; ++j)
@@ -212,11 +206,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Second traversal writes the bonds and atoms to the SMILES string.
-        ///
+        /// </summary>
         /// <param name="u">a vertex</param>
         /// <param name="p">previous vertex</param>
         /// <param name="b">the bond from the previous vertex to this vertex</param>
-        /// </summary>
         public void Write(int u, int p, Bond b)
         {
             visitedAt[u] = nVisit++;
@@ -277,11 +270,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Indicate that the edge connecting the vertices u and v forms a ring.
-        ///
+        /// </summary>
         /// <param name="u">a vertex</param>
         /// <param name="v">a vertex connected to u</param>
         /// <param name="b">bond type connecting u to v</param>
-        /// </summary>
         private void CyclicEdge(int u, int v, Bond b)
         {
             RingClosure r = new RingClosure(u, v, b);
@@ -291,10 +283,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Add a ring closure to the the vertex 'u'.
-        ///
+        /// </summary>
         /// <param name="u"> a vertex</param>
         /// <param name="rc">ring closure</param>
-        /// </summary>
         private void AddRing(int u, RingClosure rc)
         {
             IList<RingClosure> closures;
@@ -309,34 +300,29 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Access the generated SMILES string.
-        ///
-        /// <returns>smiles string</returns>
         /// </summary>
+        /// <returns>smiles string</returns>
         public string GetString()
         {
             return sb.ToString();
         }
 
         /// <summary>
-        /// Convenience method for generating a SMILES string for the specified
-        /// chemical graph.
-        ///
+        /// Convenience method for generating a SMILES string for the specified chemical graph.
+        /// </summary>
         /// <param name="g">the graph to generate the SMILE for</param>
         /// <returns>SMILES gor the provided chemical graph</returns>
-        /// </summary>
         public static string Generate(Graph g)
         {
             return new Generator(g, new IterativeRingNumbering(1)).GetString();
         }
 
         /// <summary>
-        /// Convenience method for generating a SMILES string for the specified
-        /// chemical graph.
-        ///
+        /// Convenience method for generating a SMILES string for the specified chemical graph.
+        /// </summary>
         /// <param name="g">the graph to generate the SMILE for</param>
         /// <param name="visitedAt">store when each atom was visited</param>
         /// <returns>SMILES gor the provided chemical graph</returns>
-        /// </summary>
         public static string Generate(Graph g, int[] visitedAt)
         {
             return new Generator(g, visitedAt, new IterativeRingNumbering(1)).GetString();
@@ -409,10 +395,10 @@ namespace NCDK.Beam
 
         public sealed class BracketToken : AtomToken
         {
-            private Atom_ atom;
+            private Atom atom;
             private Configuration c = Configuration.Unknown;
 
-            public BracketToken(Atom_ a)
+            public BracketToken(Atom a)
             {
                 this.atom = a;
             }

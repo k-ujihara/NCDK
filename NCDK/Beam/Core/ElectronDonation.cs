@@ -38,15 +38,10 @@ namespace NCDK.Beam
     /// Defines a model to determine the number of p electrons a particular element
     /// in a certain environment donates. There is no universally accepted 'correct'
     /// model and different models can produce very different results.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public 
-#endif
-    abstract class ElectronDonation
+    // @author John May
+    internal abstract class ElectronDonation
     {
-
         /// <summary>The Daylight model implementation.</summary>
         private static readonly ElectronDonation DAYLIGHT = new DaylightImpl();
 
@@ -59,14 +54,13 @@ namespace NCDK.Beam
         /// case a runtime error will be thrown if it is needed for determining the
         /// donation. The cycle will be Unknown if the method use the donation model
         /// builds up the cycle iteratively counting the number of p electrons.
-        ///
-        /// <param name="u">     the vertex under consideration</param>
-        /// <param name="g">     the graph the vertex is referring to</param>
+        /// </summary>
+        /// <param name="u">the vertex under consideration</param>
+        /// <param name="g">the graph the vertex is referring to</param>
         /// <param name="cycle"> the cycle under consideration</param>
         /// <param name="cyclic">all cyclic vertices</param>
-        /// <returns>the number of p electrons contributed to if the element or -</returns>1 if
-        ///         the vertex should not be used
-        /// </summary>
+        /// <returns>the number of p electrons contributed to if the element or -1 if
+        ///         the vertex should not be used</returns>
         public abstract int Contribution(int u, Graph g, Cycle cycle, BitArray cyclic);
 
         /// <summary>
@@ -88,7 +82,7 @@ namespace NCDK.Beam
         /// </summary>
         private sealed class DaylightImpl : ElectronDonation
         {
-            /// <summary>@inheritDoc</summary>
+            /// <inheritdoc/>
             public override int Contribution(int u, Graph g, Cycle cycle, BitArray cyclic)
             {
 

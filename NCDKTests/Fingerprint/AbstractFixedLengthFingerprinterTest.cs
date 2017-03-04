@@ -30,15 +30,15 @@ using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections;
 
+
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public abstract class AbstractFixedLengthFingerprinterTest : AbstractFingerprinterTest
     {
-
         // logical 'AND' or two bit sets (orginals are not modified)
         static BitArray And(BitArray a, BitArray b)
         {
@@ -47,9 +47,9 @@ namespace NCDK.Fingerprint
             return c;
         }
 
-        /**
-         * @cdk.bug 706786
-         */
+        /// <summary>
+        // @cdk.bug 706786
+        /// </summary>
         [TestMethod()]
         public virtual void TestBug706786()
         {
@@ -71,19 +71,19 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(subBS, And(superBS, subBS)));
         }
 
-        /**
-         * @cdk.bug 853254
-         */
+        /// <summary>
+        // @cdk.bug 853254
+        /// </summary>
         [TestMethod()]
         public void TestBug853254()
         {
             string filename = "NCDK.Data.MDL.bug853254-2.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer superstructure = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug853254-1.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer substructure = (IAtomContainer)reader.Read(new AtomContainer());
 
@@ -102,11 +102,11 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(isSubset);
         }
 
-        /**
-         * Fingerprint not subset.
-         *
-         * @cdk.bug 934819
-         */
+        /// <summary>
+        /// Fingerprint not subset.
+        ///
+        // @cdk.bug 934819
+        /// </summary>
         [TestMethod()]
         public virtual void TestBug934819()
         {
@@ -127,21 +127,21 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(subBS, And(superBS, subBS)));
         }
 
-        /**
-         * Problems with different aromaticity concepts.
-         *
-         * @cdk.bug 771485
-         */
+        /// <summary>
+        /// Problems with different aromaticity concepts.
+        ///
+        // @cdk.bug 771485
+        /// </summary>
         [TestMethod()]
         public void TestBug771485()
         {
             string filename = "NCDK.Data.MDL.bug771485-1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug771485-2.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
 
@@ -172,22 +172,22 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(isSubset);
         }
 
-        /**
-         * Fingerprinter gives different fingerprints for same molecule.
-         *
-         * @cdk.bug 931608
-         * @cdk.bug 934819
-         */
+        /// <summary>
+        /// Fingerprinter gives different fingerprints for same molecule.
+        ///
+        // @cdk.bug 931608
+        // @cdk.bug 934819
+        /// </summary>
         [TestMethod()]
         public void TestBug931608()
         {
             string filename = "NCDK.Data.MDL.bug931608-1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer structure1 = (IAtomContainer)reader.Read(new AtomContainer());
 
             filename = "NCDK.Data.MDL.bug931608-2.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer structure2 = (IAtomContainer)reader.Read(new AtomContainer());
 
@@ -207,11 +207,11 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(0, cardinality);
         }
 
-        /**
-         * data/mdl/bug70786-1.mol
-         * CC(=O)C1=CC2=C(OC(C)(C)[C@@H](O)[C@@H]2O)C=C1
-         * @cdk.inchi InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
-         */
+        /// <summary>
+        /// data/mdl/bug70786-1.mol
+        /// CC(=O)C1=CC2=C(OC(C)(C)[C@@H](O)[C@@H]2O)C=C1
+        // @cdk.inchi InChI=1/C13H16O4/c1-7(14)8-4-5-10-9(6-8)11(15)12(16)13(2,3)17-10/h4-6,11-12,15-16H,1-3H3/t11-,12+/s2
+        /// </summary>
         public static IAtomContainer Bug706786_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -309,11 +309,11 @@ namespace NCDK.Fingerprint
             return mol;
         }
 
-        /**
-         * data/mdl/bug706786-2.mol
-         * C1COC2=CC=CC=C2C1
-         * @cdk.inchi InChI=1/C9H10O/c1-2-6-9-8(4-1)5-3-7-10-9/h1-2,4,6H,3,5,7H2
-         */
+        /// <summary>
+        /// data/mdl/bug706786-2.mol
+        /// C1COC2=CC=CC=C2C1
+        // @cdk.inchi InChI=1/C9H10O/c1-2-6-9-8(4-1)5-3-7-10-9/h1-2,4,6H,3,5,7H2
+        /// </summary>
         public static IAtomContainer Bug706786_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -375,11 +375,11 @@ namespace NCDK.Fingerprint
             return mol;
         }
 
-        /**
-         * /data/mdl/bug934819_1.mol
-         * [O-][N+](=O)C1=CC=CS1
-         * @cdk.inchi InChI=1/C4H3NO2S/c6-5(7)4-2-1-3-8-4/h1-3H
-         */
+        /// <summary>
+        /// /data/mdl/bug934819_1.mol
+        /// [O-][N+](=O)C1=CC=CS1
+        // @cdk.inchi InChI=1/C4H3NO2S/c6-5(7)4-2-1-3-8-4/h1-3H
+        /// </summary>
         public static IAtomContainer Bug934819_1()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
@@ -431,11 +431,11 @@ namespace NCDK.Fingerprint
             return mol;
         }
 
-        /**
-         * /data/mdl/bug934819-2.mol
-         * CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O
-         * @cdk.inchi InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
-         */
+        /// <summary>
+        /// /data/mdl/bug934819-2.mol
+        /// CCCCSC1=CC=C(S1)C#CC1=CC=C(S1)[N+]([O-])=O
+        // @cdk.inchi InChI=1/C14H13NO2S3/c1-2-3-10-18-14-9-7-12(20-14)5-4-11-6-8-13(19-11)15(16)17/h6-9H,2-3,10H2,1H3
+        /// </summary>
         public static IAtomContainer Bug934819_2()
         {
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;

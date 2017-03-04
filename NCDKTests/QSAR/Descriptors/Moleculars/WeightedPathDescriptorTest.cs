@@ -56,7 +56,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(0.0, result[4], 0.000001);
 
             string filename = "NCDK.Data.MDL.wpo.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             IChemFile content = (IChemFile)reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -72,7 +72,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Assert.AreEqual(0, result[4], 0.00001);
 
             filename = "NCDK.Data.MDL.wpn.sdf";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
             content = (IChemFile)reader.Read(new ChemFile());
             cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

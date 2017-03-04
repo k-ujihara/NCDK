@@ -40,7 +40,7 @@ namespace NCDK.IO.RandomAccess
         {
             string path = "NCDK.Data.MDL.test2.sdf";
             Trace.TraceInformation("Testing: " + path);
-            using (var ins = GetType().Assembly.GetManifestResourceStream(path))
+            using (var ins = ResourceLoader.GetAsStream(path))
             {
                 string f = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".sdf");
                 try

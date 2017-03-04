@@ -14,6 +14,7 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -61,27 +62,27 @@ namespace NCDK.Default
     public class ChemObject
         : IChemObject
     {
-#if TEST
-		private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
+#if DEBUG
+        private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
         {
-			typeof(string),
-			typeof(NCDK.Dict.DictRef),
+            typeof(string),
+            typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
-		};
+        };
 #endif
-		private ICollection<IChemObjectListener> listeners;
+        private ICollection<IChemObjectListener> listeners;
         /// <summary>
         /// List for listener administration.
         /// </summary>
         public ICollection<IChemObjectListener> Listeners 
-		{ 
-			get
-			{
-				if (listeners == null)
-					listeners = new HashSet<IChemObjectListener>(); 
-				return listeners;
-			}
-		}
+        { 
+            get
+            {
+                if (listeners == null)
+                    listeners = new HashSet<IChemObjectListener>(); 
+                return listeners;
+            }
+        }
         public bool Notification { get; set; } = true;
         public IChemObjectBuilder Builder { get; protected set; } = ChemObjectBuilder.Instance;
 
@@ -147,7 +148,7 @@ namespace NCDK.Default
         /// <summary>
         /// This should be triggered by an method that changes the content of an object
         /// to that the registered listeners can react to it. This is a version of
-        /// notifyChanged() which allows to propagate a change event while preserving
+        /// NotifyChanged() which allows to propagate a change event while preserving
         /// the original origin.
         /// </summary>
         /// <param name="evt">A ChemObjectChangeEvent pointing to the source of where the change happened</param>
@@ -181,9 +182,9 @@ namespace NCDK.Default
         /// <seealso cref="RemoveProperty(object)"/>
         public virtual void SetProperty(object description, object property)
         {
-#if TEST
-			if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 InitProperties();
@@ -199,9 +200,9 @@ namespace NCDK.Default
         /// <seealso cref="GetProperty{T}(object)"/>
         public virtual void RemoveProperty(object description)
         {
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 return;
@@ -218,19 +219,19 @@ namespace NCDK.Default
         /// <seealso cref="SetProperty(object, object)"/>
         /// <seealso cref="RemoveProperty(object)"/>
         public virtual T GetProperty<T>(object description)
-		{
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+        {
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
-			return GetProperty(description, default(T));
-		}
+            return GetProperty(description, default(T));
+        }
 
         public virtual T GetProperty<T>(object description, T defaultValue)
         {
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 return defaultValue;
@@ -238,7 +239,7 @@ namespace NCDK.Default
             if (properties.TryGetValue(description, out property))
                 return (T)property;
             return defaultValue;
-		}
+        }
 
         private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
@@ -336,27 +337,27 @@ namespace NCDK.Silent
     public class ChemObject
         : IChemObject
     {
-#if TEST
-		private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
+#if DEBUG
+        private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
         {
-			typeof(string),
-			typeof(NCDK.Dict.DictRef),
+            typeof(string),
+            typeof(NCDK.Dict.DictRef),
             typeof(NCDK.QSAR.DescriptorSpecification),
-		};
+        };
 #endif
-		private ICollection<IChemObjectListener> listeners;
+        private ICollection<IChemObjectListener> listeners;
         /// <summary>
         /// List for listener administration.
         /// </summary>
         public ICollection<IChemObjectListener> Listeners 
-		{ 
-			get
-			{
-				if (listeners == null)
-					listeners = new ImmutableCollection<IChemObjectListener>(); 
-				return listeners;
-			}
-		}
+        { 
+            get
+            {
+                if (listeners == null)
+                    listeners = new ImmutableCollection<IChemObjectListener>(); 
+                return listeners;
+            }
+        }
         public bool Notification { get; set; } = true;
         public IChemObjectBuilder Builder { get; protected set; } = ChemObjectBuilder.Instance;
 
@@ -418,7 +419,7 @@ namespace NCDK.Silent
         /// <summary>
         /// This should be triggered by an method that changes the content of an object
         /// to that the registered listeners can react to it. This is a version of
-        /// notifyChanged() which allows to propagate a change event while preserving
+        /// NotifyChanged() which allows to propagate a change event while preserving
         /// the original origin.
         /// </summary>
         /// <param name="evt">A ChemObjectChangeEvent pointing to the source of where the change happened</param>
@@ -445,9 +446,9 @@ namespace NCDK.Silent
         /// <seealso cref="RemoveProperty(object)"/>
         public virtual void SetProperty(object description, object property)
         {
-#if TEST
-			if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 InitProperties();
@@ -462,9 +463,9 @@ namespace NCDK.Silent
         /// <seealso cref="GetProperty{T}(object)"/>
         public virtual void RemoveProperty(object description)
         {
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 return;
@@ -479,19 +480,19 @@ namespace NCDK.Silent
         /// <seealso cref="SetProperty(object, object)"/>
         /// <seealso cref="RemoveProperty(object)"/>
         public virtual T GetProperty<T>(object description)
-		{
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+        {
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
-			return GetProperty(description, default(T));
-		}
+            return GetProperty(description, default(T));
+        }
 
         public virtual T GetProperty<T>(object description, T defaultValue)
         {
-#if TEST
-			if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-				throw new Exception();
+#if DEBUG
+            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
+                throw new Exception();
 #endif
             if (this.properties == null)
                 return defaultValue;
@@ -499,7 +500,7 @@ namespace NCDK.Silent
             if (properties.TryGetValue(description, out property))
                 return (T)property;
             return defaultValue;
-		}
+        }
 
         private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 

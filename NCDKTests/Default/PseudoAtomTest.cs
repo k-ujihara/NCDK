@@ -23,12 +23,12 @@ using NCDK.Numerics;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the AtomTypeFactory
-     *
-     * @cdk.module test-data
-     */
-	[TestClass()]
+    /// <summary>
+    /// Checks the functionality of the AtomTypeFactory
+    ///
+    // @cdk.module test-data
+    /// </summary>
+    [TestClass()]
     public class PseudoAtomTest
         : AbstractPseudoAtomTest
     {

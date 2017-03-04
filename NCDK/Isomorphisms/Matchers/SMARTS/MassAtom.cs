@@ -22,45 +22,34 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This class matches an atom based on the atomic mass.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This class matches an atom based on the atomic mass.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class MassAtom : SMARTSAtom
     {
 
-        /**
-         * Creates a new instance
-         *
-         * @param mass
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="mass">/// </summary></param>
         public MassAtom(int mass, IChemObjectBuilder builder)
             : base(builder)
         {
             this.MassNumber = mass;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return atom.MassNumber == this.MassNumber;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
-            return ("(MassAtom(" + this.MassNumber + ")");
+            return ("(" + nameof(MassAtom) + "(" + this.MassNumber + ")");
         }
     }
 }

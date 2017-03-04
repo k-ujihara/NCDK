@@ -28,17 +28,17 @@ using System.Text;
 using System.Xml.Linq;
 
 namespace NCDK.LibIO.CML {
-    /**
-     * Customizer for the libio-cml Convertor to be able to export details for
-     * QSAR descriptors calculated for Molecules.
-     *
-     * @author        egonw
-     * @cdk.created   2005-05-04
-     * @cdk.module    qsarcml
-     * @cdk.githash
-     * @cdk.set       libio-cml-customizers
-     * @cdk.require   java1.5+
-     */
+    /// <summary>
+    /// Customizer for the libio-cml Convertor to be able to export details for
+    /// QSAR descriptors calculated for Molecules.
+    ///
+    // @author        egonw
+    // @cdk.created   2005-05-04
+    // @cdk.module    qsarcml
+    // @cdk.githash
+    // @cdk.set       libio-cml-customizers
+    // @cdk.require   java1.5+
+    /// </summary>
     public class QSARCustomizer : ICMLCustomizer {
         private const string QSAR_NAMESPACE = "qsar";
         private const string QSAR_URI = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";

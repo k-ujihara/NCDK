@@ -23,11 +23,11 @@ namespace <#= ns.NS #>
             : base(atomContainer)
         { }
 
-		public Ring(
+        public Ring(
            IEnumerable<IAtom> atoms,
            IEnumerable<IBond> bonds)
-		   : base(atoms, bonds)
-		{ }
+           : base(atoms, bonds)
+        { }
 
         public Ring(int ringSize, string elementSymbol)
             : base()
@@ -50,7 +50,7 @@ namespace <#= ns.NS #>
             => bonds.Where(n => n.Contains(atom) && n != bond).FirstOrDefault();
 
         public int BondOrderSum
-            => bonds.Where(n => n.Order != null).Select(n => n.Order.Numeric).Sum();
+            => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
 
         public override string ToString()
         {

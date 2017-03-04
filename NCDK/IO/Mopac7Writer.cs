@@ -32,14 +32,14 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.IO
 {
-    /**
-     * Prepares input file for running MOPAC.
-     * Optimization is switched on if there are no coordinates.
-     *
-     * @author      Nina Jeliazkova <nina@acad.bg>
-     * @cdk.githash
-     * @cdk.module  io
-     */
+    /// <summary>
+    /// Prepares input file for running MOPAC.
+    /// Optimization is switched on if there are no coordinates.
+    ///
+    // @author      Nina Jeliazkova <nina@acad.bg>
+    // @cdk.githash
+    // @cdk.module  io
+    /// </summary>
     public class Mopac7Writer : DefaultChemObjectWriter
     {
 
@@ -47,33 +47,33 @@ namespace NCDK.IO
 
 
         private const char BLANK = ' ';
-        /**
-         * Creates a writer to serialize a molecule as Mopac7 input.
-         *
-         * @
-         */
+        /// <summary>
+        /// Creates a writer to serialize a molecule as Mopac7 input.
+        ///
+        // @
+        /// </summary>
         public Mopac7Writer()
             : this(new StreamWriter(new MemoryStream()))
         { }
 
-        /**
-         * Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
-         * given {@link Stream}.
-         *
-         * @param  out {@link Stream} to which the output is written
-         * @throws     Exception
-         */
+        /// <summary>
+        /// Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
+        /// given <see cref="Stream"/>.
+        ///
+        /// <param name="out"><see cref="Stream"/> to which the output is written</param>
+        // @throws     Exception
+        /// </summary>
         public Mopac7Writer(Stream out_)
                 : this(new StreamWriter(out_))
         { }
 
-        /**
-         * Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
-         * given {@link Writer}.
-         *
-         * @param  out {@link Writer} to which the output is written
-         * @throws     Exception
-         */
+        /// <summary>
+        /// Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
+        /// given <see cref="Writer"/>.
+        ///
+        /// <param name="out"><see cref="Writer"/> to which the output is written</param>
+        // @throws     Exception
+        /// </summary>
         public Mopac7Writer(TextWriter out_)
         {
             //numberFormat = NumberFormat.GetInstance(Locale.US);

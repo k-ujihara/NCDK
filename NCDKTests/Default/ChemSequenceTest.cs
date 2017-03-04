@@ -18,19 +18,14 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the {@link ChemSequence} class.
-     *
-     * @cdk.module test-data
-     */
+    /// <summary>
+    /// Checks the functionality of the {@link ChemSequence} class.
+    ///
+    // @cdk.module test-data
+    /// </summary>
     [TestClass()]
     public class ChemSequenceTest : AbstractChemSequenceTest
     {

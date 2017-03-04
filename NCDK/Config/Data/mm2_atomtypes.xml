@@ -16,7 +16,7 @@
   </metadataList>
   
   <atomType id="C">
-	<!-- for example in CC-->
+    <!-- for example in CC-->
     <atom elementType="C" formalCharge="0">
       <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
@@ -59,7 +59,7 @@
       <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">2</scalar>
       <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
-	</atom>
+    </atom>
     <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp1</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
     <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">C-[1-2][-]?+;[H]{0,1}+%.*+</scalar>

@@ -23,29 +23,29 @@ using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
-    /**
-     * Compares two {@link IElement} classes.
-     *
-     * @author     egonw
-     * @cdk.module diff
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Compares two <see cref="IElement"/> classes.
+    ///
+    // @author     egonw
+    // @cdk.module diff
+    // @cdk.githash
+    /// </summary>
     public class ElementDiff
     {
 
-        /**
-         * Overwrite the default public constructor because this class is not
-         * supposed to be instantiated.
-         */
+        /// <summary>
+        /// Overwrite the default public constructor because this class is not
+        /// supposed to be instantiated.
+        /// </summary>
         private ElementDiff() { }
 
-        /**
-         * Compare two {@link IChemObject} classes and return the difference as a {@link string}.
-         *
-         * @param first  the first of the two classes to compare
-         * @param second the second of the two classes to compare
-         * @return a {@link string} representation of the difference between the first and second {@link IChemObject}.
-         */
+        /// <summary>
+        /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
+        ///
+        /// <param name="first">the first of the two classes to compare</param>
+        /// <param name="second">the second of the two classes to compare</param>
+        /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
+        /// </summary>
         public static string Diff(IChemObject first, IChemObject second)
         {
             IDifference difference = Difference(first, second);
@@ -59,13 +59,13 @@ namespace NCDK.Tools.Diff.Tree
             }
         }
 
-        /**
-         * Compare two {@link IChemObject} classes and return the difference as an {@link IDifference}.
-         *
-         * @param first  the first of the two classes to compare
-         * @param second the second of the two classes to compare
-         * @return an {@link IDifference} representation of the difference between the first and second {@link IChemObject}.
-         */
+        /// <summary>
+        /// Compare two <see cref="IChemObject"/> classes and return the difference as an <see cref="IDifference"/>.
+        ///
+        /// <param name="first">the first of the two classes to compare</param>
+        /// <param name="second">the second of the two classes to compare</param>
+        /// <returns>an <see cref="IDifference"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
+        /// </summary>
         public static IDifference Difference(IChemObject first, IChemObject second)
         {
             if (!(first is IElement && second is IElement))

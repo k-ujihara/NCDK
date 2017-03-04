@@ -26,15 +26,13 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries
 {
-    /**
-     * A set of static utility classes for dealing with Z matrices.
-     *
-     * @cdk.module  io
-     * @cdk.githash
-     * @cdk.keyword Z-matrix
-     *
-     * @cdk.created 2004-02-09
-     */
+    /// <summary>
+    /// A set of static utility classes for dealing with Z matrices.
+    /// </summary>
+    // @cdk.module  io
+    // @cdk.githash
+    // @cdk.keyword Z-matrix
+    // @cdk.created 2004-02-09
     public class ZMatrixTools
     {
         /// <summary>
@@ -50,7 +48,7 @@ namespace NCDK.Geometries
         /// <param name="dihedrals">Array of atom ids of the second invoked atom in angle and dihedral</param>
         /// <param name="third_atoms">Array of atom ids of the third invoked atom in dihedral</param>
         /// <returns>The cartesian coordinates</returns>
-        // @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
+       // @cdk.dictref blue-obelisk:zmatrixCoordinatesIntoCartesianCoordinates
         public static Vector3[] ZMatrixToCartesian(double[] distances, int[] first_atoms, double[] angles,
                 int[] second_atoms, double[] dihedrals, int[] third_atoms)
         {

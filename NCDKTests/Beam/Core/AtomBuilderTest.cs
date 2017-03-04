@@ -5,7 +5,7 @@ using static NCDK.Beam.Element;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class AtomBuilderTest
     {
         [TestMethod()]

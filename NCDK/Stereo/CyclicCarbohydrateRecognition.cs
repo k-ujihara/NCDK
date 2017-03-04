@@ -34,31 +34,27 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 {
-    /**
-     * Recognise stereochemistry of Haworth, Chair, and Boat (not yet implemented)
-     * projections. These projections are a common way of depicting closed-chain
-     * (furanose and pyranose) carbohydrates and require special treatment to
-     * interpret stereo conformation. <p/>
-     * 
-     * The methods used are described by {@cdk.cite batchelor13}. <p/> 
-     * 
-     * @author John May
-     * @cdk.githash
-     * @see <a href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</a>
-     * @see <a href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</a>
-     */
-#if TEST
-    public
-#endif
-    sealed class CyclicCarbohydrateRecognition
+    /// <summary>
+    /// Recognise stereochemistry of Haworth, Chair, and Boat (not yet implemented)
+    /// projections. These projections are a common way of depicting closed-chain
+    /// (furanose and pyranose) carbohydrates and require special treatment to
+    /// interpret stereo conformation. <p/>
+    /// 
+    /// The methods used are described by {@cdk.cite batchelor13}. <p/> 
+    /// 
+    // @author John May
+    // @cdk.githash
+    // @see <a href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</a>
+    // @see <a href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</a>
+    /// </summary>
+    internal sealed class CyclicCarbohydrateRecognition
     {
-
-        /**
-         * The threshold at which to snap bonds to the cardinal direction. The
-         * threshold allows bonds slightly of absolute directions to be interpreted.
-         * The tested vector is of unit length and so the threshold is simply the
-         * angle (in radians).
-         */
+        /// <summary>
+        /// The threshold at which to snap bonds to the cardinal direction. The
+        /// threshold allows bonds slightly of absolute directions to be interpreted.
+        /// The tested vector is of unit length and so the threshold is simply the
+        /// angle (in radians).
+        /// </summary>
         public const double CARDINALITY_THRESHOLD = 5.0 / 180 * Math.PI;
 
         public const double QUART_CARDINALITY_THRESHOLD = CARDINALITY_THRESHOLD / 4;
@@ -68,14 +64,14 @@ namespace NCDK.Stereo
         private readonly EdgeToBondMap bonds;
         private readonly Stereocenters stereocenters;
 
-        /**
-         * Required information to recognise stereochemistry.
-         *
-         * @param container     input structure
-         * @param graph         adjacency list representation
-         * @param bonds         edge to bond index
-         * @param stereocenters location and type of asymmetries
-         */
+        /// <summary>
+        /// Required information to recognise stereochemistry.
+        ///
+        /// <param name="container">input structure</param>
+        /// <param name="graph">adjacency list representation</param>
+        /// <param name="bonds">edge to bond index</param>
+        /// <param name="stereocenters">location and type of asymmetries</param>
+        /// </summary>
         public CyclicCarbohydrateRecognition(IAtomContainer container,
                                       int[][] graph,
                                       EdgeToBondMap bonds,
@@ -87,12 +83,12 @@ namespace NCDK.Stereo
             this.stereocenters = stereocenters;
         }
 
-        /**
-         * Recognise the cyclic carbohydrate projections.
-         *
-         * @param projections the types of projections to recognise
-         * @return recognised stereocenters
-         */
+        /// <summary>
+        /// Recognise the cyclic carbohydrate projections.
+        ///
+        /// <param name="projections">the types of projections to recognise</param>
+        /// <returns>recognised stereocenters</returns>
+        /// </summary>
         public IList<IStereoElement> Recognise(ICollection<Projection> projections)
         {
 
@@ -140,12 +136,12 @@ namespace NCDK.Stereo
             return elements;
         }
 
-        /**
-         * Determine the turns in the polygon formed of the provided coordinates.
-         *
-         * @param points polygon points
-         * @return array of turns (left, right) or null if a parallel line was found
-         */
+        /// <summary>
+        /// Determine the turns in the polygon formed of the provided coordinates.
+        ///
+        /// <param name="points">polygon points</param>
+        /// <returns>array of turns (left, right) or null if a parallel line was found</returns>
+        /// </summary>
         public static Turn[] Turns(Vector2[] points)
         {
 
@@ -167,20 +163,20 @@ namespace NCDK.Stereo
             return turns;
         }
 
-        /**
-         * Given a projected cycle, assign the exocyclic substituents to being above
-         * of below the projection. For Haworth projections, the substituents must
-         * be directly up or down (within some threshold).
-         *
-         * @param cycle        vertices that form a cycle
-         * @param above        vertices that will be above the cycle (filled by
-         *                     method)
-         * @param below        vertices that will be below the cycle (filled by
-         *                     method)
-         * @param projection   the type of projection
-         * @param horizontalXy offset from the horizontal axis                  
-         * @return assignment okay (true), not okay (false)
-         */
+        /// <summary>
+        /// Given a projected cycle, assign the exocyclic substituents to being above
+        /// of below the projection. For Haworth projections, the substituents must
+        /// be directly up or down (within some threshold).
+        ///
+        /// <param name="cycle">vertices that form a cycle</param>
+        /// <param name="above">vertices that will be above the cycle (filled by</param>
+        ///                     method)
+        /// <param name="below">vertices that will be below the cycle (filled by</param>
+        ///                     method)
+        /// <param name="projection">the type of projection</param>
+        /// <param name="horizontalXy">offset from the horizontal axis                  </param>
+        /// <returns>assignment okay (true), not okay (false)</returns>
+        /// </summary>
         private bool AssignSubstituents(int[] cycle,
                                            int[] above,
                                            int[] below,
@@ -238,15 +234,15 @@ namespace NCDK.Stereo
             return found > 1 || projection.Projection != Projection.Haworth;
         }
 
-        /**
-         * Create the tetrahedral stereocenters for the provided cycle.
-         *
-         * @param cycle vertices in projected cycle
-         * @param above vertices above the cycle
-         * @param below vertices below the cycle
-         * @param type  type of projection
-         * @return zero of more stereocenters
-         */
+        /// <summary>
+        /// Create the tetrahedral stereocenters for the provided cycle.
+        ///
+        /// <param name="cycle">vertices in projected cycle</param>
+        /// <param name="above">vertices above the cycle</param>
+        /// <param name="below">vertices below the cycle</param>
+        /// <param name="type">type of projection</param>
+        /// <returns>zero of more stereocenters</returns>
+        /// </summary>
         private IList<ITetrahedralChirality> NewTetrahedralCenters(int[] cycle, int[] above, int[] below, WoundProjection type)
         {
 
@@ -285,13 +281,13 @@ namespace NCDK.Stereo
             return centers;
         }
 
-        /**
-         * Obtain the coordinates of atoms in a cycle.
-         *
-         * @param cycle     vertices that form a cycles
-         * @param container structure representation
-         * @return coordinates of the cycle
-         */
+        /// <summary>
+        /// Obtain the coordinates of atoms in a cycle.
+        ///
+        /// <param name="cycle">vertices that form a cycles</param>
+        /// <param name="container">structure representation</param>
+        /// <returns>coordinates of the cycle</returns>
+        /// </summary>
         private static Vector2[] CoordinatesOfCycle(int[] cycle, IAtomContainer container)
         {
             Vector2[] points = new Vector2[cycle.Length];
@@ -302,15 +298,15 @@ namespace NCDK.Stereo
             return points;
         }
 
-        /**
-         * Filter an array, excluding two provided values. These values must be
-         * present in the input.
-         *
-         * @param org   input array
-         * @param skip1 skip this item
-         * @param skip2 skip this item also
-         * @return array without skip1 and skip2
-         */
+        /// <summary>
+        /// Filter an array, excluding two provided values. These values must be
+        /// present in the input.
+        ///
+        /// <param name="org">input array</param>
+        /// <param name="skip1">skip this item</param>
+        /// <param name="skip2">skip this item also</param>
+        /// <returns>array without skip1 and skip2</returns>
+        /// </summary>
         private static int[] Filter(int[] org, int skip1, int skip2)
         {
             int n = 0;
@@ -322,18 +318,18 @@ namespace NCDK.Stereo
             return dest;
         }
 
-        /**
-         * Obtain the direction of a substituent relative to the center location. In
-         * a Haworth projection the substituent must be directly above or below
-         * (with threshold) the center.
-         *
-         * @param centerXy      location of center
-         * @param substituentXy location fo substituent
-         * @param horizontalXy  horizontal offset, x > 0                      
-         * @param haworth       is Haworth project (substituent must be directly up
-         *                      or down)
-         * @return the direction (up, down, other)
-         */
+        /// <summary>
+        /// Obtain the direction of a substituent relative to the center location. In
+        /// a Haworth projection the substituent must be directly above or below
+        /// (with threshold) the center.
+        ///
+        /// <param name="centerXy">location of center</param>
+        /// <param name="substituentXy">location fo substituent</param>
+        /// <param name="horizontalXy">horizontal offset, x > 0                      </param>
+        /// <param name="haworth">is Haworth project (substituent must be directly up</param>
+        ///                      or down)
+        /// <returns>the direction (up, down, other)</returns>
+        /// </summary>
         private static Direction ObtainDirection(Vector2 centerXy, Vector2 substituentXy, Vector2 horizontalXy, bool haworth)
         {
             double deltaX = substituentXy.X - centerXy.X;
@@ -367,12 +363,12 @@ namespace NCDK.Stereo
             return deltaY > 0 ? Direction.Up : Direction.Down;
         }
 
-        /**
-         * Ensures at least one cyclic bond is horizontal.
-         * 
-         * @param points the points of atoms in the ring
-         * @return whether the Haworth alignment is correct
-         */
+        /// <summary>
+        /// Ensures at least one cyclic bond is horizontal.
+        /// 
+        /// <param name="points">the points of atoms in the ring</param>
+        /// <returns>whether the Haworth alignment is correct</returns>
+        /// </summary>
         private bool CheckHaworthAlignment(Vector2[] points)
         {
 
@@ -390,16 +386,16 @@ namespace NCDK.Stereo
             return false;
         }
 
-        /**
-         * Determine the horizontal offset of the projection. This allows
-         * projections that are drawn at angle to be correctly interpreted. 
-         * Currently only projections of chair conformations are considered.
-         *
-         * @param points     points of the cycle
-         * @param turns      the turns in the cycle (left/right)
-         * @param projection the type of projection
-         * @return the horizontal offset
-         */
+        /// <summary>
+        /// Determine the horizontal offset of the projection. This allows
+        /// projections that are drawn at angle to be correctly interpreted. 
+        /// Currently only projections of chair conformations are considered.
+        ///
+        /// <param name="points">points of the cycle</param>
+        /// <param name="turns">the turns in the cycle (left/right)</param>
+        /// <param name="projection">the type of projection</param>
+        /// <returns>the horizontal offset</returns>
+        /// </summary>
         private Vector2 HorizontalOffset(Vector2[] points, Turn[] turns, Projection projection)
         {
 
@@ -434,14 +430,14 @@ namespace NCDK.Stereo
             return new Vector2((1 - deltaX), deltaY);
         }
 
-        /**
-         * Determines the center index offset for the chair projection. The center
-         * index is that of the two atoms with opposite turns (fewest). For, LLRLLR
-         * the two centers are R and the index is 2 (first is in position 2). 
-         * 
-         * @param turns calculated turns in the chair projection
-         * @return the offset
-         */
+        /// <summary>
+        /// Determines the center index offset for the chair projection. The center
+        /// index is that of the two atoms with opposite turns (fewest). For, LLRLLR
+        /// the two centers are R and the index is 2 (first is in position 2). 
+        /// 
+        /// <param name="turns">calculated turns in the chair projection</param>
+        /// <returns>the offset</returns>
+        /// </summary>
         private static int ChairCenterOffset(Turn[] turns)
         {
             if (turns[1] == turns[2])
@@ -464,13 +460,13 @@ namespace NCDK.Stereo
             return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
         }
 
-        /**
-         * Helper method determines if a bond is defined (not null) and whether it
-         * is a sigma (single) bond with no stereo attribute (wedge/hatch).
-         *
-         * @param bond the bond to test
-         * @return the bond is a planar sigma bond
-         */
+        /// <summary>
+        /// Helper method determines if a bond is defined (not null) and whether it
+        /// is a sigma (single) bond with no stereo attribute (wedge/hatch).
+        ///
+        /// <param name="bond">the bond to test</param>
+        /// <returns>the bond is a planar sigma bond</returns>
+        /// </summary>
         private static bool IsPlanarSigmaBond(IBond bond)
         {
             return bond != null &&
@@ -478,9 +474,9 @@ namespace NCDK.Stereo
                     BondStereo.None.Equals(bond.Stereo);
         }
 
-        /**
-         * Direction of substituent relative to ring atom.
-         */
+        /// <summary>
+        /// Direction of substituent relative to ring atom.
+        /// </summary>
         enum Direction
         {
             Up,
@@ -488,19 +484,19 @@ namespace NCDK.Stereo
             Other
         }
 
-        /**
-         * Turns, recorded when walking around the cycle.
-         */
+        /// <summary>
+        /// Turns, recorded when walking around the cycle.
+        /// </summary>
         public enum Turn
         {
             Left,
             Right
         }
 
-        /**
-         * Pairing of Projection + Winding. The wound projection is determined
-         * from an array of turns.
-         */
+        /// <summary>
+        /// Pairing of Projection + Winding. The wound projection is determined
+        /// from an array of turns.
+        /// </summary>
         private class WoundProjection
         {
             public static readonly WoundProjection HaworthClockwise = new WoundProjection(Projection.Haworth, TetrahedralStereo.Clockwise);

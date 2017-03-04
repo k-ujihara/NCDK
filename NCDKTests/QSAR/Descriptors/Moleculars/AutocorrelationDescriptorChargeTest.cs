@@ -3,6 +3,7 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 
+
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @cdk.module test-qsarmolecular
@@ -19,7 +20,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void Test1()
         {
             string filename = "NCDK.Data.MDL.clorobenzene.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
             DescriptorValue count = Descriptor.Calculate(container);

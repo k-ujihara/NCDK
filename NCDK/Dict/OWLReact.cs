@@ -38,7 +38,7 @@ namespace NCDK.Dict
     // @cdk.keyword  dictionary
     // @cdk.module   dict
     // @cdk.githash
-    public class OWLReact : DictionaryMap
+    public class OWLReact : EntryDictionary
     {
         private static XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
         private static XNamespace rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
@@ -55,9 +55,9 @@ namespace NCDK.Dict
         /// </summary>
         /// <param name="reader">The Reader</param>
         /// <returns>The Dictionary</returns>
-        public new static DictionaryMap Unmarshal(TextReader reader)
+        public new static EntryDictionary Unmarshal(TextReader reader)
         {
-            DictionaryMap dict = new OWLReact();
+            EntryDictionary dict = new OWLReact();
             try
             {
                 XDocument doc = XDocument.Load(reader);
@@ -133,7 +133,7 @@ namespace NCDK.Dict
             var representations = entry.Elements(ownNS + "representation");
             foreach (var representation in representations)
             {
-                //	        	string idRepr = representations[i].GetAttributeValue("id");
+                //                string idRepr = representations[i].GetAttributeValue("id");
                 string contentRepr = representation.Attribute("content")?.Value;
                 dbEntry.AddRepresentation(contentRepr);
             }

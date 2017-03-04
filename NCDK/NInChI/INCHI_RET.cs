@@ -19,65 +19,65 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * <p>Type-safe enumeration of InChI return codes.
-     *
-     * <p>InChI library return values:<br>
-     * <tt>
-     * SKIP     (-2)    Not used in InChI library<br>
-     * EOF      (-1)    No structural data has been provided<br>
-     * OKAY     (0)     Success, no errors or warnings<br>
-     * WARNING  (1)     Success, Warning(s) issued<br>
-     * ERROR    (2)     Error: no InChI has been created<br>
-     * FATAL    (3)     Severe error: no InChI has been created (typically,
-     *                  memory allocation failure)<br>
-     * Unknown  (4)     Unknown program error<br>
-     * BUSY     (5)     Previous call to InChI has not returned yet<br>
-     * </tt>
-     * <p>See <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// <p>Type-safe enumeration of InChI return codes.
+    ///
+    /// <p>InChI library return values:<br>
+    /// <tt>
+    /// SKIP     (-2)    Not used in InChI library<br>
+    /// EOF      (-1)    No structural data has been provided<br>
+    /// OKAY     (0)     Success, no errors or warnings<br>
+    /// WARNING  (1)     Success, Warning(s) issued<br>
+    /// ERROR    (2)     Error: no InChI has been created<br>
+    /// FATAL    (3)     Severe error: no InChI has been created (typically,
+    ///                  memory allocation failure)<br>
+    /// Unknown  (4)     Unknown program error<br>
+    /// BUSY     (5)     Previous call to InChI has not returned yet<br>
+    /// </tt>
+    /// <p>See <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_RET
     {
 
-        /**
-         * Not used in InChI library.
-         */
+        /// <summary>
+        /// Not used in InChI library.
+        /// </summary>
         SKIP = -2,
 
-        /**
-         * No structural data has been provided.
-         */
+        /// <summary>
+        /// No structural data has been provided.
+        /// </summary>
         EOF = -1,
 
-        /**
-         * Success; no errors or warnings.
-         */
+        /// <summary>
+        /// Success; no errors or warnings.
+        /// </summary>
         OKAY = 0,
 
-        /**
-         * Success; Warning(s) issued.
-         */
+        /// <summary>
+        /// Success; Warning(s) issued.
+        /// </summary>
         WARNING = 1,
 
-        /**
-         * Error: no InChI has been created.
-         */
+        /// <summary>
+        /// Error: no InChI has been created.
+        /// </summary>
         ERROR = 2,
 
-        /**
-         * Severe error: no InChI has been created (typically, memory allocation failure).
-         */
+        /// <summary>
+        /// Severe error: no InChI has been created (typically, memory allocation failure).
+        /// </summary>
         FATAL = 3,
 
-        /**
-         * Unknown program error.
-         */
+        /// <summary>
+        /// Unknown program error.
+        /// </summary>
         Unknown = 4,
 
-        /**
-         * Previuos call to InChI has not returned yet.
-         */
+        /// <summary>
+        /// Previuos call to InChI has not returned yet.
+        /// </summary>
         BUSY = 5
     }
 }

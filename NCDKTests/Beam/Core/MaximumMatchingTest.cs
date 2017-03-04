@@ -12,7 +12,7 @@ namespace NCDK.Beam
         [TestMethod()] public void Blossom() {
 
             Graph g = Graph.FromSmiles("CCCCCC1CCCC1CC");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
 
             // initial matching from double-bonds (size = 5) 
             m.Match(1, 2);
@@ -49,7 +49,7 @@ namespace NCDK.Beam
 
         [TestMethod()] public void Simple_augment() {
             Graph g = Graph.FromSmiles("cccc");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             m.Match(1, 2);
             MaximumMatching.Maximise(g, m, 2);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
@@ -59,7 +59,7 @@ namespace NCDK.Beam
 
         [TestMethod()] public void Simple_augment_subset() {
             Graph g = Graph.FromSmiles("cccc");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             m.Match(1, 2);
             // no vertex '3' matching can not be improved
             MaximumMatching.Maximise(g, m, 2, IntSet.AllOf(0, 1, 2));
@@ -73,7 +73,7 @@ namespace NCDK.Beam
         {
             Graph g = Graph.FromSmiles("o1cccc1");
             IntSet s = IntSet.AllOf(1, 2, 3, 4); // exclude the oxygen
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             MaximumMatching.Maximise(g, m, 0, s);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
                  new[] { Tuple.Of(1, 2), Tuple.Of(3, 4) },
@@ -83,7 +83,7 @@ namespace NCDK.Beam
         [TestMethod()] public void Furan_augment() {
             Graph g = Graph.FromSmiles("o1cccc1");
             IntSet s = IntSet.AllOf(1, 2, 3, 4); // exclude the oxygen
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             m.Match(2, 3);
             MaximumMatching.Maximise(g, m, 2, s);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
@@ -91,8 +91,8 @@ namespace NCDK.Beam
                  m.GetMatches()));
         }
 
-        [TestMethod()] public void quinone() {
-            Graph g = Graph.FromSmiles("oc1ccc(o)cc1");
+        [TestMethod()] public void Quinone() {
+            Graph g = Graph.FromSmiles("Oc1ccc(o)cc1");
             Matching m = MaximumMatching.Maximal(g);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
                 new[] {
@@ -104,13 +104,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quinone_subset()
+        public void Quinone_subset()
         {
-            Graph g = Graph.FromSmiles("oc1ccc(o)cc1");
+            Graph g = Graph.FromSmiles("Oc1ccc(o)cc1");
             // mocks the case where the oxygen atoms are already double bonded - we
             // therefore don't include those of the adjacent carbons in the vertex
             // subset to be matched
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             MaximumMatching.Maximise(g, m, 0, IntSet.AllOf(2, 3, 6, 7));
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
                 new[] {
@@ -123,7 +123,7 @@ namespace NCDK.Beam
         public void Napthalene_augment()
         {
             Graph g = Graph.FromSmiles("C1C=CC2=CCC=CC2=C1");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             m.Match(1, 2);
             m.Match(3, 4);
             m.Match(6, 7);
@@ -139,7 +139,7 @@ namespace NCDK.Beam
                 m.GetMatches()));
         }
 
-        [TestMethod()] public void azulene() {
+        [TestMethod()] public void Azulene() {
             Graph g = Graph.FromSmiles("C1CC2CCCCCC2C1");
             Matching m = MaximumMatching.Maximal(g);
             Assert.IsTrue(Compares.AreOrderLessDeepEqual(
@@ -152,9 +152,9 @@ namespace NCDK.Beam
                m.GetMatches()));
         }
 
-        [TestMethod()] public void imidazole() {
+        [TestMethod()] public void Imidazole() {
             Graph g = Graph.FromSmiles("[nH]1ccnc1");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             MaximumMatching.Maximise(g,
                                      m,
                                      0,
@@ -166,7 +166,7 @@ namespace NCDK.Beam
 
         [TestMethod()] public void Benzimidazole() {
             Graph g = Graph.FromSmiles("c1nc2ccccc2[nH]1");
-            Matching m = Matching.Empty(g);
+            Matching m = Matching.CreateEmpty(g);
             MaximumMatching.Maximise(g,
                                      m,
                                      0,

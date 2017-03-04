@@ -141,7 +141,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void norbornanePaths()
+        public virtual void NorbornanePaths()
         {
             TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(Norbornane), false);
             int[][] paths = esssr.GetPaths();
@@ -153,7 +153,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void norbornaneSize()
+        public virtual void NorbornaneSize()
         {
             TripletShortCycles esssr = new TripletShortCycles(new MinimumCycleBasis(Norbornane), false);
             Assert.AreEqual(3, esssr.Count);
@@ -190,10 +190,10 @@ namespace NCDK.Graphs
         // @cdk.inchi InChI=1S/C20H36/c1-2-6-18-13-15-20(16-14-18)8-4-3-7-19-11-9-17(5-1)10-12-19/h17-20H,1-16H2
         static int[][] Cyclophane()
         {
-			return new int[][]{
-				new[] {1, 5, 12}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4, 17}, new[] {3, 5}, new[] {4, 0}, new[] {7, 11, 15}, new[] {6, 8}, new[] {7, 9},
-				new[] {8, 10, 16}, new[] {9, 11}, new[] {10, 6}, new[] {0, 13}, new[] {12, 14}, new[] {13, 15}, new[] {14, 6}, new[] {9, 19}, new[] {3, 18}, new[] {17, 19},
-				new[] {18, 16}};
+            return new int[][]{
+                new[] {1, 5, 12}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4, 17}, new[] {3, 5}, new[] {4, 0}, new[] {7, 11, 15}, new[] {6, 8}, new[] {7, 9},
+                new[] {8, 10, 16}, new[] {9, 11}, new[] {10, 6}, new[] {0, 13}, new[] {12, 14}, new[] {13, 15}, new[] {14, 6}, new[] {9, 19}, new[] {3, 18}, new[] {17, 19},
+                new[] {18, 16}};
         }
     }
 }

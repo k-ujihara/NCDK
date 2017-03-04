@@ -46,7 +46,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.curan.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -80,7 +80,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.ceph-ns.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -115,7 +115,7 @@ namespace NCDK.IO.CML
         {
             string filename = "NCDK.Data.CML.nucleustest.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CMLReader reader = new CMLReader(ins);
             IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

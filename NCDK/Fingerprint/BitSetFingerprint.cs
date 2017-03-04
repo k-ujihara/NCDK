@@ -23,15 +23,12 @@
 using NCDK.Common.Collections;
 using System;
 using System.Collections;
-using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprint
 {
-    /**
     // @author jonalv
     // @cdk.module     standard
     // @cdk.githash
-     */
     [Serializable]
     public class BitSetFingerprint : IBitFingerprint
     {

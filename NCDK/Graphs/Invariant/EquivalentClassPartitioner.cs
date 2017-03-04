@@ -25,21 +25,18 @@ using System.Linq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * An algorithm for topological symmetry. This algorithm derived from the
-     * algorithm {@cdk.cite Hu94}.
-     *
-     * @cdk.githash
-     *
-     * @author Junfeng Hao
-     * @author Luis F. de Figueiredo
-     * @cdk.created 2003-09-24
-     * @cdk.dictref blue-obelisk:perceiveGraphSymmetry
-     * @cdk.module extra
-     */
+    /// <summary>
+    /// An algorithm for topological symmetry. This algorithm derived from the
+    /// algorithm {@cdk.cite Hu94}.
+    /// </summary>
+    // @cdk.githash
+    // @author Junfeng Hao
+    // @author Luis F. de Figueiredo
+    // @cdk.created 2003-09-24
+    // @cdk.dictref blue-obelisk:perceiveGraphSymmetry
+    // @cdk.module extra
     public class EquivalentClassPartitioner
     {
-
         private double[][] nodeMatrix;
         private double[][] bondMatrix;
         private double[] weight;
@@ -49,14 +46,14 @@ namespace NCDK.Graphs.Invariant
         private int nodeNumber;
         private static double LOST = 0.000000000001;
 
-        /**
-         * Constructor for the TopologicalEquivalentClass object.
-         */
+        /// <summary>
+        /// Constructor for the TopologicalEquivalentClass object.
+        /// </summary>
         public EquivalentClassPartitioner() { }
 
-        /**
-         * Constructor for the TopologicalEquivalentClass object.
-         */
+        /// <summary>
+        /// Constructor for the TopologicalEquivalentClass object.
+        /// </summary>
         public EquivalentClassPartitioner(IAtomContainer atomContainer)
         {
             adjaMatrix = ConnectionMatrix.GetMatrix(atomContainer);
@@ -90,13 +87,11 @@ namespace NCDK.Graphs.Invariant
             weight = new double[nodeNumber + 1];
         }
 
-        /**
-         * Get the topological equivalent class of the molecule.
-         *
-         * @param atomContainer
-         *            atoms and bonds of the molecule
-         * @return an array contains the automorphism partition of the molecule
-         */
+        /// <summary>
+        /// Get the topological equivalent class of the molecule.
+        /// </summary>
+        /// <param name="atomContainer">atoms and bonds of the molecule</param>
+        /// <returns>an array contains the automorphism partition of the molecule</returns>
         public int[] GetTopoEquivClassbyHuXu(IAtomContainer atomContainer)
         {
             double[] nodeSequence = PrepareNode(atomContainer);
@@ -106,14 +101,13 @@ namespace NCDK.Graphs.Invariant
             return FindTopoEquivClass(weight);
         }
 
-        /**
-         * Prepare the node identifier. The purpose of this is to increase the
-         * differentiation of the nodes. Detailed information please see the
-         * corresponding literature.
-         *
-         * @param atomContainer atoms and bonds of the molecule
-         * @return an array of node identifier
-         */
+        /// <summary>
+        /// Prepare the node identifier. The purpose of this is to increase the
+        /// differentiation of the nodes. Detailed information please see the
+        /// corresponding literature.
+        /// </summary>
+        /// <param name="atomContainer">atoms and bonds of the molecule</param>
+        /// <returns>an array of node identifier</returns>
         public double[] PrepareNode(IAtomContainer atomContainer)
         {
             double[] nodeSequence = new double[atomContainer.Atoms.Count];
@@ -314,12 +308,11 @@ namespace NCDK.Graphs.Invariant
             return nodeSequence;
         }
 
-        /**
-         * Build node Matrix.
-         *
-         * @param nodeSequence an array contains node number for each atom
-         * @return node Matrix
-         */
+        /// <summary>
+        /// Build node Matrix.
+        /// </summary>
+        /// <param name="nodeSequence">an array contains node number for each atom</param>
+        /// <returns>node Matrix</returns>
         public double[][] BuildNodeMatrix(double[] nodeSequence)
         {
             int i, j, k;
@@ -341,12 +334,11 @@ namespace NCDK.Graphs.Invariant
             return nodeMatrix;
         }
 
-        /**
-         * Build trial node Matrix.
-         *
-         * @param weight an array contains the weight of atom
-         * @return trial node matrix.
-         */
+        /// <summary>
+        /// Build trial node Matrix.
+        /// </summary>
+        /// <param name="weight">an array contains the weight of atom</param>
+        /// <returns>trial node matrix.</returns>
         public double[][] BuildTrialNodeMatrix(double[] weight)
         {
             int i, j, k;
@@ -368,11 +360,10 @@ namespace NCDK.Graphs.Invariant
             return nodeMatrix;
         }
 
-        /**
-         * Build bond matrix.
-         *
-         * @return bond matrix.
-         */
+        /// <summary>
+        /// Build bond matrix.
+        /// </summary>
+        /// <returns>bond matrix.</returns>
         public double[][] BuildBondMatrix()
         {
             int i, j, k, m;
@@ -409,13 +400,12 @@ namespace NCDK.Graphs.Invariant
             return bondMatrix;
         }
 
-        /**
-         * Build weight array for the given node matrix and bond matrix.
-         *
-         * @param nodeMatrix array contains node information
-         * @param bondMatrix array contains bond information
-         * @return weight array for the node
-         */
+        /// <summary>
+        /// Build weight array for the given node matrix and bond matrix.
+        /// </summary>
+        /// <param name="nodeMatrix">array contains node information</param>
+        /// <param name="bondMatrix">array contains bond information</param>
+        /// <returns>weight array for the node</returns>
         public double[] BuildWeightMatrix(double[][] nodeMatrix, double[][] bondMatrix)
         {
             for (int i = 0; i < nodeNumber; i++)
@@ -430,12 +420,11 @@ namespace NCDK.Graphs.Invariant
             return weight;
         }
 
-        /**
-         * Get different number of the given number.
-         *
-         * @param weight array contains weight of the nodes
-         * @return number of different weight
-         */
+        /// <summary>
+        /// Get different number of the given number.
+        /// </summary>
+        /// <param name="weight">array contains weight of the nodes</param>
+        /// <returns>number of different weight</returns>
         public int CheckDiffNumber(double[] weight)
         {
             // Count the number of different weight
@@ -461,12 +450,11 @@ namespace NCDK.Graphs.Invariant
             return count;
         }
 
-        /**
-         * Get the final equivalent class.
-         *
-         * @param weight array contains weight of the nodes
-         * @return an array contains the automorphism partition
-         */
+        /// <summary>
+        /// Get the final equivalent class.
+        /// </summary>
+        /// <param name="weight">array contains weight of the nodes</param>
+        /// <returns>an array contains the automorphism partition</returns>
         public int[] GetEquivalentClass(double[] weight)
         {
             var category = new double[weight.Length];
@@ -515,12 +503,11 @@ namespace NCDK.Graphs.Invariant
             return equivalentClass;
         }
 
-        /**
-         * Find the topological equivalent class for the given weight.
-         *
-         * @param weight array contains weight of the nodes
-         * @return an array contains the automorphism partition
-         */
+        /// <summary>
+        /// Find the topological equivalent class for the given weight.
+        /// </summary>
+        /// <param name="weight">array contains weight of the nodes</param>
+        /// <returns>an array contains the automorphism partition</returns>
         public int[] FindTopoEquivClass(double[] weight)
         {
             int trialCount, i;

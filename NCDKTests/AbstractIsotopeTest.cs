@@ -22,13 +22,13 @@ using NCDK.Tools.Diff.Tree;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of the Isotope class.
-     *
-     * @cdk.module test-interfaces
-     *
-     * @see org.openscience.cdk.Isotope
-     */
+    /// <summary>
+    /// Checks the functionality of the Isotope class.
+    ///
+    // @cdk.module test-interfaces
+    ///
+    // @see org.openscience.cdk.Isotope
+    /// </summary>
     [TestClass()]
     public abstract class AbstractIsotopeTest : AbstractElementTest
     {
@@ -74,9 +74,9 @@ namespace NCDK
             TestSetMassNumber_Integer();
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()
@@ -91,9 +91,9 @@ namespace NCDK
             Assert.AreEqual(0, diff.Length);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_ExactMass()
         {
@@ -106,9 +106,9 @@ namespace NCDK
             Assert.AreEqual(1.0, clone.ExactMass.Value, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_NaturalAbundance()
         {
@@ -121,9 +121,9 @@ namespace NCDK
             Assert.AreEqual(1.0, clone.NaturalAbundance.Value, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_MassNumber()
         {
@@ -136,9 +136,9 @@ namespace NCDK
             Assert.AreEqual(12, clone.MassNumber.Value);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public override void TestToString()
         {

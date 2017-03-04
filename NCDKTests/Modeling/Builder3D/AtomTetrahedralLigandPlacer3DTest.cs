@@ -23,12 +23,12 @@ using NCDK.Numerics;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * Tests for AtomPlacer3D
-     *
-     * @cdk.module test-builder3d
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Tests for AtomPlacer3D
+    ///
+    // @cdk.module test-builder3d
+    // @cdk.githash
+    /// </summary>
     [TestClass()]
     public class AtomTetrahedralLigandPlacer3DTest : CDKTestCase
     {

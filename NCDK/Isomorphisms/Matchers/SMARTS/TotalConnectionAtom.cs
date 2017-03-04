@@ -24,15 +24,15 @@
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches an atom using total number of connections - referred to in
-     * SMARTS as the connectivity. The connectivity is specified using the {@code
-     * X<number>} pattern.
-     *
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches an atom using total number of connections - referred to in
+    /// SMARTS as the connectivity. The connectivity is specified using the {@code
+    /// X<number>} pattern.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public sealed class TotalConnectionAtom : SMARTSAtom
     {
 

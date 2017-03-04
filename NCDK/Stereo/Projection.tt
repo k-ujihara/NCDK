@@ -1,4 +1,4 @@
-<#@ include file="..\Config.ttinclude" #>
+<#@ include file="..\..\Config.ttinclude" #>
 
 /*
  * Copyright (c) 2014 European Bioinformatics Institute (EMBL-EBI)

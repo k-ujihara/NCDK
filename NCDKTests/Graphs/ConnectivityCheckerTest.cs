@@ -28,16 +28,17 @@ using NCDK.Tools.Manipulator;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace NCDK.Graphs
 {
-    /**
-	 *  Checks the functionality of the ConnectivityChecker
-	 *
-	 * @cdk.module test-standard
-	 *
-	 * @author     steinbeck
-	 * @cdk.created    2001-07-24
-	 */
+    /// <summary>
+    ///  Checks the functionality of the ConnectivityChecker
+    ///
+    // @cdk.module test-standard
+    ///
+    // @author     steinbeck
+    // @cdk.created    2001-07-24
+    /// </summary>
     [TestClass()]
     public class ConnectivityCheckerTest : CDKTestCase
     {
@@ -46,9 +47,9 @@ namespace NCDK.Graphs
             : base()
         { }
 
-        /**
-		 * This test tests the function of the PartitionIntoMolecule() method.
-		 */
+        /// <summary>
+        /// This test tests the function of the PartitionIntoMolecule() method.
+        /// </summary>
         [TestMethod()]
         public void TestPartitionIntoMolecules_IAtomContainer()
         {
@@ -62,9 +63,9 @@ namespace NCDK.Graphs
             Assert.AreEqual(3, moleculeSet.Count);
         }
 
-        /**
-		 * Test for SF bug #903551
-		 */
+        /// <summary>
+        /// Test for SF bug #903551
+        /// </summary>
         [TestMethod()]
         public void TestPartitionIntoMoleculesKeepsAtomIDs()
         {
@@ -85,10 +86,10 @@ namespace NCDK.Graphs
             Assert.AreEqual(atom2.Id, copy2.Id);
         }
 
-        /**
-		 * This test tests the consistency between IsConnected() and
-		 * PartitionIntoMolecules().
-		 */
+        /// <summary>
+        /// This test tests the consistency between IsConnected() and
+        /// PartitionIntoMolecules().
+        /// </summary>
         [TestMethod()]
         public void TestPartitionIntoMolecules_IsConnected_Consistency()
         {
@@ -106,10 +107,10 @@ namespace NCDK.Graphs
             Assert.IsTrue(ConnectivityChecker.IsConnected(moleculeSet[2]));
         }
 
-        /**
-		 * This test makes sure that it is checked that the PartitionIntoMolecules()
-		 * method keeps LonePairs and SingleElectrons with its associated atoms.
-		 */
+        /// <summary>
+        /// This test makes sure that it is checked that the PartitionIntoMolecules()
+        /// method keeps LonePairs and SingleElectrons with its associated atoms.
+        /// </summary>
         [TestMethod()]
         public void TestDontDeleteSingleElectrons()
         {
@@ -154,9 +155,9 @@ namespace NCDK.Graphs
                             moleculeSet[1].Atoms[0]).Count() == 0);
         }
 
-        /**
-		 * This test tests the algorithm behind IsConnected().
-		 */
+        /// <summary>
+        /// This test tests the algorithm behind IsConnected().
+        /// </summary>
         [TestMethod()]
         public void TestIsConnected_IAtomContainer()
         {
@@ -172,14 +173,14 @@ namespace NCDK.Graphs
             Assert.IsTrue(ConnectivityChecker.IsConnected(container));
         }
 
-        /**
-		 * @cdk.bug 2126904
-		 */
+        /// <summary>
+        // @cdk.bug 2126904
+        /// </summary>
         [TestMethod()]
         public void TestIsConnectedFromHINFile()
         {
             string filename = "NCDK.Data.HIN.connectivity1.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content);
@@ -188,14 +189,14 @@ namespace NCDK.Graphs
             Assert.IsTrue(ConnectivityChecker.IsConnected(ac), "Molecule appears not to be connected");
         }
 
-        /**
-		* @cdk.bug 2126904
-		*/
+        /// <summary>
+       // @cdk.bug 2126904
+       /// </summary>
         [TestMethod()]
         public void TestIsConnectedFromSDFile()
         {
             string filename = "NCDK.Data.MDL.mdeotest.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content);
@@ -214,9 +215,9 @@ namespace NCDK.Graphs
             Assert.IsTrue(containerSet[0].StereoElements.GetEnumerator().MoveNext());
         }
 
-        /**
-		 * @cdk.bug 2784209
-		 */
+        /// <summary>
+        // @cdk.bug 2784209
+        /// </summary>
         [TestMethod()]
         public void TestNoAtomsIsConnected()
         {

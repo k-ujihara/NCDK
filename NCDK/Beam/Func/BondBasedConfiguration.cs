@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
-#if TEST
-    public
-#endif
-    sealed class BondBasedConfiguration
+    // @author John May 
+    internal sealed class BondBasedConfiguration
     {
         public static Configuration.DoubleBond ConfigurationOf(Graph g,
                                                         int x, int u, int v, int y)

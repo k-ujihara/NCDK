@@ -8,15 +8,15 @@ using System.Linq;
 
 namespace NCDK.Similarity
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class DistanceMomentTest : CDKTestCase
     {
         private IAtomContainer LoadMolecule(string path)
         {
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(path);
+            Stream ins = ResourceLoader.GetAsStream(path);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

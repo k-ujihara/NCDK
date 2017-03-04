@@ -22,13 +22,12 @@
  */
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
-     * have precedence over another.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Concept of a ligand in CIP terms, reflecting a side chain of a central atom that can
+    /// have precedence over another.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
     public class Ligand : ILigand
     {
         private IAtomContainer container;
@@ -46,32 +45,29 @@ namespace NCDK.Geometries.CIP
             this.visitedAtoms.Visited(centralAtom);
         }
 
-        /**
-         * <see cref="IAtomContainer"/> of which this ligand is part.
-         *
-         * @return the IAtomContainer
-         */
+        /// <summary>
+        /// <see cref="IAtomContainer"/> of which this ligand is part.
+        /// </summary>
+        /// <returns>the IAtomContainer</returns>
         public IAtomContainer GetAtomContainer()
         {
             return container;
         }
 
-        /**
-         * The central {@link IAtom} to which this ligand is connected via one {@link IBond}.
-         *
-         * @return the central atom
-         */
+        /// <summary>
+        /// The central <see cref="IAtom"/> to which this ligand is connected via one <see cref="IBond"/>.
+        /// </summary>
+        /// <returns>the central atom</returns>
         public IAtom GetCentralAtom()
         {
             return centralAtom;
         }
 
-        /**
-         * {@link IAtom} of the ligand that is connected to the chiral {@link IAtom} via
-         * one {@link IBond}.
-         *
-         * @return the ligand atom
-         */
+        /// <summary>
+        /// <see cref="IAtom"/> of the ligand that is connected to the chiral <see cref="IAtom"/> via
+        /// one <see cref="IBond"/>.
+        /// </summary>
+        /// <returns>the ligand atom</returns>
         public IAtom GetLigandAtom()
         {
             return ligandAtom;

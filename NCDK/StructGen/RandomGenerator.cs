@@ -29,21 +29,21 @@ using System.Linq;
 
 namespace NCDK.StructGen
 {
-    /**
-     * RandomGenerator is a generator of constitutional isomers. It needs to be
-     * provided with a starting constitution and it makes random moves in
-     * constitutional space from there.
-     * This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
-     *
-     * <p>Unlike the VicinitySampler, this methods does not sample
-     * the full Faulon vicinity.
-     *
-     * @see         org.openscience.cdk.structgen.VicinitySampler
-     *
-     * @cdk.githash
-     * @cdk.keyword structure generator
-     * @cdk.module structgen
-     */
+    /// <summary>
+    /// RandomGenerator is a generator of constitutional isomers. It needs to be
+    /// provided with a starting constitution and it makes random moves in
+    /// constitutional space from there.
+    /// This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
+    ///
+    /// <p>Unlike the VicinitySampler, this methods does not sample
+    /// the full Faulon vicinity.
+    ///
+    // @see         org.openscience.cdk.structgen.VicinitySampler
+    ///
+    // @cdk.githash
+    // @cdk.keyword structure generator
+    // @cdk.module structgen
+    /// </summary>
     public class RandomGenerator
     {
         private static System.Random random = new System.Random();
@@ -52,23 +52,23 @@ namespace NCDK.StructGen
         private IAtomContainer molecule = null;
         private IAtomContainer trial = null;
 
-        /**
-         * Constructs a RandomGenerator with a given starting structure.
-         *
-         * @param   molecule  The starting structure
-         */
+        /// <summary>
+        /// Constructs a RandomGenerator with a given starting structure.
+        ///
+        /// <param name="molecule">The starting structure</param>
+        /// </summary>
         public RandomGenerator(IAtomContainer molecule)
         {
             SetMolecule(molecule);
         }
 
-        /**
-         * Proposes a structure which can be accepted or rejected by an external
-         * entity. If rejected, the structure is not used as a starting point
-         * for the next random move in structure space.
-         *
-         * @return A proposed molecule
-         */
+        /// <summary>
+        /// Proposes a structure which can be accepted or rejected by an external
+        /// entity. If rejected, the structure is not used as a starting point
+        /// for the next random move in structure space.
+        ///
+        /// <returns>A proposed molecule</returns>
+        /// </summary>
         public IAtomContainer ProposeStructure()
         {
             Debug.WriteLine("RandomGenerator->ProposeStructure() Start");
@@ -96,9 +96,9 @@ namespace NCDK.StructGen
             return proposedStructure;
         }
 
-        /**
-         * Tell the RandomGenerator to accept the last structure that had been proposed.
-         */
+        /// <summary>
+        /// Tell the RandomGenerator to accept the last structure that had been proposed.
+        /// </summary>
         public void AcceptStructure()
         {
             if (proposedStructure != null)
@@ -107,11 +107,11 @@ namespace NCDK.StructGen
             }
         }
 
-        /**
-         * Randomly chooses four atoms and alters the bonding
-         * pattern between them according to rules described
-         * in "Faulon, JCICS 1996, 36, 731".
-         */
+        /// <summary>
+        /// Randomly chooses four atoms and alters the bonding
+        /// pattern between them according to rules described
+        /// in "Faulon, JCICS 1996, 36, 731".
+        /// </summary>
         public void Mutate(IAtomContainer ac)
         {
             Debug.WriteLine("RandomGenerator->Mutate() Start");
@@ -297,22 +297,22 @@ namespace NCDK.StructGen
             Debug.WriteLine("b11 b12 b21 b22: " + b11 + " " + b12 + " " + b21 + " " + b22);
         }
 
-        /**
-         * Assigns a starting structure to this generator.
-         *
-         * @param   molecule  a starting structure for this generator
-         */
+        /// <summary>
+        /// Assigns a starting structure to this generator.
+        ///
+        /// <param name="molecule">a starting structure for this generator</param>
+        /// </summary>
         public void SetMolecule(IAtomContainer molecule)
         {
             this.molecule = molecule;
         }
 
-        /**
-         * Returns the molecule which reflects the current state of this
-         * stochastic structure generator.
-         *
-         * @return The molecule
-         */
+        /// <summary>
+        /// Returns the molecule which reflects the current state of this
+        /// stochastic structure generator.
+        ///
+        /// <returns>The molecule</returns>
+        /// </summary>
         public IAtomContainer Molecule => this.molecule;
     }
 }

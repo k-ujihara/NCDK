@@ -30,14 +30,13 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * AtomTypeTools is a helper class for assigning atom types to an atom.
-     *
-     * @author         cho
-     * @cdk.created    2005-18-07
-     * @cdk.module     extra
-     * @cdk.githash
-	 */
+    /// <summary>
+    /// AtomTypeTools is a helper class for assigning atom types to an atom.
+    /// </summary>
+    // @author         cho
+    // @cdk.created    2005-18-07
+    // @cdk.module     extra
+    // @cdk.githash
     public class AtomTypeTools
     {
         public const int NotInRing = 100;
@@ -49,9 +48,9 @@ namespace NCDK.Tools
         public const int BENZENE_RING = 5;
         HOSECodeGenerator hcg = null;
 
-        /**
-         * Constructor for the MMFF94AtomTypeMatcher object.
-         */
+        /// <summary>
+        /// Constructor for the MMFF94AtomTypeMatcher object.
+        /// </summary>
         public AtomTypeTools()
         {
             hcg = new HOSECodeGenerator();
@@ -62,21 +61,22 @@ namespace NCDK.Tools
             return AssignAtomTypePropertiesToAtom(molecule, true);
         }
 
-        /**
-         *  Method assigns certain properties to an atom. Necessary for the atom type matching
-         *  Properties:
-         *  <ul>
-         *   <li>aromaticity)
-         *   <li>ChemicalGroup (CDKChemicalRingGroupConstant)
-         *	 <li>SSSR
-         *	 <li>Ring/Group, ringSize, aromaticity
-         *	 <li>SphericalMatcher (HoSe Code)
-         *  </ul>
-         *
-         *@param aromaticity bool true/false true if aromaticity should be calculated
-         *@return sssrf ringSetofTheMolecule
-         *@exception Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Method assigns certain properties to an atom. Necessary for the atom type matching
+        ///  Properties:
+        ///  <list type="bullet">
+        ///   <item>aromaticity)</item>
+        ///   <item>ChemicalGroup (CDKChemicalRingGroupConstant)</item>
+        ///   <item>
+        ///     <item>SSSR</item>
+        ///     <item>Ring/Group, ringSize, aromaticity</item>
+        ///     <item>SphericalMatcher (HoSe Code)</item>
+        ///   </item>
+        ///  </list>
+        /// </summary>
+        /// <param name="aromaticity">bool true/false true if aromaticity should be calculated</param>
+        /// <returns>sssrf ringSetofTheMolecule</returns>
+        /// <exception cref="Exception"> Description of the Exception</exception>
         public IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule, bool aromaticity)
         {
             SmilesGenerator sg = new SmilesGenerator();
@@ -138,17 +138,17 @@ namespace NCDK.Tools
             return ringSetMolecule;
         }
 
-        /**
-         * New SMILES code respects atom valency hence a ring subgraph of 'o1cccc1CCCC' is correctly
-         * written as 'o1ccc[c]1' note there is no hydrogen there since it was an external attachment.
-         * To get unique subgraph SMILES we need to adjust valencies of atoms by adding Hydrogens. We
-         * base this on the sum of bond orders removed.
-         *
-         * @param subgraph subgraph (atom and bond refs in 'molecule')
-         * @param molecule the molecule
-         * @return the canonical smiles of the subgraph
-         * @throws CDKException something went wrong with SMILES gen
-         */
+        /// <summary>
+        /// New SMILES code respects atom valency hence a ring subgraph of 'o1cccc1CCCC' is correctly
+        /// written as 'o1ccc[c]1' note there is no hydrogen there since it was an external attachment.
+        /// To get unique subgraph SMILES we need to adjust valencies of atoms by adding Hydrogens. We
+        /// base this on the sum of bond orders removed.
+        ///
+        /// <param name="subgraph">subgraph (atom and bond refs in 'molecule')</param>
+        /// <param name="molecule">the molecule</param>
+        /// <returns>the canonical smiles of the subgraph</returns>
+        /// <exception cref="CDKException">something went wrong with SMILES gen</exception>
+        /// </summary>
         private static string GetSubgraphSmiles(IAtomContainer subgraph, IAtomContainer molecule)
         {
             var bonds = new HashSet<IBond>();
@@ -180,13 +180,13 @@ namespace NCDK.Tools
             return smi;
         }
 
-        /**
-         * Canonical SMILES for the provided molecule.
-         *
-         * @param mol molecule
-         * @return the cansmi string
-         * @throws CDKException something went wrong with SMILES gen
-         */
+        /// <summary>
+        /// Canonical SMILES for the provided molecule.
+        ///
+        /// <param name="mol">molecule</param>
+        /// <returns>the cansmi string</returns>
+        /// <exception cref="CDKException">something went wrong with SMILES gen</exception>
+        /// </summary>
         private static string Cansmi(IAtomContainer mol)
         {
             return SmilesGenerator.Unique().Create(mol);
@@ -205,14 +205,14 @@ namespace NCDK.Tools
             return cached = Cansmi(smipar.ParseSmiles(input));
         }
 
-        /**
-         *  Identifies ringSystem and returns a number which corresponds to
-         *  CDKChemicalRingConstant
-         *
-         *@param  ring    Ring class with the ring system
-         *@param  smile  smile of the ring system
-         *@return chemicalRingConstant
-         */
+        /// <summary>
+        ///  Identifies ringSystem and returns a number which corresponds to
+        ///  CDKChemicalRingConstant
+        ///
+        /// <param name="ring">Ring class with the ring system</param>
+        /// <param name="smile">smile of the ring system</param>
+        /// <returns>chemicalRingConstant</returns>
+        /// </summary>
         private int RingSystemClassifier(IRing ring, string smile)
         {
             /* Console.Out.WriteLine("IN AtomTypeTools Smile:"+smile); */

@@ -22,15 +22,15 @@ namespace NCDK.IO
         /// <para>This method is called before a test is executed and performs the
         /// following actions:
         /// <ul>
-        /// 	<li>Constructs a new FileReader.</li>
-        /// 	<li>Constructs a new TextReader.</li>
-        /// 	<li>Constructs a new GamessReader.</li>
+        ///     <li>Constructs a new FileReader.</li>
+        ///     <li>Constructs a new TextReader.</li>
+        ///     <li>Constructs a new GamessReader.</li>
         /// </ul>
         /// </para>
         /// </summary>
         public GamessReaderTest()
         {
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(testFile);
+            Stream ins = ResourceLoader.GetAsStream(testFile);
             this.inputReader = new StreamReader(ins);
             this.gamessReaderUnderTest = new GamessReader(this.inputReader);
         }
@@ -47,7 +47,7 @@ namespace NCDK.IO
             Assert.IsNotNull(this.inputReader, "TEST: The inputReader is not null.");
             Assert.IsTrue(this.inputReader is TextReader, "TEST: The inputReader is a Reader object.");
             Assert.IsNotNull(this.gamessReaderUnderTest, "TEST: The GamessReader object is constructed.");
-            //		Assert.AreEqual("TEST: ", this.gr.input, this.inputReader);
+            //        Assert.AreEqual("TEST: ", this.gr.input, this.inputReader);
         }
 
         [TestMethod()]

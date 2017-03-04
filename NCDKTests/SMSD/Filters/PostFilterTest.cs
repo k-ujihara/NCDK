@@ -25,21 +25,21 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Filters
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class PostFilterTest
     {
 
         public PostFilterTest() { }
 
-        /**
-         * Test of filter method, of class PostFilter.
-         */
+        /// <summary>
+        /// Test of filter method, of class PostFilter.
+        /// </summary>
         [TestMethod()]
         public void TestFilter()
         {

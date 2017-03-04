@@ -17,8 +17,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.IO.Formats;
+using NCDK.LibIO.DotNetRDF;
 using System;
 using System.IO;
+using System.Text;
+using VDS.RDF;
+using VDS.RDF.Writing;
 
 namespace NCDK.IO.RDF
 {
@@ -100,12 +104,19 @@ namespace NCDK.IO.RDF
 
         private void WriteMolecule(IAtomContainer mol)
         {
-#if true
-            throw new NotImplementedException();
-#else
-            //Model model = Convertor.Molecule2Model(mol);
-            //model.Write(output, "N3");
-#endif
+            Graph g = CreateCDKModel();
+            var convertor = new Convertor(g);
+            convertor.Molecule2Model(mol);
+
+            NTriplesWriter ntwriter = new NTriplesWriter();
+            ntwriter.Save(g, output);
+        }
+
+        private static Graph CreateCDKModel()
+        {
+            Graph g = new Graph();
+            g.NamespaceMap.AddNamespace("cdk", new Uri("http://cdk.sourceforge.net/model.owl#"));
+            return g;
         }
     }
 }

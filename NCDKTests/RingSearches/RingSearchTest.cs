@@ -27,13 +27,13 @@ using System.Collections.Generic;
 
 namespace NCDK.RingSearches
 {
-    /**
-	 * Mocking for {@link RingSearch}. Please refer to RingSearchTest_* for
-	 * situation unit tests.
-	 *
-	 * @author John May
-	 * @cdk.module test-core
-	 */
+    /// <summary>
+    /// Mocking for {@link RingSearch}. Please refer to RingSearchTest_* for
+    /// situation unit tests.
+    ///
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class RingSearchTest
     {
@@ -109,44 +109,44 @@ namespace NCDK.RingSearches
             mock_cyclicSearch.Verify(n => n.Cyclic(1), Times.Once());
         }
 
-		[TestMethod()]
-		public void TestCyclic_IntInt()  {
+        [TestMethod()]
+        public void TestCyclic_IntInt()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
-			IAtomContainer container = new Mock<IAtomContainer>().Object;
+            IAtomContainer container = new Mock<IAtomContainer>().Object;
 
-			RingSearch ringSearch = new RingSearch(container, cyclicSearch);
-			ringSearch.Cyclic(2, 4);
+            RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+            ringSearch.Cyclic(2, 4);
 
             mock_cyclicSearch.Verify(n => n.Cyclic(2, 4), Times.Once());
-		}
+        }
 
-		[TestMethod()]
-		public void TestCyclic_Atom()  {
+        [TestMethod()]
+        public void TestCyclic_Atom()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
-			IAtom atom = new Mock<IAtom>().Object;
+            IAtom atom = new Mock<IAtom>().Object;
 
             mock_container.Setup(n => n.Atoms.IndexOf(It.IsAny<IAtom>())).Returns(42);
 
-			RingSearch ringSearch = new RingSearch(container, cyclicSearch);
-			ringSearch.Cyclic(atom);
+            RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+            ringSearch.Cyclic(atom);
 
-			// verify the number returned from getAtomNumber is passed on
+            // verify the number returned from getAtomNumber is passed on
             mock_container.Verify(n => n.Atoms.IndexOf(atom), Times.Once());
             mock_cyclicSearch.Verify(n => n.Cyclic(42), Times.Once());
         }
 
         [TestMethod()]
-		public void TestCyclic_Bond()  {
+        public void TestCyclic_Bond()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
             IAtom a1 = new Mock<IAtom>().Object;
-			IAtom a2 = new Mock<IAtom>().Object;
+            IAtom a2 = new Mock<IAtom>().Object;
             var mock_bond = new Mock<IBond>();
             IBond bond = mock_bond.Object;
 
@@ -155,43 +155,43 @@ namespace NCDK.RingSearches
             mock_bond.Setup(n => n.Atoms[0]).Returns(a1);
             mock_bond.Setup(n => n.Atoms[1]).Returns(a2);
 
-			RingSearch ringSearch = new RingSearch(container, cyclicSearch);
-			ringSearch.Cyclic(bond);
+            RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+            ringSearch.Cyclic(bond);
 
             // verify the number returned from getAtomNumber is passed on
             mock_container.Verify(n => n.Atoms.IndexOf(a1), Times.Once());
             mock_container.Verify(n => n.Atoms.IndexOf(a2), Times.Once());
             mock_cyclicSearch.Verify(n => n.Cyclic(42, 43), Times.Once());
-		}
+        }
 
         [TestMethod()][ExpectedException(typeof(NoSuchAtomException))]
-		public void TestCyclic_Atom_NotFound()  {
+        public void TestCyclic_Atom_NotFound()  {
 
-			CyclicVertexSearch cyclicSearch = new Mock<CyclicVertexSearch>().Object;
+            CyclicVertexSearch cyclicSearch = new Mock<CyclicVertexSearch>().Object;
             var mock_container = new Mock<IAtomContainer>();
             IAtomContainer container = mock_container.Object;
             IAtom atom = new Mock<IAtom>().Object;
 
             mock_container.Setup(n => n.Atoms.IndexOf(It.IsAny<IAtom>())).Returns(-1);
 
-			RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+            RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-			ringSearch.Cyclic(atom);
-		}
+            ringSearch.Cyclic(atom);
+        }
 
-		[TestMethod()]
-		public void TestIsolated()  {
+        [TestMethod()]
+        public void TestIsolated()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
             IAtomContainer container = new Mock<IAtomContainer>().Object;
-			IAtom atom = new Mock<IAtom>().Object;
+            IAtom atom = new Mock<IAtom>().Object;
 
-			RingSearch ringSearch = new RingSearch(container, cyclicSearch);
+            RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-			ringSearch.Isolated();
+            ringSearch.Isolated();
 
             mock_cyclicSearch.Verify(n => n.Isolated(), Times.Once());
-		}
+        }
 
         [TestMethod()]
         public void TestFUsed()
@@ -203,13 +203,13 @@ namespace NCDK.RingSearches
 
             RingSearch ringSearch = new RingSearch(container, cyclicSearch);
 
-            ringSearch.FUsed();
+            ringSearch.Fused();
 
-            mock_cyclicSearch.Verify(n => n.FUsed(), Times.Once());
+            mock_cyclicSearch.Verify(n => n.Fused(), Times.Once());
         }
 
         [TestMethod()]
-		public void TestRingFragments()  {
+        public void TestRingFragments()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
@@ -219,8 +219,8 @@ namespace NCDK.RingSearches
 
             mock_cyclicSearch.Setup(n => n.Cyclic()).Returns(new int[]{0, 1, 2});
             mock_cyclicSearch.Setup(n => n.Isolated()).Returns(new int[][]{ new[] {0, 1, 2}});
-			mock_cyclicSearch.Setup(n => n.FUsed()).Returns(new int[0][]);
-			mock_container.Setup(n => n.Atoms.Count).Returns(3);
+            mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[0][]);
+            mock_container.Setup(n => n.Atoms.Count).Returns(3);
             mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
@@ -229,14 +229,14 @@ namespace NCDK.RingSearches
 
             mock_cyclicSearch.Verify(n => n.Cyclic(), Times.Once());
 
-			// atoms were accessed
-			mock_container.Verify(n => n.Atoms[0], Times.Once());
-			mock_container.Verify(n => n.Atoms[1], Times.Once());
-			mock_container.Verify(n => n.Atoms[2], Times.Once());
+            // atoms were accessed
+            mock_container.Verify(n => n.Atoms[0], Times.Once());
+            mock_container.Verify(n => n.Atoms[1], Times.Once());
+            mock_container.Verify(n => n.Atoms[2], Times.Once());
 
-			// builder was invoked
-			mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Once());
-		}
+            // builder was invoked
+            mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Once());
+        }
 
         [TestMethod()]
         public void TestIsolatedRingFragments() {
@@ -266,8 +266,8 @@ namespace NCDK.RingSearches
             mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
         }
         
-		[TestMethod()]
-		public void TestFUsedRingFragments()  {
+        [TestMethod()]
+        public void TestFUsedRingFragments()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();
@@ -275,182 +275,182 @@ namespace NCDK.RingSearches
 
             RingSearch ringSearch = new RingSearch(mock_container.Object, mock_cyclicSearch.Object);
 
-            mock_cyclicSearch.Setup(n => n.FUsed()).Returns(new int[][] { new[] { 0, 1 }, new[] { 2 } });
+            mock_cyclicSearch.Setup(n => n.Fused()).Returns(new int[][] { new[] { 0, 1 }, new[] { 2 } });
             mock_container.Setup(n => n.Builder).Returns(mock_builder.Object);
             mock_builder.Setup(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>())).Returns(new Mock<IAtomContainer>().Object);
             mock_container.Setup(n => n.Bonds).Returns(new List<IBond>());
             mock_container.Setup(n => n.Atoms[It.IsAny<int>()]).Returns(new Mock<IAtom>().Object);
 
-			ringSearch.FUsedRingFragments();
+            ringSearch.FusedRingFragments();
 
-			mock_cyclicSearch.Verify(n => n.FUsed(), Times.Once());
+            mock_cyclicSearch.Verify(n => n.Fused(), Times.Once());
 
-			// atoms were accessed
-			mock_container.Verify(n => n.Atoms[0], Times.Once());
-			mock_container.Verify(n => n.Atoms[1], Times.Once());
-			mock_container.Verify(n => n.Atoms[2], Times.Once());
+            // atoms were accessed
+            mock_container.Verify(n => n.Atoms[0], Times.Once());
+            mock_container.Verify(n => n.Atoms[1], Times.Once());
+            mock_container.Verify(n => n.Atoms[2], Times.Once());
 
             // builder was invoked
             mock_builder.Verify(n => n.CreateAtomContainer(It.IsAny<IEnumerable<IAtom>>(), It.IsAny<IEnumerable<IBond>>()), Times.Exactly(2));
-		}
+        }
 
-		[TestMethod()]
-		public void ConnectingEdge1() {
-			IAtomContainer mol = DiSpiroPentane();
-			RingSearch rs = new RingSearch(mol);
-			IAtomContainer frag = rs.RingFragments();
-			Assert.AreEqual(frag.Bonds.Count + 1, mol.Bonds.Count);
-		}
+        [TestMethod()]
+        public void ConnectingEdge1() {
+            IAtomContainer mol = DiSpiroPentane();
+            RingSearch rs = new RingSearch(mol);
+            IAtomContainer frag = rs.RingFragments();
+            Assert.AreEqual(frag.Bonds.Count + 1, mol.Bonds.Count);
+        }
 
-		[TestMethod()]
-		public void ConnectingEdge2() {
-			IAtomContainer mol = TriSpiroPentane();
-			RingSearch rs = new RingSearch(mol);
-			IAtomContainer frag = rs.RingFragments();
-			Assert.AreEqual(frag.Bonds.Count, mol.Bonds.Count);
-		}
+        [TestMethod()]
+        public void ConnectingEdge2() {
+            IAtomContainer mol = TriSpiroPentane();
+            RingSearch rs = new RingSearch(mol);
+            IAtomContainer frag = rs.RingFragments();
+            Assert.AreEqual(frag.Bonds.Count, mol.Bonds.Count);
+        }
 
-		/**
-		 * Hypothetial molecule - C1C[C]11(CC1)[C]123CC1.C2C3
-		 *
-		 * @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
-		 */
-		public static IAtomContainer DiSpiroPentane() {
+        /// <summary>
+        /// Hypothetial molecule - C1C[C]11(CC1)[C]123CC1.C2C3
+        ///
+        // @cdk.inchi InChI=1/C10H16/c1-2-9(1,3-4-9)10(5-6-10)7-8-10/h1-8H2
+        /// </summary>
+        public static IAtomContainer DiSpiroPentane() {
 
-			IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-			IAtomContainer mol = builder.CreateAtomContainer();
-			IAtom a1 = builder.CreateAtom("C");
-			a1.FormalCharge = 0;
-			mol.Add(a1);
-			IAtom a2 = builder.CreateAtom("C");
-			a2.FormalCharge = 0;
-			mol.Add(a2);
-			IAtom a3 = builder.CreateAtom("C");
-			a3.FormalCharge = 0;
-			mol.Add(a3);
-			IAtom a4 = builder.CreateAtom("C");
-			a4.FormalCharge = 0;
-			mol.Add(a4);
-			IAtom a5 = builder.CreateAtom("C");
-			a5.FormalCharge = 0;
-			mol.Add(a5);
-			IAtom a6 = builder.CreateAtom("C");
-			a6.FormalCharge = 0;
-			mol.Add(a6);
-			IAtom a7 = builder.CreateAtom("C");
-			a7.FormalCharge = 0;
-			mol.Add(a7);
-			IAtom a8 = builder.CreateAtom("C");
-			a8.FormalCharge = 0;
-			mol.Add(a8);
-			IAtom a9 = builder.CreateAtom("C");
-			a9.FormalCharge = 0;
-			mol.Add(a9);
-			IAtom a10 = builder.CreateAtom("C");
-			a10.FormalCharge = 0;
-			mol.Add(a10);
-			IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
-			mol.Add(b1);
-			IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-			mol.Add(b2);
-			IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
-			mol.Add(b3);
-			IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
-			mol.Add(b4);
-			IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
-			mol.Add(b5);
-			IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
-			mol.Add(b6);
-			IBond b7 = builder.CreateBond(a3, a6, BondOrder.Single);
-			mol.Add(b7);
-			IBond b8 = builder.CreateBond(a6, a7, BondOrder.Single);
-			mol.Add(b8);
-			IBond b9 = builder.CreateBond(a7, a8, BondOrder.Single);
-			mol.Add(b9);
-			IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
-			mol.Add(b10);
-			IBond b11 = builder.CreateBond(a6, a9, BondOrder.Single);
-			mol.Add(b11);
-			IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
-			mol.Add(b12);
-			IBond b13 = builder.CreateBond(a6, a10, BondOrder.Single);
-			mol.Add(b13);
-			return mol;
-		}
+            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtom a1 = builder.CreateAtom("C");
+            a1.FormalCharge = 0;
+            mol.Add(a1);
+            IAtom a2 = builder.CreateAtom("C");
+            a2.FormalCharge = 0;
+            mol.Add(a2);
+            IAtom a3 = builder.CreateAtom("C");
+            a3.FormalCharge = 0;
+            mol.Add(a3);
+            IAtom a4 = builder.CreateAtom("C");
+            a4.FormalCharge = 0;
+            mol.Add(a4);
+            IAtom a5 = builder.CreateAtom("C");
+            a5.FormalCharge = 0;
+            mol.Add(a5);
+            IAtom a6 = builder.CreateAtom("C");
+            a6.FormalCharge = 0;
+            mol.Add(a6);
+            IAtom a7 = builder.CreateAtom("C");
+            a7.FormalCharge = 0;
+            mol.Add(a7);
+            IAtom a8 = builder.CreateAtom("C");
+            a8.FormalCharge = 0;
+            mol.Add(a8);
+            IAtom a9 = builder.CreateAtom("C");
+            a9.FormalCharge = 0;
+            mol.Add(a9);
+            IAtom a10 = builder.CreateAtom("C");
+            a10.FormalCharge = 0;
+            mol.Add(a10);
+            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            mol.Add(b1);
+            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            mol.Add(b2);
+            IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
+            mol.Add(b3);
+            IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
+            mol.Add(b4);
+            IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
+            mol.Add(b5);
+            IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
+            mol.Add(b6);
+            IBond b7 = builder.CreateBond(a3, a6, BondOrder.Single);
+            mol.Add(b7);
+            IBond b8 = builder.CreateBond(a6, a7, BondOrder.Single);
+            mol.Add(b8);
+            IBond b9 = builder.CreateBond(a7, a8, BondOrder.Single);
+            mol.Add(b9);
+            IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
+            mol.Add(b10);
+            IBond b11 = builder.CreateBond(a6, a9, BondOrder.Single);
+            mol.Add(b11);
+            IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
+            mol.Add(b12);
+            IBond b13 = builder.CreateBond(a6, a10, BondOrder.Single);
+            mol.Add(b13);
+            return mol;
+        }
 
-		/**
-		 * Hypothetial molecule - C1C[C]1123CC1.C1C[C]211(CC1)C3
-		 *
-		 * @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
-		 */
-		public static IAtomContainer TriSpiroPentane() {
+        /// <summary>
+        /// Hypothetial molecule - C1C[C]1123CC1.C1C[C]211(CC1)C3
+        ///
+        // @cdk.inchi InChI=1/C11H18/c1-2-10(1,3-4-10)9-11(10,5-6-11)7-8-11/h1-9H2
+        /// </summary>
+        public static IAtomContainer TriSpiroPentane() {
 
-			IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-			IAtomContainer mol = builder.CreateAtomContainer();
-			IAtom a1 = builder.CreateAtom("C");
-			a1.FormalCharge = 0;
-			mol.Add(a1);
-			IAtom a2 = builder.CreateAtom("C");
-			a2.FormalCharge = 0;
-			mol.Add(a2);
-			IAtom a3 = builder.CreateAtom("C");
-			a3.FormalCharge = 0;
-			mol.Add(a3);
-			IAtom a4 = builder.CreateAtom("C");
-			a4.FormalCharge = 0;
-			mol.Add(a4);
-			IAtom a5 = builder.CreateAtom("C");
-			a5.FormalCharge = 0;
-			mol.Add(a5);
-			IAtom a6 = builder.CreateAtom("C");
-			a6.FormalCharge = 0;
-			mol.Add(a6);
-			IAtom a7 = builder.CreateAtom("C");
-			a7.FormalCharge = 0;
-			mol.Add(a7);
-			IAtom a8 = builder.CreateAtom("C");
-			a8.FormalCharge = 0;
-			mol.Add(a8);
-			IAtom a9 = builder.CreateAtom("C");
-			a9.FormalCharge = 0;
-			mol.Add(a9);
-			IAtom a10 = builder.CreateAtom("C");
-			a10.FormalCharge = 0;
-			mol.Add(a10);
-			IAtom a11 = builder.CreateAtom("C");
-			a11.FormalCharge = 0;
-			mol.Add(a11);
-			IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
-			mol.Add(b1);
-			IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-			mol.Add(b2);
-			IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
-			mol.Add(b3);
-			IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
-			mol.Add(b4);
-			IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
-			mol.Add(b5);
-			IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
-			mol.Add(b6);
-			IBond b7 = builder.CreateBond(a6, a7, BondOrder.Single);
-			mol.Add(b7);
-			IBond b8 = builder.CreateBond(a7, a8, BondOrder.Single);
-			mol.Add(b8);
-			IBond b9 = builder.CreateBond(a3, a8, BondOrder.Single);
-			mol.Add(b9);
-			IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
-			mol.Add(b10);
-			IBond b11 = builder.CreateBond(a8, a9, BondOrder.Single);
-			mol.Add(b11);
-			IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
-			mol.Add(b12);
-			IBond b13 = builder.CreateBond(a8, a10, BondOrder.Single);
-			mol.Add(b13);
-			IBond b14 = builder.CreateBond(a8, a11, BondOrder.Single);
-			mol.Add(b14);
-			IBond b15 = builder.CreateBond(a3, a11, BondOrder.Single);
-			mol.Add(b15);
-			return mol;
-		}
+            IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
+            IAtomContainer mol = builder.CreateAtomContainer();
+            IAtom a1 = builder.CreateAtom("C");
+            a1.FormalCharge = 0;
+            mol.Add(a1);
+            IAtom a2 = builder.CreateAtom("C");
+            a2.FormalCharge = 0;
+            mol.Add(a2);
+            IAtom a3 = builder.CreateAtom("C");
+            a3.FormalCharge = 0;
+            mol.Add(a3);
+            IAtom a4 = builder.CreateAtom("C");
+            a4.FormalCharge = 0;
+            mol.Add(a4);
+            IAtom a5 = builder.CreateAtom("C");
+            a5.FormalCharge = 0;
+            mol.Add(a5);
+            IAtom a6 = builder.CreateAtom("C");
+            a6.FormalCharge = 0;
+            mol.Add(a6);
+            IAtom a7 = builder.CreateAtom("C");
+            a7.FormalCharge = 0;
+            mol.Add(a7);
+            IAtom a8 = builder.CreateAtom("C");
+            a8.FormalCharge = 0;
+            mol.Add(a8);
+            IAtom a9 = builder.CreateAtom("C");
+            a9.FormalCharge = 0;
+            mol.Add(a9);
+            IAtom a10 = builder.CreateAtom("C");
+            a10.FormalCharge = 0;
+            mol.Add(a10);
+            IAtom a11 = builder.CreateAtom("C");
+            a11.FormalCharge = 0;
+            mol.Add(a11);
+            IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
+            mol.Add(b1);
+            IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
+            mol.Add(b2);
+            IBond b3 = builder.CreateBond(a1, a3, BondOrder.Single);
+            mol.Add(b3);
+            IBond b4 = builder.CreateBond(a3, a4, BondOrder.Single);
+            mol.Add(b4);
+            IBond b5 = builder.CreateBond(a4, a5, BondOrder.Single);
+            mol.Add(b5);
+            IBond b6 = builder.CreateBond(a3, a5, BondOrder.Single);
+            mol.Add(b6);
+            IBond b7 = builder.CreateBond(a6, a7, BondOrder.Single);
+            mol.Add(b7);
+            IBond b8 = builder.CreateBond(a7, a8, BondOrder.Single);
+            mol.Add(b8);
+            IBond b9 = builder.CreateBond(a3, a8, BondOrder.Single);
+            mol.Add(b9);
+            IBond b10 = builder.CreateBond(a6, a8, BondOrder.Single);
+            mol.Add(b10);
+            IBond b11 = builder.CreateBond(a8, a9, BondOrder.Single);
+            mol.Add(b11);
+            IBond b12 = builder.CreateBond(a9, a10, BondOrder.Single);
+            mol.Add(b12);
+            IBond b13 = builder.CreateBond(a8, a10, BondOrder.Single);
+            mol.Add(b13);
+            IBond b14 = builder.CreateBond(a8, a11, BondOrder.Single);
+            mol.Add(b14);
+            IBond b15 = builder.CreateBond(a3, a11, BondOrder.Single);
+            mol.Add(b15);
+            return mol;
+        }
     }
 }

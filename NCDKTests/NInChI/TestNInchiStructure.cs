@@ -23,9 +23,9 @@ namespace NCDK.NInChI
     [TestClass()]
     public class TestNInchiStructure
     {
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms.Count'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms.Count'
+        /// </summary>
         [TestMethod()]
         public void TestGetNumAtoms()
         {
@@ -35,9 +35,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Atoms.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Bonds.Count'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Bonds.Count'
+        /// </summary>
         [TestMethod()]
         public void TestGetNumBonds()
         {
@@ -47,9 +47,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Bonds.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Stereos.Count'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Stereos.Count'
+        /// </summary>
         [TestMethod()]
         public void TestGetNumStereo0D()
         {
@@ -59,9 +59,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Stereos.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms.Add(JniInchiAtom)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms.Add(JniInchiAtom)'
+        /// </summary>
         [TestMethod()]
         public void TestAddAtom()
         {
@@ -71,9 +71,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Atoms.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Bonds.Add(JniInchiBond)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Bonds.Add(JniInchiBond)'
+        /// </summary>
         [TestMethod()]
         public void TestAddBond()
         {
@@ -83,9 +83,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Bonds.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.addParity(JniInchiStereo0D)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.addParity(JniInchiStereo0D)'
+        /// </summary>
         [TestMethod()]
         public void TestAddStereo0D()
         {
@@ -95,9 +95,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(1, structure.Stereos.Count);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms[int]'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.Atoms[int]'
+        /// </summary>
         [TestMethod()]
         public void TestGetAtom()
         {
@@ -107,9 +107,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(atom, structure.Atoms[0]);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.getBond(int)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.GetBond(int)'
+        /// </summary>
         [TestMethod()]
         public void TestGetBond()
         {
@@ -119,9 +119,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(bond, structure.Bonds[0]);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStructure.getStereo0D(int)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStructure.GetStereo0D(int)'
+        /// </summary>
         [TestMethod()]
         public void TestGetStereo0D()
         {

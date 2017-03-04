@@ -19,31 +19,26 @@ using System.Collections.Generic;
 
 namespace NCDK.AtomTypes
 {
-    /**
+    /// <summary>
     /// Classes that implement this interface are atom type guessers. As compared
     /// to the IAtomTypeMatcher, this guesser has room for missing information.
     /// Not uncommonly, one bit of information is missing.
-     *
-    /// @author      egonw
-    /// @cdk.created 2006-09-22
-    /// @cdk.module  core
-    /// @cdk.githash
-     *
-    /// @see         IAtomTypeMatcher
-     */
+    /// </summary>
+    /// <seealso cref="IAtomTypeMatcher"/>
+    // @author      egonw
+    // @cdk.created 2006-09-22
+    // @cdk.module  core
+    // @cdk.githash
     public interface IAtomTypeGuesser
     {
-        /**
+        /// <summary>
         /// Method that returns an iterator with a suitable list of atom types
         /// given the provided atom.
-         *
-        /// @param  container AtomContainer of which the <code>atom</code> is part
-        /// @param  atom      Atom for which a matching atom type is searched
-        /// @return           The matching AtomTypes
-        /// @throws           CDKException when something went wrong with going through
-        ///                   the AtomType's
-         */
+        /// </summary>
+        /// <param name="container">AtomContainer of which the <code>atom</code> is part</param>
+        /// <param name="atom">Atom for which a matching atom type is searched</param>
+        /// <returns>The matching AtomTypes</returns>
+        /// <exception cref="CDKException">when something went wrong with going through the AtomType's</exception>
         IEnumerable<IAtomType> PossibleAtomTypes(IAtomContainer container, IAtom atom);
     }
 }
-

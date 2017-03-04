@@ -5,17 +5,17 @@ namespace FaulonSignatures
 {
     public class Invariants : ICloneable
     {
-      /// <summary>
+        /// <summary>
         /// The colors assigned to vertices of the input graph
         /// </summary>
         public int[] colors;
 
-      /// <summary>
+        /// <summary>
         /// The invariants of the nodes of the DAG
         /// </summary>
         public int[] nodeInvariants;
 
-      /// <summary>
+        /// <summary>
         /// The invariants of the vertices of the input graph
         /// </summary>
         public int[] vertexInvariants;

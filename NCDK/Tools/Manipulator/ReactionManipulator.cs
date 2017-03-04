@@ -24,12 +24,12 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @see ChemModelManipulator
-     */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    ///
+    /// <seealso cref="ChemModelManipulator"/>
+    /// </summary>
     public class ReactionManipulator
     {
 
@@ -109,12 +109,12 @@ namespace NCDK.Tools.Manipulator
             }
         }
 
-        /**
-         * Get all molecule of a {@link IReaction}: reactants + products.
-         *
-         * @param reaction  The IReaction
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get all molecule of a <see cref="IReaction"/>: reactants + products.
+        ///
+        /// <param name="reaction">The IReaction</param>
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -125,12 +125,12 @@ namespace NCDK.Tools.Manipulator
             return moleculeSet;
         }
 
-        /**
-         * get all products of a IReaction
-         *
-         * @param reaction  The IReaction
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// get all products of a IReaction
+        ///
+        /// <param name="reaction">The IReaction</param>
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllProducts(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -142,12 +142,12 @@ namespace NCDK.Tools.Manipulator
             return moleculeSet;
         }
 
-        /**
-         * get all reactants of a IReaction
-         *
-         * @param reaction  The IReaction
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// get all reactants of a IReaction
+        ///
+        /// <param name="reaction">The IReaction</param>
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllReactants(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -159,12 +159,12 @@ namespace NCDK.Tools.Manipulator
             return moleculeSet;
         }
 
-        /**
-         * Returns a new Reaction object which is the reverse of the given
-         * Reaction.
-         * @param reaction the reaction being considered
-         * @return the reverse reaction
-         */
+        /// <summary>
+        /// Returns a new Reaction object which is the reverse of the given
+        /// Reaction.
+        /// <param name="reaction">the reaction being considered</param>
+        /// <returns>the reverse reaction</returns>
+        /// </summary>
         public static IReaction Reverse(IReaction reaction)
         {
             IReaction reversedReaction = reaction.Builder.CreateReaction();
@@ -195,11 +195,11 @@ namespace NCDK.Tools.Manipulator
             return reversedReaction;
         }
 
-        /**
-         * Returns all the AtomContainer's of a Reaction.
-         * @param reaction The reaction being considered
-         * @return a list of the IAtomContainer objects comprising the reaction
-         */
+        /// <summary>
+        /// Returns all the AtomContainer's of a Reaction.
+        /// <param name="reaction">The reaction being considered</param>
+        /// <returns>a list of the IAtomContainer objects comprising the reaction</returns>
+        /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IReaction reaction)
         {
             return MoleculeSetManipulator.GetAllAtomContainers(GetAllMolecules(reaction));
@@ -275,13 +275,13 @@ namespace NCDK.Tools.Manipulator
             return list;
         }
 
-        /**
-         * get the IAtom which is mapped
-         *
-         * @param reaction   The IReaction which contains the mapping
-         * @param chemObject The IChemObject which will be searched its mapped IChemObject
-         * @return           The mapped IChemObject
-         */
+        /// <summary>
+        /// get the IAtom which is mapped
+        ///
+        /// <param name="reaction">The IReaction which contains the mapping</param>
+        /// <param name="chemObject">The IChemObject which will be searched its mapped IChemObject</param>
+        /// <returns>The mapped IChemObject</returns>
+        /// </summary>
         public static IChemObject GetMappedChemObject(IReaction reaction, IChemObject chemObject)
         {
             foreach (var mapping in reaction.Mappings)

@@ -30,41 +30,36 @@ using System.Text;
 
 namespace NCDK.Graphs.Invariant
 {
-    /**
-     * Canonically labels an atom container implementing
-     * the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
-     * The Collections.Sort() method uses a merge sort which is
-     * stable and runs in n Log(n).
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
-     * @cdk.created  2002-02-26
-     *
-     * @cdk.keyword canonicalization
-     * @deprecated this labeller uses slow data structures and has been replaced - {@link Canon}
-     */
-    [Obsolete]
+    /// <summary>
+    /// Canonically labels an atom container implementing
+    /// the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
+    /// The Collections.Sort() method uses a merge sort which is
+    /// stable and runs in n Log(n).
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
+    // @author   Oliver Horlacher <oliver.horlacher@therastrat.com>
+    // @cdk.created  2002-02-26
+    // @cdk.keyword canonicalization
+    [Obsolete("this labeller uses slow data structures and has been replaced - " + nameof(Canon))]
     public class CanonicalLabeler
     {
-
         public CanonicalLabeler() { }
 
-        /**
-		 * Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type int, indicating the canonical order.
-		 * This is an implementation of the algorithm published in
-		 * David Weininger et.al. {@cdk.cite WEI89}.
-		 *
-		 * <p>The Collections.Sort() method uses a merge sort which is
-		 * stable and runs in n Log(n).
-		 *
-		 * <p>It is assumed that a chemically valid AtomContainer is provided:
-		 * this method does not check
-		 * the correctness of the AtomContainer. Negative H counts will
-		 * cause a FormatException to be thrown.
-		 * @param atomContainer The molecule to label
-		 */
+        /// <summary>
+        /// Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type int, indicating the canonical order.
+        /// This is an implementation of the algorithm published in
+        /// David Weininger et.al. {@cdk.cite WEI89}.
+        /// <para>The Collections.Sort() method uses a merge sort which is
+        /// stable and runs in n Log(n).
+        /// </para>
+        /// <para>It is assumed that a chemically valid AtomContainer is provided:
+        /// this method does not check
+        /// the correctness of the AtomContainer. Negative H counts will
+        /// cause a FormatException to be thrown.
+        /// </para>
+        /// </summary>
+        /// <param name="atomContainer">The molecule to label</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void CanonLabel(IAtomContainer atomContainer)
         {
@@ -78,18 +73,18 @@ namespace NCDK.Graphs.Invariant
             Step3(vect, atomContainer);
         }
 
-        /**
-		 * @param v the invariance pair vector
-		 */
+        /// <summary>
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
         private void Step2(List<InvPair> v, IAtomContainer atoms)
         {
             PrimeProduct(v, atoms);
             Step3(v, atoms);
         }
 
-        /**
-		 * @param v the invariance pair vector
-		 */
+        /// <summary>
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
         private void Step3(List<InvPair> v, IAtomContainer atoms)
         {
             SortArrayList(v);
@@ -114,11 +109,10 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-		 * Create initial invariant labeling corresponds to step 1
-		 *
-		 * @return List containing the
-		 */
+        /// <summary>
+        /// Create initial invariant labeling corresponds to step 1
+        /// </summary>
+        /// <returns>List containing the</returns>
         private List<InvPair> CreateInvarLabel(IAtomContainer atomContainer)
         {
             var atoms = atomContainer.Atoms;
@@ -145,11 +139,10 @@ namespace NCDK.Graphs.Invariant
             return vect;
         }
 
-        /**
-		 * Calculates the product of the neighbouring primes.
-		 *
-		 * @param v the invariance pair vector
-		 */
+        /// <summary>
+        /// Calculates the product of the neighbouring primes.
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
         private void PrimeProduct(List<InvPair> v, IAtomContainer atomContainer)
         {
             long summ;
@@ -168,12 +161,11 @@ namespace NCDK.Graphs.Invariant
         }
 
 
-        /**
-		 * Sorts the vector according to the current invariance, corresponds to step 3
-		 *
-		 * @param v the invariance pair vector
-		 * @cdk.todo    can this be done in one loop?
-		 */
+        /// <summary>
+        /// Sorts the vector according to the current invariance, corresponds to step 3
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
+        // @cdk.todo    can this be done in one loop?
         private void SortArrayList(List<InvPair> v)
         {
             v.Sort(ASortArrayListCompareComparer);
@@ -194,33 +186,10 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        //static SortArrayListCompareCurr SortArrayListCompareComparerCurr = new SortArrayListCompareCurr();
-        //class SortArrayListCompareCurr : IComparer<InvPair>
-        //{
-        //    public int Compare(InvPair o1, InvPair o2)
-        //    {
-        //        if (o1.Curr > o2.Curr) return +1;
-        //        if (o1.Curr < o2.Curr) return -1;
-        //        return 0;
-        //    }
-        //}
-
-        //static SortArrayListCompareLast SortArrayListCompareComparerLast = new SortArrayListCompareLast();
-        //class SortArrayListCompareLast : IComparer<InvPair>
-        //{
-        //    public int Compare(InvPair o1, InvPair o2)
-        //    {
-        //        if (o1.Last > o2.Last) return +1;
-        //        if (o1.Last < o2.Last) return -1;
-        //        return 0;
-        //    }
-        //}
-
-        /**
-		 * Rank atomic vector, corresponds to step 4.
-		 *
-		 *  @param v the invariance pair vector
-		 */
+        /// <summary>
+        /// Rank atomic vector, corresponds to step 4.
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
         private void RankArrayList(List<InvPair> v)
         {
             int num = 1;
@@ -245,12 +214,11 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-		 * Checks to see if the vector is invariantly partitioned
-		 *
-		 * @param v the invariance pair vector
-		 * @return true if the vector is invariantly partitioned, false otherwise
-		 */
+        /// <summary>
+        /// Checks to see if the vector is invariantly partitioned
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
+        /// <returns>true if the vector is invariantly partitioned, false otherwise</returns>
         private bool IsInvPart(List<InvPair> v)
         {
             if (v[v.Count - 1].Curr == v.Count) return true;
@@ -261,11 +229,10 @@ namespace NCDK.Graphs.Invariant
             return true;
         }
 
-        /**
-		 * Break ties. Corresponds to step 7
-		 *
-		 * @param v the invariance pair vector
-		 */
+        /// <summary>
+        /// Break ties. Corresponds to step 7
+        /// </summary>
+        /// <param name="v">the invariance pair vector</param>
         private void BreakTies(List<InvPair> v)
         {
             InvPair last = null;

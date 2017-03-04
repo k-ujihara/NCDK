@@ -24,9 +24,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class StandardSubstructureSetsTest : CDKTestCase
     {

@@ -22,13 +22,13 @@ using System;
 
 namespace NCDK.Exceptions
 {
-    /**
-     * Checks the functionality of the CDKException class.
-     *
-     * @cdk.module test-core
-     *
-     * @see CDKException
-     */
+    /// <summary>
+    /// Checks the functionality of the CDKException class.
+    ///
+    // @cdk.module test-core
+    ///
+    /// <seealso cref="CDKException"/>
+    /// </summary>
     [TestClass()]
     public class CDKExceptionTest : CDKTestCase
     {

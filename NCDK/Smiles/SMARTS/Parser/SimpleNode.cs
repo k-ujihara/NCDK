@@ -22,18 +22,18 @@ namespace NCDK.Smiles.SMARTS.Parser
             parser = p;
         }
 
-        public void jjtOpen()
+        public void JJTOpen()
         {
         }
 
-        public void jjtClose()
+        public void JJTClose()
         {
         }
 
-        public void jjtSetParent(Node n) { parent = n; }
-        public Node jjtGetParent() { return parent; }
+        public void JJTSetParent(Node n) { parent = n; }
+        public Node JJTGetParent() { return parent; }
 
-        public void jjtAddChild(Node n, int i)
+        public void JJTAddChild(Node n, int i)
         {
             if (children == null)
             {
@@ -48,7 +48,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             children[i] = n;
         }
 
-        public void jjtRemoveChild(int i)
+        public void JJTRemoveChild(int i)
         {
             if (i >= children.Length) return;
             Node[] c = new Node[children.Length - 1];
@@ -60,33 +60,33 @@ namespace NCDK.Smiles.SMARTS.Parser
             children = c;
         }
 
-        public Node jjtGetChild(int i)
+        public Node JJTGetChild(int i)
         {
             return children[i];
         }
 
-        public int jjtGetNumChildren()
+        public int JJTGetNumChildren()
         {
             return (children == null) ? 0 : children.Length;
         }
 
-        public void jjtSetValue(object value) { this.value = value; }
-        public object jjtGetValue() { return value; }
+        public void JJTSetValue(object value) { this.value = value; }
+        public object JJTGetValue() { return value; }
 
-        /** Accept the visitor. **/
-        public virtual object jjtAccept(SMARTSParserVisitor visitor, object data)
+        /// <summary>Accept the visitor. </summary>
+        public virtual object JJTAccept(SMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }
 
-        /** Accept the visitor. **/
+        /// <summary>Accept the visitor. </summary>
         public virtual object childrenAccept(SMARTSParserVisitor visitor, object data)
         {
             if (children != null)
             {
                 for (int i = 0; i < children.Length; ++i)
                 {
-                    children[i].jjtAccept(visitor, data);
+                    children[i].JJTAccept(visitor, data);
                 }
             }
             return data;

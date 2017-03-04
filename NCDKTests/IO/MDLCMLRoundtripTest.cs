@@ -44,7 +44,7 @@ namespace NCDK.IO
         {
             //Read the original
             string filename = "NCDK.Data.MDL.bug-1649526.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();

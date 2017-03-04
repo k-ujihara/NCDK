@@ -27,14 +27,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Defines a stereo encoder factory for the hash code. The factory allows the
-     * generation of stereo hash codes for molecules with predefined {@link
-     * IDoubleBondStereochemistry} stereo elements.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
+    /// <summary>
+    /// Defines a stereo encoder factory for the hash code. The factory allows the
+    /// generation of stereo hash codes for molecules with predefined {@link
+    /// IDoubleBondStereochemistry} stereo elements.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
     public sealed class DoubleBondElementEncoderFactory : IStereoEncoderFactory
     {
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
@@ -60,14 +60,14 @@ namespace NCDK.Hash.Stereo
             return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
         }
 
-        /**
-         * Create an encoder for the {@link IDoubleBondStereochemistry} element.
-         *
-         * @param dbs          stereo element from an atom container
-         * @param atomToIndex  map of atoms to indices
-         * @param graph        adjacency list of connected vertices
-         * @return a new geometry encoder
-         */
+        /// <summary>
+        /// Create an encoder for the <see cref="IDoubleBondStereochemistry"/> element.
+        ///
+        /// <param name="dbs">stereo element from an atom container</param>
+        /// <param name="atomToIndex">map of atoms to indices</param>
+        /// <param name="graph">adjacency list of connected vertices</param>
+        /// <returns>a new geometry encoder</returns>
+        /// </summary>
         private static GeometryEncoder GetEncoder(IDoubleBondStereochemistry dbs, IDictionary<IAtom, int> atomToIndex,
                 int[][] graph)
         {
@@ -106,14 +106,14 @@ namespace NCDK.Hash.Stereo
             return new GeometryEncoder(new int[] { u, v }, permParity, geomParity);
         }
 
-        /**
-         * Finds a vertex in 'vs' which is not 'u' or 'x'.
-         * .
-         * @param vs fixed size array of 3 elements
-         * @param u  a vertex in 'vs'
-         * @param x  another vertex in 'vs'
-         * @return the other vertex
-         */
+        /// <summary>
+        /// Finds a vertex in 'vs' which is not 'u' or 'x'.
+        /// .
+        /// <param name="vs">fixed size array of 3 elements</param>
+        /// <param name="u">a vertex in 'vs'</param>
+        /// <param name="x">another vertex in 'vs'</param>
+        /// <returns>the other vertex</returns>
+        /// </summary>
         private static int FindOther(int[] vs, int u, int x)
         {
             foreach (var v in vs)
@@ -123,13 +123,13 @@ namespace NCDK.Hash.Stereo
             throw new ArgumentException("vs[] did not contain another vertex");
         }
 
-        /**
-         * Lazy creation of an atom index map.
-         *
-         * @param map       existing map (possibly null)
-         * @param container the container we want the map for
-         * @return a usable atom to index map for the given container
-         */
+        /// <summary>
+        /// Lazy creation of an atom index map.
+        ///
+        /// <param name="map">existing map (possibly null)</param>
+        /// <param name="container">the container we want the map for</param>
+        /// <returns>a usable atom to index map for the given container</returns>
+        /// </summary>
         private static IDictionary<IAtom, int> IndexMap(IDictionary<IAtom, int> map, IAtomContainer container)
         {
             if (map != null) return map;

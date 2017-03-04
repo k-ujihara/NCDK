@@ -24,17 +24,15 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * An output Writer that writes molecular data into the
-     * <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
-     * Writes the atoms and the bonds only at this moment.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author     Egon Willighagen
-     */
+    /// <summary>
+    /// An output Writer that writes molecular data into the
+    /// <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
+    /// Writes the atoms and the bonds only at this moment.
+    /// </summary>
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    // @author     Egon Willighagen
     public class Mol2Writer : DefaultChemObjectWriter
     {
         private TextWriter writer;
@@ -44,10 +42,10 @@ namespace NCDK.IO
             : this(new StringWriter())
         { }
 
-        /**
-         * Constructs a new Mol2 writer.
-         * @param out the stream to write the Mol2 file to.
-         */
+        /// <summary>
+        /// Constructs a new Mol2 writer.
+        /// <param name="out">the stream to write the Mol2 file to.</param>
+        /// </summary>
         public Mol2Writer(TextWriter out_)
         {
             writer = out_;
@@ -69,9 +67,9 @@ namespace NCDK.IO
             SetWriter(new StreamWriter(output));
         }
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();
@@ -102,12 +100,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Writes a single frame in XYZ format to the Writer.
-         *
-         * @param mol the Molecule to write
-         * @.io.IOException if there is an error during writing
-         */
+        /// <summary>
+        /// Writes a single frame in XYZ format to the Writer.
+        /// </summary>
+        /// <param name="mol">the Molecule to write</param>
+        /// <exception cref="IOException">if there is an error during writing</exception>
         public void WriteMolecule(IAtomContainer mol)
         {
             matcher = SybylAtomTypeMatcher.GetInstance(mol.Builder);
@@ -122,10 +119,8 @@ namespace NCDK.IO
                 // FIXME: add other types of meta data
                 writer.WriteLine();
 
-                /*
-                 * @<TRIPOS>MOLECULE benzene 12 12 1 0 0 SMALL NO_CHARGES
-                 */
-
+                // @<TRIPOS>MOLECULE benzene 12 12 1 0 0 SMALL NO_CHARGES
+                
                 Debug.WriteLine("Writing molecule block...");
                 writer.Write("@<TRIPOS>MOLECULE");
                 writer.WriteLine();
@@ -145,17 +140,15 @@ namespace NCDK.IO
                 writer.Write("NO CHARGES"); // other options include Gasteiger charges
                 writer.WriteLine();
 
-                /*
-                 * @<TRIPOS>ATOM 1 C1 1.207 2.091 0.000 C.ar 1 BENZENE 0.000 2 C2
-                 * 2.414 1.394 0.000 C.ar 1 BENZENE 0.000 3 C3 2.414 0.000 0.000
-                 * C.ar 1 BENZENE 0.000 4 C4 1.207 -0.697 0.000 C.ar 1 BENZENE 0.000
-                 * 5 C5 0.000 0.000 0.000 C.ar 1 BENZENE 0.000 6 C6 0.000 1.394
-                 * 0.000 C.ar 1 BENZENE 0.000 7 H1 1.207 3.175 0.000 H 1 BENZENE
-                 * 0.000 8 H2 3.353 1.936 0.000 H 1 BENZENE 0.000 9 H3 3.353 -0.542
-                 * 0.000 H 1 BENZENE 0.000 10 H4 1.207 -1.781 0.000 H 1 BENZENE
-                 * 0.000 11 H5 -0.939 -0.542 0.000 H 1 BENZENE 0.000 12 H6 -0.939
-                 * 1.936 0.000 H 1 BENZENE 0.000
-                 */
+                // @<TRIPOS>ATOM 1 C1 1.207 2.091 0.000 C.ar 1 BENZENE 0.000 2 C2
+                // 2.414 1.394 0.000 C.ar 1 BENZENE 0.000 3 C3 2.414 0.000 0.000
+                // C.ar 1 BENZENE 0.000 4 C4 1.207 -0.697 0.000 C.ar 1 BENZENE 0.000
+                // 5 C5 0.000 0.000 0.000 C.ar 1 BENZENE 0.000 6 C6 0.000 1.394
+                // 0.000 C.ar 1 BENZENE 0.000 7 H1 1.207 3.175 0.000 H 1 BENZENE
+                // 0.000 8 H2 3.353 1.936 0.000 H 1 BENZENE 0.000 9 H3 3.353 -0.542
+                // 0.000 H 1 BENZENE 0.000 10 H4 1.207 -1.781 0.000 H 1 BENZENE
+                // 0.000 11 H5 -0.939 -0.542 0.000 H 1 BENZENE 0.000 12 H6 -0.939
+                // 1.936 0.000 H 1 BENZENE 0.000
 
                 // write atom block
                 Debug.WriteLine("Writing atom block...");
@@ -201,10 +194,8 @@ namespace NCDK.IO
                     writer.WriteLine();
                 }
 
-                /*
-                 * @<TRIPOS>BOND 1 1 2 ar 2 1 6 ar 3 2 3 ar 4 3 4 ar 5 4 5 ar 6 5 6
-                 * ar 7 1 7 1 8 2 8 1 9 3 9 1 10 4 10 1 11 5 11 1 12 6 12 1
-                 */
+                // @<TRIPOS>BOND 1 1 2 ar 2 1 6 ar 3 2 3 ar 4 3 4 ar 5 4 5 ar 6 5 6
+                // ar 7 1 7 1 8 2 8 1 9 3 9 1 10 4 10 1 11 5 11 1 12 6 12 1
 
                 // write bond block
                 Debug.WriteLine("Writing bond block...");

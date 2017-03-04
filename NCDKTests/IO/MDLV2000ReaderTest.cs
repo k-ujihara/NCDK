@@ -33,22 +33,19 @@ using NCDK.IO.Listener;
 using System.Collections.Specialized;
 using NCDK.Geometries;
 using NCDK.Isomorphisms.Matchers;
-using System.Reflection;
 using System.Text;
 using Moq;
 using NCDK.SGroups;
 
 namespace NCDK.IO
 {
-    /**
-	 * TestCase for the reading MDL mol files using one test file.
-	 * A test case for SDF files is available as separate Class.
-	 *
-	 * @cdk.module test-io
-	 *
-	 * @see org.openscience.cdk.io.MDLV2000Reader
-	 * @see org.openscience.cdk.io.SDFReaderTest
-	 */
+    /// <summary>
+    /// TestCase for the reading MDL mol files using one test file.
+    /// A test case for SDF files is available as separate Class.
+    /// </summary>
+    /// <seealso cref="MDLV2000Reader"/>
+    /// <seealso cref="SDFReaderTest"/>
+    // @cdk.module test-io
     [TestClass()]
     public class MDLV2000ReaderTest : SimpleChemObjectReaderTest
     {
@@ -65,15 +62,13 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /**
-		 * @cdk.bug 3084064
-		 */
+        // @cdk.bug 3084064
         [TestMethod()]
         public void TestBug3084064()
         {
             var filename = "NCDK.Data.MDL.weirdprops.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -104,15 +99,13 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * @cdk.bug 682233
-		 */
+        // @cdk.bug 682233
         [TestMethod()]
         public void TestBug682233()
         {
             var filename = "NCDK.Data.MDL.bug682233.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -149,7 +142,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.MDL.a-pinene.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -165,7 +158,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.ChEBI_37340.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -176,15 +169,13 @@ namespace NCDK.IO
             Assert.AreEqual(210, containersList[0].Atoms[0].MassNumber.Value);
         }
 
-        /**
-		 * @cdk.bug 2234820
-		 */
+        // @cdk.bug 2234820
         [TestMethod()]
         public void TestMassNumber()
         {
             string filename = "NCDK.Data.MDL.massnumber.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -201,7 +192,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.shortest_path_test.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -222,7 +213,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.a-pinene.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -234,7 +225,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.four-ring-5x10.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -250,7 +241,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.hydroxyamino.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -266,7 +257,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.methylbenzol.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -282,7 +273,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.polycarpol.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -298,7 +289,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.reserpine.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -314,7 +305,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.six-ring-4x4.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -330,7 +321,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.superspiro.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -346,7 +337,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.butanoic_acid.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -361,7 +352,7 @@ namespace NCDK.IO
         public void TestUsesGivenMolecule()
         {
             var filename = "NCDK.Data.MDL.superspiro.mol"; // just a random file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer superspiro = new AtomContainer();
             superspiro.Id = "superspiro";
@@ -370,9 +361,7 @@ namespace NCDK.IO
             Assert.AreEqual(superspiro.Id, result.Id);
         }
 
-        /**
-		 * @cdk.bug 835571
-		 */
+        // @cdk.bug 835571
         [TestMethod()]
         public void TestReadFromStringReader()
         {
@@ -414,7 +403,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.SARGROUPTEST.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -426,7 +415,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.AliasPropertyRGroup.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -435,15 +424,13 @@ namespace NCDK.IO
             Assert.AreEqual("R\\1", ((IPseudoAtom)atom).Label);
         }
 
-        /**
-		 * @cdk.bug 1587283
-		 */
+        // @cdk.bug 1587283
         [TestMethod()]
         public void TestBug1587283()
         {
             var filename = "NCDK.Data.MDL.bug1587283.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -475,7 +462,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.withcharges.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -499,7 +486,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.emptyStructure.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -520,15 +507,13 @@ namespace NCDK.IO
             Assert.IsTrue(keys.Contains("ChemCount"));
         }
 
-        /**
-		 * @cdk.bug 1732307
-		 */
+        // @cdk.bug 1732307
         [TestMethod()]
         public void TestZeroZCoordinates()
         {
             var filename = "NCDK.Data.MDL.nozcoord.sdf";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             var prop = new NameValueCollection();
             prop["ForceReadAs3DCoordinates"] = "true";
@@ -545,15 +530,13 @@ namespace NCDK.IO
             Assert.IsTrue(has3d);
         }
 
-        /**
-		 * @cdk.bug 1826577
-		 */
+        // @cdk.bug 1826577
         [TestMethod()]
         public void TestHIsotopes_Strict()
         {
             string filename = "NCDK.Data.MDL.hisotopes.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             try
             {
                 MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
@@ -571,15 +554,13 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * @cdk.bug 1826577
-		 */
+        // @cdk.bug 1826577
         [TestMethod()]
         public void TestHIsotopes_Relaxed()
         {
             var filename = "NCDK.Data.MDL.hisotopes.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -590,16 +571,12 @@ namespace NCDK.IO
             Assert.IsFalse((containersList[0]).Atoms[2] is IPseudoAtom);
         }
 
-        /**
-		 *
-		 * @
-		 */
         [TestMethod()]
         public void TestReadRadical()
         {
             var filename = "NCDK.Data.MDL.332727182.radical.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -611,9 +588,7 @@ namespace NCDK.IO
             Assert.IsTrue((containersList[0]).SingleElectrons.Count > 0);
         }
 
-        /**
-		 * @cdk.bug 2604888
-		 */
+        // @cdk.bug 2604888
         [TestMethod()]
         public void TestNoCoordinates()
         {
@@ -648,7 +623,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.ChEBI_26120.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -662,23 +637,23 @@ namespace NCDK.IO
         public void TestUndefinedStereo2()
         {
             var filename = "NCDK.Data.MDL.a-pinene-with-undefined-stereo.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.AreEqual(BondStereo.UpOrDown, mol.Bonds[1].Stereo);
         }
 
-        /**
-		 * Tests that the '0' read from the bond block for bond stereo
-		 * is read is 'no stereochemistry involved'.
-		 */
+        /// <summary>
+        /// Tests that the '0' read from the bond block for bond stereo
+        /// is read is 'no stereochemistry involved'.
+        /// </summary>
         [TestMethod()]
         public void TestStereoReadZeroDefault()
         {
             var filename = "NCDK.Data.MDL.withcharges.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -720,7 +695,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.butadiene.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -732,16 +707,15 @@ namespace NCDK.IO
             Assert.AreEqual(BondStereo.EOrZ, container.Bonds[2].Stereo);
         }
 
-        /**
-		 * Tests numbering of R# elements according to RGP line.
-		 * @
-		 */
+        /// <summary>
+        /// Tests numbering of R# elements according to RGP line.
+        /// </summary>
         [TestMethod()]
         public void TestRGroupHashNumbering()
         {
             var filename = "NCDK.Data.MDL.rgroups.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -778,18 +752,17 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * Test for hard coded R-group numbers in the Atom block.
-		 * Hard coding is accepted but should not be done really, instead use
-		 * a hash (#) conform the CTFile spec.
-		 * @
-		 */
+        /// <summary>
+        /// Test for hard coded R-group numbers in the Atom block.
+        /// Hard coding is accepted but should not be done really, instead use
+        /// a hash (#) conform the CTFile spec.
+        /// </summary>
         [TestMethod()]
         public void TestRGroupHardcodedNumbering()
         {
             var filename = "NCDK.Data.MDL.rgroupsNumbered.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(Default.ChemObjectBuilder.Instance.CreateAtomContainer());
             reader.Close();
@@ -823,7 +796,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.a-pinene-with-valence.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             IAtomContainer mol = reader.Read(new AtomContainer());
@@ -848,7 +821,7 @@ namespace NCDK.IO
         private void TestShortLinesForMode(ChemObjectReaderModes mode)
         {
             var filename = "NCDK.Data.MDL.glycine-short-lines.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, mode);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -862,7 +835,7 @@ namespace NCDK.IO
         {
             var filename = "NCDK.Data.MDL.a-pinene-with-atom-atom-mapping.mol";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -872,14 +845,12 @@ namespace NCDK.IO
             Assert.IsNull(mol.Atoms[2].GetProperty<int?>(CDKPropertyName.ATOM_ATOM_MAPPING));
         }
 
-        /**
-		 * @cdk.bug 2936440
-		 */
+        // @cdk.bug 2936440
         [TestMethod()]
         public void TestHas2DCoordinates_With000()
         {
             var filenameMol = "NCDK.Data.MDL.with000coordinate.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filenameMol);
+            var ins = ResourceLoader.GetAsStream(filenameMol);
             IAtomContainer molOne = null;
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             molOne = reader.Read(new AtomContainer());
@@ -892,7 +863,7 @@ namespace NCDK.IO
         public void TestAtomValueLines()
         {
             var filename = "NCDK.Data.MDL.atomValueLines.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer testMolecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             IAtomContainer result = reader.Read(testMolecule);
@@ -906,7 +877,7 @@ namespace NCDK.IO
         public void TestDeuterium()
         {
             var filename = "NCDK.Data.MDL.chemblMolregno5369.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
 
             var prop = new NameValueCollection();
@@ -929,7 +900,7 @@ namespace NCDK.IO
         public void TestDeuteriumProperties()
         {
             var filename = "NCDK.Data.MDL.chemblMolregno5369.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Relaxed);
             IAtomContainer molecule = new AtomContainer();
             molecule = reader.Read(molecule);
@@ -943,7 +914,7 @@ namespace NCDK.IO
         public void TestTritium()
         {
             var filename = "NCDK.Data.MDL.chemblMolregno7039.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = new AtomContainer();
             molecule = reader.Read(molecule);
@@ -959,7 +930,7 @@ namespace NCDK.IO
         public void TestTritiumProperties()
         {
             var filename = "NCDK.Data.MDL.chemblMolregno7039.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = new AtomContainer();
             molecule = reader.Read(molecule);
@@ -969,14 +940,14 @@ namespace NCDK.IO
             Assert.IsTrue(3.016049278 == tritium.ExactMass);
         }
 
-        /**
-		 * Tests a molfile with 'query' bond types (in this case bond type == 8 (any)).
-		 */
+        /// <summary>
+        /// Tests a molfile with 'query' bond types (in this case bond type == 8 (any)).
+        /// </summary>
         [TestMethod()]
         public void TestQueryBondType8()
         {
             var filename = "NCDK.Data.MDL.iridiumCoordination.chebi52748.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer atc = reader.Read(new AtomContainer());
             reader.Close();
@@ -1000,14 +971,14 @@ namespace NCDK.IO
             Assert.IsTrue(queryBondCount == 3, "Expecting three 'query' bond types to 'Ir'");
         }
 
-        /**
-		 * Tests a molfile with 'query' bond types (in this case bond type == 6).
-		 */
+        /// <summary>
+        /// Tests a molfile with 'query' bond types (in this case bond type == 6).
+        /// </summary>
         [TestMethod()]
         public void TestQueryBondType6()
         {
             var filename = "NCDK.Data.MDL.chebi.querybond.51736.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer atc = reader.Read(new AtomContainer());
             reader.Close();
@@ -1025,13 +996,13 @@ namespace NCDK.IO
             Assert.IsTrue(queryBondCount == 6, "Expecting six 'query' bond types");
         }
 
-        /**
-		 * Test that R-groups at higher atom numbers (>9) are read correctly
-		 */
+        /// <summary>
+        /// Test that R-groups at higher atom numbers (>9) are read correctly
+        /// </summary>
         [TestMethod()]
         public void TestRGroupHighAtomNumber()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.brenda_molfile_rgroup.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.brenda_molfile_rgroup.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             reader.Read(molecule);
@@ -1042,7 +1013,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAliasAtomNaming()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.mol_testAliasAtomNaming.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAliasAtomNaming.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             reader.Read(molecule);
@@ -1065,7 +1036,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestPseudoAtomLabels()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.pseudoatoms.sdf");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1076,13 +1047,11 @@ namespace NCDK.IO
             Assert.AreEqual("Gln", pa.Label);
         }
 
-        /**
-		 * @cdk.bug 3485634
-		 */
+        // @cdk.bug 3485634
         [TestMethod()]
         public void TestMissingAtomProperties()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.bug3485634.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1093,7 +1062,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBondOrderFour()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.mdlWithBond4.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mdlWithBond4.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1108,7 +1077,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAtomParity()
         {
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.mol_testAtomParity.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1134,7 +1103,7 @@ namespace NCDK.IO
         public void TestSingleSingletRadical()
         {
 
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.singleSingletRadical.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1147,7 +1116,7 @@ namespace NCDK.IO
         public void TestSingleDoubletRadical()
         {
 
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.singleDoubletRadical.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1160,7 +1129,7 @@ namespace NCDK.IO
         public void TestSingleTripletRadical()
         {
 
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.singleTripletRadical.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1172,7 +1141,7 @@ namespace NCDK.IO
         public void TestMultipleRadicals()
         {
 
-            var in_ = Assembly.GetExecutingAssembly().GetManifestResourceStream("NCDK.Data.MDL.multipleRadicals.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1192,7 +1161,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void Fe_iii_valence()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.iron-iii.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.iron-iii.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1205,7 +1174,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void Bismuth_ion_valence()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.bismuth-ion.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bismuth-ion.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1214,9 +1183,9 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void e_butene_2D()
+        public void E_butene_2D()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.e_butene_2d.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1226,9 +1195,9 @@ namespace NCDK.IO
 
         // when there are no coordinates stereo perception should not be done
         [TestMethod()]
-        public void e_butene_0D()
+        public void E_butene_0D()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.e_butene_0d.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_0d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
@@ -1240,9 +1209,9 @@ namespace NCDK.IO
         // forcing as 3D is problematic for stereo perception as we put 2D coordinates
         // in to 3D as we then no longer know to check wedge/hatch labels.
         [TestMethod()]
-        public void e_butene_2D_force3D()
+        public void E_butene_2D_force3D()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.e_butene_2d.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
 
             // yuk!
@@ -1260,9 +1229,9 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void e_butene_3D()
+        public void E_butene_3D()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.e_butene_3d.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_3d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
 
             var prop = new NameValueCollection();
@@ -1280,9 +1249,9 @@ namespace NCDK.IO
 
         // turn off adding stereoelements
         [TestMethod()]
-        public void e_butene_2D_optOff()
+        public void E_butene_2D_optOff()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.e_butene_2d.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
 
             var prop = new NameValueCollection();
@@ -1299,19 +1268,19 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void dataHeader_1()
+        public void DataHeader_1()
         {
             Assert.AreEqual("DENSITY", MDLV2000Reader.DataHeader("> 29 <DENSITY> "));
         }
 
         [TestMethod()]
-        public void dataHeader_2()
+        public void DataHeader_2()
         {
             Assert.AreEqual("MELTING.POINT", MDLV2000Reader.DataHeader("> <MELTING.POINT> "));
         }
 
         [TestMethod()]
-        public void dataHeader_3()
+        public void DataHeader_3()
         {
             Assert.AreEqual("BOILING.POINT", MDLV2000Reader.DataHeader("> 55 (MD-08974) <BOILING.POINT> DT12"));
         }
@@ -1393,14 +1362,14 @@ namespace NCDK.IO
 
         }
 
-        /**
-		 * Ensure having a property with 2 new line lines will still allow 2 entries
-		 * to be read - a bug from the mailing list.
-		 */
+        /// <summary>
+        /// Ensure having a property with 2 new line lines will still allow 2 entries
+        /// to be read - a bug from the mailing list.
+        /// </summary>
         [TestMethod()]
         public void TestMultipleNewlinesInSDFProperty()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.multiplenewline-property.sdf");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.multiplenewline-property.sdf");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -1410,7 +1379,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAliasAfterRgroup()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.r-group-with-alias.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.r-group-with-alias.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer container = reader.Read(new AtomContainer());
             reader.Close();
@@ -1448,22 +1417,20 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void radicalsReflectedInHydrogenCount()
+        public void RadicalsReflectedInHydrogenCount()
         {
-            MDLV2000Reader r = new MDLV2000Reader(typeof(MDLV2000Reader).Assembly.GetManifestResourceStream(typeof(MDLV2000Reader), "structure-with-radical.mol"));
+            MDLV2000Reader r = new MDLV2000Reader(ResourceLoader.GetAsStream(typeof(MDLV2000Reader), "structure-with-radical.mol"));
             IAtomContainer m = r.Read(new AtomContainer());
             r.Close();
             Assert.AreEqual(8, m.Atoms[0].AtomicNumber);
             Assert.AreEqual(0, m.Atoms[0].ImplicitHydrogenCount);
         }
 
-        /**
-		 * @cdk.bug 1326
-		 */
+        // @cdk.bug 1326
         [TestMethod()]
-        public void nonNegativeHydrogenCount()
+        public void NonNegativeHydrogenCount()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.ChEBI_30668.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_30668.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer container = reader.Read(new AtomContainer());
             reader.Close();
@@ -1474,13 +1441,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * @cdk.bug 1343
-		 */
-        [TestMethod()]
-        public void nonNegativeHydrogenCountOnHydrogenRadical()
+        // @cdk.bug 1343
+       [TestMethod()]
+        public void NonNegativeHydrogenCountOnHydrogenRadical()
         {
-            var in_ = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.ChEBI_29293.mol");
+            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_29293.mol");
             MDLV2000Reader reader = new MDLV2000Reader(in_);
             IAtomContainer container = reader.Read(new AtomContainer());
             reader.Close();
@@ -1488,30 +1453,27 @@ namespace NCDK.IO
             Assert.AreEqual(0, container.Atoms[1].ImplicitHydrogenCount);
         }
 
-        /**
-		 * The non-standard ACDLabs atom label property should throw a CDKException in Strict mode.
-		 * @
-		 */
+        /// <summary>
+        /// The non-standard ACDLabs atom label property should throw a CDKException in Strict mode.
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(CDKException))]
         public void TestAcdChemSketchLabel_Strict()
         {
-
             var filename = "NCDK.Data.MDL.chemsketch-all-labelled.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(new AtomContainer());
         }
 
-        /**
-		 * Test a simple ChemSketch label containing an integer.
-		 * @
-		 */
+        /// <summary>
+        /// Test a simple ChemSketch label containing an integer.
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel()
         {
             var filename = "NCDK.Data.MDL.chemsketch-one-label.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1519,15 +1481,14 @@ namespace NCDK.IO
             Assert.AreEqual("6", mol.Atoms[1].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
         }
 
-        /**
-		 * Test ChemSketch labels containing all non-whitespace printable ASCII characters.
-		 * @
-		 */
+        /// <summary>
+        /// Test ChemSketch labels containing all non-whitespace printable ASCII characters.
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel_PrintableAscii()
         {
             var filename = "NCDK.Data.MDL.chemsketch-printable-ascii.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1535,7 +1496,7 @@ namespace NCDK.IO
             // Printable ASCII characters, excluding whitespace. Note each string contains an atom number
             var expected = new string[]
             {
-                "!\"#$%&'()*+,-./0123456789:;<=>?@[\\]^_`{|}~",
+                "!\"#$%&'()*+,-./0123456789:;&lt;=&gt;?@[\\]^_`{|}~",
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
                 "012345678901234567890123456789012345678901234567890"
             };
@@ -1544,15 +1505,14 @@ namespace NCDK.IO
             Assert.AreEqual(expected[2], mol.Atoms[2].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
         }
 
-        /**
-		 * Check that multiple atom labels are all read.
-		 * @
-		 */
+        /// <summary>
+        /// Check that multiple atom labels are all read.
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel_AllAtomsLabelled()
         {
             var filename = "NCDK.Data.MDL.chemsketch-all-labelled.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1563,15 +1523,14 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * Check that leading and trailing whitespace in atom labels is preserved on reading.
-		 * @
-		 */
+        /// <summary>
+        /// Check that leading and trailing whitespace in atom labels is preserved on reading.
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel_LeadingTrailingWhitespace()
         {
             var filename = "NCDK.Data.MDL.chemsketch-leading-trailing-space.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1581,15 +1540,14 @@ namespace NCDK.IO
             Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
         }
 
-        /**
-		 * Check that embedded whitespace in atom labels is preserved on reading.
-		 * @
-		 */
+        /// <summary>
+        /// Check that embedded whitespace in atom labels is preserved on reading.
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel_EmbeddedWhitespace()
         {
             var filename = "NCDK.Data.MDL.chemsketch-embedded-space.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1599,15 +1557,14 @@ namespace NCDK.IO
             Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
         }
 
-        /**
-		 * Check reading of largest permissible label (50 char prefix + 3 digits + 50 char suffix).
-		 * @
-		 */
+        /// <summary>
+        /// Check reading of largest permissible label (50 char prefix + 3 digits + 50 char suffix).
+        /// </summary>
         [TestMethod()]
         public void TestAcdChemSketchLabel_MaxSizeLabel()
         {
             var filename = "NCDK.Data.MDL.chemsketch-longest-label.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
@@ -1624,7 +1581,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSgroupAbbreviation()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-abbrv.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-abbrv.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
@@ -1640,7 +1598,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSgroupRepeatUnit()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
@@ -1671,7 +1630,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSgroupUnorderedMixture()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-unord-mixture.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-unord-mixture.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
@@ -1697,7 +1657,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSgroupExpandedAbbreviation()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.triphenyl-phosphate-expanded.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
@@ -1725,7 +1686,8 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void TestSgroupInvalidConnectInStrictMode()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru-bad-scn.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bad-scn.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 mdlr.ReaderMode = ChemObjectReaderModes.Strict;
                 IAtomContainer container = mdlr.Read(new AtomContainer());
@@ -1736,7 +1698,8 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void TestSgroupDefOrderInStrictMode()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru-bad-def.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bad-def.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 mdlr.ReaderMode = ChemObjectReaderModes.Strict;
                 IAtomContainer container = mdlr.Read(new AtomContainer());
@@ -1746,7 +1709,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestSgroupBracketStyle()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.sgroup-sru-bracketstyles.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
@@ -1764,7 +1728,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReading0DStereochemistry()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.tetrahedral-parity-withImplH.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 var selements = container.StereoElements;
@@ -1784,7 +1749,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestReading0DStereochemistryWithHydrogen()
         {
-            using (MDLV2000Reader mdlr = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.tetrahedral-parity-withExpH.mol")))
+            using (var srm = ResourceLoader.GetAsStream("NCDK.Data.MDL.tetrahedral-parity-withExpH.mol"))
+            using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
                 var selements = container.StereoElements;

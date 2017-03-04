@@ -20,10 +20,10 @@ using System;
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     [Serializable]
     public class DoubleResult : IDescriptorResult
     {

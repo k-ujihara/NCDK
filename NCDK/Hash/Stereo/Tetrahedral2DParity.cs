@@ -27,43 +27,39 @@ using NCDK.Numerics;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * Geometric parity for 2D tetrahedral geometry. This class requires four 2D
-     * coordinates and their elevations. The 2D coordinates correspond to the four
-     * ligands of a tetrahedral atom and the elevation as to whether they are
-     * attached via a wedge/hatch bonds. Wedge bonds come out of the plane (+ve) and
-     * hatch bonds go into the plane (-ve), these elevations are specified with a
-     * (+1) and (-1) respectively. If a tetrahedral atom has an implicit hydrogen
-     * (only 3 ligands) the forth coordinate should be that of the atom at the
-     * centre with no elevation {@cdk.cite Cieplak2001}.
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
-     *      T and Wisniewski, J.L. 2001</a>
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        sealed class Tetrahedral2DParity : GeometricParity
+    /// <summary>
+    /// Geometric parity for 2D tetrahedral geometry. This class requires four 2D
+    /// coordinates and their elevations. The 2D coordinates correspond to the four
+    /// ligands of a tetrahedral atom and the elevation as to whether they are
+    /// attached via a wedge/hatch bonds. Wedge bonds come out of the plane (+ve) and
+    /// hatch bonds go into the plane (-ve), these elevations are specified with a
+    /// (+1) and (-1) respectively. If a tetrahedral atom has an implicit hydrogen
+    /// (only 3 ligands) the forth coordinate should be that of the atom at the
+    /// centre with no elevation {@cdk.cite Cieplak2001}.
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
+    ///      T and Wisniewski, J.L. 2001</a>
+    // @cdk.githash
+    /// </summary>
+    internal sealed class Tetrahedral2DParity : GeometricParity
     {
-
         /* four coordinates */
         private readonly Vector2[] coordinates;
 
         /* where the coordinates are with respect to the plane (-1,0,+1) */
         private readonly int[] elevations;
 
-        /**
-         * Create a new geometric parity for 2D tetrahedral geometry by specifying
-         * the coordinates and the elevations.
-         *
-         * @param coordinates non-null, 4 2D coordinates
-         * @param elevations  non-null, 4 elevations (-1,0,+1)
-         * @throws ArgumentException if the number of coordinates/elevations
-         *                                  was not exactly 4
-         */
+        /// <summary>
+        /// Create a new geometric parity for 2D tetrahedral geometry by specifying
+        /// the coordinates and the elevations.
+        ///
+        /// <param name="coordinates">non-null, 4 2D coordinates</param>
+        /// <param name="elevations">non-null, 4 elevations (-1,0,+1)</param>
+        /// <exception cref="ArgumentException">if the number of coordinates/elevations</exception>
+        ///                                  was not exactly 4
+        /// </summary>
         public Tetrahedral2DParity(Vector2[] coordinates, int[] elevations)
         {
             if (coordinates.Length != 4 || elevations.Length != 4)

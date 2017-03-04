@@ -17,28 +17,23 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 namespace NCDK.Formula.Rules {
-    /**
-    // Interface which groups all method that validate a IMolecularFormula.
-     *
+    /// <summary>
+    /// Interface which groups all method that validate a IMolecularFormula.
+    /// </summary>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-     */
     public interface IRule
     {
         object[] Parameters { get; set; }
 
-        /**
-        // Analyze the validity for the given IMolecularFormula.
-         *
-        // @param  formula      An {@link IMolecularFormula} for which this rule
-        //                      should be analyzed
-        // @return              A double value between 0 and 1. 1 meaning 100% valid
-        //                      and 0 not valid
-        // @ if an error occurs during the validation. See
-        //                      documentation for individual rules
-         */
+        /// <summary>
+        /// Analyze the validity for the given IMolecularFormula.
+        /// </summary>
+        /// <param name="formula">An <see cref="IMolecularFormula"/> for which this rule should be analyzed</param>
+        /// <returns>A double value between 0 and 1. 1 meaning 100% valid and 0 not valid</returns>
+        /// <exception cref="CDKException">if an error occurs during the validation. See documentation for individual rules</exception>
         double Validate(IMolecularFormula formula);
     }
 }

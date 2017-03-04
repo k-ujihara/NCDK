@@ -7,12 +7,12 @@ namespace NCDK
     /// A Strand is an AtomContainer which stores additional strand specific informations for a group of Atoms.
     /// </summary>
     public interface IStrand
-		: IAtomContainer
+        : IAtomContainer
     {
         string StrandName { get; set; }
         string StrandType { get; set; }
         
-		/// <summary>
+        /// <summary>
         /// Adds the atom oAtom to a specified Monomer.
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
@@ -23,11 +23,10 @@ namespace NCDK
         IMonomer GetMonomer(string name);
         IEnumerable<string> GetMonomerNames();
 
-        /**
-         * Removes a particular monomer, specified by its name.
-         *
-         * @param name The name of the monomer to remove
-         */
+        /// <summary>
+        /// Removes a particular monomer, specified by its name.
+        /// </summary>
+        /// <param name="name">The name of the monomer to remove</param>
         void RemoveMonomer(string name);
     }
 }

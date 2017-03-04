@@ -29,145 +29,145 @@ using System.Linq;
 
 namespace NCDK.Aromaticities
 {
-    /**
+    /// <summary>
     /// Defines an electron donation model for perceiving aromatic systems. The model
-    /// defines which atoms are allowed and how many electron it contributes. There
-    /// are currently several models available.
-     *
-    /// <ul>
-    ///     <li>{@link #CDK()}/{@link #CdkAllowingExocyclic()} - uses the information
+    /// defines which atoms are allowed and how many electron it contributes. 
+    /// </summary>
+    /// <remarks>
+    /// There are currently several models available.
+    /// <list type="bullet">
+    ///     <item><see cref="CDK"/>/<see cref="CdkAllowingExocyclic"/> - uses the information
     ///     form the preset CDK atom types to determine how many electrons each atom
     ///     should contribute. The model can either allow or exclude contributions
     ///     from exocyclic pi bonds. This model requires that atom types have be
     ///     perceived.
-    /// </li>
-    ///     <li>
-    ///      {@link #PiBonds()} - a simple model only allowing cyclic pi bonds to
-    ///      contribute. This model only requires that bond orders are set.
-    ///     </li>
-    ///     <li>
-    ///      {@link #Daylight()} - a model similar to that used by Daylight for SMILES.
+    /// </item>
+    ///     <item><see cref="PiBonds"/> - a simple model only allowing cyclic pi bonds to contribute. This model only requires that bond orders are set.</item>
+    ///     <item>
+    ///      <see cref="Daylight"/> - a model similar to that used by Daylight for SMILES.
     ///      This model does not require atom types to be defined but every atom should
     ///      have it's hydrogen count set.
-    ///     </li>
-    /// </ul>
-    /// <p/>
+    ///     </item>
+    /// </list>
+    /// </remarks>
+    /// <example>
     /// To obtain an instance of the model simply invoke the named method.
-    /// <blockquote><pre>
+    /// <code>
     /// ElectronDonation model = ElectronDonation.CDK();
-    /// </pre></blockquote>
-     *
-    /// @author John May
-    /// @cdk.module standard
-    /// @cdk.githash
-     */
+    /// </code></example>
+    // @author John May
+    // @cdk.module standard
+    // @cdk.githash
     public abstract class ElectronDonation
     {
-        /**
+        /// <summary>
         /// Determine the number 'p' electron contributed by each atom in the
-        /// provided {@code container}. A value of '0' indicates the atom can
+        /// provided <paramref name="container"/>. A value of '0' indicates the atom can
         /// contribute but that it contributes no electrons. A value of '-1'
         /// indicates the atom should not contribute at all.
-         *
-        /// @param container  molecule
-        /// @param ringSearch ring information
-        /// @return electron contribution of each atom (-1=none)
-         */
+        /// </summary>
+        /// <param name="container">molecule</param>
+        /// <param name="ringSearch">ring information</param>
+        /// <returns>electron contribution of each atom (-1=none)</returns>
         public abstract int[] Contribution(IAtomContainer container, RingSearch ringSearch);
 
-        /**
+        /// <summary>
         /// Use the preset CDK atom types to determine the electron contribution of
         /// atoms. If an atom type has not been perceived or hybridisation is unset a
-        /// runtime exception is thrown. <p/> The model accepts cyclic atoms which
-        /// are {@link IAtom.Hybridization#SP2} or
-        /// {@link IAtom.Hybridization#Planar3}
-        /// hybridised. The {@link org.openscience.cdk.CDKConstants#PI_BOND_COUNT} and
-        /// {@link org.openscience.cdk.CDKConstants#LONE_PAIR_COUNT} to determine how
+        /// runtime exception is thrown. 
+        /// </summary>
+        /// <remarks>
+        /// The model accepts cyclic atoms which
+        /// are <see cref="Hybridization.SP2"/> or
+        /// <see cref="Hybridization.Planar3"/>
+        /// hybridised. The <see cref="CDKPropertyName.PI_BOND_COUNT"/> and
+        /// <see cref="CDKPropertyName.LONE_PAIR_COUNT"/> to determine how
         /// many electrons an atom type can contribute. Generally these values are
         /// not automatically configured and so several atom types are cached
-        /// for lookup: <ul> <li>N.planar3: 2 electrons </li>
-        /// <li>N.minus.planar3: 2 electrons </li> <li>N.amide: 2 electrons </li>
-        /// <li>S.2: 2 electrons </li> <li>S.planar3: 2 electrons </li>
-        /// <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
-        /// <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
-        /// <p/>
+        /// for lookup: <list type="bullet"> <item>N.planar3: 2 electrons </item>
+        /// <item>N.minus.planar3: 2 electrons </item> <item>N.amide: 2 electrons </item>
+        /// <item>S.2: 2 electrons </item> <item>S.planar3: 2 electrons </item>
+        /// <item>C.minus.planar: 2 electrons </item> <item>O.planar3: 2 electrons </item>
+        /// <item>N.sp2.3: 1 electron </item> <item>C.sp2: 1 electron </item> </list>
         /// Exocyclic pi bonds are not allowed to contribute.
-         *
-        /// @return electron donation model to use for aromaticity perception
-        /// @see IAtom#AtomTypeName
-         */
+        /// </remarks>
+        /// <returns>electron donation model to use for aromaticity perception</returns>
+        /// <seealso cref="IAtomType.AtomTypeName"/>
         public static ElectronDonation Cdk()
         {
             return new AtomTypeModel(false);
         }
 
-        /**
+        /// <summary>
         /// Use the preset CDK atom types to determine the electron contribution of
         /// atoms. If an atom type has not been perceived or hybridisation is unset a
-        /// runtime exception is thrown. <p/> The model accepts cyclic atoms which
-        /// are {@link IAtom.Hybridization#SP2} or
-        /// {@link IAtom.Hybridization#Planar3}
-        /// hybridised. The {@link org.openscience.cdk.CDKConstants#PI_BOND_COUNT} and
-        /// {@link org.openscience.cdk.CDKConstants#LONE_PAIR_COUNT} to determine how
+        /// runtime exception is thrown. 
+        /// </summary>
+        /// <remarks>
+        /// The model accepts cyclic atoms which
+        /// are <see cref="Hybridization.SP2"/> or
+        /// <see cref="Hybridization.Planar3"/>
+        /// hybridised. The <see cref="CDKPropertyName.PI_BOND_COUNT"/> and
+        /// <see cref="CDKPropertyName.LONE_PAIR_COUNT"/> to determine how
         /// many electrons an atom type can contribute. Generally these values are
         /// not automatically configured and so several atom types are cached
-        /// for lookup: <ul> <li>N.planar3: 2 electrons </li>
-        /// <li>N.minus.planar3: 2 electrons </li> <li>N.amide: 2 electrons </li>
-        /// <li>S.2: 2 electrons </li> <li>S.planar3: 2 electrons </li>
-        /// <li>C.minus.planar: 2 electrons </li> <li>O.planar3: 2 electrons </li>
-        /// <li>N.sp2.3: 1 electron </li> <li>C.sp2: 1 electron </li> </ul>
-        /// <p/>
+        /// for lookup: <list type="bullet"> <item>N.planar3: 2 electrons </item>
+        /// <item>N.minus.planar3: 2 electrons </item> <item>N.amide: 2 electrons </item>
+        /// <item>S.2: 2 electrons </item> <item>S.planar3: 2 electrons </item>
+        /// <item>C.minus.planar: 2 electrons </item> <item>O.planar3: 2 electrons </item>
+        /// <item>N.sp2.3: 1 electron </item> <item>C.sp2: 1 electron </item> </list>
         /// Exocyclic pi bonds are not allowed to contribute.
-         *
-        /// @return electron donation model to use for aromaticity perception
-        /// @see IAtom#AtomTypeName
-         */
+        /// </remarks>
+        /// <returns>electron donation model to use for aromaticity perception</returns>
+        /// <seealso cref="IAtomType.AtomTypeName"/>
         public static ElectronDonation CdkAllowingExocyclic()
         {
             return new AtomTypeModel(true);
         }
 
-        /**
+        /// <summary>
         /// A very simple aromaticity model which only allows atoms adjacent to
         /// cyclic pi bonds. Lone pairs are not consider and as such molecules like
         /// furan and pyrrole are non-aromatic. The model is useful for storing
         /// aromaticity in MDL and Mol2 file formats where aromatic systems involving
         /// a lone pair can not be properly represented.
-         *
-        /// @return electron donation model to use for aromaticity perception
-         */
+        /// </summary>
+        /// <returns>electron donation model to use for aromaticity perception</returns>
         public static ElectronDonation PiBonds()
         {
             return new PiBondModel();
         }
 
-        /**
+        /// <summary>
         /// Electron donation model closely mirroring the Daylight model for use in
         /// generating SMILES. The model was interpreted from various resources and
         /// as such may not match exactly. If you find an inconsistency please add a
         /// request for enhancement to the patch tracker. One known limitation is
         /// that this model does not currently consider unknown/pseudo atoms '*'.
-        /// <p/>
-         *
+        /// </summary>
+        /// <remarks>
+        /// <para>
         /// The model makes a couple of assumptions which it will not correct for.
-        /// Checked assumptions cause the model to throw a runtime exception. <ul>
-        /// <li>there should be no valence errors (unchecked)</li> <li>every atom has
-        /// a set implicit hydrogen count (checked)</li> <li>every bond has defined
-        /// order, single, double etc (checked)</li> <li>atomic number of non-pseudo
-        /// atoms is set (checked)</li> </ul> <p/>
-         *
+        /// Checked assumptions cause the model to throw a runtime exception. <list type="bullet">
+        /// <item>there should be no valence errors (unchecked)</item> <item>every atom has
+        /// a set implicit hydrogen count (checked)</item> <item>every bond has defined
+        /// order, single, double etc (checked)</item> <item>atomic number of non-pseudo
+        /// atoms is set (checked)</item> </list> 
+        /// </para>
+        /// <para>
         /// The aromaticity model in SMILES was designed to simplify canonicalisation
         /// and express symmetry in a molecule. The contributed electrons can be
-        /// summarised as follows (refer to code for exact specification): <ul>
-        /// <li>carbon, nitrogen, oxygen, phosphorus, sulphur, arsenic and selenium
-        /// are allow to be aromatic</li> <li>atoms should be Sp2 hybridised - not
-        /// actually computed</li> <li>atoms adjacent to a single cyclic pi bond
-        /// contribute 1 electron</li> <li>neutral or negatively charged atoms with a
-        /// lone pair contribute 2 electrons</li> <li>exocyclic pi bonds are allowed
+        /// summarised as follows (refer to code for exact specification): <list type="bullet">
+        /// <item>carbon, nitrogen, oxygen, phosphorus, sulphur, arsenic and selenium
+        /// are allow to be aromatic</item> <item>atoms should be Sp2 hybridised - not
+        /// actually computed</item> <item>atoms adjacent to a single cyclic pi bond
+        /// contribute 1 electron</item> <item>neutral or negatively charged atoms with a
+        /// lone pair contribute 2 electrons</item> <item>exocyclic pi bonds are allowed
         /// but if the exocyclic atom is more electronegative it consumes an
         /// electron. As an example ketone groups contribute '0'
-        /// electrons.</li></ul>
-         */
+        /// electrons.</item></list>
+        /// </para>
+        /// </remarks>
         public static ElectronDonation Daylight()
         {
             return new DaylightModel();

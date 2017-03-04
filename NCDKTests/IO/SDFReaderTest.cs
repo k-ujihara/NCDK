@@ -30,7 +30,7 @@ namespace NCDK.IO
     /// </summary>
     /// <seealso cref="MDLReader"/>
     // @cdk.module test-io
-	[TestClass()]
+    [TestClass()]
     public class SDFReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.MDL.test.sdf";
@@ -50,7 +50,7 @@ namespace NCDK.IO
         public void TestSDFFile()
         {
             string filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -68,7 +68,7 @@ namespace NCDK.IO
         public void TestDataFromSDFReading()
         {
             string filename = "NCDK.Data.MDL.test.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -92,7 +92,7 @@ namespace NCDK.IO
         public void TestMultipleDataFields()
         {
             string filename = "NCDK.Data.MDL.bug1587283.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -118,7 +118,7 @@ namespace NCDK.IO
         public void TestSDFFile4()
         {
             string filename = "NCDK.Data.MDL.test4.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -136,7 +136,7 @@ namespace NCDK.IO
         public void TestSDFFile3()
         {
             string filename = "NCDK.Data.MDL.test3.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -154,7 +154,7 @@ namespace NCDK.IO
         public void TestSDFFile5()
         {
             string filename = "NCDK.Data.MDL.test5.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -176,7 +176,7 @@ namespace NCDK.IO
         public void TestSDFFile6()
         {
             string filename = "NCDK.Data.MDL.test6.sdf"; // a multi molecule SDF file
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile fileContents = (ChemFile)reader.Read(new ChemFile());
             reader.Close();
@@ -207,7 +207,7 @@ namespace NCDK.IO
         public void TestBug2911300()
         {
             string filename = "NCDK.Data.MDL.bug2911300.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile fileContents = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

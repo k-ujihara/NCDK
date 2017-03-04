@@ -26,40 +26,40 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Calculation of topological polar surface area based on fragment
-     * contributions (TPSA) {@cdk.cite ERTL2000}.
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td>checkAromaticity</td>
-     * <td>false</td>
-     * <td>If true, it will check aromaticity</td>
-     * </tr>
-     * </table>
-     * <p/>
-     * This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
-     * <b>implicit hydrogens</b>.
-     * <p/>
-     * Returns a single value named <i>TopoPSA</i>
-     *
-     * @author mfe4
-     * @author ulif
-     * @cdk.created 2004-11-03
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:tpsa
-     * @cdk.keyword TPSA
-     * @cdk.keyword total polar surface area
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Calculation of topological polar surface area based on fragment
+    /// contributions (TPSA) {@cdk.cite ERTL2000}.
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td>checkAromaticity</td>
+    /// <td>false</td>
+    /// <td>If true, it will check aromaticity</td>
+    /// </tr>
+    /// </table>
+    /// <p/>
+    /// This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
+    /// <b>implicit hydrogens</b>.
+    /// <p/>
+    /// Returns a single value named <i>TopoPSA</i>
+    ///
+    // @author mfe4
+    // @author ulif
+    // @cdk.created 2004-11-03
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:tpsa
+    // @cdk.keyword TPSA
+    // @cdk.keyword total polar surface area
+    // @cdk.keyword descriptor
+    /// </summary>
     public class TPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
 

@@ -26,18 +26,18 @@ using System.Linq;
 
 namespace NCDK.SMSD.Ring
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class HanserRingFinderTest
     {
-        /**
-         * Test of findRings method, of class HanserRingFinder.
-         */
+        /// <summary>
+        /// Test of findRings method, of class HanserRingFinder.
+        /// </summary>
         [TestMethod()]
         public void TestFindRings()
         {

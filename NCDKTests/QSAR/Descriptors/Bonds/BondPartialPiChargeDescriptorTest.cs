@@ -39,12 +39,8 @@ namespace NCDK.QSAR.Descriptors.Bonds
         public void TestBondPiElectronegativityDescriptor()
         {
             descriptor = new BondPartialPiChargeDescriptor();
-            double[] testResult = { 0.0, 0.0 };/*
-                                          * from Petra online:
-                                          * http://www2.chemie
-                                          * .uni-erlangen.de/services
-                                          * /petra/smiles.phtml
-                                          */
+            double[] testResult = { 0.0, 0.0 };
+            // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("CF");

@@ -24,16 +24,16 @@ using System.IO;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This class calculates ATS autocorrelation descriptor, where the weight equal
-     * to the scaled atomic mass {@cdk.cite Moreau1980}.
-     *
-     * @author      Federico
-     * @cdk.created 2007-02-08
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     */
+    /// <summary>
+    /// This class calculates ATS autocorrelation descriptor, where the weight equal
+    /// to the scaled atomic mass {@cdk.cite Moreau1980}.
+    ///
+    // @author      Federico
+    // @cdk.created 2007-02-08
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    /// </summary>
     public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };

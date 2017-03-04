@@ -1,28 +1,27 @@
-/**
-*
-* Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your sourceAtomCount code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received rBondCount copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
-
+/*
+ *
+ * Copyright (C) 2006-2010  Syed Asad Rahman <asad@ebi.ac.uk>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your sourceAtomCount code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received rBondCount copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.MCSPluses;
 using NCDK.SMSD.Algorithms.RGraph;
@@ -39,107 +38,107 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD
 {
-    /**
-     *  <p>This class implements the Isomorphism- a multipurpose structure comparison tool.
-     *  It allows users to, i) find the maximal common Substructure(s) (MCS);
-     *  ii) perform the mapping of a substructure in another structure, and;
-     *  iii) map two isomorphic structures.</p>
-     *
-     *  <p>It also comes with various published algorithms. The user is free to
-     *  choose his favorite algorithm to perform MCS or substructure search.
-     *  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
-     *  Substructure</p>
-     *
-     *  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
-     *  count, stereo & bond match) to sort the reported MCS solutions in a chemically
-     *  relevant manner. Each comparison can be made with or without using the bond
-     *  sensitive mode and with implicit or explicit hydrogens.</p>
-     *
-     *  <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></font>
-     *  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
-     *  </p>
-     *
-     *
-     * <p>An example for <b>Substructure search</b>:</p>
-     *  <font color="#003366">
-     *  <pre>
-     *  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-     *  // Benzene
-     *  IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
-     *  // Napthalene
-     *  IAtomContainer A2 = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
-     *  //Turbo mode search
-     *  //Bond Sensitive is set true
-     *  Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, true);
-     *  // set molecules, remove hydrogens, clean and configure molecule
-     *  comparison.Init(A1, A2, true, true);
-     *  // set chemical filter true
-     *  comparison.SetChemFilters(false, false, false);
-     *  if (comparison.IsSubgraph()) {
-     *  //Get similarity score
-     *   Console.Out.WriteLine("Tanimoto coefficient:  " + comparison.GetTanimotoSimilarity());
-     *   Console.Out.WriteLine("A1 is a subgraph of A2:  " + comparison.IsSubgraph());
-     *  //Get Modified AtomContainer
-     *   IAtomContainer Mol1 = comparison.ReactantMolecule;
-     *   IAtomContainer Mol2 = comparison.ProductMolecule;
-     *  // Print the mapping between molecules
-     *   Console.Out.WriteLine(" Mappings: ");
-     *   for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
-     *      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
-     *
-     *      IAtom eAtom = Mol1.Atoms[mapping.Key];
-     *      IAtom pAtom = Mol2.Atoms[mapping.Value];
-     *      Console.Out.WriteLine(eAtom.Symbol + " " + pAtom.Symbol);
-     *   }
-     *   Console.Out.WriteLine("");
-     *  }
-     *
-     *  </pre>
-     *  </font>
-     *
-     * <p>An example for <b>MCS search</b>:</p>
-     *  <font color="#003366">
-     *  <pre>
-     *  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-     *  // Benzene
-     *  IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
-     *  // Napthalene
-     *  IAtomContainer A2 = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
-     *  //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
-     *  //Bond Sensitive is set true
-     *  Isomorphism comparison = new Isomorphism(Algorithm.Default, true);
-     *  // set molecules, remove hydrogens, clean and configure molecule
-     *  comparison.Init(A1, A2, true, true);
-     *  // set chemical filter true
-     *  comparison.SetChemFilters(true, true, true);
-     *
-     *  //Get similarity score
-     *  Console.Out.WriteLine("Tanimoto coefficient:  " + comparison.GetTanimotoSimilarity());
-     *  Console.Out.WriteLine("A1 is a subgraph of A2:  " + comparison.IsSubgraph());
-     *  //Get Modified AtomContainer
-     *  IAtomContainer Mol1 = comparison.ReactantMolecule;
-     *  IAtomContainer Mol2 = comparison.ProductMolecule;
-     *  // Print the mapping between molecules
-     *  Console.Out.WriteLine(" Mappings: ");
-     *  for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
-     *      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
-     *
-     *      IAtom eAtom = Mol1.Atoms[mapping.Key];
-     *      IAtom pAtom = Mol2.Atoms[mapping.Value];
-     *      Console.Out.WriteLine(eAtom.Symbol + " " + pAtom.Symbol);
-     *  }
-     *  Console.Out.WriteLine("");
-     *
-     *  </pre>
-     *  </font>
-     *
-     * @cdk.require java1.5+
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     */
+    /// <summary>
+    ///  <p>This class implements the Isomorphism- a multipurpose structure comparison tool.
+    ///  It allows users to, i) find the maximal common Substructure(s) (MCS);
+    ///  ii) perform the mapping of a substructure in another structure, and;
+    ///  iii) map two isomorphic structures.</p>
+    ///
+    ///  <p>It also comes with various published algorithms. The user is free to
+    ///  choose his favorite algorithm to perform MCS or substructure search.
+    ///  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
+    ///  Substructure</p>
+    ///
+    ///  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
+    ///  count, stereo & bond match) to sort the reported MCS solutions in a chemically
+    ///  relevant manner. Each comparison can be made with or without using the bond
+    ///  sensitive mode and with implicit or explicit hydrogens.</p>
+    ///
+    ///  <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></font>
+    ///  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
+    ///  </p>
+    ///
+    ///
+    /// <p>An example for <b>Substructure search</b>:</p>
+    ///  <font color="#003366">
+    ///  <code>
+    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    ///  // Benzene
+    ///  IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
+    ///  // Napthalene
+    ///  IAtomContainer A2 = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
+    ///  //Turbo mode search
+    ///  //Bond Sensitive is set true
+    ///  Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, true);
+    ///  // set molecules, remove hydrogens, clean and configure molecule
+    ///  comparison.Init(A1, A2, true, true);
+    ///  // set chemical filter true
+    ///  comparison.SetChemFilters(false, false, false);
+    ///  if (comparison.IsSubgraph()) {
+    ///  //Get similarity score
+    ///   Console.Out.WriteLine("Tanimoto coefficient:  " + comparison.GetTanimotoSimilarity());
+    ///   Console.Out.WriteLine("A1 is a subgraph of A2:  " + comparison.IsSubgraph());
+    ///  //Get Modified AtomContainer
+    ///   IAtomContainer Mol1 = comparison.ReactantMolecule;
+    ///   IAtomContainer Mol2 = comparison.ProductMolecule;
+    ///  // Print the mapping between molecules
+    ///   Console.Out.WriteLine(" Mappings: ");
+    ///   for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
+    ///      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
+    ///
+    ///      IAtom eAtom = Mol1.Atoms[mapping.Key];
+    ///      IAtom pAtom = Mol2.Atoms[mapping.Value];
+    ///      Console.Out.WriteLine(eAtom.Symbol + " " + pAtom.Symbol);
+    ///   }
+    ///   Console.Out.WriteLine("");
+    ///  }
+    ///
+    ///  </code>
+    ///  </font>
+    ///
+    /// <p>An example for <b>MCS search</b>:</p>
+    ///  <font color="#003366">
+    ///  <code>
+    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    ///  // Benzene
+    ///  IAtomContainer A1 = sp.ParseSmiles("C1=CC=CC=C1");
+    ///  // Napthalene
+    ///  IAtomContainer A2 = sp.ParseSmiles("C1=CC2=C(C=C1)C=CC=C2");
+    ///  //{ 0: Default Isomorphism Algorithm, 1: MCSPlus Algorithm, 2: VFLibMCS Algorithm, 3: CDKMCS Algorithm}
+    ///  //Bond Sensitive is set true
+    ///  Isomorphism comparison = new Isomorphism(Algorithm.Default, true);
+    ///  // set molecules, remove hydrogens, clean and configure molecule
+    ///  comparison.Init(A1, A2, true, true);
+    ///  // set chemical filter true
+    ///  comparison.SetChemFilters(true, true, true);
+    ///
+    ///  //Get similarity score
+    ///  Console.Out.WriteLine("Tanimoto coefficient:  " + comparison.GetTanimotoSimilarity());
+    ///  Console.Out.WriteLine("A1 is a subgraph of A2:  " + comparison.IsSubgraph());
+    ///  //Get Modified AtomContainer
+    ///  IAtomContainer Mol1 = comparison.ReactantMolecule;
+    ///  IAtomContainer Mol2 = comparison.ProductMolecule;
+    ///  // Print the mapping between molecules
+    ///  Console.Out.WriteLine(" Mappings: ");
+    ///  for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
+    ///      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
+    ///
+    ///      IAtom eAtom = Mol1.Atoms[mapping.Key];
+    ///      IAtom pAtom = Mol2.Atoms[mapping.Value];
+    ///      Console.Out.WriteLine(eAtom.Symbol + " " + pAtom.Symbol);
+    ///  }
+    ///  Console.Out.WriteLine("");
+    ///
+    ///  </code>
+    ///  </font>
+    ///
+    // @cdk.require java1.5+
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    /// </summary>
     [Serializable]
     public sealed class Isomorphism : AbstractMCS
     {
@@ -160,19 +159,18 @@ namespace NCDK.SMSD
         private bool removeHydrogen = false;
         private bool subGraph = false;
 
-        /**
-         * This is the algorithm factory and entry port for all the MCS algorithm in the Isomorphism
-         * supported algorithm {@link org.openscience.cdk.smsd.interfaces.Algorithm} types:
-         * <OL>
-         * <lI>0: Default,
-         * <lI>1: MCSPlus,
-         * <lI>2: VFLibMCS,
-         * <lI>3: CDKMCS,
-         * <lI>4: SubStructure
-         * </OL>
-         * @param algorithmType {@link org.openscience.cdk.smsd.interfaces.Algorithm}
-         * @param bondTypeFlag
-         */
+        /// <summary>
+        /// This is the algorithm factory and entry port for all the MCS algorithm in the Isomorphism
+        /// supported algorithm {@link org.openscience.cdk.smsd.interfaces.Algorithm} types:
+        /// <OL>
+        /// <lI>0: Default,
+        /// <lI>1: MCSPlus,
+        /// <lI>2: VFLibMCS,
+        /// <lI>3: CDKMCS,
+        /// <lI>4: SubStructure
+        /// </OL>
+        /// <param name="algorithmType">{@link org.openscience.cdk.smsd.interfaces.Algorithm}</param>
+        /// <param name="bondTypeFlag">/// </summary></param>
         public Isomorphism(Algorithm algorithmType, bool bondTypeFlag)
         {
             this.algorithmType = algorithmType;
@@ -242,13 +240,13 @@ namespace NCDK.SMSD
             }
         }
 
-        /**
-         * Returns bond maps between source and target molecules based on the atoms
-         * @param ac1 source molecule
-         * @param ac2 target molecule
-         * @param mappings mappings between source and target molecule atoms
-         * @return bond maps between source and target molecules based on the atoms
-         */
+        /// <summary>
+        /// Returns bond maps between source and target molecules based on the atoms
+        /// <param name="ac1">source molecule</param>
+        /// <param name="ac2">target molecule</param>
+        /// <param name="mappings">mappings between source and target molecule atoms</param>
+        /// <returns>bond maps between source and target molecules based on the atoms</returns>
+        /// </summary>
         public static List<IDictionary<IBond, IBond>> MakeBondMapsOfAtomMaps(IAtomContainer ac1, IAtomContainer ac2,
                 List<IDictionary<IAtom, IAtom>> mappings)
         {
@@ -260,14 +258,14 @@ namespace NCDK.SMSD
             return bondMaps;
         }
 
-        /**
-         *
-         * Returns bond map between source and target molecules based on the atoms
-         * @param ac1 source molecule
-         * @param ac2 target molecule
-         * @param mapping mappings between source and target molecule atoms
-         * @return bond map between source and target molecules based on the atoms
-         */
+        /// <summary>
+        ///
+        /// Returns bond map between source and target molecules based on the atoms
+        /// <param name="ac1">source molecule</param>
+        /// <param name="ac2">target molecule</param>
+        /// <param name="mapping">mappings between source and target molecule atoms</param>
+        /// <returns>bond map between source and target molecules based on the atoms</returns>
+        /// </summary>
         public static IDictionary<IBond, IBond> MakeBondMapOfAtomMap(IAtomContainer ac1, IAtomContainer ac2,
                 IDictionary<IAtom, IAtom> mapping)
         {

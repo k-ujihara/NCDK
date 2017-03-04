@@ -24,27 +24,27 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * An implementation of the FMF descriptor characterizing complexity of a molecule.
-     * <p/>
-     * The descriptor is described in {@cdk.cite YANG2010} and is an approach to
-     * characterizing molecular complexity based on the Murcko framework present
-     * in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
-     * total number of heavy atoms in the molecule. By definition, acyclic molecules
-     * which have no frameworks, will have a value of 0.
-     *
-     * Note that the authors consider an isolated ring system to be a framework (even
-     * though there is no linker).
-     *
-     * This descriptor returns a single double value, labeled as "FMF"
-     *
-     * @author Rajarshi Guha
-     * @cdk.module qsarmolecular
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:FMF
-     * @cdk.githash
-     * @see org.openscience.cdk.fragment.MurckoFragmenter
-     */
+    /// <summary>
+    /// An implementation of the FMF descriptor characterizing complexity of a molecule.
+    /// <p/>
+    /// The descriptor is described in {@cdk.cite YANG2010} and is an approach to
+    /// characterizing molecular complexity based on the Murcko framework present
+    /// in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
+    /// total number of heavy atoms in the molecule. By definition, acyclic molecules
+    /// which have no frameworks, will have a value of 0.
+    ///
+    /// Note that the authors consider an isolated ring system to be a framework (even
+    /// though there is no linker).
+    ///
+    /// This descriptor returns a single double value, labeled as "FMF"
+    ///
+    // @author Rajarshi Guha
+    // @cdk.module qsarmolecular
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:FMF
+    // @cdk.githash
+    // @see org.openscience.cdk.fragment.MurckoFragmenter
+    /// </summary>
     public class FMFDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         public FMFDescriptor() { }
@@ -128,7 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
-			 "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
+             "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#fmf",
              typeof(FMFDescriptor).FullName,
              "The Chemistry Development Kit");
 

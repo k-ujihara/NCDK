@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Text;
@@ -36,11 +37,11 @@ namespace NCDK.Default
             : base(atomContainer)
         { }
 
-		public Ring(
+        public Ring(
            IEnumerable<IAtom> atoms,
            IEnumerable<IBond> bonds)
-		   : base(atoms, bonds)
-		{ }
+           : base(atoms, bonds)
+        { }
 
         public Ring(int ringSize, string elementSymbol)
             : base()
@@ -63,7 +64,7 @@ namespace NCDK.Default
             => bonds.Where(n => n.Contains(atom) && n != bond).FirstOrDefault();
 
         public int BondOrderSum
-            => bonds.Where(n => !n.Order.IsUnset).Select(n => n.Order.Numeric).Sum();
+            => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
 
         public override string ToString()
         {
@@ -94,11 +95,11 @@ namespace NCDK.Silent
             : base(atomContainer)
         { }
 
-		public Ring(
+        public Ring(
            IEnumerable<IAtom> atoms,
            IEnumerable<IBond> bonds)
-		   : base(atoms, bonds)
-		{ }
+           : base(atoms, bonds)
+        { }
 
         public Ring(int ringSize, string elementSymbol)
             : base()
@@ -121,7 +122,7 @@ namespace NCDK.Silent
             => bonds.Where(n => n.Contains(atom) && n != bond).FirstOrDefault();
 
         public int BondOrderSum
-            => bonds.Where(n => !n.Order.IsUnset).Select(n => n.Order.Numeric).Sum();
+            => bonds.Where(n => n.Order != BondOrder.Unset).Select(n => n.Order.Numeric).Sum();
 
         public override string ToString()
         {

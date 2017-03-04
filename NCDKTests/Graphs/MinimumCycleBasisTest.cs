@@ -25,33 +25,27 @@
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using static NCDK.Graphs.InitialCyclesTest;
-
 
 namespace NCDK.Graphs
 {
-    /**
-     * @author John May
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class MinimumCycleBasisTest
     {
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public virtual void noGraph()
+        public virtual void NoGraph()
         {
             new MinimumCycleBasis((int[][])null);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentNullException))]
-        public virtual void noInitialCycles()
+        public virtual void NoInitialCycles()
         {
             new MinimumCycleBasis((InitialCycles)null);
         }

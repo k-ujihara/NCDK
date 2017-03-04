@@ -29,24 +29,24 @@ using System.Linq;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
-     * from the AST tree.
-     *
-     * To use this visitor:
-     * <pre>
-     * SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
-     * ASTStart ast = parser.Start();
-     * SmartsQueryVisitor visitor = new SmartsQueryVisitor();
-     * QueryAtomContainer query = visitor.Visit(ast, null);
-     * </pre>
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-04-24
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS AST
-     */
+    /// <summary>
+    /// An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
+    /// from the AST tree.
+    ///
+    /// To use this visitor:
+    /// <code>
+    /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
+    /// ASTStart ast = parser.Start();
+    /// SmartsQueryVisitor visitor = new SmartsQueryVisitor();
+    /// QueryAtomContainer query = visitor.Visit(ast, null);
+    /// </code>
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-04-24
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS AST
+    /// </summary>
     public class SmartsQueryVisitor : SMARTSParserVisitor
     {
         // current atoms with a ring identifier
@@ -59,26 +59,26 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         private readonly IChemObjectBuilder builder;
 
-        /**
-         * Maintain order of neighboring atoms - required for atom-based
-         * stereochemistry.
-         */
+        /// <summary>
+        /// Maintain order of neighboring atoms - required for atom-based
+        /// stereochemistry.
+        /// </summary>
         private IDictionary<IAtom, IList<IAtom>> neighbors = new Dictionary<IAtom, IList<IAtom>>();
 
-        /**
-         * Lookup of atom indices.
-         */
+        /// <summary>
+        /// Lookup of atom indices.
+        /// </summary>
         private BitArray tetrahedral = new BitArray(0);
 
-        /**
-         * Stores the directional '/' or '\' bonds. Speeds up looking for double
-         * bond configurations.
-         */
+        /// <summary>
+        /// Stores the directional '/' or '\' bonds. Speeds up looking for double
+        /// bond configurations.
+        /// </summary>
         private List<IBond> stereoBonds = new List<IBond>();
 
-        /**
-         * Stores the double bonds in the query.
-         */
+        /// <summary>
+        /// Stores the double bonds in the query.
+        /// </summary>
         private List<IBond> doubleBonds = new List<IBond>();
 
         public SmartsQueryVisitor(IChemObjectBuilder builder)
@@ -92,13 +92,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             RingIdentifierAtom ringIdAtom = new RingIdentifierAtom(builder);
             ringIdAtom.Atom = atom;
             IQueryBond bond;
-            if (node.jjtGetNumChildren() == 0)
+            if (node.JJTGetNumChildren() == 0)
             { // implicit bond
                 bond = null;
             }
             else
             {
-                bond = (IQueryBond)node.jjtGetChild(0).jjtAccept(this, data);
+                bond = (IQueryBond)node.JJTGetChild(0).JJTAccept(this, data);
             }
             ringIdAtom.RingBond = bond;
             return ringIdAtom;
@@ -106,11 +106,11 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTAtom node, object data)
         {
-            IQueryAtom atom = (IQueryAtom)node.jjtGetChild(0).jjtAccept(this, data);
-            for (int i = 1; i < node.jjtGetNumChildren(); i++)
+            IQueryAtom atom = (IQueryAtom)node.JJTGetChild(0).JJTAccept(this, data);
+            for (int i = 1; i < node.JJTGetNumChildren(); i++)
             { // if there are ring identifiers
-                ASTRingIdentifier ringIdentifier = (ASTRingIdentifier)node.jjtGetChild(i);
-                RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.jjtAccept(this, atom);
+                ASTRingIdentifier ringIdentifier = (ASTRingIdentifier)node.JJTGetChild(i);
+                RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.JJTAccept(this, atom);
 
                 // if there is already a RingIdentifierAtom, create a bond between
                 // them and add the bond to the query
@@ -180,13 +180,13 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTStart node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         // TODO: No QueryReaction API
         public object Visit(ASTReaction node, object data)
         {
-            return node.jjtGetChild(0).jjtAccept(this, data);
+            return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
         public object Visit(ASTGroup node, object data)
@@ -197,13 +197,13 @@ namespace NCDK.Smiles.SMARTS.Parser
             int[] components = new int[0];
             int maxId = 0;
 
-            for (int i = 0; i < node.jjtGetNumChildren(); i++)
+            for (int i = 0; i < node.JJTGetNumChildren(); i++)
             {
-                ASTSmarts smarts = (ASTSmarts)node.jjtGetChild(i);
+                ASTSmarts smarts = (ASTSmarts)node.JJTGetChild(i);
                 ringAtoms = new RingIdentifierAtom[10];
                 query = new QueryAtomContainer(builder);
 
-                smarts.jjtAccept(this, null);
+                smarts.JJTAccept(this, null);
 
                 // update component info
                 if (smarts.ComponentId > 0)
@@ -259,12 +259,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             return fullQuery;
         }
 
-        /**
-         * Locate a stereo bond adjacent to the {@code atom}.
-         *
-         * @param atom an atom
-         * @return a stereo bond or null if non found
-         */
+        /// <summary>
+        /// Locate a stereo bond adjacent to the {@code atom}.
+        ///
+        /// <param name="atom">an atom</param>
+        /// <returns>a stereo bond or null if non found</returns>
+        /// </summary>
         private StereoBond FindStereoBond(IAtom atom)
         {
             foreach (var bond in stereoBonds)
@@ -277,8 +277,8 @@ namespace NCDK.Smiles.SMARTS.Parser
             SMARTSAtom atom = null;
             SMARTSBond bond = null;
 
-            ASTAtom first = (ASTAtom)node.jjtGetChild(0);
-            atom = (SMARTSAtom)first.jjtAccept(this, null);
+            ASTAtom first = (ASTAtom)node.JJTGetChild(0);
+            atom = (SMARTSAtom)first.JJTAccept(this, null);
             if (data != null)
             { // this is a sub smarts
                 bond = (SMARTSBond)((object[])data)[1];
@@ -311,16 +311,16 @@ namespace NCDK.Smiles.SMARTS.Parser
                 neighbors[atom] = localNeighbors;
             }
 
-            for (int i = 1; i < node.jjtGetNumChildren(); i++)
+            for (int i = 1; i < node.JJTGetNumChildren(); i++)
             {
-                Node child = node.jjtGetChild(i);
+                Node child = node.JJTGetChild(i);
                 if (child is ASTLowAndBond)
                 {
-                    bond = (SMARTSBond)child.jjtAccept(this, data);
+                    bond = (SMARTSBond)child.JJTAccept(this, data);
                 }
                 else if (child is ASTAtom)
                 {
-                    SMARTSAtom newAtom = (SMARTSAtom)child.jjtAccept(this, null);
+                    SMARTSAtom newAtom = (SMARTSAtom)child.JJTAccept(this, null);
                     if (bond == null)
                     { // since no bond was specified it could be aromatic or single
                         bond = new AromaticOrSingleQueryBond(builder);
@@ -348,7 +348,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
                 else if (child is ASTSmarts)
                 { // another smarts
-                    child.jjtAccept(this, new object[] { atom, bond });
+                    child.JJTAccept(this, new object[] { atom, bond });
                     bond = null;
                 }
             }
@@ -358,7 +358,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTNotBond node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
                 LogicalOperatorBond bond = new LogicalOperatorBond(builder);
@@ -374,60 +374,60 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTImplicitHighAndBond node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTLowAndBond node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTOrBond node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "or";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
             bond.Right = right;
             return bond;
         }
 
         public object Visit(ASTExplicitHighAndBond node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
             LogicalOperatorBond bond = new LogicalOperatorBond(builder);
             bond.Operator = "and";
             bond.Left = (IQueryBond)left;
-            IQueryBond right = (IQueryBond)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryBond right = (IQueryBond)node.JJTGetChild(1).JJTAccept(this, data);
             bond.Right = right;
             return bond;
         }
@@ -487,7 +487,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             SmartsQueryVisitor recursiveVisitor = new SmartsQueryVisitor(builder);
             recursiveVisitor.query = new QueryAtomContainer(builder);
             recursiveVisitor.ringAtoms = new RingIdentifierAtom[10];
-            return new RecursiveSmartsAtom((IQueryAtomContainer)node.jjtGetChild(0).jjtAccept(recursiveVisitor, null));
+            return new RecursiveSmartsAtom((IQueryAtomContainer)node.JJTGetChild(0).JJTAccept(recursiveVisitor, null));
         }
 
         public ASTStart GetRoot(Node node)
@@ -496,7 +496,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 return (ASTStart)node;
             }
-            return GetRoot(node.jjtGetParent());
+            return GetRoot(node.JJTGetParent());
         }
 
         public object Visit(ASTElement node, object data)
@@ -619,29 +619,29 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 
         public object Visit(ASTOrExpression node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
             return LogicalOperatorAtom.Or((IQueryAtom)left, right);
         }
 
         public object Visit(ASTNotExpression node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
             if (node.Type == SMARTSParserConstants.NOT)
             {
                 return LogicalOperatorAtom.Not((IQueryAtom)left);
@@ -651,23 +651,23 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTExplicitHighAndExpression node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 
         public object Visit(ASTImplicitHighAndExpression node, object data)
         {
-            object left = node.jjtGetChild(0).jjtAccept(this, data);
-            if (node.jjtGetNumChildren() == 1)
+            object left = node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() == 1)
             {
                 return left;
             }
-            IQueryAtom right = (IQueryAtom)node.jjtGetChild(1).jjtAccept(this, data);
+            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
             return LogicalOperatorAtom.And((IQueryAtom)left, right);
         }
 

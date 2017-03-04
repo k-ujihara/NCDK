@@ -26,9 +26,6 @@ using NCDK.Common.Base;
 using NCDK.SGroups;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Smiles
 {
@@ -191,12 +188,12 @@ namespace NCDK.Smiles
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|Sg:n:1,2,3:m:ht|", state));
             Assert.IsTrue(Compares.DeepContains(
-				state.sgroups,
+                state.sgroups,
                 new CxSmilesState.PolymerSgroup("n", new[] { 1, 2, 3 }, "m", "ht")));
         }
 
         [TestMethod()]
-        public void dataSgroups()
+        public void DataSgroups()
         {
             CxSmilesState state = new CxSmilesState();
             Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|SgD::cdk&#58;ReactionConditions:Heat&#10;Hv|", state));
@@ -213,10 +210,10 @@ namespace NCDK.Smiles
             Assert.AreEqual("\t", CxSmilesParser.Unescape("&#9;")); // TAB
         }
 
-        /**
-         * Custom matcher for checking an array of doubles closely matches (epsilon=0.01)
-         * an expected value.
-         */
+        /// <summary>
+        /// Custom matcher for checking an array of doubles closely matches (epsilon=0.01)
+        /// an expected value.
+        /// </summary>
         private class AprxDoubleArray
         {
             double[] expected;

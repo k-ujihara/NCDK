@@ -33,10 +33,10 @@ using System.Reflection;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class GeometricTetrahedralEncoderFactoryTest
     {

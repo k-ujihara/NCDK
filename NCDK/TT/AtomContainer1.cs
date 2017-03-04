@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -35,10 +36,10 @@ namespace NCDK.Default
         internal IList<ISingleElectron> singleElectrons;
         internal IList<IStereoElement> stereoElements;
 
-		internal bool isAromatic;
+        internal bool isAromatic;
         internal bool isSingleOrDouble;
 
-		private void Init(
+        private void Init(
             IList<IAtom> atoms,
             IList<IBond> bonds,
             IList<ILonePair> lonePairs,
@@ -58,14 +59,14 @@ namespace NCDK.Default
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
             IEnumerable<IStereoElement> stereoElements)
-		{
-			Init(
-				CreateObservableChemObjectCollection(atoms, false),
-				CreateObservableChemObjectCollection(bonds, true),
-				CreateObservableChemObjectCollection(lonePairs, true),
-				CreateObservableChemObjectCollection(singleElectrons, true),
-				new List<IStereoElement>(stereoElements)
-			);
+        {
+            Init(
+                CreateObservableChemObjectCollection(atoms, false),
+                CreateObservableChemObjectCollection(bonds, true),
+                CreateObservableChemObjectCollection(lonePairs, true),
+                CreateObservableChemObjectCollection(singleElectrons, true),
+                new List<IStereoElement>(stereoElements)
+            );
         }
 
         private ObservableChemObjectCollection<T> CreateObservableChemObjectCollection<T>(IEnumerable<T> objs, bool allowDup) where T : IChemObject
@@ -87,16 +88,16 @@ namespace NCDK.Default
                   Array.Empty<IStereoElement>())
         { }
 
-		public AtomContainer()
-			: this(
-					  Array.Empty<IAtom>(), 
-					  Array.Empty<IBond>(), 
-					  Array.Empty<ILonePair>(),
-					  Array.Empty<ISingleElectron>(),
-					  Array.Empty<IStereoElement>())
-		{ }
+        public AtomContainer()
+            : this(
+                      Array.Empty<IAtom>(), 
+                      Array.Empty<IBond>(), 
+                      Array.Empty<ILonePair>(),
+                      Array.Empty<ISingleElectron>(),
+                      Array.Empty<IStereoElement>())
+        { }
 
-		public AtomContainer(IAtomContainer container)
+        public AtomContainer(IAtomContainer container)
             : this(
                   container.Atoms,
                   container.Bonds,
@@ -114,8 +115,8 @@ namespace NCDK.Default
                 NotifyChanged();
             }
         }
-		
-		public virtual bool IsSingleOrDouble
+        
+        public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
             set
@@ -146,7 +147,7 @@ namespace NCDK.Default
 
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
-			foreach (var bond in Bonds)
+            foreach (var bond in Bonds)
                 if (bond.Contains(atom))
                     yield return bond.GetConnectedAtom(atom);
             yield break;
@@ -192,24 +193,24 @@ namespace NCDK.Default
 
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-			var max = BondOrder.Single;
-			foreach (var order in GetBondOrders(atom))
-			{
-				if (max.Numeric < order.Numeric)
-					max = order;
-			}
-			return max;
-		}
+            var max = BondOrder.Single;
+            foreach (var order in GetBondOrders(atom))
+            {
+                if (max.Numeric < order.Numeric)
+                    max = order;
+            }
+            return max;
+        }
 
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
             var min = BondOrder.Quadruple;
-			foreach (var order in GetBondOrders(atom))
+            foreach (var order in GetBondOrders(atom))
             {
                 if (min.Numeric > order.Numeric)
                     min = order;
             }
-			return min;
+            return min;
         }
 
         public virtual void Add(IAtomContainer atomContainer)
@@ -316,22 +317,22 @@ namespace NCDK.Default
         {
             var bond = electronContainer as IBond;
             if (bond != null)
-			{
+            {
                 Remove(bond);
-				return;
-			}
+                return;
+            }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
-			{
+            {
                 Remove(lonePair);
-				return;
-			}
+                return;
+            }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
-			{
+            {
                 Remove(singleElectron);
-				return;
-			}
+                return;
+            }
         }
 
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
@@ -548,10 +549,10 @@ namespace NCDK.Silent
         internal IList<ISingleElectron> singleElectrons;
         internal IList<IStereoElement> stereoElements;
 
-		internal bool isAromatic;
+        internal bool isAromatic;
         internal bool isSingleOrDouble;
 
-		private void Init(
+        private void Init(
             IList<IAtom> atoms,
             IList<IBond> bonds,
             IList<ILonePair> lonePairs,
@@ -571,14 +572,14 @@ namespace NCDK.Silent
             IEnumerable<ILonePair> lonePairs,
             IEnumerable<ISingleElectron> singleElectrons,
             IEnumerable<IStereoElement> stereoElements)
-		{
-			Init(
-				CreateObservableChemObjectCollection(atoms, false),
-				CreateObservableChemObjectCollection(bonds, true),
-				CreateObservableChemObjectCollection(lonePairs, true),
-				CreateObservableChemObjectCollection(singleElectrons, true),
-				new List<IStereoElement>(stereoElements)
-			);
+        {
+            Init(
+                CreateObservableChemObjectCollection(atoms, false),
+                CreateObservableChemObjectCollection(bonds, true),
+                CreateObservableChemObjectCollection(lonePairs, true),
+                CreateObservableChemObjectCollection(singleElectrons, true),
+                new List<IStereoElement>(stereoElements)
+            );
         }
 
         private ObservableChemObjectCollection<T> CreateObservableChemObjectCollection<T>(IEnumerable<T> objs, bool allowDup) where T : IChemObject
@@ -600,16 +601,16 @@ namespace NCDK.Silent
                   Array.Empty<IStereoElement>())
         { }
 
-		public AtomContainer()
-			: this(
-					  Array.Empty<IAtom>(), 
-					  Array.Empty<IBond>(), 
-					  Array.Empty<ILonePair>(),
-					  Array.Empty<ISingleElectron>(),
-					  Array.Empty<IStereoElement>())
-		{ }
+        public AtomContainer()
+            : this(
+                      Array.Empty<IAtom>(), 
+                      Array.Empty<IBond>(), 
+                      Array.Empty<ILonePair>(),
+                      Array.Empty<ISingleElectron>(),
+                      Array.Empty<IStereoElement>())
+        { }
 
-		public AtomContainer(IAtomContainer container)
+        public AtomContainer(IAtomContainer container)
             : this(
                   container.Atoms,
                   container.Bonds,
@@ -626,8 +627,8 @@ namespace NCDK.Silent
                 isAromatic = value; 
             }
         }
-		
-		public virtual bool IsSingleOrDouble
+        
+        public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
             set
@@ -657,7 +658,7 @@ namespace NCDK.Silent
 
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
-			foreach (var bond in Bonds)
+            foreach (var bond in Bonds)
                 if (bond.Contains(atom))
                     yield return bond.GetConnectedAtom(atom);
             yield break;
@@ -703,24 +704,24 @@ namespace NCDK.Silent
 
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
-			var max = BondOrder.Single;
-			foreach (var order in GetBondOrders(atom))
-			{
-				if (max.Numeric < order.Numeric)
-					max = order;
-			}
-			return max;
-		}
+            var max = BondOrder.Single;
+            foreach (var order in GetBondOrders(atom))
+            {
+                if (max.Numeric < order.Numeric)
+                    max = order;
+            }
+            return max;
+        }
 
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
             var min = BondOrder.Quadruple;
-			foreach (var order in GetBondOrders(atom))
+            foreach (var order in GetBondOrders(atom))
             {
                 if (min.Numeric > order.Numeric)
                     min = order;
             }
-			return min;
+            return min;
         }
 
         public virtual void Add(IAtomContainer atomContainer)
@@ -827,22 +828,22 @@ namespace NCDK.Silent
         {
             var bond = electronContainer as IBond;
             if (bond != null)
-			{
+            {
                 Remove(bond);
-				return;
-			}
+                return;
+            }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
-			{
+            {
                 Remove(lonePair);
-				return;
-			}
+                return;
+            }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
-			{
+            {
                 Remove(singleElectron);
-				return;
-			}
+                return;
+            }
         }
 
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)

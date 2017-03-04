@@ -24,26 +24,26 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
-     * parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
-     *
-     * <p>TODO: merge with Normalizer.
-     *
-     * @author     Todd Martin
-     * @cdk.module extra
-     * @cdk.githash
-     *
-     * @see        org.openscience.cdk.normalize.Normalizer
-     */
+    /// <summary>
+    /// Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
+    /// parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
+    ///
+    /// <p>TODO: merge with Normalizer.
+    ///
+    // @author     Todd Martin
+    // @cdk.module extra
+    // @cdk.githash
+    ///
+    // @see        org.openscience.cdk.normalize.Normalizer
+    /// </summary>
     public class CDKUtilities
     {
         public static string FixSmiles(string Smiles)
         {
             Smiles = Smiles.Replace("CL", "Cl");
             Smiles = Smiles.Replace("(H)", "([H])");
-            //		Smiles=Smiles.Replace("N=N#N","N=[N+]=[N-]");
-            //		Smiles=Smiles.Replace("#N=O","#[N+][O-]");
+            //        Smiles=Smiles.Replace("N=N#N","N=[N+]=[N-]");
+            //        Smiles=Smiles.Replace("#N=O","#[N+][O-]");
             Smiles = Smiles.Trim();
 
             return Smiles;
@@ -169,7 +169,7 @@ namespace NCDK.Tools
 
                                 //int totalobonds=0;
                                 //totalobonds+=m.Bonds[a,cao[0]].Order;
-                                //						totalobonds+=m.Bonds[a,cao[1]].Order;
+                                //                        totalobonds+=m.Bonds[a,cao[1]].Order;
 
                                 //if (totalobonds==4) { // need to fix
                                 if ((order1 == BondOrder.Single && order2 == BondOrder.Double)
@@ -255,7 +255,7 @@ namespace NCDK.Tools
                     {
                         m.Atoms[i].IsAromatic = true;
                     }
-			continue_jloop:
+            continue_jloop:
                     ;
                 }
             }

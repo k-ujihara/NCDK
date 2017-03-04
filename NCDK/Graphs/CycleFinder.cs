@@ -28,54 +28,44 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
-    /**
-     * Defines a method to find the cycles of a molecule. The distinction between a
-     * cycle and a ring is that cycles are stored as indices (int[]) while rings are
-     * stored as atoms ({@link IAtom}[]) in a {@link
-     * IRing}.
-     *
-     * @author John May
-     * @cdk.module core
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Defines a method to find the cycles of a molecule. The distinction between a
+    /// cycle and a ring is that cycles are stored as indices (int[]) while rings are
+    /// stored as atoms (<see cref="IAtom"/>[]) in a <see cref="IRing"/>.
+    /// </summary>
+    // @author John May
+    // @cdk.module core
+    // @cdk.githash
     public interface CycleFinder
     {
-        /**
-		 * Find the cycles of the provided molecule.
-		 *
-		 * @param molecule a molecule, can be disconnected.
-		 * @ thrown if problem could not be solved within some
-		 *                     predefined bounds.
-		 * @return an instance for querying the cycles (rings) in the molecule
-		 */
+        /// <summary>
+        /// Find the cycles of the provided molecule.
+        /// </summary>
+        /// <param name="molecule">a molecule, can be disconnected.</param>
+        /// <returns>an instance for querying the cycles (rings) in the molecule</returns>
+        /// <exception cref="">if problem could not be solved within some predefined bounds.</exception>
         Cycles Find(IAtomContainer molecule);
 
-        /**
-		 * Find the cycles of the provided molecule.
-		 *
-		 * @param molecule a molecule, can be disconnected.
-		 * @param length maximum length cycle to find (set to
-		 *               molecule.Atoms.Count for all)
-		 * @ thrown if problem could not be solved within some
-		 *                     predefined bounds.
-		 * @return an instance for querying the cycles (rings) in the molecule
-		 */
+        /// <summary>
+        /// Find the cycles of the provided molecule.
+        /// </summary>
+        /// <param name="molecule">a molecule, can be disconnected.</param>
+        /// <param name="length">maximum length cycle to find (set to molecule.Atoms.Count for all)</param>
+        /// <returns>an instance for querying the cycles (rings) in the molecule</returns>
+        /// <exception cref="">if problem could not be solved within some  predefined bounds.</exception>
         Cycles Find(IAtomContainer molecule, int length);
 
-        /**
-		 * Find the cycles of the provided molecule when an adjacent relation
-		 * (graph) is already available. The graph can be obtained through {@link
-		 * GraphUtil#ToAdjList(IAtomContainer)}, for convenience {@link
-		 * #Find(IAtomContainer, int)} will automatically create the graph.
-		 *
-		 * @param molecule input structure
-		 * @param graph adjacency list representation for fast traversal
-		 * @param length maximum length cycle to find (set to
-		 *               molecule.Atoms.Count for all)
-		 * @return an instance for querying the cycles (rings) in the molecule
-		 * @ thrown if problem could not be solved within some
-		 *                     predefined bounds.
-		 */
+        /// <summary>
+        /// Find the cycles of the provided molecule when an adjacent relation
+        /// (graph) is already available. The graph can be obtained through 
+        /// <see cref="GraphUtil.ToAdjList(IAtomContainer)"/>, for convenience
+        /// <see cref="Find(IAtomContainer, int)"/> will automatically create the graph.
+        /// </summary>
+        /// <param name="molecule">input structure</param>
+        /// <param name="graph">adjacency list representation for fast traversal</param>
+        /// <param name="length">maximum length cycle to find (set to molecule.Atoms.Count for all)</param>
+        /// <returns>an instance for querying the cycles (rings) in the molecule</returns>
+        /// <exception cref="">if problem could not be solved within some predefined bounds.</exception>
         Cycles Find(IAtomContainer molecule, int[][] graph, int length);
     }
 }

@@ -26,17 +26,17 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-	 * Interface definition for Rgroup query classes. These must provide a root
-	 * structure, root attachment points and Rgroup definitions.
-	 *
-	 * @cdk.module  isomorphism
-	 * @cdk.githash
-	 * @cdk.keyword Rgroup
-	 * @cdk.keyword R group
-	 * @cdk.keyword R-group
-	 * @author Mark Rijnbeek
-	 */
+    /// <summary>
+    /// Interface definition for Rgroup query classes. These must provide a root
+    /// structure, root attachment points and Rgroup definitions.
+    ///
+    // @cdk.module  isomorphism
+    // @cdk.githash
+    // @cdk.keyword Rgroup
+    // @cdk.keyword R group
+    // @cdk.keyword R-group
+    // @author Mark Rijnbeek
+    /// </summary>
     public interface IRGroupQuery : IChemObject
     {
 
@@ -62,22 +62,22 @@ namespace NCDK.Isomorphisms.Matchers
 
 
         /// <summary>
-		/// All the substituent atom containers, in other words the atom containers
-		/// defined in this RGroupQuery except for the root structure.
+        /// All the substituent atom containers, in other words the atom containers
+        /// defined in this RGroupQuery except for the root structure.
         /// </summary>
-		IList<IAtomContainer> GetSubstituents();
+        IList<IAtomContainer> GetSubstituents();
 
         /// <summary>
         /// Checks validity of the RGroupQuery.
         /// Each distinct R# in the root must have a
-        /// a corresponding {@link RGroupList} definition.<br>
+        /// a corresponding <see cref="RGroupList"/> definition.<br>
         /// In file terms: $RGP blocks must be defined for each R-group number.
         /// </summary>
         bool AreSubstituentsDefined();
 
         /// <summary>
         /// Checks validity of RGroupQuery.
-        /// Each {@link RGroupList} definition must have one or more corresponding
+        /// Each <see cref="RGroupList"/> definition must have one or more corresponding
         /// R# atoms in the root block. 
         /// Returns <see langword="true"/> when valid
         /// </summary>

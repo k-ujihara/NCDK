@@ -16,23 +16,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
-using NCDK.Common.Collections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
-    /**
-     * @cdk.module test-standard
-     */
-	[TestClass()]
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
+    [TestClass()]
     public class AtomContainerBondPermutorTest : CDKTestCase
     {
 

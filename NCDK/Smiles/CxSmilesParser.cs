@@ -28,30 +28,27 @@ using static NCDK.SGroups.CxSmilesState;
 
 namespace NCDK.SGroups
 {
-    /**
-     * Parse CXSMILES (ChemAxon Extended SMILES) layers. The layers are suffixed after the SMILES but before the title
-     * and encode a large number of the features. CXSMILES was not intended for outside consumption so has some quirks
-     * but does provide some useful features. This parser handles a subset of the grammar:
-     * <br>
-     * <pre>
-     * - Atom Labels
-     * - Atom Values
-     * - Atom Coordinates
-     * - Positional Variations
-     * - Polymer Sgroups
-     * - Atom Radicals
-     * - Fragment grouping
-     * </pre>
-     * The following properties are ignored
-     * <pre>
-     * - cis/trans specification
-     * - relative stereochemistry
-     * </pre>
-     */
-#if TEST
-    public
-#endif
-    sealed class CxSmilesParser
+    /// <summary>
+    /// Parse CXSMILES (ChemAxon Extended SMILES) layers. The layers are suffixed after the SMILES but before the title
+    /// and encode a large number of the features. CXSMILES was not intended for outside consumption so has some quirks
+    /// but does provide some useful features. This parser handles a subset of the grammar:
+    /// <br>
+    /// <code>
+    /// - Atom Labels
+    /// - Atom Values
+    /// - Atom Coordinates
+    /// - Positional Variations
+    /// - Polymer Sgroups
+    /// - Atom Radicals
+    /// - Fragment grouping
+    /// </code>
+    /// The following properties are ignored
+    /// <code>
+    /// - cis/trans specification
+    /// - relative stereochemistry
+    /// </code>
+    /// </summary>
+    internal sealed class CxSmilesParser
     {
         private const char COMMA_SEPARATOR = ',';
         private const char DOT_SEPARATOR = '.';
@@ -60,13 +57,13 @@ namespace NCDK.SGroups
         {
         }
 
-        /**
-         * Process atom labels from extended SMILES in a char iter.
-         *
-         * @param iter char iteration
-         * @param dest destination of labels (atomidx->label)
-         * @return parse success/failure
-         */
+        /// <summary>
+        /// Process atom labels from extended SMILES in a char iter.
+        ///
+        /// <param name="iter">char iteration</param>
+        /// <param name="dest">destination of labels (atomidx->label)</param>
+        /// <returns>parse success/failure</returns>
+        /// </summary>
         private static bool ProcessAtomLabels(CharIter iter, IDictionary<int, string> dest)
         {
             int atomIdx = 0;
@@ -133,12 +130,12 @@ namespace NCDK.SGroups
             return sign * (intPart + (fracPart / divisor));
         }
 
-        /**
-         * Coordinates are written between parenthesis. The z-coord may be omitted '(0,1,),(2,3,)'.
-         * @param iter input characters, iterator is progressed by this method
-         * @param state output CXSMILES state
-         * @return parse was a success (or not)
-         */
+        /// <summary>
+        /// Coordinates are written between parenthesis. The z-coord may be omitted '(0,1,),(2,3,)'.
+        /// <param name="iter">input characters, iterator is progressed by this method</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>parse was a success (or not)</returns>
+        /// </summary>
         private static bool ProcessCoords(CharIter iter, CxSmilesState state)
         {
             if (state.AtomCoords == null)
@@ -169,14 +166,14 @@ namespace NCDK.SGroups
             return false;
         }
 
-        /**
-         * Fragment grouping defines disconnected components that should be considered part of a single molecule (i.e.
-         * Salts). Examples include NaH, AlCl3, Cs2CO3, HATU, etc.
-         *
-         * @param iter input characters, iterator is progressed by this method
-         * @param state output CXSMILES state
-         * @return parse was a success (or not)
-         */
+        /// <summary>
+        /// Fragment grouping defines disconnected components that should be considered part of a single molecule (i.e.
+        /// Salts). Examples include NaH, AlCl3, Cs2CO3, HATU, etc.
+        ///
+        /// <param name="iter">input characters, iterator is progressed by this method</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>parse was a success (or not)</returns>
+        /// </summary>
         private static bool ProcessFragmentGrouping(CharIter iter, CxSmilesState state)
         {
             if (state.fragGroups == null)
@@ -195,13 +192,13 @@ namespace NCDK.SGroups
             return false;
         }
 
-        /**
-         * Sgroup polymers in CXSMILES can be variable length so may be terminated either with the next group
-         * or the end of the CXSMILES.
-         *
-         * @param c character
-         * @return character an delimit an Sgroup
-         */
+        /// <summary>
+        /// Sgroup polymers in CXSMILES can be variable length so may be terminated either with the next group
+        /// or the end of the CXSMILES.
+        ///
+        /// <param name="c">character</param>
+        /// <returns>character an delimit an Sgroup</returns>
+        /// </summary>
         private static bool IsSgroupDelim(char c)
         {
             return c == ':' || c == ',' || c == '|';
@@ -269,13 +266,13 @@ namespace NCDK.SGroups
             return true;
         }
 
-        /**
-         * Polymer Sgroups describe variations of repeating units. Only the atoms and not crossing bonds are written.
-         *
-         * @param iter input characters, iterator is progressed by this method
-         * @param state output CXSMILES state
-         * @return parse was a success (or not)
-         */
+        /// <summary>
+        /// Polymer Sgroups describe variations of repeating units. Only the atoms and not crossing bonds are written.
+        ///
+        /// <param name="iter">input characters, iterator is progressed by this method</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>parse was a success (or not)</returns>
+        /// </summary>
         private static bool ProcessPolymerSgroups(CharIter iter, CxSmilesState state)
         {
             if (state.sgroups == null)
@@ -327,13 +324,13 @@ namespace NCDK.SGroups
             return false;
         }
 
-        /**
-         * Positional variation/multi centre bonding. Describe as a begin atom and one or more end points.
-         *
-         * @param iter input characters, iterator is progressed by this method
-         * @param state output CXSMILES state
-         * @return parse was a success (or not)
-         */
+        /// <summary>
+        /// Positional variation/multi centre bonding. Describe as a begin atom and one or more end points.
+        ///
+        /// <param name="iter">input characters, iterator is progressed by this method</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>parse was a success (or not)</returns>
+        /// </summary>
         private static bool ProcessPositionalVariation(CharIter iter, CxSmilesState state)
         {
             if (state.positionVar == null)
@@ -359,13 +356,13 @@ namespace NCDK.SGroups
             return false;
         }
 
-        /**
-         * CXSMILES radicals.
-         *
-         * @param iter input characters, iterator is progressed by this method
-         * @param state output CXSMILES state
-         * @return parse was a success (or not)
-         */
+        /// <summary>
+        /// CXSMILES radicals.
+        ///
+        /// <param name="iter">input characters, iterator is progressed by this method</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>parse was a success (or not)</returns>
+        /// </summary>
         private static bool ProcessRadicals(CharIter iter, CxSmilesState state)
         {
             if (state.atomRads == null)
@@ -407,14 +404,14 @@ namespace NCDK.SGroups
             return true;
         }
 
-        /**
-         * Parse an string possibly containing CXSMILES into an intermediate state
-         * ({@link CxSmilesState}) representation.
-         *
-         * @param str input character string (SMILES title field)
-         * @param state output CXSMILES state
-         * @return position where CXSMILES ends (below 0 means no CXSMILES)
-         */
+        /// <summary>
+        /// Parse an string possibly containing CXSMILES into an intermediate state
+        /// (<see cref="CxSmilesState"/>) representation.
+        ///
+        /// <param name="str">input character string (SMILES title field)</param>
+        /// <param name="state">output CXSMILES state</param>
+        /// <returns>position where CXSMILES ends (below 0 means no CXSMILES)</returns>
+        /// </summary>
         public static int ProcessCx(string str, CxSmilesState state)
         {
 
@@ -552,14 +549,14 @@ namespace NCDK.SGroups
             return res;
         }
 
-        /**
-         * Process a list of unsigned integers.
-         *
-         * @param iter char iter
-         * @param sep the separator
-         * @param dest output
-         * @return int-list was successfully processed
-         */
+        /// <summary>
+        /// Process a list of unsigned integers.
+        ///
+        /// <param name="iter">char iter</param>
+        /// <param name="sep">the separator</param>
+        /// <param name="dest">output</param>
+        /// <returns>int-list was successfully processed</returns>
+        /// </summary>
         private static bool ProcessIntList(CharIter iter, char sep, IList<int> dest)
         {
             while (iter.MoveNext())
@@ -612,10 +609,10 @@ namespace NCDK.SGroups
             return new string(chars, 0, dst);
         }
 
-        /**
-         * Utility for parsing a sequence of characters. The char iter allows us to pull
-         * of one or more characters at a time and track where we are in the string.
-         */
+        /// <summary>
+        /// Utility for parsing a sequence of characters. The char iter allows us to pull
+        /// of one or more characters at a time and track where we are in the string.
+        /// </summary>
         sealed class CharIter
         {
 
@@ -629,12 +626,12 @@ namespace NCDK.SGroups
                 this.len = str.Length;
             }
 
-            /**
-             * If the next character matches the provided query the iterator is progressed.
-             *
-             * @param c query character
-             * @return iterator was moved forwards
-             */
+            /// <summary>
+            /// If the next character matches the provided query the iterator is progressed.
+            ///
+            /// <param name="c">query character</param>
+            /// <returns>iterator was moved forwards</returns>
+            /// </summary>
             public bool NextIf(char c)
             {
                 if (!MoveNext() || str[pos] != c)
@@ -643,13 +640,13 @@ namespace NCDK.SGroups
                 return true;
             }
 
-            /**
-             * If the next sequence of characters matches the prefix the iterator
-             * is progressed to character following the prefix.
-             *
-             * @param prefix prefix string
-             * @return iterator was moved forwards
-             */
+            /// <summary>
+            /// If the next sequence of characters matches the prefix the iterator
+            /// is progressed to character following the prefix.
+            ///
+            /// <param name="prefix">prefix string</param>
+            /// <returns>iterator was moved forwards</returns>
+            /// </summary>
             public bool NextIf(string prefix)
             {
                 bool res;
@@ -658,44 +655,44 @@ namespace NCDK.SGroups
                 return res;
             }
 
-            /**
-             * Is there more chracters to read?
-             *
-             * @return whether more characters are available
-             */
+            /// <summary>
+            /// Is there more chracters to read?
+            ///
+            /// <returns>whether more characters are available</returns>
+            /// </summary>
             public bool MoveNext()
             {
                 return pos < len;
             }
 
-            /**
-             * Access the current character of the iterator.
-             *
-             * @return charactor
-             */
+            /// <summary>
+            /// Access the current character of the iterator.
+            ///
+            /// <returns>charactor</returns>
+            /// </summary>
             public char Curr()
             {
                 return str[pos];
             }
 
-            /**
-             * Access the current character of the iterator and move
-             * to the next position.
-             *
-             * @return charactor
-             */
+            /// <summary>
+            /// Access the current character of the iterator and move
+            /// to the next position.
+            ///
+            /// <returns>charactor</returns>
+            /// </summary>
             public char Next()
             {
                 return str[pos++];
             }
 
-            /**
-             * Access a substring from the iterator.
-             *
-             * @param beg begin position (inclusive)
-             * @param end end position (exclusive)
-             * @return substring
-             */
+            /// <summary>
+            /// Access a substring from the iterator.
+            ///
+            /// <param name="beg">begin position (inclusive)</param>
+            /// <param name="end">end position (exclusive)</param>
+            /// <returns>substring</returns>
+            /// </summary>
             public string Substr(int beg, int end)
             {
                 return str.Substring(beg, end - beg);

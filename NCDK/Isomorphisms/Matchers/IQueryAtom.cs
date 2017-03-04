@@ -3,7 +3,7 @@ using System;
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
-    /// Defines the ability to be matched against {@link IAtom}'s. Most prominent application
+    /// Defines the ability to be matched against <see cref="IAtom"/>'s. Most prominent application
     /// is in isomorphism and substructure matching in the {@link org.openscience.cdk.isomorphism.UniversalIsomorphismTester}.
     /// </summary>
     public interface IQueryAtom : IAtom

@@ -27,17 +27,17 @@ using Moq;
 
 namespace NCDK.Hash
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class MinimumEquivalentCyclicSetTest
     {
 
-        /**
-         * @cdk.inchi InChI=1S/C8H16/c1-7-3-5-8(2)6-4-7/h7-8H,3-6H2,1-2H3
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C8H16/c1-7-3-5-8(2)6-4-7/h7-8H,3-6H2,1-2H3
+        /// </summary>
         [TestMethod()]
         public void TestFind_OneChoice()
         {
@@ -57,9 +57,9 @@ namespace NCDK.Hash
 
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C24H36/c1-2-13(1)19-20(14-3-4-14)22(16-7-8-16)24(18-11-12-18)23(17-9-10-17)21(19)15-5-6-15/h13-24H,1-12H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C24H36/c1-2-13(1)19-20(14-3-4-14)22(16-7-8-16)24(18-11-12-18)23(17-9-10-17)21(19)15-5-6-15/h13-24H,1-12H2
+        /// </summary>
         [TestMethod()]
         public void TestFind_TwoChoices()
         {
@@ -97,9 +97,9 @@ namespace NCDK.Hash
             Assert.IsTrue(set.Contains(11));
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C10H22/c1-7(2)10(8(3)4)9(5)6/h7-10H,1-6H3
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C10H22/c1-7(2)10(8(3)4)9(5)6/h7-10H,1-6H3
+        /// </summary>
         [TestMethod()]
         public void TestFind_NoChoice()
         {

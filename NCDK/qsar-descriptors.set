@@ -85,4 +85,4 @@ NCDK.QSAR.Descriptors.Moleculars.WHIMDescriptor
 NCDK.QSAR.Descriptors.Moleculars.WienerNumbersDescriptor
 NCDK.QSAR.Descriptors.Moleculars.XLogPDescriptor
 NCDK.QSAR.Descriptors.Moleculars.ZagrebIndexDescriptor
-org.openscience.cdk.qsar.descriptors.protein.TaeAminoAcidDescriptor
+NCDK.QSAR.Descriptors.Proteins.TaeAminoAcidDescriptor

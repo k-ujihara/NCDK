@@ -33,24 +33,20 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * Correct double-bond configuration depiction in 2D to be correct for it's
-     * specified {@link IDoubleBondStereochemistry}. Ideally double-bond adjustment
-     * should be done in when generating a structure diagram (and consider
-     * overlaps). This method finds double bonds with incorrect depicted
-     * configuration and reflects one side to correct the configuration.
-     * <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
-     * double-bonds with a configuration can not be corrected (error logged).</b>
-     *
-     * @author John May
-     * @cdk.module sdg
-     */
-#if TEST
-    public
-#endif
-    sealed class CorrectGeometricConfiguration
+    /// <summary>
+    /// Correct double-bond configuration depiction in 2D to be correct for it's
+    /// specified <see cref="IDoubleBondStereochemistry"/>. Ideally double-bond adjustment
+    /// should be done in when generating a structure diagram (and consider
+    /// overlaps). This method finds double bonds with incorrect depicted
+    /// configuration and reflects one side to correct the configuration.
+    /// <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
+    /// double-bonds with a configuration can not be corrected (error logged).</b>
+    ///
+    // @author John May
+    // @cdk.module sdg
+    /// </summary>
+    internal sealed class CorrectGeometricConfiguration
     {
-
         /// <summary>The structure we are assigning labels to.</summary>
         private readonly IAtomContainer container;
 
@@ -66,15 +62,15 @@ namespace NCDK.Layout
         /// <summary>Visited flags when atoms are being reflected.</summary>
         private readonly bool[] visited;
 
-        /**
-         * Adjust all double bond elements in the provided structure. <b>IMPORTANT:
-         * up/down labels should be adjusted before adjust double-bond
-         * configurations. coordinates are reflected by this method which can lead
-         * to incorrect tetrahedral specification.</b>
-         *
-         * @param container the structure to adjust
-         * @throws ArgumentException an atom had unset coordinates
-         */
+        /// <summary>
+        /// Adjust all double bond elements in the provided structure. <b>IMPORTANT:
+        /// up/down labels should be adjusted before adjust double-bond
+        /// configurations. coordinates are reflected by this method which can lead
+        /// to incorrect tetrahedral specification.</b>
+        ///
+        /// <param name="container">the structure to adjust</param>
+        /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
+        /// </summary>
         public static IAtomContainer Correct(IAtomContainer container)
         {
             if (container.StereoElements.Any())
@@ -82,23 +78,23 @@ namespace NCDK.Layout
             return container;
         }
 
-        /**
-         * Adjust all double bond elements in the provided structure.
-         *
-         * @param container the structure to adjust
-         * @throws ArgumentException an atom had unset coordinates
-         */
+        /// <summary>
+        /// Adjust all double bond elements in the provided structure.
+        ///
+        /// <param name="container">the structure to adjust</param>
+        /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
+        /// </summary>
         CorrectGeometricConfiguration(IAtomContainer container)
             : this(container, GraphUtil.ToAdjList(container))
         { }
 
-        /**
-         * Adjust all double bond elements in the provided structure.
-         *
-         * @param container the structure to adjust
-         * @param graph     the adjacency list representation of the structure
-         * @throws ArgumentException an atom had unset coordinates
-         */
+        /// <summary>
+        /// Adjust all double bond elements in the provided structure.
+        ///
+        /// <param name="container">the structure to adjust</param>
+        /// <param name="graph">the adjacency list representation of the structure</param>
+        /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
+        /// </summary>
         CorrectGeometricConfiguration(IAtomContainer container, int[][] graph)
         {
             this.container = container;
@@ -123,11 +119,11 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Adjust the configuration of the {@code dbs} element (if required).
-         *
-         * @param dbs double-bond stereochemistry element
-         */
+        /// <summary>
+        /// Adjust the configuration of the {@code dbs} element (if required).
+        ///
+        /// <param name="dbs">double-bond stereochemistry element</param>
+        /// </summary>
         private void Adjust(IDoubleBondStereochemistry dbs)
         {
 
@@ -138,8 +134,7 @@ namespace NCDK.Layout
             IAtom right = db.Atoms[1];
 
             int p = Parity(dbs);
-            int q = Parity(GetAtoms(left, bonds[0].GetConnectedAtom(left), right))
-                    * Parity(GetAtoms(right, bonds[1].GetConnectedAtom(right), left));
+            int q = Parity(GetAtoms(left, bonds[0].GetConnectedAtom(left), right)) * Parity(GetAtoms(right, bonds[1].GetConnectedAtom(right), left));
 
             // configuration is unspecified? then we add an unspecified bond.
             // note: IDoubleBondStereochemistry doesn't indicate this yet
@@ -176,18 +171,16 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Create an array of three atoms for a side of the double bond. This is
-         * used to determine the 'winding' of one side of the double bond.
-         *
-         * @param focus       a double bonded atom
-         * @param substituent the substituent we know the configuration of
-         * @param otherFocus  the other focus (i.e. the atom focus is double bonded
-         *                    to)
-         * @return 3 atoms arranged as, substituent, other substituent and other
-         *         focus. if the focus atom has an implicit hydrogen the other
-         *         substituent is the focus.
-         */
+        /// <summary>
+        /// Create an array of three atoms for a side of the double bond. This is
+        /// used to determine the 'winding' of one side of the double bond.
+        /// </summary>
+        /// <param name="focus">a double bonded atom</param>
+        /// <param name="substituent">the substituent we know the configuration of</param>
+        /// <param name="otherFocus">the other focus (i.e. the atom focus is double bonded to)</param>
+        /// <returns>3 atoms arranged as, substituent, other substituent and other
+        ///         focus. if the focus atom has an implicit hydrogen the other
+        ///         substituent is the focus.</returns>
         private IAtom[] GetAtoms(IAtom focus, IAtom substituent, IAtom otherFocus)
         {
             IAtom otherSubstituent = focus;
@@ -199,13 +192,11 @@ namespace NCDK.Layout
             return new IAtom[] { substituent, otherSubstituent, otherFocus };
         }
 
-        /**
-         * Access the parity (odd/even) parity of the double bond configuration (
-         * together/opposite).
-         *
-         * @param element double bond element
-         * @return together = -1, opposite = +1
-         */
+        /// <summary>
+        /// Access the parity (odd/even) parity of the double bond configuration (together/opposite).
+        /// </summary>
+        /// <param name="element">double bond element</param>
+        /// <returns>together = -1, opposite = +1</returns>
         private static int Parity(IDoubleBondStereochemistry element)
         {
             switch (element.Stereo.Ordinal)
@@ -219,40 +210,34 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Determine the parity (odd/even) of the triangle formed by the 3 atoms.
-         *
-         * @param atoms array of 3 atoms
-         * @return the parity of the triangle formed by 3 points, odd = -1, even =
-         *         +1
-         */
+        /// <summary>
+        /// Determine the parity (odd/even) of the triangle formed by the 3 atoms.
+        /// </summary>
+        /// <param name="atoms">array of 3 atoms</param>
+        /// <returns>the parity of the triangle formed by 3 points, odd = -1, even = +1</returns>
         private static int Parity(IAtom[] atoms)
         {
             return Parity(atoms[0].Point2D.Value, atoms[1].Point2D.Value, atoms[2].Point2D.Value);
         }
 
-        /**
-         * Determine the parity of the triangle formed by the 3 coordinates a, b and
-         * c.
-         *
-         * @param a point 1
-         * @param b point 2
-         * @param c point 3
-         * @return the parity of the triangle formed by 3 points
-         */
+        /// <summary>
+        /// Determine the parity of the triangle formed by the 3 coordinates a, b and c.
+        /// </summary>
+        /// <param name="a">point 1</param>
+        /// <param name="b">point 2</param>
+        /// <param name="c">point 3</param>
+        /// <returns>the parity of the triangle formed by 3 points</returns>
         private static int Parity(Vector2 a, Vector2 b, Vector2 c)
         {
             double det = (a.X - c.X) * (b.Y - c.Y) - (a.Y - c.Y) * (b.X - c.X);
             return (int)Math.Sign(det);
         }
 
-        /**
-         * Reflect the atom at index {@code v} and any then reflect any unvisited
-         * neighbors.
-         *
-         * @param v    index of the atom to reflect
-         * @param bond bond
-         */
+        /// <summary>
+        /// Reflect the atom at index {@code v} and any then reflect any unvisited neighbors.
+        /// </summary>
+        /// <param name="v">index of the atom to reflect</param>
+        /// <param name="bond">bond</param>
         private void Reflect(int v, IBond bond)
         {
             visited[v] = true;
@@ -264,13 +249,12 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Reflect the point {@code p} over the {@code bond}.
-         *
-         * @param p    the point to reflect
-         * @param bond bond
-         * @return the reflected point
-         */
+        /// <summary>
+        /// Reflect the point <paramref name="p"/> over the <paramref name="bond"/>.
+        /// </summary>
+        /// <param name="p">the point to reflect</param>
+        /// <param name="bond">bond</param>
+        /// <returns>the reflected point</returns>
         private Vector2 Reflect(Vector2 p, IBond bond)
         {
             IAtom a = bond.Atoms[0];
@@ -278,16 +262,15 @@ namespace NCDK.Layout
             return Reflect(p, a.Point2D.Value.X, a.Point2D.Value.Y, b.Point2D.Value.X, b.Point2D.Value.Y);
         }
 
-        /**
-         * Reflect the point {@code p} in the line (x0,y0 - x1,y1).
-         *
-         * @param p  the point to reflect
-         * @param x0 plane x start
-         * @param y0 plane y end
-         * @param x1 plane x start
-         * @param y1 plane y end
-         * @return the reflected point
-         */
+        /// <summary>
+        /// Reflect the point <paramref name="p"/> in the line (x0,y0 - x1,y1).
+        /// </summary>
+        /// <param name="p">the point to reflect</param>
+        /// <param name="x0">plane x start</param>
+        /// <param name="y0">plane y end</param>
+        /// <param name="x1">plane x start</param>
+        /// <param name="y1">plane y end</param>
+        /// <returns>the reflected point</returns>
         private Vector2 Reflect(Vector2 p, double x0, double y0, double x1, double y1)
         {
             double dx, dy, a, b;

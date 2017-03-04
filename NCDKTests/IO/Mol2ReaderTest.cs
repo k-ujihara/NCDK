@@ -32,13 +32,13 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the reading SYBYL mol2 files using a test file.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.Mol2Reader
-     */
+    /// <summary>
+    /// TestCase for the reading SYBYL mol2 files using a test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.Mol2Reader
+    /// </summary>
     [TestClass()]
     public class Mol2ReaderTest : SimpleChemObjectReaderTest
     {
@@ -55,16 +55,16 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /**
-         * Test example from website. See
-         * <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
-         */
+        /// <summary>
+        /// Test example from website. See
+        /// <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
+        /// </summary>
         [TestMethod()]
         public void TestExampleFromWebsite()
         {
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -95,7 +95,7 @@ namespace NCDK.IO
         public void TestReadingIDs()
         {
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
@@ -104,18 +104,18 @@ namespace NCDK.IO
             Assert.AreEqual("C1", reference.Atoms[0].Id);
         }
 
-        /**
-         * Tests the Mol2Reader with about 30% of the NCI molecules.
-         *
-         * @ if an error occurs
-         */
+        /// <summary>
+        /// Tests the Mol2Reader with about 30% of the NCI molecules.
+        ///
+        // @ if an error occurs
+        /// </summary>
         [TestCategory("SlowTest")]
         [TestMethod()]
         public void TestNCIfeb03_2D()
         {
-            //Assume.AssumeTrue(runSlowTests());
+            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.NCI_feb03_2D.mol2.gz";
-            Stream ins = new GZipStream(typeof(Mol2ReaderTest).Assembly.GetManifestResourceStream(filename), CompressionMode.Decompress);
+            Stream ins = new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
             TextReader br = new StreamReader(ins);
             StringBuilder buf = new StringBuilder();
             string line;
@@ -139,10 +139,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultiMol()
         {
-            //Assume.AssumeTrue(runSlowTests());
+            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.actives.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -155,10 +155,10 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultiMolButSingle()
         {
-            //Assume.AssumeTrue(runSlowTests());
+            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
             Trace.TraceInformation("Testing: ", filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
@@ -172,7 +172,7 @@ namespace NCDK.IO
         public void TestIAtomContainer()
         {
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
-            Stream ins = typeof(Mol2ReaderTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
             reader.Close();
@@ -395,7 +395,7 @@ namespace NCDK.IO
             Mol2Reader mol2Reader = null;
             try
             {
-                mol2Reader = new Mol2Reader(this.GetType().Assembly.GetManifestResourceStream(this.GetType(), "CLMW1.mol2"));
+                mol2Reader = new Mol2Reader(ResourceLoader.GetAsStream(this.GetType(), "CLMW1.mol2"));
                 IAtomContainer container = mol2Reader.Read(new AtomContainer());
                 foreach (var atom in container.Atoms)
                     Assert.IsNotNull(atom.AtomicNumber);

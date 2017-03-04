@@ -24,11 +24,11 @@ using System;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IAtomType} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IAtomType"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAtomTypeTest : AbstractIsotopeTest
     {
@@ -106,9 +106,9 @@ namespace NCDK
             TestSetFormalCharge_Integer();
         }
 
-        /**
-         * Method to test the get/SetValency() methods.
-         */
+        /// <summary>
+        /// Method to test the get/SetValency() methods.
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetValency_Integer()
         {
@@ -259,9 +259,9 @@ namespace NCDK
             TestSetSphericalMatcher_String();
         }
 
-        /**
-         * Test for bug #1309731.
-         */
+        /// <summary>
+        /// Test for bug #1309731.
+        /// </summary>
         [TestMethod()]
         public virtual void TestAtomTypeNameAndIDBug()
         {
@@ -271,9 +271,9 @@ namespace NCDK
             Assert.AreEqual("carbon1", a.Id);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
 
         public override void TestClone()
@@ -288,9 +288,9 @@ namespace NCDK
             Assert.AreEqual(0, diff.Length);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_MaxBondOrder()
         {
@@ -302,9 +302,9 @@ namespace NCDK
             Assert.AreEqual(BondOrder.Single, clone.MaxBondOrder);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_IBondOrderSum()
         {
@@ -316,9 +316,9 @@ namespace NCDK
             Assert.AreEqual(1.0, clone.BondOrderSum.Value, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_CovalentRadius()
         {
@@ -330,9 +330,9 @@ namespace NCDK
             Assert.AreEqual(1.0, clone.CovalentRadius.Value, 0.001);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_FormalCharge()
         {
@@ -344,9 +344,9 @@ namespace NCDK
             Assert.AreEqual(1, clone.FormalCharge.Value);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_FormalNeighbourCount()
         {
@@ -358,9 +358,9 @@ namespace NCDK
             Assert.AreEqual(1, (int)clone.FormalNeighbourCount);
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
         public virtual void TestClone_Hybridization()
         {
@@ -372,9 +372,9 @@ namespace NCDK
             Assert.AreEqual(Hybridization.Planar3, clone.Hybridization);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
 
         public override void TestToString()

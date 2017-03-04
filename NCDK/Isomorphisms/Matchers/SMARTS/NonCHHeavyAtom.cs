@@ -18,44 +18,33 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher any heavy atom that is not C or H.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher any heavy atom that is not C or H.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class NonCHHeavyAtom : SMARTSAtom
     {
-        /**
-         * Creates a new instance
-         *
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// </summary>
         public NonCHHeavyAtom(IChemObjectBuilder builder)
             : base(builder)
         {
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             string symbol = atom.Symbol;
             return !(symbol.Equals("C") || symbol.Equals("H"));
-
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
-            return "NonCHHeavyAtom()";
+            return nameof(NonCHHeavyAtom) +"()";
         }
     }
 }

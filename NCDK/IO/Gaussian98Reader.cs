@@ -171,7 +171,6 @@ namespace NCDK.IO
             }
             if (model != null)
             {
-
                 // Read all other data
                 line = input.ReadLine().Trim();
                 while (line != null)
@@ -210,7 +209,6 @@ namespace NCDK.IO
                     }
                     else if (line.IndexOf("Harmonic frequencies") >= 0)
                     {
-
                         // Found a set of vibrations
                         // ReadFrequencies(frame);
                     }
@@ -220,14 +218,11 @@ namespace NCDK.IO
                     }
                     else if (line.IndexOf("Magnetic shielding") >= 0)
                     {
-
                         // Found NMR data
                         ReadNMRData(model, line);
-
                     }
                     else if (line.IndexOf("GINC") >= 0)
                     {
-
                         // Found calculation level of theory
                         levelOfTheory = ParseLevelOfTheory(line);
                         Debug.WriteLine("Level of Theory for this model: " + levelOfTheory);
@@ -280,7 +275,6 @@ namespace NCDK.IO
                     atomicNumber = (int)token.NumberValue;
                     if (atomicNumber == 0)
                     {
-
                         // Skip dummy atoms. Dummy atoms must be skipped
                         // if frequencies are to be read because Gaussian
                         // does not report dummy atoms in frequencies, and
@@ -328,10 +322,9 @@ namespace NCDK.IO
                 atom.Point3D = new Vector3(x, y, z);
                 molecule.Atoms.Add(atom);
             }
-            /*
-             * this is the place where we store the atomcount to be used as a
-             * counter in the nmr reading
-             */
+            
+            // this is the place where we store the atomcount to be used as a
+            // counter in the nmr reading
             atomCount = molecule.Atoms.Count;
             moleculeSet.Add(molecule);
             model.MoleculeSet = moleculeSet;
@@ -381,44 +374,7 @@ namespace NCDK.IO
                 }
             }
         }
-
-        ///**
-        // *  Reads a set of vibrations into ChemFrame.
-        // *
-        // *@param  model            Description of the Parameter
-        // *@exception IOException  if an I/O error occurs
-        // */
-        ////	private void ReadFrequencies(IChemModel model) 
-        ////	{
-        ///*
-        // * FIXME: this is yet to be ported string line; line = input.ReadLine();
-        // * line = input.ReadLine(); line = input.ReadLine(); line =
-        // * input.ReadLine(); line = input.ReadLine(); while ((line != null) &&
-        // * line.StartsWith(" Frequencies --")) { Vector currentVibs = new Vector();
-        // * StringReader vibValRead = new StringReader(line.Substring(15));
-        // * StreamTokenizer token = new StreamTokenizer(vibValRead); while
-        // * (token.NextToken() != StreamTokenizer.TT_EOF) { Vibration vib = new
-        // * Vibration(Double.ToString(token.NumberValue)); currentVibs.AddElement(vib); }
-        // * line = input.ReadLine(); line = input.ReadLine(); line =
-        // * input.ReadLine(); line = input.ReadLine(); line = input.ReadLine(); line
-        // * = input.ReadLine(); for (int i = 0; i < frame.Atoms.Count; ++i) { line
-        // * = input.ReadLine(); StringReader vectorRead = new StringReader(line);
-        // * token = new StreamTokenizer(vectorRead); token.NextToken(); / ignore
-        // * first token token.NextToken(); / ignore second token for (int j = 0; j <
-        // * currentVibs.Count; ++j) { double[] v = new double[3]; if
-        // * (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[0] = token.NumberValue; }
-        // * else { throw new IOException("Error reading frequency"); } if
-        // * (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[1] = token.NumberValue; }
-        // * else { throw new IOException("Error reading frequency"); } if
-        // * (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[2] = token.NumberValue; }
-        // * else { throw new IOException("Error reading frequency"); } ((Vibration)
-        // * currentVibs.ElementAt(j)).AddAtomVector(v); } } for (int i = 0; i <
-        // * currentVibs.Count; ++i) { frame.AddVibration((Vibration)
-        // * currentVibs.ElementAt(i)); } line = input.ReadLine(); line =
-        // * input.ReadLine(); line = input.ReadLine(); }
-        // */
-        ////	}
-
+    
         /// <summary>
         /// Reads NMR nuclear shieldings.
         /// </summary>

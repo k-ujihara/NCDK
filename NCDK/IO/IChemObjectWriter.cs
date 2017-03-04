@@ -26,39 +26,39 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * This class is the interface that all IO writers should implement.
-     * Programs need only care about this interface for any kind of IO.
-     *
-     * <p>Currently, database IO and file IO is supported. Internet IO is
-     * expected.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This class is the interface that all IO writers should implement.
+    /// Programs need only care about this interface for any kind of IO.
+    ///
+    /// <p>Currently, database IO and file IO is supported. Internet IO is
+    /// expected.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    /// </summary>
     public interface IChemObjectWriter : IChemObjectIO
     {
 
-        /**
-         * Writes the content of "object" to output.
-         *
-         * @param  object    the object of which the content is outputed
-         *
-         * @exception CDKException is thrown if the output
-         *            does not support the data in the object
-         */
+        /// <summary>
+        /// Writes the content of "object" to output.
+        ///
+        /// <param name="object">the object of which the content is outputed</param>
+        ///
+        /// <exception cref="CDKException">is thrown if the output</exception>
+        ///            does not support the data in the object
+        /// </summary>
         void Write(IChemObject obj);
 
-        /**
-         * Sets the Writer from which this ChemObjectWriter should write
-         * the contents.
-         */
+        /// <summary>
+        /// Sets the Writer from which this ChemObjectWriter should write
+        /// the contents.
+        /// </summary>
         void SetWriter(TextWriter writer);
 
-        /**
-         * Sets the Stream from which this ChemObjectWriter should write
-         * the contents.
-         */
+        /// <summary>
+        /// Sets the Stream from which this ChemObjectWriter should write
+        /// the contents.
+        /// </summary>
         void SetWriter(Stream writer);
     }
 }

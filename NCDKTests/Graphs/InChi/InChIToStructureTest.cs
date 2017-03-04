@@ -25,11 +25,11 @@ using System.Collections.Generic;
 
 namespace NCDK.Graphs.InChi
 {
-    /**
-     * TestCase for the {@link InChIToStructure} class.
-     *
-     * @cdk.module test-inchi
-     */
+    /// <summary>
+    /// TestCase for the {@link InChIToStructure} class.
+    ///
+    // @cdk.module test-inchi
+    /// </summary>
     [TestClass()]
     public class InChIToStructureTest : CDKTestCase
     {
@@ -52,7 +52,7 @@ namespace NCDK.Graphs.InChi
 
         /// <summary>@cdk.bug 1293</summary>
         [TestMethod()]
-        public void nonNullAtomicNumbers()
+        public void NonNullAtomicNumbers()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/CH4/h1H4", Default.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
@@ -158,7 +158,7 @@ namespace NCDK.Graphs.InChi
         }
 
         [TestMethod()]
-        public void e_bute_2_ene()
+        public void E_bute_2_ene()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",
                     Default.ChemObjectBuilder.Instance);
@@ -173,7 +173,7 @@ namespace NCDK.Graphs.InChi
         }
 
         [TestMethod()]
-        public void z_bute_2_ene()
+        public void Z_bute_2_ene()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-",
                     Default.ChemObjectBuilder.Instance);
@@ -187,11 +187,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual(DoubleBondConformation.Together, ((IDoubleBondStereochemistry)se).Stereo);
         }
 
-        /**
-         * (R)-penta-2,3-diene
-         */
+        /// <summary>
+        /// (R)-penta-2,3-diene
+        /// </summary>
         [TestMethod()]
-        public void r_penta_2_3_diene()
+        public void R_penta_2_3_diene()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m0/s1",
                     Silent.ChemObjectBuilder.Instance);
@@ -212,11 +212,11 @@ namespace NCDK.Graphs.InChi
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, element.Winding);
         }
 
-        /**
-         * (S)-penta-2,3-diene
-         */
+        /// <summary>
+        /// (S)-penta-2,3-diene
+        /// </summary>
         [TestMethod()]
-        public void s_penta_2_3_diene()
+        public void S_penta_2_3_diene()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1",
                     Silent.ChemObjectBuilder.Instance);

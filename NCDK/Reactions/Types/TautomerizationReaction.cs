@@ -20,74 +20,75 @@ using NCDK.Reactions.Types.Parameters;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using NCDK.Reactions.Mechanisms;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>IReactionProcess which produces a tautomerization chemical reaction.
-     * As most commonly encountered, this reaction results in the formal migration
-     * of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</p>
-     *
-     * <pre>X=Y-Z-H => X(H)-Y=Z</pre>
-     *
-     * <p>Below you have an example how to initiate the mechanism.</p>
-     * <p>It is processed by the HeterolyticCleavageMechanism class</p>
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new TautomerizationReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to specify the reaction in a fixed point.</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not specified then the reaction process will
-     * try to find automatically the possible reaction centers.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2008-02-11
-     * @cdk.module     reaction
-     * @cdk.set        reaction-types
-     * @cdk.githash
-     *
-     * @see TautomerizationMechanism
-     **/
+    /// <summary>
+    /// <para>IReactionProcess which produces a tautomerization chemical reaction.
+    /// As most commonly encountered, this reaction results in the formal migration
+    /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</para>
+    ///
+    /// <code>X=Y-Z-H => X(H)-Y=Z</code>
+    ///
+    /// <para>Below you have an example how to initiate the mechanism.</para>
+    /// <para>It is processed by the HeterolyticCleavageMechanism class</para>
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new TautomerizationReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to specify the reaction in a fixed point.</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not specified then the reaction process will
+    /// try to find automatically the possible reaction centers.</para>
+    ///
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2008-02-11
+    // @cdk.module     reaction
+    // @cdk.set        reaction-types
+    // @cdk.githash
+    ///
+    /// <seealso cref="TautomerizationMechanism"/>
+    ///*/
     public class TautomerizationReaction : ReactionEngine, IReactionProcess
     {
 
-        /**
-         * Constructor of the TautomerizationReaction object.
-         *
-         */
+        /// <summary>
+        /// Constructor of the TautomerizationReaction object.
+        ///
+        /// </summary>
         public TautomerizationReaction() { }
 
-        /**
-         *  Gets the specification attribute of the TautomerizationReaction object.
-         *
-         *@return    The specification value
-         */
+        /// <summary>
+        ///  Gets the specification attribute of the TautomerizationReaction object.
+        ///
+        /// <returns>The specification value</returns>
+        /// </summary>
 
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#Tautomerization", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *@param  reactants         reactants of the reaction
-         *@param  agents            agents of the reaction (Must be in this case null)
-         *
-         *@exception  CDKException  Description of the Exception
-         */
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        ///
+        /// <param name="reactants">reactants of the reaction</param>
+        /// <param name="agents">agents of the reaction (Must be in this case null)</param>
+        ///
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// </summary>
 
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
@@ -106,10 +107,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -189,22 +187,22 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with X=Y-Z-H.
-         * <pre>
-         * X: Atom
-         * =: bond
-         * Y: Atom
-         * -: bond
-         * Z: Atom
-         * -: bond
-         * H: Atom
-         *  </pre>
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with X=Y-Z-H.
+        /// <code>
+        /// X: Atom
+        /// =: bond
+        /// Y: Atom
+        /// -: bond
+        /// Z: Atom
+        /// -: bond
+        /// H: Atom
+        ///  </code>
+        ///
+        /// <param name="reactant">The molecule to set the activity</param>
+        // @
+        /// </summary>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)

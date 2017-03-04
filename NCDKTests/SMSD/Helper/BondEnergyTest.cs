@@ -24,20 +24,20 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class BondEnergyTest
     {
         public BondEnergyTest() { }
 
-        /**
-         * Test of getSymbolFirstAtom method, of class BondEnergy.
-         */
+        /// <summary>
+        /// Test of getSymbolFirstAtom method, of class BondEnergy.
+        /// </summary>
         [TestMethod()]
         public void TestGetSymbolFirstAtom()
         {
@@ -47,9 +47,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getSymbolSecondAtom method, of class BondEnergy.
-         */
+        /// <summary>
+        /// Test of getSymbolSecondAtom method, of class BondEnergy.
+        /// </summary>
         [TestMethod()]
         public void TestGetSymbolSecondAtom()
         {
@@ -59,9 +59,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getBondOrder method, of class BondEnergy.
-         */
+        /// <summary>
+        /// Test of getBondOrder method, of class BondEnergy.
+        /// </summary>
         [TestMethod()]
         public void TestGetBondOrder()
         {
@@ -71,9 +71,9 @@ namespace NCDK.SMSD.Helper
             Assert.AreEqual(expResult, result);
         }
 
-        /**
-         * Test of getEnergy method, of class BondEnergy.
-         */
+        /// <summary>
+        /// Test of getEnergy method, of class BondEnergy.
+        /// </summary>
         [TestMethod()]
         public void TestGetEnergy()
         {

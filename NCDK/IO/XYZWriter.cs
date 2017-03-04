@@ -27,15 +27,15 @@ using NCDK.Numerics;
 
 namespace NCDK.IO
 {
-    /**
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author  Bradley A. Smith <bradley@baysmith.com>
-     * @author  J. Daniel Gezelter
-     * @author  Egon Willighagen
-     */
+    /// <summary>
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author  Bradley A. Smith <bradley@baysmith.com>
+    // @author  J. Daniel Gezelter
+    // @author  Egon Willighagen
+    /// </summary>
     public class XYZWriter : DefaultChemObjectWriter
     {
 
@@ -49,11 +49,11 @@ namespace NCDK.IO
             return new string(' ', len - s.Length) + s;
         }
 
-        /**
-        * Constructor.
-        *
-        * @param out the stream to write the XYZ file to.
-        */
+        /// <summary>
+       /// Constructor.
+       ///
+       /// <param name="out">the stream to write the XYZ file to.</param>
+       /// </summary>
         public XYZWriter(TextWriter out_)
         {
             writer = out_;
@@ -79,9 +79,9 @@ namespace NCDK.IO
             SetWriter(new StreamWriter(output));
         }
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();
@@ -112,10 +112,10 @@ namespace NCDK.IO
             }
         }
 
-        /**
-        * writes a single frame in XYZ format to the Writer.
-        * @param mol the Molecule to write
-        */
+        /// <summary>
+       /// writes a single frame in XYZ format to the Writer.
+       /// <param name="mol">the Molecule to write</param>
+       /// </summary>
         public void WriteMolecule(IAtomContainer mol)
         {
 

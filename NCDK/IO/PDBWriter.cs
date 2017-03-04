@@ -29,15 +29,15 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Saves small molecules in a rudimentary PDB format. It does not allow
-     * writing of PDBProtein data structures.
-     *
-     * @author      Gilleain Torrance <gilleain.torrance@gmail.com>
-     * @cdk.module pdb
-     * @cdk.iooptions
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Saves small molecules in a rudimentary PDB format. It does not allow
+    /// writing of PDBProtein data structures.
+    ///
+    // @author      Gilleain Torrance <gilleain.torrance@gmail.com>
+    // @cdk.module pdb
+    // @cdk.iooptions
+    // @cdk.githash
+    /// </summary>
     public class PDBWriter : DefaultChemObjectWriter
     {
 
@@ -58,11 +58,11 @@ namespace NCDK.IO
             : this(new StringWriter())
         { }
 
-        /**
-         * Creates a PDB writer.
-         *
-         * @param out the stream to write the PDB file to.
-         */
+        /// <summary>
+        /// Creates a PDB writer.
+        ///
+        /// <param name="out">the stream to write the PDB file to.</param>
+        /// </summary>
         public PDBWriter(TextWriter out_)
         {
             writer = out_;
@@ -143,11 +143,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Writes a single frame in PDB format to the Writer.
-         *
-         * @param molecule the Molecule to write
-         */
+        /// <summary>
+        /// Writes a single frame in PDB format to the Writer.
+        ///
+        /// <param name="molecule">the Molecule to write</param>
+        /// </summary>
         public void WriteMolecule(IAtomContainer molecule)
         {
 
@@ -298,7 +298,7 @@ namespace NCDK.IO
                 // before saving the atoms, we need to create cartesian coordinates
                 foreach (var atom in crystal.Atoms)
                 {
-                    //            	Debug.WriteLine("PDBWriter: atom -> " + atom);
+                    //                Debug.WriteLine("PDBWriter: atom -> " + atom);
                     // if it got 3D coordinates, use that. If not, try fractional coordinates
                     if (atom.Point3D == null && atom.FractionalPoint3D != null)
                     {
@@ -315,9 +315,9 @@ namespace NCDK.IO
             }
         }
 
-        /**
-          * Flushes the output and closes this object.
-          */
+        /// <summary>
+         /// Flushes the output and closes this object.
+         /// </summary>
         public override void Close()
         {
             writer.Close();

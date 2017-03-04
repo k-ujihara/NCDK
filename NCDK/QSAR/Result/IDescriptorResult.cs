@@ -19,13 +19,13 @@
 
 namespace NCDK.QSAR.Result
 {
-    /**
-     * Object that provides access to the calculated descriptor value.
-     * The concept was taken from JOELib.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Object that provides access to the calculated descriptor value.
+    /// The concept was taken from JOELib.
+    ///
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public interface IDescriptorResult 
     {
         /// <summary>

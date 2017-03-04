@@ -34,28 +34,28 @@ using NCDK.Aromaticities;
 
 namespace NCDK.Smiles
 {
-    /**
-     * Unit tests for converting CDK IAtomContainer's to the grins object module.
-     * For clarity often the SMILES output is verified if a test fails it could be
-     * the Grins output changed and there was not a problem with the conversion.
-     *
-     * @author John May
-     * @cdk.module test-smiles
-     */
+    /// <summary>
+    /// Unit tests for converting CDK IAtomContainer's to the grins object module.
+    /// For clarity often the SMILES output is verified if a test fails it could be
+    /// the Grins output changed and there was not a problem with the conversion.
+    ///
+    // @author John May
+    // @cdk.module test-smiles
+    /// </summary>
     [TestClass()]
     public class CDKToBeamTest
     {
 
         [TestMethod()]
         [ExpectedException(typeof(NullReferenceException))]
-        public void noImplicitHCount()
+        public void NoImplicitHCount()
         {
             new CDKToBeam().ToBeamAtom(new Default.Atom("C"));
         }
 
         [TestMethod()]
         [ExpectedException(typeof(NullReferenceException))]
-        public void noSymbol()
+        public void NoSymbol()
         {
             new CDKToBeam().ToBeamAtom(new Default.Atom());
         }
@@ -256,7 +256,7 @@ namespace NCDK.Smiles
 
 
         [TestMethod()]
-        public void quadrupleBond()
+        public void QuadrupleBond()
         {
             var mock_u = new Mock<IAtom>(); var u = mock_u.Object;
             var mock_v = new Mock<IAtom>(); var v = mock_v.Object;
@@ -291,21 +291,21 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void imidazole_kekule()
+        public void Imidazole_kekule()
         {
             Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), false, true);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
         }
 
         [TestMethod()]
-        public void imidazole()
+        public void Imidazole()
         {
             Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, true);
             Assert.AreEqual("c1[nH]cnc1", g.ToSmiles());
         }
 
         [TestMethod()]
-        public void imidazole_ignoreAromatic()
+        public void Imidazole_ignoreAromatic()
         {
             Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, true, false, true);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
@@ -336,7 +336,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void azanium()
+        public void Azanium()
         {
             IAtomContainer ac = new Default.AtomContainer();
             IAtom a = new Default.Atom("N");
@@ -348,7 +348,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void oxidanide()
+        public void Oxidanide()
         {
             IAtomContainer ac = new Default.AtomContainer();
             IAtom a = new Default.Atom("O");
@@ -360,7 +360,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void oxidandiide()
+        public void Oxidandiide()
         {
             IAtomContainer ac = new Default.AtomContainer();
             IAtom a = new Default.Atom("O");
@@ -371,13 +371,13 @@ namespace NCDK.Smiles
             Assert.AreEqual("[O-2]", g.ToSmiles());
         }
 
-        /**
-         * (E)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
-         */
+        /// <summary>
+        /// (E)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
+        /// </summary>
         [TestMethod()]
-        public void e_1_2_difluoroethene()
+        public void E_1_2_difluoroethene()
         {
 
             IAtomContainer ac = new Default.AtomContainer();
@@ -390,18 +390,18 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
 
             ac.AddStereoElement(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
-					DoubleBondConformation.Opposite));
+                    DoubleBondConformation.Opposite));
             Beam.Graph g = Convert(ac);
             Assert.AreEqual("F/C=C/F", g.ToSmiles());
         }
 
-        /**
-         * (Z)-1,2-difluoroethene
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
-         */
+        /// <summary>
+        /// (Z)-1,2-difluoroethene
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
+        /// </summary>
         [TestMethod()]
-        public void z_1_2_difluoroethene()
+        public void Z_1_2_difluoroethene()
         {
 
             IAtomContainer ac = new Default.AtomContainer();
@@ -419,11 +419,11 @@ namespace NCDK.Smiles
             Assert.AreEqual("F/C=C\\F", g.ToSmiles());
         }
 
-        /**
-         * (2R)-butan-2-ol
-         *
-         * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-         */
+        /// <summary>
+        /// (2R)-butan-2-ol
+        ///
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
+        /// </summary>
         [TestMethod()]
         public void _2R_butan_2_ol()
         {
@@ -450,11 +450,11 @@ namespace NCDK.Smiles
             Assert.AreEqual("CC[C@@](C)(O)[H]", g.ToSmiles());
         }
 
-        /**
-         * (2S)-butan-2-ol
-         *
-         * @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
-         */
+        /// <summary>
+        /// (2S)-butan-2-ol
+        ///
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
+        /// </summary>
         [TestMethod()]
         public void _2S_butan_2_ol()
         {
@@ -482,15 +482,15 @@ namespace NCDK.Smiles
             Assert.AreEqual("CC[C@](C)(O)[H]", g.ToSmiles());
         }
 
-        /**
-         * This is a mock test where we don't want aromatic bonds to have a
-         * configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
-         * example would be porphyrins.
-         *
-         * @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
-         */
+        /// <summary>
+        /// This is a mock test where we don't want aromatic bonds to have a
+        /// configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
+        /// example would be porphyrins.
+        ///
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
+        /// </summary>
         [TestMethod()]
-        public void z_1_2_difluoroethene_aromatic()
+        public void Z_1_2_difluoroethene_aromatic()
         {
 
             IAtomContainer ac = new Default.AtomContainer();
@@ -532,7 +532,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void r_penta_2_3_diene_impl_h()
+        public void R_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new Default.AtomContainer();
             m.Atoms.Add(new Default.Atom("C"));
@@ -553,7 +553,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void s_penta_2_3_diene_impl_h()
+        public void S_penta_2_3_diene_impl_h()
         {
             IAtomContainer m = new Default.AtomContainer();
             m.Atoms.Add(new Default.Atom("C"));
@@ -574,7 +574,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void r_penta_2_3_diene_expl_h()
+        public void R_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new Default.AtomContainer();
             m.Atoms.Add(new Default.Atom("C"));
@@ -606,7 +606,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void s_penta_2_3_diene_expl_h()
+        public void S_penta_2_3_diene_expl_h()
         {
             IAtomContainer m = new Default.AtomContainer();
             m.Atoms.Add(new Default.Atom("C"));

@@ -22,12 +22,12 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     *
-     * @author     Kai Hartmann
-     * @cdk.created    2004-02-20
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    ///
+    // @author     Kai Hartmann
+    // @cdk.created    2004-02-20
+    /// </summary>
     [TestClass()]
     public class AtomContainerSetManipulatorTest : CDKTestCase
     {

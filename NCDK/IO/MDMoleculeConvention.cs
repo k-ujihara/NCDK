@@ -59,10 +59,10 @@ namespace NCDK.IO.CML
         ///         atomArray
         ///         switchingAtom
         ///     residue
-        /// 			id
-        /// 			title
-        /// 			resNumber
-        /// 			atomArray
+        ///             id
+        ///             title
+        ///             resNumber
+        ///             atomArray
         /// ]]>
         /// </summary>
         /// <param name="xpath"></param>
@@ -71,27 +71,27 @@ namespace NCDK.IO.CML
         public override void StartElement(CMLStack xpath, XElement element)
         {
             // <molecule convention="md:mdMolecule"
-            //	          xmlns="http://www.xml-cml.org/schema"
-            //	          xmlns:md="http://www.bioclipse.org/mdmolecule">
-            //	  <atomArray>
-            //	    <atom id="a1" elementType="C"/>
-            //	    <atom id="a2" elementType="C"/>
-            //	  </atomArray>
-            //	  <molecule dictRef="md:chargeGroup" id="cg1">
-            //	    <scalar dictRef="md:cgNumber">5</scalar>
-            //	    <atomArray>
-            //	      <atom ref="a1"/>
-            //	      <atom ref="a2"><scalar dictRef="md:switchingAtom"/></atom>
-            //	    </atomArray>
-            //	  </molecule>
-            //	  <molecule dictRef="md:residue" id="r1" title="resName">
-            //	    <scalar dictRef="md:resNumber">3</scalar>
-            //	    <atomArray>
-            //	      <atom ref="a1"/>
-            //	      <atom ref="a2"/>
-            //	    </atomArray>
-            //	  </molecule>
-            //	</molecule>
+            //              xmlns="http://www.xml-cml.org/schema"
+            //              xmlns:md="http://www.bioclipse.org/mdmolecule">
+            //      <atomArray>
+            //        <atom id="a1" elementType="C"/>
+            //        <atom id="a2" elementType="C"/>
+            //      </atomArray>
+            //      <molecule dictRef="md:chargeGroup" id="cg1">
+            //        <scalar dictRef="md:cgNumber">5</scalar>
+            //        <atomArray>
+            //          <atom ref="a1"/>
+            //          <atom ref="a2"><scalar dictRef="md:switchingAtom"/></atom>
+            //        </atomArray>
+            //      </molecule>
+            //      <molecule dictRef="md:residue" id="r1" title="resName">
+            //        <scalar dictRef="md:resNumber">3</scalar>
+            //        <atomArray>
+            //          <atom ref="a1"/>
+            //          <atom ref="a2"/>
+            //        </atomArray>
+            //      </molecule>
+            //    </molecule>
 
             // let the CMLCore convention deal with things first
 
@@ -100,7 +100,7 @@ namespace NCDK.IO.CML
                 // the copy the parsed content into a new MDMolecule
                 if (element.Attribute(Attribute_convention) != null && element.Attribute(Attribute_convention).Value.Equals("md:mdMolecule"))
                 {
-                    //				Console.Out.WriteLine("creating a MDMolecule");
+                    //                Console.Out.WriteLine("creating a MDMolecule");
                     base.StartElement(xpath, element);
                     currentMolecule = new MDMolecule(currentMolecule);
                 }
@@ -110,12 +110,12 @@ namespace NCDK.IO.CML
                     //If residue or chargeGroup, set up a new one
                     if (DICTREF.Equals("md:chargeGroup"))
                     {
-                        //					Console.Out.WriteLine("Creating a new charge group...");
+                        //                    Console.Out.WriteLine("Creating a new charge group...");
                         currentChargeGroup = new ChargeGroup();
                     }
                     else if (DICTREF.Equals("md:residue"))
                     {
-                        //					Console.Out.WriteLine("Creating a new residue group...");
+                        //                    Console.Out.WriteLine("Creating a new residue group...");
                         currentResidue = new Residue();
                         if (element.Attribute(Attribute_title) != null) currentResidue.Name = element.Attribute(Attribute_title).Value;
                     }
@@ -147,7 +147,7 @@ namespace NCDK.IO.CML
                     {
                         // ok, an atom is referenced; look it up
                         currentAtom = null;
-                        //					Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
+                        //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
                         foreach (var nextAtom in currentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
@@ -172,7 +172,7 @@ namespace NCDK.IO.CML
                     {
                         // ok, an atom is referenced; look it up
                         IAtom referencedAtom = null;
-                        //					Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
+                        //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
                         foreach (var nextAtom in currentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
@@ -211,7 +211,7 @@ namespace NCDK.IO.CML
         {
             if (element.Name.Equals(XName_CML_molecule))
             {
-                //			Console.Out.WriteLine("Ending element mdmolecule");
+                //            Console.Out.WriteLine("Ending element mdmolecule");
                 // add chargeGroup, and then delete them
                 if (currentChargeGroup != null)
                 {
@@ -242,7 +242,7 @@ namespace NCDK.IO.CML
                 }
                 else
                 {
-                    //				Console.Out.WriteLine("OK, that was the last end mdmolecule");
+                    //                Console.Out.WriteLine("OK, that was the last end mdmolecule");
                     base.EndElement(xpath, element);
                 }
             }

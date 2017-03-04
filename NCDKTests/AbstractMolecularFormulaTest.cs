@@ -18,29 +18,26 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IMolecularFormula} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IMolecularFormula} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMolecularFormulaTest : CDKTestCase
     {
         protected abstract IChemObjectBuilder Builder { get; }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount0()
         {
@@ -49,11 +46,11 @@ namespace NCDK
             Assert.AreEqual(0, mf.Count);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount()
         {
@@ -67,11 +64,11 @@ namespace NCDK
             Assert.AreEqual(2, mf.Count);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope()
         {
@@ -87,11 +84,11 @@ namespace NCDK
             Assert.AreEqual(3, mf.Count);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope()
         {
@@ -114,11 +111,11 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope2()
         {
@@ -139,11 +136,11 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope_int()
         {
@@ -166,11 +163,11 @@ namespace NCDK
             //        Assert.AreEqual("H", mf.Isotopes[2].Symbol);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotope_Number_Clone()
         {
@@ -197,11 +194,11 @@ namespace NCDK
             //        Assert.AreEqual("H", cloneFormula.Isotopes[2].Symbol);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope_Occurr()
         {
@@ -220,11 +217,11 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestAdd_IMolecularFormula()
         {
@@ -254,11 +251,11 @@ namespace NCDK
             mf.Add(mf2);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestIsotopes()
         {
@@ -277,11 +274,11 @@ namespace NCDK
             Assert.AreEqual(3, counter);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestContains_IIsotope()
         {
@@ -300,11 +297,11 @@ namespace NCDK
             Assert.IsFalse(mf.Contains(h2));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestInstance_IIsotope()
         {
@@ -338,11 +335,11 @@ namespace NCDK
             Assert.IsFalse(istoIter.MoveNext());
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetCharge()
         {
@@ -358,11 +355,11 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestSetCharge_Double()
         {
@@ -391,11 +388,11 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestCharge_rest()
         {
@@ -412,11 +409,11 @@ namespace NCDK
             Assert.AreEqual(0.0, mf.Charge.Value, 0.001);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestRemoveIsotope_IIsotope()
         {
@@ -436,11 +433,11 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		 *
-		 * @return    The test suite
-		 */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public virtual void TestRemoveAllIsotopes()
         {
@@ -459,12 +456,12 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit. Only test whether the
-		 * MolecularFormula are correctly cloned.
-		 *
-		 * @return    The test suite
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit. Only test whether the
+        /// MolecularFormula are correctly cloned.
+        ///
+        /// <returns>The test suite</returns>
+       /// </summary>
         [TestMethod()]
         public virtual void TestClone()
         {
@@ -477,10 +474,10 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit. Only test whether
-		 * the MolecularFormula are correctly cloned.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit. Only test whether
+        /// the MolecularFormula are correctly cloned.
+       /// </summary>
         [TestMethod()]
         public virtual void TestClone_Isotopes()
         {
@@ -504,9 +501,9 @@ namespace NCDK
             Assert.AreEqual(3, ((IMolecularFormula)clone).Count);
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit.
+       /// </summary>
         [TestMethod()]
         public virtual void TestSetProperty_Object_Object()
         {
@@ -515,9 +512,9 @@ namespace NCDK
             Assert.IsNotNull(mf.GetProperty("blabla"));
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit.
+       /// </summary>
         [TestMethod()]
         public virtual void TestRemoveProperty_Object()
         {
@@ -532,9 +529,9 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit.
+       /// </summary>
         [TestMethod()]
         public virtual void TestGetProperty_Object()
         {
@@ -542,9 +539,9 @@ namespace NCDK
 
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit.
+       /// </summary>
         [TestMethod()]
         public virtual void TestGetProperties()
         {
@@ -554,9 +551,9 @@ namespace NCDK
             Assert.AreEqual(2, mf.GetProperties().Count());
         }
 
-        /**
-		 * A unit test suite for JUnit.
-		*/
+        /// <summary>
+        /// A unit test suite for JUnit.
+       /// </summary>
         [TestMethod()]
         public virtual void TestSetProperties_Map()
         {

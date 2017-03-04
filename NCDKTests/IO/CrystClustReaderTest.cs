@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Diagnostics;
 
+
 namespace NCDK.IO
 {
     /// <summary>
@@ -51,7 +52,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.CrystClust.estron.crystclust";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             CrystClustReader reader = new CrystClustReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
 

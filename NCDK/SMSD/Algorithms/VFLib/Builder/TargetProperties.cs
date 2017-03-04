@@ -27,13 +27,13 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Builder
 {
-    /**
-     * Class for building/storing nodes (atoms) in the graph with atom
-     * query capabilities.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Class for building/storing nodes (atoms) in the graph with atom
+    /// query capabilities.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     [Serializable]
     public class TargetProperties 
     {
@@ -43,10 +43,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         private IDictionary<IAtom, int> atoms = null;
         private IDictionary<int, IAtom> atomsIndex = null;
 
-        /**
-         * @param atom
-         * @return the connectedTargetAtomCountMap
-         */
+        /// <summary>
+        /// <param name="atom">/// <returns>the connectedTargetAtomCountMap</param></returns>
+        /// </summary>
         public int CountNeighbors(IAtom atom)
         {
             if (connectedTargetAtomCountMap == null || !connectedTargetAtomCountMap.ContainsKey(atom))
@@ -57,34 +56,31 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
             return connectedTargetAtomCountMap[atom];
         }
 
-        /**
-         * @param atom
-         * @return the connected Target Atom List
-         */
+        /// <summary>
+        /// <param name="atom">/// <returns>the connected Target Atom List</param></returns>
+        /// </summary>
         public IList<IAtom> GetNeighbors(IAtom atom)
         {
             return connectedTargetAtomListMap[atom];
         }
 
-        /**
-         * @param atom1
-         * @param atom2
-         * @return the map
-         */
+        /// <summary>
+        /// <param name="atom1">/// @param atom2</param>
+        /// <returns>the map</returns>
+        /// </summary>
         public IBond GetBond(IAtom atom1, IAtom atom2)
         {
             return map[atoms[atom2]][atoms[atom1]];
         }
 
-        /**
-         * @return atom count
-         */
+        /// <summary>
+        /// <returns>atom count</returns>
+        /// </summary>
         public int AtomCount => atoms.Count;
 
-        /**
-         *
-         * @param container
-         */
+        /// <summary>
+        ///
+        /// <param name="container">/// </summary></param>
         public TargetProperties(IAtomContainer container)
         {
             int i = 0;

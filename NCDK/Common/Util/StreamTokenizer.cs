@@ -378,11 +378,11 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Determines whether or not the tokenizer recognizes C-style comments.
-        /// If the flag argument is <code>true</code>, this stream tokenizer
+        /// If the flag argument is <see langword="true"/>, this stream tokenizer
         /// recognizes C-style comments. All text between successive
         /// occurrences of <code>/*</code> and <code>*/</code> are discarded.
         /// <para>
-        /// If the flag argument is <code>false</code>, then C-style comments
+        /// If the flag argument is <see langword="false"/>, then C-style comments
         /// are not treated specially.</para>
         /// </summary>
         public bool SlashStarComments
@@ -393,7 +393,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Determines whether or not the tokenizer recognizes C++-style comments.
-        /// If the flag argument is <code>true</code>, this stream tokenizer
+        /// If the flag argument is <see langword="true"/>, this stream tokenizer
         /// recognizes C++-style comments. Any occurrence of two consecutive
         /// slash characters (<code>'/'</code>) is treated as the beginning of
         /// a comment that extends to the end of the line.
@@ -409,13 +409,13 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Determines whether or not word token are automatically lowercased.
-        /// If the flag argument is <code>true</code>, then the value in the
+        /// If the flag argument is <see langword="true"/>, then the value in the
         /// <see cref="StringValue"/> field is lowercased whenever a word token is
         /// returned (the <see cref="TType"/> field has the
         /// value <see cref="TT_WORD"/> by the <see cref="NextToken"/> method
         /// of this tokenizer.
         /// <para>
-        /// If the flag argument is <code>false</code>, then the
+        /// If the flag argument is <see langword="false"/>, then the
         /// <see cref="StringValue"/> field is not modified.</para>
         /// </summary>
         public bool LowerCaseMode

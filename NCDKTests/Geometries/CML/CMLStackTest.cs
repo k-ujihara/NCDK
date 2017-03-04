@@ -25,11 +25,11 @@ using System;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * TestCase for the CMLStack class.
-     *
-     * @cdk.module test-io
-     */
+    /// <summary>
+    /// TestCase for the CMLStack class.
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public class CMLStackTest : CDKTestCase
     {

@@ -28,6 +28,7 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Smiles.SMARTS.Parser;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,28 +36,22 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-    // Determine the MMFF symbolic atom types {@cdk.cite Halgren96a}. The matcher uses SMARTS patterns
-    // to assign preliminary symbolic types. The types are then adjusted considering aromaticity {@link
-    // MmffAromaticTypeMapping}. The assigned atom types validate completely with the validation suite
-    // (http://server.ccl.net/cca/data/MMFF94/).
-     *
-    // <pre>{@code
-    // MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
-     *
-    // foreach (var container in containers) {
-    //     string[] symbs = mmffAtomTypes.SymbolicTypes(container);
-    // }
-    // }</pre>
-     *
+    /// <summary>
+    /// Determine the MMFF symbolic atom types {@cdk.cite Halgren96a}. The matcher uses SMARTS patterns
+    /// to assign preliminary symbolic types. The types are then adjusted considering aromaticity
+    /// <see cref="MmffAromaticTypeMapping"/>. The assigned atom types validate completely with the validation suite
+    /// (http://server.ccl.net/cca/data/MMFF94/).
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
+    /// foreach (var container in containers) {
+    ///     string[] symbs = mmffAtomTypes.SymbolicTypes(container);
+    /// }
+    /// </code></example>
     // @author John May
-     */
-#if TEST
-    public
-#endif
-    sealed class MmffAtomTypeMatcher
+    internal sealed class MmffAtomTypeMatcher
     {
-
         /// <summary>Aromatic types are assigned by this class.</summary>
         private readonly MmffAromaticTypeMapping aromaticTypes = new MmffAromaticTypeMapping();
 
@@ -66,13 +61,13 @@ namespace NCDK.ForceField.MMFF
         /// <summary>Mapping of parent to hydrogen symbols.</summary>
         private readonly IDictionary<string, string> hydrogenMap;
 
-        /**
-        // Create a new MMFF atom type matcher, definitions are loaded at instantiation.
-         */
+        /// <summary>
+        /// Create a new MMFF atom type matcher, definitions are loaded at instantiation.
+        /// </summary>
         public MmffAtomTypeMatcher()
         {
-            Stream smaIn = GetType().Assembly.GetManifestResourceStream(GetType(), "MMFFSYMB.sma");
-            Stream hdefIn = GetType().Assembly.GetManifestResourceStream(GetType(), "mmff-symb-mapping.tsv");
+            Stream smaIn = ResourceLoader.GetAsStream(GetType(), "MMFFSYMB.sma");
+            Stream hdefIn = ResourceLoader.GetAsStream(GetType(), "mmff-symb-mapping.tsv");
 
             try
             {
@@ -81,8 +76,7 @@ namespace NCDK.ForceField.MMFF
             }
             catch (IOException e)
             {
-                throw new ApplicationException("Atom type definitions for MMFF94 Atom Types could not be loaded: "
-                        + e.Message);
+                throw new ApplicationException($"Atom type definitions for MMFF94 Atom Types could not be loaded: {e.Message}");
             }
             finally
             {
@@ -91,12 +85,11 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Obtain the MMFF symbolic types to the atoms of the provided structure.
-         *
-        // @param container structure representation
-        // @return MMFF symbolic types for each atom index
-         */
+        /// <summary>
+        /// Obtain the MMFF symbolic types to the atoms of the provided structure.
+        /// </summary>
+        /// <param name="container">container structure representation</param>
+        /// <returns>MMFF symbolic types for each atom index</returns>
         public string[] SymbolicTypes(IAtomContainer container)
         {
             EdgeToBondMap bonds = EdgeToBondMap.WithSpaceFor(container);
@@ -104,18 +97,16 @@ namespace NCDK.ForceField.MMFF
             return SymbolicTypes(container, graph, bonds, new HashSet<IBond>());
         }
 
-        /**
-        // Obtain the MMFF symbolic types to the atoms of the provided structure.
-         *
-        // @param container structure representation
-        // @param graph     adj list data structure
-        // @param bonds     bond lookup map
-        // @param mmffArom  flags which bonds are aromatic by MMFF model
-        // @return MMFF symbolic types for each atom index
-         */
+        /// <summary>
+        /// Obtain the MMFF symbolic types to the atoms of the provided structure.
+        /// </summary>
+        /// <param name="container">structure representation</param>
+        /// <param name="graph">adj list data structure</param>
+        /// <param name="bonds">bond lookup map</param>
+        /// <param name="mmffArom">flags which bonds are aromatic by MMFF model</param>
+        /// <returns>MMFF symbolic types for each atom index</returns>
         public string[] SymbolicTypes(IAtomContainer container, int[][] graph, EdgeToBondMap bonds, ISet<IBond> mmffArom)
         {
-
             // Array of symbolic types, MMFF refers to these as 'SYMB' and the numeric
             // value a s 'TYPE'.
             string[] symbs = new string[container.Atoms.Count];
@@ -138,14 +129,13 @@ namespace NCDK.ForceField.MMFF
             return symbs;
         }
 
-        /**
-        // Special case, 'NCN+' matches entries that the validation suite say should actually be 'NC=N'.
-        // We can achieve 100% compliance by checking if NCN+ is still next to CNN+ or CIM+ after
-        // aromatic types are assigned
-         *
-        // @param symbs symbolic types
-        // @param graph adjacency list graph
-         */
+        /// <summary>
+        /// Special case, 'NCN+' matches entries that the validation suite say should actually be 'NC=N'.
+        /// We can achieve 100% compliance by checking if NCN+ is still next to CNN+ or CIM+ after
+        /// aromatic types are assigned
+        /// </summary>
+        /// <param name="symbs">symbolic types</param>
+        /// <param name="graph">adjacency list graph</param>
         private void FixNCNTypes(string[] symbs, int[][] graph)
         {
             for (int v = 0; v < graph.Length; v++)
@@ -165,14 +155,13 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // preconditions, 1. all hydrogens must be present as explicit nodes in the connection table.
-        // this requires that each atom explicitly states it has exactly 0 hydrogens 2. the SMARTS treat
-        // all atoms as aliphatic and therefore no aromatic flags should be set, we could remove this
-        // but ideally we don't want to modify the structure
-         *
-        // @param container input structure representation
-         */
+        /// <summary>
+        /// preconditions, 1. all hydrogens must be present as explicit nodes in the connection table.
+        /// this requires that each atom explicitly states it has exactly 0 hydrogens 2. the SMARTS treat
+        /// all atoms as aliphatic and therefore no aromatic flags should be set, we could remove this
+        /// but ideally we don't want to modify the structure
+        /// </summary>
+        /// <param name="container">input structure representation</param>
         private void CheckPreconditions(IAtomContainer container)
         {
             foreach (var atom in container.Atoms)
@@ -184,13 +173,12 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Hydrogen types, assigned based on the MMFFHDEF.PAR parent associations.
-         *
-        // @param container input structure representation
-        // @param symbs     symbolic atom types
-        // @param graph     adjacency list graph
-         */
+        /// <summary>
+        /// Hydrogen types, assigned based on the MMFFHDEF.PAR parent associations.
+        /// </summary>
+        /// <param name="container">input structure representation</param>
+        /// <param name="symbs">symbolic atom types</param>
+        /// <param name="graph">adjacency list graph</param>
         private void AssignHydrogenTypes(IAtomContainer container, string[] symbs, int[][] graph)
         {
             for (int v = 0; v < graph.Length; v++)
@@ -204,12 +192,11 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Preliminary atom types are assigned using SMARTS definitions.
-         *
-        // @param container input structure representation
-        // @param symbs     symbolic atom types
-         */
+        /// <summary>
+        /// Preliminary atom types are assigned using SMARTS definitions.
+        /// </summary>
+        /// <param name="container">input structure representation</param>
+        /// <param name="symbs">symbolic atom types</param>
         private void AssignPreliminaryTypes(IAtomContainer container, string[] symbs)
         {
             SmartsMatchers.Prepare(container, true);
@@ -225,19 +212,14 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Internal - load the SMARTS patterns for each atom type from MMFFSYMB.sma.
-         *
-        // @param smaIn input stream of MMFFSYMB.sma
-        // @return array of patterns
-        // @throws IOException
-         */
-#if TEST
-            public
-#endif
-        static AtomTypePattern[] LoadPatterns(Stream smaIn)
+        /// <summary>
+        /// Internal - load the SMARTS patterns for each atom type from MMFFSYMB.sma.
+        /// </summary>
+        /// <param name="smaIn">input stream of MMFFSYMB.sma</param>
+        /// <returns>array of patterns</returns>
+        /// <exception cref="IOException"></exception>
+        internal static AtomTypePattern[] LoadPatterns(Stream smaIn)
         {
-
             List<AtomTypePattern> matchers = new List<AtomTypePattern>();
 
             using (var br = new StreamReader(smaIn))
@@ -269,17 +251,15 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Hydrogen atom types are assigned based on their parent types. The mmff-symb-mapping file
-        // provides this mapping.
-         *
-        // @param hdefIn input stream of mmff-symb-mapping.tsv
-        // @return mapping of parent to hydrogen definitions
-        // @throws IOException
-         */
+        /// <summary>
+        /// Hydrogen atom types are assigned based on their parent types. The mmff-symb-mapping file
+        /// provides this mapping.
+        /// </summary>
+        /// <param name="hdefIn">input stream of mmff-symb-mapping.tsv</param>
+        /// <returns>mapping of parent to hydrogen definitions</returns>
+        /// <exception cref="IOException"></exception>
         private IDictionary<string, string> LoadHydrogenDefinitions(Stream hdefIn)
         {
-
             // maps of symbolic atom types to hydrogen atom types and internal types
             IDictionary<string, string> hdefs = new Dictionary<string, string>(200);
 
@@ -300,23 +280,21 @@ namespace NCDK.ForceField.MMFF
             return hdefs;
         }
 
-        /**
-        // A line is skipped if it is empty or is a comment. MMFF files use '*' to mark comments and '$'
-        // for end of file.
-         *
-        // @param line an input line
-        // @return whether to skip this line
-         */
+        /// <summary>
+        /// A line is skipped if it is empty or is a comment. MMFF files use '*' to mark comments and '$'
+        /// for end of file.
+        /// </summary>
+        /// <param name="line">an input line</param>
+        /// <returns>whether to skip this line</returns>
         private static bool SkipLine(string line)
         {
             return line.Length == 0 || line[0] == '*' || line[0] == '$';
         }
 
-        /**
-        // Safely close an input stream.
-         *
-        // @param in stream to close
-         */
+        /// <summary>
+        /// Safely close an input stream.
+        /// </summary>
+        /// <param name="in_">stream to close</param>
         private static void Close(Stream in_)
         {
             try
@@ -329,40 +307,32 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // A class that associates a pattern instance with the MMFF symbolic type. Using SMARTS the
-        // implied type is at index 0. The matching could be improved in future to skip subgraph
-        // matching of all typed atoms.
-         */
-#if TEST
-        public
-#else
-        private
-#endif
-        sealed class AtomTypePattern
+        /// <summary>
+        /// A class that associates a pattern instance with the MMFF symbolic type. Using SMARTS the
+        /// implied type is at index 0. The matching could be improved in future to skip subgraph
+        /// matching of all typed atoms.
+        /// </summary>
+        internal sealed class AtomTypePattern
         {
-
             private readonly Pattern pattern;
             public readonly string symb;
 
-            /**
-            // Create the atom type pattern.
-             *
-            // @param pattern substructure pattern
-            // @param symb    MMFF symbolic type
-             */
+            /// <summary>
+            /// Create the atom type pattern.
+            /// </summary>
+            /// <param name="pattern">substructure pattern</param>
+            /// <param name="symb">MMFF symbolic type</param>
             public AtomTypePattern(Pattern pattern, string symb)
             {
                 this.pattern = pattern;
                 this.symb = symb;
             }
 
-            /**
-            // Find the atoms that match this atom type.
-             *
-            // @param container structure representation
-            // @return indices of atoms that matched this type
-             */
+            /// <summary>
+            /// Find the atoms that match this atom type.
+            /// </summary>
+            /// <param name="container">container structure representation</param>
+            /// <returns>indices of atoms that matched this type</returns>
             public ISet<int> Matches(IAtomContainer container)
             {
                 var matchedIdx = new HashSet<int>();
@@ -375,4 +345,3 @@ namespace NCDK.ForceField.MMFF
         }
     }
 }
-

@@ -25,27 +25,27 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
-    /**
-      * Compares elements based on the order commonly used in
-      * molecular formula. Order:
-      * C, H, other elements in alphabetic order.
-      *
-      * @cdk.module standard
-     * @cdk.githash
-      *
-      * @cdk.keyword element, sorting
-      */
+    /// <summary>
+     /// Compares elements based on the order commonly used in
+     /// molecular formula. Order:
+     /// C, H, other elements in alphabetic order.
+     ///
+     // @cdk.module standard
+    // @cdk.githash
+     ///
+     // @cdk.keyword element, sorting
+     /// </summary>
     public class ElementComparator : IComparer<string>
     {
 
         private const string H_ELEMENT_SYMBOL = "H";
         private const string C_ELEMENT_SYMBOL = "C";
 
-        /**
-         * Returns a negative if o1 comes before o2 in a molecular formula,
-         * returns zero if they are identical, and positive if o1 comes
-         * after o2 in the formula.
-         */
+        /// <summary>
+        /// Returns a negative if o1 comes before o2 in a molecular formula,
+        /// returns zero if they are identical, and positive if o1 comes
+        /// after o2 in the formula.
+        /// </summary>
 
         public int Compare(string o1, string o2)
         {

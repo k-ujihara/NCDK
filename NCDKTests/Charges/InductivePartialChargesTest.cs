@@ -22,14 +22,14 @@ using NCDK.Default;
 
 namespace NCDK.Charges
 {
-    /**
-     *  TestSuite that runs a test for the MMFF94PartialCharges.
-     *
-     * @cdk.module test-charges
-     *
-     *@author        mfe4
-     *@cdk.created       2004-11-04
-     */
+    /// <summary>
+    ///  TestSuite that runs a test for the MMFF94PartialCharges.
+    ///
+    // @cdk.module test-charges
+    ///
+    ///@author        mfe4
+    ///@cdk.created       2004-11-04
+    /// </summary>
     [TestClass()]
     public class InductivePartialChargesTest : CDKTestCase
     {
@@ -67,10 +67,10 @@ namespace NCDK.Charges
             mol.Bonds.Add(bond4);
         }
 
-        /**
-         *  A unit test for JUnit with beta-amino-acetic-acid
-         *
-         */
+        /// <summary>
+        ///  A unit test for JUnit with beta-amino-acetic-acid
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestCalculateCharges_IAtomContainer()
         {
@@ -117,10 +117,10 @@ namespace NCDK.Charges
             }
         }
 
-        /**
-         *  A unit test for JUnit with beta-amino-acetic-acid
-         *
-         */
+        /// <summary>
+        ///  A unit test for JUnit with beta-amino-acetic-acid
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestInductivePartialCharges()
         {

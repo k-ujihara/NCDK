@@ -24,23 +24,21 @@ using System.Linq;
 
 namespace NCDK.Geometries.Volume
 {
-    /**
-     * Calculates the Van der Waals volume using the method proposed
-     * in {@cdk.cite Zhao2003}. The method is limited to molecules
-     * with the following elements: H, C, N, O, F, Cl, Br, I,
-     * P, S, As, B, Si, Se, and Te.
-     *
-     * @cdk.module   standard
-     * @cdk.keyword  volume, molecular
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Calculates the Van der Waals volume using the method proposed
+    /// in {@cdk.cite Zhao2003}. The method is limited to molecules
+    /// with the following elements: H, C, N, O, F, Cl, Br, I,
+    /// P, S, As, B, Si, Se, and Te.
+    /// </summary>
+    // @cdk.module   standard
+    // @cdk.keyword  volume, molecular
+    // @cdk.githash
     public class VABCVolume
     {
-        /**
-         * Values are taken from the spreadsheet where possible. The values in the
-         * paper are imprecise.
-         */
-        //@SuppressWarnings("serial")
+        /// <summary>
+        /// Values are taken from the spreadsheet where possible. The values in the
+        /// paper are imprecise.
+        /// </summary>
         private static IDictionary<string, double> bondiiVolumes = new Dictionary<string, double>() {
                 { "H", 7.2382293504 },
                 { "C", 20.5795259250667 },
@@ -54,19 +52,18 @@ namespace NCDK.Geometries.Volume
                 { "P", 24.4290240576 },
                 { "As", 26.5218483279667 },
                 { "B", 40.48 },  // value missing from spreadsheet; taken from paper
-				{ "Se", 28.7309115245333 },
+                { "Se", 28.7309115245333 },
                 { "Si", 38.7923854248 },
             };
 
         private static AtomTypeFactory atomTypeList = null;
 
-        /**
-         * Calculates the volume for the given <see cref="IAtomContainer"/>. This methods assumes
-         * that atom types have been perceived.
-         *
-         * @param  molecule <see cref="IAtomContainer"/> to calculate the volume of.
-         * @return          the volume in cubic &Aring;ngstr&ouml;m.
-         */
+        /// <summary>
+        /// Calculates the volume for the given <see cref="IAtomContainer"/>. This methods assumes
+        /// that atom types have been perceived.
+        /// </summary>
+        /// <param name="molecule"><see cref="IAtomContainer"/> to calculate the volume of.</param>
+        /// <returns>the volume in cubic Ångstrom.</returns>
         public static double Calculate(IAtomContainer molecule)
         {
             if (atomTypeList == null)

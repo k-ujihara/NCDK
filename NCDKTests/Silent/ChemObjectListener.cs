@@ -21,11 +21,11 @@ using System;
 
 namespace NCDK.Silent
 {
-    /**
-     * Helper class to test the functionality of the {@link ChemObjectListener}.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Helper class to test the functionality of the {@link ChemObjectListener}.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     public class ChemObjectListener : IChemObjectListener
     {
         public bool Changed { get; set; }

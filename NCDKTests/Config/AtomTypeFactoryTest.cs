@@ -26,7 +26,7 @@ namespace NCDK.Config
         [ClassInitialize()]
         public static void Initialize(TestContext context)
         {
-            using (var ins = typeof(AtomTypeFactory).Assembly.GetManifestResourceStream("NCDK.IO.CML.Data.cml25b1.xsd"))
+            using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, "NCDK.IO.CML.Data.cml25b1.xsd"))
             {
                 tmpCMLSchema = CopyFileToTmp("cml2.5.b1", ".xsd", ins, null, null);
             }
@@ -58,7 +58,7 @@ namespace NCDK.Config
         public virtual void TestGetInstance_InputStream_String_IChemObjectBuilder()
         {
             var configFile = "NCDK.Config.Data.structgen_atomtypes.xml";
-            var ins = typeof(AtomTypeFactory).Assembly.GetManifestResourceStream(configFile);
+            var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory), configFile);
             AtomTypeFactory atf = AtomTypeFactory.GetInstance(ins, "xml", new ChemObject().Builder);
             Assert.IsNotNull(atf);
             Assert.AreNotSame(0, atf.Count);
@@ -211,25 +211,25 @@ namespace NCDK.Config
             Assert.AreEqual("C", atom.Symbol);
         }
 
-        /**
-         * Test reading from a XML config file with content like:
-         * <pre>
-         *   <atomType id="C">
-         *    <!-- for example in CC-->
-         *    <atom elementType="C" formalCharge="0">
-         *      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
-         *      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
-         *      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
-         *      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
-         *    </atom>
-         *    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
-         *    <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
-         *    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">[CSP]-[0-4][-]?+;[A-Za-z\+\-&amp;&amp;[^=%]]{0,6}[(].*+</scalar>
-         *  </atomType>
-         * </pre>
-         *
-         * @ if the atom typ info cannot be loaded
-         */
+        /// <summary>
+        /// Test reading from a XML config file with content like:
+        /// <pre>
+        ///   <atomType id="C">
+        ///    <!-- for example in CC-->
+        ///    <atom elementType="C" formalCharge="0">
+        ///      <scalar dataType="xsd:double" dictRef="cdk:maxBondOrder">1.0</scalar>
+        ///      <scalar dataType="xsd:double" dictRef="cdk:bondOrderSum">4.0</scalar>
+        ///      <scalar dataType="xsd:integer" dictRef="cdk:formalNeighbourCount">4</scalar>
+        ///      <scalar dataType="xsd:integer" dictRef="cdk:valency">4</scalar>
+        ///    </atom>
+        ///    <scalar dataType="xsd:string" dictRef="cdk:hybridization">sp3</scalar>
+        ///    <scalar dataType="xsd:string" dictRef="cdk:DA">-</scalar>
+        ///    <scalar dataType="xsd:string" dictRef="cdk:sphericalMatcher">[CSP]-[0-4][-]?+;[A-Za-z\+\-&amp;&amp;[^=%]]{0,6}[(].*+</scalar>
+        ///  </atomType>
+        /// </pre>
+        ///
+        // @ if the atom typ info cannot be loaded
+        /// </summary>
         [TestMethod()]
         public virtual void TestGetAtomTypeFromMM2()
         {
@@ -301,7 +301,7 @@ namespace NCDK.Config
             ///加情報:セキュリティ上の理由から、DTD はこの XML ドキュメントでは使用できません。
             ///DTD 処理を有効にするには、XmlReaderSettings の DtdProcessing プロパティを Parse
             ///に設定し、XmlReader.Create メソッドにその設定を渡してください。
-            using (var ins = typeof(AtomTypeFactory).Assembly.GetManifestResourceStream(atomTypeList))
+            using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, atomTypeList))
             {
                 var tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema.FullName).AbsolutePath);
 

@@ -22,11 +22,11 @@ using NCDK.Numerics;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of <see cref="IChemObjectBuilder"/> implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IChemObjectBuilder"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractChemObjectBuilderTest : CDKTestCase
     {

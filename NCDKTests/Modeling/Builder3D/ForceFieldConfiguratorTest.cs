@@ -151,7 +151,7 @@ namespace NCDK.Modeling.Builder3D
             ffc.SetForceFieldConfigurator("mmff94", builder);
             IAtom amideN = urea.Atoms[0];
             ffc.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(urea, amideN, 3), false);
-            //		Console.Error.WriteLine(amideN.AtomTypeName);
+            //        Console.Error.WriteLine(amideN.AtomTypeName);
             Assert.AreEqual("NC=O", amideN.AtomTypeName);
         }
 
@@ -201,7 +201,7 @@ namespace NCDK.Modeling.Builder3D
             IAtom amideN = bugmol.Atoms[11];
             forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3),
                     false);
-            //		Console.Error.WriteLine(amideN.AtomTypeName);
+            //        Console.Error.WriteLine(amideN.AtomTypeName);
             Assert.AreEqual("NC=O", amideN.AtomTypeName);
         }
 
@@ -218,7 +218,7 @@ namespace NCDK.Modeling.Builder3D
             IAtom amideN = bugmol.Atoms[2];
             forceFieldConfigurator.ConfigureMMFF94BasedAtom(amideN, new HOSECodeGenerator().GetHOSECode(bugmol, amideN, 3),
                     false);
-            //		Console.Error.WriteLine(amideN.AtomTypeName);
+            //        Console.Error.WriteLine(amideN.AtomTypeName);
             Assert.AreEqual("NO3", amideN.AtomTypeName);
         }
 

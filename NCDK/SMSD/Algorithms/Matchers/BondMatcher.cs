@@ -23,12 +23,12 @@
  */
 namespace NCDK.SMSD.Algorithms.Matchers
 {
-    /**
-     * Interface for the BondMatcher (bonds) in graph.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Interface for the BondMatcher (bonds) in graph.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public interface BondMatcher
     {
         bool Matches(IAtomContainer container, IBond atom);

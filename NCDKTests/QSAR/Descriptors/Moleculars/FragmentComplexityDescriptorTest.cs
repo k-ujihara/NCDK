@@ -4,6 +4,7 @@ using NCDK.Fragment;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 
+
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     // @author      chhoppe from EUROSCREEN
@@ -22,7 +23,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             IMolecularDescriptor Descriptor = new FragmentComplexityDescriptor();
             string filename = "NCDK.Data.MDL.murckoTest1.mol";
             //Console.Out.WriteLine("\nFragmentComplexityTest: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MurckoFragmenter gf = new MurckoFragmenter();
             double Complexity = 0;
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
@@ -43,7 +44,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             IMolecularDescriptor Descriptor = new FragmentComplexityDescriptor();
             string filename = "NCDK.Data.MDL.murckoTest10.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MurckoFragmenter gf = new MurckoFragmenter();
             double Complexity = 0;
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);

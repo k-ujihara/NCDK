@@ -26,11 +26,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @author John May
-     * @cdk.module test-smarts
-     */
-	 [TestClass()]
+    /// <summary>
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
+     [TestClass()]
     public class UllmannSubstructureTest : SubstructureTest
     {
         protected override Pattern Create(IAtomContainer container)

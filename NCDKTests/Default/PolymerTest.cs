@@ -21,23 +21,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * TestCase for the Polymer class.
-     *
-     * @author      Edgar Luttmann <edgar@uni-paderborn.de>
-     * @author      Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.created 2001-08-09
-     * @cdk.module  test-data
-     */
-	[TestClass()]
+    /// <summary>
+    /// TestCase for the Polymer class.
+    ///
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.created 2001-08-09
+    // @cdk.module  test-data
+    /// </summary>
+    [TestClass()]
     public class PolymerTest : AbstractPolymerTest
     {
         public override IChemObject NewChemObject()
@@ -53,12 +49,12 @@ namespace NCDK.Default
             Assert.AreEqual(oPolymer.GetMonomerMap().Count(), 0);
         }
 
-        /**
-         * A clone must deep clone everything, so that after the clone, operations
-         * on the original do not modify the clone.
-         *
-         * @cdk.bug 2454890
-         */
+        /// <summary>
+        /// A clone must deep clone everything, so that after the clone, operations
+        /// on the original do not modify the clone.
+        ///
+        // @cdk.bug 2454890
+        /// </summary>
         [TestMethod()]
         public virtual void TestPolymerClone()
         {
@@ -86,9 +82,9 @@ namespace NCDK.Default
             Assert.AreEqual(2, clone.Atoms.Count);
         }
 
-        /**
-         * @cdk.bug  2454890
-         */
+        /// <summary>
+        // @cdk.bug  2454890
+        /// </summary>
         [TestMethod()]
         public virtual void TestPolymerClone2()
         {

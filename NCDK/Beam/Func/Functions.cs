@@ -7,10 +7,9 @@ namespace NCDK.Beam
     /// <summary>
     /// Collection of utilities for transforming chemical graphs.
     /// </summary>
-    /// <author>John May</author>
+    // @author John May
     public sealed class Functions
     {
-
         // convert to atom-based double-bond configurations
         private static readonly ToTrigonalTopology ttt = new ToTrigonalTopology();
 
@@ -39,11 +38,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Randomise the atom Order of the provided chemical graph.
-        ///
-        /// <param name="g">chemical graph</param>
-        /// <returns>a copy of the original graph with the Order of the atoms</returns>
-        ///         randomised
         /// </summary>
+        /// <param name="g">chemical graph</param>
+        /// <returns>a copy of the original graph with the Order of the atoms randomised</returns>
         public static Graph Randomise(Graph g)
         {
             return g.Permute(Random(g.Order));
@@ -51,11 +48,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Reverse the atom Order of the provided chemical graph.
-        ///
-        /// <param name="g">chemical graph</param>
-        /// <returns>a copy of the original graph with the Order of the atoms</returns>
-        ///         reversed
         /// </summary>
+        /// <param name="g">chemical graph</param>
+        /// <returns>a copy of the original graph with the Order of the atoms reversed</returns>
         public static Graph Reverse(Graph g)
         {
             return g.Permute(Reverse(g.Order));
@@ -64,11 +59,10 @@ namespace NCDK.Beam
         /// <summary>
         /// Convert any directional bond based stereo configuration to atom-based
         /// specification.
-        ///
-        /// <param name="g">chemical graph graph</param>
-        /// <returns>a copy of the original graph but with directional bonds removed</returns>
-        ///         and atom-based double-bond stereo configruation.
         /// </summary>
+        /// <param name="g">chemical graph graph</param>
+        /// <returns>a copy of the original graph but with directional bonds removed
+        ///         and atom-based double-bond stereo configruation.</returns>
         public static Graph AtomBasedDBStereo(Graph g)
         {
             return eti.Apply(ttt.Apply(ite.Apply(g)));
@@ -77,11 +71,10 @@ namespace NCDK.Beam
         /// <summary>
         /// Convert a graph with atom-based double-bond stereo configuration to
         /// bond-based specification (direction Up and Down bonds).
-        ///
-        /// <param name="g">chemical graph graph</param>
-        /// <returns>a copy of the original graph but with bond-based</returns>
-        ///         stereo-chemistry
         /// </summary>
+        /// <param name="g">chemical graph graph</param>
+        /// <returns>a copy of the original graph but with bond-based
+        ///         stereo-chemistry</returns>
         public static Graph BondBasedDBStereo(Graph g)
         {
             return eti.Apply(ftt.Apply(ite.Apply(g)));
@@ -90,10 +83,9 @@ namespace NCDK.Beam
         /// <summary>
         /// Expand a graph with organic subsets to one with specified atom
         /// properties.
-        ///
+        /// </summary>
         /// <param name="g">a chemical graph</param>
         /// <returns>the chemical graph expanded</returns>
-        /// </summary>
         public static Graph Expand(Graph g)
         {
             return eti.Apply(fsa.Apply(ite.Apply(g)));
@@ -102,10 +94,9 @@ namespace NCDK.Beam
         /// <summary>
         /// Collapse a graph with specified atom properties to one with organic
         /// subset atoms.
-        ///
+        /// </summary>
         /// <param name="g">a chemical graph</param>
         /// <returns>the chemical graph expanded</returns>
-        /// </summary>
         public static Graph Collapse(Graph g)
         {
             return eti.Apply(tsa.Apply(ite.Apply(g)));
@@ -147,17 +138,13 @@ namespace NCDK.Beam
         /// Apply the labeling {@code labels[]} to the graph {@code g}. The labels
         /// are converted to a permutation which is then applied to the Graph and
         /// rearrange it's vertex Order.
-        ///
-        /// <param name="g">     the graph to permute</param>
-        /// <param name="labels">the vertex labels - for example from a cannibalisation</param>
-        ///               algorithm
-        /// <returns>a cpy of the original graph with it's vertices permuted by the</returns>
-        ///         labelling
         /// </summary>
+        /// <param name="g">the graph to permute</param>
+        /// <param name="labels">the vertex labels - for example from a cannibalisation algorithm</param>
+        /// <returns>a copy of the original graph with it's vertices permuted by the labelling</returns>
         public static Graph Canonicalize(Graph g,
                                       long[] labels)
         {
-
             int[] is_ = new int[g.Order];
 
             for (int i = 0; i < is_.Length; i++)

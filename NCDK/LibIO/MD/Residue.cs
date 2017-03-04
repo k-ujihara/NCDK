@@ -43,9 +43,9 @@ namespace NCDK.LibIO.MD
         /// </summary>
         public Residue() { }
 
-        /**
-         * Constructor to create a Residue based on an AC, a number, and a MDMolecule.
-         */
+        /// <summary>
+        /// Constructor to create a Residue based on an AC, a number, and a MDMolecule.
+        /// </summary>
         public Residue(IAtomContainer container, int number, MDMolecule parentMolecule)
                 : base(container)
         {

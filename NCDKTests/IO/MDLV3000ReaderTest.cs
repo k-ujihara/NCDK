@@ -29,14 +29,14 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the reading MDL V3000 mol files using one test file.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.MDLReader
-     * @see org.openscience.cdk.io.SDFReaderTest
-     */
+    /// <summary>
+    /// TestCase for the reading MDL V3000 mol files using one test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.MDLReader
+    // @see org.openscience.cdk.io.SDFReaderTest
+    /// </summary>
     [TestClass()]
     public class MDLV3000ReaderTest : SimpleChemObjectReaderTest
     {
@@ -51,15 +51,15 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(AtomContainer)));
         }
 
-        /**
-         * @cdk.bug 1571207
-         */
+        /// <summary>
+        // @cdk.bug 1571207
+        /// </summary>
         [TestMethod()]
         public void TestBug1571207()
         {
             string filename = "NCDK.Data.MDL.molV3000.mol";
             Trace.TraceInformation("Testing: " + filename);
-            using (var ins = this.GetType().Assembly.GetManifestResourceStream(filename))
+            using (var ins = ResourceLoader.GetAsStream(filename))
             {
                 MDLV3000Reader reader = new MDLV3000Reader(ins);
                 IAtomContainer m = reader.Read(new AtomContainer());
@@ -98,7 +98,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestPseudoAtomLabels()
         {
-            using (Stream ins = this.GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
+            using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatomsv3000.mol"))
             using (MDLV3000Reader reader = new MDLV3000Reader(ins))
             {
                 IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();

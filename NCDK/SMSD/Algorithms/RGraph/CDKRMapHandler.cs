@@ -28,30 +28,27 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     * This algorithm derives from the algorithm described in
-     * [Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.,
-     * Machine Learning of generic reactions:
-     * 3. An efficient algorithm for maximal common substructure determination,
-     * Tetrahedron Comput. Methodol., 1990, 3:351-358] and modified in the thesis of
-     * T. Hanser [Unknown BibTeXML type: HAN93].
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This algorithm derives from the algorithm described in
+    /// [Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G.,
+    /// Machine Learning of generic reactions:
+    /// 3. An efficient algorithm for maximal common substructure determination,
+    /// Tetrahedron Comput. Methodol., 1990, 3:351-358] and modified in the thesis of
+    /// T. Hanser [Unknown BibTeXML type: HAN93].
+    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
     public class CDKRMapHandler
     {
-
         public CDKRMapHandler()
         {
-
         }
 
-        /**
-         * Returns source molecule
-         * @return the source
-         */
+        /// <summary>
+        /// Returns source molecule
+        /// </summary>
+        /// <returns>the source</returns>
         public IAtomContainer Source
         {
             get
@@ -64,10 +61,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * Returns target molecule
-         * @return the target
-         */
+        /// <summary>
+        /// Returns target molecule
+        /// </summary>
+        /// <returns>the target</returns>
         public IAtomContainer Target
         {
             get
@@ -86,13 +83,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
         private IAtomContainer target;
         private bool timeoutFlag = false;
 
-        /**
-         * This function calculates all the possible combinations of MCS
-         * @param molecule1
-         * @param molecule2
-         * @param shouldMatchBonds
-         * @throws CDKException
-         */
+        /// <summary>
+        /// This function calculates all the possible combinations of MCS
+        /// </summary>
+        /// <param name="molecule1"></param>
+        /// <param name="molecule2"></param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <exception cref="CDKException"></exception>
         public void CalculateOverlapsAndReduce(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
         {
             Source = molecule1;
@@ -111,9 +108,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
                     //List reducedList = RemoveRedundantMappingsForSingleAtomCase(overlaps);
                     //int counter = 0;
                     IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
-
                 }
-
             }
             else
             {
@@ -135,22 +130,19 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
 
             FinalMappings.Instance.Set(Mappings);
-
         }
 
-        /**
-         * This function calculates only one solution (exact) because we are looking at the
-         * molecules which are exactly same in terms of the bonds and atoms determined by the
-         * Fingerprint
-         * @param molecule1
-         * @param molecule2
-         * @param shouldMatchBonds
-         * @throws CDKException
-         */
-        public void CalculateOverlapsAndReduceExactMatch(IAtomContainer molecule1, IAtomContainer molecule2,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// This function calculates only one solution (exact) because we are looking at the
+        /// molecules which are exactly same in terms of the bonds and atoms determined by the
+        /// Fingerprint
+        /// </summary>
+        /// <param name="molecule1"></param>
+        /// <param name="molecule2"></param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <exception cref="CDKException"></exception>
+        public void CalculateOverlapsAndReduceExactMatch(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
         {
-
             Source = molecule1;
             Target = molecule2;
 
@@ -161,7 +153,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
             if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
             {
-
                 List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
                 int nAtomsMatched = overlaps.Count;
                 nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
@@ -189,15 +180,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             FinalMappings.Instance.Set(Mappings);
         }
 
-        /**
-         * This function calculates only one solution (exact) because we are looking at the
-         * molecules which are exactly same in terms of the bonds and atoms determined by the
-         * Fingerprint
-         * @param molecule1
-         * @param molecule2
-         * @param shouldMatchBonds
-         * @throws CDKException
-         */
+        /// <summary>
+        /// This function calculates only one solution (exact) because we are looking at the
+        /// molecules which are exactly same in terms of the bonds and atoms determined by the
+        /// Fingerprint
+        /// </summary>
+        /// <param name="molecule1"></param>
+        /// <param name="molecule2"></param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <exception cref="CDKException"></exception>
         public void CalculateSubGraphs(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
         {
             Source = molecule1;
@@ -218,11 +209,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 {
                     IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
                 }
-
             }
             else
             {
-
                 var overlaps = CDKMCS.GetSubgraphMaps(Source, Target, shouldMatchBonds);
 
                 var reducedList = RemoveSubGraph(overlaps);
@@ -239,15 +228,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             FinalMappings.Instance.Set(Mappings);
         }
 
-        /**
-         * This function calculates only one solution (exact) because we are looking at the
-         * molecules which are exactly same in terms of the bonds and atoms determined by the
-         * Fingerprint
-         * @param molecule1
-         * @param molecule2
-         * @param shouldMatchBonds
-         * @throws CDKException
-         */
+        /// <summary>
+        /// This function calculates only one solution (exact) because we are looking at the
+        /// molecules which are exactly same in terms of the bonds and atoms determined by the
+        /// Fingerprint
+        /// </summary>
+        /// <param name="molecule1"></param>
+        /// <param name="molecule2"></param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <exception cref="CDKException"></exception>
         public void CalculateIsomorphs(IAtomContainer molecule1, IAtomContainer molecule2, bool shouldMatchBonds)
         {
             Source = molecule1;
@@ -260,7 +249,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
             if ((Source.Atoms.Count == 1) || (Target.Atoms.Count == 1))
             {
-
                 List<CDKRMap> overlaps = CDKMCS.CheckSingleAtomCases(Source, Target);
                 int nAtomsMatched = overlaps.Count;
                 nAtomsMatched = (nAtomsMatched > 0) ? 1 : 0;
@@ -268,11 +256,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 {
                     IdentifySingleAtomsMatchedParts(overlaps, Source, Target);
                 }
-
             }
             else
             {
-
                 var overlaps = CDKMCS.GetIsomorphMaps(Source, Target, shouldMatchBonds);
 
                 var reducedList = RemoveSubGraph(overlaps);
@@ -289,14 +275,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
             FinalMappings.Instance.Set(Mappings);
         }
 
-        /**
-         *
-         * @param overlaps
-         * @return
-         */
         protected IList<IList<CDKRMap>> RemoveSubGraph(IList<IList<CDKRMap>> overlaps)
         {
-
             var reducedList = new List<IList<CDKRMap>>(overlaps);
 
             for (int i = 0; i < overlaps.Count; i++)
@@ -320,17 +300,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
                             reducedList.Remove(graphJ);
                         }
                     }
-
                 }
             }
             return reducedList;
         }
 
-        /**
-         *
-         * @param overlaps
-         * @return
-         */
         protected List<CDKRMap> RemoveRedundantMappingsForSingleAtomCase(List<CDKRMap> overlaps)
         {
             List<CDKRMap> reducedList = new List<CDKRMap>();
@@ -339,14 +313,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return reducedList;
         }
 
-        /**
-         *  This makes sourceAtom map of matching atoms out of sourceAtom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
-         *
-         * @param  rMapList   The list produced by the getMap method.
-         * @param  graph1  first molecule. Must not be an IQueryAtomContainer.
-         * @param  graph2  second molecule. May be an IQueryAtomContainer.
-         * @return     The mapping found projected on graph1. This is sourceAtom List of CDKRMap objects containing Ids of matching atoms.
-         */
+        /// <summary>
+        ///  This makes sourceAtom map of matching atoms out of sourceAtom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
+        /// </summary>
+        /// <param name="rMapList">The list produced by the getMap method.</param>
+        /// <param name="graph1">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="graph2">second molecule. May be an IQueryAtomContainer.</param>
+        /// <returns>The mapping found projected on graph1. This is sourceAtom List of CDKRMap objects containing Ids of matching atoms.</returns>
         private static IList<IList<CDKRMap>> MakeAtomsMapOfBondsMap(IList<CDKRMap> rMapList, IAtomContainer graph1,
                 IAtomContainer graph2)
         {
@@ -431,16 +404,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return result;
         }
 
-        /**
-         *  This makes atom map of matching atoms out of atom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
-         *  Added by Asad since CDK one doesn't pick up the correct changes
-         * @param  list   The list produced by the getMap method.
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @return     The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.
-         */
-        private static IList<IList<CDKRMap>> MakeAtomsMapOfBondsMapSingleBond(IList<CDKRMap> list, IAtomContainer sourceGraph,
-                IAtomContainer targetGraph)
+        /// <summary>
+        ///  This makes atom map of matching atoms out of atom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
+        ///  Added by Asad since CDK one doesn't pick up the correct changes
+        /// </summary>
+        /// <param name="list">The list produced by the getMap method.</param>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <returns>The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.</returns>
+        private static IList<IList<CDKRMap>> MakeAtomsMapOfBondsMapSingleBond(IList<CDKRMap> list, IAtomContainer sourceGraph, IAtomContainer targetGraph)
         {
             if (list == null)
             {
@@ -537,7 +509,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         protected Stack<IList<CDKRMap>> GetAllMaximum(IList<IList<CDKRMap>> overlaps)
         {
-
             Stack<IList<CDKRMap>> allMaximumMappings = null;
 
             int count = -1;
@@ -561,27 +532,22 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 }
                 else if (arrayList.Count == count)
                 {
-
                     List<CDKRMap> list = new List<CDKRMap>(arrayList);
                     count = arrayList.Count;
                     allMaximumMappings.Push(list);
                 }
-
             }
             return allMaximumMappings;
         }
 
         protected void IdentifyMatchedParts(IList<IList<CDKRMap>> list, IAtomContainer source, IAtomContainer target)
         {
-
             List<IAtom> array1 = new List<IAtom>();
             List<IAtom> array2 = new List<IAtom>();
 
-            /*
-             * We have serial numbers of the bonds/Atoms to delete Now we will
-             * collect the actual bond/Atoms rather than serial number for deletion.
-             * RonP flag check whether reactant is mapped on product or Vise Versa
-             */
+            // We have serial numbers of the bonds/Atoms to delete Now we will
+            // collect the actual bond/Atoms rather than serial number for deletion.
+            // RonP flag check whether reactant is mapped on product or Vise Versa
             foreach (var rMap in list)
             {
                 IDictionary<int, int> atomNumbersFromContainer = new SortedDictionary<int, int>();
@@ -598,25 +564,21 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
                     atomNumbersFromContainer[indexI] = indexJ;
                 }
-                /*
-                 * Added the Mapping Numbers to the FinalMapping*
-                 */
+                
+                // Added the Mapping Numbers to the FinalMapping*
                 Mappings.Add(atomNumbersFromContainer);
             }
         }
 
         protected void IdentifySingleAtomsMatchedParts(List<CDKRMap> list, IAtomContainer source, IAtomContainer target)
         {
-
             List<IAtom> array1 = new List<IAtom>();
             List<IAtom> array2 = new List<IAtom>();
 
-            /*
-             * We have serial numbers of the bonds/Atoms to delete Now we will
-             * collect the actual bond/Atoms rather than serial number for deletion.
-             * RonP flag check whether reactant is mapped on product or Vise Versa
-             */
-
+            // We have serial numbers of the bonds/Atoms to delete Now we will
+            // collect the actual bond/Atoms rather than serial number for deletion.
+            // RonP flag check whether reactant is mapped on product or Vise Versa
+            
             SortedDictionary<int, int> atomNumbersFromContainer = new SortedDictionary<int, int>();
 
             foreach (var rmap in list)
@@ -634,11 +596,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
                 atomNumbersFromContainer[indexI] = indexJ;
 
-                /*
-                 * Added the Mapping Numbers to the FinalMapping*
-                 */
+                // Added the Mapping Numbers to the FinalMapping*
                 Mappings.Add(atomNumbersFromContainer);
-
             }
         }
 
@@ -663,7 +622,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
                 {
                     return false;
                 }
-
             }
             return true;
         }

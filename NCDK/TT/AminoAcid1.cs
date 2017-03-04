@@ -14,9 +14,9 @@
 
 
 
-// .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
 
+// .NET Framework port by Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -44,13 +44,13 @@ namespace NCDK.Default
         
         public void AddNTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             nTerminus = atom;
         }
 
         public void AddCTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             cTerminus = atom;
         }
 
@@ -100,13 +100,13 @@ namespace NCDK.Silent
         
         public void AddNTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             nTerminus = atom;
         }
 
         public void AddCTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             cTerminus = atom;
         }
 

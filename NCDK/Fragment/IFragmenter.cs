@@ -24,37 +24,32 @@ using System.Collections.Generic;
 
 namespace NCDK.Fragment
 {
-    /**
-    // An interface for classes implementing fragmentation algorithms.
-     *
+    /// <summary>
+    /// An interface for classes implementing fragmentation algorithms.
+    /// </summary>
     // @author Rajarshi Guha
     // @cdk.module  fragment
     // @cdk.githash
     // @cdk.keyword fragment
-     */
     public interface IFragmenter
     {
-
-        /**
-        // Generate fragments for the input molecule.
-         *
-        // @param atomContainer The input molecule
-        // @throws CDKException if ring detection fails
-         */
+        /// <summary>
+        /// Generate fragments for the input molecule.
+        /// </summary>
+        /// <param name="atomContainer">The input molecule</param>
+        /// <exception cref="CDKException">if ring detection fails</exception>
         void GenerateFragments(IAtomContainer atomContainer);
 
-        /**
-        // Get the fragments generated as SMILES strings.
-         *
-        // @return a string[] of the fragments.
-         */
+        /// <summary>
+        /// Get the fragments generated as SMILES strings.
+        /// </summary>
+        /// <returns>a string[] of the fragments.</returns>
         IEnumerable<string> GetFragments();
 
-        /**
-        // Get fragments generated as <see cref="IAtomContainer"/> objects.
-         *
-        // @return an IAtomContainer[] of fragments
-         */
+        /// <summary>
+        /// Get fragments generated as <see cref="IAtomContainer"/> objects.
+        /// </summary>
+        /// <returns>an IAtomContainer[] of fragments</returns>
         IEnumerable<IAtomContainer> GetFragmentsAsContainers();
     }
 }

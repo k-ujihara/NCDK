@@ -174,10 +174,8 @@ namespace NCDK.IO
             // next line is empty
             writer.WriteLine();
 
-            /*
-             * next line contains two digits the first is the total charge the
-             * second is bool indicating: 0 = open shell 1 = closed shell
-             */
+            // next line contains two digits the first is the total charge the
+            // second is bool indicating: 0 = open shell 1 = closed shell
             writer.Write("0 "); // FIXME: should write total charge of molecule
             if (shell.IsSet)
             {

@@ -59,11 +59,11 @@ namespace NCDK.IO.CML
             Assert.IsTrue(writer.ToString().IndexOf("</molecule>") != -1);
         }
 
-        /**
-         * Test example with one explicit carbon, and four implicit hydrogens.
-         *
-         * @cdk.bug 1655045
-         */
+        /// <summary>
+        /// Test example with one explicit carbon, and four implicit hydrogens.
+        ///
+        // @cdk.bug 1655045
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount()
         {
@@ -98,10 +98,10 @@ namespace NCDK.IO.CML
             Assert.IsFalse(writer.ToString().Contains("formalCharge"));
         }
 
-        /**
-        * Test example with one explicit carbon, writing of MassNumber
-        *
-        */
+        /// <summary>
+       /// Test example with one explicit carbon, writing of MassNumber
+       ///
+       /// </summary>
         [TestMethod()]
         public void TestMassNumber()
         {
@@ -120,11 +120,11 @@ namespace NCDK.IO.CML
             Assert.IsTrue(writer.ToString().IndexOf("isotopeNumber=\"12\"") != -1);
         }
 
-        /**
-         * Test example with one explicit carbon, and one implicit hydrogen, and three implicit hydrogens.
-         *
-         * @cdk.bug 1655045
-         */
+        /// <summary>
+        /// Test example with one explicit carbon, and one implicit hydrogen, and three implicit hydrogens.
+        ///
+        // @cdk.bug 1655045
+        /// </summary>
         [TestMethod()]
         public void TestHydrogenCount_2()
         {
@@ -430,13 +430,13 @@ namespace NCDK.IO.CML
             Assert.IsTrue(cmlContent.IndexOf("<scalar dictRef=\"cdk:reactionProperty") != -1);
         }
 
-        /**
-         * TODO: introduce concept for ReactionStepList and ReactionStep.
-         */
+        /// <summary>
+        /// TODO: introduce concept for ReactionStepList and ReactionStep.
+        /// </summary>
         //    [TestMethod()] public void TestReactionStepList()  {
-        //    	StringWriter writer = new StringWriter();
-        //    	ReactionChain chain = new ReactionChain();
-        //    	chain.Id = "rsl1";
+        //        StringWriter writer = new StringWriter();
+        //        ReactionChain chain = new ReactionChain();
+        //        chain.Id = "rsl1";
         //
         //
         //        IReaction reaction = Default.ChemObjectBuilder.Instance.CreateReaction();
@@ -474,8 +474,8 @@ namespace NCDK.IO.CML
         //    }
         //
         //    [TestMethod()] public void TestReactionSchemeStepList1()  {
-        //    	StringWriter writer = new StringWriter();
-        //    	ReactionScheme scheme1 = new ReactionScheme();
+        //        StringWriter writer = new StringWriter();
+        //        ReactionScheme scheme1 = new ReactionScheme();
         //        scheme1.Id = "rs0";
         //        ReactionScheme scheme2 = new ReactionScheme();
         //        scheme2.Id = "rs1";
@@ -503,7 +503,7 @@ namespace NCDK.IO.CML
         //        scheme2.AddReaction(reaction2);
         //
         //        ReactionChain chain = new ReactionChain();
-        //    	chain.Id = "rsl1";
+        //        chain.Id = "rsl1";
         //
         //        IReaction reaction3 = reaction1.GetNewBuilder().CreateReaction();
         //        reaction3.Id = "r2.1";

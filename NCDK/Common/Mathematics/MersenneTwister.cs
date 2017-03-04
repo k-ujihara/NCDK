@@ -224,9 +224,9 @@ namespace NCDK.Common.Mathematics
         /** Generate next pseudorandom number.
          * <p>This method is the core generation algorithm. It is used by all the
          * public generation methods for the various primitive types {@link
-         * #nextBoolean()}, {@link #nextBytes(byte[])}, {@link #NextDouble()},
+         * #NextBoolean()}, {@link #NextBytes(byte[])}, {@link #NextDouble()},
          * {@link #NextFloat()}, {@link #NextGaussian()}, {@link #NextInt()},
-         * {@link #next(int)} and {@link #NextLong()}.</p>
+         * {@link #Next(int)} and {@link #NextLong()}.</p>
          * @param bits number of random bits to produce
          * @return random bits generated
          */

@@ -341,7 +341,7 @@ namespace NCDK.IO.CML
             if (currentChemFile.Count == 0)
             {
                 // assume there is one non-animation ChemSequence
-                //    		AddChemSequence(currentChemSequence);
+                //            AddChemSequence(currentChemSequence);
                 currentChemFile.Add(currentChemSequence);
             }
 
@@ -716,7 +716,7 @@ namespace NCDK.IO.CML
                     }
                     else if (att.Equals("dictRef"))
                     {
-                        //                	cdo.SetObjectProperty("Molecule", "dictRef", attribute.Value);
+                        //                    cdo.SetObjectProperty("Molecule", "dictRef", attribute.Value);
                         currentMolecule.SetProperty(new DictRef(DICTREF, attribute.Value), attribute.Value);
                     }
                 }
@@ -768,7 +768,7 @@ namespace NCDK.IO.CML
             {
                 if (xpath.EndsWith("atomType", "label"))
                 {
-                    //            	cdo.SetObjectProperty("Atom", "atomTypeLabel", atts.GetValue("value"));
+                    //                cdo.SetObjectProperty("Atom", "atomTypeLabel", atts.GetValue("value"));
                     currentAtom.AtomTypeName = AttGetValue(element.Attributes(), "value");
                 }
             }
@@ -1357,7 +1357,7 @@ namespace NCDK.IO.CML
                 {
                     if (DICTREF.Equals("pdb:id"))
                     {
-                        //                	cdo.SetObjectProperty("Molecule", DICTREF, cData);
+                        //                    cdo.SetObjectProperty("Molecule", DICTREF, cData);
                         currentMolecule.SetProperty(new DictRef(DICTREF, cData), cData);
                     }
                     else if (DICTREF.Equals("cdk:molecularProperty"))
@@ -1493,12 +1493,12 @@ namespace NCDK.IO.CML
                 {
                     if (DICTREF.Length > 0)
                     {
-                        //            		cdo.SetObjectProperty("Molecule", DICTREF, cData);
+                        //                    cdo.SetObjectProperty("Molecule", DICTREF, cData);
                         currentMolecule.SetProperty(new DictRef(DICTREF, cData), cData);
                     }
                     else
                     {
-                        //            		cdo.SetObjectProperty("Molecule", "Name", cData);
+                        //                    cdo.SetObjectProperty("Molecule", "Name", cData);
                         currentMolecule.SetProperty(CDKPropertyName.TITLE, cData);
                     }
                 }

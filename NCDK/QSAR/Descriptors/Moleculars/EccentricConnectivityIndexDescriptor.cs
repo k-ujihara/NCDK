@@ -25,43 +25,43 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * A topological descriptor combining distance and adjacency information.
-     * This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
-     * to correlate well with a number of physical properties. The descriptor is also reported to
-     * have good discriminatory ability.
-     * <p>
-     * The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
-     * expression
-     * <center>
-     * \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
-     * </center>
-     * where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
-     * i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
-     * i<sup>th</sup> atom.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value with name <i>ECCEN</i>
-     * @author      Rajarshi Guha
-     * @cdk.created     2005-03-19
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
-     */
+    /// <summary>
+    /// A topological descriptor combining distance and adjacency information.
+    /// This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
+    /// to correlate well with a number of physical properties. The descriptor is also reported to
+    /// have good discriminatory ability.
+    /// <p>
+    /// The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
+    /// expression
+    /// <center>
+    /// \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
+    /// </center>
+    /// where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
+    /// i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
+    /// i<sup>th</sup> atom.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value with name <i>ECCEN</i>
+    // @author      Rajarshi Guha
+    // @cdk.created     2005-03-19
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
+    /// </summary>
     public class EccentricConnectivityIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ECCEN" };

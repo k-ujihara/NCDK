@@ -24,7 +24,7 @@ using NCDK.Templates;
 namespace NCDK.Graphs
 {
     // @cdk.module test-core
-	[TestClass()]
+    [TestClass()]
     public class SpanningTreeTest : CDKTestCase
     {
         private static SpanningTree azulene = null;
@@ -36,7 +36,7 @@ namespace NCDK.Graphs
             {
                 // load azulene
                 string filename = "NCDK.Data.MDL.azulene.mol";
-                var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+                var ins = ResourceLoader.GetAsStream(filename);
                 MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
                 IChemFile chemFile = (IChemFile)reader.Read(new ChemFile());
                 IChemSequence seq = chemFile[0];

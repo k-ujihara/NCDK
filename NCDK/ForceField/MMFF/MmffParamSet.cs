@@ -29,68 +29,62 @@ using System.Text;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-    // Internal class for accessing MMFF parameters.
-    // 
+    /// <summary>
+    /// Internal class for accessing MMFF parameters.
+    /// </summary>
     // @author John May
-     */
-#if TEST
-        public
-#endif
-    sealed class MmffParamSet
+    internal sealed class MmffParamSet
     {
         public static readonly MmffParamSet Instance = new MmffParamSet();
 
         private const int MAX_MMFF_ATOMTYPE = 99;
 
-
-        /**
-        // Bond charge increments.
-         */
+        /// <summary>
+        /// Bond charge increments.
+        /// </summary>
         private IDictionary<BondKey, decimal> bcis = new Dictionary<BondKey, decimal>();
 
-        /**
-        // Atom type properties.
-         */
+        /// <summary>
+        /// Atom type properties.
+        /// </summary>
         private MmffProp[] properties = new MmffProp[MAX_MMFF_ATOMTYPE + 1];
 
         private IDictionary<string, int> typeMap = new Dictionary<string, int>();
 
-        /**
-        // Symbolic formal charges - some are varible and assigned in code.
-         */
+        /// <summary>
+        /// Symbolic formal charges - some are varible and assigned in code.
+        /// </summary>
         private IDictionary<string, decimal> fCharges = new Dictionary<string, decimal>();
 
         MmffParamSet()
         {
-            using (Stream in_ = GetType().Assembly.GetManifestResourceStream(GetType(), "MMFFCHG.PAR"))
+            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFCHG.PAR"))
             {
                 ParseMMFFCHARGE(in_, bcis);
             }
-            using (Stream in_ = GetType().Assembly.GetManifestResourceStream(GetType(), "MMFFFORMCHG.PAR"))
+            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFFORMCHG.PAR"))
             {
                 ParseMMFFFORMCHG(in_, fCharges);
             }
-            using (Stream in_ = GetType().Assembly.GetManifestResourceStream(GetType(), "MMFFPROP.PAR"))
+            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFPROP.PAR"))
             {
                 ParseMMFFPPROP(in_, properties);
             }
-            using (Stream in_ = GetType().Assembly.GetManifestResourceStream(GetType(), "MMFFPBCI.PAR"))
+            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFPBCI.PAR"))
             {
                 ParseMMFFPBCI(in_, properties);
             }
-            using (Stream in_ = GetType().Assembly.GetManifestResourceStream(GetType(), "mmff-symb-mapping.tsv"))
+            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "mmff-symb-mapping.tsv"))
             {
                 ParseMMFFTypeMap(in_, typeMap);
             }
         }
 
-        /**
-        // Obtain the integer MMFF atom type for a given symbolic MMFF type.
-         *
-        // @param sym Symbolic MMFF type
-        // @return integer MMFF type
-         */
+        /// <summary>
+        /// Obtain the integer MMFF atom type for a given symbolic MMFF type.
+        /// </summary>
+        /// <param name="sym">Symbolic MMFF type</param>
+        /// <returns>integer MMFF type</returns>
         public int IntType(string sym)
         {
             int i;
@@ -99,15 +93,14 @@ namespace NCDK.ForceField.MMFF
             return i;
         }
 
-        /**
-        // Access bond charge increment (bci) for a bond between two atoms (referred
-        // to by MMFF integer type).
-         *
-        // @param cls   bond class
-        // @param type1 first atom type
-        // @param type2 second atom type
-        // @return bci
-         */
+        /// <summary>
+        /// Access bond charge increment (bci) for a bond between two atoms (referred
+        /// to by MMFF integer type).
+        /// </summary>
+        /// <param name="cls">bond class</param>
+        /// <param name="type1">first atom type</param>
+        /// <param name="type2">second atom type</param>
+        /// <returns>bci</returns>
         public decimal? GetBondChargeIncrement(int cls, int type1, int type2)
         {
             decimal ret;
@@ -116,47 +109,43 @@ namespace NCDK.ForceField.MMFF
             return ret;
         }
 
-        /**
-        // Access Partial Bond Charge Increments (pbci).
-         *
-        // @param atype integer atom type
-        // @return pbci
-         */
+        /// <summary>
+        /// Access Partial Bond Charge Increments (pbci).
+        /// </summary>
+        /// <param name="atype">integer atom type</param>
+        /// <returns>pbci</returns>
         public decimal GetPartialBondChargeIncrement(int atype)
         {
             return properties[CheckType(atype)].pbci;
         }
 
-        /**
-        // Access Formal charge adjustment factor.
-         *
-        // @param atype integer atom type
-        // @return adjustment factor
-         */
+        /// <summary>
+        /// Access Formal charge adjustment factor.
+        /// </summary>
+        /// <param name="atype">integer atom type</param>
+        /// <returns>adjustment factor</returns>
         public decimal GetFormalChargeAdjustment(int atype)
         {
             return properties[CheckType(atype)].fcAdj;
         }
 
-        /**
-        // Access the CRD for an MMFF int type.
-        // 
-        // @param atype int atom type
-        // @return CRD
-         */
+        /// <summary>
+        /// Access the CRD for an MMFF int type.
+        /// </summary>
+        /// <param name="atype">int atom type</param>
+        /// <returns>CRD</returns>
         public int GetCrd(int atype)
         {
             return properties[CheckType(atype)].crd;
         }
 
-        /**
-        // Access the tabulated formal charge (may be fractional) for
-        // a symbolic atom type. Some formal charges are variable and
-        // need to be implemented in code.
-        // 
-        // @param symb symbolic type
-        // @return formal charge
-         */
+        /// <summary>
+        /// Access the tabulated formal charge (may be fractional) for
+        /// a symbolic atom type. Some formal charges are variable and
+        /// need to be implemented in code.
+        /// </summary>
+        /// <param name="symb">symbolic type</param>
+        /// <returns>formal charge</returns>
         public decimal? GetFormalCharge(string symb)
         {
             decimal ret;
@@ -165,14 +154,14 @@ namespace NCDK.ForceField.MMFF
             return ret;
         }
 
-        /**
-        // see. MMFF Part V - p 620, a nonstandard bond-type index of “1” is
-        // assigned whenever a single bond (formal bond order 1) is found: (a)
-        // between atoms i and j of types that are not both aromatic and for which
-        // ”sbmb” entries of ”1” appear in Table I; or (b) between pairs of atoms
-        // belonging to different aromatic rings (as in the case of the connecting
-        // C-C bond in biphenyl).
-         */
+        /// <summary>
+        /// see. MMFF Part V - p 620, a nonstandard bond-type index of “1” is
+        /// assigned whenever a single bond (formal bond order 1) is found: (a)
+        /// between atoms i and j of types that are not both aromatic and for which
+        /// ”sbmb” entries of ”1” appear in Table I; or (b) between pairs of atoms
+        /// belonging to different aromatic rings (as in the case of the connecting
+        /// C-C bond in biphenyl).
+        /// </summary>
         public int GetBondCls(int type1, int type2, int bord, bool barom)
         {
             MmffProp prop1 = properties[CheckType(type1)];
@@ -291,20 +280,18 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Key for indexing bond parameters by
-         */
+        /// <summary>
+        /// Key for indexing bond parameters by
+        /// </summary>
         sealed class BondKey
         {
-
             /// <summary>Bond class.</summary>
             private readonly int cls;
 
-            /**
+            /// <summary>
             // MMFF atom types for the bond.
-             */
+            /// </summary>
             private readonly int type1, type2;
-
 
             public BondKey(int cls, int type1, int type2)
             {
@@ -340,9 +327,9 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Properties of an MMFF atom type.
-         */
+        /// <summary>
+        /// Properties of an MMFF atom type.
+        /// </summary>
         private sealed class MmffProp
         {
             public readonly int aspec;

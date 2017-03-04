@@ -23,18 +23,18 @@ using static NCDK.IO.Setting.IOSetting;
 
 namespace NCDK.IO.Listener
 {
-    /**
-     * Allows processing of IOSetting quesions which are passed to the user
-     * by using the System.out and System.in by default.
-     *
-     * <p>This listener can also be used to list all the questions a ChemObjectWriter
-     * has, by using a dummy StringWriter, and a <code>null</code> Reader.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// Allows processing of IOSetting quesions which are passed to the user
+    /// by using the System.out and System.in by default.
+    ///
+    /// <p>This listener can also be used to list all the questions a ChemObjectWriter
+    /// has, by using a dummy StringWriter, and a <code>null</code> Reader.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     public class TextGUIListener : IReaderListener, IWriterListener
     {
         private TextReader in_;
@@ -54,17 +54,17 @@ namespace NCDK.IO.Listener
             this.level = level;
         }
 
-        /**
-         * Overwrites the default writer to which the output is directed.
-         */
+        /// <summary>
+        /// Overwrites the default writer to which the output is directed.
+        /// </summary>
         public void SetOutputWriter(TextWriter writer)
         {
             out_ = writer;
         }
 
-        /**
-         * Overwrites the default reader from which the input is taken.
-         */
+        /// <summary>
+        /// Overwrites the default reader from which the input is taken.
+        /// </summary>
         public void SetInputReader(TextReader reader)
         {
             in_ = reader;
@@ -72,13 +72,13 @@ namespace NCDK.IO.Listener
 
         public void FrameRead(ReaderEvent evt) { }
 
-        /**
-         * Processes the IOSettings by listing the question, giving the options
-         * and asking the user to provide their choice.
-         *
-         * <p>Note: if the input reader is <code>null</code>, then the method
-         * does not wait for an answer, and takes the default.
-         */
+        /// <summary>
+        /// Processes the IOSettings by listing the question, giving the options
+        /// and asking the user to provide their choice.
+        ///
+        /// <p>Note: if the input reader is <code>null</code>, then the method
+        /// does not wait for an answer, and takes the default.
+        /// </summary>
         public void ProcessIOSettingQuestion(IOSetting setting)
         {
             // post the question

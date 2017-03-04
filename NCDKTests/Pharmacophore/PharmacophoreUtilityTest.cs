@@ -34,7 +34,7 @@ namespace NCDK.Pharmacophore
         static PharmacophoreUtilityTest()
         {
             string filename = "NCDK.Data.MDL.pcoretest1.sdf";
-            Stream ins = typeof(PharmacophoreUtilityTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             IteratingMDLConformerReader reader = new IteratingMDLConformerReader(ins, Default.ChemObjectBuilder.Instance);
             conformers = reader.FirstOrDefault();
         }
@@ -43,7 +43,7 @@ namespace NCDK.Pharmacophore
         public void TestReadPcoreDef()
         {
             string filename = "NCDK.Data.PCore.pcore.xml";
-            Stream ins = typeof(PharmacophoreUtilityTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 
             Assert.AreEqual(2, defs.Count);
@@ -80,7 +80,7 @@ namespace NCDK.Pharmacophore
         public void TestReadPcoreAngleDef()
         {
             string filename = "NCDK.Data.PCore.pcoreangle.xml";
-            Stream ins = typeof(PharmacophoreUtilityTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 
             Assert.AreEqual(1, defs.Count);
@@ -128,7 +128,7 @@ namespace NCDK.Pharmacophore
         public void TestInvalidPcoreXML()
         {
             string filename = "NCDK.Data.PCore.invalid1.xml";
-            Stream ins = typeof(PharmacophoreUtilityTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
         }
 
@@ -136,7 +136,7 @@ namespace NCDK.Pharmacophore
         public void TestPCoreWrite()
         {
             string filename = "NCDK.Data.PCore.pcore.xml";
-            Stream ins = typeof(PharmacophoreUtilityTest).Assembly.GetManifestResourceStream(filename);
+            Stream ins = ResourceLoader.GetAsStream(filename);
             var defs = PharmacophoreUtils.ReadPharmacophoreDefinitions(ins);
 
             PharmacophoreQuery[] defarray = defs.ToArray();

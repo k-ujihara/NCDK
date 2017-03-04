@@ -22,21 +22,24 @@
  * CA 95054 USA or visit www.sun.com if you need additional information or
  * have any questions.
  */
- 
+
 using System;
 using NCDK.Numerics;
+using System.Runtime.CompilerServices;
 
 namespace NCDK.Common.Mathematics
 {
     public static class Vectors
     {
-        public static readonly Vector2 Vector2MaxValue = new Vector2(double.MaxValue, double.MaxValue);
+        public static Vector2 Vector2MaxValue { get; } = new Vector2(double.MaxValue, double.MaxValue);
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double DegreeToRadian(double angle)
         {
             return (Math.PI / 180) * angle;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double RadianToDegree(double angle)
         {
             return angle * (180 / Math.PI);
@@ -86,15 +89,17 @@ namespace NCDK.Common.Mathematics
             return new Quaternion(v * s, Math.Cos(angle / 2));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Quaternion NewQuaternionFromAxisAngle(double x, double y, double z, double angle)
         {
             return NewQuaternionFromAxisAngle(new Vector3(x, y, z), angle);
         }
 
-        public static bool LinesIntersect(double x1, double y1,
-                                  double x2, double y2,
-                                  double x3, double y3,
-                                  double x4, double y4)
+        public static bool LinesIntersect(
+            double x1, double y1,
+            double x2, double y2,
+            double x3, double y3,
+            double x4, double y4)
         {
             return ((RelativeCCW(x1, y1, x2, y2, x3, y3) *
                      RelativeCCW(x1, y1, x2, y2, x4, y4) <= 0)

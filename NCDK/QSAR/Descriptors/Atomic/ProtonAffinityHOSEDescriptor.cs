@@ -20,6 +20,7 @@ using NCDK.Common.Primitives;
 using NCDK.QSAR.Result;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -185,10 +186,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     {
                         string path = "NCDK.QSAR.Descriptors.Atomic.Data." + name;
                         string pathS = "NCDK.QSAR.Descriptors.Atomic.Data." + nameS;
-                        var ins = this.GetType().Assembly.GetManifestResourceStream(path);
+                        var ins = ResourceLoader.GetAsStream(path);
                         var insr = new StreamReader(ins);
                         hoseVSenergy = ExtractAttributes(insr);
-                        ins = this.GetType().Assembly.GetManifestResourceStream(pathS);
+                        ins = ResourceLoader.GetAsStream(pathS);
                         insr = new StreamReader(ins);
                         hoseVSenergyS = ExtractAttributes(insr);
                     }
@@ -230,7 +231,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                             int sign = -1;
                             if (plusMinus == 1) sign = 1;
 
-							var st = Strings.Tokenize(hoseCode, '(', ')', '/').GetEnumerator();
+                            var st = Strings.Tokenize(hoseCode, '(', ')', '/').GetEnumerator();
                             StringBuilder hoseCodeBuffer = new StringBuilder();
                             int sum = exactSphere + sign * (i + 1);
                             for (int k = 0; k < sum; k++)

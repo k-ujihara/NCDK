@@ -22,13 +22,13 @@ using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
-    /**
-     * {@link IDifference} between two {@link double?}.
-     *
-     * @author     egonw
-     * @cdk.module diff
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <see cref="IDifference"/> between two {@link double?}.
+    ///
+    // @author     egonw
+    // @cdk.module diff
+    // @cdk.githash
+    /// </summary>
     public class DoubleDifference : IDifference {
 
         private const double ERROR = 0.000000001;
@@ -43,14 +43,14 @@ namespace NCDK.Tools.Diff.Tree
             this.second = second;
         }
 
-        /**
-         * Constructs a new {@link IDifference} object.
-         *
-         * @param name   a name reflecting the nature of the created {@link IDifference}
-         * @param first  the first object to compare
-         * @param second the second object to compare
-         * @return       an {@link IDifference} reflecting the differences between the first and second object
-         */
+        /// <summary>
+        /// Constructs a new <see cref="IDifference"/> object.
+        ///
+        /// <param name="name">a name reflecting the nature of the created <see cref="IDifference"/></param>
+        /// <param name="first">the first object to compare</param>
+        /// <param name="second">the second object to compare</param>
+        /// <returns>an <see cref="IDifference"/> reflecting the differences between the first and second object</returns>
+        /// </summary>
         public static IDifference Construct(string name, double? first, double? second) {
             if (first == null && second == null) {
                 return null; // no difference
@@ -64,11 +64,11 @@ namespace NCDK.Tools.Diff.Tree
             return new DoubleDifference(name, first, second);
         }
 
-        /**
-         * Returns a {@link string} representation for this {@link IDifference}.
-         *
-         * @return a {@link string}
-         */
+        /// <summary>
+        /// Returns a <see cref="string"/> representation for this <see cref="IDifference"/>.
+        ///
+        /// <returns>a <see cref="string"/></returns>
+        /// </summary>
 
         public override string ToString() {
             return name + ":" + (first == null ? "NA" : first.ToString()) + "/" + (second == null ? "NA" : second.ToString());

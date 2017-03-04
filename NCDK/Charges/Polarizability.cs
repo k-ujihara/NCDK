@@ -27,24 +27,23 @@ using System.Linq;
 
 namespace NCDK.Charges
 {
-    /**
+    /// <summary>
     /// Calculation of the polarizability of a molecule by the method of Kang and
     /// Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
     /// Limitations in parameterization of atoms:
     /// H, Csp3, Csp2, Csp2arom, Csp3, Nsp3, Nsp2, Nsp3,
     /// P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
-     *
-    /// @author         chhoppe
-    /// @cdk.githash
-    /// @cdk.created    2004-11-03
-    /// @cdk.keyword polarizability
-    /// @cdk.module     charges
-     */
+    /// </summary>
+    // @author         chhoppe
+    // @cdk.githash
+    // @cdk.created    2004-11-03
+    // @cdk.keyword polarizability
+    // @cdk.module     charges
     public class Polarizability
     {
-        /**
+        /// <summary>
         /// Constructor for the Polarizability object.
-         */
+        /// </summary>
         public Polarizability() { }
 
         private void AddExplicitHydrogens(IAtomContainer container)
@@ -67,13 +66,12 @@ namespace NCDK.Charges
             }
         }
 
-        /**
+        /// <summary>
         ///  Gets the polarizabilitiyFactorForAtom.
-         *
-         *@param  atomContainer    AtomContainer
-         *@param  atom  atom for which the factor should become known
-         *@return       The polarizabilitiyFactorForAtom value
-         */
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="atom">atom for which the factor should become known</param>
+        /// <returns>The polarizabilitiyFactorForAtom value</returns>
         public double GetPolarizabilitiyFactorForAtom(IAtomContainer atomContainer, IAtom atom)
         {
             IAtomContainer acH = atomContainer.Builder.CreateAtomContainer(atomContainer);
@@ -81,12 +79,12 @@ namespace NCDK.Charges
             return GetKJPolarizabilityFactor(acH, atom);
         }
 
-        /**
+        /// <summary>
         ///  calculates the mean molecular polarizability as described in paper of Kang and Jhorn.
-         *
-         *@param  atomContainer  AtomContainer
-         *@return     polarizabilitiy
-         */
+        ///
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <returns>polarizabilitiy</returns>
+        /// </summary>
         public double CalculateKJMeanMolecularPolarizability(IAtomContainer atomContainer)
         {
             double polarizabilitiy = 0;
@@ -99,16 +97,15 @@ namespace NCDK.Charges
             return polarizabilitiy;
         }
 
-        /**
+        /// <summary>
         ///  calculate effective atom polarizability.
-         *
-        /// @param  atomContainer                     IAtomContainer
-        /// @param  atom                   atom for which effective atom polarizability should be calculated
-        /// @param  influenceSphereCutOff  cut off for spheres which should taken into account for calculation
-        /// @param addExplicitH if set to true, then explicit H's will be added, otherwise it assumes that they have
-        ///  been added to the molecule before being called
-        /// @return polarizabilitiy
-         */
+        /// </summary>
+        /// <param name="atomContainer">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom polarizability should be calculated</param>
+        /// <param name="influenceSphereCutOff">cut off for spheres which should taken into account for calculation</param>
+        /// <param name="addExplicitH">if set to true, then explicit H's will be added, otherwise it assumes that they have
+        ///  been added to the molecule before being called</param>
+        /// <returns>polarizabilitiy</returns>
         public double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
                 int influenceSphereCutOff, bool addExplicitH)
         {
@@ -148,18 +145,17 @@ namespace NCDK.Charges
             return polarizabilitiy;
         }
 
-        /**
+        /// <summary>
         /// calculate effective atom polarizability.
-         *
-        /// @param atomContainer         IAtomContainer
-        /// @param atom                  atom for which effective atom polarizability should be calculated
-        /// @param addExplicitH          if set to true, then explicit H's will be added, otherwise it assumes that they have
-        ///                              been added to the molecule before being called
-        /// @param distanceMatrix        an n x n matrix of topological distances between all the atoms in the molecule.
+        /// </summary>
+        /// <param name="atomContainer">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom polarizability should be calculated</param>
+        /// <param name="addExplicitH">if set to true, then explicit H's will be added, otherwise it assumes that they have
+        ///                              been added to the molecule before being called</param>
+        /// <param name="distanceMatrix">an n x n matrix of topological distances between all the atoms in the molecule.
         ///                              if this argument is non-null, then BFS will not be used and instead path lengths will be looked up. This
-        ///                              form of the method is useful, if it is being called for multiple atoms in the same molecule
-        /// @return polarizabilitiy
-         */
+        ///                              form of the method is useful, if it is being called for multiple atoms in the same molecule</param>
+        /// <returns>polarizabilitiy</returns>
         public double CalculateGHEffectiveAtomPolarizability(IAtomContainer atomContainer, IAtom atom,
                 bool addExplicitH, int[][] distanceMatrix)
         {
@@ -200,13 +196,12 @@ namespace NCDK.Charges
             return polarizabilitiy;
         }
 
-        /**
+        /// <summary>
         ///  calculate bond polarizability.
-         *
-         *@param  atomContainer    AtomContainer
-         *@param  bond  Bond bond for which the polarizabilitiy should be calculated
-         *@return       polarizabilitiy
-         */
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="bond">Bond bond for which the polarizabilitiy should be calculated</param>
+        /// <returns>polarizabilitiy</returns>
         public double CalculateBondPolarizability(IAtomContainer atomContainer, IBond bond)
         {
             double polarizabilitiy = 0;
@@ -220,13 +215,12 @@ namespace NCDK.Charges
             return (polarizabilitiy / 2);
         }
 
-        /**
+        /// <summary>
         ///  Method which assigns the polarizabilitiyFactors.
-         *
-         *@param  atomContainer    AtomContainer
-         *@param  atom  Atom
-         *@return       double polarizabilitiyFactor
-         */
+        /// </summary>
+        /// <param name="atomContainer">AtomContainer</param>
+        /// <param name="atom">Atom</param>
+        /// <returns>double polarizabilitiyFactor</returns>
         private double GetKJPolarizabilityFactor(IAtomContainer atomContainer, IAtom atom)
         {
             double polarizabilitiyFactor = 0;
@@ -354,13 +348,12 @@ namespace NCDK.Charges
             return polarizabilitiyFactor;
         }
 
-        /**
+        /// <summary>
         ///  Gets the numberOfHydrogen attribute of the Polarizability object.
-         *
-         *@param  atomContainer    Description of the Parameter
-         *@param  atom  Description of the Parameter
-         *@return       The numberOfHydrogen value
-         */
+        /// </summary>
+        /// <param name="atomContainer">Description of the Parameter</param>
+        /// <param name="atom">Description of the Parameter</param>
+        /// <returns>The numberOfHydrogen value</returns>
         private int GetNumberOfHydrogen(IAtomContainer atomContainer, IAtom atom)
         {
             var bonds = atomContainer.GetConnectedBonds(atom);

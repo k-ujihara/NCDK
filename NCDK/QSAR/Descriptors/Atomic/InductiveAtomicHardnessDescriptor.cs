@@ -24,55 +24,55 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     *  Inductive atomic hardness of an atom in a polyatomic system can be defined
-     *  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
-     *
-     *  This descriptor uses these parameters:
-     *  <tableborder="1">
-     *
-     *    <tr>
-     *
-     *      <td>
-     *        Name
-     *      </td>
-     *
-     *      <td>
-     *        Default
-     *      </td>
-     *
-     *      <td>
-     *        Description
-     *      </td>
-     *
-     *    </tr>
-     *
-     *    <tr>
-     *
-     *      <td>
-     *
-     *      </td>
-     *
-     *      <td>
-     *
-     *      </td>
-     *
-     *      <td>
-     *        no parameters
-     *      </td>
-     *
-     *    </tr>
-     *
-     *  </table>
-     *
-     *
-     *@author         mfe4
-     *@cdk.created    2004-11-03
-     *@cdk.module     qsaratomic
-     * @cdk.githash
-     *@cdk.set        qsar-descriptors
-     * @cdk.dictref   qsar-descriptors:atomicHardness
-     */
+    /// <summary>
+    ///  Inductive atomic hardness of an atom in a polyatomic system can be defined
+    ///  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
+    ///
+    ///  This descriptor uses these parameters:
+    ///  <tableborder="1">
+    ///
+    ///    <tr>
+    ///
+    ///      <td>
+    ///        Name
+    ///      </td>
+    ///
+    ///      <td>
+    ///        Default
+    ///      </td>
+    ///
+    ///      <td>
+    ///        Description
+    ///      </td>
+    ///
+    ///    </tr>
+    ///
+    ///    <tr>
+    ///
+    ///      <td>
+    ///
+    ///      </td>
+    ///
+    ///      <td>
+    ///
+    ///      </td>
+    ///
+    ///      <td>
+    ///        no parameters
+    ///      </td>
+    ///
+    ///    </tr>
+    ///
+    ///  </table>
+    ///
+    ///
+    ///@author         mfe4
+    ///@cdk.created    2004-11-03
+    ///@cdk.module     qsaratomic
+    // @cdk.githash
+    ///@cdk.set        qsar-descriptors
+    // @cdk.dictref   qsar-descriptors:atomicHardness
+    /// </summary>
     public class InductiveAtomicHardnessDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "indAtomHardnesss" };

@@ -17,31 +17,25 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This smarts bond matches any bond that is in a ring.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This smarts bond matches any bond that is in a ring.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class RingBond : SMARTSBond
     {
-        /**
-         * Creates a new instance
-         *
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// </summary>
         public RingBond(IChemObjectBuilder builder)
             : base(builder)
         {
             this.IsInRing = true;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSBond#Matches(org
-         * .openscience.cdk.interfaces.IBond)
-         */
         public override bool Matches(IBond bond)
         {
             return bond.IsInRing;

@@ -27,9 +27,9 @@ using NCDK.Smiles;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class SubstructureFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -48,7 +48,6 @@ namespace NCDK.Fingerprint
         [TestMethod()]
         public override void TestBug706786()
         {
-
             IAtomContainer superStructure = Bug706786_1();
             IAtomContainer subStructure = Bug706786_2();
 
@@ -107,14 +106,14 @@ namespace NCDK.Fingerprint
             Assert.IsFalse(fp[100]);
         }
 
-        /**
-         * @cdk.bug 2871303
-         *
-         * While this test fails, Daylight says that the
-         * SMARTS pattern used for vinylogous ester should
-         * match benzaldehyde twice. So according to the
-         * supplied definition this answer is actually correct.
-         */
+        /// <summary>
+        // @cdk.bug 2871303
+        ///
+        /// While this test fails, Daylight says that the
+        /// SMARTS pattern used for vinylogous ester should
+        /// match benzaldehyde twice. So according to the
+        /// supplied definition this answer is actually correct.
+        /// </summary>
         //("the SMARTS pattern vinylogous ester is not strict enough - we can not fix this")
         public void TestVinylogousEster()
         {

@@ -25,11 +25,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses {
-    /**
-     * @cdk.module test-smsd
-     * @author Asad
-     */
-	 [TestClass()]
+    /// <summary>
+    // @cdk.module test-smsd
+    // @author Asad
+    /// </summary>
+     [TestClass()]
     public class BKKCKCFTest
     {
         public BKKCKCFTest() { }

@@ -34,10 +34,10 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @author Syed Asad Rahman (2012)
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @author Syed Asad Rahman (2012)
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class ShortestPathFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -70,12 +70,12 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(512, fingerprinter.Count);
         }
 
-        /**
-         * Test of ShortestPathFingerprinter method
-         *
-         * @throws InvalidSmilesException
-         * @
-         */
+        /// <summary>
+        /// Test of ShortestPathFingerprinter method
+        ///
+        // @throws InvalidSmilesException
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGenerateFingerprint()
         {
@@ -91,12 +91,12 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(1024, fingerprint1.Count);
         }
 
-        /**
-         * Test of ShortestPathFingerprinter method
-         *
-         * @throws InvalidSmilesException
-         * @
-         */
+        /// <summary>
+        /// Test of ShortestPathFingerprinter method
+        ///
+        // @throws InvalidSmilesException
+        // @
+        /// </summary>
         [TestMethod()]
         public void TestGenerateFingerprintIsSubset()
         {
@@ -118,13 +118,13 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(FingerprinterTool.IsSubset(fingerprintT, fingerprintQ));
         }
 
-        /**
-         * Test of ShortestPathFingerprinter method
-         *
-         * @throws InvalidSmilesException
-         * @
-         * @throws FileNotFoundException
-         */
+        /// <summary>
+        /// Test of ShortestPathFingerprinter method
+        ///
+        // @throws InvalidSmilesException
+        // @
+        // @throws FileNotFoundException
+        /// </summary>
         [TestMethod()]
         public void TestGenerateFingerprintIsNotASubSet1()
         {
@@ -262,11 +262,11 @@ namespace NCDK.Fingerprint
             Assert.AreEqual(1024, bs.Count); // actual bit set size
         }
 
-        /**
-         * @cdk.bug 2819557
-         *
-         * @throws CDKException
-         */
+        /// <summary>
+        // @cdk.bug 2819557
+        ///
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestBug2819557()
         {

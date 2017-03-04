@@ -25,14 +25,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK
 {
-    /**
-     * TestCase for {@link IAminoAcid} implementations.
-     *
-     * @cdk.module test-interfaces
-     *
-     * @author  Edgar Luttman <edgar@uni-paderborn.de>
-     * @cdk.created 2001-08-09
-     */
+    /// <summary>
+    /// TestCase for {@link IAminoAcid} implementations.
+    ///
+    // @cdk.module test-interfaces
+    ///
+    // @author  Edgar Luttman <edgar@uni-paderborn.de>
+    // @cdk.created 2001-08-09
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAminoAcidTest
         : AbstractMonomerTest
@@ -70,9 +70,9 @@ namespace NCDK
             Assert.IsNull(m.NTerminus);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public override void TestToString()
         {

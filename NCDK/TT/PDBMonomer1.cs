@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2005-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -48,27 +49,27 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    /**
-     * Represents the idea of an monomer as used in PDB files. It contains extra fields
-     * normally associated with atoms in such files.
-     *
-     * @cdk.module data
-     * @cdk.githash
-     *
-     * @see  PDBAtom
-     */
+    /// <summary>
+    /// Represents the idea of an monomer as used in PDB files. It contains extra fields
+    /// normally associated with atoms in such files.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @see  PDBAtom
+    /// </summary>
     public class PDBMonomer : Monomer, ICloneable, IPDBMonomer
     {
         public string ICode { get; set; }
 
-        /**
-         * Denotes which chain in the PDB file this monomer is in.
-         */
+        /// <summary>
+        /// Denotes which chain in the PDB file this monomer is in.
+        /// </summary>
         public string ChainID { get; set; }
 
-        /**
-         * Denotes which residue sequence in the current chain that this monomer is in.
-         */
+        /// <summary>
+        /// Denotes which residue sequence in the current chain that this monomer is in.
+        /// </summary>
         public string ResSeq { get; set; }
 
         public PDBMonomer()
@@ -83,12 +84,12 @@ namespace NCDK.Default
             ChainID = null;
         }
 
-        /**
-		 * Returns a one line string representation of this Atom.
-		 * Methods is conform RFC #9.
-		 *
-		 * @return  The string representation of this Atom
-		 */
+        /// <summary>
+        /// Returns a one line string representation of this Atom.
+        /// Methods is conform RFC #9.
+        ///
+        /// <returns>The string representation of this Atom</returns>
+        /// </summary>
 
         public override string ToString()
         {
@@ -102,9 +103,9 @@ namespace NCDK.Default
             return description.ToString();
         }
 
-        /**
-		 * @inheritDoc
-		 */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public override object Clone()
         {
             return (IPDBMonomer)base.Clone();
@@ -113,27 +114,27 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /**
-     * Represents the idea of an monomer as used in PDB files. It contains extra fields
-     * normally associated with atoms in such files.
-     *
-     * @cdk.module data
-     * @cdk.githash
-     *
-     * @see  PDBAtom
-     */
+    /// <summary>
+    /// Represents the idea of an monomer as used in PDB files. It contains extra fields
+    /// normally associated with atoms in such files.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @see  PDBAtom
+    /// </summary>
     public class PDBMonomer : Monomer, ICloneable, IPDBMonomer
     {
         public string ICode { get; set; }
 
-        /**
-         * Denotes which chain in the PDB file this monomer is in.
-         */
+        /// <summary>
+        /// Denotes which chain in the PDB file this monomer is in.
+        /// </summary>
         public string ChainID { get; set; }
 
-        /**
-         * Denotes which residue sequence in the current chain that this monomer is in.
-         */
+        /// <summary>
+        /// Denotes which residue sequence in the current chain that this monomer is in.
+        /// </summary>
         public string ResSeq { get; set; }
 
         public PDBMonomer()
@@ -148,12 +149,12 @@ namespace NCDK.Silent
             ChainID = null;
         }
 
-        /**
-		 * Returns a one line string representation of this Atom.
-		 * Methods is conform RFC #9.
-		 *
-		 * @return  The string representation of this Atom
-		 */
+        /// <summary>
+        /// Returns a one line string representation of this Atom.
+        /// Methods is conform RFC #9.
+        ///
+        /// <returns>The string representation of this Atom</returns>
+        /// </summary>
 
         public override string ToString()
         {
@@ -167,9 +168,9 @@ namespace NCDK.Silent
             return description.ToString();
         }
 
-        /**
-		 * @inheritDoc
-		 */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public override object Clone()
         {
             return (IPDBMonomer)base.Clone();

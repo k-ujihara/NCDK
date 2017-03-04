@@ -130,9 +130,9 @@
   
    <entry id="sphericalMatcher" term="Spherical Matcher">
     <definition>
-    	A pattern which can be matched onto a string representation of the environment
-    	of an atom, e.g.a spherical Matcher can be a regular expression for 
-    	the hose code of an atom
+        A pattern which can be matched onto a string representation of the environment
+        of an atom, e.g.a spherical Matcher can be a regular expression for 
+        the hose code of an atom
     </definition>
     <description>
     </description>

@@ -27,24 +27,24 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * Reader for MoSS output files {@cdk.cite BOR2002} which present the results
-     * of a substructure mining study. These files look like:
-     * <pre>
-     * id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel
-     * 1,S-c:c:c:c:c:c,7,6,491,5.055081,5,1.7421603
-     * 2,S-c:c:c:c:c,6,5,493,5.0756717,5,1.7421603
-     * </pre>
-     *
-     * <p><b>Caution</b>: the output contains substructures, not full molecules,
-     * even though they are read as such right now.
-     *
-     * @cdk.module  smiles
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword MoSS
-     */
+    /// <summary>
+    /// Reader for MoSS output files {@cdk.cite BOR2002} which present the results
+    /// of a substructure mining study. These files look like:
+    /// <code>
+    /// id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel
+    /// 1,S-c:c:c:c:c:c,7,6,491,5.055081,5,1.7421603
+    /// 2,S-c:c:c:c:c,6,5,493,5.0756717,5,1.7421603
+    /// </code>
+    ///
+    /// <p><b>Caution</b>: the output contains substructures, not full molecules,
+    /// even though they are read as such right now.
+    ///
+    // @cdk.module  smiles
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @cdk.keyword MoSS
+    /// </summary>
     public class MoSSOutputReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -143,12 +143,12 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Read the file content into a {@link IAtomContainerSet}.
-         * @param molSet an {@link IAtomContainerSet} to store the structures
-         * @return the {@link IAtomContainerSet} containing the molecules read in
-         * @.io.IOException if there is an error during reading
-         */
+        /// <summary>
+        /// Read the file content into a <see cref="IAtomContainerSet"/>.
+        /// <param name="molSet">an <see cref="IAtomContainerSet"/> to store the structures</param>
+        /// <returns>the <see cref="IAtomContainerSet"/> containing the molecules read in</returns>
+        /// <exception cref="IOException">if there is an error during reading</exception>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> molSet)
         {
             SmilesParser parser = new SmilesParser(molSet.Builder);

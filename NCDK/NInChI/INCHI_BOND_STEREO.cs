@@ -19,51 +19,51 @@
 
 namespace NCDK.NInChI
 {
-    /**
-     * Enumeration of InChI 2D stereo definitions.
-     * Corresponds to <tt>inchi_BondStereo2D</tt> in <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Enumeration of InChI 2D stereo definitions.
+    /// Corresponds to <tt>inchi_BondStereo2D</tt> in <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public enum INCHI_BOND_STEREO
     {
-        /**
-         * No 2D stereo definition recorded.
-         */
+        /// <summary>
+        /// No 2D stereo definition recorded.
+        /// </summary>
         None = 0,
 
-        /**
-         * Stereocenter-related; positive: the sharp end points to this atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; positive: the sharp end points to this atom.
+        /// </summary>
         Single1Up = 1,
 
-        /**
-         * Stereocenter-related; positive: the sharp end points to this atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; positive: the sharp end points to this atom.
+        /// </summary>
         Single1Either = 4,
 
-        /**
-         * Stereocenter-related; positive: the sharp end points to this atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; positive: the sharp end points to this atom.
+        /// </summary>
         Single1Down = 6,
 
-        /**
-         * Stereocenter-related; negative: the sharp end points to the opposite atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
+        /// </summary>
         Single2Up = -1,
 
-        /**
-         * Stereocenter-related; negative: the sharp end points to the opposite atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
+        /// </summary>
         Single2Either = -4,
 
-        /**
-         * Stereocenter-related; negative: the sharp end points to the opposite atom.
-         */
+        /// <summary>
+        /// Stereocenter-related; negative: the sharp end points to the opposite atom.
+        /// </summary>
         Single2Down = -6,
 
-        /**
-         * Unknown stereobond geometry.
-         */
+        /// <summary>
+        /// Unknown stereobond geometry.
+        /// </summary>
         DoubleEither = 3,
     }
 }

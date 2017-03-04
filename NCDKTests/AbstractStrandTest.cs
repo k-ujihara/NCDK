@@ -28,17 +28,15 @@ using NCDK.Common.Base;
 
 namespace NCDK
 {
-    /**
-     * Tests the functionality of {@link IStrand} implementations.
-     *
-     * @author     Martin Eklund <martin.eklund@farmbio.uu.se>
-     * @cdk.module test-interfaces
-     */
-	[TestClass()]
+    /// <summary>
+    /// Tests the functionality of <see cref="IStrand"/> implementations.
+    /// </summary>
+    // @author     Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.module test-interfaces
+    [TestClass()]
     public abstract class AbstractStrandTest
         : AbstractAtomContainerTest
     {
-
         [TestMethod()]
         public virtual void TestGetStrandName()
         {
@@ -57,10 +55,10 @@ namespace NCDK
             Assert.AreEqual("DNA", oStrand.StrandType);
         }
 
-        /** The methods above effectively test SetStrandName and
-         * SetStrandType as well, but I include SetStrandName and
-         * SetStrandType explicitly as well (for concinstency).
-         */
+        /// <summary> The methods above effectively test SetStrandName and
+        /// SetStrandType as well, but I include SetStrandName and
+        /// SetStrandType explicitly as well (for concinstency).
+        /// </summary>
 
         [TestMethod()]
         public virtual void TestSetStrandName_String()
@@ -165,14 +163,12 @@ namespace NCDK
             monomers.Add("HOH", oMono2);
 
             Assert.IsTrue(Compares.AreDeepEqual(monomers.Keys, oStrand.GetMonomerNames()));
-            /*
-             * Assert.AreEqual(3, oStrand.GetMonomerNames().Count());
-             * Assert.IsTrue
-             * (oStrand.GetMonomerNames().Contains(oMono1.MonomerName));
-             * Assert.
-             * IsTrue(oStrand.GetMonomerNames().Contains(oMono2.getMonomerName
-             * ()));
-             */
+            // Assert.AreEqual(3, oStrand.GetMonomerNames().Count());
+            // Assert.IsTrue
+            // (oStrand.GetMonomerNames().Contains(oMono1.MonomerName));
+            // Assert.
+            // IsTrue(oStrand.GetMonomerNames().Contains(oMono2.getMonomerName
+            // ()));
         }
 
         [TestMethod()]
@@ -213,11 +209,10 @@ namespace NCDK
             Assert.IsTrue(Compares.AreDeepEqual(monomers.Keys, oStrand.GetMonomerNames()));
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IStrand oStrand = (IStrand)NewChemObject();
@@ -244,11 +239,10 @@ namespace NCDK
             }
         }
 
-        /**
-         * Method to test the Clone() method
-         */
+        /// <summary>
+        /// Method to test the Clone() method
+        /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IStrand strand = (IStrand)NewChemObject();

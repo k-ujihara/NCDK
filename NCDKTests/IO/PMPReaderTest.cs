@@ -48,7 +48,7 @@ namespace NCDK.IO
         public void TestAceticAcid()
         {
             string filename = "NCDK.Data.PMP.aceticacid.pmp";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PMPReader reader = new PMPReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();
@@ -76,7 +76,7 @@ namespace NCDK.IO
         public void TestTwoAceticAcid()
         {
             string filename = "NCDK.Data.PMP.two_aceticacid.pmp";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PMPReader reader = new PMPReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             reader.Close();

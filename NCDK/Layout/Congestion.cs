@@ -28,11 +28,11 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * Measure and update a score of congestion in a molecule layout 
-     * {@cdk.cite HEL99}, {@cdk.cite Clark06}. This can be tuned in
-     * several ways but currently uses a basic '1/(dist^2)'.
-     */
+    /// <summary>
+    /// Measure and update a score of congestion in a molecule layout 
+    /// {@cdk.cite HEL99}, {@cdk.cite Clark06}. This can be tuned in
+    /// several ways but currently uses a basic '1/(dist^2)'.
+    /// </summary>
     sealed class Congestion
     {
 
@@ -54,11 +54,11 @@ namespace NCDK.Layout
             this.score = InitScore();
         }
 
-        /**
-         * Calculate the initial score.
-         *
-         * @return congestion score
-         */
+        /// <summary>
+        /// Calculate the initial score.
+        ///
+        /// <returns>congestion score</returns>
+        /// </summary>
         private double InitScore()
         {
             double score = 0;
@@ -79,15 +79,15 @@ namespace NCDK.Layout
             return score;
         }
 
-        /**
-         * Update the score considering that some atoms have moved. We only
-         * need to update the score of atom that have moved vs those that haven't
-         * since all those that moved did so together.
-         * 
-         * @param visit visit flags
-         * @param vs visit list
-         * @param n number of visited in visit list
-         */
+        /// <summary>
+        /// Update the score considering that some atoms have moved. We only
+        /// need to update the score of atom that have moved vs those that haven't
+        /// since all those that moved did so together.
+        /// 
+        /// <param name="visit">visit flags</param>
+        /// <param name="vs">visit list</param>
+        /// <param name="n">number of visited in visit list</param>
+        /// </summary>
         public void Update(bool[] visit, int[] vs, int n)
         {
             int len = atoms.Length;
@@ -110,12 +110,12 @@ namespace NCDK.Layout
             score -= subtract;
         }
 
-        /**
-         * Update the score considering the atoms have moved (provided). 
-         *
-         * @param vs visit list
-         * @param n number of visited in visit list
-         */
+        /// <summary>
+        /// Update the score considering the atoms have moved (provided). 
+        ///
+        /// <param name="vs">visit list</param>
+        /// <param name="n">number of visited in visit list</param>
+        /// </summary>
         public void Update(int[] vs, int n)
         {
             int len = atoms.Length;
@@ -138,23 +138,23 @@ namespace NCDK.Layout
             score -= subtract;
         }
 
-        /**
-         * The congestion score.
-         *
-         * @return the current score
-         */
+        /// <summary>
+        /// The congestion score.
+        ///
+        /// <returns>the current score</returns>
+        /// </summary>
         public double Score()
         {
             return score;
         }
 
-        /**
-         * Access the contribution of an atom pair to the congestion.
-         *
-         * @param i atom idx
-         * @param j atom idx
-         * @return score
-         */
+        /// <summary>
+        /// Access the contribution of an atom pair to the congestion.
+        ///
+        /// <param name="i">atom idx</param>
+        /// <param name="j">atom idx</param>
+        /// <returns>score</returns>
+        /// </summary>
         public double Contribution(int i, int j)
         {
             return contribution[i][j];

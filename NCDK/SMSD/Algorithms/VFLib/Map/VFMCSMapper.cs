@@ -57,14 +57,14 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Map
 {
-    /**
-     * This class finds MCS between query and target molecules
-     * using VF2 algorithm.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class finds MCS between query and target molecules
+    /// using VF2 algorithm.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFMCSMapper : IMapper
     {
         private IQuery query = null;
@@ -72,9 +72,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         private int currentMCSSize = -1;
         private static TimeManager timeManager = null;
 
-        /**
-         * @return the timeout
-         */
+        /// <summary>
+        /// <returns>the timeout</returns>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static double GetTimeOut() => TimeOut.Instance.Time;
 

@@ -24,37 +24,37 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This descriptor calculates the Wiener numbers. This includes the Wiener Path number
-     * and the Wiener Polarity Number.
-     * <BR>
-     * Further information is given in
-     * Wiener path number: half the sum of all the distance matrix entries; Wiener
-     * polarity number: half the sum of all the distance matrix entries with a
-     * value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
-     * <p>
-     * This descriptor uses no parameters.
-     * <p>
-     * This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
-     * or <b>explicit hydrogens</b>.
-     *
-     * Returns the  following values
-     * <ol>
-     * <li>WPATH - weiner path number
-     * <li>WPOL - weiner polarity number
-     * </ol>
-     *
-     * <p>This descriptor does not have any parameters.
-     *
-     * @author         mfe4
-     * @cdk.created        December 7, 2004
-     * @cdk.created    2004-11-03
-     * @cdk.module     qsarmolecular
-     * @cdk.githash
-     * @cdk.set        qsar-descriptors
-     * @cdk.dictref    qsar-descriptors:wienerNumbers
-     * @cdk.keyword    Wiener number
-     */
+    /// <summary>
+    /// This descriptor calculates the Wiener numbers. This includes the Wiener Path number
+    /// and the Wiener Polarity Number.
+    /// <BR>
+    /// Further information is given in
+    /// Wiener path number: half the sum of all the distance matrix entries; Wiener
+    /// polarity number: half the sum of all the distance matrix entries with a
+    /// value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
+    /// <p>
+    /// This descriptor uses no parameters.
+    /// <p>
+    /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
+    /// or <b>explicit hydrogens</b>.
+    ///
+    /// Returns the  following values
+    /// <ol>
+    /// <li>WPATH - weiner path number
+    /// <li>WPOL - weiner polarity number
+    /// </ol>
+    ///
+    /// <p>This descriptor does not have any parameters.
+    ///
+    // @author         mfe4
+    // @cdk.created        December 7, 2004
+    // @cdk.created    2004-11-03
+    // @cdk.module     qsarmolecular
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref    qsar-descriptors:wienerNumbers
+    // @cdk.keyword    Wiener number
+    /// </summary>
     public class WienerNumbersDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WPATH", "WPOL" };

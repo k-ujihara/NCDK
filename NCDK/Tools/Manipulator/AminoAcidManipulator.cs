@@ -24,25 +24,25 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Class with convenience methods that provide methods to manipulate
-     * AminoAcid's.
-     *
-     * @cdk.module  standard
-     * @cdk.githash
-     *
-     * @author      Egon Willighagen
-     * @cdk.created 2005-08-19
-     */
+    /// <summary>
+    /// Class with convenience methods that provide methods to manipulate
+    /// AminoAcid's.
+    ///
+    // @cdk.module  standard
+    // @cdk.githash
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2005-08-19
+    /// </summary>
     public class AminoAcidManipulator
     {
 
-        /**
-         * Removes the singly bonded oxygen from the acid group of the AminoAcid.
-         *
-         * @param acid AminoAcid from which to remove the oxygen
-         * @ when the C-terminus is not defined for the given AminoAcid
-         */
+        /// <summary>
+        /// Removes the singly bonded oxygen from the acid group of the AminoAcid.
+        ///
+        /// <param name="acid">AminoAcid from which to remove the oxygen</param>
+        // @ when the C-terminus is not defined for the given AminoAcid
+        /// </summary>
         public static void RemoveAcidicOxygen(IAminoAcid acid)
         {
             if (acid.CTerminus == null) throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
@@ -67,12 +67,12 @@ namespace NCDK.Tools.Manipulator
                 acid.RemoveAtomAndConnectedElectronContainers(atom);
         }
 
-        /**
-         * Adds the singly bonded oxygen from the acid group of the AminoAcid.
-         *
-         * @param  acid         AminoAcid to which to add the oxygen
-         * @ when the C-terminus is not defined for the given AminoAcid
-         */
+        /// <summary>
+        /// Adds the singly bonded oxygen from the acid group of the AminoAcid.
+        ///
+        /// <param name="acid">AminoAcid to which to add the oxygen</param>
+        // @ when the C-terminus is not defined for the given AminoAcid
+        /// </summary>
         public static void AddAcidicOxygen(IAminoAcid acid)
         {
             if (acid.CTerminus == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");

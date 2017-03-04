@@ -23,24 +23,24 @@ using System.Xml.Linq;
 
 namespace NCDK.IO.InChI
 {
-    /**
-	 * SAX2 implementation for INChI XML fragment parsing.
-	 *
-	 * <p>The supported elements are: identifier, formula and
-	 * connections. All other elements are not parsed (at this moment).
-	 * This parser is written based on the INChI files in data/ichi
-	 * for version 1.1Beta.
-	 *
-	 * <p>The returned ChemFile contains a ChemSequence in
-	 * which the ChemModel represents the molecule.
-	 *
-	 * @cdk.module extra
-	 * @cdk.githash
-	 *
-	 * @see org.openscience.cdk.io.INChIReader
-	 *
-	 * @cdk.require java1.4+
-	 */
+    /// <summary>
+    /// SAX2 implementation for INChI XML fragment parsing.
+    ///
+    /// <p>The supported elements are: identifier, formula and
+    /// connections. All other elements are not parsed (at this moment).
+    /// This parser is written based on the INChI files in data/ichi
+    /// for version 1.1Beta.
+    ///
+    /// <p>The returned ChemFile contains a ChemSequence in
+    /// which the ChemModel represents the molecule.
+    ///
+    // @cdk.module extra
+    // @cdk.githash
+    ///
+    // @see org.openscience.cdk.io.INChIReader
+    ///
+    // @cdk.require java1.4+
+    /// </summary>
     public class INChIHandler : XContentHandler
     {
         private INChIContentProcessorTool inchiTool;
@@ -51,9 +51,9 @@ namespace NCDK.IO.InChI
         private IAtomContainerSet<IAtomContainer> setOfMolecules;
         private IAtomContainer tautomer;
 
-        /**
-		 * Constructor for the IChIHandler.
-		 **/
+        /// <summary>
+        /// Constructor for the IChIHandler.
+        ///*/
         public INChIHandler()
         {
             inchiTool = new INChIContentProcessorTool();
@@ -125,15 +125,15 @@ namespace NCDK.IO.InChI
             }
         }
 
-        /**
-		 * Implementation of the StartElement() procedure overwriting the
-		 * DefaultHandler interface.
-		 *
-		 * @param uri       the Universal Resource Identifier
-		 * @param local     the local name (without namespace part)
-		 * @param raw       the complete element name (with namespace part)
-		 * @param atts      the attributes of this element
-		 */
+        /// <summary>
+        /// Implementation of the StartElement() procedure overwriting the
+        /// DefaultHandler interface.
+        ///
+        /// <param name="uri">the Universal Resource Identifier</param>
+        /// <param name="local">the local name (without namespace part)</param>
+        /// <param name="raw">the complete element name (with namespace part)</param>
+        /// <param name="atts">the attributes of this element</param>
+        /// </summary>
         public override void StartElement(XElement element)
         {
             Debug.WriteLine("startElement: ", element.ToString());

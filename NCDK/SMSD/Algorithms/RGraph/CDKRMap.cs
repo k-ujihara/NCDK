@@ -26,16 +26,16 @@
  */
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     *  An CDKRMap implements the association between an edge (bond) in G1 and an edge
-     *  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
-     *
-     * @author      Stephane Werner, IXELIS <mail@ixelis.net>,
-     *              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
-     * @cdk.created 2002-07-24
-     * @cdk.module  smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  An CDKRMap implements the association between an edge (bond) in G1 and an edge
+    ///  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
+    ///
+    // @author      Stephane Werner, IXELIS <mail@ixelis.net>,
+    ///              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
+    // @cdk.created 2002-07-24
+    // @cdk.module  smsd
+    // @cdk.githash
+    /// </summary>
     public class CDKRMap
     {
         /// <summary>
@@ -59,12 +59,12 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// </summary>
         public int Id2 { get; set; }
 
-        /**
-         *  The equals method.
-         *
-         * @param  obj  The object to compare.
-         * @return    true=if both ids equal, else false.
-         */
+        /// <summary>
+        ///  The equals method.
+        ///
+        /// <param name="obj">The object to compare.</param>
+        /// <returns>true=if both ids equal, else false.</returns>
+        /// </summary>
         public override bool Equals(object obj)
         {
             if (((CDKRMap)obj).Id1 == Id1 && ((CDKRMap)obj).Id2 == Id2)
@@ -77,10 +77,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-        * Returns a hash code for object comparison.
-        * @return    Returns a hash code for object comparison.
-        */
+        /// <summary>
+       /// Returns a hash code for object comparison.
+       /// <returns>Returns a hash code for object comparison.</returns>
+       /// </summary>
         public override int GetHashCode()
         {
             int hash = 5;

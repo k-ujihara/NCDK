@@ -23,137 +23,118 @@ using System.Linq;
 
 namespace NCDK.Formula
 {
-    /**
-	 *  Class defining an adduct object in a MolecularFormula. It maintains
-	 *   a list of list IMolecularFormula.<p>
-	 *
-	 *  Examples:
-	 * <ul>
-	 *   <li><code>[C2H4O2+Na]+</code></li>
-	 * </ul>
-	 *
-	 * @cdk.module  data
-	 * @author      miguelrojasch
-	 * @cdk.created 2007-11-20
-	 * @cdk.keyword molecular formula
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Class defining an adduct object in a MolecularFormula. It maintains
+    /// a list of list IMolecularFormula.
+    /// <para>
+    /// Examples:
+    /// <list type="bullet">
+    /// <item>[C2H4O2+Na]+</item>
+    /// </list>
+    /// </para>
+    /// </summary>
+    // @cdk.module  data
+    // @author      miguelrojasch
+    // @cdk.created 2007-11-20
+    // @cdk.keyword molecular formula
+    // @cdk.githash
     public class AdductFormula : IEnumerable<IMolecularFormula>, IAdductFormula, ICloneable
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
         private List<IMolecularFormula> components;
 
-        /**
-		 *  Constructs an empty AdductFormula.
-		 *
-		 *  @see #AdductFormula(IMolecularFormula)
-		 */
+        /// <summary>
+        /// Constructs an empty AdductFormula.
+        /// </summary>
         public AdductFormula()
         {
             components = new List<IMolecularFormula>();
         }
 
-        /**
-		 * Constructs an AdductFormula with a copy AdductFormula of another
-		 * AdductFormula (A shallow copy, i.e., with the same objects as in
-		 * the original AdductFormula).
-		 *
-		 *  @param  formula  An MolecularFormula to copy from
-		 *  @see             #AdductFormula()
-		 */
+        /// <summary>
+        /// Constructs an AdductFormula with a copy AdductFormula of another
+        /// AdductFormula (A shallow copy, i.e., with the same objects as in
+        /// the original AdductFormula).
+        /// </summary>
+        /// <param name="formula">An MolecularFormula to copy from</param>
         public AdductFormula(IMolecularFormula formula)
         {
             components = new List<IMolecularFormula>();
             components.Insert(0, formula);
         }
 
-        /**
-		 * Adds an molecularFormula to this chemObject.
-		 *
-		 * @param  formula  The molecularFormula to be added to this chemObject
-		 */
+        /// <summary>
+        /// Adds an molecularFormula to this chemObject.
+        /// </summary>
+        /// <param name="formula">The molecularFormula to be added to this chemObject</param>
         public virtual void Add(IMolecularFormula formula)
         {
             components.Add(formula);
         }
 
-        /**
-		 *  Adds all molecularFormulas in the AdductFormula to this chemObject.
-		 *
-		 * @param  formulaSet  The MolecularFormulaSet
-		 */
+        /// <summary>
+        /// Adds all molecularFormulas in the AdductFormula to this chemObject.
+        /// </summary>
+        /// <param name="formulaSet">The MolecularFormulaSet</param>
         public virtual void Add(IMolecularFormulaSet formulaSet)
         {
             foreach (var mf in formulaSet)
             {
                 Add(mf);
             }
-            /*
-			 * notifyChanged() is called by Add()
-			 */
+            // NotifyChanged() is called by Add()
         }
 
-        /**
-		 *  True, if the AdductFormula contains the given IIsotope object and not
-		 *  the instance. The method looks for other isotopes which has the same
-		 *  symbol, natural abundance and exact mass.
-		 *
-		 * @param  isotope  The IIsotope this AdductFormula is searched for
-		 * @return          True, if the AdductFormula contains the given isotope object
-		 */
+        /// <summary>
+        /// True, if the AdductFormula contains the given IIsotope object and not
+        /// the instance. The method looks for other isotopes which has the same
+        /// symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotope">The IIsotope this AdductFormula is searched for</param>
+        /// <returns>True, if the AdductFormula contains the given isotope object</returns>
         public virtual bool Contains(IIsotope isotope)
         {
-            foreach (var thisIsotope in Isotopes)
+            foreach (var thisIsotope in GetIsotopes())
                 if (IsTheSame(thisIsotope, isotope))
                     return true;
             return false;
         }
 
-        /**
-		 *  The partial charge of this Adduct. If the charge
-		 *  has not been set the return value is double.NaN.
-		 */
+        /// <summary>
+        /// The partial charge of this Adduct. If the charge
+        /// has not been set the return value is double.NaN.
+        /// </summary>
         public virtual int? Charge
         {
             get { return components.Select(n => n.Charge ?? 0).Sum(); }
             set { new FieldAccessException(); }
         }
 
-        /**
-		 *  Checks a set of Nodes for the occurrence of the isotope in the
-		 *  adduct formula from a particular isotope. It returns 0 if the does not exist.
-		 *
-		 * @param   isotope          The IIsotope to look for
-		 * @return                   The occurrence of this isotope in this adduct
-		 * @see                      #Isotopes.Count
-		 */
+        /// <summary>
+        /// Checks a set of Nodes for the occurrence of the isotope in the
+        /// adduct formula from a particular isotope. It returns 0 if the does not exist.
+        /// </summary>
+        /// <param name="isotope">The IIsotope to look for</param>
+        /// <returns>The occurrence of this isotope in this adduct</returns>
         public virtual int GetCount(IIsotope isotope)
         {
             return components.Select(nn => nn.GetCount(isotope)).Sum();
         }
 
-        /**
-		 *  Checks a set of Nodes for the number of different isotopes in the
-		 *  adduct formula.
-		 *
-		 * @return        The the number of different isotopes in this adduct formula
-		 * @see           #Isotopes.Count(IIsotope)
-		 */
+        /// <summary>
+        /// The the number of different isotopes in this adduct formula
+        /// </summary>
         public virtual int IsotopeCount => IsotopesList().Count;
 
-        /**
-		 *  Returns an IEnumerator for looping over all isotopes in this adduct formula.
-		 *
-		 * @return    An IEnumerator with the isotopes in this adduct formula
-		 */
-        public virtual IEnumerable<IIsotope> Isotopes
-            => IsotopesList();
+        /// <summary>
+        /// An IEnumerator for looping over all isotopes in this adduct formula.
+        /// </summary>
+        public virtual IEnumerable<IIsotope> GetIsotopes() => IsotopesList();
 
-        /**
-		 *  Returns a List for looping over all isotopes in this adduct formula.
-		 *
-		 * @return    A List with the isotopes in this adduct formula
-		 */
+        /// <summary>
+        /// Returns a List for looping over all isotopes in this adduct formula.
+        /// </summary>
+        /// <returns>A List with the isotopes in this adduct formula</returns>
         private List<IIsotope> IsotopesList()
         {
             List<IIsotope> isotopes = new List<IIsotope>();
@@ -166,70 +147,61 @@ namespace NCDK.Formula
             return isotopes;
         }
 
-        /**
-		 *  Returns an Iterable for looping over all IMolecularFormula
-		 *   in this adduct formula.
-		 *
-		 * @return    An Iterable with the IMolecularFormula in this adduct formula
-		 */
-        public virtual IEnumerator<IMolecularFormula> GetEnumerator()
-            => components.GetEnumerator();
+        /// <summary>
+        /// Returns an Iterable for looping over all IMolecularFormula
+        /// in this adduct formula.
+        /// </summary>
+        /// <returns>An Iterable with the IMolecularFormula in this adduct formula</returns>
+        public virtual IEnumerator<IMolecularFormula> GetEnumerator() => components.GetEnumerator();
 
-        /**
-		 * Returns the number of MolecularFormulas in this AdductFormula.
-		 *
-		 * @return     The number of MolecularFormulas in this AdductFormula
-		 */
+        /// <summary>
+        /// The number of MolecularFormulas in this AdductFormula.
+        /// </summary>
         public virtual int Count => components.Count;
 
-        /**
-		 *  True, if the AdductFormula contains the given IMolecularFormula object.
-		 *
-		 * @param  formula  The IMolecularFormula this AdductFormula is searched for
-		 * @return          True, if the AdductFormula contains the given IMolecularFormula object
-		 */
+        /// <summary>
+        /// True, if the AdductFormula contains the given IMolecularFormula object.
+        ///
+        /// <param name="formula">The IMolecularFormula this AdductFormula is searched for</param>
+        /// <returns>True, if the AdductFormula contains the given IMolecularFormula object</returns>
+        /// </summary>
         public virtual bool Contains(IMolecularFormula formula)
         {
             return components.Contains(formula);
         }
 
-        /**
-		 *
-		 * Returns the MolecularFormula at position <code>number</code> in the
-		 * chemObject.
-		 *
-		 * @param  position The position of the IMolecularFormula to be returned.
-		 * @return          The IMolecularFormula at position <code>number</code> .
-		 */
+        /// <summary>
+        /// The MolecularFormula at position <paramref name="position"/> in the hemObject.
+        /// </summary>
+        /// <param name="position">The position of the IMolecularFormula to be returned.</param>
+        /// <returns>The IMolecularFormula at position <paramref name="position"/>.</returns>
         public virtual IMolecularFormula this[int position]
         {
             get { return components[position]; }
-			set { components[position] = value; }
+            set { components[position] = value; }
         }
 
-        /**
-		 * Removes all IMolecularFormula from this chemObject.
-		 */
+        /// <summary>
+        /// Removes all IMolecularFormula from this chemObject.
+        /// </summary>
         public virtual void Clear()
         {
             components.Clear();
         }
 
-        /**
-		 * Removes an IMolecularFormula from this chemObject.
-		 *
-		 * @param  formula  The IMolecularFormula to be removed from this chemObject
-		 */
+        /// <summary>
+        /// Removes an IMolecularFormula from this chemObject.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula to be removed from this chemObject</param>
         public virtual bool Remove(IMolecularFormula formula)
         {
             return components.Remove(formula);
         }
 
-        /**
-		 * Removes an MolecularFormula from this chemObject.
-		 *
-		 * @param  position The position of the MolecularFormula to be removed from this chemObject
-		 */
+        /// <summary>
+        /// Removes an MolecularFormula from this chemObject.
+        /// </summary>
+        /// <param name="position">The position of the MolecularFormula to be removed from this chemObject</param>
         public virtual void RemoveAt(int position)
         {
             components.RemoveAt(position);
@@ -241,15 +213,15 @@ namespace NCDK.Formula
         /// <returns> The cloned object</returns>
         public virtual object Clone()
         {
-            //		/* it is not a super class of chemObject */
-            //		AdductFormula clone = (AdductFormula) base.Clone();
+            //        /* it is not a super class of chemObject */
+            //        AdductFormula clone = (AdductFormula) base.Clone();
             //        // start from scratch
-            //		clone.Clear();
+            //        clone.Clear();
             //        // clone all molecularFormulas
-            //		IEnumerator<IMolecularFormula> iterForm = this;
-            //		while(iterForm.MoveNext()){
-            //			clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
-            //		}
+            //        IEnumerator<IMolecularFormula> iterForm = this;
+            //        while(iterForm.MoveNext()){
+            //            clone.AddMolecularFormula((IMolecularFormula) iterForm.Next().Clone());
+            //        }
             AdductFormula clone = new AdductFormula();
             foreach (var form in this)
             {
@@ -263,14 +235,13 @@ namespace NCDK.Formula
             return (ICDKObject)Clone();
         }
 
-        /**
-		 * Compare to IIsotope. The method doesn't compare instance but if they
-		 * have the same symbol, natural abundance and exact mass.
-		 *
-		 * @param isotopeOne   The first Isotope to compare
-		 * @param isotopeTwo   The second Isotope to compare
-		 * @return             True, if both isotope are the same
-		 */
+        /// <summary>
+        /// Compare to IIsotope. The method doesn't compare instance but if they
+        /// have the same symbol, natural abundance and exact mass.
+        /// </summary>
+        /// <param name="isotopeOne">The first Isotope to compare</param>
+        /// <param name="isotopeTwo">The second Isotope to compare</param>
+        /// <returns>True, if both isotope are the same</returns>
         private bool IsTheSame(IIsotope isotopeOne, IIsotope isotopeTwo)
         {
             if (isotopeOne.Symbol != isotopeTwo.Symbol) return false;
@@ -309,6 +280,5 @@ namespace NCDK.Formula
 
         public IChemObjectBuilder Builder
             => Default.ChemObjectBuilder.Instance;
-
     }
 }

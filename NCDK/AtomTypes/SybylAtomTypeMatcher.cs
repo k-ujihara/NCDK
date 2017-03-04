@@ -18,22 +18,22 @@
 using NCDK.Aromaticities;
 using NCDK.AtomTypes.Mapper;
 using NCDK.Config;
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /**
-    /// Atom Type matcher for Sybyl atom types. It uses the {@link CDKAtomTypeMatcher}
+    /// <summary>
+    /// Atom Type matcher for Sybyl atom types. It uses the <see cref="CDKAtomTypeMatcher"/>
     /// for perception and then maps CDK to Sybyl atom types.
-     *
-    /// @author         egonw
-    /// @cdk.created    2008-07-13
-    /// @cdk.module     atomtype
-    /// @cdk.githash
-    /// @cdk.keyword    atom type, Sybyl
-     */
+    /// </summary>
+    // @author         egonw
+    // @cdk.created    2008-07-13
+    // @cdk.module     atomtype
+    // @cdk.githash
+    // @cdk.keyword    atom type, Sybyl
     public class SybylAtomTypeMatcher : IAtomTypeMatcher
     {
 
@@ -48,27 +48,25 @@ namespace NCDK.AtomTypes
 
         private SybylAtomTypeMatcher(IChemObjectBuilder builder)
         {
-            Stream stream = this.GetType().Assembly.GetManifestResourceStream(SYBYL_ATOM_TYPE_LIST);
+            Stream stream = ResourceLoader.GetAsStream(SYBYL_ATOM_TYPE_LIST);
             factory = AtomTypeFactory.GetInstance(stream, "owl", builder);
             cdkMatcher = CDKAtomTypeMatcher.GetInstance(builder);
-            Stream mapStream = this.GetType().Assembly.GetManifestResourceStream(CDK_TO_SYBYL_MAP);
+            Stream mapStream = ResourceLoader.GetAsStream(CDK_TO_SYBYL_MAP);
             mapper = AtomTypeMapper.GetInstance(CDK_TO_SYBYL_MAP, mapStream);
         }
 
-        /**
+        /// <summary>
         /// Returns an instance of this atom typer. It uses the given <code>builder</code> to
         /// create atom type objects.
-         *
-        /// @param builder <see cref="IChemObjectBuilder"/> to use to create {@link IAtomType} instances.
-        /// @return an instance of this atom type matcher.
-         */
+        /// </summary>
+        /// <param name="builder"><see cref="IChemObjectBuilder"/> to use to create <see cref="IAtomType"/> instances.</param>
+        /// <returns>an instance of this atom type matcher.</returns>
         public static SybylAtomTypeMatcher GetInstance(IChemObjectBuilder builder)
         {
             if (!factories.ContainsKey(builder)) factories.Add(builder, new SybylAtomTypeMatcher(builder));
             return factories[builder];
         }
 
-        /// <inheritdoc/>
         public IAtomType[] FindMatchingAtomTypes(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
@@ -96,15 +94,14 @@ namespace NCDK.AtomTypes
             return types;
         }
 
-        /**
+        /// <summary>
         /// Sybyl atom type perception for a single atom. The molecular property <i>aromaticity</i> is not perceived;
         /// Aromatic carbons will, therefore, be perceived as <i>C.2</i> and not <i>C.ar</i>. If the latter is
         /// required, please use FindMatchingAtomType(IAtomContainer) instead.
-         *
-        /// @param  atomContainer the <see cref="IAtomContainer"/> in which the atom is found
-        /// @param  atom          the {@link IAtom} to find the atom type of
-        /// @return               the atom type perceived from the given atom
-         */
+        /// </summary>
+        /// <param name="atomContainer">the <see cref="IAtomContainer"/> in which the atom is found</param>
+        /// <param name="atom">the <see cref="IAtom"/> to find the atom type of</param>
+        /// <returns>the atom type perceived from the given atom</returns>
         public IAtomType FindMatchingAtomType(IAtomContainer atomContainer, IAtom atom)
         {
             IAtomType type = cdkMatcher.FindMatchingAtomType(atomContainer, atom);

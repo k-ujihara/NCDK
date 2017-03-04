@@ -33,13 +33,9 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// A simple utility class for storing two primitive integers.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class Tuple
+    // @author John May
+    internal sealed class Tuple
     {
         private readonly int fst, snd;
 
@@ -51,9 +47,8 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Access the first value of the tuple.
-        ///
-        /// <returns>value</returns>
         /// </summary>
+        /// <returns>value</returns>
         public int First()
         {
             return fst;
@@ -61,15 +56,14 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Access the second value of the tuple.
-        ///
-        /// <returns>value</returns>
         /// </summary>
+        /// <returns>value</returns>
         public int Second()
         {
             return snd;
         }
 
-        /// <summary>@inheritDoc</summary>
+        /// <inheritdoc/>
         public override bool Equals(object o)
         {
             var tuple = o as Tuple;
@@ -82,7 +76,7 @@ namespace NCDK.Beam
             return true;
         }
 
-        /// <summary>@inheritDoc</summary>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             int result = fst;
@@ -90,7 +84,7 @@ namespace NCDK.Beam
             return result;
         }
 
-        /// <summary>@inheritDoc</summary>
+        /// <inheritdoc/>
         public override string ToString()
         {
             return "{" + fst + ", " + snd + "}";
@@ -98,11 +92,10 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create a new tuple for the provided values.
-        ///
+        /// </summary>
         /// <param name="fst">a value</param>
         /// <param name="snd">another value</param>
         /// <returns>a tuple of the two values</returns>
-        /// </summary>
         public static Tuple Of(int fst, int snd)
         {
             return new Tuple(fst, snd);

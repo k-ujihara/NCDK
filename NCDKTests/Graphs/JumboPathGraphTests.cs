@@ -24,13 +24,9 @@
 
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Graphs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Graphs
 {
@@ -93,7 +89,7 @@ namespace NCDK.Graphs
 
         /* re-invoking the Remove on the same vertex should not do anything */
         [TestMethod()]
-        public virtual void repeatRemoval()
+        public virtual void RepeatRemoval()
         {
             int ord = 3;
             int[][] k3 = CompleteGraphOfSize(ord);

@@ -31,12 +31,12 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Some simple isolated tests on functionality.
-     *
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    /// Some simple isolated tests on functionality.
+    ///
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
     [TestClass()]
     public class SmartsStereoMatchTest
     {
@@ -50,9 +50,9 @@ namespace NCDK.Isomorphisms
         }
 
         /*
-         * Query does not have an element but the target does - the query therefore
-         * is a valid mapping.
-         */
+        /// Query does not have an element but the target does - the query therefore
+        /// is a valid mapping.
+        /// </summary>
         [TestMethod()]
         public void Tetrahedral_missingInQuery()
         {
@@ -84,9 +84,9 @@ namespace NCDK.Isomorphisms
         }
 
         /*
-         * Map to different atom order which means the clockwise and anticlockwise
-         * match
-         */
+        /// Map to different atom order which means the clockwise and anticlockwise
+        /// match
+        /// </summary>
         [TestMethod()]
         public void Tetrahedral_match_swap()
         {

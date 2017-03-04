@@ -30,30 +30,20 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools
 {
-    /**
-    * TestSuite that runs all tests.
-    *
-    * @cdk.module test-reaction
-*/
+    // @cdk.module test-reaction
     [TestClass()]
     public class StructureResonanceGeneratorTest : CDKTestCase
     {
-
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         LonePairElectronChecker lpcheck = new LonePairElectronChecker();
 
-        /**
-         * Constructor of the StructureResonanceGeneratorTest.
-         */
+        /// <summary>
+        /// Constructor of the StructureResonanceGeneratorTest.
+        /// </summary>
         public StructureResonanceGeneratorTest()
                 : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestStructureResonanceGenerator()
         {
@@ -61,11 +51,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(new StructureResonanceGenerator());
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestStructureResonanceGenerator_boolean()
         {
@@ -73,11 +58,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(new StructureResonanceGenerator(true));
         }
 
-        /**
-         * A unit test suite for JUnit
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestGetReactions()
         {
@@ -85,11 +65,6 @@ namespace NCDK.Tools
             Assert.IsNotNull(new StructureResonanceGenerator().Reactions);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestSetDefaultReactions()
         {
@@ -150,16 +125,9 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         * @throws Exception Thrown to indicate the failure of this unit test
-         */
         [TestMethod()]
         public void TestSetReactions_List()
         {
-
             StructureResonanceGenerator sRG = new StructureResonanceGenerator();
             var reactionList = sRG.Reactions;
             Assert.IsNotNull(reactionList);
@@ -179,16 +147,16 @@ namespace NCDK.Tools
         }
 
         //
-        //    /**
-        //	 * <p>A unit test suite for JUnit: Resonance - CC(=[O*+])C=O</p>
-        //	 * <p>CC(=[O*+])C=O <=> C[C+]([O*])C=O <=> CC([O*])=CO <=> CC(=O)[C*][O+] <=> CC(=O)C=[O*+]</p>
-        //	 *
-        //	 * @return    The test suite
-        //	 */
-        //	[TestMethod()] public void TestGetAllStructures_IAtomContainer() {
-        //		IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //    /// <summary>
+        //    /// <p>A unit test suite for JUnit: Resonance - CC(=[O*+])C=O</p>
+        //    /// <p>CC(=[O*+])C=O &lt;=&gt; C[C+]([O*])C=O &lt;=&gt; CC([O*])=CO &lt;=&gt; CC(=O)[C*][O+] &lt;=&gt; CC(=O)C=[O*+]</p>
+        //    ///
+        //    /// <returns>The test suite</returns>
+        //    /// </summary>
+        //    [TestMethod()] public void TestGetAllStructures_IAtomContainer() {
+        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
-        //		AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
+        //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(molecule);
         //
@@ -196,79 +164,79 @@ namespace NCDK.Tools
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
         //        atom.FormalCharge = 1;
         //        List<ILonePair> selectron = molecule.GetConnectedLonePairsList(atom);
-        //		molecule.RemoveLonePair(selectron[0]);
+        //        molecule.RemoveLonePair(selectron[0]);
         //        SmilesGenerator sg = new SmilesGenerator();
-        //		Console.Out.WriteLine("> "+sg.CreateSMILES(molecule));
-        //		MakeSureAtomTypesAreRecognized(molecule);
+        //        Console.Out.WriteLine("> "+sg.CreateSMILES(molecule));
+        //        MakeSureAtomTypesAreRecognized(molecule);
         //
-        //		StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false,-1);
-        //		var setOfMolecules = gRI.GetAllStructures(molecule);
-        //		For(int i = 0; i < setOfMolecules.Count; i++)
-        //			Console.Out.WriteLine("> "+sg.CreateSMILES((IAtomContainer) setOfMolecules[i]));
+        //        StructureResonanceGenerator gRI = new StructureResonanceGenerator(true,true,true,true,false,false,-1);
+        //        var setOfMolecules = gRI.GetAllStructures(molecule);
+        //        For(int i = 0; i < setOfMolecules.Count; i++)
+        //            Console.Out.WriteLine("> "+sg.CreateSMILES((IAtomContainer) setOfMolecules[i]));
         //
         //
-        //		Iterator<IAtomContainer> containers = setOfMolecules.AtomContainers();
-        //		SmilesGenerator smiGen = new SmilesGenerator();
-        //		while (containers.HasNext()) {
-        //			Console.Out.WriteLine(smiGen.CreateSMILES(new AtomContainer(containers.Next())));
-        //		}
-        //		Assert.AreEqual(8,setOfMolecules.Count);
+        //        Iterator<IAtomContainer> containers = setOfMolecules.AtomContainers();
+        //        SmilesGenerator smiGen = new SmilesGenerator();
+        //        while (containers.HasNext()) {
+        //            Console.Out.WriteLine(smiGen.CreateSMILES(new AtomContainer(containers.Next())));
+        //        }
+        //        Assert.AreEqual(8,setOfMolecules.Count);
         //
-        //		/*1*/
+        //        /*1*/
         //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("C[C+](O)C=O");
         //        For(int i = 0; i < 4; i++)
-        //			molecule1.Atoms.Add(new Atom("H"));
-        //		molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[5], BondOrder.Single);
-        //	    molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[6], BondOrder.Single);
-        //	    molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[7], BondOrder.Single);
-        //	    molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[8], BondOrder.Single);
+        //            molecule1.Atoms.Add(new Atom("H"));
+        //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[5], BondOrder.Single);
+        //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[6], BondOrder.Single);
+        //        molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[7], BondOrder.Single);
+        //        molecule1.AddBond(molecule1.Atoms[3], molecule1.Atoms[8], BondOrder.Single);
         //        lpcheck.Saturate(molecule1);
         //        IAtom atom1 =  molecule1.Atoms[2];
         //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
         //        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
-        //		Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
+        //        Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
         //
-        ////		/*2*/
-        ////		Molecule molecule2 = (new SmilesParser()).ParseSmiles("CC(O)=CO");
-        ////		For(int i = 0; i < 4; i++)
-        ////			molecule2.Atoms.Add(new Atom("H"));
-        ////		molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[5], BondOrder.Single);
-        ////	    molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[6], BondOrder.Single);
-        ////	    molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[7], BondOrder.Single);
-        ////	    molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[8], BondOrder.Single);
+        ////        /*2*/
+        ////        Molecule molecule2 = (new SmilesParser()).ParseSmiles("CC(O)=CO");
+        ////        For(int i = 0; i < 4; i++)
+        ////            molecule2.Atoms.Add(new Atom("H"));
+        ////        molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[5], BondOrder.Single);
+        ////        molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[6], BondOrder.Single);
+        ////        molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[7], BondOrder.Single);
+        ////        molecule2.AddBond(molecule2.Atoms[3], molecule2.Atoms[8], BondOrder.Single);
         ////        lpcheck.NewSaturate(molecule2);
-        ////		IAtom atom2a =  molecule2.Atoms[2];
-        ////		molecule2.AddElectronContainer(new SingleElectron(atom2a));
+        ////        IAtom atom2a =  molecule2.Atoms[2];
+        ////        molecule2.AddElectronContainer(new SingleElectron(atom2a));
         ////
-        ////		IAtom atom2b =  molecule2.Atoms[4];
-        ////		atom2b.SetHydrogenCount(0);
-        ////		atom2b.FormalCharge = 1;
+        ////        IAtom atom2b =  molecule2.Atoms[4];
+        ////        atom2b.SetHydrogenCount(0);
+        ////        atom2b.FormalCharge = 1;
         ////
-        ////		qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
-        ////		Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[3],qAC));
-        //	}
-        //
-        //	private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
-        //            {
-        //	    Iterator<IAtom> atoms = molecule.Atoms();
-        //		CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.GetNewBuilder());
-        //		while (atoms.HasNext()) {
-        //			IAtom nextAtom = atoms.Next();
-        //			Assert.IsNotNull(
-        //				"Missing atom type for: " + nextAtom,
-        //				matcher.FindMatchingAtomType(molecule, nextAtom)
-        //			);
-        //		}
+        ////        qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
+        ////        Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[3],qAC));
         //    }
-        //	/**
-        //	 * A unit test suite for JUnit: Resonance CC(=[O*+])C=O <=> CC(=O)C=[O*+]
-        //	 *
-        //	 * @return    The test suite
-        //	 */
-        //	[TestMethod()] public void TestGetStructures_IAtomContainer() {
-        //		IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //
+        //    private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
+        //            {
+        //        Iterator<IAtom> atoms = molecule.Atoms();
+        //        CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.GetNewBuilder());
+        //        while (atoms.HasNext()) {
+        //            IAtom nextAtom = atoms.Next();
+        //            Assert.IsNotNull(
+        //                "Missing atom type for: " + nextAtom,
+        //                matcher.FindMatchingAtomType(molecule, nextAtom)
+        //            );
+        //        }
+        //    }
+        //    /// <summary>
+        //    /// A unit test suite for JUnit: Resonance CC(=[O*+])C=O &lt;=&gt; CC(=O)C=[O*+]
+        //    ///
+        //    /// <returns>The test suite</returns>
+        //    /// </summary>
+        //    [TestMethod()] public void TestGetStructures_IAtomContainer() {
+        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
         //        AddExplicitHydrogens(molecule);
-        //		AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
+        //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(molecule);
         //
@@ -276,37 +244,37 @@ namespace NCDK.Tools
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
         //        atom.FormalCharge = 1;
         //        List<ILonePair> selectron = molecule.GetConnectedLonePairsList(atom);
-        //		molecule.RemoveLonePair(selectron[selectron.Count-1]);
-        //		MakeSureAtomTypesAreRecognized(molecule);
+        //        molecule.RemoveLonePair(selectron[selectron.Count-1]);
+        //        MakeSureAtomTypesAreRecognized(molecule);
         //
-        //		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-        //		var setOfMolecules = gRI.GetStructures(molecule);
+        //        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+        //        var setOfMolecules = gRI.GetStructures(molecule);
         //
-        //		Assert.AreEqual(2,setOfMolecules.Count);
+        //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //		IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
-        //		AddExplicitHydrogens(molecule1);
-        //		lpcheck.Saturate(molecule1);
-        //		IAtom atom1 =  molecule1.Atoms[4];
-        //		molecule1.SingleElectrons.Add(new SingleElectron(atom1));
-        //		selectron = molecule1.GetConnectedLonePairsList(atom1);
-        //		molecule1.RemoveLonePair((ILonePair)selectron[0]);
-        //		atom1.FormalCharge = 1;
+        //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CC(=O)C=O");
+        //        AddExplicitHydrogens(molecule1);
+        //        lpcheck.Saturate(molecule1);
+        //        IAtom atom1 =  molecule1.Atoms[4];
+        //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
+        //        selectron = molecule1.GetConnectedLonePairsList(atom1);
+        //        molecule1.RemoveLonePair((ILonePair)selectron[0]);
+        //        atom1.FormalCharge = 1;
         //
         //
-        //		QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
-        //		Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
+        //        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
+        //        Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
         //
-        //	}
-        //	/**
-        //	 * A unit test suite for JUnit: Resonance CCC(=[O*+])C(C)=O <=> CCC(=O)C(C)=[O*+]
-        //	 *
-        //	 * @return    The test suite
-        //	 */
-        //	[TestMethod()] public void TestGetStructures2() {
-        //		IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //    }
+        //    /// <summary>
+        //    /// A unit test suite for JUnit: Resonance CCC(=[O*+])C(C)=O &lt;=&gt; CCC(=O)C(C)=[O*+]
+        //    ///
+        //    /// <returns>The test suite</returns>
+        //    /// </summary>
+        //    [TestMethod()] public void TestGetStructures2() {
+        //        IAtomContainer molecule = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
         //        AddExplicitHydrogens(molecule);
-        //		AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
+        //        AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
         //        LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         //        lpcheck.Saturate(molecule);
         //
@@ -314,34 +282,33 @@ namespace NCDK.Tools
         //        molecule.SingleElectrons.Add(new SingleElectron(atom));
         //        atom.FormalCharge = 1;
         //        List<ILonePair> selectron = molecule.GetConnectedLonePairsList(atom);
-        //		molecule.RemoveLonePair(selectron[0]);
-        //		MakeSureAtomTypesAreRecognized(molecule);
+        //        molecule.RemoveLonePair(selectron[0]);
+        //        MakeSureAtomTypesAreRecognized(molecule);
         //
-        //		StructureResonanceGenerator gRI = new StructureResonanceGenerator();
-        //		var setOfMolecules = gRI.GetStructures(molecule);
+        //        StructureResonanceGenerator gRI = new StructureResonanceGenerator();
+        //        var setOfMolecules = gRI.GetStructures(molecule);
         //
-        //		Assert.AreEqual(2,setOfMolecules.Count);
+        //        Assert.AreEqual(2,setOfMolecules.Count);
         //
-        //		IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
-        //		AddExplicitHydrogens(molecule1);
-        //		lpcheck.Saturate(molecule1);
+        //        IAtomContainer molecule1 = (new SmilesParser(Default.ChemObjectBuilder.Instance)).ParseSmiles("CCC(=O)C(C)=O");
+        //        AddExplicitHydrogens(molecule1);
+        //        lpcheck.Saturate(molecule1);
         //
         //        IAtom atom1 =  molecule1.Atoms[6];
         //        molecule1.SingleElectrons.Add(new SingleElectron(atom1));
         //        atom1.FormalCharge = 1;
         //        selectron = molecule.GetConnectedLonePairsList(atom);
-        //		molecule.RemoveLonePair((ILonePair)selectron[0]);
+        //        molecule.RemoveLonePair((ILonePair)selectron[0]);
         //
-        //		QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
-        //		Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
+        //        QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule1);
+        //        Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1],qAC));
         //
-        //	}
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+] +
-         * C-C=C-[C+]-C-[C+]-C=C + C-[C+]-C=C-C-[C+]-C=C
-         *
-         * @return    The test suite
-         */
+        //    }
+
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+] +
+        /// C-C=C-[C+]-C-[C+]-C=C + C-[C+]-C=C-C-[C+]-C=C
+        /// </summary>
         [TestMethod()]
         public void TestGetStructures_IAtomContainer()
         {
@@ -372,11 +339,9 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// </summary>
         [TestMethod()]
         public void TestFlagActiveCenter1()
         {
@@ -445,11 +410,9 @@ namespace NCDK.Tools
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C-] <=> C=C-[C-]-C
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C-] &lt;=&gt; C=C-[C-]-C
+        /// </summary>
         [TestMethod()]
         public void TesttestGetStructures2()
         {
@@ -486,13 +449,10 @@ namespace NCDK.Tools
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Formic acid  C(=O)O <=> [C+](-[O-])O <=> C([O-])=[O+]
-         *
-         *  @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Formic acid  C(=O)O &lt;=&gt; [C+](-[O-])O &lt;=&gt; C([O-])=[O+]
+        /// </summary>
+        //  @cdk.inchi InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
         [TestMethod()]
         public void TestFormicAcid()
         {
@@ -528,16 +488,12 @@ namespace NCDK.Tools
 
             QueryAtomContainer qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
-
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Formic acid  F-C=C <=> [F+]=C-[C-]
-         *
-         *  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Formic acid  F-C=C &lt;=&gt; [F+]=C-[C-]
+        /// </summary>
+        //  @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         [TestMethod()]
         public void TestFluoroethene()
         {
@@ -572,17 +528,13 @@ namespace NCDK.Tools
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(setOfMolecules[1], qAC));
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestFluorobenzene()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -656,20 +608,15 @@ namespace NCDK.Tools
             IAtomContainer product2 = setOfMolecules[4];
             qAC = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(molecule2);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(product2, qAC));
-
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestFluorobenzeneContainer()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -694,20 +641,15 @@ namespace NCDK.Tools
             IAtomContainer container = gRI.GetContainer(molecule, molecule.Atoms[0]);
 
             Assert.AreEqual(7, container.Atoms.Count);
-
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestFluorobenzene_symm()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -784,13 +726,10 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance   n1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
         [TestMethod()]
         public void TestAniline()
         {
@@ -819,13 +758,10 @@ namespace NCDK.Tools
             Assert.AreEqual(5, setOfMolecules.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance   n1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance   n1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
         [TestMethod()]
         public void TestAniline_Symm()
         {
@@ -854,13 +790,10 @@ namespace NCDK.Tools
             Assert.AreEqual(3, setOfMolecules.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         * ClC([H])=C([H])[C+]([H])[H] => [H]C([H])=C([H])[C+](Cl)[H] +
-         * Cl=C([H])[C-]([H])[C+]([H])[H] + Cl=C([H])C([H])=C([H])[H]
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// ClC([H])=C([H])[C+]([H])[H] => [H]C([H])=C([H])[C+](Cl)[H] +
+        /// Cl=C([H])[C-]([H])[C+]([H])[H] + Cl=C([H])C([H])=C([H])[H]
+        /// </summary>
         [TestMethod()]
         public void TestAllyl()
         {
@@ -884,11 +817,6 @@ namespace NCDK.Tools
             Assert.AreEqual(4, resonanceStructures.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @throws Exception
-         */
         [TestMethod()]
         public void TestAllylRadical()
         {
@@ -913,14 +841,10 @@ namespace NCDK.Tools
             Assert.AreEqual(2, resonanceStructures.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         * [H]C([H])=C([H])[O-] => O=C([H])[C-]([H])[H]
-         *
-         * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// [H]C([H])=C([H])[O-] => O=C([H])[C-]([H])[H]
+        /// </summary>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
         [TestMethod()]
         public void TestEthenolate()
         {
@@ -942,17 +866,13 @@ namespace NCDK.Tools
             Assert.AreEqual(2, resonanceStructures.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         * [H]N([H])C1=C([H])C([H])=C([H])C([H])=C1C([H])([H])[H] =>
-         *  + [H]C=1C([H])=C(C(=[N+]([H])[H])[C-]([H])C=1([H]))C([H])([H])[H]
-         *  + [H]C1=C([H])[C-]([H])C([H])=C(C1=[N+]([H])[H])C([H])([H])[H]
-         *  + [H]C=1C([H])=C([H])[C-](C(C=1([H]))=[N+]([H])[H])C([H])([H])[H]
-         *
-         * @cdk.inchi InChI=1/C7H9N/c1-6-4-2-3-5-7(6)8/h2-5H,8H2,1H3
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// [H]N([H])C1=C([H])C([H])=C([H])C([H])=C1C([H])([H])[H] =>
+        ///  + [H]C=1C([H])=C(C(=[N+]([H])[H])[C-]([H])C=1([H]))C([H])([H])[H]
+        ///  + [H]C1=C([H])[C-]([H])C([H])=C(C1=[N+]([H])[H])C([H])([H])[H]
+        ///  + [H]C=1C([H])=C([H])[C-](C(C=1([H]))=[N+]([H])[H])C([H])([H])[H]
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H9N/c1-6-4-2-3-5-7(6)8/h2-5H,8H2,1H3
         [TestMethod()]
         public void Test2Methylaniline()
         {
@@ -985,16 +905,7 @@ namespace NCDK.Tools
             Assert.AreEqual(4, resonanceStructures.Count);
         }
 
-        /**
-         *
-         * A unit test suite for JUnit.
-         *
-         * @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
-         *
-         *
-         * @return    The test suite
-         * @throws    Exception
-         */
+        // @cdk.inchi InChI=1/C8H10/c1-7-5-3-4-6-8(7)2/h3-6H,1-2H3
         [TestMethod()]
         public void Test12DimethylBenzene()
         {
@@ -1036,17 +947,13 @@ namespace NCDK.Tools
             Assert.AreEqual(2, resonanceStructures.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 <=> ...
-         *
-         * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestPreservingAromaticity()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -1103,7 +1010,6 @@ namespace NCDK.Tools
             Assert.IsTrue(prod3.Bonds[4].IsAromatic, "Bond is expected to be marked aromatic!");
             Assert.IsTrue(prod3.Bonds[5].IsAromatic, "Bond is expected to be marked aromatic!");
             Assert.IsTrue(prod3.Bonds[6].IsAromatic, "Bond is expected to be marked aromatic!");
-
         }
 
         [TestMethod()]
@@ -1119,14 +1025,9 @@ namespace NCDK.Tools
             var setOfMolecules = gRI.GetStructures(molecule);
 
             Assert.AreEqual(2, setOfMolecules.Count);
-
         }
 
-        /**
-         * A unit test for JUnit
-         *
-         * @cdk.bug      1728830
-         */
+        // @cdk.bug      1728830
         [TestMethod()]
         public void TestBenzene()
         {
@@ -1141,14 +1042,10 @@ namespace NCDK.Tools
             Assert.AreEqual(2, setOfMolecules.Count);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         * [H]C([H])=C([H])[O-] => OCC
-         *
-         * @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// [H]C([H])=C([H])[O-] => OCC
+        /// </summary>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
         [TestMethod()]
         public void TestGetContainers_IAtomContainer()
         {
@@ -1172,11 +1069,9 @@ namespace NCDK.Tools
             Assert.AreEqual(2, containers[0].Bonds.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// </summary>
         [TestMethod()]
         public void TestGetContainers2Groups()
         {
@@ -1221,11 +1116,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// </summary>
         [TestMethod()]
         public void TestGetContainer_IAtomContainer_IAtom()
         {
@@ -1269,11 +1162,9 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// </summary>
         [TestMethod()]
         public void TestGetContainer_IAtomContainer_IBond()
         {
@@ -1317,11 +1208,9 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] <=> C-[C+]-C=C-C-C=C-[C+]
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
+        /// </summary>
         [TestMethod()]
         public void TestGetID()
         {
@@ -1375,17 +1264,13 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C <=> Fc1ccccc1
-         *
-         * @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance 1-fluoro-2-methylbenzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
+        /// </summary>
+        // @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
         [TestMethod()]
         public void TestGetContainersFluoromethylbenzene()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -1420,20 +1305,15 @@ namespace NCDK.Tools
 
             Assert.AreEqual(15, molecule.Bonds.Count);
             Assert.AreEqual(7, container.Bonds.Count);
-
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance 1-fluoro-benzene  Fc1ccccc1C <=> Fc1ccccc1
-         *
-         * @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance 1-fluoro-benzene  Fc1ccccc1C &lt;=&gt; Fc1ccccc1
+        /// </summary>
+        // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestGetContainersFluorobenzene()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -1466,16 +1346,12 @@ namespace NCDK.Tools
 
             Assert.AreEqual(12, molecule.Bonds.Count);
             Assert.AreEqual(7, container.Bonds.Count);
-
         }
 
-        /**
-         * A unit test suite for JUnit: Resonance Formic acid  C-C(C)=C <=> [Cl+]=C(C)-[C-]
-         *
-         *  @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: Resonance Formic acid  C-C(C)=C &lt;=&gt; [Cl+]=C(C)-[C-]
+        /// </summary>
+        // @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
         [TestMethod()]
         public void Test1Propene2chloro()
         {
@@ -1498,13 +1374,10 @@ namespace NCDK.Tools
             Assert.AreEqual(3, setOfContainers[0].Atoms.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
-         *
-         *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
         [TestMethod()]
         public void TestBenzene1bromo4methoxy()
         {
@@ -1537,13 +1410,10 @@ namespace NCDK.Tools
             Assert.AreEqual(8, setOfContainers[0].Atoms.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: COC1=CC=C(C=C1)Br
-         *
-         *  @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: COC1=CC=C(C=C1)Br
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
         [TestMethod()]
         public void TestBenzene1bromo4methoxy_with()
         {
@@ -1578,22 +1448,13 @@ namespace NCDK.Tools
             Assert.AreEqual(8, setOfContainers[0].Atoms.Count);
         }
 
-        /**
-         * A unit test suite for JUnit
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestGetMaximalStructures()
         {
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();
             Assert.AreEqual(50, gRI.MaximalStructures);
-
         }
 
-        /**
-         * A unit test suite for JUnit
-         * @return    The test suite
-         */
         [TestMethod()]
         public void TestSetMaximalStructures_int()
         {
@@ -1604,17 +1465,13 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * A unit test suite for JUnit: c1ccccc1CN
-         *
-         *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: c1ccccc1CN
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
         [TestMethod()]
         public void TestBenzylamine()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -1644,18 +1501,14 @@ namespace NCDK.Tools
             Assert.AreEqual(6, setOfContainers[0].Atoms.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: c1ccccc1CN
-         *
-         *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-         *  @cdk.bug 2014515
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: c1ccccc1CN
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
+        // @cdk.bug 2014515
         [TestMethod()]
         public void TestBenzylamine_Aromatic()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms.Add(builder.CreateAtom("C"));
@@ -1688,17 +1541,13 @@ namespace NCDK.Tools
             Assert.AreEqual(6, setOfContainers[0].Atoms.Count);
         }
 
-        /**
-         * A unit test suite for JUnit: c1ccccc1CN
-         *
-         *  @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit: c1ccccc1CN
+        /// </summary>
+        // @cdk.inchi InChI=1/C7H9N/c8-6-7-4-2-1-3-5-7/h1-5H,6,8H2
         [TestMethod()]
         public void TestBenzylamine_Aromatic_lookingSymmetry()
         {
-
             IAtomContainer molecule = builder.CreateAtomContainer();
             molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms.Add(builder.CreateAtom("C"));

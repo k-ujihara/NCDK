@@ -17,23 +17,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * Checks the functionality of the ChemModel class.
-     *
-     * @cdk.module test-data
-     *
-     * @see org.openscience.cdk.ChemModel
-     */
+    /// <summary>
+    /// Checks the functionality of the ChemModel class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @see org.openscience.cdk.ChemModel
+    /// </summary>
     [TestClass()]
     public class ChemModelTest : AbstractChemModelTest
     {

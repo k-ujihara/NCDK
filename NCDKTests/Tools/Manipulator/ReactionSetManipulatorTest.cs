@@ -23,9 +23,9 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class ReactionSetManipulatorTest : CDKTestCase
     {
@@ -42,7 +42,7 @@ namespace NCDK.Tools.Manipulator
         {
             builder = Default.ChemObjectBuilder.Instance;
             string filename1 = "NCDK.Data.MDL.reaction-1.rxn";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNReader reader1 = new MDLRXNReader(ins1);
             set = (ReactionSet)reader1.Read(new ReactionSet());
             reader1.Close();

@@ -208,7 +208,7 @@ namespace NCDK.Graphs
         /// <param name="atomContainer">The AtomContainer to be searched</param>
         /// <param name="sphere">A sphere of atoms to start the search with</param>
         /// <param name="molecule">A molecule into which all the atoms and bonds are stored that are found during search</param>
-        public static void BreadthFirstSearch(IAtomContainer atomContainer, IList<IAtom> sphere, IAtomContainer molecule)
+        public static void BreadthFirstSearch(IAtomContainer atomContainer, IEnumerable<IAtom> sphere, IAtomContainer molecule)
         {
             // Debug.WriteLine("Staring partitioning with this ac: " + ac);
             BreadthFirstSearch(atomContainer, sphere, molecule, -1);
@@ -223,23 +223,15 @@ namespace NCDK.Graphs
         /// <param name="atom">the atom to start from</param>
         /// <param name="max">the number of neighbours to return</param>
         /// <returns> the average bond length</returns>
-        public static IAtom[] FindClosestByBond(IAtomContainer atomContainer, IAtom atom, int max)
+        public static IEnumerable<IAtom> FindClosestByBond(IAtomContainer atomContainer, IAtom atom, int max)
         {
             IAtomContainer mol = atomContainer.Builder.CreateAtomContainer();
-            IList<IAtom> v = new List<IAtom>();
-            v.Add(atom);
-            BreadthFirstSearch(atomContainer, v, mol, max);
+            BreadthFirstSearch(atomContainer, new[] { atom }, mol, max);
             IAtom[] returnValue = new IAtom[mol.Atoms.Count - 1];
-            int k = 0;
             for (int i = 0; i < mol.Atoms.Count; i++)
-            {
                 if (mol.Atoms[i] != atom)
-                {
-                    returnValue[k] = mol.Atoms[i];
-                    k++;
-                }
-            }
-            return (returnValue);
+                    yield return mol.Atoms[i];
+            yield break;
         }
 
         /// <summary>
@@ -259,8 +251,7 @@ namespace NCDK.Graphs
         /// <param name="sphere">A sphere of atoms to start the search with</param>
         /// <param name="molecule">A molecule into which all the atoms and bonds are stored that are found during search</param>
         /// <param name="max">max</param>
-        public static void BreadthFirstSearch(IAtomContainer atomContainer, IList<IAtom> sphere, IAtomContainer molecule,
-                int max)
+        public static void BreadthFirstSearch(IAtomContainer atomContainer, IEnumerable<IAtom> sphere, IAtomContainer molecule, int max)
         {
             IAtom nextAtom;
             List<IAtom> newSphere = new List<IAtom>();
@@ -292,7 +283,7 @@ namespace NCDK.Graphs
                     nextAtom = bond.GetConnectedAtom(atom);
                     if (!nextAtom.IsVisited)
                     {
-                        //					Debug.WriteLine("wie oft???");
+                        //                    Debug.WriteLine("wie oft???");
                         newSphere.Add(nextAtom);
                         nextAtom.IsVisited = true;
                     }
@@ -320,8 +311,7 @@ namespace NCDK.Graphs
         /// <param name="pathLength">The current path length, incremented and passed in recursive calls. Call this method with "zero".</param>
         /// <param name="cutOff">Stop the path search when this cutOff sphere count has been reatomContainerhed</param>
         /// <returns>The shortest path between the starting sphere and the target atom</returns>
-        public static int BreadthFirstTargetSearch(IAtomContainer atomContainer, IList<IAtom> sphere, IAtom target,
-                int pathLength, int cutOff)
+        public static int BreadthFirstTargetSearch(IAtomContainer atomContainer, IEnumerable<IAtom> sphere, IAtom target, int pathLength, int cutOff)
         {
             if (pathLength == 0) ResetFlags(atomContainer);
             pathLength++;
@@ -360,12 +350,7 @@ namespace NCDK.Graphs
             return -1;
         }
 
-#if TEST
-        public
-#else
-        protected internal
-#endif
-            static void ResetFlags(IAtomContainer atomContainer)
+        protected internal static void ResetFlags(IAtomContainer atomContainer)
         {
             for (int f = 0; f < atomContainer.Atoms.Count; f++)
             {
@@ -375,7 +360,6 @@ namespace NCDK.Graphs
             {
                 atomContainer.Bonds[f].IsVisited = false;
             }
-
         }
 
         /// <summary>
@@ -558,16 +542,15 @@ namespace NCDK.Graphs
         /// <param name="start">The starting Atom of the path</param>
         /// <param name="end">The ending Atom of the path</param>
         /// <returns>A <see cref="IEnumerable{IList{IAtom}}"/> containing all the paths between the specified atoms</returns>
-        public static IEnumerable<IList<IAtom>> GetAllPaths(IAtomContainer atomContainer, IAtom start, IAtom end)
+        public static IList<IList<IAtom>> GetAllPaths(IAtomContainer atomContainer, IAtom start, IAtom end)
         {
-            var allPaths = new List<List<IAtom>>();
+            var allPaths = new List<IList<IAtom>>();
             if (start.Equals(end)) return allPaths;
             FindPathBetween(allPaths, atomContainer, start, end, new List<IAtom>());
             return allPaths;
         }
 
-        private static void FindPathBetween(IList<List<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start,
-                IAtom end, List<IAtom> path)
+        private static void FindPathBetween(List<IList<IAtom>> allPaths, IAtomContainer atomContainer, IAtom start, IAtom end, List<IAtom> path)
         {
             if (start == end)
             {
@@ -592,15 +575,15 @@ namespace NCDK.Graphs
         /// <param name="start">The starting atom</param>
         /// <param name="length">The length of paths to look for</param>
         /// <returns>A <see cref="IEnumerable{IList{IAtom}}"/> containing the paths found</returns>
-        public static IEnumerable<IList<IAtom>> GetPathsOfLength(IAtomContainer atomContainer, IAtom start, int length)
+        public static IList<IList<IAtom>> GetPathsOfLength(IAtomContainer atomContainer, IAtom start, int length)
         {
-            var curPath = new List<IAtom>();
-            var paths = new List<List<IAtom>>();
+            IList<IAtom> curPath = new List<IAtom>();
+            var paths = new List<IList<IAtom>>();
             curPath.Add(start);
             paths.Add(curPath);
             for (int i = 0; i < length; i++)
             {
-                var tmpList = new List<List<IAtom>>();
+                var tmpList = new List<IList<IAtom>>();
                 foreach (var path in paths)
                 {
                     curPath = path;
@@ -663,7 +646,7 @@ namespace NCDK.Graphs
         /// Get all the paths starting from an atom of length 0 up to the specified
         /// length. If the number of paths exceeds the the set {@code limit} then an
         /// exception is thrown. <p/> This method returns a set of paths. Each path
-        /// is a <code>List</code> of atoms that make up the path (ie they are
+        /// is a <see cref="IList{T}"/> of <see cref="IAtom"/> that make up the path (ie they are
         /// sequentially connected).
         /// </summary>
         /// <param name="atomContainer">The molecule to consider</param>
@@ -672,8 +655,7 @@ namespace NCDK.Graphs
         /// <param name="limit">Limit the number of paths - thrown an exception if exceeded</param>
         /// <returns>A  <see cref="IList{IList{IAtom}}"/> containing the paths found</returns>
         /// <exception cref="CDKException">if the number of paths generated was larger than the limit.</exception>
-        public static IList<IList<IAtom>> GetLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length,
-                int limit)
+        public static IList<IList<IAtom>> GetLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length, int limit)
         {
             IList<IAtom> curPath = new List<IAtom>();
             List<IList<IAtom>> paths = new List<IList<IAtom>>();

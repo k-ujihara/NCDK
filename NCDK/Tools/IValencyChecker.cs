@@ -23,16 +23,16 @@
  */
 namespace NCDK.Tools
 {
-    /**
-     * A common interface for SaturationChecker and ValencyChecker. Mainly created
-     * to be able to have HydrogenAdder use both.
-     *
-     * @author         Egon Willighagen
-     * @cdk.created    2004-01-08
-     *
-     * @cdk.module     valencycheck
-     * @cdk.githash
-     */
+    /// <summary>
+    /// A common interface for SaturationChecker and ValencyChecker. Mainly created
+    /// to be able to have HydrogenAdder use both.
+    ///
+    // @author         Egon Willighagen
+    // @cdk.created    2004-01-08
+    ///
+    // @cdk.module     valencycheck
+    // @cdk.githash
+    /// </summary>
     public interface IValencyChecker
     {
         bool IsSaturated(IAtomContainer ac);

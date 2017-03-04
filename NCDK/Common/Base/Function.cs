@@ -16,35 +16,34 @@
 
 namespace NCDK.Common.Base
 {
-    /**
-     * A transformation from one object to another. For example, a
-     * {@code StringToIntegerFunction} may implement
-     * <code>Function&lt;string,Integer&gt;</code> and transform integers in
-     * {@code string} format to {@code Integer} format.
-     *
-     * <p>The transformation on the source object does not necessarily result in
-     * an object of a different type.  For example, a
-     * {@code FarenheitToCelsiusFunction} may implement
-     * <code>Function&lt;Float,Float&gt;</code>.
-     *
-     * <p>Implementations which may cause side effects upon evaluation are strongly
-     * encouraged to state this fact clearly in their API documentation.
-     *
-     * @param <F> the type of the function input
-     * @param <T> the type of the function output
-     * @author Kevin Bourrillion
-     * @author Scott Bonneau
-     */
+    /// <summary>
+    /// A transformation from one object to another. For example, a 
+    /// <c>StringToIntegerFunction</c> may implement
+    /// <c>Function&lt;string,int&gt;</c> and transform integers in
+    /// <c>string</c> format to <c>int</c> format.
+    ///
+    /// <para>The transformation on the source object does not necessarily result in
+    /// an object of a different type.  For example, a
+    /// <c>FarenheitToCelsiusFunction</c> may implement
+    /// <c>Function&lt;float,float&gt;</c>.
+    /// </para>
+    /// <para>Implementations which may cause side effects upon evaluation are strongly
+    /// encouraged to state this fact clearly in their API documentation.
+    /// </para>
+    /// </summary>
+    /// <typeparam name="F">the type of the function input</typeparam>
+    /// <typeparam name="T">the type of the function output</typeparam>
+    // @author Kevin Bourrillion
+    // @author Scott Bonneau
     public interface Function<F, T>
     {
-        /**
-         * Applies the function to an object of type {@code F}, resulting in an object
-         * of type {@code T}.  Note that types {@code F} and {@code T} may or may not
-         * be the same.
-         *
-         * @param from the source object
-         * @return the resulting object
-         */
+        /// <summary>
+        /// Applies the function to an object of type <typeparamref name="F"/>, resulting in an object
+        /// of type <typeparamref name="T"/>.  Note that types <typeparamref name="F"/> and <typeparamref name="T"/> may or may not
+        /// be the same.
+        /// </summary>
+        /// <param name="from">the source object</param>
+        /// <returns>the resulting object</returns>
         T Apply(F from);
     }
 }

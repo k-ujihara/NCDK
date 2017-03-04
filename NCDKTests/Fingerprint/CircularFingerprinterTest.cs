@@ -39,11 +39,12 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 
+
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class CircularFingerprinterTest : CDKTestCase
     {
@@ -68,7 +69,7 @@ namespace NCDK.Fingerprint
 
             string fnzip = "NCDK.Data.CDD.circular_validation.zip";
             Trace.TraceInformation("Loading source content: " + fnzip);
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(fnzip);
+            Stream ins = ResourceLoader.GetAsStream(fnzip);
             Validate(ins);
             ins.Close();
 
@@ -289,7 +290,7 @@ namespace NCDK.Fingerprint
         }
 
         [TestMethod()]
-        public void iminesDetectionDoesntCauseNPE()
+        public void IminesDetectionDoesntCauseNPE()
         {
             IAtomContainer pyrazole = new AtomContainer();
             pyrazole.Atoms.Add(Atom("H", 0, 0));
@@ -308,9 +309,9 @@ namespace NCDK.Fingerprint
             Assert.IsNotNull(circ.GetBitFingerprint(pyrazole));
         }
 
-        /**
-         * @cdk.bug 1357
-         */
+        /// <summary>
+        // @cdk.bug 1357
+        /// </summary>
         [TestMethod()]
         public void PartialCoordinatesDontCauseNPE()
         {

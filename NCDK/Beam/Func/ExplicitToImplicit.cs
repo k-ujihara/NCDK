@@ -35,11 +35,8 @@ namespace NCDK.Beam
     /// <summary>
     /// Convert a chemical graph with explicit  single or aromatic edge labels to one with implicit edge labels.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class ExplicitToImplicit
+    // @author John May
+    internal sealed class ExplicitToImplicit
         : AbstractFunction<Graph, Graph>
     {
         /// <summary>
@@ -54,7 +51,7 @@ namespace NCDK.Beam
 
             // atom/topology information doesn't change
             for (int u = 0; u < g.Order; u++) {
-                h.AddAtom(g.GetAtom_(u));
+                h.AddAtom(g.GetAtom(u));
                 h.AddTopology(g.TopologyOf(u));
             }
 
@@ -73,17 +70,16 @@ namespace NCDK.Beam
         /// Given a chemical graph and an edge in that graph, return the implicit
         /// form of that edge. Neither the graph or the edge is modified, if the edge
         /// is already explicit then 'e' is returned.
-        ///
+        /// </summary>
         /// <param name="g">chemical graph</param>
         /// <param name="e">an edge of g</param>
         /// <returns>the edge with specified explicit bond type</returns>
-        /// </summary>
         static Edge ToImplicitEdge(Graph g, Edge e) {
              int u = e.Either(), v = e.Other(u);
             if (e.Bond == Bond.Single || e.Bond == Bond.Aromatic) {
                 return new Edge(u, v,
-                                GetBondType(g.GetAtom_(u),
-                                     g.GetAtom_(v),
+                                GetBondType(g.GetAtom(u),
+                                     g.GetAtom(v),
                                      e.Bond));
             }
             return e;
@@ -92,14 +88,13 @@ namespace NCDK.Beam
         /// <summary>
         /// Given two atoms which are explicit connected determine the implicit bond
         /// type. If both atoms are aromatic but connected by a single bond the bond
-        /// type is {@link Bond#Single} otherwise it is implicit.
-        ///
+        /// type is <see cref="Bond.Single"/> otherwise it is implicit.
+        /// </summary>
         /// <param name="u">an atom</param>
         /// <param name="v">another atom </param>(connected to u)
         /// <param name="b">explicit bond type</param>
         /// <returns>the bond type</returns>
-        /// </summary>
-        static Bond GetBondType(Atom_ u, Atom_ v, Bond b) {
+        static Bond GetBondType(Atom u, Atom v, Bond b) {
             if (u.IsAromatic() && v.IsAromatic())
                 return b == Bond.Aromatic ? Bond.Implicit : b;
             else

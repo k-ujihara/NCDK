@@ -29,17 +29,14 @@ using NCDK.Common.Collections;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * CyclicVertexSearch for graphs with 64 vertices or less. This search is
-     * optimised using primitive {@literal long} values to represent vertex sets.
-     *
-     * @author John May
-     * @cdk.module core
-     */
-#if TEST
-    public
-#endif
-    class RegularCyclicVertexSearch
+    /// <summary>
+    /// CyclicVertexSearch for graphs with 64 vertices or less. This search is
+    /// optimised using primitive {@literal long} values to represent vertex sets.
+    ///
+    // @author John May
+    // @cdk.module core
+    /// </summary>
+    internal class RegularCyclicVertexSearch
         : CyclicVertexSearch
     {
         /* graph representation */
@@ -63,17 +60,12 @@ namespace NCDK.RingSearches
         /// <summary>Vertex colors - which component does each vertex belong.</summary>
         private volatile int[] colors;
 
-        /**
-         * Create a new cyclic vertex search for the provided graph.
-         *
-         * @param graph adjacency list representation of a graph
-         */
-#if TEST
-        public
-#else
-            internal
-#endif
-        RegularCyclicVertexSearch(int[][] graph)
+        /// <summary>
+        /// Create a new cyclic vertex search for the provided graph.
+        ///
+        /// <param name="graph">adjacency list representation of a graph</param>
+        /// </summary>
+        internal RegularCyclicVertexSearch(int[][] graph)
         {
 
             this.g = graph;
@@ -105,16 +97,15 @@ namespace NCDK.RingSearches
 
         }
 
-        /**
-         * Perform a depth first search from the vertex <i>v</i>.
-         *
-         * @param v    vertex to search from
-         * @param prev the state before we vistaed our parent (previous state)
-         * @param curr the current state (including our parent)
-         */
+        /// <summary>
+        /// Perform a depth first search from the vertex <i>v</i>.
+        ///
+        /// <param name="v">vertex to search from</param>
+        /// <param name="prev">the state before we vistaed our parent (previous state)</param>
+        /// <param name="curr">the current state (including our parent)</param>
+        /// </summary>
         private void Search(int v, long prev, long curr)
         {
-
             state[v] = curr; // store the state before we visited v
             curr = SetBit(curr, v); // include v in our current state (state[v] is unmodified)
             visited |= curr; // mark v as visited (or being visited)
@@ -147,24 +138,24 @@ namespace NCDK.RingSearches
             }
         }
 
-        /**
-         * Returns whether the vertex 'v' has been visited.
-         *
-         * @param v a vertex
-         * @return whether the vertex has been visited
-         */
+        /// <summary>
+        /// Returns whether the vertex 'v' has been visited.
+        ///
+        /// <param name="v">a vertex</param>
+        /// <returns>whether the vertex has been visited</returns>
+        /// </summary>
         private bool Visited(int v)
         {
             return IsBitSet(visited, v);
         }
 
-        /**
-         * Add the cycle vertices to our discovered cycles. The cycle is first
-         * checked to see if it is isolated (shares at most one vertex) or
-         * <i>potentially</i> fused.
-         *
-         * @param cycle newly discovered cyclic vertex set
-         */
+        /// <summary>
+        /// Add the cycle vertices to our discovered cycles. The cycle is first
+        /// checked to see if it is isolated (shares at most one vertex) or
+        /// <i>potentially</i> fused.
+        ///
+        /// <param name="cycle">newly discovered cyclic vertex set</param>
+        /// </summary>
         private void Add(long cycle)
         {
 
@@ -184,25 +175,25 @@ namespace NCDK.RingSearches
 
         }
 
-        /**
-         * Add an a new isolated cycle which is currently edge disjoint with all
-         * other cycles.
-         *
-         * @param cycle newly discovered cyclic vertices
-         */
+        /// <summary>
+        /// Add an a new isolated cycle which is currently edge disjoint with all
+        /// other cycles.
+        ///
+        /// <param name="cycle">newly discovered cyclic vertices</param>
+        /// </summary>
         private void AddIsolated(long cycle)
         {
             cycles.Add(cycle);
             fused.Add(false);
         }
 
-        /**
-         * Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
-         * fused it will still be added as isolated.
-         *
-         * @param cycle vertex set of a potentially fused cycle, indicated by the
-         *              set bits
-         */
+        /// <summary>
+        /// Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
+        /// fused it will still be added as isolated.
+        ///
+        /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the</param>
+        ///              set bits
+        /// </summary>
         private void AddFUsed(long cycle)
         {
 
@@ -233,15 +224,15 @@ namespace NCDK.RingSearches
             }
         }
 
-        /**
-         * Find the next index that the <i>cycle</i> intersects with by at least two
-         * vertices. If the intersect of a vertex set with another contains more
-         * then two vertices it cannot be edge disjoint.
-         *
-         * @param start start searching from here
-         * @param cycle test whether any current cycles are fused with this one
-         * @return the index of the first fused after 'start', -1 if none
-         */
+        /// <summary>
+        /// Find the next index that the <i>cycle</i> intersects with by at least two
+        /// vertices. If the intersect of a vertex set with another contains more
+        /// then two vertices it cannot be edge disjoint.
+        ///
+        /// <param name="start">start searching from here</param>
+        /// <param name="cycle">test whether any current cycles are fused with this one</param>
+        /// <returns>the index of the first fused after 'start', -1 if none</returns>
+        /// </summary>
         private int IndexOfFUsed(int start, long cycle)
         {
             for (int i = start; i < cycles.Count(); i++)
@@ -258,14 +249,14 @@ namespace NCDK.RingSearches
         /// <summary>Synchronisation lock.</summary>
         private readonly object syncLock = new object();
 
-        /**
-         * Lazily build an indexed lookup of vertex color. The vertex color
-         * indicates which cycle a given vertex belongs. If a vertex belongs to more
-         * then one cycle it is colored '0'. If a vertex belongs to no cycle it is
-         * colored '-1'.
-         *
-         * @return vertex colors
-         */
+        /// <summary>
+        /// Lazily build an indexed lookup of vertex color. The vertex color
+        /// indicates which cycle a given vertex belongs. If a vertex belongs to more
+        /// then one cycle it is colored '0'. If a vertex belongs to no cycle it is
+        /// colored '-1'.
+        ///
+        /// <returns>vertex colors</returns>
+        /// </summary>
         public int[] VertexColor()
         {
             int[] result = colors;
@@ -283,13 +274,13 @@ namespace NCDK.RingSearches
             return result;
         }
 
-        /**
-         * Build an indexed lookup of vertex color. The vertex color indicates which
-         * cycle a given vertex belongs. If a vertex belongs to more then one cycle
-         * it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-         *
-         * @return vertex colors
-         */
+        /// <summary>
+        /// Build an indexed lookup of vertex color. The vertex color indicates which
+        /// cycle a given vertex belongs. If a vertex belongs to more then one cycle
+        /// it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
+        ///
+        /// <returns>vertex colors</returns>
+        /// </summary>
         private int[] BuildVertexColor()
         {
             int[] color = new int[g.Length];
@@ -310,17 +301,17 @@ namespace NCDK.RingSearches
             return color;
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public bool Cyclic(int v)
         {
             return IsBitSet(cyclic, v);
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public bool Cyclic(int u, int v)
         {
 
@@ -351,17 +342,17 @@ namespace NCDK.RingSearches
             return colors[u] == colors[v];
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public int[] Cyclic()
         {
             return ToArray(cyclic);
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public int[][] Isolated()
         {
             List<int[]> isolated = new List<int[]>(cycles.Count());
@@ -372,10 +363,10 @@ namespace NCDK.RingSearches
             return isolated.ToArray();
         }
 
-        /**
-         * @inheritDoc
-         */
-        public int[][] FUsed()
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
+        public int[][] Fused()
         {
             List<int[]> fused = new List<int[]>(cycles.Count());
             for (int i = 0; i < cycles.Count(); i++)
@@ -385,17 +376,14 @@ namespace NCDK.RingSearches
             return fused.ToArray();
         }
 
-        /**
-         * Convert the bits of a {@code long} to an array of integers. The size of
-         * the output array is the number of bits set in the value.
-         *
-         * @param set value to convert
-         * @return array of the set bits in the long value
-         */
-#if TEST
-        public
-#endif
-        static int[] ToArray(long set)
+        /// <summary>
+        /// Convert the bits of a {@code long} to an array of integers. The size of
+        /// the output array is the number of bits set in the value.
+        ///
+        /// <param name="set">value to convert</param>
+        /// <returns>array of the set bits in the long value</returns>
+        /// </summary>
+        internal static int[] ToArray(long set)
         {
 
             int[] vertices = new int[Longs.BitCount(set)];
@@ -410,32 +398,26 @@ namespace NCDK.RingSearches
             return vertices;
         }
 
-        /**
-         * Determine if the specified bit on the value is set.
-         *
-         * @param value bits indicate that vertex is in the set
-         * @param bit   bit to test
-         * @return whether the specified bit is set
-         */
-#if TEST
-        public
-#endif
-        static bool IsBitSet(long value, int bit)
+        /// <summary>
+        /// Determine if the specified bit on the value is set.
+        ///
+        /// <param name="value">bits indicate that vertex is in the set</param>
+        /// <param name="bit">bit to test</param>
+        /// <returns>whether the specified bit is set</returns>
+        /// </summary>
+        internal static bool IsBitSet(long value, int bit)
         {
             return (value & 1L << bit) != 0;
         }
 
-        /**
-         * Set the specified bit on the value and return the modified value.
-         *
-         * @param value the value to set the bit on
-         * @param bit   the bit to set
-         * @return modified value
-         */
-#if TEST
-        public
-#endif
-            static long SetBit(long value, int bit)
+        /// <summary>
+        /// Set the specified bit on the value and return the modified value.
+        ///
+        /// <param name="value">the value to set the bit on</param>
+        /// <param name="bit">the bit to set</param>
+        /// <returns>modified value</returns>
+        /// </summary>
+        internal static long SetBit(long value, int bit)
         {
             return value | 1L << bit;
         }

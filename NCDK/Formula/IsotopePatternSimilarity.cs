@@ -3,15 +3,12 @@ using System;
 namespace NCDK.Formula
 {
 
-    /**
-    // This class gives a score hit of similarity between two different
-    // isotope abundance pattern.
-     *
+    /// <summary>
+    /// This class gives a score hit of similarity between two different isotope abundance pattern.
+    /// </summary>
     // @author Miguel Rojas Cherto
-     *
     // @cdk.module  formula
     // @cdk.githash
-     */
     public class IsotopePatternSimilarity
     {
         private double chargeToAdd;
@@ -24,18 +21,15 @@ namespace NCDK.Formula
         /// </summary>
         public double Tolerance { get; set; } = 1;
 
-        /**
-        // Compare the IMolecularFormula with a isotope
-        // abundance pattern.
-         *
-         *
-        // @param  isoto1  The Isotope pattern reference (predicted)
-        // @param  isoto2  The Isotope pattern reference (detected)
-        // @return         The hit score of similarity
-         */
+        /// <summary>
+        /// Compare the IMolecularFormula with a isotope
+        /// abundance pattern.
+        /// </summary>
+        /// <param name="isoto1">The Isotope pattern reference (predicted)</param>
+        /// <param name="isoto2">The Isotope pattern reference (detected)</param>
+        /// <returns>The hit score of similarity</returns>
         public double Compare(IsotopePattern isoto1, IsotopePattern isoto2)
         {
-
             IsotopePattern iso1 = IsotopePatternManipulator.SortAndNormalizedByIntensity(isoto1);
             IsotopePattern iso2 = IsotopePatternManipulator.SortAndNormalizedByIntensity(isoto2);
 
@@ -87,14 +81,13 @@ namespace NCDK.Formula
             return score / totalFactor;
         }
 
-        /**
-        // Search and find the closest difference in an array in terms of mass and
-        // intensity. Always return the position in this List.
-         *
-        // @param diffValue  The difference to look for
-        // @param normMass   A List of normalized masses
-        // @return           The position in the List
-         */
+        /// <summary>
+        /// Search and find the closest difference in an array in terms of mass and
+        /// intensity. Always return the position in this List.
+        /// </summary>
+        /// <param name="diffValue">The difference to look for</param>
+        /// <param name="normMass">A List of normalized masses</param>
+        /// <returns>The position in the List</returns>
         private int GetClosestDataDiff(IsotopeContainer isoContainer, IsotopePattern pattern)
         {
             double diff = 100;

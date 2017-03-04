@@ -22,12 +22,12 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO.InChI
 {
-    /**
-	 * Tool to help process INChI 1.12beta content.
-	 *
-	 * @cdk.module extra
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Tool to help process INChI 1.12beta content.
+    ///
+    // @cdk.module extra
+    // @cdk.githash
+    /// </summary>
     public class INChIContentProcessorTool
     {
         public INChIContentProcessorTool() { }
@@ -35,10 +35,10 @@ namespace NCDK.IO.InChI
         private static readonly Regex pattern1 = new Regex("([A-Z][a-z]?)(\\d+)?(.*)", RegexOptions.Compiled);
         private static readonly Regex pattern2 = new Regex("^(\\d+)-?(.*)", RegexOptions.Compiled);
 
-        /**
-		 * Processes the content from the formula field of the INChI.
-		 * Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
-		 */
+        /// <summary>
+        /// Processes the content from the formula field of the INChI.
+        /// Typical values look like C6H6, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+        /// </summary>
         public IAtomContainer ProcessFormula(IAtomContainer parsedContent, string atomsEncoding)
         {
             Debug.WriteLine("Parsing atom data: ", atomsEncoding);
@@ -84,16 +84,16 @@ namespace NCDK.IO.InChI
             return parsedContent;
         }
 
-        /**
-		 * Processes the content from the connections field of the INChI.
-		 * Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
-		 *
-		 * @param bondsEncoding the content of the INChI connections field
-		 * @param container     the atomContainer parsed from the formula field
-		 * @param source        the atom to build the path upon. If -1, then start new path
-		 *
-		 * @see   #processFormula
-		 */
+        /// <summary>
+        /// Processes the content from the connections field of the INChI.
+        /// Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
+        ///
+        /// <param name="bondsEncoding">the content of the INChI connections field</param>
+        /// <param name="container">the atomContainer parsed from the formula field</param>
+        /// <param name="source">the atom to build the path upon. If -1, then start new path</param>
+        ///
+        /// @see   #processFormula
+        /// </summary>
         public void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
         {
             Debug.WriteLine("Parsing bond data: ", bondsEncoding);
@@ -147,10 +147,10 @@ namespace NCDK.IO.InChI
             }
         }
 
-        /**
-		 * Extracts the first full branch. It extracts everything between the first
-		 * '(' and the corresponding ')' char.
-		 */
+        /// <summary>
+        /// Extracts the first full branch. It extracts everything between the first
+        /// '(' and the corresponding ')' char.
+        /// </summary>
         private string ChopBranch(string remainder)
         {
             bool doChop = false;

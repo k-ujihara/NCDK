@@ -25,41 +25,34 @@ using System.Linq;
 
 namespace NCDK.Fragment
 {
-    /**
-    // Helper methods for fragmentation algorithms.
-    // <p/>
-    // Most of these methods are specific to the fragmentation algorithms
-    // in this package and so are protected. In general, these methods will
-    // not be used by the rest of the API or by other users of the library.
-     *
+    /// <summary>
+    /// Helper methods for fragmentation algorithms.
+    /// </summary>
+    /// <remarks>
+    /// Most of these methods are specific to the fragmentation algorithms
+    /// in this package and so are protected. In general, these methods will
+    /// not be used by the rest of the API or by other users of the library.
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module fragment
-     */
     public class FragmentUtils
     {
-
-        /**
-        // Non destructively split a molecule into two parts at the specified bond.
-         *
-        // Note that if a ring bond is specified, the resultant list will contain
-        // teh opened ring twice.
-         *
-        // @param atomContainer The molecule to split
-        // @param bond The bond to split at
-        // @return A list containing the two parts of the molecule
-         */
-#if TEST
-            public
-#else
-        internal 
-#endif
-            static List<IAtomContainer> SplitMolecule(IAtomContainer atomContainer, IBond bond)
+        /// <summary>
+        /// Non destructively split a molecule into two parts at the specified bond.
+        /// </summary>
+        /// <remarks>
+        /// Note that if a ring bond is specified, the resultant list will contain
+        /// teh opened ring twice.
+        /// </remarks>
+        /// <param name="atomContainer">The molecule to split</param>
+        /// <param name="bond">The bond to split at</param>
+        /// <returns>A list containing the two parts of the molecule</returns>
+        internal static List<IAtomContainer> SplitMolecule(IAtomContainer atomContainer, IBond bond)
         {
             List<IAtomContainer> ret = new List<IAtomContainer>();
 
             foreach (var atom in bond.Atoms)
             {
-
                 // later on we'll want to make sure that the fragment doesn't contain
                 // the bond joining the current atom and the atom that is on the other side
                 IAtom excludedAtom;
@@ -96,16 +89,11 @@ namespace NCDK.Fragment
             return ret;
         }
 
-        // Given a list of bonds representing a fragment obtained by splitting the molecule
-        // at a bond, we need to create an IAtomContainer from it, containing *one* of the atoms
-        // of the splitting bond. In addition, the new IAtomContainer should not contain the
-        // splitting bond itself
-#if TEST
-        public
-#else
-        protected 
-#endif
-            static IAtomContainer MakeAtomContainer(IAtom atom, IEnumerable<IBond> parts, IAtom excludedAtom)
+        /// Given a list of bonds representing a fragment obtained by splitting the molecule
+        /// at a bond, we need to create an IAtomContainer from it, containing *one* of the atoms
+        /// of the splitting bond. In addition, the new IAtomContainer should not contain the
+        /// splitting bond itself
+        internal static IAtomContainer MakeAtomContainer(IAtom atom, IEnumerable<IBond> parts, IAtom excludedAtom)
         {
             IAtomContainer partContainer = atom.Builder.CreateAtomContainer();
             partContainer.Atoms.Add(atom);
@@ -121,12 +109,7 @@ namespace NCDK.Fragment
             return partContainer;
         }
 
-#if TEST
-        public
-#else
-        protected 
-#endif
-            static List<IBond> Traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList)
+        internal static List<IBond> Traverse(IAtomContainer atomContainer, IAtom atom, List<IBond> bondList)
         {
             var connectedBonds = atomContainer.GetConnectedBonds(atom);
             foreach (var aBond in connectedBonds)

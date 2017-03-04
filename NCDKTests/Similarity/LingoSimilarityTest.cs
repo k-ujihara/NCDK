@@ -30,9 +30,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Similarity
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class LingoSimilarityTest : CDKTestCase
     {

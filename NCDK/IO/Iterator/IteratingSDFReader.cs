@@ -32,38 +32,38 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * Iterating MDL SDF reader. It allows to iterate over all molecules
-     * in the SD file, without reading them into memory first. Suitable
-     * for (very) large SDF files. For parsing the molecules in the
-     * SD file, it uses the <code>MDLV2000Reader</code> or
-     * <code>MDLV3000Reader</code> reader; it does <b>not</b> work
-     * for SDF files with MDL formats prior to the V2000 format.
-     *
-     * <p>Example use:
-     * <pre>
-     * File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
-     * IteratingMDLReader reader = new IteratingMDLReader(
-     *   new FileInputStream(sdfFile), Default.ChemObjectBuilder.Instance
-     * );
-     * while (reader.HasNext()) {
-     *   IAtomContainer molecule = (IAtomContainer)reader.Next();
-     * }
-     * </pre>
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @see org.openscience.cdk.io.MDLV2000Reader
-     * @see org.openscience.cdk.io.MDLV3000Reader
-     *
-     * @author     Egon Willighagen <egonw@sci.kun.nl>
-     * @cdk.created    2003-10-19
-     *
-     * @cdk.keyword    file format, MDL molfile
-     * @cdk.keyword    file format, SDF
-     * @cdk.iooptions
-     */
+    /// <summary>
+    /// Iterating MDL SDF reader. It allows to iterate over all molecules
+    /// in the SD file, without reading them into memory first. Suitable
+    /// for (very) large SDF files. For parsing the molecules in the
+    /// SD file, it uses the <code>MDLV2000Reader</code> or
+    /// <code>MDLV3000Reader</code> reader; it does <b>not</b> work
+    /// for SDF files with MDL formats prior to the V2000 format.
+    ///
+    /// <p>Example use:
+    /// <code>
+    /// File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
+    /// IteratingMDLReader reader = new IteratingMDLReader(
+    ///   new FileInputStream(sdfFile), Default.ChemObjectBuilder.Instance
+    /// );
+    /// while (reader.HasNext()) {
+    ///   IAtomContainer molecule = (IAtomContainer)reader.Next();
+    /// }
+    /// </code>
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @see org.openscience.cdk.io.MDLV2000Reader
+    // @see org.openscience.cdk.io.MDLV3000Reader
+    ///
+    // @author     Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.created    2003-10-19
+    ///
+    // @cdk.keyword    file format, MDL molfile
+    // @cdk.keyword    file format, SDF
+    // @cdk.iooptions
+    /// </summary>
     public class IteratingSDFReader : DefaultIteratingChemObjectReader<IAtomContainer>
     {
 
@@ -89,54 +89,54 @@ namespace NCDK.IO.Iterator
         private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(
                                                                                              5);
 
-        /**
-         * Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
-         *
-         * @param  in  The Reader to read from
-         * @param builder The builder
-         */
+        /// <summary>
+        /// Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// <param name="builder">The builder</param>
+        /// </summary>
         public IteratingSDFReader(TextReader in_, IChemObjectBuilder builder)
             : this(in_, builder, false)
         { }
 
-        /**
-         * Constructs a new IteratingMDLReader that can read Molecule from a given Stream.
-         *
-         * @param  in  The Stream to read from
-         * @param builder The builder
-         */
+        /// <summary>
+        /// Constructs a new IteratingMDLReader that can read Molecule from a given Stream.
+        ///
+        /// <param name="in">The Stream to read from</param>
+        /// <param name="builder">The builder</param>
+        /// </summary>
         public IteratingSDFReader(Stream in_, IChemObjectBuilder builder)
             : this(new StreamReader(in_), builder)
         { }
 
-        /**
-         * Constructs a new IteratingMDLReader that can read Molecule from a given a
-         * Stream. This constructor allows specification of whether the reader will
-         * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
-         * is read the iterating reader will stop at the broken molecule. However if
-         * skip is set to true then the reader will keep trying to read more molecules
-         * until the end of the file is reached.
-         *
-         * @param in       the {@link Stream} to read from
-         * @param builder  builder to use
-         * @param skip     whether to skip null molecules
-         */
+        /// <summary>
+        /// Constructs a new IteratingMDLReader that can read Molecule from a given a
+        /// Stream. This constructor allows specification of whether the reader will
+        /// skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
+        /// is read the iterating reader will stop at the broken molecule. However if
+        /// skip is set to true then the reader will keep trying to read more molecules
+        /// until the end of the file is reached.
+        ///
+        /// <param name="in">the <see cref="Stream"/> to read from</param>
+        /// <param name="builder">builder to use</param>
+        /// <param name="skip">whether to skip null molecules</param>
+        /// </summary>
         public IteratingSDFReader(Stream in_, IChemObjectBuilder builder, bool skip)
             : this(new StreamReader(in_), builder, skip)
         { }
 
-        /**
-         * Constructs a new IteratingMDLReader that can read Molecule from a given a
-         * Reader. This constructor allows specification of whether the reader will
-         * skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
-         * is read the iterating reader will stop at the broken molecule. However if
-         * skip is set to true then the reader will keep trying to read more molecules
-         * until the end of the file is reached.
-         *
-         * @param in       the {@link Reader} to read from
-         * @param builder  builder to use
-         * @param skip     whether to skip null molecules
-         */
+        /// <summary>
+        /// Constructs a new IteratingMDLReader that can read Molecule from a given a
+        /// Reader. This constructor allows specification of whether the reader will
+        /// skip 'null' molecules. If skip is set to false and a broken/corrupted molecule
+        /// is read the iterating reader will stop at the broken molecule. However if
+        /// skip is set to true then the reader will keep trying to read more molecules
+        /// until the end of the file is reached.
+        ///
+        /// <param name="in">the <see cref="Reader"/> to read from</param>
+        /// <param name="builder">builder to use</param>
+        /// <param name="skip">whether to skip null molecules</param>
+        /// </summary>
         public IteratingSDFReader(TextReader in_, IChemObjectBuilder builder, bool skip)
         {
             this.builder = builder;
@@ -147,16 +147,16 @@ namespace NCDK.IO.Iterator
 
         public override IResourceFormat Format => currentFormat;
 
-        /**
-         *                Method will return an appropriate reader for the provided format. Each reader is stored
-         *                in a map, if no reader is available for the specified format a new reader is created. The
-         *                {@see ISimpleChemObjectReadr#SetErrorHandler(IChemObjectReaderErrorHandler)} and
-         *                {@see ISimpleChemObjectReadr#SetReaderMode(DefaultIteratingChemObjectReader)}
-         *                methods are set.
-         *
-         * @param  format The format to obtain a reader for
-         * @return        instance of a reader appropriate for the provided format
-         */
+        /// <summary>
+        ///                Method will return an appropriate reader for the provided format. Each reader is stored
+        ///                in a map, if no reader is available for the specified format a new reader is created. The
+        ///                {@see ISimpleChemObjectReadr#SetErrorHandler(IChemObjectReaderErrorHandler)} and
+        ///                {@see ISimpleChemObjectReadr#SetReaderMode(DefaultIteratingChemObjectReader)}
+        ///                methods are set.
+        ///
+        /// <param name="format">The format to obtain a reader for</param>
+        /// <returns>instance of a reader appropriate for the provided format</returns>
+        /// </summary>
         private ISimpleChemObjectReader GetReader(IChemFormat format)
         {
             // create a new reader if not mapped
@@ -281,12 +281,12 @@ namespace NCDK.IO.Iterator
             }
         }
 
-        /**
-         *        Indicate whether the reader should skip over SDF records
-         *        that cause problems. If true the reader will fetch the next
-         *        molecule
-         * @param skip ignore error molecules continue reading
-         */
+        /// <summary>
+        ///        Indicate whether the reader should skip over SDF records
+        ///        that cause problems. If true the reader will fetch the next
+        ///        molecule
+        /// <param name="skip">ignore error molecules continue reading</param>
+        /// </summary>
         public bool Skip
         {
             set

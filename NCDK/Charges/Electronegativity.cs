@@ -37,19 +37,19 @@ namespace NCDK.Charges
         private IAtomContainer acOldS;
         private double[] marsiliFactors;
 
-        /**
+        /// <summary>
         /// Constructor for the PiElectronegativity object.
-         */
+        /// </summary>
         public Electronegativity()
                 : this(6, 50)
         { }
 
-        /**
+        /// <summary>
         /// Constructor for the Electronegativity object.
-         *
-        /// @param maxIterations         The maximal number of Iteration
-        /// @param maxResonStruc         The maximal number of Resonance Structures
-         */
+        ///
+        /// <param name="maxIterations">The maximal number of Iteration</param>
+        /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
+        /// </summary>
         public Electronegativity(int maxIterations, int maxResonStruc)
         {
             peoe = new GasteigerMarsiliPartialCharges();
@@ -57,30 +57,27 @@ namespace NCDK.Charges
             MaxResonanceStructures = maxResonStruc;
         }
 
-        /**
+        /// <summary>
         /// calculate the electronegativity of orbitals sigma.
-         *
-        /// @param ac                    IAtomContainer
-        /// @param atom                  atom for which effective atom electronegativity should be calculated
-         *
-        /// @return piElectronegativity
-         */
+        ///
+        /// <param name="ac">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
+        ///
+        /// <returns>piElectronegativity</returns>
+        /// </summary>
         public double CalculateSigmaElectronegativity(IAtomContainer ac, IAtom atom)
         {
-
             return CalculateSigmaElectronegativity(ac, atom, MaxIterations, MaxResonanceStructures);
         }
 
-        /**
+        /// <summary>
         /// calculate the electronegativity of orbitals sigma.
-         *
-        /// @param ac                    IAtomContainer
-        /// @param atom                  atom for which effective atom electronegativity should be calculated
-        /// @param maxIterations         The maximal number of Iterations
-        /// @param maxResonStruc         The maximal number of Resonance Structures
-         *
-        /// @return piElectronegativity
-         */
+        /// </summary>
+        /// <param name="ac">IAtomContainer</param>
+        /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
+        /// <param name="maxIterations">The maximal number of Iterations</param>
+        /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
+        /// <returns>piElectronegativity</returns>
         public double CalculateSigmaElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc)
         {
             MaxIterations = maxIterations;

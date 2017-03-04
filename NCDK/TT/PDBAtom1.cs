@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2005-2015  Egon Willighagen <egonw@users.sf.net>
  *
@@ -47,45 +48,45 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    /**
-	 * Represents the idea of an atom as used in PDB files. It contains extra fields
-	 * normally associated with atoms in such files.
-	 *
-	 * @cdk.module data
-	 * @cdk.githash
-	 *
-	 * @see  Atom
-	 */
+    /// <summary>
+    /// Represents the idea of an atom as used in PDB files. It contains extra fields
+    /// normally associated with atoms in such files.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @see  Atom
+    /// </summary>
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {
-        /**
-		 * Constructs an IPDBAtom from a Element.
-		 *
-		 * @param element IElement to copy information from
-		 */
+        /// <summary>
+        /// Constructs an IPDBAtom from a Element.
+        ///
+        /// <param name="element">IElement to copy information from</param>
+        /// </summary>
         public PDBAtom(IElement element)
             : base(element)
         {
             InitValues();
         }
 
-        /**
-		 * Constructs an {@link IPDBAtom} from a string containing an element symbol.
-		 *
-		 * @param symbol  The string describing the element for the PDBAtom
-		 */
+        /// <summary>
+        /// Constructs an <see cref="IPDBAtom"/> from a string containing an element symbol.
+        ///
+        /// <param name="symbol">The string describing the element for the PDBAtom</param>
+        /// </summary>
         public PDBAtom(string symbol)
             : base(symbol)
         {
             InitValues();
         }
 
-        /**
-		 * Constructs an {@link IPDBAtom} from an Element and a Vector3.
-		 *
-		 * @param  symbol     The symbol of the atom
-		 * @param  coordinate The 3D coordinates of the atom
-		 */
+        /// <summary>
+        /// Constructs an <see cref="IPDBAtom"/> from an Element and a Vector3.
+        ///
+        /// <param name="symbol">The symbol of the atom</param>
+        /// <param name="coordinate">The 3D coordinates of the atom</param>
+        /// </summary>
         public PDBAtom(string symbol, Vector3 coordinate)
             : base(symbol, coordinate)
         {
@@ -113,76 +114,76 @@ namespace NCDK.Default
             base.FormalCharge = 0;
         }
 
-        /**
-		 * one entire line from the PDB entry file which describe the IPDBAtom.
-		 * It consists of 80 columns.
-		 *
-		 * @return a string with all information
-		 */
+        /// <summary>
+        /// one entire line from the PDB entry file which describe the IPDBAtom.
+        /// It consists of 80 columns.
+        ///
+        /// <returns>a string with all information</returns>
+        /// </summary>
         public virtual string Record { get; set; }
 
-        /**
-		 * The Temperature factor of this atom.
-		 */
+        /// <summary>
+        /// The Temperature factor of this atom.
+        /// </summary>
         public double? TempFactor { get; set; }
 
-        /**
-		 * The Residue name of this atom.
-		 */
+        /// <summary>
+        /// The Residue name of this atom.
+        /// </summary>
         public string ResName { get; set; }
 
-        /**
-		 * The Code for insertion of residues of this atom.
-		 */
+        /// <summary>
+        /// The Code for insertion of residues of this atom.
+        /// </summary>
         public string ICode { get; set; }
 
-        /**
-		 * The Atom name of this atom.
-		 */
+        /// <summary>
+        /// The Atom name of this atom.
+        /// </summary>
 
         public string Name { get; set; }
 
-        /**
-		 * The Chain identifier of this atom.
-		 */
+        /// <summary>
+        /// The Chain identifier of this atom.
+        /// </summary>
         public string ChainID { get; set; }
 
-        /**
-		 * The Alternate location indicator of this atom.
-		 */
+        /// <summary>
+        /// The Alternate location indicator of this atom.
+        /// </summary>
         public string AltLoc { get; set; }
 
-        /**
-		 * The Segment identifier, left-justified of this atom.
-		 */
+        /// <summary>
+        /// The Segment identifier, left-justified of this atom.
+        /// </summary>
         public string SegID { get; set; }
 
-        /**
-		 * The Atom serial number of this atom.
-		 */
+        /// <summary>
+        /// The Atom serial number of this atom.
+        /// </summary>
         public int? Serial { get; set; }
 
-        /**
-		 * The Residue sequence number of this atom.
-		 */
+        /// <summary>
+        /// The Residue sequence number of this atom.
+        /// </summary>
         public string ResSeq { get; set; }
 
         public bool Oxt { get; set; }
 
         public bool? HetAtom { get; set; }
 
-        /**
-		 * The Occupancy of this atom.
-		 */
+        /// <summary>
+        /// The Occupancy of this atom.
+        /// </summary>
 
         public double? Occupancy { get; set; }
 
-        /**
-		 * Returns a one line string representation of this Atom.
-		 * Methods is conform RFC #9.
-		 *
-		 * @return  The string representation of this Atom
-		 */
+        /// <summary>
+        /// Returns a one line string representation of this Atom.
+        /// Methods is conform RFC #9.
+        ///
+        /// <returns>The string representation of this Atom</returns>
+        /// </summary>
         public override string ToString()
         {
             StringBuilder description = new StringBuilder(150);
@@ -207,45 +208,45 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /**
-	 * Represents the idea of an atom as used in PDB files. It contains extra fields
-	 * normally associated with atoms in such files.
-	 *
-	 * @cdk.module data
-	 * @cdk.githash
-	 *
-	 * @see  Atom
-	 */
+    /// <summary>
+    /// Represents the idea of an atom as used in PDB files. It contains extra fields
+    /// normally associated with atoms in such files.
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    ///
+    // @see  Atom
+    /// </summary>
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {
-        /**
-		 * Constructs an IPDBAtom from a Element.
-		 *
-		 * @param element IElement to copy information from
-		 */
+        /// <summary>
+        /// Constructs an IPDBAtom from a Element.
+        ///
+        /// <param name="element">IElement to copy information from</param>
+        /// </summary>
         public PDBAtom(IElement element)
             : base(element)
         {
             InitValues();
         }
 
-        /**
-		 * Constructs an {@link IPDBAtom} from a string containing an element symbol.
-		 *
-		 * @param symbol  The string describing the element for the PDBAtom
-		 */
+        /// <summary>
+        /// Constructs an <see cref="IPDBAtom"/> from a string containing an element symbol.
+        ///
+        /// <param name="symbol">The string describing the element for the PDBAtom</param>
+        /// </summary>
         public PDBAtom(string symbol)
             : base(symbol)
         {
             InitValues();
         }
 
-        /**
-		 * Constructs an {@link IPDBAtom} from an Element and a Vector3.
-		 *
-		 * @param  symbol     The symbol of the atom
-		 * @param  coordinate The 3D coordinates of the atom
-		 */
+        /// <summary>
+        /// Constructs an <see cref="IPDBAtom"/> from an Element and a Vector3.
+        ///
+        /// <param name="symbol">The symbol of the atom</param>
+        /// <param name="coordinate">The 3D coordinates of the atom</param>
+        /// </summary>
         public PDBAtom(string symbol, Vector3 coordinate)
             : base(symbol, coordinate)
         {
@@ -273,76 +274,76 @@ namespace NCDK.Silent
             base.FormalCharge = 0;
         }
 
-        /**
-		 * one entire line from the PDB entry file which describe the IPDBAtom.
-		 * It consists of 80 columns.
-		 *
-		 * @return a string with all information
-		 */
+        /// <summary>
+        /// one entire line from the PDB entry file which describe the IPDBAtom.
+        /// It consists of 80 columns.
+        ///
+        /// <returns>a string with all information</returns>
+        /// </summary>
         public virtual string Record { get; set; }
 
-        /**
-		 * The Temperature factor of this atom.
-		 */
+        /// <summary>
+        /// The Temperature factor of this atom.
+        /// </summary>
         public double? TempFactor { get; set; }
 
-        /**
-		 * The Residue name of this atom.
-		 */
+        /// <summary>
+        /// The Residue name of this atom.
+        /// </summary>
         public string ResName { get; set; }
 
-        /**
-		 * The Code for insertion of residues of this atom.
-		 */
+        /// <summary>
+        /// The Code for insertion of residues of this atom.
+        /// </summary>
         public string ICode { get; set; }
 
-        /**
-		 * The Atom name of this atom.
-		 */
+        /// <summary>
+        /// The Atom name of this atom.
+        /// </summary>
 
         public string Name { get; set; }
 
-        /**
-		 * The Chain identifier of this atom.
-		 */
+        /// <summary>
+        /// The Chain identifier of this atom.
+        /// </summary>
         public string ChainID { get; set; }
 
-        /**
-		 * The Alternate location indicator of this atom.
-		 */
+        /// <summary>
+        /// The Alternate location indicator of this atom.
+        /// </summary>
         public string AltLoc { get; set; }
 
-        /**
-		 * The Segment identifier, left-justified of this atom.
-		 */
+        /// <summary>
+        /// The Segment identifier, left-justified of this atom.
+        /// </summary>
         public string SegID { get; set; }
 
-        /**
-		 * The Atom serial number of this atom.
-		 */
+        /// <summary>
+        /// The Atom serial number of this atom.
+        /// </summary>
         public int? Serial { get; set; }
 
-        /**
-		 * The Residue sequence number of this atom.
-		 */
+        /// <summary>
+        /// The Residue sequence number of this atom.
+        /// </summary>
         public string ResSeq { get; set; }
 
         public bool Oxt { get; set; }
 
         public bool? HetAtom { get; set; }
 
-        /**
-		 * The Occupancy of this atom.
-		 */
+        /// <summary>
+        /// The Occupancy of this atom.
+        /// </summary>
 
         public double? Occupancy { get; set; }
 
-        /**
-		 * Returns a one line string representation of this Atom.
-		 * Methods is conform RFC #9.
-		 *
-		 * @return  The string representation of this Atom
-		 */
+        /// <summary>
+        /// Returns a one line string representation of this Atom.
+        /// Methods is conform RFC #9.
+        ///
+        /// <returns>The string representation of this Atom</returns>
+        /// </summary>
         public override string ToString()
         {
             StringBuilder description = new StringBuilder(150);

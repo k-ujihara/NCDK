@@ -9,11 +9,8 @@ namespace NCDK.Beam
     /// (trigonal topology) - remove the topology but add in direction up/down edge
     /// labels.
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class FromTrigonalTopology : AbstractFunction<Graph, Graph>
+    // @author John May
+    internal sealed class FromTrigonalTopology : AbstractFunction<Graph, Graph>
     {
 
         public override Graph Apply(Graph g)
@@ -29,7 +26,7 @@ namespace NCDK.Beam
                 }
                 else
                 {
-                    h.AddAtom(g.GetAtom_(u));
+                    h.AddAtom(g.GetAtom(u));
                     h.AddTopology(g.TopologyOf(u));
                 }
             }
@@ -56,9 +53,9 @@ namespace NCDK.Beam
             return h;
         }
 
-        private Atom_ ReducedAtom(Graph g, int u)
+        private Atom ReducedAtom(Graph g, int u)
         {
-            Atom_ a = g.GetAtom_(u);
+            Atom a = g.GetAtom(u);
 
             int sum = 0;
             foreach (var e in g.GetEdges(u))
@@ -66,7 +63,7 @@ namespace NCDK.Beam
                 sum += e.Bond.Order;
             }
 
-            return ToSubsetAtoms.ToSubset(g.GetAtom_(u), g, u);
+            return ToSubsetAtoms.ToSubset(g.GetAtom(u), g, u);
         }
 
         private sealed class Traversal

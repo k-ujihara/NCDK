@@ -24,34 +24,32 @@ using System;
 
 namespace NCDK.Geometries.CIP
 {
-    /**
-     * Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
-     *
-     * <p>The data model defines the central, chiral {@link IAtom},
-     * and its four {@link ILigand}s, each of which has an ligand {@link IAtom}, directly bonded to the chiral atom via
-     * an {@link IBond}. The ordering of the four ligands is important, and defines together with the {@link STEREO}
-     * to spatial geometry around the chiral atom. The first ligand points towards to observer, and the three other
-     * ligands point away from the observer; the {@link STEREO} then defines the order of the second, third, and
-     * fourth ligand to be clockwise or anti-clockwise.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
+    /// </summary>
+    /// <remarks>
+    /// <p>The data model defines the central, chiral <see cref="IAtom"/>,
+    /// and its four <see cref="ILigand"/>s, each of which has an ligand <see cref="IAtom"/>, directly bonded to the chiral atom via
+    /// an <see cref="IBond"/>. The ordering of the four ligands is important, and defines together with the <see cref="Stereo"/>
+    /// to spatial geometry around the chiral atom. The first ligand points towards to observer, and the three other
+    /// ligands point away from the observer; the <see cref="Stereo"/> then defines the order of the second, third, and
+    /// fourth ligand to be clockwise or anti-clockwise.
+    /// </remarks>
+    // @cdk.module cip
+    // @cdk.githash
     public class LigancyFourChirality
     {
         private IAtom chiralAtom;
         private ILigand[] ligands;
         private TetrahedralStereo stereo;
 
-        /**
-         * Creates a new data model for chirality for the CIP rules.
-         *
-         * @param chiralAtom The {@link IAtom} that is actually chiral.
-         * @param ligands    An array with exactly four {@link ILigand}s.
-         * @param stereo     A indication of clockwise or anticlockwise orientation of the atoms.
-         *
-         * @see TetrahedralStereo
-         */
+        /// <summary>
+        /// Creates a new data model for chirality for the CIP rules.
+        /// </summary>
+        /// <param name="chiralAtom">The <see cref="IAtom"/> that is actually chiral.</param>
+        /// <param name="ligands">An array with exactly four <see cref="ILigand"/>s.</param>
+        /// <param name="stereo">A indication of clockwise or anticlockwise orientation of the atoms.</param>
+        /// <seealso cref="TetrahedralStereo"/>
         public LigancyFourChirality(IAtom chiralAtom, ILigand[] ligands, TetrahedralStereo stereo)
         {
             this.chiralAtom = chiralAtom;
@@ -59,13 +57,12 @@ namespace NCDK.Geometries.CIP
             this.stereo = stereo;
         }
 
-        /**
-         * Creates a new data model for chirality for the CIP rules based on a chirality definition
-         * in the CDK data model with {@link ITetrahedralChirality}.
-         *
-         * @param container    <see cref="IAtomContainer"/> to which the chiral atom belongs.
-         * @param cdkChirality {@link ITetrahedralChirality} object specifying the chirality.
-         */
+        /// <summary>
+        /// Creates a new data model for chirality for the CIP rules based on a chirality definition
+        /// in the CDK data model with <see cref="ITetrahedralChirality"/>.
+        /// </summary>
+        /// <param name="container"><see cref="IAtomContainer"/> to which the chiral atom belongs.</param>
+        /// <param name="cdkChirality"><see cref="ITetrahedralChirality"/> object specifying the chirality.</param>
         public LigancyFourChirality(IAtomContainer container, ITetrahedralChirality cdkChirality)
         {
             this.chiralAtom = cdkChirality.ChiralAtom;
@@ -87,33 +84,29 @@ namespace NCDK.Geometries.CIP
             this.stereo = cdkChirality.Stereo;
         }
 
-        /**
-         * Returns the four ligands for this chirality.
-         *
-         * @return An array of four {@link ILigand}s.
-         */
+        /// <summary>
+        /// Returns the four ligands for this chirality.
+        /// </summary>
+        /// <returns>An array of four <see cref="ILigand"/>s.</returns>
         public ILigand[] Ligands => ligands;
 
-        /**
-         * Returns the chiral {@link IAtom} to which the four ligands are connected..
-         *
-         * @return The chiral {@link IAtom}.
-         */
+        /// <summary>
+        /// Returns the chiral <see cref="IAtom"/> to which the four ligands are connected..
+        /// </summary>
+        /// <returns>The chiral <see cref="IAtom"/>.</returns>
         public IAtom ChiralAtom => chiralAtom;
 
-        /**
-         * Returns the chirality value for this stereochemistry object.
-         *
-         * @return A {@link TetrahedralStereo} value.
-         */
+        /// <summary>
+        /// Returns the chirality value for this stereochemistry object.
+        /// </summary>
+        /// <returns>A <see cref="TetrahedralStereo"/> value.</returns>
         public TetrahedralStereo Stereo => stereo;
 
-        /**
-         * Recalculates the {@link LigancyFourChirality} based on the new, given atom ordering.
-         *
-         * @param newOrder new order of atoms
-         * @return the chirality following the new atom order
-         */
+        /// <summary>
+        /// Recalculates the <see cref="LigancyFourChirality"/> based on the new, given atom ordering.
+        /// </summary>
+        /// <param name="newOrder">new order of atoms</param>
+        /// <returns>the chirality following the new atom order</returns>
         public LigancyFourChirality Project(ILigand[] newOrder)
         {
             TetrahedralStereo newStereo = this.stereo;

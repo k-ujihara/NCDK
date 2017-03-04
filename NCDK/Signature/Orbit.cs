@@ -45,7 +45,7 @@ namespace NCDK.Signature {
         /// </summary>
         private string label;
 
-		 /// <summary>
+         /// <summary>
          /// The maximum height of the signature string
          /// </summary>
         private int height;

@@ -30,13 +30,13 @@ namespace <#= ns.NS #>
         
         public void AddNTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             nTerminus = atom;
         }
 
         public void AddCTerminus(IAtom atom)
         {
-            base.Add(atom);	//  OnStateChanged is called here
+            base.Add(atom);    //  OnStateChanged is called here
             cTerminus = atom;
         }
 

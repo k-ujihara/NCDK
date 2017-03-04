@@ -21,8 +21,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.IO.Formats;
+using NCDK.LibIO.DotNetRDF;
 using System;
 using System.IO;
+using VDS.RDF;
+using VDS.RDF.Parsing;
 
 namespace NCDK.IO.RDF
 {
@@ -59,11 +62,10 @@ namespace NCDK.IO.RDF
         public override IResourceFormat Format => CDKOWLFormat.Instance;
 
         /// <summary>
-        /// This method must not be used; XML reading requires the use of an
-        /// <see cref="Stream"/>. Use <see cref="SetReader(Stream)"/> instead.
+        /// This method must not be used; XML reading requires the use of a <see cref="Stream"/>.
         /// </summary>
         /// <param name="reader">reader to which should be written.</param>
-        [Obsolete]
+        [Obsolete("Use " + nameof(SetReader) + "(" + nameof(Stream) + ") instead.")]
         public override void SetReader(TextReader reader)
         {
             this.input = reader;
@@ -83,20 +85,24 @@ namespace NCDK.IO.RDF
         public override T Read<T>(T obj)
         {
             if (!(obj is IAtomContainer))
-                throw new CDKException("Only supported is reading of IAtomCOntainer objects.");
-            IAtomContainer result = (IAtomContainer)obj;
+                throw new CDKException($"Only supported is reading of {nameof(IAtomContainer)} objects.");
+            return (T)Read((IAtomContainer)obj);
+        }
+
+        public IAtomContainer Read(IAtomContainer obj)
+        { 
+            IAtomContainer result = obj;
 
             // do the actual parsing
-#if true
-            throw new NotImplementedException();
-#else
-            Model model = ModelFactory.CreateDefaultModel();
-            model.Read(input, "", "N3");
 
-            IAtomContainer mol = Convertor.Model2Molecule(model, obj.Builder);
+            IGraph model = new Graph();
+            TurtleParser parser = new TurtleParser();
+            parser.Load(model, input);
+
+            var convertor = new Convertor(model);
+            IAtomContainer mol = convertor.Model2Molecule(obj.Builder);
             result.Add(mol);
-            return (T)result;
-#endif
+            return result;
         }
 
         public override void Close()

@@ -28,25 +28,25 @@ using System.Linq;
 
 namespace NCDK.StructGen.Stochastic
 {
-    /**
-     * Randomly generates a single, connected, correctly bonded structure from
-     * a number of fragments.
-     * <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
-     * in the atom pool but should be assigned implicitly to the heavy atoms in
-     * order to reduce computational cost.
-     *
-     * @author     steinbeck
-     * @cdk.created    2001-09-04
-     * @cdk.module     structgen
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Randomly generates a single, connected, correctly bonded structure from
+    /// a number of fragments.
+    /// <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
+    /// in the atom pool but should be assigned implicitly to the heavy atoms in
+    /// order to reduce computational cost.
+    ///
+    // @author     steinbeck
+    // @cdk.created    2001-09-04
+    // @cdk.module     structgen
+    // @cdk.githash
+    /// </summary>
     public class PartialFilledStructureMerger
     {
         SaturationChecker satCheck;
 
-        /**
-         * Constructor for the PartialFilledStructureMerger object.
-         */
+        /// <summary>
+        /// Constructor for the PartialFilledStructureMerger object.
+        /// </summary>
         public PartialFilledStructureMerger()
         {
             satCheck = new SaturationChecker();
@@ -132,12 +132,12 @@ namespace NCDK.StructGen.Stochastic
             return atomContainers[0];
         }
 
-        /**
-         *  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
-         *  container than exclusionAtom.
-         *
-         * @return  The unsaturated atom.
-         */
+        /// <summary>
+        ///  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
+        ///  container than exclusionAtom.
+        ///
+        /// <returns>The unsaturated atom.</returns>
+        /// </summary>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainerSet<IAtomContainer> atomContainers)
         {
             IAtom atom;

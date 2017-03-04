@@ -26,30 +26,27 @@ using System;
 
 namespace NCDK.Hash
 {
-    /**
-     * A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The
-     * provided {@link AtomHashGenerator} is used to produce individual atom hash
-     * codes. These are then combined together in an order independent manner to
-     * generate a single hash code for the molecule.
-     *
-     * <blockquote><pre>
-     * AtomHashGenerator     atomGenerator = ...;
-     * MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
-     *
-     * IAtomContainer benzene  = MoleculeFactory.MakeBenzene();
-     * long           hashCode = generator.Generate(benzene);
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see AtomHashGenerator
-     * @see BasicAtomHashGenerator
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        sealed class BasicMoleculeHashGenerator : MoleculeHashGenerator
+    /// <summary>
+    /// A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The
+    /// provided <see cref="AtomHashGenerator"/> is used to produce individual atom hash
+    /// codes. These are then combined together in an order independent manner to
+    /// generate a single hash code for the molecule.
+    ///
+    /// <example><code>
+    /// AtomHashGenerator     atomGenerator = ...;
+    /// MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
+    ///
+    /// IAtomContainer benzene  = MoleculeFactory.MakeBenzene();
+    /// long           hashCode = generator.Generate(benzene);
+    /// </code></example>
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// <seealso cref="AtomHashGenerator"/>
+    /// <seealso cref="BasicAtomHashGenerator"/>
+    // @cdk.githash
+    /// </summary>
+    internal sealed class BasicMoleculeHashGenerator : MoleculeHashGenerator
     {
 
         /* generator for atom hashes */
@@ -58,29 +55,26 @@ namespace NCDK.Hash
         /* pseudorandom number generator */
         private readonly Pseudorandom pseudorandom;
 
-        /**
-         * Create a new molecule hash using the provided atom hash generator.
-         *
-         * @param generator a generator for atom hash codes
-         * @throws NullPointerException no generator provided
-         */
+        /// <summary>
+        /// Create a new molecule hash using the provided atom hash generator.
+        ///
+        /// <param name="generator">a generator for atom hash codes</param>
+        /// <exception cref="NullPointerException">no generator provided</exception>
+        /// </summary>
         public BasicMoleculeHashGenerator(AtomHashGenerator generator)
             : this(generator, new Xorshift())
         { }
 
-        /**
-         * Create a new molecule hash using the provided atom hash generator and
-         * pseudorandom number generator.
-         *
-         * @param generator    a generator for atom hash codes
-         * @param pseudorandom pseudorandom number generator
-         * @throws NullPointerException no atom hash generator or pseudorandom
-         *                              number generator provided
-         */
-#if TEST
-        public
-#endif
-            BasicMoleculeHashGenerator(AtomHashGenerator generator, Pseudorandom pseudorandom)
+        /// <summary>
+        /// Create a new molecule hash using the provided atom hash generator and
+        /// pseudorandom number generator.
+        ///
+        /// <param name="generator">a generator for atom hash codes</param>
+        /// <param name="pseudorandom">pseudorandom number generator</param>
+        /// <exception cref="NullPointerException">no atom hash generator or pseudorandom</exception>
+        ///                              number generator provided
+        /// </summary>
+        internal BasicMoleculeHashGenerator(AtomHashGenerator generator, Pseudorandom pseudorandom)
         {
             if (generator == null) throw new ArgumentNullException("no AtomHashGenerator provided");
             if (pseudorandom == null) throw new ArgumentNullException("no Pseudorandom number generator provided");

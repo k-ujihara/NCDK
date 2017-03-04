@@ -28,12 +28,12 @@ using System.IO;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * TestCase for the reading SMILES mol files using one test file.
-     *
-     * @cdk.module test-smiles
-     * @see org.openscience.cdk.io.SMILESReader
-     */
+    /// <summary>
+    /// TestCase for the reading SMILES mol files using one test file.
+    ///
+    // @cdk.module test-smiles
+    // @see org.openscience.cdk.io.SMILESReader
+    /// </summary>
     [TestClass()]
     public class IteratingSMILESReaderTest : CDKTestCase
     {
@@ -42,7 +42,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -63,7 +63,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -84,7 +84,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.tabs.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
             foreach (var mol in reader)
             {
@@ -99,7 +99,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;
@@ -118,7 +118,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
             IResourceFormat format = reader.Format;
             Assert.IsTrue(format is SMILESFormat);
@@ -128,7 +128,7 @@ namespace NCDK.IO.Iterator
         public void TestSetReader1()
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins1 = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader)
@@ -136,7 +136,7 @@ namespace NCDK.IO.Iterator
                 molCount++;
             }
             filename = "NCDK.Data.Smiles.tabs.smi";
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins2 = ResourceLoader.GetAsStream(filename);
             reader.SetReader(ins2);
             molCount = 0;
             foreach (var mol in reader)
@@ -151,7 +151,7 @@ namespace NCDK.IO.Iterator
         public void TestRemove()
         {
             string filename = "NCDK.Data.Smiles.test2.smi";
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins1 = ResourceLoader.GetAsStream(filename);
             IteratingSMILESReader reader = new IteratingSMILESReader(ins1, Default.ChemObjectBuilder.Instance);
             int molCount = 0;
             foreach (var mol in reader)

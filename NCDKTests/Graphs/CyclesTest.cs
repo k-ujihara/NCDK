@@ -6,6 +6,7 @@ using NCDK.Templates;
 using System.Collections.Generic;
 using static NCDK.Templates.TestMoleculeFactory;
 
+
 namespace NCDK.Graphs
 {
     /// <summary>
@@ -117,7 +118,7 @@ namespace NCDK.Graphs
         }
 
         [TestMethod()]
-        public virtual void cdkAromaticSet_withGraph()
+        public virtual void CDKAromaticSet_withGraph()
         {
             CheckSize(Cycles.CDKAromaticSet.Find(MakeBiphenyl(), GraphUtil.ToAdjList(MakeBiphenyl()), int.MaxValue),
                     2);
@@ -260,7 +261,7 @@ namespace NCDK.Graphs
         private IAtomContainer GetFullerene()
         {
             string path = "NCDK.Data.MDL.boronBuckyBall.mol";
-            MDLV2000Reader mdl = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream(path));
+            MDLV2000Reader mdl = new MDLV2000Reader(ResourceLoader.GetAsStream(path));
             try
             {
                 return mdl.Read(new AtomContainer());

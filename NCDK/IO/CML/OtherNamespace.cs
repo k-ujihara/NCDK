@@ -25,11 +25,11 @@ using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
-    /**
-     * Modules that ignore all content, for use in XML in namespaces other than CML.
-     *
-     * @author egonw
-     */
+    /// <summary>
+    /// Modules that ignore all content, for use in XML in namespaces other than CML.
+    ///
+    // @author egonw
+    /// </summary>
     sealed class OtherNamespace : ICMLModule
     {
         /// <inheritdoc/>

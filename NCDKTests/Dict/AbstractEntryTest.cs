@@ -21,9 +21,7 @@ using System.Collections.Generic;
 
 namespace NCDK.Dict
 {
-    /**
-     * @cdk.module test-dict
-     */
+    // @cdk.module test-dict
     [TestClass()]
     public abstract class AbstractEntryTest : CDKTestCase
     {

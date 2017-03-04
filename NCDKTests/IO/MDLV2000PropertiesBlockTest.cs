@@ -31,7 +31,7 @@ namespace NCDK.IO
 {
     // @author John May
     // @cdk.module test-io
-	[TestClass()]
+    [TestClass()]
     public class MDLV2000PropertiesBlockTest
     {
         private readonly MDLV2000Reader reader = new MDLV2000Reader();
@@ -47,7 +47,7 @@ namespace NCDK.IO
         public void M_end_padding()
         {
             Assert.AreEqual(MDLV2000Reader.PropertyKey.M_END, MDLV2000Reader.PropertyKey.Of("M  END  "));
-        }	
+        }    
 
         [TestMethod()]
         public void M_chg_padding()

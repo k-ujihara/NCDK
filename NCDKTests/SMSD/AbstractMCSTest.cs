@@ -26,11 +26,11 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMCSTest
     {

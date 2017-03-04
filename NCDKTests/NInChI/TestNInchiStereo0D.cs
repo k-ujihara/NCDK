@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.NInChI
 {
-	[TestClass()]
+    [TestClass()]
     public class TestNInchiStereo0D
     {
         private static NInchiAtom atC = new NInchiAtom(0, 0, 0, "C");
@@ -34,9 +34,9 @@ namespace NCDK.NInChI
             return new NInchiStereo0D(atC, at0, at1, at2, at3, INCHI_STEREOTYPE.Tetrahedral, INCHI_PARITY.Odd);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.JniInchiStereo0D(JniInchiAtom, JniInchiAtom, JniInchiAtom, JniInchiAtom, JniInchiAtom, INCHI_STEREOTYPE, INCHI_PARITY)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.JniInchiStereo0D(JniInchiAtom, JniInchiAtom, JniInchiAtom, JniInchiAtom, JniInchiAtom, INCHI_STEREOTYPE, INCHI_PARITY)'
+        /// </summary>
         [TestMethod()]
         public void TestJniInchiStereo0D()
         {
@@ -51,9 +51,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_PARITY.Odd, stereo.Parity);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.setDisconnectedParity(INCHI_PARITY)'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.SetDisconnectedParity(INCHI_PARITY)'
+        /// </summary>
         [TestMethod()]
         public void TestSetDisconnectedParity()
         {
@@ -63,9 +63,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_PARITY.Even, stereo.DisconnectedParity);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.CentralAtom'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.CentralAtom'
+        /// </summary>
         [TestMethod()]
         public void TestGetCentralAtom()
         {
@@ -75,21 +75,21 @@ namespace NCDK.NInChI
             Assert.AreEqual(atC, stereo.CentralAtom);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.Neighbors'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.Neighbors'
+        /// </summary>
         [TestMethod()]
         public void TestGetNeighbors()
         {
             NInchiStereo0D stereo = new NInchiStereo0D(atC, at0, at1, at2, at3, INCHI_STEREOTYPE.Tetrahedral, INCHI_PARITY.Even);
             NInchiAtom[] neighbours = { at0, at1, at2, at3 };
-			for (int i = 0; i < neighbours.Length; i++)
-	            Assert.AreEqual(neighbours[i], stereo.Neighbors[i]);
+            for (int i = 0; i < neighbours.Length; i++)
+                Assert.AreEqual(neighbours[i], stereo.Neighbors[i]);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.Parity'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.Parity'
+        /// </summary>
         [TestMethod()]
         public void TestGetParity()
         {
@@ -99,9 +99,9 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_PARITY.Odd, stereo.Parity);
         }
 
-        /*
-         * Test method for 'net.sf.jniinchi.JniInchiStereo0D.StereoType'
-         */
+        /// <summary>
+        /// Test method for 'net.sf.jniinchi.JniInchiStereo0D.StereoType'
+        /// </summary>
         [TestMethod()]
         public void TestGetStereoType()
         {

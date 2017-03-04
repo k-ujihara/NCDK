@@ -60,7 +60,7 @@ namespace NCDK.Signature
         }
 
         [TestMethod()]
-        public void iteratorTest()
+        public void IteratorTest()
         {
             int count = 0;
             List<int> indices = orbit.AtomIndices;

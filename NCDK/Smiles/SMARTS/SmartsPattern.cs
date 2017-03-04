@@ -33,7 +33,7 @@ using System.IO;
 namespace NCDK.Smiles.SMARTS
 {
     /**
-     * A {@link Pattern} for matching a single SMARTS query against multiple target
+     * A <see cref="Pattern"/> for matching a single SMARTS query against multiple target
      * compounds. The class should <b>not</b> be used for matching many queries
      * against a single target as in substructure keyed fingerprints. The {@link
      * SMARTSQueryTool} is currently a better option as less target initialistion is
@@ -41,7 +41,7 @@ namespace NCDK.Smiles.SMARTS
      *
      * Simple usage:
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
      *
      * foreach (var ac in acs) {
@@ -49,19 +49,19 @@ namespace NCDK.Smiles.SMARTS
      *       // 'ac' contains the pattern
      *   }
      * }
-     * </pre></blockquote>
+     * </code></blockquote>
      *
-     * Obtaining a {@link Mappings} instance and determine the number of unique
+     * Obtaining a <see cref="Mappings"/> instance and determine the number of unique
      * matches.
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
      *
      * foreach (var ac in acs) {
      *   nUniqueHits += ptrn.MatchAll(ac)
      *                      .CountUnique();
      * }
-     * </pre></blockquote>
+     * </code></blockquote>
      *
      * @author John May
      */
@@ -121,7 +121,7 @@ namespace NCDK.Smiles.SMARTS
          * aromaticity. <b>Do not use this for matching multiple SMARTS againsts the
          * same container</b>.
          *
-         * <blockquote><pre>
+         * <blockquote><code>
          * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
          * int nUniqueHits = 0;
          *
@@ -129,9 +129,9 @@ namespace NCDK.Smiles.SMARTS
          *   nUniqueHits += ptrn.MatchAll(ac)
          *                      .CountUnique();
          * }
-         * </pre></blockquote>
+         * </code></blockquote>
          *
-         * See {@link Mappings} for available methods.
+         * See <see cref="Mappings"/> for available methods.
          *
          * @param target the target compound in which we want to match the pattern
          * @return mappings of the query to the target compound
@@ -173,12 +173,12 @@ namespace NCDK.Smiles.SMARTS
         }
 
         /**
-         * Create a {@link Pattern} that will match the given {@code smarts} query.
+         * Create a <see cref="Pattern"/> that will match the given {@code smarts} query.
          *
          * @param smarts  SMARTS pattern string
          * @param builder chem object builder used to create objects
          * @return a new pattern
-         * @throws java.io.IOException the smarts could not be parsed
+         * @throws java.IOException the smarts could not be parsed
          */
         public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
         {
@@ -192,10 +192,7 @@ namespace NCDK.Smiles.SMARTS
          * @param smarts pattern string
          * @return the pattern has a ring size or number query
          */
-#if TEST
-        public
-#endif
-        static bool RingSizeOrNumber(string smarts)
+        internal static bool RingSizeOrNumber(string smarts)
         {
             for (int i = 0, end = smarts.Length - 1; i <= end; i++)
             {

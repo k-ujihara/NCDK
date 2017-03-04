@@ -146,12 +146,10 @@ namespace NCDK.IO.CML
                         Trace.TraceInformation("New Convention: ", convName);
                         if (convName.Equals("CML"))
                         {
-                            /*
-							 * Don't reset the convention handler to CMLCore,
-							 * becuase all handlers should extend this handler, and
-							 * use it for any content other then specifically put
-							 * into the specific convention
-							 */
+                            // Don't reset the convention handler to CMLCore,
+                            // becuase all handlers should extend this handler, and
+                            // use it for any content other then specifically put
+                            // into the specific convention
                         }
                         else if (convName.Equals("PDB"))
                         {

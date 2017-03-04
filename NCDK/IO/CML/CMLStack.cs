@@ -53,12 +53,7 @@ namespace NCDK.IO.CML
         /// </summary>
         /// <param name="lastElement"></param>
         /// <returns></returns>
-#if TEST
-        public
-#else
-        internal 
-# endif
-            bool EndsWith(string lastElement)
+        internal bool EndsWith(string lastElement)
         {
             return Peek().Equals(lastElement);
         }
@@ -69,12 +64,7 @@ namespace NCDK.IO.CML
         /// <param name="oneButLast"></param>
         /// <param name="lastElement"></param>
         /// <returns></returns>
-#if TEST
-        public
-#else
-        internal 
-# endif
-            bool EndsWith(string oneButLast, string lastElement)
+        internal bool EndsWith(string oneButLast, string lastElement)
         {
             return EndsWith(lastElement) && this.ElementAt(1).Equals(oneButLast);
         }
@@ -82,12 +72,7 @@ namespace NCDK.IO.CML
         /// <summary>
         /// Convenience method to check the last three added elements.
         /// </summary>
-#if TEST
-        public
-#else
-        internal 
-# endif
-            bool EndsWith(string twoButLast, string oneButLast, string lastElement)
+        internal bool EndsWith(string twoButLast, string oneButLast, string lastElement)
         {
             return EndsWith(oneButLast, lastElement) && this.ElementAt(2).Equals(twoButLast);
         }

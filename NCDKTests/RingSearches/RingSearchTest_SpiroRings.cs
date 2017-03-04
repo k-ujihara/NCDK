@@ -27,12 +27,12 @@ using System.Collections.Generic;
 
 namespace NCDK.RingSearches
 {
-    /**
-     * ring search unit tests for spiro rings
-     *
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// ring search unit tests for spiro rings
+    ///
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public sealed class RingSearchTest_SpiroRings
     {
@@ -67,7 +67,7 @@ namespace NCDK.RingSearches
         [TestMethod()]
         public void TestFUsed()
         {
-            Assert.AreEqual(0, new RingSearch(spiro).FUsed().Length);
+            Assert.AreEqual(0, new RingSearch(spiro).Fused().Length);
         }
 
         [TestMethod()]
@@ -91,7 +91,7 @@ namespace NCDK.RingSearches
         public void TestFUsedRingFragments()
         {
             RingSearch search = new RingSearch(spiro);
-            IList<IAtomContainer> fused = search.FUsedRingFragments();
+            IList<IAtomContainer> fused = search.FusedRingFragments();
             Assert.AreEqual(0, fused.Count);
         }
     }

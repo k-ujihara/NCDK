@@ -25,22 +25,22 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Class that implements the new MDL mol format introduced in August 2002.
-     * The overall syntax is compatible with the old format, but I consider
-     * the format completely different, and thus implemented a separate Reader
-     * for it.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author  Egon Willighagen <egonw@sci.kun.nl>
-     * @cdk.created 2003-10-05
-     *
-     * @cdk.keyword MDL V3000
-     * @cdk.require java1.4+
-     */
+    /// <summary>
+    /// Class that implements the new MDL mol format introduced in August 2002.
+    /// The overall syntax is compatible with the old format, but I consider
+    /// the format completely different, and thus implemented a separate Reader
+    /// for it.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author  Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.created 2003-10-05
+    ///
+    // @cdk.keyword MDL V3000
+    // @cdk.require java1.4+
+    /// </summary>
     public class MDLRXNV3000Reader : DefaultChemObjectReader
     {
         TextReader input = null;

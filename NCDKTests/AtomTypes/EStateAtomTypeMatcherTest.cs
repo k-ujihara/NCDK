@@ -26,9 +26,9 @@ using System;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class EStateAtomTypeMatcherTest : CDKTestCase
     {

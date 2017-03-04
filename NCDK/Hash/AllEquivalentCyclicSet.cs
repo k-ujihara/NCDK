@@ -27,37 +27,33 @@ using System.Collections.Generic;
 
 namespace NCDK.Hash
 {
-    /**
-     * Finds the set of equivalent values are members of a ring. This class is
-     * intended to drive the systematic perturbation of the {@link
-     * org.openscience.cdk.hash.PerturbedAtomHashGenerator}. This {@link
-     * EquivalentSetFinder} provides the highest probability of avoid collisions due
-     * to uniform atom environments but is much more demanding then the simpler
-     * {@link MinimumEquivalentCyclicSet}.
-     *
-     * <p/><br/> The easiest way to use this class is with the {@link
-     * org.openscience.cdk.hash.HashGeneratorMaker}.
-     * <blockquote><pre>
-     * MoleculeHashGenerator generator =
-     *   new HashGeneratorMaker().Depth(6)
-     *                           .Elemental()
-     *                           .PerturbWith(new AllEquivalentCyclicSet())
-     *                           .Molecular();
-     * </pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module hash
-     * @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
-     * @see MinimumEquivalentCyclicSet
-     * @see MinimumEquivalentCyclicSetUnion
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-        sealed class AllEquivalentCyclicSet : EquivalentSetFinder
+    /// <summary>
+    /// Finds the set of equivalent values are members of a ring. This class is
+    /// intended to drive the systematic perturbation of the {@link
+    /// org.openscience.cdk.hash.PerturbedAtomHashGenerator}. This {@link
+    /// EquivalentSetFinder} provides the highest probability of avoid collisions due
+    /// to uniform atom environments but is much more demanding then the simpler
+    /// <see cref="MinimumEquivalentCyclicSet"/>.
+    ///
+    /// <p/><br/> The easiest way to use this class is with the {@link
+    /// org.openscience.cdk.hash.HashGeneratorMaker}.
+    /// <example><code>
+    /// MoleculeHashGenerator generator =
+    ///   new HashGeneratorMaker().Depth(6)
+    ///                           .Elemental()
+    ///                           .PerturbWith(new AllEquivalentCyclicSet())
+    ///                           .Molecular();
+    /// </code></example>
+    ///
+    // @author John May
+    // @cdk.module hash
+    // @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
+    /// <seealso cref="MinimumEquivalentCyclicSet"/>
+    /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
+    // @cdk.githash
+    /// </summary>
+    internal sealed class AllEquivalentCyclicSet : EquivalentSetFinder
     {
-
         public override ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph)
         {
             int n = invariants.Length;

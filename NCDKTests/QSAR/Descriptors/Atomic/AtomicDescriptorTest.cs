@@ -72,11 +72,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
             Assert.AreNotEqual(0, v.GetValue().Length, "The descriptor did not calculate any value.");
         }
 
-        /**
-         * Checks if the given labels are consistent.
-         *
-         * @throws Exception Passed on from calculate.
-         */
+        /// <summary>
+        /// Checks if the given labels are consistent.
+        ///
+        /// <exception cref="Exception">Passed on from calculate.</exception>
+        /// </summary>
         [TestMethod()]
         public void TestLabels()
         {
@@ -91,19 +91,19 @@ namespace NCDK.QSAR.Descriptors.Atomic
             {
                 Assert.IsNotNull("A descriptor label may not be null.", name);
                 Assert.AreNotEqual(0, name.Length, "The label string must not be empty.");
-                //        	Console.Out.WriteLine("Label: " + names[i]);
+                //            Console.Out.WriteLine("Label: " + names[i]);
             }
             Assert.IsNotNull(v.GetValue());
             int valueCount = v.GetValue().Length;
             Assert.AreEqual(names.Length, valueCount, "The number of labels must equals the number of values.");
         }
 
-        /**
-         * Check if the names obtained directly from the descriptor without
-         * calculation match those obtained from the descriptor value object.
-         * Also ensure that the number of actual values matches the length
-         * of the names
-         */
+        /// <summary>
+        /// Check if the names obtained directly from the descriptor without
+        /// calculation match those obtained from the descriptor value object.
+        /// Also ensure that the number of actual values matches the length
+        /// of the names
+        /// </summary>
         [TestMethod()]
         public void TestNamesConsistency()
         {

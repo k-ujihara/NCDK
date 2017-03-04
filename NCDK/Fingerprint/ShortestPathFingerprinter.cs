@@ -25,93 +25,87 @@ using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
 using NCDK.Aromaticities;
 using NCDK.Graphs;
+using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are one-dimensional bit arrays, where bits
-    // are set according to a the occurrence of a particular structural feature (See for example the Daylight inc. theory
-    // manual for more information). Fingerprints allow for a fast screening step to exclude candidates for a substructure
-    // search in a database. They are also a means for determining the similarity of chemical structures.
-
-    // <pre>
-     *
-    // A fingerprint is generated for an AtomContainer with this code:
-    // It is recommended to use atomtyped container before generating the fingerprints.
-     *
-    // For example: AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
-     *
-    //   AtomContainer molecule = new AtomContainer();
-    //   AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
-    //   IFingerprinter fingerprinter = new ShortestPathFingerprinter();
-    //   IBitFingerprint fingerprint = fingerprinter.GetFingerprint(molecule);
-    //   fingerprint.FingerprintLength(); // returns 1024 by default
-    //   fingerprint.Length; // returns the highest set bit
-    // </pre>
-     *
-    // <P>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account
-    // ring system, charges etc while generating a fingerprint. </P>
-     *
-    // <p>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or atoms with
-    // malformed symbols are present, their atomic number is taken as one more than the last element currently supported in {@link PeriodicTable}.
-    // </P>
-     *
-     *
+    /// <summary>
+    /// Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are one-dimensional bit arrays, where bits
+    /// are set according to a the occurrence of a particular structural feature (See for example the Daylight inc. theory
+    /// manual for more information). Fingerprints allow for a fast screening step to exclude candidates for a substructure
+    /// search in a database. They are also a means for determining the similarity of chemical structures.
+    /// </summary>
+    /// <example>
+    /// A fingerprint is generated for an AtomContainer with this code:
+    /// It is recommended to use atomtyped container before generating the fingerprints.    ///
+    /// For example: <c>AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);</c>
+    /// <code>
+    ///   AtomContainer molecule = new AtomContainer();
+    ///   AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
+    ///   IFingerprinter fingerprinter = new ShortestPathFingerprinter();
+    ///   IBitFingerprint fingerprint = fingerprinter.GetFingerprint(molecule);
+    ///   fingerprint.FingerprintLength(); // returns 1024 by default
+    ///   fingerprint.Length; // returns the highest set bit
+    /// </code>
+    ///</example>
+    ///<remarks>
+    /// <para>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account
+    /// ring system, charges etc while generating a fingerprint. </para>
+    /// <para>The FingerPrinter assumes that hydrogens are explicitly given! Furthermore, if pseudo atoms or atoms with
+    /// malformed symbols are present, their atomic number is taken as one more than the last element currently supported in <see cref="PeriodicTable"/>.
+    /// </para>
+    /// </remarks>
+    ///
     // @author Syed Asad Rahman (2012)
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-     *
-     */
+    ///
+    /// </summary>
     [Serializable]
-#if TEST
-    public
-#endif
-    class ShortestPathFingerprinter : RandomNumber, IFingerprinter
+    internal class ShortestPathFingerprinter : RandomNumber, IFingerprinter
     {
-
-        /**
+        /// <summary>
         // The default length of created fingerprints.
-         */
+        /// </summary>
         const int DEFAULT_SIZE = 1024;
-        /**
+        /// <summary>
         // The default length of created fingerprints.
-         */
+        /// </summary>
         private int fingerprintLength;
 
-        /**
+        /// <summary>
         // Creates a fingerprint generator of length
         // <code>DEFAULT_SIZE</code>
-         */
+        /// </summary>
         public ShortestPathFingerprinter()
             : this(DEFAULT_SIZE)
         { }
 
-        /**
+        /// <summary>
         // Constructs a fingerprint generator that creates fingerprints of the given fingerprintLength, using a generation
         // algorithm with shortest paths.
-         *
-        // @param fingerprintLength The desired fingerprintLength of the fingerprint
-         */
+        ///
+        /// <param name="fingerprintLength">The desired fingerprintLength of the fingerprint</param>
+        /// </summary>
         public ShortestPathFingerprinter(int fingerprintLength)
         {
             this.fingerprintLength = fingerprintLength;
         }
 
-        /**
+        /// <summary>
         // Generates a shortest path based BitArray fingerprint for the given AtomContainer.
-         *
-        // @param ac The AtomContainer for which a fingerprint is generated
+        ///
+        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
         // @exception CDKException if there error in aromaticity perception or other CDK functions
-        // @return A {@link BitArray} representing the fingerprint
-         */
+        // @return A <see cref="BitArray"/> representing the fingerprint
+        /// </summary>
         public IBitFingerprint GetBitFingerprint(IAtomContainer ac)
         {
             IAtomContainer atomContainer = null;
@@ -133,13 +127,13 @@ namespace NCDK.Fingerprint
             return new BitSetFingerprint(bitSet);
         }
 
-        /**
+        /// <summary>
         // {@inheritDoc}
-         *
-        // @param ac The AtomContainer for which a fingerprint is generated
+        ///
+        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
         // @return IDictionary of raw fingerprint paths/features
         // @ method is not supported
-         */
+        /// </summary>
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
         {
             throw new NotSupportedException();
@@ -166,15 +160,14 @@ namespace NCDK.Fingerprint
             }
         }
 
-        /**
-        // Get all paths of lengths 0 to the specified length.
-         *
-        // This method will find all paths upto length N starting from each atom in the molecule and return the unique set
-        // of such paths.
-         *
-        // @param container The molecule to search
-        // @return A map of path strings, keyed on themselves
-         */
+        /// <summary>
+        /// Get all paths of lengths 0 to the specified length.
+        ///
+        /// This method will find all paths upto length N starting from each atom in the molecule and return the unique set
+        /// of such paths.
+        /// </summary>
+        /// <param name="container">The molecule to search</param>
+        /// <returns>A map of path strings, keyed on themselves</returns>
         private int[] FindPaths(IAtomContainer container)
         {
             ShortestPathWalker walker = new ShortestPathWalker(container);
@@ -189,9 +182,7 @@ namespace NCDK.Fingerprint
                 patternIndex++;
             }
 
-            /*
             // Add ring information
-             */
             IRingSet sssr = Cycles.FindEssential(container).ToRingSet();
             RingSetManipulator.Sort(sssr);
             foreach (var ring in sssr)
@@ -200,9 +191,7 @@ namespace NCDK.Fingerprint
                 paths.Insert(patternIndex, toHashCode);
                 patternIndex++;
             }
-            /*
             // Check for the charges
-             */
             List<string> l = new List<string>();
             foreach (var atom in container.Atoms)
             {
@@ -220,9 +209,7 @@ namespace NCDK.Fingerprint
             }
 
             l = new List<string>();
-            /*
             // atom stereo parity
-             */
             foreach (var atom in container.Atoms)
             {
                 int st = atom.StereoParity ?? 0;
@@ -262,9 +249,7 @@ namespace NCDK.Fingerprint
             throw new NotSupportedException("Not supported yet.");
         }
 
-        /*
         // Returns a random number for a given object
-         */
         private int GetRandomNumber(int hashValue)
         {
             return GenerateMersenneTwisterRandomNumber(fingerprintLength, hashValue);

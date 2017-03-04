@@ -30,91 +30,91 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class FromTrigonalTopologyTest
     {
 
         [TestMethod()]
-        public void z_dichloroethene()
+        public void Z_dichloroethene()
         {
             Transform("F[C@H]=[C@H]F", "F/C=C\\F");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_alt()
+        public void Z_dichloroethene_alt()
         {
             Transform("F[C@@H]=[C@@H]F", "F\\C=C/F");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_explicitH()
+        public void Z_dichloroethene_explicitH()
         {
             Transform("F[C@]([H])=[C@](F)[H]", "F/C(/[H])=C(\\F)/[H]");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_alt_explicitH()
+        public void Z_dichloroethene_alt_explicitH()
         {
             Transform("F[C@@]([H])=[C@@](F)[H]", "F\\C(\\[H])=C(/F)\\[H]");
         }
 
         [TestMethod()]
-        public void e_dichloroethene()
+        public void E_dichloroethene()
         {
             Transform("F[C@H]=[C@@H]F", "F/C=C/F");
         }
 
         [TestMethod()]
-        public void e_dichloroethene_alt()
+        public void E_dichloroethene_alt()
         {
             Transform("F[C@@H]=[C@H]F", "F\\C=C\\F");
         }
 
         [TestMethod()]
-        public void e_dichloroethene_explicitH()
+        public void E_dichloroethene_explicitH()
         {
             Transform("F[C@]([H])=[C@@](F)[H]", "F/C(/[H])=C(/F)\\[H]");
         }
 
         [TestMethod()]
-        public void e_dichloroethene_alt_explicitH()
+        public void E_dichloroethene_alt_explicitH()
         {
             Transform("F[C@@]([H])=[C@](F)[H]", "F\\C(\\[H])=C(\\F)/[H]");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_permuted_1()
+        public void Z_dichloroethene_permuted_1()
         {
             Transform("F[C@H]=[C@H]F", new int[] { 1, 0, 2, 3 }, "C(\\F)=C\\F");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_permuted_2()
+        public void Z_dichloroethene_permuted_2()
         {
             Transform("F[C@H]=[C@H]F", new int[] { 3, 2, 1, 0 }, "F\\C=C/F");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_alt_permuted_1()
+        public void Z_dichloroethene_alt_permuted_1()
         {
             Transform("F[C@@H]=[C@@H]F", new int[] { 1, 0, 2, 3 }, "C(/F)=C/F");
         }
 
         [TestMethod()]
-        public void z_dichloroethene_alt_permuted_2()
+        public void Z_dichloroethene_alt_permuted_2()
         {
             Transform("F[C@@H]=[C@@H]F", new int[] { 3, 2, 1, 0 }, "F/C=C\\F");
         }
 
         [TestMethod()]
-        public void e_dichloroethene_permuted_1()
+        public void E_dichloroethene_permuted_1()
         {
             Transform("F[C@H]=[C@@H]F", new int[] { 1, 0, 2, 3 }, "C(\\F)=C/F");
         }
 
         [TestMethod()]
-        public void e_dichloroethene_permuted_2()
+        public void E_dichloroethene_permuted_2()
         {
             Transform("F[C@@H]=[C@H]F", new int[] { 3, 2, 1, 0 }, "F\\C=C\\F");
         }

@@ -27,69 +27,69 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>
-     * This reaction could be represented as [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*]. Due to
-     * the single electron of atom A the proton is moved.</p>
-     * <p>It is processed by the RadicalSiteRearrangementMechanism class</p>
-     *
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new RadicalSiteHrDeltaReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2006-10-20
-     * @cdk.module     reaction
-     * @cdk.githash
-     * @cdk.set        reaction-types
-     *
-     * @see RadicalSiteRearrangementMechanism
-     **/
+    /// <summary>
+    /// <para>
+    /// This reaction could be represented as [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*]. Due to
+    /// the single electron of atom A the proton is moved.</para>
+    /// <para>It is processed by the RadicalSiteRearrangementMechanism class</para>
+    ///
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new RadicalSiteHrDeltaReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</para>
+    ///
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2006-10-20
+    // @cdk.module     reaction
+    // @cdk.githash
+    // @cdk.set        reaction-types
+    ///
+    /// <seealso cref="RadicalSiteRearrangementMechanism"/>
+    ///*/
     public class RadicalSiteHrDeltaReaction : ReactionEngine, IReactionProcess
     {
 
-        /**
-         * Constructor of the RadicalSiteHrDeltaReaction object
-         *
-         */
+        /// <summary>
+        /// Constructor of the RadicalSiteHrDeltaReaction object
+        ///
+        /// </summary>
         public RadicalSiteHrDeltaReaction() { }
 
-        /**
-         *  Gets the specification attribute of the RadicalSiteHrDeltaReaction object
-         *
-         *@return    The specification value
-         */
+        /// <summary>
+        ///  Gets the specification attribute of the RadicalSiteHrDeltaReaction object
+        ///
+        /// <returns>The specification value</returns>
+        /// </summary>
 
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteHrDelta", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *
-         *@exception  CDKException  Description of the Exception
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        ///
+        ///
+        /// <exception cref="CDKException"> Description of the Exception</exception>
 
-         * @param  reactants         reactants of the reaction.
-        * @param  agents            agents of the reaction (Must be in this case null).
-         */
+        /// <param name="reactants">reactants of the reaction.</param>
+       /// <param name="agents">agents of the reaction (Must be in this case null).</param>
+        /// </summary>
 
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
@@ -121,10 +121,7 @@ namespace NCDK.Reactions.Types
                     aring.IsInRing = true;
                 }
             }
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -175,17 +172,17 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with [A*]-(C)_4-C5[H]
-         * <pre>
-         * C: Atom with single electron
-         * C5: Atom with Hydrogen
-         *  </pre>
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with [A*]-(C)_4-C5[H]
+        /// <code>
+        /// C: Atom with single electron
+        /// C5: Atom with Hydrogen
+        ///  </code>
+        ///
+        /// <param name="reactant">The molecule to set the activity</param>
+        // @
+        /// </summary>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             HOSECodeGenerator hcg = new HOSECodeGenerator();

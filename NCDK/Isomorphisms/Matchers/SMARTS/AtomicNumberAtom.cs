@@ -25,33 +25,26 @@ using NCDK.Common.Base;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-	 * This matches an atom using the atomic number.
-	 *
-	 * @cdk.module smarts
-	 * @cdk.githash
-	 * @cdk.keyword SMARTS
-	 */
+    /// <summary>
+    /// This matches an atom using the atomic number.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class AtomicNumberAtom : SMARTSAtom
     {
 
-        /**
-		 * Creates a new instance.
-		 *
-		 * @param atomicNumber
-		 */
+        /// <summary>
+        /// Creates a new instance.
+        ///
+        /// <param name="atomicNumber">/// </summary></param>
         public AtomicNumberAtom(int atomicNumber, IChemObjectBuilder builder)
             : base(builder)
         {
             this.AtomicNumber = atomicNumber;
         }
 
-        /*
-		 * (non-Javadoc)
-		 * @see
-		 * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-		 * .openscience.cdk.interfaces.IAtom)
-		 */
         public override bool Matches(IAtom atom)
         {
             return Preconditions.CheckNotNull(atom.AtomicNumber, "Atomic number is not set.").Equals(

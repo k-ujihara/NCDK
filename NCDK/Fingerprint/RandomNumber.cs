@@ -27,32 +27,26 @@ using NCDK.Maths;
 
 namespace NCDK.Fingerprint
 {
-    /**
-    // Generates pseudorandom numbers using the MersenneTwister method from commons-math.
-     *
+    /// <summary>
+    /// Generates pseudorandom numbers using the MersenneTwister method from commons-math.
+    /// </summary>
     // @author Syed Asad Rahman (2012)
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-     */
     [Serializable]
-#if TEST
-    public
-#endif
-    class RandomNumber
+    internal class RandomNumber
     {
-        // TODO: to use Mersenne Twister algolithum
         [NonSerialized]
         private MersenneTwister rg = new MersenneTwister();
 
-        /**
-        // Mersenne Twister Random Number for a hashcode within a range between 0 to n.
-         *
-        // @param n the maximum value the
-        // @param seed the seed for the next pseudorandom number
-        // @return next pseudorandom number
-         */
+        /// <summary>
+        /// Mersenne Twister Random Number for a hashcode within a range between 0 to n.
+        /// </summary>
+        /// <param name="n">the maximum value the</param>
+        /// <param name="seed">the seed for the next pseudorandom number</param>
+        /// <returns>next pseudorandom number</returns>
         public int GenerateMersenneTwisterRandomNumber(int n, long seed)
         {
             rg.SetSeed(seed);

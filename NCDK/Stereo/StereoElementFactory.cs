@@ -31,303 +31,303 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 { 
-	/**
-	 * Create stereo elements for a structure with 2D and 3D coordinates. The
-	 * factory does not verify whether atoms can or cannot support stereochemistry -
-	 * for this functionality use {@link Stereocenters}. The factory will not create
-	 * stereo elements if there is missing information (wedge/hatch bonds, undefined
-	 * coordinates) or the layout indicates unspecified configuration.
-	 *
-	 * Stereocenters specified with inverse down (hatch) bond style are created if
-	 * the configuration is unambiguous and the bond does not connect to another
-	 * stereocenter.
-	 *
-	 * <blockquote><pre>
-	 * IAtomContainer       container = ...;
-	 * StereoElementFactory stereo    = StereoElementFactory.Using2DCoordinates()
-	 *                                                      .InterpretProjections(Projection.Haworth);
-	 *
-	 * // set the elements replacing any existing elements (recommended)
-	 * container.SetStereoElements(stereo.CreateAll());
-	 *
-	 * // adding elements individually is no recommended as the AtomContainer
-	 * // does not check for duplicate or contradicting elements
-	 * foreach (var element in stereo.CreateAll())
-	 *     container.AddStereoElement(element); // bad, there may already be elements
-	 *
-	 * </pre></blockquote>
-	 *
-	 * @author John May
-	 * @cdk.module standard
-	 * @see Stereocenters
-	 * @cdk.githash
-	 */
-	public abstract class StereoElementFactory {
+    /// <summary>
+    /// Create stereo elements for a structure with 2D and 3D coordinates. The
+    /// factory does not verify whether atoms can or cannot support stereochemistry -
+    /// for this functionality use <see cref="Stereocenters"/>. The factory will not create
+    /// stereo elements if there is missing information (wedge/hatch bonds, undefined
+    /// coordinates) or the layout indicates unspecified configuration.
+    ///
+    /// Stereocenters specified with inverse down (hatch) bond style are created if
+    /// the configuration is unambiguous and the bond does not connect to another
+    /// stereocenter.
+    ///
+    /// <blockquote><code>
+    /// IAtomContainer       container = ...;
+    /// StereoElementFactory stereo    = StereoElementFactory.Using2DCoordinates()
+    ///                                                      .InterpretProjections(Projection.Haworth);
+    ///
+    /// // set the elements replacing any existing elements (recommended)
+    /// container.SetStereoElements(stereo.CreateAll());
+    ///
+    /// // adding elements individually is no recommended as the AtomContainer
+    /// // does not check for duplicate or contradicting elements
+    /// foreach (var element in stereo.CreateAll())
+    ///     container.AddStereoElement(element); // bad, there may already be elements
+    ///
+    /// </code></blockquote>
+    ///
+    // @author John May
+    // @cdk.module standard
+    /// <seealso cref="Stereocenters"/>
+    // @cdk.githash
+    /// </summary>
+    public abstract class StereoElementFactory {
 
-		/// <summary>Native CDK structure representation.</summary>
-		protected readonly IAtomContainer container;
+        /// <summary>Native CDK structure representation.</summary>
+        protected readonly IAtomContainer container;
 
-		/// <summary>Adjacency list graph representation.</summary>
-		protected readonly int[][] graph;
+        /// <summary>Adjacency list graph representation.</summary>
+        protected readonly int[][] graph;
 
-		/// <summary>A bond map for fast access to bond labels between two atom indices.</summary>
-		protected readonly EdgeToBondMap bondMap;
+        /// <summary>A bond map for fast access to bond labels between two atom indices.</summary>
+        protected readonly EdgeToBondMap bondMap;
 
         protected readonly List<Projection> projections = new List<Projection>();
         
-		/**
-		 * Internal constructor.
-		 *
-		 * @param container an atom container
-		 * @param graph     adjacency list representation
-		 * @param bondMap   lookup bonds by atom index
-		 */
-		protected StereoElementFactory(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap) {
-			this.container = container;
-			this.graph = graph;
-			this.bondMap = bondMap;
-		}
+        /// <summary>
+        /// Internal constructor.
+        ///
+        /// <param name="container">an atom container</param>
+        /// <param name="graph">adjacency list representation</param>
+        /// <param name="bondMap">lookup bonds by atom index</param>
+        /// </summary>
+        protected StereoElementFactory(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap) {
+            this.container = container;
+            this.graph = graph;
+            this.bondMap = bondMap;
+        }
 
-		/**
-		 * Creates all stereo elements found by {@link Stereocenters} using the or
-		 * 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
-		 * Currently only {@link ITetrahedralChirality} and {@link
-		 * IDoubleBondStereochemistry} elements are created..
-		 *
-		 * @return a list of stereo elements
-		 */
-		public IList<IStereoElement> CreateAll() {
+        /// <summary>
+        /// Creates all stereo elements found by <see cref="Stereocenters"/> using the or
+        /// 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
+        /// Currently only <see cref="ITetrahedralChirality"/> and {@link
+        /// IDoubleBondStereochemistry} elements are created..
+        ///
+        /// <returns>a list of stereo elements</returns>
+        /// </summary>
+        public IList<IStereoElement> CreateAll() {
 
-			Stereocenters centers = new Stereocenters(container, graph, bondMap);
-			List<IStereoElement> elements = new List<IStereoElement>();
+            Stereocenters centers = new Stereocenters(container, graph, bondMap);
+            List<IStereoElement> elements = new List<IStereoElement>();
 
-			// projection recognition (note no action in constructors)
-			FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);
-			CyclicCarbohydrateRecognition cycleRecon = new CyclicCarbohydrateRecognition(container, graph, bondMap, centers);
+            // projection recognition (note no action in constructors)
+            FischerRecognition fischerRecon = new FischerRecognition(container, graph, bondMap, centers);
+            CyclicCarbohydrateRecognition cycleRecon = new CyclicCarbohydrateRecognition(container, graph, bondMap, centers);
 
-			elements.AddRange(fischerRecon.Recognise(projections));
-			elements.AddRange(cycleRecon.Recognise(projections));
+            elements.AddRange(fischerRecon.Recognise(projections));
+            elements.AddRange(cycleRecon.Recognise(projections));
 
-			for (int v = 0; v < graph.Length; v++) {
-				switch (centers.ElementType(v)) {
-					case Stereocenters.Type.Bicoordinate:
-						int t0 = graph[v][0];
-						int t1 = graph[v][1];
-						if (centers.ElementType(t0) == Stereocenters.Type.Tricoordinate
-								&& centers.ElementType(t1) == Stereocenters.Type.Tricoordinate) {
-							if (centers.IsStereocenter(t0) && centers.IsStereocenter(t1)) {
-								IStereoElement element_ = CreateExtendedTetrahedral(v, centers);
-								if (element_ != null) elements.Add(element_);
-							}
-						}
-						break;
-					case Stereocenters.Type.Tricoordinate:
-						if (!centers.IsStereocenter(v)) continue;
-						foreach (var w in graph[v]) {
-							if (w > v && bondMap[v, w].Order == BondOrder.Double) {
-								if (centers.IsStereocenter(w)) {
-									IStereoElement element_ = CreateGeometric(v, w, centers);
-									if (element_ != null) elements.Add(element_);
-								}
-								break;
-							}
-						}
-						break;
-					case Stereocenters.Type.Tetracoordinate:
-						IStereoElement element = CreateTetrahedral(v, centers);
-						if (element != null) elements.Add(element);
-						break;
-				}
-			}
+            for (int v = 0; v < graph.Length; v++) {
+                switch (centers.ElementType(v)) {
+                    case Stereocenters.CoordinateTypes.Bicoordinate:
+                        int t0 = graph[v][0];
+                        int t1 = graph[v][1];
+                        if (centers.ElementType(t0) == Stereocenters.CoordinateTypes.Tricoordinate
+                                && centers.ElementType(t1) == Stereocenters.CoordinateTypes.Tricoordinate) {
+                            if (centers.IsStereocenter(t0) && centers.IsStereocenter(t1)) {
+                                IStereoElement element_ = CreateExtendedTetrahedral(v, centers);
+                                if (element_ != null) elements.Add(element_);
+                            }
+                        }
+                        break;
+                    case Stereocenters.CoordinateTypes.Tricoordinate:
+                        if (!centers.IsStereocenter(v)) continue;
+                        foreach (var w in graph[v]) {
+                            if (w > v && bondMap[v, w].Order == BondOrder.Double) {
+                                if (centers.IsStereocenter(w)) {
+                                    IStereoElement element_ = CreateGeometric(v, w, centers);
+                                    if (element_ != null) elements.Add(element_);
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    case Stereocenters.CoordinateTypes.Tetracoordinate:
+                        IStereoElement element = CreateTetrahedral(v, centers);
+                        if (element != null) elements.Add(element);
+                        break;
+                }
+            }
 
-			return elements;
-		}
+            return elements;
+        }
 
-		/**
-		 * Create a tetrahedral element for the atom at index {@code v}. If a
-		 * tetrahedral element could not be created then null is returned. An
-		 * element can not be created if, one or more atoms was missing coordinates,
-		 * the atom has an unspecified (wavy) bond, the atom is no non-planar bonds
-		 * (i.e. up/down, wedge/hatch). The method does not check if tetrahedral
-		 * chirality is supported - for this functionality use {@link
-		 * Stereocenters}.
-		 *
-		 * <blockquote><pre>
-		 * StereoElementFactory  factory   = ...; // 2D/3D
-		 * IAtomContainer        container = ...; // container
-		 *
-		 * for (int v = 0; v < container.Atoms.Count; v++) {
-		 *     // ... verify v is a stereo atom ...
-		 *     ITetrahedralChirality element = factory.CreateTetrahedral(v);
-		 *     if (element != null)
-		 *         container.AddStereoElement(element);
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @param v atom index (vertex)
-		 * @return a new stereo element
-		 */
-		public abstract ITetrahedralChirality CreateTetrahedral(int v, Stereocenters stereocenters);
+        /// <summary>
+        /// Create a tetrahedral element for the atom at index {@code v}. If a
+        /// tetrahedral element could not be created then null is returned. An
+        /// element can not be created if, one or more atoms was missing coordinates,
+        /// the atom has an unspecified (wavy) bond, the atom is no non-planar bonds
+        /// (i.e. up/down, wedge/hatch). The method does not check if tetrahedral
+        /// chirality is supported - for this functionality use {@link
+        /// Stereocenters}.
+        ///
+        /// <blockquote><code>
+        /// StereoElementFactory  factory   = ...; // 2D/3D
+        /// IAtomContainer        container = ...; // container
+        ///
+        /// for (int v = 0; v < container.Atoms.Count; v++) {
+        ///     // ... verify v is a stereo atom ...
+        ///     ITetrahedralChirality element = factory.CreateTetrahedral(v);
+        ///     if (element != null)
+        ///         container.AddStereoElement(element);
+        /// }
+        /// </code></blockquote>
+        ///
+        /// <param name="v">atom index (vertex)</param>
+        /// <returns>a new stereo element</returns>
+        /// </summary>
+        public abstract ITetrahedralChirality CreateTetrahedral(int v, Stereocenters stereocenters);
 
-		/**
-		 * Create a tetrahedral element for the atom. If a tetrahedral element could
-		 * not be created then null is returned. An element can not be created if,
-		 * one or more atoms was missing coordinates, the atom has an unspecified
-		 * (wavy) bond, the atom is no non-planar bonds (i.e. up/down, wedge/hatch).
-		 * The method does not check if tetrahedral chirality is supported - for
-		 * this functionality use {@link Stereocenters}.
-		 *
-		 * <blockquote><pre>
-		 * StereoElementFactory  factory   = ...; // 2D/3D
-		 * IAtomContainer        container = ...; // container
-		 *
-		 * foreach (var atom in container.Atoms) {
-		 *     // ... verify atom is a stereo atom ...
-		 *     ITetrahedralChirality element = factory.CreateTetrahedral(atom);
-		 *     if (element != null)
-		 *         container.AddStereoElement(element);
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @param atom atom
-		 * @return a new stereo element
-		 */
-		public abstract ITetrahedralChirality CreateTetrahedral(IAtom atom, Stereocenters stereocenters);
+        /// <summary>
+        /// Create a tetrahedral element for the atom. If a tetrahedral element could
+        /// not be created then null is returned. An element can not be created if,
+        /// one or more atoms was missing coordinates, the atom has an unspecified
+        /// (wavy) bond, the atom is no non-planar bonds (i.e. up/down, wedge/hatch).
+        /// The method does not check if tetrahedral chirality is supported - for
+        /// this functionality use <see cref="Stereocenters"/>.
+        ///
+        /// <blockquote><code>
+        /// StereoElementFactory  factory   = ...; // 2D/3D
+        /// IAtomContainer        container = ...; // container
+        ///
+        /// foreach (var atom in container.Atoms) {
+        ///     // ... verify atom is a stereo atom ...
+        ///     ITetrahedralChirality element = factory.CreateTetrahedral(atom);
+        ///     if (element != null)
+        ///         container.AddStereoElement(element);
+        /// }
+        /// </code></blockquote>
+        ///
+        /// <param name="atom">atom</param>
+        /// <returns>a new stereo element</returns>
+        /// </summary>
+        public abstract ITetrahedralChirality CreateTetrahedral(IAtom atom, Stereocenters stereocenters);
 
-		/**
-		 * Create a geometric element (double-bond stereochemistry) for the provided
-		 * atom indices. If the configuration could not be created a null element is
-		 * returned. There is no configuration is the coordinates do not indicate a
-		 * configuration, there were undefined coordinates or an unspecified bond
-		 * label. The method does not check if double bond stereo is supported - for
-		 * this functionality use {@link Stereocenters}.
-		 *
-		 * @param u an atom index
-		 * @param v an atom pi bonded 'v'
-		 * @return a new stereo element
-		 */
-		public abstract IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters);
+        /// <summary>
+        /// Create a geometric element (double-bond stereochemistry) for the provided
+        /// atom indices. If the configuration could not be created a null element is
+        /// returned. There is no configuration is the coordinates do not indicate a
+        /// configuration, there were undefined coordinates or an unspecified bond
+        /// label. The method does not check if double bond stereo is supported - for
+        /// this functionality use <see cref="Stereocenters"/>.
+        ///
+        /// <param name="u">an atom index</param>
+        /// <param name="v">an atom pi bonded 'v'</param>
+        /// <returns>a new stereo element</returns>
+        /// </summary>
+        public abstract IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters);
 
-		/**
-		 * Create a geometric element (double-bond stereochemistry) for the provided
-		 * double bond. If the configuration could not be created a null element is
-		 * returned. There is no configuration is the coordinates do not indicate a
-		 * configuration, there were undefined coordinates or an unspecified bond
-		 * label. The method does not check if double bond stereo is supported - for
-		 * this functionality use {@link Stereocenters}.
-		 *
-		 * <blockquote><pre>
-		 * StereoElementFactory  factory   = ...; // 2D/3D
-		 * IAtomContainer        container = ...; // container
-		 *
-		 * foreach (var bond in container.Bonds) {
-		 *     if (bond.Order != Double)
-		 *         continue;
-		 *     // ... verify bond is a stereo bond...
-		 *     IDoubleBondStereochemistry element = factory.CreateGeometric(bond);
-		 *     if (element != null)
-		 *         container.AddStereoElement(element);
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @param bond the bond to create a configuration for
-		 * @return a new stereo element
-		 */
-		public abstract IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters);
+        /// <summary>
+        /// Create a geometric element (double-bond stereochemistry) for the provided
+        /// double bond. If the configuration could not be created a null element is
+        /// returned. There is no configuration is the coordinates do not indicate a
+        /// configuration, there were undefined coordinates or an unspecified bond
+        /// label. The method does not check if double bond stereo is supported - for
+        /// this functionality use <see cref="Stereocenters"/>.
+        ///
+        /// <blockquote><code>
+        /// StereoElementFactory  factory   = ...; // 2D/3D
+        /// IAtomContainer        container = ...; // container
+        ///
+        /// foreach (var bond in container.Bonds) {
+        ///     if (bond.Order != Double)
+        ///         continue;
+        ///     // ... verify bond is a stereo bond...
+        ///     IDoubleBondStereochemistry element = factory.CreateGeometric(bond);
+        ///     if (element != null)
+        ///         container.AddStereoElement(element);
+        /// }
+        /// </code></blockquote>
+        ///
+        /// <param name="bond">the bond to create a configuration for</param>
+        /// <returns>a new stereo element</returns>
+        /// </summary>
+        public abstract IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters);
 
-		/**
-		 * Create an extended tetrahedral element for the atom at index {@code v}.
-		 * If an extended  tetrahedral element could not be created then null is
-		 * returned. An element can not be created if, one or more atoms was
-		 * missing coordinates, the atom has an unspecified (wavy) bond, the atom
-		 * is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not
-		 * check if tetrahedral chirality is supported - for this functionality
-		 * use {@link * Stereocenters}.
-		 *
-		 * <blockquote><pre>
-		 * StereoElementFactory  factory   = ...; // 2D/3D
-		 * IAtomContainer        container = ...; // container
-		 *
-		 * for (int v = 0; v < container.Atoms.Count; v++) {
-		 *     // ... verify v is a stereo atom ...
-		 *     ExtendedTetrahedral element = factory.CreateExtendedTetrahedral(v);
-		 *     if (element != null)
-		 *         container.AddStereoElement(element);
-		 * }
-		 * </pre></blockquote>
-		 *
-		 * @param v atom index (vertex)
-		 * @return a new stereo element
-		 */
-		public abstract ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters);
+        /// <summary>
+        /// Create an extended tetrahedral element for the atom at index {@code v}.
+        /// If an extended  tetrahedral element could not be created then null is
+        /// returned. An element can not be created if, one or more atoms was
+        /// missing coordinates, the atom has an unspecified (wavy) bond, the atom
+        /// is no non-planar bonds (i.e. up/down, wedge/hatch). The method does not
+        /// check if tetrahedral chirality is supported - for this functionality
+        /// use {@link * Stereocenters}.
+        ///
+        /// <blockquote><code>
+        /// StereoElementFactory  factory   = ...; // 2D/3D
+        /// IAtomContainer        container = ...; // container
+        ///
+        /// for (int v = 0; v < container.Atoms.Count; v++) {
+        ///     // ... verify v is a stereo atom ...
+        ///     ExtendedTetrahedral element = factory.CreateExtendedTetrahedral(v);
+        ///     if (element != null)
+        ///         container.AddStereoElement(element);
+        /// }
+        /// </code></blockquote>
+        ///
+        /// <param name="v">atom index (vertex)</param>
+        /// <returns>a new stereo element</returns>
+        /// </summary>
+        public abstract ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters);
 
-		/**
-		 * Indicate that stereochemistry drawn as a certain projection should be
-		 * interpreted. 
-		 *
-		 * <pre>{@code
-		 * StereoElementFactory factory = 
-		 *   StereoElementFactory.Using2DCoordinates(container)
-		 *                       .InterpretProjections(Projection.Fischer, Projection.Haworth);
-		 * }</pre>
-		 * 
-		 * @param projections types of projection
-		 * @return self
-		 * @see org.openscience.cdk.stereo.Projection
-		 */
-		public StereoElementFactory InterpretProjections(params Projection[] projections)
+        /// <summary>
+        /// Indicate that stereochemistry drawn as a certain projection should be
+        /// interpreted. 
+        ///
+        /// <code>{@code
+        /// StereoElementFactory factory = 
+        ///   StereoElementFactory.Using2DCoordinates(container)
+        ///                       .InterpretProjections(Projection.Fischer, Projection.Haworth);
+        /// }</code>
+        /// 
+        /// <param name="projections">types of projection</param>
+        /// <returns>self</returns>
+        /// @see org.openscience.cdk.stereo.Projection
+        /// </summary>
+        public StereoElementFactory InterpretProjections(params Projection[] projections)
         {
             this.projections.AddRange(projections);
-			return this;
-		}
+            return this;
+        }
 
-		/**
-		 * Create a stereo element factory for creating stereo elements using 2D
-		 * coordinates and depiction labels (up/down, wedge/hatch).
-		 *
-		 * @param container the structure to create the factory for
-		 * @return the factory instance
-		 */
-		public static StereoElementFactory Using2DCoordinates(IAtomContainer container) {
-			EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
-			int[][] graph = GraphUtil.ToAdjList(container, bondMap);
-			return new StereoElementFactory2D(container, graph, bondMap);
-		}
+        /// <summary>
+        /// Create a stereo element factory for creating stereo elements using 2D
+        /// coordinates and depiction labels (up/down, wedge/hatch).
+        ///
+        /// <param name="container">the structure to create the factory for</param>
+        /// <returns>the factory instance</returns>
+        /// </summary>
+        public static StereoElementFactory Using2DCoordinates(IAtomContainer container) {
+            EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
+            int[][] graph = GraphUtil.ToAdjList(container, bondMap);
+            return new StereoElementFactory2D(container, graph, bondMap);
+        }
 
-		/**
-		 * Create a stereo element factory for creating stereo elements using 3D
-		 * coordinates and depiction labels (up/down, wedge/hatch).
-		 *
-		 * @param container the structure to create the factory for
-		 * @return the factory instance
-		 */
-		public static StereoElementFactory Using3DCoordinates(IAtomContainer container) {
-			EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
-			int[][] graph = GraphUtil.ToAdjList(container, bondMap);
-			return new StereoElementFactory3D(container, graph, bondMap);
-		}
+        /// <summary>
+        /// Create a stereo element factory for creating stereo elements using 3D
+        /// coordinates and depiction labels (up/down, wedge/hatch).
+        ///
+        /// <param name="container">the structure to create the factory for</param>
+        /// <returns>the factory instance</returns>
+        /// </summary>
+        public static StereoElementFactory Using3DCoordinates(IAtomContainer container) {
+            EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(container);
+            int[][] graph = GraphUtil.ToAdjList(container, bondMap);
+            return new StereoElementFactory3D(container, graph, bondMap);
+        }
 
-		private static bool HasUnspecifiedParity(IAtom atom) {
-			return atom.StereoParity != null && atom.StereoParity == 3;
-		}
+        private static bool HasUnspecifiedParity(IAtom atom) {
+            return atom.StereoParity != null && atom.StereoParity == 3;
+        }
 
         /// <summary>Create stereo-elements from 2D coordinates.</summary>
         sealed class StereoElementFactory2D : StereoElementFactory
         {
 
-            /**
-			 * Threshold at which the determinant is considered too small (unspecified
-			 * by coordinates).
-			 */
+            /// <summary>
+            /// Threshold at which the determinant is considered too small (unspecified
+            /// by coordinates).
+            /// </summary>
             private const double THRESHOLD = 0.1;
 
-            /**
-			 * Create a new stereo-element factory for the specified structure.
-			 *
-			 * @param container native CDK structure representation
-			 * @param graph     adjacency list representation
-			 * @param bondMap   fast bond lookup from atom indices
-			 */
+            /// <summary>
+            /// Create a new stereo-element factory for the specified structure.
+            ///
+            /// <param name="container">native CDK structure representation</param>
+            /// <param name="graph">adjacency list representation</param>
+            /// <param name="bondMap">fast bond lookup from atom indices</param>
+            /// </summary>
             public StereoElementFactory2D(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
                 : base(container, graph, bondMap)
             {
@@ -528,12 +528,12 @@ namespace NCDK.Stereo
                 return new ExtendedTetrahedral(focus, neighbors, winding);
             }
 
-            /**
-			 * Is the provided bond have an unspecified stereo label.
-			 *
-			 * @param bond a bond
-			 * @return the bond has unspecified stereochemistry
-			 */
+            /// <summary>
+            /// Is the provided bond have an unspecified stereo label.
+            ///
+            /// <param name="bond">a bond</param>
+            /// <returns>the bond has unspecified stereochemistry</returns>
+            /// </summary>
             private bool IsUnspecified(IBond bond)
             {
                 switch (bond.Stereo.Ordinal)
@@ -547,13 +547,13 @@ namespace NCDK.Stereo
                 }
             }
 
-            /**
-			 * Parity computation for one side of a double bond in a geometric center.
-			 *
-			 * @param atoms atoms around the double bonded atom, 0: substituent, 1:
-			 *              other substituent (or focus), 2: double bonded atom
-			 * @return the parity of the atoms
-			 */
+            /// <summary>
+            /// Parity computation for one side of a double bond in a geometric center.
+            ///
+            /// <param name="atoms">atoms around the double bonded atom, 0: substituent, 1:</param>
+            ///              other substituent (or focus), 2: double bonded atom
+            /// <returns>the parity of the atoms</returns>
+            /// </summary>
             private int Parity(IAtom[] atoms)
             {
                 if (atoms.Length != 3) throw new ArgumentException("incorrect number of atoms");
@@ -572,13 +572,13 @@ namespace NCDK.Stereo
                 return (int)Math.Sign(det);
             }
 
-            /**
-			 * Parity computation for 2D tetrahedral stereocenters.
-			 *
-			 * @param atoms      the atoms surrounding the central focus atom
-			 * @param elevations the elevations of each atom
-			 * @return the parity (winding)
-			 */
+            /// <summary>
+            /// Parity computation for 2D tetrahedral stereocenters.
+            ///
+            /// <param name="atoms">the atoms surrounding the central focus atom</param>
+            /// <param name="elevations">the elevations of each atom</param>
+            /// <returns>the parity (winding)</returns>
+            /// </summary>
             private int Parity(IAtom focus, IAtom[] atoms, int[] elevations)
             {
 
@@ -597,13 +597,13 @@ namespace NCDK.Stereo
                 return (int)Math.Sign(det);
             }
 
-            /**
-			 * Obtain the unit vector between two points.
-			 *
-			 * @param from the base of the vector
-			 * @param to   the point of the vector
-			 * @return the unit vector
-			 */
+            /// <summary>
+            /// Obtain the unit vector between two points.
+            ///
+            /// <param name="from">the base of the vector</param>
+            /// <param name="to">the point of the vector</param>
+            /// <returns>the unit vector</returns>
+            /// </summary>
             private Vector2 ToUnitVector(Vector2 from, Vector2 to)
             {
                 if (from == to) return Vector2.Zero;
@@ -611,14 +611,14 @@ namespace NCDK.Stereo
                 return Vector2.Normalize(v2d);
             }
 
-            /**
-			 * Compute the signed volume of the tetrahedron from the planar points
-			 * and elevations.
-			 *
-			 * @param coordinates locations in the plane
-			 * @param elevations  elevations above/below the plane
-			 * @return the determinant (signed volume of tetrahedron)
-			 */
+            /// <summary>
+            /// Compute the signed volume of the tetrahedron from the planar points
+            /// and elevations.
+            ///
+            /// <param name="coordinates">locations in the plane</param>
+            /// <param name="elevations">elevations above/below the plane</param>
+            /// <returns>the determinant (signed volume of tetrahedron)</returns>
+            /// </summary>
             private double Parity(Vector2[] coordinates, int[] elevations)
             {
                 double x1 = coordinates[0].X;
@@ -641,13 +641,13 @@ namespace NCDK.Stereo
                 return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
             }
 
-            /**
-			 * Utility find the specified value, {@code v}, in the array of values,
-			 * {@code vs} and moves it to the back.
-			 *
-			 * @param vs an array of values (containing v)
-			 * @param v  a value
-			 */
+            /// <summary>
+            /// Utility find the specified value, {@code v}, in the array of values,
+            /// {@code vs} and moves it to the back.
+            ///
+            /// <param name="vs">an array of values (containing v)</param>
+            /// <param name="v">a value</param>
+            /// </summary>
             private static void MoveToBack(int[] vs, int v)
             {
                 for (int i = 0; i < vs.Length; i++)
@@ -661,15 +661,15 @@ namespace NCDK.Stereo
                 }
             }
 
-            /**
-			 * Obtain the elevation of an atom connected to the {@code focus} by the
-			 * specified {@code bond}.
-			 *
-			 * @param focus a focus of stereochemistry
-			 * @param bond  a bond connecting the focus to a substituent
-			 * @return the elevation of the connected atom, +1 above, -1 below, 0
-			 *         planar
-			 */
+            /// <summary>
+            /// Obtain the elevation of an atom connected to the {@code focus} by the
+            /// specified {@code bond}.
+            ///
+            /// <param name="focus">a focus of stereochemistry</param>
+            /// <param name="bond">a bond connecting the focus to a substituent</param>
+            /// <returns>the elevation of the connected atom, +1 above, -1 below, 0</returns>
+            ///         planar
+            /// </summary>
             private int ElevationOf(IAtom focus, IBond bond)
             {
                 switch (bond.Stereo.Ordinal)
@@ -688,248 +688,248 @@ namespace NCDK.Stereo
             }
         }
 
-		/// <summary>Create stereo-elements from 3D coordinates.</summary>
-		private sealed class StereoElementFactory3D : StereoElementFactory {
+        /// <summary>Create stereo-elements from 3D coordinates.</summary>
+        private sealed class StereoElementFactory3D : StereoElementFactory {
 
-			/**
-			 * Create a new stereo-element factory for the specified structure.
-			 *
-			 * @param container native CDK structure representation
-			 * @param graph     adjacency list representation
-			 * @param bondMap   fast bond lookup from atom indices
-			 */
-			public StereoElementFactory3D(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
+            /// <summary>
+            /// Create a new stereo-element factory for the specified structure.
+            ///
+            /// <param name="container">native CDK structure representation</param>
+            /// <param name="graph">adjacency list representation</param>
+            /// <param name="bondMap">fast bond lookup from atom indices</param>
+            /// </summary>
+            public StereoElementFactory3D(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
                 : base(container, graph, bondMap)
             {
-			}
+            }
 
-			/// <inheritdoc/>
+            /// <inheritdoc/>
         
-			public override ITetrahedralChirality CreateTetrahedral(IAtom atom, Stereocenters stereocenters) {
-				return CreateTetrahedral(container.Atoms.IndexOf(atom), stereocenters);
-			}
+            public override ITetrahedralChirality CreateTetrahedral(IAtom atom, Stereocenters stereocenters) {
+                return CreateTetrahedral(container.Atoms.IndexOf(atom), stereocenters);
+            }
 
             /// <inheritdoc/>
 
             public override IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters) {
-				return CreateGeometric(container.Atoms.IndexOf(bond.Atoms[0]), container.Atoms.IndexOf(bond.Atoms[1]),
-						stereocenters);
-			}
+                return CreateGeometric(container.Atoms.IndexOf(bond.Atoms[0]), container.Atoms.IndexOf(bond.Atoms[1]),
+                        stereocenters);
+            }
 
             /// <inheritdoc/>
 
             public override ITetrahedralChirality CreateTetrahedral(int v, Stereocenters stereocenters) {
 
-				if (!stereocenters.IsStereocenter(v)) return null;
+                if (!stereocenters.IsStereocenter(v)) return null;
 
-				IAtom focus = container.Atoms[v];
+                IAtom focus = container.Atoms[v];
 
-				if (HasUnspecifiedParity(focus)) return null;
+                if (HasUnspecifiedParity(focus)) return null;
 
-				IAtom[] neighbors = new IAtom[4];
+                IAtom[] neighbors = new IAtom[4];
 
-				neighbors[3] = focus;
+                neighbors[3] = focus;
 
-				int n = 0;
+                int n = 0;
 
-				foreach (var w in graph[v])
-					neighbors[n++] = container.Atoms[w];
+                foreach (var w in graph[v])
+                    neighbors[n++] = container.Atoms[w];
 
-				// too few/many neighbors
-				if (n < 3 || n > 4) return null;
+                // too few/many neighbors
+                if (n < 3 || n > 4) return null;
 
-				// TODO: verify valid wedge/hatch configurations using similar procedure
-				// to NonPlanarBonds in the cdk-sdg package
+                // TODO: verify valid wedge/hatch configurations using similar procedure
+                // to NonPlanarBonds in the cdk-sdg package
 
-				int parity = Parity(neighbors);
+                int parity = Parity(neighbors);
 
                 TetrahedralStereo winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
-				return new TetrahedralChirality(focus, neighbors, winding);
-			}
+                return new TetrahedralChirality(focus, neighbors, winding);
+            }
 
             /// <inheritdoc/>
 
             public override IDoubleBondStereochemistry CreateGeometric(int u, int v, Stereocenters stereocenters) {
 
-				if (HasUnspecifiedParity(container.Atoms[u]) || HasUnspecifiedParity(container.Atoms[v])) return null;
+                if (HasUnspecifiedParity(container.Atoms[u]) || HasUnspecifiedParity(container.Atoms[v])) return null;
 
-				int[] us = graph[u];
-				int[] vs = graph[v];
+                int[] us = graph[u];
+                int[] vs = graph[v];
 
-				int x = us[0] == v ? us[1] : us[0];
-				int w = vs[0] == u ? vs[1] : vs[0];
+                int x = us[0] == v ? us[1] : us[0];
+                int w = vs[0] == u ? vs[1] : vs[0];
 
-				IAtom uAtom = container.Atoms[u];
-				IAtom vAtom = container.Atoms[v];
-				IAtom uSubstituentAtom = container.Atoms[x];
-				IAtom vSubstituentAtom = container.Atoms[w];
+                IAtom uAtom = container.Atoms[u];
+                IAtom vAtom = container.Atoms[v];
+                IAtom uSubstituentAtom = container.Atoms[x];
+                IAtom vSubstituentAtom = container.Atoms[w];
 
-				if (uAtom.Point3D == null || vAtom.Point3D == null || uSubstituentAtom.Point3D == null
-						|| vSubstituentAtom.Point3D == null) return null;
+                if (uAtom.Point3D == null || vAtom.Point3D == null || uSubstituentAtom.Point3D == null
+                        || vSubstituentAtom.Point3D == null) return null;
 
-				int parity = Parity(uAtom.Point3D.Value, vAtom.Point3D.Value, uSubstituentAtom.Point3D.Value,
-						vSubstituentAtom.Point3D.Value);
+                int parity = Parity(uAtom.Point3D.Value, vAtom.Point3D.Value, uSubstituentAtom.Point3D.Value,
+                        vSubstituentAtom.Point3D.Value);
 
-				DoubleBondConformation conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
+                DoubleBondConformation conformation = parity > 0 ? DoubleBondConformation.Opposite : DoubleBondConformation.Together;
 
-				IBond bond = bondMap[u, v];
+                IBond bond = bondMap[u, v];
                 bond.Atoms[0] = uAtom;
                 bond.Atoms[1] = vAtom;
 
-				return new DoubleBondStereochemistry(bond, new IBond[]{bondMap[u, x], bondMap[v, w],}, conformation);
-			}
+                return new DoubleBondStereochemistry(bond, new IBond[]{bondMap[u, x], bondMap[v, w],}, conformation);
+            }
 
             /// <inheritdoc/>
 
             public override ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters) {
 
-				IAtom focus = container.Atoms[v];
+                IAtom focus = container.Atoms[v];
 
-				if (HasUnspecifiedParity(focus)) return null;
+                if (HasUnspecifiedParity(focus)) return null;
 
-				IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
-				IAtom[] neighbors = new IAtom[4];
+                IAtom[] terminals = ExtendedTetrahedral.FindTerminalAtoms(container, focus);
+                IAtom[] neighbors = new IAtom[4];
 
-				int t0 = container.Atoms.IndexOf(terminals[0]);
-				int t1 = container.Atoms.IndexOf(terminals[1]);
+                int t0 = container.Atoms.IndexOf(terminals[0]);
+                int t1 = container.Atoms.IndexOf(terminals[1]);
 
-				// check the focus is cumulated
-				if (bondMap[v, t0].Order != BondOrder.Double
-						|| bondMap[v, t1].Order != BondOrder.Double) return null;
+                // check the focus is cumulated
+                if (bondMap[v, t0].Order != BondOrder.Double
+                        || bondMap[v, t1].Order != BondOrder.Double) return null;
 
-				neighbors[1] = terminals[0];
-				neighbors[3] = terminals[1];
+                neighbors[1] = terminals[0];
+                neighbors[3] = terminals[1];
 
-				int n = 0;
-				foreach (var w in graph[t0]) {
-					if (bondMap[t0, w].Order != BondOrder.Single) continue;
-					neighbors[n++] = container.Atoms[w];
-				}
-				n = 2;
-				foreach (var w in graph[t1]) {
-					if (bondMap[t1, w].Order != BondOrder.Single) continue;
-					neighbors[n++] = container.Atoms[w];
-				}
+                int n = 0;
+                foreach (var w in graph[t0]) {
+                    if (bondMap[t0, w].Order != BondOrder.Single) continue;
+                    neighbors[n++] = container.Atoms[w];
+                }
+                n = 2;
+                foreach (var w in graph[t1]) {
+                    if (bondMap[t1, w].Order != BondOrder.Single) continue;
+                    neighbors[n++] = container.Atoms[w];
+                }
 
-				int parity = Parity(neighbors);
+                int parity = Parity(neighbors);
 
                 TetrahedralStereo winding = parity > 0 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
-				return new ExtendedTetrahedral(focus, neighbors, winding);
-			}
+                return new ExtendedTetrahedral(focus, neighbors, winding);
+            }
 
-			/// <summary>3x3 determinant helper for a constant third column</summary>
-			private static double Det(double xa, double ya, double xb, double yb, double xc, double yc) {
-				return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
-			}
+            /// <summary>3x3 determinant helper for a constant third column</summary>
+            private static double Det(double xa, double ya, double xb, double yb, double xc, double yc) {
+                return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
+            }
 
-			/**
-			 * Parity computation for one side of a double bond in a geometric center.
-			 * The method needs the 3D coordinates of the double bond atoms (first 2
-			 * arguments) and the coordinates of two substituents (one at each end).
-			 *
-			 * @param u an atom double bonded to v
-			 * @param v an atom double bonded to u
-			 * @param x an atom sigma bonded to u
-			 * @param w an atom sigma bonded to v
-			 * @return the parity of the atoms
-			 */
-			private int Parity(Vector3 u, Vector3 v, Vector3 x, Vector3 w) {
+            /// <summary>
+            /// Parity computation for one side of a double bond in a geometric center.
+            /// The method needs the 3D coordinates of the double bond atoms (first 2
+            /// arguments) and the coordinates of two substituents (one at each end).
+            ///
+            /// <param name="u">an atom double bonded to v</param>
+            /// <param name="v">an atom double bonded to u</param>
+            /// <param name="x">an atom sigma bonded to u</param>
+            /// <param name="w">an atom sigma bonded to v</param>
+            /// <returns>the parity of the atoms</returns>
+            /// </summary>
+            private int Parity(Vector3 u, Vector3 v, Vector3 x, Vector3 w) {
 
-				// create three vectors, v->u, v->w and u->x
-				double[] vu = ToVector(v, u);
-				double[] vw = ToVector(v, w);
-				double[] ux = ToVector(u, x);
+                // create three vectors, v->u, v->w and u->x
+                double[] vu = ToVector(v, u);
+                double[] vw = ToVector(v, w);
+                double[] ux = ToVector(u, x);
 
-				// normal vector (to compare against), the normal vector (n) looks like:
-				// x     n w
-				//  \    |/
-				//   u = v
-				double[] normal = CrossProduct(vu, CrossProduct(vu, vw));
+                // normal vector (to compare against), the normal vector (n) looks like:
+                // x     n w
+                //  \    |/
+                //   u = v
+                double[] normal = CrossProduct(vu, CrossProduct(vu, vw));
 
-				// compare the dot products of v->w and u->x, if the signs are the same
-				// they are both pointing the same direction. if a value is close to 0
-				// then it is at pi/2 radians (i.e. unspecified) however 3D coordinates
-				// are generally discrete and do not normally represent on unspecified
-				// stereo configurations so we don't check this
-				int parity = (int) Math.Sign(Dot(normal, vw)) * (int) Math.Sign(Dot(normal, ux));
+                // compare the dot products of v->w and u->x, if the signs are the same
+                // they are both pointing the same direction. if a value is close to 0
+                // then it is at pi/2 radians (i.e. unspecified) however 3D coordinates
+                // are generally discrete and do not normally represent on unspecified
+                // stereo configurations so we don't check this
+                int parity = (int) Math.Sign(Dot(normal, vw)) * (int) Math.Sign(Dot(normal, ux));
 
-				// invert sign, this then matches with Sp2 double bond parity
-				return parity * -1;
-			}
+                // invert sign, this then matches with Sp2 double bond parity
+                return parity * -1;
+            }
 
-			/**
-			 * Parity computation for 3D tetrahedral stereocenters.
-			 *
-			 * @param atoms the atoms surrounding the central focus atom
-			 * @return the parity (winding)
-			 */
-			private int Parity(IAtom[] atoms) {
+            /// <summary>
+            /// Parity computation for 3D tetrahedral stereocenters.
+            ///
+            /// <param name="atoms">the atoms surrounding the central focus atom</param>
+            /// <returns>the parity (winding)</returns>
+            /// </summary>
+            private int Parity(IAtom[] atoms) {
 
-				if (atoms.Length != 4) throw new ArgumentException("incorrect number of atoms");
+                if (atoms.Length != 4) throw new ArgumentException("incorrect number of atoms");
 
-				Vector3[] coordinates = new Vector3[atoms.Length];
-				for (int i = 0; i < atoms.Length; i++) {
+                Vector3[] coordinates = new Vector3[atoms.Length];
+                for (int i = 0; i < atoms.Length; i++) {
                     var c = atoms[i].Point3D;
                     if (c == null) return 0;
                     coordinates[i] = c.Value;
-				}
+                }
 
-				double x1 = coordinates[0].X;
-				double x2 = coordinates[1].X;
-				double x3 = coordinates[2].X;
-				double x4 = coordinates[3].X;
+                double x1 = coordinates[0].X;
+                double x2 = coordinates[1].X;
+                double x3 = coordinates[2].X;
+                double x4 = coordinates[3].X;
 
-				double y1 = coordinates[0].Y;
-				double y2 = coordinates[1].Y;
-				double y3 = coordinates[2].Y;
-				double y4 = coordinates[3].Y;
+                double y1 = coordinates[0].Y;
+                double y2 = coordinates[1].Y;
+                double y3 = coordinates[2].Y;
+                double y4 = coordinates[3].Y;
 
-				double z1 = coordinates[0].Z;
-				double z2 = coordinates[1].Z;
-				double z3 = coordinates[2].Z;
-				double z4 = coordinates[3].Z;
+                double z1 = coordinates[0].Z;
+                double z2 = coordinates[1].Z;
+                double z3 = coordinates[2].Z;
+                double z4 = coordinates[3].Z;
 
-				double det = (z1 * Det(x2, y2, x3, y3, x4, y4)) - (z2 * Det(x1, y1, x3, y3, x4, y4))
-						+ (z3 * Det(x1, y1, x2, y2, x4, y4)) - (z4 * Det(x1, y1, x2, y2, x3, y3));
+                double det = (z1 * Det(x2, y2, x3, y3, x4, y4)) - (z2 * Det(x1, y1, x3, y3, x4, y4))
+                        + (z3 * Det(x1, y1, x2, y2, x4, y4)) - (z4 * Det(x1, y1, x2, y2, x3, y3));
 
-				return (int) Math.Sign(det);
-			}
+                return (int) Math.Sign(det);
+            }
 
-			/**
-			 * Create a vector by specifying the source and destination coordinates.
-			 *
-			 * @param src  start point of the vector
-			 * @param dest end point of the vector
-			 * @return a new vector
-			 */
-			private static double[] ToVector(Vector3 src, Vector3 dest) {
-				return new double[]{dest.X - src.X, dest.Y - src.Y, dest.Z - src.Z};
-			}
+            /// <summary>
+            /// Create a vector by specifying the source and destination coordinates.
+            ///
+            /// <param name="src">start point of the vector</param>
+            /// <param name="dest">end point of the vector</param>
+            /// <returns>a new vector</returns>
+            /// </summary>
+            private static double[] ToVector(Vector3 src, Vector3 dest) {
+                return new double[]{dest.X - src.X, dest.Y - src.Y, dest.Z - src.Z};
+            }
 
-			/**
-			 * Dot product of two 3D coordinates
-			 *
-			 * @param u either 3D coordinates
-			 * @param v other 3D coordinates
-			 * @return the dot-product
-			 */
-			private static double Dot(double[] u, double[] v) {
-				return (u[0] * v[0]) + (u[1] * v[1]) + (u[2] * v[2]);
-			}
+            /// <summary>
+            /// Dot product of two 3D coordinates
+            ///
+            /// <param name="u">either 3D coordinates</param>
+            /// <param name="v">other 3D coordinates</param>
+            /// <returns>the dot-product</returns>
+            /// </summary>
+            private static double Dot(double[] u, double[] v) {
+                return (u[0] * v[0]) + (u[1] * v[1]) + (u[2] * v[2]);
+            }
 
-			/**
-			 * Cross product of two 3D coordinates
-			 *
-			 * @param u either 3D coordinates
-			 * @param v other 3D coordinates
-			 * @return the cross-product
-			 */
-			private static double[] CrossProduct(double[] u, double[] v) {
-				return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]),
-						(u[0] * v[1]) - (v[0] * u[1])};
-			}
-		}
-	}
+            /// <summary>
+            /// Cross product of two 3D coordinates
+            ///
+            /// <param name="u">either 3D coordinates</param>
+            /// <param name="v">other 3D coordinates</param>
+            /// <returns>the cross-product</returns>
+            /// </summary>
+            private static double[] CrossProduct(double[] u, double[] v) {
+                return new double[]{(u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]),
+                        (u[0] * v[1]) - (v[0] * u[1])};
+            }
+        }
+    }
 }

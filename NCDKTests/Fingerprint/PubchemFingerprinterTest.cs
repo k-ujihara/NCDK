@@ -29,16 +29,14 @@ using NCDK.Aromaticities;
 using NCDK.Smiles;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
-using System;
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    // @cdk.module test-fingerprint
     [TestClass()]
     public class PubchemFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -117,12 +115,11 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(FingerprinterTool.IsSubset(bs2, bs3));
         }
 
-        /**
-         * Test case for Pubchem CID 25181308.
-         *
-         * @throws InvalidSmilesException
-         * @cdk.inchi InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
-         */
+        /// <summary>
+        /// Test case for Pubchem CID 25181308.
+        /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
+        // @cdk.inchi InChI=1S/C13H24O10S/c1-20-12-8(18)6(16)10(4(2-14)21-12)23-13-9(19)7(17)11(24)5(3-15)22-13/h4-19,24H,2-3H2,1H3/t4-,5-,6-,7-,8-,9-,10-,11-,12-,13+/m1/s1
         [TestMethod()]
         public void TestCID2518130()
         {
@@ -141,12 +138,11 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
         }
 
-        /**
-         * Test case for Pubchem CID 5934166.
-         *
-         * @throws InvalidSmilesException
-         * @cdk.inchi InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
-         */
+        /// <summary>
+        /// Test case for Pubchem CID 5934166.
+        /// </summary>
+        /// <exception cref="InvalidSmilesException"></exception>
+        // @cdk.inchi InChI=1S/C32H26N/c1-5-13-26(14-6-1)21-22-31-23-30(28-17-9-3-10-18-28)24-32(29-19-11-4-12-20-29)33(31)25-27-15-7-2-8-16-27/h1-24H,25H2/q+1/b22-21+
         [TestMethod()]
         public void TestCID5934166()
         {
@@ -165,12 +161,10 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(ref_, fp));
         }
 
-        /**
-           * Test case for Pubchem CID 25181289.
-           *
-           * @throws InvalidSmilesException
-           * @cdk.inchi  InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
-           */
+        /// <summary>
+        /// Test case for Pubchem CID 25181289.
+        /// </summary>
+        // @cdk.inchi  InChI=1S/C14H10Cl3N3O3/c1-6(7-2-4-8(21)5-3-7)19-20-11-9(15)12(14(22)23)18-13(17)10(11)16/h2-5,19,21H,1H2,(H,18,20)(H,22,23)
         [TestMethod()]
         public void TestCID25181289()
         {
@@ -290,10 +284,7 @@ namespace NCDK.Fingerprint
             }
         }
 
-        /**
-         * @
-         * @cdk.bug 3510588
-         */
+        // @cdk.bug 3510588
         [TestMethod()]
         public void TestMultithReadedUsage()
         {
@@ -333,17 +324,16 @@ namespace NCDK.Fingerprint
             Assert.IsTrue(BitArrays.AreEqual(bs2, fb2));
         }
 
-        /**
-         * Using PubChem/CACTVS Substr keys, these molecules are not considered
-         * substructures and should only be used for similarity. This is because the
-         * PubChem fragments match hydrogen counts. In this case the {@code 599}
-         * bit ({@code [#1]-C-C=C-[#1]}) is found in the substructure but not the
-         * superstructure.
-         */
+        /// <summary>
+        /// Using PubChem/CACTVS Substr keys, these molecules are not considered
+        /// substructures and should only be used for similarity. This is because the
+        /// PubChem fragments match hydrogen counts. In this case the <c>599</c>
+        /// bit (<c>[#1]-C-C=C-[#1]</c>) is found in the substructure but not the
+        /// superstructure.
+        /// </summary>
         [TestMethod()]
         public override void TestBug934819()
         {
-
             IAtomContainer subStructure = Bug934819_1();
             IAtomContainer superStructure = Bug934819_2();
 

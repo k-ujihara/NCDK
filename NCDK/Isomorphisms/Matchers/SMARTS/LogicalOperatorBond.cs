@@ -19,28 +19,28 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-	 * This class matches a logical operator that connects two query bonds.
-	 *
-	 * @cdk.module  smarts
-	 * @cdk.githash
-	 * @cdk.keyword SMARTS
-	 */
+    /// <summary>
+    /// This class matches a logical operator that connects two query bonds.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class LogicalOperatorBond : SMARTSBond
     {
-        /**
-		 * Left child
-		 */
+        /// <summary>
+        /// Left child
+        /// </summary>
         private IQueryBond left;
 
-        /**
-		 * Name of the operator
-		 */
+        /// <summary>
+        /// Name of the operator
+        /// </summary>
         private string operator_;
 
-        /**
-		 * Right child
-		 */
+        /// <summary>
+        /// Right child
+        /// </summary>
         private IQueryBond right;
 
         public LogicalOperatorBond(IChemObjectBuilder builder)

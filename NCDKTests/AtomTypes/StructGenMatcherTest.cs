@@ -25,12 +25,12 @@ using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests the matching of atom types defined in the
-     * structgen atom type list.
-     *
-     * @cdk.module test-structgen
-     */
+    /// <summary>
+    /// This class tests the matching of atom types defined in the
+    /// structgen atom type list.
+    ///
+    // @cdk.module test-structgen
+    /// </summary>
     //@FixMethodOrder(MethodSorters.NAME_ASCENDING)
     [TestClass()]
     public class StructGenMatcherTest : AbstractAtomTypeTest
@@ -214,8 +214,8 @@ namespace NCDK.AtomTypes
         }
 
         /*
-         * Tests As3, Cl1
-         */
+        /// Tests As3, Cl1
+        /// </summary>
         [TestMethod()]
         public void TestArsenic()
         {
@@ -245,8 +245,8 @@ namespace NCDK.AtomTypes
         }
 
         /*
-         * Tests C4, O2
-         */
+        /// Tests C4, O2
+        /// </summary>
         [TestMethod()]
         public void TestOxygen1()
         {
@@ -282,8 +282,8 @@ namespace NCDK.AtomTypes
         }
 
         /*
-         * Tests O2, H1
-         */
+        /// Tests O2, H1
+        /// </summary>
         [TestMethod()]
         public void TestOxygen2()
         {
@@ -323,8 +323,8 @@ namespace NCDK.AtomTypes
         }
 
         /*
-         * Tests P4, S2, Cl1
-         */
+        /// Tests P4, S2, Cl1
+        /// </summary>
         [TestMethod()]
         public void TestP4()
         {
@@ -368,8 +368,8 @@ namespace NCDK.AtomTypes
         }
 
         /*
-         * Tests P3, O2, C4
-         */
+        /// Tests P3, O2, C4
+        /// </summary>
         [TestMethod()]
         public void TestP3()
         {
@@ -792,15 +792,15 @@ namespace NCDK.AtomTypes
 
         }
 
-        /**
-         * The test seems to be run by JUnit in order in which they found
-         * in the source. Ugly, but @AfterClass does not work because that
-         * methods does cannot assert anything.
-         *
-         * ...not anymore. Bad idea to do have such a test in the first place
-         * but we can hack it by sorting by test name (see fix method order
-         * annotation).
-         */
+        /// <summary>
+        /// The test seems to be run by JUnit in order in which they found
+        /// in the source. Ugly, but @AfterClass does not work because that
+        /// methods does cannot assert anything.
+        ///
+        /// ...not anymore. Bad idea to do have such a test in the first place
+        /// but we can hack it by sorting by test name (see fix method order
+        /// annotation).
+        /// </summary>
         [ClassCleanup()]
         public static void UTestCountTestedAtomTypes()
         {

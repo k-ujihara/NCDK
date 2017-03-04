@@ -25,11 +25,11 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for {@link IChemObjectWriter} implementations.
-     *
-     * @cdk.module test-io
-     */
+    /// <summary>
+    /// TestCase for {@link IChemObjectWriter} implementations.
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public abstract class ChemObjectWriterTest : ChemObjectIOTest
     {
@@ -39,11 +39,11 @@ namespace NCDK.IO
             new ChemFile(), new ChemModel(), new Reaction(),
             new AtomContainerSet<IAtomContainer>(), new AtomContainer(), };
 
-        /**
-         * Unit tests that iterates over all common objects that can be
-         * serialized and tests that if it is marked as accepted with
-         * <code>accepts</code>, that it can actually be written too.
-         */
+        /// <summary>
+        /// Unit tests that iterates over all common objects that can be
+        /// serialized and tests that if it is marked as accepted with
+        /// <code>accepts</code>, that it can actually be written too.
+        /// </summary>
         [TestMethod()]
         public void TestAcceptsWriteConsistency()
         {

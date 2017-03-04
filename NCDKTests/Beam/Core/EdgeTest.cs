@@ -33,7 +33,7 @@ using System;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class EdgeTest
     {
 
@@ -55,7 +55,7 @@ namespace NCDK.Beam
 
         // no longer thrown
         [ExpectedException(typeof(ArgumentException))]
-        public void invalidEndpoint()
+        public void InvalidEndpoint()
         {
             new Edge(2, 3, Bond.Implicit).Other(1);
         }
@@ -69,7 +69,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void relativeBond()
+        public void RelativeBond()
         {
             Assert.AreEqual(new Edge(2, 3, Bond.Single).GetBond(2), Bond.Single);
             Assert.AreEqual(new Edge(2, 3, Bond.Single).GetBond(3), Bond.Single);
@@ -81,7 +81,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(ArgumentException))]
-        public void invalidRelativeBond()
+        public void InvalidRelativeBond()
         {
             new Edge(2, 3, Bond.Implicit).GetBond(1);
         }

@@ -30,40 +30,40 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * This Reader reads files which has one SMILES string on each
-     * line, where the format is given as below:
-     * <pre>
-     * COC ethoxy ethane
-     * </pre>
-     * Thus first the SMILES, and then after the first space (or tab) on the line a title
-     * that is stored as {@link CDKConstants#TITLE}. For legacy comparability the
-     * title is also placed in a "SMIdbNAME" property. If a line is invalid an empty
-     * molecule is inserted into the container set. The molecule with have the prop
-     * {@link IteratingSMILESReader#BAD_SMILES_INPUT} set to the input line that
-     * could not be read. 
-     *
-     * <p>For each line a molecule is generated, and multiple Molecules are
-     * read as MoleculeSet.
-     *
-     * @cdk.module  smiles
-     * @cdk.githash
-     * @cdk.iooptions
-     * @cdk.keyword file format, SMILES
-     *
-     * @see org.openscience.cdk.io.iterator.IteratingSMILESReader
-     */
+    /// <summary>
+    /// This Reader reads files which has one SMILES string on each
+    /// line, where the format is given as below:
+    /// <code>
+    /// COC ethoxy ethane
+    /// </code>
+    /// Thus first the SMILES, and then after the first space (or tab) on the line a title
+    /// that is stored as {@link CDKConstants#TITLE}. For legacy comparability the
+    /// title is also placed in a "SMIdbNAME" property. If a line is invalid an empty
+    /// molecule is inserted into the container set. The molecule with have the prop
+    /// {@link IteratingSMILESReader#BAD_SMILES_INPUT} set to the input line that
+    /// could not be read. 
+    ///
+    /// <p>For each line a molecule is generated, and multiple Molecules are
+    /// read as MoleculeSet.
+    ///
+    // @cdk.module  smiles
+    // @cdk.githash
+    // @cdk.iooptions
+    // @cdk.keyword file format, SMILES
+    ///
+    // @see org.openscience.cdk.io.iterator.IteratingSMILESReader
+    /// </summary>
     public class SMILESReader : DefaultChemObjectReader
     {
 
         private TextReader input = null;
         private SmilesParser sp = null;
 
-        /**
-         * Construct a new reader from a Reader and a specified builder object.
-         *
-         * @param input   The Reader object from which to read structures
-         */
+        /// <summary>
+        /// Construct a new reader from a Reader and a specified builder object.
+        ///
+        /// <param name="input">The Reader object from which to read structures</param>
+        /// </summary>
         public SMILESReader(TextReader input)
         {
             this.input = input;
@@ -96,14 +96,14 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * reads the content from a XYZ input. It can only return a
-         * IChemObject of type ChemFile
-         *
-         * @param object class must be of type ChemFile
-         *
-         * @see IChemFile
-         */
+        /// <summary>
+        /// reads the content from a XYZ input. It can only return a
+        /// IChemObject of type ChemFile
+        ///
+        /// <param name="object">class must be of type ChemFile</param>
+        ///
+        /// <seealso cref="IChemFile"/>
+        /// </summary>
         public override T Read<T>(T obj)
         {
             sp = new SmilesParser(obj.Builder);
@@ -130,13 +130,13 @@ namespace NCDK.IO
 
         // private procedures
 
-        /**
-         *  Private method that actually parses the input to read a ChemFile
-         *  object.
-         *
-         * @param som The set of molecules that came fron the file
-         * @return A ChemFile containing the data parsed from input.
-         */
+        /// <summary>
+        ///  Private method that actually parses the input to read a ChemFile
+        ///  object.
+        ///
+        /// <param name="som">The set of molecules that came fron the file</param>
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
         {
             try
@@ -180,13 +180,13 @@ namespace NCDK.IO
             input.Close();
         }
 
-        /**
-         * Obtain the suffix after a line containing SMILES. The suffix follows
-         * any ' ' or '\t' termination characters.
-         *
-         * @param line input line
-         * @return the suffix - or an empty line
-         */
+        /// <summary>
+        /// Obtain the suffix after a line containing SMILES. The suffix follows
+        /// any ' ' or '\t' termination characters.
+        ///
+        /// <param name="line">input line</param>
+        /// <returns>the suffix - or an empty line</returns>
+        /// </summary>
         private string Suffix(string line)
         {
             for (int i = 0; i < line.Length; i++)

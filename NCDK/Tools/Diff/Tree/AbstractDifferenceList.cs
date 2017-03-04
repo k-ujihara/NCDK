@@ -23,13 +23,13 @@ using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
-    /**
-     * Diff between two IChemObjects.
-     *
-     * @author     egonw
-     * @cdk.module diff
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Diff between two IChemObjects.
+    ///
+    // @author     egonw
+    // @cdk.module diff
+    // @cdk.githash
+    /// </summary>
     public abstract class AbstractDifferenceList : IDifferenceList
     {
         protected List<IDifference> differences;

@@ -431,7 +431,7 @@ namespace NCDK.Signature
         }
 
         [TestMethod()]
-        public void threeMethylSulphanylPropanal()
+        public void ThreeMethylSulphanylPropanal()
         {
             string smiles = "O=CCCSC";
             FullPermutationTest(parser.ParseSmiles(smiles));
@@ -449,7 +449,7 @@ namespace NCDK.Signature
 
         [TestMethod()]
         [TestCategory("SlowTest")]
-        public void ttprTest()
+        public void TtprTest()
         {
             string expected = "[Rh]([P]([C]([C]([C]([C,6]))" + "[C]([C]([C,6])))[C]([C]([C]([C,3]))"
                     + "[C]([C]([C,3])))[C]([C]([C]([C,2]))" + "[C]([C]([C,2]))))[P]([C]([C]([C]([C,7]))"

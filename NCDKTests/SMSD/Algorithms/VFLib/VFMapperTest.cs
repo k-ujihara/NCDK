@@ -51,14 +51,14 @@ using NCDK.SMSD.Algorithms.VFLib.Map;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     *
-     * @author Richard L. Apodaca <rapodaca at metamolecular.com>
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    ///
+    // @author Richard L. Apodaca <rapodaca at metamolecular.com>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class VFMapperTest
     {

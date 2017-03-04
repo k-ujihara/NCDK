@@ -23,41 +23,41 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     *  The number of rotatable bonds is given by the SMARTS specified by Daylight on
-     *  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>includeTerminals</td>
-     *     <td>false</td>
-     *     <td>True if terminal bonds are included</td>
-     *   </tr>
-     *   <tr>
-     *     <td>excludeAmides</td>
-     *     <td>false</td>
-     *     <td>True if amide C-N bonds should be excluded</td>
-     *   </tr>
-     * </table>
-     *
-     * Returns a single value named <i>nRotB</i>
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-03
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:rotatableBondsCount
-     *
-     * @cdk.keyword bond count, rotatable
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    ///  The number of rotatable bonds is given by the SMARTS specified by Daylight on
+    ///  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>includeTerminals</td>
+    ///     <td>false</td>
+    ///     <td>True if terminal bonds are included</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>excludeAmides</td>
+    ///     <td>false</td>
+    ///     <td>True if amide C-N bonds should be excluded</td>
+    ///   </tr>
+    /// </table>
+    ///
+    /// Returns a single value named <i>nRotB</i>
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-03
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:rotatableBondsCount
+    ///
+    // @cdk.keyword bond count, rotatable
+    // @cdk.keyword descriptor
+    /// </summary>
     public class RotatableBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool includeTerminals = false;

@@ -436,7 +436,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
-                //			Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
+                //            Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
                 Assert.AreEqual(testResult[i], result, 0.3);
             }
         }
@@ -458,7 +458,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
                 double result = ((DoubleResult)descriptor.Calculate(mol.Atoms[i], mol).GetValue()).Value;
-                //			Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
+                //            Debug.WriteLine(mol.Atoms[i].Symbol+",result: "+result);
                 Assert.AreEqual(testResult[i], result, 0.05);
             }
         }

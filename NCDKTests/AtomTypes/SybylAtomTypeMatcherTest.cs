@@ -25,13 +25,13 @@ using System.Collections.Generic;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * This class tests the perception of Sybyl atom types, which uses
-     * CDK atom type perception and mapping of CDK atom types to Sybyl
-     * atom types.
-     *
-     * @cdk.module test-atomtype
-     */
+    /// <summary>
+    /// This class tests the perception of Sybyl atom types, which uses
+    /// CDK atom type perception and mapping of CDK atom types to Sybyl
+    /// atom types.
+    ///
+    // @cdk.module test-atomtype
+    /// </summary>
     [TestClass()]
     public class SybylAtomTypeMatcherTest : AbstractSybylAtomTypeTest
     {
@@ -77,7 +77,7 @@ namespace NCDK.AtomTypes
         public void TestFindMatchingAtomType_IAtomContainer()
         {
             string filename = "NCDK.Data.Mol2.atomtyping.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
 
@@ -95,7 +95,7 @@ namespace NCDK.AtomTypes
         public void TestAtomTyping()
         {
             string filename = "NCDK.Data.Mol2.atomtyping.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
@@ -113,9 +113,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * Uses FindMatchingAtomType(IAtomContainer, IAtom) type.
-         */
+        /// <summary>
+        /// Uses FindMatchingAtomType(IAtomContainer, IAtom) type.
+        /// </summary>
         [TestMethod()]
         public void TestBenzene()
         {
@@ -143,9 +143,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * Uses FindMatchingAtomType(IAtomContainer) type.
-         */
+        /// <summary>
+        /// Uses FindMatchingAtomType(IAtomContainer) type.
+        /// </summary>
         [TestMethod()]
         public void TestBenzene_AtomContainer()
         {
@@ -164,7 +164,7 @@ namespace NCDK.AtomTypes
         public void TestAtomTyping4()
         {
             string filename = "NCDK.Data.Mol2.atomtyping4.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
@@ -184,9 +184,9 @@ namespace NCDK.AtomTypes
             }
         }
 
-        /**
-         * @cdk.bug 2445178
-         */
+        /// <summary>
+        // @cdk.bug 2445178
+        /// </summary>
         [TestMethod()]
         public void TestNonExistingType()
         {
@@ -203,7 +203,7 @@ namespace NCDK.AtomTypes
         public void TestAtomTyping2()
         {
             string filename = "NCDK.Data.Mol2.atomtyping2.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
@@ -227,7 +227,7 @@ namespace NCDK.AtomTypes
         public void TestAtomTyping3()
         {
             string filename = "NCDK.Data.Mol2.atomtyping3.mol2";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Mol2Reader reader = new Mol2Reader(ins);
             IAtomContainer molecule = (IAtomContainer)reader.Read(new AtomContainer());
             Assert.IsNotNull(molecule);
@@ -853,9 +853,9 @@ namespace NCDK.AtomTypes
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
         }
 
-        /**
-         * @cdk.inchi InChI=1/H2Se/h1H2
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1/H2Se/h1H2
+        /// </summary>
         [TestMethod()]
         public void TestH2Se()
         {

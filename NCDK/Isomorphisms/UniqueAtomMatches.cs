@@ -28,63 +28,60 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A predicate for filtering atom-mapping results. This class is intended for
-     * use with {@link Pattern}.
-     *
-     * <blockquote><pre>{@code
-     *     Pattern     pattern = Ullmann.FindSubstructure(query);
-     *     List<int[]> unique  = FluentIterable.Of(patter.MatchAll(target))
-     *                                         .Filter(new UniqueAtomMatches())
-     *                                         .ToList();
-     * }</pre></blockquote>
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
-#if TEST
-    public
-#endif
-    sealed class UniqueAtomMatches : NCDK.Common.Base.Predicate<int[]>
+    /// <summary>
+    /// A predicate for filtering atom-mapping results. This class is intended for
+    /// use with <see cref="Pattern"/>.
+    ///
+    /// <blockquote><code>{@code
+    ///     Pattern     pattern = Ullmann.FindSubstructure(query);
+    ///     List<int[]> unique  = FluentIterable.Of(patter.MatchAll(target))
+    ///                                         .Filter(new UniqueAtomMatches())
+    ///                                         .ToList();
+    /// }</code></blockquote>
+    ///
+    // @author John May
+    // @cdk.module isomorphism
+    /// </summary>
+    internal sealed class UniqueAtomMatches : NCDK.Common.Base.Predicate<int[]>
     {
 
         /// <summary>Which mappings have we seen already.</summary>
         private readonly HashSet<BitArray> unique;
 
-        /**
-         * Create filter for the expected number of unique matches. The number
-         * of matches can grow if required.
-         *
-         * @param expectedHits expected number of unique matches
-         */
+        /// <summary>
+        /// Create filter for the expected number of unique matches. The number
+        /// of matches can grow if required.
+        ///
+        /// <param name="expectedHits">expected number of unique matches</param>
+        /// </summary>
         private UniqueAtomMatches(int expectedHits)
         {
             this.unique = new HashSet<BitArray>(BitArrays.EqualityComparer);
         }
 
-        /**
-         * Create filter for unique matches.
-         */
+        /// <summary>
+        /// Create filter for unique matches.
+        /// </summary>
         public UniqueAtomMatches()
             : this(10)
         {
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
 
         public bool Apply(int[] input)
         {
             return unique.Add(ToBitArray(input));
         }
 
-        /**
-         * Convert a mapping to a bitset.
-         *
-         * @param mapping an atom mapping
-         * @return a bit set of the mapped vertices (values in array)
-         */
+        /// <summary>
+        /// Convert a mapping to a bitset.
+        ///
+        /// <param name="mapping">an atom mapping</param>
+        /// <returns>a bit set of the mapped vertices (values in array)</returns>
+        /// </summary>
         private BitArray ToBitArray(int[] mapping)
         {
             BitArray hits = new BitArray(0);

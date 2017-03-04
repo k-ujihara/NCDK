@@ -37,30 +37,23 @@ namespace NCDK.Beam
     /// Abstraction allows simple definitions of integer sets. Generally for this
     /// library we are dealing with small bounded integer ranges (vertices of a
     /// graph) which are most efficiently represented as a binary set. For
-    /// convenience the {@link #AllOf(int, int...)} method can be used to construct a
+    /// convenience the <see cref="AllOf(int[])"/> method can be used to construct a
     /// binary set from varargs.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    abstract class IntSet
+    // @author John May
+    internal abstract class IntSet
     {
-
         /// <summary>
         /// Determine if value 'x' is a member of this set.
-        ///
+        /// </summary>
         /// <param name="x">a value to</param>
         /// <returns>x is included in this set</returns>.
-        /// </summary>
         public abstract bool Contains(int x);
 
         /// <summary>
         /// The universe is a set which includes every int value.
-        ///
-        /// <returns>int set with every item</returns>
         /// </summary>
+        /// <returns>int set with every item</returns>
         public static IntSet Universe => UNIVERSE;
 
         /// <summary>
@@ -72,14 +65,13 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Convenience method to create a set with the specified contents.
-        ///
-        /// <blockquote> IntSet.AllOf(0, 2, 5); // a set with 0,2 and 5
-        /// </blockquote>
-        ///
+        /// </summary>
+        /// <example><code>
+        ///     IntSet.AllOf(0, 2, 5); // a set with 0,2 and 5
+        /// </code></example>
         /// <param name="x"> a value</param>
         /// <param name="xs">more values</param>
         /// <returns>int set with specified items</returns>
-        /// </summary>
         public static IntSet AllOf(params int[] xs)
         {
             return NAllOf(64, xs);
@@ -95,14 +87,13 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Convenience method to create a set without the specified contents.
-        ///
-        /// <blockquote> IntSet.NoneOf(0, 2, 5); // a set with all but 0,2 and 5
-        /// </blockquote>
-        ///
+        /// </summary>
+        /// <example><code>
+        ///     IntSet.NoneOf(0, 2, 5); // a set with all but 0,2 and 5
+        /// </code></example>
         /// <param name="x"> a value</param>
         /// <param name="xs">more values</param>
         /// <returns>int set without the specified items</returns>
-        /// </summary>
         public static IntSet NoneOf(params int[] xs)
         {
             return NNoneOf(64, xs);
@@ -115,10 +106,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Create an set from a BitArray.
-        ///
+        /// </summary>
         /// <param name="s">bitset</param>
         /// <returns>int set which uses the bit set to test for membership</returns>
-        /// </summary>
         public static IntSet FromBitArray(BitArray s)
         {
             return new BinarySet((BitArray)s.Clone());
@@ -126,10 +116,9 @@ namespace NCDK.Beam
 
         /// <summary>
         /// Make a complement of the specified set.
-        ///
+        /// </summary>
         /// <param name="set">a set</param>
         /// <returns>complement of the set</returns>
-        /// </summary>
         private static IntSet CreateComplement(IntSet set)
         {
             return new Complement(set);

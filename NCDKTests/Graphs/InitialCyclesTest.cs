@@ -389,13 +389,13 @@ namespace NCDK.Graphs
         internal static int[][] K1
             => new int[][] { new int[] { } };
 
-        /**
-         * Simple undirected graph where every pair of of the four vertices is
-         * connected. The graph is known as a complete graph and is referred to as
-         * K<sub>4</sub>.
-         *
-         * @return adjacency list of K<sub>4</sub>
-         */
+        /// <summary>
+        /// Simple undirected graph where every pair of of the four vertices is
+        /// connected. The graph is known as a complete graph and is referred to as
+        /// K<sub>4</sub>.
+        ///
+        /// <returns>adjacency list of K<sub>4</sub></returns>
+        /// </summary>
         internal static int[][] K4
             => new int[][] { new[] { 1, 2, 3 }, new[] { 0, 2, 3 }, new[] { 0, 1, 3 }, new[] { 0, 1, 2 } };
 
@@ -424,10 +424,10 @@ namespace NCDK.Graphs
         internal static int[][] CyclophaneOdd
             => new int[][] { new[] { 1, 5, 10 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4, 6 }, new[] { 3, 5 }, new[] { 0, 4 }, new[] { 3, 7 }, new[] { 6, 8 }, new[] { 7, 9 }, new[] { 8, 10 }, new[] { 0, 9 }, };
 
-        /**
-         * Same as above but generate an even cycle so we can also test {@link
-         * org.openscience.cdk.graph.InitialCycles.Cycle#Family()} method.
-         */
+        /// <summary>
+        /// Same as above but generate an even cycle so we can also test {@link
+        /// org.openscience.cdk.graph.InitialCycles.Cycle#Family()} method.
+        /// </summary>
         internal static int[][] CyclophaneEven
             => new int[][] { new int[] { 1, 5, 11 }, new int[] { 0, 2 }, new int[] { 1, 3 }, new int[] { 2, 4, 6 }, new int[] { 3, 5 }, new int[] { 0, 4 }, new int[] { 3, 7 }, new int[] { 6, 8 }, new int[] { 7, 9 }, new int[] { 8, 10 }, new int[] { 9, 11 }, new int[] { 0, 10 } };
     }

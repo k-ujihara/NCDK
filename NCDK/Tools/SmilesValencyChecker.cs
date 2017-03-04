@@ -29,16 +29,16 @@ using System.Linq;
 
 namespace NCDK.Tools
 {
-    /**
-     * Small customization of ValencyHybridChecker suggested by Todd Martin
-     * specially tuned for SMILES parsing.
-     *
-     * @author       Egon Willighagen
-     * @cdk.created  2004-06-12
-     * @cdk.keyword  atom, valency
-     * @cdk.module   valencycheck
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Small customization of ValencyHybridChecker suggested by Todd Martin
+    /// specially tuned for SMILES parsing.
+    ///
+    // @author       Egon Willighagen
+    // @cdk.created  2004-06-12
+    // @cdk.keyword  atom, valency
+    // @cdk.module   valencycheck
+    // @cdk.githash
+    /// </summary>
     public class SmilesValencyChecker : IValencyChecker, IDeduceBondOrderTool
     {
 
@@ -55,13 +55,13 @@ namespace NCDK.Tools
             Trace.TraceInformation("Using configuration file: ", atomTypeList);
         }
 
-        /**
-         * Saturates a molecule by setting appropriate bond orders.
-         *
-         * @cdk.keyword            bond order, calculation
-         *
-         * @cdk.created 2003-10-03
-         */
+        /// <summary>
+        /// Saturates a molecule by setting appropriate bond orders.
+        ///
+        // @cdk.keyword            bond order, calculation
+        ///
+        // @cdk.created 2003-10-03
+        /// </summary>
 
         public void Saturate(IAtomContainer atomContainer)
         {
@@ -81,9 +81,9 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Saturates a set of Bonds in an AtomContainer.
-         */
+        /// <summary>
+        /// Saturates a set of Bonds in an AtomContainer.
+        /// </summary>
         public bool Saturate(IBond[] bonds, IAtomContainer atomContainer)
         {
             Debug.WriteLine("Saturating bond set of size: ", bonds.Length);
@@ -155,10 +155,10 @@ namespace NCDK.Tools
             }
         }
 
-        /**
-         * Returns whether a bond is unsaturated. A bond is unsaturated if
-         * <b>all</b> Atoms in the bond are unsaturated.
-         */
+        /// <summary>
+        /// Returns whether a bond is unsaturated. A bond is unsaturated if
+        /// <b>all</b> Atoms in the bond are unsaturated.
+        /// </summary>
         public bool IsUnsaturated(IBond bond, IAtomContainer atomContainer)
         {
             Debug.WriteLine("isBondUnsaturated?: ", bond);
@@ -172,11 +172,11 @@ namespace NCDK.Tools
             return isUnsaturated;
         }
 
-        /**
-         * Tries to saturate a bond by increasing its bond orders by 1.0.
-         *
-         * @return true if the bond could be increased
-         */
+        /// <summary>
+        /// Tries to saturate a bond by increasing its bond orders by 1.0.
+        ///
+        /// <returns>true if the bond could be increased</returns>
+        /// </summary>
         public bool SaturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer)
         {
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
@@ -211,10 +211,10 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * Returns whether a bond is saturated. A bond is saturated if
-         * <b>both</b> Atoms in the bond are saturated.
-         */
+        /// <summary>
+        /// Returns whether a bond is saturated. A bond is saturated if
+        /// <b>both</b> Atoms in the bond are saturated.
+        /// </summary>
         public bool IsSaturated(IBond bond, IAtomContainer atomContainer)
         {
             Debug.WriteLine("isBondSaturated?: ", bond);
@@ -229,9 +229,9 @@ namespace NCDK.Tools
             return isSaturated;
         }
 
-        /**
-         * Determines of all atoms on the AtomContainer are saturated.
-         */
+        /// <summary>
+        /// Determines of all atoms on the AtomContainer are saturated.
+        /// </summary>
 
         public bool IsSaturated(IAtomContainer container)
         {
@@ -251,10 +251,10 @@ namespace NCDK.Tools
             return true;
         }
 
-        /**
-         * Determines if the atom can be of type AtomType. That is, it sees if this
-         * AtomType only differs in bond orders, or implicit hydrogen count.
-         */
+        /// <summary>
+        /// Determines if the atom can be of type AtomType. That is, it sees if this
+        /// AtomType only differs in bond orders, or implicit hydrogen count.
+        /// </summary>
         public bool CouldMatchAtomType(IAtom atom, double bondOrderSum, BondOrder maxBondOrder, IAtomType type)
         {
             Debug.WriteLine("couldMatchAtomType:   ... matching atom ", atom, " vs ", type);
@@ -289,11 +289,11 @@ namespace NCDK.Tools
             return false;
         }
 
-        /**
-         * Calculates the number of hydrogens that can be added to the given atom to fullfil
-         * the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
-         * does not have an entry in the configuration file.
-         */
+        /// <summary>
+        /// Calculates the number of hydrogens that can be added to the given atom to fullfil
+        /// the atom's valency. It will return 0 for PseudoAtoms, and for atoms for which it
+        /// does not have an entry in the configuration file.
+        /// </summary>
         public int CalculateNumberOfImplicitHydrogens(IAtom atom, double bondOrderSum, BondOrder maxBondOrder,
                 int neighbourCount)
         {
@@ -340,10 +340,10 @@ namespace NCDK.Tools
             return missingHydrogens;
         }
 
-        /**
-         * Checks whether an Atom is saturated by comparing it with known AtomTypes.
-         * It returns true if the atom is an PseudoAtom and when the element is not in the list.
-         */
+        /// <summary>
+        /// Checks whether an Atom is saturated by comparing it with known AtomTypes.
+        /// It returns true if the atom is an PseudoAtom and when the element is not in the list.
+        /// </summary>
         public bool IsSaturated(IAtom atom, IAtomContainer container)
         {
             if (atom is IPseudoAtom)
@@ -423,9 +423,9 @@ namespace NCDK.Tools
             return structgenATF;
         }
 
-        /**
-         * Determines if the atom can be of type AtomType.
-         */
+        /// <summary>
+        /// Determines if the atom can be of type AtomType.
+        /// </summary>
         public bool CouldMatchAtomType(IAtomContainer container, IAtom atom, IAtomType type)
         {
             double bondOrderSum = container.GetBondOrderSum(atom);

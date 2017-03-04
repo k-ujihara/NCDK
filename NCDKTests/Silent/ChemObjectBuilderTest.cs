@@ -20,12 +20,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Silent
 {
-    /**
-     * Checks the functionality of the <see cref="IChemObjectBuilder"/>
-     * {@link Silent.ChemObjectBuilder} implementation.
-     *
-     * @cdk.module test-silent
-     */
+    /// <summary>
+    /// Checks the functionality of the <see cref="IChemObjectBuilder"/>
+    /// {@link Silent.ChemObjectBuilder} implementation.
+    ///
+    // @cdk.module test-silent
+    /// </summary>
     public class ChemObjectBuilderTest : AbstractChemObjectBuilderTest
     {
         public override IChemObject RootObject { get; } = new ChemObject();

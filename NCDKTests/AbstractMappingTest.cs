@@ -22,19 +22,19 @@ using System.Collections.Generic;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IMapping} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IMapping} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractMappingTest
         : AbstractChemObjectTest
     {
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         public virtual void TestToString()
         {
             IMapping mapping = (IMapping)NewChemObject();

@@ -74,13 +74,13 @@ namespace NCDK.Maths
     }
 
     /**
-	 * Class supplying useful methods to generate random numbers.
-	 * This class isn't supposed to be instantiated. You should use it by calling
-	 * its static methods.
-	 *
-	 * @cdk.module standard
-	 * @cdk.githash
-	 */
+     * Class supplying useful methods to generate random numbers.
+     * This class isn't supposed to be instantiated. You should use it by calling
+     * its static methods.
+     *
+     * @cdk.module standard
+     * @cdk.githash
+     */
     public class RandomNumbersTool
     {
         private static BitsStreamGenerator random;
@@ -144,13 +144,13 @@ namespace NCDK.Maths
         }
 
         /**
-		 * Generates a random long between the specified values.
-		 * <p/>
-		 *
-		 * @param lo the lower bound for the generated long.
-		 * @param hi the upper bound for the generated long.
-		 * @return a random long between <code>lo</code> and <code>hi</code>.
-		 */
+         * Generates a random long between the specified values.
+         * <p/>
+         *
+         * @param lo the lower bound for the generated long.
+         * @param hi the upper bound for the generated long.
+         * @return a random long between <code>lo</code> and <code>hi</code>.
+         */
         public static long RandomLong(long lo, long hi)
         {
             return NextLong(random, hi - lo + 1L) + lo;
@@ -205,90 +205,90 @@ namespace NCDK.Maths
         }
 
         /**
-		 * Generates a random double between the specified values.
-		 * <p/>
-		 *
-		 * @param lo the lower bound for the generated double.
-		 * @param hi the upper bound for the generated double.
-		 * @return a random double between <code>lo</code> and <code>hi</code>.
-		 */
+         * Generates a random double between the specified values.
+         * <p/>
+         *
+         * @param lo the lower bound for the generated double.
+         * @param hi the upper bound for the generated double.
+         * @return a random double between <code>lo</code> and <code>hi</code>.
+         */
         public static double RandomDouble(double lo, double hi)
         {
             return (hi - lo) * random.NextDouble() + lo;
         }
 
         /**
-		 * Generates a random bool.
-		 * <p/>
-		 *
-		 * @return a random bool.
-		 */
+         * Generates a random bool.
+         * <p/>
+         *
+         * @return a random bool.
+         */
         public static bool RandomBoolean()
         {
             return (RandomInt() == 1);
         }
 
         /**
-		 * Generates a random bit: either <code>0</code> or <code>1</code>.
-		 * <p/>
-		 *
-		 * @return a random bit.
-		 */
+         * Generates a random bit: either <code>0</code> or <code>1</code>.
+         * <p/>
+         *
+         * @return a random bit.
+         */
         public static int RandomBit()
         {
             return RandomInt();
         }
 
         /**
-		 * Returns a bool value based on a biased coin toss.
-		 * <p/>
-		 *
-		 * @param p the probability of success.
-		 * @return <code>true</code> if a success was found; <code>false</code>
-		 *         otherwise.
-		 */
+         * Returns a bool value based on a biased coin toss.
+         * <p/>
+         *
+         * @param p the probability of success.
+         * @return <see langword="true"/> if a success was found; <see langword="false"/>
+         *         otherwise.
+         */
         public static bool FlipCoin(double p)
         {
             return (RandomDouble() < p ? true : false);
         }
 
         /**
-		 * Generates a random float from a Gaussian distribution with the specified
-		 * deviation.
-		 * <p/>
-		 *
-		 * @param dev the desired deviation.
-		 * @return a random float from a Gaussian distribution with deviation
-		 *         <code>dev</code>.
-		 */
+         * Generates a random float from a Gaussian distribution with the specified
+         * deviation.
+         * <p/>
+         *
+         * @param dev the desired deviation.
+         * @return a random float from a Gaussian distribution with deviation
+         *         <code>dev</code>.
+         */
         public static float GaussianFloat(float dev)
         {
             return (float)random.NextGaussian() * dev;
         }
 
         /**
-		 * Generates a random double from a Gaussian distribution with the specified
-		 * deviation.
-		 * <p/>
-		 *
-		 * @param dev the desired deviation.
-		 * @return a random double from a Gaussian distribution with deviation
-		 *         <code>dev</code>.
-		 */
+         * Generates a random double from a Gaussian distribution with the specified
+         * deviation.
+         * <p/>
+         *
+         * @param dev the desired deviation.
+         * @return a random double from a Gaussian distribution with deviation
+         *         <code>dev</code>.
+         */
         public static double GaussianDouble(double dev)
         {
             return random.NextGaussian() * dev;
         }
 
         /**
-		 * Generates a random double from an Exponential distribution with the specified
-		 * mean value.
-		 * <p/>
-		 *
-		 * @param mean the desired mean value.
-		 * @return a random double from an Exponential distribution with mean value
-		 *         <code>mean</code>.
-		 */
+         * Generates a random double from an Exponential distribution with the specified
+         * mean value.
+         * <p/>
+         *
+         * @param mean the desired mean value.
+         * @return a random double from an Exponential distribution with mean value
+         *         <code>mean</code>.
+         */
         public static double ExponentialDouble(double mean)
         {
             return -mean * Math.Log(RandomDouble());

@@ -24,21 +24,21 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /**
-     * Refiner for atom containers, which refines partitions of the atoms to
-     * equitable partitions. Used by the {@link AtomDiscretePartitionRefiner}.
-     *
-     * @author maclean
-     * @cdk.module group
-     *
-     */
+    /// <summary>
+    /// Refiner for atom containers, which refines partitions of the atoms to
+    /// equitable partitions. Used by the <see cref="AtomDiscretePartitionRefiner"/>.
+    ///
+    // @author maclean
+    // @cdk.module group
+    ///
+    /// </summary>
     public class AtomEquitablePartitionRefiner : AbstractEquitablePartitionRefiner,
             IEquitablePartitionRefiner
     {
 
-        /**
-         * A reference to the discrete refiner, which has the connectivity info.
-         */
+        /// <summary>
+        /// A reference to the discrete refiner, which has the connectivity info.
+        /// </summary>
         private readonly AtomDiscretePartitionRefiner discreteRefiner;
 
         public AtomEquitablePartitionRefiner(AtomDiscretePartitionRefiner discreteRefiner)

@@ -29,22 +29,22 @@ using System.IO;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class VFlibTurboHandlerTest : AbstractSubGraphTest
     {
 
         public VFlibTurboHandlerTest() { }
 
-        /**
-         * Test of isSubgraph method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of isSubgraph method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public override void TestIsSubgraph()
         {
@@ -59,10 +59,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(smsd1.IsSubgraph(true));
         }
 
-        /**
-         * Test of set method, of class VFlibSubStructureHandler.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of set method, of class VFlibSubStructureHandler.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
@@ -77,10 +77,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(smsd1.IsSubgraph(true));
         }
 
-        /**
-         * Test of set method, of class VFlibSubStructureHandler.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test of set method, of class VFlibSubStructureHandler.
+        // @throws CDKException
+        /// </summary>
         [TestMethod()]
         public void TestSet_String_String()
         {
@@ -89,10 +89,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             IAtomContainer query = new AtomContainer();
             IAtomContainer target = new AtomContainer();
 
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(molfile);
+            Stream ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(query);
-            ins = this.GetType().Assembly.GetManifestResourceStream(queryfile);
+            ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(target);
 
@@ -103,10 +103,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(smsd1.IsSubgraph(true));
         }
 
-        /**
-         * Test of set method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of set method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
@@ -121,10 +121,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.IsTrue(instance.IsSubgraph(true));
         }
 
-        /**
-         * Test of getAllAtomMapping method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getAllAtomMapping method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
@@ -141,10 +141,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.AreEqual(4, smsd1.GetAllAtomMapping().Count);
         }
 
-        /**
-         * Test of getAllMapping method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getAllMapping method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
         {
@@ -161,10 +161,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.AreEqual(4, smsd1.GetAllMapping().Count);
         }
 
-        /**
-         * Test of getFirstAtomMapping method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getFirstAtomMapping method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {
@@ -181,10 +181,10 @@ namespace NCDK.SMSD.Algorithms.VFLib
             Assert.AreEqual(7, smsd1.GetFirstAtomMapping().Count);
         }
 
-        /**
-         * Test of getFirstMapping method, of class VFlibSubStructureHandler.
-         * @throws InvalidSmilesException
-         */
+        /// <summary>
+        /// Test of getFirstMapping method, of class VFlibSubStructureHandler.
+        // @throws InvalidSmilesException
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
         {

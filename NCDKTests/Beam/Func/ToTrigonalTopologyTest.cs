@@ -30,60 +30,60 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class ToTrigonalTopologyTest
     {
         [TestMethod()]
-        public void e_difluoroethene_impl1()
+        public void E_difluoroethene_impl1()
         {
             Transform("F/C=C/F", "F[C@H]=[C@@H]F");
         }
 
         [TestMethod()]
-        public void z_difluoroethene_impl2()
+        public void Z_difluoroethene_impl2()
         {
             Transform("F/C=C\\F", "F[C@H]=[C@H]F");
         }
 
         [TestMethod()]
-        public void e_difluoroethene_impl3()
+        public void E_difluoroethene_impl3()
         {
             Transform("F\\C=C\\F", "F[C@@H]=[C@H]F");
         }
 
         [TestMethod()]
-        public void z_difluoroethene_impl4()
+        public void Z_difluoroethene_impl4()
         {
             Transform("F\\C=C/F", "F[C@@H]=[C@@H]F");
         }
 
         [TestMethod()]
-        public void e_difluoroethene_exp1()
+        public void E_difluoroethene_exp1()
         {
             Transform("F/C([H])=C([H])/F", "F[C@]([H])=[C@@]([H])F");
         }
 
         [TestMethod()]
-        public void z_difluoroethene_exp2()
+        public void Z_difluoroethene_exp2()
         {
             Transform("F/C([H])=C([H])\\F", "F[C@]([H])=[C@]([H])F");
         }
 
         [TestMethod()]
-        public void e_difluoroethene_exp3()
+        public void E_difluoroethene_exp3()
         {
             Transform("F\\C([H])=C([H])\\F", "F[C@@]([H])=[C@]([H])F");
         }
 
         [TestMethod()]
-        public void z_difluoroethene_exp4()
+        public void Z_difluoroethene_exp4()
         {
             Transform("F\\C([H])=C([H])/F", "F[C@@]([H])=[C@@]([H])F");
         }
 
         [TestMethod()]
-        public void z_difluoroethene_exp5()
+        public void Z_difluoroethene_exp5()
         {
             Transform("FC(\\[H])=C([H])/F", "F[C@@]([H])=[C@@]([H])F");
             Transform("FC(\\[H])=C(\\[H])F", "F[C@@]([H])=[C@@]([H])F");
@@ -91,7 +91,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_exp6()
+        public void E_difluoroethene_exp6()
         {
             Transform("FC(\\[H])=C([H])\\F", "F[C@@]([H])=[C@]([H])F");
             Transform("FC(\\[H])=C(/[H])F", "F[C@@]([H])=[C@]([H])F");
@@ -99,7 +99,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_difluoroethene_exp7()
+        public void Z_difluoroethene_exp7()
         {
             Transform("FC(/[H])=C([H])\\F", "F[C@]([H])=[C@]([H])F");
             Transform("FC(/[H])=C(/[H])F", "F[C@]([H])=[C@]([H])F");
@@ -107,7 +107,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_exp8()
+        public void E_difluoroethene_exp8()
         {
             Transform("FC(/[H])=C([H])/F", "F[C@]([H])=[C@@]([H])F");
             Transform("FC(/[H])=C(\\[H])F", "F[C@]([H])=[C@@]([H])F");
@@ -115,14 +115,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_explicitH_9()
+        public void E_difluoroethene_explicitH_9()
         {
             Transform("C(\\F)([H])=C([H])/F",
                       "[C@](F)([H])=[C@@]([H])F");
         }
 
         [TestMethod()]
-        public void e_difluoroethene_permuted()
+        public void E_difluoroethene_permuted()
         {
             Transform("F/C=C/F",
                       new int[] { 1, 0, 2, 3 },
@@ -130,7 +130,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_explicitH_permutation_1()
+        public void E_difluoroethene_explicitH_permutation_1()
         {
             Transform("F/C([H])=C([H])/F",
                       new int[] { 1, 0, 2, 3, 4, 5 },
@@ -138,7 +138,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_explicitH_permutation_2()
+        public void E_difluoroethene_explicitH_permutation_2()
         {
             Transform("F/C([H])=C([H])/F",
                       new int[] { 2, 0, 1, 3, 4, 5 },
@@ -146,7 +146,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_difluoroethene_explicitH_permutation_3()
+        public void E_difluoroethene_explicitH_permutation_3()
         {
             Transform("F/C([H])=C([H])/F",
                       new int[] { 2, 0, 1, 3, 5, 4 },

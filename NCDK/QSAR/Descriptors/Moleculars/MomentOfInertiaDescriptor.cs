@@ -28,49 +28,49 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * A descriptor that calculates the moment of inertia and radius of gyration.
-     * Moment of inertia (MI) values characterize the mass distribution of a molecule.
-     * Related to the MI values, ratios of the MI values along the three principal axes
-     * are also well know modeling variables. This descriptor calculates the MI values
-     * along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
-     * calculates the radius of gyration of the molecule.
-     * <p/>
-     * The descriptor generates 7 values in the following order
-     * <ul>
-     * <li>MOMI-X - MI along X axis
-     * <li>MOMI-Y - MI along Y axis
-     * <li>MOMI-Z - MI along Z axis
-     * <li>MOMI-XY - X/Y
-     * <li>MOMI-XZ - X/Z
-     * <li>MOMI-YZ Y/Z
-     * <li>MOMI-R - Radius of gyration
-     * </ul>
-     * One important aspect of the algorithm is that if the eigenvalues of the MI tensor
-     * are below 1e-3, then the ratio's are set to a default of 1000.
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td></td>
-     * <td></td>
-     * <td>no parameters</td>
-     * </tr>
-     * </table>
-     *
-     * @author           Rajarshi Guha
-     * @cdk.created      2005-02-07
-     * @cdk.module       qsarmolecular
-     * @cdk.githash
-     * @cdk.set          qsar-descriptors
-     * @cdk.dictref      qsar-descriptors:momentOfInertia
-     * @cdk.keyword      moment of inertia
-     */
+    /// <summary>
+    /// A descriptor that calculates the moment of inertia and radius of gyration.
+    /// Moment of inertia (MI) values characterize the mass distribution of a molecule.
+    /// Related to the MI values, ratios of the MI values along the three principal axes
+    /// are also well know modeling variables. This descriptor calculates the MI values
+    /// along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
+    /// calculates the radius of gyration of the molecule.
+    /// <p/>
+    /// The descriptor generates 7 values in the following order
+    /// <ul>
+    /// <li>MOMI-X - MI along X axis
+    /// <li>MOMI-Y - MI along Y axis
+    /// <li>MOMI-Z - MI along Z axis
+    /// <li>MOMI-XY - X/Y
+    /// <li>MOMI-XZ - X/Z
+    /// <li>MOMI-YZ Y/Z
+    /// <li>MOMI-R - Radius of gyration
+    /// </ul>
+    /// One important aspect of the algorithm is that if the eigenvalues of the MI tensor
+    /// are below 1e-3, then the ratio's are set to a default of 1000.
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td></td>
+    /// <td></td>
+    /// <td>no parameters</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author           Rajarshi Guha
+    // @cdk.created      2005-02-07
+    // @cdk.module       qsarmolecular
+    // @cdk.githash
+    // @cdk.set          qsar-descriptors
+    // @cdk.dictref      qsar-descriptors:momentOfInertia
+    // @cdk.keyword      moment of inertia
+    /// </summary>
     public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };

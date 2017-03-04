@@ -20,30 +20,27 @@ using System;
 
 namespace NCDK.Charges
 {
-    /**
-    /// <p>The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
+    /// <summary>
+    /// The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
     /// {@cdk.cite GM80}. This class only implements the original method which only
-    /// applies to &sigma;-bond systems.</p>
-     *
-     *
-    /// @author      chhoppe
-    /// @author      rojas
-     *
-    /// @cdk.module  charges
-    /// @cdk.githash
-    /// @cdk.created 2004-11-03
-    /// @cdk.keyword partial atomic charges
-    /// @cdk.keyword charge distribution
-    /// @cdk.keyword electronegativities, partial equalization of orbital
-    /// @cdk.keyword PEOE
-     */
+    /// applies to &sigma;-bond systems.
+    /// </summary>
+    // @author      chhoppe
+    // @author      rojas
+    // @cdk.module  charges
+    // @cdk.githash
+    // @cdk.created 2004-11-03
+    // @cdk.keyword partial atomic charges
+    // @cdk.keyword charge distribution
+    // @cdk.keyword electronegativities, partial equalization of orbital
+    // @cdk.keyword PEOE
     public class GasteigerMarsiliPartialCharges : IChargeCalculator
     {
-        /** Flag is set if the formal charge of a chemobject is changed due to resonance.*/
+        /// <summary>Flag is set if the formal charge of a chemobject is changed due to resonance.</summary>
 
-        /**
+        /// <summary>
         ///  Constructor for the GasteigerMarsiliPartialCharges object.
-         */
+        /// </summary>
         public GasteigerMarsiliPartialCharges() { }
 
         /// <summary>
@@ -61,20 +58,17 @@ namespace NCDK.Charges
         /// </summary>
         public double MaxGasteigerIterations { get; set; } = 20;
 
-        /**
+        /// <summary>
         ///  Main method which assigns Gasteiger Marisili partial sigma charges.
-         *
-         *@param  ac             AtomContainer
-         *@param setCharge   	 The Charge
-         *@return                AtomContainer with partial charges
-         *@exception  Exception  Possible Exceptions
-         */
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <param name="setCharge">The Charge</param>
+        /// <returns>AtomContainer with partial charges</returns>
         public IAtomContainer AssignGasteigerMarsiliSigmaPartialCharges(IAtomContainer ac, bool setCharge)
         {
-
-            //		if (setCharge) {
-            //			atomTypeCharges.SetCharges(ac); // not necessary initial charge
-            //		}
+            //        if (setCharge) {
+            //            atomTypeCharges.SetCharges(ac); // not necessary initial charge
+            //        }
             /* add the initial charge to 0. According results of Gasteiger */
             for (int i = 0; i < ac.Atoms.Count; i++)
                 ac.Atoms[i].Charge = 0.0;
@@ -102,7 +96,7 @@ namespace NCDK.Charges
 
                     gasteigerFactors[StepSize * j + j + 4] = gasteigerFactors[StepSize * j + j + 2] * q * q
                             + gasteigerFactors[StepSize * j + j + 1] * q + gasteigerFactors[StepSize * j + j];
-                    //				Debug.WriteLine("g4: "+gasteigerFactors[StepSize * j + j + 4]);
+                    //                Debug.WriteLine("g4: "+gasteigerFactors[StepSize * j + j + 4]);
                 }
                 if (!isDifferent) /* automatically break the maximum iterations */
                     goto break_out;
@@ -138,7 +132,7 @@ namespace NCDK.Charges
 
                     q = (gasteigerFactors[StepSize * atom1 + atom1 + 4] - gasteigerFactors[StepSize * atom2 + atom2 + 4])
                             / deoc;
-                    //				Debug.WriteLine("qq: "+q);
+                    //                Debug.WriteLine("qq: "+q);
                     gasteigerFactors[StepSize * atom1 + atom1 + 5] -= (q * alpha);
                     gasteigerFactors[StepSize * atom2 + atom2 + 5] += (q * alpha);
                 }
@@ -170,12 +164,12 @@ namespace NCDK.Charges
         /// </summary>
         public int StepSize { get; set; } = 5;
 
-        /**
+        /// <summary>
         ///  Method which stores and assigns the factors a,b,c and CHI+.
-         *
-         *@param  ac  AtomContainer
-         *@return     Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer
-         */
+        ///
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer</returns>
+        /// </summary>
         public double[] AssignGasteigerSigmaMarsiliFactors(IAtomContainer ac)
         {
             //a,b,c,denom,chi,q
@@ -257,10 +251,7 @@ namespace NCDK.Charges
                           || ((ac.GetMaximumBondOrder(ac.Atoms[i]) == BondOrder.Single) && ac.Atoms[i]
                                   .FormalCharge == -1))
                     {
-                        factors[0] = 17.07;/*
-                                       /// paramaters aren'T correct
-                                       /// parametrized.
-                                        */
+                        factors[0] = 17.07; // paramaters aren'T correct parametrized.
                         factors[1] = 13.79;
                         factors[2] = 0.47;/* 0.47 */
                     }
@@ -277,11 +268,7 @@ namespace NCDK.Charges
                     factors[1] = 8.32;
                     factors[2] = 1.58;
                 }
-                else if (AtomSymbol.Equals("S") /*
-                                              /// &&
-                                              /// ac.GetMaximumBondOrder(ac.getAtomAt
-                                              /// (i)) == 1
-                                               */)
+                else if (AtomSymbol.Equals("S") /* && ac.GetMaximumBondOrder(ac.Atoms[i]) == 1 */)
                 {
                     factors[0] = 10.14;/* 10.14 */
                     factors[1] = 9.13;/* 9.13 */

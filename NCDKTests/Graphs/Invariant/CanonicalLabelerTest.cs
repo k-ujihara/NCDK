@@ -29,13 +29,14 @@ using System.IO;
 using System.Text;
 using static NCDK.Graphs.GraphUtil;
 
+
 namespace NCDK.Graphs.Invariant
 {
-    /**
-	 * Checks the functionality of the CanonicalLabeler.
-	 *
-	 * @cdk.module test-standard
-	 */
+    /// <summary>
+    /// Checks the functionality of the CanonicalLabeler.
+    ///
+    // @cdk.module test-standard
+    /// </summary>
     // CanonicalLabeler is deprecated (slow)
     [TestClass()]
     public class CanonicalLabelerTest : CDKTestCase
@@ -72,13 +73,13 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CANONICAL_LABEL));
         }
 
-        /**
-		 * Ordering of original should not matter, so the same SMILES
-		 * with a different atom order as the test above.
-		 *
-		 * @
-		 * @see TestSomeMolecule()
-		 */
+        /// <summary>
+        /// Ordering of original should not matter, so the same SMILES
+        /// with a different atom order as the test above.
+        ///
+        // @
+        // @see TestSomeMolecule()
+        /// </summary>
         [TestMethod()]
         public void TestSomeMoleculeWithDifferentStartingOrder()
         {
@@ -95,14 +96,14 @@ namespace NCDK.Graphs.Invariant
             Assert.AreEqual(5, molecule.Atoms[4].GetProperty<long>(InvPair.CANONICAL_LABEL));
         }
 
-        /**
-		 * @cdk.bug 1014344
-		 */
+        /// <summary>
+        // @cdk.bug 1014344
+        /// </summary>
         [TestMethod()]
         public void TestStabilityAfterRoundtrip()
         {
             string filename = "NCDK.Data.MDL.bug1014344-1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             IAtomContainer mol1 = reader.Read(new AtomContainer());
             AddImplicitHydrogens(mol1);
@@ -127,13 +128,13 @@ namespace NCDK.Graphs.Invariant
             }
         }
 
-        /**
-		 * Convenience method that perceives atom types (CDK scheme) and
-		 * adds implicit hydrogens accordingly. It does not create 2D or 3D
-		 * coordinates for the new hydrogens.
-		 *
-		 * @param container to which implicit hydrogens are added.
-		 */
+        /// <summary>
+        /// Convenience method that perceives atom types (CDK scheme) and
+        /// adds implicit hydrogens accordingly. It does not create 2D or 3D
+        /// coordinates for the new hydrogens.
+        ///
+        /// <param name="container">to which implicit hydrogens are added.</param>
+        /// </summary>
 
         protected override void AddImplicitHydrogens(IAtomContainer container)
         {
@@ -147,9 +148,9 @@ namespace NCDK.Graphs.Invariant
             hAdder.AddImplicitHydrogens(container);
         }
 
-        /**
-		 * @cdk.bug 2944519
-		 */
+        /// <summary>
+        // @cdk.bug 2944519
+        /// </summary>
         [TestMethod()]
         public void TestBug2944519()
         {

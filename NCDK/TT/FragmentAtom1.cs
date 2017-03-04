@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Text;
@@ -26,13 +27,13 @@ namespace NCDK.Default
     public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
-		public FragmentAtom()
+        public FragmentAtom()
         {
             Fragment = Builder.CreateAtomContainer();
-		}
+        }
 
-		public virtual bool IsExpanded { get; set; }
-		public virtual IAtomContainer Fragment { get; set; }
+        public virtual bool IsExpanded { get; set; }
+        public virtual IAtomContainer Fragment { get; set; }
 
         public override double? ExactMass
         {
@@ -66,13 +67,13 @@ namespace NCDK.Silent
     public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
-		public FragmentAtom()
+        public FragmentAtom()
         {
             Fragment = Builder.CreateAtomContainer();
-		}
+        }
 
-		public virtual bool IsExpanded { get; set; }
-		public virtual IAtomContainer Fragment { get; set; }
+        public virtual bool IsExpanded { get; set; }
+        public virtual IAtomContainer Fragment { get; set; }
 
         public override double? ExactMass
         {

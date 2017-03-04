@@ -36,7 +36,7 @@ namespace NCDK.IO.Iterator
         {
             string filename = "NCDK.Data.ASN.PubChem.aceticAcids38.xml";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             var reader = new IteratingPCCompoundXMLReader(new StreamReader(ins), Default.ChemObjectBuilder.Instance);
 
             int molCount = 0;

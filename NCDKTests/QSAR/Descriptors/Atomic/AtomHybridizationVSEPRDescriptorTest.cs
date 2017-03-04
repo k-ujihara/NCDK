@@ -69,7 +69,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
                     ((IntegerResult)descriptor.Calculate(molecule.Atoms[2], molecule).GetValue()).Value);
         }
 
-		 /// <summary>
+         /// <summary>
          /// A unit test for JUnit with [O+]=C-C
          /// </summary>
         [TestMethod()]
@@ -228,15 +228,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
         [TestMethod()]
         public void TestAtomHybridizationVSEPRDescriptorTest_7()
         {
-            int[] testResult = {Hybridization.SP3.Ordinal, Hybridization.SP2.Ordinal,
-                Hybridization.SP2.Ordinal}; /*
-                                                         * from Petra online:
-                                                         * http
-                                                         * ://www2.chemie.uni
-                                                         * -erlangen
-                                                         * .de/services/
-                                                         * petra/smiles.phtml
-                                                         */
+            int[] testResult = {Hybridization.SP3.Ordinal, Hybridization.SP2.Ordinal, Hybridization.SP2.Ordinal};
+                // from Petra online: http://www2.chemie.uni-erlangen.de/services/petra/smiles.phtml
 
             AtomHybridizationVSEPRDescriptor descriptor = new AtomHybridizationVSEPRDescriptor();
 

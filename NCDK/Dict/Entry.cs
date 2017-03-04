@@ -25,17 +25,15 @@ using System.Collections.Generic;
 
 namespace NCDK.Dict
 {
-    /**
-	 * Entry in a Dictionary.
-	 *
-	 * @author       Egon Willighagen <egonw@users.sf.net>
-	 * @cdk.githash
-	 * @cdk.created  2003-08-23
-	 * @cdk.keyword  dictionary
-	 * @cdk.module   dict
-	 *
-	 * @see          Dictionary
-	 */
+    /// <summary>
+    /// Entry in a Dictionary.
+    /// </summary>
+    /// <seealso cref="EntryDictionary"/>
+    // @author       Egon Willighagen <egonw@users.sf.net>
+    // @cdk.githash
+    // @cdk.created  2003-08-23
+    // @cdk.keyword  dictionary
+    // @cdk.module   dict
     public class Entry
     {
         private string identifier;

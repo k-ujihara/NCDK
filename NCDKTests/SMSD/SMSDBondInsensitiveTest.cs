@@ -29,12 +29,12 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.SMSD
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     [TestClass()]
     public class SMSDBondInsensitiveTest
     {
@@ -160,7 +160,7 @@ namespace NCDK.SMSD
             bool fragmentMinimization = true;
             bool energyMinimization = true;
 
-            //	Calling the main algorithm to perform MCS cearch
+            //    Calling the main algorithm to perform MCS cearch
             Isomorphism comparison = new Isomorphism(Algorithm.SubStructure, bondSensitive);
             comparison.Init(source, target, removeHydrogen, true);
             comparison.SetChemFilters(stereoMatch, fragmentMinimization, energyMinimization);
@@ -197,10 +197,10 @@ namespace NCDK.SMSD
 
         }
 
-        /**
-         * frag is a subgraph of the het mol
-         * @throws Exception
-         */
+        /// <summary>
+        /// frag is a subgraph of the het mol
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSMSDFragHetSubgraph()
         {
@@ -218,7 +218,7 @@ namespace NCDK.SMSD
             IAtomContainer source = ExtAtomContainerManipulator.RemoveHydrogensExceptSingleAndPreserveAtomID(mol1);
             IAtomContainer target = ExtAtomContainerManipulator.RemoveHydrogensExceptSingleAndPreserveAtomID(mol2);
 
-            //	Calling the main algorithm to perform MCS search
+            //    Calling the main algorithm to perform MCS search
 
             Aromaticity.CDKLegacy.Apply(source);
             Aromaticity.CDKLegacy.Apply(target);

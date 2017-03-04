@@ -29,12 +29,12 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Simple tests for exact and non exact matching.
-     *
-     * @author John May
-     * @cdk.module test-isomorphism
-     */
+    /// <summary>
+    /// Simple tests for exact and non exact matching.
+    ///
+    // @author John May
+    // @cdk.module test-isomorphism
+    /// </summary>
     [TestClass()]
     public class UllmannTest
     {

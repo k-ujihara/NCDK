@@ -35,13 +35,9 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// A character buffer with utilities for sequential processing of characters.
-    ///
-    /// <author>John May</author>
     /// </summary>
-#if TEST
-    public
-#endif
-    sealed class CharBuffer
+    // @author John May
+    internal sealed class CharBuffer
     {
         /// <summary>Characters stored in a fixed size array.</summary>
         public char[] cs;
@@ -73,7 +69,7 @@ namespace NCDK.Beam
         /// Access the next character in the buffer and progress the position.
         /// </summary>
         /// <returns>the next character</returns>
-        // @see #Next()
+        /// @see #Next()
         public char Get()
         {
             return cs[Position++];
@@ -84,7 +80,7 @@ namespace NCDK.Beam
         /// position.
         /// </summary>
         /// <returns>the next character</returns>
-        // @see #Get()
+        /// @see #Get()
         public char NextChar => cs[Position];
 
         /// <summary>
@@ -103,7 +99,7 @@ namespace NCDK.Beam
         /// character is a digit.
         /// </summary>
         /// <returns>the next character in the buffer as a digit</returns>.
-        // @see #NextIsDigit()
+        /// @see #NextIsDigit()
         public int GetAsDigit()
         {
             return ToDigit(Get());
@@ -115,7 +111,7 @@ namespace NCDK.Beam
         /// next character is a digit.
         /// </summary>
         /// <returns>the next character in the buffer as a digit</returns>.
-        // @see #NextIsDigit()
+        /// @see #NextIsDigit()
         public int GetNextAsDigit()
         {
             return ToDigit(NextChar);
@@ -217,7 +213,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="c">a character</param>
         /// <returns>the digit for character</returns>
-        // @see #IsDigit(char)
+        /// <seealso cref="IsDigit(char)"/>
         public static int ToDigit(char c)
         {
             return c - '0';

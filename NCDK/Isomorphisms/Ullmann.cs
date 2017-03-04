@@ -38,7 +38,7 @@ namespace NCDK.Isomorphisms {
      *
      * Find and count the number molecules which contain the query substructure.
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * IAtomContainer query   = ...;
      * Pattern        pattern = Ullmann.FindSubstructure(query);
      *
@@ -46,7 +46,7 @@ namespace NCDK.Isomorphisms {
      * foreach (var m in ms)
      *     if (pattern.Matches(m))
      *         hits++;
-     * </pre></blockquote>
+     * </code></blockquote>
      * <p/>
      *
      * Finding the matching to molecules which contain the query substructure. It is
@@ -54,7 +54,7 @@ namespace NCDK.Isomorphisms {
      * test if it {@link #matches} first. These methods automatically verify
      * stereochemistry.
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * IAtomContainer query   = ...;
      * Pattern        pattern = Ullmann.FindSubstructure(query);
      *
@@ -64,7 +64,7 @@ namespace NCDK.Isomorphisms {
      *     if (match.Length > 0)
      *         hits++;
      * }
-     * </pre></blockquote>
+     * </code></blockquote>
      *
      * @author John May
      * @cdk.module isomorphism

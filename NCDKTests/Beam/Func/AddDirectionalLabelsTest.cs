@@ -30,12 +30,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class AddDirectionalLabelsTest
     {
         [TestMethod()]
-        public void e_butene_implH()
+        public void E_butene_implH()
         {
             Transform("C\\C=C\\C",
                       "C\\C=C\\C");
@@ -52,7 +52,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_butene_implH()
+        public void Z_butene_implH()
         {
             Transform("C\\C=C/C",
                       "C\\C=C/C");
@@ -69,7 +69,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_butene_expH()
+        public void E_butene_expH()
         {
             Transform("C\\C([H])=C\\C",
                       "C\\C(\\[H])=C\\C");
@@ -82,7 +82,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_butene_expH()
+        public void Z_butene_expH()
         {
             Transform("C\\C([H])=C/C",
                       "C\\C(\\[H])=C/C");
@@ -96,7 +96,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalid()
+        public void Invalid()
         {
             Transform("C/C=C(/C)/([H])",
                       "n/a");
@@ -110,7 +110,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_implH()
+        public void E_e_hexadiene_implH()
         {
             Transform("C\\C=C\\C=C\\C",
                       "C\\C=C\\C=C\\C");
@@ -119,7 +119,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_z_hexadiene_implH()
+        public void Z_z_hexadiene_implH()
         {
             Transform("C\\C=C/C=C\\C",
                       "C\\C=C/C=C\\C");
@@ -128,7 +128,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_z_hexadiene_implH()
+        public void E_z_hexadiene_implH()
         {
             Transform("C\\C=C\\C=C/C",
                       "C\\C=C\\C=C/C");
@@ -137,7 +137,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_e_hexadiene_implH()
+        public void Z_e_hexadiene_implH()
         {
             Transform("C/C=C\\C=C\\C",
                       "C/C=C\\C=C\\C");
@@ -146,7 +146,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_e_hexadiene_expH()
+        public void E_e_hexadiene_expH()
         {
             Transform("C\\C([H])=C([H])\\C([H])=C([H])\\C",
                       "C\\C(\\[H])=C(/[H])\\C(\\[H])=C(/[H])\\C");
@@ -155,7 +155,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_z_hexadiene_expH()
+        public void Z_z_hexadiene_expH()
         {
             Transform("C\\C([H])=C([H])/C([H])=C([H])\\C",
                       "C\\C(\\[H])=C(\\[H])/C(/[H])=C(/[H])\\C");
@@ -164,7 +164,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void e_z_hexadiene_expH()
+        public void E_z_hexadiene_expH()
         {
             Transform("C\\C([H])=C([H])\\C([H])=C([H])/C",
                       "C\\C(\\[H])=C(/[H])\\C(\\[H])=C(\\[H])/C");
@@ -173,7 +173,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void z_e_hexadiene_expH()
+        public void Z_e_hexadiene_expH()
         {
             Transform("C/C(/[H])=C(/[H])\\C(\\[H])=C(/[H])\\C",
                       "C/C(/[H])=C(/[H])\\C(\\[H])=C(/[H])\\C");
@@ -198,7 +198,7 @@ namespace NCDK.Beam
         }
 
         // TODO: [TestMethod()] 
-        public void invalidConjugated()
+        public void InvalidConjugated()
         {
             Transform("F/C=C(/F)C(/F)=C/F",
                       "F/C=C(/F)\\C(\\F)=C\\F");

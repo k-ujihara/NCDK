@@ -11,7 +11,7 @@
 - matches observed warnings from the Daylight Depict, daylight.com/daycgi/depict 
 
 - period 1
-H     (0),1       -1,1     1	
+H     (0),1       -1,1     1    
 
 He    0           0,0      2
 
@@ -54,7 +54,7 @@ Sr    0,2         0,2      2
 
 In    n/a         n/a      3
 Sn    n/a         n/a      4
-Sb    n/a         n/a  	   5
+Sb    n/a         n/a         5
 Te    [0],2,4,6   n/a      6
 I     [0],1,3,5,7 n/a      7
 Xe    0           0,0      8

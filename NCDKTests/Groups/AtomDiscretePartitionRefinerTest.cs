@@ -225,13 +225,13 @@ namespace NCDK.Groups
             Assert.AreEqual(expected, autP, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in pyrimidine
-         * Tests if the position of the single and double bonds in an aromatic ring matter
-         * to assign a class.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in pyrimidine
+        /// Tests if the position of the single and double bonds in an aromatic ring matter
+        /// to assign a class.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestPyrimidine()
         {
@@ -249,12 +249,12 @@ namespace NCDK.Groups
             Assert.AreEqual(expected, autP, "Wrong class assignment");
         }
 
-        /**
-         * Test the equivalent classes method in biphenyl,
-         * a molecule with two aromatic systems. It has 2 symmetry axis.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test the equivalent classes method in biphenyl,
+        /// a molecule with two aromatic systems. It has 2 symmetry axis.
+        ///
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestBiphenyl()
         {

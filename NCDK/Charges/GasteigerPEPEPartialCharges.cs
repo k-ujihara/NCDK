@@ -30,25 +30,25 @@ using System.Diagnostics;
 
 namespace NCDK.Charges
 {
-    /**
-    /// <p>The calculation of the Gasteiger (PEPE) partial charges is based on
+    /// <summary>
+    /// The calculation of the Gasteiger (PEPE) partial charges is based on
     /// {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the
-    /// method based on H. Saller which is described from Petra manual version 2.6</p>
-    /// <p>They are calculated by generating all valence bond (resonance) structures
+    /// method based on H. Saller which is described from Petra manual version 2.6
+    /// </summary>
+    /// <remarks>
+    /// They are calculated by generating all valence bond (resonance) structures
     /// for this system and then weighting them on the basis of pi-orbital electronegativities
-    /// and formal considerations based on PEPE (Partial Equalization of pi-electronegativity).</p>
-     *
-    /// @author      Miguel Rojas
-     *
-    /// @cdk.module  charges
-    /// @cdk.githash
-    /// @cdk.created 2006-05-14
-    /// @cdk.keyword partial atomic charges
-    /// @cdk.keyword charge distribution
-    /// @cdk.keyword electronegativities, partial equalization of orbital
-    /// @cdk.keyword PEPE
-    /// @see GasteigerMarsiliPartialCharges
-     */
+    /// and formal considerations based on PEPE (Partial Equalization of pi-electronegativity).
+    /// </remarks>
+    /// <seealso cref="GasteigerMarsiliPartialCharges"/>
+    // @author      Miguel Rojas
+    // @cdk.module  charges
+    // @cdk.githash
+    // @cdk.created 2006-05-14
+    // @cdk.keyword partial atomic charges
+    // @cdk.keyword charge distribution
+    // @cdk.keyword electronegativities, partial equalization of orbital
+    // @cdk.keyword PEPE
     public class GasteigerPEPEPartialCharges : IChargeCalculator
     {
         /// <summary>The maxGasteigerIters attribute of the GasteigerPEPEPartialCharges object.</summary>
@@ -137,7 +137,7 @@ namespace NCDK.Charges
             /* find resonance containers, which eliminates the repetitions */
             StructureResonanceGenerator gRN = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
             var acSet = gRN.GetContainers(RemovingFlagsAromaticity(ac));
-            //		IAtomContainerSet acSet = ConjugatedPiSystemsDetector.Detect(RemovingFlagsAromaticity(ac));
+            //        IAtomContainerSet acSet = ConjugatedPiSystemsDetector.Detect(RemovingFlagsAromaticity(ac));
 
             var iSet = ac.Builder.CreateAtomContainerSet();
             iSet.Add(ac);
@@ -246,7 +246,7 @@ namespace NCDK.Charges
             // between whose atoms which change their formal charge
             for (int iter = 0; iter < MaxGasteigerIterations; iter++)
             {
-                //		for (int iter = 0; iter < 1; iter++) {
+                //        for (int iter = 0; iter < 1; iter++) {
                 for (int k = 1; k < iSet.Count; k++)
                 {
                     IAtomContainer iac = iSet[k];
@@ -256,10 +256,7 @@ namespace NCDK.Charges
                     int atom2 = 0;
                     for (int j = 0; j < iac.Atoms.Count; j++)
                     {
-                        if (count == 2) /*
-                                    /// The change of sign is product of only two
-                                    /// atoms, is not true
-                                     */
+                        if (count == 2) // The change of sign is product of only two atoms, is not true 
                             break;
                         if (iac.Atoms[j].IsPlaced)
                         {
@@ -543,7 +540,7 @@ namespace NCDK.Charges
         private double GetElectrostaticPotentialN(IAtomContainer ac, int atom1, double[] ds)
         {
 
-            //		double CoulombForceConstant = 1/(4*Math.PI*8.81/*Math.Pow(10, -12)*/);
+            //        double CoulombForceConstant = 1/(4*Math.PI*8.81/*Math.Pow(10, -12)*/);
             double CoulombForceConstant = 0.048;
             double sum = 0.0;
             try

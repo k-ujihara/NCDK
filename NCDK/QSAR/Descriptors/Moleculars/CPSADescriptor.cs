@@ -26,108 +26,108 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
-     * <p/>
-     * The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and
-     * are related to the Polar Surface Area descriptors. The original
-     * implementation was in the ADAPT software package and the the definitions
-     * of the individual descriptors are presented in the following table. This class
-     * returns a <code>DoubleArrayResult</code> containing the 29 descriptors in the order
-     * described in the table.
-     * <table border=1 cellpadding=2>
-     * <caption><a name="cpsa">A Summary of the 29 CPSA Descriptors</a></caption>
-     * <thead>
-     * <tr>
-     * <th>IDescriptor</th><th>Meaning</th>
-     * </tr>
-     * </thead>
-     * <tbody>
-     * <tr>
-     * <td>PPSA-1</td><td> partial positive surface area -- sum of surface area on positive parts of molecule</td></tr><tr>
-     * <td>PPSA-2</td><td> partial positive surface area * total positive charge on the molecule </td></tr><tr>
-     * <td>PPSA-3</td><td> charge weighted partial positive surface area</td></tr><tr>
-     * <td>PNSA-1</td><td> partial negative surface area -- sum of surface area on negative parts of molecule</td></tr><tr>
-     * <td>PNSA-2</td><td> partial negative surface area * total negative charge on the molecule</td></tr><tr>
-     * <td>PNSA-3</td><td> charge weighted partial negative surface area</td></tr><tr>
-     * <td>    DPSA-1</td><td> difference of PPSA-1 and PNSA-1</td></tr><tr>
-     * <td>    DPSA-2</td><td> difference of FPSA-2 and PNSA-2</td></tr><tr>
-     * <td>    DPSA-3</td><td> difference of PPSA-3 and PNSA-3</td></tr><tr>
-     * <td>    FPSA-1</td><td> PPSA-1 / total molecular surface area</td></tr><tr>
-     * <td>    FFSA-2  </td><td>PPSA-2 / total molecular surface area</td></tr><tr>
-     * <td>    FPSA-3</td><td> PPSA-3 / total molecular surface area</td></tr><tr>
-     * <td>    FNSA-1</td><td> PNSA-1 / total molecular surface area</td></tr><tr>
-     * <td>    FNSA-2</td><td> PNSA-2 / total molecular surface area</td></tr><tr>
-     * <td>    FNSA-3</td><td> PNSA-3 / total molecular surface area</td></tr><tr>
-     * <td>    WPSA-1</td><td> PPSA-1 *  total molecular surface area / 1000</td></tr><tr>
-     * <td>WPSA-2</td><td>    PPSA-2 * total molecular surface area /1000</td></tr><tr>
-     * <td>WPSA-3</td><td>  PPSA-3 * total molecular surface area / 1000</td></tr><tr>
-     * <td>WNSA-1</td><td>  PNSA-1 *  total molecular surface area /1000</td></tr><tr>
-     * <td>WNSA-2</td><td> PNSA-2 * total molecular surface area / 1000</td></tr><tr>
-     * <td>WNSA-3</td><td> PNSA-3 * total molecular surface area / 1000</td></tr><tr>
-     * <td>RPCG</td><td> relative positive charge --  most positive charge / total positive charge</td></tr><tr>
-     * <td>    RNCG    </td><td>relative negative charge -- most negative charge / total negative charge</td></tr><tr>
-     * <td>    RPCS    </td><td>relative positive charge surface area -- most positive surface area * RPCG</td></tr><tr>
-     * <td>    RNCS    </td><td>relative negative charge surface area -- most negative surface area * RNCG</td></tr>
-     * <tr>
-     * <td>THSA</td>
-     * <td>sum of solvent accessible surface areas of
-     * atoms with absolute value of partial charges
-     * less than 0.2
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>TPSA</td>
-     * <td>sum of solvent accessible surface areas of
-     * atoms with absolute value of partial charges
-     * greater than or equal 0.2
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>RHSA</td>
-     * <td>THSA / total molecular surface area
-     * </td>
-     * </tr>
-     * <tr>
-     * <td>RPSA</td>
-     * <td>TPSA / total molecular  surface area
-     * </td>
-     * </tr>
-     * </tbody>
-     * </table>
-     * <p/>
-     * <b>NOTE</b>: The values calculated by this implementation will differ from those
-     * calculated by the original ADAPT implementation of the CPSA descriptors. This
-     * is because the original implementation used an analytical surface area algorithm
-     * and used partial charges obtained from MOPAC using the AM1 Hamiltonian.
-     * This implementation uses a numerical
-     * algorithm to obtain surface areas (see {@link NumericalSurface}) and obtains partial
-     * charges using the Gasteiger-Marsilli algorithm (see {@link GasteigerMarsiliPartialCharges}).
-     * <p/>
-     * However, a comparison of the values calculated by the two implementations indicates
-     * that they are qualitatively the same.
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td></td>
-     * <td></td>
-     * <td>no parameters</td>
-     * </tr>
-     * </table>
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2005-05-16
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:CPSA
-     */
+    /// <summary>
+    /// Calculates 29 Charged Partial Surface Area (CPSA) descriptors.
+    /// <p/>
+    /// The CPSA's were developed by Stanton et al. ({@cdk.cite STA90}) and
+    /// are related to the Polar Surface Area descriptors. The original
+    /// implementation was in the ADAPT software package and the the definitions
+    /// of the individual descriptors are presented in the following table. This class
+    /// returns a <code>DoubleArrayResult</code> containing the 29 descriptors in the order
+    /// described in the table.
+    /// <table border=1 cellpadding=2>
+    /// <caption><a name="cpsa">A Summary of the 29 CPSA Descriptors</a></caption>
+    /// <thead>
+    /// <tr>
+    /// <th>IDescriptor</th><th>Meaning</th>
+    /// </tr>
+    /// </thead>
+    /// <tbody>
+    /// <tr>
+    /// <td>PPSA-1</td><td> partial positive surface area -- sum of surface area on positive parts of molecule</td></tr><tr>
+    /// <td>PPSA-2</td><td> partial positive surface area * total positive charge on the molecule </td></tr><tr>
+    /// <td>PPSA-3</td><td> charge weighted partial positive surface area</td></tr><tr>
+    /// <td>PNSA-1</td><td> partial negative surface area -- sum of surface area on negative parts of molecule</td></tr><tr>
+    /// <td>PNSA-2</td><td> partial negative surface area * total negative charge on the molecule</td></tr><tr>
+    /// <td>PNSA-3</td><td> charge weighted partial negative surface area</td></tr><tr>
+    /// <td>    DPSA-1</td><td> difference of PPSA-1 and PNSA-1</td></tr><tr>
+    /// <td>    DPSA-2</td><td> difference of FPSA-2 and PNSA-2</td></tr><tr>
+    /// <td>    DPSA-3</td><td> difference of PPSA-3 and PNSA-3</td></tr><tr>
+    /// <td>    FPSA-1</td><td> PPSA-1 / total molecular surface area</td></tr><tr>
+    /// <td>    FFSA-2  </td><td>PPSA-2 / total molecular surface area</td></tr><tr>
+    /// <td>    FPSA-3</td><td> PPSA-3 / total molecular surface area</td></tr><tr>
+    /// <td>    FNSA-1</td><td> PNSA-1 / total molecular surface area</td></tr><tr>
+    /// <td>    FNSA-2</td><td> PNSA-2 / total molecular surface area</td></tr><tr>
+    /// <td>    FNSA-3</td><td> PNSA-3 / total molecular surface area</td></tr><tr>
+    /// <td>    WPSA-1</td><td> PPSA-1 *  total molecular surface area / 1000</td></tr><tr>
+    /// <td>WPSA-2</td><td>    PPSA-2 * total molecular surface area /1000</td></tr><tr>
+    /// <td>WPSA-3</td><td>  PPSA-3 * total molecular surface area / 1000</td></tr><tr>
+    /// <td>WNSA-1</td><td>  PNSA-1 *  total molecular surface area /1000</td></tr><tr>
+    /// <td>WNSA-2</td><td> PNSA-2 * total molecular surface area / 1000</td></tr><tr>
+    /// <td>WNSA-3</td><td> PNSA-3 * total molecular surface area / 1000</td></tr><tr>
+    /// <td>RPCG</td><td> relative positive charge --  most positive charge / total positive charge</td></tr><tr>
+    /// <td>    RNCG    </td><td>relative negative charge -- most negative charge / total negative charge</td></tr><tr>
+    /// <td>    RPCS    </td><td>relative positive charge surface area -- most positive surface area * RPCG</td></tr><tr>
+    /// <td>    RNCS    </td><td>relative negative charge surface area -- most negative surface area * RNCG</td></tr>
+    /// <tr>
+    /// <td>THSA</td>
+    /// <td>sum of solvent accessible surface areas of
+    /// atoms with absolute value of partial charges
+    /// less than 0.2
+    /// </td>
+    /// </tr>
+    /// <tr>
+    /// <td>TPSA</td>
+    /// <td>sum of solvent accessible surface areas of
+    /// atoms with absolute value of partial charges
+    /// greater than or equal 0.2
+    /// </td>
+    /// </tr>
+    /// <tr>
+    /// <td>RHSA</td>
+    /// <td>THSA / total molecular surface area
+    /// </td>
+    /// </tr>
+    /// <tr>
+    /// <td>RPSA</td>
+    /// <td>TPSA / total molecular  surface area
+    /// </td>
+    /// </tr>
+    /// </tbody>
+    /// </table>
+    /// <p/>
+    /// <b>NOTE</b>: The values calculated by this implementation will differ from those
+    /// calculated by the original ADAPT implementation of the CPSA descriptors. This
+    /// is because the original implementation used an analytical surface area algorithm
+    /// and used partial charges obtained from MOPAC using the AM1 Hamiltonian.
+    /// This implementation uses a numerical
+    /// algorithm to obtain surface areas (see <see cref="NumericalSurface"/>) and obtains partial
+    /// charges using the Gasteiger-Marsilli algorithm (see <see cref="GasteigerMarsiliPartialCharges"/>).
+    /// <p/>
+    /// However, a comparison of the values calculated by the two implementations indicates
+    /// that they are qualitatively the same.
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td></td>
+    /// <td></td>
+    /// <td>no parameters</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2005-05-16
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:CPSA
+    /// </summary>
     public class CPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"PPSA-1", "PPSA-2", "PPSA-3", "PNSA-1", "PNSA-2", "PNSA-3", "DPSA-1",

@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class FromSubsetAtomsTest
     {
@@ -13,7 +13,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void inorganic()
+        public void Inorganic()
         {
             Transform("[Ne]", "[Ne]");
         }
@@ -44,17 +44,17 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void noStereoSpecification()
+        public void NoStereoSpecification()
         {
             Transform("C(N)(O)C", "[CH]([NH2])([OH])[CH3]");
         }
 
         [TestMethod()]
-        public void bracketAtom()
+        public void BracketAtom()
         {
             // should provide identity of bracket atom
-            Atom_ input = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
-            Atom_ output = FromSubsetAtoms.FromSubset(input, 0, 0);
+            Atom input = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
+            Atom output = FromSubsetAtoms.FromSubset(input, 0, 0);
 
             Assert.AreSame(output, input);
         }
@@ -62,30 +62,30 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Aliphatic_carbon()
         {
-            Atom_ actual = FromSubsetAtoms
+            Atom actual = FromSubsetAtoms
                     .FromSubset(AtomImpl.AliphaticSubset.Carbon, 3, 0);
-            Atom_ expect = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
+            Atom expect = new AtomImpl.BracketAtom(Element.Carbon, 1, 0);
             Assert.AreEqual(actual, expect);
         }
 
         [TestMethod()]
         public void Aromatic_carbon()
         {
-            Atom_ actual = FromSubsetAtoms
+            Atom actual = FromSubsetAtoms
                     .FromSubset(AtomImpl.AromaticSubset.Carbon, 2, 0);
-            Atom_ expect = new AtomImpl.BracketAtom(-1, Element.Carbon, 1, 0, 0, true);
+            Atom expect = new AtomImpl.BracketAtom(-1, Element.Carbon, 1, 0, 0, true);
             Assert.AreEqual(expect, actual);
         }
 
         [TestMethod()]
-        public void indolizine()
+        public void Indolizine()
         {
             Transform("c2cc1cccn1cc2",
                       "[cH]1[cH][c]2[cH][cH][cH][n]2[cH][cH]1");
         }
 
         [TestMethod()]
-        public void indolizine_kekule()
+        public void Indolizine_kekule()
         {
             Transform("C1=CN2C=CC=CC2=C1",
                       "[CH]1=[CH][N]2[CH]=[CH][CH]=[CH][C]2=[CH]1");
@@ -106,21 +106,21 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void cdk_bug_1363882()
+        public void CDK_bug_1363882()
         {
             Transform("[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl",
                       "[H][c]1[c]([H])[c]([c]2[c]([n][c]([n]2[H])[C]([F])([F])[F])[c]1[Cl])[Cl]");
         }
 
         [TestMethod()]
-        public void cdk_bug_1579235()
+        public void CDK_bug_1579235()
         {
             Transform("c2cc1cccn1cc2",
                       "[cH]1[cH][c]2[cH][cH][cH][n]2[cH][cH]1");
         }
 
         [TestMethod()]
-        public void sulphur()
+        public void Sulphur()
         {
             Transform("S([H])[H]",
                       "[S]([H])[H]");
@@ -156,7 +156,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void quinone()
+        public void Quinone()
         {
             Transform("oc1ccc(o)cc1",
                       "[o][c]1[cH][cH][c]([o])[cH][cH]1");
@@ -171,7 +171,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void cdk_bug_956926()
+        public void CDK_bug_956926()
         {
             Transform("[c+]1ccccc1",
                       "[c+]1[cH][cH][cH][cH][cH]1");

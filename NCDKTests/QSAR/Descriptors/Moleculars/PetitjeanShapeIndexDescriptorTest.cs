@@ -43,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             // first molecule is nbutane, second is naphthalene
             string filename = "NCDK.Data.MDL.petitejean.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

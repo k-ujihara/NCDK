@@ -34,13 +34,12 @@ using System.IO;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     * Helper class that help setup a template library of CDK's Builder3D.
-     *
-     * @author      Christian Hoppe
-     * @cdk.module  builder3dtools
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Helper class that help setup a template library of CDK's Builder3D.
+    /// </summary>
+    // @author      Christian Hoppe
+    // @cdk.module  builder3dtools
+    // @cdk.githash
     public class TemplateExtractor
     {
         const string usage = "Usage: TemplateExtractor SDFinfile outfile anyAtom=true/false anyBondAnyAtom=true/false";
@@ -176,11 +175,10 @@ namespace NCDK.Modeling.Builder3D
                             foreach (var m in imdl)
                             {
                                 counterMolecules = counterMolecules + 1;
-                                /*
-                                 * try{ HueckelAromaticityDetector.DetectAromaticity(m);
-                                 * }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
-                                 * aromaticity due to:"+ex1); }
-                                 */
+                                
+                                // try{ HueckelAromaticityDetector.DetectAromaticity(m);
+                                // }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
+                                // aromaticity due to:"+ex1); }
                                 IRingSet ringSetM = Cycles.SSSR(m).ToRingSet();
 
                                 if (counterMolecules % 1000 == 0)
@@ -268,17 +266,15 @@ namespace NCDK.Modeling.Builder3D
             Console.Out.WriteLine($"READY Molecules:{counterMolecules} RingSystems:{counterRings} UniqueRingsSystem:{counterUniqueRings}");
             Console.Out.WriteLine($"HashtableKeys:{hashRingSystems.Count}");
 
-            /*
-             * int c=0; Set keyset = HashRingSystems.Keys; Iterator
-             * it=keyset.iterator(); IAtomContainerSet som=new AtomContainerSet();
-             * SmilesParser smileParser=new SmilesParser(); string ringSmile="";
-             * while (it.HasNext()) { key=(string)it.Next();
-             * ringSmile=(string)HashRingSystems[key];
-             * Console.Out.WriteLine("HashtableSmile:"+ringSmile+" key:"+key); try{
-             * som.Add(smileParser.ParseSmiles(ringSmile)); }catch
-             * (Exception ex5){ Console.Out.WriteLine("Error in som.addmolecule due
-             * to:"+ex5); } }
-             */
+            // int c=0; Set keyset = HashRingSystems.Keys; Iterator
+            // it=keyset.Iterator(); IAtomContainerSet som=new AtomContainerSet();
+            // SmilesParser smileParser=new SmilesParser(); string ringSmile="";
+            // while (it.HasNext()) { key=(string)it.Next();
+            // ringSmile=(string)HashRingSystems[key];
+            // Console.Out.WriteLine("HashtableSmile:"+ringSmile+" key:"+key); try{
+            // som.Add(smileParser.ParseSmiles(ringSmile)); }catch
+            // (Exception ex5){ Console.Out.WriteLine("Error in som.addmolecule due
+            // to:"+ex5); } }
 
             // WriteChemModel(som,dataFile,"_TESTTESTTESTTESTTEST");
         }
@@ -319,11 +315,10 @@ namespace NCDK.Modeling.Builder3D
 
                     foreach (var m in imdl)
                     {
-                        /*
-                         * try{ HueckelAromaticityDetector.DetectAromaticity(m);
-                         * }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
-                         * aromaticity due to:"+ex1); }
-                         */
+                        // try{ HueckelAromaticityDetector.DetectAromaticity(m);
+                        // }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
+                        // aromaticity due to:"+ex1); }
+
                         // query=QueryAtomContainerCreator.CreateAnyAtomContainer(m,true);
                         // Console.Out.WriteLine("string:"+smiles.CreateSMILES(new
                         // Molecule(m)));

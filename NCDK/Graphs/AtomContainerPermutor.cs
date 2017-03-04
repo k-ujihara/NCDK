@@ -26,55 +26,51 @@ using System.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-     * The base class for permutors of atom containers, with a single abstract
-     * method <code>ContainerFromPermutation</code> that should be implemented in
-     * concrete derived classes.
-     *
-     * @author maclean
-     * @cdk.githash
-     * @cdk.created    2009-09-09
-     * @cdk.keyword    permutation
-     * @cdk.module     standard
-     */
+    /// <summary>
+    /// The base class for permutors of atom containers, with a single abstract
+    /// method <see cref="ContainerFromPermutation(int[])"/> that should be implemented in
+    /// concrete derived classes.
+    /// </summary>
+    // @author maclean
+    // @cdk.githash
+    // @cdk.created    2009-09-09
+    // @cdk.keyword    permutation
+    // @cdk.module     standard
     public abstract class AtomContainerPermutor : Permutor, IEnumerator<IAtomContainer>
     {
-        /**
-         * The atom container that is permuted at each step.
-         */
+        /// <summary>
+        /// The atom container that is permuted at each step.
+        /// </summary>
         protected IAtomContainer atomContainer;
 
         public IAtomContainer Current { get; private set; }
 
         object IEnumerator.Current => this.Current;
 
-        /**
-         * Start the permutor off with an initial atom container, and the size of
-         * the permutation.
-         *
-         * @param atomContainer
-         */
+        /// <summary>
+        /// Start the permutor off with an initial atom container, and the size of
+        /// the permutation.
+        /// </summary>
+        /// <param name="atomContainer"></param>
         public AtomContainerPermutor(int size, IAtomContainer atomContainer)
             : base(size)
         {
             this.atomContainer = atomContainer;
         }
 
-        /**
-         * Convert a permutation (expressed as a list of numbers) into a permuted
-         * atom container. This will differ depending on the desired effect of the
-         * permutation (atoms or bonds, for example).
-         *
-         * @return the atom container corresponding to this permutation
-         */
+        /// <summary>
+        /// Convert a permutation (expressed as a list of numbers) into a permuted
+        /// atom container. This will differ depending on the desired effect of the
+        /// permutation (atoms or bonds, for example).
+        /// </summary>
+        /// <returns>the atom container corresponding to this permutation</returns>
         public abstract IAtomContainer ContainerFromPermutation(int[] permutation);
 
-        /**
-         * Get a new container, but randomly skip forwards in the list of possible
-         * permutations to generate it.
-         *
-         * @return a random next permuted atom container
-         */
+        /// <summary>
+        /// Get a new container, but randomly skip forwards in the list of possible
+        /// permutations to generate it.
+        /// </summary>
+        /// <returns>a random next permuted atom container</returns>
         public bool RandomNext()
         {
             if (!HasNext())

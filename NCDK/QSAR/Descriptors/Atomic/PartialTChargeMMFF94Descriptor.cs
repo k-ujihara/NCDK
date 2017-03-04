@@ -23,23 +23,23 @@ using System.Diagnostics;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     * The calculation of total partial charges of an heavy atom is based on MMFF94
-     * model.
-     *
-     * <p>This descriptor uses these parameters: <table border="1"> <tr>
-     * <td>Name</td> <td>Default</td> <td>Description</td> </tr> <tr> <td></td>
-     * <td></td> <td>no parameters</td> </tr> </table>
-     *
-     * @author Miguel Rojas
-     * @cdk.created 2006-04-11
-     * @cdk.module qsaratomic
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:partialTChargeMMFF94
-     * @cdk.bug 1628461
-     * @see MMFF94PartialCharges
-     */
+    /// <summary>
+    /// The calculation of total partial charges of an heavy atom is based on MMFF94
+    /// model.
+    ///
+    /// <p>This descriptor uses these parameters: <table border="1"> <tr>
+    /// <td>Name</td> <td>Default</td> <td>Description</td> </tr> <tr> <td></td>
+    /// <td></td> <td>no parameters</td> </tr> </table>
+    ///
+    // @author Miguel Rojas
+    // @cdk.created 2006-04-11
+    // @cdk.module qsaratomic
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:partialTChargeMMFF94
+    // @cdk.bug 1628461
+    /// <seealso cref="MMFF94PartialCharges"/>
+    /// </summary>
     public class PartialTChargeMMFF94Descriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "partialTCMMFF94" };

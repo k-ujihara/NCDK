@@ -25,14 +25,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-     * @author John May
-     */
+    /// <summary>
+    // @author John May
+    /// </summary>
     [TestClass()]
     public class MmffParamSetTest
     {
-
-        public static readonly MmffParamSet mmffParams = MmffParamSet.Instance;
+        internal static readonly MmffParamSet mmffParams = MmffParamSet.Instance;
 
         [TestMethod()]
         public void FormalCharge()
@@ -47,25 +46,25 @@ namespace NCDK.ForceField.MMFF
         }
 
         [TestMethod()]
-        public void crd()
+        public void Crd()
         {
             Assert.AreEqual(1, mmffParams.GetCrd(32));
         }
 
         [TestMethod()]
-        public void bciBetween1And18()
+        public void BciBetween1And18()
         {
             Assert.AreEqual(-0.1052M, mmffParams.GetBondChargeIncrement(0, 1, 18));
         }
 
         [TestMethod()]
-        public void bciBetween18And1()
+        public void BciBetween18And1()
         {
             Assert.AreEqual(0.1052M, mmffParams.GetBondChargeIncrement(0, 18, 1));
         }
 
         [TestMethod()]
-        public void bciBetween37And63WithBondClass()
+        public void BciBetween37And63WithBondClass()
         {
             Assert.AreEqual(0.0000M, mmffParams.GetBondChargeIncrement(0, 37, 63));
             Assert.AreEqual(-0.0530M, mmffParams.GetBondChargeIncrement(1, 37, 63));

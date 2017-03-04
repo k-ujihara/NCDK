@@ -21,14 +21,14 @@ using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /**
-     * JUnit testing routine for SmartsQueryVisitor
-     *
-     * @author Dazhi Jiao
-     * @cdk.created 2007-05-10
-     * @cdk.module test-smarts
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// JUnit testing routine for SmartsQueryVisitor
+    ///
+    // @author Dazhi Jiao
+    // @cdk.created 2007-05-10
+    // @cdk.module test-smarts
+    // @cdk.keyword SMARTS
+    /// </summary>
     [TestClass()]
     public class SmartsQueryVisitorTest : CDKTestCase
     {

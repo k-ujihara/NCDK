@@ -23,25 +23,20 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Common.Base;
-using NCDK.SGroups;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Smiles
 {
-    /**
-     * @author John May
-     * @cdk.module test-inchi
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-inchi
+    /// </summary>
     [TestClass()]
     public class AbsoluteSMILESTest
     {
         [TestMethod()]
-        public void myo_inositol()
+        public void Myo_inositol()
         {
             Test("O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O", "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O",
                     "O[C@@H]1[C@@H](O)[C@H](O)[C@@H](O)[C@H](O)[C@@H]1O",
@@ -74,7 +69,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void bIspropenyloctatriene()
+        public void Ispropenyloctatriene()
         {
             Test("C(=C/C)/C(=C(\\C=C/C)/C=C/C)/C=C/C", "C(=C/C)/C(/C=C/C)=C(\\C=C/C)/C=C/C",
                     "C\\C=C\\C(=C(/C=C/C)\\C=C/C)\\C=C/C", "C(=C/C)/C(/C=C/C)=C(/C=C/C)\\C=C/C",

@@ -22,20 +22,15 @@
  */
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * Tests the functionality of {@link ICDKObject} implementations.
-     *
-     * @cdk.module  test-interfaces
-     * @cdk.created 2010-10-22
-     */
+    /// <summary>
+    /// Tests the functionality of {@link ICDKObject} implementations.
+    ///
+    // @cdk.module  test-interfaces
+    // @cdk.created 2010-10-22
+    /// </summary>
     [TestClass()]
     public abstract class AbstractCDKObjectTest : CDKTestCase
     {

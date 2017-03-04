@@ -35,7 +35,7 @@ namespace NCDK.Isomorphisms
      * index indicates the maximum component group (in the query). A specification
      * of '0' indicates there are no grouping restrictions.
      *
-     * <blockquote><pre>
+     * <blockquote><code>
      * // grouping is actually set by SMARTS parser but this shows how it's stored
      * query.SetProperty(ComponentGrouping.Key, grouping);
      *
@@ -45,7 +45,7 @@ namespace NCDK.Isomorphisms
      * // filter for mappings which respect component grouping in the query
      * Iterables.Filter(pattern.MatchAll(target),
      *                  new ComponentGrouping(query, target));
-     * </pre></blockquote>
+     * </code></blockquote>
      *
      * @author John May
      * @cdk.module isomorphism

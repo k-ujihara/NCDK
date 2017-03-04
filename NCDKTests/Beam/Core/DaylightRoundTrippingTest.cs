@@ -7,8 +7,8 @@ namespace NCDK.Beam
     /// href="http://www.daylight.com/dayhtml/doc/theory/theory.smiles.html">Daylight
     /// theory manual</a>)
     /// </summary>
-    /// <author>John May</author>
-	[TestClass()]
+    // @author John May
+    [TestClass()]
     public class DaylightRoundTrippingTest
     {
 
@@ -87,7 +87,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void lAlanine()
+        public void LAlanine()
         {
             RoundTrip("N[C@@H](C)C(=O)O");
         }
@@ -383,31 +383,31 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void lAlanine_1()
+        public void LAlanine_1()
         {
             RoundTrip("N[C@@]([H])(C)C(=O)O");
         }
 
         [TestMethod()]
-        public void lAlanine_2()
+        public void LAlanine_2()
         {
             RoundTrip("N[C@@H](C)C(=O)O");
         }
 
         [TestMethod()]
-        public void lAlanine_3()
+        public void LAlanine_3()
         {
             RoundTrip("N[C@H](C(=O)O)C");
         }
 
         [TestMethod()]
-        public void lAlanine_4()
+        public void LAlanine_4()
         {
             RoundTrip("[H][C@](N)(C)C(=O)O");
         }
 
         [TestMethod()]
-        public void lAlanine_5()
+        public void LAlanine_5()
         {
             RoundTrip("[C@H](N)(C)C(=O)O");
         }

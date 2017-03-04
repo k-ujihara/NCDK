@@ -25,15 +25,15 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.SMSD.Algorithms.McGregors
 {
-    /**
-     * Helper Class for McGregor algorithm.
-     *
-     * The second part of the program extents the mapping by the McGregor algorithm in case,
-     * that not all atoms of molecule A and molecule B are mapped by the clique approach.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Helper Class for McGregor algorithm.
+    ///
+    /// The second part of the program extents the mapping by the McGregor algorithm in case,
+    /// that not all atoms of molecule A and molecule B are mapped by the clique approach.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class McgregorHelper
     {
 
@@ -53,24 +53,16 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private readonly IList<int> iBondSetA;
         private readonly IList<int> iBondSetB;
 
-        /**
-         * Stores the variables
-         * @param mappingCheckFlag
-         * @param mappedAtomCount
-         * @param mappedAtomsOrg
-         * @param neighborBondNumA
-         * @param neighborBondNumB
-         * @param iBondNeighborAtomsA
-         * @param iBondNeighborAtomsB
-         * @param cBondNeighborsA
-         * @param cBondNeighborsB
-         * @param setNumA
-         * @param setNumB
-         * @param iBondSetA
-         * @param iBondSetB
-         * @param cBondSetA
-         * @param cBondSetB
-         */
+        /// <summary>
+        /// Stores the variables
+        /// <param name="mappingCheckFlag">/// @param mappedAtomCount</param>
+        /// <param name="mappedAtomsOrg">/// @param neighborBondNumA</param>
+        /// <param name="neighborBondNumB">/// @param iBondNeighborAtomsA</param>
+        /// <param name="iBondNeighborAtomsB">/// @param cBondNeighborsA</param>
+        /// <param name="cBondNeighborsB">/// @param setNumA</param>
+        /// <param name="setNumB">/// @param iBondSetA</param>
+        /// <param name="iBondSetB">/// @param cBondSetA</param>
+        /// <param name="cBondSetB">/// </summary></param>
         protected internal McgregorHelper(bool mappingCheckFlag, int mappedAtomCount, IList<int> mappedAtomsOrg,
                                  int neighborBondNumA, int neighborBondNumB, IList<int> iBondNeighborAtomsA,
                                  IList<int> iBondNeighborAtomsB, IList<string> cBondNeighborsA, IList<string> cBondNeighborsB, int setNumA,
@@ -95,98 +87,98 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         }
 
-        /**
-         * @return the cBondSetA
-         */
+        /// <summary>
+        /// <returns>the cBondSetA</returns>
+        /// </summary>
         protected internal IList<string> GetCBondSetA()
         {
             return new ReadOnlyCollection<string>(cBondSetA);
         }
 
-        /**
-         * @return the cBondSetB
-         */
+        /// <summary>
+        /// <returns>the cBondSetB</returns>
+        /// </summary>
         protected internal IList<string> GetCBondSetB()
         {
             return new ReadOnlyCollection<string>(cBondSetB);
         }
 
-        /**
-         * @return the mappingCheckFlag
-         */
+        /// <summary>
+        /// <returns>the mappingCheckFlag</returns>
+        /// </summary>
         protected internal bool IsMappingCheckFlag => mappingCheckFlag;
 
-        /**
-         * @return the mappedAtomCount
-         */
+        /// <summary>
+        /// <returns>the mappedAtomCount</returns>
+        /// </summary>
         protected internal int MappedAtomCount => mappedAtomCount;
 
-        /**
-         * @return the mappedAtomsOrg
-         */
+        /// <summary>
+        /// <returns>the mappedAtomsOrg</returns>
+        /// </summary>
         protected internal IList<int> GetMappedAtomsOrg()
         {
             return new ReadOnlyCollection<int>(mappedAtomsOrg);
         }
 
-        /**
-         * @return the neighborBondNumA
-         */
+        /// <summary>
+        /// <returns>the neighborBondNumA</returns>
+        /// </summary>
         protected internal int NeighborBondNumA => neighborBondNumA;
 
-        /**
-         * @return the neighborBondNumB
-         */
+        /// <summary>
+        /// <returns>the neighborBondNumB</returns>
+        /// </summary>
         protected internal int NeighborBondNumB => neighborBondNumB;
 
-        /**
-         * @return the iBondNeighborAtomsA
-         */
+        /// <summary>
+        /// <returns>the iBondNeighborAtomsA</returns>
+        /// </summary>
         protected internal IList<int> GetIBondNeighborAtomsA()
         {
             return new ReadOnlyCollection<int>(iBondNeighborAtomsA);
         }
 
-        /**
-         * @return the iBondNeighborAtomsB
-         */
+        /// <summary>
+        /// <returns>the iBondNeighborAtomsB</returns>
+        /// </summary>
         protected internal IList<int> GetIBondNeighborAtomsB()
         {
             return new ReadOnlyCollection<int>(iBondNeighborAtomsB);
         }
 
-        /**
-         * @return the cBondNeighborsA
-         */
+        /// <summary>
+        /// <returns>the cBondNeighborsA</returns>
+        /// </summary>
         protected internal IList<string> GetCBondNeighborsA()
         {
             return new ReadOnlyCollection<string>(cBondNeighborsA);
         }
 
-        /**
-         * @return the cBondNeighborsB
-         */
+        /// <summary>
+        /// <returns>the cBondNeighborsB</returns>
+        /// </summary>
         protected internal IList<string> GetCBondNeighborsB()
         {
             return new ReadOnlyCollection<string>(cBondNeighborsB);
         }
 
-        /**
-         * @return the setNumA
-         */
+        /// <summary>
+        /// <returns>the setNumA</returns>
+        /// </summary>
         protected internal int SetNumA => setNumA;
 
-        /**
-         * @return the iBondSetA
-         */
+        /// <summary>
+        /// <returns>the iBondSetA</returns>
+        /// </summary>
         protected internal IList<int> GetIBondSetA()
         {
             return new ReadOnlyCollection<int>(iBondSetA);
         }
 
-        /**
-         * @return the iBondSetB
-         */
+        /// <summary>
+        /// <returns>the iBondSetB</returns>
+        /// </summary>
         protected internal IList<int> GetIBondSetB()
         {
             return new ReadOnlyCollection<int>(iBondSetB);

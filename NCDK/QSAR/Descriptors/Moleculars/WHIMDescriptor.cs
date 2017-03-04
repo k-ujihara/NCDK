@@ -26,84 +26,84 @@ using System.Diagnostics;
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars {
-    /**
-     * Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
-     * The descriptors are based on a number of atom weightings. There are 6 different
-     * possible weightings:
-     * <ol>
-     * <li>unit weights
-     * <li>atomic masses
-     * <li>van der Waals volumes
-     * <li>Mulliken atomic electronegativites
-     * <li>atomic polarizabilities
-     * <li>E-state values described by Kier &amp; Hall
-     * </ol>
-     * Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
-     * are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
-     * <p/>
-     * <p>For each weighting scheme we can obtain
-     * <ul>
-     * <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
-     * <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
-     * </ul>
-     * <p/>
-     * <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
-     * descriptors are required the current code will return all 11.
-     * <p/>
-     * The descriptor returns 17 values for a given weighting scheme, named as follows:
-     * <ol>
-     * <li>Wlambda1
-     * <li>Wlambda2
-     * <li>wlambda3
-     * <li>Wnu1
-     * <li>Wnu2
-     * <li>Wgamma1
-     * <li>Wgamma2
-     * <li>Wgamma3
-     * <li>Weta1
-     * <li>Weta2
-     * <li>Weta3
-     * <li>WT
-     * <li>WA
-     * <li>WV
-     * <li>WK
-     * <li>WG
-     * <li>WD
-     * </ol>
-     * Each name will have a suffix of the form <i>.X</i> where <i>X</i> indicates
-     * the weighting scheme used. Possible values of <i>X</i> are
-     * <ul>
-     * <li>unity
-     * <li>mass
-     * <li>volume
-     * <li>eneg
-     * <li>polar
-     * </ul>
-     * <p/>
-     * <p/>
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     * <tr>
-     * <td>Name</td>
-     * <td>Default</td>
-     * <td>Description</td>
-     * </tr>
-     * <tr>
-     * <td>type</td>
-     * <td>unity</td>
-     * <td>Type of weighting as described above</td>
-     * </tr>
-     * </table>
-     *
-     * @author Rajarshi Guha
-     * @cdk.created 2004-12-1
-     * @cdk.module qsarmolecular
-     * @cdk.githash
-     * @cdk.set qsar-descriptors
-     * @cdk.dictref qsar-descriptors:WHIM
-     * @cdk.keyword WHIM
-     * @cdk.keyword descriptor
-     */
+    /// <summary>
+    /// Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
+    /// The descriptors are based on a number of atom weightings. There are 6 different
+    /// possible weightings:
+    /// <ol>
+    /// <li>unit weights
+    /// <li>atomic masses
+    /// <li>van der Waals volumes
+    /// <li>Mulliken atomic electronegativites
+    /// <li>atomic polarizabilities
+    /// <li>E-state values described by Kier &amp; Hall
+    /// </ol>
+    /// Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
+    /// are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
+    /// <p/>
+    /// <p>For each weighting scheme we can obtain
+    /// <ul>
+    /// <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
+    /// <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
+    /// </ul>
+    /// <p/>
+    /// <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
+    /// descriptors are required the current code will return all 11.
+    /// <p/>
+    /// The descriptor returns 17 values for a given weighting scheme, named as follows:
+    /// <ol>
+    /// <li>Wlambda1
+    /// <li>Wlambda2
+    /// <li>wlambda3
+    /// <li>Wnu1
+    /// <li>Wnu2
+    /// <li>Wgamma1
+    /// <li>Wgamma2
+    /// <li>Wgamma3
+    /// <li>Weta1
+    /// <li>Weta2
+    /// <li>Weta3
+    /// <li>WT
+    /// <li>WA
+    /// <li>WV
+    /// <li>WK
+    /// <li>WG
+    /// <li>WD
+    /// </ol>
+    /// Each name will have a suffix of the form <i>.X</i> where <i>X</i> indicates
+    /// the weighting scheme used. Possible values of <i>X</i> are
+    /// <ul>
+    /// <li>unity
+    /// <li>mass
+    /// <li>volume
+    /// <li>eneg
+    /// <li>polar
+    /// </ul>
+    /// <p/>
+    /// <p/>
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    /// <tr>
+    /// <td>Name</td>
+    /// <td>Default</td>
+    /// <td>Description</td>
+    /// </tr>
+    /// <tr>
+    /// <td>type</td>
+    /// <td>unity</td>
+    /// <td>Type of weighting as described above</td>
+    /// </tr>
+    /// </table>
+    ///
+    // @author Rajarshi Guha
+    // @cdk.created 2004-12-1
+    // @cdk.module qsarmolecular
+    // @cdk.githash
+    // @cdk.set qsar-descriptors
+    // @cdk.dictref qsar-descriptors:WHIM
+    // @cdk.keyword WHIM
+    // @cdk.keyword descriptor
+    /// </summary>
     public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         string type = "";

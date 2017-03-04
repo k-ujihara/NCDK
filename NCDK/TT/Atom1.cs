@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using NCDK.Config;
 using System;
@@ -179,8 +180,8 @@ namespace NCDK.Default
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
             IAtom clone;
             if (map.AtomMap.TryGetValue(this, out clone))
                 return clone;
@@ -340,8 +341,8 @@ namespace NCDK.Silent
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
             IAtom clone;
             if (map.AtomMap.TryGetValue(this, out clone))
                 return clone;

@@ -18,13 +18,13 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matches Hydrogen atoms.
-     *
-     * @cdk.module smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matches Hydrogen atoms.
+    ///
+    // @cdk.module smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class HydrogenAtom : SMARTSAtom
     {
 
@@ -33,12 +33,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             : base(builder)
         { }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             if (!atom.Symbol.Equals("H"))

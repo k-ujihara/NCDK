@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 
 /* Copyright (C) 2003-2015  Egon Willighagen <egonw@users.sf.net>
@@ -44,32 +45,32 @@
 
 namespace NCDK.Default
 {
-    /**
-	 * Atom that represents part of an residue in an enzyme, like Arg255.
-	 *
-	 * @see  PseudoAtom
-	 * @cdk.module pdb
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Atom that represents part of an residue in an enzyme, like Arg255.
+    ///
+    // @see  PseudoAtom
+    // @cdk.module pdb
+    // @cdk.githash
+    /// </summary>
     public class EnzymeResidueLocator : PseudoAtom
     {
-        /**
-		 * Constructs an EnzymeResidueLocator from a string containing the locator.
-		 *
-		 * @param   label  The string describing the residue and its location.
-		 */
+        /// <summary>
+        /// Constructs an EnzymeResidueLocator from a string containing the locator.
+        ///
+        /// <param name="label">The string describing the residue and its location.</param>
+        /// </summary>
         public EnzymeResidueLocator(string label)
-			: base(label)
+            : base(label)
         {
         }
 
-        /**
-		 * Constructs an EnzymeResidueLocator from an existing Atom.
-		 *
-		 * @param   atom Atom that should be converted into a EnzymeResidueLocator.
-		 */
+        /// <summary>
+        /// Constructs an EnzymeResidueLocator from an existing Atom.
+        ///
+        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
+        /// </summary>
         public EnzymeResidueLocator(IAtom atom)
-			: base(atom)
+            : base(atom)
         {
             if (atom is IPseudoAtom)
             {
@@ -81,32 +82,32 @@ namespace NCDK.Default
 
 namespace NCDK.Silent
 {
-    /**
-	 * Atom that represents part of an residue in an enzyme, like Arg255.
-	 *
-	 * @see  PseudoAtom
-	 * @cdk.module pdb
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Atom that represents part of an residue in an enzyme, like Arg255.
+    ///
+    // @see  PseudoAtom
+    // @cdk.module pdb
+    // @cdk.githash
+    /// </summary>
     public class EnzymeResidueLocator : PseudoAtom
     {
-        /**
-		 * Constructs an EnzymeResidueLocator from a string containing the locator.
-		 *
-		 * @param   label  The string describing the residue and its location.
-		 */
+        /// <summary>
+        /// Constructs an EnzymeResidueLocator from a string containing the locator.
+        ///
+        /// <param name="label">The string describing the residue and its location.</param>
+        /// </summary>
         public EnzymeResidueLocator(string label)
-			: base(label)
+            : base(label)
         {
         }
 
-        /**
-		 * Constructs an EnzymeResidueLocator from an existing Atom.
-		 *
-		 * @param   atom Atom that should be converted into a EnzymeResidueLocator.
-		 */
+        /// <summary>
+        /// Constructs an EnzymeResidueLocator from an existing Atom.
+        ///
+        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
+        /// </summary>
         public EnzymeResidueLocator(IAtom atom)
-			: base(atom)
+            : base(atom)
         {
             if (atom is IPseudoAtom)
             {

@@ -30,17 +30,15 @@ using System.Xml.Linq;
 
 namespace NCDK.Dict
 {
-    /**
-    // Dictionary with entries build from an OWL file.
-     *
+    /// <summary>
+    /// Dictionary with entries build from an OWL file.
+    /// </summary>
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.githash
     // @cdk.created  2005-11-18
     // @cdk.keyword  dictionary
     // @cdk.module   dict
-     *
-     */
-    public class OWLFile : DictionaryMap
+    public class OWLFile : EntryDictionary
     {
         private static readonly XNamespace rdfNS = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
         private static readonly XNamespace rdfsNS = "http://www.w3.org/2000/01/rdf-schema#";
@@ -49,9 +47,9 @@ namespace NCDK.Dict
             : base()
         { }
 
-        public new static DictionaryMap Unmarshal(TextReader reader)
+        public new static EntryDictionary Unmarshal(TextReader reader)
         {
-            DictionaryMap dict = new OWLFile();
+            EntryDictionary dict = new OWLFile();
             try
             {
                 var text = reader.ReadToEnd();

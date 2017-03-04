@@ -18,21 +18,16 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IElectronContainer} implementations.
-     *
-     * @cdk.module test-interfaces
-     *
-     * @see org.openscience.cdk.ElectronContainer
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IElectronContainer} implementations.
+    ///
+    // @cdk.module test-interfaces
+    ///
+    // @see org.openscience.cdk.ElectronContainer
+    /// </summary>
     [TestClass()]
     public abstract class AbstractElectronContainerTest : AbstractChemObjectTest
     {
@@ -61,9 +56,9 @@ namespace NCDK
             Assert.IsTrue(clone is IElectronContainer);
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public virtual void TestToString()
         {

@@ -19,50 +19,47 @@
 using NCDK.Tools.Manipulator;
 using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace NCDK.Formula.Rules
 {
-    /**
-    // This class validate if the mass from an IMolecularFormula is
-    // between the tolerance range give a experimental mass. As default
-    // the mass to range is 0.0.
-     *
-     *
-    // <p>This rule uses these parameters:
-    // <table border="1">
-    //   <tr>
-    //     <td>Name</td>
-    //     <td>Default</td>
-    //     <td>Description</td>
-    //   </tr>
-    //   <tr>
-    //     <td>mass</td>
-    //     <td>0.0</td>
-    //     <td>The Mass which the MolecularFormula has to be compared</td>
-    //   </tr>
-    //   <tr>
-    //     <td>tolerance</td>
-    //     <td>0.05</td>
-    //     <td>The range tolerance</td>
-    //   </tr>
-    // </table>
-     *
+    /// <summary>
+    /// This class validate if the mass from an IMolecularFormula is
+    /// between the tolerance range give a experimental mass. As default
+    /// the mass to range is 0.0.
+    /// </summary>
+    /// <remarks>
+    /// This rule uses these parameters:
+    /// <list type="table">
+    /// <item>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </item>
+    /// <item>
+    ///   <term>mass</term>
+    ///   <term>0.0</term>
+    ///   <term>The Mass which the MolecularFormula has to be compared</term>
+    /// </item>
+    /// <item>
+    ///   <term>tolerance</term>
+    ///   <term>0.05</term>
+    ///   <term>The range tolerance</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-     */
     public class ToleranceRangeRule : IRule
     {
         private double mass = 0.0;
         private double tolerance = 0.05;
 
-        /**
-        //  Constructor for the ToleranceRangeRule object.
-         *
-        //  @throws IOException            If an error occurs when reading atom type information
-        //  @throws ClassNotFoundException If an error occurs during tom typing
-         */
+        /// <summary>
+        /// Constructor for the ToleranceRangeRule object.
+        /// </summary>
         public ToleranceRangeRule() { }
         
         /// <summary>
@@ -89,12 +86,11 @@ namespace NCDK.Formula.Rules
             }
         }
 
-        /**
-        // Validate the Tolerance Range of this IMolecularFormula.
-         *
-        // @param formula   Parameter is the IMolecularFormula
-        // @return          A double value meaning 1.0 True, 0.0 False
-         */
+        /// <summary>
+        /// Validate the Tolerance Range of this IMolecularFormula.
+        /// </summary>
+        /// <param name="formula">Parameter is the IMolecularFormula</param>
+        /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public double Validate(IMolecularFormula formula)
         {
             Trace.TraceInformation("Start validation of ", formula);

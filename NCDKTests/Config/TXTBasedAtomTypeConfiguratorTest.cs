@@ -20,7 +20,7 @@ namespace NCDK.Config
         public virtual void TestReadAtomTypes_IChemObjectBuilder()
         {
             var configFile = "NCDK.Config.Data.jmol_atomtypes.txt";
-            var ins = typeof(TXTBasedAtomTypeConfigurator).Assembly.GetManifestResourceStream(configFile);
+            var ins = ResourceLoader.GetAsStream(typeof(TXTBasedAtomTypeConfigurator), configFile);
             var configurator = new TXTBasedAtomTypeConfigurator();
             configurator.Stream = ins;
             var atomTypes = configurator.ReadAtomTypes(new ChemObject().Builder);

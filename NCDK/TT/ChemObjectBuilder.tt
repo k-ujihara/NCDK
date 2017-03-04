@@ -11,10 +11,10 @@ using NCDK.Numerics;
 #>
 namespace <#= ns.NS #>
 {
-	public sealed class ChemObjectBuilder
-		: IChemObjectBuilder
-	{
-		public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
+    public sealed class ChemObjectBuilder
+        : IChemObjectBuilder
+    {
+        public static readonly IChemObjectBuilder Instance = new ChemObjectBuilder();
 
         public T Create<T>() where T : IAtomContainer, new() => new T();
 
@@ -80,7 +80,7 @@ namespace <#= ns.NS #>
         public IRing CreateRing() => new Ring();
         public IRing CreateRing(int ringSize, string elementSymbol) => new Ring(ringSize, elementSymbol);
         public IRing CreateRing(IAtomContainer atomContainer) => new Ring(atomContainer);
-		public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
+        public IRing CreateRing(IEnumerable<IAtom> atoms, IEnumerable<IBond> bonds) => new Ring(atoms, bonds); 
         public IRingSet CreateRingSet() => new RingSet();
         public ISubstance CreateSubstance() => new Substance();
         public ISingleElectron CreateSingleElectron() => new SingleElectron();
@@ -98,7 +98,7 @@ namespace <#= ns.NS #>
         public IMolecularFormula CreateMolecularFormula() => new MolecularFormula();
         public IMolecularFormulaSet CreateMolecularFormulaSet() => new MolecularFormulaSet();
         public IMolecularFormulaSet CreateMolecularFormulaSet(IMolecularFormula formula) => new MolecularFormulaSet(formula);
-	}
+    }
 }
 <#   
 }

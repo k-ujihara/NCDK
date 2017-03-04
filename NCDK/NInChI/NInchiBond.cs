@@ -21,40 +21,40 @@ using System;
 
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates properties of InChI Bond.  See <tt>inchi_api.h</tt>.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates properties of InChI Bond.  See <tt>inchi_api.h</tt>.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiBond
     {
-        /**
-         * Origin atom in bond.
-         */
+        /// <summary>
+        /// Origin atom in bond.
+        /// </summary>
         public NInchiAtom OriginAtom { get; set; }
 
-        /**
-         * Target atom in bond.
-         */
+        /// <summary>
+        /// Target atom in bond.
+        /// </summary>
         public NInchiAtom TargetAtom { get; set; }
 
-        /**
-         * Bond type.
-         */
+        /// <summary>
+        /// Bond type.
+        /// </summary>
         public INCHI_BOND_TYPE BondType { get; set; } = INCHI_BOND_TYPE.None;
 
-        /**
-         * Bond 2D stereo definition.
-         */
+        /// <summary>
+        /// Bond 2D stereo definition.
+        /// </summary>
         public INCHI_BOND_STEREO BondStereo { get; set; } = INCHI_BOND_STEREO.None;
 
-        /**
-         * Create bond.
-         *
-         * @param atO        Origin atom
-         * @param atT        Target atom
-         * @param type        Bond type
-         * @param stereo    Bond 2D stereo definition
-         */
+        /// <summary>
+        /// Create bond.
+        ///
+        /// <param name="atO">Origin atom</param>
+        /// <param name="atT">Target atom</param>
+        /// <param name="type">Bond type</param>
+        /// <param name="stereo">Bond 2D stereo definition</param>
+        /// </summary>
         public NInchiBond(NInchiAtom atO, NInchiAtom atT,
                 INCHI_BOND_TYPE type, INCHI_BOND_STEREO stereo)
         {
@@ -72,23 +72,23 @@ namespace NCDK.NInChI
         {
         }
 
-        /**
-         * Create bond.
-         *
-         * @param atO        Origin atom
-         * @param atT        Target atom
-         * @param type        Bond type
-         */
+        /// <summary>
+        /// Create bond.
+        ///
+        /// <param name="atO">Origin atom</param>
+        /// <param name="atT">Target atom</param>
+        /// <param name="type">Bond type</param>
+        /// </summary>
         public NInchiBond(NInchiAtom atO, NInchiAtom atT,
                 INCHI_BOND_TYPE type)
 
             : this(atO, atT, type, INCHI_BOND_STEREO.None)
         { }
 
-        /**
-         * Generates string representation of information on bond,
-         * for debugging purposes.
-         */
+        /// <summary>
+        /// Generates string representation of information on bond,
+        /// for debugging purposes.
+        /// </summary>
         public string ToDebugString()
         {
             return ("InChI Bond: "
@@ -99,9 +99,9 @@ namespace NCDK.NInChI
             );
         }
 
-        /**
-         * Outputs information on bond, for debugging purposes.
-         */
+        /// <summary>
+        /// Outputs information on bond, for debugging purposes.
+        /// </summary>
         public void PrintDebug()
         {
             Console.Out.WriteLine(ToDebugString());

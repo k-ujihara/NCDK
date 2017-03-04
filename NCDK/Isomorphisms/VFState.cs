@@ -36,10 +36,7 @@ namespace NCDK.Isomorphisms
      * @author John May
      * @cdk.module isomorphism
      */
-#if TEST
-    public
-#endif
-    sealed class VFState : AbstractVFState
+    internal sealed class VFState : AbstractVFState
     {
         /**
          * The query (container1) and target (container2) of the isomorphism

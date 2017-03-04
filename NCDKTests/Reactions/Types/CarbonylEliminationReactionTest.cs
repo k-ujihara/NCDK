@@ -28,12 +28,12 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the CarbonylEliminationReactionTest.
-     * Generalized Reaction: RC-C#[O+] => R[C] + |C#[O+]
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the CarbonylEliminationReactionTest.
+    /// Generalized Reaction: RC-C#[O+] => R[C] + |C#[O+]
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class CarbonylEliminationReactionTest : ReactionProcessTest
     {
@@ -41,17 +41,17 @@ namespace NCDK.Reactions.Types
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public CarbonylEliminationReactionTest()
         {
             SetReaction(typeof(CarbonylEliminationReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestCarbonylEliminationReaction()
         {
@@ -59,12 +59,12 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-         * Automatically looks for active centre.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// Automatically looks for active centre.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
@@ -94,12 +94,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-         * Automatically looks for active centre.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// Automatically looks for active centre.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestManuallyPCentreActiveExample1()
         {
@@ -137,12 +137,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
-         * Automatically looks for active centre.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: C-C#[O+] => [C+] + [|C-]#[O+]
+        /// Automatically looks for active centre.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMappingExample1()
         {
@@ -173,12 +173,12 @@ namespace NCDK.Reactions.Types
 
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
 
@@ -189,11 +189,11 @@ namespace NCDK.Reactions.Types
             }
         }
 
-        /**
-         * Get the example set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the example set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -228,11 +228,11 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

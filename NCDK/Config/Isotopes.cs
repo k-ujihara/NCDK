@@ -58,7 +58,7 @@ namespace NCDK.Config
         {
             string configFile = "NCDK.Config.Data.isotopes.dat";
             isotopes = new Dictionary<string, IList<IIsotope>>();
-            var ins = Assembly.GetExecutingAssembly().GetManifestResourceStream(configFile);
+            var ins = ResourceLoader.GetAsStream(configFile);
 
             byte[] buffer = new byte[8];
             ins.Read(buffer, 0, 4); Array.Reverse(buffer, 0, 4);
@@ -199,8 +199,8 @@ namespace NCDK.Config
                     }
                 }
             }
-			if (major == null)
-				Trace.TraceError($"Could not find major isotope for: {atomicNumber}");
+            if (major == null)
+                Trace.TraceError($"Could not find major isotope for: {atomicNumber}");
             return major;
         }
 
@@ -217,7 +217,7 @@ namespace NCDK.Config
                 IList<IIsotope> isotopesForValue;
                 if (!isotopes.TryGetValue(symbol, out isotopesForValue))
                 {
-					Trace.TraceError($"Could not find major isotope for: {symbol}");
+                    Trace.TraceError($"Could not find major isotope for: {symbol}");
                     return null;
                 }
                 foreach (var isotope in isotopesForValue)

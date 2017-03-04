@@ -28,14 +28,14 @@ using NCDK.Numerics;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     *  A set of static utility classes for geometric calculations on Atoms.
-     *
-     *@author         Peter Murray-Rust,chhoppe,egonw
-     *@cdk.created    2003-??-??
-     * @cdk.module    builder3d
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  A set of static utility classes for geometric calculations on Atoms.
+    ///
+    ///@author         Peter Murray-Rust,chhoppe,egonw
+    ///@cdk.created    2003-??-??
+    // @cdk.module    builder3d
+    // @cdk.githash
+    /// </summary>
     public class AtomTetrahedralLigandPlacer3D
     {
 
@@ -50,36 +50,33 @@ namespace NCDK.Modeling.Builder3D
         readonly static Vector3 XV = new Vector3(1, 0, 0);
         readonly static Vector3 YV = new Vector3(0, 1, 0);
 
-        /**
-         *  Constructor for the AtomTetrahedralLigandPlacer3D object.
-         */
-#if TEST
-        public
-#endif
-        AtomTetrahedralLigandPlacer3D() { }
+        /// <summary>
+        ///  Constructor for the AtomTetrahedralLigandPlacer3D object.
+        /// </summary>
+        internal AtomTetrahedralLigandPlacer3D() { }
 
-        /**
-         *  Constructor for the setParameterSet object.
-         *
-         *@param  moleculeParameter  Description of the Parameter
-         */
+        /// <summary>
+        ///  Constructor for the setParameterSet object.
+        ///
+        /// <param name="moleculeParameter">Description of the Parameter</param>
+        /// </summary>
         public void SetParameterSet(IDictionary<string, object> moleculeParameter)
         {
             pSet = moleculeParameter;
         }
 
-        /**
-         *  Generate coordinates for all atoms which are singly bonded and have no
-         *  coordinates. This is useful when hydrogens are present but have no coordinates.
-         *  It knows about C, O, N, S only and will give tetrahedral or trigonal
-         *  geometry elsewhere. Bond lengths are computed from covalent radii or taken
-         *  out of a parameter set if available. Angles are tetrahedral or trigonal
-         *
-         *@param  atomContainer  the set of atoms involved
-         * @throws CDKException
-         *@cdk.keyword           coordinate calculation
-         *@cdk.keyword           3D model
-         */
+        /// <summary>
+        ///  Generate coordinates for all atoms which are singly bonded and have no
+        ///  coordinates. This is useful when hydrogens are present but have no coordinates.
+        ///  It knows about C, O, N, S only and will give tetrahedral or trigonal
+        ///  geometry elsewhere. Bond lengths are computed from covalent radii or taken
+        ///  out of a parameter set if available. Angles are tetrahedral or trigonal
+        ///
+        /// <param name="atomContainer">the set of atoms involved</param>
+        // @throws CDKException
+        ///@cdk.keyword           coordinate calculation
+        ///@cdk.keyword           3D model
+        /// </summary>
         public void Add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer)
         {
             IAtom refAtom = null;
@@ -124,16 +121,16 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         *  Rescales Point2 so that length 1-2 is sum of covalent radii.
-         *  If covalent radii cannot be found, use bond length of 1.0
-         *
-         *@param  atom1          stationary atom
-         *@param  atom2          movable atom
-         *@param  point2         coordinates for atom 2
-         *@return                new coordinates for atom 2
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Rescales Point2 so that length 1-2 is sum of covalent radii.
+        ///  If covalent radii cannot be found, use bond length of 1.0
+        ///
+        /// <param name="atom1">stationary atom</param>
+        /// <param name="atom2">movable atom</param>
+        /// <param name="point2">coordinates for atom 2</param>
+        /// <returns>new coordinates for atom 2</returns>
+        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// </summary>
         public Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
         {
             Vector3 point1 = atom1.Point3D.Value;
@@ -152,44 +149,44 @@ namespace NCDK.Modeling.Builder3D
             return newPoint;
         }
 
-        /**
-         *  Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
-         *  Initially designed for hydrogens. The ligands of refAtom are identified and
-         *  those with 3D coordinates used to generate the new points. (This allows
-         *  structures with partially known 3D coordinates to be used, as when groups
-         *  are added.) "Bent" and "non-planar" groups can be formed by taking a subset
-         *  of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated
-         *  from (1,iii) nomenclature: A is point to which new ones are "attached". A
-         *  may have ligands B, C... B may have ligands J, K.. points X1, X2... are
-         *  returned The cases (see individual routines, which use idealised geometry
-         *  by default): (0) zero ligands of refAtom. The resultant points are randomly
-         *  oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use +x,0,0 and
-         *  -x,0,0 (iii) 3 points: equilateral triangle in xy plane (iv) 4 points
-         *  x,x,x, x,-x,-x, -x,x,-x, -x,-x,x (1a) 1 ligand(B) of refAtom which itself
-         *  has a ligand (J) (i) 1 points required; vector along AB vector (ii) 2
-         *  points: 2 vectors in ABJ plane, staggered and eclipsed wrt J (iii) 3
-         *  points: 1 staggered wrt J, the others +- gauche wrt J (1b) 1 ligand(B) of
-         *  refAtom which has no other ligands. A random J is generated and (1a)
-         *  applied (2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in
-         *  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
-         *  vectors at angle ang, whose resultant is 2i (3) 3 ligands(B, C, D) of
-         *  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
-         *  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
-         *  or >4 ligands
-         *
-         *@param  refAtom        (A) to which new ligands coordinates could be added
-         *@param  length         A-X length
-         *@param  angle          B-A-X angle (used in certain cases)
-         *@param  nwanted        Description of the Parameter
-         *@param  noCoords       Description of the Parameter
-         *@param  withCoords     Description of the Parameter
-         *@param  atomC          Description of the Parameter
-         *@return                Point3D[] points calculated. If request could not be
-         *      fulfilled (e.g. too many atoms, or strange geometry, returns empty
-         *      array (zero length, not null)
-         * @throws CDKException
-         *@cdk.keyword           coordinate generation
-         */
+        /// <summary>
+        ///  Adds 3D coordinates for singly-bonded ligands of a reference atom (A).
+        ///  Initially designed for hydrogens. The ligands of refAtom are identified and
+        ///  those with 3D coordinates used to generate the new points. (This allows
+        ///  structures with partially known 3D coordinates to be used, as when groups
+        ///  are added.) "Bent" and "non-planar" groups can be formed by taking a subset
+        ///  of the calculated points. Thus R-NH2 could use 2 of the 3 points calculated
+        ///  from (1,iii) nomenclature: A is point to which new ones are "attached". A
+        ///  may have ligands B, C... B may have ligands J, K.. points X1, X2... are
+        ///  returned The cases (see individual routines, which use idealised geometry
+        ///  by default): (0) zero ligands of refAtom. The resultant points are randomly
+        ///  oriented: (i) 1 points required; +x,0,0 (ii) 2 points: use +x,0,0 and
+        ///  -x,0,0 (iii) 3 points: equilateral triangle in xy plane (iv) 4 points
+        ///  x,x,x, x,-x,-x, -x,x,-x, -x,-x,x (1a) 1 Ligand(B) of refAtom which itself
+        ///  has a ligand (J) (i) 1 points required; vector along AB vector (ii) 2
+        ///  points: 2 vectors in ABJ plane, staggered and eclipsed wrt J (iii) 3
+        ///  points: 1 staggered wrt J, the others +- gauche wrt J (1b) 1 Ligand(B) of
+        ///  refAtom which has no other ligands. A random J is generated and (1a)
+        ///  applied (2) 2 Ligands(B, C) of refAtom A (i) 1 points required; vector in
+        ///  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
+        ///  vectors at angle ang, whose resultant is 2i (3) 3 Ligands(B, C, D) of
+        ///  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
+        ///  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
+        ///  or >4 ligands
+        ///
+        /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle (used in certain cases)</param>
+        /// <param name="nwanted">Description of the Parameter</param>
+        /// <param name="noCoords">Description of the Parameter</param>
+        /// <param name="withCoords">Description of the Parameter</param>
+        /// <param name="atomC">Description of the Parameter</param>
+        /// <returns>Point3D[] points calculated. If request could not be</returns>
+        ///      fulfilled (e.g. too many atoms, or strange geometry, returns empty
+        ///      array (zero length, not null)
+        // @throws CDKException
+        ///@cdk.keyword           coordinate generation
+        /// </summary>
 
         public Vector3[] Get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, int nwanted, double length, double angle)
@@ -210,7 +207,7 @@ namespace NCDK.Modeling.Builder3D
             BondOrder refMaxBondOrder = refAtom.MaxBondOrder;
             if (refAtom.FormalNeighbourCount == 1)
             {
-                //        	WTF???
+                //            WTF???
             }
             else if (refAtom.FormalNeighbourCount == 2 || refMaxBondOrder == BondOrder.Triple)
             {
@@ -234,7 +231,7 @@ namespace NCDK.Modeling.Builder3D
                 }
                 catch (Exception ex1)
                 {
-                    //				Debug.WriteLine("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.ToString());
+                    //                Debug.WriteLine("Get3DCoordinatesForLigandsERROR: Cannot place SP2 Ligands due to:" + ex1.ToString());
                     throw new CDKException("Cannot place sp2 substituents\n" + ex1.Message, ex1);
                 }
 
@@ -248,7 +245,7 @@ namespace NCDK.Modeling.Builder3D
                 }
                 catch (Exception ex1)
                 {
-                    //				Debug.WriteLine("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.ToString());
+                    //                Debug.WriteLine("Get3DCoordinatesForLigandsERROR: Cannot place SP3 Ligands due to:" + ex1.ToString());
                     throw new CDKException("Cannot place sp3 substituents\n" + ex1.Message, ex1);
                 }
             }
@@ -266,18 +263,18 @@ namespace NCDK.Modeling.Builder3D
             return newPoint;
         }
 
-        /**
-         *  Main method for the calculation of the ligand coordinates for sp2 atoms.
-         *  Decides if one or two coordinates should be created
-         *
-         *@param  refAtom            central atom (Atom)
-         *@param  noCoords           Description of the Parameter
-         *@param  withCoords         Description of the Parameter
-         *@param  atomC              Description of the Parameter
-         *@param  length             Description of the Parameter
-         *@param  angle              Description of the Parameter
-         *@return                    coordinates as Points3d []
-         */
+        /// <summary>
+        ///  Main method for the calculation of the ligand coordinates for sp2 atoms.
+        ///  Decides if one or two coordinates should be created
+        ///
+        /// <param name="refAtom">central atom (Atom)</param>
+        /// <param name="noCoords">Description of the Parameter</param>
+        /// <param name="withCoords">Description of the Parameter</param>
+        /// <param name="atomC">Description of the Parameter</param>
+        /// <param name="length">Description of the Parameter</param>
+        /// <param name="angle">Description of the Parameter</param>
+        /// <returns>coordinates as Points3d []</returns>
+        /// </summary>
         public Vector3[] Get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, double length, double angle)
         {
@@ -304,20 +301,20 @@ namespace NCDK.Modeling.Builder3D
             return newPoints;
         }
 
-        /**
-         *  Main method for the calculation of the ligand coordinates for sp3 atoms.
-         *  Decides how many coordinates should be created
-         *
-         *@param  refAtom            central atom (Atom)
-         *@param  nwanted            how many ligands should be created
-         *@param  length             bond length
-         *@param  angle              angle in a B-A-(X) system; a=central atom;
-         *      x=ligand with unknown coordinates
-         *@param  noCoords           Description of the Parameter
-         *@param  withCoords         Description of the Parameter
-         *@param  atomC              Description of the Parameter
-         *@return                    Description of the Return Value
-         */
+        /// <summary>
+        ///  Main method for the calculation of the ligand coordinates for sp3 atoms.
+        ///  Decides how many coordinates should be created
+        ///
+        /// <param name="refAtom">central atom (Atom)</param>
+        /// <param name="nwanted">how many ligands should be created</param>
+        /// <param name="length">bond length</param>
+        /// <param name="angle">angle in a B-A-(X) system; a=central atom;</param>
+        ///      x=ligand with unknown coordinates
+        /// <param name="noCoords">Description of the Parameter</param>
+        /// <param name="withCoords">Description of the Parameter</param>
+        /// <param name="atomC">Description of the Parameter</param>
+        /// <returns>Description of the Return Value</returns>
+        /// </summary>
         public Vector3[] Get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, int nwanted, double length, double angle)
         {
@@ -356,18 +353,18 @@ namespace NCDK.Modeling.Builder3D
             return newPoints;
         }
 
-        /**
-         *  Calculates substituent points. Calculate substituent points for (0) zero
-         *  ligands of aPoint. The resultant points are randomly oriented: (i) 1 points
-         *  required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0 (iii) 3 points:
-         *  equilateral triangle in the xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
-         *  -x,-x,x where 3x**2 = bond length
-         *
-         *@param  aPoint   to which substituents are added
-         *@param  nwanted  number of points to calculate (1-4)
-         *@param  length   from aPoint
-         *@return          Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        ///  Calculates substituent points. Calculate substituent points for (0) zero
+        ///  ligands of aPoint. The resultant points are randomly oriented: (i) 1 points
+        ///  required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0 (iii) 3 points:
+        ///  equilateral triangle in the xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
+        ///  -x,-x,x where 3x**2 = bond length
+        ///
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="nwanted">number of points to calculate (1-4)</param>
+        /// <param name="length">from aPoint</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
+        /// </summary>
         public Vector3[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
         {
             Vector3[] points = new Vector3[0];
@@ -401,22 +398,22 @@ namespace NCDK.Modeling.Builder3D
             return points;
         }
 
-        /**
-         *  Calculate new Point(s) X in a B-A system to form B-A-X. Use C as reference
-         *  for * staggering about the B-A bond (1a) 1 ligand(B) of refAtom (A) which
-         *  itself has a ligand (C) (i) 1 points required; vector along AB vector (ii)
-         *  2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C (iii) 3
-         *  points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a
-         *  random non-colinear C is generated
-         *
-         *@param  aPoint   to which substituents are added
-         *@param  nwanted  number of points to calculate (1-3)
-         *@param  length   A-X length
-         *@param  angle    B-A-X angle
-         *@param  bPoint   Description of the Parameter
-         *@param  cPoint   Description of the Parameter
-         *@return          Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        ///  Calculate new Point(s) X in a B-A system to form B-A-X. Use C as reference
+        ///  for * staggering about the B-A bond (1a) 1 Ligand(B) of refAtom (A) which
+        ///  itself has a ligand (C) (i) 1 points required; vector along AB vector (ii)
+        ///  2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C (iii) 3
+        ///  points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a
+        ///  random non-colinear C is generated
+        ///
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="nwanted">number of points to calculate (1-3)</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle</param>
+        /// <param name="bPoint">Description of the Parameter</param>
+        /// <param name="cPoint">Description of the Parameter</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
+        /// </summary>
         public Vector3[] Calculate3DCoordinates1(Vector3 aPoint, Vector3 bPoint, Vector3? cPoint, int nwanted,
                 double length, double angle)
         {
@@ -462,26 +459,24 @@ namespace NCDK.Modeling.Builder3D
                 points[i] += vy;
                 points[i] += vz;
             }
-            /*
-             * ax = null; cbxba = null; ba = null; cb = null;
-             */
+            
+            // ax = null; cbxba = null; ba = null; cb = null;
             return points;
         }
 
-        /**
-         *  Calculate new Point(s) X in a B-A-C system, it forms a B-A(-C)-X
-         *  system. (2) 2 ligands(B, C) of refAtom A (i) 1 points required; vector in
-         *  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
-         *  points X1, X2, X1-A-X2 = angle about 2i vector
-         *
-         *@param  aPoint   to which substituents are added
-         *@param  bPoint   first ligand of A
-         *@param  cPoint   second ligand of A
-         *@param  nwanted  number of points to calculate (1-2)
-         *@param  length   A-X length
-         *@param  angle    B-A-X angle
-         *@return          Vector3[] nwanted points (or zero if failed)
-         */
+        /// <summary>
+        ///  Calculate new Point(s) X in a B-A-C system, it forms a B-A(-C)-X
+        ///  system. (2) 2 Ligands(B, C) of refAtom A (i) 1 points required; vector in
+        ///  ABC plane bisecting AB, AC. If ABC is linear, no points (ii) 2 points: 2
+        ///  points X1, X2, X1-A-X2 = angle about 2i vector
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="bPoint">first ligand of A</param>
+        /// <param name="cPoint">second ligand of A</param>
+        /// <param name="nwanted">number of points to calculate (1-2)</param>
+        /// <param name="length">A-X length</param>
+        /// <param name="angle">B-A-X angle</param>
+        /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
         public Vector3[] Calculate3DCoordinates2(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, int nwanted,
                 double length, double angle)
         {
@@ -519,18 +514,17 @@ namespace NCDK.Modeling.Builder3D
             return newPoints;
         }
 
-        /**
-         *  Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X
-         *  system. (3) 3 ligands(B, C, D) of refAtom A (i) 1 points required; if A, B,
-         *  C, D coplanar, no points. else vector is resultant of BA, CA, DA
-         *
-         *@param  aPoint  to which substituents are added
-         *@param  bPoint  first ligand of A
-         *@param  cPoint  second ligand of A
-         *@param  dPoint  third ligand of A
-         *@param  length  A-X length
-         *@return         Vector3 nwanted points (or null if failed (coplanar))
-         */
+        /// <summary>
+        ///  Calculate new point X in a B-A(-D)-C system. It forms a B-A(-D)(-C)-X
+        ///  system. (3) 3 Ligands(B, C, D) of refAtom A (i) 1 points required; if A, B,
+        ///  C, D coplanar, no points. else vector is resultant of BA, CA, DA
+        /// </summary>
+        /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="bPoint">first ligand of A</param>
+        /// <param name="cPoint">second ligand of A</param>
+        /// <param name="dPoint">third ligand of A</param>
+        /// <param name="length">A-X length</param>
+        /// <returns>Vector3 nwanted points (or null if failed (coplanar))</returns>
         public Vector3 Calculate3DCoordinates3(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, Vector3 dPoint, double length)
         {
             //Debug.WriteLine("3DCoordinates3");
@@ -566,17 +560,15 @@ namespace NCDK.Modeling.Builder3D
             return point;
         }
 
-        /**
-         *  Calculate new point in B-A-C system. It forms B-A(-X)-C system, where A is
-         *  sp2
-         *
-         *@param  aPoint  central point A (Vector3)
-         *@param  bPoint  B (Vector3)
-         *@param  cPoint  C (Vector3)
-         *@param  length  bond length
-         *@param  angle   angle between B(C)-A-X
-         *@return         new Point (Vector3)
-         */
+        /// <summary>
+        ///  Calculate new point in B-A-C system. It forms B-A(-X)-C system, where A is sp2
+        /// </summary>
+        /// <param name="aPoint">central point A (Vector3)</param>
+        /// <param name="bPoint">B (Vector3)</param>
+        /// <param name="cPoint">C (Vector3)</param>
+        /// <param name="length">bond length</param>
+        /// <param name="angle">angle between B(C)-A-X</param>
+        /// <returns>new Point (Vector3)</returns>
         public Vector3 Calculate3DCoordinatesSP2_1(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, double length,
                 double angle)
         {
@@ -596,19 +588,16 @@ namespace NCDK.Modeling.Builder3D
             return point;
         }
 
-        /**
-         *  Calculate two new points in B-A system. It forms B-A(-X)(-X) system, where
-         *  A is sp2
-         *
-         *@param  aPoint  central point A (Vector3)
-         *@param  bPoint  B (Vector3)
-         *@param  cPoint  C (Vector3)
-         *@param  length  bond length
-         *@param  angle   angle between B(C)-A-X
-         *@return         new Points (Vector3 [])
-         */
-        public Vector3[] Calculate3DCoordinatesSP2_2(Vector3 aPoint, Vector3 bPoint, Vector3? cPoint, double length,
-                double angle)
+        /// <summary>
+        ///  Calculate two new points in B-A system. It forms B-A(-X)(-X) system, where A is sp2
+        /// </summary>
+        /// <param name="aPoint">central point A (Vector3)</param>
+        /// <param name="bPoint">B (Vector3)</param>
+        /// <param name="cPoint">C (Vector3)</param>
+        /// <param name="length">bond length</param>
+        /// <param name="angle">angle between B(C)-A-X</param>
+        /// <returns>new Points (Vector3 [])</returns>
+        public Vector3[] Calculate3DCoordinatesSP2_2(Vector3 aPoint, Vector3 bPoint, Vector3? cPoint, double length, double angle)
         {
             //Debug.WriteLine("3DCoordinatesSP_2");
             Vector3 ca = new Vector3();
@@ -642,12 +631,11 @@ namespace NCDK.Modeling.Builder3D
             return newPoints;
         }
 
-        /**
-         *  Gets the nonColinearVector attribute of the AtomLigandPlacer3D class
-         *
-         *@param  ab  Description of the Parameter
-         *@return     The nonColinearVector value
-         */
+        /// <summary>
+        ///  Gets the nonColinearVector attribute of the AtomLigandPlacer3D class
+        /// </summary>
+        /// <param name="ab">Description of the Parameter</param>
+        /// <returns>The nonColinearVector value</returns>
         private Vector3 GetNonColinearVector(Vector3 ab)
         {
             Vector3 cr = Vector3.Cross(ab, XV);
@@ -661,15 +649,14 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         *  Rotates a vector around an axis.
-         *
-         *@param  vector  vector to be rotated around axis
-         *@param  axis    axis of rotation
-         *@param  angle   angle to vector rotate around
-         *@return         rotated vector
-         *author:         egonw
-         */
+        /// <summary>
+        ///  Rotates a vector around an axis.
+        /// </summary>
+        /// <param name="vector">vector to be rotated around axis</param>
+        /// <param name="axis">axis of rotation</param>
+        /// <param name="angle">angle to vector rotate around</param>
+        /// <returns>rotated vector</returns>
+        // @author:         egonw
         public static Vector3 Rotate(Vector3 vector, Vector3 axis, double angle)
         {
             Quaternion rotate = Vectors.NewQuaternionFromAxisAngle(axis.X, axis.Y, axis.Z, angle);
@@ -677,14 +664,13 @@ namespace NCDK.Modeling.Builder3D
             return result;
         }
 
-        /**
-         * Gets the distance between two atoms out of the parameter set.
-         *
-         *@param  id1            id of the parameter set for atom1 (atom1.AtomTypeName)
-         *@param  id2            id of the parameter set for atom2
-         *@return                The distanceValue value
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        /// Gets the distance between two atoms out of the parameter set.
+        /// </summary>
+        /// <param name="id1">id of the parameter set for atom1 (atom1.AtomTypeName)</param>
+        /// <param name="id2">id of the parameter set for atom2</param>
+        /// <returns>The distanceValue value</returns>
+        /// <exception cref="Exception"> Description of the Exception</exception>
         private double GetDistanceValue(string id1, string id2)
         {
             string dkey = "";
@@ -698,21 +684,20 @@ namespace NCDK.Modeling.Builder3D
             }
             else
             {
-                //			Debug.WriteLine("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
+                //            Debug.WriteLine("DistanceKEYError:pSet has no key:" + id2 + " ; " + id1 + " take default bond length:" + DEFAULT_BOND_LENGTH_H);
                 return DEFAULT_BOND_LENGTH_H;
             }
             return ((IList<double>)pSet[dkey])[0];
         }
 
-        /**
-         *  Gets the angleKey attribute of the AtomPlacer3D object.
-         *
-         *@param  id1            Description of the Parameter
-         *@param  id2            Description of the Parameter
-         *@param  id3            Description of the Parameter
-         *@return                The angleKey value
-         *@exception  Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Gets the angleKey attribute of the AtomPlacer3D object.
+        /// </summary>
+        /// <param name="id1">Description of the Parameter</param>
+        /// <param name="id2">Description of the Parameter</param>
+        /// <param name="id3">Description of the Parameter</param>
+        /// <returns>The angleKey value</returns>
+        /// <exception cref="Exception"> Description of the Exception</exception>
         public double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";
@@ -749,23 +734,22 @@ namespace NCDK.Modeling.Builder3D
             return ((IList<double>)pSet[akey])[0];
         }
 
-        /**
-         *  set Atoms in respect to stereoinformation.
-         *	take placed neighbours to stereocenter
-         *		create a x b
-         *	     if right handed system (spatproduct >0)
-         *			if unplaced is not up (relative to stereocenter)
-         *				n=b x a
-         *	     Determine angle between n and possible ligand place points
-         *	     if angle smaller than 90 degrees take this branch point
-         *
-         *@param  atomA         placed Atom - stereocenter
-         *@param  ax            bond between stereocenter and unplaced atom
-         *@param  atomB         neighbour of atomA (in plane created by atomA, atomB and atomC)
-         *@param  atomC         neighbour of atomA
-         *@param  branchPoints  the two possible placement points for unplaced atom (up and down)
-         *@return               int value of branch point position
-         */
+        /// <summary>
+        ///  set Atoms in respect to stereoinformation.
+        ///    take placed neighbours to stereocenter
+        ///        create a x b
+        ///         if right handed system (spatproduct >0)
+        ///            if unplaced is not up (relative to stereocenter)
+        ///                n=b x a
+        ///         Determine angle between n and possible ligand place points
+        ///         if angle smaller than 90 degrees take this branch point
+        /// </summary>
+        /// <param name="atomA">placed Atom - stereocenter</param>
+        /// <param name="ax">bond between stereocenter and unplaced atom</param>
+        /// <param name="atomB">neighbour of atomA (in plane created by atomA, atomB and atomC)</param>
+        /// <param name="atomC">neighbour of atomA</param>
+        /// <param name="branchPoints">the two possible placement points for unplaced atom (up and down)</param>
+        /// <returns>int value of branch point position</returns>
         public int MakeStereocenter(Vector3 atomA, IBond ax, Vector3 atomB, Vector3 atomC, Vector3[] branchPoints)
         {
 
@@ -795,28 +779,26 @@ namespace NCDK.Modeling.Builder3D
             return -1;
         }
 
-        /**
-         *  Gets the spatproduct of three vectors.
-         *
-         *@param  a  vector a
-         *@param  b  vector b
-         *@param  c  vector c
-         *@return    double value of the spatproduct
-         */
+        /// <summary>
+        ///  Gets the spatproduct of three vectors.
+        /// </summary>
+        /// <param name="a">vector a</param>
+        /// <param name="b">vector b</param>
+        /// <param name="c">vector c</param>
+        /// <returns>double value of the spatproduct</returns>
         public double GetSpatproduct(Vector3 a, Vector3 b, Vector3 c)
         {
             return (c.X * (b.Y * a.Z - b.Z * a.Y) + c.Y * (b.Z * a.X - b.X * a.Z) + c.Z * (b.X * a.Y - b.Y * a.X));
         }
 
-        /**
-         *  Calculates the torsionAngle of a-b-c-d.
-         *
-         *@param  a  Vector3
-         *@param  b  Vector3
-         *@param  c  Vector3
-         *@param  d  Vector3
-         *@return    The torsionAngle value
-         */
+        /// <summary>
+        ///  Calculates the torsionAngle of a-b-c-d.
+        /// </summary>
+        /// <param name="a">Vector3</param>
+        /// <param name="b">Vector3</param>
+        /// <param name="c">Vector3</param>
+        /// <param name="d">Vector3</param>
+        /// <returns>The torsionAngle value</returns>
         public double GetTorsionAngle(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
         {
             Vector3 ab = new Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
@@ -839,17 +821,14 @@ namespace NCDK.Modeling.Builder3D
             return Vector3.Dot(n1, n2);
         }
 
-        /**
-         *  Gets all placed neighbouring atoms of a atom.
-         *
-         *@param  atom  central atom (Atom)
-         *@param  ac    the molecule
-         *@return       all connected and placed atoms to the central atom
-         *      ((AtomContainer)
-         */
+        /// <summary>
+        ///  Gets all placed neighbouring atoms of a atom.
+        /// </summary>
+        /// <param name="atom">central atom (Atom)</param>
+        /// <param name="ac">the molecule</param>
+        /// <returns>all connected and placed atoms to the central atom (AtomContainer)</returns>
         public IAtomContainer GetPlacedAtomsInAtomContainer(IAtom atom, IAtomContainer ac)
         {
-
             var bonds = ac.GetConnectedBonds(atom);
             IAtomContainer connectedAtoms = atom.Builder.CreateAtomContainer();
             IAtom connectedAtom = null;
@@ -864,14 +843,13 @@ namespace NCDK.Modeling.Builder3D
             return connectedAtoms;
         }
 
-        /**
-         *  Gets the unsetAtomsInAtomContainer attribute of the
-         *  AtomTetrahedralLigandPlacer3D object.
-         *
-         *@param  atom  Description of the Parameter
-         *@param  ac    Description of the Parameter
-         *@return       The unsetAtomsInAtomContainer value
-         */
+        /// <summary>
+        ///  Gets the unsetAtomsInAtomContainer attribute of the
+        ///  AtomTetrahedralLigandPlacer3D object.
+        /// </summary>
+        /// <param name="atom">Description of the Parameter</param>
+        /// <param name="ac">Description of the Parameter</param>
+        /// <returns>The unsetAtomsInAtomContainer value</returns>
         public IAtomContainer GetUnsetAtomsInAtomContainer(IAtom atom, IAtomContainer ac)
         {
             var atoms = ac.GetConnectedAtoms(atom);
@@ -899,15 +877,13 @@ namespace NCDK.Modeling.Builder3D
             return false;
         }
 
-        /**
-         *  Returns a placed neighbouring atom of a central atom atomA, which is not
-         *  atomB.
-         *
-         *@param  atomA  central atom (Atom)
-         *@param  atomB  atom connected to atomA (Atom)
-         *@param  ac     molecule
-         *@return        returns a connected atom (Atom)
-         */
+        /// <summary>
+        /// Returns a placed neighbouring atom of a central atom atomA, which is not atomB.
+        /// </summary>
+        /// <param name="atomA">central atom (Atom)</param>
+        /// <param name="atomB">atom connected to atomA (Atom)</param>
+        /// <param name="ac">molecule</param>
+        /// <returns>returns a connected atom (Atom)</returns>
         public IAtom GetPlacedHeavyAtomInAtomContainer(IAtom atomA, IAtom atomB, IAtomContainer ac)
         {
             var atoms = ac.GetConnectedAtoms(atomA);

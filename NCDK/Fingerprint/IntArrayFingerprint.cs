@@ -29,11 +29,9 @@ using System.Runtime.Serialization;
 
 namespace NCDK.Fingerprint
 {
-    /**
-	 * @author jonalv
-	 * @cdk.module     standard
-	 * @cdk.githash
-	 */
+    // @author jonalv
+    // @cdk.module     standard
+    // @cdk.githash
     [Serializable]
     public class IntArrayFingerprint : IBitFingerprint
     {
@@ -182,12 +180,10 @@ namespace NCDK.Fingerprint
                 return (Array.BinarySearch(trueBits, index) >= 0);
             }
 
-            /*
-		    // This method is VERY INNEFICIENT when called multiple times. It is the
-		    // cost of keeping down the memory footprint. Avoid using it for building up
-		    // IntArrayFingerprints -- instead use the constructor taking a so called
-		    // raw fingerprint.
-		     */
+            // This method is VERY INNEFICIENT when called multiple times. It is the
+            // cost of keeping down the memory footprint. Avoid using it for building up
+            // IntArrayFingerprints -- instead use the constructor taking a so called
+            // raw fingerprint.
             set
             {
                 int i = Array.BinarySearch(trueBits, index);

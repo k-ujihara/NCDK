@@ -31,11 +31,11 @@ using System.Text;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-     * Unit tests for MMFF symbolic atom types. This class primarily tests preconditions and some
-     * failing cases from old implementations. The atom types of the MMFF validation suite is tested by
-     * {@link MmffAtomTypeValidationSuiteTest}.
-     */
+    /// <summary>
+    /// Unit tests for MMFF symbolic atom types. This class primarily tests preconditions and some
+    /// failing cases from old implementations. The atom types of the MMFF validation suite is tested by
+    /// {@link MmffAtomTypeValidationSuiteTest}.
+    /// </summary>
     [TestClass()]
     public class MmffAtomTypeMatcherTest
     {
@@ -80,12 +80,12 @@ namespace NCDK.ForceField.MMFF
             Instance.SymbolicTypes(container);
         }
 
-        /**
-         * This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
-         * 'NC=O' and we see this is the case. SMILES: CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O
-         *
-         * @cdk.bug #3523240
-         */
+        /// <summary>
+        /// This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
+        /// 'NC=O' and we see this is the case. SMILES: CC(C)C1CCC(CC1)C(=O)NC(Cc1ccccc1)C(=O)O
+        ///
+        // @cdk.bug #3523240
+        /// </summary>
         [TestMethod()]
         public void Bug3523240IsResolved()
         {
@@ -199,12 +199,12 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
-         * 'NO2', it was previously assigned 'N2OX'. SMILES: CC[N+](=O)[O-]
-         *
-         * @cdk.bug #3524734
-         */
+        /// <summary>
+        /// This test ensures a unit from the old ForceFieldConfigurator passes. The nitrogen should be
+        /// 'NO2', it was previously assigned 'N2OX'. SMILES: CC[N+](=O)[O-]
+        ///
+        // @cdk.bug #3524734
+        /// </summary>
         [TestMethod()]
         public void Bug3524734IsResolved()
         {
@@ -234,11 +234,11 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * An old test from ForceFieldConfigurator. The expected atom types listed in that test are
-         * don't seem right, here 'CONN' and 'NC=O' is definitely correct. Previously the test expected
-         * N2OX but this is for nitrogen cations so '*[NH+]([O-])*', NC=O is more likely to be correct.
-         */
+        /// <summary>
+        /// An old test from ForceFieldConfigurator. The expected atom types listed in that test are
+        /// don't seem right, here 'CONN' and 'NC=O' is definitely correct. Previously the test expected
+        /// N2OX but this is for nitrogen cations so '*[NH+]([O-])*', NC=O is more likely to be correct.
+        /// </summary>
         [TestMethod()]
         public void Hydroxyurea()
         {
@@ -265,11 +265,11 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * The MMFF articles mention H2 as a special case for assigning hydrogen types. However it is
-         * not mentioned what type they are assigned. This test simply shows molecular hydrogens don't
-         * break the assignment and are set to null.
-         */
+        /// <summary>
+        /// The MMFF articles mention H2 as a special case for assigning hydrogen types. However it is
+        /// not mentioned what type they are assigned. This test simply shows molecular hydrogens don't
+        /// break the assignment and are set to null.
+        /// </summary>
         [TestMethod()]
         public void MolecularHydrogenDoesNotBreakAssignment()
         {
@@ -282,11 +282,11 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * MMFF94AtomTypeMatcherTest.testFindMatchingAtomType_IAtomContainer_IAtom_Methylamine. The
-         * nitrogen was being assigned NPYL by MMFF94AtomTypeMatcherTest. It is now assigned 'NR:
-         * NITROGEN IN ALIPHATIC AMINES'.
-         */
+        /// <summary>
+        /// MMFF94AtomTypeMatcherTest.testFindMatchingAtomType_IAtomContainer_IAtom_Methylamine. The
+        /// nitrogen was being assigned NPYL by MMFF94AtomTypeMatcherTest. It is now assigned 'NR:
+        /// NITROGEN IN ALIPHATIC AMINES'.
+        /// </summary>
         [TestMethod()]
         public void Methylamine()
         {
@@ -309,12 +309,12 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * MMFF94AtomTypeMatcherTest.testSthi would not assign STHI in thiophene. This is no longer the
-         * case.
-         */
+        /// <summary>
+        /// MMFF94AtomTypeMatcherTest.testSthi would not assign STHI in thiophene. This is no longer the
+        /// case.
+        /// </summary>
         [TestMethod()]
-        public void thiophene()
+        public void Thiophene()
         {
             IAtomContainer container = new AtomContainer();
             container.Atoms.Add(Atom("H", 0));
@@ -340,10 +340,10 @@ namespace NCDK.ForceField.MMFF
             Assert.IsTrue(Compares.AreDeepEqual(expected, actual));
         }
 
-        /**
-         * MMFF94AtomTypeMatcherTest.testOar would not assign OFUR in thiophene. This is no longer the
-         * case. Note the CDK used 'Oar' instead of the actual 'OFUR' type.
-         */
+        /// <summary>
+        /// MMFF94AtomTypeMatcherTest.testOar would not assign OFUR in thiophene. This is no longer the
+        /// case. Note the CDK used 'Oar' instead of the actual 'OFUR' type.
+        /// </summary>
         [TestMethod()]
         public void Furane()
         {

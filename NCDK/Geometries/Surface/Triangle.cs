@@ -22,16 +22,15 @@ using NCDK.Numerics;
 
 namespace NCDK.Geometries.Surface
 {
-    /**
-     * Representation of a triangle in 3D.
-     *
-     * By default this class represent the triangle in clockwise
-     * fashion.
-     *
-     * @author Rajarshi Guha
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Representation of a triangle in 3D.
+    ///
+    /// By default this class represent the triangle in clockwise
+    /// fashion.
+    /// </summary>
+    // @author Rajarshi Guha
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
     public class Triangle
     {
         internal Vector3 p1, p2, p3;

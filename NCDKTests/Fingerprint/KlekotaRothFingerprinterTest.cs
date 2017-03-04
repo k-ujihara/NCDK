@@ -27,9 +27,9 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /**
-     * @cdk.module test-fingerprint
-     */
+    /// <summary>
+    // @cdk.module test-fingerprint
+    /// </summary>
     [TestClass()]
     public class KlekotaRothFingerprinterTest : AbstractFingerprinterTest
     {

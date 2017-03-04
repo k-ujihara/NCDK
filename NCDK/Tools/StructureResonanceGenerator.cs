@@ -28,56 +28,56 @@ using System.Diagnostics;
 
 namespace NCDK.Tools
 {
-    /**
-     * <p>This class try to generate resonance structure for a determinate molecule.</p>
-     * <p>Make sure that the molecule has the corresponding lone pair electrons
-     * for each atom. You can use the method: <pre> LonePairElectronChecker </pre>
-     * <p>It is needed to call the addExplicitHydrogensToSatisfyValency
-     *  from the class tools.HydrogenAdder.</p>
-     * <p>It is based on rearrangements of electrons and charge</p>
-     * <p>The method is based on call by reactions which occur in a resonance.</p>
-     *
-     * <pre>
-     * StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
-     * MoleculeSet setOf = srG.GetResonances(new Molecule());
-     * </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter as true</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     * @author       Miguel Rojas
-     * @cdk.created  2006-5-05
-     * @cdk.module   reaction
-     * @cdk.githash
-     *
-     * @see NCDK.Reactions.IReactionProcess
-     */
+    /// <summary>
+    /// <p>This class try to generate resonance structure for a determinate molecule.</p>
+    /// <p>Make sure that the molecule has the corresponding lone pair electrons
+    /// for each atom. You can use the method: <code> LonePairElectronChecker </code>
+    /// <p>It is needed to call the addExplicitHydrogensToSatisfyValency
+    ///  from the class tools.HydrogenAdder.</p>
+    /// <p>It is based on rearrangements of electrons and charge</p>
+    /// <p>The method is based on call by reactions which occur in a resonance.</p>
+    ///
+    /// <code>
+    /// StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
+    /// MoleculeSet setOf = srG.GetResonances(new Molecule());
+    /// </code>
+    ///
+    /// <p>We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point</p>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <p>Moreover you must put the parameter as true</p>
+    /// <p>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</p>
+    ///
+    // @author       Miguel Rojas
+    // @cdk.created  2006-5-05
+    // @cdk.module   reaction
+    // @cdk.githash
+    ///
+    // @see NCDK.Reactions.IReactionProcess
+    /// </summary>
     public class StructureResonanceGenerator
     {
-        /**Generate resonance structure without looking at the symmetry*/
+        /// <summary>Generate resonance structure without looking at the symmetry*/
         private bool lookingSymmetry;
 
-        /**
-         * Construct an instance of StructureResonanceGenerator. Default restrictions
-         * are initiated.
-         *
-         * @see #SetDefaultReactions()
-         */
+        /// <summary>
+        /// Construct an instance of StructureResonanceGenerator. Default restrictions
+        /// are initiated.
+        ///
+        /// <seealso cref="SetDefaultReactions"/>
+        /// </summary>
         public StructureResonanceGenerator()
                 : this(false)
         { }
 
-        /**
-         * Construct an instance of StructureResonanceGenerator. Default restrictions
-         * are initiated.
-         *
-         * @param lookingSymmetry  Specify if the resonance generation is based looking at the symmetry
-         * @see #SetDefaultReactions()
-         */
+        /// <summary>
+        /// Construct an instance of StructureResonanceGenerator. Default restrictions
+        /// are initiated.
+        ///
+        /// <param name="lookingSymmetry">Specify if the resonance generation is based looking at the symmetry</param>
+        /// <seealso cref="SetDefaultReactions"/>
+        /// </summary>
         public StructureResonanceGenerator(bool lookingSymmetry)
         {
             Trace.TraceInformation("Initiate StructureResonanceGenerator");
@@ -96,13 +96,13 @@ namespace NCDK.Tools
         /// The number maximal of resonance structures to be found. The
         /// algorithm breaks the process when is came to this number.
         /// </summary>
-        public int MaximalStructures { get; set; } = 50; /** TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
+        public int MaximalStructures { get; set; } = 50; /* TODO: REACT: some time takes too much time. At the moment fixed to 50 structures*/
 
-        /**
-         * Set the default reactions that must be presents to generate the resonance.
-         *
-         * @see #Reactions
-         */
+        /// <summary>
+        /// Set the default reactions that must be presents to generate the resonance.
+        ///
+        /// <seealso cref="Reactions"/>
+        /// </summary>
         public void SetDefaultReactions()
         {
             CallDefaultReactions();
@@ -187,12 +187,12 @@ namespace NCDK.Tools
 
         }
 
-        /**
-         * Get the resonance structures from an <see cref="IAtomContainer"/>.
-         *
-         * @param molecule The IAtomContainer to analyze
-         * @return         The different resonance structures
-         */
+        /// <summary>
+        /// Get the resonance structures from an <see cref="IAtomContainer"/>.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        /// <returns>The different resonance structures</returns>
+        /// </summary>
         public IAtomContainerSet<IAtomContainer> GetStructures(IAtomContainer molecule)
         {
             int countStructure = 0;
@@ -232,13 +232,13 @@ namespace NCDK.Tools
             return setOfMol;
         }
 
-        /**
-         * Get the container which is found resonance from a <see cref="IAtomContainer"/>.
-         * It is based on looking if the order of the bond changes.
-         *
-         * @param molecule The IAtomContainer to analyze
-         * @return         The different containers
-         */
+        /// <summary>
+        /// Get the container which is found resonance from a <see cref="IAtomContainer"/>.
+        /// It is based on looking if the order of the bond changes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        /// <returns>The different containers</returns>
+        /// </summary>
         public IAtomContainerSet<IAtomContainer> GetContainers(IAtomContainer molecule)
         {
             var setOfCont = molecule.Builder.CreateAtomContainerSet();
@@ -334,15 +334,15 @@ namespace NCDK.Tools
             return setOfCont;
         }
 
-        /**
-         * Get the container which the atom is found on resonance from a <see cref="IAtomContainer"/>.
-         * It is based on looking if the order of the bond changes. Return null
-         * is any is found.
-         *
-         * @param molecule The IAtomContainer to analyze
-         * @param atom     The IAtom
-         * @return         The container with the atom
-         */
+        /// <summary>
+        /// Get the container which the atom is found on resonance from a <see cref="IAtomContainer"/>.
+        /// It is based on looking if the order of the bond changes. Return null
+        /// is any is found.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        /// <param name="atom">The IAtom</param>
+        /// <returns>The container with the atom</returns>
+        /// </summary>
         public IAtomContainer GetContainer(IAtomContainer molecule, IAtom atom)
         {
             var setOfCont = GetContainers(molecule);
@@ -356,15 +356,15 @@ namespace NCDK.Tools
             return null;
         }
 
-        /**
-         * Get the container which the bond is found on resonance from a <see cref="IAtomContainer"/>.
-         * It is based on looking if the order of the bond changes. Return null
-         * is any is found.
-         *
-         * @param molecule The IAtomContainer to analyze
-         * @param bond     The IBond
-         * @return         The container with the bond
-         */
+        /// <summary>
+        /// Get the container which the bond is found on resonance from a <see cref="IAtomContainer"/>.
+        /// It is based on looking if the order of the bond changes. Return null
+        /// is any is found.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        /// <param name="bond">The IBond</param>
+        /// <returns>The container with the bond</returns>
+        /// </summary>
         public IAtomContainer GetContainer(IAtomContainer molecule, IBond bond)
         {
             var setOfCont = GetContainers(molecule);
@@ -378,14 +378,14 @@ namespace NCDK.Tools
             return null;
         }
 
-        /**
-         * Search if the setOfAtomContainer contains the atomContainer
-         *
-         *
-         * @param set            ISetOfAtomContainer object where to search
-         * @param atomContainer  IAtomContainer to search
-         * @return   			 True, if the atomContainer is contained
-         */
+        /// <summary>
+        /// Search if the setOfAtomContainer contains the atomContainer
+        ///
+        ///
+        /// <param name="set">ISetOfAtomContainer object where to search</param>
+        /// <param name="atomContainer">IAtomContainer to search</param>
+        /// <returns>True, if the atomContainer is contained</returns>
+        /// </summary>
         private bool ExistAC(IAtomContainerSet<IAtomContainer> set, IAtomContainer atomContainer)
         {
 
@@ -400,7 +400,7 @@ namespace NCDK.Tools
             }
 
             for (int i = 0; i < acClone.Atoms.Count; i++)
-                //			if(acClone.Atoms[i].Id == null)
+                //            if(acClone.Atoms[i].Id == null)
                 acClone.Atoms[i].Id = "" + acClone.Atoms.IndexOf(acClone.Atoms[i]);
 
             if (lookingSymmetry)
@@ -428,7 +428,7 @@ namespace NCDK.Tools
             {
                 IAtomContainer ss = set[i];
                 for (int j = 0; j < ss.Atoms.Count; j++)
-                    //				if(ss.Atoms[j].Id == null)
+                    //                if(ss.Atoms[j].Id == null)
                     ss.Atoms[j].Id = "" + ss.Atoms.IndexOf(ss.Atoms[j]);
 
                 try

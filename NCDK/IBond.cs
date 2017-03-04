@@ -15,27 +15,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */
- 
+ */ 
 using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
 
 namespace NCDK
 {
-    /**
-     * Implements the concept of a covalent bond between two or more atoms. A bond is
-     * considered to be a number of electrons connecting two ore more atoms.
-     *type filter text
-     * @cdk.module interfaces
-     * @cdk.githash
-     *
-     * @author      egonw
-     * @cdk.created 2005-08-24
-     * @cdk.keyword bond
-     * @cdk.keyword atom
-     * @cdk.keyword electron
-     */
+    /// <summary>
+    /// Implements the concept of a covalent bond between two or more atoms. A bond is
+    /// considered to be a number of electrons connecting two ore more atoms.
+    ///type filter text
+    // @cdk.module interfaces
+    // @cdk.githash
+    ///
+    // @author      egonw
+    // @cdk.created 2005-08-24
+    // @cdk.keyword bond
+    // @cdk.keyword atom
+    // @cdk.keyword electron
+    /// </summary>
     public interface IBond
         : IElectronContainer, IMolecularEntity
     {
@@ -61,12 +60,12 @@ namespace NCDK
         /// <returns>the connected atoms or <c>null</c> if the given atom is not part of the bond</returns>
         IEnumerable<IAtom> GetConnectedAtoms(IAtom atom);
 
-        /**
-         * Returns true if the given atom participates in this bond.
-         *
-         * @param  atom  The atom to be tested if it participates in this bond
-         * @return       true if the atom participates in this bond
-         */
+        /// <summary>
+        /// Returns true if the given atom participates in this bond.
+        ///
+        /// <param name="atom">The atom to be tested if it participates in this bond</param>
+        /// <returns>true if the atom participates in this bond</returns>
+        /// </summary>
         bool Contains(IAtom atom);
 
         /// <summary>
@@ -96,19 +95,18 @@ namespace NCDK
         /// <returns><c>true</c>, if the bonds share an atom, otherwise <c>false</c></returns>
         bool IsConnectedTo(IBond bond);
 
-
-        /**
-         * Flag used for marking uncertainty of the bond order.
-         * If used on an
-         * <ul>
-         *  <li><see cref="IAtomContainer"/> it means that one or several of the bonds have
-         * 		this flag raised (which may indicate aromaticity).</li>
-         *  <li>{@link IBond} it means that it's unclear whether the bond is a single or
-         * 		double bond.</li>
-         *  <li>{@link IAtom} it is a way for the Smiles parser to indicate that this atom was
-         * 		written with a lower case letter, e.g. 'c' rather than 'C'</li>
-         * </ul>
-         */
+        /// <summary>
+        /// Flag used for marking uncertainty of the bond order.
+        /// If used on an
+        /// <ul>
+        ///  <li><see cref="IAtomContainer"/> it means that one or several of the bonds have
+        ///         this flag raised (which may indicate aromaticity).</li>
+        ///  <li><see cref="IBond"/> it means that it's unclear whether the bond is a single or
+        ///         double bond.</li>
+        ///  <li><see cref="IAtom"/> it is a way for the Smiles parser to indicate that this atom was
+        ///         written with a lower case letter, e.g. 'c' rather than 'C'</li>
+        /// </ul>
+        /// </summary>
         bool IsSingleOrDouble { get; set; }
 
         bool IsReactiveCenter { get; set; }

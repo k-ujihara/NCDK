@@ -311,20 +311,20 @@ namespace NCDK.Default
             Assert.AreEqual(location, container.IndexOf(container[location + 1]));
         }
 
-        /*
-         * note that AreNotSame checks whether object A *refers* to the same as
-         * object B since a ConformerContainer.get always returns the sme
-         * IAtomContainer object (just changing the 3D coords for a given conformer)
-         * the following will always fail
-         * Assert.AreNotSame(container[location+1], container[location]);
-         * Sinmilarly: Assert.AreEqual(container[location+1],
-         * container[location]); since this will check whether the references of
-         * X & Y are the same. Since Get() returns the same atom container (with the
-         * coords chanegd), there is no difference in the reference returned. Thus
-         * this test is always the same. Better to check set position X to X+1 and
-         * then find the first occurence of the object originally at X+1 - it should
-         * now be X
-         */
+        /// <summary>
+        /// note that AreNotSame checks whether object A *refers* to the same as
+        /// object B since a ConformerContainer.get always returns the sme
+        /// IAtomContainer object (just changing the 3D coords for a given conformer)
+        /// the following will always fail
+        /// Assert.AreNotSame(container[location+1], container[location]);
+        /// Sinmilarly: Assert.AreEqual(container[location+1],
+        /// container[location]); since this will check whether the references of
+        /// X & Y are the same. Since Get() returns the same atom container (with the
+        /// coords chanegd), there is no difference in the reference returned. Thus
+        /// this test is always the same. Better to check set position X to X+1 and
+        /// then find the first occurence of the object originally at X+1 - it should
+        /// now be X
+        /// </summary>
         [TestMethod()]
         public virtual void TestSet_int_Object()
         {

@@ -24,10 +24,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    // @cdk.module standard
+    // @cdk.githash
+    /// </summary>
     public class RingSizeComparator : IComparer<IRing>
     {
 
@@ -38,12 +38,12 @@ namespace NCDK.Tools.Manipulator
 
         int sortOrder = SMALL_FIRST;
 
-        /**
-        * Constructs a new comparator to sort rings by size.
-        *
-        * @param   order  Sort order: either RingSet.SMALL_FIRST or
-        *                                 RingSet.LARGE_FIRST.
-        */
+        /// <summary>
+       /// Constructs a new comparator to sort rings by size.
+       ///
+       /// <param name="order">Sort order: either RingSet.SMALL_FIRST or</param>
+       ///                                 RingSet.LARGE_FIRST.
+       /// </summary>
         public RingSizeComparator(int order)
         {
             sortOrder = order;

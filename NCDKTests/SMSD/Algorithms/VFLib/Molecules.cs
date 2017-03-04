@@ -53,12 +53,12 @@ using System;
 
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-    /**
-     * query and target molecules.
-     * @cdk.module test-smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// query and target molecules.
+    // @cdk.module test-smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class Molecules
     {
         public static IAtomContainer Create4Toluene()

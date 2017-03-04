@@ -34,15 +34,15 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * Class providing methods for generating coordinates for ring atoms.
-     * Various situations are supported, like condensation, spiro-attachment, etc.
-     * They can be used for Automated Structure Diagram Generation or in the interactive
-     * buildup of ringsystems by the user.
-     *
-     * @cdk.module sdg
-     * @cdk.githash
-     **/
+    /// <summary>
+    /// Class providing methods for generating coordinates for ring atoms.
+    /// Various situations are supported, like condensation, spiro-attachment, etc.
+    /// They can be used for Automated Structure Diagram Generation or in the interactive
+    /// buildup of ringsystems by the user.
+    ///
+    // @cdk.module sdg
+    // @cdk.githash
+    ///*/
     public class RingPlacer
     {
 
@@ -58,9 +58,9 @@ namespace NCDK.Layout
         internal const int BRIDGED = 1;
         internal const int SPIRO = 2;
 
-        /**
-         * Default ring start angles. Map contains pairs: ring size with start angle.
-         */
+        /// <summary>
+        /// Default ring start angles. Map contains pairs: ring size with start angle.
+        /// </summary>
         public static readonly IDictionary<int, double> defaultAngles = new Dictionary<int, double>()
         {
             {3, Math.PI* (0.1666667)},
@@ -70,9 +70,9 @@ namespace NCDK.Layout
             {8, Math.PI* (0.125)},
         };
 
-        /**
-         * Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
-         */
+        /// <summary>
+        /// Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
+        /// </summary>
         public static readonly IDictionary<int, double> jcpAngles = new Dictionary<int, double>()
 {
             {3, Math.PI * (0.5)},
@@ -82,25 +82,23 @@ namespace NCDK.Layout
             {8, Math.PI * (0.125)},
     };
 
-        /**
-         * The empty constructor.
-         */
+        /// <summary>
+        /// The empty constructor.
+        /// </summary>
         public RingPlacer()
         {
         }
 
-        /**
-         * Generated coordinates for a given ring. Multiplexes to special handlers
-         * for the different possible situations (spiro-, fusion-, bridged attachement)
-         *
-         * @param   ring  The ring to be placed
-         * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
-         * @param   sharedAtomsCenter  The geometric center of these atoms
-         * @param   ringCenterVector  A vector pointing the the center of the new ring
-         * @param   bondLength  The standard bondlength
-         */
-        public void PlaceRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector,
-                              double bondLength)
+        /// <summary>
+        /// Generated coordinates for a given ring. Multiplexes to special handlers
+        /// for the different possible situations (spiro-, fusion-, bridged attachement)
+        /// </summary>
+        /// <param name="ring">The ring to be placed</param>
+        /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
+        /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
+        /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
+        /// <param name="bondLength">The standard bondlength</param>
+        public void PlaceRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
             int sharedAtomCount = sharedAtoms.Atoms.Count;
             Debug.WriteLine("placeRing -> sharedAtomCount: " + sharedAtomCount);
@@ -118,25 +116,24 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Place ring with default start angles, using {@link #defaultAngles}.
-         * @param ring the ring to place.
-         * @param ringCenter center coordinates of the ring.
-         * @param bondLength given bond length.
-         */
+        /// <summary>
+        /// Place ring with default start angles, using {@link #defaultAngles}.
+        /// </summary>
+        /// <param name="ring">the ring to place.</param>
+        /// <param name="ringCenter">center coordinates of the ring.</param>
+        /// <param name="bondLength">given bond length.</param>
         public void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength)
         {
             PlaceRing(ring, ringCenter, bondLength, defaultAngles);
         }
 
-        /**
-         * Place ring with user provided angles.
-         *
-         * @param ring the ring to place.
-         * @param ringCenter center coordinates of the ring.
-         * @param bondLength given bond length.
-         * @param startAngles a map with start angles when drawing the ring.
-         */
+        /// <summary>
+        /// Place ring with user provided angles.
+        /// </summary>
+        /// <param name="ring">the ring to place.</param>
+        /// <param name="ringCenter">center coordinates of the ring.</param>
+        /// <param name="bondLength">given bond length.</param>
+        /// <param name="startAngles">a map with start angles when drawing the ring.</param>
         public void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength, IDictionary<int, double> startAngles)
         {
             var radius = this.GetNativeRingRadius(ring, bondLength);
@@ -147,18 +144,13 @@ namespace NCDK.Layout
             startAtom.Point2D = p;
             double startAngle = Math.PI * 0.5;
 
-            /*
-             * Different ring sizes get different start angles to have visually
-             * correct placement
-             */
+            // Different ring sizes get different start angles to have visually
+            // correct placement
             int ringSize = ring.RingSize;
             startAngle = startAngles[ringSize];
 
             var bonds = ring.GetConnectedBonds(startAtom);
-            /*
-             * Store all atoms to draw in consecutive order relative to the chosen
-             * bond.
-             */
+            // Store all atoms to draw in consecutive order relative to the chosen bond.
             var atomsToDraw = new List<IAtom>();
             IAtom currentAtom = startAtom;
             IBond currentBond = (IBond)bonds.First();
@@ -171,12 +163,11 @@ namespace NCDK.Layout
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
         }
 
-        /**
-         * Positions the aliphatic substituents of a ring system
-         *
-         * @param   rs The RingSystem for which the substituents are to be laid out
-         * @return  A list of atoms that where laid out
-         */
+        /// <summary>
+        /// Positions the aliphatic substituents of a ring system
+        /// </summary>
+        /// <param name="rs">The RingSystem for which the substituents are to be laid out</param>
+        /// <returns>A list of atoms that where laid out</returns>
         public IAtomContainer PlaceRingSubstituents(IRingSet rs, double bondLength)
         {
             Debug.WriteLine("RingPlacer.PlaceRingSubstituents() start");
@@ -188,10 +179,7 @@ namespace NCDK.Layout
             IAtomContainer treatedAtoms = rs.Builder.CreateAtomContainer();
             for (int j = 0; j < rs.Count; j++)
             {
-                ring = (IRing)rs[j]; /*
-                                                    * Get the j-th Ring in
-                                                    * RingSet rs
-                                                    */
+                ring = (IRing)rs[j]; // Get the j-th Ring in RingSet rs 
                 for (int k = 0; k < ring.Atoms.Count; k++)
                 {
                     unplacedPartners.RemoveAllElements();
@@ -225,19 +213,17 @@ namespace NCDK.Layout
             return treatedAtoms;
         }
 
-        /**
-         * Generated coordinates for a given ring, which is connected to another ring a bridged ring,
-         * i.e. it shares more than two atoms with another ring.
-         *
-         * @param   ring  The ring to be placed
-         * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
-         * @param   sharedAtomsCenter  The geometric center of these atoms
-         * @param   ringCenterVector  A vector pointing the the center of the new ring
-         * @param   bondLength  The standard bondlength
-         */
+        /// <summary>
+        /// Generated coordinates for a given ring, which is connected to another ring a bridged ring,
+        /// i.e. it shares more than two atoms with another ring.
+        /// </summary>
+        /// <param name="ring">The ring to be placed</param>
+        /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
+        /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
+        /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
+        /// <param name="bondLength">The standard bondlength</param>
         private void PlaceBridgedRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
-
             IAtom[] bridgeAtoms = GetBridgeAtoms(sharedAtoms);
             IAtom bondAtom1 = bridgeAtoms[0];
             IAtom bondAtom2 = bridgeAtoms[1];
@@ -384,20 +370,18 @@ namespace NCDK.Layout
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
         }
 
-        /**
-         * Generated coordinates for a given ring, which is connected to a spiro ring.
-         * The rings share exactly one atom.
-         *
-         * @param   ring  The ring to be placed
-         * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
-         * @param   sharedAtomsCenter  The geometric center of these atoms
-         * @param   ringCenterVector  A vector pointing the the center of the new ring
-         * @param   bondLength  The standard bondlength
-         */
+        /// <summary>
+        /// Generated coordinates for a given ring, which is connected to a spiro ring.
+        /// The rings share exactly one atom.
+        /// </summary>
+        /// <param name="ring">The ring to be placed</param>
+        /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
+        /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
+        /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
+        /// <param name="bondLength">The standard bondlength</param>
         public void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter,
                 Vector2 ringCenterVector, double bondLength)
         {
-
             Debug.WriteLine("placeSpiroRing");
             double radius = GetNativeRingRadius(ring, bondLength);
             Vector2 ringCenter = sharedAtomsCenter;
@@ -416,19 +400,13 @@ namespace NCDK.Layout
             IAtom currentAtom = startAtom;
             double startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - ringCenter.X, startAtom.Point2D.Value.Y
                     - ringCenter.Y);
-            /*
-             * Get one bond connected to the spiro bridge atom. It doesn't matter in
-             * which direction we draw.
-             */
+            // Get one bond connected to the spiro bridge atom. It doesn't matter in which direction we draw.
             var bonds = ring.GetConnectedBonds(startAtom);
 
             IBond currentBond = (IBond)bonds.First();
 
             var atomsToDraw = new List<IAtom>();
-            /*
-             * Store all atoms to draw in consequtive order relative to the chosen
-             * bond.
-             */
+            // Store all atoms to draw in consequtive order relative to the chosen bond.
             for (int i = 0; i < ring.Bonds.Count; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
@@ -439,18 +417,16 @@ namespace NCDK.Layout
             Debug.WriteLine("startAtom  " + startAtom);
 
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
-
         }
 
-        /**
-         * Generated coordinates for a given ring, which is fused to another ring.
-         * The rings share exactly one bond.
-         *
-         * @param   ring  The ring to be placed
-         * @param   sharedAtoms  The atoms of this ring, also members of another ring, which are already placed
-         * @param   ringCenterVector  A vector pointing the the center of the new ring
-         * @param   bondLength  The standard bondlength
-         */
+        /// <summary>
+        /// Generated coordinates for a given ring, which is fused to another ring.
+        /// The rings share exactly one bond.
+        /// </summary>
+        /// <param name="ring">The ring to be placed</param>
+        /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
+        /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
+        /// <param name="bondLength">The standard bondlength</param>
         public void PlaceFUsedRing(IRing ring,
                                    IAtomContainer sharedAtoms,
                                    Vector2 ringCenterVector,
@@ -467,7 +443,6 @@ namespace NCDK.Layout
             // fuse the ring perpendicular to the bond, ring center is not
             // sub-optimal if non-regular/convex polygon (e.g. macro cycle)
             ringCenterVector = GetPerpendicular(pBeg, pEnd, ringCenterVector);
-
 
             double radius = GetNativeRingRadius(ring, bondLength);
             double newRingPerpendicular = Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(bondLength / 2, 2));
@@ -550,8 +525,7 @@ namespace NCDK.Layout
                     direction = -1;
                 }
             }
-            startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - ringCenter.X, startAtom.Point2D.Value.Y
-                    - ringCenter.Y);
+            startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - ringCenter.X, startAtom.Point2D.Value.Y - ringCenter.Y);
 
             IAtom currentAtom = startAtom;
             // determine first bond in Ring
@@ -582,13 +556,12 @@ namespace NCDK.Layout
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
         }
 
-        /**
-         * Get the middle of two provide points.
-         *
-         * @param a first point
-         * @param b second point
-         * @return mid
-         */
+        /// <summary>
+        /// Get the middle of two provide points.
+        /// </summary>
+        /// <param name="a">first point</param>
+        /// <param name="b">second point</param>
+        /// <returns>mid</returns>
         private static Vector2 GetMidPoint(Vector2 a, Vector2 b)
         {
             return new Vector2((a.X + b.X) / 2, (a.Y + b.Y) / 2);
@@ -600,15 +573,14 @@ namespace NCDK.Layout
             return Vectors.Angle(pBeg, pEnd);
         }
 
-        /**
-         * Gat a vector perpendicular to the line, a-b, that is pointing
-         * the same direction as 'ref'.
-         *
-         * @param a first coordinate
-         * @param b second coordinate
-         * @param ref reference vector
-         * @return perpendicular vector
-         */
+        /// <summary>
+        /// Gat a vector perpendicular to the line, a-b, that is pointing
+        /// the same direction as 'ref'.
+        /// </summary>
+        /// <param name="a">first coordinate</param>
+        /// <param name="b">second coordinate</param>
+        /// <param name="ref">reference vector</param>
+        /// <returns>perpendicular vector</returns>
         private static Vector2 GetPerpendicular(Vector2 a, Vector2 b, Vector2 ref_)
         {
             Vector2 pVec = new Vector2(-(a.Y - b.Y), a.X - b.X);
@@ -617,13 +589,11 @@ namespace NCDK.Layout
             return pVec;
         }
 
-        /**
-         * True if coordinates have been assigned to all atoms in all rings.
-         *
-         * @param   rs  The ringset to be checked
-         * @return  True if coordinates have been assigned to all atoms in all rings.
-         */
-
+        /// <summary>
+        /// True if coordinates have been assigned to all atoms in all rings.
+        /// </summary>
+        /// <param name="rs">The ringset to be checked</param>
+        /// <returns>True if coordinates have been assigned to all atoms in all rings.</returns>
         public bool AllPlaced(IRingSet rs)
         {
             for (int i = 0; i < rs.Count; i++)
@@ -636,12 +606,11 @@ namespace NCDK.Layout
             return true;
         }
 
-        /**
-         * Walks throught the atoms of each ring in a ring set and marks
-         * a ring as PLACED if all of its atoms have been placed.
-         *
-         * @param   rs  The ringset to be checked
-         */
+        /// <summary>
+        /// Walks throught the atoms of each ring in a ring set and marks
+        /// a ring as PLACED if all of its atoms have been placed.
+        /// </summary>
+        /// <param name="rs">The ringset to be checked</param>
         public void CheckAndMarkPlaced(IEnumerable<IRing> rs)
         {
             bool allPlaced = true;
@@ -660,13 +629,12 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Returns the bridge atoms, that is the outermost atoms in
-         * the chain of more than two atoms which are shared by two rings
-         *
-         * @param   sharedAtoms  The atoms (n > 2) which are shared by two rings
-         * @return  The bridge atoms, i.e. the outermost atoms in the chain of more than two atoms which are shared by two rings
-         */
+        /// <summary>
+        /// Returns the bridge atoms, that is the outermost atoms in
+        /// the chain of more than two atoms which are shared by two rings
+        /// </summary>
+        /// <param name="sharedAtoms">The atoms (n > 2) which are shared by two rings</param>
+        /// <returns>The bridge atoms, i.e. the outermost atoms in the chain of more than two atoms which are shared by two rings</returns>
         private IAtom[] GetBridgeAtoms(IAtomContainer sharedAtoms)
         {
             IAtom[] bridgeAtoms = new IAtom[2];
@@ -684,14 +652,13 @@ namespace NCDK.Layout
             return bridgeAtoms;
         }
 
-        /**
-         * Partition the bonding partners of a given atom into ring atoms and non-ring atoms
-         *
-         * @param   atom  The atom whose bonding partners are to be partitioned
-         * @param   ring  The ring against which the bonding partners are checked
-         * @param   ringAtoms  An AtomContainer to store the ring bonding partners
-         * @param   nonRingAtoms  An AtomContainer to store the non-ring bonding partners
-         */
+        /// <summary>
+        /// Partition the bonding partners of a given atom into ring atoms and non-ring atoms
+        /// </summary>
+        /// <param name="atom">The atom whose bonding partners are to be partitioned</param>
+        /// <param name="ring">The ring against which the bonding partners are checked</param>
+        /// <param name="ringAtoms">An AtomContainer to store the ring bonding partners</param>
+        /// <param name="nonRingAtoms">An AtomContainer to store the non-ring bonding partners</param>
         public void PartitionNonRingPartners(IAtom atom, IRing ring, IAtomContainer ringAtoms, IAtomContainer nonRingAtoms)
         {
             var atoms = Molecule.GetConnectedAtoms(atom);
@@ -708,14 +675,13 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Returns the ring radius of a perfect polygons of size ring.Atoms.Count
-         * The ring radius is the distance of each atom to the ringcenter.
-         *
-         * @param   ring  The ring for which the radius is to calculated
-         * @param   bondLength  The bond length for each bond in the ring
-         * @return  The radius of the ring.
-         */
+        /// <summary>
+        /// Returns the ring radius of a perfect polygons of size ring.Atoms.Count
+        /// The ring radius is the distance of each atom to the ringcenter.
+        /// </summary>
+        /// <param name="ring">The ring for which the radius is to calculated</param>
+        /// <param name="bondLength">The bond length for each bond in the ring</param>
+        /// <returns>The radius of the ring.</returns>
         public double GetNativeRingRadius(IRing ring, double bondLength)
         {
             int size = ring.Atoms.Count;
@@ -723,14 +689,13 @@ namespace NCDK.Layout
             return radius;
         }
 
-        /**
-         * Calculated the center for the first ring so that it can
-         * layed out. Only then, all other rings can be assigned
-         * coordinates relative to it.
-         *
-         * @param   ring  The ring for which the center is to be calculated
-         * @return  A Vector2 pointing to the new ringcenter
-         */
+        /// <summary>
+        /// Calculated the center for the first ring so that it can
+        /// layed out. Only then, all other rings can be assigned
+        /// coordinates relative to it.
+        /// </summary>
+        /// <param name="ring">The ring for which the center is to be calculated</param>
+        /// <returns>A Vector2 pointing to the new ringcenter</returns>
         public Vector2 GetRingCenterOfFirstRing(IRing ring, Vector2 bondVector, double bondLength)
         {
             int size = ring.Atoms.Count;
@@ -738,32 +703,28 @@ namespace NCDK.Layout
             double newRingPerpendicular = Math.Sqrt(Math.Pow(radius, 2) - Math.Pow(bondLength / 2, 2));
             /* get the angle between the x axis and the bond vector */
             double rotangle = GeometryUtil.GetAngle(bondVector.X, bondVector.Y);
-            /*
-             * Add 90 Degrees to this angle, this is supposed to be the new
-             * ringcenter vector
-             */
+            // Add 90 Degrees to this angle, this is supposed to be the new ringcenter vector
             rotangle += Math.PI / 2;
             return new Vector2((Math.Cos(rotangle) * newRingPerpendicular), (Math.Sin(rotangle) * newRingPerpendicular));
         }
 
-        /**
-         * Layout all rings in the given RingSet that are connected to a given Ring
-         *
-         * @param   rs  The RingSet to be searched for rings connected to Ring
-         * @param   ring  The Ring for which all connected rings in RingSet are to be layed out.
-         */
+        /// <summary>
+        /// Layout all rings in the given RingSet that are connected to a given Ring
+        /// </summary>
+        /// <param name="rs">The RingSet to be searched for rings connected to Ring</param>
+        /// <param name="ring">The Ring for which all connected rings in RingSet are to be layed out.</param>
         public void PlaceConnectedRings(IRingSet rs, IRing ring, int handleType, double bondLength)
         {
             var connectedRings = rs.GetConnectedRings(ring);
 
-            //		Debug.WriteLine(rs.reportRingList(Molecule));
+            //        Debug.WriteLine(rs.ReportRingList(Molecule));
             foreach (var container in connectedRings)
             {
                 IRing connectedRing = (IRing)container;
                 if (!connectedRing.IsPlaced)
                 {
-                    //				Debug.WriteLine(ring.ToString(Molecule));
-                    //				Debug.WriteLine(connectedRing.ToString(Molecule));
+                    //                Debug.WriteLine(ring.ToString(Molecule));
+                    //                Debug.WriteLine(connectedRing.ToString(Molecule));
                     IAtomContainer sharedAtoms = AtomContainerManipulator.GetIntersection(ring, connectedRing);
                     int numSharedAtoms = sharedAtoms.Atoms.Count;
                     Debug.WriteLine("placeConnectedRings-> connectedRing: " + (ring.ToString()));

@@ -22,30 +22,30 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * Checks the functionality of the MolecularFormulaSetManipulator.
-     *
-     * @cdk.module test-formula
-     */
+    /// <summary>
+    /// Checks the functionality of the MolecularFormulaSetManipulator.
+    ///
+    // @cdk.module test-formula
+    /// </summary>
     [TestClass()]
     public class MolecularFormulaSetManipulatorTest : CDKTestCase
     {
 
         private readonly static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  Constructor for the MolecularFormulaSetManipulatorTest object.
-         *
-         */
+        /// <summary>
+        ///  Constructor for the MolecularFormulaSetManipulatorTest object.
+        ///
+        /// </summary>
         public MolecularFormulaSetManipulatorTest()
             : base()
         { }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMaxOccurrenceElements_IMolecularFormulaSet()
         {
@@ -84,11 +84,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestGetMinOccurrenceElements_IMolecularFormulaSet()
         {
@@ -127,11 +127,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemove_IMolecularFormulaSet_IMolecularFormula_IMolecularFormula()
         {
@@ -160,11 +160,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemove_1()
         {
@@ -218,11 +218,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemove_2()
         {
@@ -259,11 +259,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemove_3()
         {
@@ -301,11 +301,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestRemove_IMolecularFormulaSet_MolecularFormulaRange()
         {
@@ -335,11 +335,11 @@ namespace NCDK.Tools.Manipulator
 
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestContains_IMolecularFormulaSet_IMolecularFormula()
         {

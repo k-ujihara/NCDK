@@ -41,7 +41,7 @@ namespace NCDK.Tools
         {
             string configFile = "NCDK.Config.Data.whim_weights.txt";
 
-            using (var ins = this.GetType().Assembly.GetManifestResourceStream(configFile))
+            using (var ins = ResourceLoader.GetAsStream(configFile))
             using (var bufferedReader = new StreamReader(ins))
             {
                 bufferedReader.ReadLine(); // header

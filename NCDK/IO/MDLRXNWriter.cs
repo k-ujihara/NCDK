@@ -31,24 +31,24 @@ using System.Linq;
 
 namespace NCDK.IO
 {
-    /**
-     * Writes a reaction to a MDL rxn or SDF file. Attention: Stoichiometric
-     * coefficients have to be natural numbers.
-     *
-     * <pre>
-     * MDLRXNWriter writer = new MDLRXNWriter(new FileWriter(new File("output.mol")));
-     * writer.Write((Molecule)molecule);
-     * writer.Close();
-     * </pre>
-     *
-     * See {@cdk.cite DAL92}.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword file format, MDL RXN file
-     */
+    /// <summary>
+    /// Writes a reaction to a MDL rxn or SDF file. Attention: Stoichiometric
+    /// coefficients have to be natural numbers.
+    ///
+    /// <code>
+    /// MDLRXNWriter writer = new MDLRXNWriter(new FileWriter(new File("output.mol")));
+    /// writer.Write((Molecule)molecule);
+    /// writer.Close();
+    /// </code>
+    ///
+    /// See {@cdk.cite DAL92}.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @cdk.keyword file format, MDL RXN file
+    /// </summary>
     public class MDLRXNWriter : DefaultChemObjectWriter
     {
 
@@ -56,24 +56,24 @@ namespace NCDK.IO
         private int reactionNumber;
         public IDictionary<string, object> rdFields = null;
 
-        /**
-         * Constructs a new MDLWriter that can write an array of
-         * Molecules to a Writer.
-         *
-         * @param   out  The Writer to write to
-         */
+        /// <summary>
+        /// Constructs a new MDLWriter that can write an array of
+        /// Molecules to a Writer.
+        ///
+        /// <param name="out">The Writer to write to</param>
+        /// </summary>
         public MDLRXNWriter(TextWriter out_)
         {
             writer = out_;
             this.reactionNumber = 1;
         }
 
-        /**
-         * Constructs a new MDLWriter that can write an array of
-         * Molecules to a given Stream.
-         *
-         * @param   output  The Stream to write to
-         */
+        /// <summary>
+        /// Constructs a new MDLWriter that can write an array of
+        /// Molecules to a given Stream.
+        ///
+        /// <param name="output">The Stream to write to</param>
+        /// </summary>
         public MDLRXNWriter(Stream output)
             : this(new StreamWriter(output))
         { }
@@ -94,23 +94,23 @@ namespace NCDK.IO
             SetWriter(new StreamWriter(output));
         }
 
-        /**
-         * Here you can set a map which will be used to build rd fields in the file.
-         * The entries will be translated to rd fields like this:<br>
-         * &gt; &lt;key&gt;<br>
-         * &gt; value<br>
-         * empty line<br>
-         *
-         * @param  map The map to be used, map of string-string pairs
-         */
+        /// <summary>
+        /// Here you can set a map which will be used to build rd fields in the file.
+        /// The entries will be translated to rd fields like this:<br>
+        /// &gt; &lt;key&gt;<br>
+        /// &gt; value<br>
+        /// empty line<br>
+        ///
+        /// <param name="map">The map to be used, map of string-string pairs</param>
+        /// </summary>
         public void SetRdFields(IDictionary<string, object> map)
         {
             rdFields = map;
         }
 
-        /**
-         * Flushes the output and closes this object.
-         */
+        /// <summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();
@@ -123,14 +123,14 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * Writes a IChemObject to the MDL RXN file formated output.
-         * It can only output ChemObjects of type Reaction
-         *
-         * @param object class must be of type Molecule or MoleculeSet.
-         *
-         * @see org.openscience.cdk.ChemFile
-         */
+        /// <summary>
+        /// Writes a IChemObject to the MDL RXN file formated output.
+        /// It can only output ChemObjects of type Reaction
+        ///
+        /// <param name="object">class must be of type Molecule or MoleculeSet.</param>
+        ///
+        /// @see org.openscience.cdk.ChemFile
+        /// </summary>
         public override void Write(IChemObject obj)
         {
             if (obj is IReactionSet)
@@ -147,11 +147,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         *  Writes an array of Reaction to an Stream in MDL rdf format.
-         *
-         * @param   reactions  Array of Reactions that is written to an Stream
-         */
+        /// <summary>
+        ///  Writes an array of Reaction to an Stream in MDL rdf format.
+        ///
+        /// <param name="reactions">Array of Reactions that is written to an Stream</param>
+        /// </summary>
         private void WriteReactionSet(IReactionSet reactions)
         {
 
@@ -161,11 +161,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Writes a Reaction to an Stream in MDL sdf format.
-         *
-         * @param   reaction  A Reaction that is written to an Stream
-         */
+        /// <summary>
+        /// Writes a Reaction to an Stream in MDL sdf format.
+        ///
+        /// <param name="reaction">A Reaction that is written to an Stream</param>
+        /// </summary>
         private void WriteReaction(IReaction reaction)
         {
             int reactantCount = reaction.Reactants.Count;
@@ -250,11 +250,11 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Writes a MoleculeSet to an Stream for the reaction.
-         *
-         * @param   som  The MoleculeSet that is written to an Stream
-         */
+        /// <summary>
+        /// Writes a MoleculeSet to an Stream for the reaction.
+        ///
+        /// <param name="som">The MoleculeSet that is written to an Stream</param>
+        /// </summary>
         private void WriteAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
         {
             for (int i = 0; i < som.Count; i++)
@@ -283,14 +283,14 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Formats an int to fit into the connectiontable and changes it
-         * to a string.
-         *
-         * @param   i  The int to be formated
-         * @param   l  Length of the string
-         * @return     The string to be written into the connectiontable
-         */
+        /// <summary>
+        /// Formats an int to fit into the connectiontable and changes it
+        /// to a string.
+        ///
+        /// <param name="i">The int to be formated</param>
+        /// <param name="l">Length of the string</param>
+        /// <returns>The string to be written into the connectiontable</returns>
+        /// </summary>
         private string FormatMDLInt(int i, int l)
         {
             var s = i.ToString(CultureInfo.InvariantCulture.NumberFormat);

@@ -180,8 +180,8 @@ namespace <#= ns.NS #>
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
             IAtom clone;
             if (map.AtomMap.TryGetValue(this, out clone))
                 return clone;

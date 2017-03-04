@@ -17,13 +17,9 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Common.Base;
-using NCDK.SGroups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NCDK.Tools.Manipulator;
 using NCDK.Aromaticities;
 using NCDK.Common.Primitives;
@@ -36,15 +32,13 @@ using NCDK.Isomorphisms;
 
 namespace NCDK.Smiles
 {
-    /**
-     * Please see the test.gui package for visual feedback on tests.
-     *
-     * @author         steinbeck
-     * @cdk.module     test-smiles
-     * @cdk.created    2003-09-19
-     *
-     * @see org.openscience.cdk.gui.smiles.SmilesParserTest
-     */
+    /// <summary>
+    /// Please see the test.gui package for visual feedback on tests.
+    /// </summary>
+    /// <seealso cref="SmilesParserTest"/>
+    // @author         steinbeck
+    // @cdk.module     test-smiles
+    // @cdk.created    2003-09-19
     [TestClass()]
     public class SmilesParserTest : CDKTestCase
     {
@@ -92,10 +86,10 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.GetBond(mol.Atoms[9], mol.Atoms[5]).IsSingleOrDouble);
         }
 
-        /**
-		 * 1-(1H-pyrrol-2-yl)pyrrole
-		 * @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
-		 */
+        /// <summary>
+        /// 1-(1H-pyrrol-2-yl)pyrrole
+        /// </summary>
+        // @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void Pyrrolylpyrrole_invalid()
@@ -103,10 +97,10 @@ namespace NCDK.Smiles
             Load("c1cccn1c2cccn2");
         }
 
-        /**
-		 * 1-(1H-pyrrol-2-yl)pyrrole
-		 * @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
-		 */
+        /// <summary>
+        /// 1-(1H-pyrrol-2-yl)pyrrole
+        /// </summary>
+        // @cdk.inchi InChI=1/C8H8N2/c1-2-7-10(6-1)8-4-3-5-9-8/h1-7,9H
         [TestMethod()]
         public void Pyrrolylpyrrole_valid()
         {
@@ -114,7 +108,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(m);
         }
 
-        /// <summary>@cdk.bug 1363882</summary>
+        // cdk.bug 1363882
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1363882()
@@ -127,7 +121,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(Aromaticity.CDKLegacy.Apply(mol));
         }
 
-        /// <summary>@cdk.bug 1535587</summary>
+        // @cdk.bug 1535587
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1535587()
@@ -142,7 +136,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.Atoms[8].IsAromatic);
         }
 
-        /// <summary>@cdk.bug 1579235</summary>
+        // @cdk.bug 1579235
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1579235()
@@ -183,7 +177,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /// <summary>@cdk.bug 1579230</summary>
+        // @cdk.bug 1579230
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1579230()
@@ -243,12 +237,12 @@ namespace NCDK.Smiles
             Assert.AreEqual(+3, mol.Atoms[0].FormalCharge.Value);
         }
 
-        /*
-		 * The next methods tests compounds with several conjugated rings These
-		 * compounds would not fail if the Aromaticity Detection was changed so that
-		 * a ring is aromatic if all the atoms in a ring have already been flagged
-		 * as aromatic from the testing of other rings in the system.
-		 */
+        /// <summary>
+        /// The next methods tests compounds with several conjugated rings These
+        /// compounds would not fail if the Aromaticity Detection was changed so that
+        /// a ring is aromatic if all the atoms in a ring have already been flagged
+        /// as aromatic from the testing of other rings in the system.
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestUnusualConjugatedRings()
@@ -353,10 +347,10 @@ namespace NCDK.Smiles
             Load("c1ccc4c(c1)ccc5c3ccc2ccccc2c3nc45");
         }
 
-        /*
-		 * Compounds like Indolizine (274-40-8) with a fused nitrogen as part of a 6
-		 * membered ring and another ring do not parse
-		 */
+        /// <summary>
+        /// Compounds like Indolizine (274-40-8) with a fused nitrogen as part of a 6
+        /// membered ring and another ring do not parse
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestIndolizine()
@@ -367,9 +361,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(9, mol.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles1()
@@ -380,9 +371,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(16, molecule.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles2()
@@ -393,9 +381,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(29, molecule.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles3()
@@ -406,9 +391,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(14, molecule.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles4()
@@ -419,9 +401,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(19, molecule.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles5()
@@ -432,9 +411,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(21, molecule.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSmiles6()
@@ -466,7 +442,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-       // [Timeout(10000)]
+        [Timeout(1000)]
         public void TestSmiles9()
         {
             string smiles = "NC(C(C)C)C(NC(C(C)O)C(NC(C(C)C)C(NC(CCC(N)=O)C(NC(CC([O-])[O-])C(NCC(NC(CC(N)=O)C(NC(Cc1ccccc1)C(NC(CO)C(NC(Cc2ccccc2)C(NC(CO)C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CO)C(NC(C(C)C)C(NC(CCCC[N+])C(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCC[N+])C(NC(CC([O-])[O-])C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N3CCCC3C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(N4CCCC4C(NC(CCCNC([N+])[N+])C(NC(C(C)C)C(NCC(NC(CCCC[N+])C(NC(CC(C)C)C(NC(CCCNC([N+])[N+])C(NC(CC(N)=O)C(NC(Cc5ccccc5)C(NC(C)C(N6CCCC6C(NC(C(C)CC)C(N7CCCC7C(NCC(NC(CCC([O-])[O-])C(N8CCCC8C(NC(C(C)C)C(NC(C(C)C)C(N9CCCC9C(NC(C(C)CC)C(NC(CC(C)C)C(NC%19C[S][S]CC(C(NC(CCCC[N+])C(NC(CCC([O-])[O-])C(N%10CCCC%10C(NC(CC(N)=O)C(NC(C)C(NC(CCC(N)=O)C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(CC(C)C)C(NC(CCC(N)=O)C(NC(CCCNC([N+])[N+])C(NC(CC(C)C)C(NC(CCC([O-])[O-])C(NC(CCC([O-])[O-])C(NC(C(C)CC)C(NC(C)C(NC(CCC([O-])[O-])C(NC(CC([O-])[O-])C(N%11CCCC%11C(NCC(NC(C(C)O)C(NC%14C[S][S]CC%13C(NC(C(C)O)C(NCC(NC(C[S][S]CC(C(NC(C)C(NC(Cc%12ccc(O)cc%12)C(NC(C)C(NC(C)C(N%13)=O)=O)=O)=O)=O)NC(=O)C(C(C)CC)NC(=O)C(CCC([O-])[O-])NC%14=O)C(O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)NC(=O)C(CC(C)C)NC(=O)C%15CCCN%15C(=O)C(CCCC[N+])NC(=O)C(CC(C)C)NC(=O)C(CCC([O-])[O-])NC(=O)C(CCC([O-])[O-])NC(=O)C%16CCCN%16C(=O)C(Cc%17ccccc%17)NC(=O)C(CC(N)=O)NC(=O)C%18CCCN%18C(=O)C(CC(N)=O)NC(=O)C(CO)NC%19=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O)=O";
@@ -475,9 +451,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(molecule);
         }
 
-        /**
-		 * @cdk.bug 1296113
-		 */
+        // @cdk.bug 1296113
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug1296113()
@@ -488,9 +462,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(molecule);
         }
 
-        /**
-		 * @cdk.bug 1324105
-		 */
+        // @cdk.bug 1324105
         [TestMethod()]
         [Timeout(1000)]
         public void TestAromaticSmiles2()
@@ -503,12 +475,13 @@ namespace NCDK.Smiles
                 Assert.IsTrue(bonds.Current.IsAromatic);
         }
 
-        /**
-		 * A unit test for JUnit. It is currently ignored because the SMILES
-		 * given is invalid: the negative has an implied zero hydrogen count,
-		 * making it have an unfilled valency.
-		 */
-        //@Ignore		[TestMethod()][Timeout(1000)]
+        /// <summary>
+        /// A unit test for JUnit. It is currently ignored because the SMILES
+        /// given is invalid: the negative has an implied zero hydrogen count,
+        /// making it have an unfilled valency.
+        /// </summary>
+        //@Ignore        [TestMethod()]
+        [Timeout(1000)]
         public void TestAromaticSmilesWithCharge()
         {
             string smiles = "c1cc[c-]c1";
@@ -518,9 +491,6 @@ namespace NCDK.Smiles
             Assert.IsTrue(molecule.Bonds[0].IsAromatic);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestAromaticSmiles()
@@ -531,9 +501,7 @@ namespace NCDK.Smiles
                 Assert.IsTrue(bond.IsAromatic);
         }
 
-        /**
-		 * @cdk.bug 630475
-		 */
+        // @cdk.bug 630475
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug630475()
@@ -543,9 +511,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.Atoms.Count > 0);
         }
 
-        /**
-		 * @cdk.bug 585811
-		 */
+        // @cdk.bug 585811
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug585811()
@@ -555,68 +521,63 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.Atoms.Count > 0);
         }
 
-        /**
-		 * @cdk.bug 593648
-		 */
+        // @cdk.bug 593648
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug593648()
         {
             string smiles = "CC1=CCC2CC1C(C)2C";
-			IAtomContainer mol = sp.ParseSmiles(smiles);
+            IAtomContainer mol = sp.ParseSmiles(smiles);
 
-			IAtomContainer apinene = mol.Builder.CreateAtomContainer();
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 1
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 2
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 3
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 4
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 5
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 6
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 7
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 8
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 9
-			apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
-			// 10
+            IAtomContainer apinene = mol.Builder.CreateAtomContainer();
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 1
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 2
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 3
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 4
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 5
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 6
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 7
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 8
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 9
+            apinene.Atoms.Add(mol.Builder.CreateAtom("C"));
+            // 10
 
-			apinene.AddBond(apinene.Atoms[0], apinene.Atoms[1], BondOrder.Double);
-			// 1
-			apinene.AddBond(apinene.Atoms[1], apinene.Atoms[2], BondOrder.Single);
-			// 2
-			apinene.AddBond(apinene.Atoms[2], apinene.Atoms[3], BondOrder.Single);
-			// 3
-			apinene.AddBond(apinene.Atoms[3], apinene.Atoms[4], BondOrder.Single);
-			// 4
-			apinene.AddBond(apinene.Atoms[4], apinene.Atoms[5], BondOrder.Single);
-			// 5
-			apinene.AddBond(apinene.Atoms[5], apinene.Atoms[0], BondOrder.Single);
-			// 6
-			apinene.AddBond(apinene.Atoms[0], apinene.Atoms[6], BondOrder.Single);
-			// 7
-			apinene.AddBond(apinene.Atoms[3], apinene.Atoms[7], BondOrder.Single);
-			// 8
-			apinene.AddBond(apinene.Atoms[5], apinene.Atoms[7], BondOrder.Single);
-			// 9
-			apinene.AddBond(apinene.Atoms[7], apinene.Atoms[8], BondOrder.Single);
-			// 10
-			apinene.AddBond(apinene.Atoms[7], apinene.Atoms[9], BondOrder.Single);
-			// 11
+            apinene.AddBond(apinene.Atoms[0], apinene.Atoms[1], BondOrder.Double);
+            // 1
+            apinene.AddBond(apinene.Atoms[1], apinene.Atoms[2], BondOrder.Single);
+            // 2
+            apinene.AddBond(apinene.Atoms[2], apinene.Atoms[3], BondOrder.Single);
+            // 3
+            apinene.AddBond(apinene.Atoms[3], apinene.Atoms[4], BondOrder.Single);
+            // 4
+            apinene.AddBond(apinene.Atoms[4], apinene.Atoms[5], BondOrder.Single);
+            // 5
+            apinene.AddBond(apinene.Atoms[5], apinene.Atoms[0], BondOrder.Single);
+            // 6
+            apinene.AddBond(apinene.Atoms[0], apinene.Atoms[6], BondOrder.Single);
+            // 7
+            apinene.AddBond(apinene.Atoms[3], apinene.Atoms[7], BondOrder.Single);
+            // 8
+            apinene.AddBond(apinene.Atoms[5], apinene.Atoms[7], BondOrder.Single);
+            // 9
+            apinene.AddBond(apinene.Atoms[7], apinene.Atoms[8], BondOrder.Single);
+            // 10
+            apinene.AddBond(apinene.Atoms[7], apinene.Atoms[9], BondOrder.Single);
+            // 11
 
-			IsomorphismTester it = new IsomorphismTester(apinene);
-			Assert.IsTrue(it.IsIsomorphic(mol.Builder.CreateAtomContainer(mol)));
+            IsomorphismTester it = new IsomorphismTester(apinene);
+            Assert.IsTrue(it.IsIsomorphic(mol.Builder.CreateAtomContainer(mol)));
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestReadingOfTwoCharElements()
@@ -637,9 +598,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("K", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestOrganicSubSetUnderstanding()
@@ -666,9 +624,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(BondOrder.Double, mol.Bonds[2].Order);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestMassNumberReading()
@@ -680,9 +635,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(13, mol.Atoms[0].MassNumber.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestFormalChargeReading()
@@ -694,9 +646,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(-1, mol.Atoms[0].FormalCharge.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestReadingPartionedMolecules()
@@ -707,9 +656,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(0, mol.Bonds.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestExplicitSingleBond()
@@ -721,9 +667,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(BondOrder.Single, mol.Bonds[0].Order);
         }
 
-        /**
-		 * @cdk.bug 1175478
-		 */
+        // @cdk.bug 1175478
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug1175478()
@@ -734,9 +678,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(32, mol.Bonds.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestUnkownAtomType()
@@ -756,10 +697,7 @@ namespace NCDK.Smiles
             Assert.IsFalse(mol.Atoms[1] is IPseudoAtom);
         }
 
-        /**
-		 * @cdk.bug 2596061
-		 * @
-		 */
+        // @cdk.bug 2596061
         [TestMethod()]
         public void TestUnknownAtomType2()
         {
@@ -773,9 +711,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(-1, mol.Atoms[0].FormalCharge.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestBondCreation()
@@ -791,9 +726,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Bonds.Count);
         }
 
-        /**
-		 * @cdk.bug 784433
-		 */
+        // @cdk.bug 784433
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug784433()
@@ -804,9 +737,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(5, mol.Bonds.Count);
         }
 
-        /**
-		 * @cdk.bug 873783.
-		 */
+        // @cdk.bug 873783.
         [TestMethod()]
         [Timeout(1000)]
         public void TestProton()
@@ -817,9 +748,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[0].FormalCharge.Value);
         }
 
-        /**
-		 * @cdk.bug 881330.
-		 */
+        // @cdk.bug 881330.
         [TestMethod()]
         [Timeout(1000)]
         public void TestSMILESFromXYZ()
@@ -829,9 +758,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(20, mol.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestSingleBracketH()
@@ -841,9 +767,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         public void TestSingleH()
         {
@@ -879,9 +802,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(3, mol.Atoms[0].MassNumber);
         }
 
-        /**
-		 * @cdk.bug 862930.
-		 */
+        // @cdk.bug 862930.
         [TestMethod()]
         [Timeout(1000)]
         public void TestHydroxonium()
@@ -891,9 +812,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(4, mol.Atoms.Count);
         }
 
-        /**
-		 * @cdk.bug 809412
-		 */
+        // @cdk.bug 809412
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug809412()
@@ -903,11 +822,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(33, mol.Atoms.Count);
         }
 
-        /**
-		 * A bug found with JCP.
-		 *
-		 * @cdk.bug 956926
-		 */
+        /// <summary>
+        /// A bug found with JCP.
+        /// </summary>
+        // @cdk.bug 956926
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug956926()
@@ -933,14 +851,12 @@ namespace NCDK.Smiles
             Assert.AreEqual(5, hCount);
         }
 
-        /**
-		 * A bug found with JCP.
-		 *
-		 * @cdk.bug   956929
-		 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-		 *
-		 * @see #TestPyrrole()
-		 */
+        /// <summary>
+        /// A bug found with JCP.
+        /// </summary>
+        /// <seealso cref="TestPyrrole"/>
+        // @cdk.bug   956929
+        // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
         [TestMethod()]
         [Timeout(1000)]
         public void TestPyrrole()
@@ -959,10 +875,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 2679607
-		 * @
-		 */
+        // @cdk.bug 2679607
         [TestMethod()]
         [Timeout(1000)]
         public void TestHardCodedHydrogenCount()
@@ -982,10 +895,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(0, mol.Atoms[3].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @
-		 * @cdk.bug 2679607
-		 */
+        // @cdk.bug 2679607
         [TestMethod()]
         public void TestHardCodedHydrogenCount2()
         {
@@ -994,11 +904,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * A bug found with JCP.
-		 *
-		 * @cdk.bug 956929
-		 */
+        /// <summary>
+        /// A bug found with JCP.
+        /// </summary>
+        // @cdk.bug 956929
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug956929()
@@ -1017,11 +926,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(3.0, totalBondOrder, 0.001);
         }
 
-        /**
-		 * A bug found with JCP.
-		 *
-		 * @cdk.bug 956921
-		 */
+        /// <summary>
+        /// A bug found with JCP.
+        /// </summary>
+        // @cdk.bug 956921
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug956921()
@@ -1039,34 +947,30 @@ namespace NCDK.Smiles
             Assert.AreEqual(-1, mol.Atoms[0].FormalCharge.Value);
         }
 
-        /**
-		 * @cdk.bug 1274464
-		 */
+        // @cdk.bug 1274464
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug1274464()
         {
             IAtomContainer fromSmiles = new SmilesParser(Default.ChemObjectBuilder.Instance).ParseSmiles("C1=CC=CC=C1");
-			IAtomContainer fromFactory = TestMoleculeFactory.MakeBenzene();
-			CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(fromFactory.Builder);
-			CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(fromFactory.Builder);
-			foreach (var atom in fromFactory.Atoms)
+            IAtomContainer fromFactory = TestMoleculeFactory.MakeBenzene();
+            CDKHydrogenAdder hAdder = CDKHydrogenAdder.GetInstance(fromFactory.Builder);
+            CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(fromFactory.Builder);
+            foreach (var atom in fromFactory.Atoms)
             {
                 IAtomType type = matcher.FindMatchingAtomType(fromFactory, atom);
                 AtomTypeManipulator.Configure(atom, type);
                 hAdder.AddImplicitHydrogens(fromFactory, atom);
             }
 
-			MakeAtomType(fromSmiles);
-			Aromaticity.CDKLegacy.Apply(fromSmiles);
-			Aromaticity.CDKLegacy.Apply(fromFactory);
-			bool result = new UniversalIsomorphismTester().IsIsomorph(fromFactory, fromSmiles);
-			Assert.IsTrue(result);
+            MakeAtomType(fromSmiles);
+            Aromaticity.CDKLegacy.Apply(fromSmiles);
+            Aromaticity.CDKLegacy.Apply(fromFactory);
+            bool result = new UniversalIsomorphismTester().IsIsomorph(fromFactory, fromSmiles);
+            Assert.IsTrue(result);
         }
 
-        /**
-		 * @cdk.bug 1095696
-		 */
+        // @cdk.bug 1095696
         [TestMethod()]
         [Timeout(1000)]
         public void TestSFBug1095696()
@@ -1078,10 +982,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[6].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
-		 *  (Part I).
-		 */
+        /// <summary>
+        ///  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
+        ///  (Part I).
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestNonBond()
@@ -1101,10 +1005,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(6, Math.Abs(mol1.Atoms.Count - mol2.Atoms.Count));
         }
 
-        /**
-		 *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
-		 *  (Part I).
-		 */
+        /// <summary>
+        ///  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
+        ///  (Part I).
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestConnectedByRingClosure()
@@ -1136,10 +1040,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol1.Atoms.Count);
         }
 
-        /**
-		 *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
-		 *  (Part I).
-		 */
+        /// <summary>
+        ///  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 89
+        ///  (Part I).
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestReaction()
@@ -1151,7 +1055,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void noReactants()
+        public void NoReactants()
         {
             IReaction reaction = sp.ParseReactionSmiles(">>C");
             Assert.AreEqual(0, reaction.Reactants.Count);
@@ -1159,7 +1063,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void noProducts()
+        public void NoProducts()
         {
             IReaction reaction = sp.ParseReactionSmiles("C>>");
             Assert.AreEqual(1, reaction.Reactants.Count);
@@ -1167,7 +1071,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void noReaction()
+        public void NoReaction()
         {
             IReaction reaction = sp.ParseReactionSmiles(">>");
             Assert.AreEqual(0, reaction.Reactants.Count);
@@ -1175,7 +1079,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void onlyAgents()
+        public void OnlyAgents()
         {
             IReaction reaction = sp.ParseReactionSmiles(">C>");
             Assert.AreEqual(0, reaction.Reactants.Count);
@@ -1183,10 +1087,10 @@ namespace NCDK.Smiles
             Assert.AreEqual(0, reaction.Products.Count);
         }
 
-        /**
-		 *  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 90
-		 *  (Part I).
-		 */
+        /// <summary>
+        ///  Example taken from 'Handbook of Chemoinformatics', Gasteiger, 2003, page 90
+        ///  (Part I).
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestReactionWithAgents()
@@ -1200,9 +1104,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, reaction.Agents[0].Atoms.Count);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount()
@@ -1213,9 +1114,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(4, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @cdk.bug 2028780
-		 */
+        // @cdk.bug 2028780
         [TestMethod()]
         [Timeout(1000)]
         public void TestTungsten()
@@ -1227,9 +1126,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("W", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount2()
@@ -1240,9 +1136,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(3, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount2b()
@@ -1253,9 +1146,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount2c()
@@ -1266,9 +1156,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount3()
@@ -1279,9 +1166,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.Atoms[1].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount4()
@@ -1292,9 +1176,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount4a()
@@ -1305,9 +1186,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestImplicitHydrogenCount4b()
@@ -1318,9 +1196,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[0].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestHOSECodeProblem()
@@ -1331,9 +1206,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("Br", mol.Atoms[3].Symbol);
         }
 
-        /**
-		 *  A unit test for JUnit
-		 */
         [TestMethod()]
         [Timeout(1000)]
         public void TestPyridine()
@@ -1350,9 +1222,7 @@ namespace NCDK.Smiles
                 Assert.AreEqual(Hybridization.SP2, atom.Hybridization);
         }
 
-        /**
-		 * @cdk.bug 1306780
-		 */
+        // @cdk.bug 1306780
         [TestMethod()]
         [Timeout(1000)]
         public void TestParseK()
@@ -1370,9 +1240,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(23, mol.Atoms.Count);
         }
 
-        /**
-		 * @cdk.bug 1459299
-		 */
+        // @cdk.bug 1459299
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1459299()
@@ -1382,9 +1250,9 @@ namespace NCDK.Smiles
             Assert.AreEqual(22, mol.Atoms.Count);
         }
 
-        /**
-		 * @cdk.bug 1365547
-		 */
+        /// <summary>
+        // @cdk.bug 1365547
+        /// </summary>
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1365547()
@@ -1395,9 +1263,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol.Bonds[0].IsAromatic);
         }
 
-        /**
-		 * @cdk.bug 1365547
-		 */
+        // @cdk.bug 1365547
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1365547_2()
@@ -1421,9 +1287,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 1235852
-		 */
+        // @cdk.bug 1235852
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1235852()
@@ -1441,9 +1305,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(4.0, mol.GetBondOrderSum(mol.Atoms[16]), 0.001);
         }
 
-        /**
-		 * @cdk.bug 1519183
-		 */
+        // @cdk.bug 1519183
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1519183()
@@ -1455,9 +1317,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(7, mol.Bonds.Count);
         }
 
-        /**
-		 * @cdk.bug 1530926
-		 */
+        // @cdk.bug 1530926
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1530926()
@@ -1481,9 +1341,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 1541333
-		 */
+        // @cdk.bug 1541333
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1541333()
@@ -1508,9 +1366,7 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol2.Bonds[7].IsAromatic);
         }
 
-        /**
-		 * @cdk.bug 1719287
-		 */
+        // @cdk.bug 1719287
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1719287()
@@ -1524,12 +1380,12 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[7].FormalCharge.Value);
         }
 
-        /**
-		 * Test for bug #1503541 "Problem with SMILES parsing". All SMILES in the test
-		 * should result in a benzene molecule. Sometimes only a Cyclohexa-dien was
-		 * created.
-		 * @cdk.bug 1503541
-		 */
+        /// <summary>
+        /// Test for bug #1503541 "Problem with SMILES parsing". All SMILES in the test
+        /// should result in a benzene molecule. Sometimes only a Cyclohexa-dien was
+        /// created.
+        /// </summary>
+        // @cdk.bug 1503541
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1503541()
@@ -1587,14 +1443,13 @@ namespace NCDK.Smiles
             Assert.AreEqual(3.0, mol.GetBondOrderSum(mol.Atoms[5]), 0.001);
         }
 
-        /**
-		 * Test case for bug #1783367 "SmilesParser incorrectly assigns double bonds".
-		 * "C=%10C=CC=C%02C=%10N(C)CCC%02" was parsed incorrectly whereas "C=1C=CC=C%02C=1N(C)CCC%02"
-		 * was parsed correctly. There was a bug with parsing "C=%10".
-		 * Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-		 *
-		 * @cdk.bug 1783367
-		 */
+        /// <summary>
+        /// Test case for bug #1783367 "SmilesParser incorrectly assigns double bonds".
+        /// "C=%10C=CC=C%02C=%10N(C)CCC%02" was parsed incorrectly whereas "C=1C=CC=C%02C=1N(C)CCC%02"
+        /// was parsed correctly. There was a bug with parsing "C=%10".
+        /// </summary>
+        // Author: Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
+        // @cdk.bug 1783367
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1783367()
@@ -1604,9 +1459,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(BondOrder.Single, mol.Bonds[0].Order);
         }
 
-        /**
-		 * @cdk.bug 1783547
-		 */
+        // @cdk.bug 1783547
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1783547()
@@ -1628,12 +1481,12 @@ namespace NCDK.Smiles
             Assert.IsTrue(mol2.Bonds[19].IsAromatic);
         }
 
-        /**
-		 * Test case for bug #1783546 "Lost aromaticity in SmilesParser with Benzene".
-		 * SMILES like "C=1C=CC=CC=1" which end in "=1" were incorrectly parsed, the ring
-		 * closure double bond got lost.
-		 * @cdk.bug 1783546
-		 */
+        /// <summary>
+        /// Test case for bug #1783546 "Lost aromaticity in SmilesParser with Benzene".
+        /// SMILES like "C=1C=CC=CC=1" which end in "=1" were incorrectly parsed, the ring
+        /// closure double bond got lost.
+        /// </summary>
+        // @cdk.bug 1783546
         [TestMethod()]
         [Timeout(1000)]
         public void TestBug1783546()
@@ -1659,9 +1512,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(1, mol.Atoms[1].FormalCharge.Value);
         }
 
-        /**
-		 * @cdk.bug 1872969
-		 */
+        // @cdk.bug 1872969
         [TestMethod()]
         public void Bug1872969()
         {
@@ -1674,9 +1525,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 1875949
-		 */
+        // @cdk.bug 1875949
         [TestMethod()]
         public void TestResonanceStructure()
         {
@@ -1688,9 +1537,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(-1, mol.Atoms[2].FormalCharge.Value);
         }
 
-        /**
-		 * @cdk.bug 1879589
-		 */
+        // @cdk.bug 1879589
         [TestMethod()]
         public void TestSP2HybridizedSulphur()
         {
@@ -1713,9 +1560,7 @@ namespace NCDK.Smiles
             AssertAtomTypesPerceived(mol);
         }
 
-        /**
-		 * @cdk.bug 1957958
-		 */
+        // @cdk.bug 1957958
         [TestMethod()]
         public void Test3amino4methylpyridine()
         {
@@ -1727,13 +1572,9 @@ namespace NCDK.Smiles
             Assert.IsTrue(isaromatic);
         }
 
-        /*
-		 * Tests for various aromatic hetero cycles follow:
-		 */
+        // Tests for various aromatic hetero cycles follow:
 
-        /**
-		 * @cdk.bug 1959516
-		 */
+        // @cdk.bug 1959516
         [TestMethod()]
         public void TestPyrrole1()
         {
@@ -1755,9 +1596,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 1, 1, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1959516
-		 */
+        // @cdk.bug 1959516
         [TestMethod()]
         public void TestPyrrole2()
         {
@@ -1779,9 +1618,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 0, 1, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1962419
-		 */
+        // @cdk.bug 1962419
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestPyrrole3()
@@ -1790,9 +1627,7 @@ namespace NCDK.Smiles
             sp.ParseSmiles(smiles);
         }
 
-        /**
-		 * @cdk.bug 1962398
-		 */
+        // @cdk.bug 1962398
         [TestMethod()]
         public void TestPyrroleAnion1()
         {
@@ -1814,9 +1649,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 1, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1960990
-		 */
+        // @cdk.bug 1960990
         [TestMethod()]
         public void TestImidazole1()
         {
@@ -1838,9 +1671,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 1, 1, 0, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1960990
-		 */
+        // @cdk.bug 1960990
         [TestMethod()]
         public void TestImidazole2()
         {
@@ -1862,9 +1693,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 0, 1, 0, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1962419
-		 */
+        // @cdk.bug 1962419
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestImidazole3()
@@ -1873,9 +1702,7 @@ namespace NCDK.Smiles
             sp.ParseSmiles(smiles);
         }
 
-        /**
-		 * @cdk.bug 1960990
-		 */
+        // @cdk.bug 1960990
         [TestMethod()]
         public void TestImidazole4()
         {
@@ -1896,9 +1723,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 1, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1959516
-		 */
+        // @cdk.bug 1959516
         [TestMethod()]
         public void TestPyridine1()
         {
@@ -1918,9 +1743,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 1, 1, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @cdk.bug 1959516
-		 */
+        // @cdk.bug 1959516
         [TestMethod()]
         public void TestPyrimidine1()
         {
@@ -1942,10 +1765,7 @@ namespace NCDK.Smiles
             AssertHydrogenCounts(new int[] { 0, 1, 0, 1, 1, 1 }, mol);
         }
 
-        /**
-		 * @
-		 * @cdk.bug 1967468
-		 */
+        // @cdk.bug 1967468
         [TestMethod()]
         public void TestIndole1()
         {
@@ -1960,10 +1780,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @
-		 * @cdk.bug 1967468
-		 */
+        // @cdk.bug 1967468
         [TestMethod()]
         public void TestIndole2()
         {
@@ -1979,10 +1796,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @
-		 * @cdk.bug 1963731
-		 */
+        // @cdk.bug 1963731
         [TestMethod()]
         public void TestBug1963731()
         {
@@ -2032,9 +1846,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(6, mol.Atoms.Count);
         }
 
-        /**
-		 * @cdk.bug 2514200
-		 */
+        // @cdk.bug 2514200
         [TestMethod()]
         public void Testno937()
         {
@@ -2046,10 +1858,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(0, mol.Atoms[3].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @cdk.bug 2514200
-		 * @
-		 */
+        // @cdk.bug 2514200
         [TestMethod()]
         public void TestHardcodedH()
         {
@@ -2067,10 +1876,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(0, mol.Atoms[1].ImplicitHydrogenCount.Value);
         }
 
-        /**
-		 * @cdk.bug 2714283
-		 * @
-		 */
+        // @cdk.bug 2714283
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestBadRingClosure1()
@@ -2079,10 +1885,7 @@ namespace NCDK.Smiles
             p.ParseSmiles("c1ccccc1Cc1ccccc");
         }
 
-        /**
-		 * @cdk.bug 2714283
-		 * @
-		 */
+        // @cdk.bug 2714283
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestBadRingClosure2()
@@ -2091,11 +1894,10 @@ namespace NCDK.Smiles
             p.ParseSmiles("NC1=CC=C(N)C=C");
         }
 
-        /**
-		 * @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
-		 *
-		 * @see #TestPyrrole()
-		 */
+        /// <summary>
+        /// <seealso cref="TestPyrrole"/>
+        /// </summary>
+        // @cdk.inchi InChI=1/C4H5N/c1-2-4-5-3-1/h1-5H
         [TestMethod()]
         public void TestPyrrole_2()
         {
@@ -2117,9 +1919,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestAromaticSeParsing()
         {
@@ -2134,9 +1934,7 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestCeParsing()
         {
@@ -2145,9 +1943,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Ce", mol.Atoms[1].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestErParsing()
         {
@@ -2156,9 +1952,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Er", mol.Atoms[1].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestGdParsing()
         {
@@ -2167,9 +1961,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Gd", mol.Atoms[1].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestSmParsing()
         {
@@ -2178,9 +1970,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Sm", mol.Atoms[1].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestLaParsing()
         {
@@ -2189,9 +1979,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("La", mol.Atoms[3].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestAcParsing()
         {
@@ -2200,9 +1988,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Ac", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestPuParsing()
         {
@@ -2211,9 +1997,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Pu", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestPrParsing()
         {
@@ -2222,9 +2006,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Pr", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestPaParsing()
         {
@@ -2233,9 +2015,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Pa", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestTbParsing()
         {
@@ -2244,9 +2024,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Tb", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestAmParsing()
         {
@@ -2255,9 +2033,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Am", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestPmParsing()
         {
@@ -2266,9 +2042,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Pm", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestHoParsing()
         {
@@ -2277,9 +2051,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Ho", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 3048501
-		 */
+        // @cdk.bug 3048501
         [TestMethod()]
         public void TestCfParsing()
         {
@@ -2288,10 +2060,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("Cf", mol.Atoms[0].Symbol);
         }
 
-        /**
-		 * @cdk.bug 2976054
-		 * @
-		 */
+        // @cdk.bug 2976054
         [TestMethod()]
         public void TestAromaticity()
         {
@@ -2302,9 +2071,9 @@ namespace NCDK.Smiles
             }
         }
 
-        /**
-		 * Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
-		 */
+        /// <summary>
+        /// Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
+        /// </summary>
         [TestMethod()]
         public void TestAtAt()
         {
@@ -2329,11 +2098,11 @@ namespace NCDK.Smiles
             Assert.AreEqual(TetrahedralStereo.Clockwise, l4Chiral.Stereo);
         }
 
-        /**
-		 * Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
-		 * Per SMILES specification, this hydrogen is the atom towards the viewer, and will therefore end up
-		 * as first atom in the array.
-		 */
+        /// <summary>
+        /// Tests reading stereochemistry from a SMILES with one of the four groups being an implicit hydrogen.
+        /// Per SMILES specification, this hydrogen is the atom towards the viewer, and will therefore end up
+        /// as first atom in the array.
+        /// </summary>
         [TestMethod()]
         public void TestAt()
         {
@@ -2636,10 +2405,10 @@ namespace NCDK.Smiles
 
         }
 
-        /**
-		 *  'C:1:C:C:C:C:C1' is actually cyclo-hexane not benzene. Beam will kekulise
-		 *  this correctly and leave single bonds the aromaticity flags are preserved.
-		 */
+        /// <summary>
+        ///  'C:1:C:C:C:C:C1' is actually cyclo-hexane not benzene. Beam will kekulise
+        ///  this correctly and leave single bonds the aromaticity flags are preserved.
+        /// </summary>
         [TestMethod()]
         public void CyclohexaneWithAromaticBonds()
         {
@@ -2663,9 +2432,7 @@ namespace NCDK.Smiles
             Assert.IsNotNull(molecule.Atoms[0].AtomTypeName);
         }
 
-        /**
-		 * @cdk.bug 3160514
-		 */
+        // @cdk.bug 3160514
         [TestMethod()]
         public void TestAromaticBoron()
         {
@@ -2674,9 +2441,9 @@ namespace NCDK.Smiles
             AssertAllSingleAndAromatic(mol);
         }
 
-        /**
-		 * This molecule is actually invalid and there is no way to kekulise it.
-		 */
+        /// <summary>
+        /// This molecule is actually invalid and there is no way to kekulise it.
+        /// </summary>
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestAromaticBoron_invalid()
@@ -2684,11 +2451,11 @@ namespace NCDK.Smiles
             Load("c1cc2c3cc1.c1cb23cc1");
         }
 
-        /**
-		 * A 'proper' aromatic boron example.
-		 */
+        /// <summary>
+        /// A 'proper' aromatic boron example.
+        /// </summary>
         [TestMethod()]
-        public void borinine()
+        public void Borinine()
         {
             IAtomContainer mol = Load("b1ccccc1");
             Assert.AreEqual(BondOrder.Double, mol.GetBond(mol.Atoms[0], mol.Atoms[1]).Order);
@@ -2699,7 +2466,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(BondOrder.Single, mol.GetBond(mol.Atoms[5], mol.Atoms[0]).Order);
         }
 
-        /// <summary>@cdk.bug 1234</summary>
+        // @cdk.bug 1234
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
         public void TestBug1234()
@@ -2724,7 +2491,7 @@ namespace NCDK.Smiles
             Assert.AreEqual(3, clone.Atoms[1].FormalNeighbourCount.Value);
         }
 
-        /// <summary>@cdk.bug 549</summary>
+        // @cdk.bug 549
         [TestMethod()]
         public void TestDiBorane()
         {
@@ -2738,21 +2505,21 @@ namespace NCDK.Smiles
             Assert.AreEqual(2, mol.GetConnectedAtoms(mol.Atoms[5]).Count());
         }
 
-        /**
-		 * Okay exception for a non-SMILES string.
-		 * @cdk.bug 1375
-		 */
+        /// <summary>
+        /// Okay exception for a non-SMILES string.
+        /// </summary>
+        // @cdk.bug 1375
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void idNumber()
+        public void IdNumber()
         {
             Load("50-00-0");
         }
 
-        /**
-		 * Counts aromatic atoms in a molecule.
-		 * @param mol molecule for which to count aromatic atoms.
-		 */
+        /// <summary>
+        /// Counts aromatic atoms in a molecule.
+        /// </summary>
+        /// <param name="mol">molecule for which to count aromatic atoms.</param>
         private int CountAromaticAtoms(IAtomContainer mol)
         {
             int aromCount = 0;
@@ -2763,10 +2530,10 @@ namespace NCDK.Smiles
             return aromCount;
         }
 
-        /**
-		 * Counts aromatic bonds in a molecule.
-		 * @param mol molecule for which to count aromatic bonds.
-		 */
+        /// <summary>
+        /// Counts aromatic bonds in a molecule.
+        /// </summary>
+        /// <param name="mol">molecule for which to count aromatic bonds.</param>
         private int CountAromaticBonds(IAtomContainer mol)
         {
             int aromCount = 0;

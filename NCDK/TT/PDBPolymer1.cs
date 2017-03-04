@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 /* Copyright (C) 2001-2008  Egon Willighagen <egonw@users.sf.net>
  *
@@ -47,26 +48,26 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    /**
-	 * An entry in the PDB database. It is not just a regular protein, but the
-	 * regular PDB mix of protein or protein complexes, ligands, water molecules
-	 * and other species.
-	 *
-	 * @cdk.module  data
-	 * @cdk.githash
-	 *
-	 * @author      Egon Willighagen
-	 * @cdk.created 2006-04-19
-	 * @cdk.keyword polymer
-	 */
+    /// <summary>
+    /// An entry in the PDB database. It is not just a regular protein, but the
+    /// regular PDB mix of protein or protein complexes, ligands, water molecules
+    /// and other species.
+    ///
+    // @cdk.module  data
+    // @cdk.githash
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2006-04-19
+    // @cdk.keyword polymer
+    /// </summary>
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
         IList<string> sequentialListOfMonomers;
         IList<IPDBStructure> secondaryStructures;
 
-        /**
-		 * Constructs a new Polymer to store the {@link IMonomer}s.
-		 */
+        /// <summary>
+        /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.
+        /// </summary>
         public PDBPolymer()
             : base()
         {
@@ -82,30 +83,30 @@ namespace NCDK.Default
 
         public IEnumerable<IPDBStructure> GetStructures()
         {
-            //		don't return the original
+            //        don't return the original
             return new List<IPDBStructure>(secondaryStructures);
         }
 
-        /**
-		 * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
-		 * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
-		 * e.g. for HETATMs).
-		 *
-		 * @param oAtom  The {@link IPDBAtom} to add
-		 */
+        /// <summary>
+        /// Adds the atom oAtom without specifying a <see cref="IMonomer"/> or a Strand. Therefore the
+        /// atom to this AtomContainer, but not to a certain Strand or <see cref="IMonomer"/> (intended
+        /// e.g. for HETATMs).
+        ///
+        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
+        /// </summary>
 
         public void Add(IPDBAtom oAtom)
         {
             base.Add(oAtom);
         }
 
-        /**
-		 * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-		 * record of the iCode.
-		 *
-		 * @param oAtom  The IPDBAtom to add
-		 * @param oMonomer  The monomer the atom belongs to
-		 */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+        /// record of the iCode.
+        ///
+        /// <param name="oAtom">The IPDBAtom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -113,13 +114,13 @@ namespace NCDK.Default
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-		 * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
-		 * Additionally, it keeps record of the iCode.
-		 *
-		 * @param oAtom  The IPDBAtom to add
-		 * @param oMonomer  The monomer the atom belongs to
-		 */
+        /// <summary>
+        /// Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
+        /// Additionally, it keeps record of the iCode.
+        ///
+        /// <param name="oAtom">The IPDBAtom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
 
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand)
         {
@@ -128,20 +129,20 @@ namespace NCDK.Default
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-		 * Returns the monomer names in the order in which they were added.
-		 *
-		 * @see IPolymer#GetMonomerNames()
-		 */
+        /// <summary>
+        /// Returns the monomer names in the order in which they were added.
+        ///
+        /// @see IPolymer#GetMonomerNames()
+        /// </summary>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /**
-		 * @inheritDoc
-		 */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();
@@ -160,26 +161,26 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    /**
-	 * An entry in the PDB database. It is not just a regular protein, but the
-	 * regular PDB mix of protein or protein complexes, ligands, water molecules
-	 * and other species.
-	 *
-	 * @cdk.module  data
-	 * @cdk.githash
-	 *
-	 * @author      Egon Willighagen
-	 * @cdk.created 2006-04-19
-	 * @cdk.keyword polymer
-	 */
+    /// <summary>
+    /// An entry in the PDB database. It is not just a regular protein, but the
+    /// regular PDB mix of protein or protein complexes, ligands, water molecules
+    /// and other species.
+    ///
+    // @cdk.module  data
+    // @cdk.githash
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2006-04-19
+    // @cdk.keyword polymer
+    /// </summary>
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
         IList<string> sequentialListOfMonomers;
         IList<IPDBStructure> secondaryStructures;
 
-        /**
-		 * Constructs a new Polymer to store the {@link IMonomer}s.
-		 */
+        /// <summary>
+        /// Constructs a new Polymer to store the <see cref="IMonomer"/>s.
+        /// </summary>
         public PDBPolymer()
             : base()
         {
@@ -195,30 +196,30 @@ namespace NCDK.Silent
 
         public IEnumerable<IPDBStructure> GetStructures()
         {
-            //		don't return the original
+            //        don't return the original
             return new List<IPDBStructure>(secondaryStructures);
         }
 
-        /**
-		 * Adds the atom oAtom without specifying a {@link IMonomer} or a Strand. Therefore the
-		 * atom to this AtomContainer, but not to a certain Strand or {@link IMonomer} (intended
-		 * e.g. for HETATMs).
-		 *
-		 * @param oAtom  The {@link IPDBAtom} to add
-		 */
+        /// <summary>
+        /// Adds the atom oAtom without specifying a <see cref="IMonomer"/> or a Strand. Therefore the
+        /// atom to this AtomContainer, but not to a certain Strand or <see cref="IMonomer"/> (intended
+        /// e.g. for HETATMs).
+        ///
+        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
+        /// </summary>
 
         public void Add(IPDBAtom oAtom)
         {
             base.Add(oAtom);
         }
 
-        /**
-		 * Adds the atom oAtom to a specified Monomer. Additionally, it keeps
-		 * record of the iCode.
-		 *
-		 * @param oAtom  The IPDBAtom to add
-		 * @param oMonomer  The monomer the atom belongs to
-		 */
+        /// <summary>
+        /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
+        /// record of the iCode.
+        ///
+        /// <param name="oAtom">The IPDBAtom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -226,13 +227,13 @@ namespace NCDK.Silent
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-		 * Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
-		 * Additionally, it keeps record of the iCode.
-		 *
-		 * @param oAtom  The IPDBAtom to add
-		 * @param oMonomer  The monomer the atom belongs to
-		 */
+        /// <summary>
+        /// Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
+        /// Additionally, it keeps record of the iCode.
+        ///
+        /// <param name="oAtom">The IPDBAtom to add</param>
+        /// <param name="oMonomer">The monomer the atom belongs to</param>
+        /// </summary>
 
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand)
         {
@@ -241,20 +242,20 @@ namespace NCDK.Silent
                 sequentialListOfMonomers.Add(oMonomer.MonomerName);
         }
 
-        /**
-		 * Returns the monomer names in the order in which they were added.
-		 *
-		 * @see IPolymer#GetMonomerNames()
-		 */
+        /// <summary>
+        /// Returns the monomer names in the order in which they were added.
+        ///
+        /// @see IPolymer#GetMonomerNames()
+        /// </summary>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /**
-		 * @inheritDoc
-		 */
+        /// <summary>
+        // @inheritDoc
+        /// </summary>
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();

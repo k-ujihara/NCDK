@@ -49,12 +49,12 @@ using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.Matchers
 {
-    /**
-     * Checks if atom is matching between query and target molecules.
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Checks if atom is matching between query and target molecules.
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class DefaultRGraphAtomMatcher : AtomMatcher
     {
         private int maximumNeighbors;
@@ -62,9 +62,9 @@ namespace NCDK.SMSD.Algorithms.Matchers
         private IAtom qAtom = null;
         private bool shouldMatchBonds = false;
 
-        /**
-         * @return the shouldMatchBonds
-         */
+        /// <summary>
+        /// <returns>the shouldMatchBonds</returns>
+        /// </summary>
         public bool IsBondMatchFlag
         {
             get
@@ -77,9 +77,9 @@ namespace NCDK.SMSD.Algorithms.Matchers
             }
         }
 
-        /**
-         * Constructor
-         */
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DefaultRGraphAtomMatcher()
         {
             this.qAtom = null;
@@ -87,12 +87,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
             maximumNeighbors = -1;
         }
 
-        /**
-         * Constructor
-         * @param queryContainer query atom container
-         * @param atom query atom
-         * @param shouldMatchBonds bond matching flag
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryContainer">query atom container</param>
+        /// <param name="atom">query atom</param>
+        /// <param name="shouldMatchBonds">bond matching flag</param>
+        /// </summary>
         public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom atom, bool shouldMatchBonds)
                 : this()
         {
@@ -101,13 +101,12 @@ namespace NCDK.SMSD.Algorithms.Matchers
             IsBondMatchFlag = shouldMatchBonds;
         }
 
-        /**
-         * Constructor
-         * @param queryContainer query atom container
-         * @param template query atom
-         * @param blockedPositions
-         * @param shouldMatchBonds bond matching flag
-         */
+        /// <summary>
+        /// Constructor
+        /// <param name="queryContainer">query atom container</param>
+        /// <param name="template">query atom</param>
+        /// <param name="blockedPositions">/// <param name="shouldMatchBonds">bond matching flag</param></param>
+        /// </summary>
         public DefaultRGraphAtomMatcher(IAtomContainer queryContainer, IAtom template, int blockedPositions,
                 bool shouldMatchBonds)
                 : this(queryContainer, template, shouldMatchBonds)

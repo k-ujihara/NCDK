@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Primitives;
-using NCDK.Util;
+
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -100,12 +100,7 @@ namespace NCDK.IO
         /// <returns>The guessed <see cref="IChemFormat"/> or <see langword="null"/> if the file format is not recognized.</returns>
         /// <exception cref="ArgumentNullException">if the input is null</exception>
         /// <seealso cref="GuessFormat(Stream)"/>
-#if TEST 
-        public
-#else
-        internal
-#endif
-            IChemFormat GuessFormat(TextReader input)
+        internal IChemFormat GuessFormat(TextReader input)
         {
             if (input == null)
             {

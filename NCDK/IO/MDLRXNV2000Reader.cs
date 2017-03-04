@@ -28,28 +28,28 @@ using System.IO;
 using System.Text;
 
 namespace NCDK.IO {
-    /**
-     * Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
-     * This MDL RXN reader uses the MDLV2000 reader to read each mol file
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author     Egon Willighagen
-     * @author 	   Thomas Kuhn
-     * @cdk.created    2003-07-24
-     *
-     * @cdk.keyword    file format, MDL RXN
-     * @cdk.bug        1849923
-     */
+    /// <summary>
+    /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
+    /// This MDL RXN reader uses the MDLV2000 reader to read each mol file
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author     Egon Willighagen
+    // @author        Thomas Kuhn
+    // @cdk.created    2003-07-24
+    ///
+    // @cdk.keyword    file format, MDL RXN
+    // @cdk.bug        1849923
+    /// </summary>
     public class MDLRXNV2000Reader : DefaultChemObjectReader {
 
         TextReader input = null;
-        /**
-         * Constructs a new MDLReader that can read Molecule from a given Reader.
-         *
-         * @param  in  The Reader to read from
-         */
+        /// <summary>
+        /// Constructs a new MDLReader that can read Molecule from a given Reader.
+        ///
+        /// <param name="in">The Reader to read from</param>
+        /// </summary>
         public MDLRXNV2000Reader(TextReader ins)
             : this(ins, ChemObjectReaderModes.Relaxed)
         { }
@@ -91,16 +91,16 @@ namespace NCDK.IO {
             return false;
         }
 
-        /**
-          * Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-          * this (from file, database, internet etc). If the specific implementation
-          * does not support a specific IChemObject it will throw an Exception.
-          *
-          * @param  object                              The object that subclasses
-          *      IChemObject
-          * @return                                     The IChemObject read
-          * @exception  CDKException
-          */
+        /// <summary>
+         /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
+         /// this (from file, database, internet etc). If the specific implementation
+         /// does not support a specific IChemObject it will throw an Exception.
+         ///
+         /// <param name="object">The object that subclasses</param>
+         ///      IChemObject
+         /// <returns>The IChemObject read</returns>
+         // @exception  CDKException
+         /// </summary>
         public override T Read<T>(T obj)
         {
             if (obj is IReaction) {
@@ -140,11 +140,11 @@ namespace NCDK.IO {
             return false;
         }
 
-        /**
-         * Read a Reaction from a file in MDL RXN format
-         *
-         * @return  The Reaction that was read from the MDL file.
-         */
+        /// <summary>
+        /// Read a Reaction from a file in MDL RXN format
+        ///
+        /// <returns>The Reaction that was read from the MDL file.</returns>
+        /// </summary>
         private IReaction ReadReaction(IChemObjectBuilder builder) {
             IReaction reaction = builder.CreateReaction();
             try {
@@ -161,9 +161,8 @@ namespace NCDK.IO {
             int productCount = 0;
             try {
                 string countsLine = input.ReadLine();
-                /*
-                 * this line contains the number of reactants and products
-                 */
+                
+                // this line contains the number of reactants and products
                 var tokens = Strings.Tokenize(countsLine);
                 reactantCount = int.Parse(tokens[0]);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");

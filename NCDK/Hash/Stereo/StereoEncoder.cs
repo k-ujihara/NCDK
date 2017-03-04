@@ -26,39 +26,39 @@ using System;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * An encoder for stereo chemistry. The stereo configuration is encoded by
-     * checking the {@code current[]} invariant values. If there is a configuration
-     * then the appropriate value is the {@code next[]} is modified.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
+    /// <summary>
+    /// An encoder for stereo chemistry. The stereo configuration is encoded by
+    /// checking the {@code current[]} invariant values. If there is a configuration
+    /// then the appropriate value is the {@code next[]} is modified.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
     public interface IStereoEncoder
     {
-        /**
-         * Encode one or more stereo elements based on the current invariants. If
-         * any stereo element are uncovered then the corresponding value in the
-         * next[] array is modified.
-         *
-         * @param current current invariants
-         * @param next    next invariants
-         * @return whether any stereo configurations were encoded
-         */
+        /// <summary>
+        /// Encode one or more stereo elements based on the current invariants. If
+        /// any stereo element are uncovered then the corresponding value in the
+        /// next[] array is modified.
+        ///
+        /// <param name="current">current invariants</param>
+        /// <param name="next">next invariants</param>
+        /// <returns>whether any stereo configurations were encoded</returns>
+        /// </summary>
         bool Encode(long[] current, long[] next);
 
-        /**
-         * Reset the stereo-encoders, any currently perceived configurations will be
-         * re-activated.
-         */
+        /// <summary>
+        /// Reset the stereo-encoders, any currently perceived configurations will be
+        /// re-activated.
+        /// </summary>
         void Reset();
     }
 
     public static class StereoEncoder
     {
-        /**
-		 * empty stereo encoder when no stereo can be perceived
-		 */
+        /// <summary>
+        /// empty stereo encoder when no stereo can be perceived
+        /// </summary>
         public static readonly IStereoEncoder EMPTY = new EmptyStereoEncoder();
 
         class EmptyStereoEncoder : IStereoEncoder

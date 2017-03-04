@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Text;
@@ -30,9 +31,9 @@ namespace NCDK.Default
         private string monomerType;
 
         /// <summary>The name of this monomer (e.g. Trp42).</summary>
-		public string MonomerName
+        public string MonomerName
         {
-			get { return monomerName; }
+            get { return monomerName; }
             set
             {
                 monomerName = value;
@@ -81,9 +82,9 @@ namespace NCDK.Silent
         private string monomerType;
 
         /// <summary>The name of this monomer (e.g. Trp42).</summary>
-		public string MonomerName
+        public string MonomerName
         {
-			get { return monomerName; }
+            get { return monomerName; }
             set
             {
                 monomerName = value;

@@ -26,31 +26,30 @@ using System.Linq;
 
 namespace NCDK.Similarity
 {
-    /**
-     * A class to evaluate the similarity between two LINGO's as described in {@cdk.cite Vidal2005}.
-     *
-     * The similarity calculation is a variant of the Tanimoto coefficient and hence its
-     * value ranges from 0 to 1
-     *
-     * @author Rajarshi Guha
-     * @cdk.githash
-     * @cdk.keyword lingo
-     * @cdk.keyword similarity, tanimoto
-     * @cdk.module fingerprint
-     */
+    /// <summary>
+    /// A class to evaluate the similarity between two LINGO's as described in {@cdk.cite Vidal2005}.
+    ///
+    /// The similarity calculation is a variant of the Tanimoto coefficient and hence its
+    /// value ranges from 0 to 1
+    ///
+    // @author Rajarshi Guha
+    // @cdk.githash
+    // @cdk.keyword lingo
+    // @cdk.keyword similarity, tanimoto
+    // @cdk.module fingerprint
+    /// </summary>
     public class LingoSimilarity
     {
         private LingoSimilarity() { }
 
-        /**
-         * Evaluate the LINGO similarity between two key,value sty;e fingerprints.
-         *
-         * The value will range from 0.0 to 1.0.
-         *
-         * @param features1
-         * @param features2
-         * @return similarity
-         */
+        /// <summary>
+        /// Evaluate the LINGO similarity between two key,value sty;e fingerprints.
+        ///
+        /// The value will range from 0.0 to 1.0.
+        ///
+        /// <param name="features1">/// @param features2</param>
+        /// <returns>similarity</returns>
+        /// </summary>
         public static double Calculate(IDictionary<string, int> features1, IDictionary<string, int> features2)
         {
             var keys = features1.Keys.Union(features2.Keys).ToList();

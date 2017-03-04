@@ -27,66 +27,59 @@ using NCDK.Graphs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.ForceField.MMFF
 {
-    /**
-    // Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
-    // in the appendix of {@cdk.cite Halgren96a}:<p/>
-     *
-    // For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
-    // the first, a provisional atom type is assigned based on local connectivity. In the second,
-    // aromatic systems are perceived, and properly qualified aromatic atom types are assigned based on
-    // ring size and, for five-membered rings, on the position within the ring. Information in this file
-    // (MMFFAROM.PAR) is used to make the proper correspondence between provisional and final (aromatic)
-    // atom types. <p/>
-     *
-    // The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
-    // question relative to the unique pi-lone-pair containing heteroatom (which itself occupies
-    // position "1"); a "4" is an artificial entry that is assigned when no such unique heteroatom
-    // exists, as for example occurs in imidazolium cations and in tetrazole anions. An entry of "1" in
-    // the "IM CAT" or "N5 ANION" column must also be matched for such ionic species to convert the
-    // "OLD" (preliminary) to "AROM" (aromatic) symbolic atom type. Note: in matching the "OLD" symbolic
-    // atom types, an "exact" match is first attempted. If this match fails, a wild-carded match, using
-    // for example "C*" is then employed. <p/>
-     *
-    // This class implements this in three stages. Firstly, the aromatic rings are found with {@link
-    // #FindAromaticRings(int[][], int[], int[])}. These rings are then parsed to {@link
-    // #UpdateAromaticTypesInSixMemberRing(int[], string[])} and {@link #UpdateAromaticTypesInFiveMemberRing(int[],
-    // string[])}. The more complex of the two is the five member rings that normalises the ring to put
-    // the 'pi-lone-pair' hetroatom in position 1. The alpha and beta positions are then fixed and the
-    // {@link #alphaTypes} and {@link #betaTypes} mappings are used to obtain the correct assignment.
-     *
+    /// <summary>
+    /// Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
+    /// in the appendix of {@cdk.cite Halgren96a}:<p/>
+    ///
+    /// For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
+    /// the first, a provisional atom type is assigned based on local connectivity. In the second,
+    /// aromatic systems are perceived, and properly qualified aromatic atom types are assigned based on
+    /// ring size and, for five-membered rings, on the position within the ring. Information in this file
+    /// (MMFFAROM.PAR) is used to make the proper correspondence between provisional and final (aromatic)
+    /// atom types. <p/>
+    ///
+    /// The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
+    /// question relative to the unique pi-lone-pair containing heteroatom (which itself occupies
+    /// position "1"); a "4" is an artificial entry that is assigned when no such unique heteroatom
+    /// exists, as for example occurs in imidazolium cations and in tetrazole anions. An entry of "1" in
+    /// the "IM CAT" or "N5 ANION" column must also be matched for such ionic species to convert the
+    /// "OLD" (preliminary) to "AROM" (aromatic) symbolic atom type. Note: in matching the "OLD" symbolic
+    /// atom types, an "exact" match is first attempted. If this match fails, a wild-carded match, using
+    /// for example "C*" is then employed. <p/>
+    ///
+    /// This class implements this in three stages. Firstly, the aromatic rings are found with {@link
+    /// #FindAromaticRings(int[][], int[], int[])}. These rings are then parsed to {@link
+    /// #UpdateAromaticTypesInSixMemberRing(int[], string[])} and {@link #UpdateAromaticTypesInFiveMemberRing(int[],
+    /// string[])}. The more complex of the two is the five member rings that normalises the ring to put
+    /// the 'pi-lone-pair' hetroatom in position 1. The alpha and beta positions are then fixed and the
+    /// {@link #alphaTypes} and {@link #betaTypes} mappings are used to obtain the correct assignment.
+    ///
     // @author John May
-     */
-#if TEST
-    public
-#endif
-    sealed class MmffAromaticTypeMapping
+    /// </summary>
+    internal sealed class MmffAromaticTypeMapping
     {
-
-        /**
-        // Create an instance to map from preliminary MMFF symbolic types to their aromatic equivalent.
-         */
+        /// <summary>
+        /// Create an instance to map from preliminary MMFF symbolic types to their aromatic equivalent.
+        /// </summary>
         public MmffAromaticTypeMapping() { }
 
-        /**
-        // Given the assigned preliminary MMFF atom types (symbs[]) update these to the aromatic types.
-        // To begin, all the 5 and 6 member aromatic cycles are discovered. The symbolic types of five
-        // and six member cycles are then update with {@link #UpdateAromaticTypesInFiveMemberRing(int[],
-        // string[])} and {@link #UpdateAromaticTypesInSixMemberRing(int[], string[])}.
-         *
-        // @param container structure representation
-        // @param symbs     vector of symbolic types for the whole structure
-        // @param bonds     edge to bond map lookup
-        // @param graph     adjacency list graph representation of structure
-        // @param mmffArom  set of bonds that are aromatic
-         */
+        /// <summary>
+        /// Given the assigned preliminary MMFF atom types (symbs[]) update these to the aromatic types.
+        /// To begin, all the 5 and 6 member aromatic cycles are discovered. The symbolic types of five
+        /// and six member cycles are then update with <see cref="UpdateAromaticTypesInFiveMemberRing(int[], string[])"/>
+        /// and <see cref="UpdateAromaticTypesInSixMemberRing(int[], string[])"/>.
+        /// </summary>
+        /// <param name="container">structure representation</param>
+        /// <param name="symbs">vector of symbolic types for the whole structure</param>
+        /// <param name="bonds">edge to bond map lookup</param>
+        /// <param name="graph">adjacency list graph representation of structure</param>
+        /// <param name="mmffArom">set of bonds that are aromatic</param>
         public void Assign(IAtomContainer container, string[] symbs, EdgeToBondMap bonds, int[][] graph, ISet<IBond> mmffArom)
         {
-
             int[] contribution = new int[graph.Length];
             int[] doubleBonds = new int[graph.Length];
             Arrays.Fill(doubleBonds, -1);
@@ -111,19 +104,17 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // From a provided set of cycles find the 5/6 member cycles that fit the MMFF aromaticity
-        // definition - {@link #IsAromaticRing(int[], int[], int[], bool[])}. The cycles of size 6
-        // are listed first.
-         *
-        // @param cycles       initial set of cycles from
-        // @param contribution vector of p electron contributions from each vertex
-        // @param dbs          vector of double-bond pairs, index stored double-bonded index
-        // @return the cycles that are aromatic
-         */
+        /// <summary>
+        /// From a provided set of cycles find the 5/6 member cycles that fit the MMFF aromaticity
+        /// definition - <see cref="IsAromaticRing(int[], int[], int[], bool[])"/>. The cycles of size 6
+        /// are listed first.
+        /// </summary>
+        /// <param name="cycles">initial set of cycles from</param>
+        /// <param name="contribution">vector of p electron contributions from each vertex</param>
+        /// <param name="dbs">vector of double-bond pairs, index stored double-bonded index</param>
+        /// <returns>the cycles that are aromatic</returns>
         private static int[][] FindAromaticRings(int[][] cycles, int[] contribution, int[] dbs)
         {
-
             // loop control variables, the while loop continual checks all cycles
             // until no changes are found
             bool found;
@@ -142,7 +133,6 @@ namespace NCDK.ForceField.MMFF
                 found = false;
                 for (int i = 0; i < cycles.Length; i++)
                 {
-
                     // note paths are closed walks and repeat first/last vertex so
                     // the true length is one less
                     int[] cycle = cycles[i];
@@ -173,20 +163,18 @@ namespace NCDK.ForceField.MMFF
             return rings.ToArray();
         }
 
-        /**
-        // Check if a cycle/ring is aromatic. A cycle is aromatic if the sum of its p electrons is equal
-        // to 4n+2. Double bonds can only contribute if they are in the cycle being tested or are
-        // already delocalised.
-         *
-        // @param cycle        closed walk of vertices in the cycle
-        // @param contribution vector of p electron contributions from each vertex
-        // @param dbs          vector of double-bond pairs, index stored double-bonded index
-        // @param aromatic     binary set of aromatic atoms
-        // @return whether the ring is aromatic
-         */
+        /// <summary>
+        /// Check if a cycle/ring is aromatic. A cycle is aromatic if the sum of its p electrons is equal
+        /// to 4n+2. Double bonds can only contribute if they are in the cycle being tested or are
+        /// already delocalised.
+        /// </summary>
+        /// <param name="cycle">closed walk of vertices in the cycle</param>
+        /// <param name="contribution">vector of p electron contributions from each vertex</param>
+        /// <param name="dbs">vector of double-bond pairs, index stored double-bonded index</param>
+        /// <param name="aromatic">binary set of aromatic atoms</param>
+        /// <returns>whether the ring is aromatic</returns>
         public static bool IsAromaticRing(int[] cycle, int[] contribution, int[] dbs, bool[] aromatic)
         {
-
             int len = cycle.Length - 1;
             int sum = 0;
 
@@ -196,7 +184,6 @@ namespace NCDK.ForceField.MMFF
 
             while (i < len)
             {
-
                 int prev = cycle[iPrev];
                 int curr = cycle[i];
                 int next = cycle[iNext];
@@ -225,13 +212,12 @@ namespace NCDK.ForceField.MMFF
             return (sum - 2) % 4 == 0;
         }
 
-        /**
-        // Update aromatic atom types in a six member ring. The aromatic types here are hard coded from
-        // the 'MMFFAROM.PAR' file.
-         *
-        // @param cycle 6-member aromatic cycle / ring
-        // @param symbs vector of symbolic types for the whole structure
-         */
+        /// <summary>
+        /// Update aromatic atom types in a six member ring. The aromatic types here are hard coded from
+        /// the 'MMFFAROM.PAR' file.
+        /// </summary>
+        /// <param name="cycle">6-member aromatic cycle / ring</param>
+        /// <param name="symbs">vector of symbolic types for the whole structure</param>
         public static void UpdateAromaticTypesInSixMemberRing(int[] cycle, string[] symbs)
         {
             foreach (var v in cycle)
@@ -246,17 +232,15 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Update the symbolic for a 5-member cycle/ring. The cycle should first be normalised with
-        // {@link #NormaliseCycle(int[], int[])} to put the unique 'pi-lone-pair' in position 1 (index
-        // 0). Using predefined mappings the symbolic atom types are updated in the 'symbs[]' vector.
-         *
-        // @param cycle normalised 5-member cycle (6 indices)
-        // @param symbs vector of symbolic types for the whole structure
-         */
+        /// <summary>
+        /// Update the symbolic for a 5-member cycle/ring. The cycle should first be normalised with
+        /// <see cref="NormaliseCycle(int[], int[])"/> to put the unique 'pi-lone-pair' in position 1 (index
+        /// 0). Using predefined mappings the symbolic atom types are updated in the 'symbs[]' vector.
+        /// </summary>
+        /// <param name="cycle">normalised 5-member cycle (6 indices)</param>
+        /// <param name="symbs">vector of symbolic types for the whole structure</param>
         private void UpdateAromaticTypesInFiveMemberRing(int[] cycle, string[] symbs)
         {
-
             string hetro = symbs[cycle[0]];
 
             // simple conditions tell is the 'IM' and 'AN' flags
@@ -269,57 +253,53 @@ namespace NCDK.ForceField.MMFF
             symbs[cycle[4]] = GetAlphaAromaticType(symbs[cycle[4]], imidazolium, anion);
             symbs[cycle[2]] = GetBetaAromaticType(symbs[cycle[2]], imidazolium, anion);
             symbs[cycle[3]] = GetBetaAromaticType(symbs[cycle[3]], imidazolium, anion);
-
         }
 
-        /**
-        // Convenience method to obtain the aromatic type of a symbolic (SYMB) type in the alpha
-        // position of a 5-member ring. This method delegates to {@link #GetAromaticType(java.util.Map,
-        // char, string, bool, bool)} setup for alpha atoms.
-         *
-        // @param symb        symbolic atom type
-        // @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-        // @param anion       anion flag (AN naming from MMFFAROM.PAR)
-        // @return the aromatic type
-         */
+        /// <summary>
+        /// Convenience method to obtain the aromatic type of a symbolic (SYMB) type in the alpha
+        /// position of a 5-member ring. This method delegates to <see cref="GetAromaticType(IDictionary{string, string}, char, string, bool, bool)"/>
+        /// setup for alpha atoms.
+        /// </summary>
+        /// <param name="symb">symbolic atom type</param>
+        /// <param name="imidazolium">imidazolium flag (IM naming from MMFFAROM.PAR)</param>
+        /// <param name="anion">anion flag (AN naming from MMFFAROM.PAR)</param>
+        /// <returns>the aromatic type</returns>
         private string GetAlphaAromaticType(string symb, bool imidazolium, bool anion)
         {
             return GetAromaticType(alphaTypes, 'A', symb, imidazolium, anion);
         }
 
-        /**
-        // Convenience method to obtain the aromatic type of a symbolic (SYMB) type in the beta position
-        // of a 5-member ring. This method delegates to {@link #GetAromaticType(java.util.Map, char,
-        // string, bool, bool)} setup for beta atoms.
-         *
-        // @param symb        symbolic atom type
-        // @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-        // @param anion       anion flag (AN naming from MMFFAROM.PAR)
-        // @return the aromatic type
-         */
+        /// <summary>
+        /// Convenience method to obtain the aromatic type of a symbolic (SYMB) type in the beta position
+        /// of a 5-member ring. This method delegates to <see cref="GetAromaticType(IDictionary{string, string}, char, string, bool, bool)"/>
+        /// setup for beta atoms.
+        /// </summary>
+        /// <param name="symb">symbolic atom type</param>
+        /// <param name="imidazolium">imidazolium flag (IM naming from MMFFAROM.PAR)</param>
+        /// <param name="anion">anion flag (AN naming from MMFFAROM.PAR)</param>
+        /// <returns>the aromatic type</returns>
         private string GetBetaAromaticType(string symb, bool imidazolium, bool anion)
         {
             return GetAromaticType(betaTypes, 'B', symb, imidazolium, anion);
         }
 
-        /**
-        // Obtain the aromatic atom type for an atom in the alpha or beta position of a 5-member
-        // aromatic ring. The method primarily uses an HashMap to lookup up the aromatic type. The two
-        // maps are, {@link #alphaTypes} and {@link #betaTypes}. Depending on the position (alpha or
-        // beta), one map is passed to the method. The exceptions to using the HashMap directly are as
-        // follows: 1) if AN flag is raised and the symbolic type is a nitrogen, the type is 'N5M'. 2)
-        // If the IM or AN flag is raised, the atom is 'C5' or 'N5 instead of 'C5A', 'C5B', 'N5A', or
-        // 'N5B'. This is because the hetroatom in these rings can resonate and so the atom is both
-        // alpha and beta.
-         *
-        // @param map         mapping of alpha or beta types
-        // @param suffix      'A' or 'B'
-        // @param symb        input symbolic type
-        // @param imidazolium imidazolium flag (IM naming from MMFFAROM.PAR)
-        // @param anion       anion flag (AN naming from MMFFAROM.PAR)
-        // @return the aromatic type
-         */
-        public  static string GetAromaticType(IDictionary<string, string> map, char suffix, string symb, bool imidazolium, bool anion)
+        /// <summary>
+        /// Obtain the aromatic atom type for an atom in the alpha or beta position of a 5-member
+        /// aromatic ring. The method primarily uses an HashMap to lookup up the aromatic type. The two
+        /// maps are, <see cref="alphaTypes"/> and <see cref="betaTypes"/>. Depending on the position (alpha or
+        /// beta), one map is passed to the method. The exceptions to using the HashMap directly are as
+        /// follows: 1) if AN flag is raised and the symbolic type is a nitrogen, the type is 'N5M'. 2)
+        /// If the IM or AN flag is raised, the atom is 'C5' or 'N5 instead of 'C5A', 'C5B', 'N5A', or
+        /// 'N5B'. This is because the hetroatom in these rings can resonate and so the atom is both
+        /// alpha and beta.
+        /// </summary>
+        /// <param name="map">mapping of alpha or beta types</param>
+        /// <param name="suffix">'A' or 'B'</param>
+        /// <param name="symb">input symbolic type</param>
+        /// <param name="imidazolium">imidazolium flag (IM naming from MMFFAROM.PAR)</param>
+        /// <param name="anion">anion flag (AN naming from MMFFAROM.PAR)</param>
+        /// <returns>the aromatic type</returns>
+        public static string GetAromaticType(IDictionary<string, string> map, char suffix, string symb, bool imidazolium, bool anion)
         {
             if (anion && symb.StartsWith("N")) symb = "N5M";
             if (map.ContainsKey(symb)) symb = map[symb];
@@ -328,14 +308,13 @@ namespace NCDK.ForceField.MMFF
             return symb;
         }
 
-        /**
-        // Find the index of a hetroatom in a cycle. A hetroatom in MMFF is the unique atom that
-        // contributes a pi-lone-pair to the aromatic system.
-         *
-        // @param cycle        aromatic cycle, |C| = 5
-        // @param contribution vector of p electron contributions from each vertex
-        // @return index of hetroatom, if none found index is < 0.
-         */
+        /// <summary>
+        /// Find the index of a hetroatom in a cycle. A hetroatom in MMFF is the unique atom that
+        /// contributes a pi-lone-pair to the aromatic system.
+        /// </summary>
+        /// <param name="cycle">aromatic cycle, |C| = 5</param>
+        /// <param name="contribution">vector of p electron contributions from each vertex</param>
+        /// <returns>index of hetroatom, if none found index is &lt; 0.</returns>
         public static int IndexOfHetro(int[] cycle, int[] contribution)
         {
             int index = -1;
@@ -346,16 +325,15 @@ namespace NCDK.ForceField.MMFF
             return index;
         }
 
-        /**
-        // Normalises a 5-member 'cycle' such that the hetroatom contributing the lone-pair is in
-        // position 1 (index 0). The alpha atoms are then in index 1 and 4 whilst the beta atoms are in
-        // index 2 and 3. If the ring contains more than one hetroatom the cycle is not normalised
-        // (return=false).
-         *
-        // @param cycle        aromatic cycle to normalise, |C| = 5
-        // @param contribution vector of p electron contributions from each vertex (size |V|)
-        // @return whether the cycle was normalised
-         */
+        /// <summary>
+        /// Normalises a 5-member 'cycle' such that the hetroatom contributing the lone-pair is in
+        /// position 1 (index 0). The alpha atoms are then in index 1 and 4 whilst the beta atoms are in
+        /// index 2 and 3. If the ring contains more than one hetroatom the cycle is not normalised
+        /// (return=false).
+        /// </summary>
+        /// <param name="cycle">aromatic cycle to normalise, |C| = 5</param>
+        /// <param name="contribution">vector of p electron contributions from each vertex (size |V|)</param>
+        /// <returns>whether the cycle was normalised</returns>
         public static bool NormaliseCycle(int[] cycle, int[] contribution)
         {
             int offset = IndexOfHetro(cycle, contribution);
@@ -371,14 +349,13 @@ namespace NCDK.ForceField.MMFF
             return true;
         }
 
-        /**
-        // Electron contribution of an element with the specified connectivity and valence.
-         *
-        // @param elem atomic number
-        // @param x    connectivity
-        // @param v    bonded valence
-        // @return p electrons
-         */
+        /// <summary>
+        /// Electron contribution of an element with the specified connectivity and valence.
+        /// </summary>
+        /// <param name="elem">atomic number</param>
+        /// <param name="x">connectivity</param>
+        /// <param name="v">bonded valence</param>
+        /// <returns>p electrons</returns>
         //@SuppressWarnings("PMD.CyclomaticComplexity")
         // high complexity but clean
         public static int Contribution(int elem, int x, int v)
@@ -402,13 +379,12 @@ namespace NCDK.ForceField.MMFF
             return -1;
         }
 
-        /**
-        // Locate all 5 and 6 member cycles (rings) in a structure representation.
-         *
-        // @param container structure representation
-        // @param graph     adjacency list graph representation of structure
-        // @return closed walks (first = last vertex) of the cycles
-         */
+        /// <summary>
+        /// Locate all 5 and 6 member cycles (rings) in a structure representation.
+        /// </summary>
+        /// <param name="container">structure representation</param>
+        /// <param name="graph">adjacency list graph representation of structure</param>
+        /// <returns>closed walks (first = last vertex) of the cycles</returns>
         public static int[][] CyclesOfSizeFiveOrSix(IAtomContainer container, int[][] graph)
         {
             try
@@ -421,23 +397,20 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Internal - sets up the 'contribution' and 'dbs' vectors. These define how many pi electrons
-        // an atom can contribute and provide a lookup of the double bonded neighbour.
-         *
-        // @param molecule     structure representation
-        // @param bonds        edge to bond map lookup
-        // @param graph        adjacency list graph representation of structure
-        // @param contribution vector of p electron contributions from each vertex
-        // @param dbs          vector of double-bond pairs, index stored double-bonded index
-         */
-        private static void SetupContributionAndDoubleBonds(IAtomContainer molecule, EdgeToBondMap bonds, int[][] graph,
-                int[] contribution, int[] dbs)
+        /// <summary>
+        /// Internal - sets up the 'contribution' and 'dbs' vectors. These define how many pi electrons
+        /// an atom can contribute and provide a lookup of the double bonded neighbour.
+        /// </summary>
+        /// <param name="molecule">structure representation</param>
+        /// <param name="bonds">edge to bond map lookup</param>
+        /// <param name="graph">adjacency list graph representation of structure</param>
+        /// <param name="contribution">vector of p electron contributions from each vertex</param>
+        /// <param name="dbs">vector of double-bond pairs, index stored double-bonded index</param>
+        private static void SetupContributionAndDoubleBonds(IAtomContainer molecule, EdgeToBondMap bonds, int[][] graph, int[] contribution, int[] dbs)
         {
             // fill the contribution and dbs vectors
             for (int v = 0; v < graph.Length; v++)
             {
-
                 // hydrogens, valence, and connectivity
                 int hyd = molecule.Atoms[v].ImplicitHydrogenCount.Value;
                 int val = hyd;
@@ -457,10 +430,10 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        /**
-        // Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
-        // lone pair.
-         */
+        /// <summary>
+        /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute a
+        /// lone pair.
+        /// </summary>
         private readonly IDictionary<string, string> hetroTypes =
                 new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
                 {
@@ -472,10 +445,10 @@ namespace NCDK.ForceField.MMFF
                     { "NR", NPYL },
                 });
 
-        /**
-        // Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
-        // one electron and are alpha to an atom that contributes a lone pair.
-         */
+        /// <summary>
+        /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
+        /// one electron and are alpha to an atom that contributes a lone pair.
+        /// </summary>
         private readonly IDictionary<string, string> alphaTypes =
                 new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
                     {
@@ -488,10 +461,10 @@ namespace NCDK.ForceField.MMFF
                     });
 
 
-        /**
-        // Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
-        // one electron and are beta to an atom that contributes a lone pair.
-         */
+        /// <summary>
+        /// Mapping of preliminary atom MMFF symbolic types to aromatic types for atoms that contribute
+        /// one electron and are beta to an atom that contributes a lone pair.
+        /// </summary>
         private readonly IDictionary<string, string> betaTypes =
                 new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
                         {
@@ -522,6 +495,5 @@ namespace NCDK.ForceField.MMFF
         private const string CIM_PLUS = "CIM+";
         private const string OFUR = "OFUR";
         private const string STHI = "STHI";
-
     }
 }

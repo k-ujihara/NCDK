@@ -31,13 +31,13 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer MDL SD file writer.
-     *
-     * @cdk.module test-io
-     *
-     * @see org.openscience.cdk.io.SDFWriter
-     */
+    /// <summary>
+    /// TestCase for the writer MDL SD file writer.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.SDFWriter
+    /// </summary>
     [TestClass()]
     public class SDFWriterTest : ChemObjectWriterTest
     {
@@ -74,9 +74,9 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("bar") != -1);
         }
 
-        /**
-         * @cdk.bug 2827745
-         */
+        /// <summary>
+        // @cdk.bug 2827745
+        /// </summary>
         [TestMethod()]
         public void TestWrite_IAtomContainerSet()
         {
@@ -182,9 +182,9 @@ namespace NCDK.IO
             Assert.IsTrue(writer.ToString().IndexOf("$$$$") != -1);
         }
 
-        /**
-         * @cdk.bug 3392485
-         */
+        /// <summary>
+        // @cdk.bug 3392485
+        /// </summary>
         [TestMethod()]
         public void TestIOPropPropagation()
         {

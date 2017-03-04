@@ -26,13 +26,13 @@ using System.Diagnostics;
 
 namespace NCDK.IO
 {
-    /**
-	 * TestCase for the reading MDL RXN files using one test file.
-	 *
-	 * @cdk.module test-io
-	 *
-	 * @see org.openscience.cdk.io.MDLRXNReader
-	 */
+    /// <summary>
+    /// TestCase for the reading MDL RXN files using one test file.
+    ///
+    // @cdk.module test-io
+    ///
+    // @see org.openscience.cdk.io.MDLRXNReader
+    /// </summary>
     [TestClass()]
     public class MDLRXNV2000ReaderTest : SimpleChemObjectReaderTest
     {
@@ -49,15 +49,15 @@ namespace NCDK.IO
             Assert.IsTrue(reader.Accepts(typeof(Reaction)));
         }
 
-        /**
-		 * @cdk.bug 1849923
-		 */
+        /// <summary>
+        // @cdk.bug 1849923
+        /// </summary>
         [TestMethod()]
         public void TestReadReactions1()
         {
             string filename1 = "NCDK.Data.MDL.0024.stg02.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
@@ -77,15 +77,15 @@ namespace NCDK.IO
 
         }
 
-        /**
-		 * @cdk.bug 1851202
-		 */
+        /// <summary>
+        // @cdk.bug 1851202
+        /// </summary>
         [TestMethod()]
         public void TestBug1851202()
         {
             string filename1 = "NCDK.Data.MDL.0002.stg01.rxn";
             Trace.TraceInformation("Testing: " + filename1);
-            var ins1 = this.GetType().Assembly.GetManifestResourceStream(filename1);
+            var ins1 = ResourceLoader.GetAsStream(filename1);
             MDLRXNV2000Reader reader1 = new MDLRXNV2000Reader(ins1, ChemObjectReaderModes.Strict);
             IReaction reaction1 = new Reaction();
             reaction1 = (IReaction)reader1.Read(reaction1);
@@ -110,7 +110,7 @@ namespace NCDK.IO
         {
             string filename2 = "NCDK.Data.MDL.mappingTest.rxn";
             Trace.TraceInformation("Testing: " + filename2);
-            var ins2 = this.GetType().Assembly.GetManifestResourceStream(filename2);
+            var ins2 = ResourceLoader.GetAsStream(filename2);
             MDLRXNV2000Reader reader2 = new MDLRXNV2000Reader(ins2);
             IReaction reaction2 = new Reaction();
             reaction2 = (IReaction)reader2.Read(reaction2);

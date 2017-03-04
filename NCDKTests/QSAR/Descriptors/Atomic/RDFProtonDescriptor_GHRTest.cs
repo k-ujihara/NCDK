@@ -20,7 +20,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         {
             //firstly read file to molecule
             string filename = "NCDK.Data.MDL.hydroxyamino.mol" + "";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IChemSequence seq = chemFile[0];
@@ -32,15 +32,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
             int hNumber = 0;
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                //			Console.Out.WriteLine("Atom: " + mol.Atoms[i].Symbol);
-                //			Console.Out.WriteLine("  charge: " + mol.Atoms[i].Charge);
+                //            Console.Out.WriteLine("Atom: " + mol.Atoms[i].Symbol);
+                //            Console.Out.WriteLine("  charge: " + mol.Atoms[i].Charge);
                 if (mol.Atoms[i].Symbol.Equals("H"))
                 {
                     hNumber++;
                     //secondly perform calculation on it.
                     DescriptorValue dv = descriptor.Calculate(mol.Atoms[i], mol);
                     IDescriptorResult result = dv.GetValue();
-                    //				Console.Out.WriteLine("array: " + result.ToString());
+                    //                Console.Out.WriteLine("array: " + result.ToString());
                     Assert.IsNotNull(result);
                 }
             }

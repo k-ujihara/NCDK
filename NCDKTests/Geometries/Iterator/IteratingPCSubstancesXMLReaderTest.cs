@@ -27,9 +27,9 @@ using System.IO;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * @cdk.module test-io
-     */
+    /// <summary>
+    // @cdk.module test-io
+    /// </summary>
      [TestClass()]
     public class IteratingPCSubstancesXMLReaderTest : CDKTestCase
     {
@@ -41,7 +41,7 @@ namespace NCDK.IO.Iterator
 
             int modelCount = 0;
             IChemSequence set;
-            using (var ins = this.GetType().Assembly.GetManifestResourceStream(filename))
+            using (var ins = ResourceLoader.GetAsStream(filename))
             using (var sr = new StreamReader(ins))
             using (var reader = new IteratingPCSubstancesXMLReader(sr, Default.ChemObjectBuilder.Instance))
             {

@@ -21,38 +21,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using NCDK.Common.Collections;
-using System.Collections.ObjectModel;
 
 namespace NCDK.Graphs
 {
-    /**
-     * General permutation generator, that uses orderly generation by ranking and
-     * unranking. The basic idea is that all permutations of length N can be ordered
-     * (lexicographically) like:
-     * <pre>
-     * 0 [0, 1, 2]
-     * 1 [0, 2, 1]
-     * 2 [1, 0, 2]
-     * ...
-     * </pre>
-     * where the number to the left of each permutation is the <i>rank</i> - really
-     * just the index in this ordered list. The list is created on demand, by a
-     * process called <i>unranking</i> where the rank is converted to the
-     * permutation that appears at that point in the list.
-     *
-     * <p>The algorithms used are from the book "Combinatorial Generation :
-     * Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
-     * Stinson. CRC Press (18 Dec 1998). ISBN-13 : 978-0849339882.</p>
-     *
-     * @author         maclean
-     * @cdk.created    2009-09-09
-     * @cdk.keyword    permutation
-     * @cdk.module     standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// General permutation generator, that uses orderly generation by ranking and
+    /// unranking. The basic idea is that all permutations of length N can be ordered
+    /// (lexicographically) like:
+    /// <code>
+    /// 0 [0, 1, 2]
+    /// 1 [0, 2, 1]
+    /// 2 [1, 0, 2]
+    /// ...
+    /// </code>
+    /// where the number to the left of each permutation is the <i>rank</i> - really
+    /// just the index in this ordered list. The list is created on demand, by a
+    /// process called <i>unranking</i> where the rank is converted to the
+    /// permutation that appears at that point in the list.
+    ///
+    /// <para>The algorithms used are from the book "Combinatorial Generation :
+    /// Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
+    /// Stinson. CRC Press (18 Dec 1998). ISBN-13 : 978-0849339882.</para>
+    /// </summary>
+    // @author         maclean
+    // @cdk.created    2009-09-09
+    // @cdk.keyword    permutation
+    // @cdk.module     standard
+    // @cdk.githash
     public class Permutor
     {
         /// <summary>
@@ -60,28 +55,25 @@ namespace NCDK.Graphs
         /// </summary>
         public int Rank { get; set; }
 
-        /**
-         * The maximum rank possible, given the size
-         */
+        /// <summary>
+        /// The maximum rank possible, given the size
+        /// </summary>
         private int maxRank;
 
-        /*
-         * The number of objects to permute
-         */
-
+        /// <summary>
+        /// The number of objects to permute
+        /// </summary>
         private int size;
 
-        /**
-         * For accessing part of the permutation space
-         */
+        /// <summary>
+        /// For accessing part of the permutation space
+        /// </summary>
         private Random random;
 
-        /**
-         * Create a permutor that will generate permutations of numbers up to
-         * <code>size</code>.
-         *
-         * @param size the size of the permutations to generate
-         */
+        /// <summary>
+        /// Create a permutor that will generate permutations of numbers up to <paramref name="size"/>.
+        /// </summary>
+        /// <param name="size">the size of the permutations to generate</param>
         public Permutor(int size)
         {
             this.Rank = 0;
@@ -90,31 +82,24 @@ namespace NCDK.Graphs
             this.random = new Random();
         }
 
-#if TEST
-        public
-#else
-        protected 
-#endif
-        bool HasNext()
+        protected internal bool HasNext()
         {
             return this.Rank < this.maxRank;
         }
 
-        /**
-         * Set the currently used permutation.
-         *
-         * @param permutation the permutation to use, as an int array
-         */
+        /// <summary>
+        /// Set the currently used permutation.
+        /// </summary>
+        /// <param name="permutation">the permutation to use, as an int array</param>
         public void SetPermutation(int[] permutation)
         {
             this.Rank = this.RankPermutationLexicographically(permutation);
         }
 
-        /**
-         * Randomly skip ahead in the list of permutations.
-         *
-         * @return a permutation in the range (current, N!)
-         */
+        /// <summary>
+        /// Randomly skip ahead in the list of permutations.
+        /// </summary>
+        /// <returns>a permutation in the range (current, N!)</returns>
         public int[] GetRandomNextPermutation()
         {
             int d = maxRank - Rank;
@@ -123,32 +108,29 @@ namespace NCDK.Graphs
             return this.GetCurrentPermutation();
         }
 
-        /**
-         * Get the next permutation in the list.
-         *
-         * @return the next permutation
-         */
+        /// <summary>
+        /// Get the next permutation in the list.
+        /// </summary>
+        /// <returns>the next permutation</returns>
         public int[] GetNextPermutation()
         {
             this.Rank++;
             return this.GetCurrentPermutation();
         }
 
-        /**
-         * Get the permutation that is currently being used.
-         *
-         * @return the permutation as an int array
-         */
+        /// <summary>
+        /// Get the permutation that is currently being used.
+        /// </summary>
+        /// <returns>the permutation as an int array</returns>
         public int[] GetCurrentPermutation()
         {
             return this.UnrankPermutationLexicographically(Rank, size);
         }
 
-        /**
-         * Calculate the max possible rank for permutations of N numbers.
-         *
-         * @return the maximum number of permutations
-         */
+        /// <summary>
+        /// Calculate the max possible rank for permutations of N numbers.
+        /// </summary>
+        /// <returns>the maximum number of permutations</returns>
         public int CalculateMaxRank()
         {
             return Factorial(size) - 1;
@@ -168,14 +150,13 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * Convert a permutation (in the form of an int array) into a 'rank' - which
-         * is just a single number that is the order of the permutation in a lexico-
-         * graphically ordered list.
-         *
-         * @param permutation the permutation to use
-         * @return the rank as a number
-         */
+        /// <summary>
+        /// Convert a permutation (in the form of an int array) into a 'rank' - which
+        /// is just a single number that is the order of the permutation in a lexico-
+        /// graphically ordered list.
+        /// </summary>
+        /// <param name="permutation">the permutation to use</param>
+        /// <returns>the rank as a number</returns>
         private int RankPermutationLexicographically(int[] permutation)
         {
             int rank = 0;
@@ -199,19 +180,19 @@ namespace NCDK.Graphs
             return rank + 1;
         }
 
-        /**
-         * Performs the opposite to the rank method, producing the permutation that
-         * has the order <code>rank</code> in the lexicographically ordered list.
-         *
-         * As an implementation note, the algorithm assumes that the permutation is
-         * in the form [1,...N] not the more usual [0,...N-1] for a list of size N.
-         * This is why there is the final step of 'shifting' the permutation. The
-         * shift also reduces the numbers by one to make them array indices.
-         *
-         * @param rank the order of the permutation to generate
-         * @param size the length/size of the permutation
-         * @return a permutation as an int array
-         */
+        /// <summary>
+        /// Performs the opposite to the rank method, producing the permutation that
+        /// has the order <paramref name="rank"/> in the lexicographically ordered list.
+        /// </summary>
+        /// <remarks>
+        /// As an implementation note, the algorithm assumes that the permutation is
+        /// in the form [1,...N] not the more usual [0,...N-1] for a list of size N.
+        /// This is why there is the final step of 'shifting' the permutation. The
+        /// shift also reduces the numbers by one to make them array indices.
+        /// </remarks>
+        /// <param name="rank">the order of the permutation to generate</param>
+        /// <param name="size">the length/size of the permutation</param>
+        /// <returns>a permutation as an int array</returns>
         private int[] UnrankPermutationLexicographically(int rank, int size)
         {
             int[] permutation = new int[size + 1];

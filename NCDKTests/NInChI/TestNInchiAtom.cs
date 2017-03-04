@@ -29,10 +29,10 @@ namespace NCDK.NInChI
             return new NInchiAtom(1, 2, 3, "C");
         }
 
-        /**
-         * Test JniInchiAtom constructor.
-         *
-         */
+        /// <summary>
+        /// Test JniInchiAtom constructor.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestJniInchiAtomConstructor()
         {
@@ -53,10 +53,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_RADICAL.None, atom.Radical);
         }
 
-        /**
-         * Test setCharge.
-         *
-         */
+        /// <summary>
+        /// Test setCharge.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetCharge()
         {
@@ -65,10 +65,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(+1, atom.Charge);
         }
 
-        /**
-         * Test setRadical.
-         *
-         */
+        /// <summary>
+        /// Test setRadical.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetRadical()
         {
@@ -77,10 +77,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_RADICAL.Doublet, atom.Radical);
         }
 
-        /**
-         * Test setIsotopicMass.
-         *
-         */
+        /// <summary>
+        /// Test setIsotopicMass.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetIsotopicMass()
         {
@@ -89,10 +89,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(13, atom.IsotopicMass);
         }
 
-        /**
-         * Test setIsotopicMassShift.
-         *
-         */
+        /// <summary>
+        /// Test setIsotopicMassShift.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetIsotopicMassShift()
         {
@@ -101,10 +101,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(NInchiAtom.ISOTOPIC_SHIFT_FLAG + 1, atom.IsotopicMass);
         }
 
-        /**
-         * Test setImplicitH.
-         *
-         */
+        /// <summary>
+        /// Test setImplicitH.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetImplictH()
         {
@@ -113,10 +113,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(3, atom.ImplicitH);
         }
 
-        /**
-         * Test setImplicitProtium.
-         *
-         */
+        /// <summary>
+        /// Test setImplicitProtium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetImplictProtium()
         {
@@ -125,10 +125,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2, atom.ImplicitProtium);
         }
 
-        /**
-         * Test setImplicitDeuterium.
-         *
-         */
+        /// <summary>
+        /// Test setImplicitDeuterium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetImplictDeuterium()
         {
@@ -137,10 +137,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2, atom.ImplicitDeuterium);
         }
 
-        /**
-         * Test setImplicitTritium.
-         *
-         */
+        /// <summary>
+        /// Test setImplicitTritium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestSetImplictTritium()
         {
@@ -149,10 +149,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2, atom.ImplicitTritium);
         }
 
-        /**
-         * Test getElementType.
-         *
-         */
+        /// <summary>
+        /// Test getElementType.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetElementType()
         {
@@ -160,10 +160,10 @@ namespace NCDK.NInChI
             Assert.AreEqual("C", atom.ElementType);
         }
 
-        /**
-         * Test getCharge.
-         *
-         */
+        /// <summary>
+        /// Test getCharge.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetCharge()
         {
@@ -172,10 +172,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(+1, atom.Charge);
         }
 
-        /**
-         * Test getRadical.
-         *
-         */
+        /// <summary>
+        /// Test getRadical.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetRadical()
         {
@@ -184,10 +184,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(INCHI_RADICAL.Triplet, atom.Radical);
         }
 
-        /**
-         * Test getX.
-         *
-         */
+        /// <summary>
+        /// Test getX.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetX()
         {
@@ -195,10 +195,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(1.0, atom.X, 1E-6);
         }
 
-        /**
-         * Test getY.
-         *
-         */
+        /// <summary>
+        /// Test getY.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetY()
         {
@@ -206,10 +206,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2.0, atom.Y, 1E-6);
         }
 
-        /**
-         * Test getZ.
-         *
-         */
+        /// <summary>
+        /// Test getZ.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetZ()
         {
@@ -217,10 +217,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(3.0, atom.Z, 1E-6);
         }
 
-        /**
-         * Test getImplicitH.
-         *
-         */
+        /// <summary>
+        /// Test getImplicitH.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitH()
         {
@@ -230,10 +230,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(3, atom.ImplicitH);
         }
 
-        /**
-         * Test getImplicitProtium.
-         *
-         */
+        /// <summary>
+        /// Test getImplicitProtium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitProtium()
         {
@@ -243,10 +243,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2, atom.ImplicitProtium);
         }
 
-        /**
-         * Test getImplicitDeuterium.
-         *
-         */
+        /// <summary>
+        /// Test getImplicitDeuterium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitDeuterium()
         {
@@ -256,10 +256,10 @@ namespace NCDK.NInChI
             Assert.AreEqual(2, atom.ImplicitDeuterium);
         }
 
-        /**
-         * Test getImplicitTritium.
-         *
-         */
+        /// <summary>
+        /// Test getImplicitTritium.
+        ///
+        /// </summary>
         [TestMethod()]
         public void TestGetImplicitTritium()
         {

@@ -22,6 +22,7 @@ using NCDK.Default;
 using NCDK.IO;
 using NCDK.QSAR.Result;
 using NCDK.Tools.Manipulator;
+
 using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
@@ -42,7 +43,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestEhccentricConnectivityIndex()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

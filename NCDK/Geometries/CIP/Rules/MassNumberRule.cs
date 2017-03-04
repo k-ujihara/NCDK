@@ -27,16 +27,12 @@ using System.IO;
 
 namespace NCDK.Geometries.CIP.Rules
 {
-    /**
-     * Compares to {@link ILigand}s based on mass numbers.
-     *
-     * @cdk.module cip
-     * @cdk.githash
-     */
-#if TEST
-    public
-#endif
-    class MassNumberRule : ISequenceSubRule<ILigand>
+    /// <summary>
+    /// Compares to <see cref="ILigand"/>s based on mass numbers.
+    /// </summary>
+    // @cdk.module cip
+    // @cdk.githash
+    internal class MassNumberRule : ISequenceSubRule<ILigand>
     {
         IsotopeFactory factory;
 

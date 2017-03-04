@@ -29,23 +29,23 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the writer MOL2 writer from smiles.
-     *
-     * @cdk.module test-smiles
-     * @see org.openscience.cdk.io.Mol2Writer
-     */
+    /// <summary>
+    /// TestCase for the writer MOL2 writer from smiles.
+    ///
+    // @cdk.module test-smiles
+    // @see org.openscience.cdk.io.Mol2Writer
+    /// </summary>
     [TestClass()]
     public class SMILES2Mol2WriterTest
     {
 
         private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         * @.openscience.cdk.exception.CDKException
-         * @.io.IOException
-         * @cdk.bug 2675188
-         */
+        /// <summary>
+        // @throws CDKException
+        // @throws IOException
+        // @cdk.bug 2675188
+        /// </summary>
         [TestMethod()]
         public void TestWriter1()
         {

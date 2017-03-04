@@ -23,33 +23,33 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Bonds
 {
-    /**
-     *  The calculation of bond-Polarizability is calculated determining the
-     *  difference the Sigma electronegativity on atoms A and B of a bond.
-     *  <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td>bondPosition</td>
-     *     <td>0</td>
-     *     <td>The position of the target bond</td>
-     *   </tr>
-     * </table>
-     *
-     *
-     * @author      Miguel Rojas
-     * @cdk.created 2006-05-08
-     * @cdk.module  qsarbond
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
-     *
-     * @see Electronegativity
-     */
+    /// <summary>
+    ///  The calculation of bond-Polarizability is calculated determining the
+    ///  difference the Sigma electronegativity on atoms A and B of a bond.
+    ///  <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td>bondPosition</td>
+    ///     <td>0</td>
+    ///     <td>The position of the target bond</td>
+    ///   </tr>
+    /// </table>
+    ///
+    ///
+    // @author      Miguel Rojas
+    // @cdk.created 2006-05-08
+    // @cdk.module  qsarbond
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
+    ///
+    /// <seealso cref="Electronegativity"/>
+    /// </summary>
     public class BondSigmaElectronegativityDescriptor : AbstractBondDescriptor, IBondDescriptor
     {
         /// <summary>Number of maximum iterations*/

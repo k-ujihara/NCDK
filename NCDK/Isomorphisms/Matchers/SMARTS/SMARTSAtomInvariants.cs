@@ -34,10 +34,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /**
      * Computes and stores atom invariants in a single object. The atom invariants
-     * are utilised as additional information for the {@link SMARTSAtom}s to match.
+     * are utilised as additional information for the <see cref="SMARTSAtom"/>s to match.
      * The values provide additional invariants which are not defined in the {@link
      * IAtom} API and avoids storing multiple properties in a type unsafe map
-     * ({@link IAtom#SetProperty(Object, Object)}). <p/> Depending on the SMARTS
+     * (<see cref="IAtom.SetProperty(Object, Object)"/>). <p/> Depending on the SMARTS
      * implementation different values for the ring information may be set. The
      * choice of ring set affects {@link #RingNumber} and {@link #RingSize}.
      * Some implementations store all ring sizes whilst others (Daylight) store only
@@ -51,10 +51,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
      * @author John May
      * @cdk.module smarts
      */
-#if TEST
-    public
-#endif
-    sealed class SMARTSAtomInvariants
+    internal sealed class SMARTSAtomInvariants
     {
         /// <summary>Property key to index the class by.</summary>
         public const string Key = "SMARTS.INVARIANTS";
@@ -181,19 +178,19 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         public int TotalHydrogenCount => totalHydrogenCount;
 
         /**
-         * Computes {@link SMARTSAtomInvariants} and stores on the {@link #Key} or
-         * each {@link IAtom} in the {@code container}. The {@link
+         * Computes <see cref="SMARTSAtomInvariants"/> and stores on the {@link #Key} or
+         * each <see cref="IAtom"/> in the <paramref name="container"/>. The {@link
          * CDKConstants#ISINRING} is also set for each bond. This configuration does
          * not include ring information and values are left as unset.
          * Ring membership is still configured but not ring size.
          *
-         * <blockquote><pre>
+         * <blockquote><code>
          *     IAtomContainer container = ...;
          *     SMARTSAtomInvariants.ConfigureDaylightWithoutRingInfo(container);
          *     foreach (var atom in container.Atoms) {
          *         SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
          *     }
-         * </pre></blockquote>
+         * </code></blockquote>
          *
          * @param container the container to configure
          */
@@ -205,21 +202,21 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         /**
-         * Computes {@link SMARTSAtomInvariants} and stores on the {@link #Key} or
-         * each {@link IAtom} in the {@code container}. The {@link
+         * Computes <see cref="SMARTSAtomInvariants"/> and stores on the {@link #Key} or
+         * each <see cref="IAtom"/> in the <paramref name="container"/>. The {@link
          * CDKConstants#ISINRING} is also set for each bond. This configuration
          * includes the ring information as used by the Daylight implementation.
          * That is the Smallest Set of Smallest Rings (SSSR) is used and only the
          * smallest ring is stored for the {@link #RingSize}.
          *
-         * <blockquote><pre>
+         * <blockquote><code>
          *     IAtomContainer container = ...;
          *     SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
          *     foreach (var atom in container.Atoms) {
          *         SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
          *
          *     }
-         * </pre></blockquote>
+         * </code></blockquote>
          *
          * @param container the container to configure
          */

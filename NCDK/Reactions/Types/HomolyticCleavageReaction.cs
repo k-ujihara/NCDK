@@ -23,69 +23,68 @@ using System.Linq;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * <p>IReactionProcess which breaks the bond homogeneously leading to radical ions.
-     * It is also called homogeneous bond-breaking.Depending of the bond order,
-     * the bond will be removed or simply the order decreased.</p>
-     * <pre>A-B => [A*] + [B*]</pre>
-     * <p>It is processed by the HomolyticCleavageMechanism class</p>
-     * <pre>
-     *  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-     *  setOfReactants.Add(new AtomContainer());
-     *  IReactionProcess type = new HomolyticCleavageReaction();
-     *  object[] parameters = {bool.FALSE};
-        type.Parameters = parameters;
-     *  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-     *  </pre>
-     *
-     * <p>We have the possibility to localize the reactive center. Good method if you
-     * want to localize the reaction in a fixed point</p>
-     * <pre>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</pre>
-     * <p>Moreover you must put the parameter true</p>
-     * <p>If the reactive center is not localized then the reaction process will
-     * try to find automatically the possible reactive center.</p>
-     *
-     *
-     * @author         Miguel Rojas
-     *
-     * @cdk.created    2006-10-27
-     * @cdk.module     reaction
-     * @cdk.githash
-     * @cdk.set        reaction-types
-     *
-     * @see HomolyticCleavageMechanism
-     **/
+    /// <summary>
+    /// <para>IReactionProcess which breaks the bond homogeneously leading to radical ions.
+    /// It is also called homogeneous bond-breaking.Depending of the bond order,
+    /// the bond will be removed or simply the order decreased.</para>
+    /// <code>A-B => [A*] + [B*]</code>
+    /// <para>It is processed by the HomolyticCleavageMechanism class</para>
+    /// <code>
+    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
+    ///  setOfReactants.Add(new AtomContainer());
+    ///  IReactionProcess type = new HomolyticCleavageReaction();
+    ///  object[] parameters = {bool.FALSE};
+    ///  type.Parameters = parameters;
+    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
+    ///  </code>
+    ///
+    /// <para>We have the possibility to localize the reactive center. Good method if you
+    /// want to localize the reaction in a fixed point</para>
+    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <para>Moreover you must put the parameter true</para>
+    /// <para>If the reactive center is not localized then the reaction process will
+    /// try to find automatically the possible reactive center.</para>
+    ///
+    ///
+    // @author         Miguel Rojas
+    ///
+    // @cdk.created    2006-10-27
+    // @cdk.module     reaction
+    // @cdk.githash
+    // @cdk.set        reaction-types
+    ///
+    /// <seealso cref="HomolyticCleavageMechanism"/>
+    ///*/
     public class HomolyticCleavageReaction : ReactionEngine, IReactionProcess
     {
 
-        /**
-         * Constructor of the HomolyticCleavageReaction object.
-         *
-         */
+        /// <summary>
+        /// Constructor of the HomolyticCleavageReaction object.
+        ///
+        /// </summary>
         public HomolyticCleavageReaction() { }
 
-        /**
-         *  Gets the specification attribute of the HomolyticCleavageReaction object.
-         *
-         *@return    The specification value
-         */
+        /// <summary>
+        ///  Gets the specification attribute of the HomolyticCleavageReaction object.
+        ///
+        /// <returns>The specification value</returns>
+        /// </summary>
 
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#HomolyticCleavage", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /**
-         *  Initiate process.
-         *  It is needed to call the addExplicitHydrogensToSatisfyValency
-         *  from the class tools.HydrogenAdder.
-         *
-         *
-         *@exception  CDKException  Description of the Exception
-         * @param  reactants         reactants of the reaction.
-        * @param  agents            agents of the reaction (Must be in this case null).
-         */
-
+        /// <summary>
+        ///  Initiate process.
+        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
+        ///  from the class tools.HydrogenAdder.
+        ///
+        ///
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <param name="reactants">reactants of the reaction.</param>
+       /// <param name="agents">agents of the reaction (Must be in this case null).</param>
+        /// </summary>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
 
@@ -103,10 +102,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /*
-             * if the parameter hasActiveCenter is not fixed yet, set the active
-             * centers
-             */
+            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -142,19 +138,19 @@ namespace NCDK.Reactions.Types
             return setOfReactions;
         }
 
-        /**
-         * set the active center for this molecule.
-         * The active center will be those which correspond with A-B. If
-         * the bond is simple, it will be broken forming two fragments.
-         * <pre>
-         * A: Atom
-         * #/=/-: bond
-         * B: Atom
-         *  </pre>
-         *
-         * @param reactant The molecule to set the activity
-         * @
-         */
+        /// <summary>
+        /// set the active center for this molecule.
+        /// The active center will be those which correspond with A-B. If
+        /// the bond is simple, it will be broken forming two fragments.
+        /// <code>
+        /// A: Atom
+        /// #/=/-: bond
+        /// B: Atom
+        ///  </code>
+        ///
+        /// <param name="reactant">The molecule to set the activity</param>
+        // @
+        /// </summary>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var bond in reactant.Bonds)

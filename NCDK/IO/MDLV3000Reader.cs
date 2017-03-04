@@ -32,20 +32,20 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
-    /**
-     * Class that implements the MDL mol V3000 format. This reader reads the
-     * element symbol and 2D or 3D coordinates from the ATOM block.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @author      Egon Willighagen <egonw@users.sf.net>
-     * @cdk.created 2006
-     *
-     * @cdk.keyword MDL molfile V3000
-     * @cdk.require java1.4+
-     */
+    /// <summary>
+    /// Class that implements the MDL mol V3000 format. This reader reads the
+    /// element symbol and 2D or 3D coordinates from the ATOM block.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @author      Egon Willighagen <egonw@users.sf.net>
+    // @cdk.created 2006
+    ///
+    // @cdk.keyword MDL molfile V3000
+    // @cdk.require java1.4+
+    /// </summary>
     public class MDLV3000Reader : DefaultChemObjectReader
     {
 
@@ -159,10 +159,10 @@ namespace NCDK.IO
             return readData;
         }
 
-        /**
-         * @ when no file content is detected
-         * @return Last line read
-         */
+        /// <summary>
+        // @ when no file content is detected
+        /// <returns>Last line read</returns>
+        /// </summary>
         public string ReadHeader(IAtomContainer readData)
         {
             // read four lines
@@ -191,11 +191,11 @@ namespace NCDK.IO
             return ReadLine();
         }
 
-        /**
-         * Reads the atoms, coordinates and charges.
-         *
-         * <p>IMPORTANT: it does not support the atom list and its negation!
-         */
+        /// <summary>
+        /// Reads the atoms, coordinates and charges.
+        ///
+        /// <p>IMPORTANT: it does not support the atom list and its negation!
+        /// </summary>
         public void ReadAtomBlock(IAtomContainer readData)
         {
             Trace.TraceInformation("Reading ATOM block");
@@ -369,9 +369,9 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Reads the bond atoms, order and stereo configuration.
-         */
+        /// <summary>
+        /// Reads the bond atoms, order and stereo configuration.
+        /// </summary>
         public void ReadBondBlock(IAtomContainer readData)
         {
             Trace.TraceInformation("Reading BOND block");
@@ -542,9 +542,9 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Reads labels.
-         */
+        /// <summary>
+        /// Reads labels.
+        /// </summary>
         public void ReadSGroup(IAtomContainer readData)
         {
             bool foundEND = false;
@@ -636,12 +636,12 @@ namespace NCDK.IO
             }
         }
 
-        /**
-         * Reads the command on this line. If the line is continued on the next, that
-         * part is added.
-         *
-         * @return Returns the command on this line.
-         */
+        /// <summary>
+        /// Reads the command on this line. If the line is continued on the next, that
+        /// part is added.
+        ///
+        /// <returns>Returns the command on this line.</returns>
+        /// </summary>
         private string ReadCommand(string line)
         {
             if (line.StartsWith("M  V30 "))

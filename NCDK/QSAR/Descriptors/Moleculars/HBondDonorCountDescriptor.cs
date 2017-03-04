@@ -21,43 +21,43 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
-    /**
-     * This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
-     * <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
-     * The following groups are counted as hydrogen bond donors:
-     * <ul>
-     * <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
-     * <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
-     * </ul>
-     * <p>
-     * This descriptor uses no parameters.
-     * <p>
-     * This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
-     * hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
-     *
-     * Returns a single value named <i>nHBDon</i>.
-     *
-     * <p>This descriptor uses these parameters:
-     * <table border="1">
-     *   <tr>
-     *     <td>Name</td>
-     *     <td>Default</td>
-     *     <td>Description</td>
-     *   </tr>
-     *   <tr>
-     *     <td></td>
-     *     <td></td>
-     *     <td>no parameters</td>
-     *   </tr>
-     * </table>
-     *
-     * @author      ulif
-     * @cdk.created 2005-22-07
-     * @cdk.module  qsarmolecular
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:hBondDonors
-     */
+    /// <summary>
+    /// This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
+    /// <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+    /// The following groups are counted as hydrogen bond donors:
+    /// <ul>
+    /// <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
+    /// <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
+    /// </ul>
+    /// <p>
+    /// This descriptor uses no parameters.
+    /// <p>
+    /// This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
+    /// hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
+    ///
+    /// Returns a single value named <i>nHBDon</i>.
+    ///
+    /// <p>This descriptor uses these parameters:
+    /// <table border="1">
+    ///   <tr>
+    ///     <td>Name</td>
+    ///     <td>Default</td>
+    ///     <td>Description</td>
+    ///   </tr>
+    ///   <tr>
+    ///     <td></td>
+    ///     <td></td>
+    ///     <td>no parameters</td>
+    ///   </tr>
+    /// </table>
+    ///
+    // @author      ulif
+    // @cdk.created 2005-22-07
+    // @cdk.module  qsarmolecular
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:hBondDonors
+    /// </summary>
     public class HBondDonorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "nHBDon" };
@@ -137,7 +137,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     }
                 }
                 continue_atomloop:
-	                ;
+                    ;
             }
 
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(hBondDonors), DescriptorNames);

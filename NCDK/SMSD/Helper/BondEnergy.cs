@@ -24,14 +24,14 @@ using System;
 
 namespace NCDK.SMSD.Helper
 {
-    /**
-     * Helper class defining the energy for a bond type. The bond
-     * type is defined as to element symbols and a bond order.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// Helper class defining the energy for a bond type. The bond
+    /// type is defined as to element symbols and a bond order.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class BondEnergy
     {
         private string symbol1 = "";
@@ -39,15 +39,15 @@ namespace NCDK.SMSD.Helper
         private BondOrder bondOrder = BondOrder.Unset;
         private int energy = -1;
 
-        /**
-         * Creates a new bond energy for the given elements and
-         * bond order.
-         *
-         * @param symbol1 element symbol for the first atom
-         * @param symbol2 element symbol for the second atom
-         * @param order   bond order
-         * @param energy  energy for this bond type
-         */
+        /// <summary>
+        /// Creates a new bond energy for the given elements and
+        /// bond order.
+        ///
+        /// <param name="symbol1">element symbol for the first atom</param>
+        /// <param name="symbol2">element symbol for the second atom</param>
+        /// <param name="order">bond order</param>
+        /// <param name="energy">energy for this bond type</param>
+        /// </summary>
         public BondEnergy(string symbol1, string symbol2, BondOrder order, int energy)
         {
             this.symbol1 = symbol1;
@@ -56,32 +56,32 @@ namespace NCDK.SMSD.Helper
             this.energy = energy;
         }
 
-        /**
-         * Returns the element symbol of the first atom.
-         *
-         * @return the element symbol as {@link string}
-         */
+        /// <summary>
+        /// Returns the element symbol of the first atom.
+        ///
+        /// <returns>the element symbol as <see cref="string"/></returns>
+        /// </summary>
         public string SymbolFirstAtom => symbol1;
 
-        /**
-         * Returns the element symbol of the second atom.
-         *
-         * @return the element symbol as {@link string}
-         */
+        /// <summary>
+        /// Returns the element symbol of the second atom.
+        ///
+        /// <returns>the element symbol as <see cref="string"/></returns>
+        /// </summary>
         public string SymbolSecondAtom => symbol2;
 
-        /**
-         * Returns the bond order for this bond type energy.
-         *
-         * @return the bond order of the bond type as {@link Order}
-         */
+        /// <summary>
+        /// Returns the bond order for this bond type energy.
+        ///
+        /// <returns>the bond order of the bond type as <see cref="Order"/></returns>
+        /// </summary>
         public BondOrder BondOrder => bondOrder;
 
-        /**
-         * Returns the energy for this bond type.
-         *
-         * @return the bond energy as integer.
-         */
+        /// <summary>
+        /// Returns the energy for this bond type.
+        ///
+        /// <returns>the bond energy as integer.</returns>
+        /// </summary>
         public int Energy => energy;
 
         public bool Matches(IBond bond)

@@ -24,6 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -31,11 +32,11 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-	 * TestCase for reading CML files.
-	 *
-	 * @cdk.module test-io
-	 */
+    /// <summary>
+    /// TestCase for reading CML files.
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public class CMLReaderTest : SimpleChemObjectReaderTest
     {
@@ -53,20 +54,20 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public override void TestSetReader_Reader()
         {
-            var ins = typeof(ChemObjectReaderTest).Assembly.GetManifestResourceStream(testFile);
+            var ins = ResourceLoader.GetAsStream(testFile);
             simpleReader.SetReader(new StreamReader(ins));
         }
 
-        /**
-		 * Ensure stereoBond content is read if the usual "dictRef" attribute is not
-		 * supplied
-		 *
-		 * @cdk.bug 1248
-		 */
+        /// <summary>
+        /// Ensure stereoBond content is read if the usual "dictRef" attribute is not
+        /// supplied
+        ///
+        // @cdk.bug 1248
+        /// </summary>
         [TestMethod()]
         public void TestBug1248()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
             CMLReader reader = new CMLReader(ins);
             try
             {
@@ -94,15 +95,15 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * Ensure correct atomic numbers are read and does not default to 1
-		 *
-		 * @cdk.bug 1245
-		 */
+        /// <summary>
+        /// Ensure correct atomic numbers are read and does not default to 1
+        ///
+        // @cdk.bug 1245
+        /// </summary>
         [TestMethod()]
         public void TestBug1245()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol.cml");
             CMLReader reader = new CMLReader(ins);
             try
             {
@@ -133,36 +134,36 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * Ensures that when multiple stereo is set the dictRef is favoured
-		 * and the charContent is not used. Here is an example of what we expect
-		 * to read.
-		 *
-		 * <pre>{@code
-		 * <bond atomRefs2="a1 a4" order="1">
-		 *     <bondStereo dictRef="cml:W"/> <!-- should be W -->
-		 * </bond>
-		 *
-		 * <bond atomRefs2="a1 a4" order="1">
-		 *     <bondStereo>W</bondStereo> <!-- should be W -->
-		 * </bond>
-		 *
-		 * <bond atomRefs2="a1 a4" order="1">
-		 *    <bondStereo dictRef="cml:W">W</bondStereo> <!-- should be W -->
-		 * </bond>
-		 *
-		 * <bond atomRefs2="a1 a4" order="1">
-		 *    <bondStereo dictRef="cml:W">H</bondStereo> <!-- should be W -->
-		 * </bond>
-		 * }</pre>
-		 *
-		 * @cdk.bug 1274
-		 * @see #TestBug1248()
-		 */
+        /// <summary>
+        /// Ensures that when multiple stereo is set the dictRef is favoured
+        /// and the charContent is not used. Here is an example of what we expect
+        /// to read.
+        ///
+        /// <pre>{@code
+        /// <bond atomRefs2="a1 a4" order="1">
+        ///     <bondStereo dictRef="cml:W"/> <!-- should be W -->
+        /// </bond>
+        ///
+        /// <bond atomRefs2="a1 a4" order="1">
+        ///     <bondStereo>W</bondStereo> <!-- should be W -->
+        /// </bond>
+        ///
+        /// <bond atomRefs2="a1 a4" order="1">
+        ///    <bondStereo dictRef="cml:W">W</bondStereo> <!-- should be W -->
+        /// </bond>
+        ///
+        /// <bond atomRefs2="a1 a4" order="1">
+        ///    <bondStereo dictRef="cml:W">H</bondStereo> <!-- should be W -->
+        /// </bond>
+        /// }</pre>
+        ///
+        // @cdk.bug 1274
+        /// <seealso cref="TestBug1248"/>
+        /// </summary>
         [TestMethod()]
         public void TestBug1274()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-multipleBondStereo.cml");
             CMLReader reader = new CMLReader(ins);
             try
             {
@@ -191,16 +192,16 @@ namespace NCDK.IO
             }
         }
 
-        /**
-		 * Ensures that {@code <bondStereo dictRef="cml:"/>} doesn't cause an exception
-		 *
-		 * @cdk.bug 1275
-		 */
+        /// <summary>
+        /// Ensures that {@code <bondStereo dictRef="cml:"/>} doesn't cause an exception
+        ///
+        // @cdk.bug 1275
+        /// </summary>
         [TestMethod()]
         public void TestBug1275()
         {
 
-            var ins = GetType().Assembly.GetManifestResourceStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.(1R)-1-aminoethan-1-ol-malformedDictRef.cml");
             CMLReader reader = new CMLReader(ins);
             try
             {
@@ -230,7 +231,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestWedgeBondParsing()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream("NCDK.Data.CML.AZD5423.xml");
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.CML.AZD5423.xml");
             CMLReader reader = new CMLReader(ins);
             try
             {
@@ -329,7 +330,7 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMixedNamespaces()
         {
-            var ins = GetType().Assembly.GetManifestResourceStream(this.GetType(), "US06358966-20020319-C00001-enr.cml");
+            var ins = ResourceLoader.GetAsStream(this.GetType(), "US06358966-20020319-C00001-enr.cml");
             CMLReader reader = new CMLReader(ins);
             try
             {

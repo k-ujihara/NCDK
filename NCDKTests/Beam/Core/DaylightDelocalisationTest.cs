@@ -4,7 +4,7 @@ using NCDK.Common.Base;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class DaylightDelocalisationTest
     {
         void Assert_AreEqual(object expected, object actual)
@@ -21,7 +21,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void azulene()
+        public void Azulene()
         {
             Graph g = Graph.FromSmiles("[CH]1=[CH][C]2=[CH][CH]=[CH][CH]=[CH][C]2=[CH]1");
             AllCycles d = AllCycles.DaylightModel(g);
@@ -83,7 +83,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void thiophene()
+        public void Thiophene()
         {
             Graph g = Graph.FromSmiles("[S]1[CH]=[CH][CH]=[CH]1");
             AllCycles d = AllCycles.DaylightModel(g);
@@ -164,7 +164,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void noroborane()
+        public void Noroborane()
         {
             Graph g = Graph.FromSmiles("[CH2]=[C]1[C]2=[CH][CH]=[C]1[N]=[CH]2");
             AllCycles d = AllCycles.DaylightModel(g);
@@ -173,7 +173,7 @@ namespace NCDK.Beam
 
         // http://www.eyesopen.com/docs/toolkits/current/html/OEChem_TK-python/_images/OEAssignAromaticFlags_Table.png
         /* ignore [TestMethod()]*/
-        public void openeye_comparison_5()
+        public void Openeye_comparison_5()
         {
             Graph g = Graph.FromSmiles("[NH]1[C]2=[CH][CH]=[C]1[CH]=[C]3[CH]=[CH][C]([CH]=[C]4[NH][C]([CH]=[CH]4)=[CH][C]5=[N][C]([CH]=[CH]5)=[CH]2)=[N]3");
             AllCycles d = AllCycles.DaylightModel(g);
@@ -350,117 +350,117 @@ namespace NCDK.Beam
 
         // 2 electrons from the lone-pair
         [TestMethod()]
-        public void nitrogen_5_memberRing()
+        public void Nitrogen_5_memberRing()
         {
             Test("N1C=CC=C1", "[nH]1cccc1");
         }
 
         // 1 electron from the double-bond
         [TestMethod()]
-        public void nitrogen_6_memberRing()
+        public void Nitrogen_6_memberRing()
         {
             Test("N=1C=CC=CC1", "n1ccccc1");
         }
 
         // 0 electrons (Sp3)
         [TestMethod()]
-        public void nitrogen_cation_5_memberRing()
+        public void Nitrogen_cation_5_memberRing()
         {
             Test("[NH2+]1C=CC=C1", "[NH2+]1C=CC=C1");
         }
 
         // 0 electrons (Sp3)
         [TestMethod()]
-        public void nitrogen_cation_6_memberRing()
+        public void Nitrogen_cation_6_memberRing()
         {
             Test("[NH2+]1C=CC=C1", "[NH2+]1C=CC=C1");
         }
 
         // 0 electrons (Sp3) note - 6 electrons in ring thus 4n+2 valid
         [TestMethod()]
-        public void nitrogen_cation_6_memberRing2()
+        public void Nitrogen_cation_6_memberRing2()
         {
             Test("N1C=C[NH2+]C=C1", "N1C=C[NH2+]C=C1");
         }
 
         // 0 electrons (Sp2) - 4n+2 not valid
         [TestMethod()]
-        public void nitrogen_dication_5_memberRing()
+        public void Nitrogen_dication_5_memberRing()
         {
             Test("[NH+2]1C=CC=C1", "[NH+2]1C=CC=C1");
         }
 
         // 0 electrons (Sp2) - 4n+2 valid but abnormal charge
         [TestMethod()]
-        public void nitrogen_dication_6_memberRing()
+        public void Nitrogen_dication_6_memberRing()
         {
             Test("N1C=C[NH+2]C=C1", "N1C=C[NH+2]C=C1");
         }
 
         // 2 electrons (lone pair)
         [TestMethod()]
-        public void nitrogen_anion_5_memberRing()
+        public void Nitrogen_anion_5_memberRing()
         {
             Test("[N-]1C=CC=C1", "[n-]1cccc1");
         }
 
         // 2 electrons (lone pair) - 4n+2 not valid, unusual valence
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing()
+        public void Nitrogen_anion_6_memberRing()
         {
             Test("[N-]=1C=CC=CC1", "[N-]=1C=CC=CC1");
         }
 
         // 2 electrons (lone pair) - 4n+2 valid - not aromatic
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing2()
+        public void Nitrogen_anion_6_memberRing2()
         {
             Test("[N-]1C=CNC=C1", "[N-]1C=CNC=C1");
         }
 
         // 1 electron (double bond) - 4n+2 valid - but Sp3 - not aromatic
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing3()
+        public void Nitrogen_anion_6_memberRing3()
         {
             Test("[NH2-]=1C=CC=CC1", "[NH2-]=1C=CC=CC1");
         }
 
         // 1 electron (double bond) - 4n+2 valid - but not aromatic (2 double bonds?)
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing_exoCyclic_N()
+        public void Nitrogen_anion_6_memberRing_exoCyclic_N()
         {
             Test("[N]=1(=N)C=CC=CC1", "[N]=1(=N)C=CC=CC1");
         }
 
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing_exoCyclic_O()
+        public void Nitrogen_anion_6_memberRing_exoCyclic_O()
         {
             Test("N=1(=O)C=CC=CC1", "n1(=O)ccccc1");
         }
 
         [TestMethod()]
-        public void nitrogen_anion_6_memberRing_exoCyclic_S()
+        public void Nitrogen_anion_6_memberRing_exoCyclic_S()
         {
             Test("[N]=1(=S)C=CC=CC1", "[N]=1(=S)C=CC=CC1");
         }
 
         // okay it doesn't given 2 electron (note 4n+2 valid if case)
         [TestMethod()]
-        public void nitrogen_2_doubleBond_exocyclic_N()
+        public void Nitrogen_2_doubleBond_exocyclic_N()
         {
             Test("C=C1C=C[N](=N)=C1", "C=C1C=C[N](=N)=C1");
         }
 
         // okay it doesn't given 0 electron (note 4n+2 valid if case)
         [TestMethod()]
-        public void nitrogen_2_doubleBond_exocyclic_O()
+        public void Nitrogen_2_doubleBond_exocyclic_O()
         {
             Test("N=[N]1=COC=C1", "N=[N]1=COC=C1");
         }
 
         // 2 electrons from lone pair
         [TestMethod()]
-        public void nitrogen_anion()
+        public void Nitrogen_anion()
         {
             Test("O=C1C=C[N-]C=C1", "O=c1cc[n-]cc1");
         }
@@ -468,57 +468,57 @@ namespace NCDK.Beam
         /* Oxygen Examples */
 
         [TestMethod()]
-        public void oxygen_5_member_ring()
+        public void Oxygen_5_member_ring()
         {
             Test("O1C=CC=C1", "o1cccc1");
         }
 
         // 4n+2 invalid
         [TestMethod()]
-        public void oxygen_6_member_ring()
+        public void Oxygen_6_member_ring()
         {
             Test("C=C1C=COC=C1", "C=C1C=COC=C1");
         }
 
         // 4n+2 not invalid
         [TestMethod()]
-        public void oxygen_7_member_ring()
+        public void Oxygen_7_member_ring()
         {
             Test("O1C=CC=CC=C1", "O1C=CC=CC=C1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_5_member_ring()
+        public void Oxygen_cation_5_member_ring()
         {
             Test("[OH+]1C=CC=C1", "[OH+]1C=CC=C1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_6_member_ring()
+        public void Oxygen_cation_6_member_ring()
         {
             Test("C=C1C=C[OH+]C=C1", "C=C1C=C[OH+]C=C1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_7_member_ring()
+        public void Oxygen_cation_7_member_ring()
         {
             Test("[OH+]1C=CC=CC=C1", "[OH+]1C=CC=CC=C1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_5_member_ring_piBond()
+        public void Oxygen_cation_5_member_ring_piBond()
         {
             Test("C=C1C=C[O+]=C1", "C=C1C=C[O+]=C1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_6_member_ring_piBond()
+        public void Oxygen_cation_6_member_ring_piBond()
         {
             Test("C1=CC=[O+]C=C1", "c1cc[o+]cc1");
         }
 
         [TestMethod()]
-        public void oxygen_cation_7_member_ring_piBond()
+        public void Oxygen_cation_7_member_ring_piBond()
         {
             Test("C=C1C=CC=C[O+]=C1", "C=C1C=CC=C[O+]=C1");
         }
@@ -526,63 +526,63 @@ namespace NCDK.Beam
         /* Sulphur Examples */
 
         [TestMethod()]
-        public void sulfur_5_member_ring()
+        public void Sulfur_5_member_ring()
         {
             Test("S1C=CC=C1", "s1cccc1");
         }
 
         // 4n+2 invalid
         [TestMethod()]
-        public void sulfur_6_member_ring()
+        public void Sulfur_6_member_ring()
         {
             Test("C=C1C=CSC=C1", "C=C1C=CSC=C1");
         }
 
         // 4n+2 not invalid
         [TestMethod()]
-        public void sulfur_7_member_ring()
+        public void Sulfur_7_member_ring()
         {
             Test("S1C=CC=CC=C1", "S1C=CC=CC=C1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_5_member_ring()
+        public void Sulfur_cation_5_member_ring()
         {
             Test("[SH+]1C=CC=C1", "[SH+]1C=CC=C1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_6_member_ring()
+        public void Sulfur_cation_6_member_ring()
         {
             Test("C=C1C=C[SH+]C=C1", "C=C1C=C[SH+]C=C1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_7_member_ring()
+        public void Sulfur_cation_7_member_ring()
         {
             Test("[SH+]1C=CC=CC=C1", "[SH+]1C=CC=CC=C1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_5_member_ring_piBond()
+        public void Sulfur_cation_5_member_ring_piBond()
         {
             Test("C=C1C=C[S+]=C1", "C=C1C=C[S+]=C1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_6_member_ring_piBond()
+        public void Sulfur_cation_6_member_ring_piBond()
         {
             Test("C1=CC=[S+]C=C1", "c1cc[s+]cc1");
         }
 
         [TestMethod()]
-        public void sulfur_cation_7_member_ring_piBond()
+        public void Sulfur_cation_7_member_ring_piBond()
         {
             Test("C=C1C=CC=C[S+]=C1", "C=C1C=CC=C[S+]=C1");
         }
 
         [TestMethod()]
-        public void nitrogen_3_valent_acyclic()
+        public void Nitrogen_3_valent_acyclic()
         {
             Test("C=N1C=CC(=C)C=C1", "C=N1C=CC(=C)C=C1");
             Test("N=N1C=CC(=C)C=C1", "N=N1C=CC(=C)C=C1");
@@ -604,7 +604,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void nitrogen_5_valent_acyclic()
+        public void Nitrogen_5_valent_acyclic()
         {
             Test("C=[N]1=CC=CC=C1", "C=[N]1=CC=CC=C1");
             Test("N=[N]1=CC=CC=C1", "N=[N]1=CC=CC=C1");
@@ -636,7 +636,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void sulfur_acyclic()
+        public void Sulfur_acyclic()
         {
             Test("C=S1C=CC=C1", "C=S1C=CC=C1");
             Test("N=S1C=CC=C1", "N=S1C=CC=C1");
@@ -692,64 +692,64 @@ namespace NCDK.Beam
         /// </summary>
 
         [TestMethod()]
-        public void bo_6678()
+        public void Bo_6678()
         {
             // note different from daylight due to their use of SSSR
             Test("O=C1OC(=O)C2=C3C1=CC=C1C(=O)OC(=O)C(C=C2)=C31",
                  "O=C1OC(=O)c2c3c1ccc4C(=O)OC(=O)c(cc2)c34");
         }
 
-        [TestMethod()] public void bo_8317()
+        [TestMethod()] public void Bo_8317()
         {
             // note different from daylight due to their use of SSS
             Test("O=C1C2=CC=CC=C2C2=C3C1=CC=C1C4=CC=C5C(=O)C6=CC=CC=C6C6=C5C4=C(C=C6)C(C=C2)=C31",
              "O=C1c2ccccc2c3c4c1ccc5c6ccc7C(=O)c8ccccc8c9c7c6c(cc9)c(cc3)c45");
         }
 
-        [TestMethod()] public void bo_8978()
+        [TestMethod()] public void Bo_8978()
         {
             Test("C1=CC=C2C(=C1)C1=N\\C\\2=N/C2=N/C(=N\\C3=N\\C(=N/C4=N/C(=N\\1)/C1=CC=CC=C41)\\C1=CC=CC=C31)/C1=CC=CC=C21",
              "c1ccc2c(c1)c3nc2nc4nc(nc5nc(nc6nc(n3)c7ccccc67)c8ccccc58)c9ccccc49");
         }
 
-        [TestMethod()] public void bo_18301()
+        [TestMethod()] public void Bo_18301()
         {
             // note different from daylight due to their use of SSSR
             Test("O=C1C=CC2=C3C1=CC=C1C(=O)C4=CC=CC=C4C(C=C2)=C31",
              "O=C1C=Cc2c3c1ccc4C(=O)c5ccccc5c(cc2)c34");
         }
 
-        [TestMethod()] public void bo_21963()
+        [TestMethod()] public void Bo_21963()
         {
             Test("O=C1C2=CC=CC3=C2C2=C(C=CC=C12)C=C3",
              "O=c1c2cccc3c2c4c(cccc14)cc3");
         }
 
-        [TestMethod()] public void bo_25756()
+        [TestMethod()] public void Bo_25756()
         {
             Test("NC1=C2C3=CC=CC=C3C3=CC=CC(C=C1)=C23",
              "Nc1c2c3ccccc3c4cccc(cc1)c24");
         }
 
-        [TestMethod()] public void bo_39171()
+        [TestMethod()] public void Bo_39171()
         {
             Test("O=C1C(=O)C2=CC3=CC=CC=C3C3=C2C2=C(C=CC=C12)C=C3",
              "O=c1c(=O)c2cc3ccccc3c4c2c5c(cccc15)cc4");
         }
 
-        [TestMethod()] public void bo_75696()
+        [TestMethod()] public void Bo_75696()
         {
             Test("O=C1NC(=O)C2=CC3=C(C=C12)C(=O)NC3=O",
              "O=c1[nH]c(=O)c2cc3c(cc12)c(=O)[nH]c3=O");
         }
 
-        [TestMethod()] public void bo_78222()
+        [TestMethod()] public void Bo_78222()
         {
             Test("[O-]S(=O)(=O)OC1=C2C=CC3=C(NC4=CC=C5C6=CC=CC=C6C(=O)C6=C5C4=C3C=C6)C2=C(OS([O-])(=O)=O)C2=CC=CC=C12",
              "[O-]S(=O)(=O)Oc1c2ccc3c([nH]c4ccc5c6ccccc6c(=O)c7c5c4c3cc7)c2c(OS([O-])(=O)=O)c8ccccc18");
         }
 
-        [TestMethod()] public void bo_83217()
+        [TestMethod()] public void Bo_83217()
         {
             Test("CN(C)C1=CC=[C-]C=C1",
              "CN(C)c1cc[c-]cc1");
@@ -759,13 +759,13 @@ namespace NCDK.Beam
         /// Daylight Examples <seealso cref="http://www.daylight.com/dayhtml_tutorials/languages/smiles/smiles_examples.html"/>
         /// </summary>
         //@Ignore("need to kekulize") 
-        public void daylightExamples()
+        public void DaylightExamples()
         {
             Test("CCc1nn(C)c2c(=O)[nH]c(nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4", "CCc1nn(C)c2c(=O)[nH]c(nc12)c3cc(ccc3OCC)S(=O)(=O)N4CCN(C)CC4");
             Test("Cc1nnc2CN=C(c3ccccc3)c4cc(Cl)ccc4-n12", "Cc1nnc2CN=C(c3ccccc3)c4cc(Cl)ccc4-n12");
             Test("CC(C)(N)Cc1ccccc1", "CC(C)(N)Cc1ccccc1");
             Test("CN1C(=O)CN=C(c2ccccc2)c3cc(Cl)ccc13", "CN1C(=O)CN=C(c2ccccc2)c3cc(Cl)ccc13");
-            Test("CN(C)C(=O)Cc1c(nc2ccc(C)cn12)c3ccc(C)cc3", "CN(C)C(=O)Cc1c(nc2ccc(C)cn12)c3ccc(C)cc3");
+            Test("CN(C)C(=O)Cc1c(nc2ccc(C)cn12)c3ccc(C)cc3", "CN(C)C(=O)Cc1c(Nc2ccc(C)cn12)c3ccc(C)cc3");
             Test("COc1ccc2[nH]c(nc2c1)S(=O)Cc3ncc(C)c(OC)c3C", "COc1ccc2[nH]c(nc2c1)S(=O)Cc3ncc(C)c(OC)c3C");
             Test("CS(=O)(=O)c1ccc(cc1)C2=C(C(=O)OC2)c3ccccc3", "CS(=O)(=O)c1ccc(cc1)C2=C(C(=O)OC2)c3ccccc3");
             Test("Fc1ccc(cc1)C2CCNCC2COc3ccc4OCOc4c3", "Fc1ccc(cc1)C2CCNCC2COc3ccc4OCOc4c3");
@@ -783,13 +783,13 @@ namespace NCDK.Beam
             Test("C/C(=C\\CO)/C=C/C=C(/C)\\C=C\\C1=C(C)CCCC1(C)C", "C/C(=C\\CO)/C=C/C=C(/C)\\C=C\\C1=C(C)CCCC1(C)C");
         }
 
-        [TestMethod()] public void non_daylight_aromatic_element()
+        [TestMethod()] public void Non_daylight_aromatic_element()
         {
             Test("CC1=CC=C2[Bi](Cl)C3=CC=CC=C3S(=O)(=O)C2=C1",
              "Cc1ccc2[Bi](Cl)c3ccccc3S(=O)(=O)c2c1");
         }
 
-        [TestMethod()] public void acyclic_charge()
+        [TestMethod()] public void Acyclic_charge()
         {
             Test("[Na+].[Na+].[S-2]",
              "[Na+].[Na+].[S-2]");

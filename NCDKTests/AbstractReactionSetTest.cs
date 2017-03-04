@@ -18,22 +18,15 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NCDK.Numerics;
-using NCDK;
 
 namespace NCDK
 {
-
-    /**
-     * Checks the functionality of {@link IReactionSet} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IReactionSet"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractReactionSetTest : AbstractChemObjectTest
     {
@@ -66,7 +59,7 @@ namespace NCDK
             IReactionSet reactionSet = (IReactionSet)NewChemObject();
             reactionSet.Add(reactionSet.Builder.CreateReaction());
             reactionSet.Clear();
-			Assert.AreEqual(0, reactionSet.Count);
+            Assert.AreEqual(0, reactionSet.Count);
         }
 
         [TestMethod()]
@@ -155,9 +148,9 @@ namespace NCDK
             }
         }
 
-        /**
-         * Method to test whether the class complies with RFC #9.
-         */
+        /// <summary>
+        /// Method to test whether the class complies with RFC #9.
+        /// </summary>
         [TestMethod()]
         public virtual void TestToString()
         {

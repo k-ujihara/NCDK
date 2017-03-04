@@ -28,29 +28,29 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Types
 {
-    /**
-     * TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest.
-     * Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
-     *
-     * @cdk.module test-reaction
-     */
+    /// <summary>
+    /// TestSuite that runs a test for the RadicalSiteHrDeltaReactionTest.
+    /// Generalized Reaction: [A*]-(C)_4-C5[H] => A([H])-(C_4)-[C5*].
+    ///
+    // @cdk.module test-reaction
+    /// </summary>
     [TestClass()]
     public class RadicalSiteHrDeltaReactionTest : ReactionProcessTest
     {
 
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         public RadicalSiteHrDeltaReactionTest()
         {
             SetReaction(typeof(RadicalSiteHrDeltaReaction));
         }
 
-        /**
-         *  The JUnit setup method
-         */
+        /// <summary>
+        ///  The JUnit setup method
+        /// </summary>
         [TestMethod()]
         public void TestRadicalSiteHrDeltaReaction()
         {
@@ -58,14 +58,14 @@ namespace NCDK.Reactions.Types
             Assert.IsNotNull(type);
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
-         * Automatic search of the center active. hexan-3-one
-         *
-         * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
+        /// Automatic search of the center active. hexan-3-one
+        ///
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
 
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
@@ -91,14 +91,14 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
-        /**
-         * A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
-         * Automatic search of the center active. hexan-3-one
-         *
-         * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit. Reaction: C([H])([H])([H])C([H])([H])C(=O)C([H])([H])C([H])C([H])[H]
+        /// Automatic search of the center active. hexan-3-one
+        ///
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -128,13 +128,13 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
         }
 
-        /**
-         * create the compound Hexan-3-one.
-         *
-         * @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// create the compound Hexan-3-one.
+        ///
+        // @cdk.inchi InChI=1/C6H12O/c1-3-5-6(7)4-2/h3-5H2,1-2H3
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -177,11 +177,11 @@ namespace NCDK.Reactions.Types
             return setOfReactants;
         }
 
-        /**
-         * Get the expected set of molecules.
-         *
-         * @return The IAtomContainerSet
-         */
+        /// <summary>
+        /// Get the expected set of molecules.
+        ///
+        /// <returns>The IAtomContainerSet</returns>
+        /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -224,11 +224,11 @@ namespace NCDK.Reactions.Types
             return setOfProducts;
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -263,11 +263,11 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[6].IsReactiveCenter);
         }
 
-        /**
-         * A unit test suite for JUnit.
-         *
-         * @return    The test suite
-         */
+        /// <summary>
+        /// A unit test suite for JUnit.
+        ///
+        /// <returns>The test suite</returns>
+        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -300,12 +300,12 @@ namespace NCDK.Reactions.Types
             Assert.AreEqual(mappedProductA3, product.Atoms[7]);
         }
 
-        /**
-         * Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-         *
-         * @param molecule          The IAtomContainer to analyze
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
+        ///
+        /// <param name="molecule">The IAtomContainer to analyze</param>
+        // @throws CDKException
+        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

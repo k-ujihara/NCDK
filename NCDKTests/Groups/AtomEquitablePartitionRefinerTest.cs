@@ -5,7 +5,7 @@ namespace NCDK.Groups
 {
     // @author maclean
     // @cdk.module test-group
-	[TestClass()]
+    [TestClass()]
     public class AtomEquitablePartitionRefinerTest : CDKTestCase
     {
         public MockAtomRefiner MakeExampleTable()

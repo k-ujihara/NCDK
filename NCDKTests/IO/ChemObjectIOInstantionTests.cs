@@ -26,13 +26,13 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    /**
-     * Tests whether all Reader and Writer classes can be instantiated.
-     *
-     * @cdk.module test-io
-     *
-     * @author  Egon Willighagen <egonw@sci.kun.nl>
-     */
+    /// <summary>
+    /// Tests whether all Reader and Writer classes can be instantiated.
+    ///
+    // @cdk.module test-io
+    ///
+    // @author  Egon Willighagen <egonw@sci.kun.nl>
+    /// </summary>
     [TestClass()]
     public class ChemObjectIOInstantionTests : CDKTestCase
     {
@@ -47,8 +47,7 @@ namespace NCDK.IO
                 try
                 {
                     Debug.WriteLine("Starting loading Formats...");
-                    var reader = new StreamReader(typeof(IResourceFormat).Assembly
-                            .GetManifestResourceStream(IO_FORMATS_LIST));
+                    var reader = new StreamReader(ResourceLoader.GetAsStream(typeof(IResourceFormat).Assembly,  IO_FORMATS_LIST));
                     int formatCount = 0;
                     string formatName;
 

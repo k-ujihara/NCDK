@@ -22,11 +22,11 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.Geometries.Volume
 {
-    /**
-     * Values in the paper are inaccurate. The spreadsheet from the SI is better.
-     *
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    /// Values in the paper are inaccurate. The spreadsheet from the SI is better.
+    ///
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class VABCVolumeTest
     {

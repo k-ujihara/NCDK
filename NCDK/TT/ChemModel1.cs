@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Text;
@@ -49,7 +50,7 @@ namespace NCDK.Default
  
                 if (setOfMolecules != null)
                     setOfMolecules.Listeners.Add(this);
-				NotifyChanged(); 
+                NotifyChanged(); 
             }
         }
 

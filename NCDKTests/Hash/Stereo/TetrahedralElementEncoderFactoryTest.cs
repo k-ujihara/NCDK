@@ -31,12 +31,12 @@ using System.Reflection;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
-     * @author John May
-     * @cdk.module test-hash
-     * @see org.openscience.cdk.hash.HashCodeScenariosTest
-     */
+    /// <summary>
+    /// See {@link org.openscience.cdk.hash.HashCodeScenariosTest} for examples.
+    // @author John May
+    // @cdk.module test-hash
+    // @see org.openscience.cdk.hash.HashCodeScenariosTest
+    /// </summary>
     [TestClass()]
     public class TetrahedralElementEncoderFactoryTest
     {

@@ -20,13 +20,13 @@ using System;
 
 namespace NCDK.Reactions
 {
-    /**
-     * Class that is used to distribute reactions specifications.
-     *
-     * @author      Miguel Rojas
-     * @cdk.module  reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class that is used to distribute reactions specifications.
+    ///
+    // @author      Miguel Rojas
+    // @cdk.module  reaction
+    // @cdk.githash
+    /// </summary>
     public class ReactionSpecification : IImplementationSpecification
     {
 
@@ -35,21 +35,21 @@ namespace NCDK.Reactions
         private string implementationIdentifier;
         private string implementationVendor;
 
-        /**
-         * Container for specifying the type of reaction.
-         *
-         * @param specificationReference Reference to a formal definition in a
-         *          dictionary (e.g. in STMML format) of the descriptor, preferably
-         *          refering to the original article. The format of the content is
-         *          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
-         * @param implementationTitle Title for the reaction process.
-         * @param implementationIdentifier Unique identifier for the actual
-         *          implementation, preferably including the exact version number of
-         *          the source code. E.g. $Id$ can be used when the source code is
-         *          in a CVS repository.
-         * @param implementationVendor Name of the organisation/person/program/whatever
-         *          who wrote/packaged the implementation.
-         */
+        /// <summary>
+        /// Container for specifying the type of reaction.
+        ///
+        /// <param name="specificationReference">Reference to a formal definition in a</param>
+        ///          dictionary (e.g. in STMML format) of the descriptor, preferably
+        ///          refering to the original article. The format of the content is
+        ///          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
+        /// <param name="implementationTitle">Title for the reaction process.</param>
+        /// <param name="implementationIdentifier">Unique identifier for the actual</param>
+        ///          implementation, preferably including the exact version number of
+        ///          the source code. E.g. $Id$ can be used when the source code is
+        ///          in a CVS repository.
+        /// <param name="implementationVendor">Name of the organisation/person/program/whatever</param>
+        ///          who wrote/packaged the implementation.
+        /// </summary>
         public ReactionSpecification(string specificationReference, string implementationTitle,
                 string implementationIdentifier, string implementationVendor)
         {

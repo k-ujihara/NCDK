@@ -22,25 +22,24 @@
  */
 namespace NCDK.Dict
 {
-    /**
-	 * This class transforms implicit references to dictionary of CDK
-	 * objects into explicit references.
-	 *
-	 * <p>The syntax of the property names used is as follows:
-	 * org.openscience.cdk.dict:self or
-	 * org.openscience.cdk.dict:field:'fieldname', where fieldname
-	 * indicates a field for this object. The name may be appended
-	 * by :'number' to allow for more than one reference.
-	 *
-	 * @author     Egon Willighagen <egonw@sci.kun.nl>
-	 * @cdk.githash
-	 * @cdk.created    2003-08-06
-	 * @cdk.keyword    dictionary, implicit CDK references
-	 * @cdk.module     dict
-	 */
+    /// <summary>
+    /// This class transforms implicit references to dictionary of CDK
+    /// objects into explicit references.
+    /// </summary>
+    /// <remarks>
+    /// The syntax of the property names used is as follows:
+    /// org.openscience.cdk.dict:self or
+    /// org.openscience.cdk.dict:field:'fieldname', where fieldname
+    /// indicates a field for this object. The name may be appended
+    /// by :'number' to allow for more than one reference.
+    ///</remarks>
+    // @author     Egon Willighagen <egonw@sci.kun.nl>
+    // @cdk.githash
+    // @cdk.created    2003-08-06
+    // @cdk.keyword    dictionary, implicit CDK references
+    // @cdk.module     dict
     public class CDKDictionaryReferences
     {
-
         private static string prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
 
         public static void MakeReferencesExplicit(IChemObject obj)
@@ -137,10 +136,8 @@ namespace NCDK.Dict
         {
             int selfCounter = 0;
             molecule.SetProperty(prefix + ":self:" + selfCounter++, "chemical:molecularEntity");
-            /*
-			 * remark: this is not strictly true... the Compendium includes the ion
-			 * pair, which normally would not considered a CDK molecule
-			 */
+            // remark: this is not strictly true... the Compendium includes the ion
+            // pair, which normally would not considered a CDK molecule
         }
 
         private static void MakeReferencesExplicitForReaction(IReaction reaction)

@@ -46,7 +46,7 @@ namespace NCDK.Config
         [ClassInitialize()]
         public static void Initialize(TestContext context)
         {
-            using (var ins = typeof(AtomTypeFactory).Assembly.GetManifestResourceStream("NCDK.IO.CML.Data.cml25b1.xsd"))
+            using (var ins = ResourceLoader.GetAsStream(typeof(AtomTypeFactory).Assembly, "NCDK.IO.CML.Data.cml25b1.xsd"))
             {
                 tmpCMLSchema = CopyFileToTmp("cml2.5.b1", ".xsd", ins, null, null);
             }
@@ -228,7 +228,7 @@ namespace NCDK.Config
 
         private void AssertValidCML(string atomTypeList, string shortcut)
         {
-            var ins = typeof(XMLIsotopeFactory).Assembly.GetManifestResourceStream(atomTypeList);
+            var ins = ResourceLoader.GetAsStream(atomTypeList);
             FileInfo tmpInput = CopyFileToTmp(shortcut, ".cmlinput", ins, "../../io/cml/data/cml25b1.xsd", new Uri(tmpCMLSchema.FullName).AbsolutePath);
             Assert.IsNotNull(ins, "Could not find the atom type list CML source");
 

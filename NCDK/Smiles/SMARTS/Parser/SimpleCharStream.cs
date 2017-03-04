@@ -20,10 +20,10 @@
 namespace NCDK.Smiles.SMARTS.Parser
 {
 
-    /**
-     * An implementation of interface CharStream, where the stream is assumed to
-     * contain only ASCII characters (without unicode processing).
-     */
+    /// <summary>
+    /// An implementation of interface CharStream, where the stream is assumed to
+    /// contain only ASCII characters (without unicode processing).
+    /// </summary>
 
     public class SimpleCharStream
     {
@@ -146,7 +146,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 if (e is System.IO.IOException)
                 {
                     --bufpos;
-                    backup(0);
+                    Backup(0);
                     if (tokenBegin == -1)
                         tokenBegin = bufpos;
                 }
@@ -227,10 +227,10 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [System.Obsolete()]
-        /**
-         * @deprecated
-         * @see #getEndColumn
-         */
+        /// <summary>
+        // @deprecated
+        /// <seealso cref="getEndColumn"/>
+        /// </summary>
 
         public int GetColumn()
         {
@@ -238,10 +238,10 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [System.Obsolete()]
-        /**
-         * @deprecated
-         * @see #getEndLine
-         */
+        /// <summary>
+        // @deprecated
+        /// <seealso cref="getEndLine"/>
+        /// </summary>
 
         public int GetLine()
         {
@@ -273,7 +273,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>Backup a number of characters.</summary>
-        public void backup(int amount)
+        public void Backup(int amount)
         {
 
             inBuf += amount;
@@ -444,9 +444,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             bufcolumn = null;
         }
 
-        /**
-         * Method to adjust line and column numbers for the start of a token.
-         */
+        /// <summary>
+        /// Method to adjust line and column numbers for the start of a token.
+        /// </summary>
         public void AdjustBeginLineColumn(int newLine, int newCol)
         {
             int start = tokenBegin;

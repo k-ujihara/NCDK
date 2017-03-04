@@ -27,23 +27,23 @@ using System.IO;
 
 namespace NCDK.SMSD.Algorithms.Single
 {
-    /**
-     * Unit testing for the {@link SingleMappingHandler} class.
-     *
-     * @author     egonw
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    /// Unit testing for the {@link SingleMappingHandler} class.
+    ///
+    // @author     egonw
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    /// </summary>
     [TestClass()]
     public class SingleMappingHandlerTest : AbstractMCSAlgorithmTest
     {
         protected override AbstractMCSAlgorithm algorithm { get; } = new SingleMappingHandler(true);
 
-        /**
-         * Test of set method, of class SingleMappingHandler.
-         * @throws Exception
-         */
+        /// <summary>
+        /// Test of set method, of class SingleMappingHandler.
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
         {
@@ -61,11 +61,11 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.IsNotNull(instance.GetFirstAtomMapping());
         }
 
-        /**
-         * Test of set method, of class SingleMappingHandler.
-         * @throws CDKException
-         * @throws IOException
-         */
+        /// <summary>
+        /// Test of set method, of class SingleMappingHandler.
+        // @throws CDKException
+        // @throws IOException
+        /// </summary>
         [TestMethod()]
         public void TestSet_String_String()
         {
@@ -74,10 +74,10 @@ namespace NCDK.SMSD.Algorithms.Single
             IAtomContainer query = new AtomContainer();
             IAtomContainer target = new AtomContainer();
 
-            Stream ins = this.GetType().Assembly.GetManifestResourceStream(molfile);
+            Stream ins = ResourceLoader.GetAsStream(molfile);
             MDLV2000Reader reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(query);
-            ins = this.GetType().Assembly.GetManifestResourceStream(queryfile);
+            ins = ResourceLoader.GetAsStream(queryfile);
             reader = new MDLV2000Reader(ins, ChemObjectReaderModes.Strict);
             reader.Read(target);
 
@@ -88,9 +88,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.AreEqual(score, smsd1.GetTanimotoSimilarity(), 0.0001);
         }
 
-        /**
-         * Test of set method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of set method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
         {
@@ -110,9 +110,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.IsNotNull(instance.GetFirstAtomMapping());
         }
 
-        /**
-         * Test of searchMCS method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of searchMCS method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public override void TestSearchMCS()
         {
@@ -132,9 +132,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.AreEqual(1, instance.GetAllMapping().Count);
         }
 
-        /**
-         * Test of getAllMapping method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of getAllMapping method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
         {
@@ -153,9 +153,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.IsNotNull(instance.GetAllMapping());
         }
 
-        /**
-         * Test of getFirstMapping method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of getFirstMapping method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
         {
@@ -174,9 +174,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.IsNotNull(instance.GetFirstMapping());
         }
 
-        /**
-         * Test of getAllAtomMapping method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of getAllAtomMapping method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
         {
@@ -195,9 +195,9 @@ namespace NCDK.SMSD.Algorithms.Single
             Assert.IsNotNull(instance.GetAllAtomMapping());
         }
 
-        /**
-         * Test of getFirstAtomMapping method, of class SingleMappingHandler.
-         */
+        /// <summary>
+        /// Test of getFirstAtomMapping method, of class SingleMappingHandler.
+        /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
         {

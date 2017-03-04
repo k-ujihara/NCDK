@@ -29,7 +29,7 @@ namespace NCDK.IO
     /// TestCase for the instantiation and functionality of the <see cref="ReaderFactory"/>.
     /// </summary>
     // @cdk.module test-pdb
-	[TestClass()]
+    [TestClass()]
     public class PDBReaderFactoryTest : AbstractReaderFactoryTest
     {
         private ReaderFactory factory = new ReaderFactory();

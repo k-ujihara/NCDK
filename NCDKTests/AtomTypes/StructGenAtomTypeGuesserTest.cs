@@ -22,9 +22,9 @@ using System.Linq;
 
 namespace NCDK.AtomTypes
 {
-    /**
-     * @cdk.module test-structgen
-     */
+    /// <summary>
+    // @cdk.module test-structgen
+    /// </summary>
     [TestClass()]
     public class StructGenAtomTypeGuesserTest : CDKTestCase
     {

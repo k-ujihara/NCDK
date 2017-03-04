@@ -492,7 +492,7 @@ namespace NCDK.Smiles.SMARTS
             }
         }
 
-        private IList<ICollection<int>> matchedAtoms(IList<IList<RMap>> bondMapping, IAtomContainer atomContainer)
+        private IList<ICollection<int>> MatchedAtoms(IList<IList<RMap>> bondMapping, IAtomContainer atomContainer)
         {
             List<ICollection<int>> atomMapping = new List<ICollection<int>>();
             // loop over each mapping

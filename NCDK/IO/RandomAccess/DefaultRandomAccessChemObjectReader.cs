@@ -26,7 +26,7 @@ using System.Collections;
 namespace NCDK.IO.RandomAccess
 {
     /// <summary>
-    /// Abstract class that {@link IRandomAccessChemObjectReader}'s can implement to
+    /// Abstract class that <see cref="IRandomAccessChemObjectReader"/>'s can implement to
     /// have it take care of basic stuff, like managing the ReaderListeners.
     /// </summary>
     // @cdk.module  io

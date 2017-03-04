@@ -26,10 +26,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Hash.Stereo
 {
-    /**
-     * @author John May
-     * @cdk.module test-hash
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-hash
+    /// </summary>
     [TestClass()]
     public class DoubleBond2DParityTest
     {
@@ -46,7 +46,7 @@ namespace NCDK.Hash.Stereo
         }
 
         [TestMethod()]
-        public void opposite()
+        public void OppositeTest()
         {
             GeometricParity geometric = new DoubleBond2DParity(new Vector2(-2.6518, 0.1473), new Vector2(-1.8268, 0.1473),
                     new Vector2(-3.0643, 0.8618), new Vector2(-1.4143, -0.5671));
@@ -70,7 +70,7 @@ namespace NCDK.Hash.Stereo
         }
 
         [TestMethod()]
-        public void opposite_inverted()
+        public void Opposite_inverted()
         {
             GeometricParity geometric = new DoubleBond2DParity(new Vector2(-2.6518, 0.1473), new Vector2(-1.8268, 0.1473),
                     new Vector2(-3.0643, -0.5671), new Vector2(-1.4143, 0.8618));
@@ -87,7 +87,7 @@ namespace NCDK.Hash.Stereo
 
         // double bond rotated pi/6 radians (30 degrees)
         [TestMethod()]
-        public void opposite30()
+        public void Opposite30()
         {
             GeometricParity geometric = new DoubleBond2DParity(new Vector2(-2.4455, 0.5046), new Vector2(-2.0330, -0.2099),
                     new Vector2(-2.0330, 1.2191), new Vector2(-2.4455, -0.9244));

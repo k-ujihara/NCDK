@@ -31,26 +31,26 @@ using NCDK.Numerics;
 
 namespace NCDK.IO
 {
-    /**
-     * Reads an object from XYZ formated input.
-     *
-     * <p>This class is based on Dan Gezelter's XYZReader from Jmol
-     *
-     * @cdk.module io
-     * @cdk.githash
-     * @cdk.iooptions
-     *
-     * @cdk.keyword file format, XYZ
-     */
+    /// <summary>
+    /// Reads an object from XYZ formated input.
+    ///
+    /// <p>This class is based on Dan Gezelter's XYZReader from Jmol
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    // @cdk.iooptions
+    ///
+    // @cdk.keyword file format, XYZ
+    /// </summary>
     public class XYZReader : DefaultChemObjectReader
     {
         private TextReader input;
 
-        /**
-         * Construct a new reader from a Reader type object.
-         *
-         * @param input reader from which input is read
-         */
+        /// <summary>
+        /// Construct a new reader from a Reader type object.
+        ///
+        /// <param name="input">reader from which input is read</param>
+        /// </summary>
         public XYZReader(TextReader input)
         {
             this.input = input;
@@ -82,14 +82,14 @@ namespace NCDK.IO
             return false;
         }
 
-        /**
-         * reads the content from a XYZ input. It can only return a
-         * IChemObject of type ChemFile
-         *
-         * @param object class must be of type ChemFile
-         *
-         * @see IChemFile
-         */
+        /// <summary>
+        /// reads the content from a XYZ input. It can only return a
+        /// IChemObject of type ChemFile
+        ///
+        /// <param name="object">class must be of type ChemFile</param>
+        ///
+        /// <seealso cref="IChemFile"/>
+        /// </summary>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -104,12 +104,12 @@ namespace NCDK.IO
 
         // private procedures
 
-        /**
-         *  Private method that actually parses the input to read a ChemFile
-         *  object.
-         *
-         * @return A ChemFile containing the data parsed from input.
-         */
+        /// <summary>
+        ///  Private method that actually parses the input to read a ChemFile
+        ///  object.
+        ///
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
+        /// </summary>
         private IChemFile ReadChemFile(IChemFile file)
         {
             IChemSequence chemSequence = file.Builder.CreateChemSequence();

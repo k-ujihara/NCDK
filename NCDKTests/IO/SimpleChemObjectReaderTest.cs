@@ -24,11 +24,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.IO
 {
-    /**
-	 * TestCase for CDK IO classes.
-	 *
-	 * @cdk.module test-io
-	 */
+    /// <summary>
+    /// TestCase for CDK IO classes.
+    ///
+    // @cdk.module test-io
+    /// </summary>
     [TestClass()]
     public abstract class SimpleChemObjectReaderTest : ChemObjectReaderTest
     {
@@ -44,7 +44,7 @@ namespace NCDK.IO
             {
                 if (ChemObjectIOToTest.Accepts(obj.GetType()))
                 {
-                    var ins = typeof(SimpleChemObjectReaderTest).Assembly.GetManifestResourceStream(testFile);
+                    var ins = ResourceLoader.GetAsStream(testFile);
                     SimpleChemObjectReaderToTest.SetReader(ins);
                     IChemObject readObject = SimpleChemObjectReaderToTest.Read(obj);
                     SimpleChemObjectReaderToTest.Close();

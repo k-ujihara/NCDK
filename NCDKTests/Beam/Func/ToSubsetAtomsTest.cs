@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class ToSubsetAtomsTest
     {
@@ -13,7 +13,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void inorganic()
+        public void Inorganic()
         {
             Transform("[Ne]", "[Ne]");
         }
@@ -63,13 +63,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void oxidanide()
+        public void Oxidanide()
         {
             Transform("[OH-]", "[OH-]");
         }
 
         [TestMethod()]
-        public void azanium()
+        public void Azanium()
         {
             Transform("[NH4+]", "[NH4+]");
         }
@@ -94,7 +94,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void noStereoSpecification()
+        public void NoStereoSpecification()
         {
             Transform("[CH]([NH2])([OH])[CH3]", "C(N)(O)C");
         }
@@ -121,7 +121,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void zinc_1()
+        public void Zinc_1()
         {
             Transform("c1cc(ccc1/C=c\\2/c(=O)o/c(=C\\Cl)/[nH]2)F",
                   "c1cc(ccc1/C=c\\2/c(=O)o/c(=C\\Cl)/[nH]2)F");

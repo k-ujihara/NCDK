@@ -48,7 +48,7 @@ namespace NCDK.Reactions.Mechanisms
          *                    third is the atom which will be removed
          *                    the first atom
          * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond.
-         * 					  It is the bond which is moved
+         *                       It is the bond which is moved
          * @return            The Reaction mechanism
          *
          */

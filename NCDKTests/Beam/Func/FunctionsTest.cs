@@ -2,19 +2,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <author>John May </author>
+    // @author John May 
     [TestClass()]
     public class FunctionsTest
     {
         [TestMethod()]
-        public void reverse_ethanol()
+        public void Reverse_ethanol()
         {
             Graph g = Graph.FromSmiles("CCO");
             Assert.AreEqual("OCC", Functions.Reverse(g).ToSmiles());
         }
 
         [TestMethod()]
-        public void reverse_withBranch()
+        public void Reverse_withBranch()
         {
             Graph g = Graph.FromSmiles("CC(CC(CO)C)CCO");
             Assert.AreEqual("OCCC(CC(C)CO)C", Functions.Reverse(g).ToSmiles());

@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 
+
 namespace NCDK.IO
 {
     /// <summary>
@@ -208,7 +209,7 @@ namespace NCDK.IO
 
         private void ExpectFormat(string filename, IResourceFormat expectedFormat)
         {
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             Assert.IsNotNull(ins, $"Cannot find file: {filename}");
             if (expectedFormat is IChemFormatMatcher)
             {
@@ -225,7 +226,7 @@ namespace NCDK.IO
         public void TestGuessFormat()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz";
-            Stream input = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream input = ResourceLoader.GetAsStream(filename);
             input = new BufferedStream(input);
             IChemFormat format = factory.GuessFormat(input);
             Assert.IsNotNull(format);
@@ -243,7 +244,7 @@ namespace NCDK.IO
         public void TestGuessFormat_Gz()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz.gz";
-            Stream input = new ReadSeekableStream(new GZipStream(this.GetType().Assembly.GetManifestResourceStream(filename), CompressionMode.Decompress), 60000);
+            Stream input = new ReadSeekableStream(new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress), 60000);
             IChemFormat format = factory.GuessFormat(input);
             Assert.IsNotNull(format);
             // make sure the Stream is properly reset
@@ -260,7 +261,7 @@ namespace NCDK.IO
         public void TestGuessFormat_Reader()
         {
             string filename = "NCDK.Data.XYZ.bf3.xyz";
-            Stream input = this.GetType().Assembly.GetManifestResourceStream(filename);
+            Stream input = ResourceLoader.GetAsStream(filename);
             TextReader reader = new StreamReader(input);
             IChemFormat format = factory.GuessFormat(reader);
             Assert.IsNotNull(format);

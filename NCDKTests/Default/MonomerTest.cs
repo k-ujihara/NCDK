@@ -21,23 +21,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NCDK.Default
 {
-    /**
-     * TestCase for the Monomer class.
-     *
-     * @cdk.module test-data
-     *
-     * @author  Edgar Luttman <edgar@uni-paderborn.de>
-     * @cdk.created 2001-08-09
-     */
-	[TestClass()]
+    /// <summary>
+    /// TestCase for the Monomer class.
+    ///
+    // @cdk.module test-data
+    ///
+    // @author  Edgar Luttman <edgar@uni-paderborn.de>
+    // @cdk.created 2001-08-09
+    /// </summary>
+    [TestClass()]
     public class MonomerTest : AbstractMonomerTest
     {
         public override IChemObject NewChemObject()

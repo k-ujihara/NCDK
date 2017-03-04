@@ -18,56 +18,50 @@
  */
 namespace NCDK.NInChI
 {
-    /**
-     * Encapsulates output from InChI to structure conversion.
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// Encapsulates output from InChI to structure conversion.
+    // @author Sam Adams
+    /// </summary>
     public class NInchiOutputStructure : NInchiStructure
     {
-        /**
-         * Return status from conversion.
-         */
+        /// <summary>
+        /// Return status from conversion.
+        /// </summary>
         public INCHI_RET ReturnStatus { get; protected set; }
 
-        /**
-         * Error/warning messages generated.
-         */
-        public string Message {
+        /// <summary>
+        /// Error/warning messages generated.
+        /// </summary>
+        public string Message
+        {
             get;
-#if !TEST
-            protected 
-#endif
-            set; }
-
-        /**
-         * Log generated.
-         */
-        public string Log {
-            get;
-#if !TEST
-            protected 
-#endif
-            set;
+            protected internal set;
         }
 
-        /**
-         * <p>Warning flags, see INCHIDIFF in inchicmp.h.
-         *
-         * <p>[x][y]:
-         * <br>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-         * <br>x=1 => Disconnected layer if Reconnected layer is present
-         * <br>y=1 => Main layer or Mobile-H
-         * <br>y=0 => Fixed-H layer
-         */
-        public ulong[,] WarningFlags {
+        /// <summary>
+        /// Log generated.
+        /// </summary>
+        public string Log
+        {
             get;
-#if !TEST
-            protected 
-#endif
-            set;
+            protected internal set;
+        }
+
+        /// <summary>
+        /// <p>Warning flags, see INCHIDIFF in inchicmp.h.
+        ///
+        /// <p>[x][y]:
+        /// <br>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
+        /// <br>x=1 => Disconnected layer if Reconnected layer is present
+        /// <br>y=1 => Main layer or Mobile-H
+        /// <br>y=0 => Fixed-H layer
+        /// </summary>
+        public ulong[,] WarningFlags
+        {
+            get;
+            protected internal set;
         } = new ulong[2, 2];
-
-
+        
         public NInchiOutputStructure(int ret, string message, string log, ulong w00, ulong w01, ulong w10, ulong w11)
             : this((INCHI_RET)ret)
         {
@@ -83,7 +77,7 @@ namespace NCDK.NInChI
 
         protected void SetWarningFlags(ulong f00, ulong f01, ulong f10, ulong f11)
         {
-            this.WarningFlags = new [,] { { f00, f01 }, { f10, f11 } };
+            this.WarningFlags = new[,] { { f00, f01 }, { f10, f11 } };
         }
     }
 }

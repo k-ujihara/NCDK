@@ -29,64 +29,56 @@ using System.Text;
 
 namespace NCDK.Graphs.InChi
 {
-    /**
-     * <p>This class generates a CDK IAtomContainer from an InChI string.  It places
-     * calls to a JNI wrapper for the InChI C++ library.
-     *
-     * <p>The generated IAtomContainer will have all 2D and 3D coordinates set to 0.0,
-     * but may have atom parities set.  Double bond and allene stereochemistry are
-     * not currently recorded.
-     *
-     * <h3>Example usage</h3>
-     *
-     * <code>// Generate factory -  if native code does not load</code><br>
-     * <code>InChIGeneratorFactory factory = new InChIGeneratorFactory();</code><br>
-     * <code>// Get InChIToStructure</code><br>
-     * <code>InChIToStructure intostruct = factory.GetInChIToStructure(</code><br>
-     * <code>  inchi, Default.ChemObjectBuilder.Instance</code><br>
-     * <code>);</code><br>
-     * <code></code><br>
-     * <code>INCHI_RET ret = intostruct.ReturnStatus;</code><br>
-     * <code>if (ret == INCHI_RET.WARNING) {</code><br>
-     * <code>  // Structure generated, but with warning message</code><br>
-     * <code>  Console.Out.WriteLine("InChI warning: " + intostruct.Message);</code><br>
-     * <code>} else if (ret != INCHI_RET.OKAY) {</code><br>
-     * <code>  // Structure generation failed</code><br>
-     * <code>  throw new CDKException("Structure generation failed failed: " + ret.ToString()</code><br>
-     * <code>    + " [" + intostruct.Message + "]");</code><br>
-     * <code>}</code><br>
-     * <code></code><br>
-     * <code>IAtomContainer container = intostruct.AtomContainer;</code><br>
-     * <p><tt><b>
-     *
-     * @author Sam Adams
-     *
-     * @cdk.module inchi
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This class generates a CDK IAtomContainer from an InChI string.  It places
+    /// calls to a JNI wrapper for the InChI C++ library.
+    /// <para>
+    /// The generated IAtomContainer will have all 2D and 3D coordinates set to 0.0,
+    /// but may have atom parities set.  Double bond and allene stereochemistry are
+    /// not currently recorded.
+    /// </para>
+    /// </summary>
+    /// <example>
+    /// Example usage
+    /// <code>
+    /// // Generate factory -  if native code does not load
+    /// InChIGeneratorFactory factory = new InChIGeneratorFactory();
+    /// // Get InChIToStructure
+    /// InChIToStructure intostruct = factory.GetInChIToStructure(
+    ///   inchi, Default.ChemObjectBuilder.Instance
+    /// );
+    /// 
+    /// INCHI_RET ret = intostruct.ReturnStatus;
+    /// if (ret == INCHI_RET.WARNING) {
+    ///   // Structure generated, but with warning message
+    ///   Console.Out.WriteLine("InChI warning: " + intostruct.Message);
+    /// } else if (ret != INCHI_RET.OKAY) {
+    ///   // Structure generation failed
+    ///   throw new CDKException("Structure generation failed failed: " + ret.ToString()
+    ///     + " [" + intostruct.Message + "]");
+    /// }
+    /// 
+    /// IAtomContainer container = intostruct.AtomContainer;
+    /// </code>
+    /// </example>
+    // @author Sam Adams
+    // @cdk.module inchi
+    // @cdk.githash
     public class InChIToStructure
     {
-
         protected NInchiInputInchi input;
-
         protected NInchiOutputStructure output;
-
         protected IAtomContainer molecule;
 
         // magic number - indicates isotope mass is relative
         private const int ISOTOPIC_SHIFT_FLAG = 10000;
 
-        /**
-		 * Constructor. Generates CDK AtomContainer from InChI.
-		 * @param inchi
-		 * @
-		 */
-#if TEST
-        public
-#else
-        protected internal
-#endif
-            InChIToStructure(string inchi, IChemObjectBuilder builder)
+        /// <summary>
+        /// Constructor. Generates CDK AtomContainer from InChI.
+        /// </summary>
+        /// <param name="inchi"></param>
+        /// <param name="builder"></param>
+        internal protected InChIToStructure(string inchi, IChemObjectBuilder builder)
         {
             try
             {
@@ -99,18 +91,13 @@ namespace NCDK.Graphs.InChi
             GenerateAtomContainerFromInchi(builder);
         }
 
-        /**
-		 * Constructor. Generates CMLMolecule from InChI.
-		 * @param inchi
-		 * @param options
-		 * @
-		 */
-#if TEST
-        public
-#else
-        protected internal
-#endif
-            InChIToStructure(string inchi, IChemObjectBuilder builder, string options)
+        /// <summary>
+        /// Constructor. Generates CMLMolecule from InChI.
+        /// </summary>
+        /// <param name="inchi"></param>
+        /// <param name="builder"></param>
+        /// <param name="options"></param>
+        protected internal InChIToStructure(string inchi, IChemObjectBuilder builder, string options)
         {
             try
             {
@@ -123,22 +110,17 @@ namespace NCDK.Graphs.InChi
             GenerateAtomContainerFromInchi(builder);
         }
 
-        /**
-		 * Constructor. Generates CMLMolecule from InChI.
-		 * @param inchi
-		 * @param options
-		 * @
-		 */
-#if TEST
-        public
-#else
-        protected internal
-#endif
-        InChIToStructure(string inchi, IChemObjectBuilder builder, IList<string> options)
+        /// <summary>
+        /// Constructor. Generates CMLMolecule from InChI.
+        /// </summary>
+        /// <param name="inchi"></param>
+        /// <param name="builder"></param>
+        /// <param name="options"></param>
+        protected internal InChIToStructure(string inchi, IChemObjectBuilder builder, IList<string> options)
         {
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
-            
+
             try
             {
                 // fixed CDK's bug
@@ -155,18 +137,11 @@ namespace NCDK.Graphs.InChi
             GenerateAtomContainerFromInchi(builder);
         }
 
-        /**
-		 * Gets structure from InChI, and converts InChI library data structure
-		 * into an IAtomContainer.
-		 *
-		 * @
-		 */
-#if TEST
-        public
-#else
-        protected internal
-#endif
-            void GenerateAtomContainerFromInchi(IChemObjectBuilder builder)
+        /// <summary>
+        /// Gets structure from InChI, and converts InChI library data structure into an IAtomContainer.
+        /// </summary>
+        /// <param name="builder"></param>
+        protected internal void GenerateAtomContainerFromInchi(IChemObjectBuilder builder)
         {
             try
             {
@@ -304,7 +279,7 @@ namespace NCDK.Graphs.InChi
                     IAtom focus = inchiCdkAtomMap[central];
                     IAtom[] neighbors = new IAtom[]{inchiCdkAtomMap[neighbours[0]], inchiCdkAtomMap[neighbours[1]],
                             inchiCdkAtomMap[neighbours[2]], inchiCdkAtomMap[neighbours[3]]};
-                    TetrahedralStereo stereo; 
+                    TetrahedralStereo stereo;
 
                     // as per JNI InChI doc even is clockwise and odd is
                     // anti-clockwise
@@ -423,16 +398,14 @@ namespace NCDK.Graphs.InChi
                 }
             }
         }
-
-        /**
-		 * Finds a neighbor attached to 'atom' that is singley bonded and isn't
-		 * 'exclude'. If no such atom exists, the 'atom' is returned.
-		 *
-		 * @param container a molecule container
-		 * @param atom      the atom to find the neighbor or
-		 * @param exclude   don't find this atom
-		 * @return the other atom (or 'atom')
-		 */
+        
+        /// <summary>
+        /// Finds a neighbor attached to 'atom' that is singley bonded and isn't 'exclude'. If no such atom exists, the 'atom' is returned.
+        /// </summary>
+        /// <param name="container">a molecule container</param>
+        /// <param name="atom">the atom to find the neighbor or</param>
+        /// <param name="exclude">don't find this atom</param>
+        /// <returns>the other atom (or 'atom')</returns>
         private static IAtom FindOtherSinglyBonded(IAtomContainer container, IAtom atom, IAtom exclude)
         {
             foreach (var bond in container.GetConnectedBonds(atom))
@@ -443,36 +416,37 @@ namespace NCDK.Graphs.InChi
             return atom;
         }
 
-        /**
-		 * Returns generated molecule.
-		 * @return An AtomContainer object
-		 */
+        /// <summary>
+        /// Generated molecule.
+        /// </summary>
         public IAtomContainer AtomContainer => molecule;
 
-        /**
-		 * Gets return status from InChI process.  OKAY and WARNING indicate
-		 * InChI has been generated, in all other cases InChI generation
-		 * has failed.
-		 */
+        /// <summary>
+        /// Return status from InChI process.  OKAY and WARNING indicate
+        /// InChI has been generated, in all other cases InChI generation has failed.
+        /// </summary>
         public INCHI_RET ReturnStatus => output.ReturnStatus;
 
-        /**
-		 * Gets generated (error/warning) messages.
-		 */
+        /// <summary>
+        /// Generated (error/warning) messages.
+        /// </summary>
         public string Message => output.Message;
-
-        /**
-         * Gets generated log.
-         */
+        
+        /// <summary>
+        /// Generated log.
+        /// </summary>
         public string Log => output.Log;
 
         /// <summary>
         /// Returns warning flags, see INCHIDIFF in inchicmp.h.
+        /// 
         /// [x][y]:
-        /// x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-        /// x=1 => Disconnected layer if Reconnected layer is present
-        /// y=1 => Main layer or Mobile-H
-        /// y=0 => Fixed-H layer        
+        /// <list type="bullet">
+        /// <item>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal</item>
+        /// <item>x=1 => Disconnected layer if Reconnected layer is present</item>
+        /// <item>y=1 => Main layer or Mobile-H</item>
+        /// <item>y=0 => Fixed-H layer</item>
+        /// </list>
         /// </summary>
         public ulong[,] WarningFlags => output.WarningFlags;
     }

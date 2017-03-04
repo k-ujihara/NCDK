@@ -30,14 +30,14 @@ using System.Linq;
 
 namespace NCDK.IO
 {
-    /**
-     * TestCase for the PDBWriter class.
-     *
-     * @cdk.module test-pdb
-     *
-     * @author      Egon Willighagen
-     * @cdk.created 2001-08-09
-     */
+    /// <summary>
+    /// TestCase for the PDBWriter class.
+    ///
+    // @cdk.module test-pdb
+    ///
+    // @author      Egon Willighagen
+    // @cdk.created 2001-08-09
+    /// </summary>
     [TestClass()]
     public class PDBWriterTest : ChemObjectIOTest
     {

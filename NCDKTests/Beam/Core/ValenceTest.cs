@@ -4,932 +4,932 @@ using System.IO;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class ValenceTest
     {
         [TestMethod()]
         public void Hydrogen()
         {
-            normal("[H]");
-            normal("[H](C)");
-            abnormal("[H](C)(C)");
+            Normal("[H]");
+            Normal("[H](C)");
+            Abnormal("[H](C)(C)");
 
-            normal("[H+]");
-            normal("[H-]");
-            abnormal("[H++]");
-            abnormal("[H--]");
+            Normal("[H+]");
+            Normal("[H-]");
+            Abnormal("[H++]");
+            Abnormal("[H--]");
 
-            abnormal("[H+](C)");
-            normal("[H+](C)(C)");
-            abnormal("[H-](C)");
+            Abnormal("[H+](C)");
+            Normal("[H+](C)(C)");
+            Abnormal("[H-](C)");
         }
 
         [TestMethod()]
-        public void helium()
+        public void Helium()
         {
-            normal("[He]");
-            abnormal("[He+]");
-            abnormal("[He-]");
-            abnormal("[HeH]");
-            abnormal("[HeH2]");
-            abnormal("[HeH3]");
-            abnormal("[HeH4]");
+            Normal("[He]");
+            Abnormal("[He+]");
+            Abnormal("[He-]");
+            Abnormal("[HeH]");
+            Abnormal("[HeH2]");
+            Abnormal("[HeH3]");
+            Abnormal("[HeH4]");
         }
 
         [TestMethod()]
-        public void lithium()
+        public void Lithium()
         {
-            normal("[Li]");
+            Normal("[Li]");
 
-            normal("[Li+]");
-            abnormal("[Li-]");
-            abnormal("[Li++]");
-            abnormal("[Li--]");
+            Normal("[Li+]");
+            Abnormal("[Li-]");
+            Abnormal("[Li++]");
+            Abnormal("[Li--]");
 
-            abnormal("[Li+](C)(C)");
+            Abnormal("[Li+](C)(C)");
         }
 
         [TestMethod()]
-        public void boron()
+        public void Boron()
         {
-            normal("[B]");
-            abnormal("[B+]");
-            abnormal("[B-]");
+            Normal("[B]");
+            Abnormal("[B+]");
+            Abnormal("[B-]");
 
-            abnormal("[BH]");
-            abnormal("[BH2]");
-            normal("[BH3]");
-            abnormal("[BH4]");
-            abnormal("[BH5]");
+            Abnormal("[BH]");
+            Abnormal("[BH2]");
+            Normal("[BH3]");
+            Abnormal("[BH4]");
+            Abnormal("[BH5]");
         }
 
         [TestMethod()]
         public void Carbon_neutral()
         {
-            normal("[C]");
-            abnormal("[CH1]");
-            normal("[CH2]");
-            abnormal("[CH3]");
-            normal("[CH4]");
-            abnormal("[CH5]");
-            abnormal("[CH6]");
+            Normal("[C]");
+            Abnormal("[CH1]");
+            Normal("[CH2]");
+            Abnormal("[CH3]");
+            Normal("[CH4]");
+            Abnormal("[CH5]");
+            Abnormal("[CH6]");
         }
 
         [TestMethod()]
         public void Carbon_anion()
         {
-            normal("[CH-]");
-            abnormal("[CH2-]");
-            normal("[CH3-]");
-            abnormal("[CH4-]");
-            abnormal("[CH5-]");
+            Normal("[CH-]");
+            Abnormal("[CH2-]");
+            Normal("[CH3-]");
+            Abnormal("[CH4-]");
+            Abnormal("[CH5-]");
         }
 
         [TestMethod()]
         public void Carbon_cation()
         {
-            abnormal("[CH+]");
-            abnormal("[CH2+]");
-            normal("[CH3+]");
-            abnormal("[CH4+]");
-            normal("[CH5+]");
+            Abnormal("[CH+]");
+            Abnormal("[CH2+]");
+            Normal("[CH3+]");
+            Abnormal("[CH4+]");
+            Normal("[CH5+]");
         }
 
         [TestMethod()]
         public void Carbon_dianion()
         {
-            abnormal("[CH--]");
-            abnormal("[CH2--]");
-            abnormal("[CH3--]");
-            abnormal("[CH4--]");
+            Abnormal("[CH--]");
+            Abnormal("[CH2--]");
+            Abnormal("[CH3--]");
+            Abnormal("[CH4--]");
         }
 
         [TestMethod()]
         public void Carbon_dication()
         {
-            abnormal("[CH++]");
-            abnormal("[CH2++]");
-            abnormal("[CH3++]");
-            abnormal("[CH4++]");
+            Abnormal("[CH++]");
+            Abnormal("[CH2++]");
+            Abnormal("[CH3++]");
+            Abnormal("[CH4++]");
         }
 
         [TestMethod()]
-        public void nitrogen_neutral()
+        public void Nitrogen_neutral()
         {
-            normal("[N]");
-            abnormal("[NH]");
-            abnormal("[NH2]");
-            normal("[NH3]");
-            abnormal("[NH4]");
-            normal("[NH5]");
-            abnormal("[NH6]");
-            abnormal("[NH7]");
+            Normal("[N]");
+            Abnormal("[NH]");
+            Abnormal("[NH2]");
+            Normal("[NH3]");
+            Abnormal("[NH4]");
+            Normal("[NH5]");
+            Abnormal("[NH6]");
+            Abnormal("[NH7]");
         }
 
         [TestMethod()]
-        public void nitrogen_cation()
+        public void Nitrogen_cation()
         {
-            abnormal("[N+]");
-            abnormal("[NH+]");
-            abnormal("[NH2+]");
-            abnormal("[NH3+]");
-            normal("[NH4+]");
-            normal("[NH5+]");
-            abnormal("[NH6+]");
-            abnormal("[NH7+]");
+            Abnormal("[N+]");
+            Abnormal("[NH+]");
+            Abnormal("[NH2+]");
+            Abnormal("[NH3+]");
+            Normal("[NH4+]");
+            Normal("[NH5+]");
+            Abnormal("[NH6+]");
+            Abnormal("[NH7+]");
         }
 
         [TestMethod()]
-        public void nitrogen_anion()
+        public void Nitrogen_anion()
         {
-            abnormal("[N-]");
-            abnormal("[NH-]");
-            normal("[NH2-]");
-            abnormal("[NH3-]");
-            abnormal("[NH4-]");
-            normal("[NH5-]");
-            abnormal("[NH6-]");
-            abnormal("[NH7-]");
+            Abnormal("[N-]");
+            Abnormal("[NH-]");
+            Normal("[NH2-]");
+            Abnormal("[NH3-]");
+            Abnormal("[NH4-]");
+            Normal("[NH5-]");
+            Abnormal("[NH6-]");
+            Abnormal("[NH7-]");
         }
 
         [TestMethod()]
-        public void nitrogen_dication()
+        public void Nitrogen_dication()
         {
-            abnormal("[N++]");
-            abnormal("[NH++]");
-            abnormal("[NH2++]");
-            abnormal("[NH3++]");
-            abnormal("[NH4++]");
-            abnormal("[NH5++]");
-            abnormal("[NH6+]");
-            abnormal("[NH7+]");
+            Abnormal("[N++]");
+            Abnormal("[NH++]");
+            Abnormal("[NH2++]");
+            Abnormal("[NH3++]");
+            Abnormal("[NH4++]");
+            Abnormal("[NH5++]");
+            Abnormal("[NH6+]");
+            Abnormal("[NH7+]");
         }
 
         [TestMethod()]
-        public void nitrogen_dianion()
+        public void Nitrogen_dianion()
         {
-            abnormal("[N--]");
-            normal("[NH--]");
-            abnormal("[NH2--]");
-            abnormal("[NH3--]");
-            abnormal("[NH4--]");
-            normal("[NH5--]");
-            abnormal("[NH6--]");
-            abnormal("[NH7--]");
+            Abnormal("[N--]");
+            Normal("[NH--]");
+            Abnormal("[NH2--]");
+            Abnormal("[NH3--]");
+            Abnormal("[NH4--]");
+            Normal("[NH5--]");
+            Abnormal("[NH6--]");
+            Abnormal("[NH7--]");
         }
 
         [TestMethod()]
-        public void nitrogen_trianion()
+        public void Nitrogen_trianion()
         {
-            normal("[N---]");
-            abnormal("[NH---]");
-            abnormal("[NH2---]");
-            abnormal("[NH3---]");
-            abnormal("[NH4---]");
-            normal("[NH5---]");
-            abnormal("[NH6---]");
-            abnormal("[NH7---]");
+            Normal("[N---]");
+            Abnormal("[NH---]");
+            Abnormal("[NH2---]");
+            Abnormal("[NH3---]");
+            Abnormal("[NH4---]");
+            Normal("[NH5---]");
+            Abnormal("[NH6---]");
+            Abnormal("[NH7---]");
         }
 
         [TestMethod()]
-        public void oxygen_neutral()
+        public void Oxygen_neutral()
         {
-            normal("[O]");
-            abnormal("[OH1]");
-            normal("[OH2]");
-            abnormal("[OH3]");
-            abnormal("[OH4]");
-            abnormal("[OH5]");
+            Normal("[O]");
+            Abnormal("[OH1]");
+            Normal("[OH2]");
+            Abnormal("[OH3]");
+            Abnormal("[OH4]");
+            Abnormal("[OH5]");
         }
 
         [TestMethod()]
-        public void oxygen_cation()
+        public void Oxygen_cation()
         {
-            abnormal("[O+]");
-            abnormal("[OH1+]");
-            abnormal("[OH2+]");
-            normal("[OH3+]");
-            abnormal("[OH4+]");
-            abnormal("[OH5+]");
+            Abnormal("[O+]");
+            Abnormal("[OH1+]");
+            Abnormal("[OH2+]");
+            Normal("[OH3+]");
+            Abnormal("[OH4+]");
+            Abnormal("[OH5+]");
         }
 
         [TestMethod()]
-        public void oxygen_anion()
+        public void Oxygen_anion()
         {
-            abnormal("[O-]");
-            normal("[OH1-]");
-            abnormal("[OH2-]");
-            abnormal("[OH3-]");
-            abnormal("[OH4-]");
-            abnormal("[OH5-]");
+            Abnormal("[O-]");
+            Normal("[OH1-]");
+            Abnormal("[OH2-]");
+            Abnormal("[OH3-]");
+            Abnormal("[OH4-]");
+            Abnormal("[OH5-]");
         }
 
         [TestMethod()]
-        public void oxygen_dication()
+        public void Oxygen_dication()
         {
-            abnormal("[O++]");
-            abnormal("[OH1++]");
-            abnormal("[OH2++]");
-            abnormal("[OH3++]");
-            abnormal("[OH4++]");
-            abnormal("[OH5++]");
+            Abnormal("[O++]");
+            Abnormal("[OH1++]");
+            Abnormal("[OH2++]");
+            Abnormal("[OH3++]");
+            Abnormal("[OH4++]");
+            Abnormal("[OH5++]");
         }
 
         [TestMethod()]
-        public void oxygen_dianion()
+        public void Oxygen_dianion()
         {
-            normal("[O--]");
-            abnormal("[OH1--]");
-            abnormal("[OH2--]");
-            abnormal("[OH3--]");
-            abnormal("[OH4--]");
-            abnormal("[OH5--]");
+            Normal("[O--]");
+            Abnormal("[OH1--]");
+            Abnormal("[OH2--]");
+            Abnormal("[OH3--]");
+            Abnormal("[OH4--]");
+            Abnormal("[OH5--]");
         }
 
         [TestMethod()]
         public void Fluorine()
         {
-            normal("[F]");
-            abnormal("[F+]");
-            normal("[F-]");
-            abnormal("[F++]");
-            abnormal("[F--]");
+            Normal("[F]");
+            Abnormal("[F+]");
+            Normal("[F-]");
+            Abnormal("[F++]");
+            Abnormal("[F--]");
 
-            normal("[FH1]");
-            abnormal("[FH2]");
-            abnormal("[FH3]");
-            abnormal("[FH4]");
-            abnormal("[FH5]");
-            abnormal("[FH6]");
-            abnormal("[FH7]");
+            Normal("[FH1]");
+            Abnormal("[FH2]");
+            Abnormal("[FH3]");
+            Abnormal("[FH4]");
+            Abnormal("[FH5]");
+            Abnormal("[FH6]");
+            Abnormal("[FH7]");
 
-            normal("[FH1-]");
-            abnormal("[FH2-]");
-            abnormal("[FH3-]");
-            abnormal("[FH4-]");
-            abnormal("[FH5-]");
-            abnormal("[FH6-]");
-            abnormal("[FH7-]");
+            Normal("[FH1-]");
+            Abnormal("[FH2-]");
+            Abnormal("[FH3-]");
+            Abnormal("[FH4-]");
+            Abnormal("[FH5-]");
+            Abnormal("[FH6-]");
+            Abnormal("[FH7-]");
         }
 
         [TestMethod()]
         public void Neon()
         {
-            normal("[Ne]");
-            abnormal("[Ne+]");
-            abnormal("[Ne-]");
-            abnormal("[Ne++]");
-            abnormal("[Ne--]");
+            Normal("[Ne]");
+            Abnormal("[Ne+]");
+            Abnormal("[Ne-]");
+            Abnormal("[Ne++]");
+            Abnormal("[Ne--]");
 
-            abnormal("[NeH]");
+            Abnormal("[NeH]");
         }
 
         [TestMethod()]
         public void Sodium()
         {
-            normal("[Na]");
-            normal("[Na+]");
-            abnormal("[Na-]");
-            abnormal("[Na++]");
-            abnormal("[Na--]");
+            Normal("[Na]");
+            Normal("[Na+]");
+            Abnormal("[Na-]");
+            Abnormal("[Na++]");
+            Abnormal("[Na--]");
 
-            normal("[Na](C)");
-            abnormal("[Na+](C)");
-            abnormal("[Na+](C)(C)");
+            Normal("[Na](C)");
+            Abnormal("[Na+](C)");
+            Abnormal("[Na+](C)(C)");
         }
 
         [TestMethod()]
-        public void magnesium()
+        public void Magnesium()
         {
-            normal("[Mg]");
-            normal("[Mg+](C)");
-            normal("[Mg++]");
+            Normal("[Mg]");
+            Normal("[Mg+](C)");
+            Normal("[Mg++]");
 
-            abnormal("[Mg](C)");
-            normal("[Mg](C)(C)");
+            Abnormal("[Mg](C)");
+            Normal("[Mg](C)(C)");
 
-            normal("[Mg+](C)");
-            abnormal("[Mg+](C)(C)");
-            abnormal("[Mg+](C)(C)(C)");
+            Normal("[Mg+](C)");
+            Abnormal("[Mg+](C)(C)");
+            Abnormal("[Mg+](C)(C)(C)");
 
-            abnormal("[Mg++](C)");
-            abnormal("[Mg++](C)(C)");
-            abnormal("[Mg++](C)(C)(C)");
+            Abnormal("[Mg++](C)");
+            Abnormal("[Mg++](C)(C)");
+            Abnormal("[Mg++](C)(C)(C)");
         }
 
         [TestMethod()]
         public void Phosphorus_neutral()
         {
-            normal("[P]");
-            abnormal("[PH1]");
-            abnormal("[PH2]");
-            normal("[PH3]");
-            abnormal("[PH4]");
-            normal("[PH5]");
-            abnormal("[PH6]");
-            abnormal("[PH7]");
-            abnormal("[PH8]");
+            Normal("[P]");
+            Abnormal("[PH1]");
+            Abnormal("[PH2]");
+            Normal("[PH3]");
+            Abnormal("[PH4]");
+            Normal("[PH5]");
+            Abnormal("[PH6]");
+            Abnormal("[PH7]");
+            Abnormal("[PH8]");
         }
 
         [TestMethod()]
         public void Phosphorus_cation()
         {
-            abnormal("[P+]");
-            abnormal("[PH1+]");
-            abnormal("[PH2+]");
-            abnormal("[PH3+]");
-            normal("[PH4+]");
-            abnormal("[PH5+]");
-            normal("[PH6+]");
-            abnormal("[PH7+]");
-            abnormal("[PH8+]");
+            Abnormal("[P+]");
+            Abnormal("[PH1+]");
+            Abnormal("[PH2+]");
+            Abnormal("[PH3+]");
+            Normal("[PH4+]");
+            Abnormal("[PH5+]");
+            Normal("[PH6+]");
+            Abnormal("[PH7+]");
+            Abnormal("[PH8+]");
         }
 
         [TestMethod()]
         public void Phosphorus_anion()
         {
-            abnormal("[P-]");
-            abnormal("[PH1-]");
-            normal("[PH2-]");
-            abnormal("[PH3-]");
-            normal("[PH4-]");
-            abnormal("[PH5-]");
-            abnormal("[PH6-]");
-            abnormal("[PH7-]");
-            abnormal("[PH8-]");
+            Abnormal("[P-]");
+            Abnormal("[PH1-]");
+            Normal("[PH2-]");
+            Abnormal("[PH3-]");
+            Normal("[PH4-]");
+            Abnormal("[PH5-]");
+            Abnormal("[PH6-]");
+            Abnormal("[PH7-]");
+            Abnormal("[PH8-]");
         }
 
         [TestMethod()]
         public void Phosphorus_dication()
         {
-            abnormal("[P++]");
-            abnormal("[PH1++]");
-            abnormal("[PH2++]");
-            abnormal("[PH3++]");
-            abnormal("[PH4++]");
-            abnormal("[PH5++]");
-            abnormal("[PH6++]");
-            abnormal("[PH7++]");
-            abnormal("[PH8++]");
+            Abnormal("[P++]");
+            Abnormal("[PH1++]");
+            Abnormal("[PH2++]");
+            Abnormal("[PH3++]");
+            Abnormal("[PH4++]");
+            Abnormal("[PH5++]");
+            Abnormal("[PH6++]");
+            Abnormal("[PH7++]");
+            Abnormal("[PH8++]");
         }
 
         [TestMethod()]
         public void Phosphorus_dianion()
         {
-            abnormal("[P--]");
-            normal("[PH1--]");
-            abnormal("[PH2--]");
-            normal("[PH3--]");
-            abnormal("[PH4--]");
-            abnormal("[PH5--]");
-            abnormal("[PH6--]");
-            abnormal("[PH7--]");
-            abnormal("[PH8--]");
+            Abnormal("[P--]");
+            Normal("[PH1--]");
+            Abnormal("[PH2--]");
+            Normal("[PH3--]");
+            Abnormal("[PH4--]");
+            Abnormal("[PH5--]");
+            Abnormal("[PH6--]");
+            Abnormal("[PH7--]");
+            Abnormal("[PH8--]");
         }
 
         [TestMethod()]
         public void Phosphorus_trianion()
         {
-            normal("[P---]");
-            abnormal("[PH1---]");
-            normal("[PH2---]");
-            abnormal("[PH3---]");
-            abnormal("[PH4---]");
-            abnormal("[PH5---]");
-            abnormal("[PH6---]");
-            abnormal("[PH7---]");
-            abnormal("[PH8---]");
+            Normal("[P---]");
+            Abnormal("[PH1---]");
+            Normal("[PH2---]");
+            Abnormal("[PH3---]");
+            Abnormal("[PH4---]");
+            Abnormal("[PH5---]");
+            Abnormal("[PH6---]");
+            Abnormal("[PH7---]");
+            Abnormal("[PH8---]");
         }
 
         [TestMethod()]
-        public void sulphur()
+        public void Sulphur()
         {
-            normal("[S]");
-            abnormal("[SH1]");
-            normal("[SH2]");
-            abnormal("[SH3]");
-            normal("[SH4]");
-            abnormal("[SH5]");
-            normal("[SH6]");
-            abnormal("[SH7]");
-            abnormal("[SH8]");
+            Normal("[S]");
+            Abnormal("[SH1]");
+            Normal("[SH2]");
+            Abnormal("[SH3]");
+            Normal("[SH4]");
+            Abnormal("[SH5]");
+            Normal("[SH6]");
+            Abnormal("[SH7]");
+            Abnormal("[SH8]");
         }
 
         [TestMethod()]
-        public void sulphur_cation()
+        public void Sulphur_cation()
         {
-            abnormal("[S+]");
-            abnormal("[SH1+]");
-            abnormal("[SH2+]");
-            normal("[SH3+]");
-            abnormal("[SH4+]");
-            normal("[SH5+]");
-            abnormal("[SH6+]");
-            normal("[SH7+]");
-            abnormal("[SH8+]");
+            Abnormal("[S+]");
+            Abnormal("[SH1+]");
+            Abnormal("[SH2+]");
+            Normal("[SH3+]");
+            Abnormal("[SH4+]");
+            Normal("[SH5+]");
+            Abnormal("[SH6+]");
+            Normal("[SH7+]");
+            Abnormal("[SH8+]");
         }
 
         [TestMethod()]
-        public void sulphur_anion()
+        public void Sulphur_anion()
         {
-            abnormal("[S-]");
-            normal("[SH1-]");
-            abnormal("[SH2-]");
-            normal("[SH3-]");
-            abnormal("[SH4-]");
-            normal("[SH5-]");
-            abnormal("[SH6-]");
-            abnormal("[SH7-]");
-            abnormal("[SH8-]");
+            Abnormal("[S-]");
+            Normal("[SH1-]");
+            Abnormal("[SH2-]");
+            Normal("[SH3-]");
+            Abnormal("[SH4-]");
+            Normal("[SH5-]");
+            Abnormal("[SH6-]");
+            Abnormal("[SH7-]");
+            Abnormal("[SH8-]");
         }
 
         [TestMethod()]
-        public void sulphur_dication()
+        public void Sulphur_dication()
         {
-            abnormal("[S++]");
-            abnormal("[SH1++]");
-            abnormal("[SH2++]");
-            abnormal("[SH3++]");
-            normal("[SH4++]");
-            abnormal("[SH5++]");
-            normal("[SH6++]");
-            abnormal("[SH7++]");
-            normal("[SH8++]");
-            abnormal("[SH9++]");
+            Abnormal("[S++]");
+            Abnormal("[SH1++]");
+            Abnormal("[SH2++]");
+            Abnormal("[SH3++]");
+            Normal("[SH4++]");
+            Abnormal("[SH5++]");
+            Normal("[SH6++]");
+            Abnormal("[SH7++]");
+            Normal("[SH8++]");
+            Abnormal("[SH9++]");
         }
 
         [TestMethod()]
-        public void sulphur_trication()
+        public void Sulphur_trication()
         {
-            abnormal("[S+++]");
-            abnormal("[SH1+++]");
-            abnormal("[SH2+++]");
-            abnormal("[SH3+++]");
-            abnormal("[SH4+++]");
-            normal("[SH5+++]");
-            abnormal("[SH6+++]");
-            normal("[SH7+++]");
-            abnormal("[SH8+++]");
-            normal("[SH9+++]");
-            abnormal("[SH10+++]");
+            Abnormal("[S+++]");
+            Abnormal("[SH1+++]");
+            Abnormal("[SH2+++]");
+            Abnormal("[SH3+++]");
+            Abnormal("[SH4+++]");
+            Normal("[SH5+++]");
+            Abnormal("[SH6+++]");
+            Normal("[SH7+++]");
+            Abnormal("[SH8+++]");
+            Normal("[SH9+++]");
+            Abnormal("[SH10+++]");
         }
 
         [TestMethod()]
-        public void chlorine()
+        public void Chlorine()
         {
-            normal("[Cl]");
-            abnormal("[Cl+]");
-            normal("[Cl-]");
+            Normal("[Cl]");
+            Abnormal("[Cl+]");
+            Normal("[Cl-]");
 
-            abnormal("[ClH1+]");
-            normal("[ClH2+]");
-            abnormal("[ClH3+]");
-            normal("[ClH4+]");
-            abnormal("[ClH5+]");
-            normal("[ClH6+]");
-            abnormal("[ClH7+]");
-            normal("[ClH8+]");
+            Abnormal("[ClH1+]");
+            Normal("[ClH2+]");
+            Abnormal("[ClH3+]");
+            Normal("[ClH4+]");
+            Abnormal("[ClH5+]");
+            Normal("[ClH6+]");
+            Abnormal("[ClH7+]");
+            Normal("[ClH8+]");
 
-            abnormal("[ClH1-]");
-            normal("[ClH2-]");
-            abnormal("[ClH3-]");
-            normal("[ClH4-]");
-            abnormal("[ClH5-]");
-            normal("[ClH6-]");
+            Abnormal("[ClH1-]");
+            Normal("[ClH2-]");
+            Abnormal("[ClH3-]");
+            Normal("[ClH4-]");
+            Abnormal("[ClH5-]");
+            Normal("[ClH6-]");
 
-            abnormal("[ClH1++]");
-            abnormal("[ClH2++]");
-            normal("[ClH3++]");
-            abnormal("[ClH4++]");
-            normal("[ClH5++]");
-            abnormal("[ClH6++]");
-            normal("[ClH7++]");
-            abnormal("[ClH8++]");
-            normal("[ClH9++]");
-            abnormal("[ClH10++]");
+            Abnormal("[ClH1++]");
+            Abnormal("[ClH2++]");
+            Normal("[ClH3++]");
+            Abnormal("[ClH4++]");
+            Normal("[ClH5++]");
+            Abnormal("[ClH6++]");
+            Normal("[ClH7++]");
+            Abnormal("[ClH8++]");
+            Normal("[ClH9++]");
+            Abnormal("[ClH10++]");
 
-            normal("[ClH1--]");
-            abnormal("[ClH2--]");
-            normal("[ClH3--]");
-            abnormal("[ClH4--]");
-            normal("[ClH5--]");
-            abnormal("[ClH6--]");
-            abnormal("[ClH7--]");
+            Normal("[ClH1--]");
+            Abnormal("[ClH2--]");
+            Normal("[ClH3--]");
+            Abnormal("[ClH4--]");
+            Normal("[ClH5--]");
+            Abnormal("[ClH6--]");
+            Abnormal("[ClH7--]");
         }
 
         [TestMethod()]
         public void Argon()
         {
-            normal("[Ar]");
-            abnormal("[Ar+]");
-            abnormal("[Ar-]");
-            abnormal("[ArH]");
-            abnormal("[ArH]");
+            Normal("[Ar]");
+            Abnormal("[Ar+]");
+            Abnormal("[Ar-]");
+            Abnormal("[ArH]");
+            Abnormal("[ArH]");
         }
 
         [TestMethod()]
         public void Potassium()
         {
-            normal("[K]");
-            normal("[K+]");
-            abnormal("[K-]");
-            normal("[K](C)");
-            abnormal("[K+](C)");
+            Normal("[K]");
+            Normal("[K+]");
+            Abnormal("[K-]");
+            Normal("[K](C)");
+            Abnormal("[K+](C)");
         }
 
         [TestMethod()]
         public void Calcium()
         {
-            normal("[Ca]");
-            normal("[Ca](C)(C)");
-            abnormal("[Ca+]");
-            normal("[Ca+](C)");
-            abnormal("[Ca+](C)(C)");
-            normal("[Ca++]");
-            abnormal("[Ca++](C)");
-            abnormal("[Ca++](C)(C)");
+            Normal("[Ca]");
+            Normal("[Ca](C)(C)");
+            Abnormal("[Ca+]");
+            Normal("[Ca+](C)");
+            Abnormal("[Ca+](C)(C)");
+            Normal("[Ca++]");
+            Abnormal("[Ca++](C)");
+            Abnormal("[Ca++](C)(C)");
 
         }
 
         [TestMethod()]
         public void Arsenic_neutral()
         {
-            normal("[As]");
-            abnormal("[AsH1]");
-            abnormal("[AsH2]");
-            normal("[AsH3]");
-            abnormal("[AsH4]");
-            normal("[AsH5]");
-            abnormal("[AsH6]");
+            Normal("[As]");
+            Abnormal("[AsH1]");
+            Abnormal("[AsH2]");
+            Normal("[AsH3]");
+            Abnormal("[AsH4]");
+            Normal("[AsH5]");
+            Abnormal("[AsH6]");
         }
 
         [TestMethod()]
         public void Arsenic_cation()
         {
-            abnormal("[As+]");
-            abnormal("[AsH1+]");
-            abnormal("[AsH2+]");
-            abnormal("[AsH3+]");
-            normal("[AsH4+]");
-            abnormal("[AsH5+]");
-            normal("[AsH6+]");
-            abnormal("[AsH7+]");
+            Abnormal("[As+]");
+            Abnormal("[AsH1+]");
+            Abnormal("[AsH2+]");
+            Abnormal("[AsH3+]");
+            Normal("[AsH4+]");
+            Abnormal("[AsH5+]");
+            Normal("[AsH6+]");
+            Abnormal("[AsH7+]");
         }
 
         [TestMethod()]
         public void Arsenic_dication()
         {
-            abnormal("[As++]");
-            abnormal("[AsH1++]");
-            abnormal("[AsH2++]");
-            abnormal("[AsH3++]");
-            abnormal("[AsH4++]");
-            abnormal("[AsH5++]");
-            abnormal("[AsH6++]");
-            abnormal("[AsH7++]");
+            Abnormal("[As++]");
+            Abnormal("[AsH1++]");
+            Abnormal("[AsH2++]");
+            Abnormal("[AsH3++]");
+            Abnormal("[AsH4++]");
+            Abnormal("[AsH5++]");
+            Abnormal("[AsH6++]");
+            Abnormal("[AsH7++]");
         }
 
         [TestMethod()]
         public void Arsenic_anion()
         {
-            abnormal("[As-]");
-            abnormal("[AsH1-]");
-            normal("[AsH2-]");
-            abnormal("[AsH3-]");
-            normal("[AsH4-]");
-            abnormal("[AsH5-]");
-            abnormal("[AsH6-]");
-            abnormal("[AsH7-]");
+            Abnormal("[As-]");
+            Abnormal("[AsH1-]");
+            Normal("[AsH2-]");
+            Abnormal("[AsH3-]");
+            Normal("[AsH4-]");
+            Abnormal("[AsH5-]");
+            Abnormal("[AsH6-]");
+            Abnormal("[AsH7-]");
         }
 
         [TestMethod()]
         public void Arsenic_dianion()
         {
-            abnormal("[As--]");
-            normal("[AsH1--]");
-            abnormal("[AsH2--]");
-            normal("[AsH3--]");
-            abnormal("[AsH4--]");
-            abnormal("[AsH5--]");
-            abnormal("[AsH6--]");
-            abnormal("[AsH7--]");
+            Abnormal("[As--]");
+            Normal("[AsH1--]");
+            Abnormal("[AsH2--]");
+            Normal("[AsH3--]");
+            Abnormal("[AsH4--]");
+            Abnormal("[AsH5--]");
+            Abnormal("[AsH6--]");
+            Abnormal("[AsH7--]");
         }
 
         [TestMethod()]
         public void Arsenic_trianion()
         {
-            normal("[As---]");
-            abnormal("[AsH1---]");
-            normal("[AsH2---]");
-            abnormal("[AsH3---]");
-            abnormal("[AsH4---]");
-            abnormal("[AsH5---]");
-            abnormal("[AsH6---]");
-            abnormal("[AsH7---]");
+            Normal("[As---]");
+            Abnormal("[AsH1---]");
+            Normal("[AsH2---]");
+            Abnormal("[AsH3---]");
+            Abnormal("[AsH4---]");
+            Abnormal("[AsH5---]");
+            Abnormal("[AsH6---]");
+            Abnormal("[AsH7---]");
         }
 
         [TestMethod()]
-        public void selenium_neutral()
+        public void Selenium_neutral()
         {
-            normal("[Se]");
-            abnormal("[SeH1]");
-            normal("[SeH2]");
-            abnormal("[SeH3]");
-            normal("[SeH4]");
-            abnormal("[SeH5]");
-            normal("[SeH6]");
-            abnormal("[SeH7]");
-            abnormal("[SeH8]");
+            Normal("[Se]");
+            Abnormal("[SeH1]");
+            Normal("[SeH2]");
+            Abnormal("[SeH3]");
+            Normal("[SeH4]");
+            Abnormal("[SeH5]");
+            Normal("[SeH6]");
+            Abnormal("[SeH7]");
+            Abnormal("[SeH8]");
         }
 
         [TestMethod()]
-        public void selenium_cation()
+        public void Selenium_cation()
         {
-            abnormal("[Se+]");
-            abnormal("[SeH1+]");
-            abnormal("[SeH2+]");
-            normal("[SeH3+]");
-            abnormal("[SeH4+]");
-            normal("[SeH5+]");
-            abnormal("[SeH6+]");
-            normal("[SeH7+]");
-            abnormal("[SeH8+]");
+            Abnormal("[Se+]");
+            Abnormal("[SeH1+]");
+            Abnormal("[SeH2+]");
+            Normal("[SeH3+]");
+            Abnormal("[SeH4+]");
+            Normal("[SeH5+]");
+            Abnormal("[SeH6+]");
+            Normal("[SeH7+]");
+            Abnormal("[SeH8+]");
         }
 
         [TestMethod()]
-        public void selenium_anion()
+        public void Selenium_anion()
         {
-            abnormal("[Se-]");
-            normal("[SeH1-]");
-            abnormal("[SeH2-]");
-            normal("[SeH3-]");
-            abnormal("[SeH4-]");
-            normal("[SeH5-]");
-            abnormal("[SeH6-]");
-            abnormal("[SeH7-]");
-            abnormal("[SeH8-]");
+            Abnormal("[Se-]");
+            Normal("[SeH1-]");
+            Abnormal("[SeH2-]");
+            Normal("[SeH3-]");
+            Abnormal("[SeH4-]");
+            Normal("[SeH5-]");
+            Abnormal("[SeH6-]");
+            Abnormal("[SeH7-]");
+            Abnormal("[SeH8-]");
         }
 
         // selenium charge is unrestricted
         [TestMethod()]
-        public void selenium_n_cation()
+        public void Selenium_n_cation()
         {
-            abnormal("[Se+6]");
-            abnormal("[SeH1+6]");
-            abnormal("[SeH2+6]");
-            abnormal("[SeH3+6]");
-            abnormal("[SeH4+6]");
-            abnormal("[SeH5+6]");
-            abnormal("[SeH6+6]");
-            abnormal("[SeH7+6]");
-            normal("[SeH8+6]");
-            abnormal("[SeH9+6]");
-            normal("[SeH10+6]");
-            abnormal("[SeH11+6]");
-            normal("[SeH12+6]");
+            Abnormal("[Se+6]");
+            Abnormal("[SeH1+6]");
+            Abnormal("[SeH2+6]");
+            Abnormal("[SeH3+6]");
+            Abnormal("[SeH4+6]");
+            Abnormal("[SeH5+6]");
+            Abnormal("[SeH6+6]");
+            Abnormal("[SeH7+6]");
+            Normal("[SeH8+6]");
+            Abnormal("[SeH9+6]");
+            Normal("[SeH10+6]");
+            Abnormal("[SeH11+6]");
+            Normal("[SeH12+6]");
         }
 
         [TestMethod()]
-        public void bromine()
+        public void Bromine()
         {
-            normal("[Br]");
-            abnormal("[Br+]");
-            normal("[Br-]");
+            Normal("[Br]");
+            Abnormal("[Br+]");
+            Normal("[Br-]");
 
-            abnormal("[BrH1+]");
-            normal("[BrH2+]");
-            abnormal("[BrH3+]");
-            normal("[BrH4+]");
-            abnormal("[BrH5+]");
-            normal("[BrH6+]");
-            abnormal("[BrH7+]");
-            normal("[BrH8+]");
+            Abnormal("[BrH1+]");
+            Normal("[BrH2+]");
+            Abnormal("[BrH3+]");
+            Normal("[BrH4+]");
+            Abnormal("[BrH5+]");
+            Normal("[BrH6+]");
+            Abnormal("[BrH7+]");
+            Normal("[BrH8+]");
 
-            abnormal("[BrH1-]");
-            normal("[BrH2-]");
-            abnormal("[BrH3-]");
-            normal("[BrH4-]");
-            abnormal("[BrH5-]");
-            normal("[BrH6-]");
+            Abnormal("[BrH1-]");
+            Normal("[BrH2-]");
+            Abnormal("[BrH3-]");
+            Normal("[BrH4-]");
+            Abnormal("[BrH5-]");
+            Normal("[BrH6-]");
 
-            abnormal("[BrH1++]");
-            abnormal("[BrH2++]");
-            normal("[BrH3++]");
-            abnormal("[BrH4++]");
-            normal("[BrH5++]");
-            abnormal("[BrH6++]");
-            normal("[BrH7++]");
-            abnormal("[BrH8++]");
-            normal("[BrH9++]");
-            abnormal("[BrH10++]");
+            Abnormal("[BrH1++]");
+            Abnormal("[BrH2++]");
+            Normal("[BrH3++]");
+            Abnormal("[BrH4++]");
+            Normal("[BrH5++]");
+            Abnormal("[BrH6++]");
+            Normal("[BrH7++]");
+            Abnormal("[BrH8++]");
+            Normal("[BrH9++]");
+            Abnormal("[BrH10++]");
 
-            normal("[BrH1--]");
-            abnormal("[BrH2--]");
-            normal("[BrH3--]");
-            abnormal("[BrH4--]");
-            normal("[BrH5--]");
-            abnormal("[BrH6--]");
-            abnormal("[BrH7--]");
+            Normal("[BrH1--]");
+            Abnormal("[BrH2--]");
+            Normal("[BrH3--]");
+            Abnormal("[BrH4--]");
+            Normal("[BrH5--]");
+            Abnormal("[BrH6--]");
+            Abnormal("[BrH7--]");
         }
 
         [TestMethod()]
         public void Krypton()
         {
-            normal("[Kr]");
-            abnormal("[Kr+]");
-            abnormal("[Kr-]");
-            abnormal("[KrH]");
+            Normal("[Kr]");
+            Abnormal("[Kr+]");
+            Abnormal("[Kr-]");
+            Abnormal("[KrH]");
         }
 
         [TestMethod()]
         public void Strontium()
         {
-            normal("[Sr]");
-            abnormal("[Sr+]");
-            normal("[Sr++]");
-            normal("[Sr+](C)");
-            normal("[Sr](C)(C)");
+            Normal("[Sr]");
+            Abnormal("[Sr+]");
+            Normal("[Sr++]");
+            Normal("[Sr+](C)");
+            Normal("[Sr](C)(C)");
         }
 
         [TestMethod()]
-        public void tellurium_neutral()
+        public void Tellurium_neutral()
         {
-            normal("[Te]");
-            abnormal("[TeH1]");
-            normal("[TeH2]");
-            abnormal("[TeH3]");
-            normal("[TeH4]");
-            abnormal("[TeH5]");
-            normal("[TeH6]");
-            abnormal("[TeH7]");
-            abnormal("[TeH8]");
+            Normal("[Te]");
+            Abnormal("[TeH1]");
+            Normal("[TeH2]");
+            Abnormal("[TeH3]");
+            Normal("[TeH4]");
+            Abnormal("[TeH5]");
+            Normal("[TeH6]");
+            Abnormal("[TeH7]");
+            Abnormal("[TeH8]");
         }
 
         [TestMethod()]
-        public void tellurium_cation()
+        public void Tellurium_cation()
         {
-            abnormal("[Te+]");
-            abnormal("[TeH1+]");
-            abnormal("[TeH2+]");
-            normal("[TeH3+]");
-            abnormal("[TeH4+]");
-            normal("[TeH5+]");
-            abnormal("[TeH6+]");
-            normal("[TeH7+]");
-            abnormal("[TeH8+]");
+            Abnormal("[Te+]");
+            Abnormal("[TeH1+]");
+            Abnormal("[TeH2+]");
+            Normal("[TeH3+]");
+            Abnormal("[TeH4+]");
+            Normal("[TeH5+]");
+            Abnormal("[TeH6+]");
+            Normal("[TeH7+]");
+            Abnormal("[TeH8+]");
         }
 
         [TestMethod()]
-        public void tellurium_anion()
+        public void Tellurium_anion()
         {
-            abnormal("[Te-]");
-            normal("[TeH1-]");
-            abnormal("[TeH2-]");
-            normal("[TeH3-]");
-            abnormal("[TeH4-]");
-            normal("[TeH5-]");
-            abnormal("[TeH6-]");
-            abnormal("[TeH7-]");
-            abnormal("[TeH8-]");
+            Abnormal("[Te-]");
+            Normal("[TeH1-]");
+            Abnormal("[TeH2-]");
+            Normal("[TeH3-]");
+            Abnormal("[TeH4-]");
+            Normal("[TeH5-]");
+            Abnormal("[TeH6-]");
+            Abnormal("[TeH7-]");
+            Abnormal("[TeH8-]");
         }
 
         // tellurium charge is unrestricted
         [TestMethod()]
-        public void tellurium_n_cation()
+        public void Tellurium_n_cation()
         {
-            abnormal("[Te+6]");
-            abnormal("[TeH1+6]");
-            abnormal("[TeH2+6]");
-            abnormal("[TeH3+6]");
-            abnormal("[TeH4+6]");
-            abnormal("[TeH5+6]");
-            abnormal("[TeH6+6]");
-            abnormal("[TeH7+6]");
-            normal("[TeH8+6]");
-            abnormal("[TeH9+6]");
-            normal("[TeH10+6]");
-            abnormal("[TeH11+6]");
-            normal("[TeH12+6]");
+            Abnormal("[Te+6]");
+            Abnormal("[TeH1+6]");
+            Abnormal("[TeH2+6]");
+            Abnormal("[TeH3+6]");
+            Abnormal("[TeH4+6]");
+            Abnormal("[TeH5+6]");
+            Abnormal("[TeH6+6]");
+            Abnormal("[TeH7+6]");
+            Normal("[TeH8+6]");
+            Abnormal("[TeH9+6]");
+            Normal("[TeH10+6]");
+            Abnormal("[TeH11+6]");
+            Normal("[TeH12+6]");
         }
 
         [TestMethod()]
-        public void iodine()
+        public void Iodine()
         {
-            normal("[I]");
-            abnormal("[I+]");
-            normal("[I-]");
+            Normal("[I]");
+            Abnormal("[I+]");
+            Normal("[I-]");
 
-            abnormal("[IH1+]");
-            normal("[IH2+]");
-            abnormal("[IH3+]");
-            normal("[IH4+]");
-            abnormal("[IH5+]");
-            normal("[IH6+]");
-            abnormal("[IH7+]");
-            normal("[IH8+]");
+            Abnormal("[IH1+]");
+            Normal("[IH2+]");
+            Abnormal("[IH3+]");
+            Normal("[IH4+]");
+            Abnormal("[IH5+]");
+            Normal("[IH6+]");
+            Abnormal("[IH7+]");
+            Normal("[IH8+]");
 
-            abnormal("[IH1-]");
-            normal("[IH2-]");
-            abnormal("[IH3-]");
-            normal("[IH4-]");
-            abnormal("[IH5-]");
-            normal("[IH6-]");
+            Abnormal("[IH1-]");
+            Normal("[IH2-]");
+            Abnormal("[IH3-]");
+            Normal("[IH4-]");
+            Abnormal("[IH5-]");
+            Normal("[IH6-]");
 
-            abnormal("[IH1++]");
-            abnormal("[IH2++]");
-            normal("[IH3++]");
-            abnormal("[IH4++]");
-            normal("[IH5++]");
-            abnormal("[IH6++]");
-            normal("[IH7++]");
-            abnormal("[IH8++]");
-            normal("[IH9++]");
-            abnormal("[IH10++]");
+            Abnormal("[IH1++]");
+            Abnormal("[IH2++]");
+            Normal("[IH3++]");
+            Abnormal("[IH4++]");
+            Normal("[IH5++]");
+            Abnormal("[IH6++]");
+            Normal("[IH7++]");
+            Abnormal("[IH8++]");
+            Normal("[IH9++]");
+            Abnormal("[IH10++]");
 
-            normal("[IH1--]");
-            abnormal("[IH2--]");
-            normal("[IH3--]");
-            abnormal("[IH4--]");
-            normal("[IH5--]");
-            abnormal("[IH6--]");
-            abnormal("[IH7--]");
+            Normal("[IH1--]");
+            Abnormal("[IH2--]");
+            Normal("[IH3--]");
+            Abnormal("[IH4--]");
+            Normal("[IH5--]");
+            Abnormal("[IH6--]");
+            Abnormal("[IH7--]");
         }
 
         [TestMethod()]
         public void astatine()
         {
-            normal("[At]");
-            abnormal("[At+]");
-            normal("[At-]");
+            Normal("[At]");
+            Abnormal("[At+]");
+            Normal("[At-]");
 
-            abnormal("[AtH1+]");
-            normal("[AtH2+]");
-            abnormal("[AtH3+]");
-            normal("[AtH4+]");
-            abnormal("[AtH5+]");
-            normal("[AtH6+]");
-            abnormal("[AtH7+]");
-            normal("[AtH8+]");
+            Abnormal("[AtH1+]");
+            Normal("[AtH2+]");
+            Abnormal("[AtH3+]");
+            Normal("[AtH4+]");
+            Abnormal("[AtH5+]");
+            Normal("[AtH6+]");
+            Abnormal("[AtH7+]");
+            Normal("[AtH8+]");
 
-            abnormal("[AtH1-]");
-            normal("[AtH2-]");
-            abnormal("[AtH3-]");
-            normal("[AtH4-]");
-            abnormal("[AtH5-]");
-            normal("[AtH6-]");
+            Abnormal("[AtH1-]");
+            Normal("[AtH2-]");
+            Abnormal("[AtH3-]");
+            Normal("[AtH4-]");
+            Abnormal("[AtH5-]");
+            Normal("[AtH6-]");
 
-            abnormal("[AtH1++]");
-            abnormal("[AtH2++]");
-            normal("[AtH3++]");
-            abnormal("[AtH4++]");
-            normal("[AtH5++]");
-            abnormal("[AtH6++]");
-            normal("[AtH7++]");
-            abnormal("[AtH8++]");
-            normal("[AtH9++]");
-            abnormal("[AtH10++]");
+            Abnormal("[AtH1++]");
+            Abnormal("[AtH2++]");
+            Normal("[AtH3++]");
+            Abnormal("[AtH4++]");
+            Normal("[AtH5++]");
+            Abnormal("[AtH6++]");
+            Normal("[AtH7++]");
+            Abnormal("[AtH8++]");
+            Normal("[AtH9++]");
+            Abnormal("[AtH10++]");
 
-            normal("[AtH1--]");
-            abnormal("[AtH2--]");
-            normal("[AtH3--]");
-            abnormal("[AtH4--]");
-            normal("[AtH5--]");
-            abnormal("[AtH6--]");
-            abnormal("[AtH7--]");
+            Normal("[AtH1--]");
+            Abnormal("[AtH2--]");
+            Normal("[AtH3--]");
+            Abnormal("[AtH4--]");
+            Normal("[AtH5--]");
+            Abnormal("[AtH6--]");
+            Abnormal("[AtH7--]");
         }
 
         [TestMethod()]
-        public void barium()
+        public void Barium()
         {
-            normal("[Ba]");
-            abnormal("[Ba+]");
-            normal("[Ba++]");
-            normal("[Ba+](C)");
-            normal("[Ba](C)(C)");
+            Normal("[Ba]");
+            Abnormal("[Ba+]");
+            Normal("[Ba++]");
+            Normal("[Ba+](C)");
+            Normal("[Ba](C)(C)");
         }
 
         [TestMethod()]
-        public void radium()
+        public void Radium()
         {
-            normal("[Ra]");
-            abnormal("[Ra+]");
-            normal("[Ra++]");
-            normal("[Ra+](C)");
-            normal("[Ra](C)(C)");
-            abnormal("[Ra++](C)(C)");
+            Normal("[Ra]");
+            Abnormal("[Ra+]");
+            Normal("[Ra++]");
+            Normal("[Ra+](C)");
+            Normal("[Ra](C)(C)");
+            Abnormal("[Ra++](C)(C)");
         }
 
-        static void normal(string str)
+        static void Normal(string str)
         {
-            normal(str, 0);
+            Normal(str, 0);
         }
 
-        static void abnormal(string str)
+        static void Abnormal(string str)
         {
-            abnormal(str, 0);
+            Abnormal(str, 0);
         }
 
-        static void normal(string str, int v)
+        static void Normal(string str, int v)
         {
             try
             {
@@ -950,7 +950,7 @@ namespace NCDK.Beam
             }
         }
 
-        static void abnormal(string str, int v)
+        static void Abnormal(string str, int v)
         {
             try
             {

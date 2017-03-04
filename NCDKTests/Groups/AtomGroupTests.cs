@@ -25,10 +25,10 @@ using NCDK.Smiles;
 
 namespace NCDK.Groups
 {
-    /**
-     * @author maclean
-     * @cdk.module test-group
-     */
+    /// <summary>
+    // @author maclean
+    // @cdk.module test-group
+    /// </summary>
     [TestClass()]
     public class AtomGroupTests : CDKTestCase
     {
@@ -53,7 +53,7 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void hetatmSingleTree()
+        public void HetatmSingleTree()
         {
             Test(GetMol("CC(O)C(C)C"), 2);
         }
@@ -71,13 +71,13 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void hetatmMultipleTree()
+        public void HetatmMultipleTree()
         {
             Test(GetMol("CC(=O)C(C)C"), 2);
         }
 
         [TestMethod()]
-        public void hetatmSingleCycle()
+        public void HetatmSingleCycle()
         {
             Test(GetMol("C1COC1"), 2);
         }
@@ -89,7 +89,7 @@ namespace NCDK.Groups
         }
 
         [TestMethod()]
-        public void hetatmMultipleCycle()
+        public void HetatmMultipleCycle()
         {
             Test(GetMol("C1=OC=C1"), 1);
         }

@@ -3,19 +3,19 @@ using NCDK.Smiles;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Sets the computation of SMARTSAtomInvariants using the Daylight ring
-     * values.
-     *
-     * @author John May
-     * @cdk.module test-smarts
-     */
+    /// <summary>
+    /// Sets the computation of SMARTSAtomInvariants using the Daylight ring
+    /// values.
+    ///
+    // @author John May
+    // @cdk.module test-smarts
+    /// </summary>
      [TestClass()]
     public class DaylightSMARTSAtomInvariantsTest
     {
 
         [TestMethod()]
-        public void targetTest()
+        public void TargetTest()
         {
             IAtomContainer container = sp.ParseSmiles("CCC");
             SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
@@ -98,12 +98,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             Assert.AreEqual(2, InvariantOfFirstAtom("C12(CCC2)CCC1").RingNumber);
         }
 
-        /**
-         * Demonstates a problems with the SSSR but we match what Daylight depict
-         * match says. We always have 4 atoms atoms in 3 rings but the other atoms
-         * are either in 1 ring or 2 rings. Which atoms depends on the order of
-         * atoms in the input.
-         */
+        /// <summary>
+        /// Demonstates a problems with the SSSR but we match what Daylight depict
+        /// match says. We always have 4 atoms atoms in 3 rings but the other atoms
+        /// are either in 1 ring or 2 rings. Which atoms depends on the order of
+        /// atoms in the input.
+        /// </summary>
         [TestMethod()]
         public void RingNumber_cyclophane() {
             IAtomContainer container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
@@ -137,14 +137,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             Assert.IsTrue(InvariantOfFirstAtom("C1CCCC1").RingSize.Contains(5));
         }
 
-        /**
-         * Shows that the store ring sizes are only the smallest. There is one ring
-         * of size six and one ring of size 5. When we count the ring sizes (can be
-         * verities on depict match) there are only 4 atoms in a 6 member ring. This
-         * is because 2 atoms are shared with the smalled 5 member ring.
-         *
-         * @
-         */
+        /// <summary>
+        /// Shows that the store ring sizes are only the smallest. There is one ring
+        /// of size six and one ring of size 5. When we count the ring sizes (can be
+        /// verities on depict match) there are only 4 atoms in a 6 member ring. This
+        /// is because 2 atoms are shared with the smalled 5 member ring.
+        ///
+        // @
+        /// </summary>
         [TestMethod()]
         public void RingSize_imidazole() {
 
@@ -161,10 +161,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             Assert.AreEqual(4, ringSize6);
         }
 
-        /**
-         * Shows that the exterior ring of the SSSR (size 12) is not
-         * @
-         */
+        /// <summary>
+        /// Shows that the exterior ring of the SSSR (size 12) is not
+        // @
+        /// </summary>
         [TestMethod()]
         public void RingSize_cyclophane()
         {
@@ -180,7 +180,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         [TestMethod()]
-        public void noRingInfo() {
+        public void NoRingInfo() {
             IAtomContainer container = sp.ParseSmiles("C1CC23CCC11CCC4(CC1)CCC(CC2)(CC3)CC4");
             SMARTSAtomInvariants.ConfigureDaylightWithoutRingInfo(container);
             foreach (var atom in container.Atoms) {

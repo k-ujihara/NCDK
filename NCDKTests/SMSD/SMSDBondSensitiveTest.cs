@@ -30,12 +30,12 @@ using System;
 
 namespace NCDK.SMSD
 {
-    /**
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     *
-     * @cdk.module test-smsd
-     * @cdk.require java1.6+
-     */
+    /// <summary>
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    ///
+    // @cdk.module test-smsd
+    // @cdk.require java1.6+
+    /// </summary>
     //[TestCategory("SlowTest")]
     [TestClass()]
     public class SMSDBondSensitiveTest
@@ -243,10 +243,10 @@ namespace NCDK.SMSD
         //
         //
         //    }
-        /**
-         * frag is a subgraph of the het mol
-         * @throws Exception
-         */
+        /// <summary>
+        /// frag is a subgraph of the het mol
+        // @throws Exception
+        /// </summary>
         [TestMethod()]
         public void TestSMSDAdpAtpSubgraph()
         {
@@ -259,7 +259,7 @@ namespace NCDK.SMSD
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol1);
             ExtAtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol2);
 
-            //	Calling the main algorithm to perform MCS cearch
+            //    Calling the main algorithm to perform MCS cearch
 
             Aromaticity.CDKLegacy.Apply(mol1);
             Aromaticity.CDKLegacy.Apply(mol2);
@@ -301,7 +301,7 @@ namespace NCDK.SMSD
             IAtomContainer source = ExtAtomContainerManipulator.RemoveHydrogensExceptSingleAndPreserveAtomID(mol1);
             IAtomContainer target = ExtAtomContainerManipulator.RemoveHydrogensExceptSingleAndPreserveAtomID(mol2);
 
-            //	Calling the main algorithm to perform MCS cearch
+            //    Calling the main algorithm to perform MCS cearch
 
             Aromaticity.CDKLegacy.Apply(source);
             Aromaticity.CDKLegacy.Apply(target);

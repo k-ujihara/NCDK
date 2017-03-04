@@ -17,26 +17,20 @@
  */
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This encapsulates an atom with a ring identifier, with an optional ring
-     * bond specified. For example, <code>C=1CCCCC1</code>.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This encapsulates an atom with a ring identifier, with an optional ring
+    /// bond specified. For example, <code>C=1CCCCC1</code>.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class RingIdentifierAtom : SMARTSAtom
     {
         public RingIdentifierAtom(IChemObjectBuilder builder)
             : base(builder)
         { }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             return this.Atom.Matches(atom);

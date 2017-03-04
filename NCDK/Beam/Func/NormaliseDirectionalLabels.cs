@@ -6,17 +6,13 @@ namespace NCDK.Beam
 {
     /// <summary>
     /// Normalise directional labels such that the first label is always a '/'. Given 
-    /// a molecule with directional bonds {@code F\C=C\F} the labels are normalised 
-    /// to be F/C=C/F.
+    /// a molecule with directional bonds "F\C=C\F" the labels are normalised 
+    /// to be "F/C=C/F".
     /// </summary>
-    /// <author>John May</author>
-#if TEST
-    public
-#endif
-    sealed class NormaliseDirectionalLabels
+    // @author John May
+    internal sealed class NormaliseDirectionalLabels
             : AbstractFunction<Graph, Graph>
     {
-
         public override Graph Apply(Graph g)
         {
             Traversal traversal = new Traversal(g);
@@ -25,11 +21,10 @@ namespace NCDK.Beam
             // copy atom/topology information this is unchanged
             for (int u = 0; u < g.Order; u++)
             {
-                h.AddAtom(g.GetAtom_(u));
+                h.AddAtom(g.GetAtom(u));
                 h.AddTopology(g.TopologyOf(u));
             }
-
-
+            
             // change edges (only changed added to replacement)
             for (int u = 0; u < g.Order; u++)
             {
@@ -54,7 +49,6 @@ namespace NCDK.Beam
 
         private sealed class Traversal
         {
-
             private readonly Graph g;
             private readonly bool[] visited;
             private readonly int[] ordering;

@@ -27,31 +27,31 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     * This is a wrapper class for some existing methods in AtomPlacer. It helps you
-     * to layout 2D and 3D coordinates for hydrogen atoms added to a molecule which
-     * already has coordinates for the rest of the atoms.
-     *
-     * <blockquote><pre>
-     * IAtomContainer container      = ...;
-     * HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-     * hydrogenPlacer.PlaceHydrogens2D(container, 1.5);
-     * </pre></blockquote>
-     *
-     * @author Christoph Steinbeck
-     * @cdk.created 2003-08-06
-     * @cdk.module sdg
-     * @cdk.githash
-     * @see AtomPlacer
-     */
+    /// <summary>
+    /// This is a wrapper class for some existing methods in AtomPlacer. It helps you
+    /// to layout 2D and 3D coordinates for hydrogen atoms added to a molecule which
+    /// already has coordinates for the rest of the atoms.
+    ///
+    /// <blockquote><code>
+    /// IAtomContainer container      = ...;
+    /// HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
+    /// hydrogenPlacer.PlaceHydrogens2D(container, 1.5);
+    /// </code></blockquote>
+    ///
+    // @author Christoph Steinbeck
+    // @cdk.created 2003-08-06
+    // @cdk.module sdg
+    // @cdk.githash
+    /// <seealso cref="AtomPlacer"/>
+    /// </summary>
     public sealed class HydrogenPlacer
     {
-        /**
-         * Place all hydrogens connected to atoms which have already been laid out.
-         *
-         * @param container  atom container
-         * @param bondLength bond length to user
-         */
+        /// <summary>
+        /// Place all hydrogens connected to atoms which have already been laid out.
+        ///
+        /// <param name="container">atom container</param>
+        /// <param name="bondLength">bond length to user</param>
+        /// </summary>
         public void PlaceHydrogens2D(IAtomContainer container, double bondLength)
         {
             Debug.WriteLine("placing hydrogens on all atoms");
@@ -66,34 +66,34 @@ namespace NCDK.Layout
             Debug.WriteLine("hydrogen placement complete");
         }
 
-        /**
-         * Place hydrogens connected to the given atom using the average bond length
-         * in the container.
-         *
-         * @param container atom container of which <i>atom</i> is a member
-         * @param atom      the atom of which to place connected hydrogens
-         * @throws ArgumentException if the <i>atom</i> does not have 2d
-         *                                  coordinates
-         * @see #PlaceHydrogens2D(IAtomContainer,
-         *      double)
-         */
+        /// <summary>
+        /// Place hydrogens connected to the given atom using the average bond length
+        /// in the container.
+        ///
+        /// <param name="container">atom container of which <i>atom</i> is a member</param>
+        /// <param name="atom">the atom of which to place connected hydrogens</param>
+        /// <exception cref="ArgumentException">if the <i>atom</i> does not have 2d</exception>
+        ///                                  coordinates
+        /// <seealso cref="PlaceHydrogens2D(IAtomContainer,
+        ///      double)"/>
+        /// </summary>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom)
         {
             double bondLength = GeometryUtil.GetBondLengthAverage(container);
             PlaceHydrogens2D(container, atom, bondLength);
         }
 
-        /**
-         * Place hydrogens connected to the provided atom <i>atom</i> using the
-         * specified <i>bondLength</i>.
-         *
-         * @param container  atom container
-         * @param bondLength bond length to user
-         * @throws ArgumentException thrown if the <i>atom</i> or
-         *                                  <i>container</i> was null or the atom
-         *                                  has connected atoms which have not been
-         *                                  placed.
-         */
+        /// <summary>
+        /// Place hydrogens connected to the provided atom <i>atom</i> using the
+        /// specified <i>bondLength</i>.
+        ///
+        /// <param name="container">atom container</param>
+        /// <param name="bondLength">bond length to user</param>
+        /// <exception cref="ArgumentException">thrown if the <i>atom</i> or</exception>
+        ///                                  <i>container</i> was null or the atom
+        ///                                  has connected atoms which have not been
+        ///                                  placed.
+        /// </summary>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom, double bondLength)
         {
 

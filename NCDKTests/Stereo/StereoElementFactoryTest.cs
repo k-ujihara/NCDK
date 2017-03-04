@@ -31,16 +31,16 @@ using System.Linq;
 
 namespace NCDK.Stereo
 {
-    /**
-     * @author John May
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @author John May
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class StereoElementFactoryTest
     {
 
         [TestMethod()]
-        public void e_but2ene()
+        public void E_but2ene()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -2.19d, 1.64d));
@@ -60,7 +60,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void z_but2ene()
+        public void Z_but2ene()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 3, -2.46d, 1.99d));
@@ -133,7 +133,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void r_butan2ol()
+        public void R_butan2ol()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
@@ -152,7 +152,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void s_butan2ol()
+        public void S_butan2ol()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("O", 1, -0.46d, 1.98d));
@@ -171,7 +171,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void r_butan2ol_3d()
+        public void R_butan2ol_3d()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.56d, 0.05d, 0.71d));
@@ -190,7 +190,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void s_butan2ol_3d()
+        public void S_butan2ol_3d()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.17d, -0.12d, -0.89d));
@@ -209,7 +209,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void r_butan2ol_3d_expH()
+        public void R_butan2ol_3d_expH()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.07d, -0.14d, 0.50d));
@@ -230,7 +230,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void s_butan2ol_3d_expH()
+        public void S_butan2ol_3d_expH()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, -0.17d, -0.12d, -0.89d));
@@ -269,11 +269,11 @@ namespace NCDK.Stereo
             Assert.IsNull(element);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m1/s1
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m1/s1
+        /// </summary>
         [TestMethod()]
-        public void r_methanesulfinylethane()
+        public void R_methanesulfinylethane()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("S", 0, 0.01d, 1.50d));
@@ -291,11 +291,11 @@ namespace NCDK.Stereo
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, element.Stereo);
         }
 
-        /**
-         * @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m0/s1
-         */
+        /// <summary>
+        // @cdk.inchi InChI=1S/C3H8OS/c1-3-5(2)4/h3H2,1-2H3/t5-/m0/s1
+        /// </summary>
         [TestMethod()]
-        public void s_methanesulfinylethane()
+        public void S_methanesulfinylethane()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("S", 0, 0.01d, 1.50d));
@@ -314,7 +314,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void e_but2ene_3d()
+        public void E_but2ene_3d()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.19d, 0.09d, -0.27d));
@@ -333,7 +333,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void z_but2ene_3d()
+        public void Z_but2ene_3d()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 0.05d, -1.28d, 0.13d));
@@ -394,18 +394,18 @@ namespace NCDK.Stereo
             Assert.IsNull(element);
         }
 
-        /**
-         * MetaCyc CPD-7272 D-dopachrome
-         * http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272
-         * @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
-         */
+        /// <summary>
+        /// MetaCyc CPD-7272 D-dopachrome
+        /// http://metacyc.org/META/NEW-IMAGE?type=NIL&object=CPD-7272
+        // @cdk.inchi InChI=1S/C9H7NO4/c11-7-2-4-1-6(9(13)14)10-5(4)3-8(7)12/h1,3,6,10H,2H2,(H,13,14)/p-1
+        /// </summary>
         [TestMethod()]
         public void Inverse_style_Downbond_dopachrome()
         {
             MDLV2000Reader mdl = null;
             try
             {
-                mdl = new MDLV2000Reader(GetType().Assembly.GetManifestResourceStream("NCDK.Data.MDL.CPD-7272.mol"));
+                mdl = new MDLV2000Reader(ResourceLoader.GetAsStream("NCDK.Data.MDL.CPD-7272.mol"));
                 IAtomContainer ac = mdl.Read(new AtomContainer());
 
                 // MDL reader currently adds stereo automatically
@@ -622,11 +622,11 @@ namespace NCDK.Stereo
             Assert.IsFalse(m.StereoElements.GetEnumerator().MoveNext());
         }
 
-        /**
-         * The embedding of 3D depictions may cause bonds of abnormal length
-         * (e.g. CHEBI:7621). The parity computation should consider this, here
-         * we check we get the correct (anti-clockwise) configuration.
-         */
+        /// <summary>
+        /// The embedding of 3D depictions may cause bonds of abnormal length
+        /// (e.g. CHEBI:7621). The parity computation should consider this, here
+        /// we check we get the correct (anti-clockwise) configuration.
+        /// </summary>
         [TestMethod()]
         public void DifferentBondLengthsDoNotAffectWinding()
         {
@@ -680,7 +680,7 @@ namespace NCDK.Stereo
         }
 
         [TestMethod()]
-        public void onlyCreateStereoForConsitionalDifferencesIn3D()
+        public void OnlyCreateStereoForConsitionalDifferencesIn3D()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -1.00d, -0.25d, 1.22d));
@@ -725,12 +725,12 @@ namespace NCDK.Stereo
             Assert.AreEqual(0, elements.Count);
         }
 
-        /**
-         * glyceraldehyde
-         * @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
-         */
+        /// <summary>
+        /// glyceraldehyde
+        // @cdk.inchi InChI=1/C3H6O3/c4-1-3(6)2-5/h1,3,5-6H,2H2/t3-/s2
+        /// </summary>
         [TestMethod()]
-        public void onlyInterpretFischerProjectionsWhenAsked()
+        public void OnlyInterpretFischerProjectionsWhenAsked()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 0, 0.80d, 1.24d));
@@ -766,12 +766,12 @@ namespace NCDK.Stereo
                                             .Count == 0);
         }
 
-        /**
-         * beta-D-glucose
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-         */
+        /// <summary>
+        /// beta-D-glucose
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+        /// </summary>
         [TestMethod()]
-        public void onlyInterpretHaworthProjectionsWhenAsked()
+        public void OnlyInterpretHaworthProjectionsWhenAsked()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, 4.16d, 1.66d));
@@ -816,12 +816,12 @@ namespace NCDK.Stereo
                                             .Count == 0);
         }
 
-        /**
-         * beta-D-glucose
-         * @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
-         */
+        /// <summary>
+        /// beta-D-glucose
+        // @cdk.inchi InChI=1/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3-,4+,5-,6-/s2
+        /// </summary>
         [TestMethod()]
-        public void onlyInterpretChairProjectionsWhenAsked()
+        public void OnlyInterpretChairProjectionsWhenAsked()
         {
             IAtomContainer m = new AtomContainer();
             m.Atoms.Add(Atom("C", 1, -0.77d, 10.34d));

@@ -53,8 +53,8 @@ Maximum geometric degrees of freedom:       9
    
   Stoichiometry: CH4
   Molecular Point Group: C3v     
-	Molecule translated to center of mass 
-	Molecule reoriented along symmetry axes
+    Molecule translated to center of mass 
+    Molecule reoriented along symmetry axes
   Point Group used: C3v
   
  Symmetrized geometry:
@@ -992,7 +992,7 @@ etot   4  Y  N  4  M   -40.52404260189  2.7E-07  0.0E-01  0.0E-01
   predicted energy change:    -1.1056E-07
   
   ********************************************************
-  **           Geometry optimization complete           **
+  **           Geometry optimization complete          ///*
   ********************************************************
   
   center of mass moved by:

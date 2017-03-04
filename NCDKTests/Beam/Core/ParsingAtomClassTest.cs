@@ -34,26 +34,26 @@ namespace NCDK.Beam
     /// <summary>
     /// Unit tests verify correct handling of atom class in bracket atoms.
     /// </summary>
-    /// <author>John May</author>
-	[TestClass()]
+    // @author John May
+    [TestClass()]
     public class ParsingAtomClassTest
     {
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void invalid()
+        public void Invalid()
         {
             Verify(":", 0);
         }
 
         [TestMethod()]
-        public void none()
+        public void None()
         {
             Verify("", 0);
         }
 
         [TestMethod()]
-        public void none2()
+        public void None2()
         {
             Verify("]", 0);
         }
@@ -71,7 +71,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void two()
+        public void Two()
         {
             Verify(":2", 2);
         }

@@ -23,11 +23,11 @@ using System.Linq;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IAdductFormula} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of {@link IAdductFormula} implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAdductFormulaTest : AbstractMolecularFormulaSetTest
     {
@@ -277,7 +277,7 @@ namespace NCDK
         public virtual void TestGetIsotopeCount()
         {
             IAdductFormula add = Builder.CreateAdductFormula();
-            Assert.AreEqual(0, add.Isotopes.Count());
+            Assert.AreEqual(0, add.GetIsotopes().Count());
 
             IMolecularFormula formula = Builder.CreateMolecularFormula();
             formula.Add(Builder.CreateIsotope("C"));
@@ -285,7 +285,7 @@ namespace NCDK
 
             add.Add(formula);
 
-            Assert.AreEqual(2, add.Isotopes.Count());
+            Assert.AreEqual(2, add.GetIsotopes().Count());
         }
 
         [TestMethod()]
@@ -304,7 +304,7 @@ namespace NCDK
             add.Add(formula2);
 
             int count = 0;
-            IEnumerator<IIsotope> it = add.Isotopes.GetEnumerator();
+            IEnumerator<IIsotope> it = add.GetIsotopes().GetEnumerator();
             while (it.MoveNext())
             {
                 ++count;
@@ -316,7 +316,7 @@ namespace NCDK
         public virtual void TestGetIsotopeCount_Sum()
         {
             IAdductFormula add = Builder.CreateAdductFormula();
-            Assert.AreEqual(0, add.Isotopes.Count());
+            Assert.AreEqual(0, add.GetIsotopes().Count());
 
             IMolecularFormula adduct1 = Builder.CreateMolecularFormula();
             adduct1.Add(Builder.CreateIsotope("C"));
@@ -328,14 +328,14 @@ namespace NCDK
             formula.Add(h);
             add.Add(adduct1);
 
-            Assert.AreEqual(2, add.Isotopes.Count());
+            Assert.AreEqual(2, add.GetIsotopes().Count());
         }
 
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope()
         {
             IAdductFormula add = Builder.CreateAdductFormula();
-            Assert.AreEqual(0, add.Isotopes.Count());
+            Assert.AreEqual(0, add.GetIsotopes().Count());
 
             IMolecularFormula formula = Builder.CreateMolecularFormula();
             IIsotope C = Builder.CreateIsotope("C");
@@ -346,7 +346,7 @@ namespace NCDK
             add.Add(formula);
 
             Assert.AreEqual(2, formula.Isotopes.Count());
-            Assert.AreEqual(2, add.Isotopes.Count());
+            Assert.AreEqual(2, add.GetIsotopes().Count());
             Assert.AreEqual(1, add.GetCount(C));
             Assert.AreEqual(4, add.GetCount(h));
         }
@@ -356,7 +356,7 @@ namespace NCDK
         {
 
             IAdductFormula add = Builder.CreateAdductFormula();
-            Assert.AreEqual(0, add.Isotopes.Count());
+            Assert.AreEqual(0, add.GetIsotopes().Count());
 
             IMolecularFormula adduct1 = Builder.CreateMolecularFormula();
             IIsotope C = Builder.CreateIsotope("C");

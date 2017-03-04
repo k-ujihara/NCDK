@@ -31,19 +31,19 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Aromaticities
 {
-    /**
+    /// <summary>
     /// Assign a Kekulé representation to the aromatic systems of a compound. Input
     /// from some file-formats provides some bonds as aromatic / delocalised bond
     /// types. This method localises the electrons and assigns single and double
     /// bonds. Different atom and bond orderings may produce distinct but valid
     /// Kekulé forms. Only bond orders are adjusted and any aromatic flags will
     /// remain untouched.
-    /// <p/>
-     *
+    /// <para>
     /// The procedure requires that all atoms have defined implicit hydrogens counts
     /// and formal charges. If this information is not present it should be assigned
-    /// first. <p/>
-     *
+    /// first. 
+    /// </para>
+    /// <para>
     /// For some inputs it may not be possible to assign a Kekulé form. In general
     /// theses cases are rare but usually occur for one of two reasons.
     /// 1) Missing / ambiguous implicit hydrogens, this is fundamental to determining the
@@ -54,25 +54,23 @@ namespace NCDK.Aromaticities
     /// on the aromatic nitrogen '[nH]1cccc1' (not: 'n1cccc1').
     /// 2) The aromaticity perception algorithm has allowed atoms with abnormal
     /// valence. This usually happens when a non-convalent bond has be <i>upgraded</i>
-    /// to a sigma bond during format conversion. <p/>
-     *
-    /// @author John May
-    /// @cdk.keyword kekule
-    /// @cdk.keyword kekulize
-    /// @cdk.keyword dearomatize
-    /// @cdk.keyword aromatic
-    /// @cdk.keyword fix bond orders
-    /// @cdk.keyword deduce bond orders
-     */
+    /// to a sigma bond during format conversion. 
+    /// </para>
+    /// </summary>
+    // @author John May
+    // @cdk.keyword kekule
+    // @cdk.keyword kekulize
+    // @cdk.keyword dearomatize
+    // @cdk.keyword aromatic
+    // @cdk.keyword fix bond orders
+    // @cdk.keyword deduce bond orders
     public sealed class Kekulization
     {
-
-        /**
+        /// <summary>
         /// Assign a Kekulé representation to the aromatic systems of a compound.
-         *
-        /// @param ac structural representation
-        /// @ a Kekulé form could not be assigned
-         */
+        /// </summary>
+        /// <param name="ac">structural representation</param>
+        /// <exception cref="CDKException">a Kekulé form could not be assigned</exception>
         public static void Kekulize(IAtomContainer ac)
         {
             // storage of pairs of atoms that have pi-bonded
@@ -103,8 +101,7 @@ namespace NCDK.Aromaticities
 
                 // sanity check, something wrong if this happens
                 if (bond.Order.Numeric > 1)
-                    throw new CDKException(
-                            "Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
+                    throw new CDKException("Cannot assign Kekulé structure, non-sigma bond order has already been assigned?");
 
                 bond.Order = BondOrder.Double;
                 available.Set(w, false);
@@ -112,14 +109,13 @@ namespace NCDK.Aromaticities
         }
 
 
-        /**
+        /// <summary>
         /// Determine the set of atoms that are available to have a double-bond.
-         *
-        /// @param graph adjacent list representation
-        /// @param atoms array of atoms
-        /// @param bonds map of atom indices to bonds
-        /// @return atoms that can require a double-bond
-         */
+        /// </summary>
+        /// <param name="graph">adjacent list representation</param>
+        /// <param name="atoms">array of atoms</param>
+        /// <param name="bonds">map of atom indices to bonds</param>
+        /// <returns>atoms that can require a double-bond</returns>
         private static BitArray IsAvailable(int[][] graph, IAtom[] atoms, EdgeToBondMap bonds)
         {
             BitArray available = new BitArray(atoms.Length);
@@ -171,18 +167,16 @@ namespace NCDK.Aromaticities
             return available;
         }
 
-        /**
+        /// <summary>
         /// Determine if the specified element with the provided charge and valance
         /// requires a pi bond?
-         *
-        /// @param element atomic number >= 0
-        /// @param charge  formal charge
-        /// @param valence bonded electrons
-        /// @return a double-bond is required
-         */
+        /// </summary>
+        /// <param name="element">atomic number >= 0</param>
+        /// <param name="charge">formal charge</param>
+        /// <param name="valence">bonded electrons</param>
+        /// <returns>a double-bond is required</returns>
         private static bool IsAvailable(int element, int charge, int valence)
         {
-
             // higher atomic number elements aren't likely to be found but
             // we have them for rare corner cases (tellurium).
             // Germanium, Silicon, Tin and Antimony are a bit bonkers...

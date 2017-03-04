@@ -31,18 +31,18 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK.Beam
 {
     /// <summary> <author>John May </author>*/
-	[TestClass()]
+    [TestClass()]
     public class ParserTest
     {
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void ringBondMismatch()
+        public void RingBondMismatch()
         {
             Parser.DecideBond(Bond.Single, Bond.Double, CharBuffer.FromString(""));
         }
 
         [TestMethod()]
-        public void ringBondDecision()
+        public void RingBondDecision()
         {
             Assert.AreEqual(Parser.DecideBond(Bond.Double, Bond.Double, CharBuffer.FromString("")), Bond.Double);
             Assert.AreEqual(Parser.DecideBond(Bond.Double, Bond.Implicit, CharBuffer.FromString("")), Bond.Double);
@@ -50,14 +50,14 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void invalidTetrahedral()
+        public void InvalidTetrahedral()
         {
             Graph g = Parser.Parse("[C@-](N)(O)C");
             Assert.AreEqual(g.TopologyOf(0), Topology.Unknown);
         }
 
         [TestMethod()]
-        public void invalidTetrahedral2()
+        public void InvalidTetrahedral2()
         {
             Graph g = Parser.Parse("[C@](N)(O)C");
             Assert.AreEqual(g.TopologyOf(0), Topology.Unknown);
@@ -106,7 +106,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void tellurophene()
+        public void Tellurophene()
         {
             Parser.Parse("c1cc[te]c1");
         }
@@ -167,7 +167,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void tellurium()
+        public void Tellurium()
         {
             Graph g = Parser.Losse("[te]");
             Assert.IsTrue(g.GetAtom(0).IsAromatic());
@@ -176,7 +176,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void tellurium_strict()
+        public void Tellurium_strict()
         {
             Graph g = Parser.GetStrict("[te]");
         }
@@ -189,14 +189,14 @@ namespace NCDK.Beam
 
         // not part of spec
         [TestMethod()]
-        public void r_label()
+        public void R_label()
         {
             Graph g = Parser.Parse("CC(C)C[R]");
             Assert.AreEqual(g.GetAtom(4).Label, "R");
         }
 
         [TestMethod()]
-        public void random_label()
+        public void Random_label()
         {
             Graph g = Parser.Parse("CC(C)C[Really?]");
             Assert.AreEqual(g.GetAtom(4).Label, "Really?");
@@ -204,14 +204,14 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void bad_label()
+        public void Bad_label()
         {
             Parser.Parse("[Nope-[not]-[ok]");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void bad_label2()
+        public void Bad_label2()
         {
             Parser.Parse("[this-[is-not-okay]");
         }
@@ -239,13 +239,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void seleniumTh()
+        public void SeleniumTh()
         {
             Assert.AreEqual(Parser.Parse("[Se@](=O)(C)CC").ToSmiles(), "[Se@](=O)(C)CC");
         }
 
         [TestMethod()]
-        public void sulphurIonTh()
+        public void SulphurIonTh()
         {
             Assert.AreEqual(Parser.Parse("[S@+]([O-])(C)CC").ToSmiles(), "[S@+]([O-])(C)CC");
         }
@@ -253,14 +253,14 @@ namespace NCDK.Beam
         // chembl has some of these odditites, not sure which tool produced them
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void rejectChEMBLBadBonds()
+        public void RejectChEMBLBadBonds()
         {
             Parser.Parse("C\\=C");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void rejectMultipleUpBonds()
+        public void RejectMultipleUpBonds()
         {
             Parser.Parse("C/C=C(/C)/C");
         }
@@ -301,7 +301,7 @@ namespace NCDK.Beam
 
         [TestMethod()]
         [ExpectedException(typeof(InvalidSmilesException))]
-        public void openBracketIsInvalid()
+        public void OpenBracketIsInvalid()
         {
             Parser.Parse("[");
         }

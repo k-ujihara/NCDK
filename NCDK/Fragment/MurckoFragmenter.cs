@@ -33,28 +33,29 @@ using System.Linq;
 
 namespace NCDK.Fragment
 {
-    /**
-    // An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
-    // <p/>
-    // As an implementation of {@link IFragmenter} this class will return
-    // the Murcko frameworks (i.e., ring systems + linkers) along with
-    // the ring systems ia getFragments. The
-    // class also provides methods to extract the ring systems and frameworks
-    // separately. For all these methods, the user can retrieve the substructures
-    // as canonical SMILES strings or as <see cref="IAtomContainer"/> objects.
-    // <p/>
-    // Note that in contrast to the original paper which implies that a single molecule
-    // has a single framework, this class returns multiple frameworks consisting of all
-    // combinations of ring systems and linkers. The "true" Murcko framework is simply
-    // the largest framework.
-     *
+    /// <summary>
+    /// An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
+    /// </summary>
+    /// <remarks>
+    /// As an implementation of <see cref="IFragmenter"/> this class will return
+    /// the Murcko frameworks (i.e., ring systems + linkers) along with
+    /// the ring systems ia getFragments. The
+    /// class also provides methods to extract the ring systems and frameworks
+    /// separately. For all these methods, the user can retrieve the substructures
+    /// as canonical SMILES strings or as <see cref="IAtomContainer"/> objects.
+    /// <para>
+    /// Note that in contrast to the original paper which implies that a single molecule
+    /// has a single framework, this class returns multiple frameworks consisting of all
+    /// combinations of ring systems and linkers. The "true" Murcko framework is simply
+    /// the largest framework.
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module fragment
     // @cdk.githash
     // @cdk.keyword fragment
     // @cdk.keyword framework
     // @see org.openscience.cdk.fragment.ExhaustiveFragmenter
-     */
     public class MurckoFragmenter : IFragmenter
     {
         private const string IS_SIDECHAIN_ATOM = "sidechain";
@@ -70,53 +71,50 @@ namespace NCDK.Fragment
         bool singleFrameworkOnly = false;
         int minimumFragmentSize = 5;
 
-        /**
-        // Instantiate Murcko fragmenter.
-        // <p/>
-        // Considers fragments with 5 or more atoms and generates multiple
-        // frameworks if available.
-         */
+        /// <summary>
+        /// Instantiate Murcko fragmenter.
+        /// </summary>
+        /// <remarks>
+        /// Considers fragments with 5 or more atoms and generates multiple
+        /// frameworks if available.
+        /// </remarks>
         public MurckoFragmenter()
             : this(false, 5, null)
         { }
 
-        /**
-        // Instantiate Murcko fragmenter.
-         *
-        // @param singleFrameworkOnly if <code>true</code>, only the true Murcko framework is generated.
-        // @param minimumFragmentSize the smallest size of fragment to consider
-         */
+        /// <summary>
+        /// Instantiate Murcko fragmenter.
+        /// </summary>
+        /// <param name="singleFrameworkOnly">if <see langword="true"/>, only the true Murcko framework is generated.</param>
+        /// <param name="minimumFragmentSize">the smallest size of fragment to consider</param>
         public MurckoFragmenter(bool singleFrameworkOnly, int minimumFragmentSize)
             : this(singleFrameworkOnly, minimumFragmentSize, null)
         { }
 
-        /**
-        // Instantiate Murcko fragmenter.
-         *
-        // @param singleFrameworkOnly if <code>true</code>, only the true Murcko framework is generated.
-        // @param minimumFragmentSize the smallest size of fragment to consider
-        // @param generator           An instance of a {@link MoleculeHashGenerator} to be used to check for
-        //                            duplicate fragments
-         */
+        /// <summary>
+        /// Instantiate Murcko fragmenter.
+        /// </summary>
+        /// <param name="singleFrameworkOnly">if <see langword="true"/>, only the true Murcko framework is generated.</param>
+        /// <param name="minimumFragmentSize">the smallest size of fragment to consider</param>
+        /// <param name="generator">An instance of a <see cref="MoleculeHashGenerator"/> to be used to check for duplicate fragments</param>
         public MurckoFragmenter(bool singleFrameworkOnly, int minimumFragmentSize, MoleculeHashGenerator generator)
         {
             this.singleFrameworkOnly = singleFrameworkOnly;
             this.minimumFragmentSize = minimumFragmentSize;
 
             if (generator == null)
-                this.generator = new HashGeneratorMaker().Depth(8).Elemental().Isotopic().Charged().orbital().Molecular();
+                this.generator = new HashGeneratorMaker().Depth(8).Elemental().Isotopic().Charged().Orbital().Molecular();
             else
                 this.generator = generator;
 
             smigen = SmilesGenerator.Unique().Aromatic();
         }
 
-        /**
-        // Perform the fragmentation procedure.
-         *
-        // @param atomContainer The input molecule
-        // @throws CDKException
-         */
+        /// <summary>
+        /// Perform the fragmentation procedure.
+        /// </summary>
+        /// <param name="atomContainer">The input molecule</param>
+        /// <exception cref="CDKException"></exception>
         public void GenerateFragments(IAtomContainer atomContainer)
         {
             var fragmentSet = new HashSet<long>();
@@ -326,11 +324,11 @@ namespace NCDK.Fragment
             }
         }
 
-        private List<string> GetSmilesFromAtomContainers(IEnumerable<IAtomContainer> mols)
+        private IEnumerable<string> GetSmilesFromAtomContainers(IEnumerable<IAtomContainer> mols)
         {
-            List<string> smis = new List<string>();
             foreach (var mol in mols)
             {
+                string smi = null;
                 try
                 {
                     AtomContainerManipulator.ClearAtomConfigurations(mol);
@@ -339,84 +337,75 @@ namespace NCDK.Fragment
                     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);
                     CDKHydrogenAdder.GetInstance(mol.Builder).AddImplicitHydrogens(mol);
                     Aromaticity.CDKLegacy.Apply(mol);
-                    smis.Add(smigen.Create(mol));
+                    smi = smigen.Create(mol);
                 }
                 catch (CDKException e)
                 {
                     Trace.TraceError(e.Message);
                 }
+                yield return smi;
             }
-            return smis;
+            yield break;
         }
 
-        /**
-        // This returns the frameworks and ring systems from a Murcko fragmentation.
-        // <p/>
-        // To get frameworks, ring systems and side chains seperately, use the
-        // respective functions
-         *
-        // @return a string[] of the fragments.
-        // @see #GetRingSystems()
-        // @see #GetRingSystemsAsContainers()
-        // @see #GetFrameworks()
-        // @see #GetFrameworksAsContainers()
-         */
+        /// <summary>
+        /// This returns the frameworks and ring systems from a Murcko fragmentation.
+        /// </summary>
+        /// <remarks>
+        /// To get frameworks, ring systems and side chains seperately, use the
+        /// respective functions
+        /// </remarks>
+        /// <returns>a string[] of the fragments.</returns>
+        /// <seealso cref="GetRingSystems"/>
+        /// <seealso cref="GetRingSystemsAsContainers"/>
+        /// <seealso cref="GetFrameworks"/>
+        /// <seealso cref="GetFrameworksAsContainers"/>
         public IEnumerable<string> GetFragments()
         {
-            List<string> allfrags = new List<string>();
-            allfrags.AddRange(GetSmilesFromAtomContainers(frameMap.Values));
-            allfrags.AddRange(GetSmilesFromAtomContainers(ringMap.Values));
-            return allfrags;
+            return GetSmilesFromAtomContainers(frameMap.Values)
+                .Concat(GetSmilesFromAtomContainers(ringMap.Values));
         }
 
-        /**
-        // Get all frameworks and ring systems as <see cref="IAtomContainer"/> objects.
-         *
-        // @return An array of structures representing frameworks and ring systems
-         */
+        /// <summary>
+        /// Get all frameworks and ring systems as <see cref="IAtomContainer"/> objects.
+        /// </summary>
+        /// <returns>An array of structures representing frameworks and ring systems</returns>
         public IEnumerable<IAtomContainer> GetFragmentsAsContainers()
         {
-            List<IAtomContainer> allfrags = new List<IAtomContainer>();
-            allfrags.AddRange(frameMap.Values);
-            allfrags.AddRange(ringMap.Values);
-            return allfrags;
+            return frameMap.Values.Concat(ringMap.Values);
         }
 
-        /**
-        // Get the ring system fragments as SMILES strings.
-         *
-        // @return a string[] of the fragments.
-         */
+        /// <summary>
+        /// Get the ring system fragments as SMILES strings.
+        /// </summary>
+        /// <returns>The fragments.</returns>
         public IEnumerable<string> GetRingSystems()
         {
             return GetSmilesFromAtomContainers(ringMap.Values);
         }
 
-        /**
-        // Get rings systems as <see cref="IAtomContainer"/> objects.
-         *
-        // @return an array of ring systems.
-         */
+        /// <summary>
+        /// Get rings systems as <see cref="IAtomContainer"/> objects.
+        /// </summary>
+        /// <returns>an array of ring systems.</returns>
         public IEnumerable<IAtomContainer> GetRingSystemsAsContainers()
         {
             return ringMap.Values;
         }
 
-        /**
-        // Get frameworks as SMILES strings.
-         *
-        // @return an array of SMILES strings
-         */
+        /// <summary>
+        /// Get frameworks as SMILES strings.
+        /// </summary>
+        /// <returns>an array of SMILES strings</returns>
         public IEnumerable<string> GetFrameworks()
         {
             return GetSmilesFromAtomContainers(frameMap.Values);
         }
 
-        /**
-        // Get frameworks as <see cref="IAtomContainer"/> as objects.
-         *
-        // @return an array of frameworks.
-         */
+        /// <summary>
+        /// Get frameworks as <see cref="IAtomContainer"/> as objects.
+        /// </summary>
+        /// <returns>an array of frameworks.</returns>
         public IEnumerable<IAtomContainer> GetFrameworksAsContainers()
         {
             return frameMap.Values;

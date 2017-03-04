@@ -21,11 +21,12 @@ using NCDK.Config;
 using NCDK.Default;
 using NCDK.IO;
 
+
 namespace NCDK.Geometries
 {
-    /**
-     * @cdk.module test-standard
-     */
+    /// <summary>
+    // @cdk.module test-standard
+    /// </summary>
     [TestClass()]
     public class BondToolsTest : CDKTestCase
     {
@@ -38,7 +39,7 @@ namespace NCDK.Geometries
         public void TestIsValidDoubleBondConfiguration_IAtomContainer_IBond()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -56,7 +57,7 @@ namespace NCDK.Geometries
         public void TestIsCIsTrans_IAtom_IAtom_IAtom_IAtom_IAtomContainer()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -67,7 +68,7 @@ namespace NCDK.Geometries
         public void TestIsLeft_IAtom_IAtom_IAtom()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -78,7 +79,7 @@ namespace NCDK.Geometries
         public void TestGiveAngleBothMethods_IAtom_IAtom_IAtom_bool()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -88,14 +89,14 @@ namespace NCDK.Geometries
                     BondTools.GiveAngleBothMethods(mol.Atoms[0], mol.Atoms[2], mol.Atoms[3], false), 0.2);
         }
 
-        /**
-         * Make sure the the rebonding is working.
-         */
+        /// <summary>
+        /// Make sure the the rebonding is working.
+        /// </summary>
         [TestMethod()]
         public void TestCloseEnoughToBond_IAtom_IAtom_Double()
         {
             string filename = "NCDK.Data.XYZ.viagra.xyz";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             XYZReader reader = new XYZReader(ins);
             AtomTypeFactory atf = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
                     Silent.ChemObjectBuilder.Instance);
@@ -113,7 +114,7 @@ namespace NCDK.Geometries
         public void TestGiveAngleBothMethods_Point2d_Point2d_Point2d_bool()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -127,14 +128,14 @@ namespace NCDK.Geometries
         public void TestIsTetrahedral_IAtomContainer_IAtom_bool()
         {
             string filename = "NCDK.Data.MDL.tetrahedral_1.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
             Assert.AreEqual(BondTools.IsTetrahedral(mol, mol.Atoms[0], true), 1);
             Assert.AreEqual(BondTools.IsTetrahedral(mol, mol.Atoms[1], true), 0);
             filename = "NCDK.Data.MDL.tetrahedral_1_lazy.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
             chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
@@ -146,7 +147,7 @@ namespace NCDK.Geometries
         public void TestIsTrigonalBipyramidalOrOctahedral_IAtomContainer_IAtom()
         {
             string filename = "NCDK.Data.MDL.trigonal_bipyramidal.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -158,7 +159,7 @@ namespace NCDK.Geometries
         public void TestIsStereo_IAtomContainer_IAtom()
         {
             string filename = "NCDK.Data.MDL.trigonal_bipyramidal.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -170,7 +171,7 @@ namespace NCDK.Geometries
         public void TestIsStereo_IAtomContainer_IAtom_forinvalid()
         {
             string filename = "NCDK.Data.MDL.trigonal_bipyramidal.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -186,7 +187,7 @@ namespace NCDK.Geometries
         public void TestIsSquarePlanar_IAtomContainer_IAtom()
         {
             string filename = "NCDK.Data.MDL.squareplanar.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -198,13 +199,13 @@ namespace NCDK.Geometries
         public void TestStereosAreOpposite_IAtomContainer_IAtom()
         {
             string filename = "NCDK.Data.MDL.squareplanar.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
             Assert.IsFalse(BondTools.StereosAreOpposite(mol, mol.Atoms[0]));
             filename = "NCDK.Data.MDL.tetrahedral_with_four_wedges.mol";
-            ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            ins = ResourceLoader.GetAsStream(filename);
             reader = new MDLV2000Reader(ins);
             chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             mol = chemFile[0][0].MoleculeSet[0];
@@ -215,7 +216,7 @@ namespace NCDK.Geometries
         public void TestMakeUpDownBonds_IAtomContainer()
         {
             string filename = "NCDK.Data.MDL.tetrahedral_2_lazy.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -227,7 +228,7 @@ namespace NCDK.Geometries
         public void TestGiveAngle_IAtom_IAtom_IAtom()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -239,7 +240,7 @@ namespace NCDK.Geometries
         public void TestGiveAngleFromMiddle_IAtom_IAtom_IAtom()
         {
             string filename = "NCDK.Data.MDL.testdoublebondconfig.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];
@@ -247,14 +248,14 @@ namespace NCDK.Geometries
                     BondTools.GiveAngleFromMiddle(mol.Atoms[0], mol.Atoms[2], mol.Atoms[3]), 0.2);
         }
 
-        /**
-         * @cdk.bug 2831420
-         */
+        /// <summary>
+        // @cdk.bug 2831420
+        /// </summary>
         [TestMethod()]
         public void TestBug2831420()
         {
             string filename = "NCDK.Data.MDL.bug2831420.mol";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
             IAtomContainer mol = chemFile[0][0].MoleculeSet[0];

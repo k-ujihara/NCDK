@@ -24,9 +24,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Tools.Manipulator
 {
-    /**
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class BondManipulatorTest : CDKTestCase
     {

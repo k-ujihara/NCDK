@@ -34,12 +34,12 @@ namespace NCDK.Beam
     /// <summary>
     /// Unit tests verify correct handling of hydrogen count for bracket atoms.
     /// </summary>
-    /// <author>John May</author>
-	[TestClass()]
+    // @author John May
+    [TestClass()]
     public class ParsingHydrogenCountTest
     {
         [TestMethod()]
-        public void impliedHCount()
+        public void ImpliedHCount()
         {
             Verify("H", 1);
         }
@@ -87,7 +87,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void noHCount()
+        public void NoHCount()
         {
             CharBuffer buffer = CharBuffer.FromString("-1");
             Assert.AreEqual(Parser.ReadHydrogens(buffer), 0);

@@ -14,8 +14,9 @@
 
 
 
+
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2016  Kazuya Ujihara
+// Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace NCDK.Default
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener, ICloneable
     {
-	    internal bool isAromatic;
+        internal bool isAromatic;
         internal bool isAliphatic;
         internal bool isInRing;
         internal bool isSingleOrDouble;
@@ -79,16 +80,16 @@ namespace NCDK.Default
 
         private void InitAtoms(IEnumerable<IAtom> atoms)
         {
-			if (atoms == null)
-			{
-	            this.atoms = 
-			        new List<IAtom>(2);
-			}
-			else
-			{
-					this.atoms = 
-					new List<IAtom>(atoms);
-			}
+            if (atoms == null)
+            {
+                this.atoms = 
+                    new List<IAtom>(2);
+            }
+            else
+            {
+                    this.atoms = 
+                    new List<IAtom>(atoms);
+            }
         }
 
         public virtual IList<IAtom> Atoms => atoms;
@@ -229,8 +230,8 @@ namespace NCDK.Default
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
 
             IBond iclone;
             if (map.BondMap.TryGetValue(this, out iclone))
@@ -266,8 +267,8 @@ namespace NCDK.Default
         public override bool Compare(object obj)
         {
             var bond = obj as Bond;
-			if (bond == null)
-				return false;
+            if (bond == null)
+                return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
         }
@@ -284,7 +285,7 @@ namespace NCDK.Silent
     public class Bond
         : ElectronContainer, IBond, IChemObjectListener, ICloneable
     {
-	    internal bool isAromatic;
+        internal bool isAromatic;
         internal bool isAliphatic;
         internal bool isInRing;
         internal bool isSingleOrDouble;
@@ -334,16 +335,16 @@ namespace NCDK.Silent
 
         private void InitAtoms(IEnumerable<IAtom> atoms)
         {
-			if (atoms == null)
-			{
-	            this.atoms = 
-				    new ObservableChemObjectCollection<IAtom>(2, this);
-			}
-			else
-			{
-					this.atoms = 
+            if (atoms == null)
+            {
+                this.atoms = 
+                    new ObservableChemObjectCollection<IAtom>(2, this);
+            }
+            else
+            {
+                    this.atoms = 
                 new ObservableChemObjectCollection<IAtom>(this, atoms);
-			}
+            }
         }
 
         public virtual IList<IAtom> Atoms => atoms;
@@ -477,8 +478,8 @@ namespace NCDK.Silent
 
         public override ICDKObject Clone(CDKObjectMap map)
         {
-			if (map == null)
-				throw new ArgumentNullException(nameof(map));
+            if (map == null)
+                throw new ArgumentNullException(nameof(map));
 
             IBond iclone;
             if (map.BondMap.TryGetValue(this, out iclone))
@@ -514,8 +515,8 @@ namespace NCDK.Silent
         public override bool Compare(object obj)
         {
             var bond = obj as Bond;
-			if (bond == null)
-				return false;
+            if (bond == null)
+                return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
         }

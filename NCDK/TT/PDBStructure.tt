@@ -28,15 +28,15 @@ using System.Text;
 #>
 namespace <#= ns.NS #>
 {
-    /**
-	 * Holder for secundary protein structure elements. Lously modeled after
-	 * the Jmol Structure.java.
-	 *
-	 * @author     egonw
-	 *
-	 * @cdk.module data
-	 * @cdk.githash
-	 */
+    /// <summary>
+    /// Holder for secundary protein structure elements. Lously modeled after
+    /// the Jmol Structure.java.
+    ///
+    // @author     egonw
+    ///
+    // @cdk.module data
+    // @cdk.githash
+    /// </summary>
     public class PDBStructure : ChemObject, IPDBStructure
     {
         public const string HELIX = "helix";

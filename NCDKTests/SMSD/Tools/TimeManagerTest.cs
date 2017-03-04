@@ -26,10 +26,10 @@ using System.Threading;
 
 namespace NCDK.SMSD.Tools
 {
-    /**
-     * @author Asad
-     * @cdk.module test-smsd
-     */
+    /// <summary>
+    // @author Asad
+    // @cdk.module test-smsd
+    /// </summary>
     //[TestCategory("SlowTest")]
     // test uses Thread.sleep...
     [TestClass()]
@@ -43,59 +43,59 @@ namespace NCDK.SMSD.Tools
             Assert.IsNotNull(tMan);
         }
 
-        /**
-         * Test of getElapsedTimeInHours method, of class TimeManager.
-         */
+        /// <summary>
+        /// Test of getElapsedTimeInHours method, of class TimeManager.
+        /// </summary>
         [TestMethod()]
         public void TestGetElapsedTimeInHours()
         {
             TimeManager instance = new TimeManager();
             double expResult = 0.0001;
-            myMethod(360);
+            MyMethod(360);
             double result = instance.GetElapsedTimeInHours();
             Assert.AreEqual(expResult, result, 0.0001);
         }
 
-        /**
-         * Test of getElapsedTimeInMinutes method, of class TimeManager.
-         */
+        /// <summary>
+        /// Test of getElapsedTimeInMinutes method, of class TimeManager.
+        /// </summary>
         [TestMethod()]
         public void TestGetElapsedTimeInMinutes()
         {
             TimeManager instance = new TimeManager();
             double expResult = 0.006;
-            myMethod(360);
+            MyMethod(360);
             double result = instance.GetElapsedTimeInMinutes();
             Assert.AreEqual(expResult, result, 0.006);
         }
 
-        /**
-         * Test of getElapsedTimeInSeconds method, of class TimeManager.
-         */
+        /// <summary>
+        /// Test of getElapsedTimeInSeconds method, of class TimeManager.
+        /// </summary>
         [TestMethod()]
         public void TestGetElapsedTimeInSeconds()
         {
             TimeManager instance = new TimeManager();
             double expResult = 0.36;
-            myMethod(360);
+            MyMethod(360);
             double result = instance.GetElapsedTimeInSeconds();
             Assert.AreEqual(expResult, result, 0.36);
         }
 
-        /**
-         * Test of getElapsedTimeInMilliSeconds method, of class TimeManager.
-         */
+        /// <summary>
+        /// Test of getElapsedTimeInMilliSeconds method, of class TimeManager.
+        /// </summary>
         [TestMethod()]
         public void TestGetElapsedTimeInMilliSeconds()
         {
             TimeManager instance = new TimeManager();
             double expResult = 360;
-            myMethod(360);
+            MyMethod(360);
             double result = instance.GetElapsedTimeInMilliSeconds();
             Assert.AreEqual(expResult, result, 360);
         }
 
-        public void myMethod(long timeMillis)
+        public void MyMethod(long timeMillis)
         {
             Console.Out.WriteLine("Starting......");
 

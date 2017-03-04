@@ -27,9 +27,9 @@ using System.Collections.Generic;
 
 namespace NCDK.Stereo
 {
-    /**
-     * @cdk.module test-core
-     */
+    /// <summary>
+    // @cdk.module test-core
+    /// </summary>
     [TestClass()]
     public class TetrahedralChiralityTest : CDKTestCase
     {

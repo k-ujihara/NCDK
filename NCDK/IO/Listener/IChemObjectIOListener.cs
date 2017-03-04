@@ -21,22 +21,22 @@ using NCDK.IO.Setting;
 
 namespace NCDK.IO.Listener
 {
-    /**
-     * Allows monitoring of progress of file reader activities.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     *
-     * @author Egon Willighagen
-     */
+    /// <summary>
+    /// Allows monitoring of progress of file reader activities.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    ///
+    // @author Egon Willighagen
+    /// </summary>
     public interface IChemObjectIOListener
     {
-        /**
-         * Prompted when the IO filter needs information to process the
-         * file. The ReaderListener may redirect this question to the
-         * user, disregard it (and let the Reader take the default),
-         * or answer it itself.
-         */
+        /// <summary>
+        /// Prompted when the IO filter needs information to process the
+        /// file. The ReaderListener may redirect this question to the
+        /// user, disregard it (and let the Reader take the default),
+        /// or answer it itself.
+        /// </summary>
         void ProcessIOSettingQuestion(IOSetting setting);
     }
 }

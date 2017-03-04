@@ -26,25 +26,22 @@ using System.Collections;
 
 namespace NCDK.Hash
 {
-    /**
-     * Defines a method of suppressing certain atoms from an <see cref="IAtomContainer"/>
-     * when computing the hash codes for the molecule or its atoms.
-     *
-     * @author John May
-     * @cdk.module hash
-     */
-#if TEST
-    public
-#endif
-    abstract class AtomSuppression
+    /// <summary>
+    /// Defines a method of suppressing certain atoms from an <see cref="IAtomContainer"/>
+    /// when computing the hash codes for the molecule or its atoms.
+    ///
+    // @author John May
+    // @cdk.module hash
+    /// </summary>
+    internal abstract class AtomSuppression
     {
-        /**
-         * Returns a new instance indicating which atoms are suppressed for this
-         * suppression method.
-         *
-         * @param container molecule with 0 or more atoms
-         * @return the vertices (atom index) which should be suppressed
-         */
+        /// <summary>
+        /// Returns a new instance indicating which atoms are suppressed for this
+        /// suppression method.
+        ///
+        /// <param name="container">molecule with 0 or more atoms</param>
+        /// <returns>the vertices (atom index) which should be suppressed</returns>
+        /// </summary>
         public abstract Suppressed Suppress(IAtomContainer container);
 
         /// <summary>Default implementation - don't suppress anything.</summary>
@@ -56,10 +53,10 @@ namespace NCDK.Hash
             }
         }
 
-        /**
-         * Suppresses any explicit hydrogen regardless of whether the atom is a
-         * hydrogen ion or isotope.
-         */
+        /// <summary>
+        /// Suppresses any explicit hydrogen regardless of whether the atom is a
+        /// hydrogen ion or isotope.
+        /// </summary>
         private sealed class AnyHydrogensAtomSuppression : AtomSuppression
         {
             public override Suppressed Suppress(IAtomContainer container)

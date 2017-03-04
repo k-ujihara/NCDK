@@ -22,6 +22,7 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
+
 using System.Diagnostics;
 using System.IO;
 
@@ -45,12 +46,13 @@ namespace NCDK.IO.RDF
         public void TestMolecule()
         {
             string filename = "NCDK.Data.OWL.molecule.n3";
-            Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
-            CDKOWLReader reader = new CDKOWLReader(new StreamReader(ins));
-            IAtomContainer mol = (IAtomContainer)reader.Read(new AtomContainer());
-            reader.Close();
-
+            Trace.TraceInformation($"Testing: {filename}");
+            var ins = ResourceLoader.GetAsStream(filename);
+            IAtomContainer mol;
+            using (var reader = new CDKOWLReader(new StreamReader(ins)))
+            {
+                mol = (IAtomContainer)reader.Read(new AtomContainer());
+            }
             Assert.IsNotNull(mol);
             Assert.AreEqual(2, mol.Atoms.Count);
             Assert.AreEqual(1, mol.Bonds.Count);

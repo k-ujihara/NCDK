@@ -34,53 +34,43 @@ using NCDK.Numerics;
 
 namespace NCDK.Layout
 {
-    /**
-     *  Methods for generating coordinates for atoms in various situations. They can
-     *  be used for Automated Structure Diagram Generation or in the interactive
-     *  buildup of molecules by the user.
-     *
-     *@author      steinbeck
-     *@cdk.created 2003-08-29
-     *@cdk.module  sdg
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Methods for generating coordinates for atoms in various situations. They can
+    ///  be used for Automated Structure Diagram Generation or in the interactive
+    ///  buildup of molecules by the user.
+    /// </summary>
+    ///@author      steinbeck
+    ///@cdk.created 2003-08-29
+    ///@cdk.module  sdg
+    // @cdk.githash
     public class AtomPlacer
     {
-
         public const bool debug = true;
         public const string PRIORITY = "Weight";
 
-
-        /**
-         *  Constructor for the AtomPlacer object
-         */
+        /// <summary>
+        ///  Constructor for the AtomPlacer object
+        /// </summary>
         public AtomPlacer() { }
 
-        /*
-         *  Return 
-         *
-         *@return    the molecule the AtomPlacer currently works with
-         */
         /// <summary>
         /// The molecule the AtomPlacer currently works with
         /// </summary>
         public IAtomContainer Molecule { get; set; } = null;
 
-        /**
-         *  Distribute the bonded atoms (neighbours) of an atom such that they fill the
-         *  remaining space around an atom in a geometrically nice way.
-         *  IMPORTANT: This method is not supposed to handle the
-         *  case of one or no place neighbor. In the case of
-         *  one placed neigbor, the chain placement methods
-         *  should be used.
-         *
-         *@param  atom                The atom whose partners are to be placed
-         *@param  placedNeighbours    The atoms which are already placed
-         *@param  unplacedNeighbours  The partners to be placed
-         *@param  bondLength          The standared bond length for the newly placed
-         *      Atoms
-         *@param  sharedAtomsCenter   The 2D centre of the placed Atoms
-         */
+        /// <summary>
+        ///  Distribute the bonded atoms (neighbours) of an atom such that they fill the
+        ///  remaining space around an atom in a geometrically nice way.
+        ///  IMPORTANT: This method is not supposed to handle the
+        ///  case of one or no place neighbor. In the case of
+        ///  one placed neigbor, the chain placement methods
+        ///  should be used.
+        /// </summary>
+        /// <param name="atom">The atom whose partners are to be placed</param>
+        /// <param name="placedNeighbours">The atoms which are already placed</param>
+        /// <param name="unplacedNeighbours">The partners to be placed</param>
+        /// <param name="bondLength">The standared bond length for the newly placed Atoms</param>
+        /// <param name="sharedAtomsCenter">The 2D centre of the placed Atoms</param>
         public void DistributePartners(IAtom atom, IAtomContainer placedNeighbours, Vector2 sharedAtomsCenter,
                 IAtomContainer unplacedNeighbours, double bondLength)
         {
@@ -92,9 +82,7 @@ namespace NCDK.Layout
             double addAngle = 0.0;
             double radius = 0.0;
             double remainingAngle = 0.0;
-            /*
-             * calculate the direction away from the already placed partners of atom
-             */
+            // calculate the direction away from the already placed partners of atom
             //Vector2 sharedAtomsCenter = sharedAtoms.Get2DCenter();
             Vector2 sharedAtomsCenterVector = sharedAtomsCenter;
 
@@ -106,11 +94,9 @@ namespace NCDK.Layout
 
             Debug.WriteLine("Number of shared atoms: ", placedNeighbours.Atoms.Count);
 
-            /*
-             * IMPORTANT: This method is not supposed to handle the case of one or
-             * no place neighbor. In the case of one placed neigbor, the chain
-             * placement methods should be used.
-             */
+            // IMPORTANT: This method is not supposed to handle the case of one or
+            // no place neighbor. In the case of one placed neigbor, the chain
+            // placement methods should be used.
             if (placedNeighbours.Atoms.Count == 1)
             {
                 Debug.WriteLine("Only one neighbour...");
@@ -120,13 +106,11 @@ namespace NCDK.Layout
                 }
 
                 addAngle = Math.PI * 2 / (unplacedNeighbours.Atoms.Count + placedNeighbours.Atoms.Count);
-                /*
-                 * IMPORTANT: At this point we need a calculation of the start
-                 * angle. Not done yet.
-                 */
+                // IMPORTANT: At this point we need a calculation of the start
+                // angle. Not done yet.
                 IAtom placedAtom = placedNeighbours.Atoms[0];
-                //			double xDiff = atom.GetX2d() - placedAtom.GetX2d();
-                //			double yDiff = atom.GetY2d() - placedAtom.GetY2d();
+                //            double xDiff = atom.GetX2d() - placedAtom.GetX2d();
+                //            double yDiff = atom.GetY2d() - placedAtom.GetY2d();
                 double xDiff = placedAtom.Point2D.Value.X - atom.Point2D.Value.X;
                 double yDiff = placedAtom.Point2D.Value.Y - atom.Point2D.Value.Y;
 
@@ -148,10 +132,9 @@ namespace NCDK.Layout
                 }
 
                 addAngle = Math.PI * 2.0 / unplacedNeighbours.Atoms.Count;
-                /*
-                 * IMPORTANT: At this point we need a calculation of the start
-                 * angle. Not done yet.
-                 */
+                
+                // IMPORTANT: At this point we need a calculation of the start
+                // angle. Not done yet.
                 startAngle = 0.0;
                 PopulatePolygonCorners(atomsToDraw, atom.Point2D.Value, startAngle, addAngle, bondLength);
                 return;
@@ -199,10 +182,7 @@ namespace NCDK.Layout
                 }
             }
 
-            /*
-             * if the least hindered side of the atom is clearly defined (bondLength
-             * / 10 is an arbitrary value that seemed reasonable)
-             */
+            // if the least hindered side of the atom is clearly defined (bondLength / 10 is an arbitrary value that seemed reasonable)
             //newDirection.Sub(sharedAtomsCenterVector);
             sharedAtomsCenterVector -= newDirection;
             newDirection = sharedAtomsCenterVector;
@@ -213,10 +193,7 @@ namespace NCDK.Layout
             Vector2 distanceMeasure = atom.Point2D.Value;
             distanceMeasure += newDirection;
 
-            /*
-             * get the two sharedAtom partners with the smallest distance to the new
-             * center
-             */
+            /// get the two sharedAtom partners with the smallest distance to the new center
             sortedAtoms = AtomContainerManipulator.GetAtomArray(placedNeighbours);
             GeometryUtil.SortBy2DDistance(sortedAtoms, distanceMeasure);
             Vector2 closestPoint1 = sortedAtoms[0].Point2D.Value;
@@ -307,18 +284,18 @@ namespace NCDK.Layout
             PopulatePolygonCorners(atomsToDraw, atom.Point2D.Value, startAngle, addAngle, radius);
         }
 
-        /**
-         * Places the atoms in a linear chain.
-         *
-         * <p>Expects the first atom to be placed and
-         * places the next atom according to initialBondVector. The rest of the chain
-         * is placed such that it is as linear as possible (in the overall result, the
-         * angles in the chain are set to 120 Deg.)
-         *
-         * @param  atomContainer  The IAtomContainer containing the chain atom to be placed
-         * @param  initialBondVector  The Vector indicating the direction of the first bond
-         * @param  bondLength         The factor used to scale the initialBondVector
-         */
+        /// <summary>
+        /// Places the atoms in a linear chain.
+        ///
+        /// <para>Expects the first atom to be placed and
+        /// places the next atom according to initialBondVector. The rest of the chain
+        /// is placed such that it is as linear as possible (in the overall result, the
+        /// angles in the chain are set to 120 Deg.)
+        /// </para>
+        /// </summary>
+        /// <param name="atomContainer">The IAtomContainer containing the chain atom to be placed</param>
+        /// <param name="initialBondVector">The Vector indicating the direction of the first bond</param>
+        /// <param name="bondLength">The factor used to scale the initialBondVector</param>
         public void PlaceLinearChain(IAtomContainer atomContainer, Vector2 initialBondVector, double bondLength)
         {
             IAtomContainer withh = atomContainer.Builder.CreateAtomContainer(atomContainer);
@@ -332,7 +309,7 @@ namespace NCDK.Layout
                 numh[i] = atomContainer.Atoms[i].ImplicitHydrogenCount ?? 0;
             }
 
-            //		SDG should lay out what it gets and not fiddle with molecules
+            //        SDG should lay out what it gets and not fiddle with molecules
             //      during layout so this was
             //      removed during debugging. Before you put this in again, contact
             //      er@doktor-steinbeck.de
@@ -407,21 +384,17 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         *  Returns the next bond vector needed for drawing an extended linear chain of
-         *  atoms. It assumes an angle of 120 deg for a nice chain layout and
-         *  calculates the two possible placments for the next atom. It returns the
-         *  vector pointing farmost away from a given start atom.
-         *
-         *@param  atom             An atom for which the vector to the next atom to
-         *      draw is calculated
-         *@param  previousAtom     The preceding atom for angle calculation
-         *@param  distanceMeasure  A point from which the next atom is to be farmost
-         *      away
-         *@param   trans           if true E (trans) configurations are built, false makes Z (cis) configurations
-         *@return                  A vector pointing to the location of the next atom
-         *      to draw
-         */
+        /// <summary>
+        ///  Returns the next bond vector needed for drawing an extended linear chain of
+        ///  atoms. It assumes an angle of 120 deg for a nice chain layout and
+        ///  calculates the two possible placments for the next atom. It returns the
+        ///  vector pointing farmost away from a given start atom.
+        /// </summary>
+        /// <param name="atom">An atom for which the vector to the next atom to draw is calculated</param>
+        /// <param name="previousAtom">The preceding atom for angle calculation</param>
+        /// <param name="distanceMeasure">A point from which the next atom is to be farmost away</param>
+        /// <param name="trans">if true E (trans) configurations are built, false makes Z (cis) configurations</param>
+        /// <returns>A vector pointing to the location of the next atom to draw</returns>
         public Vector2 GetNextBondVector(IAtom atom, IAtom previousAtom, Vector2 distanceMeasure, bool trans)
         {
 #if DEBUG
@@ -454,26 +427,20 @@ namespace NCDK.Layout
             return vec1;
         }
 
-        /**
-         *  Populates the corners of a polygon with atoms. Used to place atoms in a
-         *  geometrically regular way around a ring center or another atom. If this is
-         *  used to place the bonding partner of an atom (and not to draw a ring) we
-         *  want to place the atoms such that those with highest "weight" are placed
-         *  farmost away from the rest of the molecules. The "weight" mentioned here is
-         *  calculated by a modified morgan number algorithm.
-         *
-         *@param  atomsToDraw     All the atoms to draw
-         *@param  startAngle      A start angle, giving the angle of the most clockwise
-         *      atom which has already been placed
-         *@param  addAngle        An angle to be added to startAngle for each atom from
-         *      atomsToDraw
-         *@param  rotationCenter  The center of a ring, or an atom for which the
-         *      partners are to be placed
-         *@param  radius          The radius of the polygon to be populated: bond
-         *      length or ring radius
-         */
-        public void PopulatePolygonCorners(IEnumerable<IAtom> atomsToDraw, Vector2 rotationCenter, double startAngle,
-                double addAngle, double radius)
+        /// <summary>
+        ///  Populates the corners of a polygon with atoms. Used to place atoms in a
+        ///  geometrically regular way around a ring center or another atom. If this is
+        ///  used to place the bonding partner of an atom (and not to draw a ring) we
+        ///  want to place the atoms such that those with highest "weight" are placed
+        ///  farmost away from the rest of the molecules. The "weight" mentioned here is
+        ///  calculated by a modified morgan number algorithm.
+        /// </summary>
+        /// <param name="atomsToDraw">All the atoms to draw</param>
+        /// <param name="startAngle">A start angle, giving the angle of the most clockwise atom which has already been placed</param>
+        /// <param name="addAngle">An angle to be added to startAngle for each atom from atomsToDraw</param>
+        /// <param name="rotationCenter">The center of a ring, or an atom for which the partners are to be placed</param>
+        /// <param name="radius">The radius of the polygon to be populated: bond length or ring radius</param>
+        public void PopulatePolygonCorners(IEnumerable<IAtom> atomsToDraw, Vector2 rotationCenter, double startAngle, double addAngle, double radius)
         {
             double angle = startAngle;
             Debug.WriteLine("populatePolygonCorners->startAngle: ", Vectors.RadianToDegree(angle));
@@ -525,15 +492,12 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         *  Partition the bonding partners of a given atom into placed (coordinates
-         *  assinged) and not placed.
-         *
-         *@param  atom              The atom whose bonding partners are to be
-         *      partitioned
-         *@param  unplacedPartners  A vector for the unplaced bonding partners to go in
-         *@param  placedPartners    A vector for the placed bonding partners to go in
-         */
+        /// <summary>
+        ///  Partition the bonding partners of a given atom into placed (coordinates assinged) and not placed.
+        /// </summary>
+        /// <param name="atom">The atom whose bonding partners are to be partitioned</param>
+        /// <param name="unplacedPartners">A vector for the unplaced bonding partners to go in</param>
+        /// <param name="placedPartners">A vector for the placed bonding partners to go in</param>
         public void PartitionPartners(IAtom atom, IAtomContainer unplacedPartners, IAtomContainer placedPartners)
         {
             var atoms = Molecule.GetConnectedAtoms(atom);
@@ -550,19 +514,15 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         *  Search an aliphatic molecule for the longest chain. This is the method to
-         *  be used if there are no rings in the molecule and you want to layout the
-         *  longest chain in the molecule as a starting point of the structure diagram
-         *  generation.
-         *
-         *@param  molecule                                               The molecule
-         *      to be search for the longest unplaced chain
-         *@return                                                        An
-         *      AtomContainer holding the longest chain.
-         *@exception  NoSuchAtomException  Description of
-         *      the Exception
-         */
+        /// <summary>
+        ///  Search an aliphatic molecule for the longest chain. This is the method to
+        ///  be used if there are no rings in the molecule and you want to layout the
+        ///  longest chain in the molecule as a starting point of the structure diagram
+        ///  generation.
+        /// </summary>
+        /// <param name="molecule">The molecule to be search for the longest unplaced chain</param>
+        /// <returns>An AtomContainer holding the longest chain.</returns>
+        /// <exception cref="NoSuchAtomException">Description of the Exception</exception>
         static public IAtomContainer GetInitialLongestChain(IAtomContainer molecule)
         {
             Debug.WriteLine("Start of GetInitialLongestChain()");
@@ -604,21 +564,16 @@ namespace NCDK.Layout
             return path;
         }
 
-        /**
-         *  Search a molecule for the longest unplaced, aliphatic chain in it. If an
-         *  aliphatic chain encounters an unplaced ring atom, the ring atom is also
-         *  appended to allow for it to be laid out. This gives us a vector for
-         *  attaching the unplaced ring later.
-         *
-         *@param  molecule                                        The molecule to be
-         *      search for the longest unplaced chain
-         *@param  startAtom                                       A start atom from
-         *      which the chain search starts
-         *@return                                                 An AtomContainer
-         *      holding the longest unplaced chain.
-         *@exception  CDKException  Description of the
-         *      Exception
-         */
+        /// <summary>
+        ///  Search a molecule for the longest unplaced, aliphatic chain in it. If an
+        ///  aliphatic chain encounters an unplaced ring atom, the ring atom is also
+        ///  appended to allow for it to be laid out. This gives us a vector for
+        ///  attaching the unplaced ring later.
+        /// </summary>
+        /// <param name="molecule">The molecule to be search for the longest unplaced chain</param>
+        /// <param name="startAtom">A start atom from which the chain search starts</param>
+        /// <returns>An AtomContainer holding the longest unplaced chain.</returns>
+        /// <exception cref="CDKException">Description of the Exception</exception>
         static public IAtomContainer GetLongestUnplacedChain(IAtomContainer molecule, IAtom startAtom)
         {
             Debug.WriteLine("Start of getLongestUnplacedChain.");
@@ -655,23 +610,18 @@ namespace NCDK.Layout
             return pathes[longest];
         }
 
-        /**
-         *  Performs a breadthFirstSearch in an AtomContainer starting with a
-         *  particular sphere, which usually consists of one start atom, and searches
-         *  for the longest aliphatic chain which is yet unplaced. If the search
-         *  encounters an unplaced ring atom, it is also appended to the chain so that
-         *  this last bond of the chain can also be laid out. This gives us the
-         *  orientation for the attachment of the ring system.
-         *
-         *@param  ac                                              The AtomContainer to
-         *      be searched
-         *@param  sphere                                          A sphere of atoms to
-         *      start the search with
-         *@param  pathes                                          A vector of N pathes
-         *      (N = no of heavy atoms).
-         *@exception  CDKException  Description of the
-         *      Exception
-         */
+        /// <summary>
+        ///  Performs a breadthFirstSearch in an AtomContainer starting with a
+        ///  particular sphere, which usually consists of one start atom, and searches
+        ///  for the longest aliphatic chain which is yet unplaced. If the search
+        ///  encounters an unplaced ring atom, it is also appended to the chain so that
+        ///  this last bond of the chain can also be laid out. This gives us the
+        ///  orientation for the attachment of the ring system.
+        /// </summary>
+        /// <param name="ac">The AtomContainer to be searched</param>
+        /// <param name="sphere">A sphere of atoms to start the search with</param>
+        /// <param name="pathes">A vector of N pathes (N = no of heavy atoms).</param>
+        /// <exception cref="CDKException"> Description of the Exception</exception>
         static public void BreadthFirstSearch(IAtomContainer ac, IList<IAtom> sphere, IAtomContainer[] pathes)
         {
             IAtom nextAtom = null;
@@ -720,12 +670,11 @@ namespace NCDK.Layout
             Debug.WriteLine("End of breadthFirstSearch");
         }
 
-        /**
-         *  Returns a string with the numbers of all placed atoms in an AtomContainer
-         *
-         *@param  ac  The AtomContainer for which the placed atoms are to be listed
-         *@return     A string with the numbers of all placed atoms in an AtomContainer
-         */
+        /// <summary>
+        ///  Returns a string with the numbers of all placed atoms in an AtomContainer
+        /// </summary>
+        /// <param name="ac">The AtomContainer for which the placed atoms are to be listed</param>
+        /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
         public string ListPlaced(IAtomContainer ac)
         {
             string s = "Placed: ";
@@ -743,20 +692,15 @@ namespace NCDK.Layout
             return s;
         }
 
-        /**
-         *  Returns a string with the numbers of all atoms in an AtomContainer relative
-         *  to a given Molecule. I.e. the number the is listesd is the position of each
-         *  atom in the Molecule.
-         *
-         *@param  ac                                              The AtomContainer for
-         *      which the placed atoms are to be listed
-         *@param  mol                                             Description of the
-         *      Parameter
-         *@return                                                 A string with the
-         *      numbers of all placed atoms in an AtomContainer
-         *@exception  CDKException  Description of the
-         *      Exception
-         */
+        /// <summary>
+        ///  Returns a string with the numbers of all atoms in an AtomContainer relative
+        ///  to a given Molecule. I.e. the number the is listesd is the position of each
+        ///  atom in the Molecule.
+        /// </summary>
+        /// <param name="ac">The AtomContainer for which the placed atoms are to be listed</param>
+        /// <param name="mol">Description of  Parameter</param>
+        /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
+        /// <exception cref="CDKException"></exception>
         static public string ListNumbers(IAtomContainer mol, IAtomContainer ac)
         {
             string s = "Numbers: ";
@@ -767,18 +711,14 @@ namespace NCDK.Layout
             return s;
         }
 
-        /**
-         *  Returns a string with the numbers of all atoms in a Vector relative to a
-         *  given Molecule. I.e. the number the is listesd is the position of each atom
-         *  in the Molecule.
-         *
-         *@param  ac                       The Vector for which the placed atoms are to
-         *      be listed
-         *@param  mol                      Description of the Parameter
-         *@return                          A string with the numbers of all placed
-         *      atoms in an AtomContainer
-         *@exception  java.lang.Exception  Description of the Exception
-         */
+        /// <summary>
+        ///  Returns a string with the numbers of all atoms in a Vector relative to a
+        ///  given Molecule. I.e. the number the is listesd is the position of each atom
+        ///  in the Molecule.
+        /// </summary>
+        /// <param name="ac">The Vector for which the placed atoms are to be listed</param>
+        /// <param name="mol">Description of the Parameter</param>
+        /// <returns>A string with the numbers of all placed atoms in an AtomContainer</returns>
         static public string ListNumbers(IAtomContainer mol, List<IAtom> ac)
         {
             string s = "Numbers: ";
@@ -789,12 +729,12 @@ namespace NCDK.Layout
             return s;
         }
 
-        /**
-         *  True is all the atoms in the given AtomContainer have been placed
-         *
-         *@param  ac  The AtomContainer to be searched
-         *@return     True is all the atoms in the given AtomContainer have been placed
-         */
+        /// <summary>
+        ///  True is all the atoms in the given AtomContainer have been placed
+        ///
+        /// <param name="ac">The AtomContainer to be searched</param>
+        /// <returns>True is all the atoms in the given AtomContainer have been placed</returns>
+        /// </summary>
         static public bool AllPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -807,11 +747,10 @@ namespace NCDK.Layout
             return true;
         }
 
-        /**
-         *  Marks all the atoms in the given AtomContainer as not placed
-         *
-         *@param  ac  The AtomContainer whose atoms are to be marked
-         */
+        /// <summary>
+        ///  Marks all the atoms in the given AtomContainer as not placed
+        /// </summary>
+        /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
         static public void MarkNotPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -821,12 +760,11 @@ namespace NCDK.Layout
 
         }
 
-        /**
-         *  Marks all the atoms in the given AtomContainer as placed
-         *
-         *@param  ac  The AtomContainer whose atoms are to be marked
-         */
-
+        /// <summary>
+        ///  Marks all the atoms in the given AtomContainer as placed
+        ///
+        /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
+        /// </summary>
         static public void MarkPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -835,12 +773,11 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         *  Get all the placed atoms in an AtomContainer
-         *
-         *@param  ac  The AtomContainer to be searched for placed atoms
-         *@return     An AtomContainer containing all the placed atoms
-         */
+        /// <summary>
+        ///  Get all the placed atoms in an AtomContainer
+        /// </summary>
+        /// <param name="ac">The AtomContainer to be searched for placed atoms</param>
+        /// <returns>An AtomContainer containing all the placed atoms</returns>
         static public IAtomContainer GetPlacedAtoms(IAtomContainer ac)
         {
             IAtomContainer ret = ac.Builder.CreateAtomContainer();
@@ -854,14 +791,12 @@ namespace NCDK.Layout
             return ret;
         }
 
-        /**
-         *  Sums up the degrees of atoms in an atomcontainer
-         *
-         *@param  ac  The atomcontainer to be processed
-         *@param  superAC  The superAtomContainer from which the former has been derived
-         *
-         *@return sum of degrees
-         */
+        /// <summary>
+        ///  Sums up the degrees of atoms in an atomcontainer
+        /// </summary>
+        /// <param name="ac">The atomcontainer to be processed</param>
+        /// <param name="superAC">The superAtomContainer from which the former has been derived</param>
+        /// <returns>sum of degrees</returns>
         static int GetDegreeSum(IAtomContainer ac, IAtomContainer superAC)
         {
             int degreeSum = 0;
@@ -877,24 +812,22 @@ namespace NCDK.Layout
             return degreeSum;
         }
 
-        /**
-         * Calculates priority for atoms in a Molecule.
-         *
-         * @param mol connected molecule
-         * @see #PRIORITY
-         */
+        /// <summary>
+        /// Calculates priority for atoms in a Molecule.
+        /// </summary>
+        /// <param name="mol">connected molecule</param>
+        /// <seealso cref="PRIORITY"/>
         internal static void Prioritise(IAtomContainer mol)
         {
             Prioritise(mol, GraphUtil.ToAdjList(mol));
         }
 
-        /**
-         * Calculates priority for atoms in a Molecule.
-         *
-         * @param mol connected molecule
-         * @param  adjList fast adjacency lookup
-         * @see #PRIORITY
-         */
+        /// <summary>
+        /// Calculates priority for atoms in a Molecule.
+        /// </summary>
+        /// <param name="mol">connected molecule</param>
+        /// <param name="adjList">fast adjacency lookup</param>
+        /// <seealso cref="PRIORITY"/>
         static void Prioritise(IAtomContainer mol, int[][] adjList)
         {
             int[] weights = GetPriority(mol, adjList);
@@ -904,19 +837,17 @@ namespace NCDK.Layout
             }
         }
 
-        /**
-         * Prioritise atoms of a molecule base on how 'buried' they are. The priority
-         * is cacheted with a morgan-like relaxation O(n^2 lg n). Priorities are assign
-         * from 1..|V| (usually less than |V| due to symmetry) where the lowest numbers
-         * have priority.
-         *
-         * @param  mol     molecule
-         * @param  adjList fast adjacency lookup
-         * @return the priority
-         */
+        /// <summary>
+        /// Prioritise atoms of a molecule base on how 'buried' they are. The priority
+        /// is cacheted with a morgan-like relaxation O(n^2 lg n). Priorities are assign
+        /// from 1..|V| (usually less than |V| due to symmetry) where the lowest numbers
+        /// have priority.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <param name="adjList">fast adjacency lookup</param>
+        /// <returns>the priority</returns>
         static int[] GetPriority(IAtomContainer mol, int[][] adjList)
         {
-
             int n = mol.Atoms.Count;
             int[] order = new int[n];
             int[] rank = new int[n];
@@ -965,12 +896,12 @@ namespace NCDK.Layout
             return prev;
         }
 
-        /**
-         * -C#N
-         * -[N+]#[C-]
-         * -C=[N+]=N
-         * -N=[N+]=N
-         */
+        /// <summary>
+        /// -C#N
+        /// -[N+]#[C-]
+        /// -C=[N+]=N
+        /// -N=[N+]=N
+        /// </summary>
         bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {
             if (bonds.Count() != 2)

@@ -24,13 +24,13 @@ using System.IO;
 
 namespace NCDK.IO.Iterator
 {
-    /**
-     * Abstract class that IteratingChemObjectReader's can implement to have it
-     * take care of basic stuff, like managing the ReaderListeners.
-     *
-     * @cdk.module io
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Abstract class that IteratingChemObjectReader's can implement to have it
+    /// take care of basic stuff, like managing the ReaderListeners.
+    ///
+    // @cdk.module io
+    // @cdk.githash
+    /// </summary>
     public abstract class DefaultIteratingChemObjectReader<T> : ChemObjectIO,
             IIteratingChemObjectReader<T> where T : IChemObject
     {
@@ -44,9 +44,9 @@ namespace NCDK.IO.Iterator
 
         /* Extra convenience methods */
 
-        /**
-         * File IO generally does not support removing of entries.
-         */
+        /// <summary>
+        /// File IO generally does not support removing of entries.
+        /// </summary>
         public virtual void Remove()
         {
             throw new NotSupportedException();

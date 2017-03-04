@@ -26,11 +26,11 @@ using System.Linq;
 
 namespace NCDK
 {
-    /**
-     * Checks the functionality of {@link IAtomContainerSet} implementations.
-     *
-     * @cdk.module test-interfaces
-     */
+    /// <summary>
+    /// Checks the functionality of <see cref="IAtomContainerSet{T}"/> implementations.
+    ///
+    // @cdk.module test-interfaces
+    /// </summary>
     [TestClass()]
     public abstract class AbstractAtomContainerSetTest<T>
         : AbstractChemObjectTest
@@ -38,9 +38,9 @@ namespace NCDK
     {
         public abstract T NewContainerObject();
 
-        /**
-		 * @cdk.bug 3093241
-		 */
+        /// <summary>
+        // @cdk.bug 3093241
+        /// </summary>
         [TestMethod()]
         public virtual void TestSortAtomContainers_Comparator_Null()
         {
@@ -64,9 +64,9 @@ namespace NCDK
             Assert.AreEqual(2, som[1].Atoms.Count);
         }
 
-        /**
-		 * ensure coefficients are sorted also
-		 */
+        /// <summary>
+        /// ensure coefficients are sorted also
+        /// </summary>
         [TestMethod()]
         public virtual void TestSort_Coefficients()
         {
@@ -113,15 +113,15 @@ namespace NCDK
             }
         }
 
-        /**
-	 	 * Ensures that sort method of the AtomContainerSet does not include nulls
-		 * in the comparator. This is tested using a comparator which sorts null
-		 * values as low and thus to the start of an array. By adding two (non-null)
-		 * values and sorting we should see that the first two values are not null
-		 * despite giving a comparator which sorts null as low.
-		 *
-		 * @cdk.bug 1291
-		 */
+        /// <summary>
+         /// Ensures that sort method of the AtomContainerSet does not include nulls
+        /// in the comparator. This is tested using a comparator which sorts null
+        /// values as low and thus to the start of an array. By adding two (non-null)
+        /// values and sorting we should see that the first two values are not null
+        /// despite giving a comparator which sorts null as low.
+        ///
+        // @cdk.bug 1291
+        /// </summary>
         [TestMethod()]
         public virtual void TestSort_BrokenComparator()
         {
@@ -165,10 +165,10 @@ namespace NCDK
             }
         }
 
-        /**
-		 * Ensure that sort is not called on an empty set. We mock the comparator
-		 * and verify the compare method is never called
-		 */
+        /// <summary>
+        /// Ensure that sort is not called on an empty set. We mock the comparator
+        /// and verify the compare method is never called
+        /// </summary>
         [TestMethod()]
         public virtual void TestSort_empty()
         {
@@ -223,7 +223,7 @@ namespace NCDK
 
             IAtomContainerSet<IAtomContainer> tested = som.Builder.CreateAtomContainerSet();
             Assert.AreEqual(0, tested.Count);
-			foreach (var m in som)
+            foreach (var m in som)
                 tested.Add(m);
             Assert.AreEqual(3, tested.Count);
         }
@@ -471,9 +471,7 @@ namespace NCDK
             Assert.AreEqual(ac2, som[0]);
         }
 
-        /*
-         * @cdk.bug 2679343
-         */
+        // @cdk.bug 2679343
         [TestMethod()]
         public virtual void TestBug2679343()
         {
@@ -530,12 +528,12 @@ namespace NCDK
             som.Add(ac2, 1.0);
             ac2.SetProperty("multiplierSortCode", "1");
             som.Sort(new CodeComparer());
-        	Assert.AreEqual(2, som.Count);
-        	T newFirstAC = som[0];
+            Assert.AreEqual(2, som.Count);
+            T newFirstAC = som[0];
             Assert.AreEqual(newFirstAC.GetProperty<object>("multiplierSortCode"), "1");
-        	// OK, sorting worked as intended
-        	// The multiplier should have been resorted too:
-        	Assert.AreEqual(1.0, som.GetMultiplier(newFirstAC).Value, 0.00001);
+            // OK, sorting worked as intended
+            // The multiplier should have been resorted too:
+            Assert.AreEqual(1.0, som.GetMultiplier(newFirstAC).Value, 0.00001);
         }
 
         class CodeComparer : IComparer<T>
@@ -569,7 +567,7 @@ namespace NCDK
         }
 
 
-    //        	[TestMethod()]
+    //            [TestMethod()]
     //public virtual void TestIsEmpty()
     //{
 

@@ -18,8 +18,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public int HybridizationNumber { get; set; }
  
-        /** Accept the visitor. **/
-        public override object jjtAccept(SMARTSParserVisitor visitor, object data)
+        /// <summary>Accept the visitor. </summary>
+        public override object JJTAccept(SMARTSParserVisitor visitor, object data)
         {
             return visitor.Visit(this, data);
         }

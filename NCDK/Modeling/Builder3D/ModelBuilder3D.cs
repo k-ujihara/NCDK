@@ -37,30 +37,29 @@ using System.Linq;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     *  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
-     *  Its use looks like:
-     *  <pre>
-     *  ModelBuilder3D mb3d = ModelBuilder3D.Instance;
-     *  IAtomContainer molecule = mb3d.Generate3DCoordinates(molecule, false);
-     *  </pre>
-     *
-     *  <p>Standing problems:
-     *  <ul>
-     *    <li>condensed ring systems which are unknown for the template class
-     *    <li>vdWaals clashes
-     *    <li>stereochemistry
-     *    <li>chains running through ring systems
-     *  </ul>
-     *
-     * @author      cho
-     * @author      steinbeck
-     * @cdk.created 2004-09-07
-     * @cdk.module  builder3d
-     * @cdk.githash
-     * @cdk.keyword 3D coordinates
-     * @cdk.keyword coordinate generation, 3D
-     */
+    /// <summary>
+    ///  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
+    ///  Its use looks like:
+    ///  <code>
+    ///  ModelBuilder3D mb3d = ModelBuilder3D.Instance;
+    ///  IAtomContainer molecule = mb3d.Generate3DCoordinates(molecule, false);
+    ///  </code>
+    ///
+    ///  <p>Standing problems:
+    ///  <ul>
+    ///    <li>condensed ring systems which are unknown for the template class
+    ///    <li>vdWaals clashes
+    ///    <li>stereochemistry
+    ///    <li>chains running through ring systems
+    ///  </ul>
+    /// </summary>
+    // @author      cho
+    // @author      steinbeck
+    // @cdk.created 2004-09-07
+    // @cdk.module  builder3d
+    // @cdk.githash
+    // @cdk.keyword 3D coordinates
+    // @cdk.keyword coordinate generation, 3D
     public class ModelBuilder3D
     {
         private static IDictionary<string, ModelBuilder3D> memyselfandi = new Dictionary<string, ModelBuilder3D>();
@@ -69,12 +68,11 @@ namespace NCDK.Modeling.Builder3D
         private readonly ForceFieldConfigurator ffc = new ForceFieldConfigurator();
         string forceFieldName = "mm2";
 
-        /**
-         * Constructor for the ModelBuilder3D object.
-         *
-         * @param  templateHandler  templateHandler Object
-         * @param  ffname           name of force field
-         */
+        /// <summary>
+        /// Constructor for the ModelBuilder3D object.
+        /// </summary>
+        /// <param name="templateHandler">templateHandler Object</param>
+        /// <param name="ffname">name of force field</param>
         private ModelBuilder3D(TemplateHandler3D templateHandler, string ffname, IChemObjectBuilder builder)
         {
             SetTemplateHandler(templateHandler);
@@ -102,21 +100,19 @@ namespace NCDK.Modeling.Builder3D
             return GetInstance(TemplateHandler3D.Instance, "mm2", builder);
         }
 
-        /**
-         * Gives a list of possible force field types.
-         *
-         * @return                the list
-         */
+        /// <summary>
+        /// Gives a list of possible force field types.
+        /// </summary>
+        /// <returns>the list</returns>
         public string[] GetFfTypes()
         {
             return ffc.GetFfTypes();
         }
 
-        /**
-         * Sets the forceField attribute of the ModeSetForceFieldConfigurator(lBuilder3D object.
-         *
-         * @param  ffname  forceField name
-         */
+        /// <summary>
+        /// Sets the forceField attribute of the ModeSetForceFieldConfigurator(lBuilder3D object.
+        /// </summary>
+        /// <param name="ffname">forceField name</param>
         private void SetForceField(string ffname, IChemObjectBuilder builder)
         {
             if (ffname == null)
@@ -137,9 +133,9 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Generate 3D coordinates with force field information.
-         */
+        /// <summary>
+        /// Generate 3D coordinates with force field information.
+        /// </summary>
         public IAtomContainer Generate3DCoordinates(IAtomContainer molecule, bool clone)
         {
             var originalAtomTypeNames = molecule.Atoms.Select(n => n.AtomTypeName).ToArray();
@@ -241,11 +237,10 @@ namespace NCDK.Modeling.Builder3D
             return molecule;
         }
 
-        /**
-         * Gets the ringSetOfAtom attribute of the ModelBuilder3D object.
-         *
-         *@return              The ringSetOfAtom value
-         */
+        /// <summary>
+        /// Gets the ringSetOfAtom attribute of the ModelBuilder3D object.
+        /// </summary>
+        /// <returns>The ringSetOfAtom value</returns>
         private IRingSet GetRingSetOfAtom(IList<IRingSet> ringSystems, IAtom atom)
         {
             IRingSet ringSetOfAtom = null;
@@ -259,11 +254,10 @@ namespace NCDK.Modeling.Builder3D
             return ringSetOfAtom;
         }
 
-        /**
-         * Layout the molecule, starts with ring systems and than aliphatic chains.
-         *
-         *@param  ringSetMolecule  ringSystems of the molecule
-         */
+        /// <summary>
+        /// Layout the molecule, starts with ring systems and than aliphatic chains.
+        /// </summary>
+        /// <param name="ringSetMolecule">ringSystems of the molecule</param>
         private void LayoutMolecule(IList<IRingSet> ringSetMolecule, IAtomContainer molecule, AtomPlacer3D ap3d,
                 AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer)
         {
@@ -319,15 +313,14 @@ namespace NCDK.Modeling.Builder3D
             } while (!ap3d.AllHeavyAtomsPlaced(molecule) || safetyCounter > molecule.Atoms.Count);
         }
 
-        /**
-         * Layout the ring system, rotate and translate the template.
-         *
-         *@param  originalCoord         coordinates of the placedRingAtom from the template
-         *@param  placedRingAtom        placedRingAtom
-         *@param  ringSet               ring system which placedRingAtom is part of
-         *@param  centerPlacedMolecule  the geometric center of the already placed molecule
-         *@param  atomB                 placed neighbour atom of  placedRingAtom
-         */
+        /// <summary>
+        /// Layout the ring system, rotate and translate the template.
+        /// </summary>
+        /// <param name="originalCoord">coordinates of the placedRingAtom from the template</param>
+        /// <param name="placedRingAtom">placedRingAtom</param>
+        /// <param name="ringSet">ring system which placedRingAtom is part of</param>
+        /// <param name="centerPlacedMolecule">the geometric center of the already placed molecule</param>
+        /// <param name="atomB">placed neighbour atom of  placedRingAtom</param>
         private void LayoutRingSystem(Vector3 originalCoord, IAtom placedRingAtom, IRingSet ringSet,
                 Vector3 centerPlacedMolecule, IAtom atomB, AtomPlacer3D ap3d)
         {
@@ -403,13 +396,12 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Sets a branch atom to a ring or aliphatic chain.
-         *
-         *@param  unplacedAtom    The new branchAtom
-         *@param  atomA           placed atom to which the unplaced atom is connected
-         *@param  atomNeighbours  placed atomNeighbours of atomA
-         */
+        /// <summary>
+        /// Sets a branch atom to a ring or aliphatic chain.
+        /// </summary>
+        /// <param name="unplacedAtom">The new branchAtom</param>
+        /// <param name="atomA">placed atom to which the unplaced atom is connected</param>
+        /// <param name="atomNeighbours">placed atomNeighbours of atomA</param>
         private void SetBranchAtom(IAtomContainer molecule, IAtom unplacedAtom, IAtom atomA, IAtomContainer atomNeighbours,
                 AtomPlacer3D ap3d, AtomTetrahedralLigandPlacer3D atlp3d)
         {
@@ -425,16 +417,15 @@ namespace NCDK.Modeling.Builder3D
 
             double length = ap3d.GetBondLengthValue(atypeNameA, atypeNameUnplaced);
             double angle = (ap3d.GetAngleValue(atypeNameB, atypeNameA, atypeNameUnplaced)) * Math.PI / 180;
-            /*
-             * Console.Out.WriteLine("A:"+atomA.Symbol+" "+atomA.AtomTypeName+
-             * " B:"+atomB.Symbol+" "+atomB.AtomTypeName
-             * +" unplaced Atom:"
-             * +unplacedAtom.AtomTypeName+" BL:"+length+" Angle:"+angle
-             * +" FormalNeighbour:"
-             * +atomA.FormalNeighbourCount+" HYB:"+atomA.getFlag
-             * (CDKConstants.HYBRIDIZATION_SP2)
-             * +" #Neigbhours:"+atomNeighbours.Atoms.Count);
-             */
+            
+            // Console.Out.WriteLine("A:"+atomA.Symbol+" "+atomA.AtomTypeName+
+            // " B:"+atomB.Symbol+" "+atomB.AtomTypeName
+            // +" unplaced Atom:"
+            // +unplacedAtom.AtomTypeName+" BL:"+length+" Angle:"+angle
+            // +" FormalNeighbour:"
+            // +atomA.FormalNeighbourCount+" HYB:"+atomA.getFlag
+            // (CDKConstants.HYBRIDIZATION_SP2)
+            // +" #Neigbhours:"+atomNeighbours.Atoms.Count);
             IAtom atomC = ap3d.GetPlacedHeavyAtom(molecule, atomB, atomA);
 
             Vector3[] branchPoints = atlp3d.Get3DCoordinatesForLigands(atomA, noCoords, atomNeighbours, atomC,
@@ -471,11 +462,10 @@ namespace NCDK.Modeling.Builder3D
             unplacedAtom.IsPlaced = true;
         }
 
-        /**
-         * Search and place branches of a chain or ring.
-         *
-         *@param  chain          AtomContainer if atoms in an aliphatic chain or ring system
-         */
+        /// <summary>
+        /// Search and place branches of a chain or ring.
+        /// </summary>
+        /// <param name="chain">AtomContainer if atoms in an aliphatic chain or ring system</param>
         private void SearchAndPlaceBranches(IAtomContainer molecule, IAtomContainer chain, AtomPlacer3D ap3d,
                 AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer)
         {
@@ -491,7 +481,7 @@ namespace NCDK.Modeling.Builder3D
                             & !(atom.IsInRing))
                     {
                         //Debug.WriteLine("SEARCH PLACE AND FOUND Branch Atom "+molecule.Atoms.IndexOf(chain.GetAtomAt(i))+
-                        //		" New Atom:"+molecule.Atoms.IndexOf(atoms[j])+" -> STORE");
+                        //        " New Atom:"+molecule.Atoms.IndexOf(atoms[j])+" -> STORE");
                         connectedAtoms.Add(ap3d.GetPlacedHeavyAtoms(molecule, chain.Atoms[i]));
                         //Debug.WriteLine("Connected atom1:"+molecule.Atoms.IndexOf(connectedAtoms.GetAtomAt(0))+" atom2:"+
                         //molecule.Atoms.IndexOf(connectedAtoms.GetAtomAt(1))+ " Length:"+connectedAtoms.Atoms.Count);
@@ -515,11 +505,10 @@ namespace NCDK.Modeling.Builder3D
             PlaceLinearChains3D(molecule, branchAtoms, ap3d, atlp3d, atomPlacer);
         }
 
-        /**
-         * Layout all aliphatic chains with ZMatrix.
-         *
-         *@param  startAtoms     AtomContainer of possible start atoms for a chain
-         */
+        /// <summary>
+        /// Layout all aliphatic chains with ZMatrix.
+        /// </summary>
+        /// <param name="startAtoms">AtomContainer of possible start atoms for a chain</param>
         private void PlaceLinearChains3D(IAtomContainer molecule, IAtomContainer startAtoms, AtomPlacer3D ap3d,
                 AtomTetrahedralLigandPlacer3D atlp3d, AtomPlacer atomPlacer)
         {
@@ -566,13 +555,12 @@ namespace NCDK.Modeling.Builder3D
             //Debug.WriteLine("****** HANDLE ALIPHATICS END ******");
         }
 
-        /**
-         * Translates the template ring system to new coordinates.
-         *
-         *@param  originalCoord  original coordinates of the placed ring atom from template
-         *@param  newCoord       new coordinates from branch placement
-         *@param  ac             AtomContainer contains atoms of ring system
-         */
+        /// <summary>
+        /// Translates the template ring system to new coordinates.
+        /// </summary>
+        /// <param name="originalCoord">original coordinates of the placed ring atom from template</param>
+        /// <param name="newCoord">new coordinates from branch placement</param>
+        /// <param name="ac">AtomContainer contains atoms of ring system</param>
         private void TranslateStructure(Vector3 originalCoord, Vector3 newCoord, IAtomContainer ac)
         {
             Vector3 transVector = originalCoord - newCoord;
@@ -586,12 +574,11 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Returns the largest (number of atoms) ring set in a molecule.
-         *
-         *@param  ac  AtomContainer
-         *@return     bool
-         */
+        /// <summary>
+        /// Returns the largest (number of atoms) ring set in a molecule.
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>bool</returns>
         private bool CheckAllRingAtomsHasCoordinates(IAtomContainer ac)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -610,11 +597,10 @@ namespace NCDK.Modeling.Builder3D
             return true;
         }
 
-        /**
-         * Sets the atomsToPlace attribute of the ModelBuilder3D object.
-         *
-         *@param  ac  The new atomsToPlace value
-         */
+        /// <summary>
+        /// Sets the atomsToPlace attribute of the ModelBuilder3D object.
+        /// </summary>
+        /// <param name="ac">The new atomsToPlace value</param>
         private void SetAtomsToPlace(IAtomContainer ac)
         {
             for (int i = 0; i < ac.Atoms.Count; i++)
@@ -623,9 +609,9 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Sets the atomsToUnplaced attribute of the ModelBuilder3D object.
-         */
+        /// <summary>
+        /// Sets the atomsToUnplaced attribute of the ModelBuilder3D object.
+        /// </summary>
         private void SetAtomsToUnplaced(IAtomContainer molecule)
         {
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -634,9 +620,9 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Sets the atomsToUnVisited attribute of the ModelBuilder3D object.
-         */
+        /// <summary>
+        /// Sets the atomsToUnVisited attribute of the ModelBuilder3D object.
+        /// </summary>
         private void SetAtomsToUnVisited(IAtomContainer molecule)
         {
             for (int i = 0; i < molecule.Atoms.Count; i++)
@@ -645,11 +631,10 @@ namespace NCDK.Modeling.Builder3D
             }
         }
 
-        /**
-         * Sets the templateHandler attribute of the ModelBuilder3D object.
-         *
-         * @param  templateHandler  The new templateHandler value
-         */
+        /// <summary>
+        /// Sets the templateHandler attribute of the ModelBuilder3D object.
+        /// </summary>
+        /// <param name="templateHandler">The new templateHandler value</param>
         private void SetTemplateHandler(TemplateHandler3D templateHandler)
         {
             if (templateHandler == null) throw new ArgumentNullException("The given template handler is null!");
@@ -657,12 +642,11 @@ namespace NCDK.Modeling.Builder3D
             this.templateHandler = templateHandler;
         }
 
-        /**
-         * Returns the number of loaded templates. Note that it may return 0 because
-         * templates are lazy loaded, that is upon the first ring being laid out.
-         *
-         * @return 0, if not templates are loaded
-         */
+        /// <summary>
+        /// Returns the number of loaded templates. Note that it may return 0 because
+        /// templates are lazy loaded, that is upon the first ring being laid out.
+        /// </summary>
+        /// <returns>0, if not templates are loaded</returns>
         public int TemplateCount => this.templateHandler.TemplateCount;
     }
 }

@@ -48,7 +48,7 @@ namespace NCDK.IO
         {
             string filename = "NCDK.Data.ASN.PubChem.cid1.asn";
             Trace.TraceInformation("Testing: " + filename);
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             PCCompoundASNReader reader = new PCCompoundASNReader(ins);
             IChemFile cFile = (IChemFile)reader.Read(new ChemFile());
             reader.Close();

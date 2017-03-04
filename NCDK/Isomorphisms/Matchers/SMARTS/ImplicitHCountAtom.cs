@@ -20,22 +20,21 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * This matcher checks the number of implicit hydrogens of the Atom.
-     *
-     * @cdk.module  smarts
-     * @cdk.githash
-     * @cdk.keyword SMARTS
-     */
+    /// <summary>
+    /// This matcher checks the number of implicit hydrogens of the Atom.
+    ///
+    // @cdk.module  smarts
+    // @cdk.githash
+    // @cdk.keyword SMARTS
+    /// </summary>
     public class ImplicitHCountAtom : SMARTSAtom
     {
         private readonly int hcount;
 
-        /**
-         * Creates a new instance
-         *
-         * @param hcount
-         */
+        /// <summary>
+        /// Creates a new instance
+        ///
+        /// <param name="hcount">/// </summary></param>
         public ImplicitHCountAtom(int hcount, IChemObjectBuilder builder)
             : base(builder)
         {
@@ -43,12 +42,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             this.ImplicitHydrogenCount = hcount;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see
-         * org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom#Matches(org
-         * .openscience.cdk.interfaces.IAtom)
-         */
         public override bool Matches(IAtom atom)
         {
             // h counts should be set before match throw runtime exception?
@@ -57,10 +50,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             return atom.ImplicitHydrogenCount == hcount;
         }
 
-        /*
-         * (non-Javadoc)
-         * @see org.openscience.cdk.PseudoAtom#ToString()
-         */
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();

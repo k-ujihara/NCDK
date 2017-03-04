@@ -267,11 +267,11 @@ namespace NCDK.Config
         
         /// <summary>
         /// Configures an atom. Finds the correct element type
-        /// by looking at the atoms element symbol. If the element symbol is not recognised, it will
-        /// throw an <see cref="ArgumentException"/>.
+        /// by looking at the atoms element symbol.
         /// </summary>
         /// <param name="atom">The atom to be configured</param>
         /// <returns>The configured atom</returns>
+        /// <exception cref="ArgumentException">If the element symbol is not recognised</exception>
         public virtual IAtom Configure(IAtom atom)
         {
             IIsotope isotope;

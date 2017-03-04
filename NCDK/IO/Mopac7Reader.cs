@@ -30,18 +30,17 @@ using System.Text;
 
 namespace NCDK.IO
 {
-    /**
-     * Reads MOPAC output, extracts several electronic parameters and assigns them as a molecule
-     * properties.<p>
-     *
-     * Parameters: "NO. OF FILLED LEVELS",	"TOTAL ENERGY","FINAL HEAT OF FORMATION",
-     * "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
-     * Doesn't update structure coordinates ! (TODO fix)
-     *
-     * @author      Nina Jeliazkova <nina@acad.bg>
-     * @cdk.githash
-     * @cdk.module  io
-     */
+    /// <summary>
+    /// Reads MOPAC output, extracts several electronic parameters and assigns them as a molecule
+    /// properties.<p>
+    ///
+    /// Parameters: "NO. OF FILLED LEVELS",    "TOTAL ENERGY","FINAL HEAT OF FORMATION",
+    /// "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
+    /// Doesn't update structure coordinates ! (TODO fix)
+    /// </summary>
+    // @author      Nina Jeliazkova <nina@acad.bg>
+    // @cdk.githash
+    // @cdk.module  io
     public class Mopac7Reader : DefaultChemObjectReader
     {
         TextReader input = null;
@@ -51,40 +50,36 @@ namespace NCDK.IO
         private static string eigenvalues = "EIGENVALUES";
         private static string filledLevels = "NO. OF FILLED LEVELS";
 
-        /**
-         * Constructs a new Mopac7reader that can read a molecule from a given {@link Reader}.
-         *
-         * @param  input  The {@link Reader} to read from
-         */
+        /// <summary>
+        /// Constructs a new Mopac7reader that can read a molecule from a given <see cref="Reader"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="Reader"/> to read from</param>
         public Mopac7Reader(TextReader input)
         {
             this.input = input;
         }
 
-        /**
-         * Constructs a new Mopac7reader that can read a molecule from a given {@link Stream}.
-         *
-         * @param  input  The {@link Stream} to read from
-         */
+        /// <summary>
+        /// Constructs a new Mopac7reader that can read a molecule from a given <see cref="Stream"/>.
+        /// </summary>
+        /// <param name="input">The <see cref="Stream"/> to read from</param>
         public Mopac7Reader(Stream input)
             : this(new StreamReader(input))
         { }
 
-        /**
-         * Constructs a new Mopac7reader that can read a molecule. The reader to read from has
-         * yet to be set.
-         */
+        /// <summary>
+        /// Constructs a new Mopac7reader that can read a molecule. The reader to read from has
+        /// yet to be set.
+        /// </summary>
         public Mopac7Reader()
             : this(new StringReader(""))
         { }
 
-        /*
-         * FINAL HEAT OF FORMATION = -32.90826 KCAL = -137.68818 KJ TOTAL ENERGY =
-         * -1618.31024 EV ELECTRONIC ENERGY = -6569.42640 EV POINT GROUP: C1
-         * CORE-CORE REPULSION = 4951.11615 EV IONIZATION POTENTIAL = 10.76839 NO.
-         * OF FILLED LEVELS = 23 MOLECULAR WEIGHT = 122.123
-         */
-
+        // FINAL HEAT OF FORMATION = -32.90826 KCAL = -137.68818 KJ TOTAL ENERGY =
+        // -1618.31024 EV ELECTRONIC ENERGY = -6569.42640 EV POINT GROUP: C1
+        // CORE-CORE REPULSION = 4951.11615 EV IONIZATION POTENTIAL = 10.76839 NO.
+        // OF FILLED LEVELS = 23 MOLECULAR WEIGHT = 122.123
+        
         private static readonly string[] expected_columns = { "NO.", "ATOM", "X", "Y", "Z" };
         public override T Read<T>(T obj)
         {
@@ -188,11 +183,9 @@ namespace NCDK.IO
                                 {
                                     string value = line.Substring(line.LastIndexOf('=') + 1).Trim();
 
-                                    /*
-                                     * v = v.replaceAll("EV",""); v =
-                                     * v.replaceAll("KCAL",""); v =
-                                     * v.replaceAll("KJ","");
-                                     */
+                                    // v = v.ReplaceAll("EV",""); v =
+                                    // v.ReplaceAll("KCAL",""); v =
+                                    // v.ReplaceAll("KJ","");
                                     if (!string.IsNullOrEmpty(units[i]))
                                         value = value.Replace(units[i], "").Trim();
                                     int pos = value.IndexOf(' ');

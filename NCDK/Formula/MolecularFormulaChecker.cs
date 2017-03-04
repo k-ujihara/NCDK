@@ -27,51 +27,45 @@ using System.Diagnostics;
 
 namespace NCDK.Formula
 {
-    /**
-    // <p> Validate a molecular formula given in IMolecularformula object. The
-    // validation is based according different rules that you have to introduce before
-    // see IRule.
-     *
+    /// <summary>
+    /// <para> Validate a molecular formula given in IMolecularformula object. The
+    /// validation is based according different rules that you have to introduce before
+    /// see IRule.
+    /// </summary>
+    /// <seealso cref="IRule"/>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.keyword molecule, molecular formula
     // @cdk.githash
-    // @see         IRule
-     */
     public class MolecularFormulaChecker
     {
-        /** List of IRules to be applied in the validation.*/
+        /// <summary>List of IRules to be applied in the validation.*/
         private IList<IRule> rules;
 
-        /**
-        // Construct an instance of MolecularFormulaChecker. It must be initialized
-        // with the rules to applied.
-         *
-        // @param rules  A List with IRule to be applied
-         */
+        /// <summary>
+        /// Construct an instance of MolecularFormulaChecker. It must be initialized with the rules to applied.
+        /// </summary>
+        /// <param name="rules">A List with IRule to be applied</param>
         public MolecularFormulaChecker(IList<IRule> rules)
         {
             this.rules = rules;
         }
 
-        /**
-        // Get the IRules to be applied to validate the IMolecularFormula.
-         *
-        // @return A List with IRule
-         */
+        /// <summary>
+        /// The IRules to be applied to validate the IMolecularFormula.
+        /// </summary>
         public IList<IRule> Rules => rules;
 
-        /**
-        // Validate if a IMolecularFormula is valid. The result more close to 1 means
-        // maximal probability to be valid. Opposite more close to 0 means minimal
-        // probability to be valid. To know the result in each IRule use
-        // {@link #IsValid(IMolecularFormula)}
-         *
-        // @param  formula      The IMolecularFormula value
-        // @return              The percent of the validity
-        // @see                 #IsValid(IMolecularFormula)
-         */
+        /// <summary>
+        /// Validate if a IMolecularFormula is valid. The result more close to 1 means
+        /// maximal probability to be valid. Opposite more close to 0 means minimal
+        /// probability to be valid. To know the result in each IRule use
+        /// <see cref="IsValid(IMolecularFormula)"/>.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula value</param>
+        /// <returns>The percent of the validity</returns>
+        /// <seealso cref="IsValid(IMolecularFormula)"/>
         public double IsValidSum(IMolecularFormula formula)
         {
             double result = 1.0;
@@ -86,24 +80,21 @@ namespace NCDK.Formula
             return result;
         }
 
-        /**
-        // Validate if a IMolecularFormula is valid. The results of each IRule which
-        // has to be applied is put into IMolecularFormula as properties. To extract
-        // the result final as the product of rule's result use
-        // {@link #IsValidSum(IMolecularFormula)}.
-         *
-        // @param  formula      The IMolecularFormula value
-        // @return formulaWith  The IMolecularFormula with the results for each
-        //                      IRule into properties
-        // @see                 #IsValidSum(IMolecularFormula)
-         */
+        /// <summary>
+        /// Validate if a IMolecularFormula is valid. The results of each IRule which
+        /// has to be applied is put into IMolecularFormula as properties. To extract
+        /// the result final as the product of rule's result use
+        /// <see cref="IsValidSum(IMolecularFormula)"/>.
+        /// </summary>
+        /// <param name="formula">The IMolecularFormula value</param>
+        /// <returns>formulaWith  The IMolecularFormula with the results for each IRule into properties</returns>
+        /// <seealso cref="IsValidSum(IMolecularFormula)"/>
         public IMolecularFormula IsValid(IMolecularFormula formula)
         {
             Trace.TraceInformation("Generating the validity of the molecular formula");
 
             if (formula.Count == 0)
             {
-
                 Trace.TraceError("Proposed molecular formula has not elements");
                 return formula;
             }

@@ -24,6 +24,7 @@ using NCDK.IO;
 using NCDK.QSAR.Result;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
+
 using System;
 using System.Linq;
 
@@ -46,7 +47,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestBCUT()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -68,33 +69,31 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             foreach (var name in names)
                 Assert.IsNotNull(name);
 
-            /*
-             * Assert.AssertEquals(1756.5060703860984,
-             * ((Double)retval[0]).Value, 0.00000001);
-             * Assert.AssertEquals(41.91069159994975,
-             * ((Double)retval[1]).Value, 0.00000001);
-             * Assert.AssertEquals(12.06562671430088,
-             * ((Double)retval[2]).Value, 0.00000001);
-             * Assert.AssertEquals(1976.6432599699767,
-             * ((Double)retval[3]).Value, 0.00000001);
-             * Assert.AssertEquals(44.45945636161082,
-             * ((Double)retval[4]).Value, 0.00000001);
-             * Assert.AssertEquals(12.549972243701887,
-             * ((Double)retval[5]).Value, 0.00000001);
-             * Assert.AssertEquals(4333.097373073368,
-             * ((Double)retval[6]).Value, 0.00000001);
-             * Assert.AssertEquals(65.82626658920714,
-             * ((Double)retval[7]).Value, 0.00000001);
-             * Assert.AssertEquals(16.302948232909483,
-             * ((Double)retval[8]).Value, 0.00000001);
-             */
+            // Assert.AreEqual(1756.5060703860984,
+            // ((Double)retval[0]).Value, 0.00000001);
+            // Assert.AreEqual(41.91069159994975,
+            // ((Double)retval[1]).Value, 0.00000001);
+            // Assert.AreEqual(12.06562671430088,
+            // ((Double)retval[2]).Value, 0.00000001);
+            // Assert.AreEqual(1976.6432599699767,
+            // ((Double)retval[3]).Value, 0.00000001);
+            // Assert.AreEqual(44.45945636161082,
+            // ((Double)retval[4]).Value, 0.00000001);
+            // Assert.AreEqual(12.549972243701887,
+            // ((Double)retval[5]).Value, 0.00000001);
+            // Assert.AreEqual(4333.097373073368,
+            // ((Double)retval[6]).Value, 0.00000001);
+            // Assert.AreEqual(65.82626658920714,
+            // ((Double)retval[7]).Value, 0.00000001);
+            // Assert.AreEqual(16.302948232909483,
+            // ((Double)retval[8]).Value, 0.00000001);
         }
 
         [TestMethod()]
         public void TestExtraEigenvalues()
         {
             string filename = "NCDK.Data.HIN.gravindex.hin";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new HINReader(ins);
             ChemFile content = (ChemFile)reader.Read((ChemObject)new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();
@@ -161,7 +160,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         public void TestUndefinedValues()
         {
             string filename = "NCDK.Data.MDL.burden_undefined.sdf";
-            var ins = this.GetType().Assembly.GetManifestResourceStream(filename);
+            var ins = ResourceLoader.GetAsStream(filename);
             ISimpleChemObjectReader reader = new MDLV2000Reader(ins);
             ChemFile content = reader.Read(new ChemFile());
             var cList = ChemFileManipulator.GetAllAtomContainers(content).ToList();

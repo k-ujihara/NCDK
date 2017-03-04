@@ -24,23 +24,22 @@ using System.Text;
 
 namespace NCDK.NInChI
 {
-    /**
-     * <p>JNI Wrapper for International Chemical Identifier (InChI) C++ library.
-     *
-     * <p>This class is not intended to be used directly, but should be accessed
-     * through subclasses that read data formats and load them into the InChI
-     * data structures.
-     *
-     * <p>Subclasses should load data through the addAtom, addBond and addParity
-     * methods. Once the molecule is fully loaded then the generateInchi method
-     * should be called. Ideally this should all take place within the subclass's
-     * constructor. The public get methods will all return null until this has
-     * happened.
-     *
-     * <p>See <tt>inchi_api.h</tt>.
-     *
-     * @author Sam Adams
-     */
+    /// <summary>
+    /// <p>JNI Wrapper for International Chemical Identifier (InChI) C++ library.
+    ///
+    /// <p>This class is not intended to be used directly, but should be accessed
+    /// through subclasses that read data formats and load them into the InChI
+    /// data structures.
+    ///
+    /// <p>Subclasses should load data through the addAtom, addBond and addParity
+    /// methods. Once the molecule is fully loaded then the generateInchi method
+    /// should be called. Ideally this should all take place within the subclass's
+    /// constructor. The public get methods will all return null until this has
+    /// happened.
+    ///
+    /// <p>See <tt>inchi_api.h</tt>.
+    /// </summary>
+    // @author Sam Adams
     unsafe public class NInchiWrapper
     {
         private const string DllName_libinchi = "libinchi.dll";
@@ -81,11 +80,10 @@ namespace NCDK.NInChI
         /* sizes definitions */
         public const int MAX_ATOMS = 1024;            // defined in  ichisize.h
 
-        public const int MAXVAL = 20;                 /* max number of bonds per atom                 */
-        public const int ATOM_EL_LEN = 6;             /* length of ASCIIZ element symbol field        */
+        public const int MAXVAL = 20;                 /* max number of bonds per atom */
+        public const int ATOM_EL_LEN = 6;             /* length of ASCIIZ element symbol field */
         public const int NUM_H_ISOTOPES = 3;          /* number of hydrogen isotopes: protium, D, T   */
-        public const int ISOTOPIC_SHIFT_FLAG = 10000; /* add to isotopic mass if isotopic_mass =      */
-                                                      /* (isotopic mass - average atomic mass)        */
+        public const int ISOTOPIC_SHIFT_FLAG = 10000; /* add to isotopic mass if isotopic_mass = (isotopic mass - average atomic mass) */
         public const int ISOTOPIC_SHIFT_MAX = 100;    /* max Abs(isotopic mass - average atomic mass) */
 
         [StructLayout(LayoutKind.Sequential)]
@@ -96,17 +94,11 @@ namespace NCDK.NInChI
             public double Y;
             public double Z;
             /* connectivity */
-            public fixed Int16/*AT_NUM*/ neighbor[MAXVAL];     /* adjacency list: ordering numbers of */
-                                                               /*            the adjacent atoms, >= 0 */
-            public fixed SByte/*S_CHAR*/ bond_type[MAXVAL];    /* inchi_BondType */
-                                                               /* 2D stereo */
-            public fixed SByte/*S_CHAR*/ bond_stereo[MAXVAL];  /* inchi_BondStereo2D; negative if the */
-                                                               /* sharp end points to opposite atom */
-                                                               /* other atom properties */
-            public fixed sbyte/*char*/ elname[ATOM_EL_LEN];  /* zero-terminated chemical element name:*/
-                                                             /* "H", "Si", etc. */
-            public Int16/*AT_NUM*/ num_bonds;            /* number of neighbors, bond types and bond*/
-                                                         /* stereo in the adjacency list */
+            public fixed Int16/*AT_NUM*/ neighbor[MAXVAL];     /* adjacency list: ordering numbers of  the adjacent atoms, >= 0 */
+            public fixed SByte/*S_CHAR*/ bond_type[MAXVAL];    /* inchi_BondType 2D stereo */
+            public fixed SByte/*S_CHAR*/ bond_stereo[MAXVAL];  /* inchi_BondStereo2D; negative if the sharp end points to opposite atom other atom properties */
+            public fixed sbyte/*char*/ elname[ATOM_EL_LEN];  /* zero-terminated chemical element name: "H", "Si", etc. */
+            public Int16/*AT_NUM*/ num_bonds;            /* number of neighbors, bond types and bond stereo in the adjacency list */
             public fixed SByte/*S_CHAR*/ num_iso_H[NUM_H_ISOTOPES + 1]; /* implicit hydrogen atoms */
                                                                         /* [0]: number of implicit non-isotopic H
                                                                              (exception: num_iso_H[0]=-1 means INCHI
@@ -114,8 +106,7 @@ namespace NCDK.NInChI
                                                                            [1]: number of implicit isotopic 1H (protium),
                                                                            [2]: number of implicit 2H (deuterium),
                                                                            [3]: number of implicit 3H (tritium) */
-            public Int16/*AT_NUM*/ isotopic_mass;        /* 0 => non-isotopic; isotopic mass or  */
-                                                         /* ISOTOPIC_SHIFT_FLAG + mass - (average atomic mass) */
+            public Int16/*AT_NUM*/ isotopic_mass;        /* 0 => non-isotopic; isotopic mass or ISOTOPIC_SHIFT_FLAG + mass - (average atomic mass) */
             public SByte/*S_CHAR*/ radical;              /* inchi_Radical */
             public SByte/*S_CHAR*/ charge;               /* positive or negative; 0 => no charge */
         }
@@ -126,11 +117,9 @@ namespace NCDK.NInChI
         public struct Inchi_Stereo0D
         {
             public fixed Int16/*AT_NUM*/  neighbor[4];    /* 4 atoms always */
-            public Int16/*AT_NUM*/  central_atom;   /* central tetrahedral atom or a central */
-                                                    /* atom of allene; otherwise NO_ATOM */
+            public Int16/*AT_NUM*/  central_atom;   /* central tetrahedral atom or a central atom of allene; otherwise NO_ATOM */
             public SByte/*S_CHAR*/  type;           /* inchi_StereoType0D */
-            public SByte/*S_CHAR*/  parity;         /* inchi_StereoParity0D: may be a combination of two parities: */
-                                                    /* ParityOfConnected | (ParityOfDisconnected << 3), see Note above */
+            public SByte/*S_CHAR*/  parity;         /* inchi_StereoParity0D: may be a combination of two parities: ParityOfConnected | (ParityOfDisconnected << 3), see Note above */
         }
 
         /* Structure -> InChI, GetINCHI() / GetStdINCHI() */
@@ -140,8 +129,7 @@ namespace NCDK.NInChI
             /* the caller is responsible for the data allocation and deallocation */
             public IntPtr/*inchi_Atom**/ atom;            /* array of num_atoms elements */
             public IntPtr/*inchi_Stereo0D**/ stereo0D;    /* array of num_stereo0D 0D stereo elements or NULL */
-            public IntPtr/*char**/ szOptions;    /* InChI options: space-delimited; each is preceded by */
-                                                 /* '/' or '-' depending on OS and compiler */
+            public IntPtr/*char**/ szOptions;    /* InChI options: space-delimited; each is preceded by '/' or '-' depending on OS and compiler */
             public Int16/*AT_NUM*/ num_atoms;    /* number of atoms in the structure < 1024 */
             public Int16/*AT_NUM*/ num_stereo0D; /* number of 0D stereo elements */
         }
@@ -188,14 +176,12 @@ namespace NCDK.NInChI
             public Int16/*AT_NUM*/          num_atoms;    /* number of atoms in the structure < 1024 */
             public Int16/*AT_NUM*/          num_stereo0D; /* number of 0D stereo elements */
             public string/*char**/ szMessage;    /* Error/warning ASCIIZ message */
-            public string/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list */
-                                                 /* of recognized options and possibly an Error/warning message */
+            public string/*char**/ szLog;        /* log-file ASCIIZ string, contains a human-readable list  of recognized options and possibly an Error/warning message */
             public fixed ulong/*unsigned long[2][2]*/ WarningFlags[4]; /* warnings, see INCHIDIFF in inchicmp.h */
                                                                        /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
                                                                                   x=1 => Disconnected layer if Reconnected layer is present
                                                                                   y=1 => Main layer or Mobile-H
-                                                                                  y=0 => Fixed-H layer
-                                                                        */
+                                                                                  y=0 => Fixed-H layer */
         }
 
         [DllImport(DllName_libinchi, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -268,30 +254,22 @@ namespace NCDK.NInChI
         private const string ID = "NInChI";
         private const string VERSION = "1.04_1";
 
-        /**
-         * Flag indicating windows or linux.
-         */
+        /// <summary>
+        /// Flag indicating windows or linux.
+        /// </summary>
         private const bool IS_WINDOWS = true;
 
-        /**
-         * Switch character for passing options. / in windows, - on other systems.
-         */
-#if TEST
-        public
-#endif
-        const string FlagChar = IS_WINDOWS ? "/" : "-";
+        /// <summary>
+        /// Switch character for passing options. / in windows, - on other systems.
+        /// </summary>
+        internal const string FlagChar = IS_WINDOWS ? "/" : "-";
 
-        /**
-         * Checks and canonicalises options.
-         *
-         * @param ops  List of INCHI_OPTION
-         */
-#if TEST
-        public
-#else
-        protected internal 
-#endif
-        static string CheckOptions(IList<INCHI_OPTION> ops)
+        /// <summary>
+        /// Checks and canonicalises options.
+        ///
+        /// <param name="ops">List of INCHI_OPTION</param>
+        /// </summary>
+        protected internal static string CheckOptions(IList<INCHI_OPTION> ops)
         {
             if (ops == null)
             {
@@ -308,19 +286,13 @@ namespace NCDK.NInChI
             return sbOptions.ToString();
         }
 
-        /**
-         * Checks and canonicalises options.
-         *
-         * @param ops          Space delimited string of options to pass to InChI library.
-         *                     Each option may optionally be preceded by a command line
-         *                     switch (/ or -).
-         */
-#if TEST
-        public
-#else
-        protected internal 
-#endif
-        static string CheckOptions(string ops)
+        /// <summary>
+        /// Checks and canonicalises options.
+        /// </summary>
+        /// <param name="ops">Space delimited string of options to pass to InChI library.
+        ///                     Each option may optionally be preceded by a command line
+        ///                     switch (/ or -).</param>
+        protected internal static string CheckOptions(string ops)
         {
             if (ops == null)
             {
@@ -475,37 +447,36 @@ namespace NCDK.NInChI
             return new NInchiOutput(ret, inchi, aux, mes, log);
         }
 
-        /**
-         * <p>Generates the InChI for a chemical structure.</p>
-         *
-         * <p>If no InChI creation/stereo modification options are specified then a standard
-         * InChI is produced, otherwise the generated InChI will be a non-standard one.</p>
-         *
-         * <p><b>Valid options:</b></p>
-         * <pre>
-         *  Structure perception (compatible with stdInChI):
-         *    /NEWPSOFF   /DoNotAddH   /SNon
-         *  Stereo interpretation (lead to generation of non-standard InChI)
-         *    /SRel /SRac /SUCF /ChiralFlagON /ChiralFlagOFF
-         *  InChI creation options (lead to generation of non-standard InChI)
-         *    /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
-         * </pre>
-         *
-         * <p><b>Other options:</b></p>
-         * <pre>
-         *  /AuxNone    Omit auxiliary information (default: Include)
-         *  /Wnumber    Set time-out per structure in seconds; W0 means unlimited
-         *              In InChI library the default value is unlimited
-         *  /OutputSDF  Output SDfile instead of InChI
-         *  /WarnOnEmptyStructure
-         *              Warn and produce empty InChI for empty structure
-         *  /SaveOpt    Save custom InChI creation options (non-standard InChI)
-         * </pre>
-         *
-         * @param input
-         * @return
-         * @
-         */
+        /// <summary>
+        /// <p>Generates the InChI for a chemical structure.</p>
+        ///
+        /// <p>If no InChI creation/stereo modification options are specified then a standard
+        /// InChI is produced, otherwise the generated InChI will be a non-standard one.</p>
+        ///
+        /// <p><b>Valid options:</b></p>
+        /// <code>
+        ///  Structure perception (compatible with stdInChI):
+        ///    /NEWPSOFF   /DoNotAddH   /SNon
+        ///  Stereo interpretation (lead to generation of non-standard InChI)
+        ///    /SRel /SRac /SUCF /ChiralFlagON /ChiralFlagOFF
+        ///  InChI creation options (lead to generation of non-standard InChI)
+        ///    /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
+        /// </code>
+        ///
+        /// <p><b>Other options:</b></p>
+        /// <code>
+        ///  /AuxNone    Omit auxiliary information (default: Include)
+        ///  /Wnumber    Set time-out per structure in seconds; W0 means unlimited
+        ///              In InChI library the default value is unlimited
+        ///  /OutputSDF  Output SDfile instead of InChI
+        ///  /WarnOnEmptyStructure
+        ///              Warn and produce empty InChI for empty structure
+        ///  /SaveOpt    Save custom InChI creation options (non-standard InChI)
+        /// </code>
+        ///
+        /// <param name="input">/// @return</param>
+        // @
+        /// </summary>
         public static NInchiOutput GetInchi(NInchiInput input)
         {
             if (input == null)
@@ -542,14 +513,13 @@ namespace NCDK.NInChI
             }
         }
 
-        /**
-         * <p>Calculates the Standard InChI string for a chemical structure.</p>
-         * <p>The only valid structure perception options are NEWPSOFF/DoNotAddH/SNon. In any other structural
-         * perception options are specified then the calculation will fail.</p>
-         * @param input
-         * @return
-         * @
-         */
+        /// <summary>
+        /// <p>Calculates the Standard InChI string for a chemical structure.</p>
+        /// <p>The only valid structure perception options are NEWPSOFF/DoNotAddH/SNon. In any other structural
+        /// perception options are specified then the calculation will fail.</p>
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static NInchiOutput GetStdInchi(NInchiInput input)
         {
             if (input == null)
@@ -586,15 +556,14 @@ namespace NCDK.NInChI
             }
         }
 
-        /**
-         * <p>Converts an InChI into an InChI for validation purposes (the same as the -InChI2InChI option).</p>
-         * <p>This method may also be used to filter out specific layers. For instance, /Snon would remove the
-         * stereochemical layer; Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers.
-         * In order to keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed.</p>         
-         * @param input
-         * @return
-         * @
-         */
+        /// <summary>
+        /// <p>Converts an InChI into an InChI for validation purposes (the same as the -InChI2InChI option).</p>
+        /// <p>This method may also be used to filter out specific layers. For instance, /Snon would remove the
+        /// stereochemical layer; Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers.
+        /// In order to keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed.</p>         
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static NInchiOutput GetInchiFromInchi(NInchiInputInchi input)
         {
             if (input == null)
@@ -677,12 +646,11 @@ namespace NCDK.NInChI
             }
         }
 
-        /**
-         * Generated 0D structure from an InChI string.
-         * @param input
-         * @return
-         * @
-         */
+        /// <summary>
+        /// Generated 0D structure from an InChI string.
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static NInchiOutputStructure GetStructureFromInchi(NInchiInputInchi input)
         {
             if (input == null)
@@ -711,12 +679,12 @@ namespace NCDK.NInChI
             return output;
         }
 
-        /**
-         * Calculates the InChIKey for an InChI string.
-         * @param inchi     source InChI string
-         * @return  InChIKey output
-         * @throws  JniInchiException
-         */
+        /// <summary>
+        /// Calculates the InChIKey for an InChI string.
+        /// </summary>
+        /// <param name="inchi">source InChI string</param>
+        /// <returns>InChIKey output</returns>
+        /// <exception cref="NInchiException"></exception>
         public static NInchiOutputKey GetInchiKey(string inchi)
         {
             if (inchi == null)
@@ -737,12 +705,11 @@ namespace NCDK.NInChI
             return oo;
         }
 
-        /**
-         * Checks whether a string represents valid InChIKey.
-         * @param key
-         * @return
-         * @
-         */
+        /// <summary>
+        /// Checks whether a string represents valid InChIKey.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public static INCHI_KEY_STATUS CheckInchiKey(string key)
         {
             if (key == null)
@@ -753,15 +720,14 @@ namespace NCDK.NInChI
             return (INCHI_KEY_STATUS)ret;
         }
 
-        /**
-         * <p>Checks if the string represents valid InChI/standard InChI.</p>
-         *
-         * @param inchi  source InChI
-         * @param strict if <code>false</code>, just briefly check for proper layout (prefix, version, etc.) The result
-         *               may not be strict.
-         *               If <code>true</code>, try to perform InChI2InChI conversion and returns success if a resulting
-         *               InChI string exactly match source. The result may be 'false alarm' due to imperfectness of
-         */
+        /// <summary>
+        /// <p>Checks if the string represents valid InChI/standard InChI.</p>
+        /// </summary>
+        /// <param name="inchi">source InChI</param>
+        /// <param name="strict">if <see langword="false"/>, just briefly check for proper layout (prefix, version, etc.) The result
+        ///               may not be strict.
+        ///               If <see langword="true"/>, try to perform InChI2InChI conversion and returns success if a resulting
+        ///               InChI string exactly match source. The result may be 'false alarm' due to imperfectness of</param>
         public static INCHI_STATUS CheckInchi(string inchi, bool strict)
         {
             if (inchi == null)

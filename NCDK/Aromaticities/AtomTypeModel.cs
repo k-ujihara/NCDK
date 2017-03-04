@@ -35,50 +35,42 @@ using NCDK.Config;
 
 namespace NCDK.Aromaticities
 {
-    /**
-    /// Electron donation model using the CDK atom types. This model closely mirrors
-    /// the previously implementations {@code CDKHueckelAromaticityDetector} and
-    /// {@code DoubleBondAcceptingAromaticityDetector}. One can choose to allow
+    /// <summary>
+    /// Electron donation model using the CDK atom types. One can choose to allow
     /// contribution from exocyclic pi bonds in the constructor. Allowing exocyclic
-    /// pi bonds results in molecules such as hexamethylidenecyclohexane ({@code
-    /// C=C1C(=C)C(=C)C(=C)C(=C)C1=C}) being considered aromatic.
-     *
-    /// @author John May
-    /// @cdk.module standard
-     */
-    // mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
+    /// pi bonds results in molecules such as hexamethylidenecyclohexane (
+    /// "C=C1C(=C)C(=C)C(=C)C(=C)C1=C") being considered aromatic.
+    /// </summary>
+    // @author John May
+    // @cdk.module standard
+    /// mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
     sealed class AtomTypeModel : ElectronDonation
     {
-
         /// <summary>Predefined electron contribution for several atom types.</summary>
-        private readonly static IDictionary<string, int> TYPES;
-
-        static AtomTypeModel()
-        {
-            var dic = new Dictionary<string, int>();
-            dic.Add("N.planar3", 2);
-            dic.Add("N.minus.planar3", 2);
-            dic.Add("N.amide", 2);
-            dic.Add("S.2", 2);
-            dic.Add("S.planar3", 2);
-            dic.Add("C.minus.planar", 2);
-            dic.Add("O.planar3", 2);
-            dic.Add("N.sp2.3", 1);
-            dic.Add("C.sp2", 1);
-            TYPES = new ReadOnlyDictionary<string, int>(dic);
-        }
+        private readonly static Dictionary<string, int> TYPES =
+            new Dictionary<string, int>()
+            {
+                {"N.planar3", 2},
+                {"N.minus.planar3", 2},
+                {"N.amide", 2},
+                {"S.2", 2},
+                {"S.planar3", 2},
+                {"C.minus.planar", 2},
+                {"O.planar3", 2},
+                {"N.sp2.3", 1},
+                {"C.sp2", 1},
+            };
 
         /// <summary>Allow exocyclic pi bonds.</summary>
         private readonly bool exocyclic;
 
-        /**
+        /// <summary>
         /// Create the electron donation model specifying whether exocyclic pi bonds
         /// are allowed. Exocyclic pi bonds <i>sprout</i> from a ring, allowing these
         /// bonds to contribute means structure such as hexamethylidenecyclohexane,
-        /// {@code C=C1C(=C)C(=C)C(=C)C(=C)C1=C} are considered <i>aromatic</i>.
-         *
-        /// @param exocyclic allow exocyclic double bonds
-         */
+        /// "C=C1C(=C)C(=C)C(=C)C(=C)C1=C" are considered <i>aromatic</i>.
+        /// </summary>
+        /// <param name="exocyclic">allow exocyclic double bonds</param>
         public AtomTypeModel(bool exocyclic)
         {
             this.exocyclic = exocyclic;
@@ -87,7 +79,6 @@ namespace NCDK.Aromaticities
         /// <inheritdoc/>
         public override int[] Contribution(IAtomContainer container, RingSearch ringSearch)
         {
-
             int nAtoms = container.Atoms.Count;
             int[] electrons = new int[nAtoms];
 
@@ -155,13 +146,11 @@ namespace NCDK.Aromaticities
             return electrons;
         }
 
-        /**
-        /// The number of contributed electrons for the atom type of the specified
-        /// atom type.
-         *
-        /// @param atom an atom to get the contribution of
-        /// @return the number of electrons
-         */
+        /// <summary>
+        /// The number of contributed electrons for the atom type of the specified atom type.
+        /// </summary>
+        /// <param name="atom">an atom to get the contribution of</param>
+        /// <returns>the number of electrons</returns>
         private static int ElectronsForAtomType(IAtom atom)
         {
             int electrons;
@@ -181,13 +170,11 @@ namespace NCDK.Aromaticities
             }
         }
 
-        /**
-        /// Access to the number of lone-pairs (specified as a property of the
-        /// atom).
-         *
-        /// @param atom the atom to get the lone pairs from
-        /// @return number of lone pairs
-         */
+        /// <summary>
+        /// Access to the number of lone-pairs (specified as a property of the atom).
+        /// </summary>
+        /// <param name="atom">the atom to get the lone pairs from</param>
+        /// <returns>number of lone pairs</returns>
         private static int LonePairCount(IAtom atom)
         {
             // XXX: LONE_PAIR_COUNT is not currently set!

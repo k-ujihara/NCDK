@@ -22,19 +22,19 @@ using System;
 
 namespace NCDK.QSAR.Descriptors.Atomic
 {
-    /**
-     * This class returns the valence of an atom.
-     * This descriptor does not have any parameters.
-     *
-     * @author      mfe4
-     * @cdk.created 2004-11-13
-     * @cdk.module  qsaratomic
-     * @cdk.githash
-     * @cdk.set     qsar-descriptors
-     * @cdk.dictref qsar-descriptors:atomValence
-     *
-     * @see         org.openscience.cdk.qsar.AtomValenceTool
-     */
+    /// <summary>
+    /// This class returns the valence of an atom.
+    /// This descriptor does not have any parameters.
+    ///
+    // @author      mfe4
+    // @cdk.created 2004-11-13
+    // @cdk.module  qsaratomic
+    // @cdk.githash
+    // @cdk.set     qsar-descriptors
+    // @cdk.dictref qsar-descriptors:atomValence
+    ///
+    // @see         org.openscience.cdk.qsar.AtomValenceTool
+    /// </summary>
     public class AtomValenceDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         /// <summary>

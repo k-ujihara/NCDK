@@ -30,45 +30,51 @@ using System.Diagnostics;
 
 namespace NCDK.Tools.Manipulator
 {
-
-    /**
-     * <p>Compares two IAtomContainers for order with the following criteria with decreasing priority:</p>
-     * <ul>
-     *   <li>Compare atom count
-     *   <li>Compare molecular weight (heavy atoms only)
-     *   <li>Compare bond count
-     *   <li>Compare sum of bond orders (heavy atoms only)
-     * </ul>
-     * <p>If no difference can be found with the above criteria, the IAtomContainers are
-     * considered equal.</p>
-     *
-     * @author Andreas Schueller
-     * @cdk.created  2007-09-05
-     * @cdk.module   standard
-     * @cdk.githash
-     */
+    /// <summary>
+    ///<para> Compares two IAtomContainers for order with the following criteria with decreasing priority:
+    /// <list type="number">
+    ///   <item>Compare atom count</item>
+    ///   <item>Compare molecular weight (heavy atoms only)</item>
+    ///   <item>Compare bond count</item>
+    ///   <item>Compare sum of bond orders (heavy atoms only)</item>
+    /// </list>
+    /// </para>
+    /// <para>If no difference can be found with the above criteria, the IAtomContainers are
+    /// considered equal.</para>
+    /// </summary>
+    // @author Andreas Schueller
+    // @cdk.created  2007-09-05
+    // @cdk.module   standard
+    // @cdk.githash
     public class AtomContainerComparator<T>
         : IComparer<T> 
         where T : IAtomContainer
     {
-
         /// <summary>Creates a new instance of AtomContainerComparator</summary>
         public AtomContainerComparator() { }
 
-        /*
-         * <p>Compares two IAtomContainers for order with the following criteria
-         * with decreasing priority:</p> <ul> <li>Compare atom count <li>Compare
-         * molecular weight (heavy atoms only) <li>Compare bond count <li>Compare
-         * sum of bond orders (heavy atoms only) </ul> <p>If no difference can be
-         * found with the above criteria, the IAtomContainers are considered
-         * equal.</p> <p>Returns a negative integer, zero, or a positive integer as
-         * the first argument is less than, equal to, or greater than the
-         * second.</p> <p>This method is null safe.</p>
-         * @param o1 the first IAtomContainer
-         * @param o2 the second IAtomContainer
-         * @return a negative integer, zero, or a positive integer as the first
-         * argument is less than, equal to, or greater than the second.
-         */
+        /// <summary>
+        /// <para>Compares two IAtomContainers for order with the following criteria
+        /// with decreasing priority:
+        /// <list type="number">
+        /// <item>Compare atom count</item>
+        /// <item>Compare molecular weight (heavy atoms only)</item>
+        /// <item>Compare bond count</item>
+        /// <item>Compare sum of bond orders (heavy atoms only)</item>
+        /// </list> 
+        /// </para>
+        /// <para>If no difference can be
+        /// found with the above criteria, the IAtomContainers are considered
+        /// equal.</para> 
+        /// <para>Returns a negative integer, zero, or a positive integer as
+        /// the first argument is less than, equal to, or greater than the
+        /// second.</para>
+        /// </summary>
+        /// <para>This method is null safe.</para>
+        /// <param name="o1">the first IAtomContainer</param>
+        /// <param name="o2">the second IAtomContainer</param>
+        /// <returns>a negative integer, zero, or a positive integer as the first
+        /// argument is less than, equal to, or greater than the second.</returns>
         public int Compare(T o1, T o2)
         {
             // Check for nulls
@@ -126,14 +132,14 @@ namespace NCDK.Tools.Manipulator
             return 0;
         }
 
-        /**
-         * Returns the molecular weight (exact mass) of the major isotopes
-         * of all heavy atoms of the given IAtomContainer.
-         * @param atomContainer an IAtomContainer to calculate the mocular weight for
-         * @.openscience.cdk.exception.CDKException if an error occurs with the IsotopeFactory
-         * @return the molecularweight (exact mass) of the major isotopes
-         *         of all heavy atoms of the given IAtomContainer
-         */
+        /// <summary>
+        /// Returns the molecular weight (exact mass) of the major isotopes
+        /// of all heavy atoms of the given IAtomContainer.
+        /// </summary>
+        /// <param name="atomContainer">an IAtomContainer to calculate the mocular weight for</param>
+        /// <exception cref="CDKException">if an error occurs with the IsotopeFactory</exception>
+        /// <returns>the molecularweight (exact mass) of the major isotopes
+        ///         of all heavy atoms of the given IAtomContainer</returns>
         private double GetMolecularWeight(T atomContainer)
         {
             double mw = 0.0;

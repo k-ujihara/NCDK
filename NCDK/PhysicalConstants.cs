@@ -18,24 +18,24 @@
  */
 namespace NCDK
 {
-	 /// <summary>
+     /// <summary>
      /// An class providing predefined properties of physical constants.
      /// </summary>
      // @cdk.keyword physical properties
-	 // @cdk.githash
+     // @cdk.githash
     public class PhysicalConstants
     {
-		/// <summary>
+        /// <summary>
         /// Mass of a proton.
         /// </summary>
         public const double MASS_PROTON = 1.6726485E-27;
 
-		 /// <summary>
+         /// <summary>
          /// Mass of an electron.
          /// </summary>
         public const double MASS_ELECTRON = 9.109534E-31;
 
-		 /// <summary>
+         /// <summary>
          /// Factor for the conversion of Bohr's to Angstrom's.
          /// </summary>
         public const double BOHR_TO_ANGSTROM = 0.529177249;

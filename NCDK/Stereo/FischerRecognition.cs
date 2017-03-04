@@ -31,40 +31,37 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
 {
-    /**
-	 * Recognize the configuration of tetrahedral stereocenters depicted as
-	 * Fischer projection. Fischer projection is a convenient means of depicting
-	 * 3D geometry commonly used in depicting carbohydrates. <p/>
-	 * 
-	 * Fischer projection depicts tetrahedral stereocenters as though they were 
-	 * coplanar with the four substituents at cardinal directions (up,right,down, 
-	 * and left). The horizontal bonds (right and left) are interpreted as pointing
-	 * out of the plane towards the viewer; They are not depicted with non-planar
-	 * wedge bonds. <p/>
-	 * 
-	 * This class provides the recognition of Fischer projections. Each asymmetric
-	 * carbon is checked as to whether it's 2D depiction is coplanar with cardinal
-	 * directions. All of these bonds must be planar (i.e. not wedge or hatch) and
-	 * sigma bonds. In a hydrogen suppressed representation, one of the left or 
-	 * right bonds (to the implied hydrogen) may be omitted but can be correctly
-	 * interpreted.
-	 * 
-	 * @author John May
-	 * @cdk.githash
-	 * @see <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer 
-	 *      projection (Wikipedia)</a>
-	 */
-#if TEST
-    public
-#endif
-    sealed class FischerRecognition
+    /// <summary>
+    /// Recognize the configuration of tetrahedral stereocenters depicted as
+    /// Fischer projection. Fischer projection is a convenient means of depicting
+    /// 3D geometry commonly used in depicting carbohydrates. <p/>
+    /// 
+    /// Fischer projection depicts tetrahedral stereocenters as though they were 
+    /// coplanar with the four substituents at cardinal directions (up,right,down, 
+    /// and left). The horizontal bonds (right and left) are interpreted as pointing
+    /// out of the plane towards the viewer; They are not depicted with non-planar
+    /// wedge bonds. <p/>
+    /// 
+    /// This class provides the recognition of Fischer projections. Each asymmetric
+    /// carbon is checked as to whether it's 2D depiction is coplanar with cardinal
+    /// directions. All of these bonds must be planar (i.e. not wedge or hatch) and
+    /// sigma bonds. In a hydrogen suppressed representation, one of the left or 
+    /// right bonds (to the implied hydrogen) may be omitted but can be correctly
+    /// interpreted.
+    /// 
+    // @author John May
+    // @cdk.githash
+    // @see <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer 
+    ///      projection (Wikipedia)</a>
+    /// </summary>
+    internal sealed class FischerRecognition
     {
-        /**
-		 * The threshold at which to snap bonds to the cardinal direction. The
-		 * threshold allows bonds slightly of absolute directions to be interpreted.
-		 * The tested vector is of unit length and so the threshold is simply the
-		 * angle (in radians).
-		 */
+        /// <summary>
+        /// The threshold at which to snap bonds to the cardinal direction. The
+        /// threshold allows bonds slightly of absolute directions to be interpreted.
+        /// The tested vector is of unit length and so the threshold is simply the
+        /// angle (in radians).
+        /// </summary>
         public const double CARDINALITY_THRESHOLD = 5.0 / 180 * Math.PI; // 5 degrees in radians
 
         /// <summary>Cardinal direction, North index.</summary>
@@ -84,14 +81,14 @@ namespace NCDK.Stereo
         private readonly EdgeToBondMap bonds;
         private readonly Stereocenters stereocenters;
 
-        /**
-		 * Required information to recognise stereochemistry.
-		 *
-		 * @param container     input structure
-		 * @param graph         adjacency list representation
-		 * @param bonds         edge to bond index
-		 * @param stereocenters location and type of asymmetries
-		 */
+        /// <summary>
+        /// Required information to recognise stereochemistry.
+        ///
+        /// <param name="container">input structure</param>
+        /// <param name="graph">adjacency list representation</param>
+        /// <param name="bonds">edge to bond index</param>
+        /// <param name="stereocenters">location and type of asymmetries</param>
+        /// </summary>
         public FischerRecognition(IAtomContainer container,
                            int[][] graph,
                            EdgeToBondMap bonds,
@@ -105,12 +102,12 @@ namespace NCDK.Stereo
 
 
 
-        /**
-		 * Recognise the tetrahedral stereochemistry in the provided structure.
-		 *
-		 * @param projections allowed projection types
-		 * @return zero of more stereo elements
-		 */
+        /// <summary>
+        /// Recognise the tetrahedral stereochemistry in the provided structure.
+        ///
+        /// <param name="projections">allowed projection types</param>
+        /// <returns>zero of more stereo elements</returns>
+        /// </summary>
         public IList<IStereoElement> Recognise(ICollection<Projection> projections)
         {
 
@@ -140,7 +137,7 @@ namespace NCDK.Stereo
                     continue;
                 if (ringSearch.Cyclic(v))
                     continue;
-                if (stereocenters.ElementType(v) != Stereocenters.Type.Tetracoordinate)
+                if (stereocenters.ElementType(v) != Stereocenters.CoordinateTypes.Tetracoordinate)
                     continue;
                 if (!stereocenters.IsStereocenter(v))
                     continue;
@@ -167,18 +164,18 @@ namespace NCDK.Stereo
         }
 
 
-        /**
-		 * Create a new tetrahedral stereocenter of the given focus and neighboring
-		 * bonds. This is an internal method and is presumed the atom can support
-		 * tetrahedral stereochemistry and it has three or four explicit neighbors. 
-		 * 
-		 * The stereo element is only created if the local arrangement looks like
-		 * a Fischer projection. 
-		 * 
-		 * @param focus central atom
-		 * @param bonds adjacent bonds
-		 * @return a stereo element, or null if one could not be created
-		 */
+        /// <summary>
+        /// Create a new tetrahedral stereocenter of the given focus and neighboring
+        /// bonds. This is an internal method and is presumed the atom can support
+        /// tetrahedral stereochemistry and it has three or four explicit neighbors. 
+        /// 
+        /// The stereo element is only created if the local arrangement looks like
+        /// a Fischer projection. 
+        /// 
+        /// <param name="focus">central atom</param>
+        /// <param name="bonds">adjacent bonds</param>
+        /// <returns>a stereo element, or null if one could not be created</returns>
+        /// </summary>
         public static ITetrahedralChirality NewTetrahedralCenter(IAtom focus, IBond[] bonds)
         {
 
@@ -228,16 +225,16 @@ namespace NCDK.Stereo
             return new TetrahedralChirality(focus, neighbors, TetrahedralStereo.AntiClockwise);
         }
 
-        /**
-		 * Arrange the bonds adjacent to an atom (focus) in cardinal direction. The
-		 * cardinal directions are that of a compass. Bonds are checked as to
-		 * whether they are horizontal or vertical within a predefined threshold.
-		 *
-		 * @param focus an atom
-		 * @param bonds bonds adjacent to the atom
-		 * @return array of bonds organised (N,E,S,W), or null if a bond was found
-		 * that exceeded the threshold
-		 */
+        /// <summary>
+        /// Arrange the bonds adjacent to an atom (focus) in cardinal direction. The
+        /// cardinal directions are that of a compass. Bonds are checked as to
+        /// whether they are horizontal or vertical within a predefined threshold.
+        ///
+        /// <param name="focus">an atom</param>
+        /// <param name="bonds">bonds adjacent to the atom</param>
+        /// <returns>array of bonds organised (N,E,S,W), or null if a bond was found</returns>
+        /// that exceeded the threshold
+        /// </summary>
         public static IBond[] CardinalBonds(IAtom focus, IBond[] bonds)
         {
 
@@ -281,25 +278,25 @@ namespace NCDK.Stereo
             return cardinal;
         }
 
-        /**
-		 * Is the atom terminal having only one connection.
-		 *
-		 * @param atom        an atom
-		 * @param atomToIndex a map of atoms to index
-		 * @return the atom is terminal
-		 */
+        /// <summary>
+        /// Is the atom terminal having only one connection.
+        ///
+        /// <param name="atom">an atom</param>
+        /// <param name="atomToIndex">a map of atoms to index</param>
+        /// <returns>the atom is terminal</returns>
+        /// </summary>
         private bool IsTerminal(IAtom atom, IDictionary<IAtom, int> atomToIndex)
         {
             return graph[atomToIndex[atom]].Length == 1;
         }
 
-        /**
-		 * Helper method determines if a bond is defined (not null) and whether
-		 * it is a sigma (single) bond with no stereo attribute (wedge/hatch).
-		 * 
-		 * @param bond the bond to test
-		 * @return the bond is a planar sigma bond
-		 */
+        /// <summary>
+        /// Helper method determines if a bond is defined (not null) and whether
+        /// it is a sigma (single) bond with no stereo attribute (wedge/hatch).
+        /// 
+        /// <param name="bond">the bond to test</param>
+        /// <returns>the bond is a planar sigma bond</returns>
+        /// </summary>
         private static bool IsPlanarSigmaBond(IBond bond)
         {
             return bond != null &&
@@ -307,15 +304,15 @@ namespace NCDK.Stereo
                     BondStereo.None.Equals(bond.Stereo);
         }
 
-        /**
-		 * Helper method to obtain the neighbouring bonds from an adjacency list
-		 * graph and edge->bond map.
-		 *
-		 * @param v       vertex
-		 * @param g       graph (adj list)
-		 * @param bondMap map of edges to bonds
-		 * @return neighboring bonds
-		 */
+        /// <summary>
+        /// Helper method to obtain the neighbouring bonds from an adjacency list
+        /// graph and edge->bond map.
+        ///
+        /// <param name="v">vertex</param>
+        /// <param name="g">graph (adj list)</param>
+        /// <param name="bondMap">map of edges to bonds</param>
+        /// <returns>neighboring bonds</returns>
+        /// </summary>
         private static IBond[] Neighbors(int v, int[][] g, EdgeToBondMap bondMap)
         {
             int[] ws = g[v];

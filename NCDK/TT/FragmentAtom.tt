@@ -13,13 +13,13 @@ namespace <#= ns.NS #>
     public class FragmentAtom 
         : PseudoAtom, IFragmentAtom
     {
-		public FragmentAtom()
+        public FragmentAtom()
         {
             Fragment = Builder.CreateAtomContainer();
-		}
+        }
 
-		public virtual bool IsExpanded { get; set; }
-		public virtual IAtomContainer Fragment { get; set; }
+        public virtual bool IsExpanded { get; set; }
+        public virtual IAtomContainer Fragment { get; set; }
 
         public override double? ExactMass
         {

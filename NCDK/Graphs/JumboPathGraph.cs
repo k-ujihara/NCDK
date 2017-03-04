@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2013 European Bioinformatics Institute (EMBL-EBI)
- * 			  John May <jwmay@users.sf.net>
+ *               John May <jwmay@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -23,31 +23,27 @@
  */
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections;
 using NCDK.Common.Collections;
 
 namespace NCDK.Graphs
 {
-    /**
-	 * A Path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the
-	 * P-Graph provides efficient generation of all simple cycles in a graph
-	 * {@cdk.cite HAN96}. Vertices are sequentially Removed from the graph by
-	 * reducing incident edges and forming new 'Path edges'. The order in which the
-	 * vertices are to be Removed should be pre-defined in the constructor as the
-	 * {@code rank[]} parameter.
-	 *
-	 * @author John May
-	 * @author Till Schäfer (predefined vertex ordering)
-	 * @cdk.module core
-	 * @cdk.githash
-	 * @see org.openscience.cdk.ringsearch.RingSearch
-	 * @see org.openscience.cdk.graph.GraphUtil
-	 * @see <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia:
-	 *      Biconnected Component</a>
-	 */
+    /// <summary>
+    /// A Path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the
+    /// P-Graph provides efficient generation of all simple cycles in a graph
+    /// {@cdk.cite HAN96}. Vertices are sequentially Removed from the graph by
+    /// reducing incident edges and forming new 'Path edges'. The order in which the
+    /// vertices are to be Removed should be pre-defined in the constructor as the
+    /// <see cref="rank[]"/> parameter.
+    /// <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</a>
+    /// </summary>
+    /// <seealso cref="GraphUtil"/>
+    /// <seealso cref="RingSearches.RingSearch"/>
+    // @author John May
+    // @author Till Schäfer (predefined vertex ordering)
+    // @cdk.module core
+    // @cdk.githash
     sealed class JumboPathGraph
         : PathGraph
     {
@@ -62,20 +58,14 @@ namespace NCDK.Graphs
         /// <summary>Indicates when each vertex will be Removed, '0' = first, '|V|' = last.</summary>
         private readonly int[] rank;
 
-        /**
-		 * Create a regular Path graph (<b>P-Graph</b>) for the given molecule graph
-		 * (<b>M-Graph</b>).
-		 *
-		 * @param mGraph The molecule graph (M-Graph) in adjacency list
-		 *               representation.
-		 * @param rank   Unique rank of each vertex - indicates when it will be
-		 *               Removed.
-		 * @param limit  Limit for size of cycles found, to find all cycles specify
-		 *               the limit as the number of vertices in the graph.
-		 * @ limit was invalid or the graph was too
-		 *                                  large
-		 * @     the molecule graph was not provided
-		 */
+        /// <summary>
+        /// Create a regular Path graph (<b>P-Graph</b>) for the given molecule graph (<b>M-Graph</b>).
+        /// </summary>
+        /// <param name="mGraph">The molecule graph (M-Graph) in adjacency list representation.</param>
+        /// <param name="rank">Unique rank of each vertex - indicates when it will be removed.</param>
+        /// <param name="limit">Limit for size of cycles found, to find all cycles specify the limit as the number of vertices in the graph.</param>
+        /// <exception cref="ArgumentOutOfRangeException">limit was invalid or the graph was too large</exception>
+        /// <exception cref="ArgumentNullException">the molecule graph was not provided</exception>
         public JumboPathGraph(int[][] mGraph, int[] rank, int limit)
         {
             if (mGraph == null)
@@ -108,12 +98,11 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * Add a Path-edge to the Path-graph. Edges are only Added to the vertex of
-		 * lowest rank (see. constructor).
-		 *
-		 * @param edge Path edge
-		 */
+        /// <summary>
+        /// Add a Path-edge to the Path-graph. Edges are only Added to the vertex of
+        /// lowest rank (see. constructor).
+        /// </summary>
+        /// <param name="edge">Path edge</param>
         private void Add(PathEdge edge)
         {
             int u = edge.Either();
@@ -130,13 +119,11 @@ namespace NCDK.Graphs
             return graph[x].Count;
         }
 
-        /**
-		 * Access edges which are incident to <i>x</i> and Remove them from the
-		 * graph.
-		 *
-		 * @param x a vertex
-		 * @return vertices incident to x
-		 */
+        /// <summary>
+        /// Access edges which are incident to <i>x</i> and Remove them from the graph.
+        /// </summary>
+        /// <param name="x">a vertex</param>
+        /// <returns>vertices incident to x</returns>
         private List<PathEdge> Remove(int x)
         {
             List<PathEdge> edges = graph[x];
@@ -144,14 +131,12 @@ namespace NCDK.Graphs
             return edges;
         }
 
-        /**
-		 * Pairwise combination of all Disjoint <i>edges</i> incident to a vertex
-		 * <i>x</i>.
-		 *
-		 * @param edges edges which are currently incident to <i>x</i>
-		 * @param x     a vertex in the graph
-		 * @return reduced edges
-		 */
+        /// <summary>
+        /// Pairwise combination of all Disjoint <i>edges</i> incident to a vertex <paramref name="x"/>.
+        /// </summary>
+        /// <param name="edges">edges which are currently incident to <i>x</i></param>
+        /// <param name="x">a vertex in the graph</param>
+        /// <returns>reduced edges</returns>
         private List<PathEdge> Combine(List<PathEdge> edges, int x)
         {
             int n = edges.Count;
@@ -171,7 +156,7 @@ namespace NCDK.Graphs
         }
 
         /// <inheritdoc/>
-        public override void Remove(int x, List<int[]> cycles)
+        public override void Remove(int x, IList<int[]> cycles)
         {
             List<PathEdge> edges = Remove(x);
             List<PathEdge> reduced = Combine(edges, x);
@@ -188,10 +173,10 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-         * An abstract Path edge. A Path edge has two end points and 0 or more
-         * reduced vertices which represent a Path between those endpoints.
-         */
+        /// <summary>
+        /// An abstract Path edge. A Path edge has two end points and 0 or more
+        /// reduced vertices which represent a Path between those endpoints.
+        /// </summary>
         public abstract class PathEdge
         {
             /// <summary>Endpoints of the edge.</summary>
@@ -200,14 +185,13 @@ namespace NCDK.Graphs
             /// <summary>Bits indicate reduced vertices between endpoints (exclusive).</summary>
             public BitArray xs;
 
-            /**
-             * A new edge specified by two endpoints and a bit set indicating which
-             * vertices have been reduced.
-             *
-             * @param u  an endpoint
-             * @param v  the Other endpoint
-             * @param xs reduced vertices between endpoints
-             */
+            /// <summary>
+            /// A new edge specified by two endpoints and a bit set indicating which
+            /// vertices have been reduced.
+            /// </summary>
+            /// <param name="u">an endpoint</param>
+            /// <param name="v">the Other endpoint</param>
+            /// <param name="xs">reduced vertices between endpoints</param>
             public PathEdge(int u, int v, BitArray xs)
             {
                 this.u = u;
@@ -215,69 +199,62 @@ namespace NCDK.Graphs
                 this.xs = xs;
             }
 
-            /**
-             * Check if the edges are disjoint with respect to their reduced
-             * vertices. That is, excluding the endpoints, no reduced vertices are
-             * shared.
-             *
-             * @param other another edge
-             * @return the edges reduced vertices are disjoint.
-             */
+            /// <summary>
+            /// Check if the edges are disjoint with respect to their reduced
+            /// vertices. That is, excluding the endpoints, no reduced vertices are
+            /// shared.
+            /// </summary>
+            /// <param name="other">another edge</param>
+            /// <returns>the edges reduced vertices are disjoint.</returns>
             public bool Disjoint(PathEdge other)
             {
                 return !BitArrays.Intersects(this.xs, other.xs);
            }
 
-            /**
-             * Is the edge a loop and connects a vertex to its self.
-             *
-             * @return whether the edge is a loop
-             */
+            /// <summary>
+            /// Is the edge a loop and connects a vertex to its self.
+            /// </summary>
+            /// <returns>whether the edge is a loop</returns>
             public bool IsLoop => u == v;
 
-            /**
-             * Access either endpoint of the edge.
-             *
-             * @return Either endpoint.
-             */
+            /// <summary>
+            /// Access either endpoint of the edge.
+            /// </summary>
+            /// <returns>Either endpoint.</returns>
             public int Either()
             {
                 return u;
             }
 
-            /**
-             * Given one endpoint, retrieve the other endpoint.
-             *
-             * @param x an endpoint
-             * @return the other endpoint.
-             */
+            /// <summary>
+            /// Given one endpoint, retrieve the other endpoint.
+            /// </summary>
+            /// <param name="x">an endpoint</param>
+            /// <returns>the other endpoint.</returns>
             public int Other(int x)
             {
                 return u == x ? v : u;
             }
 
-            /**
-			 * Total Length of the Path formed by this edge. The value includes
-			 * endpoints and reduced vertices.
-			 *
-			 * @return Length of Path
-			 */
+            /// <summary>
+            /// Total Length of the Path formed by this edge. The value includes
+            /// endpoints and reduced vertices.
+            /// </summary>
+            /// <returns>Length of Path</returns>
             public abstract int Len();
 
-            /**
-			 * Reconstruct the Path through the edge by appending vertices to a
-			 * mutable {@link ArrayBuilder}.
-			 *
-			 * @param ab array builder to append vertices to
-			 * @return the array builder parameter for convenience
-			 */
+            /// <summary>
+            /// Reconstruct the Path through the edge by appending vertices to a
+            /// mutable <see cref="ArrayBuilder"/>.
+            /// </summary>
+            /// <param name="ab">array builder to append vertices to</param>
+            /// <returns>the array builder parameter for convenience</returns>
             public abstract ArrayBuilder Reconstruct(ArrayBuilder ab);
 
-            /**
-             * The Path stored by the edge as a fixed size array of vertices.
-             *
-             * @return fixed size array of vertices which are in the Path.
-             */
+            /// <summary>
+            /// The Path stored by the edge as a fixed size array of vertices.
+            /// </summary>
+            /// <returns>fixed size array of vertices which are in the Path.</returns>
             public int[] Path()
             {
                 return Reconstruct(new ArrayBuilder(Len()).Append(Either())).xs;
@@ -289,12 +266,11 @@ namespace NCDK.Graphs
             : PathEdge
         {
 
-            /**
-			 * A new simple edge, with two endpoints.
-			 *
-			 * @param u an endpoint
-			 * @param v anOther endpoint
-			 */
+            /// <summary>
+            /// A new simple edge, with two endpoints.
+            /// </summary>
+            /// <param name="u">an endpoint</param>
+            /// <param name="v">anOther endpoint</param>
             public SimpleEdge(int u, int v, int size)
                 : base(u, v, new BitArray(size)) // fixed CDK's bug. EMPTY_SET is not value type.
             {
@@ -313,24 +289,23 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * A reduced edge, made from two existing Path edges and an endpoint they
-		 * have in common.
-		 */
+        /// <summary>
+        /// A reduced edge, made from two existing Path edges and an endpoint they
+        /// have in common.
+        /// </summary>
         public sealed class ReducedEdge
             : PathEdge
         {
             /// <summary>Reduced edges.</summary>
             private readonly PathEdge e, f;
 
-            /**
-			 * Create a new reduced edge from two existing edges and vertex they
-			 * have in common.
-			 *
-			 * @param e an edge
-			 * @param f anOther edge
-			 * @param x a common vertex
-			 */
+            /// <summary>
+            /// Create a new reduced edge from two existing edges and vertex they
+            /// have in common.
+            /// </summary>
+            /// <param name="e">an edge</param>
+            /// <param name="f">anOther edge</param>
+            /// <param name="x">a common vertex</param>
             public ReducedEdge(PathEdge e, PathEdge f, int x)
                 : base(e.Other(x), f.Other(x), Union(e.xs, f.xs, x))
             {
@@ -363,42 +338,39 @@ namespace NCDK.Graphs
             }
         }
 
-        /**
-		 * A simple helper class for constructing a fixed size int[] array and
-		 * sequentially appending vertices.
-		 */
+        /// <summary>
+        /// A simple helper class for constructing a fixed size int[] array and
+        /// sequentially appending vertices.
+        /// </summary>
         public class ArrayBuilder
         {
             private int i = 0;
             public readonly int[] xs;
 
-            /**
-             * A new array builder of fixed size.
-             *
-             * @param n size of the array
-             */
+            /// <summary>
+            /// A new array builder of fixed size.
+            /// </summary>
+            /// <param name="n">size of the array</param>
             public ArrayBuilder(int n)
             {
                 xs = new int[n];
             }
 
-            /**
-             * Append a value to the end of the sequence.
-             *
-             * @param x a new value
-             * @return self-reference for chaining
-             */
+            /// <summary>
+            /// Append a value to the end of the sequence.
+            /// </summary>
+            /// <param name="x">a new value</param>
+            /// <returns>self-reference for chaining</returns>
             public ArrayBuilder Append(int x)
             {
                 xs[i++] = x;
                 return this;
             }
 
-            /**
-             * Previously value in the sequence.
-             *
-             * @return previous value
-             */
+            /// <summary>
+            /// Previously value in the sequence.
+            /// </summary>
+            /// <returns>previous value</returns>
             public int Prev()
             {
                 return xs[i - 1];

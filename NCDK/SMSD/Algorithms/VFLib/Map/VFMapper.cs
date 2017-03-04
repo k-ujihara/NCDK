@@ -57,14 +57,14 @@ using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Map
 {
-    /**
-     * This class finds MCS between query and target molecules
-     * using VF2 algorithm.
-     *
-     * @cdk.module smsd
-     * @cdk.githash
-     * @author Syed Asad Rahman <asad@ebi.ac.uk>
-     */
+    /// <summary>
+    /// This class finds MCS between query and target molecules
+    /// using VF2 algorithm.
+    ///
+    // @cdk.module smsd
+    // @cdk.githash
+    // @author Syed Asad Rahman <asad@ebi.ac.uk>
+    /// </summary>
     public class VFMapper : IMapper
     {
 
@@ -73,24 +73,24 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         private int currentMCSSize = -1;
         private static TimeManager timeManager = null;
 
-        /**
-         * @return the timeout
-         */
+        /// <summary>
+        /// <returns>the timeout</returns>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static double GetTimeOut() => TimeOut.Instance.Time;
 
-        /**
-         * @return the timeManager
-         */
+        /// <summary>
+        /// <returns>the timeManager</returns>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static TimeManager GetTimeManager()
         {
             return timeManager;
         }
 
-        /**
-         * @param aTimeManager the timeManager to set
-         */
+        /// <summary>
+        /// <param name="aTimeManager">the timeManager to set</param>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static void SetTimeManager(TimeManager aTimeManager)
         {
@@ -98,10 +98,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             timeManager = aTimeManager;
         }
 
-        /**
-         *
-         * @param query
-         */
+        /// <summary>
+        ///
+        /// <param name="query">/// </summary></param>
         public VFMapper(IQuery query)
         {
             SetTimeManager(new TimeManager());
@@ -109,11 +108,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.maps = new List<IDictionary<INode, IAtom>>();
         }
 
-        /**
-         *
-         * @param queryMolecule
-         * @param bondMatcher
-         */
+        /// <summary>
+        ///
+        /// <param name="queryMolecule">/// @param bondMatcher</param>
+        /// </summary>
         public VFMapper(IAtomContainer queryMolecule, bool bondMatcher)
         {
             SetTimeManager(new TimeManager());
@@ -121,9 +119,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.maps = new List<IDictionary<INode, IAtom>>();
         }
 
-        /** {@inheritDoc}
-         * @param targetMolecule targetMolecule graph
-         */
+        /// <summary> {@inheritDoc}
+        /// <param name="targetMolecule">targetMolecule graph</param>
+        /// </summary>
         public bool HasMap(IAtomContainer targetMolecule)
         {
             IState state = new VFState(query, new TargetProperties(targetMolecule));
@@ -155,9 +153,9 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return maps.Count;
         }
 
-        /** {@inheritDoc}
-         * @param targetMolecule targetMolecule graph
-         */
+        /// <summary> {@inheritDoc}
+        /// <param name="targetMolecule">targetMolecule graph</param>
+        /// </summary>
         public bool HasMap(TargetProperties targetMolecule)
         {
             IState state = new VFState(query, targetMolecule);
