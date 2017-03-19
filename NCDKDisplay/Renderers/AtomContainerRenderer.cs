@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2009  Gilleain Torrance <gilleain.torrance@gmail.com>
+Ôªø/*  Copyright (C) 2008-2009  Gilleain Torrance <gilleain.torrance@gmail.com>
  *                2008-2009  Arvid Berg <goglepox@users.sf.net>
  *                2009-2010  Egon Willighagen <egonw@users.sf.net>
  *
@@ -23,7 +23,7 @@ using NCDK.Numerics;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,7 +86,7 @@ namespace NCDK.Renderers
     /// </para>
     /// <para>
     /// So, if the bond length on screen is set to 40, and the average bond length
-    /// of the model is 2 (unitless, but roughly Ångstrom scale) then the
+    /// of the model is 2 (unitless, but roughly √Öngstrom scale) then the
     /// scale will be 20. If the model is 10 units wide, then the diagram drawn at
     /// 100% zoom will be 10 * 20 = 200 in width on screen. If the screen is 400
     /// pixels wide, then fitting it to the screen will make the zoom 200%. Since the
@@ -183,7 +183,7 @@ namespace NCDK.Renderers
         /// </summary>
         /// <param name="container">a chemical structure with no bonds at at least 2 atoms</param>
         /// <returns>the estimated bond length</returns>
-        /// <exception cref="IllegalArgumentException">the structure had a bond or less than two atoms</exception>
+        /// <exception cref="ArgumentException">the structure had a bond or less than two atoms</exception>
         private static double EstimatedBondLength(IAtomContainer container)
         {
             if (container.Bonds.Count > 0)

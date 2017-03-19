@@ -33,7 +33,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace NCDK.Fingerprint {
+namespace NCDK.Fingerprint
+{
     /// <summary>
     /// This fingerprinter generates 166 bit MACCS keys.
     /// </summary>
@@ -70,30 +71,38 @@ namespace NCDK.Fingerprint {
     {
         private const string KEY_DEFINITIONS = "Data.maccs.txt";
 
-        private volatile IList<MaccsKey> keys            = null;
+        private volatile IList<MaccsKey> keys = null;
 
-        public MACCSFingerprinter() {}
+        public MACCSFingerprinter() { }
 
-        public MACCSFingerprinter(IChemObjectBuilder builder) {
-            try {
+        public MACCSFingerprinter(IChemObjectBuilder builder)
+        {
+            try
+            {
                 keys = ReadKeyDef(builder);
-            } catch (IOException e) {
+            }
+            catch (IOException e)
+            {
                 Debug.WriteLine(e);
-            } catch (CDKException e) {
+            }
+            catch (CDKException e)
+            {
                 Debug.WriteLine(e);
             }
         }
 
         /// <inheritdoc/>
-    
-        public IBitFingerprint GetBitFingerprint(IAtomContainer container)  {
+
+        public IBitFingerprint GetBitFingerprint(IAtomContainer container)
+        {
             IList<MaccsKey> keys = GetKeys(container.Builder);
             BitArray fp = new BitArray(keys.Count);
 
             // init SMARTS invariants (connectivity, degree, etc)
             SmartsMatchers.Prepare(container, false);
 
-            for (int i = 0; i < keys.Count; i++) {
+            for (int i = 0; i < keys.Count; i++)
+            {
                 Pattern pattern = keys[i].Pattern;
                 if (pattern == null) continue;
 
@@ -110,12 +119,16 @@ namespace NCDK.Fingerprint {
             AllRingsFinder ringFinder = new AllRingsFinder();
             IRingSet rings = ringFinder.FindAllRings(container);
             int ringCount = 0;
-            for (int i = 0; i < rings.Count; i++) {
+            for (int i = 0; i < rings.Count; i++)
+            {
                 IAtomContainer ring = rings[i];
                 bool allAromatic = true;
-                if (ringCount < 2) { // already found enough aromatic rings
-                    foreach (var bond in ring.Bonds) {
-                        if (!bond.IsAromatic) {
+                if (ringCount < 2)
+                { // already found enough aromatic rings
+                    foreach (var bond in ring.Bonds)
+                    {
+                        if (!bond.IsAromatic)
+                        {
                             allAromatic = false;
                             break;
                         }
@@ -135,13 +148,14 @@ namespace NCDK.Fingerprint {
         }
 
         /// <inheritdoc/>
-    
-        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)  {
+
+        public IDictionary<string, int> GetRawFingerprint(IAtomContainer iAtomContainer)
+        {
             throw new NotSupportedException();
         }
 
         /// <inheritdoc/>
-    
+
         public int Count
         {
             get
@@ -160,24 +174,27 @@ namespace NCDK.Fingerprint {
 
             // now process the keys
             string line;
-            while ((line = reader.ReadLine()) != null) {
+            while ((line = reader.ReadLine()) != null)
+            {
                 if (line[0] == '#') continue;
                 string data = line.Substring(0, line.IndexOf('|')).Trim();
                 var toks = Strings.Tokenize(data);
-                
+
                 keys.Add(new MaccsKey(toks[1], CreatePattern(toks[1], builder), int.Parse(toks[2])));
             }
             if (keys.Count != 166) throw new CDKException("Found " + keys.Count + " keys during setup. Should be 166");
             return keys;
         }
 
-        private class MaccsKey {
+        private class MaccsKey
+        {
 
             private string smarts;
             private int count;
             private Pattern pattern;
 
-            public MaccsKey(string smarts, Pattern pattern, int count) {
+            public MaccsKey(string smarts, Pattern pattern, int count)
+            {
                 this.smarts = smarts;
                 this.pattern = pattern;
                 this.count = count;
@@ -192,8 +209,9 @@ namespace NCDK.Fingerprint {
 
 
         /// <inheritdoc/>
-    
-        public ICountFingerprint GetCountFingerprint(IAtomContainer container)  {
+
+        public ICountFingerprint GetCountFingerprint(IAtomContainer container)
+        {
             throw new NotSupportedException();
         }
 
@@ -201,19 +219,25 @@ namespace NCDK.Fingerprint {
 
         /// <summary>
         /// Access MACCS keys definitions.
-        ///
-        /// <returns>array of MACCS keys.</returns>
-        // @ maccs keys could not be loaded
         /// </summary>
-        private IList<MaccsKey> GetKeys(IChemObjectBuilder builder)  {
+        /// <returns>array of MACCS keys.</returns>
+        /// <exception cref="CDKException">maccs keys could not be loaded</exception>
+        private IList<MaccsKey> GetKeys(IChemObjectBuilder builder)
+        {
             var result = keys;
-            if (result == null) {
-                lock (syncLock) {
+            if (result == null)
+            {
+                lock (syncLock)
+                {
                     result = keys;
-                    if (result == null) {
-                        try {
+                    if (result == null)
+                    {
+                        try
+                        {
                             keys = result = ReadKeyDef(builder);
-                        } catch (IOException e) {
+                        }
+                        catch (IOException e)
+                        {
                             throw new CDKException("could not read MACCS definitions", e);
                         }
                     }

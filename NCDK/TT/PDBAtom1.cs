@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -51,19 +36,16 @@ namespace NCDK.Default
     /// <summary>
     /// Represents the idea of an atom as used in PDB files. It contains extra fields
     /// normally associated with atoms in such files.
-    ///
+    /// </summary>
     // @cdk.module data
     // @cdk.githash
-    ///
     // @see  Atom
-    /// </summary>
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {
         /// <summary>
         /// Constructs an IPDBAtom from a Element.
-        ///
-        /// <param name="element">IElement to copy information from</param>
         /// </summary>
+        /// <param name="element">IElement to copy information from</param>
         public PDBAtom(IElement element)
             : base(element)
         {
@@ -72,9 +54,8 @@ namespace NCDK.Default
 
         /// <summary>
         /// Constructs an <see cref="IPDBAtom"/> from a string containing an element symbol.
-        ///
-        /// <param name="symbol">The string describing the element for the PDBAtom</param>
         /// </summary>
+        /// <param name="symbol">The string describing the element for the PDBAtom</param>
         public PDBAtom(string symbol)
             : base(symbol)
         {
@@ -83,10 +64,9 @@ namespace NCDK.Default
 
         /// <summary>
         /// Constructs an <see cref="IPDBAtom"/> from an Element and a Vector3.
-        ///
+        /// </summary>
         /// <param name="symbol">The symbol of the atom</param>
         /// <param name="coordinate">The 3D coordinates of the atom</param>
-        /// </summary>
         public PDBAtom(string symbol, Vector3 coordinate)
             : base(symbol, coordinate)
         {
@@ -117,9 +97,8 @@ namespace NCDK.Default
         /// <summary>
         /// one entire line from the PDB entry file which describe the IPDBAtom.
         /// It consists of 80 columns.
-        ///
-        /// <returns>a string with all information</returns>
         /// </summary>
+        /// <returns>a string with all information</returns>
         public virtual string Record { get; set; }
 
         /// <summary>
@@ -181,9 +160,8 @@ namespace NCDK.Default
         /// <summary>
         /// Returns a one line string representation of this Atom.
         /// Methods is conform RFC #9.
-        ///
-        /// <returns>The string representation of this Atom</returns>
         /// </summary>
+        /// <returns>The string representation of this Atom</returns>
         public override string ToString()
         {
             StringBuilder description = new StringBuilder(150);
@@ -211,19 +189,16 @@ namespace NCDK.Silent
     /// <summary>
     /// Represents the idea of an atom as used in PDB files. It contains extra fields
     /// normally associated with atoms in such files.
-    ///
+    /// </summary>
     // @cdk.module data
     // @cdk.githash
-    ///
     // @see  Atom
-    /// </summary>
     public class PDBAtom : Atom, ICloneable, IPDBAtom
     {
         /// <summary>
         /// Constructs an IPDBAtom from a Element.
-        ///
-        /// <param name="element">IElement to copy information from</param>
         /// </summary>
+        /// <param name="element">IElement to copy information from</param>
         public PDBAtom(IElement element)
             : base(element)
         {
@@ -232,9 +207,8 @@ namespace NCDK.Silent
 
         /// <summary>
         /// Constructs an <see cref="IPDBAtom"/> from a string containing an element symbol.
-        ///
-        /// <param name="symbol">The string describing the element for the PDBAtom</param>
         /// </summary>
+        /// <param name="symbol">The string describing the element for the PDBAtom</param>
         public PDBAtom(string symbol)
             : base(symbol)
         {
@@ -243,10 +217,9 @@ namespace NCDK.Silent
 
         /// <summary>
         /// Constructs an <see cref="IPDBAtom"/> from an Element and a Vector3.
-        ///
+        /// </summary>
         /// <param name="symbol">The symbol of the atom</param>
         /// <param name="coordinate">The 3D coordinates of the atom</param>
-        /// </summary>
         public PDBAtom(string symbol, Vector3 coordinate)
             : base(symbol, coordinate)
         {
@@ -277,9 +250,8 @@ namespace NCDK.Silent
         /// <summary>
         /// one entire line from the PDB entry file which describe the IPDBAtom.
         /// It consists of 80 columns.
-        ///
-        /// <returns>a string with all information</returns>
         /// </summary>
+        /// <returns>a string with all information</returns>
         public virtual string Record { get; set; }
 
         /// <summary>
@@ -341,9 +313,8 @@ namespace NCDK.Silent
         /// <summary>
         /// Returns a one line string representation of this Atom.
         /// Methods is conform RFC #9.
-        ///
-        /// <returns>The string representation of this Atom</returns>
         /// </summary>
+        /// <returns>The string representation of this Atom</returns>
         public override string ToString()
         {
             StringBuilder description = new StringBuilder(150);

@@ -20,17 +20,14 @@ namespace NCDK.Smiles.SMARTS.Parser
 
     /// <summary>
     /// An AST node. It represents one type of atomic primitive notation in smarts.
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
-    public
-    class ASTPrimitiveAtomExpression : SimpleNode
+    public class ASTPrimitiveAtomExpression : SimpleNode
     {
-
         /// <summary>
         /// Creates a new instance.
         /// </summary>

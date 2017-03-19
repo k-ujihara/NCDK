@@ -33,24 +33,21 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads an object from XYZ formated input.
-    ///
-    /// <p>This class is based on Dan Gezelter's XYZReader from Jmol
-    ///
+    /// 
+    /// <para>This class is based on Dan Gezelter's XYZReader from Jmol</para>
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, XYZ
-    /// </summary>
     public class XYZReader : DefaultChemObjectReader
     {
         private TextReader input;
 
         /// <summary>
         /// Construct a new reader from a Reader type object.
-        ///
-        /// <param name="input">reader from which input is read</param>
         /// </summary>
+        /// <param name="input">reader from which input is read</param>
         public XYZReader(TextReader input)
         {
             this.input = input;
@@ -84,12 +81,10 @@ namespace NCDK.IO
 
         /// <summary>
         /// reads the content from a XYZ input. It can only return a
-        /// IChemObject of type ChemFile
-        ///
-        /// <param name="object">class must be of type ChemFile</param>
-        ///
-        /// <seealso cref="IChemFile"/>
+        /// <see cref="IChemObject"/>  of type <see cref="IChemFile"/> 
         /// </summary>
+        /// <param name="obj">class must be of type ChemFile</param>
+        /// <seealso cref="IChemFile"/>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -105,11 +100,9 @@ namespace NCDK.IO
         // private procedures
 
         /// <summary>
-        ///  Private method that actually parses the input to read a ChemFile
-        ///  object.
-        ///
-        /// <returns>A ChemFile containing the data parsed from input.</returns>
+        ///  Private method that actually parses the input to read a <see cref="IChemFile"/>  object.
         /// </summary>
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IChemFile ReadChemFile(IChemFile file)
         {
             IChemSequence chemSequence = file.Builder.CreateChemSequence();
@@ -130,7 +123,7 @@ namespace NCDK.IO
                     var setOfMolecules = file.Builder.CreateAtomContainerSet();
 
                     IAtomContainer m = file.Builder.CreateAtomContainer();
-                    m.SetProperty(CDKPropertyName.TITLE, info);
+                    m.SetProperty(CDKPropertyName.Title, info);
 
                     for (int i = 0; i < number_of_atoms; i++)
                     {
@@ -138,9 +131,9 @@ namespace NCDK.IO
                         if (line == null) break;
                         if (line.StartsWith("#") && line.Length > 1)
                         {
-                            var comment = m.GetProperty(CDKPropertyName.COMMENT, "");
+                            var comment = m.GetProperty(CDKPropertyName.Comment, "");
                             comment = comment + line.Substring(1).Trim();
-                            m.SetProperty(CDKPropertyName.COMMENT, comment);
+                            m.SetProperty(CDKPropertyName.Comment, comment);
                             Debug.WriteLine("Found and set comment: ", comment);
                             i--; // a comment line does not count as an atom
                         }

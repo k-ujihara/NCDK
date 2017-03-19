@@ -26,15 +26,13 @@ namespace NCDK.Tools
     /// <summary>
     /// Provides methods for checking whether an atoms lone pair electrons are saturated
     /// with respect to a particular atom type.
-    ///
+    /// </summary>
     // @author         Miguel Rojas
     // @cdk.githash
     // @cdk.created    2006-04-01
-    ///
     // @cdk.keyword    saturation
     // @cdk.keyword    atom, valency
     // @cdk.module     standard
-    /// </summary>
     public class LonePairElectronChecker
     {
         private static AtomTypeFactory factory;
@@ -73,14 +71,13 @@ namespace NCDK.Tools
         /// <summary>
         /// Checks if an Atom is saturated their lone pair electrons
         /// by comparing it with known AtomTypes.
-        ///
-        /// <returns>True, if it's right saturated</returns>
         /// </summary>
+        /// <returns>True, if it's right saturated</returns>
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
             CreateAtomTypeFactory(ac.Builder);
             IAtomType atomType = factory.GetAtomType(atom.AtomTypeName);
-            int lpCount = atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT);
+            int lpCount = atomType.GetProperty<int>(CDKPropertyName.LonePairCount);
             int foundLPCount = ac.GetConnectedLonePairs(atom).Count();
             return foundLPCount >= lpCount;
         }
@@ -108,13 +105,13 @@ namespace NCDK.Tools
         {
             Trace.TraceInformation("Saturating atom by adjusting lone pair electrons...");
             IAtomType atomType = factory.GetAtomType(atom.AtomTypeName);
-            int lpCount = atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT);
+            int lpCount = atomType.GetProperty<int>(CDKPropertyName.LonePairCount);
             int missingLPs = lpCount - ac.GetConnectedLonePairs(atom).Count();
 
             for (int j = 0; j < missingLPs; j++)
             {
                 ILonePair lp = atom.Builder.CreateLonePair(atom);
-                ac.Add(lp);
+                ac.LonePairs.Add(lp);
             }
         }
     }

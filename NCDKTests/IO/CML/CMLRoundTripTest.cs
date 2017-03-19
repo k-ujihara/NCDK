@@ -468,12 +468,12 @@ namespace NCDK.IO.CML {
         {
             IAtomContainer mol = new AtomContainer();
             string inchi = "InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)";
-            mol.SetProperty(CDKPropertyName.INCHI, inchi);
+            mol.SetProperty(CDKPropertyName.InChI, inchi);
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
             Assert.IsNotNull(roundTrippedMol);
 
-            Assert.AreEqual(inchi, roundTrippedMol.GetProperty<string>(CDKPropertyName.INCHI));
+            Assert.AreEqual(inchi, roundTrippedMol.GetProperty<string>(CDKPropertyName.InChI));
         }
 
         [TestMethod()]
@@ -482,7 +482,7 @@ namespace NCDK.IO.CML {
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom("C");
             mol.Atoms.Add(atom);
-            mol.Add(new SingleElectron(atom));
+            mol.SingleElectrons.Add(new SingleElectron(atom));
 
             IAtomContainer roundTrippedMol = CMLRoundTripTool.RoundTripMolecule(convertor, mol);
 

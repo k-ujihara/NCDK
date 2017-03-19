@@ -36,15 +36,15 @@ namespace NCDK.IO
         private ReaderFactory factory = new ReaderFactory();
 
         [TestMethod()]
-        public void TestINChI()
+        public void TestInChI()
         {
-            ExpectReader("NCDK.Data.InChI.guanine.inchi.xml", INChIFormat.Instance, -1, -1);
+            ExpectReader("NCDK.Data.InChI.guanine.inchi.xml", InChIFormat.Instance, -1, -1);
         }
 
         [TestMethod()]
-        public void TestINChIPlainText()
+        public void TestInChIPlainText()
         {
-            ExpectReader("NCDK.Data.InChI.guanine.inchi", INChIPlainTextFormat.Instance, -1, -1);
+            ExpectReader("NCDK.Data.InChI.guanine.inchi", InChIPlainTextFormat.Instance, -1, -1);
         }
 
         [TestMethod()]

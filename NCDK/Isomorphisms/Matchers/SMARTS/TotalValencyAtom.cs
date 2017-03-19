@@ -21,14 +21,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <summary>
     /// This matcher checks the valence of the Atom. The valence is the number of
     /// bonds formed by an atom (including bonds to implicit hydrogens).
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
-    /// </summary>
     public sealed class TotalValencyAtom : SMARTSAtom
     {
-
         /// <summary>
         /// The valence to match.
         /// </summary>
@@ -36,9 +34,9 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// Match the valence of atom.
+        /// </summary>
         /// <param name="valence">valence value</param>
         /// <param name="builder">chem object builder (required for ChemObject.getBuilder)</param>
-        /// </summary>
         public TotalValencyAtom(int valence, IChemObjectBuilder builder)
             : base(builder)
         {

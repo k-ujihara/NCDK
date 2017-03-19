@@ -23,17 +23,17 @@ namespace NCDK.IO.Formats
     // @cdk.module ioformats
     // @cdk.githash
     // @cdk.set    io-formats
-    public class INChIPlainTextFormat : SimpleChemFormatMatcher, IChemFormatMatcher
+    public class InChIPlainTextFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;
 
-        public INChIPlainTextFormat() { }
+        public InChIPlainTextFormat() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new INChIPlainTextFormat();
+                if (myself == null) myself = new InChIPlainTextFormat();
                 return myself;
             }
         }
@@ -42,7 +42,7 @@ namespace NCDK.IO.Formats
         public override string MIMEType => null;
         public override string PreferredNameExtension => null;
         public override string[] NameExtensions => new string[0];
-        public override string ReaderClassName => "NCDK.IO.INChIPlainTextReader";
+        public override string ReaderClassName => "NCDK.IO.InChIPlainTextReader";
         public override string WriterClassName => null;
 
         public override bool Matches(int lineNumber, string line)

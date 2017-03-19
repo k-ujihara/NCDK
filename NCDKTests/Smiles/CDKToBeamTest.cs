@@ -389,7 +389,7 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
 
-            ac.AddStereoElement(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                     DoubleBondConformation.Opposite));
             Beam.Graph g = Convert(ac);
             Assert.AreEqual("F/C=C/F", g.ToSmiles());
@@ -413,7 +413,7 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Double);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
 
-            ac.AddStereoElement(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                     DoubleBondConformation.Together));
             Beam.Graph g = Convert(ac);
             Assert.AreEqual("F/C=C\\F", g.ToSmiles());
@@ -421,11 +421,10 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (2R)-butan-2-ol
-        ///
-        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         [TestMethod()]
-        public void _2R_butan_2_ol()
+        public void Test_2R_butan_2_ol()
         {
             IAtomContainer ac = new Default.AtomContainer();
             ac.Atoms.Add(new Default.Atom("C"));
@@ -440,7 +439,7 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[2], ac.Atoms[4], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[5], BondOrder.Single);
 
-            ac.AddStereoElement(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
+            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
                         ac.Atoms[3], // C
                         ac.Atoms[4], // O
                         ac.Atoms[5], // H
@@ -452,11 +451,10 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// (2S)-butan-2-ol
-        ///
-        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
+        // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         [TestMethod()]
-        public void _2S_butan_2_ol()
+        public void Test_2S_butan_2_ol()
         {
 
             IAtomContainer ac = new Default.AtomContainer();
@@ -472,7 +470,7 @@ namespace NCDK.Smiles
             ac.AddBond(ac.Atoms[2], ac.Atoms[4], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[5], BondOrder.Single);
 
-            ac.AddStereoElement(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
+            ac.StereoElements.Add(new TetrahedralChirality(ac.Atoms[2], new IAtom[]{ac.Atoms[1], // C-C
                         ac.Atoms[3], // C
                         ac.Atoms[4], // O
                         ac.Atoms[5], // H
@@ -504,7 +502,7 @@ namespace NCDK.Smiles
 
             ac.Bonds[1].IsAromatic = true;
 
-            ac.AddStereoElement(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
+            ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                    DoubleBondConformation.Together));
             Beam.Graph g = Convert(ac);
             Assert.AreEqual("F[CH]:[CH]F", g.ToSmiles());
@@ -525,9 +523,9 @@ namespace NCDK.Smiles
             ac.Atoms.Add(new Default.Atom("O"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Single);
-            ac.Atoms[0].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, 3);
-            ac.Atoms[1].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, 1);
-            ac.Atoms[2].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, 2);
+            ac.Atoms[0].SetProperty(CDKPropertyName.AtomAtomMapping, 3);
+            ac.Atoms[1].SetProperty(CDKPropertyName.AtomAtomMapping, 1);
+            ac.Atoms[2].SetProperty(CDKPropertyName.AtomAtomMapping, 2);
             Assert.AreEqual("[CH3:3][CH2:1][OH:2]", Convert(ac).ToSmiles());
         }
 

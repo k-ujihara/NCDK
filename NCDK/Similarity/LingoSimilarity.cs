@@ -31,13 +31,12 @@ namespace NCDK.Similarity
     ///
     /// The similarity calculation is a variant of the Tanimoto coefficient and hence its
     /// value ranges from 0 to 1
-    ///
+    /// </summary>
     // @author Rajarshi Guha
     // @cdk.githash
     // @cdk.keyword lingo
     // @cdk.keyword similarity, tanimoto
     // @cdk.module fingerprint
-    /// </summary>
     public class LingoSimilarity
     {
         private LingoSimilarity() { }

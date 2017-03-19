@@ -90,7 +90,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
         /// <summary>
         /// Test of set method, of class MCSPlusHandler.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @throws IOException
         /// </summary>
         [TestMethod()]

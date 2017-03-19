@@ -35,33 +35,33 @@ namespace NCDK.QSAR.Descriptors.Atomic
     ///  experimental values. Up to now is only possible predict for
     ///  Cl,Br,I,N,P,O,S Atoms and they are not belong to
     ///  conjugated system or not adjacent to an double bond.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term></term>
+    ///   <term></term>
+    ///   <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @author       Miguel Rojas
     // @cdk.created  2006-05-26
     // @cdk.module   qsaratomic
     // @cdk.githash
     // @cdk.set      qsar-descriptors
     // @cdk.dictref  qsar-descriptors:ionizationPotential
-    /// </summary>
     public class IPAtomicHOSEDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "ipAtomicHOSE" };
 
-        /// <summary> Maximum spheres to use by the HoseCode model.*/
+        /// <summary> Maximum spheres to use by the HoseCode model.</summary>
         internal int maxSpheresToUse = 10;
 
         private IPdb db;
@@ -294,10 +294,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             /// <summary>
             /// Extract the Hose code and energy
-            ///
+            /// </summary>
             /// <param name="input">The BufferedReader</param>
             /// <returns>HashMap with the Hose vs energy attributes</returns>
-            /// </summary>
             private Dictionary<string, double> ExtractAttributes(TextReader input)
             {
                 Dictionary<string, double> hoseVSenergy = new Dictionary<string, double>();
@@ -322,14 +321,12 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// Extract the information from a line which contains HOSE_ID & energy.
-        ///
+        /// Extract the information from a line which contains HOSE_ID &amp; energy.
+        /// </summary>
         /// <param name="str">string with the information</param>
         /// <returns>List with string = HOSECode and string = energy</returns>
-        /// </summary>
         private static List<string> ExtractInfo(string str)
         {
-
             StringBuilder idEdited = new StringBuilder();
             StringBuilder valEdited = new StringBuilder();
 

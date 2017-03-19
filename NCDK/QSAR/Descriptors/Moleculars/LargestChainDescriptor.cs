@@ -25,36 +25,36 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Class that returns the number of atoms in the largest chain.
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td>checkAromaticity (deprecated)</td>
-    /// <td>false</td>
-    /// <td>Old parameter is now ignored</td>
-    /// </tr>
-    /// <tr>
-    /// <td>checkRingSystem</td>
-    /// <td>false</td>
-    /// <td>True is the CDKConstant.ISINRING has to be set</td>
-    /// </tr>
-    /// </table>
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term>checkAromaticity (deprecated)</term>
+    /// <term>false</term>
+    /// <term>Old parameter is now ignored</term>
+    /// </item>
+    /// <item>
+    /// <term>checkRingSystem</term>
+    /// <term>false</term>
+    /// <term>True is the CDKConstant.ISINRING has to be set</term>
+    /// </item>
+    /// </list>
+    /// </para>
     /// Returns a single value named <i>nAtomLAC</i>. Note that a chain exists if there
     /// are two or more atoms. Thus single atom molecules will return 0
-    ///
+    /// </remarks>
     // @author chhoppe from EUROSCREEN
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:largestChain
-    /// </summary>
     public class LargestChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
@@ -121,7 +121,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <seealso cref="Parameters"/>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
-
             if (checkRingSystem)
                 Cycles.MarkRingAtomsAndBonds(atomContainer);
 
@@ -151,17 +150,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(max), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </para>
-        /// </summary>
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object</returns>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

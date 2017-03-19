@@ -22,7 +22,7 @@
  */
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System.Collections.Generic;
 using System.Windows;
 

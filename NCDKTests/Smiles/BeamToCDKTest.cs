@@ -316,7 +316,7 @@ namespace NCDK.Smiles
         // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
         [TestMethod()]
-        public void _2R_butan_2_ol()
+        public void Test_2R_butan_2_ol()
         {
             IAtomContainer ac = Convert("CC[C@@](C)(O)[H]");
 
@@ -337,7 +337,7 @@ namespace NCDK.Smiles
         // @cdk.inchi InChI=1/C4H10O/c1-3-4(2)5/h4-5H,3H2,1-2H3/t4-/s2
         /// </summary>
         [TestMethod()]
-        public void _2S_butan_2_ol()
+        public void Test_2S_butan_2_ol()
         {
             IAtomContainer ac = Convert("CC[C@](C)(O)[H]");
 
@@ -484,7 +484,7 @@ namespace NCDK.Smiles
         public void ReadAtomClass()
         {
             IAtomContainer ac = Convert("CC[C:2]C");
-            object actual = ac.Atoms[2].GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING);
+            object actual = ac.Atoms[2].GetProperty<int>(CDKPropertyName.AtomAtomMapping);
             Assert.IsNotNull(actual);
             Assert.AreEqual(2, (int)actual);
         }
@@ -566,21 +566,21 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void TitleWithTab()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").GetProperty<string>(CDKPropertyName.TITLE),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C\tcaffeine").GetProperty<string>(CDKPropertyName.Title),
                          "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").GetProperty<string>(CDKPropertyName.TITLE),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine").GetProperty<string>(CDKPropertyName.Title),
                  "caffeine");
         }
 
         [TestMethod()]
         public void TitleWithMultipleSpace()
         {
-            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").GetProperty<string>(CDKPropertyName.TITLE),
+            Assert.AreEqual(Convert("CN1C=NC2=C1C(=O)N(C(=O)N2C)C caffeine compound").GetProperty<string>(CDKPropertyName.Title),
                  "caffeine compound");
         }
 

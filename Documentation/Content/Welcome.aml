@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<topic id="c9f38e32-3e98-455f-8e1c-33fce2abf283" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para></para>
+		</introduction>
+
+		<section>
+			<title>Getting Started</title>
+      <content>
+        <para>
+          The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is collection of modular .NET Framework
+          libraries for processing chemical information (<legacyBold>cheminformatics</legacyBold>). The
+          modules are <link xlink:href="323b9147-5a38-423b-b1ca-91a3396c6b6d"/>free and open-source</link> and is easily
+          integrated with other open-source or in-house projects.
+          Functionality is provided for many areas in cheminformatics including:
+        </para>
+        <list class="bullet">
+          <listItem>
+            <para>Molecule and reaction valence bond representation</para>
+          </listItem>
+          <listItem>
+            <para>
+              Read and write file formats: SMILES, SDF, InChI, Mol2, CML, and others
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Efficient molecule processing algorithms: Ring Finding, Kekulisation, Aromaticity
+              Coordinate generation and rendering
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Canonical identifiers for fast exact searching
+            </para>
+          </listItem>
+          <listItem>
+            <para>Substructure and SMARTS pattern searching</para>
+          </listItem>
+          <listItem>
+            <para>
+              ECFP, Daylight, MACCS, and other fingerprint methods for similarity searching
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              QSAR descriptor calculations
+            </para>
+          </listItem>
+          <listItem>
+            <para>...and much more</para>
+          </listItem>
+        </list>
+        <mediaLink>
+          <image xlink:href="top_compound_image"/>
+        </mediaLink>
+      </content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+		</relatedTopics>
+	</developerConceptualDocument>
+</topic>

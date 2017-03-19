@@ -197,7 +197,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _2_butyne()
+        public void Test_2_butyne()
         {
             RoundTrip("CC#CC");
         }
@@ -235,19 +235,19 @@ namespace NCDK.Beam
         // Branches
 
         [TestMethod()]
-        public void _2_ethyl_1_butanol()
+        public void Test_2_ethyl_1_butanol()
         {
             RoundTrip("CCC(CC)CO");
         }
 
         [TestMethod()]
-        public void _2_4_dimethyl_3_penthanone()
+        public void Test_2_4_dimethyl_3_penthanone()
         {
             RoundTrip("CC(C)C(=O)C(C)C");
         }
 
         [TestMethod()]
-        public void _2_propyl_3_isopropyl_1_propanol()
+        public void Test_2_propyl_3_isopropyl_1_propanol()
         {
             RoundTrip("OCC(CCC)C(C(C)C)CCC");
         }
@@ -519,7 +519,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _1_bromo_2_3_dichlorobenzene()
+        public void Test_1_bromo_2_3_dichlorobenzene()
         {
             RoundTrip("c1c2c3c4cc1.Br2.Cl3.Cl4",
                   "c1c(c(c(cc1)Cl)Cl)Br"); // non-DFS

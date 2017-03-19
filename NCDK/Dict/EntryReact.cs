@@ -60,7 +60,7 @@ namespace NCDK.Dict
         }
 
         /// <summary>
-        // Constructor of the EntryReact.
+        /// Constructor of the EntryReact.
         /// </summary>
         /// <param name="identifier">The ID value</param>
         public EntryReact(string identifier)

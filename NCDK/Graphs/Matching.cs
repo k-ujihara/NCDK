@@ -38,7 +38,7 @@ namespace NCDK.Graphs
     /// This class provides storage and manipulation of a matching. A new match is
     /// added with <see cref="Match(int, int)"/>, any existing match for the newly matched
     /// vertices is no-longer available. The status of a vertex can be queried with
-    /// {@link #Matched(int)} and the matched vertex obtained with <see cref="Other(int)"/>.
+    /// <see cref="Matched(int)"/>  and the matched vertex obtained with <see cref="Other(int)"/>.
     /// </para>
     /// <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory), Wikipedia</a>
     /// </summary>

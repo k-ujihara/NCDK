@@ -19,7 +19,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Collections;
-using NCDK;
 using NCDK.Aromaticities;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
@@ -165,10 +164,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Calculates the xlogP for an atom container.
-        ///
+        /// <para>
         /// If checkAromaticity is true, the method check the aromaticity, if false, means that the aromaticity has
         /// already been checked. It is necessary to use before the call of this mehtod the
         /// addExplicitHydrogensToSatisfyValency method (HydrogenAdder classe).
+        /// </para>
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>XLogP is a double</returns>
@@ -218,7 +218,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 //            Problem fused ring systems
                 IList<IRing> atomRingSet = rs.GetRings(atomi).ToList();
                 atomi.SetProperty("IS_IN_AROMATIC_RING", false);
-                atomi.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, 0);
+                atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, 0);
                 //Debug.WriteLine("atomRingSet.size "+atomRingSet.Count);
                 if (atomRingSet.Count > 0)
                 {
@@ -240,7 +240,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     {
                         if (j == 0)
                         {
-                            atomi.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, ((IRing)atomRingSet[j]).RingSize);
+                            atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, ((IRing)atomRingSet[j]).RingSize);
                         }
 
                         if (((IRing)atomRingSet[j]).Contains(atomi))
@@ -250,9 +250,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                             {
                                 atomi.SetProperty("IS_IN_AROMATIC_RING", true);
                             }
-                            if (((IRing)atomRingSet[j]).RingSize < (int)atomi.GetProperty<int>(CDKPropertyName.PART_OF_RING_OF_SIZE))
+                            if (((IRing)atomRingSet[j]).RingSize < (int)atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize))
                             {
-                                atomi.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, ((IRing)atomRingSet[j]).RingSize);
+                                atomi.SetProperty(CDKPropertyName.PartOfRingOfSize, ((IRing)atomRingSet[j]).RingSize);
                             }
                         }
                     }
@@ -722,7 +722,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                     //if (rs.Contains(atomi)&&ringSize>3) {
                                     if (atomi.IsAromatic
                                             || (rs.Contains(atomi)
-                                                    && atomi.GetProperty<int>(CDKPropertyName.PART_OF_RING_OF_SIZE) > 3 && GetPiSystemsCount(ac, atomi) >= 1))
+                                                    && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 1))
                                     {
                                         if (GetAtomTypeXCount(ac, atomi) == 0)
                                         {
@@ -764,7 +764,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                                         //                                    like pyrrole
                                         if (atomi.IsAromatic
                                                 || (rs.Contains(atomi)
-                                                        && atomi.GetProperty<int>(CDKPropertyName.PART_OF_RING_OF_SIZE) > 3 && GetPiSystemsCount(ac, atomi) >= 2))
+                                                        && atomi.GetProperty<int>(CDKPropertyName.PartOfRingOfSize) > 3 && GetPiSystemsCount(ac, atomi) >= 2))
                                         {
                                             xlogP += 0.545;
                                             hBondDonors.Add(i);
@@ -1702,11 +1702,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Gets the ifCarbonIsHydrophobic attribute of the XLogPDescriptor object.
         /// C must be sp2 or sp3 and, for all distances C-1-2-3 only C atoms are permitted
-        ///
+        /// </summary>
         /// <param name="ac">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>The ifCarbonIsHydrophobic value</returns>
-        /// </summary>
         private bool GetIfCarbonIsHydrophobic(IAtomContainer ac, IAtom atom)
         {
             var first = ac.GetConnectedAtoms(atom);

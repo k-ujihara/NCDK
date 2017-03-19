@@ -62,12 +62,10 @@ namespace NCDK.SMSD.Ring
     /// The paths that join source and sink node are step by step fused and the joined
     /// nodes are deleted from the path graph (collapsed path). What remains is a graph
     /// of paths that have the same start and endpoint and are thus rings (source=sink=ring).
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
-    ///
-    /// </summary>
     public class HanserRingFinder : RingFinder
     {
 
@@ -80,10 +78,10 @@ namespace NCDK.SMSD.Ring
 
         /// <summary>
         /// Returns a collection of rings.
-        ///
-        /// <param name="molecule">/// <returns>a <see cref="Collection"/> of <see cref="List"/>s containing one ring each</param></returns>
-        /// @see org.openscience.cdk.smsd.ring.RingFinder#FindRings(IAtomContainer)
         /// </summary>
+        /// <param name="molecule"></param>
+        /// <returns>a <see cref="IEnumerable{T}"/> of <see cref="IList{T}"/>s containing one ring each</returns>
+        /// <seealso cref="RingFinder.FindRings(IAtomContainer)"/>
         public IEnumerable<IList<IAtom>> FindRings(IAtomContainer molecule)
         {
             if (molecule == null) return null;
@@ -106,12 +104,12 @@ namespace NCDK.SMSD.Ring
 
         /// <summary>
         /// Returns Ring set based on Hanser Ring Finding method
-        /// <param name="molecule">/// <returns>report collected the rings</param></returns>
-        /// @see org.openscience.cdk.smsd.ring.RingFinder#GetRingSet(IAtomContainer)
+        /// <param name="molecule"></param>
         /// </summary>
+        /// <returns>report collected the rings</returns>
+        /// <seealso cref="RingFinder.GetRingSet(IAtomContainer)"/>
         public IRingSet GetRingSet(IAtomContainer molecule)
         {
-
             var cycles = FindRings(molecule);
 
             IRingSet ringSet = molecule.Builder.CreateRingSet();
@@ -131,7 +129,7 @@ namespace NCDK.SMSD.Ring
                             if (bond != null)
                             {
                                 bond.IsInRing = true;
-                                ring.Add(bond);
+                                ring.Bonds.Add(bond);
                             }
                         }
                     }

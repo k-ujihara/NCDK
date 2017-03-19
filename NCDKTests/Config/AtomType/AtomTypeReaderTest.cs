@@ -117,8 +117,8 @@ namespace NCDK.Config.AtomType
 
             Assert.AreEqual(0, atomType.FormalCharge.Value);
             Assert.AreEqual(Hybridization.SP1, atomType.Hybridization);
-            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(2, atomType.GetProperty<int?>(CDKPropertyName.PI_BOND_COUNT));
+            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(2, atomType.GetProperty<int?>(CDKPropertyName.PiBondCount));
         }
 
         [TestMethod()]
@@ -153,12 +153,12 @@ namespace NCDK.Config.AtomType
             Assert.IsTrue(obj is IAtomType);
             IAtomType atomType = (IAtomType)obj;
 
-            Assert.AreEqual("[CSP]-[0-4][-]?+;", atomType.GetProperty<string>(CDKPropertyName.SPHERICAL_MATCHER));
+            Assert.AreEqual("[CSP]-[0-4][-]?+;", atomType.GetProperty<string>(CDKPropertyName.SphericalMatcher));
             Assert.IsFalse(atomType.IsHydrogenBondAcceptor);
             Assert.IsFalse(atomType.IsHydrogenBondDonor);
 
-            Assert.AreEqual(3, atomType.GetProperty<int?>(CDKPropertyName.PART_OF_RING_OF_SIZE));
-            Assert.AreEqual(3, atomType.GetProperty<int?>(CDKPropertyName.CHEMICAL_GROUP_CONSTANT));
+            Assert.AreEqual(3, atomType.GetProperty<int?>(CDKPropertyName.PartOfRingOfSize));
+            Assert.AreEqual(3, atomType.GetProperty<int?>(CDKPropertyName.ChemicalGroupConstant));
         }
     }
 }

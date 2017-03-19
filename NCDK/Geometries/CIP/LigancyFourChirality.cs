@@ -28,7 +28,7 @@ namespace NCDK.Geometries.CIP
     /// Stereochemistry specification for quadrivalent atoms to be used for the CIP algorithm only.
     /// </summary>
     /// <remarks>
-    /// <p>The data model defines the central, chiral <see cref="IAtom"/>,
+    /// The data model defines the central, chiral <see cref="IAtom"/>,
     /// and its four <see cref="ILigand"/>s, each of which has an ligand <see cref="IAtom"/>, directly bonded to the chiral atom via
     /// an <see cref="IBond"/>. The ordering of the four ligands is important, and defines together with the <see cref="Stereo"/>
     /// to spatial geometry around the chiral atom. The first ligand points towards to observer, and the three other

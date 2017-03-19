@@ -21,56 +21,49 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Isomorphisms.Matchers;
 using System;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Defines compatibility checking of atoms for (subgraph)-isomorphism mapping.
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// Defines compatibility checking of atoms for (subgraph)-isomorphism mapping.
+    /// </summary>
+    // @author John May
+    // @cdk.module isomorphism
     public abstract class AtomMatcher
     {
-
-        /**
-         * Are the semantics of {@code atom1} compatible with {@code atom2}.
-         *
-         * @param atom1 an atom from a query container
-         * @param atom2 an atom from the target container
-         * @return the atom1 can be paired with atom2
-         */
+        /// <summary>
+        /// Are the semantics of <paramref name="atom1"/> compatible with <paramref name="atom2"/>.
+        /// </summary>
+        /// <param name="atom1">an atom from a query container</param>
+        /// <param name="atom2">an atom from the target container</param>
+        /// <returns>the <paramref name="atom1"/> can be paired with <paramref name="atom2"/></returns>
         public abstract bool Matches(IAtom atom1, IAtom atom2);
 
-        /**
-         * Atoms are always compatible.
-         *
-         * @return a matcher for which all atoms match
-         */
+        /// <summary>
+        /// Atoms are always compatible.
+        /// </summary>
+        /// <returns>a matcher for which all atoms match</returns>
         public static AtomMatcher CreateAnyMatcher()
         {
             return new AnyMatcher();
         }
 
-        /**
-         * Atoms are compatible if they are the same element.
-         *
-         * @return a matcher which checks element compatibility
-         */
+        /// <summary>
+        /// Atoms are compatible if they are the same element.
+        /// </summary>
+        /// <returns>a matcher which checks element compatibility</returns>
         public static AtomMatcher CreateElementMatcher()
         {
             return new ElementMatcher();
         }
 
-        /**
-         * Atoms are compatible if the second atom ({@code atom2}) is accepted by
-         * the <see cref="IQueryAtom"/>, {@code atom1}.
-         *
-         * @return a matcher which checks query atom compatibility
-         */
+        /// <summary>
+        /// Atoms are compatible if the second atom (<c>atom2</c>) is accepted by
+        /// the <see cref="IQueryAtom"/>, <c>atom1</c>.
+        /// </summary>
+        /// <returns>a matcher which checks query atom compatibility</returns>
         public static AtomMatcher CreateQueryMatcher()
         {
             return new QueryMatcher();
@@ -79,50 +72,43 @@ namespace NCDK.Isomorphisms
         /// <summary>A matcher defines all atoms as compatible.</summary>
         private sealed class AnyMatcher : AtomMatcher
         {
-
             /// <inheritdoc/>
-
             public override bool Matches(IAtom atom1, IAtom atom2)
             {
                 return true;
             }
         }
 
-        /**
-         * A matcher to use when all atoms are <see cref="IQueryAtom"/>s. {@code atom1} is
-         * cast to a query atom and matched against {@code atom2}.
-         */
+        /// <summary>
+        /// A matcher to use when all atoms are <see cref="IQueryAtom"/>s. <c>atom1</c> is
+        /// cast to a query atom and matched against <c>atom2</c> .
+        /// </summary>
         private sealed class QueryMatcher : AtomMatcher
         {
-
             /// <inheritdoc/>
-
             public override bool Matches(IAtom atom1, IAtom atom2)
             {
                 return ((IQueryAtom)atom1).Matches(atom2);
             }
         }
 
-        /**
-         * A matcher to use when all atoms are <see cref="IQueryAtom"/>s. {@code atom1} is
-         * cast to a query atom and matched against {@code atom2}.
-         */
+        /// <summary>
+        /// A matcher to use when all atoms are <see cref="IQueryAtom"/>s. <c>atom1</c> is
+        /// cast to a query atom and matched against <c>atom2</c>.
+        /// </summary>
         private sealed class ElementMatcher : AtomMatcher
         {
-
             /// <inheritdoc/>
-
             public override bool Matches(IAtom atom1, IAtom atom2)
             {
                 return GetAtomicNumber(atom1) == GetAtomicNumber(atom2);
             }
 
-            /**
-             * Null safe atomic number access.
-             *
-             * @param atom an atom
-             * @return the atomic number
-             */
+            /// <summary>
+            /// Null safe atomic number access.
+            /// </summary>
+            /// <param name="atom">an atom</param>
+            /// <returns>the atomic number</returns>
             private int GetAtomicNumber(IAtom atom)
             {
                 int? elem = atom.AtomicNumber;
@@ -133,4 +119,3 @@ namespace NCDK.Isomorphisms
         }
     }
 }
-

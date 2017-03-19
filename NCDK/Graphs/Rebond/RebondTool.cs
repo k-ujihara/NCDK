@@ -1,4 +1,4 @@
-/* Copyright (C) 2003-2007  Miguel Howard <miguel@jmol.org>
+Ôªø/* Copyright (C) 2003-2007  Miguel Howard <miguel@jmol.org>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,9 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using NCDK.Numerics;
-
 namespace NCDK.Graphs.Rebond
 {
     /// <summary>
@@ -59,7 +56,7 @@ namespace NCDK.Graphs.Rebond
         /// <summary>
         /// Rebonding using a Binary Space Partition Tree. Note, that any bonds
         /// defined will be deleted first. It assumes the unit of 3D space to
-        /// be 1 Ångstrom.
+        /// be 1 √Öngstrom.
         /// </summary>
         public void Rebond(IAtomContainer container)
         {

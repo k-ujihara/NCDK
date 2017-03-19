@@ -3,7 +3,7 @@ using NCDK.Common.Base;
 
 namespace NCDK.Beam
 {
-    /// <summary> <author>John May </author>*/
+   /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class DaylightDelocalisationTest
     {
@@ -53,7 +53,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _1_H_pyrole()
+        public void Test_1_H_pyrole()
         {
             Test("N1C=CC=C1", "[nH]1cccc1");
         }

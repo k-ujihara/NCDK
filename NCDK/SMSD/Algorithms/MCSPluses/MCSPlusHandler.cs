@@ -33,11 +33,11 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 {
     /// <summary>
     /// This class acts as a handler class for MCSPlus algorithm.
-    /// {@link org.openscience.cdk.smsd.algorithm.mcsplus.MCSPlus}
+    /// </summary>
+    /// <seealso cref="MCSPlus"/>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class MCSPlusHandler : AbstractMCSAlgorithm, IMCSBase
     {
 
@@ -60,10 +60,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             allMCS = new List<IDictionary<int, int>>();
         }
 
-        /// <summary> {@inheritDoc}
-        ///
-        /// <param name="source">/// @param target</param>
-        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Set(MolHandler source, MolHandler target)
         {
@@ -71,20 +67,15 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             this.target = target.Molecule;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
-        /// <param name="source">/// @param target</param>
-        /// </summary>
         public void Set(IQueryAtomContainer source, IAtomContainer target)
         {
             this.source = source;
             this.target = target;
         }
 
-        /// <summary> {@inheritDoc}
+        /// <summary>
         /// Function is called by the main program and serves as a starting point for the comparison procedure.
-        ///
-        /// <param name="shouldMatchBonds">/// </summary></param>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public override void SearchMCS(bool shouldMatchBonds)
         {

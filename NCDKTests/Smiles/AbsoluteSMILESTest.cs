@@ -36,7 +36,7 @@ namespace NCDK.Smiles
     public class AbsoluteSMILESTest
     {
         [TestMethod()]
-        public void Myo_inositol()
+        public void Test_Myo_inositol()
         {
             Test("O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O", "O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@@H](O)[C@H]1O",
                     "O[C@@H]1[C@@H](O)[C@H](O)[C@@H](O)[C@H](O)[C@@H]1O",
@@ -59,7 +59,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void _1_3_diethylidenecyclobutane()
+        public void Test_1_3_diethylidenecyclobutane()
         {
             Test("C/C=C1/CC(=C/C)/C1", "C/C=C/1C\\C(=C/C)C1", "C/1(C\\C(C1)=C/C)=C\\C", "C\\1C(/CC1=C/C)=C\\C",
                     "C/C=C1/CC(=C/C)/C1", "C1(=C/C)/CC(=C\\C)/C1", "C\\C=C1/CC(=C\\C)/C1", "C(\\C)=C1/CC(=C/C)/C1",
@@ -69,7 +69,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        public void Ispropenyloctatriene()
+        public void Test_Ispropenyloctatriene()
         {
             Test("C(=C/C)/C(=C(\\C=C/C)/C=C/C)/C=C/C", "C(=C/C)/C(/C=C/C)=C(\\C=C/C)/C=C/C",
                     "C\\C=C\\C(=C(/C=C/C)\\C=C/C)\\C=C/C", "C(=C/C)/C(/C=C/C)=C(/C=C/C)\\C=C/C",
@@ -86,7 +86,7 @@ namespace NCDK.Smiles
 
         // 2,4,6,8-tetramethyl-1,3,5,7-tetraazatricyclo[5.1.0.0³,⁵]octane
         [TestMethod()]
-        public void Tetramethyltetraazatricyclooctane()
+        public void Test_Tetramethyltetraazatricyclooctane()
         {
             Test("C[C@H]1N2N([C@@H](C)N3[C@H](C)N13)[C@H]2C", "N12N([C@H](C)N3[C@@H](C)N3[C@@H]1C)[C@@H]2C",
                     "C[C@H]1N2[C@@H](N3[C@H](N3[C@H](C)N21)C)C", "C[C@@H]1N2[C@@H](C)N3[C@H](C)N3[C@@H](C)N12",
@@ -100,21 +100,19 @@ namespace NCDK.Smiles
                     "N12[C@H](C)N3N([C@@H]3C)[C@H](C)N1[C@H]2C", "N12N([C@@H](C)N3N([C@H]3C)[C@H]1C)[C@H]2C");
         }
 
-        // [TestMethod()]
+        //[TestMethod()]
         // Maybe, reason of failure is in Beam module.
-        public void dbStereoCanonGeneration()
+        public void Test_DbStereoCanonGeneration()
         {
-            string in_ = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
+            string ins = "Oc1ccc(cc1O)C(\\C([O-])=O)=c1/cc(O)\\c(cc1O)=C(/C([O-])=O)c1ccccc1";
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles(in_);
+            IAtomContainer mol = smipar.ParseSmiles(ins);
             SmilesGenerator cansmi = SmilesGenerator.CreateAbsolute();
-            Assert.AreEqual(cansmi.Create(mol),
-                                cansmi.Create(smipar.ParseSmiles(cansmi.Create(mol))));
+            Assert.AreEqual(cansmi.Create(mol), cansmi.Create(smipar.ParseSmiles(cansmi.Create(mol))));
         }
 
         static void Test(params string[] inputs)
         {
-
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             SmilesGenerator sg = SmilesGenerator.CreateAbsolute();
 
@@ -128,14 +126,7 @@ namespace NCDK.Smiles
 
         static string Join(IEnumerable<string> strings)
         {
-            var sb = new StringBuilder();
-            foreach (var s in strings)
-            {
-                if (sb.Length != 0)
-                    sb.Append(".");
-                sb.Append(s);
-            }
-            return sb.ToString();
+            return string.Join(".", strings);
         }
     }
 }

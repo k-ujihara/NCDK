@@ -2,7 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <summary> <author>John May </author>*/
+   /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class LocaliseTest
     {
@@ -66,7 +66,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _4H_pyran_4_one()
+        public void Test_4H_pyran_4_one()
         {
             Test("oc1ccocc1", "O=C1C=COC=C1");
         }

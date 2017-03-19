@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// Class to reconstruct a graph from a signature string (or a colored tree).

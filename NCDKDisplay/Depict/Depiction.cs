@@ -20,7 +20,7 @@ using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -197,29 +197,29 @@ namespace NCDK.Depict
         /// Write the depiction to the provided output stream.
         /// </summary>
         /// <param name="fmt">format</param>
-        /// <param name="out_">output stream</param>
+        /// <param name="output">output stream</param>
         /// <exception cref="IOException">depiction could not be written, low level IO problem</exception>
-        /// <seealso cref="listFormats"/>
-        public void WriteTo(string fmt, Stream out_)
+        /// <seealso cref="ListFormats"/>
+        public void WriteTo(string fmt, Stream output)
         {
             switch (fmt.ToLowerInvariant())
             {
                 case SVG_FMT:
                     {
                         var bytes = Encoding.UTF8.GetBytes(ToSvgStr());
-                        out_.Write(bytes, 0, bytes.Length);
+                        output.Write(bytes, 0, bytes.Length);
                     }
                     break;
                 case PS_FMT:
                     {
                         var bytes = Encoding.UTF8.GetBytes(ToEpsStr());
-                        out_.Write(bytes, 0, bytes.Length);
+                        output.Write(bytes, 0, bytes.Length);
                     }
                     break;
                 case PDF_FMT:
                     {
                         var bytes = Encoding.UTF8.GetBytes(ToPdfStr());
-                        out_.Write(bytes, 0, bytes.Length);
+                        output.Write(bytes, 0, bytes.Length);
                     }
                     break;
                 default:
@@ -238,13 +238,13 @@ namespace NCDK.Depict
         /// <param name="fmt">format</param>
         /// <param name="path">output destination path</param>
         /// <exception cref="IOException">depiction could not be written, low level IO problem</exception>
-        /// <seealso cref="listFormats"/>
+        /// <seealso cref="ListFormats"/>
         public void WriteTo(string fmt, string path)
         {
             path = ReplaceTildeWithHomeDir(EnsureSuffix(path, fmt));
-            using (var out_ = new FileStream(path, FileMode.Create))
+            using (var output = new FileStream(path, FileMode.Create))
             {
-                WriteTo(fmt, out_);
+                WriteTo(fmt, output);
             }
         }
 

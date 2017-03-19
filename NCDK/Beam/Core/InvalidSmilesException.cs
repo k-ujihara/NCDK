@@ -63,7 +63,8 @@ namespace NCDK.Beam
         ///   ^
         /// </remarks>
         /// <param name="buffer">a character buffer</param>
-        /// <returns>a </returns>3 line string showing the buffer and it's current position
+        /// <param name="offset"></param>
+        /// <returns>a * 3 line string showing the buffer and it's current position</returns>
         static string Display(CharBuffer buffer, int offset)
         {
             StringBuilder sb = new StringBuilder();

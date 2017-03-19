@@ -24,22 +24,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     ///  Class that returns the number of aromatic atoms in an atom container.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkAromaticity</td>
-    ///     <td>false</td>
-    ///     <td>True is the aromaticity has to be checked</td>
-    ///   </tr>
-    /// </table>
-    /// Returns a single value with name <i>nAromAtom</i>
     /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkAromaticity</term>
+    ///     <term>false</term>
+    ///     <term>True is the aromaticity has to be checked</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// Returns a single value with name <i>nAromAtom</i>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
@@ -56,20 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public AromaticAtomsCountDescriptor() { }
 
-        /// <summary>
-        /// Returns a <code>Map</code> which specifies which descriptor
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        /// </summary>
-        /// <returns>An object containing the descriptor specification</returns>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(

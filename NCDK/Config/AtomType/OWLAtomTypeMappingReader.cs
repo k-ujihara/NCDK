@@ -51,7 +51,7 @@ namespace NCDK.Config.AtomType
         /// <summary>
         /// Reads the atom type mappings from the data file.
         /// </summary>
-        /// <returns>a <see cref="IDictionary{string, string}"/> with atom type mappings. <see langword="null"/>, if some reading error occurred.</returns>
+        /// <returns>a <see cref="IDictionary{T, T}"/> with atom type mappings. <see langword="null"/>, if some reading error occurred.</returns>
         public IDictionary<string, string> ReadAtomTypeMappings()
         {
             IDictionary<string, string> mappings = null;

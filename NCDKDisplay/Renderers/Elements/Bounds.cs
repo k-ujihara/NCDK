@@ -100,8 +100,7 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Ensure the point x,y is included in the bounding box.
         /// </summary>
-        /// <param name="x">x-coordinate</param>
-        /// <param name="y">y-coordinate</param>
+        /// <param name="p">coordinate</param>
         public void Add(Point p)
         {
             if (p.X < minX) minX = p.X;
@@ -218,7 +217,7 @@ namespace NCDK.Renderers.Elements
         ///
         /// <returns>bounds are empty (true) or not (false)</returns>
         /// </summary>
-        public bool IsEmpty => minX > maxX || minY > maxY;
+        public bool IsEmpty() => minX > maxX || minY > maxY;
 
         public void Accept(IRenderingVisitor visitor)
         {

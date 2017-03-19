@@ -24,22 +24,24 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// This Class contains a method that returns the number of aromatic atoms in an AtomContainer.
-    /// 
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkAromaticity</td>
-    ///     <td>false</td>
-    ///     <td>True is the aromaticity has to be checked</td>
-    ///   </tr>
-    /// </table>
-    /// Returns a single value with name <i>nAromBond</i>
     /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkAromaticity</term>
+    ///     <term>false</term>
+    ///     <term>True is the aromaticity has to be checked</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// Returns a single value with name <i>nAromBond</i>
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
@@ -56,19 +58,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public AromaticBondsCountDescriptor() { }
 
-        /// <summary>
-        /// A map which specifies which descriptor
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
@@ -82,7 +72,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// This descriptor takes one parameter, which should be bool to indicate whether
         /// aromaticity has been checked (TRUE) or not (FALSE).
         /// </summary>
-        /// <param name="parameters">The new parameters value</param>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
         public override object[] Parameters
         {
@@ -113,11 +102,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///
         ///  The method take a bool checkAromaticity: if the bool is true, it means that
         ///  aromaticity has to be checked.
-        ///
+        /// </summary>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        ///@see #setParameters
-        /// </summary>
+        /// <seealso cref="Parameters"/>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
             IAtomContainer ac = (IAtomContainer)atomContainer.Clone();
@@ -155,17 +143,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(aromaticBondsCount), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

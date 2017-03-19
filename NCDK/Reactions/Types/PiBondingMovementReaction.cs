@@ -24,13 +24,16 @@ using System.Diagnostics;
 namespace NCDK.Reactions.Types
 {
     /// <summary>
-    /// <para>IReactionProcess which tries to reproduce the delocalization of electrons
+    /// IReactionProcess which tries to reproduce the delocalization of electrons
     ///  which are unsaturated bonds from conjugated rings. Only is allowed those
     ///  movements which produces from neutral to neutral structures and not take account the possible
     ///  movements influenced from lone pairs, or empty orbitals. This movements are
     ///  typically from rings without any access or deficiency of charge and have a
-    ///  even number of atoms. </para>
+    ///  even number of atoms. 
+    ///  </summary>
+    ///  <example>
     ///  <para>The reaction don't care if the product are the same in symmetry.</para>
+    ///  <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
     ///  IReactionProcess type = new PiBondingMovementReaction();
@@ -41,35 +44,26 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
-    ///
-    ///
+    /// </example>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2007-02-02
     // @cdk.module     reaction
     // @cdk.set        reaction-types
     // @cdk.githash
-    ///
-    ///*/
     public class PiBondingMovementReaction : ReactionEngine, IReactionProcess
     {
-
         /// <summary>
         /// Constructor of the PiBondingMovementReaction object
-        ///
         /// </summary>
         public PiBondingMovementReaction() { }
 
         /// <summary>
-        ///  Gets the specification attribute of the PiBondingMovementReaction object
-        ///
-        /// <returns>The specification value</returns>
+        ///  The specification attribute of the PiBondingMovementReaction object
         /// </summary>
-
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#PiBondingMovement", this
@@ -101,7 +95,7 @@ namespace NCDK.Reactions.Types
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
 
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -168,10 +162,8 @@ namespace NCDK.Reactions.Types
         /// with pi electrons with resonance.
         ///
         /// FIXME REACT: It could be possible that a ring is a super ring of others small rings
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             AllRingsFinder arf = new AllRingsFinder();
@@ -194,7 +186,6 @@ namespace NCDK.Reactions.Types
                         foreach (var bond in ring.Bonds)
                         {
                             bond.IsReactiveCenter = true;
-
                         }
                     }
                 }

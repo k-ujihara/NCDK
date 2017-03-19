@@ -25,16 +25,14 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// <summary>
     /// This class returns the valence of an atom.
     /// This descriptor does not have any parameters.
-    ///
+    /// </summary>
+    /// <seealso cref="AtomValenceTool"/>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:atomValence
-    ///
-    // @see         org.openscience.cdk.qsar.AtomValenceTool
-    /// </summary>
     public class AtomValenceDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         /// <summary>

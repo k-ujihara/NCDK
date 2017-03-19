@@ -31,15 +31,13 @@ namespace NCDK.Hash.Stereo
     /// Defines a stereo encoder factory for the hash code. The factory allows the
     /// generation of stereo hash codes for molecules with predefined
     /// <see cref="ITetrahedralChirality"/> stereo elements.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
     public sealed class TetrahedralElementEncoderFactory : IStereoEncoderFactory
     {
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
         {
-
             // index atoms for quick lookup - wish we didn't have to do this
             // but the it's better than calling getAtomNumber every time - we use
             // a lazy creation so it's only created if there was a need for it
@@ -56,19 +54,17 @@ namespace NCDK.Hash.Stereo
                 }
             }
 
-            return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
+            return encoders.Count == 0 ? StereoEncoder.Empty : new MultiStereoEncoder(encoders);
         }
 
         /// <summary>
         /// Create an encoder for the <see cref="ITetrahedralChirality"/> element.
-        ///
+        /// </summary>
         /// <param name="tc">stereo element from an atom container</param>
         /// <param name="atomToIndex">map of atoms to indices</param>
         /// <returns>a new geometry encoder</returns>
-        /// </summary>
         private static GeometryEncoder Encoder(ITetrahedralChirality tc, IDictionary<IAtom, int> atomToIndex)
         {
-
             var ligands = tc.Ligands;
 
             int centre = atomToIndex[tc.ChiralAtom];
@@ -93,7 +89,6 @@ namespace NCDK.Hash.Stereo
             // hydrogen) we need to adjust the indicies and the parity
             if (offset >= 0)
             {
-
                 // remove the 'implicit' central from the first 3 vertices
                 for (int i = offset; i < indices.Length - 1; i++)
                 {
@@ -118,11 +113,10 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Lazy creation of an atom index map.
-        ///
+        /// </summary>
         /// <param name="map">existing map (possibly null)</param>
         /// <param name="container">the container we want the map for</param>
         /// <returns>a usable atom to index map for the given container</returns>
-        /// </summary>
         private static IDictionary<IAtom, int> IndexMap(IDictionary<IAtom, int> map, IAtomContainer container)
         {
             if (map != null) return map;

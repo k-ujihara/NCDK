@@ -7,20 +7,26 @@ namespace NCDK.IO.Iterator
 {
     /// <summary>
     /// Iterate over conformers of a collection of molecules stored in SDF format.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader} except that
     /// rather than return a single <see cref="IAtomContainer"/> at each iteration this
     /// class will return all the conformers for a given molecule at each iteration.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// The class assumes that the molecules are stored in SDF format and that all conformers for a given
     /// molecule are in sequential order.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// Currently, the code uses the title of each molecule in the SD file to perform te conformer check
     /// and so it is important that all conformers for a given molecule have the same title field, but
     /// different from the title fields of conformers of other molecules. In
     /// the future the class will allow the user to perform the check using either the title or a more
     /// rigorous (but more time-consuming) graph isomorphism check.
-    /// <p/>
+    /// </para>
+    /// </remarks>
+    /// <example>
     /// Example usage is
     /// <code>
     /// string filename = "/Users/rguha/conf2.sdf";
@@ -29,18 +35,15 @@ namespace NCDK.IO.Iterator
     /// while (reader.HasNext()) {
     ///      ConformerContainer2 cc = (ConformerContainer2) reader.Next();
     /// }
-    /// <p/>
     /// // do something with this set of conformers
-    /// <p/>
     /// </code>
-    ///
+    /// </example>
     // @cdk.module extra
     // @cdk.githash
     // @author Rajarshi Guha
     // @see org.openscience.cdk.ConformerContainer
     // @cdk.keyword file format SDF
     // @cdk.keyword conformer conformation
-    /// </summary>
     public class IteratingMDLConformerReader : IEnumerable<ConformerContainer>
     {
         private IteratingSDFReader imdlr;
@@ -64,7 +67,7 @@ namespace NCDK.IO.Iterator
                     container = new ConformerContainer(mol);
                 else
                 {
-                    if (container.Title.Equals(mol.GetProperty<string>(CDKPropertyName.TITLE)))
+                    if (container.Title.Equals(mol.GetProperty<string>(CDKPropertyName.Title)))
                         container.Add(mol);
                     else
                     {

@@ -1,11 +1,10 @@
 using NCDK.Common.Collections;
-using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// The base class for signatures that are created from a vertex of a graph. A
@@ -406,9 +405,7 @@ namespace FaulonSignatures
         /// <param name="node">the current node of the signature</param>
         /// <param name="parent">the parent node, or null</param>
         /// <param name="arcs">the list of already visited arcs</param>
-        /// <param name="colorMap">a map between pre-printed colors and printed colors</param>
-        private void Print(StringBuilder buffer, DAG.Node node,
-                DAG.Node parent, List<DAG.Arc> arcs)
+        private void Print(StringBuilder buffer, DAG.Node node, DAG.Node parent, List<DAG.Arc> arcs)
         {
             int vertexIndex = GetOriginalVertexIndex(node.vertexIndex);
 

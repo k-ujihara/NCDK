@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// A quotient graph Q is derived from a simple graph G (or molecule graph) by 

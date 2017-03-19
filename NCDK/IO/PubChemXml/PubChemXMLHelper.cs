@@ -34,7 +34,6 @@ namespace NCDK.IO.PubChemXml
     /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
     public class PubChemXMLHelper
@@ -188,7 +187,7 @@ namespace NCDK.IO.PubChemXml
             foreach (var elm in parser.Descendants(Name_EL_PCSUBSTANCE_SID))
             {
                 string sid = GetSID(elm);
-                model.SetProperty(CDKPropertyName.TITLE, sid);
+                model.SetProperty(CDKPropertyName.Title, sid);
             }
             return model;
         }

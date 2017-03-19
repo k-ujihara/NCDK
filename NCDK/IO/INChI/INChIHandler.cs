@@ -24,26 +24,24 @@ using System.Xml.Linq;
 namespace NCDK.IO.InChI
 {
     /// <summary>
-    /// SAX2 implementation for INChI XML fragment parsing.
-    ///
-    /// <p>The supported elements are: identifier, formula and
+    /// XReader handler for INChI XML fragment parsing.
+    /// </summary>
+    /// <remarks>
+    /// <para>The supported elements are: identifier, formula and
     /// connections. All other elements are not parsed (at this moment).
     /// This parser is written based on the INChI files in data/ichi
     /// for version 1.1Beta.
-    ///
-    /// <p>The returned ChemFile contains a ChemSequence in
-    /// which the ChemModel represents the molecule.
-    ///
+    /// </para>
+    /// <para>The returned ChemFile contains a ChemSequence in
+    /// which the ChemModel represents the molecule.</para>
+    /// </remarks>
+    /// <seealso cref="InChIReader"/>
     // @cdk.module extra
     // @cdk.githash
-    ///
-    // @see org.openscience.cdk.io.INChIReader
-    ///
     // @cdk.require java1.4+
-    /// </summary>
-    public class INChIHandler : XContentHandler
+    public class InChIHandler : XContentHandler
     {
-        private INChIContentProcessorTool inchiTool;
+        private InChIContentProcessorTool inchiTool;
 
         private ChemFile chemFile;
         private ChemSequence chemSequence;
@@ -53,10 +51,10 @@ namespace NCDK.IO.InChI
 
         /// <summary>
         /// Constructor for the IChIHandler.
-        ///*/
-        public INChIHandler()
+        /// </summary>
+        public InChIHandler()
         {
-            inchiTool = new INChIContentProcessorTool();
+            inchiTool = new InChIContentProcessorTool();
         }
 
         public override void DoctypeDecl(XDocumentType docType)
@@ -128,11 +126,6 @@ namespace NCDK.IO.InChI
         /// <summary>
         /// Implementation of the StartElement() procedure overwriting the
         /// DefaultHandler interface.
-        ///
-        /// <param name="uri">the Universal Resource Identifier</param>
-        /// <param name="local">the local name (without namespace part)</param>
-        /// <param name="raw">the complete element name (with namespace part)</param>
-        /// <param name="atts">the attributes of this element</param>
         /// </summary>
         public override void StartElement(XElement element)
         {

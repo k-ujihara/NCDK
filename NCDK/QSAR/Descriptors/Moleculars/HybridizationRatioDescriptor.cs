@@ -27,19 +27,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// <see cref="IMolecularDescriptor"/> that reports the fraction of sp3 carbons to sp2 carbons.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// Note that it only considers carbon atoms and rather than use a simple ratio
     /// it reports the value of N<sub>sp3</sub>/ (N<sub>sp3</sub> + N<sub>sp2</sub>).
     /// The original form of the descriptor (i.e., simple ratio) has been used to
     /// characterize molecular complexity, especially in the are of natural products
     /// , which usually have a high value of the sp3 to sp2 ratio.
-    ///
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:hybratio
-    /// </summary>
     public class HybridizationRatioDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /// <summary>
@@ -104,14 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

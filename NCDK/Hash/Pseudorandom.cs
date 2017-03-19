@@ -26,19 +26,17 @@ namespace NCDK.Hash
 {
     /// <summary>
     /// A pseudorandom number generator.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal abstract class Pseudorandom
     {
         /// <summary>
         /// Generate a pseudorandom number for the given seed.
-        ///
+        /// </summary>
         /// <param name="seed">seeding value for the random number generator</param>
         /// <returns>next pseudorandom number</returns>
-        /// </summary>
         public abstract long Next(long seed);
     }
 }

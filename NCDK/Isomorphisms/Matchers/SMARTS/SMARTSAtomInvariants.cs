@@ -32,25 +32,29 @@ using System;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
-    /**
-     * Computes and stores atom invariants in a single object. The atom invariants
-     * are utilised as additional information for the <see cref="SMARTSAtom"/>s to match.
-     * The values provide additional invariants which are not defined in the {@link
-     * IAtom} API and avoids storing multiple properties in a type unsafe map
-     * (<see cref="IAtom.SetProperty(Object, Object)"/>). <p/> Depending on the SMARTS
-     * implementation different values for the ring information may be set. The
-     * choice of ring set affects {@link #RingNumber} and {@link #RingSize}.
-     * Some implementations store all ring sizes whilst others (Daylight) store only
-     * the smallest. The {@link #Degree} also depends on whether hydrogens are
-     * suppressed or represented as explicit atoms. <p/> The {@link
-     * #ConfigureDaylightWithRingInfo(IAtomContainer)} and {@link
-     * #ConfigureDaylightWithoutRingInfo(IAtomContainer)} static utilities create
-     * and set the invariants following the Daylight implementation. The invariants
-     * are set on the {@link #Key} property of each atom.
-     *
-     * @author John May
-     * @cdk.module smarts
-     */
+    /// <summary>
+    /// Computes and stores atom invariants in a single object. The atom invariants
+    /// are utilised as additional information for the <see cref="SMARTSAtom"/>s to match.
+    /// The values provide additional invariants which are not defined in the <see cref="IAtom"/> 
+    /// API and avoids storing multiple properties in a type unsafe map
+    /// (<see cref="IChemObject.SetProperty(object, object)"/>). 
+    /// </summary>
+    /// <remarks>
+    /// <para>Depending on the SMARTS
+    /// implementation different values for the ring information may be set. The
+    /// choice of ring set affects <see cref="RingNumber"/> and <see cref="RingSize"/> .
+    /// Some implementations store all ring sizes whilst others (Daylight) store only
+    /// the smallest. The <see cref="Degree"/>  also depends on whether hydrogens are
+    /// suppressed or represented as explicit atoms. </para>
+    /// <para>The <see cref="ConfigureDaylightWithRingInfo(IAtomContainer)"/> and
+    /// <see cref="ConfigureDaylightWithoutRingInfo(IAtomContainer)"/>
+    /// static utilities create
+    /// and set the invariants following the Daylight implementation. The invariants
+    /// are set on the <see cref="Key"/>  property of each atom.
+    /// </para>
+    /// </remarks>
+    // @author John May
+    // @cdk.module smarts
     internal sealed class SMARTSAtomInvariants
     {
         /// <summary>Property key to index the class by.</summary>
@@ -80,20 +84,17 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>The total number of hydrogens on an atom.</summary>
         private readonly int totalHydrogenCount;
 
-        /**
-         * Internal constructor - simple takes all the values.
-         *
-         * @param valence            the valence value
-         * @param ringNumber         number of rings an atom belongs to (variable)
-         * @param ringSize           the size of the rings (variable)
-         * @param ringConnectivity   the number of connected ring bonds (or atoms)
-         * @param degree             the degree of an atom
-         * @param connectivity       the number of connections (degree + implicit H
-         *                           count)
-         * @param totalHydrogenCount the total number of hydrogens
-         */
-        public SMARTSAtomInvariants(IAtomContainer target, int valence, int ringNumber, ICollection<int> ringSize,
-                int ringConnectivity, int degree, int connectivity, int totalHydrogenCount)
+        /// <summary>
+        /// Internal constructor - simple takes all the values.
+        /// </summary>
+        /// <param name="valence">the valence value</param>
+        /// <param name="ringNumber">number of rings an atom belongs to (variable)</param>
+        /// <param name="ringSize">the size of the rings (variable)</param>
+        /// <param name="ringConnectivity">the number of connected ring bonds (or atoms)</param>
+        /// <param name="degree">the degree of an atom</param>
+        /// <param name="connectivity">the number of connections (degree + implicit H count)</param>
+        /// <param name="totalHydrogenCount">the total number of hydrogens</param>
+        public SMARTSAtomInvariants(IAtomContainer target, int valence, int ringNumber, ICollection<int> ringSize, int ringConnectivity, int degree, int connectivity, int totalHydrogenCount)
         {
             this.target = target;
             this.valence = valence;
@@ -107,93 +108,86 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         public IAtomContainer Target => target;
 
-        /**
-         * Access the valence of this atom. The valence is matched by the {@code
-         * v<NUMBER>} SMARTS token. The valence is the total number of bonds formed
-         * by this atom and <b>NOT</b> the number of valence electrons. As such
-         * {@code [v3]} will match a 3 valent nitrogen and {@code [v5]} will match a
-         * 5 valent nitrogen. The value is separate from {@link IAtom#Valency}
-         * so it can be cleaned up after matching and avoid confusion with what the
-         * value should be.
-         *
-         * @return the valence of the atom.
-         */
+        /// <summary>
+        /// Access the valence of this atom. The valence is matched by the <c>v&lt;NUMBER&gt;</c>
+        /// SMARTS token. The valence is the total number of bonds formed
+        /// by this atom and <b>NOT</b> the number of valence electrons. As such
+        /// <c>[v3]</c> will match a 3 valent nitrogen and <c>[v5]</c> will match a
+        /// 5 valent nitrogen. The value is separate from <see cref="IAtomType.Valency"/> 
+        /// so it can be cleaned up after matching and avoid confusion with what the
+        /// value should be.
+        /// </summary>
+        /// <returns>the valence of the atom.</returns>
         public int Valence => valence;
 
-        /**
-         * The number of rings this atom belong to. The value is matched by the
-         * {@code R<NUMBER>} token and depends on the ring set used. The Daylight
-         * implementation uses the non-unique Smallest Set of Smallest Rings (SSSR)
-         * which can lead to inconsistent matches.
-         *
-         * @return number or rings
-         */
+        /// <summary>
+        /// The number of rings this atom belong to. The value is matched by the
+        /// <c>R&lt;NUMBER&gt;</c> token and depends on the ring set used. The Daylight
+        /// implementation uses the non-unique Smallest Set of Smallest Rings (SSSR)
+        /// which can lead to inconsistent matches.
+        /// </summary>
+        /// <returns>number or rings</returns>
         public int RingNumber => ringNumber;
 
-        /**
-         * The sizes of rings this atoms belongs to. The value is matched by the
-         * {@code r<NUMBER>} token and depends on the ring set used. The Daylight
-         * implementation uses this value to match the smallest ring to which this
-         * atom is a member. It may be beneficial to match multiple ring sizes (not
-         * yet defined by OpenSMARTS).
-         *
-         * @return ring sizes
-         */
+        /// <summary>
+        /// The sizes of rings this atoms belongs to. The value is matched by the
+        /// <c>r&lt;NUMBER&gt;</c> token and depends on the ring set used. The Daylight
+        /// implementation uses this value to match the smallest ring to which this
+        /// atom is a member. It may be beneficial to match multiple ring sizes (not
+        /// yet defined by OpenSMARTS).
+        /// </summary>
+        /// <returns>ring sizes</returns>
         public ICollection<int> RingSize => ringSize;
 
-        /**
-         * The number of connected ring bonds (or atoms). This value is matched by
-         * the {@code x<NUMBER>} token. The Daylight implementation counts the
-         * number of connected ring bonds but it may be beneficial to match the atom
-         * ring connectivity (not yet defined by OpenSMARTS).
-         *
-         * @return ring connectivity
-         */
+        /// <summary>
+        /// The number of connected ring bonds (or atoms). This value is matched by
+        /// the <c>x&lt;NUMBER&gt;</c> token. The Daylight implementation counts the
+        /// number of connected ring bonds but it may be beneficial to match the atom
+        /// ring connectivity (not yet defined by OpenSMARTS).
+        /// </summary>
+        /// <returns>ring connectivity</returns>
         public int RingConnectivity => ringConnectivity;
 
-        /**
-         * The number of connected bonds including those to hydrogens. This value is
-         * matched by the {@code X<NUMBER>} token. This value depends on whether the
-         * hydrogens have been suppressed or are represented as explicit atoms.
-         *
-         * @return connectivity
-         */
+        /// <summary>
+        /// The number of connected bonds including those to hydrogens. This value is
+        /// matched by the <c>X&lt;NUMBER&gt;</c> token. This value depends on whether the
+        /// hydrogens have been suppressed or are represented as explicit atoms.
+        /// </summary>
+        /// <returns>connectivity</returns>
         public int Connectivity => connectivity;
 
-        /**
-         * The degree of a vertex defined as the number of explicit connected bonds.
-         * This value is matched by the {@code D<NUMBER>} token. This value depends
-         * on whether the hydrogens have been suppressed or are represented as
-         * explicit atoms.
-         *
-         * @return connectivity
-         */
+        /// <summary>
+        /// The degree of a vertex defined as the number of explicit connected bonds.
+        /// This value is matched by the <c>D&lt;NUMBER&gt;</c> token. This value depends
+        /// on whether the hydrogens have been suppressed or are represented as
+        /// explicit atoms.
+        /// </summary>
+        /// <returns>connectivity</returns>
         public int Degree => degree;
 
-        /**
-         * The total number of hydrogens attached to an atom.
-         *
-         * @return
-         */
+        /// <summary>
+        /// The total number of hydrogens attached to an atom.
+        /// </summary>
+        /// <returns></returns>
         public int TotalHydrogenCount => totalHydrogenCount;
 
-        /**
-         * Computes <see cref="SMARTSAtomInvariants"/> and stores on the {@link #Key} or
-         * each <see cref="IAtom"/> in the <paramref name="container"/>. The {@link
-         * CDKConstants#ISINRING} is also set for each bond. This configuration does
-         * not include ring information and values are left as unset.
-         * Ring membership is still configured but not ring size.
-         *
-         * <blockquote><code>
-         *     IAtomContainer container = ...;
-         *     SMARTSAtomInvariants.ConfigureDaylightWithoutRingInfo(container);
-         *     foreach (var atom in container.Atoms) {
-         *         SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
-         *     }
-         * </code></blockquote>
-         *
-         * @param container the container to configure
-         */
+        /// <summary>
+        /// Computes <see cref="SMARTSAtomInvariants"/> and stores on the <see cref="Key"/> or
+        /// each <see cref="IAtom"/> in the <paramref name="container"/>. The <see cref="IMolecularEntity.IsInRing"/>  
+        /// is also set for each bond. This configuration does
+        /// not include ring information and values are left as unset.
+        /// Ring membership is still configured but not ring size.
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///     IAtomContainer container = ...;
+        ///     SMARTSAtomInvariants.ConfigureDaylightWithoutRingInfo(container);
+        ///     foreach (var atom in container.Atoms) {
+        ///         SMARTSAtomInvariants inv = atom.GetProperty&lt;SMARTSAtomInvariants&gt;(SMARTSAtomInvariants.Key);
+        ///     }
+        /// </code>
+        /// </example>
+        /// <param name="container">the container to configure</param>
         public static void ConfigureDaylightWithoutRingInfo(IAtomContainer container)
         {
             EdgeToBondMap map = EdgeToBondMap.WithSpaceFor(container);
@@ -201,25 +195,24 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             ConfigureDaylight(container, graph, map, false);
         }
 
-        /**
-         * Computes <see cref="SMARTSAtomInvariants"/> and stores on the {@link #Key} or
-         * each <see cref="IAtom"/> in the <paramref name="container"/>. The {@link
-         * CDKConstants#ISINRING} is also set for each bond. This configuration
-         * includes the ring information as used by the Daylight implementation.
-         * That is the Smallest Set of Smallest Rings (SSSR) is used and only the
-         * smallest ring is stored for the {@link #RingSize}.
-         *
-         * <blockquote><code>
-         *     IAtomContainer container = ...;
-         *     SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
-         *     foreach (var atom in container.Atoms) {
-         *         SMARTSAtomInvariants inv = atom.GetProperty<SMARTSAtomInvariants>(SMARTSAtomInvariants.Key);
-         *
-         *     }
-         * </code></blockquote>
-         *
-         * @param container the container to configure
-         */
+        /// <summary>
+        /// Computes <see cref="SMARTSAtomInvariants"/> and stores on the <see cref="Key"/> or
+        /// each <see cref="IAtom"/> in the <paramref name="container"/>. The <see cref="IMolecularEntity.IsInRing"/>  
+        /// is also set for each bond. This configuration
+        /// includes the ring information as used by the Daylight implementation.
+        /// That is the Smallest Set of Smallest Rings (SSSR) is used and only the
+        /// smallest ring is stored for the <see cref="RingSize"/> .
+        /// </summary>
+        /// <example>
+        /// <code>
+        ///     IAtomContainer container = ...;
+        ///     SMARTSAtomInvariants.ConfigureDaylightWithRingInfo(container);
+        ///     foreach (var atom in container.Atoms) {
+        ///         SMARTSAtomInvariants inv = atom.GetProperty&lt;SMARTSAtomInvariants&gt;(SMARTSAtomInvariants.Key);
+        ///     }
+        /// </code>
+        /// </example>
+        /// <param name="container">the container to configure</param>
         public static void ConfigureDaylightWithRingInfo(IAtomContainer container)
         {
             EdgeToBondMap map = EdgeToBondMap.WithSpaceFor(container);
@@ -227,20 +220,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             ConfigureDaylight(container, graph, map, true);
         }
 
-        /**
-         * Computes invariants - see {@link #ConfigureDaylightWithRingInfo(IAtomContainer)}
-         * and {@link #ConfigureDaylightWithoutRingInfo(IAtomContainer)}.
-         *
-         * @param container the container to configure
-         * @param graph     the graph for quick traversal
-         * @param bondMap   the bond map for quick bond lookup
-         * @param ringInfo  logical condition as whether ring info should be
-         *                  included
-         */
-        private static void ConfigureDaylight(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap,
-                bool ringInfo)
+        /// <summary>
+        /// Computes invariants - see <see cref="ConfigureDaylightWithRingInfo(IAtomContainer)"/> 
+        /// and <see cref="ConfigureDaylightWithoutRingInfo(IAtomContainer)"/>.
+        /// </summary>
+        /// <param name="container">the container to configure</param>
+        /// <param name="graph">the graph for quick traversal</param>
+        /// <param name="bondMap">the bond map for quick bond lookup</param>
+        /// <param name="ringInfo">logical condition as whether ring info should be included</param>
+        private static void ConfigureDaylight(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap, bool ringInfo)
         {
-
             int nAtoms = container.Atoms.Count;
 
             int[] ringNumber = new int[nAtoms];
@@ -274,7 +263,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
             for (int v = 0; v < nAtoms; v++)
             {
-
                 IAtom atom = container.Atoms[v];
 
                 int implHCount = CheckNotNull(atom.ImplicitHydrogenCount, "Implicit hydrogen count was not set.");

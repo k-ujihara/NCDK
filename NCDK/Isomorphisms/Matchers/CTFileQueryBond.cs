@@ -66,11 +66,10 @@ namespace NCDK.Isomorphisms.Matchers
         /// Create a CTFileQueryBond of the specified type (from the MDL spec). The
         /// bond copies the atoms and sets the type using the value 'type', 5 = single
         /// or double, 8 = any, etc.
-        ///
+        /// </summary>
         /// <param name="bond">an existing bond</param>
         /// <param name="type">the specified type</param>
         /// <returns>a new CTFileQueryBond</returns>
-        /// </summary>
         public static CTFileQueryBond OfType(IBond bond, int type)
         {
             CTFileQueryBond queryBond = new CTFileQueryBond(bond.Builder);

@@ -1,23 +1,7 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
-
 
 /* Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -45,21 +29,18 @@ using NCDK.Default;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace NCDK.Default
 {
     /// <summary>
     /// An entry in the PDB database. It is not just a regular protein, but the
     /// regular PDB mix of protein or protein complexes, ligands, water molecules
     /// and other species.
-    ///
+    /// </summary>
     // @cdk.module  pdb
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    /// </summary>
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;
@@ -109,21 +90,18 @@ namespace NCDK.Default
         }
     }
 }
-
 namespace NCDK.Silent
 {
     /// <summary>
     /// An entry in the PDB database. It is not just a regular protein, but the
     /// regular PDB mix of protein or protein complexes, ligands, water molecules
     /// and other species.
-    ///
+    /// </summary>
     // @cdk.module  pdb
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    /// </summary>
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;
@@ -173,4 +151,3 @@ namespace NCDK.Silent
         }
     }
 }
-

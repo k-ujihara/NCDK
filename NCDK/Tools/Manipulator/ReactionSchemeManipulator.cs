@@ -26,21 +26,19 @@ using System.Linq;
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
+    /// </summary>
+    /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    ///
-    /// <seealso cref="ChemModelManipulator"/>
-    /// </summary>
     public class ReactionSchemeManipulator
     {
 
         /// <summary>
         /// Get all molecule objects from a set of Reactions given a <see cref="IAtomContainerSet"/> to add.
-        ///
+        /// </summary>
         /// <param name="scheme">The set of reaction to inspect</param>
         /// <param name="molSet">The set of molecules to be added</param>
         /// <returns>The IAtomContainerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme, IAtomContainerSet<IAtomContainer> molSet)
         {
             // A ReactionScheme can contain other IRreactionSet objects
@@ -84,10 +82,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// get all AtomContainers object from a set of Reactions.
-        ///
+        /// </summary>
         /// <param name="scheme">The scheme of reaction to inspect</param>
         /// <returns>The IAtomContainerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllAtomContainers(IReactionScheme scheme)
         {
             return GetAllAtomContainers(scheme, scheme.Builder.CreateAtomContainerSet());
@@ -95,10 +92,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get all ID of this IReactionSet.
-        ///
+        /// </summary>
         /// <param name="scheme">The IReactionScheme to analyze</param>
         /// <returns>A List with all ID</returns>
-        /// </summary>
         public static IEnumerable<string> GetAllIDs(IReactionScheme scheme)
         {
             List<string> IDlist = new List<string>();
@@ -116,10 +112,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get all IReaction's object from a given IReactionScheme.
-        ///
+        /// </summary>
         /// <param name="scheme">The IReactionScheme to extract</param>
         /// <returns>The IReactionSet</returns>
-        /// </summary>
         public static IReactionSet GetAllReactions(IReactionScheme scheme)
         {
             IReactionSet reactionSet = scheme.Builder.CreateReactionSet();
@@ -138,10 +133,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Create a IReactionScheme give a IReactionSet object.
-        ///
+        /// </summary>
         /// <param name="reactionSet">The IReactionSet</param>
         /// <returns>The IReactionScheme</returns>
-        /// </summary>
         public static IReactionScheme CreateReactionScheme(IReactionSet reactionSet)
         {
             IReactionScheme reactionScheme = reactionSet.Builder.CreateReactionScheme();
@@ -166,10 +160,9 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Extract a set of Reactions which are in top of a IReactionScheme. The top reactions are those
         /// which any of their reactants are participating in other reactions as a products.
-        ///
+        /// </summary>
         /// <param name="reactionScheme">The IReactionScheme</param>
         /// <returns>The set of top reactions</returns>
-        /// </summary>
         public static IReactionSet ExtractTopReactions(IReactionScheme reactionScheme)
         {
             IReactionSet reactionSet = reactionScheme.Builder.CreateReactionSet();
@@ -195,11 +188,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Create a IReactionScheme given as a top a IReaction. If it doesn't exist any subsequent reaction
         /// return null;
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction as a top</param>
         /// <param name="reactionSet">The IReactionSet to extract a IReactionScheme</param>
         /// <returns>The IReactionScheme</returns>
-        /// </summary>
         private static IReactionScheme SetScheme(IReaction reaction, IReactionSet reactionSet)
         {
             IReactionScheme reactionScheme = reaction.Builder.CreateReactionScheme();
@@ -223,11 +215,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Extract reactions from a IReactionSet which at least one product is existing
         /// as reactant given a IReaction
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction to analyze</param>
         /// <param name="reactionSet">The IReactionSet to inspect</param>
         /// <returns>A IReactionSet containing the reactions</returns>
-        /// </summary>
         private static IReactionSet ExtractPrecursorReaction(IReaction reaction, IReactionSet reactionSet)
         {
             IReactionSet reactConSet = reaction.Builder.CreateReactionSet();
@@ -250,11 +241,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Extract reactions from a IReactionSet which at least one reactant is existing
         /// as precursor given a IReaction
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction to analyze</param>
         /// <param name="reactionSet">The IReactionSet to inspect</param>
         /// <returns>A IReactionSet containing the reactions</returns>
-        /// </summary>
         private static IReactionSet ExtractSubsequentReaction(IReaction reaction, IReactionSet reactionSet)
         {
             IReactionSet reactConSet = reaction.Builder.CreateReactionSet();
@@ -277,12 +267,11 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Extract the list of AtomContainers taking part in the IReactionScheme to originate a
         /// product given a reactant.
-        ///
+        /// </summary>
         /// <param name="origenMol">The start IAtomContainer</param>
         /// <param name="finalMol">The end IAtomContainer</param>
         /// <param name="reactionScheme">The IReactionScheme containing the AtomContainers</param>
         /// <returns>A List of IAtomContainerSet given the path</returns>
-        /// </summary>
         public static IList<IAtomContainerSet<IAtomContainer>> GetAtomContainerSet(IAtomContainer origenMol, IAtomContainer finalMol,
                 IReactionScheme reactionScheme)
         {

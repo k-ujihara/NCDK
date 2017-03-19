@@ -19,19 +19,17 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This smarts atom matches aliphatic atom with element symbol specified.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AliphaticSymbolAtom : SMARTSAtom
     {
-
         /// <summary>
         /// Creates a new instance.
-        ///
-        /// <param name="symbol">the atom symbol</param>
         /// </summary>
+        /// <param name="symbol">the atom symbol</param>
+        /// <param name="builder"></param>
         public AliphaticSymbolAtom(string symbol, IChemObjectBuilder builder)
             : base(builder)
         {

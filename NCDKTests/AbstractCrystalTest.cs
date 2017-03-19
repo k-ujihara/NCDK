@@ -43,16 +43,16 @@ namespace NCDK
             IAtom c2 = crystal.Builder.CreateAtom("C");
             IAtom o = crystal.Builder.CreateAtom("O");
             IAtom c3 = crystal.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = crystal.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = crystal.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = crystal.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             crystal.Add(acetone);
             Assert.AreEqual(4, crystal.Atoms.Count);
@@ -65,7 +65,7 @@ namespace NCDK
         {
             ICrystal crystal = (ICrystal)NewChemObject();
             IAtom c1 = crystal.Builder.CreateAtom("C");
-            crystal.Add(c1);
+            crystal.Atoms.Add(c1);
             Assert.AreEqual(1, crystal.Atoms.Count);
         }
 

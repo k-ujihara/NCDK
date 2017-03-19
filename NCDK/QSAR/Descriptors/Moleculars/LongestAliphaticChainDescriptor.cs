@@ -28,21 +28,23 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     ///  Class that returns the number of atoms in the longest aliphatic chain.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkRingSystem</td>
-    ///     <td>false</td>
-    ///     <td>True is the CDKConstant.ISINRING has to be set</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkRingSystem</term>
+    ///     <term>false</term>
+    ///     <term>True is the CDKConstant.ISINRING has to be set</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     /// Returns a single value named <i>nAtomLAC</i>
     // @author      chhoppe from EUROSCREEN
     // @cdk.created 2006-1-03
@@ -50,7 +52,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:largestAliphaticChain
-    /// </summary>
     public class LongestAliphaticChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkRingSystem = false;
@@ -184,14 +185,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(longestChainAtomsCount), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         private int GetLongestChainPath(int[][] apsp)
@@ -247,15 +241,11 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         ///  Performs a breadthFirstSearch in an AtomContainer starting with a
         ///  particular sphere, which usually consists of one start atom, and searches
         ///  for a pi system.
-        ///
-        /// <param name="container">The AtomContainer to</param>
-        ///      be searched
-        /// <param name="sphere">A sphere of atoms to</param>
-        ///      start the search with
-        /// <param name="path">A vector which stores the atoms belonging to the pi system</param>
-        /// <exception cref="CDKException"> Description of the</exception>
-        ///      Exception
         /// </summary>
+        /// <param name="container">The AtomContainer to be searched</param>
+        /// <param name="sphere">A sphere of atoms to start the search with</param>
+        /// <param name="path">A vector which stores the atoms belonging to the pi system</param>
+        /// <exception cref="CDKException"></exception>
         private void BreadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path)
         {
             IAtom nextAtom;

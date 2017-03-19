@@ -40,7 +40,7 @@ namespace NCDK.Smiles.SMARTS
     {
 
         /// <summary>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @cdk.bug 2788357
         /// </summary>
         [TestMethod()]
@@ -222,10 +222,10 @@ namespace NCDK.Smiles.SMARTS
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(furan);
 
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.MCB));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.MCBFinder));
             Assert.IsTrue(sqt.Matches(furan, true));
 
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.PiBonds(), Cycles.MCB));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.PiBondsModel, Cycles.MCBFinder));
             Assert.IsFalse(sqt.Matches(furan, true));
         }
 

@@ -27,11 +27,10 @@ namespace NCDK.SMSD.Helper
     /// <summary>
     /// Helper class defining the energy for a bond type. The bond
     /// type is defined as to element symbols and a bond order.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class BondEnergy
     {
         private string symbol1 = "";
@@ -73,15 +72,14 @@ namespace NCDK.SMSD.Helper
         /// <summary>
         /// Returns the bond order for this bond type energy.
         ///
-        /// <returns>the bond order of the bond type as <see cref="Order"/></returns>
+        /// <returns>the bond order of the bond type as <see cref="NCDK.BondOrder"/></returns>
         /// </summary>
         public BondOrder BondOrder => bondOrder;
 
         /// <summary>
         /// Returns the energy for this bond type.
-        ///
-        /// <returns>the bond energy as integer.</returns>
         /// </summary>
+        /// <returns>the bond energy as integer.</returns>
         public int Energy => energy;
 
         public bool Matches(IBond bond)

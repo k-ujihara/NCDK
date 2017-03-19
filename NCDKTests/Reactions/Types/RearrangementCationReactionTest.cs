@@ -256,13 +256,13 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Double);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
             try
             {
@@ -288,13 +288,13 @@ namespace NCDK.Reactions.Types
 
             // C=C-[C+]-C
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[2].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
             try
             {
@@ -313,7 +313,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {

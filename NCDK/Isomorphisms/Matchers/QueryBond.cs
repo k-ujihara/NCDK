@@ -16,19 +16,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
     /// Implements the concept of a "query bond" between two or more atoms.
     /// Query bonds can be used to capture types such as "Single or Double" or "Any".
-    ///
+    /// </summary>
     // @cdk.module isomorphism
     // @cdk.githash
     // @cdk.created 2010-12-16
-    /// </summary>
     public abstract class QueryBond : Default.Bond, IQueryBond
     {
         public QueryBond(IChemObjectBuilder builder)

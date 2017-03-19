@@ -40,18 +40,16 @@ namespace NCDK.IO
     /// This interface specifies the common functionality all IO readers should provide.
     ///
     /// IO readers should not implement this interface directly, but rather implement
-    /// one of its child interfaces: <see cref="ISimpleChemObjectReader"/> or <see cref="IIteratingChemObjectReader"/>.
+    /// one of its child interfaces: <see cref="ISimpleChemObjectReader"/> or <see cref="Iterator.IIteratingChemObjectReader{T}"/>.
     /// These sub-interfaces specify the information access methods:
     /// a simple Read() method for the <see cref="ISimpleChemObjectReader"/> and
-    /// more advanced iterator based access for the <see cref="IIteratingChemObjectReader"/> (suitable for large files)
-    ///
+    /// more advanced iterator based access for the <see cref="Iterator.IIteratingChemObjectReader{T}"/> (suitable for large files)
+    /// </summary>
+    /// <seealso cref="ISimpleChemObjectReader"/>
+    /// <seealso cref="Iterator.IIteratingChemObjectReader{T}"/>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author     Egon Willighagen <egonw@users.sf.net>
-    /// <seealso cref="ISimpleChemObjectReader"/>
-    /// <seealso cref="IIteratingChemObjectReader"/>
-    ///*/
     public interface IChemObjectReader : IChemObjectIO
     {
         /// <summary>
@@ -67,59 +65,51 @@ namespace NCDK.IO
          void SetReader(Stream reader);
 
         /// <summary>
-        /// Sets the reader mode. If ChemObjectReaderModes.Strict, then the reader will fail on
+        /// The reader mode. If <see cref="ChemObjectReaderModes.Strict"/>, then the reader will fail on
         /// any problem in the format of the read file, instead of trying to
         /// recover from that.
-        ///
-        /// <param name="mode">/// </summary></param>
-         ChemObjectReaderModes ReaderMode { set; }
+        /// </summary>
+        ChemObjectReaderModes ReaderMode { set; }
 
         /// <summary>
-        /// Sets an error handler that is sent events when file format issues occur.
-        ///
-        /// <param name="handler"><see cref="IChemObjectReaderErrorHandler"/> to send error</param>
-        ///                messages to.
+        /// An error handler that is sent events when file format issues occur.
         /// </summary>
         IChemObjectReaderErrorHandler ErrorHandler { set; }
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
-        ///
-        /// <param name="message">the error message.</param>
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
         /// </summary>
-         void HandleError(string message);
+        /// <param name="message">the error message.</param>
+        void HandleError(string message);
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
-        ///
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
+        /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="exception">the corresponding <see cref="Exception"/>.</param>
-        /// </summary>
-         void HandleError(string message, Exception exception);
+        void HandleError(string message, Exception exception);
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
-        ///
+        /// Throws an <see cref="CDKException"/> when in Strict <see cref="ChemObjectReaderModes"/>.
+        /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="row">Row in the file where the error is found.</param>
         /// <param name="colStart">Start column in the file where the error is found.</param>
         /// <param name="colEnd">End column in the file where the error is found.</param>
-        /// </summary>
-         void HandleError(string message, int row, int colStart, int colEnd);
+        void HandleError(string message, int row, int colStart, int colEnd);
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.
-        /// Throws an <see cref="CDKException"/> when in Strict <see cref="Mode"/>.
-        ///
+        /// Throws an <see cref="CDKException"/> when in <see cref="ChemObjectReaderModes.Strict"/>.
+        /// </summary>
         /// <param name="message">the error message.</param>
         /// <param name="exception">the corresponding <see cref="Exception"/>.</param>
         /// <param name="row">Row in the file where the error is found.</param>
         /// <param name="colStart">Start column in the file where the error is found.</param>
         /// <param name="colEnd">End column in the file where the error is found.</param>
-        /// </summary>
-         void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
+        void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
     }
 }

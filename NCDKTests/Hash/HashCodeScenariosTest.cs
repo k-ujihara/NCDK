@@ -57,7 +57,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -78,7 +78,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -98,7 +98,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -120,7 +120,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -142,7 +142,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -163,7 +163,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -185,8 +185,8 @@ namespace NCDK.Hash
 
             IAtomContainer molecule = mols[0];
 
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(8).Molecular();
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(8).Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
 
             long basicHash = basic.Generate(molecule);
             long stereoHash = stereo.Generate(molecule);
@@ -207,7 +207,7 @@ namespace NCDK.Hash
         {
             List<IAtomContainer> mols = ExtractSDF("ihlenfeldt93-figure-12.sdf", 2);
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(1).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(1).Chiral().Molecular();
 
             var sHashes = new HashSet<long>();
             var rHashes = new HashSet<long>();
@@ -244,7 +244,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
             long aHash = stereo.Generate(a);
             long bHash = stereo.Generate(b);
 
@@ -265,7 +265,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(8).Chiral().Molecular();
 
             Assert.AreNotEqual(stereo.Generate(a), stereo.Generate(b), NonEqMesg(a, b));
         }
@@ -285,7 +285,7 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -307,13 +307,13 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
 
             Assert.AreEqual(aHash, bHash, eqMesg(a, b));
 
-            MoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
+            IMoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
             aHash = perturbed.Generate(a);
             bHash = perturbed.Generate(b);
             Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
@@ -334,8 +334,8 @@ namespace NCDK.Hash
             IAtomContainer a = mols[0];
             IAtomContainer b = mols[1];
 
-            MoleculeHashGenerator nonperturbed = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
-            MoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
+            IMoleculeHashGenerator nonperturbed = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
 
             long aHash = nonperturbed.Generate(a);
             long bHash = nonperturbed.Generate(b);
@@ -345,7 +345,7 @@ namespace NCDK.Hash
             bHash = perturbed.Generate(b);
             Assert.AreNotEqual(aHash, bHash, NonEqMesg(a, b));
 
-            AtomHashGenerator perturbedAtomic = new HashGeneratorMaker().Elemental().Depth(3).Perturbed().Atomic();
+            IAtomHashGenerator perturbedAtomic = new HashGeneratorMaker().Elemental().Depth(3).Perturbed().Atomic();
             long[] aHashes = perturbedAtomic.Generate(a);
             long[] bHashes = perturbedAtomic.Generate(b);
 
@@ -379,7 +379,7 @@ namespace NCDK.Hash
             IAtomContainer c = mols[2];
             IAtomContainer d = mols[3];
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(6).Perturbed().Molecular();
 
             long aHash = generator.Generate(a);
             long bHash = generator.Generate(b);
@@ -413,7 +413,7 @@ namespace NCDK.Hash
 
             for (int depth = 0; depth < 12; depth++)
             {
-                MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(depth).Molecular();
+                IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(depth).Molecular();
                 long aHash = basic.Generate(a);
                 long bHash = basic.Generate(b);
 
@@ -443,7 +443,7 @@ namespace NCDK.Hash
             List<IAtomContainer> inositols = ExtractSDF("inositols.sdf", 9);
 
             // non-stereo non-perturbed hash generator
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(6).Molecular();
 
             var hashes = new HashSet<long>();
 
@@ -456,7 +456,7 @@ namespace NCDK.Hash
             Assert.AreEqual(1, hashes.Count, "all inositol isomers should hash to the same value");
 
             // stereo non-perturbed hash generator
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(6).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(6).Chiral().Molecular();
             hashes.Clear();
 
             foreach (var inositol in inositols)
@@ -468,7 +468,7 @@ namespace NCDK.Hash
             Assert.AreEqual(1, hashes.Count, "all inositol isomers should hash to the same value");
 
             // stereo non-perturbed hash generator
-            MoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Chiral().Perturbed()
+            IMoleculeHashGenerator perturbed = new HashGeneratorMaker().Elemental().Depth(6).Chiral().Perturbed()
                     .Molecular();
             hashes.Clear();
 
@@ -492,10 +492,10 @@ namespace NCDK.Hash
             IAtomContainer pAllene = allenes[1];
 
             // non-stereo hash code
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
             Assert.AreEqual(basic.Generate(mAllene), basic.Generate(pAllene), "(M) and (P) allene should hash the same when non-stereo");
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
 
             Assert.AreNotEqual(stereo.Generate(mAllene), stereo.Generate(pAllene), "(M) and (P) allene should not hash the same when stereo");
 
@@ -529,11 +529,11 @@ namespace NCDK.Hash
             IAtomContainer pAllene = allenes[1];
 
             // non-stereo hash code
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
             Assert.AreEqual(basic.Generate(mAllene), basic.Generate(pAllene),
                 "(M) and (P) allene should hash the same when non-stereo");
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
             Assert.AreNotEqual(stereo.Generate(mAllene), stereo.Generate(pAllene),
                 "(M) and (P) allene should not hash the same when stereo");
 
@@ -568,7 +568,7 @@ namespace NCDK.Hash
             IAtomContainer pAllene3D = allenes3D[1];
 
             // non-stereo hash code
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
             Assert.AreEqual(basic.Generate(mAllene2D), basic.Generate(pAllene2D),
                 "(M) and (P) allene (2D) should hash the same when non-stereo");
             Assert.AreEqual(basic.Generate(mAllene3D), basic.Generate(pAllene3D),
@@ -578,7 +578,7 @@ namespace NCDK.Hash
             Assert.AreEqual(basic.Generate(mAllene2D), basic.Generate(mAllene3D),
                 "(P) allene should hash the same in 2D and 3D");
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
             Assert.AreNotEqual(stereo.Generate(mAllene2D), stereo.Generate(pAllene2D), "(M) and (P) allene should not hash the same when stereo");
             Assert.AreNotEqual(stereo.Generate(mAllene3D), stereo.Generate(pAllene3D), "(M) and (P) allene (3D) should not hash the same when stereo");
             Assert.AreEqual(stereo.Generate(mAllene2D), stereo.Generate(mAllene3D), "(M) allene should hash the same in 2D and 3D (stereo)");
@@ -597,13 +597,13 @@ namespace NCDK.Hash
             IAtomContainer unspecAllene2 = unspecified[1];
 
             // non-stereo hash code
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
 
             Assert.AreEqual(basic.Generate(mAllene), basic.Generate(pAllene), "(M) and (P) allene should hash the same when non-stereo");
             Assert.AreNotEqual(basic.Generate(mAllene), basic.Generate(unspecAllene1), "Unspecifed allene should be the same");
             Assert.AreNotEqual(basic.Generate(mAllene), basic.Generate(unspecAllene2), "Unspecifed allene should be the same");
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
             Assert.AreNotEqual(stereo.Generate(mAllene), stereo.Generate(pAllene), "(M) and (P) allene should not hash the same when using stereo");
             Assert.AreNotEqual(stereo.Generate(mAllene), stereo.Generate(unspecAllene1), "Unspecifed allene should be the different");
             Assert.AreNotEqual(stereo.Generate(mAllene), stereo.Generate(unspecAllene2), "Unspecifed allene should be the different");
@@ -620,10 +620,10 @@ namespace NCDK.Hash
             IAtomContainer zCumulene = cumulenes[1];
 
             // non-stereo hash code
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Elemental().Depth(2).Molecular();
             Assert.AreNotEqual(basic.Generate(eCumulene), basic.Generate(zCumulene), "(E) and (Z) cumulene should hash the same when non-stereo");
 
-            MoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
+            IMoleculeHashGenerator stereo = new HashGeneratorMaker().Elemental().Depth(2).Chiral().Molecular();
 
             Assert.AreEqual(stereo.Generate(eCumulene), stereo.Generate(zCumulene), "(E) and (Z) cumulene should not hash the same when stereo");
         }
@@ -638,10 +638,10 @@ namespace NCDK.Hash
             IAtomContainer implicit_ = implicits[0];
             IAtomContainer explicit_ = explicits[0];
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Molecular();
+            IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Molecular();
             Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).SuppressHydrogens().Molecular();
+            IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).SuppressHydrogens().Molecular();
             Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
         }
 
@@ -655,10 +655,10 @@ namespace NCDK.Hash
             IAtomContainer implicit_ = implicits[0];
             IAtomContainer explicit_ = explicits[0];
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
+            IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
             Assert.AreNotEqual(unsuppressed.Generate(implicit_), unsuppressed.Generate(explicit_), NonEqMesg(implicit_, explicit_));
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().SuppressHydrogens().Molecular();
+            IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).Chiral().SuppressHydrogens().Molecular();
             Assert.AreEqual(suppressed.Generate(implicit_), suppressed.Generate(explicit_), eqMesg(implicit_, explicit_));
 
             // okay now let's do some permutations can check the hash codes are always the same
@@ -682,9 +682,9 @@ namespace NCDK.Hash
 
             Assert.AreEqual(implicits.Count, explicits.Count, "different number of implicit and explicit structures");
 
-            MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Perturbed().Molecular();
+            IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(4).Perturbed().Molecular();
 
-            MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).SuppressHydrogens()
+            IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(4).SuppressHydrogens()
                     .Perturbed().Molecular();
 
             // check that for each inesitol the values are equal if we suppress the hydrogens
@@ -712,10 +712,10 @@ namespace NCDK.Hash
             for (int d = 0; d < 10; d++)
             {
 
-                MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
+                IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
                         .Molecular();
 
-                MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
+                IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
                         .SuppressHydrogens().Perturbed().Molecular();
                 for (int i = 0; i < implicits.Count; i++)
                 {
@@ -744,10 +744,10 @@ namespace NCDK.Hash
             for (int d = 0; d < 4; d++)
             {
 
-                MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
+                IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
                         .Molecular();
 
-                MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
+                IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
                         .SuppressHydrogens().Perturbed().Molecular();
                 for (int i = 0; i < implicits.Count; i++)
                 {
@@ -776,10 +776,10 @@ namespace NCDK.Hash
             for (int d = 0; d < 4; d++)
             {
 
-                MoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
+                IMoleculeHashGenerator unsuppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral().Perturbed()
                         .Molecular();
 
-                MoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
+                IMoleculeHashGenerator suppressed = new HashGeneratorMaker().Elemental().Depth(d).Chiral()
                         .SuppressHydrogens().Perturbed().Molecular();
                 for (int i = 0; i < implicits.Count; i++)
                 {
@@ -811,12 +811,12 @@ namespace NCDK.Hash
             butan2ol.AddBond(butan2ol.Atoms[1], butan2ol.Atoms[3], BondOrder.Single);
             butan2ol.AddBond(butan2ol.Atoms[3], butan2ol.Atoms[4], BondOrder.Single);
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
 
             long achiral = generator.Generate(butan2ol);
 
             // C[C@@H](O)CC (2R)-butan-2-ol
-            butan2ol.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[0],
+            butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[0],
                 butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[2], butan2ol.Atoms[3],}, TetrahedralStereo.Clockwise));
 
@@ -824,7 +824,7 @@ namespace NCDK.Hash
 
             // C[C@H](O)CC  (2S)-butan-2-ol
             butan2ol.SetStereoElements(new List<IStereoElement>(1));
-            butan2ol.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[0],
+            butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[0],
                 butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[2], butan2ol.Atoms[3],}, TetrahedralStereo.AntiClockwise));
 
@@ -847,7 +847,7 @@ namespace NCDK.Hash
 
             // [C@H](C)(O)CC (2R)-butan-2-ol
             butan2ol.SetStereoElements(new List<IStereoElement>(1));
-            butan2ol.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
+            butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[0], butan2ol.Atoms[2], butan2ol.Atoms[3],},
                     TetrahedralStereo.AntiClockwise));
 
@@ -856,7 +856,7 @@ namespace NCDK.Hash
 
             // [C@@H](C)(O)CC (2S)-butan-2-ol
             butan2ol.SetStereoElements(new List<IStereoElement>(1));
-            butan2ol.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
+            butan2ol.StereoElements.Add(new TetrahedralChirality(butan2ol.Atoms[1], new IAtom[]{butan2ol.Atoms[1], // represents implicit_ H
                 butan2ol.Atoms[0], butan2ol.Atoms[2], butan2ol.Atoms[3],}, TetrahedralStereo.Clockwise));
 
             // check 'S' configuration was encoded
@@ -878,18 +878,18 @@ namespace NCDK.Hash
             dichloroethene.AddBond(dichloroethene.Atoms[1], dichloroethene.Atoms[2], BondOrder.Double);
             dichloroethene.AddBond(dichloroethene.Atoms[2], dichloroethene.Atoms[3], BondOrder.Single);
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
 
             // set E configuration
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
 
             long eConfiguration = generator.Generate(dichloroethene);
 
             // set Z configuration
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             long zConfiguration = generator.Generate(dichloroethene);
 
@@ -924,7 +924,7 @@ namespace NCDK.Hash
             dichloroethene.AddBond(dichloroethene.Atoms[1], dichloroethene.Atoms[4], BondOrder.Single); // C2-H5    3
             dichloroethene.AddBond(dichloroethene.Atoms[2], dichloroethene.Atoms[5], BondOrder.Single); // C3-H6    4
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().Molecular();
 
             var eConfigurations = new HashSet<long>();
             var zConfigurations = new HashSet<long>();
@@ -941,27 +941,27 @@ namespace NCDK.Hash
             // ClC(/[H])=C(\[H])Cl
             // Cl/C([H])=C(\[H])Cl
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[2]}, // CL4-C3
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Together));
@@ -970,22 +970,22 @@ namespace NCDK.Hash
             // set Z configurations - we can specify using the C-CL bonds or the
             // C-H bonds so there are four possible combinations
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[4]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[4]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
@@ -1023,7 +1023,7 @@ namespace NCDK.Hash
             dichloroethene.AddBond(dichloroethene.Atoms[1], dichloroethene.Atoms[4], BondOrder.Single); // C2-H5    3
             dichloroethene.AddBond(dichloroethene.Atoms[2], dichloroethene.Atoms[5], BondOrder.Single); // C3-H6    4
 
-            MoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().SuppressHydrogens()
+            IMoleculeHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(4).Chiral().SuppressHydrogens()
                     .Molecular();
 
             var eConfigurations = new HashSet<long>();
@@ -1041,27 +1041,27 @@ namespace NCDK.Hash
             // ClC(/[H])=C(\[H])Cl
             // Cl/C([H])=C(\[H])Cl
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[2]}, // CL4-C3
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], // C2-H5
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Opposite));
             eConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], // CL1-C2
                 dichloroethene.Bonds[4]}, // C3-H6
                 DoubleBondConformation.Together));
@@ -1070,22 +1070,22 @@ namespace NCDK.Hash
             // set Z configurations - we can specify using the C-CL bonds or the
             // C-H bonds so there are four possible combinations
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[2]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[2]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[3], dichloroethene.Bonds[4]}, DoubleBondConformation.Together));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
             dichloroethene.SetStereoElements(new List<IStereoElement>());
-            dichloroethene.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
+            dichloroethene.StereoElements.Add(new DoubleBondStereochemistry(dichloroethene.Bonds[1], new IBond[]{
                 dichloroethene.Bonds[0], dichloroethene.Bonds[4]}, DoubleBondConformation.Opposite));
             zConfigurations.Add(generator.Generate(dichloroethene));
 
@@ -1101,7 +1101,7 @@ namespace NCDK.Hash
 
         private static string title(IAtomContainer mol)
         {
-            return (string)mol.GetProperty<string>(CDKPropertyName.TITLE);
+            return (string)mol.GetProperty<string>(CDKPropertyName.Title);
         }
 
         private static string NonEqMesg(IAtomContainer a, IAtomContainer b)

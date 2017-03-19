@@ -41,13 +41,13 @@ namespace NCDK.Aromaticities
     /// pi bonds results in molecules such as hexamethylidenecyclohexane (
     /// "C=C1C(=C)C(=C)C(=C)C(=C)C1=C") being considered aromatic.
     /// </summary>
+    // mores tests in - NCDK.Aromaticities.ExocyclicAtomTypeModelTest
     // @author John May
     // @cdk.module standard
-    /// mores tests in - org.openscience.cdk.aromaticity.ExocyclicAtomTypeModelTest
     sealed class AtomTypeModel : ElectronDonation
     {
         /// <summary>Predefined electron contribution for several atom types.</summary>
-        private readonly static Dictionary<string, int> TYPES =
+        private readonly static Dictionary<string, int> Types =
             new Dictionary<string, int>()
             {
                 {"N.planar3", 2},
@@ -154,14 +154,14 @@ namespace NCDK.Aromaticities
         private static int ElectronsForAtomType(IAtom atom)
         {
             int electrons;
-            if (TYPES.TryGetValue(atom.AtomTypeName, out electrons))
+            if (Types.TryGetValue(atom.AtomTypeName, out electrons))
                 return electrons;
 
             try
             {
                 IAtomType atomType = AtomTypeFactory.GetInstance("NCDK.Dict.Data.cdk-atom-types.owl",
                         atom.Builder).GetAtomType(atom.AtomTypeName);
-                var propPiBondCount = atomType.GetProperty<int>(CDKPropertyName.PI_BOND_COUNT, 0);
+                var propPiBondCount = atomType.GetProperty<int>(CDKPropertyName.PiBondCount, 0);
                 return propPiBondCount;
             }
             catch (NoSuchAtomTypeException e)
@@ -178,7 +178,7 @@ namespace NCDK.Aromaticities
         private static int LonePairCount(IAtom atom)
         {
             // XXX: LONE_PAIR_COUNT is not currently set!
-            return atom.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT, -1);
+            return atom.GetProperty<int>(CDKPropertyName.LonePairCount, -1);
         }
     }
 }

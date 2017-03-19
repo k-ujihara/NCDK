@@ -28,21 +28,17 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Utility that helps determine which data features are present.
-    ///
+    /// </summary>
     // @author egonw
     // @cdk.githash
-    ///
     // @see    org.openscience.cdk.tools.DataFeatures
-    /// </summary>
     public class DataFeaturesTool
     {
         /// <summary>
         /// Determines the features present in the given <see cref="IAtomContainer"/>.
-        ///
-        /// <param name="molecule">IAtomContainer to determine the features off</param>
-        ///
-        /// <returns>integer representation of the present features</returns>
         /// </summary>
+        /// <param name="molecule">IAtomContainer to determine the features off</param>
+       /// <returns>integer representation of the present features</returns>
         public static int GetSupportedDataFeatures(IAtomContainer molecule)
         {
             int features = DataFeatures.None;

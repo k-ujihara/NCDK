@@ -22,25 +22,20 @@ namespace NCDK.Reactions
 {
     /// <summary>
     /// Classes that implement this interface are reaction mechanisms.
-    ///
+    /// </summary>
     // @author      Miguel Rojas
     // @cdk.module  reaction
     // @cdk.githash
-    /// </summary>
     public interface IReactionMechanism
     {
         /// <summary>
         /// Initiates the process for the given mechanism. The atoms to apply are mapped between
         /// reactants and products.
-        ///
-        ///
+        /// </summary>
         /// <param name="atomContainerSet">/// <param name="atomList">The list of atoms taking part in the mechanism</param></param>
         /// <param name="bondList">The list of bonds taking part in the mechanism</param>
         /// <returns>The Reaction mechanism</returns>
-        ///
-        // @ if an error occurs during the reaction process.
-        /// See documentation for individual reaction processes
-        /// </summary>
+        /// <exception cref="CDKException">if an error occurs during the reaction process. See documentation for individual reaction processes</exception>
         IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList);
     }
 }

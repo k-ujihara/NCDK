@@ -29,19 +29,16 @@ using System.IO;
 
 namespace NCDK.Proteins
 {
-    /**
-     * The detection of pocket and cavities in a bioPolymer is done similar to the program
-     * LIGSITE {@cdk.cite MH1997}.
-     *
-     * <p>TODO: Optimisation of the cubic grid placement
-     *
-     * @author      cho
-     * @cdk.created 2005-09-30
-     * @cdk.module     extra
-     * @cdk.githash
-     * @cdk.keyword    protein
-     * @cdk.keyword    pocket
-     */
+    /// <summary>
+    /// The detection of pocket and cavities in a bioPolymer is done similar to the program LIGSITE {@cdk.cite MH1997}.
+    /// TODO: Optimisation of the cubic grid placement
+    /// </summary>
+    // @author      cho
+    // @cdk.created 2005-09-30
+    // @cdk.module extra
+    // @cdk.githash
+    // @cdk.keyword protein
+    // @cdk.keyword pocket
     public class ProteinPocketFinder
     {
         public int SolvantValue { get; set; } = 0;
@@ -104,9 +101,7 @@ namespace NCDK.Proteins
             gridGenerator.Grid = grid;
         }
 
-        /**
-         * Creates from a PDB File a BioPolymer.
-         */
+        /// <summary>Creates from a PDB File a BioPolymer.</summary>
         private void ReadBioPolymer(string biopolymerFile)
         {
             try
@@ -133,12 +128,10 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method determines the minimum and maximum values of a coordinate space
-         * up to 3D space.
-         *
-         * @return double[] stores min,max,min,max,min,max
-         */
+        /// <summary>
+        /// Method determines the minimum and maximum values of a coordinate space up to 3D space.
+        /// </summary>
+        /// <returns>double[] stores min,max,min,max,min,max</returns>
         public double[] FindGridBoundaries()
         {
             IAtom[] atoms = AtomContainerManipulator.GetAtomArray(Protein);
@@ -179,9 +172,7 @@ namespace NCDK.Proteins
             return minMax;
         }
 
-        /**
-         * Method creates a cubic grid with the grid generator class.
-         */
+        /// <summary>Method creates a cubic grid with the grid generator class.</summary>
         public void CreateCubicGrid()
         {
             //        Debug.WriteLine("    CREATE CUBIC GRID");
@@ -190,15 +181,14 @@ namespace NCDK.Proteins
             this.Grid = gridGenerator.Grid;
         }
 
-        /**
-         * Method assigns the atoms of a biopolymer to the grid. For every atom
-         * the corresponding grid point is identified and set to the value
-         * of the proteinInterior variable.
-         * The atom radius and solvent radius is accounted for with the variables:
-         * double rAtom, and double rSolvent.
-         *
-         * @throws Exception
-         */
+        /// <summary>
+        /// Method assigns the atoms of a biopolymer to the grid. For every atom
+        /// the corresponding grid point is identified and set to the value
+        /// of the proteinInterior variable.
+        /// The atom radius and solvent radius is accounted for with the variables:
+        /// double rAtom, and double rSolvent.
+        /// </summary>
+        /// <exception cref="Exception"></exception>
         public void assignProteinToGrid()
         {
             //        logger.debug.Print("    ASSIGN PROTEIN TO GRID");
@@ -331,11 +321,10 @@ namespace NCDK.Proteins
             // +" solventGridPoints:"+solventGrid);
         }
 
-        /**
-         * Main method which calls the methods: assignProteinToGrid,
-         * GridScan, and FindPockets.
-         *
-         */
+        /// <summary>
+        /// Main method which calls the methods: assignProteinToGrid,
+        /// GridScan, and FindPockets.
+        /// </summary>
         public void SiteFinder()
         {
             //Debug.WriteLine("SITEFINDER");
@@ -352,7 +341,7 @@ namespace NCDK.Proteins
             int[] dim = gridGenerator.Dim;
             //        Debug.WriteLine("    SITEFINDER-SCAN - dim:" + dim[0] + " grid:"
             //                + this.grid[0].Length + " grid point sum:" + this.grid.Length
-            //                * this.grid[0].Length * this.grid[0][0].Length);
+            //               /// this.grid[0].Length * this.grid[0][0].Length);
             axisScanX(dim[2], dim[1], dim[0]);// x-Axis
             axisScanY(dim[2], dim[0], dim[1]);// y-Axis
             axisScanZ(dim[0], dim[1], dim[2]);// z-Axis
@@ -369,10 +358,9 @@ namespace NCDK.Proteins
             SortPockets();
         }
 
-        /**
-         * Method sorts the pockets due to its size. The biggest pocket is the first.
-         *
-         */
+        /// <summary>
+        /// Method sorts the pockets due to its size. The biggest pocket is the first.
+        /// </summary>
         private void SortPockets()
         {
             //        Debug.WriteLine("    SORT POCKETS Start#:" + pockets.Count);
@@ -412,11 +400,11 @@ namespace NCDK.Proteins
             Pockets = sortPockets;
         }
 
-        /**
-         * Method which finds the pocket, with a simple nearest neighbour clustering. The points
-         * which should be clustered or form a pocket can be determined with:
-         *     minPSPocket, minPSCluster, linkageRadius, and pocketSize.
-         */
+        /// <summary>
+        /// Method which finds the pocket, with a simple nearest neighbour clustering. The points
+        /// which should be clustered or form a pocket can be determined with:
+        ///     minPSPocket, minPSCluster, linkageRadius, and pocketSize.
+        /// </summary>
         private void FindPockets()
         {
             int[] dim = gridGenerator.Dim;
@@ -469,9 +457,7 @@ namespace NCDK.Proteins
 
         }
 
-        /**
-         * Method performs the clustering, is called by FindPockets().
-         */
+        /// <summary>Method performs the clustering, is called by FindPockets().</summary>
         public List<Vector3> clusterPSPPocket(Vector3 root, List<Vector3> subPocket, int[] dim)
         {
             // Debug.WriteLine(" ****** New Root ******:"+root.X+" "+root.Y+"
@@ -511,13 +497,12 @@ namespace NCDK.Proteins
             return subPocket;
         }
 
-        /**
-         * Method checks boundaries.
-         *
-         * @param minMax with minMax values
-         * @param dim    dimension
-         * @return new minMax values between 0 and dim
-         */
+        /// <summary>
+        /// Method checks boundaries.
+        /// </summary>
+        /// <param name="minMax">with minMax values</param>
+        /// <param name="dim">dimension</param>
+        /// <returns>new minMax values between 0 and dim</returns>
         private int[] CheckBoundaries(int[] minMax, int[] dim)
         {
             if (minMax[0] < 0)
@@ -547,9 +532,7 @@ namespace NCDK.Proteins
             return minMax;
         }
 
-        /**
-         * Method which assigns upon a PSP event +1 to these grid points.
-         */
+        /// <summary>Method which assigns upon a PSP event +1 to these grid points.</summary>
         private void firePSPEvent(List<Vector3> line)
         {
             for (int i = 0; i < line.Count; i++)
@@ -560,13 +543,12 @@ namespace NCDK.Proteins
 
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void DiagonalAxisScanXZY(int dimK, int dimL, int dimM)
         {
             // x min ->x max;left upper corner z+y max->min//1
@@ -621,13 +603,12 @@ namespace NCDK.Proteins
             //Debug.WriteLine(" #gridPoints>" + gridPoints);
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void DiagonalAxisScanYZX(int dimK, int dimL, int dimM)
         {
             // y min -> y max; right lower corner zmax->zmin, xmax ->min//4
@@ -682,13 +663,12 @@ namespace NCDK.Proteins
             // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void DiagonalAxisScanYXZ(int dimK, int dimL, int dimM)
         {
             // y min -> y max; left lower corner z max->min, x min->max//2
@@ -747,13 +727,12 @@ namespace NCDK.Proteins
             // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void DiagonalAxisScanXYZ(int dimK, int dimL, int dimM)
         {
             // x min -> xmax;left lower corner z max->min, y min->max//3
@@ -812,13 +791,12 @@ namespace NCDK.Proteins
             // Debug.WriteLine(" #gridPoints>"+gridPoints);
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void axisScanX(int dimK, int dimL, int dimM)
         {
             // z,y,x
@@ -865,13 +843,12 @@ namespace NCDK.Proteins
             //        Debug.WriteLine(" #gridPoints>" + gridPoints);
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void axisScanY(int dimK, int dimL, int dimM)
         {
             // z,x,y
@@ -916,13 +893,12 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method performs a scan; works only for cubic grids!
-         *
-         * @param dimK first dimension
-         * @param dimL second dimension
-         * @param dimM third dimension
-         */
+        /// <summary>
+        /// Method performs a scan; works only for cubic grids!
+        /// </summary>
+        /// <param name="dimK">first dimension</param>
+        /// <param name="dimL">second dimension</param>
+        /// <param name="dimM">third dimension</param>
         public void axisScanZ(int dimK, int dimL, int dimM)
         {
             // x,y,z
@@ -965,11 +941,11 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method which assigns van der Waals radii to the biopolymer
-         * default org/openscience/cdk/config/data/pdb_atomtypes.xml
-         * stored in the variable string vanDerWaalsFile.
-         */
+        /// <summary>
+        /// Method which assigns van der Waals radii to the biopolymer
+        /// default org/openscience/cdk/config/data/pdb_atomtypes.xml
+        /// stored in the variable string vanDerWaalsFile.
+        /// </summary>
         public void assignVdWRadiiToProtein()
         {
             AtomTypeFactory atf = null;
@@ -996,9 +972,7 @@ namespace NCDK.Proteins
 
         }
 
-        /**
-         * Method writes the grid to pmesh format.
-         */
+        /// <summary>Method writes the grid to pmesh format.</summary>
         public void gridToPmesh(string outPutFileName)
         {
             try
@@ -1011,9 +985,7 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method writes the PSP points (>=minPSPocket) to pmesh format.
-         */
+        /// <summary>Method writes the PSP points (>=minPSPocket) to pmesh format.</summary>
         public void PspGridToPmesh(string outPutFileName)
         {
             try
@@ -1026,9 +998,7 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method writes the protein grid points to pmesh format.
-         */
+        /// <summary>Method writes the protein grid points to pmesh format.</summary>
         public void ProteinGridToPmesh(string outPutFileName)
         {
             try
@@ -1041,12 +1011,9 @@ namespace NCDK.Proteins
             }
         }
 
-        /**
-         * Method writes the pockets to pmesh format.
-         */
+        /// <summary>Method writes the pockets to pmesh format.</summary>
         public void WritePocketsToPMesh(string outPutFileName)
         {
-
             try
             {
                 for (int i = 0; i < Pockets.Count; i++)

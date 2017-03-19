@@ -1,8 +1,6 @@
-using System;
-
 namespace NCDK.Hash
 {
-    public interface AtomEncoder
+    public interface IAtomEncoder
     {
         int Encode(IAtom atom, IAtomContainer container);
     }

@@ -28,51 +28,44 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates the weighted path descriptors.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// These decsriptors were described  by Randic ({@cdk.cite RAN84}) and characterize molecular
     /// branching. Five descriptors are calculated, based on the implementation in the ADAPT
     /// software package. Note that the descriptor is based on identifying <b>all</b> pahs between pairs of
     /// atoms and so is NP-hard. This means that it can take some time for large, complex molecules.
-    /// The class returns a <code>DoubleArrayResult</code> containing the five
+    /// The class returns a <see cref="DoubleArrayResult"/> containing the five
     /// descriptors in the order described below.
-    /// <p/>
-    /// <center>
-    /// <table border=1>
-    /// <caption><a name="dmwp">DMWP</a></caption>
-    /// <tr>
-    /// <td>WTPT1</td><td>molecular ID</td></tr><tr>
-    /// <td>WTPT2</td><td> molecular ID / number of atoms</td></tr><tr>
-    /// <td>WTPT3</td><td> sum of path lengths starting
-    /// from heteroatoms</td></tr><tr>
-    /// <p/>
-    /// <td>WTPT4</td><td> sum of path lengths starting
-    /// from oxygens</td></tr><tr>
-    /// <td>WTPT5</td><td> sum of path lengths starting
-    /// from nitrogens</td></tr>
-    /// </table>
-    /// </center>
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// <list type="bullet">
+    /// <listheader>
+    /// <term>DMWP</term>
+    /// </listheader>
+    /// <item><term>WTPT1</term><description>molecular ID</description></item>
+    /// <item><term>WTPT2</term><description>molecular ID / number of atoms</description></item>
+    /// <item><term>WTPT3</term><description>sum of path lengths starting from heteroatoms</description></item>
+    /// <item><term>WTPT4</term><description>sum of path lengths starting from oxygens</description></item>
+    /// <item><term>WTPT5</term><description>sum of path lengths starting from nitrogens</description></item>
+    /// </list> 
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    /// </listheader>
+    /// <item>
+    /// <term></term>
+    /// <term></term>
+    /// <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-01-15
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:weightedPath
-    /// </summary>
     public class WeightedPathDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WTPT-1", "WTPT-2", "WTPT-3", "WTPT-4", "WTPT-5" };
@@ -207,14 +200,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(5);
 
         private double[] GetPathWeights(List<IList<IAtom>> pathList, IAtomContainer atomContainer)

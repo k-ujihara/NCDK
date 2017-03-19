@@ -49,7 +49,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="x">a vertex</param>
         /// <returns>degree</returns>
-        /// <seealso cref="Remove(int, IList)"/>
+        /// <seealso cref="Remove(int, IList{int[]})"/>
         public abstract int Degree(int x);
 
         /// <summary>

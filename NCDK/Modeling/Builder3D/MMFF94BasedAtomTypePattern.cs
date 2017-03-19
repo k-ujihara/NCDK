@@ -28,12 +28,11 @@ namespace NCDK.Modeling.Builder3D
 {
     /// <summary>
     ///  Class stores hose code patterns to identify mm2 force field atom types
-    ///
+    /// </summary>
     // @author     chhoppe
     // @cdk.created    2004-09-07
     // @cdk.module     forcefield
     // @cdk.githash
-    /// </summary>
     public class MMFF94BasedAtomTypePattern
     {
 
@@ -49,9 +48,8 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         ///  Gets the atomTypePatterns attribute of the MM2BasedAtomTypePattern object
-        ///
-        /// <returns>The atomTypePatterns as a vector</returns>
         /// </summary>
+        /// <returns>The atomTypePatterns as a vector</returns>
         public List<Regex> AtomTypePatterns => atomTypePatterns;
 
         /// <summary>

@@ -24,34 +24,33 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// This Class contains a method that returns the number failures of the
     /// Lipinski's Rule Of 5.
     /// See <a href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
-    ///
-     /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkAromaticity</td>
-    ///     <td>false</td>
-    ///     <td>True is the aromaticity has to be checked</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkAromaticity</term>
+    ///     <term>false</term>
+    ///     <term>True is the aromaticity has to be checked</term>
+    ///   </item>
+    /// </list>
+    /// </para>
     /// Returns a single value named <i>LipinskiFailures</i>.
-    ///
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:lipinskifailures
-    ///
     // @cdk.keyword Lipinski
     // @cdk.keyword rule-of-five
     // @cdk.keyword descriptor
-    /// </summary>
     public class RuleOfFiveDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
@@ -172,14 +171,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(lipinskifailures), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

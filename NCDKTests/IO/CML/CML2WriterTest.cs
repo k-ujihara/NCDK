@@ -301,7 +301,7 @@ namespace NCDK.IO.CML
             formula.Add(reaction.Builder.CreateIsotope("H"), 15);
             formula.Add(reaction.Builder.CreateIsotope("N"), 2);
             formula.Add(reaction.Builder.CreateIsotope("O"), 1);
-            moleculeA.SetProperty(CDKPropertyName.FORMULA, formula);
+            moleculeA.SetProperty(CDKPropertyName.Formula, formula);
             IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);
@@ -346,7 +346,7 @@ namespace NCDK.IO.CML
             reaction.Id = "r1";
             IAtomContainer moleculeA = reaction.Builder.CreateAtomContainer();
             moleculeA.Id = "A";
-            moleculeA.SetProperty(CDKPropertyName.FORMULA, "C 10 H 15 N 2 O 1");
+            moleculeA.SetProperty(CDKPropertyName.Formula, "C 10 H 15 N 2 O 1");
             IAtomContainer moleculeB = reaction.Builder.CreateAtomContainer();
             moleculeB.Id = "B";
             reaction.Reactants.Add(moleculeA);

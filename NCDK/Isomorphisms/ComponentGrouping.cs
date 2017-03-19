@@ -21,42 +21,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Graphs;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A predicate for verifying component level grouping in query/target structure
-     * matching. The grouping is used by SMARTS and is critical to querying
-     * reactions. The grouping specifies that substructures in the query should
-     * match to separate components in the target. The grouping specification is
-     * indicated by an {@code int[]} array of length (|V(query)| + 1). The final
-     * index indicates the maximum component group (in the query). A specification
-     * of '0' indicates there are no grouping restrictions.
-     *
-     * <blockquote><code>
-     * // grouping is actually set by SMARTS parser but this shows how it's stored
-     * query.SetProperty(ComponentGrouping.Key, grouping);
-     *
-     * IAtomContainer query, target;
-     * Pattern        pattern = ...; // create pattern for query
-     *
-     * // filter for mappings which respect component grouping in the query
-     * Iterables.Filter(pattern.MatchAll(target),
-     *                  new ComponentGrouping(query, target));
-     * </code></blockquote>
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     * @see Pattern
-     */
+    /// <summary>
+    /// A predicate for verifying component level grouping in query/target structure
+    /// matching. The grouping is used by SMARTS and is critical to querying
+    /// reactions. The grouping specifies that substructures in the query should
+    /// match to separate components in the target. The grouping specification is
+    /// indicated by an {@code int[]} array of length (|V(query)| + 1). The final
+    /// index indicates the maximum component group (in the query). A specification
+    /// of '0' indicates there are no grouping restrictions.
+    /// </summary>
+    /// <example>
+    /// <code>
+    /// // grouping is actually set by SMARTS parser but this shows how it's stored
+    /// query.SetProperty(ComponentGrouping.Key, grouping);
+    ///
+    /// IAtomContainer query, target;
+    /// Pattern        pattern = ...; // create pattern for query
+    ///
+    /// // filter for mappings which respect component grouping in the query
+    /// Iterables.Filter(pattern.MatchAll(target),
+    ///                  new ComponentGrouping(query, target));
+    /// </code>
+    /// </example>
+    /// <seealso cref="Pattern"/>
+    // @author John May
+    // @cdk.module isomorphism
     public sealed class ComponentGrouping : Common.Base.Predicate<int[]>
     {
-        /**
-         * Key indicates where the grouping should be store in the query
-         * properties.
-         */
+        /// <summary>
+        /// Key indicates where the grouping should be store in the query
+        /// properties.
+        /// </summary>
         public const string Key = "COMPONENT.GROUPING";
 
         /// <summary>The required  (query) and the targetComponents of the target.</summary>
@@ -65,40 +64,37 @@ namespace NCDK.Isomorphisms
         /// <summary>Connected components of the target.</summary>
         private readonly ConnectedComponents cc;
 
-        /**
-         * Create a predicate to match components for the provided query and target.
-         * The target is converted to an adjacency list ({@link
-         * GraphUtil#ToAdjList(IAtomContainer)}) and the query components extracted
-         * from the property {@link #Key} in the query.
-         *
-         * @param query  query structure
-         * @param target target structure
-         */
+        /// <summary>
+        /// Create a predicate to match components for the provided query and target.
+        /// The target is converted to an adjacency list (<see cref="GraphUtil.ToAdjList(IAtomContainer)"/> 
+        /// ) and the query components extracted
+        /// from the property <see cref="Key"/> in the query.
+        /// </summary>
+        /// <param name="query">query structure</param>
+        /// <param name="target">target structure</param>
         public ComponentGrouping(IAtomContainer query, IAtomContainer target)
             : this(query, GraphUtil.ToAdjList(target))
         { }
 
-        /**
-         * Create a predicate to match components for the provided query and target.
-         * The target is pre-converted to an adjacency list ({@link
-         * GraphUtil#ToAdjList(IAtomContainer)}) and the query components extracted
-         * from the property {@link #Key} in the query.
-         *
-         * @param query  query structure
-         * @param target target structure
-         */
+        /// <summary>
+        /// Create a predicate to match components for the provided query and target.
+        /// The target is pre-converted to an adjacency list (
+        /// <see cref="GraphUtil.ToAdjList(IAtomContainer)"/>) and the query components extracted
+        /// from the property <see cref="Key"/> in the query.
+        /// </summary>
+        /// <param name="query">query structure</param>
+        /// <param name="target">target structure</param>
         public ComponentGrouping(IAtomContainer query, int[][] target)
             : this(query.GetProperty<int[]>(Key), query.GetProperty<int[]>(Key) != null ? new ConnectedComponents(target)
                     : null)
         { }
 
-        /**
-         * Create a predicate to match components for the provided query (grouping)
-         * and target (connected components).
-         *
-         * @param grouping  query grouping
-         * @param cc        connected component of the target
-         */
+        /// <summary>
+        /// Create a predicate to match components for the provided query (grouping)
+        /// and target (connected components).
+        /// </summary>
+        /// <param name="grouping">query grouping</param>
+        /// <param name="cc">connected component of the target</param>
         public ComponentGrouping(int[] grouping, ConnectedComponents cc)
         {
             this.queryComponents = grouping;
@@ -106,14 +102,12 @@ namespace NCDK.Isomorphisms
             this.targetComponents = cc != null ? cc.Components() : null;
         }
 
-        /**
-         * Does the mapping respected the component grouping specified by the
-         * query.
-         *
-         * @param mapping a permutation of the query vertices
-         * @return the mapping preserves the specified grouping
-         */
-
+        /// <summary>
+        /// Does the mapping respected the component grouping specified by the
+        /// query.
+        /// </summary>
+        /// <param name="mapping">a permutation of the query vertices</param>
+        /// <returns>the mapping preserves the specified grouping</returns>
         public bool Apply(int[] mapping)
         {
             // no grouping required

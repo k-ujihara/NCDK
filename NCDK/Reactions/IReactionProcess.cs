@@ -23,29 +23,13 @@ namespace NCDK.Reactions
 {
     /// <summary>
     /// Classes that implement this interface are Reactions types.
-    ///
+    /// </summary>
     // @author      Miguel Rojas
     // @cdk.module  reaction
     // @cdk.githash
-    /// </summary>
     public interface IReactionProcess
     {
-
-        /// <summary>
-        /// Returns a <code>IDictionary</code> which specifies which reaction
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary or web page
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        ///
-        /// <returns>An object containing the reaction specification</returns>
-        /// </summary>
+        /// <inheritdoc/>
         ReactionSpecification Specification { get; }
 
         /// <summary>
@@ -57,23 +41,20 @@ namespace NCDK.Reactions
 
         /// <summary>
         /// Initiates the process for the given Reaction.
-        ///
+        /// 
         /// Optionally, parameters may be set which can affect the course of the process.
-        ///
-        ///
+        /// </summary>
         /// <param name="reactants">An <see cref="IAtomContainerSet"/> for which this process should be initiate.</param>
         /// <param name="agents">An <see cref="IAtomContainerSet"/> for which this process should be initiate.</param>
         /// <returns>the set of reactions.</returns>
-        // @ if an error occurs during the reaction process. See documentation for individual reaction processes
-        /// </summary>
+        /// <exception cref="CDKException">if an error occurs during the reaction process. See documentation for individual reaction processes</exception>
         IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents);
 
         /// <summary>
         /// Return the IParameterReact if it exists given the class.
-        ///
+        /// </summary>
         /// <param name="paramClass">The class</param>
         /// <returns>The IParameterReact</returns>
-        /// </summary>
         IParameterReact GetParameterClass(System.Type paramClass);
     }
 }

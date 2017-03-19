@@ -26,11 +26,12 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// <para>IReactionProcess which participate in movement resonance.
     /// This reaction could be represented as [A+]=B => A|-[B+]. Due to
-    /// deficiency of charge of the atom A, the double bond is displaced to atom A.</para>
-    /// <para>Make sure that the molecule has the correspond lone pair electrons
-    /// for each atom. You can use the method: <code> LonePairElectronChecker </code>
+    /// deficiency of charge of the atom A, the double bond is displaced to atom A.
+    /// Make sure that the molecule has the correspond lone pair electrons
+    /// for each atom. You can use the method: <see cref="Tools.LonePairElectronChecker"/></para>
     /// <para>It is processed by the HeterolyticCleavageMechanism class</para>
-    ///
+    /// </summary>
+    /// <example>
     /// <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
@@ -42,21 +43,17 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
-    ///
-    ///
+    /// </example>
+    /// <seealso cref="Mechanisms.HeterolyticCleavageMechanism"/>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    ///
-    /// <seealso cref="HeterolyticCleavageMechanism"/>
-    ///*/
     public class SharingChargeDBReaction : ReactionEngine, IReactionProcess
     {
 
@@ -105,7 +102,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -155,10 +152,8 @@ namespace NCDK.Reactions.Types
         /// =: Double bond
         /// B: Atom
         ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)
@@ -172,7 +167,8 @@ namespace NCDK.Reactions.Types
                         {
 
                             IAtom atomj = bondi.GetConnectedAtom(atomi);
-                            if (atomj.FormalCharge == 0) if (!reactant.GetConnectedSingleElectrons(atomj).Any())
+                            if (atomj.FormalCharge == 0)
+                                if (!reactant.GetConnectedSingleElectrons(atomj).Any())
                                 {
                                     atomi.IsReactiveCenter = true;
                                     bondi.IsReactiveCenter = true;

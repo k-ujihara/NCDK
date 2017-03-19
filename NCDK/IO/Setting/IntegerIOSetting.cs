@@ -20,14 +20,12 @@ namespace NCDK.IO.Setting
 {
     /// <summary>
     /// An class for a reader setting which must be of type string.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    /// </summary>
-    public class IntegerIOSetting : IOSetting {
-
+    public class IntegerIOSetting : IOSetting
+    {
         public IntegerIOSetting(string name, Importance level, string question, string defaultSetting)
                 : base(name, level, question, defaultSetting)
         { }

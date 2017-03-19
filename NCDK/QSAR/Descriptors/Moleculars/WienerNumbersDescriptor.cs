@@ -27,25 +27,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This descriptor calculates the Wiener numbers. This includes the Wiener Path number
     /// and the Wiener Polarity Number.
-    /// <BR>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// Further information is given in
     /// Wiener path number: half the sum of all the distance matrix entries; Wiener
     /// polarity number: half the sum of all the distance matrix entries with a
     /// value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
-    /// <p>
+    /// </para>
+    /// <para>
     /// This descriptor uses no parameters.
-    /// <p>
+    /// </para>
+    /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b>
     /// or <b>explicit hydrogens</b>.
-    ///
+    /// </para>
+    /// <para>
     /// Returns the  following values
-    /// <ol>
-    /// <li>WPATH - weiner path number
-    /// <li>WPOL - weiner polarity number
-    /// </ol>
-    ///
-    /// <p>This descriptor does not have any parameters.
-    ///
+    /// <list type="bullet">
+    /// <item>WPATH - weiner path number</item>
+    /// <item>WPOL - weiner polarity number</item>
+    /// </list>
+    /// </para>
+    /// <para>This descriptor does not have any parameters.</para>
+    /// </remarks>
     // @author         mfe4
     // @cdk.created        December 7, 2004
     // @cdk.created    2004-11-03
@@ -54,7 +59,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
-    /// </summary>
     public class WienerNumbersDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "WPATH", "WPOL" };
@@ -123,11 +127,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
+        /// <para>
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
         /// allows you to do the same thing, without actually calculating the descriptor.
+        /// </para>
         /// </summary>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
 

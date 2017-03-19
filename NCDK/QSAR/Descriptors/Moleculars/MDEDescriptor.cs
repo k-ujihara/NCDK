@@ -33,47 +33,40 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// This class evaluates the 10 MDE descriptors described by Liu et al. and
     /// in addition it calculates variants where O and N are considered (as found in the DEDGE routine
     /// from ADAPT).
-    /// <p/>
-    /// * The variants are described below:
-    /// <center>
-    /// <table border=1>
-    /// <p/>
-    /// <tr>
-    /// <td>MDEC-11</td><td> molecular distance edge between all primary carbons</td></tr><tr>
-    /// <td>MDEC-12</td><td> molecular distance edge between all primary and secondary carbons</td></tr><tr>
-    /// <p/>
-    /// <td>MDEC-13</td><td> molecular distance edge between all primary and tertiary carbons</td></tr><tr>
-    /// <td>MDEC-14</td><td> molecular distance edge between all primary and quaternary carbons </td></tr><tr>
-    /// <td>MDEC-22</td><td> molecular distance edge between all secondary carbons </td></tr><tr>
-    /// <td>MDEC-23</td><td> molecular distance edge between all secondary and tertiary carbons</td></tr><tr>
-    /// <p/>
-    /// <td>MDEC-24</td><td> molecular distance edge between all secondary and quaternary carbons </td></tr><tr>
-    /// <td>MDEC-33</td><td> molecular distance edge between all tertiary carbons</td></tr><tr>
-    /// <td>MDEC-34</td><td> molecular distance edge between all tertiary and quaternary carbons </td></tr><tr>
-    /// <td>MDEC-44</td><td> molecular distance edge between all quaternary carbons </td></tr><tr>
-    /// <p/>
-    /// <td>MDEO-11</td><td> molecular distance edge between all primary oxygens </td></tr><tr>
-    /// <td>MDEO-12</td><td> molecular distance edge between all primary and secondary oxygens </td></tr><tr>
-    /// <td>MDEO-22</td><td> molecular distance edge between all secondary oxygens </td></tr><tr>
-    /// <td>MDEN-11</td><td> molecular distance edge between all primary nitrogens</td></tr><tr>
-    /// <p/>
-    /// <td>MDEN-12</td><td> molecular distance edge between all primary and secondary nitrogens </td></tr><tr>
-    /// <td>MDEN-13</td><td> molecular distance edge between all primary and tertiary niroqens </td></tr><tr>
-    /// <td>MDEN-22</td><td> molecular distance edge between all secondary nitroqens </td></tr><tr>
-    /// <td>MDEN-23</td><td> molecular distance edge between all secondary and tertiary nitrogens </td></tr><tr>
-    /// <p/>
-    /// <td>MDEN-33</td><td> molecular distance edge between all tertiary nitrogens</td></tr>
-    /// </table>
-    /// </center>
-    /// <p/>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The variants are described below:
+    /// <list type="table">
+    /// <item>
+    /// <term>MDEC-11</term><term> molecular distance edge between all primary carbons</term></item><item>
+    /// <term>MDEC-12</term><term> molecular distance edge between all primary and secondary carbons</term></item><item>
+    /// <term>MDEC-13</term><term> molecular distance edge between all primary and tertiary carbons</term></item><item>
+    /// <term>MDEC-14</term><term> molecular distance edge between all primary and quaternary carbons </term></item><item>
+    /// <term>MDEC-22</term><term> molecular distance edge between all secondary carbons </term></item><item>
+    /// <term>MDEC-23</term><term> molecular distance edge between all secondary and tertiary carbons</term></item><item>
+    /// <term>MDEC-24</term><term> molecular distance edge between all secondary and quaternary carbons </term></item><item>
+    /// <term>MDEC-33</term><term> molecular distance edge between all tertiary carbons</term></item><item>
+    /// <term>MDEC-34</term><term> molecular distance edge between all tertiary and quaternary carbons </term></item><item>
+    /// <term>MDEC-44</term><term> molecular distance edge between all quaternary carbons </term></item><item>
+    /// <term>MDEO-11</term><term> molecular distance edge between all primary oxygens </term></item><item>
+    /// <term>MDEO-12</term><term> molecular distance edge between all primary and secondary oxygens </term></item><item>
+    /// <term>MDEO-22</term><term> molecular distance edge between all secondary oxygens </term></item><item>
+    /// <term>MDEN-11</term><term> molecular distance edge between all primary nitrogens</term></item><item>
+    /// <term>MDEN-12</term><term> molecular distance edge between all primary and secondary nitrogens </term></item><item>
+    /// <term>MDEN-13</term><term> molecular distance edge between all primary and tertiary niroqens </term></item><item>
+    /// <term>MDEN-22</term><term> molecular distance edge between all secondary nitroqens </term></item><item>
+    /// <term>MDEN-23</term><term> molecular distance edge between all secondary and tertiary nitrogens </term></item><item>
+    /// <term>MDEN-33</term><term> molecular distance edge between all tertiary nitrogens</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-09-18
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:mde
-    /// </summary>
     public class MDEDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"MDEC-11", "MDEC-12", "MDEC-13", "MDEC-14", "MDEC-22", "MDEC-23",
@@ -153,14 +146,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(19);
 
         private double Dedge(IAtomContainer atomContainer, int which)

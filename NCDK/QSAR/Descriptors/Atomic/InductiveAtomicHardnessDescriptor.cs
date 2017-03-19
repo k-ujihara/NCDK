@@ -26,53 +26,29 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     ///  Inductive atomic hardness of an atom in a polyatomic system can be defined
-    ///  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. <p>
-    ///
-    ///  This descriptor uses these parameters:
-    ///  <tableborder="1">
-    ///
-    ///    <tr>
-    ///
-    ///      <td>
-    ///        Name
-    ///      </td>
-    ///
-    ///      <td>
-    ///        Default
-    ///      </td>
-    ///
-    ///      <td>
-    ///        Description
-    ///      </td>
-    ///
-    ///    </tr>
-    ///
-    ///    <tr>
-    ///
-    ///      <td>
-    ///
-    ///      </td>
-    ///
-    ///      <td>
-    ///
-    ///      </td>
-    ///
-    ///      <td>
-    ///        no parameters
-    ///      </td>
-    ///
-    ///    </tr>
-    ///
-    ///  </table>
-    ///
-    ///
-    ///@author         mfe4
-    ///@cdk.created    2004-11-03
-    ///@cdk.module     qsaratomic
-    // @cdk.githash
-    ///@cdk.set        qsar-descriptors
-    // @cdk.dictref   qsar-descriptors:atomicHardness
+    ///  as the "resistance" to a change of the atomic charge. Only works with 3D coordinates, which must be calculated beforehand. 
     /// </summary>
+    /// <remarks>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term></term>
+    ///   <term></term>
+    ///   <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
+    // @author         mfe4
+    // @cdk.created    2004-11-03
+    // @cdk.module     qsaratomic
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref   qsar-descriptors:atomicHardness
     public class InductiveAtomicHardnessDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "indAtomHardnesss" };
@@ -85,9 +61,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// The specification attribute of the InductiveAtomicHardnessDescriptor object
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
+        /// <returns>The specification value</returns>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(

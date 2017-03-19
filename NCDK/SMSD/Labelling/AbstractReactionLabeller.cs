@@ -5,10 +5,8 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Labelling
 {
-    /// <summary>
     // @cdk.module smsd
     // @cdk.githash
-    /// </summary>
     public class AbstractReactionLabeller
     {
         /// <summary>
@@ -20,10 +18,10 @@ namespace NCDK.SMSD.Labelling
         {
             foreach (var a in canonicalForm.Atoms)
             {
-                string v = a.GetProperty<string>(CDKPropertyName.ATOM_ATOM_MAPPING);
+                string v = a.GetProperty<string>(CDKPropertyName.AtomAtomMapping);
                 if (v != null)
                 {
-                    a.SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, int.Parse(v));
+                    a.SetProperty(CDKPropertyName.AtomAtomMapping, int.Parse(v));
                 }
             }
         }
@@ -108,8 +106,8 @@ namespace NCDK.SMSD.Labelling
         /// <summary>
         /// Clone and Sort the mappings based on the order of the first object
         /// in the mapping (which is assumed to be the reactant).
-        ///
-        /// <param name="reaction">/// </summary></param>
+        /// </summary>
+        /// <param name="reaction"></param>
         private void CloneAndSortMappings(IReaction reaction, IReaction copyOfReaction,
             IDictionary<IAtomContainer, int[]> permutationMap)
         {
@@ -135,8 +133,8 @@ namespace NCDK.SMSD.Labelling
             int mappingIndex = 0;
             foreach (var mapping in map)
             {
-                mapping[0].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, mappingIndex);
-                mapping[1].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, mappingIndex);
+                mapping[0].SetProperty(CDKPropertyName.AtomAtomMapping, mappingIndex);
+                mapping[1].SetProperty(CDKPropertyName.AtomAtomMapping, mappingIndex);
                 copyOfReaction.Mappings.Add(mapping);
                 mappingIndex++;
             }

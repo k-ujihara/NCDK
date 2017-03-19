@@ -29,37 +29,36 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// This parser implements a nearly complete subset of the SMARTS syntax as defined on
     /// <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
     /// Daylight website</a>. 
-    ///
-    /// <p>Example code using SMARTS substructure search looks like:
+    /// </summary>
+    /// <example>
+    /// <para>Example code using SMARTS substructure search looks like:
     /// <code>
     /// SmilesParser sp = new SmilesParser();
     /// AtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
     /// QueryAtomContainer query = SMARTSParser.Parse("C*C");
     /// bool queryMatch = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
     /// </code>
+    /// </para>
     ///
-    /// <p>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
+    /// <para>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
     /// subset.
-    ///
+    /// </para>
     /// This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)
-    /// <p>To get the AST, the code looks like:
+    /// <para>To get the AST, the code looks like:
     /// <code>
     /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
     /// ASTStart = parser.Start();
     /// </code>
-    ///
-    // @see org.openscience.cdk.isomorphism.matchers.smarts.SMARTSAtom
-    ///
+    /// </para>
+    /// </example>
+    /// <seealso cref="Isomorphisms.Matchers.SMARTS.SMARTSAtom"/>
     // @author      Dazhi Jiao
     // @cdk.created 2007-04-23
     // @cdk.githash
-    ///
     // @cdk.require ant1.6
     // @cdk.module  smarts
-    ///
     // @cdk.keyword SMARTS
     // @cdk.keyword substructure search
-    /// </summary>
     public class SMARTSParser/*@bgen(jjtree)*/
     {/*@bgen(jjtree)*/
         protected JJTSMARTSParserState jjtree = new JJTSMARTSParserState();
@@ -90,34 +89,35 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
-        ///                     Start ::= <ReactionExpression> <#_WS>
-        ///        ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
+        /// <![CDATA[
+        /// Start ::= <ReactionExpression> <#_WS>
+        /// ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
         ///                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
-        ///           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
-        ///          SmartsExpression ::= <AtomExpression> ( 
+        /// GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
+        /// SmartsExpression ::= <AtomExpression> ( 
         ///                                ( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
         ///                                ( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
-        ///          AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
-        ///                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
-        ///                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
-        ///       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
-        ///       ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
-        ///                   NotBond ::= [ "!" ] <SimpleBond>
-        ///                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
-        ///    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
+        /// AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
+        /// LowAndBond ::= <OrBond> [ ";" <AndBond> ]
+        /// OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
+        /// ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
+        /// ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
+        /// NotBond ::= [ "!" ] <SimpleBond>
+        /// SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
+        /// ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
         ///                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ] 
-        ///          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
-        ///              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
+        /// LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
+        /// OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
         /// ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
         /// ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
-        ///             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
+        /// NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
         /// RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
-        ///   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
+        /// PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
         ///                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
         ///                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
         ///                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
-        ///                     Digit ::= ( "0" - "9")
-        ///        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+        /// Digit ::= ( "0" - "9")
+        /// NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
         ///                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
         ///                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
         ///                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
@@ -125,7 +125,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         ///                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
         ///                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
         ///                               "c" | "o" | "n" | "p" | "as" | "se" ]
-        /// </summary>
+        /// ]]></summary>
         public ASTStart Start()
         {
             /*@bgen(jjtree) Start */

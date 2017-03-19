@@ -51,13 +51,9 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Ring
 {
-    /// <summary>
-    ///
     // @cdk.module smsd
     // @cdk.githash
-    // @author Richard L. Apodaca <rapodaca at metamolecular.com> 2007-2009,
-    ///         Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
-    /// </summary>
+    // @author Richard L. Apodaca <rapodaca at metamolecular.com> 2007-2009, Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
     public class PathEdge
     {
         private IList<IAtom> atoms;

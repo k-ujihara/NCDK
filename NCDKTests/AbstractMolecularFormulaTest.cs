@@ -24,10 +24,9 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IMolecularFormula} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IMolecularFormula"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractMolecularFormulaTest : CDKTestCase
     {
@@ -46,11 +45,6 @@ namespace NCDK
             Assert.AreEqual(0, mf.Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount()
         {
@@ -64,15 +58,9 @@ namespace NCDK
             Assert.AreEqual(2, mf.Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             mf.Add(Builder.CreateIsotope("C"));
             mf.Add(Builder.CreateIsotope("H"));
@@ -84,11 +72,6 @@ namespace NCDK
             Assert.AreEqual(3, mf.Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope()
         {
@@ -111,11 +94,6 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope2()
         {
@@ -136,11 +114,6 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestAddIsotope_IIsotope_int()
         {
@@ -163,11 +136,6 @@ namespace NCDK
             //        Assert.AreEqual("H", mf.Isotopes[2].Symbol);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotope_Number_Clone()
         {
@@ -194,11 +162,6 @@ namespace NCDK
             //        Assert.AreEqual("H", cloneFormula.Isotopes[2].Symbol);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetIsotopeCount_IIsotope_Occurr()
         {
@@ -217,15 +180,9 @@ namespace NCDK
             Assert.AreEqual(3, mf.GetCount(h1));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestAdd_IMolecularFormula()
         {
-
             IMolecularFormula acetone = Builder.CreateMolecularFormula();
             acetone.Add(Builder.CreateIsotope("C"), 3);
             IIsotope oxig = Builder.CreateIsotope("O");
@@ -239,7 +196,6 @@ namespace NCDK
             acetone.Add(water);
 
             Assert.AreEqual(3, acetone.Count);
-
         }
 
         [TestMethod()]
@@ -251,15 +207,9 @@ namespace NCDK
             mf.Add(mf2);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestIsotopes()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             mf.Add(Builder.CreateIsotope("C"));
             mf.Add(Builder.CreateIsotope("F"));
@@ -274,11 +224,6 @@ namespace NCDK
             Assert.AreEqual(3, counter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestContains_IIsotope()
         {
@@ -297,15 +242,9 @@ namespace NCDK
             Assert.IsFalse(mf.Contains(h2));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestInstance_IIsotope()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
 
             IIsotope carb = Builder.CreateIsotope("C");
@@ -335,15 +274,9 @@ namespace NCDK
             Assert.IsFalse(istoIter.MoveNext());
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestGetCharge()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             mf.Charge = 1;
             mf.Add(Builder.CreateAtom("C"));
@@ -352,18 +285,11 @@ namespace NCDK
 
             Assert.AreEqual(3, mf.Count);
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestSetCharge_Double()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             Assert.AreEqual(null, mf.Charge);
 
@@ -377,7 +303,6 @@ namespace NCDK
         [TestMethod()]
         public virtual void TestSetCharge_Integer()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             mf.Charge = 1;
             mf.Add(Builder.CreateAtom("C"));
@@ -385,18 +310,11 @@ namespace NCDK
             mf.Add(Builder.CreateAtom("H"), 3);
 
             Assert.AreEqual(1.0, mf.Charge.Value, 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestCharge_rest()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             Assert.AreEqual(null, mf.Charge);
 
@@ -409,15 +327,9 @@ namespace NCDK
             Assert.AreEqual(0.0, mf.Charge.Value, 0.001);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestRemoveIsotope_IIsotope()
         {
-
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             IIsotope carb = Builder.CreateIsotope("C");
             IIsotope flu = Builder.CreateIsotope("F");
@@ -430,14 +342,8 @@ namespace NCDK
             mf.Remove(flu);
 
             Assert.AreEqual(2, mf.Count);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public virtual void TestRemoveAllIsotopes()
         {
@@ -453,14 +359,10 @@ namespace NCDK
             mf.Clear();
 
             Assert.AreEqual(0, mf.Count);
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Only test whether the
-        /// MolecularFormula are correctly cloned.
-        ///
-        /// <returns>The test suite</returns>
+        /// Only test whether the MolecularFormula are correctly cloned.
        /// </summary>
         [TestMethod()]
         public virtual void TestClone()
@@ -471,12 +373,10 @@ namespace NCDK
             Assert.IsTrue(clone is IMolecularFormula);
             Assert.AreEqual(mf.Count, ((IMolecularFormula)clone).Count);
             Assert.AreEqual(mf.Charge, ((IMolecularFormula)clone).Charge);
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Only test whether
-        /// the MolecularFormula are correctly cloned.
+        /// Only test whether the MolecularFormula are correctly cloned.
        /// </summary>
         [TestMethod()]
         public virtual void TestClone_Isotopes()
@@ -501,20 +401,14 @@ namespace NCDK
             Assert.AreEqual(3, ((IMolecularFormula)clone).Count);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-       /// </summary>
         [TestMethod()]
         public virtual void TestSetProperty_Object_Object()
         {
             IMolecularFormula mf = Builder.CreateMolecularFormula();
             mf.SetProperty("blabla", 2);
-            Assert.IsNotNull(mf.GetProperty("blabla"));
+            Assert.IsNotNull(mf.GetProperty<object>("blabla"));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-       /// </summary>
         [TestMethod()]
         public virtual void TestRemoveProperty_Object()
         {
@@ -522,26 +416,18 @@ namespace NCDK
             string blabla = "blabla";
             double number = 2;
             mf.SetProperty(blabla, number);
-            Assert.IsNotNull(mf.GetProperty(blabla));
+            Assert.IsNotNull(mf.GetProperty<object>(blabla));
 
             mf.RemoveProperty("blabla");
-            Assert.IsNull(mf.GetProperty(blabla));
-
+            Assert.IsNull(mf.GetProperty<object>(blabla));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-       /// </summary>
         [TestMethod()]
         public virtual void TestGetProperty_Object()
         {
             TestSetProperty_Object_Object();
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-       /// </summary>
         [TestMethod()]
         public virtual void TestGetProperties()
         {
@@ -550,15 +436,11 @@ namespace NCDK
             mf.SetProperty("blabla3", 3);
             Assert.AreEqual(2, mf.GetProperties().Count());
         }
-
-        /// <summary>
-        /// A unit test suite for JUnit.
-       /// </summary>
+        
         [TestMethod()]
         public virtual void TestSetProperties_Map()
         {
             TestGetProperties();
-
         }
 
         [TestMethod()]

@@ -22,21 +22,18 @@ namespace NCDK.IO
     /// Signals that something has happened in a file reader. This class is
     /// primarily in place for future development when additional information
     /// may be passed to <code>ReaderListener</code>s.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Bradley A. Smith <bradley@baysmith.com>
-    /// </summary>
     public class ReaderEvent
     {
         public object Source { get; protected set; }
 
         /// <summary>
         /// Creates a reader event.
-        ///
-        /// <param name="source">the object on which the event initially occurred.</param>
         /// </summary>
+        /// <param name="source">the object on which the event initially occurred.</param>
         public ReaderEvent(object source)
         {
             Source = source;

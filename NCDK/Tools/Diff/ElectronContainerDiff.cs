@@ -25,11 +25,10 @@ namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
     /// Compares two <see cref="IChemObject"/> classes.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public class ElectronContainerDiff
     {
 

@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 

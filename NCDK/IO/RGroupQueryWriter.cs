@@ -58,10 +58,10 @@ namespace NCDK.IO
         /// Constructs a new writer that can write an <see cref="IRGroupQuery"/>
         /// to the Symx RGFile format.
         /// </summary>
-        /// <param name="out_">The Writer to write to</param>
-        public RGroupQueryWriter(TextWriter out_)
+        /// <param name="output">The Writer to write to</param>
+        public RGroupQueryWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         /// <summary>
@@ -139,10 +139,10 @@ namespace NCDK.IO
         /// <summary>
         /// Sets the writer.
         /// </summary>
-        /// <param name="out_"></param>
-        public override void SetWriter(TextWriter out_)
+        /// <param name="output"></param>
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         /// <summary>

@@ -1,23 +1,7 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
-
 
 /* Copyright (C) 2003-2015  Egon Willighagen <egonw@users.sf.net>
  *
@@ -42,23 +26,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
 namespace NCDK.Default
 {
     /// <summary>
     /// Atom that represents part of an residue in an enzyme, like Arg255.
-    ///
+    /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
     // @cdk.githash
-    /// </summary>
     public class EnzymeResidueLocator : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.
-        ///
-        /// <param name="label">The string describing the residue and its location.</param>
         /// </summary>
+        /// <param name="label">The string describing the residue and its location.</param>
         public EnzymeResidueLocator(string label)
             : base(label)
         {
@@ -66,9 +47,8 @@ namespace NCDK.Default
 
         /// <summary>
         /// Constructs an EnzymeResidueLocator from an existing Atom.
-        ///
-        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         /// </summary>
+        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         public EnzymeResidueLocator(IAtom atom)
             : base(atom)
         {
@@ -79,23 +59,20 @@ namespace NCDK.Default
         }
     }
 }
-
 namespace NCDK.Silent
 {
     /// <summary>
     /// Atom that represents part of an residue in an enzyme, like Arg255.
-    ///
+    /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
     // @cdk.githash
-    /// </summary>
     public class EnzymeResidueLocator : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.
-        ///
-        /// <param name="label">The string describing the residue and its location.</param>
         /// </summary>
+        /// <param name="label">The string describing the residue and its location.</param>
         public EnzymeResidueLocator(string label)
             : base(label)
         {
@@ -103,9 +80,8 @@ namespace NCDK.Silent
 
         /// <summary>
         /// Constructs an EnzymeResidueLocator from an existing Atom.
-        ///
-        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         /// </summary>
+        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         public EnzymeResidueLocator(IAtom atom)
             : base(atom)
         {
@@ -116,4 +92,3 @@ namespace NCDK.Silent
         }
     }
 }
-

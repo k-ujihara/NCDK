@@ -16,19 +16,16 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System.IO;
 
 namespace NCDK.IO
 {
-
     /// <summary>
     /// Abstract class that ChemObjectReader's can implement to have it
     /// take care of basic stuff, like managing the ReaderListeners.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    /// </summary>
     public abstract class DefaultChemObjectWriter : ChemObjectIO, IChemObjectWriter
     {
         public abstract void SetWriter(Stream writer);
@@ -36,4 +33,3 @@ namespace NCDK.IO
         public abstract void Write(IChemObject obj);
     }
 }
-

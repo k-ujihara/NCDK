@@ -326,7 +326,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi  InChI=1/C2H7N/c1-2-3/h2-3H2,1H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]
@@ -359,7 +359,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi InChI=1/C6H14/c1-3-5-6-4-2/h3-6H2,1-2H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]
@@ -385,7 +385,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]
@@ -413,7 +413,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]
@@ -441,7 +441,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi  InChI=1/C5H8S/c1-5-2-3-6-4-5/h4H,2-3H2,1H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]
@@ -470,7 +470,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //    ///  @cdk.inchi InChI=1/C6H10O/c1-4-5-6(2,3)7/h7H,1-3H3
         //    ///
         //    // @throws ClassNotFoundException
-        //    // @throws CDKException
+        //    /// <exception cref="CDKException"></exception>
         //    // @throws java.lang.Exception
         //    /// </summary>
         //    [TestMethod()]

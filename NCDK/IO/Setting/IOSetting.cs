@@ -21,12 +21,10 @@ namespace NCDK.IO.Setting
     /// <summary>
     /// An interface for reader settings. It is subclassed by implementations,
     /// one for each type of field, e.g. IntReaderSetting.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    /// </summary>
     public abstract class IOSetting : ISetting
     {
         public struct Importance
@@ -46,14 +44,11 @@ namespace NCDK.IO.Setting
         /// The default constructor that sets this field. All textual
         /// information is supposed to be English. Localization is taken care
         /// off by the ReaderConfigurator.
-        ///
+        /// </summary>
         /// <param name="name">Name of the setting</param>
         /// <param name="level">Level at which question is asked</param>
-        /// <param name="question">Question that is poped to the user when the</param>
-        ///                       ReaderSetting needs setting
-        /// <param name="defaultSetting">The default setting, used if not overwritten</param>
-        ///                       by a user
-        /// </summary>
+        /// <param name="question">Question that is poped to the user when the ReaderSetting needs setting</param>
+        /// <param name="defaultSetting">The default setting, used if not overwritten by a user</param>
         public IOSetting(string name, Importance level, string question, string defaultSetting)
         {
             Level = level;

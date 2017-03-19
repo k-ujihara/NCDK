@@ -30,14 +30,14 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Utility methods for chi index calculations.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// These methods are common to all the types of chi index calculations and can
     /// be used to evaluate path, path-cluster, cluster and chain chi indices.
-    ///
+    /// </remarks>
     // @author     Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.githash
-    /// </summary>
     internal class ChiIndexUtils
     {
         /// <summary>
@@ -122,15 +122,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Evaluates the valence corrected chi index for a set of fragments.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// This method takes into account the S and P atom types described in
-        /// Kier & Hall (1986), page 20 for which empirical delta V values are used.
-        ///
+        /// Kier &amp; Hall (1986), page 20 for which empirical delta V values are used.
+        /// </remarks>
         /// <param name="atomContainer">The target <code>AtomContainer</code></param>
         /// <param name="fragList">A list of fragments</param>
         /// <returns>The valence corrected chi index</returns>
-        // @throws CDKException if the <code>IsotopeFactory</code> cannot be created
-        /// </summary>
+        /// <exception cref="CDKException"> if the <see cref="IsotopeFactory"/> cannot be created</exception>
         public static double EvalValenceIndex(IAtomContainer atomContainer, IList<IList<int>> fragList)
         {
             try
@@ -196,16 +196,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Evaluates the empirical delt V for some S environments.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// The method checks to see whether a S atom is in a -S-S-,
         /// -SO-, -SO2- group and returns the empirical values noted
-        /// in Kier & Hall (1986), page 20.
-        ///
+        /// in Kier &amp; Hall (1986), page 20.
+        /// </remarks>
         /// <param name="atom">The S atom in question</param>
         /// <param name="atomContainer">The molecule containing the S</param>
-        /// <returns>The empirical delta V if it is present in one of the above</returns>
-        ///         environments, -1 otherwise
-        /// </summary>
+        /// <returns>The empirical delta V if it is present in one of the above environments, -1 otherwise</returns>
         protected internal static double DeltavSulphur(IAtom atom, IAtomContainer atomContainer)
         {
             if (!atom.Symbol.Equals("S")) return -1;
@@ -233,14 +232,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Checks whether the P atom is in a PO environment.
-        /// <p/>
-        /// This environment is noted in Kier & Hall (1986), page 20
-        ///
+        /// </summary>
+        /// <remarks>
+        /// This environment is noted in Kier &amp; Hall (1986), page 20
+        /// </remarks>
         /// <param name="atom">The P atom in question</param>
         /// <param name="atomContainer">The molecule containing the P atom</param>
-        /// <returns>The empirical delta V if present in the above environment,</returns>
-        ///         -1 otherwise
-        /// </summary>
+        /// <returns>The empirical delta V if present in the above environment, -1 otherwise</returns>
         private static double DeltavPhosphorous(IAtom atom, IAtomContainer atomContainer)
         {
             if (!atom.Symbol.Equals("P")) return -1;
@@ -262,15 +260,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Converts a set of bond mappings to a unique set of atom paths.
-        /// <p/>
-        /// This method accepts a <code>List</code> of bond mappings. It first
+        /// </summary>
+        /// <remarks>
+        /// This method accepts a <see cref="IList{T}"/> of bond mappings. It first
         /// reduces the set to a unique set of bond maps and then for each bond map
         /// converts it to a series of atoms making up the bonds.
-        ///
-        /// <param name="subgraphs">A <code>List</code> of bon mappings</param>
+        /// </remarks>
+        /// <param name="subgraphs">A <see cref="IList{T}"/> of bon mappings</param>
         /// <param name="ac">The molecule we are examining</param>
-        /// <returns>A unique <code>List</code> of atom paths</returns>
-        /// </summary>
+        /// <returns>A unique <see cref="IList{T}"/> of atom paths</returns>
         private static IList<IList<int>> GetUniqueBondSubgraphs(IList<IList<RMap>> subgraphs, IAtomContainer ac)
         {
             List<List<int>> bondList = new List<List<int>>();

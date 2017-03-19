@@ -23,8 +23,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates properties of InChI Atom.  See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiAtom
     {
         /// <summary>
@@ -91,27 +91,26 @@ namespace NCDK.NInChI
         public int Charge { get; set; } = 0;
 
         /// <summary>
-        /// <p>Create new atom.
-        ///
-        /// <p>Coordinates and element symbol must be set (unknown
+        /// Create new atom.
+        /// </summary>
+        /// <remarks>
+        /// Coordinates and element symbol must be set (unknown
         /// coordinates/dimensions should be set to zero).  All other
         /// parameters are initialised to default values:
-        /// <p>
-        /// <tt>
-        ///    Num Implicit H = 0<br>
-        ///    Num Implicit 1H = 0<br>
-        ///    Num Implicit 2H = 0<br>
-        ///    Num Implicit 3H = 0<br>
-        ///    Isotopic mass = 0 (non isotopic)<br>
-        ///    Radical status = None  (radical status not defined)
-        /// </tt>
-        ///
+        ///  <list type="bullet">
+        ///    <item>Num Implicit H = 0</item>
+        ///    <item>Num Implicit 1H = 0</item>
+        ///    <item>Num Implicit 2H = 0</item>
+        ///    <item>Num Implicit 3H = 0</item>
+        ///    <item>Isotopic mass = 0 (non isotopic)</item>
+        ///    <item>Radical status = None  (radical status not defined)</item>
+        /// </list>
+        /// </remarks>
         /// <param name="x">x-coordinate</param>
         /// <param name="y">y-coordinate</param>
         /// <param name="z">z-coordinate</param>
         /// <param name="el">Chemical element symbol</param>
-        // @ - if the element symbol is null.
-        /// </summary>
+        /// <exception cref="ArgumentNullException">if the element symbol is null.</exception>
         public NInchiAtom(double x, double y, double z, string el)
         {
             this.X = x;
@@ -128,16 +127,16 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Convenience method to create a new atom with zero coordinates.
-        /// <param name="el">/// </summary></param>
+        /// <param name="el"></param>
+        /// </summary>
         public NInchiAtom(string el)
             : this(0.0, 0.0, 0.0, el)
         { }
 
         /// <summary>
         /// Sets isotopic mass, relative to standard mass.
-        ///
-        /// <param name="shift">Isotopic mass minus average atomic mass</param>
         /// </summary>
+        /// <param name="shift">Isotopic mass minus average atomic mass</param>
         public void SetIsotopicMassShift(int shift)
         {
             this.IsotopicMass = ISOTOPIC_SHIFT_FLAG + shift;

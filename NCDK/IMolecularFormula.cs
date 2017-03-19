@@ -17,10 +17,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace NCDK
 {
@@ -60,55 +57,47 @@ namespace NCDK
 
         /// <summary>
         ///  Adds an Isotope to this MolecularFormula in a number of occurrences.
-        ///
+        /// </summary>
         /// <param name="isotope">The isotope to be added to this MolecularFormula</param>
         /// <param name="count">The number of occurrences to add</param>
-        /// @see             #Add(IIsotope)
         /// <returns>the new molecular formula</returns>
-        /// </summary>
+        /// <seealso cref="Add(IIsotope)"/>
         IMolecularFormula Add(IIsotope isotope, int count);
 
         /// <summary>
         ///  Checks a set of Nodes for the occurrence of the isotope in the
         ///  IMolecularFormula from a particular isotope. It returns 0 if the does not exist.
-        ///
+        /// </summary>
         /// <param name="isotope">The IIsotope to look for</param>
         /// <returns>The occurrence of this isotope in this IMolecularFormula</returns>
-        /// @see                      #Isotopes.Count()
-        /// </summary>
         int GetCount(IIsotope isotope);
 
         /// <summary>
-        ///  Returns an <see cref="Iterable"/> for looping over all isotopes in this IMolecularFormula.
-        ///
-        /// <returns>An <see cref="Iterable"/> with the isotopes in this IMolecularFormula</returns>
+        ///  Returns an <see cref="IEnumerable{T}"/> for looping over all isotopes in this IMolecularFormula.
         /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> with the isotopes in this IMolecularFormula</returns>
         IEnumerable<IIsotope> Isotopes { get; }
 
         /// <summary>
         ///  Checks a set of Nodes for the number of different isotopes in the
         ///  IMolecularFormula.
-        ///
-        /// <returns>The the number of different isotopes in this IMolecularFormula</returns>
-        /// @see           #Isotopes.Count(IIsotope)
         /// </summary>
-         int Count { get; }
+        /// <value>The the number of different isotopes in this IMolecularFormula</value>
+        int Count { get; }
 
         /// <summary>
         ///  True, if the MolecularFormula contains the given IIsotope object. Not
         ///  the instance. The method looks for other isotopes which has the same
         ///  symbol, natural abundance and exact mass.
-        ///
+        /// </summary>
         /// <param name="isotope">The IIsotope this IMolecularFormula is searched for</param>
         /// <returns>True, if the IMolecularFormula contains the given isotope object</returns>
-        /// </summary>
         bool Contains(IIsotope isotope);
 
         /// <summary>
-        ///  Removes the given isotope from the MolecularFormula.
-        ///
-        /// <param name="isotope">The IIsotope to be removed</param>
+        /// Removes the given isotope from the MolecularFormula.
         /// </summary>
+        /// <param name="isotope">The IIsotope to be removed</param>
         void Remove(IIsotope isotope);
 
         /// <summary>
@@ -124,41 +113,35 @@ namespace NCDK
 
         /// <summary>
         /// Sets a property for a IChemObject.
-        ///
-        /// <param name="description">An object description of the property (most likely a</param>
-        ///                      unique string)
-        /// <param name="property">An object with the property itself</param>
-        /// @see                 #GetProperty
-        /// @see                 #removeProperty
         /// </summary>
-        void SetProperty(string key, object value);
+        /// <param name="description">An object description of the property (most likely a unique string)</param>
+        /// <param name="property">An object with the property itself</param>
+        /// <seealso cref="GetProperty(object)"/>
+        /// <seealso cref="RemoveProperty(object)"/>
+        void SetProperty(object description, object property);
 
         /// <summary>
         /// Set the properties of this object to the provided map (shallow copy). Any
         /// existing properties are removed.
-        ///
-        /// <param name="properties">map key-value pairs</param>
         /// </summary>
-        void SetProperties(IEnumerable<KeyValuePair<string, object>> properties);
+        /// <param name="properties">map key-value pairs</param>
+        void SetProperties(IEnumerable<KeyValuePair<object, object>> properties);
 
         /// <summary>
         /// Removes a property for a IChemObject.
-        ///
-        /// <param name="description">The object description of the property (most likely a</param>
-        ///                      unique string)
-        /// @see                 #SetProperty
-        /// @see                 #GetProperty
         /// </summary>
-        void RemoveProperty(string description);
+        /// <param name="description">The object description of the property (most likely a unique string)</param>
+        /// <see cref="SetProperty(object, object)"/>
+        /// <see cref="GetProperty(object)"/> 
+        void RemoveProperty(object description);
 
         /// <summary>
         /// Returns a property for the IChemObject - the object is automatically
         /// cast to the required type. This does however mean if the wrong type is
         /// provided then a runtime ClassCastException will be thrown.
-        ///
-        /// <p/>
-        /// <code>{@code
-        ///
+        /// </summary>
+        /// <example>
+        /// <code>
         ///     IAtom atom = new Atom("C");
         ///     atom.SetProperty("number", 1); // set an integer property
         ///
@@ -174,25 +157,18 @@ namespace NCDK
         ///
         ///     // if the type is provided a more meaningful error is thrown
         ///     atom.GetProperty("number", typeof(string)); // ArgumentException
-        ///
-        /// }</code>
-        /// <param name="description">An object description of the property (most likely a</param>
-        ///                      unique string)
-        // @param  <T>          generic return type
-        /// <returns>The object containing the property. Returns null if</returns>
-        ///                      property is not set.
-        /// @see                 #SetProperty
-        /// @see                 #GetProperty(object, Class)
-        /// @see                 #removeProperty
-        /// </summary>
-        object GetProperty(string key);
+        /// </code>
+        /// </example>
+        /// <typeparam name="T">generic return type</typeparam>
+        /// <param name="description">An object description of the property (most likely a unique string)</param>
+        /// <returns>The object containing the property. Returns null if property is not set.</returns>
+        T GetProperty<T>(object description);
 
         /// <summary>
         ///  Returns a IDictionary with the IChemObject's properties.
-        ///
-        /// <returns>The object's properties as an IDictionary</returns>
-        ///@see       #addProperties
         /// </summary>
-        IDictionary<string, object> GetProperties();
+        /// <returns>The object's properties as an IDictionary</returns>
+        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{object, object}})"/>
+        IDictionary<object, object> GetProperties();
     }
 }

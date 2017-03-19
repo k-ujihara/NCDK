@@ -1,22 +1,31 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
+
+/* Copyright (C) 2003-2008  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ */
 
 using System;
 using System.Collections.Generic;
@@ -25,23 +34,30 @@ using System.Collections.ObjectModel;
 
 namespace NCDK.Default
 {
+    /// <inheritdoc cref="IReaction"/>
+    // @cdk.githash
     [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
         private IAtomContainerSet<IAtomContainer> reactants;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Reactants => reactants;
 
         private IAtomContainerSet<IAtomContainer> products;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Products => products;
 
         private IAtomContainerSet<IAtomContainer> agents;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Agents => agents;
 
         private IList<IMapping> mappings;
+        /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
         private ReactionDirection direction;
+        /// <inheritdoc/>
         public ReactionDirection Direction
         {
             get { return direction; }
@@ -52,6 +68,9 @@ namespace NCDK.Default
                  NotifyChanged();             }
         }
 
+        /// <summary>
+        /// Constructs an empty, forward reaction.
+        /// </summary>
         public Reaction()
         {
             this.reactants = Builder.CreateAtomContainerSet();
@@ -96,23 +115,30 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+    /// <inheritdoc cref="IReaction"/>
+    // @cdk.githash
     [Serializable]
     public class Reaction
         : ChemObject, IReaction, ICloneable
     {
         private IAtomContainerSet<IAtomContainer> reactants;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Reactants => reactants;
 
         private IAtomContainerSet<IAtomContainer> products;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Products => products;
 
         private IAtomContainerSet<IAtomContainer> agents;
+        /// <inheritdoc/>
         public IAtomContainerSet<IAtomContainer> Agents => agents;
 
         private IList<IMapping> mappings;
+        /// <inheritdoc/>
         public IList<IMapping> Mappings => mappings;
 
         private ReactionDirection direction;
+        /// <inheritdoc/>
         public ReactionDirection Direction
         {
             get { return direction; }
@@ -123,6 +149,9 @@ namespace NCDK.Silent
                             }
         }
 
+        /// <summary>
+        /// Constructs an empty, forward reaction.
+        /// </summary>
         public Reaction()
         {
             this.reactants = Builder.CreateAtomContainerSet();

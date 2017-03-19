@@ -44,8 +44,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Default options for spacing and sizing adjuncts, could be configruable parameters.
         /// </summary>
-        private const double DEFAULT_ADJUNCT_SPACING_RATIO = 0.15d;
-        private const double DEFAULT_SUBSCRIPT_SIZE = 0.6d;
+        private const double DefaultAdjunctSpacingRatio = 0.15d;
+        private const double DefaultSubscriptSize = 0.6d;
 
         /// <summary>
         /// The font used in the symbol.
@@ -75,7 +75,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="font">the symbol font</param>
         /// </summary>
         public StandardAtomGenerator(Typeface font, double emSize)
-                : this(font, emSize, DEFAULT_ADJUNCT_SPACING_RATIO, DEFAULT_SUBSCRIPT_SIZE)
+                : this(font, emSize, DefaultAdjunctSpacingRatio, DefaultSubscriptSize)
         {
         }
 
@@ -91,7 +91,7 @@ namespace NCDK.Renderers.Generators.Standards
             this.emSize = emSize;
             this.scriptSize = scriptSize;
             this.defaultHydrogenLabel = new TextOutline("H", font, emSize);
-            this.padding = adjunctSpacing * defaultHydrogenLabel.Bounds.Width;
+            this.padding = adjunctSpacing * defaultHydrogenLabel.GetBounds().Width;
         }
 
         /// <summary>
@@ -133,9 +133,8 @@ namespace NCDK.Renderers.Generators.Standards
 
         /// <summary>
         /// Generates an atom symbol for a pseudo atom.
-        ///
-        /// <returns>the atom symbol</returns>
         /// </summary>
+        /// <returns>the atom symbol</returns>
         public AtomSymbol GeneratePseudoSymbol(string label, HydrogenPosition position)
         {
             var italicFont = new Typeface(font.FontFamily, FontStyles.Italic, FontWeights.Bold, font.Stretch);
@@ -404,8 +403,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>positioned hydrogen label</returns>
         public TextOutline PositionHydrogenLabel(HydrogenPosition position, TextOutline element, TextOutline hydrogen)
         {
-            var elementBounds = element.Bounds;
-            var hydrogenBounds = hydrogen.Bounds;
+            var elementBounds = element.GetBounds();
+            var hydrogenBounds = hydrogen.GetBounds();
             switch (position.Ordinal)
             {
                 case HydrogenPosition.O.Above:
@@ -428,8 +427,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>positioned subscript outline</returns>
         public TextOutline PositionSubscript(TextOutline label, TextOutline subscript)
         {
-            var hydrogenBounds = label.Bounds;
-            var hydrogenCountBounds = subscript.Bounds;
+            var hydrogenBounds = label.GetBounds();
+            var hydrogenCountBounds = subscript.GetBounds();
             subscript = subscript.Translate((hydrogenBounds.Right + padding) - hydrogenCountBounds.Left,
                                             (hydrogenBounds.Bottom + (hydrogenCountBounds.Height / 2)) - hydrogenCountBounds.Bottom);
             return subscript;
@@ -437,8 +436,8 @@ namespace NCDK.Renderers.Generators.Standards
 
         public TextOutline PositionSuperscript(TextOutline label, TextOutline superscript)
         {
-            var labelBounds = label.Bounds;
-            var superscriptBounds = superscript.Bounds;
+            var labelBounds = label.GetBounds();
+            var superscriptBounds = superscript.GetBounds();
             superscript = superscript.Translate((labelBounds.Right + padding) - superscriptBounds.Left,
                                                 (labelBounds.Top - (superscriptBounds.Height / 2)) - superscriptBounds.Top);
             return superscript;
@@ -446,8 +445,8 @@ namespace NCDK.Renderers.Generators.Standards
 
         public TextOutline PositionAfter(TextOutline before, TextOutline after)
         {
-            var fixedBounds = before.Bounds;
-            var movableBounds = after.Bounds;
+            var fixedBounds = before.GetBounds();
+            var movableBounds = after.GetBounds();
             after = after.Translate((fixedBounds.Right + padding) - movableBounds.Left, 0);
             return after;
         }
@@ -465,16 +464,16 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>positioned charge label</returns>
         public TextOutline PositionChargeLabel(int hydrogens, HydrogenPosition position, TextOutline charge, TextOutline element, TextOutline hydrogen)
         {
-            var chargeBounds = charge.Bounds;
+            var chargeBounds = charge.GetBounds();
 
             // the charge is placed to the top right of the element symbol
             // unless either the hydrogen label or the hydrogen count label
             // are in the way - in which case we place it relative to the
             // hydrogen
-            var referenceBounds = element.Bounds;
+            var referenceBounds = element.GetBounds();
             if (hydrogens > 0 && position == HydrogenPosition.Right)
-                referenceBounds = hydrogen.Bounds;
-            else if (hydrogens > 1 && position == HydrogenPosition.Above) referenceBounds = hydrogen.Bounds;
+                referenceBounds = hydrogen.GetBounds();
+            else if (hydrogens > 1 && position == HydrogenPosition.Above) referenceBounds = hydrogen.GetBounds();
 
             return charge.Translate((referenceBounds.Right + padding) - chargeBounds.Left,
                                     (referenceBounds.Top - (chargeBounds.Height / 2)) - chargeBounds.Top);
@@ -489,8 +488,8 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>positioned mass label</returns>
         public TextOutline PositionMassLabel(TextOutline massLabel, TextOutline elementLabel)
         {
-            var elementBounds = elementLabel.Bounds;
-            var massBounds = massLabel.Bounds;
+            var elementBounds = elementLabel.GetBounds();
+            var massBounds = massLabel.GetBounds();
             return massLabel.Translate((elementBounds.Left - padding) - massBounds.Right,
                                        (elementBounds.Top - (massBounds.Height / 2)) - massBounds.Top);
         }
@@ -513,17 +512,17 @@ namespace NCDK.Renderers.Generators.Standards
         {
             if (mass < 0 && hydrogens > 1)
             {
-                return (elementLabel.Bounds.Left - padding) - hydrogenCount.Bounds.Right;
+                return (elementLabel.GetBounds().Left - padding) - hydrogenCount.GetBounds().Right;
             }
             else if (mass >= 0)
             {
                 if (hydrogens > 1)
                 {
-                    return (massLabel.Bounds.Left + padding) - hydrogenCount.Bounds.Right;
+                    return (massLabel.GetBounds().Left + padding) - hydrogenCount.GetBounds().Right;
                 }
                 else if (hydrogens > 0)
                 {
-                    return (massLabel.Bounds.Left - padding) - hydrogenLabel.Bounds.Right;
+                    return (massLabel.GetBounds().Left - padding) - hydrogenLabel.GetBounds().Right;
                 }
             }
             return 0;

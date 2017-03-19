@@ -1,4 +1,4 @@
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     public interface VisitableDAG
     {

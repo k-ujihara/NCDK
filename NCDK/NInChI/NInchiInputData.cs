@@ -18,10 +18,7 @@
  */
 namespace NCDK.NInChI
 {
-
-    /// <summary>
     // @author sea36
-    /// </summary>
     public class NInchiInputData
     {
         public NInchiInput Input { get; private set; }

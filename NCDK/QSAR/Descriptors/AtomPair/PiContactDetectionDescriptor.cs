@@ -30,38 +30,39 @@ namespace NCDK.QSAR.Descriptors.AtomPair
     /// This class checks if two atoms have pi-contact (this is true when there is
     /// one and the same conjugated pi-system which contains both atoms, or directly
     /// linked neighbours of the atoms).
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>firstAtom</td>
-    ///     <td>0</td>
-    ///     <td>The position of the first atom</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>secondAtom</td>
-    ///     <td>0</td>
-    ///     <td>The position of the second atom</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkAromaticity</td>
-    ///     <td>false</td>
-    ///     <td>True is the aromaticity has to be checked</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>firstAtom</term>
+    ///     <term>0</term>
+    ///     <term>The position of the first atom</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>secondAtom</term>
+    ///     <term>0</term>
+    ///     <term>The position of the second atom</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkAromaticity</term>
+    ///     <term>false</term>
+    ///     <term>True is the aromaticity has to be checked</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
     // @cdk.githash
     // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:piContact
-    /// </summary>
     public class PiContactDetectionDescriptor : AbstractAtomPairDescriptor, IAtomPairDescriptor
     {
         private static readonly string[] NAMES = { "piContact" };

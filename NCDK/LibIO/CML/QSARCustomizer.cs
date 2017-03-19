@@ -27,63 +27,80 @@ using NCDK.QSAR.Result;
 using System.Text;
 using System.Xml.Linq;
 
-namespace NCDK.LibIO.CML {
+namespace NCDK.LibIO.CML
+{
     /// <summary>
     /// Customizer for the libio-cml Convertor to be able to export details for
     /// QSAR descriptors calculated for Molecules.
-    ///
+    /// </summary>
     // @author        egonw
     // @cdk.created   2005-05-04
     // @cdk.module    qsarcml
     // @cdk.githash
     // @cdk.set       libio-cml-customizers
-    // @cdk.require   java1.5+
-    /// </summary>
-    public class QSARCustomizer : ICMLCustomizer {
+    public class QSARCustomizer : ICMLCustomizer
+    {
         private const string QSAR_NAMESPACE = "qsar";
         private const string QSAR_URI = "http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/";
 
-        public void Customize(IBond bond, object nodeToAdd) {
+        public void Customize(IBond bond, object nodeToAdd)
+        {
             CustomizeIChemObject(bond, nodeToAdd);
         }
 
-        public void Customize(IAtom atom, object nodeToAdd) {
+        public void Customize(IAtom atom, object nodeToAdd)
+        {
             CustomizeIChemObject(atom, nodeToAdd);
         }
 
-        public void Customize(IAtomContainer molecule, object nodeToAdd) {
+        public void Customize(IAtomContainer molecule, object nodeToAdd)
+        {
             CustomizeIChemObject(molecule, nodeToAdd);
         }
 
-        private XElement CreateScalar(IDescriptorResult value) {
+        private XElement CreateScalar(IDescriptorResult value)
+        {
             XElement scalar = null;
-            if (value is DoubleResult) {
+            if (value is DoubleResult)
+            {
                 scalar = new CMLScalar(((DoubleResult)value).Value);
-            } else if (value is IntegerResult) {
+            }
+            else if (value is IntegerResult)
+            {
                 scalar = new CMLScalar(((IntegerResult)value).Value);
-            } else if (value is BooleanResult) {
+            }
+            else if (value is BooleanResult)
+            {
                 scalar = new CMLScalar(((BooleanResult)value).Value);
-            } else if (value is IntegerArrayResult) {
+            }
+            else if (value is IntegerArrayResult)
+            {
                 IntegerArrayResult result = (IntegerArrayResult)value;
                 scalar = new CMLArray();
                 scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:int");
                 scalar.SetAttributeValue(CMLElement.Attribute_size, result.Length.ToString());
                 StringBuilder buffer = new StringBuilder();
-                for (int i = 0; i < result.Length; i++) {
+                for (int i = 0; i < result.Length; i++)
+                {
                     buffer.Append(result[i] + " ");
                 }
                 scalar.Add(buffer.ToString());
-            } else if (value is DoubleArrayResult) {
+            }
+            else if (value is DoubleArrayResult)
+            {
                 DoubleArrayResult result = (DoubleArrayResult)value;
                 scalar = new CMLArray();
                 scalar.SetAttributeValue(CMLElement.Attribute_dataType, "xsd:double");
                 scalar.SetAttributeValue(CMLElement.Attribute_size, "" + result.Length);
                 StringBuilder buffer = new StringBuilder();
-                for (int i = 0; i < result.Length; i++) {
+                for (int i = 0; i < result.Length; i++)
+                {
                     buffer.Append(result[i] + " ");
                 }
                 scalar.Add(buffer.ToString());
-            } else {
+            }
+            else
+            {
                 // Trace.TraceError("Could not convert this object to a scalar element: ", value);
                 scalar = new CMLScalar();
                 scalar.Add(value.ToString());
@@ -91,7 +108,8 @@ namespace NCDK.LibIO.CML {
             return scalar;
         }
 
-        private void CustomizeIChemObject(IChemObject obj, object nodeToAdd) {
+        private void CustomizeIChemObject(IChemObject obj, object nodeToAdd)
+        {
             if (!(nodeToAdd is XElement)) throw new CDKException("NodeToAdd must be of type nu.xom.Element!");
 
             var element = (XElement)nodeToAdd;
@@ -99,11 +117,13 @@ namespace NCDK.LibIO.CML {
             XElement propList = null;
             foreach (var key in props.Keys)
             {
-                if (key is DescriptorSpecification) {
+                if (key is DescriptorSpecification)
+                {
                     DescriptorSpecification specs = (DescriptorSpecification)key;
                     DescriptorValue value = (DescriptorValue)props[key];
                     IDescriptorResult result = value.GetValue();
-                    if (propList == null) {
+                    if (propList == null)
+                    {
                         propList = new CMLPropertyList();
                     }
                     XElement property = new CMLProperty();
@@ -112,7 +132,8 @@ namespace NCDK.LibIO.CML {
                     metadataList.SetAttributeValue(XNamespace.Xmlns + QSAR_NAMESPACE, QSAR_URI);
                     property.SetAttributeValue(CMLElement.Attribute_convention, QSAR_NAMESPACE + ":" + "DescriptorValue");
                     string specsRef = specs.SpecificationReference;
-                    if (specsRef.StartsWith(QSAR_URI)) {
+                    if (specsRef.StartsWith(QSAR_URI))
+                    {
                         property.SetAttributeValue(XNamespace.Xmlns + QSAR_NAMESPACE, QSAR_URI);
                     }
                     CMLMetadata metaData = new CMLMetadata();
@@ -134,19 +155,26 @@ namespace NCDK.LibIO.CML {
                     // add parameter setting to the metadata list
                     object[] parameters = value.Parameters;
                     //                Debug.WriteLine("Value: " + value.Specification.ImplementationIdentifier);
-                    if (parameters != null && parameters.Length > 0) {
+                    if (parameters != null && parameters.Length > 0)
+                    {
                         string[] paramNames = value.ParameterNames;
                         var paramSettings = new CMLMetadataList();
                         paramSettings.SetAttributeValue(CMLElement.Attribute_title, QSAR_NAMESPACE + ":" + "descriptorParameters");
-                        for (int i = 0; i < parameters.Length; i++) {
+                        for (int i = 0; i < parameters.Length; i++)
+                        {
                             var paramSetting = new CMLMetadata();
                             string paramName = paramNames[i];
                             object paramVal = parameters[i];
-                            if (paramName == null) {
+                            if (paramName == null)
+                            {
                                 // Trace.TraceError("Parameter name was null! Cannot output to CML.");
-                            } else if (paramVal == null) {
+                            }
+                            else if (paramVal == null)
+                            {
                                 // Trace.TraceError("Parameter setting was null! Cannot output to CML. Problem param: " + paramName);
-                            } else {
+                            }
+                            else
+                            {
                                 paramSetting.SetAttributeValue(CMLElement.Attribute_title, paramNames[i]);
                                 paramSetting.SetAttributeValue(CMLElement.Attribute_content, parameters[i].ToString());
                                 paramSettings.Add(paramSetting);
@@ -162,7 +190,8 @@ namespace NCDK.LibIO.CML {
                     propList.Add(property);
                 } // else: disregard all other properties
             }
-            if (propList != null) {
+            if (propList != null)
+            {
                 element.Add(propList);
             }
         }

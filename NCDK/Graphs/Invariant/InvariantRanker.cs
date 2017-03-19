@@ -47,7 +47,7 @@ namespace NCDK.Graphs.Invariant
         /// will always be 'almost' sorted which is the best case for the insertion
         /// sort.
         /// </summary>
-        private const int INSERTION_SORT_THRESHOLD = 42;
+        private const int InsertionSortThreshold = 42;
 
         /// <summary>
         /// Create an invariant ranker for <paramref name="n"/> invariants.
@@ -139,7 +139,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="prev">the previous invariants</param>
         public void SortBy(int[] vs, int lo, int len, long[] curr, long[] prev)
         {
-            if (len < INSERTION_SORT_THRESHOLD)
+            if (len < InsertionSortThreshold)
             {
                 InsertionSortBy(vs, lo, len, curr, prev);
                 return;
@@ -157,7 +157,7 @@ namespace NCDK.Graphs.Invariant
         }
 
         /// <summary>
-        /// Merge the values which are sorted between <paramref name="to"/> - <paramref name="split"/> and
+        /// Merge the values which are sorted between <paramref name="lo"/> - <paramref name="split"/> and
         /// <paramref name="split"/> - <paramref name="len"/>.
         /// </summary>
         /// <param name="vs">vertices</param>

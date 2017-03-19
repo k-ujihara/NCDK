@@ -39,7 +39,7 @@ namespace NCDK.Aromaticities {
     [TestClass()]
     public class PiBondModelTest {
 
-        private static ElectronDonation model = ElectronDonation.PiBonds();
+        private static ElectronDonation model = ElectronDonation.PiBondsModel;
 
         [TestMethod()]
         public void Benzene() {

@@ -108,19 +108,19 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[5].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Single);
 
             try
@@ -133,7 +133,7 @@ namespace NCDK.Reactions.Types
             }
 
             molecule.Atoms[5].FormalCharge = 0;
-            molecule.Add(new SingleElectron(molecule.Atoms[5]));
+            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[5]));
 
             try
             {
@@ -158,19 +158,19 @@ namespace NCDK.Reactions.Types
             var setOfProducts = builder.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[3], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[6], BondOrder.Single);
 
             try
@@ -183,7 +183,7 @@ namespace NCDK.Reactions.Types
             }
 
             molecule.Atoms[0].FormalCharge = 0;
-            molecule.Add(new SingleElectron(molecule.Atoms[0]));
+            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[0]));
 
             try
             {
@@ -286,7 +286,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {

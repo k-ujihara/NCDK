@@ -215,22 +215,22 @@ namespace NCDK.Smiles
             IBond bond7 = new Bond(atom7, atom1);
             IBond bond8 = new Bond(atom8, atom4);
 
-            enol.Add(atom1);
-            enol.Add(atom2);
-            enol.Add(atom3);
-            enol.Add(atom4);
-            enol.Add(atom5);
-            enol.Add(atom6);
-            enol.Add(atom7);
-            enol.Add(atom8);
-            enol.Add(bond1);
-            enol.Add(bond2);
-            enol.Add(bond3);
-            enol.Add(bond4);
-            enol.Add(bond5);
-            enol.Add(bond6);
-            enol.Add(bond7);
-            enol.Add(bond8);
+            enol.Atoms.Add(atom1);
+            enol.Atoms.Add(atom2);
+            enol.Atoms.Add(atom3);
+            enol.Atoms.Add(atom4);
+            enol.Atoms.Add(atom5);
+            enol.Atoms.Add(atom6);
+            enol.Atoms.Add(atom7);
+            enol.Atoms.Add(atom8);
+            enol.Bonds.Add(bond1);
+            enol.Bonds.Add(bond2);
+            enol.Bonds.Add(bond3);
+            enol.Bonds.Add(bond4);
+            enol.Bonds.Add(bond5);
+            enol.Bonds.Add(bond6);
+            enol.Bonds.Add(bond7);
+            enol.Bonds.Add(bond8);
 
             // perceive atom types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
@@ -279,16 +279,16 @@ namespace NCDK.Smiles
             IBond bond4 = new Bond(atom4, atom5);
             IBond bond5 = new Bond(atom5, atom1);
 
-            enol.Add(atom1);
-            enol.Add(atom2);
-            enol.Add(atom3);
-            enol.Add(atom4);
-            enol.Add(atom5);
-            enol.Add(bond1);
-            enol.Add(bond2);
-            enol.Add(bond3);
-            enol.Add(bond4);
-            enol.Add(bond5);
+            enol.Atoms.Add(atom1);
+            enol.Atoms.Add(atom2);
+            enol.Atoms.Add(atom3);
+            enol.Atoms.Add(atom4);
+            enol.Atoms.Add(atom5);
+            enol.Bonds.Add(bond1);
+            enol.Bonds.Add(bond2);
+            enol.Bonds.Add(bond3);
+            enol.Bonds.Add(bond4);
+            enol.Bonds.Add(bond5);
 
             // perceive atom types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
@@ -333,18 +333,18 @@ namespace NCDK.Smiles
             IBond bond5 = new Bond(atom5, atom6);
             IBond bond6 = new Bond(atom6, atom1);
 
-            enol.Add(atom1);
-            enol.Add(atom2);
-            enol.Add(atom3);
-            enol.Add(atom4);
-            enol.Add(atom5);
-            enol.Add(atom6);
-            enol.Add(bond1);
-            enol.Add(bond2);
-            enol.Add(bond3);
-            enol.Add(bond4);
-            enol.Add(bond5);
-            enol.Add(bond6);
+            enol.Atoms.Add(atom1);
+            enol.Atoms.Add(atom2);
+            enol.Atoms.Add(atom3);
+            enol.Atoms.Add(atom4);
+            enol.Atoms.Add(atom5);
+            enol.Atoms.Add(atom6);
+            enol.Bonds.Add(bond1);
+            enol.Bonds.Add(bond2);
+            enol.Bonds.Add(bond3);
+            enol.Bonds.Add(bond4);
+            enol.Bonds.Add(bond5);
+            enol.Bonds.Add(bond6);
 
             // perceive atom types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);
@@ -406,18 +406,18 @@ namespace NCDK.Smiles
             IBond bond5 = new Bond(atom5, atom6);
             IBond bond6 = new Bond(atom6, atom1);
 
-            enol.Add(atom1);
-            enol.Add(atom2);
-            enol.Add(atom3);
-            enol.Add(atom4);
-            enol.Add(atom5);
-            enol.Add(atom6);
-            enol.Add(bond1);
-            enol.Add(bond2);
-            enol.Add(bond3);
-            enol.Add(bond4);
-            enol.Add(bond5);
-            enol.Add(bond6);
+            enol.Atoms.Add(atom1);
+            enol.Atoms.Add(atom2);
+            enol.Atoms.Add(atom3);
+            enol.Atoms.Add(atom4);
+            enol.Atoms.Add(atom5);
+            enol.Atoms.Add(atom6);
+            enol.Bonds.Add(bond1);
+            enol.Bonds.Add(bond2);
+            enol.Bonds.Add(bond3);
+            enol.Bonds.Add(bond4);
+            enol.Bonds.Add(bond5);
+            enol.Bonds.Add(bond6);
 
             // perceive atom types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(enol);

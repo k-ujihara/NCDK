@@ -1,4 +1,7 @@
-﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+<#@ template debug="false" hostspecific="false" language="C#" #>
 <#@ output extension=".cs" #>
 <#@ Assembly Name="System.Core.dll" #>
 <#@ Assembly Name="System.Xml.dll" #>

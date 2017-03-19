@@ -1,4 +1,4 @@
-namespace FaulonSignatures.Simple
+namespace NCDK.FaulonSignatures.Simple
 {
     /// <summary>
     /// A test implementation of signatures for <see cref="SimpleGraph"/>s.

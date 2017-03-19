@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FaulonSignatures.EdgeColored
+namespace NCDK.FaulonSignatures.EdgeColored
 {
     /// <summary>
     /// A very simple graph class - the equivalent of a client library class.

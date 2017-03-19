@@ -32,7 +32,7 @@ using System;
 
 namespace NCDK.Beam
 {
-    /// <summary> <author>John May </author>*/
+   /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class EdgeTest
     {

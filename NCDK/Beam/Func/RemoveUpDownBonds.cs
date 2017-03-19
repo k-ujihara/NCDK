@@ -107,6 +107,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
+        /// <param name="ordering"></param>
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private void RemoveRedundant(Graph g,
@@ -152,15 +153,16 @@ namespace NCDK.Beam
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="u">  a endpoint of the edge 'e'</param>
+        /// <param name="ordering"></param>
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
         private void RePlaceImplWithExpl(Graph g,
                                       Edge e,
                                       int u,
-                                      int[] Ordering,
+                                      int[] ordering,
                                       IDictionary<Edge, Edge> acc)
         {
-            ICollection<Edge> edges = new SortedSet<Edge>(new S(e, u, Ordering));
+            ICollection<Edge> edges = new SortedSet<Edge>(new S(e, u, ordering));
 
             foreach (var f in g.GetEdges(u))
             {

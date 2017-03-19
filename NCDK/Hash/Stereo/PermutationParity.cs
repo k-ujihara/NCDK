@@ -26,13 +26,11 @@ namespace NCDK.Hash.Stereo
 {
     /// <summary>
     /// Calculate the permutation parity on a given array of current values.
-    ///
+    /// <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation, Wikipedia</a>
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    // @see <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of
-    ///      a Permutation, Wikipedia</a>
     // @cdk.githash
-    /// </summary>
     internal abstract class PermutationParity
     {
         /// <summary>
@@ -40,7 +38,7 @@ namespace NCDK.Hash.Stereo
         /// configurations which do not require ordering, such as, double bonds with
         /// implicit hydrogens.
         /// </summary>
-        public static readonly PermutationParity IDENTITY = new EevenPermutationParity();
+        public static readonly PermutationParity Identity = new EevenPermutationParity();
 
         class EevenPermutationParity : PermutationParity
         {
@@ -55,11 +53,9 @@ namespace NCDK.Hash.Stereo
         /// The inversion parity counts whether we need to do an odd or even number
         /// of swaps to put the values in sorted order. If the values contain
         /// duplicates then the parity is returned as 0.
-        ///
-        /// <param name="current">current values of invariants</param>
-        /// <returns>-1, odd number of swaps, +1, even number of swaps, 0, contains</returns>
-        ///         duplicates
         /// </summary>
+        /// <param name="current">current values of invariants</param>
+        /// <returns>-1, odd number of swaps, +1, even number of swaps, 0, contains duplicates</returns>
         public abstract int Parity(long[] current);
     }
 }

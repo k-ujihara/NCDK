@@ -72,7 +72,7 @@ namespace NCDK.Beam
         /// explicit hydrogen count of bracket atoms (e.g. [CH4]).
         /// </summary>
         /// <returns>hydrogen count</returns>
-        /// <exception cref="InvalidOperationException">
+        /// <exception cref="System.InvalidOperationException">
         /// if element is part of the organic subset and the number of hydrogens is implied by the bond Order sum.
         /// </exception>
         int NumOfHydrogens { get; }

@@ -28,21 +28,17 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with convenience methods that provide methods from
     /// methods from ChemObjects within the ChemFile.
-    ///
-    // @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
-    ///
+    /// </summary>
+    /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class ChemFileManipulator
     {
         /// <summary>
         /// Get the total number of atoms inside an IChemFile.
-        ///
+        /// </summary>
         /// <param name="file">The IChemFile object.</param>
         /// <returns>The number of Atom object inside.</returns>
-        /// </summary>
-
         public static int GetAtomCount(IChemFile file)
         {
             int count = 0;
@@ -55,10 +51,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get the total number of bonds inside an IChemFile.
-        ///
+        /// </summary>
         /// <param name="file">The IChemFile object.</param>
         /// <returns>The number of Bond object inside.</returns>
-        /// </summary>
         public static int GetBondCount(IChemFile file)
         {
             int count = 0;
@@ -71,9 +66,8 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns a List of all IChemObject inside a ChemFile.
-        ///
-        /// <returns>A list of all ChemObjects</returns>
         /// </summary>
+        /// <returns>A list of all ChemObjects</returns>
         public static IEnumerable<IChemObject> GetAllChemObjects(IChemFile file)
         {
             //list.Add(file); // should not add the original file
@@ -109,10 +103,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get a list of all ChemModels inside an IChemFile.
-        ///
+        /// </summary>
         /// <param name="file">The IChemFile object.</param>
         /// <returns>The List of IChemModel objects inside.</returns>
-        /// </summary>
         public static IEnumerable<IChemModel> GetAllChemModels(IChemFile file)
         {
             foreach (var models in file)
@@ -123,10 +116,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get a list of all IReaction inside an IChemFile.
-        ///
+        /// </summary>
         /// <param name="file">The IChemFile object.</param>
         /// <returns>The List of IReaction objects inside.</returns>
-        /// </summary>
         public static IEnumerable<IReaction> GetAllReactions(IChemFile file)
         {
             foreach (var model in GetAllChemModels(file))

@@ -20,11 +20,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches a bond of any order.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AnyOrderQueryBond : SMARTSBond
     {
         public AnyOrderQueryBond(IChemObjectBuilder builder)
@@ -34,9 +33,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// Creates a new instance.
-        ///
-        /// <param name="atom1">/// @param atom2</param>
         /// </summary>
+        /// <param name="atom1"></param>
+        /// <param name="atom2"></param>
+        /// <param name="order"></param>
+        /// <param name="builder"></param>
         public AnyOrderQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
             : base(atom1, atom2, order, builder)
         {

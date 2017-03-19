@@ -25,9 +25,7 @@ using System.IO;
 
 namespace NCDK.StructGen.Stochastic.Operator
 {
-    /// <summary>
     // @cdk.module test-structgen
-    /// </summary>
     [TestClass()]
     public class CrossoverMachineTest : CDKTestCase
     {

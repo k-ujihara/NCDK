@@ -94,7 +94,7 @@ namespace NCDK
         public ConformerContainer(IAtomContainer atomContainer)
         {
             this.atomContainer = atomContainer;
-            title = atomContainer.GetProperty<string>(CDKPropertyName.TITLE);
+            title = atomContainer.GetProperty<string>(CDKPropertyName.Title);
             coordinates = new List<Vector3[]>();
             coordinates.Add(GetCoordinateList(atomContainer));
         }
@@ -113,10 +113,10 @@ namespace NCDK
             if (atomContainers.Length == 0) throw new ArgumentException("Can't use a zero-length molecule array");
 
             // lets check that the titles match
-            title = atomContainers[0].GetProperty<string>(CDKPropertyName.TITLE);
+            title = atomContainers[0].GetProperty<string>(CDKPropertyName.Title);
             foreach (var atomContainer in atomContainers)
             {
-                string nextTitle = atomContainer.GetProperty<string>(CDKPropertyName.TITLE);
+                string nextTitle = atomContainer.GetProperty<string>(CDKPropertyName.Title);
                 if (title != null && !nextTitle.Equals(title))
                     throw new ArgumentException("Titles of all molecules must match");
             }
@@ -144,7 +144,7 @@ namespace NCDK
         /// <summary>
         /// Checks whether any conformers are stored or not.
         /// </summary>
-        public bool IsEmpty => coordinates.Count == 0;
+        public bool IsEmpty() => coordinates.Count == 0;
 
         /// <summary>
         /// Checks to see whether the specified conformer is currently stored.
@@ -207,15 +207,15 @@ namespace NCDK
             if (this.atomContainer == null)
             {
                 this.atomContainer = atomContainer;
-                title = atomContainer.GetProperty<string>(CDKPropertyName.TITLE);
+                title = atomContainer.GetProperty<string>(CDKPropertyName.Title);
             }
             if (title == null)
             {
                 throw new ArgumentException("At least one of the input molecules does not have a title");
             }
-            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.TITLE)))
+            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.Title)))
                 throw new ArgumentException("The input molecules does not have the same title ('" + title
-                        + "') as the other conformers ('" + atomContainer.GetProperty<string>(CDKPropertyName.TITLE) + "')");
+                        + "') as the other conformers ('" + atomContainer.GetProperty<string>(CDKPropertyName.Title) + "')");
 
             if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count)
                 throw new ArgumentException("Doesn't have the same number of atoms as the rest of the conformers");
@@ -226,7 +226,7 @@ namespace NCDK
         /// <summary>
         /// Remove the specified conformer.
         /// </summary>
-        /// <param name="o">The conformer to remove (should be castable to IAtomContainer)</param>
+        /// <param name="atomContainer">The conformer to remove (should be castable to IAtomContainer)</param>
         /// <returns>true if the specified conformer was present and removed, false if not found</returns>
         public bool Remove(IAtomContainer atomContainer)
         {
@@ -274,7 +274,7 @@ namespace NCDK
 
         public IAtomContainer Set(int i, IAtomContainer atomContainer)
         {
-            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.TITLE)))
+            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.Title)))
                 throw new ArgumentException(
                         "The input molecules does not have the same title as the other conformers");
             Vector3[] tmp = GetCoordinateList(atomContainer);
@@ -288,10 +288,10 @@ namespace NCDK
             if (this.atomContainer == null)
             {
                 this.atomContainer = atomContainer;
-                title = (string)atomContainer.GetProperty<string>(CDKPropertyName.TITLE);
+                title = (string)atomContainer.GetProperty<string>(CDKPropertyName.Title);
             }
 
-            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.TITLE)))
+            if (!title.Equals(atomContainer.GetProperty<string>(CDKPropertyName.Title)))
                 throw new ArgumentException(
                         "The input molecules does not have the same title as the other conformers");
 
@@ -319,11 +319,11 @@ namespace NCDK
         /// are equal to the coordinates of the corresponding atoms in a conformer.
         /// </para>
         /// </summary>
-        /// <param name="o">The IAtomContainer whose presence is being tested</param>
+        /// <param name="atomContainer">The IAtomContainer whose presence is being tested</param>
         /// <returns>The index where o was found</returns>
         public int IndexOf(IAtomContainer atomContainer)
         {
-            if (!atomContainer.GetProperty<string>(CDKPropertyName.TITLE).Equals(title)) return -1;
+            if (!atomContainer.GetProperty<string>(CDKPropertyName.Title).Equals(title)) return -1;
 
             if (atomContainer.Atoms.Count != this.atomContainer.Atoms.Count) return -1;
 
@@ -341,7 +341,8 @@ namespace NCDK
                         break;
                     }
                 }
-                if (coordsMatch) return index;
+                if (coordsMatch)
+                    return index;
                 index++;
             }
             return -1;
@@ -357,9 +358,9 @@ namespace NCDK
         /// </summary>
         /// <param name="o">The IAtomContainer whose presence is being tested</param>
         /// <returns>The index where o was found</returns>
-        public int LastIndexOf(IAtomContainer atomContainer)
+        public int LastIndexOf(IAtomContainer o)
         {
-            if (!atomContainer.GetProperty<string>(CDKPropertyName.TITLE).Equals(title)) return -1;
+            if (!atomContainer.GetProperty<string>(CDKPropertyName.Title).Equals(title)) return -1;
 
             if (atomContainer.Atoms.Count != coordinates[0].Length) return -1;
 

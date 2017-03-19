@@ -207,7 +207,7 @@ namespace NCDK.Smiles.SMARTS
         /// Aromaticity perception - dealing with SMARTS we should use the Daylight
         /// model. This can be set to a different model using <see cref="SetAromaticity(Aromaticity)"/>.
         /// </summary>
-        private Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(), Cycles.FindAllOrVertexShort());
+        private Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllOrVertexShortFinder);
 
         /// <summary>
         /// Logical flag indicates whether the aromaticity model should be skipped.
@@ -296,7 +296,7 @@ namespace NCDK.Smiles.SMARTS
         /// </summary>
         /// <example><code>
         /// SMARTSQueryTool sqt = new SMARTSQueryTool(...);
-        /// sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDK(), Cycles.cdkAromaticSet));
+        /// sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.cdkAromaticSet));
         /// foreach (var molecule in molecules) 
         /// {
         ///     // CDK Aromatic model needs atom types
@@ -345,7 +345,7 @@ namespace NCDK.Smiles.SMARTS
         /// </remarks>
         /// <param name="atomContainer">The target moleculoe</param>
         /// <returns>true if the pattern is found in the target molecule, false otherwise</returns>
-        /// <exception cref="">if there is an error in ring, aromaticity or isomorphism perception</exception>
+        /// <exception cref="CDKException">if there is an error in ring, aromaticity or isomorphism perception</exception>
         /// <seealso cref="GetMatchingAtoms"/>
         /// <seealso cref="MatchesCount"/>
         /// <see cref="Matches(IAtomContainer, bool)"/>
@@ -365,7 +365,7 @@ namespace NCDK.Smiles.SMARTS
         ///                            false, the molecule is only initialized if it is different (in terms of object
         ///                            reference) than one supplied in a previous call to this method.</param>
         /// <returns>true if the pattern is found in the target molecule, false otherwise</returns>
-        /// <exception cref="">if there is an error in ring, aromaticity or isomorphism perception</exception>
+        /// <exception cref="CDKException">if there is an error in ring, aromaticity or isomorphism perception</exception>
         /// <seealso cref="GetMatchingAtoms"/>
         /// <seealso cref="MatchesCount"/>
         /// <seealso cref="Matches(IAtomContainer)"/>
@@ -459,7 +459,7 @@ namespace NCDK.Smiles.SMARTS
         /// the appropriate properties. Right now, this function is called each time we need to do a query and this is
         /// inefficient.</para>
         /// </summary>
-        /// <exception cref="">if there is a problem in ring perception or aromaticity detection, which is usually related to a timeout in the ring finding code.</exception>
+        /// <exception cref="CDKException">if there is a problem in ring perception or aromaticity detection, which is usually related to a timeout in the ring finding code.</exception>
         private void InitializeMolecule()
         {
             // initialise required invariants - the query has ISINRING set if

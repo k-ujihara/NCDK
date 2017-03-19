@@ -43,8 +43,8 @@ namespace NCDK.Renderers.Generators.Standards
         public void PositionHydrogenAbove()
         {
             TextOutline positioned = atomGenerator.PositionHydrogenLabel(HydrogenPosition.Above, element, hydrogen);
-            var elementBounds = element.Bounds;
-            var hydrogenBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var hydrogenBounds = positioned.GetBounds();
 
             Assert.IsTrue(elementBounds.Top > hydrogenBounds.Bottom);
             Assert.AreEqual(hydrogenBounds.Left, elementBounds.Left, 0.01);
@@ -54,8 +54,8 @@ namespace NCDK.Renderers.Generators.Standards
         public void PositionHydrogenBelow()
         {
             TextOutline positioned = atomGenerator.PositionHydrogenLabel(HydrogenPosition.Below, element, hydrogen);
-            var elementBounds = element.Bounds;
-            var hydrogenBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var hydrogenBounds = positioned.GetBounds();
 
             Assert.IsTrue(elementBounds.Top < hydrogenBounds.Bottom);
             Assert.AreEqual(hydrogenBounds.Left, elementBounds.Left, 0.01);
@@ -65,8 +65,8 @@ namespace NCDK.Renderers.Generators.Standards
         public void PositionHydrogenToLeft()
         {
             TextOutline positioned = atomGenerator.PositionHydrogenLabel(HydrogenPosition.Left, element, hydrogen);
-            var elementBounds = element.Bounds;
-            var hydrogenBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var hydrogenBounds = positioned.GetBounds();
 
             Assert.IsTrue(elementBounds.Right > hydrogenBounds.Left);
             Assert.AreEqual(hydrogenBounds.Bottom, elementBounds.Bottom, 0.01);
@@ -77,8 +77,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
 
             TextOutline positioned = atomGenerator.PositionHydrogenLabel(HydrogenPosition.Right, element, hydrogen);
-            var elementBounds = element.Bounds;
-            var hydrogenBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var hydrogenBounds = positioned.GetBounds();
 
             Assert.IsTrue(elementBounds.Right < hydrogenBounds.Left);
             Assert.AreEqual(hydrogenBounds.Bottom, elementBounds.Bottom, 0.01);
@@ -90,8 +90,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline hydrogenCount = new TextOutline("2", font, emSize);
             TextOutline positioned = atomGenerator.PositionSubscript(hydrogen, hydrogenCount);
 
-            var hydrogenBounds = hydrogen.Bounds;
-            var hydrogenCountBounds = positioned.Bounds;
+            var hydrogenBounds = hydrogen.GetBounds();
+            var hydrogenCountBounds = positioned.GetBounds();
 
             Assert.IsTrue(hydrogenCountBounds.Left > hydrogenBounds.Left);
             Assert.AreEqual(hydrogenBounds.Bottom, hydrogenCountBounds.GetCenterY(), 0.01);
@@ -103,8 +103,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline mass = new TextOutline("15", font, emSize);
             TextOutline positioned = atomGenerator.PositionMassLabel(mass, element);
 
-            var elementBounds = element.Bounds;
-            var massBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var massBounds = positioned.GetBounds();
 
             Assert.IsTrue(massBounds.Right < elementBounds.Left);
             Assert.AreEqual(elementBounds.Top, massBounds.GetCenterY(), 0.01);
@@ -119,8 +119,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Right, charge, element,
                     localHydrogen);
 
-            var hydrogenBounds = localHydrogen.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var hydrogenBounds = localHydrogen.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > hydrogenBounds.Left);
             Assert.AreEqual(hydrogenBounds.Top, chargeBounds.GetCenterY(), 0.01);
@@ -136,8 +136,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(0, HydrogenPosition.Right, charge, element,
                     localHydrogen);
 
-            var elementBounds = element.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
             Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
@@ -152,8 +152,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Left, charge, element,
                     localHydrogen);
 
-            var elementBounds = element.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
             Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
@@ -166,8 +166,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Below, charge, element,
                     hydrogen.Translate(0, 5));
 
-            var elementBounds = element.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
             Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);
@@ -182,8 +182,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(2, HydrogenPosition.Above, charge, element,
                     localHydrogen);
 
-            var hydrogenBounds = localHydrogen.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var hydrogenBounds = localHydrogen.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > hydrogenBounds.Left);
             Assert.AreEqual(hydrogenBounds.Top, chargeBounds.GetCenterY(), 0.01);
@@ -198,8 +198,8 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline positioned = atomGenerator.PositionChargeLabel(1, HydrogenPosition.Above, charge, element,
                     localHydrogen);
 
-            var elementBounds = element.Bounds;
-            var chargeBounds = positioned.Bounds;
+            var elementBounds = element.GetBounds();
+            var chargeBounds = positioned.GetBounds();
 
             Assert.IsTrue(chargeBounds.Left > elementBounds.Left);
             Assert.AreEqual(elementBounds.Top, chargeBounds.GetCenterY(), 0.01);

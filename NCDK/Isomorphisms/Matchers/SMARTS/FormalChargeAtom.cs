@@ -22,17 +22,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matcher checks the formal charge of the Atom.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class FormalChargeAtom : SMARTSAtom
     {
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="charge">/// </summary></param>
+        /// </summary>
+        /// <param name="charge"></param>
         public FormalChargeAtom(int charge, IChemObjectBuilder builder)
             : base(builder)
         {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// Only intended for use in creating 'virtual' graphs for checking canonicity.

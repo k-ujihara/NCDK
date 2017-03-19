@@ -31,15 +31,14 @@ namespace NCDK.StructGen.Stochastic
     /// <summary>
     /// Randomly generates a single, connected, correctly bonded structure from
     /// a number of fragments.
-    /// <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
+    /// <para>Assign hydrogen counts to each heavy atom. The hydrogens should not be
     /// in the atom pool but should be assigned implicitly to the heavy atoms in
-    /// order to reduce computational cost.
-    ///
+    /// order to reduce computational cost.</para>
+    /// </summary>
     // @author     steinbeck
     // @cdk.created    2001-09-04
     // @cdk.module     structgen
     // @cdk.githash
-    /// </summary>
     public class PartialFilledStructureMerger
     {
         SaturationChecker satCheck;
@@ -135,9 +134,8 @@ namespace NCDK.StructGen.Stochastic
         /// <summary>
         ///  Gets a randomly selected unsaturated atom from the set. If there are any, it will be from another
         ///  container than exclusionAtom.
-        ///
-        /// <returns>The unsaturated atom.</returns>
         /// </summary>
+        /// <returns>The unsaturated atom.</returns>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom, IAtomContainerSet<IAtomContainer> atomContainers)
         {
             IAtom atom;

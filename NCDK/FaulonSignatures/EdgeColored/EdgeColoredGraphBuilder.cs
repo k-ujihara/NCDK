@@ -1,6 +1,6 @@
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 
-namespace FaulonSignatures.EdgeColored
+namespace NCDK.FaulonSignatures.EdgeColored
 {
     public class EdgeColoredGraphBuilder : AbstractGraphBuilder
     {

@@ -28,15 +28,12 @@ namespace NCDK.IO.Iterator
     /// Interface for an iterating molecule reader. It allows to iterate over all molecules
     /// in specific file format (e.g. SDF), without reading them into memory first. Suitable
     /// for very large files, with thousands of molecules.
-    ///
+    /// </summary>
+    /// <seealso cref="IChemObjectIO"/>
     // @cdk.module io
     // @cdk.githash
-    ///
-    // @see org.openscience.cdk.io.IChemObjectIO
-    ///
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-19
-    /// </summary>
     public interface IIteratingChemObjectReader<T> : IChemObjectReader, IEnumerable<T> where T : IChemObject
     { }
 }

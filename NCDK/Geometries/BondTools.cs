@@ -153,11 +153,11 @@ namespace NCDK.Geometries
         /// <param name="from">the atom to view from.</param>
         /// <param name="to1">first direction to look in.</param>
         /// <param name="to2">second direction to look in.</param>
-        /// <param name="bool">true=angle is 0 to 2PI, false=angel is -PI to PI.</param>
+        /// <param name="flag">true=angle is 0 to 2PI, false=angel is -PI to PI.</param>
         /// <returns>The angle in rad.</returns>
-        public static double GiveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, bool bool_)
+        public static double GiveAngleBothMethods(IAtom from, IAtom to1, IAtom to2, bool flag)
         {
-            return GiveAngleBothMethods(from.Point2D.Value, to1.Point2D.Value, to2.Point2D.Value, bool_);
+            return GiveAngleBothMethods(from.Point2D.Value, to1.Point2D.Value, to2.Point2D.Value, flag);
         }
 
         public static double GiveAngleBothMethods(Vector2 from, Vector2 to1, Vector2 to2, bool bool_)
@@ -327,6 +327,7 @@ namespace NCDK.Geometries
         /// </summary>
         /// <param name="atom">The atom which is the center</param>
         /// <param name="container">The atomContainer the atom is in</param>
+        /// <param name="strict"></param>
         /// <returns>0=is not tetrahedral;>1 is a certain depiction of
         ///     tetrahedrality (evaluated in parse chain)</returns>
         public static int IsTetrahedral(IAtomContainer container, IAtom atom, bool strict)

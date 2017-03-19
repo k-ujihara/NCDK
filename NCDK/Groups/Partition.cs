@@ -29,35 +29,32 @@ using System.Text;
 
 namespace NCDK.Groups
 {
-    /**
-     * A partition of a set of integers, such as the discrete partition {{1}, {2},
-     * {3}, {4}} or the unit partition {{1, 2, 3, 4}} or an intermediate like {{1,
-     * 2}, {3, 4}}.
-     *
-     * @author maclean
-     * @cdk.module group
-     */
+    /// <summary>
+    /// A partition of a set of integers, such as the discrete partition {{1}, {2},
+    /// {3}, {4}} or the unit partition {{1, 2, 3, 4}} or an intermediate like {{1,
+    /// 2}, {3, 4}}.
+    /// </summary>
+    // @author maclean
+    // @cdk.module group
     public class Partition
     {
-
-        /**
-         * The subsets of the partition, known as cells.
-         */
+        /// <summary>
+        /// The subsets of the partition, known as cells.
+        /// </summary>
         private List<SortedSet<int>> cells;
 
-        /**
-         * Creates a new, empty partition with no cells.
-         */
+        /// <summary>
+        /// Creates a new, empty partition with no cells.
+        /// </summary>
         public Partition()
         {
             this.cells = new List<SortedSet<int>>();
         }
 
-        /**
-         * Copy constructor to make one partition from another.
-         *
-         * @param other the partition to copy
-         */
+        /// <summary>
+        /// Copy constructor to make one partition from another.
+        /// </summary>
+        /// <param name="other">the partition to copy</param>
         public Partition(Partition other)
             : this()
         {
@@ -67,11 +64,10 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Constructor to make a partition from an array of int arrays.
-         *
-         * @param cellData the partition to copy
-         */
+        /// <summary>
+        /// Constructor to make a partition from an array of int arrays.
+        /// </summary>
+        /// <param name="cellData">the partition to copy</param>
         public Partition(int[][] cellData)
                 : this()
         {
@@ -81,13 +77,12 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Create a unit partition - in other words, the coarsest possible partition
-         * where all the elements are in one cell.
-         *
-         * @param size the number of elements
-         * @return a new Partition with one cell containing all the elements
-         */
+        /// <summary>
+        /// Create a unit partition - in other words, the coarsest possible partition
+        /// where all the elements are in one cell.
+        /// </summary>
+        /// <param name="size">the number of elements</param>
+        /// <returns>a new Partition with one cell containing all the elements</returns>
         public static Partition Unit(int size)
         {
             Partition unit = new Partition();
@@ -116,18 +111,16 @@ namespace NCDK.Groups
             return cells != null ? Lists.GetDeepHashCode(cells) : 0;
         }
 
-        /**
-         * Gets the size of the partition, in terms of the number of cells.
-         *
-         * @return the number of cells in the partition
-         */
+        /// <summary>
+        /// Gets the size of the partition, in terms of the number of cells.
+        /// </summary>
+        /// <returns>the number of cells in the partition</returns>
         public int Count => this.cells.Count;
 
-        /**
-         * Calculate the size of the partition as the sum of the sizes of the cells.
-         *
-         * @return the number of elements in the partition
-         */
+        /// <summary>
+        /// Calculate the size of the partition as the sum of the sizes of the cells.
+        /// </summary>
+        /// <returns>the number of elements in the partition</returns>
         public int NumberOfElements()
         {
             int n = 0;
@@ -138,12 +131,11 @@ namespace NCDK.Groups
             return n;
         }
 
-        /**
-         * Checks that all the cells are singletons - that is, they only have one
-         * element. A discrete partition is equivalent to a permutation.
-         *
-         * @return true if all the cells are discrete
-         */
+        /// <summary>
+        /// Checks that all the cells are singletons - that is, they only have one
+        /// element. A discrete partition is equivalent to a permutation.
+        /// </summary>
+        /// <returns>true if all the cells are discrete</returns>
         public bool IsDiscrete()
         {
             foreach (var cell in cells)
@@ -156,11 +148,10 @@ namespace NCDK.Groups
             return true;
         }
 
-        /**
-         * Converts the whole partition into a permutation.
-         *
-         * @return the partition as a permutation
-         */
+        /// <summary>
+        /// Converts the whole partition into a permutation.
+        /// </summary>
+        /// <returns>the partition as a permutation</returns>
         public Permutation ToPermutation()
         {
             Permutation p = new Permutation(this.Count);
@@ -171,12 +162,11 @@ namespace NCDK.Groups
             return p;
         }
 
-        /**
-         * Check whether the cells are ordered such that for cells i and j,
-         * First(j) > First(i) and Last(j) > Last(i).
-         *
-         * @return true if all cells in the partition are ordered
-         */
+        /// <summary>
+        /// Check whether the cells are ordered such that for cells i and j,
+        /// First(j) > First(i) and Last(j) > Last(i).
+        /// </summary>
+        /// <returns>true if all cells in the partition are ordered</returns>
         public bool InOrder()
         {
             SortedSet<int> prev = null;
@@ -203,37 +193,34 @@ namespace NCDK.Groups
             return true;
         }
 
-        /**
-         * Gets the first element in the specified cell.
-         *
-         * @param cellIndex the cell to use
-         * @return the first element in this cell
-         */
+        /// <summary>
+        /// Gets the first element in the specified cell.
+        /// </summary>
+        /// <param name="cellIndex">the cell to use</param>
+        /// <returns>the first element in this cell</returns>
         public int GetFirstInCell(int cellIndex)
         {
             return this.cells[cellIndex].First();
         }
 
-        /**
-         * Gets the cell at this index.
-         *
-         * @param cellIndex the index of the cell to return
-         * @return the cell at this index
-         */
+        /// <summary>
+        /// Gets the cell at this index.
+        /// </summary>
+        /// <param name="cellIndex">the index of the cell to return</param>
+        /// <returns>the cell at this index</returns>
         public SortedSet<int> GetCell(int cellIndex)
         {
             return this.cells[cellIndex];
         }
 
-        /**
-         * Splits this partition by taking the cell at cellIndex and making two
-         * new cells - the first with the singleton splitElement and the second
-         * with the rest of the elements from that cell.
-         *
-         * @param cellIndex the index of the cell to split on
-         * @param splitElement the element to put in its own cell
-         * @return a new (finer) Partition
-         */
+        /// <summary>
+        /// Splits this partition by taking the cell at cellIndex and making two
+        /// new cells - the first with the singleton splitElement and the second
+        /// with the rest of the elements from that cell.
+        /// </summary>
+        /// <param name="cellIndex">the index of the cell to split on</param>
+        /// <param name="splitElement">the element to put in its own cell</param>
+        /// <returns>a new (finer) Partition</returns>
         public Partition SplitBefore(int cellIndex, int splitElement)
         {
             Partition r = new Partition();
@@ -257,15 +244,14 @@ namespace NCDK.Groups
             return r;
         }
 
-        /**
-         * Splits this partition by taking the cell at cellIndex and making two
-         * new cells - the first with the the rest of the elements from that cell
-         * and the second with the singleton splitElement.
-         *
-         * @param cellIndex the index of the cell to split on
-         * @param splitElement the element to put in its own cell
-         * @return a new (finer) Partition
-         */
+        /// <summary>
+        /// Splits this partition by taking the cell at cellIndex and making two
+        /// new cells - the first with the the rest of the elements from that cell
+        /// and the second with the singleton splitElement.
+        /// </summary>
+        /// <param name="cellIndex">the index of the cell to split on</param>
+        /// <param name="splitElement">the element to put in its own cell</param>
+        /// <returns>a new (finer) Partition</returns>
         public Partition SplitAfter(int cellIndex, int splitElement)
         {
             Partition r = new Partition();
@@ -289,13 +275,12 @@ namespace NCDK.Groups
             return r;
         }
 
-        /**
-         * Fill the elements of a permutation from the first element of each
-         * cell, up to the point <code>upTo</code>.
-         *
-         * @param upTo take values from cells up to this one
-         * @return the permutation representing the first element of each cell
-         */
+        /// <summary>
+        /// Fill the elements of a permutation from the first element of each
+        /// cell, up to the point <paramref name="upTo"/>.
+        /// </summary>
+        /// <param name="upTo">take values from cells up to this one</param>
+        /// <returns>the permutation representing the first element of each cell</returns>
         public Permutation SetAsPermutation(int upTo)
         {
             int[] p = new int[upTo];
@@ -306,23 +291,21 @@ namespace NCDK.Groups
             return new Permutation(p);
         }
 
-        /**
-         * Check to see if the cell at <code>cellIndex</code> is discrete - that is,
-         * it only has one element.
-         *
-         * @param cellIndex the index of the cell to check
-         * @return true of the cell at this index is discrete
-         */
+        /// <summary>
+        /// Check to see if the cell at <paramref name="cellIndex"/> is discrete - that is,
+        /// it only has one element.
+        /// </summary>
+        /// <param name="cellIndex">the index of the cell to check</param>
+        /// <returns>true of the cell at this index is discrete</returns>
         public bool IsDiscreteCell(int cellIndex)
         {
             return this.cells[cellIndex].Count == 1;
         }
 
-        /**
-         * Gets the index of the first cell in the partition that is discrete.
-         *
-         * @return the index of the first discrete cell
-         */
+        /// <summary>
+        /// Gets the index of the first cell in the partition that is discrete.
+        /// </summary>
+        /// <returns>the index of the first discrete cell</returns>
         public int GetIndexOfFirstNonDiscreteCell()
         {
             for (int i = 0; i < this.cells.Count; i++)
@@ -332,12 +315,11 @@ namespace NCDK.Groups
             return -1; // XXX
         }
 
-        /**
-         * Add a new singleton cell to the end of the partition containing only
-         * this element.
-         *
-         * @param element the element to add in its own cell
-         */
+        /// <summary>
+        /// Add a new singleton cell to the end of the partition containing only
+        /// this element.
+        /// </summary>
+        /// <param name="element">the element to add in its own cell</param>
         public void AddSingletonCell(int element)
         {
             SortedSet<int> cell = new SortedSet<int>();
@@ -345,21 +327,19 @@ namespace NCDK.Groups
             this.cells.Add(cell);
         }
 
-        /**
-         * Removes the cell at the specified index.
-         *
-         * @param index the index of the cell to remove
-         */
+        /// <summary>
+        /// Removes the cell at the specified index.
+        /// </summary>
+        /// <param name="index">the index of the cell to remove</param>
         public void RemoveCell(int index)
         {
             this.cells.RemoveAt(index);
         }
 
-        /**
-         * Adds a new cell to the end of the partition containing these elements.
-         *
-         * @param elements the elements to add in a new cell
-         */
+        /// <summary>
+        /// Adds a new cell to the end of the partition containing these elements.
+        /// </summary>
+        /// <param name="elements">the elements to add in a new cell</param>
         public void AddCell(params int[] elements)
         {
             SortedSet<int> cell = new SortedSet<int>();
@@ -370,22 +350,20 @@ namespace NCDK.Groups
             this.cells.Add(cell);
         }
 
-        /**
-         * Adds a new cell to the end of the partition.
-         *
-         * @param elements the collection of elements to put in the cell
-         */
+        /// <summary>
+        /// Adds a new cell to the end of the partition.
+        /// </summary>
+        /// <param name="elements">the collection of elements to put in the cell</param>
         public void AddCell(ICollection<int> elements)
         {
             cells.Add(new SortedSet<int>(elements));
         }
 
-        /**
-         * Add an element to a particular cell.
-         *
-         * @param index the index of the cell to add to
-         * @param element the element to add
-         */
+        /// <summary>
+        /// Add an element to a particular cell.
+        /// </summary>
+        /// <param name="index">the index of the cell to add to</param>
+        /// <param name="element">the element to add</param>
         public void AddToCell(int index, int element)
         {
             if (cells.Count < index + 1)
@@ -398,43 +376,40 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Insert a cell into the partition at the specified index.
-         *
-         * @param index the index of the cell to add
-         * @param cell the cell to add
-         */
+        /// <summary>
+        /// Insert a cell into the partition at the specified index.
+        /// </summary>
+        /// <param name="index">the index of the cell to add</param>
+        /// <param name="cell">the cell to add</param>
         public void InsertCell(int index, SortedSet<int> cell)
         {
             this.cells.Insert(index, cell);
         }
 
-        /**
-         * Creates and returns a copy of the cell at cell index.
-         *
-         * @param cellIndex the cell to copy
-         * @return the copy of the cell
-         */
+        /// <summary>
+        /// Creates and returns a copy of the cell at cell index.
+        /// </summary>
+        /// <param name="cellIndex">the cell to copy</param>
+        /// <returns>the copy of the cell</returns>
         public SortedSet<int> CopyBlock(int cellIndex)
         {
             return new SortedSet<int>(this.cells[cellIndex]);
         }
 
-        /**
-         * Sort the cells in increasing order.
-         */
+        /// <summary>
+        /// Sort the cells in increasing order.
+        /// </summary>
         public void Order()
         {
             cells.Sort(delegate (SortedSet<int> cellA, SortedSet<int> cellB) { return cellA.First().CompareTo(cellB.First()); });
         }
 
-        /**
-         * Check that two elements are in the same cell of the partition.
-         *
-         * @param elementI an element in the partition
-         * @param elementJ an element in the partition
-         * @return true if both elements are in the same cell
-         */
+        /// <summary>
+        /// Check that two elements are in the same cell of the partition.
+        /// </summary>
+        /// <param name="elementI">an element in the partition</param>
+        /// <param name="elementJ">an element in the partition</param>
+        /// <returns>true if both elements are in the same cell</returns>
         public bool InSameCell(int elementI, int elementJ)
         {
             for (int cellIndex = 0; cellIndex < Count; cellIndex++)
@@ -474,18 +449,15 @@ namespace NCDK.Groups
             return sb.ToString();
         }
 
-        /**
-         * Parse a string like "[0,2|1,3]" to form the partition; cells are
-         * separated by '|' characters and elements within the cell by commas.
-         *
-         * @param strForm the partition in string form
-         * @return the partition corresponding to the string
-         * @throws ArgumentException thrown if the provided strFrom is
-         *         null or empty
-         */
+        /// <summary>
+        /// Parse a string like "[0,2|1,3]" to form the partition; cells are
+        /// separated by '|' characters and elements within the cell by commas.
+        /// </summary>
+        /// <param name="strForm">the partition in string form</param>
+        /// <returns>the partition corresponding to the string</returns>
+        /// <exception cref="ArgumentException">thrown if the provided strFrom is null or empty</exception>
         public static Partition FromString(string strForm)
         {
-
             if (strForm == null || strForm.Length == 0) throw new ArgumentException("null or empty string provided");
 
             Partition p = new Partition();

@@ -1,8 +1,8 @@
 using NCDK.Common.Collections;
 using System.Collections.Generic;
-using static FaulonSignatures.DAG;
+using static NCDK.FaulonSignatures.DAG;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     public class CanonicalLabellingVisitor : DAGVisitor
     {

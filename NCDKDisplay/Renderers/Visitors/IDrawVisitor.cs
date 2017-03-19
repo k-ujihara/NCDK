@@ -19,7 +19,7 @@
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 
-namespace NCDK.Renderers.Visitor
+namespace NCDK.Renderers.Visitors
 {
     /// <summary>
     /// An <see cref="IDrawVisitor"/> is an <see cref="IRenderingVisitor"/> that can be

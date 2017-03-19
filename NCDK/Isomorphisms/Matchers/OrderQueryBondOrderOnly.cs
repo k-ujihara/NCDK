@@ -21,12 +21,11 @@ using System;
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
-    /// <code>IQueryBond</code> that matches IBond object only based on bond order, and
+    /// <see cref="IQueryBond"/> that matches IBond object only based on bond order, and
     /// disregarding any aromaticity flag.
-    ///
+    /// </summary>
     // @cdk.module  isomorphism
     // @cdk.githash
-    /// </summary>
     public class OrderQueryBondOrderOnly : QueryBond, IQueryBond
     {
         public OrderQueryBondOrderOnly(IChemObjectBuilder builder)

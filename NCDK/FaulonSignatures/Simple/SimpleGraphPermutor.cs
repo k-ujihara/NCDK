@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace FaulonSignatures.Simple
+namespace NCDK.FaulonSignatures.Simple
 {
     public class SimpleGraphPermutor : Permutor, IEnumerable<SimpleGraph>
     {

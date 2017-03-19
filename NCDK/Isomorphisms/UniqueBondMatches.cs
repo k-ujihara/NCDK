@@ -29,35 +29,32 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A predicate for filtering atom-mapping results for those which cover unique
-     * edges. This class is intended for use with <see cref="Pattern"/>.
-     *
-     * <blockquote><code>{@code
-     *     Pattern     pattern = Ullmann.FindSubstructure(query);
-     *     List<int[]> unique  = FluentIterable.Of(patter.MatchAll(target))
-     *                                         .Filter(new UniqueBondMatches())
-     *                                         .ToList();
-     * }</code></blockquote>
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// A predicate for filtering atom-mapping results for those which cover unique
+    /// edges. This class is intended for use with <see cref="Pattern"/>.
+    /// </summary>
+    /// <example><code>
+    ///     Pattern     pattern = Ullmann.FindSubstructure(query);
+    ///     var unique  = FluentIterable.Of(patter.MatchAll(target))
+    ///                                         .Filter(new UniqueBondMatches())
+    ///                                         .ToList();
+    /// </code></example>
+    // @author John May
+    // @cdk.module isomorphism
     internal sealed class UniqueBondMatches : NCDK.Common.Base.Predicate<int[]>
     {
-
         /// <summary>Which mappings have we seen already.</summary>
         private readonly HashSet<ICollection<Tuple>> unique;
 
         /// <summary>The query graph.</summary>
         private readonly int[][] g;
 
-        /**
-         * Create filter for the expected number of unique matches. The number of
-         * matches can grow if required.
-         *
-         * @param expectedHits expected number of unique matches
-         */
+        /// <summary>
+        /// Create filter for the expected number of unique matches. The number of
+        /// matches can grow if required.
+        /// </summary>
+        /// <param name="g"></param>
+        /// <param name="expectedHits">expected number of unique matches</param>
         private UniqueBondMatches(int[][] g, int expectedHits)
         {
             this.unique = new HashSet<ICollection<Tuple>>(new EQ());
@@ -92,12 +89,11 @@ namespace NCDK.Isomorphisms
             return unique.Add(ToEdgeSet(input));
         }
 
-        /**
-         * Convert a mapping to a bitset.
-         *
-         * @param mapping an atom mapping
-         * @return a bit set of the mapped vertices (values in array)
-         */
+        /// <summary>
+        /// Convert a mapping to a bitset.
+        /// </summary>
+        /// <param name="mapping">an atom mapping</param>
+        /// <returns>a bit set of the mapped vertices (values in array)</returns>
         private ICollection<Tuple> ToEdgeSet(int[] mapping)
         {
             ICollection<Tuple> edges = new HashSet<Tuple>();

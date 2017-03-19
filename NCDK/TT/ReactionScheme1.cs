@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -48,7 +33,6 @@ namespace NCDK.Default
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     public class ReactionScheme : ReactionSet, IReactionScheme
     {
-
         /// <summary>
         /// A List of reaction schemes
         /// </summary>
@@ -77,6 +61,7 @@ namespace NCDK.Default
             reactionScheme.Remove(scheme);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>
@@ -103,7 +88,6 @@ namespace NCDK.Silent
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     public class ReactionScheme : ReactionSet, IReactionScheme
     {
-
         /// <summary>
         /// A List of reaction schemes
         /// </summary>
@@ -132,6 +116,7 @@ namespace NCDK.Silent
             reactionScheme.Remove(scheme);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>

@@ -32,39 +32,37 @@ using System.IO;
 
 namespace NCDK.Smiles.SMARTS
 {
-    /**
-     * A <see cref="Pattern"/> for matching a single SMARTS query against multiple target
-     * compounds. The class should <b>not</b> be used for matching many queries
-     * against a single target as in substructure keyed fingerprints. The {@link
-     * SMARTSQueryTool} is currently a better option as less target initialistion is
-     * performed.
-     *
-     * Simple usage:
-     *
-     * <blockquote><code>
-     * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-     *
-     * foreach (var ac in acs) {
-     *   if (ptrn.Matches(ac)) {
-     *       // 'ac' contains the pattern
-     *   }
-     * }
-     * </code></blockquote>
-     *
-     * Obtaining a <see cref="Mappings"/> instance and determine the number of unique
-     * matches.
-     *
-     * <blockquote><code>
-     * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-     *
-     * foreach (var ac in acs) {
-     *   nUniqueHits += ptrn.MatchAll(ac)
-     *                      .CountUnique();
-     * }
-     * </code></blockquote>
-     *
-     * @author John May
-     */
+    /// <summary>
+    /// A <see cref="Pattern"/> for matching a single SMARTS query against multiple target
+    /// compounds. The class should <b>not</b> be used for matching many queries
+    /// against a single target as in substructure keyed fingerprints. The <see cref="SMARTSQueryTool"/> 
+    /// is currently a better option as less target initialistion is performed.
+    /// </summary>
+    /// <example>
+    /// Simple usage:
+    /// <code>
+    /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
+    ///
+    /// foreach (var ac in acs) {
+    ///   if (ptrn.Matches(ac)) {
+    ///       // 'ac' contains the pattern
+    ///   }
+    /// }
+    /// </code>
+    ///
+    /// Obtaining a <see cref="Mappings"/> instance and determine the number of unique
+    /// matches.
+    ///
+    /// <code>
+    /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
+    ///
+    /// foreach (var ac in acs) {
+    ///   nUniqueHits += ptrn.MatchAll(ac)
+    ///                      .CountUnique();
+    /// }
+    /// </code>
+    /// </example>
+    // @author John May
     public sealed class SmartsPattern : Pattern
     {
 
@@ -78,16 +76,14 @@ namespace NCDK.Smiles.SMARTS
         private readonly bool ringInfo;
 
         /// <summary>Aromaticity model.</summary>
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.Daylight(), Cycles.Or(Cycles.All(),
-                                                  Cycles.Relevant));
+        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
 
-        /**
-         * Internal constructor.
-         *
-         * @param smarts  pattern
-         * @param builder the builder
-         * @throws IOException the pattern could not be parsed
-         */
+        /// <summary>
+        /// Internal constructor.
+        /// </summary>
+        /// <param name="smarts">pattern</param>
+        /// <param name="builder">the builder</param>
+        /// <exception cref="IOException">the pattern could not be parsed</exception>
         private SmartsPattern(string smarts, IChemObjectBuilder builder)
         {
             try
@@ -106,39 +102,34 @@ namespace NCDK.Smiles.SMARTS
             this.ringInfo = RingSizeOrNumber(smarts);
         }
 
-        /**
-         * @inheritDoc
-         */
+        /// <inheritdoc/>
         public override int[] Match(IAtomContainer container)
         {
             return MatchAll(container).First();
         }
 
-        /**
-         * Obtain the mappings of the query pattern against the target compound. Any
-         * initialisations required for the SMARTS match are automatically
-         * performed. The Daylight aromaticity model is applied clearing existing
-         * aromaticity. <b>Do not use this for matching multiple SMARTS againsts the
-         * same container</b>.
-         *
-         * <blockquote><code>
-         * Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-         * int nUniqueHits = 0;
-         *
-         * foreach (var ac in acs) {
-         *   nUniqueHits += ptrn.MatchAll(ac)
-         *                      .CountUnique();
-         * }
-         * </code></blockquote>
-         *
-         * See <see cref="Mappings"/> for available methods.
-         *
-         * @param target the target compound in which we want to match the pattern
-         * @return mappings of the query to the target compound
-         */
+        /// <summary>
+        /// Obtain the mappings of the query pattern against the target compound. Any
+        /// initialisations required for the SMARTS match are automatically
+        /// performed. The Daylight aromaticity model is applied clearing existing
+        /// aromaticity. <b>Do not use this for matching multiple SMARTS againsts the
+        /// same container</b>.
+        /// </summary>
+        /// <example><code>
+        /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
+        /// int nUniqueHits = 0;
+        ///
+        /// foreach (var ac in acs) {
+        ///   nUniqueHits += ptrn.MatchAll(ac)
+        ///                      .CountUnique();
+        /// }
+        /// </code>
+        /// See <see cref="Mappings"/> for available methods.
+        /// </example>
+        /// <param name="target">the target compound in which we want to match the pattern</param>
+        /// <returns>mappings of the query to the target compound</returns>
         public override Mappings MatchAll(IAtomContainer target)
         {
-
             // TODO: prescreen target for element frequency before intialising
             // invariants and applying aromaticity, requires pattern enumeration -
             // see http://www.daylight.com/meetings/emug00/Sayle/substruct.html.
@@ -172,26 +163,24 @@ namespace NCDK.Smiles.SMARTS
             return mappings;
         }
 
-        /**
-         * Create a <see cref="Pattern"/> that will match the given {@code smarts} query.
-         *
-         * @param smarts  SMARTS pattern string
-         * @param builder chem object builder used to create objects
-         * @return a new pattern
-         * @throws java.IOException the smarts could not be parsed
-         */
+        /// <summary>
+        /// Create a <see cref="Pattern"/> that will match the given {@code smarts} query.
+        /// </summary>
+        /// <param name="smarts">SMARTS pattern string</param>
+        /// <param name="builder">chem object builder used to create objects</param>
+        /// <returns>a new pattern</returns>
+        /// <exception cref="IOException">the smarts could not be parsed</exception> 
         public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
         {
             return new SmartsPattern(smarts, builder);
         }
 
-        /**
-         * Checks a smarts string for !R, R<num> or r<num>. If found then the more
-         * expensive ring info needs to be initlised before querying.
-         *
-         * @param smarts pattern string
-         * @return the pattern has a ring size or number query
-         */
+        /// <summary>
+        /// Checks a smarts string for !R, R&lt;num&gt; or r&lt;num&gt;. If found then the more
+        /// expensive ring info needs to be initlised before querying.
+        /// </summary>
+        /// <param name="smarts">pattern string</param>
+        /// <returns>the pattern has a ring size or number query</returns>
         internal static bool RingSizeOrNumber(string smarts)
         {
             for (int i = 0, end = smarts.Length - 1; i <= end; i++)

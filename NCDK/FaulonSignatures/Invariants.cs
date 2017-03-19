@@ -1,9 +1,9 @@
 using NCDK.Common.Collections;
 using System;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
-    public class Invariants : ICloneable
+    public class Invariants
     {
         /// <summary>
         /// The colors assigned to vertices of the input graph
@@ -68,7 +68,7 @@ namespace FaulonSignatures
             nodeInvariants[nodeIndex] = value;
         }
 
-        public object Clone()
+        public virtual Invariants Clone()
         {
             Invariants copy = new Invariants(colors.Length, vertexInvariants.Length);
             copy.colors = (int[])colors.Clone();

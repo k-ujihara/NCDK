@@ -51,6 +51,7 @@ namespace NCDK.Graphs
         /// Start the permutor off with an initial atom container, and the size of
         /// the permutation.
         /// </summary>
+        /// <param name="size"></param>
         /// <param name="atomContainer"></param>
         public AtomContainerPermutor(int size, IAtomContainer atomContainer)
             : base(size)

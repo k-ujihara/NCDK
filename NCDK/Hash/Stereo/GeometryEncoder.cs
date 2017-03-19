@@ -29,13 +29,11 @@ namespace NCDK.Hash.Stereo
     /// <summary>
     /// Given a geometric parity and a permutation parity encode the parity of the
     /// combination at the specified stereo centre indices.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
     internal sealed class GeometryEncoder : IStereoEncoder
     {
-
         /* value for a clockwise configuration */
         private const long Clockwise = 15543053;
 
@@ -52,14 +50,12 @@ namespace NCDK.Hash.Stereo
         private readonly int[] centres;
 
         /// <summary>
-        /// Create a new encoder for multiple stereo centres (specified as an
-        /// array).
-        ///
+        /// Create a new encoder for multiple stereo centres (specified as an array).
+        /// </summary>
         /// <param name="centres">the stereo centres which will be configured</param>
         /// <param name="permutation">calculator for permutation parity</param>
         /// <param name="geometric">geometric calculator</param>
         /// <exception cref="ArgumentException">if the centres[] were empty</exception>
-        /// </summary>
         public GeometryEncoder(int[] centres, PermutationParity permutation, GeometricParity geometric)
         {
             if (centres.Length == 0) throw new ArgumentException("no centres[] provided");
@@ -71,35 +67,31 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Convenience method to create a new encoder for a single stereo centre.
-        ///
+        /// </summary>
         /// <param name="centre">a stereo centre which will be configured</param>
         /// <param name="permutation">calculator for permutation parity</param>
         /// <param name="geometric">geometric calculator</param>
         /// <exception cref="ArgumentException">if the centres[] were empty</exception>
-        /// </summary>
         public GeometryEncoder(int centre, PermutationParity permutation, GeometricParity geometric)
             : this(new int[] { centre }, permutation, geometric)
         { }
 
         /// <summary>
-        /// Encodes the {@code centres[]} specified in the constructor as either
+        /// Encodes the <see cref="centres"/> specified in the constructor as either
         /// clockwise/anticlockwise or none. If there is a permutation parity but no
         /// geometric parity then we can not encode the configuration and 'true' is
         /// returned to indicate the perception is done. If there is no permutation
-        /// parity this may changed with the next {@code current[]} values and so
-        /// 'false' is returned.
-        ///
-        // @inheritDoc
+        /// parity this may changed with the next <paramref name="current"/>[] values and so
+        /// <see langword="false"/> is returned.
         /// </summary>
+        /// <inheritdoc/>
         public bool Encode(long[] current, long[] next)
         {
-
             int p = permutation.Parity(current);
 
             // if is a permutation parity (all neighbors are different)
             if (p != 0)
             {
-
                 // multiple with the geometric parity
                 int q = geometric.Parity * p;
 

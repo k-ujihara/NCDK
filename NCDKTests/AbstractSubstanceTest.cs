@@ -8,7 +8,7 @@
  * of the License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
- * but WITHOUT Any WARRANTY; without even the implied warranty of
+ * but WITHOUT Any WARRANTY; without even theSetRendererModel implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
@@ -17,15 +17,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NCDK.Default;
 
 namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="ISubstance"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractSubstanceTest
         : AbstractAtomContainerSetTest<IAtomContainer>

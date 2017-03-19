@@ -97,7 +97,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestSetStereoParity_Integer()
         {
             IPseudoAtom atom = (IPseudoAtom)NewChemObject();

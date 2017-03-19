@@ -27,10 +27,9 @@ namespace NCDK
     /// <summary>
     /// Event fired by cdk classes to their registered listeners
     /// in case something changes within them.
-    ///
+    /// </summary>
     // @cdk.module data
     // @cdk.githash
-    /// </summary>
     public class ChemObjectChangeEventArgs
         : EventArgs
     {
@@ -39,9 +38,8 @@ namespace NCDK
         /// <summary>
         /// Constructs a ChemObjectChangeEvent with a reference
         /// to the object where it originated.
-        ///
-        /// <param name="source">The reference to the object where this change event originated</param>
         /// </summary>
+        /// <param name="source">The reference to the object where this change event originated</param>
         public ChemObjectChangeEventArgs(object source)
             : base()
         {

@@ -27,12 +27,14 @@ namespace NCDK.AtomTypes
     /// AtomTypeMatcher that finds an AtomType by matching the Atom's element symbol.
     /// This atom type matcher takes into account formal charge and number of
     /// implicit hydrogens, and requires bond orders to be given.
+    /// </summary>
+    /// <remarks>
     /// <para>
-    /// <p>This class uses the <b>cdk/config/data/structgen_atomtypes.xml</b>
-    /// list. If there is not an atom type defined for the tested atom, then null
+    /// This class uses the <b>NCDK.Config.Data.structgen_atomtypes.xml</b>
+    /// list. If there is not an atom type defined for the tested atom, then <see langword="null"/>
     /// is returned.
     /// </para>
-    /// </summary>
+    /// </remarks>
     // @author         egonw
     // @cdk.created    2006-09-22
     // @cdk.module     structgen

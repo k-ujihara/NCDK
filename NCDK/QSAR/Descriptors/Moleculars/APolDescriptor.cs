@@ -25,37 +25,31 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Sum of the atomic polarizabilities (including implicit hydrogens).
-    ///
+    /// </summary>
+    /// <remarks>
     /// Polarizabilities are taken from
     /// <a href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm">http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm</a>.
-    /// <p>
+    /// <para>
     /// This class need explicit hydrogens.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </para>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// Returns a single value with name <i>apol</i>.
-    ///
+    /// </para>
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:apol
-    ///
     // @cdk.keyword polarizability, atomic
-    /// </summary>
     public class APolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         /* Atomic polarizabilities ordered by atomic number from 1 to 102. */
@@ -79,21 +73,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// Returns a <code>Map</code> which specifies which descriptor
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        ///
-        /// <returns>An object containing the descriptor specification</returns>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#apol",
@@ -148,17 +128,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

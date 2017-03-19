@@ -20,12 +20,11 @@
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// Object that describes the difference between two <see cref="Object"/>s.
-    ///
+    /// Object that describes the difference between two <see cref="object"/>s.
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public interface IDifference
     {
     }

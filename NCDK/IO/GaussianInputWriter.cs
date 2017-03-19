@@ -48,10 +48,10 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new writer that produces input files to run a Gaussian QM job.
         /// </summary>
-        /// <param name="out_"></param>
-        public GaussianInputWriter(TextWriter out_)
+        /// <param name="output"></param>
+        public GaussianInputWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
             InitIOSettings();
         }
 
@@ -65,9 +65,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => GaussianInputFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter @out)
         {
-            writer = out_;
+            writer = @out;
         }
 
         public override void SetWriter(Stream output)

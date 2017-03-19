@@ -24,14 +24,13 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace NCDK.Isomorphisms.Matchers.SMARTS
-{ 
+{
     /// <summary>
     /// This matches recursive smarts atoms.
-    ///
+    /// </summary>
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public sealed class RecursiveSmartsAtom : SMARTSAtom
     {
         /// <summary>The IQueryAtomContainer created by parsing the recursive smarts</summary>
@@ -42,8 +41,8 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="query">/// </summary></param>
+        /// </summary>
+        /// <param name="query"></param>
         public RecursiveSmartsAtom(IQueryAtomContainer query)
             : base(query.Builder)
         {

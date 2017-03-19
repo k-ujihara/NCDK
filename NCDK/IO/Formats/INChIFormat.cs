@@ -26,17 +26,17 @@ namespace NCDK.IO.Formats
     // @cdk.module ioformats
     // @cdk.githash
     // @cdk.set    io-formats
-    public class INChIFormat : SimpleChemFormatMatcher, IChemFormatMatcher
+    public class InChIFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;
 
-        public INChIFormat() { }
+        public InChIFormat() { }
 
         public static IResourceFormat Instance
         {
             get
             {
-                if (myself == null) myself = new INChIFormat();
+                if (myself == null) myself = new InChIFormat();
                 return myself;
             }
         }
@@ -54,7 +54,7 @@ namespace NCDK.IO.Formats
         public override string[] NameExtensions => new string[] { "inchi" };
 
         /// <inheritdoc/>
-        public override string ReaderClassName => "NCDK.IO.INChIReader";
+        public override string ReaderClassName => "NCDK.IO.InChIReader";
 
         /// <inheritdoc/>
         public override string WriterClassName => null;

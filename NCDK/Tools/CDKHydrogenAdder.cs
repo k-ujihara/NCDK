@@ -30,7 +30,10 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Adds implicit hydrogens based on atom type definitions. The class assumes
-    /// that CDK atom types are already detected. A full code example is:
+    /// that CDK atom types are already detected. 
+    /// </summary>
+    /// <example>
+    /// A full code example is:
     /// <code>
     ///   IAtomContainer methane = new AtomContainer();
     ///   IAtom carbon = new Atom("C");
@@ -44,7 +47,7 @@ namespace NCDK.Tools
     ///   adder.AddImplicitHydrogens(methane);
     /// </code>
     ///
-    /// <p>If you want to add the hydrogens to a specific atom only,
+    /// If you want to add the hydrogens to a specific atom only,
     /// use this example:
     /// <code>
     ///   IAtomContainer ethane = new AtomContainer();
@@ -58,23 +61,24 @@ namespace NCDK.Tools
     ///   CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ethane.GetNewBuilder());
     ///   adder.AddImplicitHydrogens(ethane, carbon1);
     /// </code>
-    ///
+    /// </example>
     // @author     egonw
     // @cdk.module valencycheck
     // @cdk.githash
-    /// </summary>
-    public class CDKHydrogenAdder {
+    public class CDKHydrogenAdder
+    {
+        private AtomTypeFactory atomTypeList;
+        private readonly string ATOM_TYPE_LIST = "NCDK.Dict.Data.cdk-atom-types.owl";
 
-        private AtomTypeFactory                      atomTypeList;
-        private readonly string                  ATOM_TYPE_LIST = "NCDK.Dict.Data.cdk-atom-types.owl";
+        private static IDictionary<Type, CDKHydrogenAdder> tables = new Dictionary<Type, CDKHydrogenAdder>();
 
-        private static IDictionary<Type, CDKHydrogenAdder> tables         = new Dictionary<Type, CDKHydrogenAdder>();
-
-        private CDKHydrogenAdder(IChemObjectBuilder builder) {
+        private CDKHydrogenAdder(IChemObjectBuilder builder)
+        {
             if (atomTypeList == null) atomTypeList = AtomTypeFactory.GetInstance(ATOM_TYPE_LIST, builder);
         }
 
-        public static CDKHydrogenAdder GetInstance(IChemObjectBuilder builder) {
+        public static CDKHydrogenAdder GetInstance(IChemObjectBuilder builder)
+        {
             CDKHydrogenAdder adder;
             if (!tables.TryGetValue(builder.GetType(), out adder))
             {
@@ -86,15 +90,16 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
-        ///
-        /// <param name="container">The molecule to which H's will be added</param>
-        // @ Throws if insufficient information is present
-        ///
-        // @cdk.keyword hydrogens, adding
         /// </summary>
-        public void AddImplicitHydrogens(IAtomContainer container)  {
-            foreach (var atom in container.Atoms) {
-                if (!(atom is IPseudoAtom)) {
+        /// <param name="container">The molecule to which H's will be added</param>
+        /// <exception cref="CDKException">if insufficient information is present</exception>
+        // @cdk.keyword hydrogens, adding
+        public void AddImplicitHydrogens(IAtomContainer container)
+        {
+            foreach (var atom in container.Atoms)
+            {
+                if (!(atom is IPseudoAtom))
+                {
                     AddImplicitHydrogens(container, atom);
                 }
             }
@@ -103,15 +108,16 @@ namespace NCDK.Tools
         /// <summary>
         /// Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
         /// If the atom type is "X", then the atom is assigned zero implicit hydrogens.
-        ///
+        /// </summary>
         /// <param name="container">The molecule to which H's will be added</param>
         /// <param name="atom">IAtom to set the implicit hydrogen count for</param>
-        // @ Throws if insufficient information is present
-        /// </summary>
-        public void AddImplicitHydrogens(IAtomContainer container, IAtom atom)  {
+        /// <exception cref="CDKException">if insufficient information is present</exception>
+        public void AddImplicitHydrogens(IAtomContainer container, IAtom atom)
+        {
             if (atom.AtomTypeName == null) throw new CDKException("IAtom is not typed! " + atom.Symbol);
 
-            if ("X".Equals(atom.AtomTypeName)) {
+            if ("X".Equals(atom.AtomTypeName))
+            {
                 if (atom.ImplicitHydrogenCount == null) atom.ImplicitHydrogenCount = 0;
                 return;
             }

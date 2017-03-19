@@ -21,15 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
      [TestClass()]
     public class UllmannSubstructureTest : SubstructureTest
     {

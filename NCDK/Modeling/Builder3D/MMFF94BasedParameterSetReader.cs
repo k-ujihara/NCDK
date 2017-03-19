@@ -210,7 +210,7 @@ namespace NCDK.Modeling.Builder3D
             atomType.FormalNeighbourCount = maxbond;
             atomType.Symbol = rootType;
             var co = CDKPropertyName.RGB2Int(rl, gl, bl);
-            atomType.SetProperty(CDKPropertyName.COLOR, co);
+            atomType.SetProperty(CDKPropertyName.Color, co);
             atomType.AtomTypeName = sid;
             atomTypes.Add(atomType);
         }

@@ -43,7 +43,6 @@ namespace NCDK.Tools
     [TestClass()]
     public class HOSECodeGeneratorTest : CDKTestCase
     {
-
         static bool standAlone = false;
 
         /// <summary>
@@ -62,11 +61,6 @@ namespace NCDK.Tools
                     new HOSECodeGenerator().GetHOSECode(mol1, mol1.Atoms[3], 6));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void TestSecondSphere()
         {
@@ -237,11 +231,6 @@ namespace NCDK.Tools
             }
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMakeBremserCompliant()
         {
@@ -265,11 +254,6 @@ namespace NCDK.Tools
             }
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void Test4Sphere()
         {
@@ -432,11 +416,6 @@ namespace NCDK.Tools
             }
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
-        /// <returns>Description of the Return Value</returns>
-        /// </summary>
         [TestMethod()]
         public void Test4()
         {
@@ -462,9 +441,7 @@ namespace NCDK.Tools
             }
         }
 
-        /// <summary>
         // @cdk.bug 655169
-        /// </summary>
         [TestMethod()]
         public void TestBug655169()
         {
@@ -484,27 +461,9 @@ namespace NCDK.Tools
                 Assert.AreEqual(result[f], s);
                 if (standAlone) Console.Out.WriteLine("  OK");
             }
-
-            // JFrame frame = new JFrame("HOSECodeTest");
-            // frame.SetDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            // frame.GetContentPane().SetLayout(new BorderLayout());
-            // DefaultMutableTreeNode top = hcg.GetRootNode();
-            // StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-            // MoleculeViewer2D mv = new MoleculeViewer2D(); Renderer2DModel r2dm =
-            // mv.GetRenderer2DModel(); r2dm.SetDrawNumbers(true);
-            // sdg.SetMolecule((Molecule) molecule.Clone());
-            // sdg.GenerateCoordinates(new Vector2(0, 1));
-            // mv.SetAtomContainer(sdg.Molecule); final JTree tree = new
-            // JTree(top); JScrollPane treeView = new JScrollPane(tree);
-            // frame.GetContentPane().Add("West", treeView); mv.SetPreferredSize(new
-            // Dimension(400,400)); frame.GetContentPane().Add("Center", mv); for
-            // (int f = 0; f < tree.GetRowCount(); f ++) { tree.ExpandRow(f); }
-            // frame.Pack(); frame.Show();
         }
 
-        /// <summary>
         // @cdk.bug 795480
-        /// </summary>
         [TestMethod()]
         public void TestBug795480()
         {

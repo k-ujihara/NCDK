@@ -217,7 +217,7 @@ namespace NCDK.IO
             MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
-            Assert.AreEqual("a-pinen.mol", mol.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("a-pinen.mol", mol.GetProperty<string>(CDKPropertyName.Title));
         }
 
         [TestMethod()]
@@ -840,9 +840,9 @@ namespace NCDK.IO
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNotNull(mol);
-            Assert.AreEqual(1, (int)mol.Atoms[0].GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
-            Assert.AreEqual(15, (int)mol.Atoms[1].GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
-            Assert.IsNull(mol.Atoms[2].GetProperty<int?>(CDKPropertyName.ATOM_ATOM_MAPPING));
+            Assert.AreEqual(1, (int)mol.Atoms[0].GetProperty<int>(CDKPropertyName.AtomAtomMapping));
+            Assert.AreEqual(15, (int)mol.Atoms[1].GetProperty<int>(CDKPropertyName.AtomAtomMapping));
+            Assert.IsNull(mol.Atoms[2].GetProperty<int?>(CDKPropertyName.AtomAtomMapping));
         }
 
         // @cdk.bug 2936440
@@ -870,7 +870,7 @@ namespace NCDK.IO
             reader.Close();
             IAtom oxygen = result.Atoms[0];
             Assert.IsTrue(oxygen.Symbol.Equals("O"));
-            Assert.AreEqual(oxygen.GetProperty<string>(CDKPropertyName.COMMENT), "Oxygen comment");
+            Assert.AreEqual(oxygen.GetProperty<string>(CDKPropertyName.Comment), "Oxygen comment");
         }
 
         [TestMethod()]
@@ -1002,8 +1002,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestRGroupHighAtomNumber()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.brenda_molfile_rgroup.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.brenda_molfile_rgroup.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             reader.Read(molecule);
             reader.Close();
@@ -1013,8 +1013,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAliasAtomNaming()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAliasAtomNaming.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAliasAtomNaming.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             reader.Read(molecule);
             reader.Close();
@@ -1036,8 +1036,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestPseudoAtomLabels()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.pseudoatoms.sdf");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1051,8 +1051,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMissingAtomProperties()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1062,8 +1062,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestBondOrderFour()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mdlWithBond4.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mdlWithBond4.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1077,8 +1077,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAtomParity()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.mol_testAtomParity.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1103,8 +1103,8 @@ namespace NCDK.IO
         public void TestSingleSingletRadical()
         {
 
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleSingletRadical.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1116,8 +1116,8 @@ namespace NCDK.IO
         public void TestSingleDoubletRadical()
         {
 
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleDoubletRadical.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1129,8 +1129,8 @@ namespace NCDK.IO
         public void TestSingleTripletRadical()
         {
 
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.singleTripletRadical.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1141,8 +1141,8 @@ namespace NCDK.IO
         public void TestMultipleRadicals()
         {
 
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.multipleRadicals.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1161,8 +1161,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void Fe_iii_valence()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.iron-iii.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.iron-iii.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1174,8 +1174,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void Bismuth_ion_valence()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bismuth-ion.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bismuth-ion.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1185,8 +1185,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void E_butene_2D()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1197,8 +1197,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void E_butene_0D()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_0d.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_0d.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -1211,8 +1211,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void E_butene_2D_force3D()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             // yuk!
             var prop = new NameValueCollection();
@@ -1231,8 +1231,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void E_butene_3D()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_3d.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_3d.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             var prop = new NameValueCollection();
             prop["ForceReadAs3DCoordinates"] = "true";
@@ -1251,8 +1251,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void E_butene_2D_optOff()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.e_butene_2d.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
 
             var prop = new NameValueCollection();
             prop["AddStereoElements"] = "false";
@@ -1369,8 +1369,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMultipleNewlinesInSDFProperty()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.multiplenewline-property.sdf");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.multiplenewline-property.sdf");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IChemFile chemFile = reader.Read(new ChemFile());
             reader.Close();
             Assert.AreEqual(2, ChemFileManipulator.GetAllAtomContainers(chemFile).Count());
@@ -1379,8 +1379,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestAliasAfterRgroup()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.r-group-with-alias.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.r-group-with-alias.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsInstanceOfType(container.Atoms[6], typeof(IPseudoAtom));
@@ -1419,9 +1419,12 @@ namespace NCDK.IO
         [TestMethod()]
         public void RadicalsReflectedInHydrogenCount()
         {
-            MDLV2000Reader r = new MDLV2000Reader(ResourceLoader.GetAsStream(typeof(MDLV2000Reader), "structure-with-radical.mol"));
-            IAtomContainer m = r.Read(new AtomContainer());
-            r.Close();
+            IAtomContainer m;
+            using (var s = ResourceLoader.GetAsStream("NCDK.IO.structure-with-radical.mol"))
+            using (var r = new MDLV2000Reader(s))
+            {
+                m = r.Read(new AtomContainer());
+            }
             Assert.AreEqual(8, m.Atoms[0].AtomicNumber);
             Assert.AreEqual(0, m.Atoms[0].ImplicitHydrogenCount);
         }
@@ -1430,14 +1433,15 @@ namespace NCDK.IO
         [TestMethod()]
         public void NonNegativeHydrogenCount()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_30668.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
-            IAtomContainer container = reader.Read(new AtomContainer());
-            reader.Close();
-            foreach (var atom in container.Atoms)
+            using (var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_30668.mol"))
+            using (MDLV2000Reader reader = new MDLV2000Reader(ins))
             {
-                Assert.IsTrue(0 <= atom.ImplicitHydrogenCount);
-                Assert.IsNotNull(atom.Valency);
+                var container = reader.Read(new AtomContainer());
+                foreach (var atom in container.Atoms)
+                {
+                    Assert.IsTrue(0 <= atom.ImplicitHydrogenCount);
+                    Assert.IsNotNull(atom.Valency);
+                }
             }
         }
 
@@ -1445,8 +1449,8 @@ namespace NCDK.IO
        [TestMethod()]
         public void NonNegativeHydrogenCountOnHydrogenRadical()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_29293.mol");
-            MDLV2000Reader reader = new MDLV2000Reader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.ChEBI_29293.mol");
+            MDLV2000Reader reader = new MDLV2000Reader(ins);
             IAtomContainer container = reader.Read(new AtomContainer());
             reader.Close();
             Assert.AreEqual(0, container.Atoms[0].ImplicitHydrogenCount);
@@ -1478,7 +1482,7 @@ namespace NCDK.IO
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
 
-            Assert.AreEqual("6", mol.Atoms[1].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+            Assert.AreEqual("6", mol.Atoms[1].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
         }
 
         /// <summary>
@@ -1500,9 +1504,9 @@ namespace NCDK.IO
                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ1abcdefghijklmnopqrstuvwxyz",
                 "012345678901234567890123456789012345678901234567890"
             };
-            Assert.AreEqual(expected[0], mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
-            Assert.AreEqual(expected[1], mol.Atoms[1].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
-            Assert.AreEqual(expected[2], mol.Atoms[2].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+            Assert.AreEqual(expected[0], mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
+            Assert.AreEqual(expected[1], mol.Atoms[1].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
+            Assert.AreEqual(expected[2], mol.Atoms[2].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
         }
 
         /// <summary>
@@ -1519,7 +1523,7 @@ namespace NCDK.IO
 
             foreach (var atom in mol.Atoms)
             {
-                Assert.IsNotNull(atom.GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+                Assert.IsNotNull(atom.GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
             }
         }
 
@@ -1537,7 +1541,7 @@ namespace NCDK.IO
 
             // Leading and trailing whitespace in both prefix and suffix
             var expected = " a 1 b ";
-            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
         }
 
         /// <summary>
@@ -1554,7 +1558,7 @@ namespace NCDK.IO
 
             // Embedded whitespace in both prefix and suffix
             var expected = "a b1c d";
-            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
         }
 
         /// <summary>
@@ -1575,7 +1579,7 @@ namespace NCDK.IO
             var suffix = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwx";
             var expected = prefix + digits + suffix;
 
-            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLABS_LABEL));
+            Assert.AreEqual(expected, mol.Atoms[0].GetProperty<string>(CDKPropertyName.ACDLabsAtomLabel));
         }
 
         [TestMethod()]
@@ -1585,7 +1589,7 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
@@ -1602,7 +1606,7 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(1, sgroups.Count);
                 Sgroup sgroup = sgroups[0];
@@ -1634,7 +1638,7 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
@@ -1661,7 +1665,7 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(3, sgroups.Count);
                 // first sgroup
@@ -1713,7 +1717,7 @@ namespace NCDK.IO
             using (MDLV2000Reader mdlr = new MDLV2000Reader(srm))
             {
                 IAtomContainer container = mdlr.Read(new AtomContainer());
-                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 Assert.IsNotNull(sgroups);
                 Assert.AreEqual(2, sgroups.Count);
                 Sgroup sgroup = sgroups[0];

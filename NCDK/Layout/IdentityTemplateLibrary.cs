@@ -21,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using NCDK.Common.Collections;
-using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
 using NCDK.Smiles;
 using System;
@@ -40,9 +38,9 @@ namespace NCDK.Layout
     /// A library for 2D layout templates that are retrieved based on identity. Such a library is useful
     /// for ensure ring systems are laid out in their de facto orientation. Importantly, identity
     /// templates means the library size can be very large but still searched in constant time.
-    ///
-    /// <code>{@code
-    ///
+    /// </summary>
+    /// <example>
+    /// <code>
     /// // load from a resource file on the classpath
     /// IdentityTemplateLibrary lib = IdentityTemplateLibrary.LoadFromResource("/data/ring-templates.smi");
     ///
@@ -58,13 +56,11 @@ namespace NCDK.Layout
     /// Stream out = new FileOutputStream("/tmp/lib.smi");
     /// lib.Store(out);
     /// out.Close();
-    /// }</code>
-    ///
+    /// </code>
+    /// </example>
     // @author John May
-    /// </summary>
     internal sealed class IdentityTemplateLibrary
     {
-
         //private static readonly DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
 
         private readonly MultiDictionary<string, Vector2[]> templateMap = new MultiDictionary<string, Vector2[]>();
@@ -77,10 +73,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Add one template library to another.
-        ///
+        /// </summary>
         /// <param name="library">another template library</param>
         /// <returns>this library with the other one added in (allows chaining)</returns>
-        /// </summary>
         public IdentityTemplateLibrary Add(IdentityTemplateLibrary library)
         {
             foreach (var e in library.templateMap)
@@ -92,15 +87,13 @@ namespace NCDK.Layout
         /// <summary>
         /// Internal - create a canonical SMILES string temporarily adjusting to default
         /// hydrogen count. This method may be moved to the SMILESGenerator in future.
-        ///
+        /// </summary>
         /// <param name="mol">molecule</param>
         /// <param name="ordering">ordering output</param>
         /// <returns>SMILES</returns>
         /// <exception cref="CDKException">SMILES could be generate</exception>
-        /// </summary>
         private string CreateCanonicalSmiles(IAtomContainer mol, int[] ordering)
         {
-
             // backup parts we will strip off
             int?[] hcntBackup = new int?[mol.Atoms.Count];
 
@@ -183,16 +176,14 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create a library entry from an atom container. Note the entry is not added to the library.
-        ///
+        /// </summary>
         /// <param name="container">structure representation</param>
         /// <returns>a new library entry (not stored).</returns>
-        /// <seealso cref="Add(java.util.Map.Entry)"/>
-        /// </summary>
+        /// <seealso cref="Add(KeyValuePair{string, Vector2[]}?)"/>
         public KeyValuePair<string, Vector2[]>? CreateEntry(IAtomContainer container)
         {
             try
             {
-
                 int n = container.Atoms.Count;
                 int[] ordering = new int[n];
                 string smiles = CreateCanonicalSmiles(container, ordering);
@@ -225,12 +216,11 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create a library entry from a SMILES string with the coordinates suffixed in binary. The
-        /// entry should be created with {@link #EncodeEntry(java.util.Map.Entry)} and not created
+        /// entry should be created with <see cref="EncodeEntry(KeyValuePair{string, Vector2[]})"/>  and not created
         /// manually. Note, the entry is not added to the library.
-        ///
+        /// </summary>
         /// <param name="str">input string</param>
         /// <returns>library entry</returns>
-        /// </summary>
         public static KeyValuePair<string, Vector2[]> DecodeEntry(string str)
         {
             int i = str.IndexOf(' ');
@@ -240,10 +230,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Decode coordinates that have been placed in a byte buffer.
-        ///
+        /// </summary>
         /// <param name="str">the string to decode</param>
         /// <returns>array of coordinates</returns>
-        /// </summary>
         public static Vector2[] DecodeCoordinates(string str)
         {
             if (str.StartsWith("|("))
@@ -279,10 +268,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Encodes an entry in a compact string representation. The encoded entry is a SMILES string
         /// with the coordinates suffixed in binary.
-        ///
+        /// </summary>
         /// <param name="entry">the entry to encode</param>
         /// <returns>encoded entry</returns>
-        /// </summary>
         public static string EncodeEntry(KeyValuePair<string, Vector2[]> entry)
         {
             StringBuilder sb = new StringBuilder();
@@ -294,10 +282,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Encode coordinates in a string.
-        ///
+        /// </summary>
         /// <param name="points">points</param>
         /// <returns>extended SMILES format coordinates</returns>
-        /// </summary>
         public static string EncodeCoordinates(Vector2[] points)
         {
             StringBuilder sb = new StringBuilder();
@@ -338,9 +325,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create an entry for the provided container and add it to the library.
-        ///
-        /// <param name="container">structure representation</param>
         /// </summary>
+        /// <param name="container">structure representation</param>
         public void Add(IAtomContainer container)
         {
             Add(CreateEntry(container));
@@ -349,13 +335,11 @@ namespace NCDK.Layout
         /// <summary>
         /// Assign a 2D layout to the atom container using the contents of the library. If multiple
         /// coordinates are available the first is choosen.
-        ///
+        /// </summary>
         /// <param name="container">structure representation</param>
         /// <returns>a layout was assigned</returns>
-        /// </summary>
         public bool AssignLayout(IAtomContainer container)
         {
-
             try
             {
                 // create the library key to lookup an entry, we also store
@@ -385,10 +369,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Get all templated coordinates for the provided molecule. The return collection has
         /// coordinates ordered based on the input.
-        ///
+        /// </summary>
         /// <param name="mol">molecule (or fragment) to lookup</param>
         /// <returns>the coordinates</returns>
-        /// </summary>
         public ICollection<Vector2[]> GetCoordinates(IAtomContainer mol)
         {
             try
@@ -421,9 +404,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create an empty template library.
-        ///
-        /// <returns>an empty template library</returns>
         /// </summary>
+        /// <returns>an empty template library</returns>
         public static IdentityTemplateLibrary Empty()
         {
             return new IdentityTemplateLibrary();
@@ -431,10 +413,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Load a template library from a resource on the class path.
-        ///
-        /// <returns>loaded template library</returns>
-        // @throws java.lang.ArgumentException resource not found or could not be loaded
         /// </summary>
+        /// <returns>loaded template library</returns>
+        /// <exception cref="ArgumentException">resource not found or could not be loaded</exception>
         public static IdentityTemplateLibrary LoadFromResource(string resource)
         {
             using (Stream ins = ResourceLoader.GetAsStream(typeof(IdentityTemplateLibrary), resource))
@@ -454,10 +435,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Load a template library from an input stream.
-        ///
-        /// <returns>loaded template library</returns>
-        // @throws java.IOException low level IO error
         /// </summary>
+        /// <returns>loaded template library</returns>
+        /// <exception cref="IOException">low level IO error</exception>
         public static IdentityTemplateLibrary Load(Stream ins)
         {
             using (var br = new StreamReader(ins))
@@ -476,11 +456,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Reorder coordinates.
-        ///
+        /// </summary>
         /// <param name="coords">coordinates</param>
         /// <param name="order">permutation</param>
         /// <returns>reordered coordinates</returns>
-        /// </summary>
         public static Vector2[] ReorderCoords(Vector2[] coords, int[] order)
         {
             Vector2[] neworder = new Vector2[coords.Length];
@@ -492,9 +471,8 @@ namespace NCDK.Layout
         /// <summary>
         /// Update the template library - can be called for safety after
         /// each load.
-        ///
-        /// <param name="bldr">builder</param>
         /// </summary>
+        /// <param name="bldr">builder</param>
         public void Update(IChemObjectBuilder bldr)
         {
             SmilesParser smipar = new SmilesParser(bldr);
@@ -524,13 +502,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Store a template library to the provided output stream.
-        ///
-        /// <param name="out">output stream</param>
-        /// <exception cref="IOException">low level IO error</exception>
         /// </summary>
-        public void Store(Stream out_)
+        /// <param name="output">output stream</param>
+        /// <exception cref="IOException">low level IO error</exception>
+        public void Store(Stream output)
         {
-            using (var bw = new StreamWriter(out_))
+            using (var bw = new StreamWriter(output))
             {
                 foreach (var e in templateMap)
                 {

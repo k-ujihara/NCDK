@@ -36,14 +36,12 @@ namespace <#= ns.NS #>
     /// An entry in the PDB database. It is not just a regular protein, but the
     /// regular PDB mix of protein or protein complexes, ligands, water molecules
     /// and other species.
-    ///
+    /// </summary>
     // @cdk.module  pdb
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    /// </summary>
     public class PDBStrand : Strand
     {
         List<string> sequentialListOfMonomers;

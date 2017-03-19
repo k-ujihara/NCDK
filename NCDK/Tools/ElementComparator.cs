@@ -26,18 +26,15 @@ using System.Collections.Generic;
 namespace NCDK.Tools
 {
     /// <summary>
-     /// Compares elements based on the order commonly used in
-     /// molecular formula. Order:
-     /// C, H, other elements in alphabetic order.
-     ///
-     // @cdk.module standard
+    /// Compares elements based on the order commonly used in
+    /// molecular formula. Order:
+    /// C, H, other elements in alphabetic order.
+    /// </summary>
+    // @cdk.module standard
     // @cdk.githash
-     ///
-     // @cdk.keyword element, sorting
-     /// </summary>
+    // @cdk.keyword element, sorting
     public class ElementComparator : IComparer<string>
     {
-
         private const string H_ELEMENT_SYMBOL = "H";
         private const string C_ELEMENT_SYMBOL = "C";
 
@@ -46,7 +43,6 @@ namespace NCDK.Tools
         /// returns zero if they are identical, and positive if o1 comes
         /// after o2 in the formula.
         /// </summary>
-
         public int Compare(string o1, string o2)
         {
             if (C_ELEMENT_SYMBOL.Equals(o1))

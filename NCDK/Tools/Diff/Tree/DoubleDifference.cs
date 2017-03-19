@@ -24,11 +24,10 @@ namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
     /// <see cref="IDifference"/> between two {@link double?}.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public class DoubleDifference : IDifference {
 
         private const double ERROR = 0.000000001;

@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using System;
 using NCDK.Numerics;
 
@@ -32,14 +31,11 @@ namespace NCDK.Hash.Stereo
     /// coordinates. The 3D coordinates correspond to the four ligands of a
     /// tetrahedral atom. If a tetrahedral atom has an implicit hydrogen (only 3
     /// ligands) the forth coordinate should be that of the atom at the centre
-    /// {@cdk.cite Cieplak2001}.
-    ///
+    /// <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</a>.
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    // @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
-    ///      T and Wisniewski, J.L. 2001</a>
     // @cdk.githash
-    /// </summary>
     internal sealed class Tetrahedral3DParity : GeometricParity
     {
         /* array of four 3D coordinates */
@@ -48,13 +44,11 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Create a new geometric parity for 3D tetrahedral geometry by specifying
         /// the coordinates.
-        ///
+        /// </summary>
         /// <param name="coordinates">non-null, 4 3D coordinates</param>
         /// <exception cref="ArgumentException">if the number of coordinates was not 4</exception>
-        /// </summary>
         public Tetrahedral3DParity(Vector3[] coordinates)
         {
-
             if (coordinates.Length != 4) throw new ArgumentException("4 coordinates expected");
 
             this.coordinates = coordinates;

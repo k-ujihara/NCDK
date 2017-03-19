@@ -36,14 +36,14 @@ namespace NCDK.Exceptions
         [TestMethod()]
         public void Timeout()
         {
-            Intractable e = new Intractable(12);
+            IntractableException e = new IntractableException(12);
             Assert.AreEqual("Operation did not finish after 12 ms.", e.Message);
         }
 
         [TestMethod()]
         public void TimeoutWithDesc()
         {
-            Intractable e = new Intractable("MCS", 200);
+            IntractableException e = new IntractableException("MCS", 200);
             Assert.AreEqual("MCS did not finish after 200 ms.", e.Message);
         }
     }

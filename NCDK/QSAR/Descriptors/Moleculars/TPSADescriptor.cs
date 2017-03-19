@@ -29,26 +29,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// Calculation of topological polar surface area based on fragment
     /// contributions (TPSA) {@cdk.cite ERTL2000}.
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td>checkAromaticity</td>
-    /// <td>false</td>
-    /// <td>If true, it will check aromaticity</td>
-    /// </tr>
-    /// </table>
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term>checkAromaticity</term>
+    /// <term>false</term>
+    /// <term>If true, it will check aromaticity</term>
+    /// </item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain either <b>explicit hydrogens</b> or
     /// <b>implicit hydrogens</b>.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// Returns a single value named <i>TopoPSA</i>
-    ///
+    /// </para>
+    /// </remarks>
     // @author mfe4
     // @author ulif
     // @cdk.created 2004-11-03
@@ -59,10 +63,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.keyword TPSA
     // @cdk.keyword total polar surface area
     // @cdk.keyword descriptor
-    /// </summary>
     public class TPSADescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-
         private bool checkAromaticity = false;
         private static Dictionary<string, double> map;
         private static readonly string[] NAMES = { "TopoPSA" };
@@ -132,9 +134,8 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Gets the specification attribute of the TPSADescriptor object.
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
+        /// <returns>The specification value</returns>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
@@ -187,7 +188,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// checked.
         /// <p/>
         /// Prior to calling this method it is necessary to either add implicit or explicit hydrogens
-        /// using <see cref="CDKHydrogenAdder.AddImplicitHydrogens(IAtomContainer)"/> or
+        /// using <see cref="Tools.CDKHydrogenAdder.AddImplicitHydrogens(IAtomContainer)"/> or
         /// <see cref="AtomContainerManipulator.ConvertImplicitToExplicitHydrogens(IAtomContainer)"/>.
         /// </summary>
         /// <param name="atomContainer">The AtomContainer whose TPSA is to be calculated</param>
@@ -308,16 +309,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(tpsa), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

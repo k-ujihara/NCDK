@@ -202,9 +202,9 @@ namespace NCDK.IO
             IAtomContainer mol = reader.Read(new AtomContainer());
             reader.Close();
             Assert.IsNotNull(mol);
-            Assert.AreEqual(1, mol.Atoms[0].GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
-            Assert.AreEqual(15, mol.Atoms[1].GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
-            Assert.IsNull(mol.Atoms[2].GetProperty<int?>(CDKPropertyName.ATOM_ATOM_MAPPING));
+            Assert.AreEqual(1, mol.Atoms[0].GetProperty<int>(CDKPropertyName.AtomAtomMapping));
+            Assert.AreEqual(15, mol.Atoms[1].GetProperty<int>(CDKPropertyName.AtomAtomMapping));
+            Assert.IsNull(mol.Atoms[2].GetProperty<int?>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]
@@ -225,8 +225,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void TestMissingAtomProperties()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
-            MDLReader reader = new MDLReader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug3485634.mol");
+            MDLReader reader = new MDLReader(ins);
             IAtomContainer molecule = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             molecule = reader.Read(molecule);
             reader.Close();
@@ -239,8 +239,8 @@ namespace NCDK.IO
         [TestMethod()]
         public void Properties()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
-            MDLReader reader = new MDLReader(in_);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
+            MDLReader reader = new MDLReader(ins);
             IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
             chemfile = reader.Read(chemfile);
             IAtomContainer container = ChemFileManipulator.GetAllAtomContainers(chemfile).First();
@@ -253,8 +253,8 @@ namespace NCDK.IO
         [ExpectedException(typeof(CDKException))]
         public void WrongFormat()
         {
-            var in_ = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
-            MDLReader reader = new MDLReader(in_, ChemObjectReaderModes.Strict);
+            var ins = ResourceLoader.GetAsStream("NCDK.Data.MDL.bug1356.sdf");
+            MDLReader reader = new MDLReader(ins, ChemObjectReaderModes.Strict);
             IChemFile chemfile = Default.ChemObjectBuilder.Instance.CreateChemFile();
             chemfile = reader.Read(chemfile);
         }

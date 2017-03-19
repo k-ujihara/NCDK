@@ -29,17 +29,15 @@ namespace NCDK.Isomorphisms.Matchers
     /// <summary>
     /// Interface definition for Rgroup query classes. These must provide a root
     /// structure, root attachment points and Rgroup definitions.
-    ///
+    /// </summary>
     // @cdk.module  isomorphism
     // @cdk.githash
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group
     // @author Mark Rijnbeek
-    /// </summary>
     public interface IRGroupQuery : IChemObject
     {
-
         /// <summary>
         /// The root structure (or scaffold) container
         /// </summary>
@@ -60,18 +58,18 @@ namespace NCDK.Isomorphisms.Matchers
         /// </summary>
         int Count { get; }
 
-
         /// <summary>
         /// All the substituent atom containers, in other words the atom containers
-        /// defined in this RGroupQuery except for the root structure.
+        /// defined in this <see cref="IRGroupQuery"/> except for the root structure.
         /// </summary>
         IList<IAtomContainer> GetSubstituents();
 
         /// <summary>
         /// Checks validity of the RGroupQuery.
         /// Each distinct R# in the root must have a
-        /// a corresponding <see cref="RGroupList"/> definition.<br>
-        /// In file terms: $RGP blocks must be defined for each R-group number.
+        /// a corresponding <see cref="RGroupList"/> definition.
+        /// <para>
+        /// In file terms: $RGP blocks must be defined for each R-group number.</para>
         /// </summary>
         bool AreSubstituentsDefined();
 

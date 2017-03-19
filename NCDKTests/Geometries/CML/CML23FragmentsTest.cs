@@ -371,7 +371,7 @@ namespace NCDK.IO.CML
             IChemFile chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
-            Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("acetic acid", mol.GetProperty<string>(CDKPropertyName.Title));
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace NCDK.IO.CML
             IChemFile chemFile = ParseCMLString(cmlString);
             IAtomContainer mol = CheckForSingleMoleculeFile(chemFile);
 
-            Assert.AreEqual("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.GetProperty<string>(CDKPropertyName.INCHI));
+            Assert.AreEqual("InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)", mol.GetProperty<string>(CDKPropertyName.InChI));
         }
 
         [TestMethod()]

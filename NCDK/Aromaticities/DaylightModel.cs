@@ -21,13 +21,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Aromaticities
@@ -311,7 +308,7 @@ namespace NCDK.Aromaticities
         /// <param name="element">the atomic number of an element</param>
         /// <param name="charge">the formal charge on the atom</param>
         /// <returns>the valence</returns>
-        /// <exception cref="">encountered an element which the valence was not encoded for</exception>
+        /// <exception cref="NotSupportedException">encountered an element which the valence was not encoded for</exception>
         private int Valence(int element, int charge)
         {
             return Valence(element - charge);
@@ -324,7 +321,7 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <param name="element">the atomic number of an element</param>
         /// <returns>the valence</returns>
-        /// <exception cref="">encountered an element which the valence was not encoded for</exception>
+        /// <exception cref="NotSupportedException">encountered an element which the valence was not encoded for</exception>
         private int Valence(int element)
         {
             switch (element)

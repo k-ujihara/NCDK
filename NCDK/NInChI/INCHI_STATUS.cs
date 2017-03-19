@@ -19,9 +19,7 @@
 
 namespace NCDK.NInChI
 {
-    /// <summary>
     // @author sea36
-    /// </summary>
     public enum INCHI_STATUS
     {
         VALID_STANDARD = 0,

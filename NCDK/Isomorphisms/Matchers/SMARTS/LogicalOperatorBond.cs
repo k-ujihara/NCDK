@@ -21,11 +21,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This class matches a logical operator that connects two query bonds.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class LogicalOperatorBond : SMARTSBond
     {
         /// <summary>
@@ -106,4 +105,3 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
     }
 }
-

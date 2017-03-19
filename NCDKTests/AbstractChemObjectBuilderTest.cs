@@ -665,11 +665,11 @@ namespace NCDK
         {
             IChemObjectBuilder builder = RootObject.Builder;
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("Cl"));
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("Br"));
-            molecule.Add(builder.CreateAtom("I"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("Cl"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("Br"));
+            molecule.Atoms.Add(builder.CreateAtom("I"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);

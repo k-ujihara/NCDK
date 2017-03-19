@@ -36,14 +36,13 @@ namespace NCDK.Smiles
     /// <summary>
     /// This is used to hold the invariance numbers for the canonical labeling of
     /// <see cref="IAtomContainer"/>s.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     [Serializable]
     public class InvPair
     {
-        /// <summary> The description used to set the invariance numbers in the atom's property*/
+       /// <summary> The description used to set the invariance numbers in the atom's property</summary>
         public const string INVARIANCE_PAIR = "InvariancePair";
         public const string CANONICAL_LABEL = "CanonicalLabel";
 

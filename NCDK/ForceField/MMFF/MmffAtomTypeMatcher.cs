@@ -294,12 +294,12 @@ namespace NCDK.ForceField.MMFF
         /// <summary>
         /// Safely close an input stream.
         /// </summary>
-        /// <param name="in_">stream to close</param>
-        private static void Close(Stream in_)
+        /// <param name="ins">stream to close</param>
+        private static void Close(Stream ins)
         {
             try
             {
-                if (in_ != null) in_.Close();
+                if (ins != null) ins.Close();
             }
             catch (IOException)
             {

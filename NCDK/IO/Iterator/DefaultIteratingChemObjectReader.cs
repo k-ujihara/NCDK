@@ -27,10 +27,9 @@ namespace NCDK.IO.Iterator
     /// <summary>
     /// Abstract class that IteratingChemObjectReader's can implement to have it
     /// take care of basic stuff, like managing the ReaderListeners.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    /// </summary>
     public abstract class DefaultIteratingChemObjectReader<T> : ChemObjectIO,
             IIteratingChemObjectReader<T> where T : IChemObject
     {

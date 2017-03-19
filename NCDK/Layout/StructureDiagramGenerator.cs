@@ -39,19 +39,23 @@ namespace NCDK.Layout
 {
     /// <summary>
     /// Generates 2D coordinates for a molecule for which only connectivity is known
-    /// or the coordinates have been discarded for some reason. Usage: Create an
-    /// instance of this class, thereby assigning a molecule, call
-    /// GenerateCoordinates() and get your molecule back:
+    /// or the coordinates have been discarded for some reason.
+    /// </summary>
+    /// <example>
+    /// Usage: Create an instance of this class, thereby assigning a molecule,
+    /// call <see cref="GenerateCoordinates()"/> and get your molecule back:
     /// <code>
     /// StructureDiagramGenerator sdg = new StructureDiagramGenerator();
     /// sdg.Molecule = someMolecule;
     /// sdg.GenerateCoordinates();
     /// Molecule layedOutMol = sdg.Molecule;
     /// </code>
-    /// <p/>
-    /// <p>The method will fail if the molecule is disconnected. The
+    /// </example>
+    /// <remarks>
+    /// The method will fail if the molecule is disconnected. The
     /// PartitionIntoMolecules(AtomContainer) can help here.
-    ///
+    /// </remarks>
+    /// <seealso cref="ConnectivityChecker.PartitionIntoMolecules(IAtomContainer)"/>
     // @author steinbeck
     // @cdk.created 2004-02-02
     // @cdk.keyword Layout
@@ -63,11 +67,9 @@ namespace NCDK.Layout
     // @cdk.githash
     // @cdk.bug 1536561
     // @cdk.bug 1788686
-    // @see org.openscience.cdk.graph.ConnectivityChecker#PartitionIntoMolecules(IAtomContainer)
-    /// </summary>
     public class StructureDiagramGenerator
     {
-        public const double DEFAULT_BOND_LENGTH = 1.5;
+        public const double DefaultBondLength = 1.5;
 
         private IAtomContainer molecule;
         private IAtomContainerSet<IRing> sssr;
@@ -75,7 +77,7 @@ namespace NCDK.Layout
         /// The bond length used for laying out the molecule. 
         /// The default value is 1.5.
         /// </summary>
-        public double BondLength { get; set; } = DEFAULT_BOND_LENGTH;
+        public double BondLength { get; set; } = DefaultBondLength;
         private Vector2 firstBondVector;
         private RingPlacer ringPlacer = new RingPlacer();
         private AtomPlacer atomPlacer = new AtomPlacer();
@@ -98,14 +100,13 @@ namespace NCDK.Layout
         /// </summary>
         private IdentityTemplateLibrary identityLibrary;
 
-        public static Vector2 DEFAULT_BOND_VECTOR = new Vector2(0, 1);
-        private static IdentityTemplateLibrary DEFAULT_TEMPLATE_LIBRARY = 
+        public static Vector2 DefaultBondVector = new Vector2(0, 1);
+        private static IdentityTemplateLibrary DefaultTempleteLibrary = 
             IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
                 .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
-
         public StructureDiagramGenerator()
-                : this(DEFAULT_TEMPLATE_LIBRARY)
+                : this(DefaultTempleteLibrary)
         { }
 
         private StructureDiagramGenerator(IdentityTemplateLibrary identityLibrary)
@@ -124,7 +125,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Assings a molecule to be layed out. Call GenerateCoordinates() to do the actual layout.
+        /// Assings a molecule to be layed out. Call <see cref="GenerateCoordinates()"/> to do the actual layout.
         /// </summary>
         /// <param name="mol">the molecule for which coordinates are to be generated.</param>
         /// <param name="clone">Should the whole process be performed with a cloned copy?</param>
@@ -168,7 +169,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// The templateHandler attribute of the StructureDiagramGenerator object.
+        /// The templateHandler attribute of the <see cref="StructureDiagramGenerator"/>  object.
         /// </summary>
         /// <remarks>Always <see langword="null"/>, substructure templates are not used anymore
         /// substructure templates are no longer used for layout but those provided here
@@ -186,7 +187,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// The molecule with new coordinates (if GenerateCoordinates() had been called)
+        /// The molecule with new coordinates (if <see cref="GenerateCoordinates()"/> had been called)
         /// </summary>
         public IAtomContainer Molecule
         {
@@ -201,23 +202,22 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// This method uses generateCoordinates, but it removes the hydrogens first,
+        /// This method uses <see cref="GenerateCoordinates()"/>, but it removes the hydrogens first,
         /// lays out the structuren and then adds them again.
         /// </summary>
         /// <exception cref="CDKException">if an error occurs</exception>
-        /// <seealso cref="GenerateCoordinates"/>
+        /// <seealso cref="GenerateCoordinates()"/>
         public void GenerateExperimentalCoordinates()
         {
-            GenerateExperimentalCoordinates(DEFAULT_BOND_VECTOR);
+            GenerateExperimentalCoordinates(DefaultBondVector);
         }
 
         /// <summary>
         /// Generates 2D coordinates on the non-hydrogen skeleton, after which
         /// coordinates for the hydrogens are calculated.
-        ///
+        /// </summary>
         /// <param name="firstBondVector">the vector of the first bond to lay out</param>
         /// <exception cref="CDKException">if an error occurs</exception>
-        /// </summary>
         public void GenerateExperimentalCoordinates(Vector2 firstBondVector)
         {
             // first make a shallow copy: Atom/Bond references are kept
@@ -250,25 +250,23 @@ namespace NCDK.Layout
         /// The main method of this StructurDiagramGenerator. Assign a molecule to the
         /// StructurDiagramGenerator, call the GenerateCoordinates() method and get
         /// your molecule back.
-        ///
-        /// <param name="firstBondVector">The vector of the first bond to lay out</param>
-        /// <exception cref="CDKException">if an error occurs</exception>
         /// </summary>
+        /// <param name="firstBondVector">The vector of the first bond to layout</param>
+        /// <exception cref="CDKException">if an error occurs</exception>
         public void GenerateCoordinates(Vector2 firstBondVector)
         {
             GenerateCoordinates(firstBondVector, false, false);
         }
 
         /// <summary>
-        /// The main method of this StructureDiagramGenerator. Assign a molecule to the
-        /// StructureDiagramGenerator, call the GenerateCoordinates() method and get
+        /// The main method of this <see cref="StructureDiagramGenerator"/>. Assign a molecule to the
+        /// <see cref="StructureDiagramGenerator"/>, call the <see cref="GenerateCoordinates()"/>  method and get
         /// your molecule back.
-        ///
+        /// </summary>
         /// <param name="firstBondVector">the vector of the first bond to lay out</param>
         /// <param name="isConnected">the 'molecule' attribute is guaranteed to be connected (we have checked)</param>
         /// <param name="isSubLayout">the 'molecule' attribute is guaranteed to be connected (we have checked)</param>
         /// <exception cref="CDKException">problem occurred during layout</exception>
-        /// </summary>
         private void GenerateCoordinates(Vector2 firstBondVector, bool isConnected, bool isSubLayout)
         {
             int safetyCounter = 0;
@@ -383,7 +381,6 @@ namespace NCDK.Layout
             }
             else
             {
-
                 Debug.WriteLine("*** Start of handling purely aliphatic molecules. ***");
                 
                 // We are here because there are no rings in the molecule so we get
@@ -400,7 +397,7 @@ namespace NCDK.Layout
                 // horizontally alligned on the x axis
                 angle = Vectors.DegreeToRadian(-30);
                 Debug.WriteLine("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
-                if (firstBondVector != null && firstBondVector != DEFAULT_BOND_VECTOR)
+                if (firstBondVector != null && firstBondVector != DefaultBondVector)
                     atomPlacer.PlaceLinearChain(longestChain, firstBondVector, BondLength);
                 else
                     atomPlacer.PlaceLinearChain(longestChain, new Vector2(Math.Cos(angle), Math.Sin(angle)), BondLength);
@@ -461,7 +458,6 @@ namespace NCDK.Layout
             // choose the orientation in which to display the structure
             if (selectOrientation)
             {
-
                 // check for attachment points, these override the direction which we rorate structures
                 IAtom begAttach = null;
                 foreach (var atom in molecule.Atoms)
@@ -476,7 +472,7 @@ namespace NCDK.Layout
                 // no attachment point, rorate to maximise horizontal spread etc.
                 if (begAttach == null)
                 {
-                    SelectOrientation(molecule, 2 * DEFAULT_BOND_LENGTH, 1);
+                    SelectOrientation(molecule, 2 * DefaultBondLength, 1);
                 }
                 // use attachment point bond to rotate
                 else
@@ -546,9 +542,7 @@ namespace NCDK.Layout
         private static void SelectOrientation(IAtomContainer mol, double widthDiff, int alignDiff)
         {
             double[] minmax = GeometryUtil.GetMinMax(mol);
-            Vector2 pivot = new Vector2(minmax[0] + ((minmax[2] - minmax[0]) / 2),
-                                        minmax[1] + ((minmax[3] - minmax[1]) / 2));
-
+            Vector2 pivot = new Vector2(minmax[0] + ((minmax[2] - minmax[0]) / 2), minmax[1] + ((minmax[3] - minmax[1]) / 2));
 
             double maxWidth = minmax[2] - minmax[0];
             int maxAligned = CountAlignedBonds(mol);
@@ -652,7 +646,7 @@ namespace NCDK.Layout
             foreach (var fragment in frags)
             {
                 SetMolecule(fragment, false);
-                GenerateCoordinates(DEFAULT_BOND_VECTOR, true, true);
+                GenerateCoordinates(DefaultBondVector, true, true);
                 limits.Add(GeometryUtil.GetMinMax(fragment));
                 numFragments++;
             }
@@ -711,7 +705,7 @@ namespace NCDK.Layout
         /// <summary>
         /// Property to cache the charge of a fragment.
         /// </summary>
-        private const string FRAGMENT_CHARGE = "FragmentCharge";
+        private const string FragmentCharge = "FragmentCharge";
 
         /// <summary>
         /// Merge fragments with duplicate atomic ions (e.g. [Na+].[Na+].[Na+]) into
@@ -774,7 +768,7 @@ namespace NCDK.Layout
         /// <returns>the select atoms (includes duplicates)</returns>
         private List<IAtom> SelectIons(IAtomContainer frag, int sign)
         {
-            int fragChg = frag.GetProperty<int?>(FRAGMENT_CHARGE).Value;
+            int fragChg = frag.GetProperty<int?>(FragmentCharge).Value;
             Trace.Assert(Math.Sign(fragChg) == sign);
             var atoms = new List<IAtom>();
 
@@ -829,15 +823,15 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Alternative method name "Humpty Dumpty" (a la. R Sayle).
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// (Re)bonding of ionic fragments for improved layout. This method takes a list
         /// of two or more fragments and creates zero or more bonds (return value) that
         /// should be temporarily used for layout generation. In general this problem is
         /// difficult but since molecules will be laid out in a grid by default - any
         /// positioning is an improvement. Heuristics could be added if bad (re)bonds
         /// are seen.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="frags">connected fragments</param>
         /// <returns>ionic bonds to make</returns>
         private IList<IBond> MakeIonicBonds(IEnumerable<IAtomContainer> frags)
@@ -859,7 +853,7 @@ namespace NCDK.Layout
                 foreach (var atom in frag.Atoms)
                     chg += NullAsZero(atom.FormalCharge);
                 chgSum += chg;
-                frag.SetProperty(FRAGMENT_CHARGE, chg);
+                frag.SetProperty(FragmentCharge, chg);
                 if (chg < 0)
                     negFrags.Add(frag);
                 else if (chg > 0)
@@ -928,8 +922,8 @@ namespace NCDK.Layout
         {
             public int Compare(IAtomContainer a, IAtomContainer b)
             {
-                int qA = a.GetProperty<int>(FRAGMENT_CHARGE);
-                int qB = b.GetProperty<int>(FRAGMENT_CHARGE);
+                int qA = a.GetProperty<int>(FragmentCharge);
+                int qB = b.GetProperty<int>(FragmentCharge);
                 int cmp = Math.Abs(qA).CompareTo(Math.Abs(qB));
                 if (cmp != 0) return cmp;
                 int sign = Math.Sign(qA);
@@ -953,7 +947,7 @@ namespace NCDK.Layout
         /// <exception cref="CDKException">if an error occurs</exception>
         public void GenerateCoordinates()
         {
-            GenerateCoordinates(DEFAULT_BOND_VECTOR);
+            GenerateCoordinates(DefaultBondVector);
         }
 
         /// <summary>
@@ -1319,7 +1313,7 @@ namespace NCDK.Layout
         {
             Debug.WriteLine("Start of LayoutNextRingSystem()");
 
-            ReSetUnplacedRings();
+            ResetUnplacedRings();
             IAtomContainer tempAc = AtomPlacer.GetPlacedAtoms(molecule);
             Debug.WriteLine("Finding attachment bond to already placed part...");
             IBond nextRingAttachmentBond = GetNextBondWithUnplacedRingAtom();
@@ -1599,7 +1593,7 @@ namespace NCDK.Layout
         /// <summary>
         /// Set all the atoms in unplaced rings to be unplaced
         /// </summary>
-        private void ReSetUnplacedRings()
+        private void ResetUnplacedRings()
         {
             IRing ring = null;
             if (sssr == null)
@@ -1647,7 +1641,7 @@ namespace NCDK.Layout
         /// <param name="mol">molecule to place the multiple groups of</param>
         private void PlaceMultipleGroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
             var multipleGroups = new List<Sgroup>();
@@ -1823,34 +1817,29 @@ namespace NCDK.Layout
             {
                 if (!visit.Contains(b))
                     return false;
-                int aElem = SafeUnbox(a.AtomicNumber);
-                int bElem = SafeUnbox(b.AtomicNumber);
+                int aElem = NullAsZero(a.AtomicNumber);
+                int bElem = NullAsZero(b.AtomicNumber);
                 if (aElem != bElem)
                     return false;
-                int aChg = SafeUnbox(a.FormalCharge);
-                int bChg = SafeUnbox(b.FormalCharge);
+                int aChg = NullAsZero(a.FormalCharge);
+                int bChg = NullAsZero(b.FormalCharge);
                 if (aChg != bChg)
                     return false;
-                int aMass = SafeUnbox(a.MassNumber);
-                int bMass = SafeUnbox(b.MassNumber);
+                int aMass = NullAsZero(a.MassNumber);
+                int bMass = NullAsZero(b.MassNumber);
                 if (aMass != bMass)
                     return false;
-                int aHcnt = SafeUnbox(a.ImplicitHydrogenCount);
-                int bHcnt = SafeUnbox(b.ImplicitHydrogenCount);
+                int aHcnt = NullAsZero(a.ImplicitHydrogenCount);
+                int bHcnt = NullAsZero(b.ImplicitHydrogenCount);
                 if (aHcnt != bHcnt)
                     return false;
                 return true;
             }
         }
 
-        private static int SafeUnbox(int? x)
-        {
-            return x ?? 0;
-        }
-
         private void PlacePositionalVariation(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
@@ -1885,7 +1874,6 @@ namespace NCDK.Layout
 
                 if (bonds.Count >= e.Value.Count)
                 {
-
                     var begIter = e.Value.GetEnumerator();
                     var bndIter = bonds.GetEnumerator();
 
@@ -2006,7 +1994,6 @@ namespace NCDK.Layout
             return mapping;
         }
 
-
         private static int NumRingBonds(IAtomContainer mol, IAtom atom)
         {
             int cnt = 0;
@@ -2018,14 +2005,13 @@ namespace NCDK.Layout
             return cnt;
         }
 
-
         /// <summary>
         /// Place and update brackets for polymer Sgroups.
         /// </summary>
         /// <param name="mol">molecule</param>
         private void PlaceSgroupBrackets(IAtomContainer mol)
         {
-            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null) return;
 
             // index all crossing bonds
@@ -2068,7 +2054,6 @@ namespace NCDK.Layout
                 // assign brackets to crossing bonds
                 if (xbonds.Count >= 2)
                 {
-
                     // check for vertical alignment
                     bool vert = true;
                     foreach (var bond in xbonds)
@@ -2101,7 +2086,6 @@ namespace NCDK.Layout
                                                         minmax[2] + padding, minmax[3] + padding));
                 }
             }
-
         }
 
         private static double Angle(IBond bond)

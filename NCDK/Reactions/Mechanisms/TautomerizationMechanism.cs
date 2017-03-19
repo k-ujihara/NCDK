@@ -22,34 +22,27 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism produces the tautomerization chemical reaction between two tautomers.
-     * It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</p>
-     * <p>This reaction could be represented as X=Y-Z-H => X(H)-Y=Z</p>
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism produces the tautomerization chemical reaction between two tautomers.
+    /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
+    /// <para>This reaction could be represented as X=Y-Z-H => X(H)-Y=Z</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class TautomerizationMechanism : IReactionMechanism
     {
 
-        /**
-         * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed fourth atoms.
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
-         *                       The first bond is the bond to decrease the order and the second is the bond
-         *                       to increase the order
-         *                       It is the bond which is moved
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed fourth atoms.</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed two bond.
+        ///     The first bond is the bond to decrease the order and the second is the bond to increase the order.
+        ///     It is the bond which is moved</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
@@ -85,7 +78,7 @@ namespace NCDK.Reactions.Mechanisms
 
             BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
             BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[posBond2]);
-            reactantCloned.Remove(reactantCloned.Bonds[posBond3]);
+            reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond3]);
             IBond newBond = molecule.Builder.CreateBond(atom1C, atom4C, BondOrder.Single);
             reactantCloned.Bonds.Add(newBond);
 

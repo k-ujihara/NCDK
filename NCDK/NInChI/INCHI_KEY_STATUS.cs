@@ -20,21 +20,21 @@
 namespace NCDK.NInChI
 {
     /// <summary>
-    /// <p>Type-safe enumeration of InChIKey check return codes.
+    /// <para>Type-safe enumeration of InChIKey check return codes.</para>
     ///
-    /// <p>InChI library return values:<br>
-    /// <tt>
-    /// VALID_STANDARD            (0)
-    /// INVALID_LENGTH     (1)
-    /// INVALID_LAYOUT     (2)
-    /// INVALID_VERSION    (3)
-    /// </tt>
-    /// <p>See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
+    /// <para>InChI library return values:
+    /// <list type="bullet">
+    /// <item>VALID_STANDARD            (0)</item>
+    /// <item>INVALID_LENGTH     (1)</item>
+    /// <item>INVALID_LAYOUT     (2)</item>
+    /// <item>INVALID_VERSION    (3)</item>
+    /// </list>
+    /// </para>
+    /// <para>See <tt>inchi_api.h</tt>.</para>
     /// </summary>
+    // @author Sam Adams
     public enum INCHI_KEY_STATUS
     {
-
         VALID_STANDARD = 0,
 
         VALID_NON_STANDARD = -1,

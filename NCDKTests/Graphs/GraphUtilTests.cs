@@ -163,7 +163,7 @@ namespace NCDK.Graphs
             IAtomContainer container = new AtomContainer();
 
             IAtom a = new Atom("C");
-            container.Add(a);
+            container.Atoms.Add(a);
 
             // add 50 neighbour to 'a'
             for (int i = 0; i < 50; i++)
@@ -171,8 +171,8 @@ namespace NCDK.Graphs
                 IAtom neighbour = new Atom("C");
                 IBond bond = new Bond(a, neighbour);
 
-                container.Add(neighbour);
-                container.Add(bond);
+                container.Atoms.Add(neighbour);
+                container.Bonds.Add(bond);
             }
 
             int[][] adjacent = GraphUtil.ToAdjList(container);
@@ -192,7 +192,7 @@ namespace NCDK.Graphs
         public virtual void TestToAdjList_missingAtom()
         {
             IAtomContainer container = Simple;
-            container.Remove(container.Atoms[4]); // remove 'e'
+            container.Atoms.Remove(container.Atoms[4]); // remove 'e'
             GraphUtil.ToAdjList(container);
         }
 
@@ -231,16 +231,16 @@ namespace NCDK.Graphs
                 IBond cd = new Bond(c, d);
                 IBond be = new Bond(b, e);
 
-                container.Add(a);
-                container.Add(b);
-                container.Add(c);
-                container.Add(d);
-                container.Add(e);
+                container.Atoms.Add(a);
+                container.Atoms.Add(b);
+                container.Atoms.Add(c);
+                container.Atoms.Add(d);
+                container.Atoms.Add(e);
 
-                container.Add(ab);
-                container.Add(bc);
-                container.Add(cd);
-                container.Add(be);
+                container.Bonds.Add(ab);
+                container.Bonds.Add(bc);
+                container.Bonds.Add(cd);
+                container.Bonds.Add(be);
 
                 return container;
             }

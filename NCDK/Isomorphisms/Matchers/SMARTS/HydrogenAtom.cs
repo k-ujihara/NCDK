@@ -20,14 +20,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches Hydrogen atoms.
-    ///
+    /// </summary>
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class HydrogenAtom : SMARTSAtom
     {
-
         /// <summary>Creates a new instance.</summary>
         public HydrogenAtom(IChemObjectBuilder builder)
             : base(builder)

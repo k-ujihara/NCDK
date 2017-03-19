@@ -25,24 +25,25 @@ using System;
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  <p>The calculation of pi partial charges in pi-bonded systems of an heavy
-    ///  atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
-    ///  implemented with the Partial Equalization of Pi-Electronegativity (PEPE).</p>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>maxIterations</td>
-    ///     <td>0</td>
-    ///     <td>Number of maximum iterations</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///
+    /// The calculation of pi partial charges in pi-bonded systems of an heavy
+    /// atom was made by Saller-Gasteiger. It is based on the qualitative concept of resonance and
+    /// implemented with the Partial Equalization of Pi-Electronegativity (PEPE).
+    /// </summary>
+    /// <remarks>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///     <term>maxIterations</term>
+    ///     <term>0</term>
+    ///     <term>Number of maximum iterations</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
     // @author      Miguel Rojas
     // @cdk.created 2006-04-15
     // @cdk.module  qsaratomic
@@ -50,17 +51,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:partialPiCharge
     // @see         GasteigerPEPEPartialCharges
-    /// </summary>
     public class PartialPiChargeDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "pepe" };
 
         private GasteigerPEPEPartialCharges pepe = null;
-        /// <summary>Number of maximum iterations*/
+        /// <summary>Number of maximum iterations</summary>
         private int maxIterations = -1;
-        /// <summary>Number of maximum resonance structures*/
+        /// <summary>Number of maximum resonance structures</summary>
         private int maxResonStruc = -1;
-        /// <summary> make a lone pair electron checker. Default true*/
+        /// <summary> make a lone pair electron checker. Default true</summary>
         private bool lpeChecker = true;
 
         /// <summary>
@@ -86,15 +86,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <remarks>
         /// <list type="bullet">
         /// <item>
-        /// <term><value>1</value></term>
+        /// <term>1</term>
         /// <description>Number of maximum iterations</description>
         /// </item>
         /// <item>
-        /// <term><value>2</value></term>
+        /// <term>2</term>
         /// <description>checking lone pair electrons</description>
         /// </item>
         /// <item>
-        /// <term><value>3</value></term>
+        /// <term>3</term>
         /// <description>number of maximum resonance structures to be searched</description>
         /// </item>
         /// </list>

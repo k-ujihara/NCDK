@@ -96,7 +96,7 @@ namespace NCDK.IO.Iterator
             object obj = etor.Current;
             Assert.IsNotNull(obj);
             Assert.IsTrue(obj is IAtomContainer);
-            Assert.AreEqual("2-methylbenzo-1,4-quinone", ((IAtomContainer)obj).GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("2-methylbenzo-1,4-quinone", ((IAtomContainer)obj).GetProperty<string>(CDKPropertyName.Title));
             Assert.AreEqual(MDLV2000Format.Instance, reader.Format);
             reader.Close();
         }
@@ -300,9 +300,9 @@ namespace NCDK.IO.Iterator
         public void TestBrokenSDF()
         {
             string path = "NCDK.Data.MDL.bug3488307.sdf";
-            Stream in_ = ResourceLoader.GetAsStream(path);
+            Stream ins = ResourceLoader.GetAsStream(path);
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IteratingSDFReader reader = new IteratingSDFReader(in_, builder);
+            IteratingSDFReader reader = new IteratingSDFReader(ins, builder);
 
             reader.Skip = true; // skip over null entries and keep reading until EOF
 
@@ -322,9 +322,9 @@ namespace NCDK.IO.Iterator
         public void TestV3000MolfileFormat()
         {
             string path = "NCDK.Data.MDL.molV3000.mol";
-            Stream in_ = ResourceLoader.GetAsStream(path);
+            Stream ins = ResourceLoader.GetAsStream(path);
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
-            IteratingSDFReader reader = new IteratingSDFReader(in_, builder);
+            IteratingSDFReader reader = new IteratingSDFReader(ins, builder);
 
             reader.Skip = true; // skip over null entries and keep reading until EOF
 

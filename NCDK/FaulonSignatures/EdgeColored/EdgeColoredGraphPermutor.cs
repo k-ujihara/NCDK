@@ -1,8 +1,8 @@
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace FaulonSignatures.EdgeColored
+namespace NCDK.FaulonSignatures.EdgeColored
 {
     public class EdgeColoredGraphPermutor : Permutor, IEnumerable<EdgeColoredGraph>
     {

@@ -32,26 +32,27 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates length over breadth descriptors.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// The current implementation reproduces the results obtained from the LOVERB descriptor
     /// routine in ADAPT. As a result ti does not perform any orientation and only considers the
-    /// X & Y extents for a series of rotations about the Z axis (in 10 degree increments).
-    /// <p/>
+    /// X &amp; Y extents for a series of rotations about the Z axis (in 10 degree increments).
+    /// <para>
     /// The class gives two descriptors
-    /// <ul>
-    /// <li>LOBMAX - The maximum L/B ratio
-    /// <li>LOBMIN - The L/B ratio for the rotation that results in the minimum area
-    /// (defined by the product of the X & Y extents for that orientation)
-    /// </ul>
+    /// <list type="bullet"> 
+    /// <item>LOBMAX - The maximum L/B ratio</item>
+    /// <item>LOBMIN - The L/B ratio for the rotation that results in the minimum area
+    /// (defined by the product of the X &amp; Y extents for that orientation)</item>
+    /// </list>
+    /// </para>
     /// <B>Note:</B> The descriptor assumes that the atoms have been configured.
-    ///
+    /// </remarks>
     // @author      Rajarshi Guha
     // @cdk.created 2006-09-26
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:lengthOverBreadth
-    /// </summary>
     public class LengthOverBreadthDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "LOBMAX", "LOBMIN" };
@@ -74,8 +75,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Sets the parameters attribute of the PetitjeanNumberDescriptor object
         /// </summary>
-        /// <param name="params">The new parameters value</param>
-        /// <exception cref="CDKException"></exception>
         public override object[] Parameters { get { return null; } set { } }
 
         public override string[] DescriptorNames => NAMES;
@@ -165,14 +164,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, result, DescriptorNames);
         }
 
-        /// <summary>
-        /// The specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
 
         private void RotateZ(double[][] coords, double theta)

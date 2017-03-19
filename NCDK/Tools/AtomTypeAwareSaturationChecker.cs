@@ -31,25 +31,24 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// This class tries to figure out the bond order of the bonds that has the flag
-    /// <code>SingleOrDouble</code> raised (i.e. set to <see langword="true"/>).<br>
+    /// <see cref="IBond.IsSingleOrDouble"/> raised (i.e. set to <see langword="true"/>).
+    /// <para>
     /// The code is written with the assumption that the properties of the atoms in
     /// the molecule has configured with the help of <see cref="AtomContainerManipulator"/>.
-    /// This class uses the <see cref="SaturationChecker"/> internally.<br>
+    /// This class uses the <see cref="SaturationChecker"/> internally.</para>
+    /// <para>
     /// If it can't find a solution where all atoms in the molecule are saturated,
     /// it gives a "best guess", i.e. the solution with most saturated atoms. If not
-    /// all atoms are saturated then it will be noticed as a warning in the log.
-    ///
+    /// all atoms are saturated then it will be noticed as a warning in the log.</para>
+    /// </summary>
     // @author Klas Jönsson
     // @author Egon Willighagen
     // @cdk.created 2012-04-13
     // @cdk.githash
-    ///
     // @cdk.keyword bond order
     // @cdk.module  valencycheck
-    /// </summary>
     public class AtomTypeAwareSaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
-
         SaturationChecker staturationChecker;
         private BondOrder oldBondOrder;
         private int startBond;
@@ -64,13 +63,10 @@ namespace NCDK.Tools
 
         /// <summary>
         /// This method decides the bond order on bonds that has the
-        /// <code>SingleOrDouble</code>-flag raised.
-        ///
-        /// <param name="atomContainer">The molecule to investigate</param>
-        /// <param name="atomsSaturated">Set to true if you want to make sure that all</param>
-        ///         atoms are saturated.
-        // @
+        /// <see cref="IBond.IsSingleOrDouble"/> raised.
         /// </summary>
+        /// <param name="atomContainer">The molecule to investigate</param>
+        /// <param name="atomsSaturated">Set to true if you want to make sure that all atoms are saturated.</param>
         public void DecideBondOrder(IAtomContainer atomContainer, bool atomsSaturated)
         {
             if (atomContainer.Bonds.Count == 0)
@@ -123,24 +119,20 @@ namespace NCDK.Tools
 
         /// <summary>
         /// This method decides the bond order on bonds that has the
-        /// <code>SingleOrDouble</code>-flag raised.
-        ///
-        /// <param name="atomContainer">The molecule to investigate.</param>
-        // @
+        /// <see cref="IBond.IsSingleOrDouble"/> raised.
         /// </summary>
+        /// <param name="atomContainer">The molecule to investigate.</param>
         public void DecideBondOrder(IAtomContainer atomContainer)
         {
             this.DecideBondOrder(atomContainer, true);
         }
 
         /// <summary>
-        /// This method decides the bond order on bonds that has the
-        /// <code>SingleOrDouble</code>-flag raised.
-        ///
+        /// This method decides the bond order on bonds that has the 
+        /// <see cref="IBond.IsSingleOrDouble"/> raised.
+        /// </summary>
         /// <param name="atomContainer">The molecule to investigate</param>
         /// <param name="start">The bond to start with</param>
-        // @
-        /// </summary>
         private void DecideBondOrder(IAtomContainer atomContainer, int start)
         {
             for (int i = 0; i < atomContainer.Bonds.Count; i++)
@@ -168,7 +160,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="atomContainer">The molecule</param>
         /// <param name="index">The index of the current bond</param>
-        /// <exception cref="">when no suitable solution can be found</exception>
+        /// <exception cref="CDKException">when no suitable solution can be found</exception>
         private void CheckBond(IAtomContainer atomContainer, int index)
         {
             IBond bond = atomContainer.Bonds[index];
@@ -195,7 +187,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="bond">The bond to be investigated</param>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> that contains the bond</param>
-        /// <exception cref="">when the bond cannot be further increased</exception>
+        /// <exception cref="CDKException">when the bond cannot be further increased</exception>
         private void SetMaxBondOrder(IBond bond, IAtomContainer atomContainer)
         {
             if (BondOrderCanBeIncreased(bond, atomContainer))
@@ -298,7 +290,7 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="atom">The <code>IAtom</code> to be investigated</param>
         /// <returns>The max number of bonds the <code>IAtom</code> can have</returns>
-        /// <exception cref="">when the atom's valency is not set</exception>
+        /// <exception cref="CDKException">when the atom's valency is not set</exception>
         public double GetMaxNoOfBonds(IAtom atom)
         {
             double noValenceElectrons = atom.Valency ?? -1;

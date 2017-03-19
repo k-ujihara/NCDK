@@ -46,11 +46,11 @@ namespace NCDK.IO.RandomAccess
                 try
                 {
                     // copy data to tmp file
-                    using (var out_ = new FileStream(f, FileMode.Create))
+                    using (var output = new FileStream(f, FileMode.Create))
                     {
                         var buf = new byte[ins.Length];
                         ins.Read(buf, 0, buf.Length);
-                        out_.Write(buf, 0, buf.Length);
+                        output.Write(buf, 0, buf.Length);
                     }
 
 

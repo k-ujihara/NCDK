@@ -265,7 +265,7 @@ namespace NCDK.Fingerprint
         /// <summary>
         // @cdk.bug 2819557
         ///
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestBug2819557()

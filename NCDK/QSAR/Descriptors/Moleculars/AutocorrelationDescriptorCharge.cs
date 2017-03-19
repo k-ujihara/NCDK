@@ -28,13 +28,12 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This class calculates ATS autocorrelation descriptor, where the weight equal
     /// to the charges.
-    ///
+    /// </summary>
     // @author      Federico
     // @cdk.created 2007-02-27
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
-    /// </summary>
     public class AutocorrelationDescriptorCharge : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSc1", "ATSc2", "ATSc3", "ATSc4", "ATSc5" };

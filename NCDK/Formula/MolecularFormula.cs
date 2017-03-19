@@ -48,7 +48,7 @@ namespace NCDK.Formula
         /// <summary>
         /// A hashtable for the storage of any kind of properties of this IChemObject.
         /// </summary>
-        private IDictionary<string, object> properties = new Dictionary<string, object>();
+        private IDictionary<object, object> properties = new Dictionary<object, object>();
 
         /// <summary>
         /// Constructs an empty MolecularFormula.
@@ -205,11 +205,7 @@ namespace NCDK.Formula
         /// <summary>
         /// Sets a property for a IChemObject. I should integrate into ChemObject.
         /// </summary>
-        /// <param name="description">An object description of the property (most likely a unique string)</param>
-        /// <param name="property">An object with the property itself</param>
-        /// <seealso cref="GetProperty(string)"/>
-        /// <seealso cref="RemoveProperty(string)"/>
-        public virtual void SetProperty(string key, object value)
+        public virtual void SetProperty(object key, object value)
         {
             properties[key] = value;
         }
@@ -218,28 +214,28 @@ namespace NCDK.Formula
         /// Removes a property for a IChemObject. I should integrate into ChemObject.
         /// </summary>
         /// <param name="description">The object description of the property (most likely a unique string)</param>
-        /// <seealso cref="SetProperty(string, object)"/>
-        /// <seealso cref="GetProperty(string)"/>
-        public virtual void RemoveProperty(string description)
+        /// <seealso cref="SetProperty(object, object)"/>
+        /// <seealso cref="GetProperty(object)"/>
+        public virtual void RemoveProperty(object description)
         {
             properties.Remove(description);
         }
 
         /// <inheritdoc/>
-        public virtual object GetProperty(string key)
+        public virtual T GetProperty<T>(object key)
         {
             object property;
             if (properties.TryGetValue(key, out property))
-                return property;
-            return null;
+                return (T)property;
+            return default(T);
         }
 
         /// <summary>
         /// Returns a IDictionary with the IChemObject's properties.I should integrate into ChemObject.
         /// </summary>
         /// <returns>The object's properties as an Dictionary</returns>
-        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{string, object}})"/>
-        public virtual IDictionary<string, object> GetProperties()
+        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{object, object}})"/>
+        public virtual IDictionary<object, object> GetProperties()
             => properties;
 
         /// <summary>
@@ -247,9 +243,9 @@ namespace NCDK.Formula
         /// </summary>
         /// <param name="properties">a Dictionary specifying the property values</param>
         /// <seealso cref="GetProperties"/>
-        public void SetProperties(IEnumerable<KeyValuePair<string, object>> properties)
+        public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
-            this.properties = new Dictionary<string, object>();
+            this.properties = new Dictionary<object, object>();
             foreach (var pair in properties)
                 this.properties.Add(pair);
         }

@@ -48,7 +48,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of init method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_1()
@@ -66,7 +66,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of init method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_2()
@@ -84,7 +84,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of searchMCS method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSearchMCS()
@@ -115,7 +115,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of set method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSet_IAtomContainer_IAtomContainer()
@@ -133,7 +133,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of set method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @throws IOException
         /// </summary>
         [TestMethod()]
@@ -160,7 +160,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of set method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSet_MolHandler_MolHandler()
@@ -179,7 +179,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getAllAtomMapping method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
@@ -210,7 +210,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getAllMapping method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
@@ -234,7 +234,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getFirstAtomMapping method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
@@ -253,7 +253,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getFirstMapping method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
@@ -272,7 +272,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of setChemFilters method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSetChemFilters()
@@ -289,7 +289,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getFragmentSize method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFragmentSize()
@@ -307,7 +307,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getStereoScore method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetStereoScore()
@@ -325,7 +325,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getEnergyScore method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetEnergyScore()
@@ -343,7 +343,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getReactantMolecule method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetReactantMolecule()
@@ -361,7 +361,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of getProductMolecule method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetProductMolecule()
@@ -398,7 +398,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of isStereoMisMatch method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestIsStereoMisMatch()
@@ -415,7 +415,7 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Test of isSubgraph method, of class Isomorphism.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestIsSubgraph()

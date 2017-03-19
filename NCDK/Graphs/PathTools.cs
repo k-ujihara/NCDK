@@ -171,8 +171,8 @@ namespace NCDK.Graphs
                 nextAtom = bond.GetConnectedAtom(root);
                 if (!nextAtom.IsVisited)
                 {
-                    path.Add(nextAtom);
-                    path.Add(bond);
+                    path.Atoms.Add(nextAtom);
+                    path.Bonds.Add(bond);
                     if (nextAtom == target)
                     {
                         return true;
@@ -182,8 +182,8 @@ namespace NCDK.Graphs
                         if (!DepthFirstTargetSearch(molecule, nextAtom, target, path))
                         {
                             // we did not find the target
-                            path.Remove(nextAtom);
-                            path.Remove(bond);
+                            path.Atoms.Remove(nextAtom);
+                            path.Bonds.Remove(bond);
                         }
                         else
                         {
@@ -259,17 +259,17 @@ namespace NCDK.Graphs
             {
                 //Debug.WriteLine("atoms  "+ atom + f);
                 //Debug.WriteLine("sphere size  "+ sphere.Count);
-                molecule.Add(atom);
+                molecule.Atoms.Add(atom);
                 // first copy LonePair's and SingleElectron's of this Atom as they need
                 // to be copied too
                 var lonePairs = atomContainer.GetConnectedLonePairs(atom);
                 //Debug.WriteLine("found #ec's: " + lonePairs.Length);
                 foreach (var lonePair in lonePairs)
-                    molecule.Add(lonePair);
+                    molecule.LonePairs.Add(lonePair);
 
                 var singleElectrons = atomContainer.GetConnectedSingleElectrons(atom);
                 foreach (var singleElectron in singleElectrons)
-                    molecule.Add(singleElectron);
+                    molecule.SingleElectrons.Add(singleElectron);
 
                 // now look at bonds
                 var bonds = atomContainer.GetConnectedBonds(atom);
@@ -277,7 +277,7 @@ namespace NCDK.Graphs
                 {
                     if (!bond.IsVisited)
                     {
-                        molecule.Add(bond);
+                        molecule.Bonds.Add(bond);
                         bond.IsVisited = true;
                     }
                     nextAtom = bond.GetConnectedAtom(atom);
@@ -541,7 +541,7 @@ namespace NCDK.Graphs
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="start">The starting Atom of the path</param>
         /// <param name="end">The ending Atom of the path</param>
-        /// <returns>A <see cref="IEnumerable{IList{IAtom}}"/> containing all the paths between the specified atoms</returns>
+        /// <returns>A <see cref="IList{T}"/> containing all the paths between the specified atoms</returns>
         public static IList<IList<IAtom>> GetAllPaths(IAtomContainer atomContainer, IAtom start, IAtom end)
         {
             var allPaths = new List<IList<IAtom>>();
@@ -566,7 +566,7 @@ namespace NCDK.Graphs
                 FindPathBetween(allPaths, atomContainer, nbr, end, path);
             path.RemoveAt(path.Count - 1);
         }
-        
+
         /// <summary>
         /// Get the paths starting from an atom of specified length.
         /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> that make up the path (ie they are sequentially connected).</para>
@@ -574,7 +574,7 @@ namespace NCDK.Graphs
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="start">The starting atom</param>
         /// <param name="length">The length of paths to look for</param>
-        /// <returns>A <see cref="IEnumerable{IList{IAtom}}"/> containing the paths found</returns>
+        /// <returns>A <see cref="IList{T}"/> of <see cref="IList{T}"/> of <see cref="IAtom"/> containing the paths found</returns>
         public static IList<IList<IAtom>> GetPathsOfLength(IAtomContainer atomContainer, IAtom start, int length)
         {
             IList<IAtom> curPath = new List<IAtom>();
@@ -602,7 +602,7 @@ namespace NCDK.Graphs
             }
             return paths;
         }
-        
+
         /// <summary>
         /// Get all the paths starting from an atom of length 0 upto the specified length.
         /// <para>This method returns a set of paths. Each path is a <see cref="IList{IAtom}"/> of atoms that make up the path (ie they are sequentially connected).</para>
@@ -610,7 +610,7 @@ namespace NCDK.Graphs
         /// <param name="atomContainer">The molecule to consider</param>
         /// <param name="start">The starting atom</param>
         /// <param name="length">The maximum length of paths to look for</param>
-        /// <returns>A <see cref="IList{IList{IAtom}}"/> containing the paths found</returns>
+        /// <returns>A <see cref="IList{T}"/> of <see cref="IList{T}"/> of <see cref="IAtom"/> containing the paths found</returns>
         public static IList<IList<IAtom>> GetPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length)
         {
             IList<IAtom> curPath = new List<IAtom>();
@@ -641,7 +641,7 @@ namespace NCDK.Graphs
             }
             return (allpaths);
         }
-        
+
         /// <summary>
         /// Get all the paths starting from an atom of length 0 up to the specified
         /// length. If the number of paths exceeds the the set {@code limit} then an
@@ -653,7 +653,7 @@ namespace NCDK.Graphs
         /// <param name="start">The starting atom</param>
         /// <param name="length">The maximum length of paths to look for</param>
         /// <param name="limit">Limit the number of paths - thrown an exception if exceeded</param>
-        /// <returns>A  <see cref="IList{IList{IAtom}}"/> containing the paths found</returns>
+        /// <returns>A <see cref="IList{T}"/> of <see cref="IList{T}"/> of <see cref="IAtom"/> containing the paths found</returns>
         /// <exception cref="CDKException">if the number of paths generated was larger than the limit.</exception>
         public static IList<IList<IAtom>> GetLimitedPathsOfLengthUpto(IAtomContainer atomContainer, IAtom start, int length, int limit)
         {

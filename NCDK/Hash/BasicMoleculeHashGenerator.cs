@@ -21,17 +21,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using System;
 
 namespace NCDK.Hash
 {
     /// <summary>
     /// A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The
-    /// provided <see cref="AtomHashGenerator"/> is used to produce individual atom hash
+    /// provided <see cref="IAtomHashGenerator"/> is used to produce individual atom hash
     /// codes. These are then combined together in an order independent manner to
     /// generate a single hash code for the molecule.
-    ///
+    /// </summary>
     /// <example><code>
     /// AtomHashGenerator     atomGenerator = ...;
     /// MoleculeHashGenerator generator     = new BasicMoleculeHashGenerator(atomGenerator)
@@ -39,42 +38,36 @@ namespace NCDK.Hash
     /// IAtomContainer benzene  = MoleculeFactory.MakeBenzene();
     /// long           hashCode = generator.Generate(benzene);
     /// </code></example>
-    ///
+    /// <seealso cref="IAtomHashGenerator"/>
+    /// <seealso cref="BasicAtomHashGenerator"/>
     // @author John May
     // @cdk.module hash
-    /// <seealso cref="AtomHashGenerator"/>
-    /// <seealso cref="BasicAtomHashGenerator"/>
     // @cdk.githash
-    /// </summary>
-    internal sealed class BasicMoleculeHashGenerator : MoleculeHashGenerator
+    internal sealed class BasicMoleculeHashGenerator : IMoleculeHashGenerator
     {
-
         /* generator for atom hashes */
-        private readonly AtomHashGenerator generator;
+        private readonly IAtomHashGenerator generator;
 
         /* pseudorandom number generator */
         private readonly Pseudorandom pseudorandom;
 
         /// <summary>
         /// Create a new molecule hash using the provided atom hash generator.
-        ///
-        /// <param name="generator">a generator for atom hash codes</param>
-        /// <exception cref="NullPointerException">no generator provided</exception>
         /// </summary>
-        public BasicMoleculeHashGenerator(AtomHashGenerator generator)
+        /// <param name="generator">a generator for atom hash codes</param>
+        /// <exception cref="ArgumentNullException">no generator provided</exception>
+        public BasicMoleculeHashGenerator(IAtomHashGenerator generator)
             : this(generator, new Xorshift())
         { }
 
         /// <summary>
         /// Create a new molecule hash using the provided atom hash generator and
         /// pseudorandom number generator.
-        ///
+        /// </summary>
         /// <param name="generator">a generator for atom hash codes</param>
         /// <param name="pseudorandom">pseudorandom number generator</param>
-        /// <exception cref="NullPointerException">no atom hash generator or pseudorandom</exception>
-        ///                              number generator provided
-        /// </summary>
-        internal BasicMoleculeHashGenerator(AtomHashGenerator generator, Pseudorandom pseudorandom)
+        /// <exception cref="ArgumentNullException">no atom hash generator or pseudorandom number generator provided</exception>
+        internal BasicMoleculeHashGenerator(IAtomHashGenerator generator, Pseudorandom pseudorandom)
         {
             if (generator == null) throw new ArgumentNullException("no AtomHashGenerator provided");
             if (pseudorandom == null) throw new ArgumentNullException("no Pseudorandom number generator provided");
@@ -84,7 +77,6 @@ namespace NCDK.Hash
 
         public long Generate(IAtomContainer container)
         {
-
             long[] hashes = generator.Generate(container);
             long[] rotated = new long[hashes.Length];
 
@@ -95,7 +87,6 @@ namespace NCDK.Hash
 
             for (int i = 0; i < hashes.Length; i++)
             {
-
                 // if non-unique, then get the next random number
                 if (i > 0 && hashes[i] == hashes[i - 1])
                 {

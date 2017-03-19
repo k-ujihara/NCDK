@@ -37,12 +37,11 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///  of the mapped edges (in an CDKRMap), of its neighbours in the RGraph it belongs
     ///  to and of the set of incompatible nodes (nodes that may not be along with
     ///  this node in the same solution)
-    ///
+    /// </summary>
     // @author      Stephane Werner from IXELIS mail@ixelis.net
     // @cdk.created 2002-07-17
     // @cdk.module  smsd
     // @cdk.githash
-    /// </summary>
     public class CDKRNode
     {
         // G1/G2 mapping

@@ -29,19 +29,17 @@ namespace NCDK.Hash
     /// <summary>
     /// Defines a method of suppressing certain atoms from an <see cref="IAtomContainer"/>
     /// when computing the hash codes for the molecule or its atoms.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
     internal abstract class AtomSuppression
     {
         /// <summary>
         /// Returns a new instance indicating which atoms are suppressed for this
         /// suppression method.
-        ///
+        /// </summary>
         /// <param name="container">molecule with 0 or more atoms</param>
         /// <returns>the vertices (atom index) which should be suppressed</returns>
-        /// </summary>
         public abstract Suppressed Suppress(IAtomContainer container);
 
         /// <summary>Default implementation - don't suppress anything.</summary>

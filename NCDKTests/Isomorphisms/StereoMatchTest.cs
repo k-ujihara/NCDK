@@ -43,7 +43,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            query.AddStereoElement(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
+            query.StereoElements.Add(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
                 query.Atoms[2], query.Atoms[3], query.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3, 4 }));
         }
@@ -108,9 +108,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = Dimethylpropane();
             IAtomContainer target = Dimethylpropane();
-            query.AddStereoElement(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
+            query.StereoElements.Add(new TetrahedralChirality(query.Atoms[0], new IAtom[]{query.Atoms[1],
                 query.Atoms[2], query.Atoms[3], query.Atoms[4]}, TetrahedralStereo.Clockwise));
-            target.AddStereoElement(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
+            target.StereoElements.Add(new TetrahedralChirality(target.Atoms[0], new IAtom[]{target.Atoms[1],
                 target.Atoms[2], target.Atoms[3], target.Atoms[4]}, TetrahedralStereo.Clockwise));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 3, 2, 4 }));
         }
@@ -120,9 +120,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            query.AddStereoElement(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
+            query.StereoElements.Add(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
                 query.Bonds[2]}, DoubleBondConformation.Together));
-            target.AddStereoElement(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
+            target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }
@@ -132,9 +132,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            query.AddStereoElement(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
+            query.StereoElements.Add(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
                 query.Bonds[2]}, DoubleBondConformation.Opposite));
-            target.AddStereoElement(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
+            target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }
@@ -144,9 +144,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            query.AddStereoElement(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
+            query.StereoElements.Add(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
                 query.Bonds[2]}, DoubleBondConformation.Together));
-            target.AddStereoElement(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
+            target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }
@@ -156,9 +156,9 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            query.AddStereoElement(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
+            query.StereoElements.Add(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
                 query.Bonds[2]}, DoubleBondConformation.Opposite));
-            target.AddStereoElement(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
+            target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }
@@ -168,7 +168,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            target.AddStereoElement(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
+            target.StereoElements.Add(new DoubleBondStereochemistry(target.Bonds[0], new IBond[]{target.Bonds[1],
                 target.Bonds[2]}, DoubleBondConformation.Together));
             Assert.IsTrue(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }
@@ -178,7 +178,7 @@ namespace NCDK.Isomorphisms
         {
             IAtomContainer query = But2ene();
             IAtomContainer target = But2ene();
-            query.AddStereoElement(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
+            query.StereoElements.Add(new DoubleBondStereochemistry(query.Bonds[0], new IBond[]{query.Bonds[1],
                 query.Bonds[2]}, DoubleBondConformation.Opposite));
             Assert.IsFalse(new StereoMatch(query, target).Apply(new int[] { 0, 1, 2, 3 }));
         }

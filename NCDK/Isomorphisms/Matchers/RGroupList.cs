@@ -23,25 +23,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using NCDK.Isomorphisms.Matchers;
-using NCDK.SGroups;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * Represents a list of Rgroup substitutes to be associated with some
-     * <see cref="RGroupQuery"/>.
-     *
-     * @cdk.module  isomorphism
-     * @cdk.githash
-     * @cdk.keyword Rgroup
-     * @cdk.keyword R group
-     * @cdk.keyword R-group
-     * @author Mark Rijnbeek
-     */
+    /// <summary>
+    /// Represents a list of Rgroup substitutes to be associated with some
+    /// <see cref="RGroupQuery"/>.
+    /// </summary>
+    // @cdk.module  isomorphism
+    // @cdk.githash
+    // @cdk.keyword Rgroup
+    // @cdk.keyword R group
+    // @cdk.keyword R-group
+    // @author Mark Rijnbeek
     public class RGroupList
     {
         /// <summary>
@@ -153,13 +150,13 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         /// Validates the occurrence value.
-        /// <ul>
-        /// <li>n : exactly n ;</li>
-        /// <li>n - m : n through m ;</li>
-        /// <li>&#62; n : greater than n ;</li>
-        /// <li>&#60; n : fewer than n ;</li>
-        /// <li>default (blank) is > 0 ;</li>
-        /// </ul>
+        /// <list type="bullet">
+        /// <item>n : exactly n ;</item>
+        /// <item>n - m : n through m ;</item>
+        /// <item>&#62; n : greater than n ;</item>
+        /// <item>&#60; n : fewer than n ;</item>
+        /// <item>default (blank) is > 0 ;</item>
+        /// </list> 
         /// Any non-contradictory combination of the preceding values is also
         /// allowed; for example "1, 3-7, 9, &gt;11".
         /// </summary>
@@ -212,32 +209,36 @@ namespace NCDK.Isomorphisms.Matchers
             return true;
         }
 
-        /**
-         * Helper method for regular expression matching.
-         * @param regExp regular expression string
-         * @param userInput user's input
-         * @return the regular expression matched the user input
-         */
+        /// <summary>
+        /// Helper method for regular expression matching.
+        /// </summary>
+        /// <param name="regExp">regular expression string</param>
+        /// <param name="userInput">user's input</param>
+        /// <returns>the regular expression matched the user input</returns>
         private static bool Match(string regExp, string userInput)
         {
             return Regex.IsMatch(userInput, regExp);
         }
 
-        /**
-         * Matches the 'occurrence' condition with a provided maximum number of
-         * RGroup attachments. Returns the valid occurrences (numeric) for these
-         * two combined. If none found, returns empty list.<P>
-         * Example: if R1 occurs 3 times attached to some root structure, then
-         * stating ">5" as an occurrence for that RGoupList does not make
-         * sense: the example R1 can occur 0..3 times. Empty would be returned.<BR>
-         * If the occurence would be >2, then 3 would be returned. Etcetera.
-         *
-         * @param maxAttachments number of attachments
-         * @return valid values by combining a max for R# with the occurrence cond.
-         */
+        /// <summary>
+        /// Matches the 'occurrence' condition with a provided maximum number of
+        /// RGroup attachments. Returns the valid occurrences (numeric) for these
+        /// two combined. If none found, returns empty list.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Example: if R1 occurs 3 times attached to some root structure, then
+        /// stating ">5" as an occurrence for that RGoupList does not make
+        /// sense: the example R1 can occur 0..3 times. Empty would be returned.
+        /// </para>
+        /// <para>
+        /// If the occurence would be >2, then 3 would be returned. Etcetera.
+        /// </para>
+        /// </remarks>
+        /// <param name="maxAttachments">number of attachments</param>
+        /// <returns>valid values by combining a max for R# with the occurrence cond.</returns>
         public IList<int> MatchOccurence(int maxAttachments)
         {
-
             List<int> validValues = new List<int>();
 
             for (int val = 0; val <= maxAttachments; val++)
@@ -293,7 +294,6 @@ namespace NCDK.Isomorphisms.Matchers
             return validValues;
         }
 
-
         public override bool Equals(object obj)
         {
             if (obj is RGroupList && this.rGroupNumber == ((RGroupList)obj).rGroupNumber)
@@ -301,7 +301,6 @@ namespace NCDK.Isomorphisms.Matchers
             else
                 return false;
         }
-
 
         public override int GetHashCode()
         {

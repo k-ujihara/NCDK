@@ -41,7 +41,7 @@ namespace NCDK
             atoms[2] = ac.Builder.CreateAtom("C");
             atoms[3] = ac.Builder.CreateAtom("O");
             foreach (var atom in atoms)
-                ac.Add(atom);
+                ac.Atoms.Add(atom);
             return atoms;
         }
 
@@ -96,7 +96,7 @@ namespace NCDK
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             for (int i = 0; i < 4; i++)
-                molecule.Add(molecule.Builder.CreateAtom("C"));
+                molecule.Atoms.Add(molecule.Builder.CreateAtom("C"));
 
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
             Assert.AreEqual(molecule.Atoms.Count, clonedMol.Atoms.Count);
@@ -116,7 +116,7 @@ namespace NCDK
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IAtom atom = molecule.Builder.CreateAtom();
-            molecule.Add(atom);
+            molecule.Atoms.Add(atom);
             Assert.AreEqual(atom, molecule.Atoms[0]);
             object clone = molecule.Clone();
             Assert.AreNotSame(molecule, clone);
@@ -128,11 +128,11 @@ namespace NCDK
         public virtual void TestCloneButKeepOriginalsIntact_IBond()
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
-            molecule.Add(molecule.Builder.CreateAtom());
-            molecule.Add(molecule.Builder.CreateAtom());
+            molecule.Atoms.Add(molecule.Builder.CreateAtom());
+            molecule.Atoms.Add(molecule.Builder.CreateAtom());
             IBond bond = molecule.Builder.CreateBond(molecule.Atoms[0], molecule.Atoms[1],
                     BondOrder.Single);
-            molecule.Add(bond);
+            molecule.Bonds.Add(bond);
             Assert.AreEqual(bond, molecule.Bonds[0]);
             object clone = molecule.Clone();
             Assert.AreNotSame(molecule, clone);
@@ -144,9 +144,9 @@ namespace NCDK
         public virtual void TestCloneButKeepOriginalsIntact_ILonePair()
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
-            molecule.Add(molecule.Builder.CreateAtom());
+            molecule.Atoms.Add(molecule.Builder.CreateAtom());
             ILonePair lonePair = molecule.Builder.CreateLonePair(molecule.Atoms[0]);
-            molecule.Add(lonePair);
+            molecule.LonePairs.Add(lonePair);
             Assert.AreEqual(lonePair, molecule.LonePairs[0]);
             object clone = molecule.Clone();
             Assert.AreNotSame(molecule, clone);
@@ -158,9 +158,9 @@ namespace NCDK
         public virtual void TestCloneButKeepOriginalsIntact_ISingleElectron()
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
-            molecule.Add(molecule.Builder.CreateAtom());
+            molecule.Atoms.Add(molecule.Builder.CreateAtom());
             ISingleElectron singleElectron = molecule.Builder.CreateSingleElectron(molecule.Atoms[0]);
-            molecule.Add(singleElectron);
+            molecule.SingleElectrons.Add(singleElectron);
             Assert.AreEqual(singleElectron, molecule.SingleElectrons[0]);
             object clone = molecule.Clone();
             Assert.AreNotSame(molecule, clone);
@@ -174,7 +174,7 @@ namespace NCDK
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IAtom carbon = molecule.Builder.CreateAtom("C");
             carbon.Point2D = new Vector2(2, 4);
-            molecule.Add(carbon); // 1
+            molecule.Atoms.Add(carbon); // 1
 
             // test cloning of Atoms
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
@@ -186,10 +186,10 @@ namespace NCDK
         public virtual void TestClone_IBond()
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
-            molecule.Add(molecule.Builder.CreateAtom("C")); // 1
-            molecule.Add(molecule.Builder.CreateAtom("C")); // 2
-            molecule.Add(molecule.Builder.CreateAtom("C")); // 3
-            molecule.Add(molecule.Builder.CreateAtom("C")); // 4
+            molecule.Atoms.Add(molecule.Builder.CreateAtom("C")); // 1
+            molecule.Atoms.Add(molecule.Builder.CreateAtom("C")); // 2
+            molecule.Atoms.Add(molecule.Builder.CreateAtom("C")); // 3
+            molecule.Atoms.Add(molecule.Builder.CreateAtom("C")); // 4
 
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double); // 1
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single); // 2
@@ -214,9 +214,9 @@ namespace NCDK
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IAtom atom1 = molecule.Builder.CreateAtom("C");
             IAtom atom2 = molecule.Builder.CreateAtom("C");
-            molecule.Add(atom1); // 1
-            molecule.Add(atom2); // 2
-            molecule.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
+            molecule.Atoms.Add(atom1); // 1
+            molecule.Atoms.Add(atom2); // 2
+            molecule.Bonds.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
 
             // test cloning of atoms in bonds
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
@@ -231,9 +231,9 @@ namespace NCDK
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IAtom atom1 = molecule.Builder.CreateAtom("C");
             IAtom atom2 = molecule.Builder.CreateAtom("C");
-            molecule.Add(atom1); // 1
-            molecule.Add(atom2); // 2
-            molecule.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
+            molecule.Atoms.Add(atom1); // 1
+            molecule.Atoms.Add(atom2); // 2
+            molecule.Bonds.Add(molecule.Builder.CreateBond(atom1, atom2, BondOrder.Double)); // 1
 
             // test that cloned bonds contain atoms from cloned atomcontainer
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
@@ -247,7 +247,7 @@ namespace NCDK
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IBond bond = molecule.Builder.CreateBond();
-            molecule.Add(bond);
+            molecule.Bonds.Add(bond);
             Assert.AreEqual(bond, molecule.Bonds[0]);
             IAtomContainer clone = (IAtomContainer)molecule.Clone();
             Assert.AreEqual(0, clone.Bonds[0].Atoms.Where(atom => atom != null).Count());
@@ -258,7 +258,7 @@ namespace NCDK
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             ILonePair lonePair = molecule.Builder.CreateLonePair();
-            molecule.Add(lonePair);
+            molecule.LonePairs.Add(lonePair);
             Assert.AreEqual(lonePair, molecule.LonePairs[0]);
             IAtomContainer clone = (IAtomContainer)molecule.Clone();
             Assert.IsNotNull(clone.LonePairs[0]);
@@ -269,7 +269,7 @@ namespace NCDK
         {
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             ISingleElectron singleElectron = molecule.Builder.CreateSingleElectron();
-            molecule.Add(singleElectron);
+            molecule.SingleElectrons.Add(singleElectron);
             Assert.AreEqual(singleElectron, molecule.SingleElectrons[0]);
             IAtomContainer clone = (IAtomContainer)molecule.Clone();
             Assert.IsNotNull(clone.SingleElectrons[0]);
@@ -281,9 +281,9 @@ namespace NCDK
             IAtomContainer molecule = (IAtomContainer)NewChemObject();
             IAtom atom1 = molecule.Builder.CreateAtom("C");
             IAtom atom2 = molecule.Builder.CreateAtom("C");
-            molecule.Add(atom1); // 1
-            molecule.Add(atom2); // 2
-            molecule.AddLonePair(atom1);
+            molecule.Atoms.Add(atom1); // 1
+            molecule.Atoms.Add(atom2); // 2
+            molecule.AddLonePairTo(atom1);
 
             // test that cloned bonds contain atoms from cloned atomcontainer
             IAtomContainer clonedMol = (IAtomContainer)molecule.Clone();
@@ -301,16 +301,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(1, acetone.GetConnectedElectronContainers(o).Count());
             Assert.AreEqual(3, acetone.GetConnectedElectronContainers(c1).Count());
@@ -320,8 +320,8 @@ namespace NCDK
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(3, acetone.GetConnectedElectronContainers(o).Count());
             Assert.AreEqual(3, acetone.GetConnectedElectronContainers(c1).Count());
@@ -339,16 +339,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
             Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
@@ -358,8 +358,8 @@ namespace NCDK
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
             Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
@@ -388,11 +388,11 @@ namespace NCDK
             IAtom c4 = builder.CreateAtom("C");
             IAtom h5 = builder.CreateAtom("H");
 
-            container.Add(c1);
-            container.Add(o2);
-            container.Add(n3);
-            container.Add(c4);
-            container.Add(h5);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(o2);
+            container.Atoms.Add(n3);
+            container.Atoms.Add(c4);
+            container.Atoms.Add(h5);
 
             IBond c1o2 = builder.CreateBond(c1, o2);
             IBond c1n3 = builder.CreateBond(c1, n3);
@@ -401,15 +401,15 @@ namespace NCDK
 
             c1o2.Stereo = BondStereo.Up;
 
-            container.Add(c1o2);
-            container.Add(c1n3);
-            container.Add(c1c4);
-            container.Add(c1h5);
+            container.Bonds.Add(c1o2);
+            container.Bonds.Add(c1n3);
+            container.Bonds.Add(c1c4);
+            container.Bonds.Add(c1h5);
 
             ITetrahedralChirality chirality = builder.CreateTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
                 h5}, TetrahedralStereo.Clockwise);
 
-            container.AddStereoElement(chirality);
+            container.StereoElements.Add(chirality);
 
             // clone the container
             IAtomContainer clone = (IAtomContainer)container.Clone();
@@ -457,25 +457,25 @@ namespace NCDK
             IAtom c3 = builder.CreateAtom("C");
             IAtom c4 = builder.CreateAtom("C");
 
-            container.Add(c1);
-            container.Add(c2);
-            container.Add(c3);
-            container.Add(c4);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(c2);
+            container.Atoms.Add(c3);
+            container.Atoms.Add(c4);
 
             IBond c1c2 = builder.CreateBond(c1, c2, BondOrder.Double);
             IBond c2c3 = builder.CreateBond(c2, c3);
             IBond c1c4 = builder.CreateBond(c1, c4);
 
-            container.Add(c1c2);
-            container.Add(c2c3);
-            container.Add(c1c4);
+            container.Bonds.Add(c1c2);
+            container.Bonds.Add(c2c3);
+            container.Bonds.Add(c1c4);
 
             IDoubleBondStereochemistry dbStereo = new DoubleBondStereochemistry(
                 c1c2, 
                 new IBond[] { c2c3, c1c4 },
                 DoubleBondConformation.Opposite);
 
-            container.AddStereoElement(dbStereo);
+            container.StereoElements.Add(dbStereo);
 
             // clone the container
             IAtomContainer clone = (IAtomContainer)container.Clone();
@@ -523,11 +523,11 @@ namespace NCDK
             IAtom c4 = builder.CreateAtom("C");
             IAtom h5 = builder.CreateAtom("H");
 
-            container.Add(c1);
-            container.Add(o2);
-            container.Add(n3);
-            container.Add(c4);
-            container.Add(h5);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(o2);
+            container.Atoms.Add(n3);
+            container.Atoms.Add(c4);
+            container.Atoms.Add(h5);
 
             IBond c1o2 = builder.CreateBond(c1, o2);
             IBond c1n3 = builder.CreateBond(c1, n3);
@@ -536,15 +536,15 @@ namespace NCDK
 
             c1o2.Stereo = BondStereo.Up;
 
-            container.Add(c1o2);
-            container.Add(c1n3);
-            container.Add(c1c4);
-            container.Add(c1h5);
+            container.Bonds.Add(c1o2);
+            container.Bonds.Add(c1n3);
+            container.Bonds.Add(c1c4);
+            container.Bonds.Add(c1h5);
 
             ITetrahedralChirality chirality = builder.CreateTetrahedralChirality(c1, new IAtom[]{o2, n3, c4,
                 h5}, TetrahedralStereo.Clockwise);
 
-            container.AddStereoElement(chirality);
+            container.StereoElements.Add(chirality);
 
             // clone the container
             IAtomContainer clone = (IAtomContainer)container.Clone();
@@ -645,16 +645,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(0, acetone.GetConnectedLonePairs(o).Count());
             Assert.AreEqual(0, acetone.GetConnectedLonePairs(c1).Count());
@@ -664,8 +664,8 @@ namespace NCDK
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
             Assert.AreEqual(0, acetone.GetConnectedLonePairs(c1).Count());
@@ -683,22 +683,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             // Remove the oxygen
             acetone.RemoveAtomAndConnectedElectronContainers(o);
@@ -718,18 +718,18 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
-            acetone.AddStereoElement(new TetrahedralChirality(c1, new IAtom[] { c2, o, c3, c1 },
+            acetone.StereoElements.Add(new TetrahedralChirality(c1, new IAtom[] { c2, o, c3, c1 },
                     TetrahedralStereo.Clockwise));
 
             // Remove the oxygen
@@ -751,10 +751,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             Assert.AreEqual(4, acetone.Atoms.Count);
         }
@@ -770,16 +770,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
         }
@@ -792,16 +792,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
             container.Add(acetone);
@@ -814,8 +814,8 @@ namespace NCDK
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c1);
-            mol.AddLonePair(mol.Atoms[0]);
+            mol.Atoms.Add(c1);
+            mol.AddLonePairTo(mol.Atoms[0]);
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
             container.Add(mol);
@@ -828,8 +828,8 @@ namespace NCDK
         {
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[0]);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[0]);
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
             container.Add(mol);
@@ -845,16 +845,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
             container.Add(acetone);
@@ -876,16 +876,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
             container.Add(acetone);
@@ -905,7 +905,7 @@ namespace NCDK
         {
 
             IAtomContainer container = (IAtomContainer)NewChemObject();
-            container.AddStereoElement(new TetrahedralChirality(container.Builder.CreateAtom(),
+            container.StereoElements.Add(new TetrahedralChirality(container.Builder.CreateAtom(),
                         new IAtom[4], TetrahedralStereo.Clockwise));
 
             int count = 0;
@@ -935,13 +935,13 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             Assert.AreEqual(4, acetone.Atoms.Count);
-            acetone.Remove(acetone.Atoms[1]);
+            acetone.Atoms.Remove(acetone.Atoms[1]);
             Assert.AreEqual(3, acetone.Atoms.Count);
             Assert.AreEqual(c1, acetone.Atoms[0]);
             Assert.AreEqual(c3, acetone.Atoms[1]);
@@ -956,13 +956,13 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             Assert.AreEqual(4, acetone.Atoms.Count);
-            acetone.Remove(c3);
+            acetone.Atoms.Remove(c3);
             Assert.AreEqual(3, acetone.Atoms.Count);
             Assert.AreEqual(c1, acetone.Atoms[0]);
             Assert.AreEqual(c2, acetone.Atoms[1]);
@@ -975,7 +975,7 @@ namespace NCDK
             IAtomContainer container = (IAtomContainer)NewChemObject();
             IAtom n = container.Builder.CreateAtom("N");
             IAtom c = container.Builder.CreateAtom("C");
-            container.Add(n);   // I believe this line is requied but not exist in CDK version. 
+            container.Atoms.Add(n);   // I believe this line is requied but not exist in CDK version. 
             container.Atoms[0] = c;
 
             Assert.IsNotNull(container.Atoms[0]);
@@ -991,10 +991,10 @@ namespace NCDK
             IAtom n = acetone.Builder.CreateAtom("N");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom s = acetone.Builder.CreateAtom("S");
-            acetone.Add(c);
-            acetone.Add(n);
-            acetone.Add(o);
-            acetone.Add(s);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(n);
+            acetone.Atoms.Add(o);
+            acetone.Atoms.Add(s);
 
             IAtom a1 = acetone.Atoms[0];
             Assert.IsNotNull(a1);
@@ -1021,16 +1021,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Triple);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(BondOrder.Triple, acetone.Bonds[0].Order);
             Assert.AreEqual(BondOrder.Double, acetone.Bonds[1].Order);
@@ -1060,20 +1060,20 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(2, acetone.LonePairs.Count);
@@ -1089,16 +1089,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
 
@@ -1115,16 +1115,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
 
@@ -1170,10 +1170,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IEnumerator<IAtom> atomIter = acetone.Atoms.GetEnumerator();
             int counter = 0;
@@ -1186,8 +1186,8 @@ namespace NCDK
             // test force growing of default arrays
             for (int i = 0; i < 11; i++)
             {
-                acetone.Add(acetone.Builder.CreateAtom());
-                acetone.Add(acetone.Builder.CreateBond());
+                acetone.Atoms.Add(acetone.Builder.CreateAtom());
+                acetone.Bonds.Add(acetone.Builder.CreateBond());
             }
         }
 
@@ -1200,10 +1200,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IEnumerator<IAtom> atomIter = acetone.Atoms.GetEnumerator();
             Assert.IsNotNull(atomIter);
@@ -1236,17 +1236,17 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
             IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
-            acetone.Add(bond1);
-            acetone.Add(bond2);
-            acetone.Add(bond3);
+            acetone.Bonds.Add(bond1);
+            acetone.Bonds.Add(bond2);
+            acetone.Bonds.Add(bond3);
 
             IEnumerator<IBond> bonds = acetone.Bonds.GetEnumerator();
             Assert.IsNotNull(bonds);
@@ -1276,21 +1276,21 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
             IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
-            acetone.Add(bond1);
-            acetone.Add(bond2);
-            acetone.Add(bond3);
+            acetone.Bonds.Add(bond1);
+            acetone.Bonds.Add(bond2);
+            acetone.Bonds.Add(bond3);
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             IEnumerator<ILonePair> lonePairs = acetone.LonePairs.GetEnumerator();
             Assert.IsNotNull(lonePairs);
@@ -1316,21 +1316,21 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
             IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
-            acetone.Add(bond1);
-            acetone.Add(bond2);
-            acetone.Add(bond3);
+            acetone.Bonds.Add(bond1);
+            acetone.Bonds.Add(bond2);
+            acetone.Bonds.Add(bond3);
             ISingleElectron se1 = acetone.Builder.CreateSingleElectron(o);
             ISingleElectron se2 = acetone.Builder.CreateSingleElectron(c1);
-            acetone.Add(se1);
-            acetone.Add(se2);
+            acetone.SingleElectrons.Add(se1);
+            acetone.SingleElectrons.Add(se2);
 
             var singleElectrons = acetone.SingleElectrons;
             Assert.IsNotNull(singleElectrons);
@@ -1356,25 +1356,25 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             IBond bond1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond bond2 = acetone.Builder.CreateBond(c2, o, BondOrder.Double);
             IBond bond3 = acetone.Builder.CreateBond(c2, c3, BondOrder.Single);
-            acetone.Add(bond1);
-            acetone.Add(bond2);
-            acetone.Add(bond3);
+            acetone.Bonds.Add(bond1);
+            acetone.Bonds.Add(bond2);
+            acetone.Bonds.Add(bond3);
             ISingleElectron se1 = acetone.Builder.CreateSingleElectron(c1);
             ISingleElectron se2 = acetone.Builder.CreateSingleElectron(c2);
-            acetone.Add(se1);
-            acetone.Add(se2);
+            acetone.SingleElectrons.Add(se1);
+            acetone.SingleElectrons.Add(se2);
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             var electronContainers = acetone.GetElectronContainers()?.ToList();
             Assert.IsNotNull(electronContainers);
@@ -1404,10 +1404,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             Assert.IsTrue(acetone.Contains(c1));
             Assert.IsTrue(acetone.Contains(c2));
@@ -1424,18 +1424,18 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
-            acetone.AddLonePair(acetone.Atoms[2]);
-            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(5, acetone.GetElectronContainers().Count());
@@ -1450,18 +1450,18 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
-            acetone.AddLonePair(acetone.Atoms[2]);
-            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(BondOrder.Double, acetone.GetMaximumBondOrder(o));
             Assert.AreEqual(BondOrder.Double, acetone.GetMaximumBondOrder(c1));
@@ -1478,18 +1478,18 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
-            acetone.AddLonePair(acetone.Atoms[2]);
-            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(BondOrder.Double, acetone.GetMinimumBondOrder(o));
             Assert.AreEqual(BondOrder.Single, acetone.GetMinimumBondOrder(c1));
@@ -1506,26 +1506,26 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
-            acetone.AddLonePair(acetone.Atoms[2]);
-            acetone.AddLonePair(acetone.Atoms[2]);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
+            acetone.AddLonePairTo(acetone.Atoms[2]);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(5, acetone.GetElectronContainers().Count());
-            acetone.Remove(acetone.GetElectronContainers().Skip(3).First());
+            acetone.RemoveElectronContainer(acetone.GetElectronContainers().Skip(3).First());
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(4, acetone.GetElectronContainers().Count());
-            acetone.Remove(acetone.GetElectronContainers().First()); // first bond now
+            acetone.RemoveElectronContainer(acetone.GetElectronContainers().First()); // first bond now
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
         }
@@ -1539,26 +1539,26 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             ILonePair firstLP = acetone.Builder.CreateLonePair(o);
-            acetone.Add(firstLP);
-            acetone.Add(acetone.Builder.CreateLonePair(o));
+            acetone.LonePairs.Add(firstLP);
+            acetone.LonePairs.Add(acetone.Builder.CreateLonePair(o));
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(5, acetone.GetElectronContainers().Count());
-            acetone.Remove(firstLP);
+            acetone.LonePairs.Remove(firstLP);
             Assert.AreEqual(3, acetone.Bonds.Count);
             Assert.AreEqual(4, acetone.GetElectronContainers().Count());
-            acetone.Remove(b1); // first bond now
+            acetone.Bonds.Remove(b1); // first bond now
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
         }
@@ -1572,16 +1572,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
             IEnumerable<IBond> bonds = acetone.Bonds;
@@ -1658,12 +1658,12 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
-            acetone.Add(acetone.Builder.CreateLonePair(o));
-            acetone.Add(acetone.Builder.CreateSingleElectron(c));
+            acetone.Bonds.Add(b1);
+            acetone.LonePairs.Add(acetone.Builder.CreateLonePair(o));
+            acetone.SingleElectrons.Add(acetone.Builder.CreateSingleElectron(c));
 
             Assert.AreEqual(3, acetone.GetElectronContainers().Count());
             Assert.AreEqual(1, acetone.Bonds.Count);
@@ -1677,13 +1677,13 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
-            acetone.Add(acetone.Builder.CreateLonePair(o));
+            acetone.Bonds.Add(b1);
+            acetone.LonePairs.Add(acetone.Builder.CreateLonePair(o));
             ISingleElectron single = acetone.Builder.CreateSingleElectron(c);
-            acetone.Add(single);
+            acetone.SingleElectrons.Add(single);
 
             Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(c).Count());
             Assert.AreEqual(single, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).First());
@@ -1698,19 +1698,19 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.Bonds.Count);
-            acetone.Remove(acetone.GetBond(c1, o));
+            acetone.Bonds.Remove(acetone.GetBond(c1, o));
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(b1, acetone.Bonds[0]);
             Assert.AreEqual(b3, acetone.Bonds[1]);
@@ -1725,10 +1725,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             acetone.AddBond(acetone.Atoms[0], acetone.Atoms[1], BondOrder.Single);
             acetone.AddBond(acetone.Atoms[1], acetone.Atoms[3], BondOrder.Double);
             acetone.AddBond(acetone.Atoms[1], acetone.Atoms[2], BondOrder.Single);
@@ -1757,10 +1757,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             acetone.AddBond(acetone.Atoms[0], acetone.Atoms[1], BondOrder.Single, BondStereo.Up); // yes this is crap
             acetone.AddBond(acetone.Atoms[1], acetone.Atoms[3], BondOrder.Double, BondStereo.Down);
             acetone.AddBond(acetone.Atoms[1], acetone.Atoms[2], BondOrder.Single, BondStereo.None);
@@ -1792,20 +1792,20 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.IsTrue(acetone.Contains(b1));
             Assert.IsTrue(acetone.Contains(b2));
@@ -1821,9 +1821,9 @@ namespace NCDK
             IAtom c1 = container.Builder.CreateAtom("C");
             IAtom c2 = container.Builder.CreateAtom("O");
             IAtom o = container.Builder.CreateAtom("H");
-            container.Add(c1);
-            container.Add(c2);
-            container.Add(o);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(c2);
+            container.Atoms.Add(o);
 
             Assert.IsNotNull(container.Atoms.First());
             Assert.AreEqual("C", container.Atoms.First().Symbol);
@@ -1836,9 +1836,9 @@ namespace NCDK
             IAtom c1 = container.Builder.CreateAtom("C");
             IAtom c2 = container.Builder.CreateAtom("O");
             IAtom o = container.Builder.CreateAtom("H");
-            container.Add(c1);
-            container.Add(c2);
-            container.Add(o);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(c2);
+            container.Atoms.Add(o);
 
             Assert.IsNotNull(container.Atoms.Last());
             Assert.AreEqual("H", container.Atoms.Last().Symbol);
@@ -1852,10 +1852,10 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
 
             Assert.AreEqual(0, acetone.Atoms.IndexOf(c1));
             Assert.AreEqual(1, acetone.Atoms.IndexOf(c2));
@@ -1872,16 +1872,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(0, acetone.Bonds.IndexOf(b1));
             Assert.AreEqual(1, acetone.Bonds.IndexOf(b2));
@@ -1899,16 +1899,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(0, acetone.Bonds.IndexOf(acetone.GetBond(c1, c2)));
             Assert.AreEqual(1, acetone.Bonds.IndexOf(acetone.GetBond(c1, o)));
@@ -1923,16 +1923,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(acetone.GetBond(c1, c2), b1);
             Assert.AreEqual(acetone.GetBond(c1, o), b2);
@@ -1974,16 +1974,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.GetConnectedAtoms(c1).Count());
             Assert.AreEqual(1, acetone.GetConnectedAtoms(c2).Count());
@@ -1999,16 +1999,16 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             Assert.AreEqual(3, acetone.GetConnectedAtoms(c1).Count());
             Assert.AreEqual(1, acetone.GetConnectedAtoms(c2).Count());
@@ -2024,22 +2024,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(2, acetone.LonePairs.Count);
         }
@@ -2052,22 +2052,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
             Assert.AreEqual(0, acetone.GetConnectedLonePairs(c2).Count());
@@ -2083,22 +2083,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(4.0, acetone.GetBondOrderSum(c1), 0.00001);
             Assert.AreEqual(1.0, acetone.GetBondOrderSum(c2), 0.00001);
@@ -2114,22 +2114,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(3, acetone.GetConnectedBonds(c1).Count());
             Assert.AreEqual(1, acetone.GetConnectedBonds(c2).Count());
@@ -2145,22 +2145,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // Add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(3, acetone.GetConnectedBonds(acetone.Atoms[0]).Count());
             Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[1]).Count());
@@ -2184,7 +2184,7 @@ namespace NCDK
             carbon4.Id = "c4";
             IStereoElement stereoElement = container.Builder.CreateTetrahedralChirality(carbon,
                             new IAtom[] { carbon1, carbon2, carbon3, carbon4 }, TetrahedralStereo.Clockwise);
-            container.AddStereoElement(stereoElement);
+            container.StereoElements.Add(stereoElement);
 
             IEnumerator<IStereoElement> stereoElements = container.StereoElements.GetEnumerator();
             Assert.IsTrue(stereoElements.MoveNext());
@@ -2215,12 +2215,12 @@ namespace NCDK
             IAtomContainer chemObject = (IAtomContainer)NewChemObject();
             chemObject.Listeners.Add(listener);
 
-            chemObject.Add(chemObject.Builder.CreateAtom());
+            chemObject.Atoms.Add(chemObject.Builder.CreateAtom());
             Assert.IsTrue(listener.Changed);
 
             listener.Reset();
             Assert.IsFalse(listener.Changed);
-            chemObject.Add(chemObject.Builder.CreateBond(
+            chemObject.Bonds.Add(chemObject.Builder.CreateBond(
                     chemObject.Builder.CreateAtom(), chemObject.Builder.CreateAtom()));
             Assert.IsTrue(listener.Changed);
         }
@@ -2258,16 +2258,16 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
+            acetone.Bonds.Add(b1);
             ISingleElectron single1 = acetone.Builder.CreateSingleElectron(c);
             ISingleElectron single2 = acetone.Builder.CreateSingleElectron(c);
             ISingleElectron single3 = acetone.Builder.CreateSingleElectron(o);
-            acetone.Add(single1);
-            acetone.Add(single2);
-            acetone.Add(single3);
+            acetone.SingleElectrons.Add(single1);
+            acetone.SingleElectrons.Add(single2);
+            acetone.SingleElectrons.Add(single3);
 
             Assert.AreEqual(2, acetone.GetConnectedSingleElectrons(c).Count());
             Assert.AreEqual(1, acetone.GetConnectedSingleElectrons(o).Count());
@@ -2285,14 +2285,14 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
+            acetone.Bonds.Add(b1);
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
             Assert.AreEqual(2, acetone.GetConnectedLonePairs(o).Count());
             Assert.AreEqual(0, acetone.GetConnectedLonePairs(c).Count());
         }
@@ -2303,16 +2303,16 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
+            acetone.Bonds.Add(b1);
             ISingleElectron single1 = acetone.Builder.CreateSingleElectron(c);
             ISingleElectron single2 = acetone.Builder.CreateSingleElectron(c);
             ISingleElectron single3 = acetone.Builder.CreateSingleElectron(o);
-            acetone.Add(single1);
-            acetone.Add(single2);
-            acetone.Add(single3);
+            acetone.SingleElectrons.Add(single1);
+            acetone.SingleElectrons.Add(single2);
+            acetone.SingleElectrons.Add(single3);
             Assert.AreEqual(single1, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(0));
             Assert.AreEqual(single2, (ISingleElectron)acetone.GetConnectedSingleElectrons(c).ElementAt(1));
             Assert.AreEqual(single3, (ISingleElectron)acetone.GetConnectedSingleElectrons(o).ElementAt(0));
@@ -2326,21 +2326,21 @@ namespace NCDK
             IAtom c1 = acetone.Builder.CreateAtom("C");
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b);
-            acetone.Add(c1);
+            acetone.Bonds.Add(b);
+            acetone.Atoms.Add(c1);
             IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(c2);
+            acetone.Bonds.Add(b1);
+            acetone.Atoms.Add(c2);
             IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
-            acetone.Add(b2);
-            acetone.Remove(acetone.Bonds[2]);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Remove(acetone.Bonds[2]);
             Assert.AreEqual(2, acetone.Bonds.Count);
             Assert.AreEqual(b, acetone.Bonds[0]);
             Assert.AreEqual(b1, acetone.Bonds[1]);
-            acetone.Remove(acetone.Bonds[0]);
+            acetone.Bonds.Remove(acetone.Bonds[0]);
             Assert.AreEqual(1, acetone.Bonds.Count);
             Assert.AreEqual(b1, acetone.Bonds[0]);
         }
@@ -2351,10 +2351,10 @@ namespace NCDK
             IAtomContainer acetone = (IAtomContainer)NewChemObject();
             IAtom c = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b1);
+            acetone.Bonds.Add(b1);
             IBond falseBond = acetone.Builder.CreateBond();
             Assert.IsTrue(acetone.Contains(b1));
             Assert.IsFalse(acetone.Contains(falseBond));
@@ -2366,10 +2366,10 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             Assert.AreEqual(2, mol.SingleElectrons.Count);
             Assert.IsNotNull(mol.SingleElectrons[1]);
             var singles = mol.SingleElectrons.ToList();
@@ -2389,10 +2389,10 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             var list = mol.GetConnectedSingleElectrons(c1);
             Assert.AreEqual(2, list.Count());
         }
@@ -2403,12 +2403,12 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
             Assert.AreEqual(1, mol.Bonds.Count);
             IBond bond = mol.Bonds[0];
-            mol.Remove(bond);
+            mol.Bonds.Remove(bond);
             Assert.AreEqual(0, mol.Bonds.Count);
         }
 
@@ -2420,16 +2420,16 @@ namespace NCDK
             IAtom c1 = acetone.Builder.CreateAtom("C");
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b);
-            acetone.Add(c1);
+            acetone.Bonds.Add(b);
+            acetone.Atoms.Add(c1);
             IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(c2);
+            acetone.Bonds.Add(b1);
+            acetone.Atoms.Add(c2);
             IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
-            acetone.Add(b2);
+            acetone.Bonds.Add(b2);
             Assert.AreEqual(1, acetone.GetConnectedBonds(o).Count());
             Assert.AreEqual(3, acetone.GetConnectedBonds(c).Count());
             Assert.AreEqual(1, acetone.GetConnectedBonds(c1).Count());
@@ -2444,16 +2444,16 @@ namespace NCDK
             IAtom c1 = acetone.Builder.CreateAtom("C");
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b);
-            acetone.Add(c1);
+            acetone.Bonds.Add(b);
+            acetone.Atoms.Add(c1);
             IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(c2);
+            acetone.Bonds.Add(b1);
+            acetone.Atoms.Add(c2);
             IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
-            acetone.Add(b2);
+            acetone.Bonds.Add(b2);
             Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[1]).Count());
             Assert.AreEqual(3, acetone.GetConnectedBonds(acetone.Atoms[0]).Count());
             Assert.AreEqual(1, acetone.GetConnectedBonds(acetone.Atoms[2]).Count());
@@ -2494,11 +2494,11 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddLonePair(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddLonePairTo(mol.Atoms[1]);
             ILonePair lp = mol.Builder.CreateLonePair(c);
-            mol.Add(lp);
+            mol.LonePairs.Add(lp);
             Assert.AreEqual(lp, mol.LonePairs[1]);
         }
 
@@ -2508,11 +2508,11 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             ISingleElectron se = mol.Builder.CreateSingleElectron(c);
-            mol.Add(se);
+            mol.SingleElectrons.Add(se);
             Assert.AreEqual(se, mol.SingleElectrons[1]);
         }
 
@@ -2522,11 +2522,11 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddLonePair(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddLonePairTo(mol.Atoms[1]);
             ILonePair lp = mol.Builder.CreateLonePair(c);
-            mol.Add(lp);
+            mol.LonePairs.Add(lp);
             Assert.AreEqual(1, mol.LonePairs.IndexOf(lp));
         }
 
@@ -2536,11 +2536,11 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             ISingleElectron se = mol.Builder.CreateSingleElectron(c);
-            mol.Add(se);
+            mol.SingleElectrons.Add(se);
             Assert.AreEqual(1, mol.SingleElectrons.IndexOf(se));
         }
 
@@ -2552,18 +2552,18 @@ namespace NCDK
             IAtom c1 = acetone.Builder.CreateAtom("C");
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
-            acetone.Add(c);
-            acetone.Add(o);
+            acetone.Atoms.Add(c);
+            acetone.Atoms.Add(o);
             IBond b = acetone.Builder.CreateBond(c, o, BondOrder.Double);
-            acetone.Add(b);
-            acetone.Add(c1);
+            acetone.Bonds.Add(b);
+            acetone.Atoms.Add(c1);
             IBond b1 = acetone.Builder.CreateBond(c, c1, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(c2);
+            acetone.Bonds.Add(b1);
+            acetone.Atoms.Add(c2);
             IBond b2 = acetone.Builder.CreateBond(c, c2, BondOrder.Single);
-            acetone.Add(b2);
-            acetone.AddLonePair(acetone.Atoms[1]);
-            acetone.AddLonePair(acetone.Atoms[1]);
+            acetone.Bonds.Add(b2);
+            acetone.AddLonePairTo(acetone.Atoms[1]);
+            acetone.AddLonePairTo(acetone.Atoms[1]);
             Assert.IsTrue(acetone.GetElectronContainers().ElementAt(2) is IBond);
             Assert.IsTrue(acetone.GetElectronContainers().ElementAt(4) is ILonePair);
         }
@@ -2574,10 +2574,10 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             Assert.AreEqual(2, mol.SingleElectrons.Count);
         }
 
@@ -2587,12 +2587,12 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddLonePair(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddLonePairTo(mol.Atoms[1]);
             ILonePair lp = mol.Builder.CreateLonePair(c);
-            mol.Add(lp);
-            mol.Remove(mol.LonePairs[0]);
+            mol.LonePairs.Add(lp);
+            mol.LonePairs.Remove(mol.LonePairs[0]);
             Assert.AreEqual(1, mol.LonePairs.Count);
             Assert.AreEqual(lp, mol.LonePairs[0]);
         }
@@ -2603,13 +2603,13 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
             ILonePair lp = mol.Builder.CreateLonePair(c1);
-            mol.Add(lp);
+            mol.LonePairs.Add(lp);
             ILonePair lp1 = mol.Builder.CreateLonePair(c);
-            mol.Add(lp1);
-            mol.Remove(lp);
+            mol.LonePairs.Add(lp1);
+            mol.LonePairs.Remove(lp);
             Assert.AreEqual(1, mol.LonePairs.Count);
             Assert.AreEqual(lp1, mol.LonePairs[0]);
         }
@@ -2620,12 +2620,12 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
-            mol.AddSingleElectron(mol.Atoms[1]);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
+            mol.AddSingleElectronTo(mol.Atoms[1]);
             ISingleElectron se = mol.Builder.CreateSingleElectron(c);
-            mol.Add(se);
-            mol.Remove(mol.SingleElectrons[0]);
+            mol.SingleElectrons.Add(se);
+            mol.SingleElectrons.Remove(mol.SingleElectrons[0]);
             Assert.AreEqual(1, mol.SingleElectrons.Count);
             Assert.AreEqual(se, mol.SingleElectrons[0]);
         }
@@ -2636,14 +2636,14 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
             ISingleElectron se1 = mol.Builder.CreateSingleElectron(c1);
-            mol.Add(se1);
+            mol.SingleElectrons.Add(se1);
             ISingleElectron se = mol.Builder.CreateSingleElectron(c);
-            mol.Add(se);
+            mol.SingleElectrons.Add(se);
             Assert.AreEqual(2, mol.SingleElectrons.Count);
-            mol.Remove(se);
+            mol.SingleElectrons.Remove(se);
             Assert.AreEqual(1, mol.SingleElectrons.Count);
             Assert.AreEqual(se1, mol.SingleElectrons[0]);
         }
@@ -2654,10 +2654,10 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
             ILonePair lp = mol.Builder.CreateLonePair(c1);
-            mol.Add(lp);
+            mol.LonePairs.Add(lp);
             ILonePair lp1 = mol.Builder.CreateLonePair(c);
             Assert.IsTrue(mol.Contains(lp));
             Assert.IsFalse(mol.Contains(lp1));
@@ -2669,10 +2669,10 @@ namespace NCDK
             IAtomContainer mol = (IAtomContainer)NewChemObject();
             IAtom c = mol.Builder.CreateAtom("C");
             IAtom c1 = mol.Builder.CreateAtom("C");
-            mol.Add(c);
-            mol.Add(c1);
+            mol.Atoms.Add(c);
+            mol.Atoms.Add(c1);
             ISingleElectron se = mol.Builder.CreateSingleElectron(c1);
-            mol.Add(se);
+            mol.SingleElectrons.Add(se);
             ISingleElectron se1 = mol.Builder.CreateSingleElectron(c1);
             Assert.IsTrue(mol.Contains(se));
             Assert.IsFalse(mol.Contains(se1));
@@ -2682,18 +2682,18 @@ namespace NCDK
         public virtual void TestIsEmpty()
         {
             IAtomContainer container = (IAtomContainer)NewChemObject();
-            Assert.IsTrue(container.IsEmpty, "new atom container was not empty");
+            Assert.IsTrue(container.IsEmpty(), "new atom container was not empty");
             IAtom c1 = container.Builder.CreateAtom("C");
             IAtom c2 = container.Builder.CreateAtom("C");
-            container.Add(c1);
-            container.Add(c2);
-            Assert.IsFalse(container.IsEmpty, "atom container Contains 2 atoms but was empty");
-            container.Add(container.Builder.CreateBond(c1, c2));
-            Assert.IsFalse(container.IsEmpty, "atom container Contains 2 atoms and 1 bond but was empty");
-            container.Remove(c1);
-            container.Remove(c2);
+            container.Atoms.Add(c1);
+            container.Atoms.Add(c2);
+            Assert.IsFalse(container.IsEmpty(), "atom container Contains 2 atoms but was empty");
+            container.Bonds.Add(container.Builder.CreateBond(c1, c2));
+            Assert.IsFalse(container.IsEmpty(), "atom container Contains 2 atoms and 1 bond but was empty");
+            container.Atoms.Remove(c1);
+            container.Atoms.Remove(c2);
             Assert.AreEqual(1, container.Bonds.Count, "atom Contains Contains no bonds");
-            Assert.IsTrue(container.IsEmpty, "atom Contains Contains no atoms but was not empty");
+            Assert.IsTrue(container.IsEmpty(), "atom Contains Contains no atoms but was not empty");
         }
     }
 }

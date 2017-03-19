@@ -418,7 +418,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
 
                 for (int c = 0; c < neighbourVertex.Count; c = c + 2)
                 {
-                    /// u and v are adjacent via index vertexOfCurrentClique-edge
+                    // u and v are adjacent via index vertexOfCurrentClique-edge
                     int neighbourVertexOfC = neighbourVertex[c];
 
                     //find respective neighbor position in potentialCVertex, which is needed for the deletion from vertex

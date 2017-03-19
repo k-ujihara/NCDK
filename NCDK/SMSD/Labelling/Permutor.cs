@@ -3,11 +3,6 @@ using System;
 namespace NCDK.SMSD.Labelling
 {
     /// <summary>
-    // @cdk.module smsd
-    // @cdk.githash
-    /// </summary>
-
-    /// <summary>
     /// General permutation generator, that uses orderly generation by ranking and
     /// unranking. The basic idea is that all permutations of length N can be ordered
     /// (lexicographically) like:
@@ -21,14 +16,16 @@ namespace NCDK.SMSD.Labelling
     /// just the index in this ordered list. The list is created on demand, by a
     /// process called <i>unranking</i> where the rank is converted to the
     /// permutation that appears at that point in the list.
-    ///
-    /// <p>The algorithms used are from the book "Combinatorial Generation :
+    /// </summary>
+    /// <remarks>
+    /// <para>The algorithms used are from the book "Combinatorial Generation :
     /// Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
-    /// Stinson</p>
-    ///
+    /// Stinson</para>
+    /// </remarks>
     // @author maclean
     // @cdk.githash
-    /// </summary>
+    // @cdk.module smsd
+    // @cdk.githash
     public class Permutor
     {
         /// <summary>

@@ -35,22 +35,22 @@ namespace NCDK.IO.CML
     /// Implements the PDB convention used by PDB2CML.
     /// 
     /// <para>This is a lousy implementation, though. Problems that will arise:
-    /// <ul>
-    ///   <li>when this new convention is adopted in the root element no
-    ///     currentFrame was set. This is done when <list sequence=""> is found</li>
-    ///   <li>multiple sequences are not yet supported</li>
-    ///   <li>the frame is now added when the doc is ended, which will result in problems
-    ///     but work for one sequence files made by PDB2CML v.??</li>
-    /// <ul>
+    /// <list type="bullet">
+    ///   <item>when this new convention is adopted in the root element no
+    ///     currentFrame was set. This is done when &lt;list sequence=""&gt; is found</item>
+    ///   <item>multiple sequences are not yet supported</item>
+    ///   <item>the frame is now added when the doc is ended, which will result in problems
+    ///     but work for one sequence files made by PDB2CML v.??</item>
+    /// </list>
     /// </para>
     /// <para>What is does:
-    /// <ul>
-    ///   <li>work for now</li>
-    ///   <li>give an idea on the API of the plugable CML import filter
-    ///     (a real one will be made)</li>
-    ///   <li>read CML files generated with Steve Zara's PDB 2 CML converter
-    ///     (of which version 1999 produces invalid CML 1.0)</li>
-    /// </ul>
+    /// <list type="bullet">
+    ///   <item>work for now</item>
+    ///   <item>give an idea on the API of the plugable CML import filter
+    ///     (a real one will be made)</item>
+    ///   <item>read CML files generated with Steve Zara's PDB 2 CML converter
+    ///     (of which version 1999 produces invalid CML 1.0)</item>
+    /// </list>
     /// </para>
     /// </summary>
     // @cdk.module io
@@ -315,7 +315,7 @@ namespace NCDK.IO.CML
                             //                                (new Integer(atom2)).ToString());
                             currentBond = currentMolecule.Builder.CreateBond(currentMolecule.Atoms[int.Parse(connect_root) - 1],
                                     currentMolecule.Atoms[int.Parse(atom) - 1], BondOrder.Single);
-                            currentMolecule.Add(currentBond);
+                            currentMolecule.Bonds.Add(currentBond);
                         }
                     }
                 }
@@ -327,7 +327,7 @@ namespace NCDK.IO.CML
             if (inchi != null)
             {
                 //            cdo.SetObjectProperty("Molecule", "inchi", inchi);
-                currentMolecule.SetProperty(CDKPropertyName.INCHI, inchi);
+                currentMolecule.SetProperty(CDKPropertyName.InChI, inchi);
             }
             StoreAtomData();
             StoreBondData();
@@ -506,14 +506,14 @@ namespace NCDK.IO.CML
                         {
                             //                        cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                             // FIXME: is a guess, Atom.title is not found in ChemFileCDO
-                            currentAtom.SetProperty(CDKPropertyName.TITLE, (string)eltitles[i]);
+                            currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
                         }
                     }
                     else
                     {
                         //                    cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                         //                    FIXME: is a guess, Atom.title is not found in ChemFileCDO
-                        currentAtom.SetProperty(CDKPropertyName.TITLE, (string)eltitles[i]);
+                        currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
                     }
                 }
 
@@ -611,7 +611,7 @@ namespace NCDK.IO.CML
                     int unpairedElectrons = int.Parse((string)spinMultiplicities[i]) - 1;
                     for (int sm = 0; sm < unpairedElectrons; sm++)
                     {
-                        currentMolecule.Add(currentChemFile.Builder.CreateSingleElectron(currentAtom));
+                        currentMolecule.SingleElectrons.Add(currentChemFile.Builder.CreateSingleElectron(currentAtom));
                     }
                 }
 

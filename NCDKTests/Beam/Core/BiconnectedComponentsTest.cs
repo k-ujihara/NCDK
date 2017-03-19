@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Beam
 {
-    /// <summary> <author>John May </author>*/
+   /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class BiconnectedComponentsTest
     {

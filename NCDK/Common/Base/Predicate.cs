@@ -26,7 +26,7 @@ namespace NCDK.Common.Base
     public interface Predicate<T>
     {
         /// <summary>
-        /// Returns the result of applying this predicate to <paramref name="inout"/>. This method is <i>generally
+        /// Returns the result of applying this predicate to <paramref name="input"/>. This method is <i>generally
         /// expected</i>, but not absolutely required, to have the following properties:
         /// <list type="bullet">
         /// <item>Its execution does not cause any observable side effects.</item>

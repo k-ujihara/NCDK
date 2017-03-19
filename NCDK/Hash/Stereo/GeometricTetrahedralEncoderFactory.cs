@@ -35,25 +35,21 @@ namespace NCDK.Hash.Stereo
     /// least one up/down bond and all required atoms have coordinates a new 2D
     /// encoder is created. If the there are no stereo bonds (up/down) and all
     /// required atoms have 3D coordinates then a new 3D encoder is created.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     public class GeometricTetrahedralEncoderFactory : IStereoEncoderFactory
     {
-
         /// <summary>
         /// Create a stereo encoder for all potential 2D and 3D tetrahedral
         /// elements.
-        ///
+        /// </summary>
         /// <param name="container">an atom container</param>
         /// <param name="graph">adjacency list representation of the container</param>
         /// <returns>a new encoder for tetrahedral elements</returns>
-        /// </summary>
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
         {
-
             // XXX: this code isn't pretty, the current IAtomContainer
             // implementations are  slow for the queries (i.e. looking at connected
             // atoms/bonds) we need to ask to decide if something is a potential
@@ -65,9 +61,9 @@ namespace NCDK.Hash.Stereo
             var encoders = new List<IStereoEncoder>();
             IDictionary<IAtom, int> elevation = new Dictionary<IAtom, int>(10);
 
-            ATOMS: for (int i = 0; i < n; i++)
+        ATOMS:
+            for (int i = 0; i < n; i++)
             {
-
                 int degree = graph[i].Length;
 
                 // ignore those which don't have 3 or 4 neighbors
@@ -103,21 +99,19 @@ namespace NCDK.Hash.Stereo
             }
 
             // no encoders, replace with the empty encoder
-            return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
+            return encoders.Count == 0 ? StereoEncoder.Empty : new MultiStereoEncoder(encoders);
         }
 
         /// <summary>
         /// Create the geometric part of an encoder
-        ///
+        /// </summary>
         /// <param name="elevationMap">temporary map to store the bond elevations (2D)</param>
         /// <param name="bonds">list of bonds connected to the atom at i</param>
         /// <param name="i">the central atom (index)</param>
         /// <param name="adjacent">adjacent atoms (indices)</param>
         /// <param name="container">container</param>
         /// <returns>geometric parity encoder (or null)</returns>
-        /// </summary>
-        private static GeometricParity Geometric(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i,
-                int[] adjacent, IAtomContainer container)
+        private static GeometricParity Geometric(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i, int[] adjacent, IAtomContainer container)
         {
             int nStereoBonds = GetNumPfStereoBonds(bonds);
             if (nStereoBonds > 0)
@@ -128,18 +122,15 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Create the geometric part of an encoder of 2D configurations
-        ///
+        /// </summary>
         /// <param name="elevationMap">temporary map to store the bond elevations (2D)</param>
         /// <param name="bonds">list of bonds connected to the atom at i</param>
         /// <param name="i">the central atom (index)</param>
         /// <param name="adjacent">adjacent atoms (indices)</param>
         /// <param name="container">container</param>
         /// <returns>geometric parity encoder (or null)</returns>
-        /// </summary>
-        private static GeometricParity Geometric2D(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i,
-                int[] adjacent, IAtomContainer container)
+        private static GeometricParity Geometric2D(IDictionary<IAtom, int> elevationMap, IEnumerable<IBond> bonds, int i, int[] adjacent, IAtomContainer container)
         {
-
             IAtom atom = container.Atoms[i];
 
             // create map of the atoms and their elevation from the center,
@@ -168,20 +159,17 @@ namespace NCDK.Hash.Stereo
             }
 
             return new Tetrahedral2DParity(coordinates, elevations);
-
         }
 
         /// <summary>
         /// Create the geometric part of an encoder of 3D configurations
-        ///
+        /// </summary>
         /// <param name="i">the central atom (index)</param>
         /// <param name="adjacent">adjacent atoms (indices)</param>
         /// <param name="container">container</param>
         /// <returns>geometric parity encoder (or null)</returns>
-        /// </summary>
         private static GeometricParity Geometric3D(int i, int[] adjacent, IAtomContainer container)
         {
-
             IAtom atom = container.Atoms[i];
             Vector3[] coordinates = new Vector3[4];
 
@@ -205,15 +193,13 @@ namespace NCDK.Hash.Stereo
 
             // add new 3D stereo encoder
             return new Tetrahedral3DParity(coordinates);
-
         }
 
         /// <summary>
         /// check whether the atom is Sp3 hybridization
-        ///
+        /// </summary>
         /// <param name="atom">an atom</param>
         /// <returns>whether the atom is Sp3</returns>
-        /// </summary>
         private static bool Sp3(IAtom atom)
         {
             return Hybridization.SP3.Equals(atom.Hybridization);
@@ -221,11 +207,9 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// access the number of stereo bonds in the provided bond list.
-        ///
-        /// <param name="bonds">input list</param>
-        /// <returns>number of Up/Down bonds in the list, -1 if a query bond was</returns>
-        ///         found
         /// </summary>
+        /// <param name="bonds">input list</param>
+        /// <returns>number of Up/Down bonds in the list, -1 if a query bond was found</returns>
         private static int GetNumPfStereoBonds(IEnumerable<IBond> bonds)
         {
             int count = 0;
@@ -255,17 +239,15 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Maps the input bonds to a map of Atom->Elevation where the elevation is
         /// whether the bond is off the plane with respect to the central atom.
-        ///
+        /// </summary>
         /// <param name="atom">central atom</param>
         /// <param name="bonds">bonds connected to the central atom</param>
         /// <param name="map">map to load with elevation values (can be reused)</param>
-        /// </summary>
         private static void MakeElevationMap(IAtom atom, IEnumerable<IBond> bonds, IDictionary<IAtom, int> map)
         {
             map.Clear();
             foreach (var bond in bonds)
             {
-
                 int elevation = 0;
                 switch (bond.Stereo.Ordinal)
                 {

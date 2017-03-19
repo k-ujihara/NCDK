@@ -27,15 +27,12 @@ namespace NCDK.Tools
     /// <summary>
     /// Utility class written by Todd Martin, for help in his QSAR descriptors and SMILES
     /// parser. Seems to have overlap with, at least, cdk.normalize.Normalizer.
-    ///
-    /// <p>TODO: merge with Normalizer.
-    ///
+    /// </summary>
+    /// <para>TODO: merge with Normalizer.</para>
+    /// <seealso cref="Normalize.Normalizer"/>
     // @author     Todd Martin
     // @cdk.module extra
     // @cdk.githash
-    ///
-    // @see        org.openscience.cdk.normalize.Normalizer
-    /// </summary>
     public class CDKUtilities
     {
         public static string FixSmiles(string Smiles)

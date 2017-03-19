@@ -369,14 +369,14 @@ namespace NCDK.Smiles
             ifac.ConfigureAtoms(mol1);
 
             mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
-            mol1.AddStereoElement(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
+            mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
             string smiles1 = sg.Create(mol1);
             Assert.IsNotNull(smiles1);
             Assert.AreEqual("S\\C(\\F)=C(/F)\\S", smiles1);
 
             mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
-            mol1.AddStereoElement(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
+            mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[1],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 
             smiles1 = sg.Create(mol1);
@@ -394,7 +394,7 @@ namespace NCDK.Smiles
             mol1.AddBond(mol1.Atoms[5], mol1.Atoms[7], BondOrder.Single);
 
             mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
-            mol1.AddStereoElement(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
+            mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Opposite));
 
             smiles1 = sg.Create(mol1);
@@ -402,7 +402,7 @@ namespace NCDK.Smiles
             Assert.AreEqual("S(/C(/F)=C(/F)\\S[H])[H]", smiles1);
 
             mol1.SetStereoElements(new List<IStereoElement>()); // clear existing
-            mol1.AddStereoElement(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
+            mol1.StereoElements.Add(new DoubleBondStereochemistry(mol1.Bonds[2], new IBond[]{mol1.Bonds[0],
                 mol1.Bonds[3]}, DoubleBondConformation.Together));
 
             smiles1 = sg.Create(mol1);
@@ -1223,9 +1223,9 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void AssignDbStereo()
         {
-            string in_ = "C(/N)=C\\C=C\\1/N=C1";
+            string ins = "C(/N)=C\\C=C\\1/N=C1";
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-            IAtomContainer mol = smipar.ParseSmiles(in_);
+            IAtomContainer mol = smipar.ParseSmiles(ins);
             Assert.AreEqual("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.Isomeric().Create(mol));
         }
 
@@ -1254,8 +1254,7 @@ namespace NCDK.Smiles
             SmilesParser smipar = new SmilesParser(bldr);
             IAtomContainer container = smipar.ParseSmiles(smi);
             AtomContainerManipulator.SuppressHydrogens(container);
-            Aromaticity arom = new Aromaticity(ElectronDonation.Daylight(),
-                                               Cycles.All());
+            Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
             arom.Apply(container);
             return SmilesGenerator.Unique().Create(container);
         }

@@ -26,25 +26,29 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// An implementation of the FMF descriptor characterizing complexity of a molecule.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The descriptor is described in {@cdk.cite YANG2010} and is an approach to
     /// characterizing molecular complexity based on the Murcko framework present
     /// in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
     /// total number of heavy atoms in the molecule. By definition, acyclic molecules
     /// which have no frameworks, will have a value of 0.
-    ///
+    /// </para>
+    /// <para>
     /// Note that the authors consider an isolated ring system to be a framework (even
     /// though there is no linker).
-    ///
+    /// </para>
+    /// <para>
     /// This descriptor returns a single double value, labeled as "FMF"
-    ///
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:FMF
     // @cdk.githash
     // @see org.openscience.cdk.fragment.MurckoFragmenter
-    /// </summary>
     public class FMFDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         public FMFDescriptor() { }
@@ -86,7 +90,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// Returns the specific type of the FMF descriptor value.
         ///
         /// The FMF descriptor is a single, double value.
-        ///
+        /// 
         /// The return value from this method really indicates what type of result will
         /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
         /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
@@ -100,31 +104,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <returns>an instance of the <see cref="DoubleResultType"/></returns>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResultType();
 
-        /// <summary>
-        /// Returns a map which specifies which descriptor is implemented by this class.
-        /// <para>
-        /// These fields are used in the map:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Specification-Reference</term>
-        /// <description>refers to an entry in a unique dictionary</description>
-        /// </item>
-        /// <item>
-        /// <term>Implementation-Title</term>
-        /// <description>anything</description>
-        /// </item>
-        /// <item>
-        /// <term>Implementation-Identifier</term>
-        /// <description>a unique identifier for this version of this class</description>
-        /// </item>
-        /// <item>
-        /// <term>Implementation-Vendor</term>
-        /// <description>CDK, JOELib, or anything else</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        /// <returns>An object containing the descriptor specification</returns>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(

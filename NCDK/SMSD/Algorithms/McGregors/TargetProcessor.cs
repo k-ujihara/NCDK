@@ -28,13 +28,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
 {
     /// <summary>
     /// Class to handle mappings of target molecule based on the query.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class TargetProcessor
     {
-
         private List<string> cTab1Copy;
         private List<string> cTab2Copy;
         private string[] signArray;
@@ -50,14 +49,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         private List<int> newINeighborsA;
         private List<string> newCNeighborsA;
 
-        /// <summary>
-        ///
-        /// <param name="cTab1Copy">/// @param cTab2Copy</param>
-        /// <param name="signArray">/// @param neighborBondnumB</param>
-        /// <param name="setBondnumB">/// @param iBondNeighborsB</param>
-        /// <param name="cBondNeighborsB">/// @param newNeighborNumA</param>
-        /// <param name="newINeighborsA">/// @param newCNeighborsA</param>
-        /// </summary>
         protected internal TargetProcessor(List<string> cTab1Copy, List<string> cTab2Copy, string[] signArray,
                 int neighborBondnumB, int setBondnumB, List<int> iBondNeighborsB, List<string> cBondNeighborsB,
                 int newNeighborNumA, List<int> newINeighborsA, List<string> newCNeighborsA)
@@ -115,21 +106,12 @@ namespace NCDK.SMSD.Algorithms.McGregors
                 }
                 bondConsidered = false;
             }
-
         }
 
-        /// <summary>
-        ///
-        /// <param name="setNumB">/// @param unmappedAtomsMolB</param>
-        /// <param name="newMappingSize">/// @param iBondSetB</param>
-        /// <param name="cBondSetB">/// @param newMapping</param>
-        /// <param name="counter">/// @param newIBondSetB</param>
-        /// <param name="newCBondSetB">/// </summary></param>
         protected internal void Process(int setNumB, IList<int> unmappedAtomsMolB, int newMappingSize,
                 IList<int> iBondSetB, IList<string> cBondSetB, IList<int> newMapping, int counter,
                 IList<int> newIBondSetB, IList<string> newCBondSetB)
         {
-
             //The special signs must be transfered to the corresponding atoms of molecule A
 
             bool bondConsidered = false;
@@ -349,27 +331,17 @@ namespace NCDK.SMSD.Algorithms.McGregors
             cBondNeighborsB.Add("X");
         }
 
-        /// <summary>
-        ///
-        /// <returns>/// </summary></returns>
         protected internal List<string> CTab1 => this.cTab1Copy;
-
-        /// <summary>
-        ///
-        /// <returns>/// </summary></returns>
         protected internal List<string> CTab2 => this.cTab2Copy;
 
         /// <summary>
-        ///
-        /// <returns>number of remaining molecule A bonds after the clique search,</returns>
+        /// number of remaining molecule A bonds after the clique search,
         /// which are neighbors of the MCS
-        ///
         /// </summary>
         protected internal int NeighborBondNumB => this.neighborBondNumB;
 
         /// <summary>
-        ///
-        /// <returns>number of remaining molecule A bonds after the clique search,</returns>
+        /// number of remaining molecule A bonds after the clique search,
         /// which aren't neighbors
         /// </summary>
         protected internal int BondNumB => this.setBondNumB;

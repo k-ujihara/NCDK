@@ -22,9 +22,9 @@ namespace NCDK.IO
         /// <para>This method is called before a test is executed and performs the
         /// following actions:
         /// <ul>
-        ///     <li>Constructs a new FileReader.</li>
-        ///     <li>Constructs a new TextReader.</li>
-        ///     <li>Constructs a new GamessReader.</li>
+        ///     <item>Constructs a new FileReader.</item>
+        ///     <item>Constructs a new TextReader.</item>
+        ///     <item>Constructs a new GamessReader.</item>
         /// </ul>
         /// </para>
         /// </summary>

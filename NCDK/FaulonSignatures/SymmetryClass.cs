@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// A collection of vertex indices with the same canonical signature string.
@@ -72,6 +72,7 @@ namespace FaulonSignatures
         /// in the symmetry class, return -1.
         /// </summary>
         /// <param name="vertexIndex"></param>
+        /// <param name="used"></param>
         /// <returns></returns>
         public int GetMinimal(int vertexIndex, List<int> used)
         {

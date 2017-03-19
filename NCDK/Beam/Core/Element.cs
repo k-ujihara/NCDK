@@ -44,11 +44,11 @@ namespace NCDK.Beam
     /// (see. <a href="http://www.opensmiles.org/opensmiles.html#orgsbst">Organic
     /// Subset, OpenSMILES Specification</a>).
     /// 
-    /// <ul><li><see cref="Unknown"/> (*)</li> 
-    /// <li><see cref="Boron"/></li> <li><see cref="Carbon"/></li> <li><see cref="Nitrogen"/></li> <li><see cref="Oxygen"/></li>
-    /// <li><see cref="Fluorine"/></li> <li><see cref="Phosphorus"/></li> <li><see cref="Sulfur"/>
-    /// </li> <li><see cref="Chlorine"/></li> <li><see cref="Bromine"/></li> <li><see cref="Iodine"/></li> 
-    /// </ul>
+    /// <list type="bullet"><item><see cref="Unknown"/> (*)</item> 
+    /// <item><see cref="Boron"/></item> <item><see cref="Carbon"/></item> <item><see cref="Nitrogen"/></item> <item><see cref="Oxygen"/></item>
+    /// <item><see cref="Fluorine"/></item> <item><see cref="Phosphorus"/></item> <item><see cref="Sulfur"/>
+    /// </item> <item><see cref="Chlorine"/></item> <item><see cref="Bromine"/></item> <item><see cref="Iodine"/></item> 
+    /// </list>
     /// </remarks>
     /// <example>
     /// <h4>Usage</h4>
@@ -451,7 +451,7 @@ namespace NCDK.Beam
         /// elements (B, C, N, O, P, S, F, Cl, Br and I) are defined in the
         /// OpenSMILES specification.
         /// </summary>
-        /// <param name="sum">bond Order sum</param>
+        /// <param name="v"></param>
         /// <returns>the number of implied hydrogens</returns>
         /// <exception cref="InvalidOperationException">
         /// the element was not a member of the
@@ -472,12 +472,12 @@ namespace NCDK.Beam
         /// <summary>
         /// Determine the number of available electrons which could be bonding to
         /// implicit hydrogens. This include electrons donated from the hydrogen.
-        /// <br/>
-        ///
-        /// The central carbon of {@code C-C=C} 6 bonded electrons - using SMILES
+        /// </summary>
+        /// <remarks>
+        /// The central carbon of <c>C-C=C</c> 6 bonded electrons - using SMILES
         /// default valence there must be 2 electrons involved in bonding an implicit
         /// hydrogen (i.e. there is a single bond to a hydrogen).
-        /// </summary>
+        /// </remarks>
         /// <param name="bondElectronSum">the sum of the bonded electrons</param>
         /// <returns>number of electrons which could be involved with bonds to hydrogen</returns>
         public int NumOfAvailableElectrons(int bondElectronSum)
@@ -491,15 +491,16 @@ namespace NCDK.Beam
         /// <summary>
         /// Determine the number of available electrons which could be bonding to
         /// implicit hydrogens for an aromatic atom with delocalized bonds. This
-        /// include electrons donated from the hydrogen. <br/>
-        ///
+        /// include electrons donated from the hydrogen.
+        /// </summary>
+        /// <remarks>
         /// Instead of checking higher valence states only the lowest is checked. For
         /// example nitrogen has valence 3 and 5 but in a delocalized system only the
         /// lowest (3) is used. The electrons which would allow bonding of implicit
         /// hydrogens in the higher valence states are donated to the aromatic system
         /// and thus cannot be <i>reached</i>. Using a generalisation that an
         /// aromatic bond as 3 electrons we reached the correct value for multi
-        /// valence aromatic elements. <br/>
+        /// valence aromatic elements.
         ///
         /// <para>
         ///     c1c[nH]cn1    the aromatic subset nitrogen is bonded to two aromatic
@@ -522,7 +523,7 @@ namespace NCDK.Beam
         ///                   valence of oxygen in the specification is '2' there
         ///                   are no hydrogens (2 - 1.5 = 0.5).
         /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="bondElectronSum">the sum of the bonded electrons</param>
         /// <returns>number of electrons which could be involved with bonds to hydrogen</returns>
         public int NumOfAvailableDelocalisedElectrons(int bondElectronSum)

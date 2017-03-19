@@ -47,22 +47,18 @@
  */
 namespace NCDK.SMSD.Algorithms.VFLib
 {
-
-
     /// <summary>
     /// Interface for the query graph generator.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
-
     public interface IQueryCompiler
     {
-
         /// <summary>
         /// Parse and build a query graph from the query moleucle.
-        /// <returns>compile the query molecule and build the graph.</returns>
         /// </summary>
+        /// <returns>compile the query molecule and build the graph.</returns>
         IQuery Compile();
     }
 }

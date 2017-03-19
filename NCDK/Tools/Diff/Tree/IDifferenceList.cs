@@ -24,13 +24,12 @@ using NCDK.Numerics;
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// <see cref="IDifference"/> between two <see cref="Object"/>s which contains one or more child
+    /// <see cref="IDifference"/> between two <see cref="object"/>s which contains one or more child
     /// <see cref="IDifference"/> objects.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public interface IDifferenceList : IDifference
     {
         /// <summary>
@@ -44,22 +43,20 @@ namespace NCDK.Tools.Diff.Tree
         /// <summary>
         /// Adds multiple <see cref="IDifference"/>s as child to this tree.
         ///
-        /// <param name="children">a <see cref="List"/> of <see cref="IDifference"/>s to add to this <see cref="IDifference"/></param>
+        /// <param name="children">a <see cref="List{T}"/> of <see cref="IDifference"/>s to add to this <see cref="IDifference"/></param>
         /// </summary>
         void AddChildren(IEnumerable<IDifference> children);
 
         /// <summary>
-        /// Returns an <see cref="IEnumerable"/> of <see cref="IDifference"/> for all childs of this <see cref="IDifference"/>.
-        ///
-        /// <returns>an <see cref="IEnumerable"/> implementation with all children</returns>
+        /// Returns an <see cref="IEnumerable{T}"/> of <see cref="IDifference"/> for all childs of this <see cref="IDifference"/>.
         /// </summary>
+        /// <returns>an <see cref="IEnumerable{T}"/> implementation with all children</returns>
         IEnumerable<IDifference> GetChildren();
 
         /// <summary>
         /// Returns the number of children of this <see cref="IDifference"/>.
-        ///
-        /// <returns>an int reflecting the number of children</returns>
         /// </summary>
+        /// <returns>an int reflecting the number of children</returns>
         int ChildCount();
     }
 }

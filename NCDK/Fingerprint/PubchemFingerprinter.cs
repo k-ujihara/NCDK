@@ -385,8 +385,8 @@ namespace NCDK.Fingerprint
                 throw new ArgumentException("Input is not a proper PubChem base64 encoded fingerprint");
             }
 
-            /// note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
-            /// isn't needed when decoding
+            // note the IChemObjectBuilder is passed as null because the SMARTSQueryTool
+            // isn't needed when decoding
             PubchemFingerprinter pc = new PubchemFingerprinter(null);
             for (int i = 0; i < pc.m_bits.Length; ++i)
             {

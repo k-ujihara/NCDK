@@ -23,7 +23,7 @@ namespace NCDK.Charges
     /// <summary>
     /// The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
     /// {@cdk.cite GM80}. This class only implements the original method which only
-    /// applies to &sigma;-bond systems.
+    /// applies to É–-bond systems.
     /// </summary>
     // @author      chhoppe
     // @author      rojas
@@ -36,7 +36,7 @@ namespace NCDK.Charges
     // @cdk.keyword PEOE
     public class GasteigerMarsiliPartialCharges : IChargeCalculator
     {
-        /// <summary>Flag is set if the formal charge of a chemobject is changed due to resonance.</summary>
+        // Flag is set if the formal charge of a chemobject is changed due to resonance.
 
         /// <summary>
         ///  Constructor for the GasteigerMarsiliPartialCharges object.
@@ -83,7 +83,7 @@ namespace NCDK.Charges
             double[] q_old = new double[ac.Atoms.Count];
             for (int i = 0; i < q_old.Length; i++)
                 q_old[0] = 20.0;
-            out_: for (int i = 0; i < MaxGasteigerIterations; i++)
+            output: for (int i = 0; i < MaxGasteigerIterations; i++)
             {
                 alpha *= MaxGasteigerDamp;
                 bool isDifferent = false;

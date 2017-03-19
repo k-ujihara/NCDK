@@ -41,13 +41,12 @@ namespace NCDK.Modeling.Builder3D
     /// <summary>
     /// Helper class for ModelBuilder3D. Handles templates. This is
     /// our layout solution for 3D ring systems
-    ///
+    /// </summary>
     // @author      cho
     // @author      steinbeck
     // @cdk.created 2004-09-21
     // @cdk.module  builder3d
     // @cdk.githash
-    /// </summary>
     public class TemplateHandler3D
     {
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
@@ -80,8 +79,8 @@ namespace NCDK.Modeling.Builder3D
         /// <summary>
         /// Loads all existing templates into memory.
         /// Template file is a mdl file. Creates a Object Set of Molecules
-        /// <exception cref="CDKException">The template file cannot be loaded</exception>
         /// </summary>
+        /// <exception cref="CDKException">The template file cannot be loaded</exception>
         private void LoadTemplates()
         {
             Debug.WriteLine("Loading templates...");
@@ -160,10 +159,9 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         /// Returns the largest (number of atoms) ring set in a molecule.
-        ///
+        /// </summary>
         /// <param name="ringSystems">RingSystems of a molecule</param>
         /// <returns>The largestRingSet</returns>
-        /// </summary>
         public IRingSet GetLargestRingSet(List<IRingSet> ringSystems)
         {
             IRingSet largestRingSet = null;
@@ -194,11 +192,9 @@ namespace NCDK.Modeling.Builder3D
         /// Checks if one of the loaded templates is a substructure in the given
         /// Molecule. If so, it assigns the coordinates from the template to the
         /// respective atoms in the Molecule.
-        ///
+        /// </summary>
         /// <param name="ringSystems">AtomContainer from the ring systems.</param>
         /// <param name="numberOfRingAtoms">Number of atoms in the specified ring</param>
-        /// <exception cref="CloneNotSupportedException">The atomcontainer cannot be cloned.</exception>
-        /// </summary>
         public void MapTemplates(IAtomContainer ringSystems, int numberOfRingAtoms)
         {
             if (!templatesLoaded) self.LoadTemplates();
@@ -275,17 +271,15 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         /// Gets the templateCount attribute of the TemplateHandler object.
-        ///
-        /// <returns>The templateCount value</returns>
         /// </summary>
+        /// <returns>The templateCount value</returns>
         public int TemplateCount => templates.Count;
 
         /// <summary>
         ///  Gets the templateAt attribute of the TemplateHandler object.
-        ///
+        /// </summary>
         /// <param name="position">Description of the Parameter</param>
         /// <returns>The templateAt value</returns>
-        /// </summary>
         public IAtomContainer GetTemplateAt(int position)
         {
             return templates[position];

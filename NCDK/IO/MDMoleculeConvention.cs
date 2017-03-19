@@ -48,22 +48,28 @@ namespace NCDK.IO.CML
         public MDMoleculeConvention(ICMLModule conv)
                 : base(conv)
         { }
-        
+
         /// <summary>
         /// Add parsing of elements in mdmolecule:
-        /// <![CDATA[
-        /// mdmolecule
-        ///     chargeGroup
-        ///         id
-        ///         cgNumber
-        ///         atomArray
-        ///         switchingAtom
-        ///     residue
-        ///             id
-        ///             title
-        ///             resNumber
-        ///             atomArray
-        /// ]]>
+        /// <list type="bullet">
+        ///   <item>mdmolecule</item>
+        ///   <list type="bullet">
+        ///     <item>chargeGroup</item>
+        ///     <list type="bullet">
+        ///       <item>id</item>
+        ///       <item>cgNumber</item>
+        ///       <item>atomArray</item>
+        ///       <item>switchingAtom</item>
+        ///     </list>
+        ///   </list>
+        ///   <item>residue</item>
+        ///   <list type="bullet">
+        ///     <item>id</item>
+        ///     <item>title</item>
+        ///     <item>resNumber</item>
+        ///     <item>atomArray</item>
+        ///   </list>
+        /// </list>
         /// </summary>
         /// <param name="xpath"></param>
         /// <param name="element"></param>

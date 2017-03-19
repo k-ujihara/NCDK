@@ -26,32 +26,34 @@ using System.IO;
 
 namespace NCDK.IO
 {
-    // <summary>
-    // A reader for Gaussian03 output.
-    // Gaussian 03 is a quantum chemistry program
-    // by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
-    //
-    // <p>Molecular coordinates, energies, and normal coordinates of
-    // vibrations are read. Each set of coordinates is added to the
-    // ChemFile in the order they are found. Energies and vibrations
-    // are associated with the previously read set of coordinates.
-    //
-    // <p>This reader was developed from a small set of
-    // example output files, and therefore, is not guaranteed to
-    // properly read all Gaussian03 output. If you have problems,
-    // please contact the author of this code, not the developers
-    // of Gaussian03.
-    //
-    // <p>This code was adaptated by Jonathan from Gaussian98Reader written by
-    // Bradley, and ported to CDK by Egon.
-    //
+    /// <summary>
+    /// A reader for Gaussian03 output.
+    /// Gaussian 03 is a quantum chemistry program
+    /// by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+    /// <para>
+    /// Molecular coordinates, energies, and normal coordinates of
+    /// vibrations are read. Each set of coordinates is added to the
+    /// ChemFile in the order they are found. Energies and vibrations
+    /// are associated with the previously read set of coordinates.
+    /// </para>
+    /// <para>
+    /// This reader was developed from a small set of
+    /// example output files, and therefore, is not guaranteed to
+    /// properly read all Gaussian03 output. If you have problems,
+    /// please contact the author of this code, not the developers
+    /// of Gaussian03.
+    /// </para>
+    /// <para>
+    /// This code was adaptated by Jonathan from Gaussian98Reader written by
+    /// Bradley, and ported to CDK by Egon.
+    /// </para>
+    /// </summary>
     // @author Jonathan C. Rienstra-Kiracofe <jrienst@emory.edu>
     // @author Bradley A. Smith <yeldar@home.com>
     // @author Egon Willighagen
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    // </summary>
     public class Gaussian03Reader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -208,12 +210,11 @@ namespace NCDK.IO
             return sequence;
         }
 
-        // <summary>
-        // Reads a set of coordinates into ChemModel.
-        //
-        // <param name="model">the destination ChemModel</param>
-        // @ if an I/O error occurs
-        // </summary>
+        /// <summary>
+        /// Reads a set of coordinates into ChemModel.
+        /// </summary>
+        /// <param name="model">the destination ChemModel</param>
+        /// <exception cref="IOException">if an I/O error occurs</exception>
         private void ReadCoordinates(IChemModel model)
         {
             IAtomContainer container = model.Builder.CreateAtomContainer();
@@ -292,9 +293,9 @@ namespace NCDK.IO
             model.MoleculeSet = moleculeSet;
         }
 
-        // <summary>
-        // Reads partial atomic charges and add the to the given ChemModel.
-        // </summary>
+        /// <summary>
+        /// Reads partial atomic charges and add the to the given ChemModel.
+        /// </summary>
         private void ReadPartialCharges(IChemModel model)
         {
             Trace.TraceInformation("Reading partial atomic charges");
@@ -338,75 +339,5 @@ namespace NCDK.IO
         {
             Close();
         }
-
-        // <summary>
-        // Reads a set of vibrations into ChemModel.
-        //
-        // <param name="model">the destination ChemModel</param>
-        // @ if an I/O error occurs
-        // </summary>
-        //    private void ReadFrequencies(IChemModel model)  {
-        
-        // This is yet to be ported. Vibrations don't exist yet in CDK. string line
-        // = input.ReadLine(); line = input.ReadLine(); line = input.ReadLine();
-        // line = input.ReadLine(); line = input.ReadLine(); while ((line != null)
-        // && line.StartsWith(" Frequencies --")) { Vector currentVibs = new
-        // Vector(); StringReader vibValRead = new StringReader(line.Substring(15));
-        // StreamTokenizer token = new StreamTokenizer(vibValRead); while
-        // (token.NextToken() != StreamTokenizer.TT_EOF) { Vibration vib = new
-        // Vibration(Double.ToString(token.nval)); currentVibs.AddElement(vib); }
-        // line = input.ReadLine(); // skip "Red. masses" line = input.ReadLine();
-        // // skip "Rfc consts" line = input.ReadLine(); // skip "IR Inten" while
-        // (!line.StartsWith(" Atom AN")) { // skip all lines upto and including the
-        // " Atom AN" line line = input.ReadLine(); // skip } for (int i = 0; i <
-        // frame.Atoms.Count; ++i) { line = input.ReadLine(); StringReader
-        // vectorRead = new StringReader(line); token = new
-        // StreamTokenizer(vectorRead); token.NextToken(); // ignore first token
-        // token.NextToken(); // ignore second token for (int j = 0; j <
-        // currentVibs.Count; ++j) { double[] v = new double[3]; if
-        // (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[0] = token.nval; }
-        // else { throw new IOException("Error reading frequency"); } if
-        // (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[1] = token.nval; }
-        // else { throw new IOException("Error reading frequency"); } if
-        // (token.NextToken() == StreamTokenizer.TT_NUMBER) { v[2] = token.nval; }
-        // else { throw new IOException("Error reading frequency"); } ((Vibration)
-        // currentVibs.ElementAt(j)).AddAtomVector(v); } } for (int i = 0; i <
-        // currentVibs.Count; ++i) { frame.AddVibration((Vibration)
-        // currentVibs.ElementAt(i)); } line = input.ReadLine(); line =
-        // input.ReadLine(); line = input.ReadLine(); }
-        //    }
-
-        // <summary>
-        // Reads NMR nuclear shieldings.
-        // </summary>
-        //    private void ReadNMRData(IChemModel model, string labelLine)  {
-        // FIXME: this is yet to be ported. CDK does not have shielding stuff. //
-        // Determine label for properties string label; if
-        // (labelLine.IndexOf("Diamagnetic") >= 0) { label =
-        // "Diamagnetic Magnetic shielding (Isotropic)"; } else if
-        // (labelLine.IndexOf("Paramagnetic") >= 0) { label =
-        // "Paramagnetic Magnetic shielding (Isotropic)"; } else { label =
-        // "Magnetic shielding (Isotropic)"; } int atomIndex = 0; for (int i = 0; i
-        // < frame.Atoms.Count; ++i) { string line = input.ReadLine().Trim();
-        // while (line.IndexOf("Isotropic") < 0) { if (line == null) { return; }
-        // line = input.ReadLine().Trim(); } StringTokenizer st1 = new
-        // StringTokenizer(line); // Find Isotropic label while
-        // (st1.HasMoreTokens()) { if (st1.NextToken().Equals("Isotropic")) { break;
-        // } } // Find Isotropic value while (st1.HasMoreTokens()) { if
-        // (st1.NextToken().Equals("=")) { break; } } double shielding =
-        // Double.ValueOf(st1.NextToken()).Value; NMRShielding ns1 = new
-        // NMRShielding(label, shielding);
-        // ((org.openscience.jmol.Atom)frame.GetAtomAt(atomIndex)).AddProperty(ns1);
-        // ++atomIndex; }
-        //    }
-
-        // <summary>
-        // Select the theory and basis set from the first archive line.
-        // </summary>
-        // private string ParseLevelOfTheory(string line) { StringTokenizer st1 =
-        // new StringTokenizer(line, "\\"); // Must contain at least 6 tokens if
-        // (st1.CountTokens() < 6) { return null; } // Skip first four tokens for
-        // (int i = 0; i < 4; ++i) { st1.NextToken(); } return st1.NextToken() + "/"
-        // + st1.NextToken(); }
     }
 }

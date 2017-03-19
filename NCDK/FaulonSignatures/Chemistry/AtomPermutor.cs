@@ -1,9 +1,7 @@
-using FaulonSignatures;
 using System.Collections.Generic;
-using System;
 using System.Collections;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     /// <summary>
     /// Utility class for permuting the atoms of a molecule - mainly for testing.

@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Templates;
@@ -31,35 +30,35 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// Simple tests for exact and non exact matching.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class UllmannTest
     {
-
         [TestMethod()]
         public void BenzeneSubsearch()
         {
-            int[] match = Ullmann.FindSubstructure(TestMoleculeFactory.MakeBenzene()).Match(
-                    TestMoleculeFactory.MakeNaphthalene());
+            int[] match = Ullmann.FindSubstructure(
+                TestMoleculeFactory.MakeBenzene()).Match(
+                TestMoleculeFactory.MakeNaphthalene());
             Assert.IsTrue(Compares.AreDeepEqual(new int[] { 2, 7, 6, 5, 4, 3 }, match));
-            int count =
-                    Ullmann.FindSubstructure(TestMoleculeFactory.MakeBenzene()).MatchAll(
-                            TestMoleculeFactory.MakeNaphthalene()).ToList().Count;
+            int count = Ullmann.FindSubstructure(
+                TestMoleculeFactory.MakeBenzene()).MatchAll(
+                TestMoleculeFactory.MakeNaphthalene()).ToList().Count;
             Assert.AreEqual(6, count); // note: aromatic one would be 24
         }
 
         [TestMethod()]
         public void NapthaleneSubsearch()
         {
-            int[] match = Ullmann.FindSubstructure(TestMoleculeFactory.MakeNaphthalene()).Match(
-                    TestMoleculeFactory.MakeBenzene());
+            int[] match = Ullmann.FindSubstructure(
+                TestMoleculeFactory.MakeNaphthalene()).Match(
+                TestMoleculeFactory.MakeBenzene());
             Assert.IsTrue(Compares.AreDeepEqual(new int[0], match));
-            int count =
-                    Ullmann.FindSubstructure(TestMoleculeFactory.MakeNaphthalene()).MatchAll(
-                            TestMoleculeFactory.MakeBenzene()).ToList().Count;
+            int count = Ullmann.FindSubstructure(
+                TestMoleculeFactory.MakeNaphthalene()).MatchAll(
+                TestMoleculeFactory.MakeBenzene()).ToList().Count;
             Assert.AreEqual(0, count);
         }
     }

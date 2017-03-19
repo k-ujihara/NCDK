@@ -33,15 +33,12 @@ namespace NCDK.IO.Iterator
     /// <summary>
     /// Iterating PubChem PCCompound ASN.1 XML reader.
     /// </summary>
+    /// <seealso cref="PCCompoundASNReader"/>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
-    // @see org.openscience.cdk.io.PCCompoundASNReader
-    ///
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
-    ///
     // @cdk.keyword  file format, ASN
     // @cdk.keyword  PubChem
     public class IteratingPCCompoundXMLReader : DefaultIteratingChemObjectReader<IAtomContainer>
@@ -54,26 +51,26 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new IteratingPCCompoundXMLReader that can read Molecule from a given Reader and IChemObjectBuilder.
         /// </summary>
-        /// <param name="in_">The input stream</param>
+        /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
         /// <exception cref="Exception">if there is an error isn setting up the XML parser</exception>
-        public IteratingPCCompoundXMLReader(TextReader in_, IChemObjectBuilder builder)
+        public IteratingPCCompoundXMLReader(TextReader ins, IChemObjectBuilder builder)
         {
             this.builder = builder;
             parserHelper = new PubChemXMLHelper(builder);
 
-            primarySource = in_;
-            parser = XDocument.Load(in_).Root;
+            primarySource = ins;
+            parser = XDocument.Load(ins).Root;
         }
 
         /// <summary>
         /// Constructs a new IteratingPCCompoundXLReader that can read Molecule from a given Stream and IChemObjectBuilder.
         /// </summary>
-        /// <param name="in_">The input stream</param>
+        /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder. In general, use <see cref="Default.ChemObjectBuilder"/></param>
         /// <exception cref="Exception">if there is a problem creating an InputStreamReader</exception>
-        public IteratingPCCompoundXMLReader(Stream in_, IChemObjectBuilder builder)
-            : this(new StreamReader(in_), builder)
+        public IteratingPCCompoundXMLReader(Stream ins, IChemObjectBuilder builder)
+            : this(new StreamReader(ins), builder)
         { }
 
         public override IResourceFormat Format => PubChemCompoundsXMLFormat.Instance;

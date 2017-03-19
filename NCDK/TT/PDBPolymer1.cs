@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -52,14 +37,12 @@ namespace NCDK.Default
     /// An entry in the PDB database. It is not just a regular protein, but the
     /// regular PDB mix of protein or protein complexes, ligands, water molecules
     /// and other species.
-    ///
+    /// </summary>
     // @cdk.module  data
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    /// </summary>
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
         IList<string> sequentialListOfMonomers;
@@ -97,7 +80,7 @@ namespace NCDK.Default
 
         public void Add(IPDBAtom oAtom)
         {
-            base.Add(oAtom);
+            base.Atoms.Add(oAtom);
         }
 
         /// <summary>
@@ -117,11 +100,10 @@ namespace NCDK.Default
         /// <summary>
         /// Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
         /// Additionally, it keeps record of the iCode.
-        ///
+        /// </summary>
         /// <param name="oAtom">The IPDBAtom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-        /// </summary>
-
+        /// <param name="oStrand"></param>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand)
         {
             base.AddAtom(oAtom, oMonomer, oStrand);
@@ -140,9 +122,7 @@ namespace NCDK.Default
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();
@@ -165,14 +145,12 @@ namespace NCDK.Silent
     /// An entry in the PDB database. It is not just a regular protein, but the
     /// regular PDB mix of protein or protein complexes, ligands, water molecules
     /// and other species.
-    ///
+    /// </summary>
     // @cdk.module  data
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2006-04-19
     // @cdk.keyword polymer
-    /// </summary>
     public class PDBPolymer : BioPolymer, ICloneable, IPDBPolymer
     {
         IList<string> sequentialListOfMonomers;
@@ -210,7 +188,7 @@ namespace NCDK.Silent
 
         public void Add(IPDBAtom oAtom)
         {
-            base.Add(oAtom);
+            base.Atoms.Add(oAtom);
         }
 
         /// <summary>
@@ -230,11 +208,10 @@ namespace NCDK.Silent
         /// <summary>
         /// Adds the IPDBAtom oAtom to a specified Monomer of a specified Strand.
         /// Additionally, it keeps record of the iCode.
-        ///
+        /// </summary>
         /// <param name="oAtom">The IPDBAtom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-        /// </summary>
-
+        /// <param name="oStrand"></param>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer, IStrand oStrand)
         {
             base.AddAtom(oAtom, oMonomer, oStrand);
@@ -253,9 +230,7 @@ namespace NCDK.Silent
             return new List<string>(sequentialListOfMonomers);
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public override object Clone()
         {
             return (IPDBPolymer)base.Clone();

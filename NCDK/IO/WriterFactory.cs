@@ -31,11 +31,10 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Helper tool to create IChemObjectWriters.
-    ///
+    /// </summary>
     // @author Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module io
     // @cdk.githash
-    ///*/
     public class WriterFactory
     {
         private const string IO_FORMATS_LIST = "NCDK.io-formats.set";
@@ -62,12 +61,10 @@ namespace NCDK.IO
         /// <summary>
         /// Finds IChemFormats that provide a container for serialization for the
         /// given features. The syntax of the integer is explained in the DataFeatures class.
-        ///
+        /// </summary>
         /// <param name="features">the data features for which a IChemFormat is searched</param>
         /// <returns>an array of IChemFormat's that can contain the given features</returns>
-        ///
-        /// @see    org.openscience.cdk.tools.DataFeatures
-        /// </summary>
+        /// <seealso cref="Tools.DataFeatures"/>
         public IChemFormat[] FindChemFormats(int features)
         {
             if (formats == null) LoadFormats();

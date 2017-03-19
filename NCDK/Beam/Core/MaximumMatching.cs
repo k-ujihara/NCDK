@@ -128,7 +128,7 @@ namespace NCDK.Beam
             }
 
             // for each 'free' vertex, start a bfs search
-            while (!queue.IsEmpty)
+            while (!queue.IsEmpty())
             {
                 int v = queue.Poll();
 
@@ -264,7 +264,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="v">adjacent to w</param>
         /// <param name="w">adjacent to v</param>
-        /// <param name="base">connected to the stem (common ancestor of v and w)</param>
+        /// <param name="base_">connected to the stem (common ancestor of v and w)</param>
         private void Blossom(int v, int w, int base_)
         {
             base_ = uf.Find(base_);
@@ -289,12 +289,12 @@ namespace NCDK.Beam
         /// <param name="v">an endpoint of the blossom bridge</param>
         /// <param name="w">another endpoint of the blossom bridge</param>
         /// <param name="base">the base of the blossom</param>
-        private int[] BlossomSupports(int v, int w, int base_)
+        private int[] BlossomSupports(int v, int w, int @base)
         {
             int n = 0;
             path[n++] = uf.Find(v);
             Tuple b = Tuple.Of(v, w);
-            while (path[n - 1] != base_)
+            while (path[n - 1] != @base)
             {
                 int u = even[path[n - 1]];
                 path[n++] = u;
@@ -385,6 +385,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="g">a graph</param>
         /// <param name="m">matching on the graph</param>
+        /// <param name="n"></param>
         /// <returns>the maximal matching on the graph</returns>
         public static int Maximise(Graph g, Matching m, int n)
             {
@@ -444,7 +445,7 @@ namespace NCDK.Beam
             /// <summary>
             /// The queue is empty.
             /// </summary>
-            public bool IsEmpty => i == n;
+            public bool IsEmpty() => i == n;
 
             /// <summary>Reset the queue.</summary>
             public void Clear()

@@ -26,7 +26,8 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// <para>IReactionProcess which a bond is broken displacing the electron to one of the
     /// atoms. The mechanism will produce one atom with excess of charge and the other one deficiency.
-    /// Depending of the bond order, the bond will be removed or simply the order decreased.
+    /// Depending of the bond order, the bond will be removed or simply the order decreased.</para>
+    /// <para>
     /// As there are two directions for displacing a bond in a polar manner,
     /// each case is investigated twice:</para>
     ///
@@ -34,6 +35,8 @@ namespace NCDK.Reactions.Types
     /// <code>A=B => |[A-]-[B+]</code>
     ///
     /// <para>It will not be created structures no possible, e.g; C=O => [C-][O+].</para>
+    /// </summary>
+    /// <example>
     /// <para>Below you have an example how to initiate the mechanism.</para>
     /// <para>It is processed by the HeterolyticCleavageMechanism class</para>
     /// <code>
@@ -47,34 +50,28 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to specify the reaction in a fixed point.</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not specified then the reaction process will
     /// try to find automatically the possible reaction centers.</para>
-    ///
-    ///
+    /// </example>
+    /// <seealso cref="Mechanisms.HeterolyticCleavageMechanism"/>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2006-06-09
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    ///
-    /// <seealso cref="HeterolyticCleavageMechanism"/>
     public class HeterolyticCleavagePBReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
         /// Constructor of the HeterolyticCleavagePBReaction object.
-        ///
         /// </summary>
         public HeterolyticCleavagePBReaction() { }
 
         /// <summary>
         ///  Gets the specification attribute of the HeterolyticCleavagePBReaction object.
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
-
+        /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#HeterolyticCleavagePB",
@@ -119,11 +116,8 @@ namespace NCDK.Reactions.Types
                         && !reactant.GetConnectedSingleElectrons(atom1).Any()
                         && !reactant.GetConnectedSingleElectrons(atom2).Any())
                 {
-
-                    /// <summary>/
                     for (int j = 0; j < 2; j++)
                     {
-
                         var atomList = new List<IAtom>();
                         if (j == 0)
                         {
@@ -159,11 +153,9 @@ namespace NCDK.Reactions.Types
         /// A: Atom
         /// #/=/-: bond
         /// B: Atom
-        ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
+        /// </code>
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var bond in reactant.Bonds)

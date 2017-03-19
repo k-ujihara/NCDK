@@ -26,23 +26,20 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Writer that outputs in the HIN format.
-    ///
+    /// </summary>
     // @author Rajarshi Guha <rajarshi@presidency.com>
     // @cdk.module io
     // @cdk.githash
     // @cdk.created 2004-01-27
     // @cdk.iooptions
-    /// </summary>
     public class HINWriter : DefaultChemObjectWriter
     {
-
         private TextWriter writer;
 
         /// <summary>
         /// Constructor.
-        ///
-        /// <param name="out">the stream to write the HIN file to.</param>
         /// </summary>
+        /// <param name="output">the stream to write the HIN file to.</param>
         public HINWriter(TextWriter output)
         {
             this.writer = output;
@@ -72,7 +69,6 @@ namespace NCDK.IO
         /// <summary>
         /// Flushes the output and closes this object.
         /// </summary>
-
         public override void Close()
         {
             writer.Close();
@@ -128,13 +124,11 @@ namespace NCDK.IO
         /// writes all the molecules supplied in a MoleculeSet class to
         /// a single HIN file. You can also supply a single Molecule object
         /// as well
-        ///
+        /// </summary>
         /// <param name="som">the set of molecules to write</param>
         /// <exception cref="IOException">if there is a problem writing the molecule</exception>
-        /// </summary>
         private void WriteAtomContainer(IAtomContainerSet<IAtomContainer> som)
         {
-
             //int na = 0;
             //string info = "";
             string sym;
@@ -143,12 +137,11 @@ namespace NCDK.IO
 
             for (int molnum = 0; molnum < som.Count; molnum++)
             {
-
                 IAtomContainer mol = som[molnum];
 
                 try
                 {
-                    string molname = "mol " + (molnum + 1) + " " + mol.GetProperty<string>(CDKPropertyName.TITLE);
+                    string molname = "mol " + (molnum + 1) + " " + mol.GetProperty<string>(CDKPropertyName.Title);
 
                     writer.Write(molname, 0, molname.Length);
                     writer.WriteLine();

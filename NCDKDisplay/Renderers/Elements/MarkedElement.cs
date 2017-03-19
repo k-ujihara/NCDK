@@ -20,6 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -160,7 +161,8 @@ namespace NCDK.Renderers.Elements
         /// <returns>the marked element</returns>
         public static MarkedElement MarkupBond(IRenderingElement elem, IBond bond)
         {
-            Debug.Assert(elem != null);
+            if (elem == null)
+                throw new ArgumentNullException(nameof(elem));
             MarkedElement tagElem = MarkupChemObj(elem, bond);
             tagElem.AggClass("bond");
             return tagElem;

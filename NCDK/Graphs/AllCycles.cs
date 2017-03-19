@@ -25,6 +25,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using NCDK.RingSearches;
 
 namespace NCDK.Graphs
 {
@@ -75,7 +76,6 @@ namespace NCDK.Graphs
     // @author John May
     // @cdk.module core
     // @cdk.githash
-    /// <seealso cref="RingSearches.RingSearch"/>
     public sealed class AllCycles
     {
         /// <summary>All simple cycles.</summary>
@@ -93,11 +93,11 @@ namespace NCDK.Graphs
         /// (Dec '12) which would successfully complete for a given Degree are listed
         /// below.
         ///
-        /// <table> <tr><th>Percent</th><th>Max Degree</th></tr>
-        /// <tr><td>99%</td><td>9</td></tr> <tr><td>99.95%</td><td>72</td></tr>
-        /// <tr><td>99.96%</td><td>84</td></tr> <tr><td>99.97%</td><td>126</td></tr>
-        /// <tr><td>99.98%</td><td>216</td></tr> <tr><td>99.99%</td><td>684</td></tr>
-        /// </table>
+        /// <list type="table"> <item><term>Percent</term><term>Max Degree</term></item>
+        /// <item><term>99%</term><term>9</term></item> <item><term>99.95%</term><term>72</term></item>
+        /// <item><term>99.96%</term><term>84</term></item> <item><term>99.97%</term><term>126</term></item>
+        /// <item><term>99.98%</term><term>216</term></item> <item><term>99.99%</term><term>684</term></item>
+        /// </list>
         /// </summary>
         /// <param name="graph">adjacency list representation of a graph</param>
         /// <param name="maxCycleSize">the maximum cycle size to perceive</param>
@@ -119,13 +119,11 @@ namespace NCDK.Graphs
             int removed = 0;
             foreach (int v in vertices)
             {
-
                 if (pGraph.Degree(v) > maxDegree) break; // or could throw exception...
 
                 pGraph.Remove(v, cycles);
                 removed++;
             }
-
             completed = removed == graph.Length;
         }
 

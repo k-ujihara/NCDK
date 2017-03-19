@@ -25,7 +25,6 @@ using NCDK.Common.Primitives;
 
 namespace NCDK.IO.Formats
 {
-    /// </summary>
     /// <summary>
     /// See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
     /// </summary>

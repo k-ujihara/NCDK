@@ -23,8 +23,8 @@ namespace NCDK.NInChI
 
     /// <summary>
     /// Exception thrown by JniInchi.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiException : Exception
     {
 

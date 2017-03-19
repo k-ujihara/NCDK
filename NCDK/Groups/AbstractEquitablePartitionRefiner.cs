@@ -24,79 +24,73 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /**
-     * Refines a 'coarse' partition (with more blocks) to a 'finer' partition that
-     * is equitable.
-     *
-     * Closely follows algorithm 7.5 in CAGES {@cdk.cite Kreher98}. The basic idea is that the refiner
-     * maintains a queue of blocks to refine, starting with all the initial blocks
-     * in the partition to refine. These blocks are popped off the queue, and
-     *
-     * @author maclean
-     * @cdk.module group
-     */
+    /// <summary>
+    /// Refines a 'coarse' partition (with more blocks) to a 'finer' partition that
+    /// is equitable.
+    /// </summary>
+    /// <remarks>
+    /// Closely follows algorithm 7.5 in CAGES {@cdk.cite Kreher98}. The basic idea is that the refiner
+    /// maintains a queue of blocks to refine, starting with all the initial blocks
+    /// in the partition to refine. These blocks are popped off the queue, and
+    /// </remarks>
+    // @author maclean
+    // @cdk.module group
     public abstract class AbstractEquitablePartitionRefiner
     {
-
-        /**
-         * A forward split order tends to favor partitions where the cells are
-         * refined from lowest to highest. A reverse split order is, of course, the
-         * opposite.
-         *
-         */
+        /// <summary>
+        /// A forward split order tends to favor partitions where the cells are
+        /// refined from lowest to highest. A reverse split order is, of course, the
+        /// opposite.
+        /// </summary>
         public enum SplitOrder
         {
-            FORWARD, REVERSE
-        };
+            Forward, Reverse
+        }
 
-        /**
-         * The bias in splitting cells when refining
-         */
-        private SplitOrder splitOrder = SplitOrder.FORWARD;
+        /// <summary>
+        /// The bias in splitting cells when refining
+        /// </summary>
+        private SplitOrder splitOrder = SplitOrder.Forward;
 
-        /**
-         * The block of the partition that is being refined
-         */
+        /// <summary>
+        /// The block of the partition that is being refined
+        /// </summary>
         private int currentBlockIndex;
 
-        /**
-         * The blocks to be refined, or at least considered for refinement
-         */
+        /// <summary>
+        /// The blocks to be refined, or at least considered for refinement
+        /// </summary>
         private Queue<ISet<int>> blocksToRefine;
 
-        /**
-         * Gets from the graph the number of vertices. Abstract to allow different
-         * graph classes to be used (eg: Graph or IAtomContainer, etc).
-         *
-         * @return the number of vertices
-         */
+        /// <summary>
+        /// Gets from the graph the number of vertices. Abstract to allow different
+        /// graph classes to be used (eg: Graph or IAtomContainer, etc).
+        /// </summary>
+        /// <returns>the number of vertices</returns>
         public abstract int GetVertexCount();
 
-        /**
-         * Find |a &cap; b| - that is, the size of the intersection between a and b.
-         *
-         * @param block a set of numbers
-         * @param vertexIndex the element to compare
-         * @return the size of the intersection
-         */
+        /// <summary>
+        /// Find |a Åø b| - that is, the size of the intersection between a and b.
+        /// </summary>
+        /// <param name="block">a set of numbers</param>
+        /// <param name="vertexIndex">the element to compare</param>
+        /// <returns>the size of the intersection</returns>
         public abstract int NeighboursInBlock(ISet<int> block, int vertexIndex);
 
-        /**
-         * Set the preference for splitting cells.
-         *
-         * @param splitOrder either FORWARD or REVERSE
-         */
+        /// <summary>
+        /// Set the preference for splitting cells.
+        /// </summary>
+        /// <param name="splitOrder">either <see cref="SplitOrder.Forward"/>  or <see cref="SplitOrder.Reverse"/></param>
         public void SetSplitOrder(SplitOrder splitOrder)
         {
             this.splitOrder = splitOrder;
         }
 
-        /**
-         * Refines the coarse partition <code>a</code> into a finer one.
-         *
-         * @param coarser the partition to refine
-         * @return a finer partition
-         */
+        /// <summary>
+        /// Refines the coarse partition <code>a</code> into a finer one.
+        /// </summary>
+        /// <param name="coarser">the partition to refine</param>
+        /// <returns>a finer partition</returns>
         public Partition Refine(Partition coarser)
         {
             Partition finer = new Partition(coarser);
@@ -136,16 +130,15 @@ namespace NCDK.Groups
             return finer;
         }
 
-        /**
-         * Gets the neighbor invariants for the block j as a map of
-         * |N<sub>g</sub>(v) &cap; T| to elements of the block j. That is, the
-         * size of the intersection between the set of neighbors of element v in
-         * the graph and the target block T.
-         *
-         * @param partition the current partition
-         * @param targetBlock the current target block of the partition
-         * @return a map of set intersection sizes to elements
-         */
+        /// <summary>
+        /// Gets the neighbor invariants for the block j as a map of
+        /// |N<sub>g</sub>(v) Åø T| to elements of the block j. That is, the
+        /// size of the intersection between the set of neighbors of element v in
+        /// the graph and the target block T.
+        /// </summary>
+        /// <param name="partition">the current partition</param>
+        /// <param name="targetBlock">the current target block of the partition</param>
+        /// <returns>a map of set intersection sizes to elements</returns>
         private IDictionary<int, SortedSet<int>> GetInvariants(Partition partition, ISet<int> targetBlock)
         {
             IDictionary<int, SortedSet<int>> setList = new Dictionary<int, SortedSet<int>>();
@@ -166,12 +159,11 @@ namespace NCDK.Groups
             return setList;
         }
 
-        /**
-         * Split the current block using the invariants calculated in getInvariants.
-         *
-         * @param invariants a map of neighbor counts to elements
-         * @param partition the partition that is being refined
-         */
+        /// <summary>
+        /// Split the current block using the invariants calculated in getInvariants.
+        /// </summary>
+        /// <param name="invariants">a map of neighbor counts to elements</param>
+        /// <param name="partition">the partition that is being refined</param>
         private void Split(IDictionary<int, SortedSet<int>> invariants, Partition partition)
         {
             int nonEmptyInvariants = invariants.Keys.Count;
@@ -181,7 +173,7 @@ namespace NCDK.Groups
                 invariantKeys.AddRange(invariants.Keys);
                 partition.RemoveCell(currentBlockIndex);
                 int k = currentBlockIndex;
-                if (splitOrder == SplitOrder.REVERSE)
+                if (splitOrder == SplitOrder.Reverse)
                 {
                     invariantKeys.Sort();
                 }

@@ -37,20 +37,17 @@ namespace NCDK.IO
     /// A reader for ShelX output (RES) files. It does not read all information.
     /// The list of fields that is read: REM, END, CELL, SPGR.
     /// In additions atoms are read.
-    ///
-    /// <p>A reader for ShelX files. It currently supports ShelXL.
-    ///
-    /// <p>The ShelXL format is described on the net:
-    /// <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html"
-    /// http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
-    ///
+    /// <para>A reader for ShelX files. It currently supports ShelXL.</para>
+    /// </summary>
+    /// <remarks>
+    /// The ShelXL format is described on the net:
+    /// <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
+    /// </remarks>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, ShelXL
     // @author E.L. Willighagen
-    /// </summary>
     public class ShelXReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -182,317 +179,187 @@ namespace NCDK.IO
                 {
                     end_found = true;
                 }
-                else if (u_command.Equals("TITL"))
-                {
-                }
-                else if (u_command.Equals("CELL"))
-                {
-                    // example: CELL 1.54184 23.56421 7.13203 18.68928 90.0000
-                    // 109.3799 90.0000 CELL 1.54184 7.11174 21.71704 30.95857
-                    // 90.000 90.000 90.000
-                    var st = Strings.Tokenize(line);
-                    //st[0]; // string command_again
-                    //st[1]; // string wavelength
-                    string sa = st[2];
-                    string sb = st[3];
-                    string sc = st[4];
-                    string salpha = st[5];
-                    string sbeta = st[6];
-                    string sgamma = st[7];
-                    Debug.WriteLine("a: " + sa);
-                    Debug.WriteLine("b: " + sb);
-                    Debug.WriteLine("c: " + sc);
-                    Debug.WriteLine("alpha: " + salpha);
-                    Debug.WriteLine("beta : " + sbeta);
-                    Debug.WriteLine("gamma: " + sgamma);
-
-                    double a = FortranFormat.Atof(sa);
-                    double b = FortranFormat.Atof(sb);
-                    double c = FortranFormat.Atof(sc);
-                    double alpha = FortranFormat.Atof(salpha);
-                    double beta = FortranFormat.Atof(sbeta);
-                    double gamma = FortranFormat.Atof(sgamma);
-
-                    Vector3[] axes = CrystalGeometryTools.NotionalToCartesian(a, b, c, alpha, beta, gamma);
-
-                    crystal.A = axes[0];
-                    crystal.B = axes[1];
-                    crystal.C = axes[2];
-                }
-                else if (u_command.Equals("ZERR"))
-                {
-                }
-                else if (u_command.Equals("LATT"))
-                {
-                }
-                else if (u_command.Equals("SYMM"))
-                {
-                }
-                else if (u_command.Equals("SFAC"))
-                {
-                }
-                else if (u_command.Equals("DISP"))
-                {
-                }
-                else if (u_command.Equals("UNIT"))
-                {
-                }
-                else if (u_command.Equals("LAUE"))
-                {
-                }
-                else if (u_command.Equals("REM "))
-                {
-                }
-                else if (u_command.Equals("MORE"))
-                {
-                }
-                else if (u_command.Equals("TIME"))
-                {
-                    /* 7.2 Reflection data input */
-                }
-                else if (u_command.Equals("HKLF"))
-                {
-                }
-                else if (u_command.Equals("OMIT"))
-                {
-                }
-                else if (u_command.Equals("SHEL"))
-                {
-                }
-                else if (u_command.Equals("BASF"))
-                {
-                }
-                else if (u_command.Equals("TWIN"))
-                {
-                }
-                else if (u_command.Equals("EXTI"))
-                {
-                }
-                else if (u_command.Equals("SWAT"))
-                {
-                }
-                else if (u_command.Equals("HOPE"))
-                {
-                }
-                else if (u_command.Equals("MERG"))
-                {
-                    /* 7.3 Atom list and least-squares constraints */
-                }
-                else if (u_command.Equals("SPEC"))
-                {
-                }
-                else if (u_command.Equals("RESI"))
-                {
-                }
-                else if (u_command.Equals("MOVE"))
-                {
-                }
-                else if (u_command.Equals("ANIS"))
-                {
-                }
-                else if (u_command.Equals("AFIX"))
-                {
-                }
-                else if (u_command.Equals("HFIX"))
-                {
-                }
-                else if (u_command.Equals("FRAG"))
-                {
-                }
-                else if (u_command.Equals("FEND"))
-                {
-                }
-                else if (u_command.Equals("EXYZ"))
-                {
-                }
-                else if (u_command.Equals("EXTI"))
-                {
-                }
-                else if (u_command.Equals("EADP"))
-                {
-                }
-                else if (u_command.Equals("EQIV"))
-                {
-                    /* 7.4 The connectivity list */
-                }
-                else if (u_command.Equals("CONN"))
-                {
-                }
-                else if (u_command.Equals("PART"))
-                {
-                }
-                else if (u_command.Equals("BIND"))
-                {
-                }
-                else if (u_command.Equals("FREE"))
-                {
-                    /* 7.5 Least-squares restraints */
-                }
-                else if (u_command.Equals("DFIX"))
-                {
-                }
-                else if (u_command.Equals("DANG"))
-                {
-                }
-                else if (u_command.Equals("BUMP"))
-                {
-                }
-                else if (u_command.Equals("SAME"))
-                {
-                }
-                else if (u_command.Equals("SADI"))
-                {
-                }
-                else if (u_command.Equals("CHIV"))
-                {
-                }
-                else if (u_command.Equals("FLAT"))
-                {
-                }
-                else if (u_command.Equals("DELU"))
-                {
-                }
-                else if (u_command.Equals("SIMU"))
-                {
-                }
-                else if (u_command.Equals("DEFS"))
-                {
-                }
-                else if (u_command.Equals("ISOR"))
-                {
-                }
-                else if (u_command.Equals("NCSY"))
-                {
-                }
-                else if (u_command.Equals("SUMP"))
-                {
-                    /* 7.6 Least-squares organization */
-                }
-                else if (u_command.Equals("L.S."))
-                {
-                }
-                else if (u_command.Equals("CGLS"))
-                {
-                }
-                else if (u_command.Equals("BLOC"))
-                {
-                }
-                else if (u_command.Equals("DAMP"))
-                {
-                }
-                else if (u_command.Equals("STIR"))
-                {
-                }
-                else if (u_command.Equals("WGHT"))
-                {
-                }
-                else if (u_command.Equals("FVAR"))
-                {
-                    /* 7.7 Lists and tables */
-                }
-                else if (u_command.Equals("BOND"))
-                {
-                }
-                else if (u_command.Equals("CONF"))
-                {
-                }
-                else if (u_command.Equals("MPLA"))
-                {
-                }
-                else if (u_command.Equals("RTAB"))
-                {
-                }
-                else if (u_command.Equals("HTAB"))
-                {
-                }
-                else if (u_command.Equals("LIST"))
-                {
-                }
-                else if (u_command.Equals("ACTA"))
-                {
-                }
-                else if (u_command.Equals("SIZE"))
-                {
-                }
-                else if (u_command.Equals("TEMP"))
-                {
-                }
-                else if (u_command.Equals("WPDB"))
-                {
-                    /* 7.8 Fouriers, peak search and lineprinter plots */
-                }
-                else if (u_command.Equals("FMAP"))
-                {
-                }
-                else if (u_command.Equals("GRID"))
-                {
-                }
-                else if (u_command.Equals("PLAN"))
-                {
-                }
-                else if (u_command.Equals("MOLE"))
-                {
-                    /* NOT DOCUMENTED BUT USED BY PLATON */
-                }
-                else if (u_command.Equals("SPGR"))
-                {
-                    // Line added by PLATON stating the spacegroup
-                    var st = Strings.Tokenize(line);
-                    //st[0]; // string command_again
-                    string spacegroup = st[1];
-                    crystal.SpaceGroup = spacegroup;
-                }
-                else if (u_command.Equals("    "))
-                {
-                    Debug.WriteLine("Disrgarding line assumed to be added by PLATON: " + line);
-
-                    /* All other is atom */
-                }
-                else
-                {
-                    //Debug.WriteLine("Assumed to contain an atom: " + line);
-                    
-                    // this line gives an atom, because all lines not starting with
-                    // a ShelX command is an atom (that sucks!)
-                    var st = Strings.Tokenize(line);
-                    string atype = st[0];
-                    //st[1]; // string scatt_factor
-                    string sa = st[2];
-                    string sb = st[3];
-                    string sc = st[4];
-                    // skip the rest
-
-                    if (char.IsDigit(atype[1]))
+                else switch (u_command)
                     {
-                        // atom type has a one letter code
-                        atype = atype.Substring(0, 1);
-                    }
-                    else
-                    {
-                        StringBuilder sb2 = new StringBuilder();
-                        sb2.Append(atype[1]);
-                        atype = atype.Substring(0, 1) + sb2.ToString().ToLowerInvariant();
-                    }
+                        case "TITL":
+                            break;
+                        case "CELL":
+                            {
+                                // example: CELL 1.54184 23.56421 7.13203 18.68928 90.0000
+                                // 109.3799 90.0000 CELL 1.54184 7.11174 21.71704 30.95857
+                                // 90.000 90.000 90.000
+                                var st = Strings.Tokenize(line);
+                                //st[0]; // string command_again
+                                //st[1]; // string wavelength
+                                string sa = st[2];
+                                string sb = st[3];
+                                string sc = st[4];
+                                string salpha = st[5];
+                                string sbeta = st[6];
+                                string sgamma = st[7];
+                                Debug.WriteLine("a: " + sa);
+                                Debug.WriteLine("b: " + sb);
+                                Debug.WriteLine("c: " + sc);
+                                Debug.WriteLine("alpha: " + salpha);
+                                Debug.WriteLine("beta : " + sbeta);
+                                Debug.WriteLine("gamma: " + sgamma);
 
-                    double[] frac = new double[3];
-                    frac[0] = FortranFormat.Atof(sa); // fractional coordinates
-                    frac[1] = FortranFormat.Atof(sb);
-                    frac[2] = FortranFormat.Atof(sc);
-                    Debug.WriteLine("fa,fb,fc: " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+                                double a = FortranFormat.Atof(sa);
+                                double b = FortranFormat.Atof(sb);
+                                double c = FortranFormat.Atof(sc);
+                                double alpha = FortranFormat.Atof(salpha);
+                                double beta = FortranFormat.Atof(sbeta);
+                                double gamma = FortranFormat.Atof(sgamma);
 
-                    if (string.Equals(atype, "Q", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // ingore atoms named Q
+                                Vector3[] axes = CrystalGeometryTools.NotionalToCartesian(a, b, c, alpha, beta, gamma);
+
+                                crystal.A = axes[0];
+                                crystal.B = axes[1];
+                                crystal.C = axes[2];
+                            }
+                            break;
+                        case "ZERR":
+                        case "LATT":
+                        case "SYMM":
+                        case "SFAC":
+                        case "DISP":
+                        case "UNIT":
+                        case "LAUE":
+                        case "REM ":
+                        case "MORE":
+                        case "TIME":
+                        /* 7.2 Reflection data input */
+                        case "HKLF":
+                        case "OMIT":
+                        case "SHEL":
+                        case "BASF":
+                        case "TWIN":
+                        case "EXTI":
+                        case "SWAT":
+                        case "HOPE":
+                        case "MERG":
+                        /* 7.3 Atom list and least-squares constraints */
+                        case "SPEC":
+                        case "RESI":
+                        case "MOVE":
+                        case "ANIS":
+                        case "AFIX":
+                        case "HFIX":
+                        case "FRAG":
+                        case "FEND":
+                        case "EXYZ":
+                        //case "EXTI":
+                        case "EADP":
+                        case "EQIV":
+                        /* 7.4 The connectivity list */
+                        case "CONN":
+                        case "PART":
+                        case "BIND":
+                        case "FREE":
+                        /* 7.5 Least-squares restraints */
+                        case "DFIX":
+                        case "DANG":
+                        case "BUMP":
+                        case "SAME":
+                        case "SADI":
+                        case "CHIV":
+                        case "FLAT":
+                        case "DELU":
+                        case "SIMU":
+                        case "DEFS":
+                        case "ISOR":
+                        case "NCSY":
+                        case "SUMP":
+                        /* 7.6 Least-squares organization */
+                        case "L.S.":
+                        case "CGLS":
+                        case "BLOC":
+                        case "DAMP":
+                        case "STIR":
+                        case "WGHT":
+                        case "FVAR":
+                        /* 7.7 Lists and tables */
+                        case "BOND":
+                        case "CONF":
+                        case "MPLA":
+                        case "RTAB":
+                        case "HTAB":
+                        case "LIST":
+                        case "ACTA":
+                        case "SIZE":
+                        case "TEMP":
+                        case "WPDB":
+                        /* 7.8 Fouriers, peak search and lineprinter plots */
+                        case "FMAP":
+                        case "GRID":
+                        case "PLAN":
+                            break;
+                        case "MOLE":
+                            /* NOT DOCUMENTED BUT USED BY PLATON */
+                            break;
+                        case "SPGR":
+                            {
+                                // Line added by PLATON stating the spacegroup
+                                var st = Strings.Tokenize(line);
+                                //st[0]; // string command_again
+                                string spacegroup = st[1];
+                                crystal.SpaceGroup = spacegroup;
+                            }
+                            break;
+                        case "    ":
+                            {
+                                Debug.WriteLine("Disrgarding line assumed to be added by PLATON: " + line);
+
+                                /* All other is atom */
+                            }
+                            break;
+                        default:
+                            {
+                                //Debug.WriteLine("Assumed to contain an atom: " + line);
+
+                                // this line gives an atom, because all lines not starting with
+                                // a ShelX command is an atom (that sucks!)
+                                var st = Strings.Tokenize(line);
+                                string atype = st[0];
+                                //st[1]; // string scatt_factor
+                                string sa = st[2];
+                                string sb = st[3];
+                                string sc = st[4];
+                                // skip the rest
+
+                                if (char.IsDigit(atype[1]))
+                                {
+                                    // atom type has a one letter code
+                                    atype = atype.Substring(0, 1);
+                                }
+                                else
+                                {
+                                    StringBuilder sb2 = new StringBuilder();
+                                    sb2.Append(atype[1]);
+                                    atype = atype.Substring(0, 1) + sb2.ToString().ToLowerInvariant();
+                                }
+
+                                double[] frac = new double[3];
+                                frac[0] = FortranFormat.Atof(sa); // fractional coordinates
+                                frac[1] = FortranFormat.Atof(sb);
+                                frac[2] = FortranFormat.Atof(sc);
+                                Debug.WriteLine("fa,fb,fc: " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+
+                                if (string.Equals(atype, "Q", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    // ingore atoms named Q
+                                }
+                                else
+                                {
+                                    Trace.TraceInformation("Adding atom: " + atype + ", " + frac[0] + ", " + frac[1] + ", " + frac[2]);
+                                    IAtom atom = crystal.Builder.CreateAtom(atype);
+                                    atom.FractionalPoint3D = new Vector3(frac[0], frac[1], frac[2]);
+                                    crystal.Atoms.Add(atom);
+                                    Debug.WriteLine("Atom added: ", atom);
+                                }
+                            }
+                            break;
                     }
-                    else
-                    {
-                        Trace.TraceInformation("Adding atom: " + atype + ", " + frac[0] + ", " + frac[1] + ", " + frac[2]);
-                        IAtom atom = crystal.Builder.CreateAtom(atype);
-                        atom.FractionalPoint3D = new Vector3(frac[0], frac[1], frac[2]);
-                        crystal.Atoms.Add(atom);
-                        Debug.WriteLine("Atom added: ", atom);
-                    }
-                }
                 line = input.ReadLine();
             }
             return crystal;

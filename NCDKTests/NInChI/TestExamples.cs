@@ -74,7 +74,7 @@ namespace NCDK.NInChI
             //
             NInchiOutput output = NInchiWrapper.GetInchiFromInchi(
                         new NInchiInputInchi(inchiIn));
-            string inchiOut = output.Inchi;
+            string inchiOut = output.InChI;
             // Output InChI:
             //   InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)/t2-/m0/s1
             // END SNIPPET: inchi2inchi-hydrogen
@@ -89,13 +89,13 @@ namespace NCDK.NInChI
             // Compress InChI
             NInchiOutput cout = NInchiWrapper.GetInchiFromInchi(
                         new NInchiInputInchi(inchi, "-compress"));
-            string compressedInchi = cout.Inchi;
+            string compressedInchi = cout.InChI;
             // compressedInchi = InChI=1/C3H7NO2/cABBCC/hB1D2A3,1EF
             //
             // Uncompress InChI
             NInchiOutput ucout = NInchiWrapper.GetInchiFromInchi(
                     new NInchiInputInchi(compressedInchi));
-            string uncompressedInchi = ucout.Inchi;
+            string uncompressedInchi = ucout.InChI;
             // uncompressedInchi = InChI=1/C3H7NO2/c1-2(4)3(5)6/h2H,4H2,1H3,(H,5,6)
             // END SNIPPET: inchi2inchi-compress
         }

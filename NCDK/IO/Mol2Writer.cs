@@ -44,11 +44,11 @@ namespace NCDK.IO
 
         /// <summary>
         /// Constructs a new Mol2 writer.
-        /// <param name="out">the stream to write the Mol2 file to.</param>
+        /// <param name="output">the stream to write the Mol2 file to.</param>
         /// </summary>
-        public Mol2Writer(TextWriter out_)
+        public Mol2Writer(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public Mol2Writer(Stream output)
@@ -57,9 +57,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => Mol2Format.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -111,9 +111,9 @@ namespace NCDK.IO
             try
             {
                 Debug.WriteLine("Writing header...");
-                if (mol.GetProperty<string>(CDKPropertyName.TITLE) != null)
+                if (mol.GetProperty<string>(CDKPropertyName.Title) != null)
                 {
-                    writer.Write("#        Name: " + mol.GetProperty<string>(CDKPropertyName.TITLE));
+                    writer.Write("#        Name: " + mol.GetProperty<string>(CDKPropertyName.Title));
                     writer.WriteLine();
                 }
                 // FIXME: add other types of meta data

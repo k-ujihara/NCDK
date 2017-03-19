@@ -22,42 +22,42 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     ///  IDescriptor based on the number of bonds of a certain bond order.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>order</td>
-    ///     <td>""</td>
-    ///     <td>The bond order</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>order</term>
+    ///     <term>""</term>
+    ///     <term>The bond order</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// Returns a single value with name <i>nBX</i> where <i>X</i> can be
-    /// <ul>
-    /// <li>s for single bonds
-    /// <li>d for double bonds
-    /// <li>t for triple bonds
-    /// <li>a for aromatic bonds
-    /// <li>"" for all bonds
-    /// </ul>
-    ///
+    /// <list type="bullet">
+    /// <item>s for single bonds</item>
+    /// <item>d for double bonds</item>
+    /// <item>t for triple bonds</item>
+    /// <item>a for aromatic bonds</item>
+    /// <item>"" for all bonds</item>
+    /// </list>
+    /// </para>
     /// Note that the descriptor does not consider bonds to H's.
-    ///
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondCount
-    /// </summary>
     public class BondCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-
         /// <summary>defaults to UNSET, which means: count all bonds </summary>
         private string order = "";
 
@@ -169,15 +169,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return (order == BondOrder.Quadruple && "q".Equals(orderString));
         }
 
-        /// <summary>
-        /// The specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

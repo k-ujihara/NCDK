@@ -70,9 +70,9 @@ namespace NCDK.Reactions.Mechanisms
             // remove one lone pair electron and substitute with one single electron and charge 1.
             int posAtom = molecule.Atoms.IndexOf(atomList[0]);
             var lps = reactantCloned.GetConnectedLonePairs(reactantCloned.Atoms[posAtom]);
-            reactantCloned.Remove(lps.Last());
+            reactantCloned.LonePairs.Remove(lps.Last());
 
-            reactantCloned.Add(molecule.Builder.CreateSingleElectron(reactantCloned.Atoms[posAtom]));
+            reactantCloned.SingleElectrons.Add(molecule.Builder.CreateSingleElectron(reactantCloned.Atoms[posAtom]));
             int charge = reactantCloned.Atoms[posAtom].FormalCharge.Value;
             reactantCloned.Atoms[posAtom].FormalCharge = charge + 1;
 

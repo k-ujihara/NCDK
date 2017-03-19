@@ -23,12 +23,10 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the IsotopePatternGenerator.
-    ///
+    /// </summary>
     // @cdk.module test-formula
-    ///
     // @author         Miguel Rojas
     // @cdk.created    2007-03-01
-    /// </summary>
     [TestClass()]
     public class IsotopePatternGeneratorTest : CDKTestCase
     {

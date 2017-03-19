@@ -29,11 +29,10 @@ namespace NCDK.Hash
     /// <summary>
     /// An abstract hash function providing several utility methods to be used by
     /// other hashing functions.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal class AbstractHashGenerator
     {
         /* pseudorandom number generator */
@@ -42,10 +41,9 @@ namespace NCDK.Hash
         /// <summary>
         /// Construct an abstract hash function providing the pseudorandom number
         /// generator.
-        ///
-        /// <param name="pseudorandom">a pseudorandom number generator</param>
-        /// <exception cref="NullPointerException">the pseudorandom number generator was null</exception>
         /// </summary>
+        /// <param name="pseudorandom">a pseudorandom number generator</param>
+        /// <exception cref="ArgumentNullException">the pseudorandom number generator was null</exception>
         public AbstractHashGenerator(Pseudorandom pseudorandom)
         {
             if (pseudorandom == null) throw new ArgumentNullException("null pseduorandom number generator provided");
@@ -54,11 +52,10 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Create a copy of the array of long values.
-        ///
+        /// </summary>
         /// <param name="src">original values</param>
         /// <returns>copy of the original values</returns>
-        /// @see Arrays#CopyOf(long[], int)
-        /// </summary>
+        /// <seealso cref="Array.Copy(Array, Array, int)"/>
         public static long[] Copy(long[] src)
         {
             var ret = new long[src.Length];
@@ -68,11 +65,10 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Copy the values from the source (src) array to the destination (dest).
-        ///
+        /// </summary>
         /// <param name="src">source values</param>
         /// <param name="dest">destination of the source copy</param>
-        /// @see System#Arraycopy(Object, int, Object, int, int);
-        /// </summary>
+        /// <seealso cref="Array.ConstrainedCopy(Array, int, Array, int, int)"/>
         public static void Copy(long[] src, long[] dest)
         {
             Array.Copy(src, 0, dest, 0, dest.Length);
@@ -80,25 +76,22 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Generate the next random number.
-        ///
-        /// <param name="seed">a {@literal long} value to seed a pseudorandom number</param>
-        ///             generator
-        /// <returns>next pseudorandom number</returns>
         /// </summary>
+        /// <param name="seed">a <see cref="long"/> value to seed a pseudorandom number generator</param>
+        /// <returns>next pseudorandom number</returns>
         public long Rotate(long seed)
         {
             return pseudorandom.Next(seed);
         }
 
         /// <summary>
-        /// Rotate a <i>value</i>, <i>n</i> times. The rotation uses a pseudorandom
+        /// Rotate a <paramref name="value"/>, <paramref name="n"/> times. The rotation uses a pseudorandom
         /// number generator to sequentially generate values seed on the previous
         /// value.
-        ///
-        /// <param name="value">the {@literal long} value to rotate</param>
-        /// <param name="n">the number of times to rotate the value</param>
-        /// <returns>the {@literal long} value rotated the specified number of times</returns>
         /// </summary>
+        /// <param name="value">the <see cref="long"/> value to rotate</param>
+        /// <param name="n">the number of times to rotate the value</param>
+        /// <returns>the <see cref="long"/> value rotated the specified number of times</returns>
         public long Rotate(long value, int n)
         {
             while (n-- > 0)
@@ -109,21 +102,19 @@ namespace NCDK.Hash
         /// <summary>
         /// Returns the value of the lowest three bits. This value is between 0 and 7
         /// inclusive.
-        ///
-        /// <param name="value">a {@literal long} value</param>
-        /// <returns>the {@literal int} value of the lowest three bits.</returns>
         /// </summary>
+        /// <param name="value">a <see cref="long"/> value</param>
+        /// <returns>the <see cref="int"/> value of the lowest three bits.</returns>
         public static int LowestThreeBits(long value)
         {
             return (int)(value & 0x7);
         }
 
         /// <summary>
-        /// Distribute the provided value across the set of {@literal long} values.
-        ///
-        /// <param name="value">a {@literal long} value to distribute</param>
-        /// <returns>the {@literal long} value distributed a set amount</returns>
+        /// Distribute the provided value across the set of <see cref="long"/> values.
         /// </summary>
+        /// <param name="value">a <see cref="long"/> value to distribute</param>
+        /// <returns>the <see cref="long"/> value distributed a set amount</returns>
         public long Distribute(long value)
         {
             // rotate 1-8 times
@@ -132,17 +123,14 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Convert an IAtomContainer to an adjacency list.
-        ///
+        /// </summary>
         /// <param name="container">the container to convert</param>
         /// <returns>adjacency list representation</returns>
-        /// </summary>
         public static int[][] ToAdjList(IAtomContainer container)
         {
-
             if (container == null) throw new ArgumentException("atom container was null");
 
             int n = container.Atoms.Count;
-
             int[][] graph = Arrays.CreateJagged<int>(n, 16);
             int[] degree = new int[n];
 

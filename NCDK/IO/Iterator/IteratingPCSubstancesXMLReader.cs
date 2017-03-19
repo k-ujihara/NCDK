@@ -37,10 +37,8 @@ namespace NCDK.IO.Iterator
     // @cdk.module   io
     // @cdk.githash
     // @cdk.iooptions
-    /// 
     // @author       Egon Willighagen <egonw@users.sf.net>
     // @cdk.created  2008-05-05
-    /// 
     // @cdk.keyword  file format, ASN
     // @cdk.keyword  PubChem
     public class IteratingPCSubstancesXMLReader
@@ -53,15 +51,15 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new IteratingPCSubstancesXMLReader that can read 
         /// </summary>
-        /// <param name="in_">The input stream</param>
+        /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
         /// <exception cref="IOException">if there is error in getting the <see cref="IsotopeFactory"/></exception>
         /// <event cref="Exception">if there is an error isn setting up the XML parser</event>
-        public IteratingPCSubstancesXMLReader(TextReader in_, IChemObjectBuilder builder)
+        public IteratingPCSubstancesXMLReader(TextReader ins, IChemObjectBuilder builder)
         {
             parserHelper = new PubChemXMLHelper(builder);
-            primarySource = in_;
-            parser = XDocument.Load(in_).Root;
+            primarySource = ins;
+            parser = XDocument.Load(ins).Root;
         }
 
         /// <summary>

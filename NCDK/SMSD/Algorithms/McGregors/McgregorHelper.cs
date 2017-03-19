@@ -30,10 +30,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
     ///
     /// The second part of the program extents the mapping by the McGregor algorithm in case,
     /// that not all atoms of molecule A and molecule B are mapped by the clique approach.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class McgregorHelper
     {
 
@@ -55,14 +55,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
 
         /// <summary>
         /// Stores the variables
-        /// <param name="mappingCheckFlag">/// @param mappedAtomCount</param>
-        /// <param name="mappedAtomsOrg">/// @param neighborBondNumA</param>
-        /// <param name="neighborBondNumB">/// @param iBondNeighborAtomsA</param>
-        /// <param name="iBondNeighborAtomsB">/// @param cBondNeighborsA</param>
-        /// <param name="cBondNeighborsB">/// @param setNumA</param>
-        /// <param name="setNumB">/// @param iBondSetA</param>
-        /// <param name="iBondSetB">/// @param cBondSetA</param>
-        /// <param name="cBondSetB">/// </summary></param>
+        /// </summary>
         protected internal McgregorHelper(bool mappingCheckFlag, int mappedAtomCount, IList<int> mappedAtomsOrg,
                                  int neighborBondNumA, int neighborBondNumB, IList<int> iBondNeighborAtomsA,
                                  IList<int> iBondNeighborAtomsB, IList<string> cBondNeighborsA, IList<string> cBondNeighborsB, int setNumA,

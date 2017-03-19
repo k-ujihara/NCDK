@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -143,11 +128,11 @@ namespace NCDK.Default
         {
              NotifyChanged(evt);         }
 
-        public bool IsEmpty
-            => (setOfMolecules == null || setOfMolecules.IsEmpty)
-            && (setOfReactions == null || setOfReactions.IsEmpty)
-            && (ringSet == null || ringSet.IsEmpty)
-            && (crystal == null || crystal.IsEmpty);
+        public bool IsEmpty()
+            => (setOfMolecules == null || setOfMolecules.IsEmpty())
+            && (setOfReactions == null || setOfReactions.IsEmpty())
+            && (ringSet == null || ringSet.IsEmpty())
+            && (crystal == null || crystal.IsEmpty());
     }
 }
 namespace NCDK.Silent
@@ -244,10 +229,10 @@ namespace NCDK.Silent
         {
                     }
 
-        public bool IsEmpty
-            => (setOfMolecules == null || setOfMolecules.IsEmpty)
-            && (setOfReactions == null || setOfReactions.IsEmpty)
-            && (ringSet == null || ringSet.IsEmpty)
-            && (crystal == null || crystal.IsEmpty);
+        public bool IsEmpty()
+            => (setOfMolecules == null || setOfMolecules.IsEmpty())
+            && (setOfReactions == null || setOfReactions.IsEmpty())
+            && (ringSet == null || ringSet.IsEmpty())
+            && (crystal == null || crystal.IsEmpty());
     }
 }

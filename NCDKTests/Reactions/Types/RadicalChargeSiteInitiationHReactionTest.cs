@@ -240,27 +240,27 @@ namespace NCDK.Reactions.Types
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("O"));
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[5], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[6], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[7], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[8], BondOrder.Single);
 
             IAtom atom = molecule.Atoms[0];
             atom.FormalCharge = 1;
-            molecule.Add(new SingleElectron(atom));
+            molecule.SingleElectrons.Add(new SingleElectron(atom));
 
             try
             {
@@ -286,28 +286,28 @@ namespace NCDK.Reactions.Types
 
             /* [O+]=CC */
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("O"));
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[4], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[5], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[2], molecule.Atoms[6], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[7], BondOrder.Single);
             molecule.Atoms[0].FormalCharge = 1;
             setOfProducts.Add(molecule);
 
             /* [H*] */
             IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Add(new Atom("H"));
-            molecule2.Add(new SingleElectron(molecule2.Atoms[0]));
+            molecule2.Atoms.Add(new Atom("H"));
+            molecule2.SingleElectrons.Add(new SingleElectron(molecule2.Atoms[0]));
             setOfProducts.Add(molecule2);
 
             return setOfProducts;
@@ -317,7 +317,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {

@@ -38,11 +38,10 @@ namespace <#= ns.NS #>
 {
     /// <summary>
     /// A set of AtomContainers.
-    ///
+    /// </summary>
     // @author        hel
     // @cdk.module    data
     // @cdk.githash
-    /// </summary>
     [Serializable]
     public class AtomContainerSet<T>
         : ChemObject, IAtomContainerSet<T>, IChemObjectListener, ICloneable
@@ -127,9 +126,8 @@ namespace <#= ns.NS #>
 
         /// <summary>
         ///  Adds all atomContainers in the AtomContainerSet to this container.
-        ///
-        /// <param name="atomContainerSet">The AtomContainerSet</param>
         /// </summary>
+        /// <param name="atomContainerSet">The AtomContainerSet</param>
         public virtual void Add(IAtomContainerSet<T> atomContainerSet)
         {
             foreach (var iter in atomContainerSet)
@@ -139,7 +137,6 @@ namespace <#= ns.NS #>
             
             // NotifyChanged() is called by Add()
 		}
-
 
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
@@ -199,7 +196,7 @@ namespace <#= ns.NS #>
 
         public bool Contains(T atomContainer) => atomContainers.Contains(atomContainer);
 
-        public bool IsEmpty { get { return atomContainers.Count == 0; } }
+        public bool IsEmpty() => atomContainers.Count == 0;
 
         public int Count => atomContainers.Count;
 
@@ -208,9 +205,8 @@ namespace <#= ns.NS #>
         /// <summary>
         ///  Called by objects to which this object has
         ///  registered as a listener.
-        ///
-        /// <param name="event">A change event pointing to the source of the change</param>
         /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
             <# if (!ns.IsSilent) { #> NotifyChanged(evt); <# } #>
@@ -218,8 +214,8 @@ namespace <#= ns.NS #>
         
         /// <summary>
         /// Sort the AtomContainers and multipliers using a provided Comparator.
-        /// <param name="comparator">defines the sorting method</param>
         /// </summary>
+        /// <param name="comparator">defines the sorting method</param>
         public void Sort(IComparer<T> comparator)
         {
             // need to use boxed primitives as we can't customise sorting of int primitives

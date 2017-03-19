@@ -177,7 +177,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
@@ -198,18 +198,18 @@ namespace NCDK.Reactions.Types
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
             IAtomContainer molecule = builder.CreateAtomContainer();//CreateFromSmiles("C-C#[O+]")
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
             IAtom oxy = builder.CreateAtom("O");
             oxy.FormalCharge = 1;
-            molecule.Add(oxy);
+            molecule.Atoms.Add(oxy);
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Triple);
 
             try
@@ -240,22 +240,22 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule1 = builder.CreateAtomContainer();//CreateFromSmiles("[C+]");
             IAtom carb = builder.CreateAtom("C");
             carb.FormalCharge = 1;
-            molecule1.Add(carb);
-            molecule1.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(carb);
+            molecule1.Atoms.Add(builder.CreateAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[1], BondOrder.Single);
-            molecule1.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(builder.CreateAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[2], BondOrder.Single);
-            molecule1.Add(builder.CreateAtom("H"));
+            molecule1.Atoms.Add(builder.CreateAtom("H"));
             molecule1.AddBond(molecule1.Atoms[0], molecule1.Atoms[3], BondOrder.Single);
 
             IAtomContainer molecule2 = builder.CreateAtomContainer();//CreateFromSmiles("[C-]#[O+]");
             carb = builder.CreateAtom("C");
             carb.FormalCharge = -1;
-            molecule2.Add(new LonePair(carb));
-            molecule2.Add(carb);
+            molecule2.LonePairs.Add(new LonePair(carb));
+            molecule2.Atoms.Add(carb);
             IAtom oxy = builder.CreateAtom("O");
             oxy.FormalCharge = 1;
-            molecule2.Add(oxy);
+            molecule2.Atoms.Add(oxy);
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Triple);
 
             setOfProducts.Add(molecule1);

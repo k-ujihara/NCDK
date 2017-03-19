@@ -391,7 +391,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// is present in the trie symbol table.
         /// </summary>
         /// <param name="trie">trie node (start with root)</param>
-        /// <param name="string">string to find a prefix of</param>
+        /// <param name="str">string to find a prefix of</param>
         /// <param name="i">the position in the string</param>
         /// <param name="best">best score so far (-1 to start)</param>
         /// <returns>the length of the prefix</returns>

@@ -282,7 +282,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             Descriptor.Parameters = new object[] { false, true };
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer mol = sp.ParseSmiles("C1=CC=CC=C1"); // benzene
-            Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(), Cycles.All());
+            Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
             aromaticity.Apply(mol);
             AssertAtomTypesPerceived(mol);
             AddExplicitHydrogens(mol);

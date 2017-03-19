@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Copyright (C) 2016-2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK

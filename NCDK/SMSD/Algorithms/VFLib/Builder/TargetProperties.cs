@@ -30,10 +30,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     /// <summary>
     /// Class for building/storing nodes (atoms) in the graph with atom
     /// query capabilities.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     [Serializable]
     public class TargetProperties 
     {
@@ -44,8 +44,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         private IDictionary<int, IAtom> atomsIndex = null;
 
         /// <summary>
-        /// <param name="atom">/// <returns>the connectedTargetAtomCountMap</param></returns>
         /// </summary>
+        /// <returns>the connectedTargetAtomCountMap</returns>
         public int CountNeighbors(IAtom atom)
         {
             if (connectedTargetAtomCountMap == null || !connectedTargetAtomCountMap.ContainsKey(atom))
@@ -57,30 +57,26 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
         }
 
         /// <summary>
-        /// <param name="atom">/// <returns>the connected Target Atom List</param></returns>
         /// </summary>
+        /// <returns>the connected Target Atom List</returns>
         public IList<IAtom> GetNeighbors(IAtom atom)
         {
             return connectedTargetAtomListMap[atom];
         }
 
         /// <summary>
-        /// <param name="atom1">/// @param atom2</param>
-        /// <returns>the map</returns>
         /// </summary>
+        /// <returns>the map</returns>
         public IBond GetBond(IAtom atom1, IAtom atom2)
         {
             return map[atoms[atom2]][atoms[atom1]];
         }
 
         /// <summary>
-        /// <returns>atom count</returns>
+        /// atom count
         /// </summary>
         public int AtomCount => atoms.Count;
 
-        /// <summary>
-        ///
-        /// <param name="container">/// </summary></param>
         public TargetProperties(IAtomContainer container)
         {
             int i = 0;

@@ -28,73 +28,79 @@ using System.Linq;
 namespace NCDK.QSAR.Descriptors.Moleculars {
     /// <summary>
     /// Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The descriptors are based on a number of atom weightings. There are 6 different
     /// possible weightings:
-    /// <ol>
-    /// <li>unit weights
-    /// <li>atomic masses
-    /// <li>van der Waals volumes
-    /// <li>Mulliken atomic electronegativites
-    /// <li>atomic polarizabilities
-    /// <li>E-state values described by Kier &amp; Hall
-    /// </ol>
+    /// <list type="bullet"> 
+    /// <item>unit weights</item>
+    /// <item>atomic masses</item>
+    /// <item>van der Waals volumes</item>
+    /// <item>Mulliken atomic electronegativites</item>
+    /// <item>atomic polarizabilities</item>
+    /// <item>E-state values described by Kier &amp; Hall</item>
+    /// </list>
     /// Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
     /// are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
-    /// <p/>
-    /// <p>For each weighting scheme we can obtain
-    /// <ul>
-    /// <li>11 directional WHIM descriptors (&lambda;<sub>1 .. 3</sub>, &nu;<sub>1 .. 2</sub>, &gamma;<sub>1 .. 3</sub>,  &eta;<sub>1 .. 3</sub>)
-    /// <li>6 non-directional WHIM descriptors (T, A, V, K, G, D)
-    /// </ul>
-    /// <p/>
-    /// <p>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
+    /// </para>
+    /// <para>For each weighting scheme we can obtain
+    /// <list type="bullet"> 
+    /// <item>11 directional WHIM descriptors (É…<sub>1 .. 3</sub>, ÉÀ<sub>1 .. 2</sub>, É¡<sub>1 .. 3</sub>, É≈<sub>1 .. 3</sub>)</item>
+    /// <item>6 non-directional WHIM descriptors (T, A, V, K, G, D)</item>
+    /// </list>
+    /// </para>
+    /// <para>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
     /// descriptors are required the current code will return all 11.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// The descriptor returns 17 values for a given weighting scheme, named as follows:
-    /// <ol>
-    /// <li>Wlambda1
-    /// <li>Wlambda2
-    /// <li>wlambda3
-    /// <li>Wnu1
-    /// <li>Wnu2
-    /// <li>Wgamma1
-    /// <li>Wgamma2
-    /// <li>Wgamma3
-    /// <li>Weta1
-    /// <li>Weta2
-    /// <li>Weta3
-    /// <li>WT
-    /// <li>WA
-    /// <li>WV
-    /// <li>WK
-    /// <li>WG
-    /// <li>WD
-    /// </ol>
+    /// <list type="bullet"> 
+    /// <item>Wlambda1</item>
+    /// <item>Wlambda2</item>
+    /// <item>wlambda3</item>
+    /// <item>Wnu1</item>
+    /// <item>Wnu2</item>
+    /// <item>Wgamma1</item>
+    /// <item>Wgamma2</item>
+    /// <item>Wgamma3</item>
+    /// <item>Weta1</item>
+    /// <item>Weta2</item>
+    /// <item>Weta3</item>
+    /// <item>WT</item>
+    /// <item>WA</item>
+    /// <item>WV</item>
+    /// <item>WK</item>
+    /// <item>WG</item>
+    /// <item>WD</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// Each name will have a suffix of the form <i>.X</i> where <i>X</i> indicates
     /// the weighting scheme used. Possible values of <i>X</i> are
-    /// <ul>
-    /// <li>unity
-    /// <li>mass
-    /// <li>volume
-    /// <li>eneg
-    /// <li>polar
-    /// </ul>
-    /// <p/>
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td>type</td>
-    /// <td>unity</td>
-    /// <td>Type of weighting as described above</td>
-    /// </tr>
-    /// </table>
-    ///
+    /// <list type="bullet"> 
+    /// <item>unity</item>
+    /// <item>mass</item>
+    /// <item>volume</item>
+    /// <item>eneg</item>
+    /// <item>polar</item>
+    /// </list>
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term>type</term>
+    /// <term>unity</term>
+    /// <term>Type of weighting as described above</term>
+    /// </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2004-12-1
     // @cdk.module qsarmolecular
@@ -103,7 +109,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     // @cdk.dictref qsar-descriptors:WHIM
     // @cdk.keyword WHIM
     // @cdk.keyword descriptor
-    /// </summary>
     public class WHIMDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         string type = "";
@@ -435,14 +440,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
             }
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(17);
 
         class PCA

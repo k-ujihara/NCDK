@@ -152,9 +152,9 @@ namespace NCDK.Geometries
                 }
             }
             // scale Sgroup brackets
-            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS) != null)
+            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
                     IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
@@ -206,9 +206,9 @@ namespace NCDK.Geometries
                 }
             }
             // translate Sgroup brackets
-            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS) != null)
+            if (atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups) != null)
             {
-                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                IList<Sgroup> sgroups = atomCon.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                 foreach (var sgroup in sgroups)
                 {
                     IList<SgroupBracket> brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
@@ -489,7 +489,7 @@ namespace NCDK.Geometries
         /// </summary>
         /// <param name="container">AtomContainer which should be translated.</param>
         /// <param name="p">New Location of the geometric 2D Center.</param>
-        /// <seealso cref="Get2DCenter"/>
+        /// <seealso cref="Get2DCenter(IAtomContainer)"/>
         /// <seealso cref="Translate2DCentreOfMassTo"/>
         public static void Translate2DCenterTo(IAtomContainer container, Vector2 p)
         {
@@ -1276,8 +1276,9 @@ namespace NCDK.Geometries
         /// <param name="firstAtomContainer">the (largest) first aligned AtomContainer which is the reference</param>
         /// <param name="secondAtomContainer">the second aligned AtomContainer</param>
         /// <param name="searchRadius">the radius of space search from each atom</param>
+        /// <param name="mappedAtoms"></param>
         /// <returns>a IDictionary of the mapped atoms</returns>
-        // @CDKException Description of the Exception
+        /// <exception cref="CDKException"></exception>
         public static IDictionary<int, int> MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
                 IAtomContainer secondAtomContainer, double searchRadius, IDictionary<int, int> mappedAtoms)
         {
@@ -1750,6 +1751,7 @@ namespace NCDK.Geometries
         /// <param name="reaction">the reaction to shift</param>
         /// <param name="bounds">the bounds of the reaction to shift</param>
         /// <param name="last">the bounds of the last reaction</param>
+        /// <param name="gap"></param>
         /// <returns>the rectangle of the shifted reaction</returns>
         public static double[] ShiftReactionVertical(IReaction reaction, double[] bounds, double[] last, double gap)
         {

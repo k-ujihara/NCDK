@@ -16,8 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
 using System.Collections.Generic;
 
 namespace NCDK
@@ -33,8 +31,16 @@ namespace NCDK
     public interface IChemObject
         : ICDKObject
     {
+        /// <summary>
+        /// Deep comparator of <see cref="IChemObject"/>.  
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns><see langword="true"/> if all properties of this object equals to <paramref name="obj"/>.</returns>
         bool Compare(object obj);
 
+        /// <summary>
+        /// <see cref="IChemObjectListener"/>s of this <see cref="IChemObject"/>.
+        /// </summary>
         ICollection<IChemObjectListener> Listeners { get; }
 
         /// <summary>
@@ -67,15 +73,15 @@ namespace NCDK
         /// <summary>
         /// Add properties to this object, duplicate keys will replace any existing value.
         /// </summary>
-        /// <param name="properties"><see cref="KeyValuePair{object, object}"/>s specifying the property values</param>
+        /// <param name="properties"><see cref="KeyValuePair{T, T}"/>s specifying the property values</param>
         void AddProperties(IEnumerable<KeyValuePair<object, object>> properties);
 
-        /// <summaRemoves a property for a IChemObject.ry>
+        /// <summary>
         /// Removes a property for a IChemObject.
         /// </summary>
         /// <param name="description">The object description of the property (most likely a unique string)</param>
         /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="GetProperty{T}(string)"/>
+        /// <seealso cref="GetProperty{T}(object)"/>
         void RemoveProperty(object description);
 
         /// <summary>
@@ -85,22 +91,22 @@ namespace NCDK
         /// <typeparam name="T">Generic return type</typeparam>
         /// <param name="description">An object description of the property</param>
         /// <returns>The property</returns>
-        /// <exception cref="InvalidCastException">If the wrong type is provided.</exception>
+        /// <exception cref="System.InvalidCastException">If the wrong type is provided.</exception>
         /// <example>
         /// <code>
         ///     IAtom atom = new Atom("C");
         ///     atom.SetProperty("number", 1); // set an integer property
         ///
         ///     // access the property and cast to an int
-        ///     int number = atom.GetProperty<int>("number");
+        ///     int number = atom.GetProperty&lt;int&gt;("number");
         ///
         ///     // the type cannot be checked and so...
-        ///     string number = atom.GetProperty<string>("number"); // <see cref="InvalidCastException"/>
+        ///     string number = atom.GetProperty&lt;string&gt;("number"); // InvalidCastException
         /// </code>
         /// </example>
-        /// <seealso cref="SetProperty(string, object)"/>
+        /// <seealso cref="SetProperty(object, object)"/>
         /// <seealso cref="GetProperties"/>
-        /// <seealso cref="RemoveProperty(string)"/>
+        /// <seealso cref="RemoveProperty(object)"/>
         T GetProperty<T>(object description);
 
         /// <summary>
@@ -113,10 +119,10 @@ namespace NCDK
         T GetProperty<T>(object description, T defaultValue);
 
         /// <summary>
-        /// Returns a <see cref="IDictionary{string, object}"/> with the <see cref="IChemObject"/>'s properties.
+        /// Returns a <see cref="IDictionary{T,T}"/> with the <see cref="IChemObject"/>'s properties.
         /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{string, object}"/></returns>
-        /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{string, object}})"/>
+        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
+        /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         IDictionary<object, object> GetProperties();
 
         /// <summary>
@@ -131,7 +137,7 @@ namespace NCDK
         bool IsVisited { get; set; }
     }
 
-    public struct ChemObjectFlagBag
+    internal struct ChemObjectFlagBag
     {
         public static ChemObjectFlagBag Save(IChemObject source)
         {

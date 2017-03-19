@@ -49,7 +49,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
                 m.Atoms[3]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Down, m.Bonds[0].Stereo);
@@ -72,7 +72,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3],
                 m.Atoms[4]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -93,7 +93,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[1], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[2],
                 m.Atoms[3]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Up, m.Bonds[0].Stereo);
@@ -116,7 +116,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[0], m.Atoms[1], m.Atoms[3],
                 m.Atoms[4]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -143,7 +143,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -173,7 +173,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -200,7 +200,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -230,7 +230,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[1], m.Atoms[4], m.Atoms[5],
                 m.Atoms[6]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.None, m.Bonds[0].Stereo);
@@ -256,7 +256,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
-            m.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
+            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
                 m.Atoms[5]}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Down, m.GetBond(m.Atoms[1], m.Atoms[0]).Stereo);
@@ -280,7 +280,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[5], BondOrder.Single);
-            m.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
+            m.StereoElements.Add(new ExtendedTetrahedral(m.Atoms[2], new IAtom[]{m.Atoms[0], m.Atoms[6], m.Atoms[4],
                 m.Atoms[5]}, TetrahedralStereo.Clockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Up, m.GetBond(m.Atoms[1], m.Atoms[0]).Stereo);
@@ -306,7 +306,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[0], m.Atoms[6], BondOrder.Single);
             m.AddBond(m.Atoms[7], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[0], m.Atoms[3], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[2], m.Atoms[4], m.Atoms[6],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[0], new IAtom[]{m.Atoms[2], m.Atoms[4], m.Atoms[6],
                 m.Atoms[3],}, TetrahedralStereo.AntiClockwise));
             NonplanarBonds.Assign(m);
             Assert.AreEqual(BondStereo.Down, m.Bonds[4].Stereo);
@@ -387,13 +387,13 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
             m.AddBond(m.Atoms[5], m.Atoms[6], BondOrder.Double);
             m.AddBond(m.Atoms[6], m.Atoms[7], BondOrder.Single);
-            m.Add(new DoubleBondStereochemistry(m.Bonds[1],
+            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[1],
                                                              new IBond[]{
                                                                  m.Bonds[0],
                                                                  m.Bonds[2]
                                                              },
                                                              DoubleBondConformation.Opposite));
-            m.Add(new DoubleBondStereochemistry(m.Bonds[5],
+            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[5],
                                                              new IBond[]{
                                                                  m.Bonds[4],
                                                                  m.Bonds[6]
@@ -421,7 +421,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[1], m.Atoms[4], BondOrder.Single);
             m.AddBond(m.Atoms[4], m.Atoms[5], BondOrder.Single);
-            m.Add(new TetrahedralChirality(m.Atoms[1],
+            m.StereoElements.Add(new TetrahedralChirality(m.Atoms[1],
                                                         new IAtom[] { m.Atoms[0], m.Atoms[1], m.Atoms[2], m.Atoms[4] },
                                                         TetrahedralStereo.AntiClockwise));
 

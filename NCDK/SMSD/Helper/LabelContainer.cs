@@ -29,10 +29,10 @@ namespace NCDK.SMSD.Helper
 {
     /// <summary>
     /// Class that handles atoms and assignes an integer lable to them.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class LabelContainer
     {
         private List<string> labelMap = null;
@@ -48,8 +48,8 @@ namespace NCDK.SMSD.Helper
 
         /// <summary>
         /// Create ids from atom labels
-        /// <returns>instance of this object</returns>
         /// </summary>
+        /// <returns>instance of this object</returns>
         public static LabelContainer Instance
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
@@ -65,7 +65,7 @@ namespace NCDK.SMSD.Helper
 
         /// <summary>
         /// Add label if its not present
-        /// <param name="label">/// </summary></param>
+        /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void Add(string label)
         {
@@ -77,8 +77,9 @@ namespace NCDK.SMSD.Helper
 
         /// <summary>
         /// Returns label ID
-        /// <param name="label">/// <returns>labelID</param></returns>
         /// </summary>
+        /// <param name="label"></param>
+        /// <returns>labelID</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public int GetLabelID(string label)
         {
@@ -88,8 +89,9 @@ namespace NCDK.SMSD.Helper
 
         /// <summary>
         /// Returns Label of a given ID
-        /// <param name="labelID">/// <returns>label</param></returns>
         /// </summary>
+        /// <param name="labelID"></param>
+        /// <returns>label</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public string GetLabel(int labelID)
         {
@@ -98,8 +100,8 @@ namespace NCDK.SMSD.Helper
 
         /// <summary>
         /// Returns label count
-        /// <returns>size of the labels</returns>
         /// </summary>
+        /// <returns>size of the labels</returns>
         public int Count => labelMap.Count;
     }
 }

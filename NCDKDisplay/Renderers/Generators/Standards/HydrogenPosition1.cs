@@ -116,8 +116,5 @@ namespace NCDK.Renderers.Generators.Standards
             var o = (HydrogenPosition)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
-        public string Name => ToString();
-
-        public bool IsUnset => this.Ordinal == 0;
     }
 }

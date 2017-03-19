@@ -23,32 +23,29 @@ using System.Linq;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
-     * It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</p>
-     * <p>This reaction could be represented as A + [B+] => A-B</p>
-     *
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism adduct together two fragments. The second fragment will be deficient in charge.
+    /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
+    /// <para>This reaction could be represented as A + [B+] => A-B</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class AdductionLPMechanism : IReactionMechanism
     {
 
-        /**
-         * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-         * @param bondList    The list of bonds taking part in the mechanism. not allowed bonds.
-         *
-         * @return            The Reaction mechanism
-         *
-         */
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
+        /// reactants and products.
+        ///
+        ///
+        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. not allowed bonds.</param>
+        ///
+        /// <returns>The Reaction mechanism</returns>
+        ///
+        /// </summary>
 
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {

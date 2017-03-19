@@ -36,10 +36,10 @@ namespace NCDK.Smiles
 {
     /// <summary>
     /// Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
-    ///
-    /// <b>Example usage</b><p/>
-    ///
-    /// <blockquote><code>
+    /// </summary>
+    /// <example>
+    /// Example usage
+    /// <code>
     /// try {
     ///     SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
     ///     IAtomContainer m   = sp.ParseSmiles("c1ccccc1");
@@ -47,10 +47,10 @@ namespace NCDK.Smiles
     ///     Console.Error.WriteLine(e.Message);
     /// }
     /// </code>
-    /// </blockquote><p/>
-    ///
-    /// <b>Reading Aromatic SMILES</b><p/>
-    ///
+    ///</example>
+    ///<remarks>
+    /// Reading Aromatic SMILES
+    /// <para>
     /// Aromatic SMILES are automatically kekulised producing a structure with
     /// assigned bond orders. The aromatic specification on the atoms is maintained
     /// from the SMILES even if the structures are not considered aromatic. For
@@ -64,38 +64,35 @@ namespace NCDK.Smiles
     /// placed the returned structure would differ depending on the atom input order.
     /// If you wish to skip the kekulistation (not recommended) then it can be
     /// disabled with {@link #kekulise}. SMILES can be verified for validity with the
-    /// <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.<p/>
-    ///
-    /// <b>Unsupported Features</b><p/>
-    ///
-    /// The following features are not supported by this parser. <ul> <li>variable
-    /// order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
-    /// The predefined order required by this parser follows the <a
-    /// href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> specification
-    /// of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</li>
-    /// <li>atom class indication - <i>this information is loaded but not annotated
-    /// on the structure</i> </li> <li>extended tetrahedral stereochemistry
-    /// (cumulated double bonds)</li> <li>trigonal bipyramidal stereochemistry</li>
-    /// <li>octahedral stereochemistry</li> </il>
-    ///
-    /// <b>Atom Class</b><p/>
-    ///
-    /// The atom class is stored as the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
-    /// property.
-    ///
-    /// <blockquote><code>
-    ///
+    /// <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
+    /// </para>
+    /// Unsupported Features
+    /// <para>
+    /// The following features are not supported by this parser.
+    /// <list type="bullet">
+    /// <item>variable order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
+    /// The predefined order required by this parser follows the 
+    /// <a href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> 
+    /// specification of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</item>
+    /// <item>atom class indication - <i>this information is loaded but not annotated on the structure</i> </item>
+    /// <item>extended tetrahedral stereochemistry (cumulated double bonds)</item>
+    /// <item>trigonal bipyramidal stereochemistry</item>
+    /// <item>octahedral stereochemistry</item>
+    /// </list>
+    /// </para>
+    /// Atom Class
+    /// <para>
+    /// The atom class is stored as the <see cref="CDKPropertyName.AtomAtomMapping"/> property.
+    /// </para>
+    /// <code>
     /// SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
     /// IAtomContainer m   = sp.ParseSmiles("c1[cH:5]cccc1");
-    /// Integer        c1  = m.Atoms[1]
-    ///                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // 5
-    /// Integer        c2  = m.Atoms[2]
-    ///                       .GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING); // null
-    ///
+    /// var        c1  = m.Atoms[1]
+    ///                       .GetProperty&lt;int&gt;(CDKPropertyName.ATOM_ATOM_MAPPING); // 5
+    /// var        c2  = m.Atoms[2]
+    ///                       .GetProperty&lt;int&gt;(CDKPropertyName.ATOM_ATOM_MAPPING); // null
     /// </code>
-    /// </blockquote><p/>
-    ///
-    ///
+    /// </remarks>
     // @author Christoph Steinbeck
     // @author Egon Willighagen
     // @author John May
@@ -103,7 +100,6 @@ namespace NCDK.Smiles
     // @cdk.githash
     // @cdk.created 2002-04-29
     // @cdk.keyword SMILES, parser
-    /// </summary>
     public sealed class SmilesParser
     {
         /// <summary>
@@ -128,9 +124,8 @@ namespace NCDK.Smiles
         /// <summary>
         /// Create a new SMILES parser which will create <see cref="IAtomContainer"/>s with
         /// the specified builder.
-        ///
-        /// <param name="builder">used to create the CDK domain objects</param>
         /// </summary>
+        /// <param name="builder">used to create the CDK domain objects</param>
         public SmilesParser(IChemObjectBuilder builder)
         {
             this.builder = builder;
@@ -139,15 +134,13 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Parse a reaction SMILES.
-        ///
+        /// </summary>
         /// <param name="smiles">The SMILES string to parse</param>
         /// <returns>An instance of <see cref="IReaction"/></returns>
-        // @ if the string cannot be parsed
+        /// <exception cref="InvalidSmilesException">if the string cannot be parsed</exception>
         /// <seealso cref="ParseSmiles(string)"/>
-        /// </summary>
         public IReaction ParseReactionSmiles(string smiles)
         {
-
             if (!smiles.Contains(">"))
                 throw new NCDK.InvalidSmilesException("Not a reaction SMILES: " + smiles);
 
@@ -196,7 +189,7 @@ namespace NCDK.Smiles
                 {
                     reaction.Products.Add(productSet[i]);
                 }
-                reaction.SetProperty(CDKPropertyName.TITLE, title = productContainer.GetProperty<string>(CDKPropertyName.TITLE));
+                reaction.SetProperty(CDKPropertyName.Title, title = productContainer.GetProperty<string>(CDKPropertyName.Title));
             }
 
             try
@@ -215,11 +208,10 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Parses a SMILES string and returns a structure (<see cref="IAtomContainer"/>).
-        ///
+        /// </summary>
         /// <param name="smiles">A SMILES string</param>
         /// <returns>A structure representing the provided SMILES</returns>
-        // @ thrown when the SMILES string is invalid
-        /// </summary>
+        /// <exception cref="InvalidSmilesException">thrown when the SMILES string is invalid</exception>
         public IAtomContainer ParseSmiles(string smiles)
         {
             return ParseSmiles(smiles, false);
@@ -263,10 +255,9 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Safely parses an integer from a string and will not fail if a number is missing.
-        ///
+        /// </summary>
         /// <param name="val">value</param>
         /// <returns>the integer value</returns>
-        /// </summary>
         private int ParseIntSafe(string val)
         {
             try
@@ -281,10 +272,9 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Parses CXSMILES layer and set attributes for atoms and bonds on the provided molecule.
-        ///
+        /// </summary>
         /// <param name="title">SMILES title field</param>
         /// <param name="mol">molecule</param>
-        /// </summary>
         private void ParseMolCXSMILES(string title, IAtomContainer mol)
         {
             CxSmilesState cxstate;
@@ -295,7 +285,7 @@ namespace NCDK.Smiles
                 {
 
                     // set the correct title
-                    mol.SetProperty(CDKPropertyName.TITLE, title.Substring(pos));
+                    mol.SetProperty(CDKPropertyName.Title, title.Substring(pos));
 
                     IDictionary<IAtom, IAtomContainer> atomToMol = new Dictionary<IAtom, IAtomContainer>(mol.Atoms.Count);
                     IList<IAtom> atoms = new List<IAtom>(mol.Atoms.Count);
@@ -313,10 +303,9 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Parses CXSMILES layer and set attributes for atoms and bonds on the provided reaction.
-        ///
+        /// </summary>
         /// <param name="title">SMILES title field</param>
         /// <param name="rxn">parsed reaction</param>
-        /// </summary>
         private void ParseRxnCXSMILES(string title, IReaction rxn)
         {
             CxSmilesState cxstate;
@@ -325,9 +314,8 @@ namespace NCDK.Smiles
             {
                 if ((pos = CxSmilesParser.ProcessCx(title, cxstate = new CxSmilesState())) >= 0)
                 {
-
                     // set the correct title
-                    rxn.SetProperty(CDKPropertyName.TITLE, title.Substring(pos));
+                    rxn.SetProperty(CDKPropertyName.Title, title.Substring(pos));
 
                     IDictionary<IAtom, IAtomContainer> atomToMol = new Dictionary<IAtom, IAtomContainer>(100);
                     IList<IAtom> atoms = new List<IAtom>();
@@ -367,10 +355,9 @@ namespace NCDK.Smiles
         /// <summary>
         /// Handle fragment grouping of a reaction that specifies certain disconnected components
         /// are actually considered a single molecule. Normally used for salts, [Na+].[OH-].
-        ///
+        /// </summary>
         /// <param name="rxn">reaction</param>
         /// <param name="cxstate">state</param>
-        /// </summary>
         private void HandleFragmentGrouping(IReaction rxn, CxSmilesState cxstate)
         {
             // repartition/merge fragments
@@ -455,13 +442,11 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Transfers the CXSMILES state onto the CDK atom/molecule data-structures.
-        ///
+        /// </summary>
         /// <param name="bldr">chem-object builder</param>
-        /// <param name="atoms">atoms parsed from the molecule or reaction. Reaction molecules are list</param>
-        ///                  left to right.
+        /// <param name="atoms">atoms parsed from the molecule or reaction. Reaction molecules are list  left to right.</param>
         /// <param name="atomToMol">look-up of atoms to molecules when connectivity/sgroups need modification</param>
         /// <param name="cxstate">the CXSMILES state to read from</param>
-        /// </summary>
         private void AssignCxSmilesInfo(IChemObjectBuilder bldr,
                                         IChemObject chemObj,
                                         IList<IAtom> atoms,
@@ -501,9 +486,8 @@ namespace NCDK.Smiles
             if (cxstate.atomValues != null)
             {
                 foreach (var e in cxstate.atomValues)
-                    atoms[e.Key].SetProperty(CDKPropertyName.COMMENT, e.Value);
+                    atoms[e.Key].SetProperty(CDKPropertyName.Comment, e.Value);
             }
-
 
             // atom-coordinates
             if (cxstate.AtomCoords != null)
@@ -560,7 +544,7 @@ namespace NCDK.Smiles
                     IAtom atom = atoms[e.Key];
                     IAtomContainer mol = atomToMol[atom];
                     while (count-- > 0)
-                        mol.Add(bldr.CreateSingleElectron(atom));
+                        mol.SingleElectrons.Add(bldr.CreateSingleElectron(atom));
                 }
             }
 
@@ -601,10 +585,8 @@ namespace NCDK.Smiles
             // polymer Sgroups
             if (cxstate.sgroups != null)
             {
-
                 foreach (var psgroup in cxstate.sgroups)
                 {
-
                     Sgroup sgroup = new Sgroup();
 
                     ICollection<IAtom> atomset = new HashSet<IAtom>();
@@ -691,28 +673,24 @@ namespace NCDK.Smiles
                             sgroup.PutValue(SgroupKey.CtabSubType, "BLO");
                             break;
                     }
-
                     sgroupMap.Add(mol, sgroup);
-
-                    C_PolySgroup:
+                C_PolySgroup:
                     ;
                 }
             }
 
             // assign Sgroups
             foreach (var e in sgroupMap)
-                e.Key.SetProperty(CDKPropertyName.CTAB_SGROUPS, new List<Sgroup>(e.Value));
+                e.Key.SetProperty(CDKPropertyName.CtabSgroups, new List<Sgroup>(e.Value));
         }
 
         /// <summary>
         /// Makes the Smiles parser set aromaticity as provided in the Smiles itself,
         /// without detecting it. Default false. Atoms will not be typed when set to
         /// true.
-        ///
-        /// <param name="preservingAromaticity">bool to indicate if aromaticity is to be</param>
-        ///                              preserved.
-        /// <seealso cref="kekulise"/>
         /// </summary>
+        /// <param name="preservingAromaticity">bool to indicate if aromaticity is to be preserved.</param>
+        /// <seealso cref="kekulise"/>
         [Obsolete]
         public void SetPreservingAromaticity(bool preservingAromaticity)
         {
@@ -720,10 +698,8 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Gets the (default false) setting to preserve aromaticity as provided in
-        /// the Smiles itself.
-        ///
-        /// <returns>true or false indicating if aromaticity is preserved.</returns>
+        /// The (default false) setting to preserve aromaticity as provided in
+        /// the Smiles itself. Indicating if aromaticity is preserved.
         /// </summary>
         [Obsolete]
         public bool IsPreservingAromaticity => !kekulise;
@@ -733,9 +709,8 @@ namespace NCDK.Smiles
         /// are provided as aromatic. Kekulisation is on by default but can be
         /// turned off if it is believed the structures can be handled without
         /// assigned bond orders (not recommended).
-        ///
-        /// <param name="kekulise">should structures be kekulised</param>
         /// </summary>
+        /// <param name="kekulise">should structures be kekulised</param>
         public void Kekulise(bool kekulise)
         {
             this.kekulise = kekulise;

@@ -32,7 +32,8 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <summary>
     /// An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
     /// from the AST tree.
-    ///
+    /// </summary>
+    /// <example>
     /// To use this visitor:
     /// <code>
     /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
@@ -40,13 +41,12 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// SmartsQueryVisitor visitor = new SmartsQueryVisitor();
     /// QueryAtomContainer query = visitor.Visit(ast, null);
     /// </code>
-    ///
+    /// </example>
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    /// </summary>
     public class SmartsQueryVisitor : SMARTSParserVisitor
     {
         // current atoms with a ring identifier
@@ -230,13 +230,13 @@ namespace NCDK.Smiles.SMARTS.Parser
                 IList<IAtom> localNeighbors = neighbors[atom];
                 if (localNeighbors.Count == 4)
                 {
-                    fullQuery.AddStereoElement(new TetrahedralChirality(atom, localNeighbors.ToArray(),
+                    fullQuery.StereoElements.Add(new TetrahedralChirality(atom, localNeighbors.ToArray(),
                         TetrahedralStereo.Clockwise)); // <- to be modified later
                 }
                 else if (localNeighbors.Count == 5)
                 {
                     localNeighbors.Remove(atom); // remove central atom (which represented implicit part)
-                    fullQuery.AddStereoElement(new TetrahedralChirality(atom, localNeighbors.ToArray(),
+                    fullQuery.StereoElements.Add(new TetrahedralChirality(atom, localNeighbors.ToArray(),
                         TetrahedralStereo.Clockwise)); // <- to be modified later
                 }
             }
@@ -252,7 +252,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 if (leftBond == null || rightBond == null) continue;
                 DoubleBondConformation conformation = leftBond.GetDirection(left) == rightBond.GetDirection(right) ? DoubleBondConformation.Together
                        : DoubleBondConformation.Opposite;
-                fullQuery.AddStereoElement(new DoubleBondStereochemistry(bond, new IBond[] { leftBond, rightBond },
+                fullQuery.StereoElements.Add(new DoubleBondStereochemistry(bond, new IBond[] { leftBond, rightBond },
                         conformation));
             }
 
@@ -260,11 +260,10 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
-        /// Locate a stereo bond adjacent to the {@code atom}.
-        ///
+        /// Locate a stereo bond adjacent to the <paramref name="atom"/>.
+        /// </summary>
         /// <param name="atom">an atom</param>
         /// <returns>a stereo bond or null if non found</returns>
-        /// </summary>
         private StereoBond FindStereoBond(IAtom atom)
         {
             foreach (var bond in stereoBonds)

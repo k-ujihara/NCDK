@@ -42,7 +42,7 @@ namespace NCDK.Aromaticities
     public class AtomTypeModelTest
     {
 
-        private static ElectronDonation model = ElectronDonation.Cdk();
+        private static ElectronDonation model = ElectronDonation.CDKModel;
 
         [TestMethod()]
         public void Benzene()

@@ -32,15 +32,13 @@ namespace NCDK.IO
     /// <summary>
     /// Saves small molecules in a rudimentary PDB format. It does not allow
     /// writing of PDBProtein data structures.
-    ///
+    /// </summary>
     // @author      Gilleain Torrance <gilleain.torrance@gmail.com>
     // @cdk.module pdb
     // @cdk.iooptions
     // @cdk.githash
-    /// </summary>
     public class PDBWriter : DefaultChemObjectWriter
     {
-
         public static string F_SERIAL_FORMAT(int serial) => serial.ToString().PadLeft(5);
         public static string F_ATOM_NAME_FORMAT(string atomName) => atomName.PadRight(5);
         public static string F_POSITION_FORMAT(double f) => f.ToString("F3").PadLeft(12);
@@ -60,12 +58,11 @@ namespace NCDK.IO
 
         /// <summary>
         /// Creates a PDB writer.
-        ///
-        /// <param name="out">the stream to write the PDB file to.</param>
         /// </summary>
-        public PDBWriter(TextWriter out_)
+        /// <param name="output">the stream to write the PDB file to.</param>
+        public PDBWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
             writeAsHET = IOSettings.Add(new BooleanIOSetting("WriteAsHET", IOSetting.Importance.Low,
                     "Should the output file use HETATM", "false"));
             useElementSymbolAsAtomName = IOSettings.Add(new BooleanIOSetting("UseElementSymbolAsAtomName",
@@ -84,9 +81,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => PDBFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -145,12 +142,10 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes a single frame in PDB format to the Writer.
-        ///
-        /// <param name="molecule">the Molecule to write</param>
         /// </summary>
+        /// <param name="molecule">the Molecule to write</param>
         public void WriteMolecule(IAtomContainer molecule)
         {
-
             try
             {
                 WriteHeader();
@@ -262,7 +257,6 @@ namespace NCDK.IO
                     writer.Write("END   ");
                     writer.WriteLine();
                 }
-
             }
             catch (IOException exception)
             {
@@ -316,8 +310,8 @@ namespace NCDK.IO
         }
 
         /// <summary>
-         /// Flushes the output and closes this object.
-         /// </summary>
+        /// Flushes the output and closes this object.
+        /// </summary>
         public override void Close()
         {
             writer.Close();

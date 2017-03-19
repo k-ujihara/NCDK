@@ -30,14 +30,12 @@ namespace NCDK.RingSearches
     ///  Partitions a RingSet into RingSets of connected rings. Rings which share an
     ///  Atom, a Bond or three or more atoms with at least on other ring in the
     ///  RingSet are considered connected.
-    ///
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
+
     public class RingPartitioner
     {
-
         /// <summary>
         ///  Debugging on/off
         /// </summary>
@@ -50,14 +48,14 @@ namespace NCDK.RingSearches
         ///  an Atom, a Bond or three or more atoms with at least on other ring in
         ///  the RingSet are considered connected. Thus molecules such as azulene and
         /// indole will return a List with 1 element.
-        ///
-        /// <p>Note that an isolated ring is considered to be <i>self-connect</i>. As a result
+        /// </summary>
+        /// <remarks>
+        /// Note that an isolated ring is considered to be <i>self-connect</i>. As a result
         /// a molecule such as biphenyl will result in a 2-element List being returned (each
         /// element corresponding to a phenyl ring).
-        ///
+        /// </remarks>
         /// <param name="ringSet">The RingSet to be partitioned</param>
-        /// <returns>A <see cref="List"/> of connected RingSets</returns>
-        /// </summary>
+        /// <returns>A <see cref="List{T}"/> of connected RingSets</returns>
         public static IList<IRingSet> PartitionRings(IEnumerable<IRing> ringSet)
         {
            var ringSets = new List<IRingSet>();
@@ -80,10 +78,9 @@ namespace NCDK.RingSearches
 
         /// <summary>
         ///  Converts a RingSet to an AtomContainer.
-        ///
+        /// </summary>
         /// <param name="ringSet">The RingSet to be converted.</param>
         /// <returns>The AtomContainer containing the bonds and atoms of the ringSet.</returns>
-        /// </summary>
         public static IAtomContainer ConvertToAtomContainer(IRingSet ringSet)
         {
             IRing ring = (IRing)ringSet[0];
@@ -99,9 +96,9 @@ namespace NCDK.RingSearches
                     {
                         for (int j = 0; j < bond.Atoms.Count; j++)
                         {
-                            ac.Add(bond.Atoms[j]);
+                            ac.Atoms.Add(bond.Atoms[j]);
                         }
-                        ac.Add(bond);
+                        ac.Bonds.Add(bond);
                     }
                 }
             }
@@ -113,12 +110,11 @@ namespace NCDK.RingSearches
         ///  recursively searching for other Rings connected to this ring. By doing
         ///  this it finds all rings in the RingSet connected to the start ring,
         ///  putting them in newRs, and removing them from rs.
-        ///
+        /// </summary>
         /// <param name="rs">The RingSet to be searched</param>
         /// <param name="ring">The ring to start with</param>
         /// <param name="newRs">The RingSet containing all Rings connected to ring</param>
         /// <returns>newRs The RingSet containing all Rings connected to ring</returns>
-        /// </summary>
         private static IRingSet WalkRingSystem(IRingSet rs, IRing ring, IRingSet newRs)
         {
             IRing tempRing;

@@ -57,6 +57,7 @@ namespace NCDK.Beam
         /// Create a new generator the given chemical graph.
         /// </summary>
         /// <param name="g">chemical graph</param>
+        /// <param name="rnums"></param>
         public Generator(Graph g, RingNumbering rnums)
             : this(g, new int[g.Order], rnums)
         {
@@ -67,6 +68,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="g">chemical graph</param>
         /// <param name="visitedAt">the index of the atom in the output</param>
+        /// <param name="rnums"></param>
         Generator(Graph g, int[] visitedAt, RingNumbering rnums)
         {
             this.g = g;

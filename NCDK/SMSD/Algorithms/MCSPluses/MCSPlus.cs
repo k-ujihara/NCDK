@@ -34,10 +34,10 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
     /// <summary>
     /// This class handles MCS plus algorithm which is a combination of
     /// c-clique algorithm and McGregor algorithm.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class MCSPlus
     {
         /// <summary>
@@ -49,12 +49,12 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         private static TimeManager timeManager = null;
 
         /// <summary>
-        /// <returns>the timeout</returns>
+        /// the timeout
         /// </summary>
         protected static double GetTimeOut() => TimeOut.Instance.Time;
 
         /// <summary>
-        /// <returns>the timeManager</returns>
+        /// the timeManager
         /// </summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static TimeManager GetTimeManager()
@@ -63,8 +63,8 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         }
 
         /// <summary>
-        /// <param name="aTimeManager">the timeManager to set</param>
         /// </summary>
+        /// <param name="aTimeManager">the timeManager to set</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected internal static void SetTimeManager(TimeManager aTimeManager)
         {
@@ -72,12 +72,6 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
             timeManager = aTimeManager;
         }
 
-        /// <summary>
-        ///
-        /// <param name="ac1">/// @param ac2</param>
-        /// <param name="shouldMatchBonds">/// @return</param>
-        // @throws CDKException
-        /// </summary>
         internal IList<IList<int>> GetOverlaps(IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
         {
             Deque<IList<int>> maxCliqueSet = null;

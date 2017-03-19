@@ -28,17 +28,15 @@ using NCDK.Numerics;
 namespace NCDK.IO
 {
     /// <summary>
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author  Bradley A. Smith <bradley@baysmith.com>
     // @author  J. Daniel Gezelter
     // @author  Egon Willighagen
-    /// </summary>
     public class XYZWriter : DefaultChemObjectWriter
     {
-
         private TextWriter writer;
 
         // new FormatStringBuffer("%-8.6f");
@@ -50,13 +48,12 @@ namespace NCDK.IO
         }
 
         /// <summary>
-       /// Constructor.
-       ///
-       /// <param name="out">the stream to write the XYZ file to.</param>
-       /// </summary>
-        public XYZWriter(TextWriter out_)
+        /// Constructor.
+        /// </summary>
+        /// <param name="output">the stream to write the XYZ file to.</param>
+        public XYZWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public XYZWriter(Stream output)
@@ -69,9 +66,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => XYZFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)

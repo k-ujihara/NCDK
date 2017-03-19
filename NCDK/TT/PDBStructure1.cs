@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -34,28 +19,21 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using NCDK.Default;
-using System.Text;
 
 namespace NCDK.Default
 {
     /// <summary>
     /// Holder for secundary protein structure elements. Lously modeled after
     /// the Jmol Structure.java.
-    ///
+    /// </summary>
     // @author     egonw
-    ///
     // @cdk.module data
     // @cdk.githash
-    /// </summary>
     public class PDBStructure : ChemObject, IPDBStructure
     {
-        public const string HELIX = "helix";
-        public const string SHEET = "sheet";
-        public const string TURN = "turn";
+        public const string Helix = "helix";
+        public const string Sheet = "sheet";
+        public const string Turn = "turn";
 
         /// <summary>
         /// Structure Type of this structure.
@@ -98,17 +76,15 @@ namespace NCDK.Silent
     /// <summary>
     /// Holder for secundary protein structure elements. Lously modeled after
     /// the Jmol Structure.java.
-    ///
+    /// </summary>
     // @author     egonw
-    ///
     // @cdk.module data
     // @cdk.githash
-    /// </summary>
     public class PDBStructure : ChemObject, IPDBStructure
     {
-        public const string HELIX = "helix";
-        public const string SHEET = "sheet";
-        public const string TURN = "turn";
+        public const string Helix = "helix";
+        public const string Sheet = "sheet";
+        public const string Turn = "turn";
 
         /// <summary>
         /// Structure Type of this structure.

@@ -98,13 +98,13 @@ namespace NCDK.Geometries.CIP
                 if (stereoElement is ITetrahedralChirality)
                 {
                     ITetrahedralChirality tc = (ITetrahedralChirality)stereoElement;
-                    tc.ChiralAtom.SetProperty(CDKPropertyName.CIP_DESCRIPTOR, GetCIPChirality(container, tc).ToString());
+                    tc.ChiralAtom.SetProperty(CDKPropertyName.CIP_Descriptor, GetCIPChirality(container, tc).ToString());
                 }
                 else if (stereoElement is IDoubleBondStereochemistry)
                 {
                     IDoubleBondStereochemistry dbs = (IDoubleBondStereochemistry)stereoElement;
                     dbs.StereoBond
-                            .SetProperty(CDKPropertyName.CIP_DESCRIPTOR, GetCIPChirality(container, dbs).ToString());
+                            .SetProperty(CDKPropertyName.CIP_Descriptor, GetCIPChirality(container, dbs).ToString());
                 }
             }
         }

@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,50 +31,43 @@ namespace NCDK.Hash
     /// An atom encoder which takes several atom encodes and combines the encodings
     /// into a single encoder. The order of the encoders matter and for persistent
     /// results should be ordered before construction.
-    ///
+    /// </summary>
     /// <example><code>
     /// // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
-    /// AtomEncoder encoder = new ConjugatedAtomEncoder(Arrays.asList(ATOMIC_NUMBER,
-    ///                                                               FORMAL_CHARGE));
+    /// AtomEncoder encoder = new ConjugatedAtomEncoder(Arrays.asList(ATOMIC_NUMBER, FORMAL_CHARGE));
     ///
     /// // convenience constructor using var-args
-    /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-    ///                                                    FORMAL_CHARGE);
+    /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, FORMAL_CHARGE);
     ///
     /// // specifying a custom encoder
     /// AtomEncoder encoder =
-    ///   ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-    ///                                FORMAL_CHARGE,
+    ///   ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, FORMAL_CHARGE,
     ///                                new AtomEncoder(){
     ///                                  public int Encode(IAtom a, IAtomContainer c){
     ///                                    return a.Symbol.HashCode();
     ///                                  }
     ///                                });
-    ///
     /// </code></example>
-    ///
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
-    internal sealed class ConjugatedAtomEncoder : AtomEncoder
+    internal sealed class ConjugatedAtomEncoder : IAtomEncoder
     {
         /* ordered list of encoders */
-        private readonly IList<AtomEncoder> encoders;
+        private readonly IList<IAtomEncoder> encoders;
 
         /// <summary>
         /// Create a new conjugated encoder for the specified list of atom encoders.
         /// The encoders are combined in an order dependant manner.
-        ///
-        /// <param name="encoders">non-empty list of encoders</param>
-        /// <exception cref="NullPointerException">    the list of encoders was null</exception>
-        /// <exception cref="ArgumentException">the list of encoders was empty</exception>
         /// </summary>
-        public ConjugatedAtomEncoder(IList<AtomEncoder> encoders)
+        /// <param name="encoders">non-empty list of encoders</param>
+        /// <exception cref="ArgumentNullException">the list of encoders was null</exception>
+        /// <exception cref="ArgumentException">the list of encoders was empty</exception>
+        public ConjugatedAtomEncoder(IList<IAtomEncoder> encoders)
         {
             if (encoders == null) throw new ArgumentNullException("null list of encoders");
             if (encoders.Count == 0) throw new ArgumentException("no encoders provided");
-            this.encoders = new ReadOnlyCollection<AtomEncoder>(new List<AtomEncoder>(encoders));
+            this.encoders = new ReadOnlyCollection<IAtomEncoder>(new List<IAtomEncoder>(encoders));
         }
 
         public int Encode(IAtom atom, IAtomContainer container)
@@ -88,23 +80,20 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Convenience method for creating a conjugated encoder from one or more
-        /// <see cref="AtomEncoder"/>s.
-        ///
+        /// <see cref="IAtomEncoder"/>s.
+        /// </summary>
         /// <example><code>
         /// // import org.openscience.cdk.hash.seed.BasicAtomEncoder.*
-        /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER,
-        ///                                                    FORMAL_CHARGE);
+        /// AtomEncoder encoder = ConjugatedAtomEncoder.Create(ATOMIC_NUMBER, FORMAL_CHARGE);
         /// </code></example>
-        ///
         /// <param name="encoder">the first encoder</param>
         /// <param name="encoders">the other encoders</param>
         /// <returns>a new conjugated encoder</returns>
-        /// <exception cref="NullPointerException">either argument was null</exception>
-        /// </summary>
-        public static AtomEncoder Create(AtomEncoder encoder, params AtomEncoder[] encoders)
+        /// <exception cref="ArgumentNullException">either argument was null</exception>
+        public static IAtomEncoder Create(IAtomEncoder encoder, params IAtomEncoder[] encoders)
         {
             if (encoder == null || encoders == null) throw new ArgumentNullException("null encoders provided");
-            List<AtomEncoder> tmp = new List<AtomEncoder>(encoders.Length + 1);
+            List<IAtomEncoder> tmp = new List<IAtomEncoder>(encoders.Length + 1);
             tmp.Add(encoder);
             foreach (var e in encoders)
                 tmp.Add(e);

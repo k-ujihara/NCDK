@@ -355,25 +355,25 @@ namespace NCDK.Graphs.Invariant
         public void Test3Aminomethane_cation()
         {
             IAtomContainer mol = builder.CreateAtomContainer();
-            mol.Add(builder.CreateAtom("N"));
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("N"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[2], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
             mol.Atoms[3].FormalCharge = +1;
-            mol.Add(builder.CreateAtom("N"));
+            mol.Atoms.Add(builder.CreateAtom("N"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[4], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[4], mol.Atoms[5], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[4], mol.Atoms[6], BondOrder.Single);
-            mol.Add(builder.CreateAtom("N"));
+            mol.Atoms.Add(builder.CreateAtom("N"));
             mol.AddBond(mol.Atoms[3], mol.Atoms[7], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[7], mol.Atoms[8], BondOrder.Single);
-            mol.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
             mol.AddBond(mol.Atoms[7], mol.Atoms[8], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(mol);

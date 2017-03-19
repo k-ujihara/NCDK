@@ -34,26 +34,26 @@ namespace NCDK.Stereo
     /// <summary>
     /// Recognize the configuration of tetrahedral stereocenters depicted as
     /// Fischer projection. Fischer projection is a convenient means of depicting
-    /// 3D geometry commonly used in depicting carbohydrates. <p/>
-    /// 
+    /// 3D geometry commonly used in depicting carbohydrates. 
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// Fischer projection depicts tetrahedral stereocenters as though they were 
     /// coplanar with the four substituents at cardinal directions (up,right,down, 
     /// and left). The horizontal bonds (right and left) are interpreted as pointing
     /// out of the plane towards the viewer; They are not depicted with non-planar
-    /// wedge bonds. <p/>
-    /// 
+    /// wedge bonds.</para>
+    /// <para>
     /// This class provides the recognition of Fischer projections. Each asymmetric
     /// carbon is checked as to whether it's 2D depiction is coplanar with cardinal
     /// directions. All of these bonds must be planar (i.e. not wedge or hatch) and
     /// sigma bonds. In a hydrogen suppressed representation, one of the left or 
     /// right bonds (to the implied hydrogen) may be omitted but can be correctly
-    /// interpreted.
-    /// 
+    /// interpreted.</para>
+    /// <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer projection (Wikipedia)</a>
+    /// </remarks>
     // @author John May
     // @cdk.githash
-    // @see <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer 
-    ///      projection (Wikipedia)</a>
-    /// </summary>
     internal sealed class FischerRecognition
     {
         /// <summary>

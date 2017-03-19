@@ -24,28 +24,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     ///  This class returns the period in the periodic table of an atom belonging to an atom container
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///@author         mfe4
-    ///@cdk.created    2004-11-13
-    ///@cdk.module     qsaratomic
-    // @cdk.githash
-    ///@cdk.set        qsar-descriptors
-    ///@cdk.dictref qsar-descriptors:period
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
+    /// </para> 
+    /// </remarks> 
+    // @author         mfe4
+    // @cdk.created    2004-11-13
+    // @cdk.module     qsaratomic
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref qsar-descriptors:period
     public class PeriodicTablePositionDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "periodicTablePosition" };
@@ -102,9 +96,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// The specification attribute of the PeriodicTablePositionDescriptor object
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
+        /// <returns>The specification value</returns>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(

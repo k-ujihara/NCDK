@@ -44,7 +44,7 @@ namespace NCDK.Renderers.Generators
         /// Converts a <see cref="IChemObject"/> from the chemical data model into
         /// something that can be drawn in the chemical drawing.
         /// </summary>
-        /// <param name="object">the chemical entity to be depicted</param>
+        /// <param name="obj">the chemical entity to be depicted</param>
         /// <param name="model">the rendering parameters</param>
         /// <returns>a drawable chemical depiction component</returns>
         IRenderingElement Generate(T obj, RendererModel model);

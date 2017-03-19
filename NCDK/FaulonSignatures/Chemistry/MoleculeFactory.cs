@@ -1,4 +1,4 @@
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeFactory
     {

@@ -20,7 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,12 +30,10 @@ namespace NCDK.Stereo
     /// <summary>
     /// Stereochemistry specification for double bonds. See <see cref="IDoubleBondStereochemistry"/> for
     /// further details.
-    ///
+    /// </summary>
+    /// <seealso cref="IDoubleBondStereochemistry"/>
     // @cdk.module core
     // @cdk.githash
-    ///
-    /// <seealso cref="IDoubleBondStereochemistry"/>
-    /// </summary>
     public class DoubleBondStereochemistry
         : IDoubleBondStereochemistry
     {

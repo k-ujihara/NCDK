@@ -26,34 +26,28 @@ namespace NCDK.QSAR.Descriptors.Bonds
     ///  The calculation of bond-sigma Partial charge is calculated
     ///  determining the difference the Partial Sigma Charge on atoms
     ///  A and B of a bond. Based in Gasteiger Charge.
-    ///  <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>bondPosition</td>
-    ///     <td>0</td>
-    ///     <td>The position of the target bond</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///
+    /// </summary>
+    /// <remarks>
+    ///  <para>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term>bondPosition</term><term>0</term><term>The position of the target bond</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="Atomic.PartialSigmaChargeDescriptor"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-08
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondPartialSigmaCharge
-    ///
-    // @see NCDK.QSAR.Descriptors.Atomic.PartialSigmaChargeDescriptor
-    /// </summary>
+
     public class BondPartialSigmaChargeDescriptor : AbstractBondDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
-        /// <summary>Number of maximum iterations*/
+       /// <summary>Number of maximum iterations</summary>
         private int maxIterations;
 
         private static readonly string[] NAMES = { "peoeB" };

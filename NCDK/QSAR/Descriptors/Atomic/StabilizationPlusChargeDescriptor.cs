@@ -28,28 +28,22 @@ namespace NCDK.QSAR.Descriptors.Atomic
     ///  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
     ///  obtaining the charges. The method is based following {@cdk.cite Saller85}.
     ///  The value is calculated looking for resonance structures which can stabilize the charge.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>maxIterations</td>
-    ///     <td>0</td>
-    ///     <td>Number of maximum iterations</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term>maxIterations</term><term>0</term><term>Number of maximum iterations</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="StabilizationCharges"/>
     // @author         Miguel Rojas Cherto
     // @cdk.created    2008-104-31
     // @cdk.module     qsaratomic
     // @cdk.set        qsar-descriptors
     // @cdk.githash
-    /// <seealso cref="StabilizationCharges"/>
-    /// </summary>
     public class StabilizationPlusChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "stabilPlusC" };
@@ -75,11 +69,15 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// The parameters attribute of the StabilizationPlusChargeDescriptor object
+        /// </summary>
+        /// <value>
+        /// <list type="bullet">
         /// <item>
-        /// <term><value>1</value></term>
+        /// <term>1</term>
         /// <description>max iterations (optional, defaults to 20)</description>
         /// </item>
         /// </list>       
+        /// </value>
         public override object[] Parameters { get { return null; } set { } }
 
         public override string[] DescriptorNames => NAMES;

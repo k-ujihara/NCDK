@@ -27,7 +27,6 @@ using System.Xml.Linq;
 namespace NCDK.IO.CML
 {
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    // 
     // @cdk.module io
     // @cdk.githash
     public class JMOLANIMATIONConvention : CMLCoreModule

@@ -26,35 +26,28 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  <p>The calculation of total partial charges of an heavy atom is based on
-    ///  Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. </p>
-    ///  <p>They are obtained by summation of the results of the calculations on
-    ///  sigma- and pi-charges. </p>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///
+    /// The calculation of total partial charges of an heavy atom is based on
+    /// Partial Equalization of Electronegativity method (PEOE-PEPE) from Gasteiger. 
+    /// <para>They are obtained by summation of the results of the calculations on
+    /// sigma- and pi-charges. </para>
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
+    /// </para> 
+    /// </remarks> 
+    /// <seealso cref="GasteigerMarsiliPartialCharges"/>
+    /// <seealso cref="GasteigerPEPEPartialCharges"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-04-11
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:PartialTChargePEOE
-    ///
-    // @see         GasteigerMarsiliPartialCharges
-    // @see         GasteigerPEPEPartialCharges
-    /// </summary>
     public class PartialTChargePEOEDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "pepeT" };
@@ -62,11 +55,11 @@ namespace NCDK.QSAR.Descriptors.Atomic
         private GasteigerMarsiliPartialCharges peoe = null;
         private GasteigerPEPEPartialCharges pepe = null;
 
-        /// <summary>Number of maximum iterations*/
+       /// <summary>Number of maximum iterations</summary>
         private int maxIterations = -1;
-        /// <summary>Number of maximum resonance structures*/
+       /// <summary>Number of maximum resonance structures</summary>
         private int maxResonStruc = -1;
-        /// <summary> make a lone pair electron checker. Default true*/
+       /// <summary> make a lone pair electron checker. Default true</summary>
         private bool lpeChecker = true;
 
         /// <summary>

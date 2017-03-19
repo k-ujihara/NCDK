@@ -23,32 +23,30 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * This mechanism displaces the chemical bond to an Atom. Generating one with
-     * excess charge and the other with deficiency.
-     * It returns the reaction mechanism which has been cloned the IAtomContainer.
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This mechanism displaces the chemical bond to an Atom. Generating one with
+    /// excess charge and the other with deficiency.
+    /// It returns the reaction mechanism which has been cloned the IAtomContainer.
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class HeterolyticCleavageMechanism : IReactionMechanism
     {
 
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-         *                    The first atom receives the positive charge charge and the second
-         *                    negative charge
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-         * @return            The Reaction mechanism
-         *
-         */
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms to apply are mapped between
+        /// reactants and products.
+        ///
+        ///
+        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.</param>
+        ///                    The first atom receives the positive charge charge and the second
+        ///                    negative charge
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
+        /// <returns>The Reaction mechanism</returns>
+        ///
+        /// </summary>
 
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
@@ -77,7 +75,7 @@ namespace NCDK.Reactions.Mechanisms
             int posBond1 = molecule.Bonds.IndexOf(bond1);
 
             if (bond1.Order == BondOrder.Single)
-                reactantCloned.Remove(reactantCloned.Bonds[posBond1]);
+                reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond1]);
             else
                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
 

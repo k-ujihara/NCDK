@@ -34,33 +34,33 @@ namespace NCDK.IO
     /// <summary>
     /// Provides some basic functionality for readers and writers. This includes
     /// managing the <see cref="IChemObjectIOListener"/>'s and managing of <see cref="IOSetting"/>'s.
-    /// The IOSettings are managed via the <see cref="SettingManager"/> class with most
-    /// method's wrapped to more descriptive method names (e.g.
-    /// {@link SettingManager#Get(string)} is invoked by {@link #GetSetting(string)}).
-    ///
+    /// The IOSettings are managed via the <see cref="SettingManager{T}"/> class with most
+    /// method's wrapped to more descriptive method names (e.g. 
+    /// <see cref="SettingManager{T}"/>[<see cref="string"/>]  is invoked by <see cref="IOSettings"/>[<see cref="string"/>]).
+    /// </summary>
     // @author johnmay
     // @cdk.module io
     // @cdk.githash
     // @cdk.created 20.03.2012
-    /// </summary>
     public abstract class ChemObjectIO : IChemObjectIO
     {
         /// <summary>
         /// Holder of reader event listeners.
         /// </summary>
         private List<IChemObjectIOListener> listeners = new List<IChemObjectIOListener>(2);
-        private SettingManager<IOSetting>   settings  = new SettingManager<IOSetting>();
+        private SettingManager<IOSetting> settings = new SettingManager<IOSetting>();
         public virtual ICollection<IChemObjectIOListener> Listeners => listeners;
         public virtual SettingManager<IOSetting> IOSettings => settings;
         public abstract IResourceFormat Format { get; }
-        public S Add<S>(S setting) where S: IOSetting
+        public T Add<T>(T setting) where T : IOSetting
         {
-            return (S)settings.Add(setting);
+            return (T)settings.Add(setting);
         }
 
         public void AddSettings(IEnumerable<IOSetting> settings)
         {
-            foreach (var setting in settings) {
+            foreach (var setting in settings)
+            {
                 if (this.settings.Has(setting.Name))
                 {
                     try
@@ -84,8 +84,10 @@ namespace NCDK.IO
         /// Fires <see cref="IChemObjectIOListener.ProcessIOSettingQuestion(IOSetting)"/> for all managed listeners.
         /// </summary>
         /// <param name="setting">the setting to process</param>
-        protected void FireIOSettingQuestion(IOSetting setting) {
-            foreach (var listener in listeners) {
+        protected void FireIOSettingQuestion(IOSetting setting)
+        {
+            foreach (var listener in listeners)
+            {
                 listener.ProcessIOSettingQuestion(setting);
             }
         }

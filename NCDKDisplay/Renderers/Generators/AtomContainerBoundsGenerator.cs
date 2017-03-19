@@ -26,7 +26,7 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// <see cref="IGenerator"/> that draws a rectangular around the <see cref="IAtomContainer"/>.
+    /// <see cref="IGenerator{T}"/> that draws a rectangular around the <see cref="IAtomContainer"/>.
     /// </summary>
     // @cdk.module renderextra
     // @cdk.githash

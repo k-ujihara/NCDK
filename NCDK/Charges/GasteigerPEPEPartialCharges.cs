@@ -461,7 +461,7 @@ namespace NCDK.Charges
             bool found = false; /* control obtained containers */
             var setOfReactants = ac.Builder.CreateAtomContainerSet();
             /* search of reactive center. */
-            out_: for (int i = 0; i < ac.Bonds.Count; i++)
+            output: for (int i = 0; i < ac.Bonds.Count; i++)
             {
                 if (ac.Bonds[i].Order != BondOrder.Single)
                 {

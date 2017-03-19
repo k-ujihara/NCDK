@@ -48,10 +48,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
     /// Checks if atom is matching between query and target molecules.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class DefaultMatcher
     {
 

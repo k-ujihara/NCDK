@@ -20,26 +20,26 @@
 namespace NCDK.NInChI
 {
     /// <summary>
-    /// <p>Type-safe enumeration of InChI return codes.
-    ///
-    /// <p>InChI library return values:<br>
-    /// <tt>
-    /// SKIP     (-2)    Not used in InChI library<br>
-    /// EOF      (-1)    No structural data has been provided<br>
-    /// OKAY     (0)     Success, no errors or warnings<br>
-    /// WARNING  (1)     Success, Warning(s) issued<br>
-    /// ERROR    (2)     Error: no InChI has been created<br>
-    /// FATAL    (3)     Severe error: no InChI has been created (typically,
-    ///                  memory allocation failure)<br>
-    /// Unknown  (4)     Unknown program error<br>
-    /// BUSY     (5)     Previous call to InChI has not returned yet<br>
-    /// </tt>
-    /// <p>See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
+    /// Type-safe enumeration of InChI return codes.
+    /// <para>
+    /// InChI library return values:
+    /// <list type="bullet">
+    /// <item>SKIP     (-2)    Not used in InChI library</item>
+    /// <item>EOF      (-1)    No structural data has been provided</item>
+    /// <item>OKAY     (0)     Success, no errors or warnings</item>
+    /// <item>WARNING  (1)     Success, Warning(s) issued</item>
+    /// <item>ERROR    (2)     Error: no InChI has been created</item>
+    /// <item>FATAL    (3)     Severe error: no InChI has been created (typically,
+    ///                  memory allocation failure)</item>
+    /// <item>Unknown  (4)     Unknown program error</item>
+    /// <item>BUSY     (5)     Previous call to InChI has not returned yet</item>
+    /// </list> 
+    /// </para>
+    /// <para>See <tt>inchi_api.h</tt>.</para>
     /// </summary>
+    // @author Sam Adams
     public enum INCHI_RET
     {
-
         /// <summary>
         /// Not used in InChI library.
         /// </summary>

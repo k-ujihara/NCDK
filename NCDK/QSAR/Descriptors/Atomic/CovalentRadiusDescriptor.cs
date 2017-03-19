@@ -25,39 +25,35 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     ///  This class returns the covalent radius of a given atom.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
+    /// </remarks>
     // @author         Miguel Rojas
     // @cdk.created    2006-05-17
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.set        qsar-descriptors
     // @cdk.dictref qsar-descriptors:covalentradius
-    /// </summary>
     public class CovalentRadiusDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private AtomTypeFactory factory = null;
 
-        /// <summary>
-        ///  Constructor for the CovalentRadiusDescriptor object.
-        /// </summary>
-        /// <exception cref="IOException">if an error occurs when reading atom type information</exception>
         public CovalentRadiusDescriptor() { }
 
-        /// <<inheritdoc/>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(

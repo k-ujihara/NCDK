@@ -1,36 +1,47 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.Serialization;
+/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using System.Text;
 
 namespace NCDK.Default
 {
-    [Serializable]
+    /// <summary>
+	/// A sequence of ChemModels, which can, for example, be used to
+	/// store the course of a reaction. Each state of the reaction would be
+	/// stored in one ChemModel.    
+	/// </summary>
+	// @cdk.module  silent
+	// @cdk.githash
+	// @cdk.keyword animation
+	// @cdk.keyword reaction
+     [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
+		/// <summary>Array of ChemModels.</summary>
         private IList<IChemModel> chemModels = new List<IChemModel>();
 
         public ChemSequence()
@@ -38,6 +49,10 @@ namespace NCDK.Default
         {
         }
 
+		/// <summary>
+        /// Adds an chemModel to this container.
+        /// </summary>
+        /// <param name="chemModel">The chemModel to be added to this container</param>
         public void Add(IChemModel chemModel)
         {
             chemModels.Add(chemModel);
@@ -104,9 +119,8 @@ namespace NCDK.Default
         /// <summary>
         ///  Called by objects to which this object has
         ///  registered as a listener.
-        ///
-        /// <param name="event">A change event pointing to the source of the change</param>
         /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
@@ -114,10 +128,20 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    [Serializable]
+    /// <summary>
+	/// A sequence of ChemModels, which can, for example, be used to
+	/// store the course of a reaction. Each state of the reaction would be
+	/// stored in one ChemModel.    
+	/// </summary>
+	// @cdk.module  silent
+	// @cdk.githash
+	// @cdk.keyword animation
+	// @cdk.keyword reaction
+     [Serializable]
     public class ChemSequence
         : ChemObject, IChemSequence, IChemObjectListener, ICloneable
     {
+		/// <summary>Array of ChemModels.</summary>
         private IList<IChemModel> chemModels = new List<IChemModel>();
 
         public ChemSequence()
@@ -125,6 +149,10 @@ namespace NCDK.Silent
         {
         }
 
+		/// <summary>
+        /// Adds an chemModel to this container.
+        /// </summary>
+        /// <param name="chemModel">The chemModel to be added to this container</param>
         public void Add(IChemModel chemModel)
         {
             chemModels.Add(chemModel);
@@ -185,9 +213,8 @@ namespace NCDK.Silent
         /// <summary>
         ///  Called by objects to which this object has
         ///  registered as a listener.
-        ///
-        /// <param name="event">A change event pointing to the source of the change</param>
         /// </summary>
+        /// <param name="evt">A change event pointing to the source of the change</param>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }

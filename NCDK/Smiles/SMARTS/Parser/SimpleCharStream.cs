@@ -227,22 +227,12 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         [System.Obsolete()]
-        /// <summary>
-        // @deprecated
-        /// <seealso cref="getEndColumn"/>
-        /// </summary>
-
         public int GetColumn()
         {
             return bufcolumn[bufpos];
         }
 
         [System.Obsolete()]
-        /// <summary>
-        // @deprecated
-        /// <seealso cref="getEndLine"/>
-        /// </summary>
-
         public int GetLine()
         {
             return bufline[bufpos];

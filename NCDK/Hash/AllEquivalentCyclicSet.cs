@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.RingSearches;
 using System.Collections.Generic;
 
@@ -29,29 +28,26 @@ namespace NCDK.Hash
 {
     /// <summary>
     /// Finds the set of equivalent values are members of a ring. This class is
-    /// intended to drive the systematic perturbation of the {@link
-    /// org.openscience.cdk.hash.PerturbedAtomHashGenerator}. This {@link
-    /// EquivalentSetFinder} provides the highest probability of avoid collisions due
+    /// intended to drive the systematic perturbation of the <see cref="PerturbedAtomHashGenerator"/> 
+    /// . This <see cref="EquivalentSetFinder"/> provides the highest probability of avoid collisions due
     /// to uniform atom environments but is much more demanding then the simpler
     /// <see cref="MinimumEquivalentCyclicSet"/>.
-    ///
-    /// <p/><br/> The easiest way to use this class is with the {@link
-    /// org.openscience.cdk.hash.HashGeneratorMaker}.
-    /// <example><code>
+    /// </summary>
+    /// <example>
+    /// The easiest way to use this class is with the <see cref="HashGeneratorMaker"/>.
+    /// <code>
     /// MoleculeHashGenerator generator =
     ///   new HashGeneratorMaker().Depth(6)
     ///                           .Elemental()
     ///                           .PerturbWith(new AllEquivalentCyclicSet())
     ///                           .Molecular();
     /// </code></example>
-    ///
+    /// <seealso cref="MinimumEquivalentCyclicSet"/>
+    /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
     // @author John May
     // @cdk.module hash
     // @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
-    /// <seealso cref="MinimumEquivalentCyclicSet"/>
-    /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
     // @cdk.githash
-    /// </summary>
     internal sealed class AllEquivalentCyclicSet : EquivalentSetFinder
     {
         public override ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph)

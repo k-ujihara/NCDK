@@ -22,8 +22,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates input for InChI to structure conversion.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiInputInchi
     {
         /// <summary>
@@ -43,7 +43,6 @@ namespace NCDK.NInChI
         /// <summary>
         /// Constructor.
         /// <param name="inchi">InChI string</param>
-        /// <param name="opts">Options</param>
         /// </summary>
         public NInchiInputInchi(string inchi)
         {

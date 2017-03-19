@@ -28,21 +28,17 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with convenience methods that provide methods from
     /// methods from ChemObjects within the ChemSequence.
-    ///
-    // @see org.openscience.cdk.AtomContainer#RemoveAtomAndConnectedElectronContainers(IAtom)
-    ///
+    /// </summary>
+    /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class ChemSequenceManipulator
     {
-
         /// <summary>
         /// Get the total number of atoms inside an IChemSequence.
-        ///
+        /// </summary>
         /// <param name="sequence">The IChemSequence object.</param>
         /// <returns>The number of Atom objects inside.</returns>
-        /// </summary>
         public static int GetAtomCount(IChemSequence sequence)
         {
             int count = 0;
@@ -84,9 +80,8 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns a List of all IChemObject inside a ChemSequence.
-        ///
-        /// <returns>A List of all ChemObjects.</returns>
         /// </summary>
+        /// <returns>A List of all ChemObjects.</returns>
         public static List<IChemObject> GetAllChemObjects(IChemSequence sequence)
         {
             List<IChemObject> list = new List<IChemObject>();

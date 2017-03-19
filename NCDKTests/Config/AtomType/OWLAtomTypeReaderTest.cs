@@ -88,9 +88,9 @@ namespace NCDK.Config.AtomType
             Assert.AreEqual(0, atomType.FormalCharge.Value);
             Assert.AreEqual(Hybridization.SP3, atomType.Hybridization);
             Assert.AreEqual(4, atomType.FormalNeighbourCount.Value);
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PI_BOND_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.SINGLE_ELECTRON_COUNT));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PiBondCount));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.SingleElectronCount));
         }
     }
 }

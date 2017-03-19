@@ -21,40 +21,34 @@ using NCDK.QSAR.Result;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 
-namespace NCDK.QSAR.Descriptors.Atomic {
+namespace NCDK.QSAR.Descriptors.Atomic
+{
     /// <summary>
     ///  Pi electronegativity is given by X = a + bq + c(q*q)
-    ///
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>maxIterations</td>
-    ///     <td>0</td>
-    ///     <td>Number of maximum iterations</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term>maxIterations</term><term>0</term><term>Number of maximum iterations</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="Electronegativity"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-17
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:piElectronegativity
-    ///
-    /// <seealso cref="Electronegativity"/>
-    /// </summary>
-    public class PiElectronegativityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor {
-        /// <summary>Number of maximum iterations*/
+    public class PiElectronegativityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    {
+        /// <summary>Number of maximum iterations</summary>
         private int maxIterations = -1;
-        /// <summary>Number of maximum resonance structures*/
+        /// <summary>Number of maximum resonance structures</summary>
         private int maxResonStruc = -1;
-        /// <summary> make a lone pair electron checker. Default true*/
+        /// <summary> make a lone pair electron checker. Default true</summary>
         private bool lpeChecker = true;
 
         private static readonly string[] NAMES = { "elecPiA" };
@@ -63,7 +57,8 @@ namespace NCDK.QSAR.Descriptors.Atomic {
         /// <summary>
         ///  Constructor for the PiElectronegativityDescriptor object
         /// </summary>
-        public PiElectronegativityDescriptor() {
+        public PiElectronegativityDescriptor()
+        {
             electronegativity = new PiElectronegativity();
         }
 
@@ -92,7 +87,7 @@ namespace NCDK.QSAR.Descriptors.Atomic {
         /// </item>
         /// </list>
         /// </remarks>
-        /// <exception cref="exception">CDKException</exception>
+        /// <exception cref="CDKException"></exception>
         public override object[] Parameters
         {
             set
@@ -130,19 +125,23 @@ namespace NCDK.QSAR.Descriptors.Atomic {
         /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>return the pi electronegativity</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer) {
+        public override DescriptorValue Calculate(IAtom atom, IAtomContainer atomContainer)
+        {
             IAtomContainer clone;
             IAtom localAtom;
-            try {
+            try
+            {
                 clone = (IAtomContainer)atomContainer.Clone();
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(clone);
-                if (lpeChecker) {
+                if (lpeChecker)
+                {
                     LonePairElectronChecker lpcheck = new LonePairElectronChecker();
                     lpcheck.Saturate(atomContainer);
                 }
                 localAtom = clone.Atoms[atomContainer.Atoms.IndexOf(atom)];
             }
-            catch (CDKException) {
+            catch (CDKException)
+            {
                 return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, null);
             }
 
@@ -165,7 +164,8 @@ namespace NCDK.QSAR.Descriptors.Atomic {
         /// </summary>
         /// <param name="name">Description of the Parameter</param>
         /// <returns>The parameterType value</returns>
-        public override object GetParameterType(string name) {
+        public override object GetParameterType(string name)
+        {
             if ("maxIterations".Equals(name)) return int.MaxValue;
             if ("lpeChecker".Equals(name)) return true;
             if ("maxResonStruc".Equals(name)) return int.MaxValue;

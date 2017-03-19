@@ -235,15 +235,15 @@ namespace NCDK
 
             IReactionSet set = (IReactionSet)NewChemObject();
 
-            Assert.IsTrue(set.IsEmpty, "new reaction set should be empty");
+            Assert.IsTrue(set.IsEmpty(), "new reaction set should be empty");
 
             set.Add(set.Builder.CreateReaction());
 
-            Assert.IsFalse(set.IsEmpty, "reaction set with a single reaction should not be empty");
+            Assert.IsFalse(set.IsEmpty(), "reaction set with a single reaction should not be empty");
 
             set.Clear();
 
-            Assert.IsTrue(set.IsEmpty, "reaction set with all reactions removed should be empty");
+            Assert.IsTrue(set.IsEmpty(), "reaction set with all reactions removed should be empty");
 
         }
 

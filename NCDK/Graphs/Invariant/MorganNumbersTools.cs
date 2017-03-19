@@ -44,7 +44,7 @@ namespace NCDK.Graphs.Canon
     public class MorganNumbersTools
     {
         /// <summary>Default size of adjacency lists.</summary>
-        private const int INITIAL_DEGREE = 4;
+        private const int InitialDegree = 4;
 
         /// <summary>
         /// Makes an array containing the morgan numbers of the atoms of
@@ -60,7 +60,7 @@ namespace NCDK.Graphs.Canon
             long[] currentInvariants = new long[order];
             long[] previousInvariants = new long[order];
 
-            int[][] graph = Arrays.CreateJagged<int>(order, INITIAL_DEGREE);
+            int[][] graph = Arrays.CreateJagged<int>(order, InitialDegree);
             int[] degree = new int[order];
 
             // which atoms are the non-hydrogens.
@@ -75,8 +75,8 @@ namespace NCDK.Graphs.Canon
             {
                 int u = molecule.Atoms.IndexOf(bond.Atoms[0]);
                 int v = molecule.Atoms.IndexOf(bond.Atoms[1]);
-                graph[u] = Ints.EnsureCapacity(graph[u], degree[u] + 1, INITIAL_DEGREE);
-                graph[v] = Ints.EnsureCapacity(graph[v], degree[v] + 1, INITIAL_DEGREE);
+                graph[u] = Ints.EnsureCapacity(graph[u], degree[u] + 1, InitialDegree);
+                graph[v] = Ints.EnsureCapacity(graph[v], degree[v] + 1, InitialDegree);
                 graph[u][degree[u]++] = v;
                 graph[v][degree[v]++] = u;
                 currentInvariants[u] += nonHydrogens[v];
@@ -91,7 +91,7 @@ namespace NCDK.Graphs.Canon
                 {
                     currentInvariants[u] = 0;
 
-                    // for each of the vertices adjacent to 'u' sum their
+                    // for each of the vertices adjacent to <paramref name="u"/> sum their
                     // previous connectivity value
                     int[] neighbors = graph[u];
                     for (int j = 0; j < degree[u]; j++)

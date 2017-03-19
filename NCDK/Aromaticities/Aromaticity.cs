@@ -21,13 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using System.Collections.Generic;
 using static NCDK.Graphs.GraphUtil;
 using static NCDK.Common.Base.Preconditions;
+using System.Linq;
 
 namespace NCDK.Aromaticities
 {
@@ -62,15 +62,15 @@ namespace NCDK.Aromaticities
     /// <para>
     /// This implementation allows configuration of these via an <see cref="ElectronDonation"/> model and <see cref="CycleFinder"/>. To obtain an instance
     /// of the electron donation model use one of the factory methods,
-    /// <see cref="ElectronDonation.Cdk"/>, <see cref="ElectronDonation.CdkAllowingExocyclic"/>,
-    /// <see cref="ElectronDonation.Daylight"/> or <see cref="ElectronDonation.PiBonds"/>.
+    /// <see cref="ElectronDonation.CDKModel"/>, <see cref="ElectronDonation.CDKAllowingExocyclicModel"/>,
+    /// <see cref="ElectronDonation.DaylightModel"/> or <see cref="ElectronDonation.PiBondsModel"/>.
     /// </para>
     /// </summary>
     /// <example>
     /// <code>
     /// // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
-    /// ElectronDonation model       = ElectronDonation.CDK();
-    /// CycleFinder      cycles      = Cycles.CDKAromaticSet;
+    /// ElectronDonation model       = ElectronDonation.CDKModel;
+    /// CycleFinder      cycles      = Cycles.CDKAromaticSetFinder;
     /// Aromaticity      aromaticity = new Aromaticity(model, cycles);
     /// // apply our configured model to each molecule, the CDK model
     /// // requires that atom types are perceived
@@ -99,13 +99,13 @@ namespace NCDK.Aromaticities
         private readonly CycleFinder cycles;
 
         /// <summary>
-        /// Create an aromaticity model using the specified electron donation {@code
-        /// model} which is tested on the <paramref name="cycles"/>. The <paramref name="model"/> defines
+        /// Create an aromaticity model using the specified electron donation
+        /// <paramref name="model"/> which is tested on the <paramref name="cycles"/>. The <paramref name="model"/> defines
         /// how many π-electrons each atom may contribute to an aromatic system. The
         /// <paramref name="cycles"/> defines the <see cref="CycleFinder"/> which is used to find
         /// cycles in a molecule. The total electron donation from each atom in each
         /// cycle is counted and checked. If the electron contribution is equal to
-        /// {@code 4n + 2} for a {@code n >= 0} then the cycle is considered
+        /// <c>4n + 2</c> for a <c>n &gt;= 0</c> then the cycle is considered
         /// aromatic. 
         /// </summary>
         /// <remarks>
@@ -113,23 +113,23 @@ namespace NCDK.Aromaticities
         /// are tested affects which atoms/bonds are found to be aromatic. There are
         /// several <see cref="ElectronDonation"/> models and <see cref="Cycles"/>
         /// available. A good choice for the cycles
-        /// is to use <see cref="Cycles.All"/> falling back to
-        /// <see cref="Cycles.Relevant"/> on failure. Finding all cycles is very
+        /// is to use <see cref="Cycles.AllFinder()"/> falling back to
+        /// <see cref="Cycles.RelevantFinder"/> on failure. Finding all cycles is very
         /// fast but may produce an exponential number of cycles. It is therefore not
         /// feasible for complex fused systems and an exception is thrown.
         /// In such cases the aromaticity can either be skipped or a simpler
-        /// polynomial cycle set <see cref="Cycles.Relevant"/> used.
+        /// polynomial cycle set <see cref="Cycles.RelevantFinder"/> used.
         /// </remarks>
         /// <example>
         /// <code>
         /// // mimics the CDKHuckelAromaticityDetector
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDK(), Cycles.CDKAromaticSet);
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
         /// // mimics the DoubleBondAcceptingAromaticityDetector
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CdkAllowingExocyclic(), Cycles.CDKAromaticSet);
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.CDKAromaticSetFinder);
         /// // a good model for writing SMILES
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(), Cycles.All());
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
         /// // a good model for writing MDL/Mol2
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.PiBonds(), Cycles.All());
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllFinder);
         /// </code>
         /// </example>
         /// <param name="model"></param>
@@ -147,7 +147,7 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <example>
         /// <code>
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDK(), Cycles.All());
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
         /// IAtomContainer container = ...;
         /// try {
         ///     ICollection&lt;IBond&gt;bonds = aromaticity.FindBonds(container);
@@ -159,8 +159,8 @@ namespace NCDK.Aromaticities
         /// </example>
         /// <param name="molecule">the molecule to apply the model to</param>
         /// <returns>the set of bonds which are aromatic</returns>
-        /// <exception cref="">a problem occurred with the cycle perception - one can retry with a simpler cycle set</exception>
-        public ICollection<IBond> FindBonds(IAtomContainer molecule)
+        /// <exception cref="CDKException">a problem occurred with the cycle perception - one can retry with a simpler cycle set</exception>
+        public IEnumerable<IBond> FindBonds(IAtomContainer molecule)
         {
             // build graph data-structures for fast cycle perception
             EdgeToBondMap bondMap = EdgeToBondMap.WithSpaceFor(molecule);
@@ -169,8 +169,6 @@ namespace NCDK.Aromaticities
             // initial ring/cycle search and get the contribution from each atom
             RingSearch ringSearch = new RingSearch(molecule, graph);
             int[] electrons = model.Contribution(molecule, ringSearch);
-
-            ICollection<IBond> bonds = new List<IBond>();
 
             // obtain the subset of electron contributions which are >= 0 (i.e.
             // allowed to be aromatic) - we then find the cycles in this subgraph
@@ -187,12 +185,11 @@ namespace NCDK.Aromaticities
                 {
                     for (int i = 1; i < cycle.Length; i++)
                     {
-                        bonds.Add(bondMap[subset[cycle[i]], subset[cycle[i - 1]]]);
+                        yield return bondMap[subset[cycle[i]], subset[cycle[i - 1]]];
                     }
                 }
             }
-
-            return bonds;
+            yield break;
         }
 
         /// <summary>
@@ -203,7 +200,7 @@ namespace NCDK.Aromaticities
         /// require aromatic flags to be preserved the <see cref="FindBonds(IAtomContainer)"/>
         /// can be used to find bonds without setting any flags.
         /// <code>
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDK(), Cycles.All());
+        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
         /// IAtomContainer container = ...;
         /// try {
         ///     if (aromaticity.Apply(container)) {
@@ -218,8 +215,6 @@ namespace NCDK.Aromaticities
         /// <returns>the model found the molecule was aromatic</returns>
         public bool Apply(IAtomContainer molecule)
         {
-            ICollection<IBond> bonds = FindBonds(molecule);
-
             // clear existing flags
             molecule.IsAromatic = false;
             foreach (var bond in molecule.Bonds)
@@ -227,26 +222,28 @@ namespace NCDK.Aromaticities
             foreach (var atom in molecule.Atoms)
                 atom.IsAromatic = false;
 
+            var bonds = FindBonds(molecule);
+            bool isAromatic = false;
             // set the new flags
             foreach (var bond in bonds)
             {
+                isAromatic = true;
                 bond.IsAromatic = true;
                 bond.Atoms[0].IsAromatic = true;
                 bond.Atoms[1].IsAromatic = true;
             }
 
-            molecule.IsAromatic = bonds.Count != 0;
-            
-            return bonds.Count != 0;
+            molecule.IsAromatic = isAromatic;
+            return isAromatic;
         }
 
         /// <summary>
         /// Check if the number electrons in the <paramref name="cycle"/> could delocalise. The
-        /// <paramref name="contributions"/> array indicates how many π-electrons each atom can
-        /// contribute.
+        /// <paramref name="contributions"/> array indicates how many π-electrons each atom can contribute.
         /// </summary>
         /// <param name="cycle">closed walk (last and first vertex the same) of vertices which form a cycle</param>
         /// <param name="contributions">π-electron contribution from each atom</param>
+        /// <param name="subset"></param>
         /// <returns>the number of electrons indicate they could delocalise</returns>
         private static bool CheckElectronSum(int[] cycle, int[] contributions, int[] subset)
         {
@@ -261,6 +258,7 @@ namespace NCDK.Aromaticities
         /// </summary>
         /// <param name="cycle">closed walk (last and first vertex the same) of vertices which form a cycle</param>
         /// <param name="contributions">π-electron contribution from each atom</param>
+        /// <param name="subset"></param>
         /// <returns>the total sum of π-electrons contributed by the <paramref name="cycle"/></returns>
         internal static int ElectronSum(int[] cycle, int[] contributions, int[] subset)
         {
@@ -298,12 +296,12 @@ namespace NCDK.Aromaticities
         }
 
         /// <summary>Replicates CDKHueckelAromaticityDetector.</summary>
-        private static readonly Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet);
+        private static readonly Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
 
         /// <summary>
         /// Access an aromaticity instance that replicates the previously utilised -
         /// CDKHueckelAromaticityDetector. It has the following configuration:
-        /// <code>new Aromaticity(ElectronDonation.CDK(), Cycles.CDKAromaticSet);</code>
+        /// <code>new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);</code>
         /// <para>
         /// This model is not necessarily bad (or really considered legacy) but
         /// should <b>not</b> be considered a gold standard model that covers all
@@ -316,7 +314,7 @@ namespace NCDK.Aromaticities
         /// versions. The same electron donation model can be used to test
         /// aromaticity of more cycles. For instance, the following configuration
         /// will identify more bonds in a some structures as aromatic:
-        /// <code>new Aromaticity(ElectronDonation.CDK(), Cycles.Or(Cycles.All(), Cycles.Relevant));</code>
+        /// <code>new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllFinder, Cycles.Relevant));</code>
         /// </para>
         /// </summary>
         public static Aromaticity CDKLegacy => CDK_LEGACY;

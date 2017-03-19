@@ -28,7 +28,7 @@ using System.Diagnostics;
 namespace NCDK.Formula
 {
     /// <summary>
-    /// <para> Validate a molecular formula given in IMolecularformula object. The
+    /// Validate a molecular formula given in IMolecularformula object. The
     /// validation is based according different rules that you have to introduce before
     /// see IRule.
     /// </summary>
@@ -40,7 +40,7 @@ namespace NCDK.Formula
     // @cdk.githash
     public class MolecularFormulaChecker
     {
-        /// <summary>List of IRules to be applied in the validation.*/
+       /// <summary>List of IRules to be applied in the validation.</summary>
         private IList<IRule> rules;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace NCDK.Formula
             double result = 1.0;
 
             IMolecularFormula formulaWith = IsValid(formula);
-            IDictionary<string, object> properties = formulaWith.GetProperties();
+            var properties = formulaWith.GetProperties();
 
             foreach (var rule in rules)
             {

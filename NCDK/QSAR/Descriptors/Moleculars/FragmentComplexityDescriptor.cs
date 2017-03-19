@@ -23,21 +23,24 @@ using System;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///  Class that returns the complexity of a system. The complexity is defined as {@cdk.cite Nilakantan06}:
+    ///  Class that returns the complexity of a system.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The complexity is defined as {@cdk.cite Nilakantan06}:
     ///  <code>
     ///  C=Abs(B^2-A^2+A)+H/100
     ///  </code>
     ///  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
-    ///
-    /// <p>This descriptor uses no parameters.
-    ///
+    /// </para>
+    /// <para>This descriptor uses no parameters.</para>
+    /// </remarks>
     // @author      chhoppe from EUROSCREEN
     // @cdk.created 2006-8-22
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:NilaComplexity
-    /// </summary>
     public class FragmentComplexityDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "fragC" };
@@ -47,21 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         public FragmentComplexityDescriptor() { }
 
-        /// <summary>
-        /// Returns a <code>Map</code> which specifies which descriptor
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        ///
-        /// <returns>An object containing the descriptor specification</returns>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
          new DescriptorSpecification(
@@ -117,16 +106,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(c), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object</returns>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

@@ -26,19 +26,16 @@ namespace NCDK.Hash.Stereo
 {
     /// <summary>
     /// Describes the geometric parity of a stereo configuration.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal abstract class GeometricParity
     {
-
         /// <summary>
         /// Calculate the geometric parity.
-        ///
-        /// <returns>-1 odd, +1 even and 0 none</returns>
         /// </summary>
+        /// <returns>-1 odd, +1 even and 0 none</returns>
         public abstract int Parity { get; }
 
         /// <summary>
@@ -63,10 +60,9 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Create a geometric parity from a pre-stored value (-1, 0, +1).
-        ///
+        /// </summary>
         /// <param name="parity">existing parity</param>
         /// <returns>instance which when invoked will return the value</returns>
-        /// </summary>
         public static GeometricParity ValueOf(int parity)
         {
             return new Predefined(parity);

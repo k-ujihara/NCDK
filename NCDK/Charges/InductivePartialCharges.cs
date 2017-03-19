@@ -27,6 +27,7 @@ namespace NCDK.Charges
     /// <summary>
     /// The calculation of the inductive partial atomic charges and equalization of
     /// effective electronegativities is based on {@cdk.cite CHE03}.
+    /// </summary>
     // @author      mfe4
     // @cdk.module  charges
     // @cdk.githash
@@ -303,10 +304,10 @@ namespace NCDK.Charges
         /// <param name="ac">AtomContainer</param>
         /// <param name="atomPosition">position of target atom</param>
         /// <param name="ElEn">electronegativity of target atom</param>
-        /// <param name="as">step in iteration</param>
+        /// <param name="step">step in iteration</param>
         /// <returns>The atomic charge increment for the target atom</returns>
         /// <exception cref="CDKException"></exception>
-        private double GetAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int as_)
+        private double GetAtomicChargeIncrement(IAtomContainer ac, int atomPosition, double[] ElEn, int step)
         {
             IAtom[] allAtoms = null;
             IAtom target = null;
@@ -361,7 +362,7 @@ namespace NCDK.Charges
                     {
                         radius = type.CovalentRadius.Value;
                     }
-                    tmp = (ElEn[a + ((as_ - 1) * allAtoms.Length)] - ElEn[atomPosition + ((as_ - 1) * allAtoms.Length)]);
+                    tmp = (ElEn[a + ((step - 1) * allAtoms.Length)] - ElEn[atomPosition + ((step - 1) * allAtoms.Length)]);
                     tmp = tmp * ((radius * radius) + (radiusTarget * radiusTarget));
                     tmp = tmp / (CalculateSquaredDistanceBetweenTwoAtoms(target, allAtoms[a]));
                     incrementedCharge += tmp;

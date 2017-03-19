@@ -23,17 +23,15 @@ using System;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// <p>Prediction of logP based on the number of carbon and hetero atoms. The
+    /// Prediction of logP based on the number of carbon and hetero atoms. The
     /// implemented equation was proposed in {@cdk.cite Mannhold2009}.
-    ///
+    /// </summary>
     // @cdk.module     qsarmolecular
     // @cdk.githash
     // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:mannholdLogP
-    ///
     // @cdk.keyword LogP
     // @cdk.keyword descriptor
-    /// </summary>
     public class MannholdLogPDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MLogP" };

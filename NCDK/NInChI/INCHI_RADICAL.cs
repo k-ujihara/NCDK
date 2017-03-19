@@ -22,8 +22,8 @@ namespace NCDK.NInChI
     /// <summary>
     /// Enumeration of InChI radical definitions.
     /// Corresponds to <tt>inchi_Radical</tt> in <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public enum INCHI_RADICAL
     {
         /// <summary>

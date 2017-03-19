@@ -27,23 +27,20 @@ using System.Linq;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * @cdk.module    standard
-     * @cdk.githash
-     */
+    // @cdk.module    standard
+    // @cdk.githash
     public class AtomMappingTools
     {
-        /**
-         * Returns a IDictionary with the AtomNumbers, the first number corresponds to the first (or the largest
-         * AtomContainer) atomContainer.
-         * <p/>
-         * Only for similar and aligned molecules with coordinates!
-         *
-         * @param firstAtomContainer  the (largest) first aligned AtomContainer which is the reference
-         * @param secondAtomContainer the second aligned AtomContainer
-         * @return a IDictionary of the mapped atoms
-         * @ if there is an error in the UniversalIsomorphismTester
-         */
+        /// <summary>
+        /// Returns a IDictionary with the AtomNumbers, the first number corresponds to the first (or the largest
+        /// AtomContainer) atomContainer.
+        /// </summary>
+        /// <remarks>Only for similar and aligned molecules with coordinates!</remarks>
+        /// <param name="firstAtomContainer">the (largest) first aligned AtomContainer which is the reference</param>
+        /// <param name="secondAtomContainer">the second aligned AtomContainer</param>
+        /// <param name="mappedAtoms"></param>
+        /// <returns>a IDictionary of the mapped atoms</returns>
+        /// <exception cref="CDKException">if there is an error in the UniversalIsomorphismTester</exception>
         public static IDictionary<int, int> MapAtomsOfAlignedStructures(IAtomContainer firstAtomContainer,
                 IAtomContainer secondAtomContainer, IDictionary<int, int> mappedAtoms)
         {
@@ -86,8 +83,7 @@ namespace NCDK.Isomorphisms
             return mappedAtoms;
         }
 
-        private static bool CheckAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom,
-                int posSecondAtom)
+        private static bool CheckAtomMapping(IAtomContainer firstAC, IAtomContainer secondAC, int posFirstAtom, int posSecondAtom)
         {
             IAtom firstAtom = firstAC.Atoms[posFirstAtom];
             IAtom secondAtom = secondAC.Atoms[posSecondAtom];

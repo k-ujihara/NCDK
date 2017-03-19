@@ -29,18 +29,14 @@ namespace NCDK.Geometries.CIP.Rules
     /// precedence {@cdk.cite Cahn1966}. A list ordered based on these rules will be
     /// sorted from low to high precedence.
     /// </summary>
+    /// <remarks>
+    /// Compares two ligands according to the particular sequence sub rule. It returns
+    /// 1 if ligand1 takes precedence over ligand2, -1 if ligand2 takes precedence over
+    /// ligand1, and 0 if they are equal.
+    /// </remarks>
     // @cdk.module cip
     // @cdk.githash
     public interface ISequenceSubRule<ILigand> : IComparer<ILigand>
     {
-        /// <summary>
-        /// Compares two ligands according to the particular sequence sub rule. It returns
-        /// 1 if ligand1 takes precedence over ligand2, -1 if ligand2 takes precedence over
-        /// ligand1, and 0 if they are equal.
-        /// </summary>
-        /// <param name="ligand1">the first of the two ligands to compare</param>
-        /// <param name="ligand2">the second of the two ligands to compare</param>
-        /// <returns>1 if ligand1 is of higher precedence than ligand2, -1 if ligand2 is
-        ///         of higher precedence than ligan1, and 0 if they have equal precedence</returns>
     }
 }

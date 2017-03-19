@@ -122,7 +122,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// Access the transformed bounds of the outline text.
         /// </summary>
         /// <returns>transformed bounds</returns>
-        public Rect Bounds => TransformedBounds(outline);
+        public Rect GetBounds() => TransformedBounds(outline);
 
         /// <summary>
         /// Access the transformed logical bounds of the outline text.
@@ -163,7 +163,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>center of outline</returns>
         public Point GetCenter()
         {
-            var bounds = Bounds;
+            var bounds = GetBounds();
             return new Point((bounds.Left + bounds.Right) / 2, (bounds.Top + bounds.Bottom) / 2);
         }
 
@@ -195,13 +195,14 @@ namespace NCDK.Renderers.Generators.Standards
             if (text.Length == 1) return GetCenter();
             if (index == 0)
             {
-                var p = new Point(Bounds.Left, (Bounds.Top + Bounds.Bottom) / 2);
+                var bounds = GetBounds();
+                var p = new Point(bounds.Left, (bounds.Top + bounds.Bottom) / 2);
                 return transform.Transform(p);
             }
             var o1 = new TextOutline(text.Substring(0, index - 1), glyphs, outline, transform);
             var o2 = new TextOutline(text.Substring(0, index), glyphs, outline, transform);
-            var b1 = o1.Bounds;
-            var b2 = o2.Bounds;
+            var b1 = o1.GetBounds();
+            var b2 = o2.GetBounds();
             return new Point((b1.Right + b2.Right) / 2, (b1.Bottom + b2.Bottom) / 2);
         }
 
@@ -248,7 +249,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <inheritdoc/>
         public override string ToString()
         {
-            var bounds = Bounds;
+            var bounds = GetBounds();
             var sb = new StringBuilder(25);
             sb.Append(text);
             sb.Append(" [x=").Append(FormatDouble(bounds.X));

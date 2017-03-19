@@ -32,32 +32,29 @@ namespace NCDK.Hash.Stereo
     /// <summary>
     /// A stereo encoder factory encoding double bond configurations by 2D and 3D
     /// coordinates. This factory will attempt to encode all double bonds that meet
-    /// the following conditions. Are not {@literal -N=N-} bonds, non-cumulated,
+    /// the following conditions. Are not <c>-N=N-</c> bonds, non-cumulated,
     /// non-query and have each double bonded atom has at least one substituent. In
     /// future the encoding rules may be more strict or even configurable but
     /// currently they may be over zealous when encoding configurations with 3D
-    /// coordinates. <br/><p/> This class is intended to be used with a the hash
-    /// encoding classes and is easier used via the {@link org.openscience.cdk.hash.HashGeneratorMaker}.
-    ///
+    /// coordinates.
+    /// <para>This class is intended to be used with a the hash
+    /// encoding classes and is easier used via the <see cref="HashGeneratorMaker"/>.</para>
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
     // @see org.openscience.cdk.hash.HashGeneratorMaker
-    /// </summary>
     public sealed class GeometricDoubleBondEncoderFactory : IStereoEncoderFactory
     {
-
         /// <summary>
         /// Create a stereo encoder for all potential 2D and 3D double bond stereo
         /// configurations.
-        ///
+        /// </summary>
         /// <param name="container">an atom container</param>
         /// <param name="graph">adjacency list representation of the container</param>
         /// <returns>a new encoder for tetrahedral elements</returns>
-        /// </summary>
         public IStereoEncoder Create(IAtomContainer container, int[][] graph)
         {
-
             var encoders = new List<IStereoEncoder>(5);
 
             foreach (var bond in container.Bonds)
@@ -83,7 +80,7 @@ namespace NCDK.Hash.Stereo
                 }
             }
 
-            return encoders.Count == 0 ? StereoEncoder.EMPTY : new MultiStereoEncoder(encoders);
+            return encoders.Count == 0 ? StereoEncoder.Empty : new MultiStereoEncoder(encoders);
         }
 
         /// <summary>
@@ -91,26 +88,22 @@ namespace NCDK.Hash.Stereo
         /// is the atom which is connected by a double bond to the left and right
         /// atom. For simple double bonds the parent of each is the other atom, in
         /// cumulenes the parents are not the same.
-        ///
+        /// </summary>
         /// <param name="container">the molecule</param>
         /// <param name="left">the left atom</param>
-        /// <param name="leftParent">the left atoms parent (usually {@literal right})</param>
+        /// <param name="leftParent">the left atoms parent (usually <paramref name="right"/>)</param>
         /// <param name="right">the right atom</param>
-        /// <param name="rightParent">the right atoms parent (usually {@literal left})</param>
+        /// <param name="rightParent">the right atoms parent (usually <paramref name="left"/>)</param>
         /// <param name="graph">adjacency list representation of the molecule</param>
         /// <returns>a stereo encoder (or null)</returns>
-        /// </summary>
-        internal static IStereoEncoder NewEncoder(IAtomContainer container, IAtom left, IAtom leftParent, IAtom right,
-                IAtom rightParent, int[][] graph)
+        internal static IStereoEncoder NewEncoder(IAtomContainer container, IAtom left, IAtom leftParent, IAtom right, IAtom rightParent, int[][] graph)
         {
-
             var leftBonds = container.GetConnectedBonds(left);
             var rightBonds = container.GetConnectedBonds(right);
 
             // check the left and right bonds are acceptable
             if (Accept(left, leftBonds) && Accept(right, rightBonds))
             {
-
                 int leftIndex = container.Atoms.IndexOf(left);
                 int rightIndex = container.Atoms.IndexOf(right);
 
@@ -137,9 +130,7 @@ namespace NCDK.Hash.Stereo
                     return new GeometryEncoder(new int[] { leftIndex, rightIndex }, new CombinedPermutationParity(
                             Permutation(leftNeighbors), Permutation(rightNeighbors)), geometric);
                 }
-
             }
-
             return null;
         }
 
@@ -148,18 +139,15 @@ namespace NCDK.Hash.Stereo
         /// atom indices. This method ensure that 2D and 3D coordinates are available
         /// on the specified atoms and returns null if the 2D or 3D coordinates are
         /// not fully available.
-        ///
+        /// </summary>
         /// <param name="mol">a molecule</param>
         /// <param name="l">left double bonded atom</param>
         /// <param name="r">right double bonded atom</param>
         /// <param name="l1">first substituent atom of <i>l</i></param>
-        /// <param name="l2">second substituent atom of <i>l</i> or <i>l</i> if there is</param>
-        ///            none
+        /// <param name="l2">second substituent atom of <i>l</i> or <i>l</i> if there is none</param>
         /// <param name="r1">first substituent atom of <paramref name="r"/></param>
-        /// <param name="r2">second substituent atom of <paramref name="r"/> or <paramref name="r"/> if there is</param>
-        ///            none
+        /// <param name="r2">second substituent atom of <paramref name="r"/> or <paramref name="r"/> if there is none</param>
         /// <returns>geometric parity or null</returns>
-        /// </summary>
         internal static GeometricParity Geometric(IAtomContainer mol, int l, int r, int l1, int l2, int r1, int r2)
         {
             // we need all points for 2D as they may be skewed, i.e.
@@ -189,7 +177,6 @@ namespace NCDK.Hash.Stereo
                 return new DoubleBond3DParity(l3d.Value, r3d.Value, l13d.Value, r13d.Value);
 
             return null;
-
         }
 
         /// <summary>
@@ -203,14 +190,13 @@ namespace NCDK.Hash.Stereo
         ///  /
         /// c4
         /// </code>
-        ///
+        /// </summary>
         /// <param name="neighbors">neighbors of a double bonded atom specified by index</param>
         /// <returns>a new permutation parity</returns>
-        /// </summary>
         internal static PermutationParity Permutation(int[] neighbors)
         {
             if (neighbors.Length == 2)
-                return PermutationParity.IDENTITY;
+                return PermutationParity.Identity;
             var xNeighbors = new int[neighbors.Length - 1];
             Array.Copy(neighbors, xNeighbors, neighbors.Length - 1);
             return new BasicPermutationParity(xNeighbors);
@@ -218,12 +204,11 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Utility method for shifting a specified value in an index to the back
-        /// (see {@link #Permutation(int[])}).
-        ///
+        /// (see <see cref="Permutation(int[])"/> ).
+        /// </summary>
         /// <param name="neighbors">list of neighbors</param>
         /// <param name="v">the value to shift to the back</param>
         /// <returns><i>neighbors</i> array</returns>
-        /// </summary>
         internal static int[] MoveToBack(int[] neighbors, int v)
         {
             int j = 0;
@@ -243,14 +228,12 @@ namespace NCDK.Hash.Stereo
         /// double bond configuration. This method checks for query bonds (up/down)
         /// as well as double bond counts. If there is more then one double bond in
         /// the connect bonds then it cannot have Z/E configuration.
-        ///
+        /// </summary>
         /// <param name="atom">a double bonded atom</param>
         /// <param name="bonds">all bonds connected to the atom</param>
         /// <returns>whether the atom is accepted for configuration</returns>
-        /// </summary>
         internal static bool Accept(IAtom atom, IEnumerable<IBond> bonds)
         {
-
             int dbCount = 0;
 
             // not SP2
@@ -261,7 +244,6 @@ namespace NCDK.Hash.Stereo
 
             foreach (var bond in bonds)
             {
-
                 // increment the number of double bonds
                 if (BondOrder.Double.Equals(bond.Order)) dbCount++;
 
@@ -269,7 +251,6 @@ namespace NCDK.Hash.Stereo
                 BondStereo stereo = bond.Stereo;
                 if (BondStereo.UpOrDown.Equals(stereo) || BondStereo.UpOrDownInverted.Equals(stereo))
                     return false;
-
             }
 
             // not cumulated

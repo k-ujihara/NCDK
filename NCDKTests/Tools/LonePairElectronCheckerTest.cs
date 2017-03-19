@@ -59,7 +59,7 @@ namespace NCDK.Tools
             for (int i = 0; i < 2; i++)
             {
                 LonePair lp = new LonePair(O);
-                m.Add(lp);
+                m.LonePairs.Add(lp);
             }
             m.Bonds.Add(new Bond(c, h1));
             m.Bonds.Add(new Bond(c, h2));
@@ -90,7 +90,7 @@ namespace NCDK.Tools
             for (int i = 0; i < 1; i++)
             {
                 LonePair lp = new LonePair(s);
-                m.Add(lp);
+                m.LonePairs.Add(lp);
             }
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(m);
 

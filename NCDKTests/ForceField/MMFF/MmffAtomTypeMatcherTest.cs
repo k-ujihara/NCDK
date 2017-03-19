@@ -394,9 +394,9 @@ namespace NCDK.ForceField.MMFF
         public void InvalidSmilesThrowsIOExceptionForTokenManagerError()
         {
             string row = "INVALID.SMILES X";
-            using (var in_ = new MemoryStream(Encoding.UTF8.GetBytes(row)))
+            using (var ins = new MemoryStream(Encoding.UTF8.GetBytes(row)))
             {
-                MmffAtomTypeMatcher.LoadPatterns(in_);
+                MmffAtomTypeMatcher.LoadPatterns(ins);
             }
         }
 
@@ -405,9 +405,9 @@ namespace NCDK.ForceField.MMFF
         public void InvalidSmilesThrowsIOExceptionForIllegalArgument()
         {
             string row = "23 X";
-            using (var in_ = new MemoryStream(Encoding.UTF8.GetBytes(row)))
+            using (var ins = new MemoryStream(Encoding.UTF8.GetBytes(row)))
             {
-                MmffAtomTypeMatcher.LoadPatterns(in_);
+                MmffAtomTypeMatcher.LoadPatterns(ins);
             }
         }
 

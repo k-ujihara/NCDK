@@ -35,10 +35,10 @@ namespace NCDK.IO
     // @cdk.require java1.4+
     /// </summary>
     [TestClass()]
-    public class INChIReaderTest : SimpleChemObjectReaderTest
+    public class InChIReaderTest : SimpleChemObjectReaderTest
     {
         protected override string testFile => "NCDK.Data.InChI.guanine.inchi.xml";
-        static readonly INChIReader simpleReader = new INChIReader();
+        static readonly InChIReader simpleReader = new InChIReader();
         protected override IChemObjectIO ChemObjectIOToTest => simpleReader;
 
 
@@ -58,7 +58,7 @@ namespace NCDK.IO
             string filename = "NCDK.Data.InChI.guanine.inchi.xml";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
-            INChIReader reader = new INChIReader(ins);
+            InChIReader reader = new InChIReader(ins);
             ChemFile chemFile = (ChemFile)reader.Read((ChemObject)new ChemFile());
 
             Assert.IsNotNull(chemFile);

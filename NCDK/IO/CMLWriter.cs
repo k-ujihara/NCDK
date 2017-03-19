@@ -39,7 +39,10 @@ namespace NCDK.IO
     /// Serializes a <see cref="IAtomContainerSet"/> or a <see cref="IAtomContainer"/> object to CML 2 code.
     /// Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
     /// Output can be redirected to other Writer objects like <see cref="StringWriter"/>
-    /// and <see cref="FileWriter"/>. An example:
+    /// and <see cref="StreamWriter"/>. 
+    /// </summary>
+    /// <example>
+    /// An example:
     ///
     /// <code>
     ///   StringWriter output = new StringWriter();
@@ -50,7 +53,7 @@ namespace NCDK.IO
     ///   string cmlcode = output.ToString();
     /// </code>
     ///
-    /// <p>Output to a file called "molecule.cml" can done with:
+    /// Output to a file called "molecule.cml" can done with:
     ///
     /// <code>
     ///   FileWriter output = new FileWriter("molecule.cml");
@@ -59,22 +62,16 @@ namespace NCDK.IO
     ///   cmlwriter.Close();
     /// </code>
     ///
-    /// <p>For atoms it outputs: coordinates, element type and formal charge.
+    /// For atoms it outputs: coordinates, element type and formal charge.
     /// For bonds it outputs: order, atoms (2, or more) and wedges.
-    ///
+    /// </example>
     // @cdk.module       libiocml
     // @cdk.githash
     // @cdk.require      java1.5+
     // @cdk.bug          1565563
     // @cdk.iooptions
-    ///
-    // @see java.io.FileWriter
-    // @see java.io.StringWriter
-    ///
     // @author Egon Willighagen
-    ///
     // @cdk.keyword file format, CML
-    /// </summary>
     public class CMLWriter : DefaultChemObjectWriter
     {
         private Stream output;
@@ -128,9 +125,8 @@ namespace NCDK.IO
         /// Constructs a new CMLWriter class. Output will be stored in the Writer
         /// class given as parameter. The CML code will be valid CML code with a
         /// XML header. Only one object can be stored.
-        ///
-        /// <param name="writer">Writer to redirect the output to.</param>
         /// </summary>
+        /// <param name="writer">Writer to redirect the output to.</param>
         public CMLWriter(TextWriter writer)
         {
             // Stream doesn't handle encoding - the serializers read/write in the same format we're okay

@@ -20,16 +20,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches an aromatic or a single bond, used when no bond is specified between an atom.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AromaticOrSingleQueryBond : SMARTSBond
     {
         /// <summary>
         /// Creates a new instance.
-        ///
         /// </summary>
         public AromaticOrSingleQueryBond(IChemObjectBuilder builder)
             : base(builder)
@@ -39,7 +37,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 
         /// <summary>
         /// Creates a new instance
-        ///
         /// </summary>
         public AromaticOrSingleQueryBond(IQueryAtom atom1, IQueryAtom atom2, BondOrder order, IChemObjectBuilder builder)
            : base(atom1, atom2, order, builder)

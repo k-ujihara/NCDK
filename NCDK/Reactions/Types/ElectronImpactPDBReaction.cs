@@ -26,9 +26,9 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// <para>IReactionProcess which make an electron impact for pi-Bond Dissociation.</para>
     /// <para>This reaction type is a representation of the processes which occurs in the mass spectrometer.</para>
+    /// <para>It is processed by the RemovingSEofPBMechanism class</para>
     /// </summary>
     /// <example>
-    /// <para>It is processed by the RemovingSEofPBMechanism class</para>
     /// <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
@@ -40,12 +40,12 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-    /// <seealso cref="RemovingSEofBMechanism"/>
+    /// <seealso cref="Mechanisms.RemovingSEofBMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-04-01
     // @cdk.module     reaction
@@ -91,7 +91,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var bondi in reactant.Bonds)

@@ -1,6 +1,6 @@
 using System;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// General permutation generator, that uses orderly generation by ranking and

@@ -35,16 +35,13 @@ namespace NCDK.IO
     /// 1,S-c:c:c:c:c:c,7,6,491,5.055081,5,1.7421603
     /// 2,S-c:c:c:c:c,6,5,493,5.0756717,5,1.7421603
     /// </code>
-    ///
-    /// <p><b>Caution</b>: the output contains substructures, not full molecules,
+    /// <b>Caution</b>: the output contains substructures, not full molecules,
     /// even though they are read as such right now.
-    ///
+    /// </summary>
     // @cdk.module  smiles
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword MoSS
-    /// </summary>
     public class MoSSOutputReader : DefaultChemObjectReader
     {
         private TextReader input;
@@ -83,7 +80,6 @@ namespace NCDK.IO
         }
 
         /// <inheritdoc/>
-
         public override void SetReader(Stream input)
         {
             SetReader(new StreamReader(input));
@@ -145,10 +141,10 @@ namespace NCDK.IO
 
         /// <summary>
         /// Read the file content into a <see cref="IAtomContainerSet"/>.
+        /// </summary>
         /// <param name="molSet">an <see cref="IAtomContainerSet"/> to store the structures</param>
         /// <returns>the <see cref="IAtomContainerSet"/> containing the molecules read in</returns>
         /// <exception cref="IOException">if there is an error during reading</exception>
-        /// </summary>
         private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> molSet)
         {
             SmilesParser parser = new SmilesParser(molSet.Builder);

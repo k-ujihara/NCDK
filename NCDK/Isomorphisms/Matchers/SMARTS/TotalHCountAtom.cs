@@ -22,15 +22,13 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// SMARTS query atom for matching the total hydrogen count. This count is
-    /// specified in SMARTS using {@code H<NUMBER>}.
-    ///
+    /// specified in SMARTS using <c>H&lt;NUMBER&gt;</c>.
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
-    /// </summary>
     public sealed class TotalHCountAtom : SMARTSAtom
     {
-
         /// <summary>The total hydrogen count to match.</summary>
         private readonly int totalHCount;
 
@@ -41,12 +39,11 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         /// <summary>
-        /// Check if the total hydrogen count of the {@code atom} is equal to the
+        /// Check if the total hydrogen count of the <paramref name="atom"/> is equal to the
         /// query.
-        ///
+        /// </summary>
         /// <param name="atom">the atom to match</param>
         /// <returns>the hydrogen count matches</returns>
-        /// </summary>
         public override bool Matches(IAtom atom)
         {
             return Invariants(atom).TotalHydrogenCount == totalHCount;

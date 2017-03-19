@@ -26,24 +26,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Class that returns the number of each amino acid in an atom container.
-    /// <para>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///  
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
     /// Returns 20 values with names of the form <i>nX</i>, where <i>X</i> is the short versio
     /// of the amino acid name
     /// </para>
-    /// </summary>
+    ///  </remarks>
     // @author      egonw
     // @cdk.created 2006-01-15
     // @cdk.module  qsarprotein
@@ -73,18 +67,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 names[i] = "n" + aas[i].GetProperty<string>(AminoAcids.RESIDUE_NAME_SHORT);
         }
 
-        /// <summary>
-        /// Returns a map which specifies which descriptor is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary</li>
-        /// <li>Implementation-Title: anything</li>
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class</li>
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else</li>
-        /// </ul>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         public DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
@@ -93,7 +76,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 "The Chemistry Development Kit");
         
         /// <summary>
-        /// The parameters attribute of the <see cref="AminoAcidsCountDescriptor"/> object.
+        /// The parameters attribute of the <see cref="AminoAcidCountDescriptor"/> object.
         /// </summary>
         /// <exception cref="CDKException">if more than one parameter or a non-bool parameter is specified</exception>
         public override object[] Parameters
@@ -109,7 +92,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// </summary>
         /// <param name="ac">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of aromatic atoms of this AtomContainer</returns>
-        /// <seealso cref="SetParameters(object[])"/>
+        /// <seealso cref="Parameters"/>
         public override DescriptorValue Calculate(IAtomContainer ac)
         {
             int resultLength = substructureSet.Count;

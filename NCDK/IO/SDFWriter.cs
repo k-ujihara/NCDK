@@ -34,12 +34,11 @@ namespace NCDK.IO
     /// <summary>
     /// Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
     /// complemented by properties.
-    ///
+    /// </summary>
     // @cdk.module  io
     // @cdk.githash
     // @cdk.iooptions
     // @cdk.keyword file format, MDL SD file
-    /// </summary>
     public class SDFWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
@@ -47,22 +46,20 @@ namespace NCDK.IO
         private ICollection<string> propertiesToWrite;
 
         /// <summary>
-        /// Constructs a new SDFWriter that writes to the given <see cref="Writer"/>.
-        ///
-        /// <param name="out">The <see cref="Writer"/> to write to</param>
+        /// Constructs a new SDFWriter that writes to the given <see cref="TextWriter"/>.
         /// </summary>
-        public SDFWriter(TextWriter out_)
+        /// <param name="output">The <see cref="TextWriter"/> to write to</param>
+        public SDFWriter(TextWriter output)
         {
-            this.writer = out_;
+            this.writer = output;
             InitIOSettings();
         }
 
         /// <summary>
         /// Constructs a new MDLWriter that can write to a given
         /// <see cref="Stream"/>.
-        ///
-        /// <param name="output">The <see cref="Stream"/> to write to</param>
         /// </summary>
+        /// <param name="output">The <see cref="Stream"/> to write to</param>
         public SDFWriter(Stream output)
             : this(new StreamWriter(output))
         { }
@@ -72,25 +69,25 @@ namespace NCDK.IO
         { }
 
         /// <summary>
-        /// Constructs a new SDFWriter that writes to the given <see cref="Writer"/>.
-        ///
-        /// <param name="out">The <see cref="Writer"/> to write to</param>
+        /// Constructs a new SDFWriter that writes to the given <see cref="TextWriter"/>.
         /// </summary>
-        public SDFWriter(TextWriter out_, ICollection<string> propertiesToWrite)
+        /// <param name="output">The <see cref="TextWriter"/> to write to</param>
+        /// <param name="propertiesToWrite"></param>
+        public SDFWriter(TextWriter output, ICollection<string> propertiesToWrite)
         {
-            writer = out_;
+            writer = output;
             InitIOSettings();
             this.propertiesToWrite = propertiesToWrite;
         }
 
         /// <summary>
-        /// Constructs a new SdfWriter that can write to a given
+        /// Constructs a new <see cref="SDFWriter"/> that can write to a given
         /// <see cref="Stream"/>.
-        ///
-        /// <param name="output">The <see cref="Stream"/> to write to</param>
         /// </summary>
+        /// <param name="output">The <see cref="Stream"/> to write to</param>
+        /// <param name="propertiesToWrite"></param>
         public SDFWriter(Stream output, ICollection<string> propertiesToWrite)
-                : this(new StreamWriter(output), propertiesToWrite)
+            : this(new StreamWriter(output), propertiesToWrite)
         { }
 
         /// <summary>
@@ -102,9 +99,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => SDFFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -130,14 +127,12 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Writes a IChemObject to the MDL SD file formated output. It can only
-        /// output IChemObjects of type <see cref="IChemFile"/>, <see cref="IAtomContainerSet"/>
+        /// Writes a <see cref="IChemObject"/> to the MDL SD file formated output. It can only
+        /// output <see cref="IChemObject"/> of type <see cref="IChemFile"/>, <see cref="IAtomContainerSet"/>
         /// and <see cref="IAtomContainerSet"/>.
-        ///
-        /// <param name="object">an acceptable <see cref="IChemObject"/></param>
-        ///
-        /// <seealso cref="Accepts(Class)"/>
         /// </summary>
+        /// <param name="obj">an acceptable <see cref="IChemObject"/></param>
+        /// <seealso cref="Accepts(Type)"/>
         public override void Write(IChemObject obj)
         {
             try
@@ -179,9 +174,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes an <see cref="IAtomContainerSet"/>.
-        ///
-        /// <param name="som">the <see cref="IAtomContainerSet"/> to serialize</param>
         /// </summary>
+        /// <param name="som">the <see cref="IAtomContainerSet"/> to serialize</param>
         private void WriteMoleculeSet(IAtomContainerSet<IAtomContainer> som)
         {
             foreach (var mol in som)

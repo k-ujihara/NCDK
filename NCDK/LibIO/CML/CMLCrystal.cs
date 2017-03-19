@@ -2,32 +2,34 @@
 using System.Linq;
 
 namespace NCDK.LibIO.CML
-{ 
+{
     public partial class CMLCrystal
     {
         /// <summary>
         /// dictRef ids for 6 scalar children of crystal.
         /// </summary>
-        string[] CRYSTAL_DICT_REFS = {
-            "cml:a",
-            "cml:b",
-            "cml:c",
-            "cml:alpha",
-            "cml:beta",
-            "cml:gamma",
-        };
+        string[] CRYSTAL_DICT_REFS =
+            {
+                "cml:a",
+                "cml:b",
+                "cml:c",
+                "cml:alpha",
+                "cml:beta",
+                "cml:gamma",
+            };
 
         /// <summary>
         ///  unit refs for 6 scalar children of crystal.
         /// </summary>
-        string[] CRYSTAL_DICT_UNITS = {
-            "units:ang",
-            "units:ang",
-            "units:ang",
-            "units:degree",
-            "units:degree",
-            "units:degree",
-        };
+        string[] CRYSTAL_DICT_UNITS =
+            {
+                "units:ang",
+                "units:ang",
+                "units:ang",
+                "units:degree",
+                "units:degree",
+                "units:degree",
+            };
 
         public static CMLScalar CreateScalar(string dictRef, double param, string unitRef, double error)
         {

@@ -27,11 +27,10 @@ using System.Xml.Linq;
 namespace NCDK.IO.CML
 {
     /// <summary>
-    /// This interface describes the procedures classes must implement to be plugable into the CMLHandler. Most procedures reflect those in SAX2.
+    /// This interface describes the procedures classes must implement to be plugable into the <see cref="CMLHandler"/>.
     /// </summary>
     // @cdk.module io
     // @cdk.githash
-    //
     // @author Egon Willighagen <egonw@sci.kun.nl>
     public interface ICMLModule
     {

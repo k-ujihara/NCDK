@@ -30,16 +30,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// In the following description, n denotes the number of atoms in the hydrogen suppressed graph,
     /// m is the number of bonds in the hydrogen suppressed graph. Also, let p2 denote the number of paths of length 2
     /// and let p3 denote the number of paths of length 3".
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// Returns three values in the order
-    /// <ol>
-    /// <li>Kier1 -  First kappa shape index
-    /// <li>Kier2 - Second kappa shape index
-    /// <li>Kier3 -  Third kappa (&kappa;) shape index
-    /// </ol>
-    /// <p/>
-    /// <p>This descriptor does not have any parameters.
-    ///
+    /// <list type="bullet"> 
+    /// <item>Kier1 -  First kappa shape index</item>
+    /// <item>Kier2 - Second kappa shape index</item>
+    /// <item>Kier3 -  Third kappa (É») shape index</item>
+    /// </list>
+    /// <para>This descriptor does not have any parameters.</para>
+    /// </remarks>
     // @author mfe4
     // @cdk.created 2004-11-03
     // @cdk.module qsarmolecular
@@ -48,7 +48,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:kierValues
     // @cdk.keyword Kappe shape index
     // @cdk.keyword descriptor
-    /// </summary>
     public class KappaShapeIndicesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "Kier1", "Kier2", "Kier3" };
@@ -211,14 +210,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(3);
 
         /// <summary>

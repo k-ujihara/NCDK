@@ -36,7 +36,6 @@ namespace NCDK.Layout
     /// </summary>
     sealed class MacroCycleLayout
     {
-
         // Macrocycle templates
         private static IdentityTemplateLibrary TEMPLATES = IdentityTemplateLibrary.LoadFromResource("macro.smi");
 
@@ -54,9 +53,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create a new helper for the provided molecule.
-        ///
-        /// <param name="mol">molecule</param>
         /// </summary>
+        /// <param name="mol">molecule</param>
         public MacroCycleLayout(IAtomContainer mol)
         {
             this.mol = mol;
@@ -67,14 +65,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Layout a macro cycle (the rest of the ring set is untouched).
-        ///
+        /// </summary>
         /// <param name="macrocycle">the macrocycle</param>
         /// <param name="ringset">the ring set the macrocycle belongs to (may only be it's self)</param>
         /// <returns>layout was successfully, if false caller fall-back to regular polygons</returns>
-        /// </summary>
         public bool Layout(IRing macrocycle, IRingSet ringset)
         {
-
             IAtomContainer anon = RoundUpIfNeeded(AtomContainerManipulator.Anonymise(macrocycle));
             var coords = TEMPLATES.GetCoordinates(anon);
 
@@ -97,13 +93,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Select the best scoring template + offset for the given macrocycle.
-        ///
+        /// </summary>
         /// <param name="macrocycle">macrocycle</param>
         /// <param name="ringset">entire ring system</param>
         /// <param name="wind">winding of ring CW/CCW</param>
         /// <param name="winding">winding of each turn in the ring</param>
         /// <returns>the best scoring configuration</returns>
-        /// </summary>
         private MacroScore BestScore(IRing macrocycle, IRingSet ringset, int wind, int[] winding)
         {
 
@@ -136,7 +131,6 @@ namespace NCDK.Layout
 
             for (int i = 0; i < winding.Length; i++)
             {
-
                 // score ring attachs
                 int nRingClick = 0;
                 foreach (var ringAttach in ringAttachs)
@@ -210,11 +204,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Get the shared indices of a macrocycle and atoms shared with another ring.
-        ///
+        /// </summary>
         /// <param name="macrocycle">macrocycle ring</param>
         /// <param name="shared">shared atoms</param>
         /// <returns>the integers</returns>
-        /// </summary>
         private List<int> GetAttachedInOrder(IRing macrocycle, IAtomContainer shared)
         {
             var ringAttach = new List<int>();
@@ -240,13 +233,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Select the best coordinates
-        ///
+        /// </summary>
         /// <param name="ps">template points</param>
         /// <param name="coords">best coordinates (updated by this method)</param>
         /// <param name="macrocycle">the macrocycle</param>
         /// <param name="ringset">rest of the ring system</param>
         /// <returns>offset into the coordinates</returns>
-        /// </summary>
         private int SelectCoords(IEnumerable<Vector2[]> ps, Vector2[] coords, IRing macrocycle, IRingSet ringset)
         {
             Debug.Assert(ps.Any());
@@ -270,11 +262,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Determine the overall winding and the vertex of a ring template.
-        ///
+        /// </summary>
         /// <param name="coords">ring coordinates</param>
         /// <param name="winding">winding result for each atom (cw/ccw)</param>
         /// <returns>global winding</returns>
-        /// </summary>
         private static int Winding(Vector2[] coords, int[] winding)
         {
             int cw = 0, ccw = 0;
@@ -304,12 +295,11 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Determine the winding of three points using the determinant.
-        ///
+        /// </summary>
         /// <param name="a">first point</param>
         /// <param name="b">second point</param>
         /// <param name="c">third point</param>
-        /// <returns>< 0 = clockwise, 0 = linear, > 0 anti-clockwise</returns>
-        /// </summary>
+        /// <returns>&lt;0 =&gt; clockwise, 0 =&gt; linear, &gt;0 anti-clockwise</returns>
         private static int Winding(Vector2 a, Vector2 b, Vector2 c)
         {
             return (int)Math.Sign((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X));
@@ -346,10 +336,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Make a ring one atom bigger if it's of an odd size.
-        ///
+        /// </summary>
         /// <param name="anon">ring</param>
         /// <returns>'anon' returned of chaining convenience</returns>
-        /// </summary>
         private static IAtomContainer RoundUpIfNeeded(IAtomContainer anon)
         {
             IChemObjectBuilder bldr = anon.Builder;

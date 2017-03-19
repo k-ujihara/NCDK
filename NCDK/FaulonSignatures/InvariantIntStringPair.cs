@@ -1,6 +1,6 @@
 using System;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
 
     public class InvariantIntStringPair : IComparable<InvariantIntStringPair>

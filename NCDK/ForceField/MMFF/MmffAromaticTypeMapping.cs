@@ -33,15 +33,17 @@ namespace NCDK.ForceField.MMFF
 {
     /// <summary>
     /// Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
-    /// in the appendix of {@cdk.cite Halgren96a}:<p/>
-    ///
+    /// in the appendix of {@cdk.cite Halgren96a}:
+    /// <para>
     /// For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
     /// the first, a provisional atom type is assigned based on local connectivity. In the second,
     /// aromatic systems are perceived, and properly qualified aromatic atom types are assigned based on
     /// ring size and, for five-membered rings, on the position within the ring. Information in this file
     /// (MMFFAROM.PAR) is used to make the proper correspondence between provisional and final (aromatic)
-    /// atom types. <p/>
-    ///
+    /// atom types. 
+    /// </para>
+    /// </summary>
+    /// <remarks>
     /// The column labeled "L5" refers, in the case of 5-ring systems, to the position of the atom in
     /// question relative to the unique pi-lone-pair containing heteroatom (which itself occupies
     /// position "1"); a "4" is an artificial entry that is assigned when no such unique heteroatom
@@ -49,17 +51,17 @@ namespace NCDK.ForceField.MMFF
     /// the "IM CAT" or "N5 ANION" column must also be matched for such ionic species to convert the
     /// "OLD" (preliminary) to "AROM" (aromatic) symbolic atom type. Note: in matching the "OLD" symbolic
     /// atom types, an "exact" match is first attempted. If this match fails, a wild-carded match, using
-    /// for example "C*" is then employed. <p/>
-    ///
-    /// This class implements this in three stages. Firstly, the aromatic rings are found with {@link
-    /// #FindAromaticRings(int[][], int[], int[])}. These rings are then parsed to {@link
-    /// #UpdateAromaticTypesInSixMemberRing(int[], string[])} and {@link #UpdateAromaticTypesInFiveMemberRing(int[],
-    /// string[])}. The more complex of the two is the five member rings that normalises the ring to put
+    /// for example "C*" is then employed. 
+    /// <para>
+    /// This class implements this in three stages. Firstly, the aromatic rings are found with <see cref="FindAromaticRings(int[][], int[], int[])"/>. 
+    /// These rings are then parsed to <see cref="UpdateAromaticTypesInSixMemberRing(int[], string[])"/> 
+    /// and <see cref="UpdateAromaticTypesInFiveMemberRing(int[], string[])"/>.
+    /// The more complex of the two is the five member rings that normalises the ring to put
     /// the 'pi-lone-pair' hetroatom in position 1. The alpha and beta positions are then fixed and the
-    /// {@link #alphaTypes} and {@link #betaTypes} mappings are used to obtain the correct assignment.
-    ///
+    /// <see cref="alphaTypes"/>  and <see cref="betaTypes"/>  mappings are used to obtain the correct assignment.
+    /// </para>
+    /// </remarks>
     // @author John May
-    /// </summary>
     internal sealed class MmffAromaticTypeMapping
     {
         /// <summary>
@@ -389,9 +391,9 @@ namespace NCDK.ForceField.MMFF
         {
             try
             {
-                return Cycles.All(6).Find(container, graph, 6).GetPaths();
+                return Cycles.GetAllFinder(6).Find(container, graph, 6).GetPaths();
             }
-            catch (Intractable)
+            catch (IntractableException)
             {
                 return Array.Empty<int[]>();
             }

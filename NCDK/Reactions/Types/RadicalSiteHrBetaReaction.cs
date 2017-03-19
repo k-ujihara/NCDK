@@ -32,7 +32,8 @@ namespace NCDK.Reactions.Types
     /// This reaction could be represented as [A*]-(C)_3-C4[H] => A([H])-(C_3)-[C4*]. Due to
     /// the single electron of atom A the proton is moved.</para>
     /// <para>It is processed by the RadicalSiteRearrangementMechanism class</para>
-    ///
+    /// </summary>
+    /// <example>
     /// <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
@@ -44,36 +45,29 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
-    ///
-    ///
+    /// </example>
+    /// <seealso cref="Mechanisms.RadicalSiteRearrangementMechanism"/>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2006-10-20
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    ///
-    /// <seealso cref="RadicalSiteRearrangementMechanism"/>
-    ///*/
     public class RadicalSiteHrBetaReaction : ReactionEngine, IReactionProcess
     {
 
         /// <summary>
         /// Constructor of the RadicalSiteHrBetaReaction object
-        ///
         /// </summary>
         public RadicalSiteHrBetaReaction() { }
 
         /// <summary>
         ///  Gets the specification attribute of the RadicalSiteHrBetaReaction object
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
-
+        /// <returns>The specification value</returns>
         public ReactionSpecification Specification => new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteHrBeta", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
@@ -115,7 +109,7 @@ namespace NCDK.Reactions.Types
                     aring.IsInRing = true;
                 }
             }
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -133,13 +127,11 @@ namespace NCDK.Reactions.Types
                                 && (atoml.FormalCharge ?? 0) == 0
                                 && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
-
                             foreach (var atomh in reactant.GetConnectedAtoms(atoml))
                             {
                                 if (reactant.GetBond(atomh, atoml).IsReactiveCenter
                                         && atomh.IsReactiveCenter && atomh.Symbol.Equals("H"))
                                 {
-
                                     var atomList = new List<IAtom>();
                                     atomList.Add(atomh);
                                     atomList.Add(atomi);
@@ -154,11 +146,8 @@ namespace NCDK.Reactions.Types
                                         continue;
                                     else
                                         setOfReactions.Add(reaction);
-
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -173,10 +162,8 @@ namespace NCDK.Reactions.Types
         /// C: Atom with single electron
         /// C5: Atom with Hydrogen
         ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             HOSECodeGenerator hcg = new HOSECodeGenerator();
@@ -184,7 +171,6 @@ namespace NCDK.Reactions.Types
             {
                 if (reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
                 {
-
                     hcg.GetSpheres(reactant, atomi, 3, true);
                     foreach (var atoml in hcg.GetNodesInSphere(3))
                     {
@@ -192,7 +178,6 @@ namespace NCDK.Reactions.Types
                                 && (atoml.FormalCharge ?? 0) == 0
                                 && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
-
                             foreach (var atomh in reactant.GetConnectedAtoms(atoml))
                             {
                                 if (atomh.Symbol.Equals("H"))

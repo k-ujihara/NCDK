@@ -41,10 +41,9 @@ namespace NCDK.Layout
     /// configuration and reflects one side to correct the configuration.
     /// <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
     /// double-bonds with a configuration can not be corrected (error logged).</b>
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module sdg
-    /// </summary>
     internal sealed class CorrectGeometricConfiguration
     {
         /// <summary>The structure we are assigning labels to.</summary>
@@ -67,10 +66,9 @@ namespace NCDK.Layout
         /// up/down labels should be adjusted before adjust double-bond
         /// configurations. coordinates are reflected by this method which can lead
         /// to incorrect tetrahedral specification.</b>
-        ///
+        /// </summary>
         /// <param name="container">the structure to adjust</param>
         /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
-        /// </summary>
         public static IAtomContainer Correct(IAtomContainer container)
         {
             if (container.StereoElements.Any())
@@ -80,21 +78,19 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Adjust all double bond elements in the provided structure.
-        ///
+        /// </summary>
         /// <param name="container">the structure to adjust</param>
         /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
-        /// </summary>
         CorrectGeometricConfiguration(IAtomContainer container)
             : this(container, GraphUtil.ToAdjList(container))
         { }
 
         /// <summary>
         /// Adjust all double bond elements in the provided structure.
-        ///
+        /// </summary>
         /// <param name="container">the structure to adjust</param>
         /// <param name="graph">the adjacency list representation of the structure</param>
         /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
-        /// </summary>
         CorrectGeometricConfiguration(IAtomContainer container, int[][] graph)
         {
             this.container = container;
@@ -120,13 +116,11 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Adjust the configuration of the {@code dbs} element (if required).
-        ///
-        /// <param name="dbs">double-bond stereochemistry element</param>
+        /// Adjust the configuration of the <paramref name="dbs"/> element (if required).
         /// </summary>
+        /// <param name="dbs">double-bond stereochemistry element</param>
         private void Adjust(IDoubleBondStereochemistry dbs)
         {
-
             IBond db = dbs.StereoBond;
             var bonds = dbs.Bonds;
 
@@ -234,7 +228,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Reflect the atom at index {@code v} and any then reflect any unvisited neighbors.
+        /// Reflect the atom at index <paramref name="v"/> and any then reflect any unvisited neighbors.
         /// </summary>
         /// <param name="v">index of the atom to reflect</param>
         /// <param name="bond">bond</param>

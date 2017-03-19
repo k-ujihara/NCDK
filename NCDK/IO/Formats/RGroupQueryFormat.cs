@@ -28,10 +28,10 @@ namespace NCDK.IO.Formats
 {
     /// <summary>
     /// Format for Symyx RGfiles (Rgroup query files).
+    /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
     // @cdk.set    io-formats
-   /// </summary>
     public class RGroupQueryFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

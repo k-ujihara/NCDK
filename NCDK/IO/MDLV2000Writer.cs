@@ -41,6 +41,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
+    /// </summary>
+    /// <example>
     /// For writing a MDL molfile you can this code:
     /// <code>
     /// MDLV2000Writer writer = new MDLV2000Writer(
@@ -49,8 +51,7 @@ namespace NCDK.IO
     /// writer.Write((IAtomContainer)molecule);
     /// writer.Close();
     /// </code>
-    /// <p/>
-    /// <para>The writer has two IO settings: one for writing 2D coordinates, even if
+    /// The writer has two IO settings: one for writing 2D coordinates, even if
     /// 3D coordinates are given for the written data; the second writes aromatic
     /// bonds as bond type 4, which is, strictly speaking, a query bond type, but
     /// my many tools used to reflect aromaticity. The full IO setting API is
@@ -65,7 +66,7 @@ namespace NCDK.IO
     ///   new PropertiesListener(customSettings);
     /// writer.Listeners.Add(listener);
     /// </code>
-    /// </summary>
+    /// </example>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
@@ -102,11 +103,10 @@ namespace NCDK.IO
             }
             /// <summary>
             /// Create a SpinMultiplicity instance for the specified value.
-            ///
+            /// </summary>
             /// <param name="value">input value (in the property block)</param>
             /// <returns>instance</returns>
             // @ unknown spin multiplicity value
-            /// </summary>
             public static SpinMultiplicity OfValue(int value)
             {
                 switch (value)
@@ -151,9 +151,8 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
         /// to the MDL molfile format.
-        ///
-        /// <param name="out">The Writer to write to</param>
         /// </summary>
+        /// <param name="writer">The Writer to write to</param>
         public MDLV2000Writer(TextWriter writer)
         {
             this.writer = writer;
@@ -163,9 +162,8 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLWriter that can write an <see cref="IAtomContainer"/>
         /// to a given Stream.
-        ///
-        /// <param name="output">The Stream to write to</param>
         /// </summary>
+        /// <param name="output">The Stream to write to</param>
         public MDLV2000Writer(Stream output)
             : this(new StreamWriter(output, Encoding.UTF8))
         {
@@ -175,13 +173,8 @@ namespace NCDK.IO
             : this(new StringWriter())
         {
         }
-        public override IResourceFormat Format
-        {
-            get
-            {
-                return MDLFormat.Instance;
-            }
-        }
+
+        public override IResourceFormat Format => MDLFormat.Instance;
 
         public override void SetWriter(TextWriter writer)
         {
@@ -219,7 +212,7 @@ namespace NCDK.IO
         /// It can only output ChemObjects of type <see cref="IChemFile"/>,
         /// <see cref="IChemObject"/> and <see cref="IAtomContainer"/>.
         /// </summary>
-        /// <param name="object"><see cref="IChemObject"/> to write</param>
+        /// <param name="obj"><see cref="IChemObject"/> to write</param>
         /// <see cref="Accepts(Type)"/>
         public override void Write(IChemObject obj)
         {
@@ -261,21 +254,21 @@ namespace NCDK.IO
             foreach (var container in ChemFileManipulator.GetAllAtomContainers(file))
             {
                 bigPile.Add(container);
-                if (container.GetProperty<string>(CDKPropertyName.TITLE) != null)
+                if (container.GetProperty<string>(CDKPropertyName.Title) != null)
                 {
-                    if (bigPile.GetProperty<string>(CDKPropertyName.TITLE) != null)
-                        bigPile.SetProperty(CDKPropertyName.TITLE,
-                                            bigPile.GetProperty<string>(CDKPropertyName.TITLE) + "; " + container.GetProperty<string>(CDKPropertyName.TITLE));
+                    if (bigPile.GetProperty<string>(CDKPropertyName.Title) != null)
+                        bigPile.SetProperty(CDKPropertyName.Title,
+                                            bigPile.GetProperty<string>(CDKPropertyName.Title) + "; " + container.GetProperty<string>(CDKPropertyName.Title));
                     else
-                        bigPile.SetProperty(CDKPropertyName.TITLE, container.GetProperty<string>(CDKPropertyName.TITLE));
+                        bigPile.SetProperty(CDKPropertyName.Title, container.GetProperty<string>(CDKPropertyName.Title));
                 }
-                if (container.GetProperty<string>(CDKPropertyName.REMARK) != null)
+                if (container.GetProperty<string>(CDKPropertyName.Remark) != null)
                 {
-                    if (bigPile.GetProperty<string>(CDKPropertyName.REMARK) != null)
-                        bigPile.SetProperty(CDKPropertyName.REMARK, bigPile.GetProperty<string>(CDKPropertyName.REMARK) + "; "
-                                                                 + container.GetProperty<string>(CDKPropertyName.REMARK));
+                    if (bigPile.GetProperty<string>(CDKPropertyName.Remark) != null)
+                        bigPile.SetProperty(CDKPropertyName.Remark, bigPile.GetProperty<string>(CDKPropertyName.Remark) + "; "
+                                                                 + container.GetProperty<string>(CDKPropertyName.Remark));
                     else
-                        bigPile.SetProperty(CDKPropertyName.REMARK, container.GetProperty<string>(CDKPropertyName.REMARK));
+                        bigPile.SetProperty(CDKPropertyName.Remark, container.GetProperty<string>(CDKPropertyName.Remark));
                 }
             }
             WriteMolecule(bigPile);
@@ -292,7 +285,7 @@ namespace NCDK.IO
             IDictionary<int, string> aliases = null;
             // write header block
             // lines get shortened to 80 chars, that's in the spec
-            string title = container.GetProperty<string>(CDKPropertyName.TITLE);
+            string title = container.GetProperty<string>(CDKPropertyName.Title);
             if (title == null) title = "";
             if (title.Length > 80) title = title.Substring(0, 80);
             writer.Write(title);
@@ -309,7 +302,7 @@ namespace NCDK.IO
             writer.Write(DateTime.Now.ToUniversalTime().ToString("MMddyyHHmm"));
             writer.WriteLine();
 
-            string comment = container.GetProperty<string>(CDKPropertyName.REMARK);
+            string comment = container.GetProperty<string>(CDKPropertyName.Remark);
             if (comment == null) comment = "";
             if (comment.Length > 80) comment = comment.Substring(0, 80);
             writer.Write(comment);
@@ -376,12 +369,10 @@ namespace NCDK.IO
                             rgroups = new SortedDictionary<int, int>();
                         }
                         rgroups[f + 1] = int.Parse(matcher.Groups[1].Value);
-
                     }
                     // not a numbered R group - note the symbol may still be R
                     else
                     {
-
                         // note: no distinction made between alias and pseudo atoms - normally
                         //       aliases maintain their original symbol while pseudo atoms are
                         //       written with a 'A' in the atom block
@@ -406,10 +397,8 @@ namespace NCDK.IO
                                 line += FormatMDLString(label, 3);
                             else
                                 line += FormatMDLString(atom.Symbol, 3);
-
                         }
                     }
-
                 }
                 else
                 {
@@ -455,10 +444,8 @@ namespace NCDK.IO
                             }
                         }
                     }
-
                     line += $" 0  0  {parity}  0  0";
                 }
-
 
                 // write valence - this is a bit of pain as the CDK has both
                 // valence and implied hydrogen counts making life a lot more
@@ -479,12 +466,10 @@ namespace NCDK.IO
                         }
                         else
                         {
-
                             int implied = MDLValence.ImplicitValence(element.Value, charge, explicitValence);
 
                             if (atom.Valency != null && atom.ImplicitHydrogenCount != null)
                             {
-
                                 int valence = atom.Valency.Value;
                                 int actual = explicitValence + atom.ImplicitHydrogenCount.Value;
 
@@ -501,7 +486,6 @@ namespace NCDK.IO
                             }
                             else if (atom.ImplicitHydrogenCount != null)
                             {
-
                                 int actual = explicitValence + atom.ImplicitHydrogenCount.Value;
 
                                 if (implied == actual)
@@ -534,7 +518,6 @@ namespace NCDK.IO
                                     line += FormatMDLInt(0, 3);
                             }
                         }
-
                     }
                     catch (Exception)
                     {
@@ -544,9 +527,9 @@ namespace NCDK.IO
                 }
                 line += "  0  0  0";
 
-                if (container.Atoms[f].GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING) != null)
+                if (container.Atoms[f].GetProperty<object>(CDKPropertyName.AtomAtomMapping) != null)
                 {
-                    object atomAtomMapping = container.Atoms[f].GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING);
+                    object atomAtomMapping = container.Atoms[f].GetProperty<object>(CDKPropertyName.AtomAtomMapping);
                     if (atomAtomMapping is string)
                     {
                         try
@@ -641,14 +624,14 @@ namespace NCDK.IO
             for (int i = 0; i < container.Atoms.Count; i++)
             {
                 IAtom atom = container.Atoms[i];
-                if (atom.GetProperty<object>(CDKPropertyName.COMMENT) != null
-                    && atom.GetProperty<object>(CDKPropertyName.COMMENT) is string
-                    && !atom.GetProperty<string>(CDKPropertyName.COMMENT).Trim().Equals(""))
+                if (atom.GetProperty<object>(CDKPropertyName.Comment) != null
+                    && atom.GetProperty<object>(CDKPropertyName.Comment) is string
+                    && !atom.GetProperty<string>(CDKPropertyName.Comment).Trim().Equals(""))
                 {
                     writer.Write("V  ");
                     writer.Write(FormatMDLInt(i + 1, 3));
                     writer.Write(" ");
-                    writer.Write(atom.GetProperty<string>(CDKPropertyName.COMMENT));
+                    writer.Write(atom.GetProperty<string>(CDKPropertyName.Comment));
                     writer.WriteLine();
                 }
             }
@@ -795,7 +778,7 @@ namespace NCDK.IO
 
         private void WriteSgroups(IAtomContainer container, TextWriter writer, IDictionary<IAtom, int> atomidxs)
         {
-            IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            IList<Sgroup> sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
@@ -1006,11 +989,10 @@ namespace NCDK.IO
         /// <summary>
         /// Formats an integer to fit into the connection table and changes it
         /// to a string.
-        ///
+        /// </summary>
         /// <param name="i">The int to be formated</param>
         /// <param name="l">Length of the string</param>
         /// <returns>The string to be written into the connectiontable</returns>
-        /// </summary>
         protected internal static string FormatMDLInt(int i, int l)
         {
             string s = i.ToString(CultureInfo.InvariantCulture);
@@ -1020,10 +1002,9 @@ namespace NCDK.IO
         /// <summary>
         /// Formats a float to fit into the connectiontable and changes it
         /// to a string.
-        ///
+        /// </summary>
         /// <param name="fl">The float to be formated</param>
         /// <returns>The string to be written into the connectiontable</returns>
-        /// </summary>
         protected static string FormatMDLFloat(double fl)
         {
             string s = fl.ToString("F4", CultureInfo.InvariantCulture);
@@ -1032,20 +1013,21 @@ namespace NCDK.IO
 
         /// <summary>
         /// Formats a string to fit into the connectiontable.
-        ///
+        /// </summary>
         /// <param name="s">The string to be formated</param>
         /// <param name="le">The length of the string</param>
         /// <returns>The string to be written in the connectiontable</returns>
-        /// </summary>
         protected static string FormatMDLString(string s, int le)
         {
             return (s + new string(' ', le)).Substring(0, le);
         }
 
         /// <summary>
-        /// Initializes IO settings.<br>
+        /// Initializes IO settings.
+        /// <para>
         /// Please note with regards to "WriteAromaticBondTypes": bond type values 4 through 8 are for SSS queries only,
         /// so a 'query file' is created if the container has aromatic bonds and this settings is true.
+        /// </para>
         /// </summary>
         private void InitIOSettings()
         {

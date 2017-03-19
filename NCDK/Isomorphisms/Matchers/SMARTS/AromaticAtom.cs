@@ -21,16 +21,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     /// <summary>
     /// This matcher any aromatic atom. This assumes that aromaticity in the molecule
     /// has been perceived.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AromaticAtom : SMARTSAtom
     {
         /// <summary>
         /// Creates a new instance
-        ///
         /// </summary>
         public AromaticAtom(IChemObjectBuilder builder)
             : base(builder)

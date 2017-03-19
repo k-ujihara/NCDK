@@ -26,11 +26,10 @@ using System.Collections.Generic;
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
+    /// </summary>
+    /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    ///
-    /// <seealso cref="ChemModelManipulator"/>
-    /// </summary>
     public class ReactionSetManipulator
     {
         public static int GetAtomCount(IReactionSet set)
@@ -71,10 +70,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// get all Molecules object from a set of Reactions.
-        ///
+        /// </summary>
         /// <param name="set">The set of reaction to inspect</param>
         /// <returns>The IAtomContanerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReactionSet set)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = set.Builder.CreateAtomContainerSet();
@@ -112,9 +110,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns all the AtomContainer's of a Reaction.
+        /// </summary>
         /// <param name="set">the reaction set to get the molecules from</param>
         /// <returns>a List containing the IAtomContainer objects in the IReactionSet</returns>
-        /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IReactionSet set)
         {
 
@@ -149,11 +147,10 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Get all Reactions object containing a Molecule from a set of Reactions.
-        ///
+        /// </summary>
         /// <param name="reactSet">The set of reaction to inspect</param>
         /// <param name="molecule">The molecule to find</param>
         /// <returns>The IReactionSet</returns>
-        /// </summary>
         public static IReactionSet GetRelevantReactions(IReactionSet reactSet, IAtomContainer molecule)
         {
             IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
@@ -169,11 +166,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Get all Reactions object containing a Molecule as a Reactant from a set
         /// of Reactions.
-        ///
+        /// </summary>
         /// <param name="reactSet">The set of reaction to inspect</param>
         /// <param name="molecule">The molecule to find as a reactant</param>
         /// <returns>The IReactionSet</returns>
-        /// </summary>
         public static IReactionSet GetRelevantReactionsAsReactant(IReactionSet reactSet, IAtomContainer molecule)
         {
             IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
@@ -188,11 +184,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Get all Reactions object containing a Molecule as a Product from a set of
         /// Reactions.
-        ///
+        /// </summary>
         /// <param name="reactSet">The set of reaction to inspect</param>
         /// <param name="molecule">The molecule to find as a product</param>
         /// <returns>The IReactionSet</returns>
-        /// </summary>
         public static IReactionSet GetRelevantReactionsAsProduct(IReactionSet reactSet, IAtomContainer molecule)
         {
             IReactionSet newReactSet = reactSet.Builder.CreateReactionSet();
@@ -252,11 +247,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Gets a reaction from a ReactionSet by ID of any product or reactant. If several exist,
         /// only the first one will be returned.
-        ///
+        /// </summary>
         /// <param name="reactionSet">The reactionSet to search in</param>
         /// <param name="id">The id to search for.</param>
         /// <returns>The Reaction or null;</returns>
-        /// </summary>
         public static IReaction GetReactionByAtomContainerID(IReactionSet reactionSet, string id)
         {
             foreach (var reaction in reactionSet)
@@ -273,11 +267,10 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Gets a reaction from a ReactionSet by ID. If several exist,
         /// only the first one will be returned.
-        ///
+        /// </summary>
         /// <param name="reactionSet">The reactionSet to search in</param>
         /// <param name="id">The id to search for.</param>
         /// <returns>The Reaction or null;</returns>
-        /// </summary>
         public static IReaction GetReactionByReactionID(IReactionSet reactionSet, string id)
         {
             foreach (var reaction in reactionSet)

@@ -18,7 +18,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Primitives;
-
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -39,7 +38,6 @@ namespace NCDK.IO
     /// </example>
     // @cdk.module  ioformats
     // @cdk.githash
-    //
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @author  Bradley A. Smith <bradley@baysmith.com>
     public class FormatFactory

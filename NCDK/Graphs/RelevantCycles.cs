@@ -114,7 +114,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Given a list of cycles return those which are independent (&oplus;-sum)
+        /// Given a list of cycles return those which are independent (⊕-sum)
         /// from the current basis.
         /// </summary>
         /// <param name="cycles">cycles of a given .Length</param>

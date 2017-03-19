@@ -27,22 +27,18 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with convenience methods that provide methods to manipulate
     /// AminoAcid's.
-    ///
+    /// </summary>
     // @cdk.module  standard
     // @cdk.githash
-    ///
     // @author      Egon Willighagen
     // @cdk.created 2005-08-19
-    /// </summary>
     public class AminoAcidManipulator
     {
-
         /// <summary>
         /// Removes the singly bonded oxygen from the acid group of the AminoAcid.
-        ///
-        /// <param name="acid">AminoAcid from which to remove the oxygen</param>
-        // @ when the C-terminus is not defined for the given AminoAcid
         /// </summary>
+        /// <param name="acid">AminoAcid from which to remove the oxygen</param>
+        /// <exception cref="CDKException">when the C-terminus is not defined for the given AminoAcid</exception>
         public static void RemoveAcidicOxygen(IAminoAcid acid)
         {
             if (acid.CTerminus == null) throw new CDKException("Cannot remove oxygen: C-terminus is not defined!");
@@ -69,18 +65,16 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Adds the singly bonded oxygen from the acid group of the AminoAcid.
-        ///
-        /// <param name="acid">AminoAcid to which to add the oxygen</param>
-        // @ when the C-terminus is not defined for the given AminoAcid
         /// </summary>
+        /// <param name="acid">AminoAcid to which to add the oxygen</param>
+        /// <exception cref="CDKException">when the C-terminus is not defined for the given AminoAcid</exception>
         public static void AddAcidicOxygen(IAminoAcid acid)
         {
             if (acid.CTerminus == null) throw new CDKException("Cannot add oxygen: C-terminus is not defined!");
 
             IAtom acidicOxygen = acid.Builder.CreateAtom("O");
             acid.Atoms.Add(acidicOxygen);
-            acid.Bonds.Add(acid.Builder.CreateBond(acid.CTerminus, acidicOxygen,
-                    BondOrder.Single));
+            acid.Bonds.Add(acid.Builder.CreateBond(acid.CTerminus, acidicOxygen, BondOrder.Single));
         }
     }
 }

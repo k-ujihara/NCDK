@@ -142,6 +142,7 @@ namespace NCDK.Renderers.Generators.Standards
         public StandardGenerator(Typeface font, double emSize)
         {
             this.font = font;
+            this.emSize = emSize;
             this.atomGenerator = new StandardAtomGenerator(font, emSize);
         }
 
@@ -153,7 +154,7 @@ namespace NCDK.Renderers.Generators.Standards
             var symbolRemap = new Dictionary<IAtom, string>();
             StandardSgroupGenerator.PrepareDisplayShortcuts(container, symbolRemap);
 
-            double scale = parameters.Get<double>(typeof(BasicSceneGenerator.Scale));
+            double scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
 
             SymbolVisibility visibility = parameters.Get<SymbolVisibility>(typeof(Visibility));
             IAtomColorer coloring = parameters.Get<IAtomColorer>(typeof(AtomColor));
@@ -162,16 +163,16 @@ namespace NCDK.Renderers.Generators.Standards
 
             // the stroke width is based on the font. a better method is needed to get
             // the exact font stroke but for now we use the width of the pipe character.
-            double fontStroke = new TextOutline("|", font, emSize).Resize(1 / scale, 1 / scale).Bounds.Width;
-            double stroke = parameters.Get<double>(typeof(StrokeRatio)) * fontStroke;
+            double fontStroke = new TextOutline("|", font, emSize).Resize(1 / scale, 1 / scale).GetBounds().Width;
+            double stroke = parameters.GetV<double>(typeof(StrokeRatio)) * fontStroke;
 
             ElementGroup annotations = new ElementGroup();
 
             AtomSymbol[] symbols = GenerateAtomSymbols(container, symbolRemap, visibility, parameters, annotations, stroke);
             IRenderingElement[] bondElements = StandardBondGenerator.GenerateBonds(container, symbols, parameters, stroke, font, emSize, annotations);
 
-            HighlightStyle style = parameters.Get<HighlightStyle>(typeof(Highlighting));
-            double glowWidth = parameters.Get<double>(typeof(OuterGlowWidth));
+            HighlightStyle style = parameters.GetV<HighlightStyle>(typeof(Highlighting));
+            double glowWidth = parameters.GetV<double>(typeof(OuterGlowWidth));
 
             ElementGroup backLayer = new ElementGroup();
             ElementGroup middleLayer = new ElementGroup();
@@ -277,10 +278,10 @@ namespace NCDK.Renderers.Generators.Standards
                                                  SymbolVisibility visibility,
                                                  RendererModel parameters, ElementGroup annotations, double stroke)
         {
-            double scale = parameters.Get<double>(typeof(BasicSceneGenerator.Scale));
-            double annDist = parameters.Get<double>(typeof(AnnotationDistance))
-                             * (parameters.Get<double>(typeof(BasicSceneGenerator.BondLength)) / scale);
-            double annScale = (1 / scale) * parameters.Get<double>(typeof(AnnotationFontScale));
+            double scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            double annDist = parameters.GetV<double>(typeof(AnnotationDistance))
+                             * (parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale);
+            double annScale = (1 / scale) * parameters.GetV<double>(typeof(AnnotationFontScale));
             Color annColor = parameters.GetV<Color>(typeof(AnnotationColor));
             double halfStroke = stroke / 2;
 
@@ -447,7 +448,7 @@ namespace NCDK.Renderers.Generators.Standards
                 var center = outline.GetCenter();
                 outline = outline.Translate(-center.X, -(center.Y + yOffset));
 
-                yOffset += lineHeight * outline.Bounds.Height;
+                yOffset += lineHeight * outline.GetBounds().Height;
 
                 group.Add(GeneralPath.ShapeOf(outline.GetOutline(), color));
                 var logicalBounds = outline.GetLogicalBounds();
@@ -489,7 +490,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Safely access a chem object color property for a chem object.
         /// </summary>
-        /// <param name="object">chem object</param>
+        /// <param name="obj">chem object</param>
         /// <returns>the highlight color</returns>
         /// <exception cref="ArgumentException">the highlight property was set but was not a <see cref="Color"/> instance</exception>
         internal static Color? GetColorProperty(IChemObject obj, string key)
@@ -769,85 +770,85 @@ namespace NCDK.Renderers.Generators.Standards
         /// Defines the ratio of the stroke to the width of the stroke of the font used to depict atom
         /// symbols. Default = 1.
         /// </summary>
-        public sealed class StrokeRatio : AbstractGeneratorParameter<Double>
+        public sealed class StrokeRatio : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 1;
+            public override double? Default => 1;
         }
 
         /// <summary>
         /// Defines the ratio of the separation between lines in double bonds as a percentage of length
         /// ({@link BasicSceneGenerator.BondLength}). The default value is 18% (0.18).
         /// </summary>
-        public sealed class BondSeparation : AbstractGeneratorParameter<Double>
+        public sealed class BondSeparation : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 0.18;
+            public override double? Default => 0.18;
         }
 
         /// <summary>
         /// Defines the margin between an atom symbol and a connected bond based on the stroke width.
         /// Default = 2.
         /// </summary>
-        public sealed class SymbolMarginRatio : AbstractGeneratorParameter<Double>
+        public sealed class SymbolMarginRatio : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 2;
+            public override double? Default => 2;
         }
 
         /// <summary>
         /// Ratio of the wide end of wedge compared to the narrow end (stroke width). Default = 8.
         /// </summary>
-        public sealed class WedgeRatio : AbstractGeneratorParameter<Double>
+        public sealed class WedgeRatio : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 6;
+            public override double? Default => 6;
         }
 
         /// <summary>
         /// The preferred spacing between lines in hashed bonds. The number of hashed sections displayed
         /// is then {@link BasicSceneGenerator.BondLength} / spacing. The default value is 5.
         /// </summary>
-        public sealed class HashSpacing : AbstractGeneratorParameter<Double>
+        public sealed class HashSpacing : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 5;
+            public override double? Default => 5;
         }
 
         /// <summary>
         /// The spacing of waves (semi circles) drawn in wavy bonds with. Default = 5.
         /// </summary>
-        public sealed class WaveSpacing : AbstractGeneratorParameter<double>
+        public sealed class WaveSpacing : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 5;
+            public override double? Default => 5;
         }
 
         /// <summary>
         /// The number of sections to render in a dashed 'unknown' bond, default = 4;
         /// </summary>
-        public sealed class DashSection : AbstractGeneratorParameter<int>
+        public sealed class DashSection : AbstractGeneratorParameter<int?>
         {
             /// <inheritdoc/>
-            public override int Default => 8;
+            public override int? Default => 8;
         }
 
         /// <summary>
         /// Modify bold wedges to be flush with adjacent bonds, default = true.
         /// </summary>
-        public sealed class FancyBoldWedges : AbstractGeneratorParameter<bool>
+        public sealed class FancyBoldWedges : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>
-            public override bool Default => true;
+            public override bool? Default => true;
         }
 
         /// <summary>
         /// Modify hashed wedges to be flush when there is a single adjacent bond, default = true.
         /// </summary>
-        public sealed class FancyHashedWedges : AbstractGeneratorParameter<bool>
+        public sealed class FancyHashedWedges : AbstractGeneratorParameter<bool?>
         {
             /// <inheritdoc/>
-            public override bool Default => true;
+            public override bool? Default => true;
         }
 
         /// <summary>
@@ -855,67 +856,67 @@ namespace NCDK.Renderers.Generators.Standards
         /// This means the bond outer glow, is 5 times the width as the glow extends to twice the width
         /// on each side.
         /// </summary>
-        public sealed class OuterGlowWidth : AbstractGeneratorParameter<double>
+        public sealed class OuterGlowWidth : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 2;
+            public override double? Default => 2;
         }
 
         /// <summary>
         /// Parameter defines the style of highlight used to emphasis atoms and bonds. The default option
         /// is to color the atom and bond symbols ({@link HighlightStyle#Colored}).
         /// </summary>
-        public sealed class Highlighting : AbstractGeneratorParameter<HighlightStyle>
+        public sealed class Highlighting : AbstractGeneratorParameter<HighlightStyle?>
         {
             /// <inheritdoc/>
-            public override HighlightStyle Default => HighlightStyle.Colored;
+            public override HighlightStyle? Default => HighlightStyle.Colored;
         }
 
         /// <summary>
         /// The color of the atom numbers. The the parameter value is null, the color of the symbol
         /// {@link AtomColor} is used. The default color is red to distinguish from normal atom symbols.
         /// </summary>
-        public sealed class AnnotationColor : AbstractGeneratorParameter<Color>
+        public sealed class AnnotationColor : AbstractGeneratorParameter<Color?>
         {
             /// <inheritdoc/>
-            public override Color Default => WPF.Media.Colors.Red;
+            public override Color? Default => WPF.Media.Colors.Red;
         }
 
         /// <summary>
         /// The distance of atom numbers from their parent atom as a percentage of bond length, default
         /// value is 0.25 (25%)
         /// </summary>
-        public sealed class AnnotationDistance : AbstractGeneratorParameter<double>
+        public sealed class AnnotationDistance : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 0.25;
+            public override double? Default => 0.25;
         }
 
         /// <summary>
         /// Annotation font size relative to element symbols, default = 0.4 (40%).
         /// </summary>
-        public sealed class AnnotationFontScale : AbstractGeneratorParameter<double>
+        public sealed class AnnotationFontScale : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 0.5;
+            public override double? Default => 0.5;
         }
 
         /// <summary>
         /// How "deep" are brackets drawn. The value is relative to bond length.
         /// </summary>
-        public sealed class SgroupBracketDepth : AbstractGeneratorParameter<double>
+        public sealed class SgroupBracketDepth : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 0.18;
+            public override double? Default => 0.18;
         }
 
         /// <summary>
         /// Scale Sgroup annotations relative to the normal font size (atom symbol).
         /// </summary>
-        public sealed class SgroupFontScale : AbstractGeneratorParameter<double>
+        public sealed class SgroupFontScale : AbstractGeneratorParameter<double?>
         {
             /// <inheritdoc/>
-            public override double Default => 0.6;
+            public override double?Default => 0.6;
         }
     }
 }

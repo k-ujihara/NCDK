@@ -95,7 +95,7 @@ namespace NCDK.Beam
             public int Charge => 0;
 
             public int NumOfHydrogens
-            { get { throw new ArgumentException("use bond Order sum to determine implicit hydrogen count"); } }
+            { get { throw new InvalidOperationException("use bond Order sum to determine implicit hydrogen count"); } }
 
             public int AtomClass => 0;
 

@@ -26,10 +26,10 @@ namespace NCDK.SMSD.Tools
 {
     /// <summary>
     /// Class that handles execution time of the MCS search.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class TimeManager
     {
 

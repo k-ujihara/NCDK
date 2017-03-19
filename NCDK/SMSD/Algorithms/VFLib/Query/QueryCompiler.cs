@@ -48,18 +48,16 @@ using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.Matchers;
 using NCDK.SMSD.Algorithms.VFLib.Builder;
 
-
 namespace NCDK.SMSD.Algorithms.VFLib.Query
 {
     /// <summary>
     /// This class creates an template for MCS/substructure query.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class QueryCompiler : IQueryCompiler
     {
-
         private IAtomContainer molecule = null;
         private IQueryAtomContainer queryMolecule = null;
         private bool shouldMatchBonds = true;
@@ -76,7 +74,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
 
         /// <summary>
         /// Construct query object from the molecule
-        /// <param name="molecule">/// </summary></param>
+        /// </summary>
         public QueryCompiler(IQueryAtomContainer molecule)
         {
             this.SetQueryMolecule(molecule);
@@ -84,7 +82,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
 
         /// <summary>
         /// Set Molecule
-        /// <param name="molecule">/// </summary></param>
+        /// </summary>
         private void SetMolecule(IAtomContainer molecule)
         {
             this.molecule = molecule;
@@ -92,7 +90,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
 
         /// <summary>
         /// Set Molecule
-        /// <param name="molecule">/// </summary></param>
+        /// </summary>
         private void SetQueryMolecule(IQueryAtomContainer molecule)
         {
             this.queryMolecule = molecule;

@@ -352,7 +352,7 @@ namespace NCDK.Hash.Stereo
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
-            Assert.AreEqual(StereoEncoder.EMPTY, encoder);
+            Assert.AreEqual(StereoEncoder.Empty, encoder);
 
         }
 
@@ -409,7 +409,7 @@ namespace NCDK.Hash.Stereo
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
-            Assert.AreEqual(StereoEncoder.EMPTY, encoder);
+            Assert.AreEqual(StereoEncoder.Empty, encoder);
 
         }
 
@@ -466,7 +466,7 @@ namespace NCDK.Hash.Stereo
 
             IStereoEncoder encoder = new GeometricTetrahedralEncoderFactory().Create(container, graph);
 
-            Assert.AreEqual(StereoEncoder.EMPTY, encoder);
+            Assert.AreEqual(StereoEncoder.Empty, encoder);
 
         }
 

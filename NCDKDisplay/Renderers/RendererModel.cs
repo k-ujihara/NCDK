@@ -41,13 +41,10 @@ namespace NCDK.Renderers
     // @cdk.module render
     // @cdk.githash
     [Serializable]
-    public class RendererModel : ICloneable
+    public class RendererModel
     {
-        /* If true, the class will notify its listeners of changes */
-        private bool notification = true;
-
         [NonSerialized]
-        private List<ICDKChangeListener> listeners = new List<ICDKChangeListener>();
+        private HashSet<ICDKChangeListener> listeners = null;
         private IDictionary<IAtom, string> toolTipTextMap = new Dictionary<IAtom, string>();
         private IAtom highlightedAtom = null;
         private IBond highlightedBond = null;
@@ -79,7 +76,7 @@ namespace NCDK.Renderers
         /// </summary>
         public class Padding : AbstractGeneratorParameter<double?>
         {
-            public override double? Default => 16d;
+            public override double? Default => 16;
         }
 
         /// <summary>
@@ -214,24 +211,26 @@ namespace NCDK.Renderers
         public void Set<T>(Type paramType,  T value) 
         {
 #if DEBUG
-            var f = typeof(IGeneratorParameter<T>).IsAssignableFrom(paramType);
-            if (!f)
-                throw new InvalidOperationException();
+            {
+                var f = typeof(IGeneratorParameter<T>).IsAssignableFrom(paramType);
+                if (!f)
+                    throw new InvalidOperationException();
+            }
 #endif
-
             var parameter = GetParameter<T>(paramType);
-            parameter.Value = value;
+            if (!parameter.Value.Equals(value))
+            {
+                parameter.Value = value;
+                FireChange();
+            }
         }
 
         public void Set(Type paramType, object value)
         {
             var parameter = GetParameter(paramType);
             paramType.GetProperty(nameof(IGeneratorParameter<object>.Value)).SetValue(parameter, value);
-        }
 
-        public void Set(Type paramType, bool value)
-        {
-            Set<bool?>(paramType, value);
+            FireChange();
         }
 
         public void SetV<T>(Type paramType, T value) where T : struct
@@ -365,25 +364,14 @@ namespace NCDK.Renderers
         /// Adds a change listener to the list of listeners.
         /// </summary>
         /// <param name="listener">The listener added to the list</param>
-        public void AddCDKChangeListener(ICDKChangeListener listener)
+        public ICollection<ICDKChangeListener> Listeners
         {
-            if (listeners == null)
+            get
             {
-                listeners = new List<ICDKChangeListener>();
+                if (listeners == null)
+                    listeners = new HashSet<ICDKChangeListener>();
+                return listeners;
             }
-            if (!listeners.Contains(listener))
-            {
-                listeners.Add(listener);
-            }
-        }
-
-        /// <summary>
-        /// Removes a change listener from the list of listeners.
-        /// </summary>
-        /// <param name="listener">The listener removed from the list</param>
-        public void RemoveCDKChangeListener(ICDKChangeListener listener)
-        {
-            listeners.Remove(listener);
         }
 
         /// <summary>
@@ -472,8 +460,8 @@ namespace NCDK.Renderers
         /// <summary>
         /// Determines if the model sends around change notifications.
         /// </summary>
-        /// <returns>true, if notifications are sent around upon changes</returns>
-        public bool Notification => notification;
+        /// <value>true, if notifications are sent around upon changes</value>
+        public bool Notification { get; set; } = true;
 
         /// <summary>
         /// Returns true if the passed <see cref="IGeneratorParameter"/>s has been
@@ -485,20 +473,6 @@ namespace NCDK.Renderers
         {
             Debug.Assert(typeof(IGeneratorParameter).IsAssignableFrom(param));
             return renderingParameters.ContainsKey(param.FullName);
-        }
-
-        /// <summary>
-        /// Dis- or enables sending around change notifications.
-        /// </summary>
-        /// <param name="notification">true if notifications should be sent, false otherwise.</param>
-        public void SetNotification(bool notification)
-        {
-            this.notification = notification;
-        }
-
-        public virtual object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }

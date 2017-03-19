@@ -2,7 +2,7 @@ using NCDK.Common.Collections;
 using NCDK.Common.Primitives;
 using System;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     public class InvariantArray : IComparable<InvariantArray>
     {

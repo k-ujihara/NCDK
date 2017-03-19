@@ -691,7 +691,7 @@ namespace NCDK.IO.CML
 
             // FIXME: REACT: It should return two different formulas
             Assert.AreEqual("[C 18 H 21 Cl 2 Mn 1 N 5 O 1]",
-                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
+                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.Formula)));
         }
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace NCDK.IO.CML
 
             // FIXME: REACT: It should return two different formulas
             Assert.AreEqual("[C 18 H 21 Cl 2 Mn 1 N 5 O 1, C 4 H 10]", 
-                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.FORMULA)));
+                Strings.ToJavaString(mol.GetProperty<IList<string>>(CDKPropertyName.Formula)));
         }
 
         /// <summary>
@@ -925,13 +925,13 @@ namespace NCDK.IO.CML
             Assert.AreEqual(2, reaction.Products.Count());
             Assert.AreEqual(idProducts[0], reaction.Products[0].Id);
             Assert.AreEqual("C 9 H 20 N 1",
-                reaction.Products[0].GetProperty<IList<string>>(CDKPropertyName.FORMULA)[0]);
+                reaction.Products[0].GetProperty<IList<string>>(CDKPropertyName.Formula)[0]);
             Assert.AreEqual(idProducts[1], reaction.Products[1].Id);
 
             Assert.AreEqual(1, reaction.Reactants.Count());
             Assert.AreEqual(idReactants[0], reaction.Reactants[0].Id);
             Assert.AreEqual("C 28 H 60 N 1",
-                reaction.Reactants[0].GetProperty<IList<string>>(CDKPropertyName.FORMULA)[0]);
+                reaction.Reactants[0].GetProperty<IList<string>>(CDKPropertyName.Formula)[0]);
         }
 
         /// <summary>

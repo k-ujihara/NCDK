@@ -32,14 +32,13 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// to a maximum of four protons for any given atom. If an atom has fewer than four protons, the remaining values
     /// are set to double.NaN. Also note that the values for the neighbors are not returned in a particular order
     /// (though the order is fixed for multiple runs for the same atom).
-    ///
+    /// </summary>
     // @author mfe4
     // @cdk.created 2004-11-03
     // @cdk.module qsaratomic
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:protonPartialCharge
-    /// </summary>
     public class ProtonTotalPartialChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;

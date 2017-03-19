@@ -24,7 +24,6 @@
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
@@ -135,7 +134,7 @@ namespace NCDK.Depict
 
                     // skip empty elements
                     var bounds = this.elements[i];
-                    if (bounds.IsEmpty)
+                    if (bounds.IsEmpty())
                         continue;
 
                     // calc the 'view' bounds:

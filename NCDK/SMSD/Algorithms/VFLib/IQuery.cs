@@ -51,67 +51,64 @@ namespace NCDK.SMSD.Algorithms.VFLib
 {
     /// <summary>
     /// Interface for the query molecule/graph.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
-
     public interface IQuery
     {
 
         /// <summary>
         /// Returns nodes of the query.
-        /// <returns>node Iterable.</returns>
         /// </summary>
+        /// <returns>node Iterable.</returns>
         IEnumerable<INode> Nodes();
 
         /// <summary>
         /// Returns a node of the query mol at a given position.
+        /// </summary>
         /// <param name="index">at position.</param>
         /// <returns>node.</returns>
-        /// </summary>
         INode GetNode(int index);
 
         /// <summary>
         /// Returns edges of the query.
-        /// <returns>edge Iterable.</returns>
         /// </summary>
+        /// <returns>edge Iterable.</returns>
         IEnumerable<IEdge> Edges();
 
         /// <summary>
         /// Returns an edge of the query mol at a given position.
+        /// </summary>
         /// <param name="index">at position.</param>
         /// <returns>edge</returns>
-        /// </summary>
         IEdge GetEdge(int index);
 
         /// <summary>
         /// Returns an atom associated with this node.
+        /// </summary>
         /// <param name="node">get Atom of this node.</param>
         /// <returns>atom of this node</returns>
-        /// </summary>
         IAtom GetAtom(INode node);
 
         /// <summary>
         /// Returns an edge associated between two nodes.
-        ///
+        /// </summary>
         /// <param name="source">get an between source.</param>
         /// <param name="target">and target.</param>
         /// <returns>IEdge egde between source and target.</returns>
-        /// </summary>
         IEdge GetEdge(INode source, INode target);
 
         /// <summary>
         /// Returns edge count.
-        /// <returns>edge count.</returns>
         /// </summary>
+        /// <returns>edge count.</returns>
         int CountEdges();
 
         /// <summary>
         /// Returns node count.
-        /// <returns>node count.</returns>
         /// </summary>
+        /// <returns>node count.</returns>
         int CountNodes();
     }
 }
-

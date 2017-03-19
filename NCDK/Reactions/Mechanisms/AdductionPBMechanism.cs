@@ -22,34 +22,26 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism adduct together two fragments due to a double bond.
-     * The second fragment will be deficient in charge.
-     * It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</p>
-     * <p>This reaction could be represented as A=B + [C+] => [A+]-B-C</p>
-     *
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism adduct together two fragments due to a double bond.
+    /// The second fragment will be deficient in charge.
+    /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
+    /// <para>This reaction could be represented as A=B + [C+] => [A+]-B-C</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class AdductionPBMechanism : IReactionMechanism
     {
-
-        /**
-         * Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed three atoms
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-         *
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed three atoms</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);

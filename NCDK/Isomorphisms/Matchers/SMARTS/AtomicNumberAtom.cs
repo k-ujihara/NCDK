@@ -27,18 +27,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matches an atom using the atomic number.
-    ///
+    /// </summary>
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AtomicNumberAtom : SMARTSAtom
     {
-
         /// <summary>
         /// Creates a new instance.
-        ///
-        /// <param name="atomicNumber">/// </summary></param>
+        /// </summary>
+        /// <param name="atomicNumber"></param>
         public AtomicNumberAtom(int atomicNumber, IChemObjectBuilder builder)
             : base(builder)
         {

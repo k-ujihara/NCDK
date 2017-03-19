@@ -15,8 +15,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
- */ 
-using System;
+ */
 using System.Collections.Generic;
 using NCDK.Numerics;
 
@@ -25,19 +24,21 @@ namespace NCDK
     /// <summary>
     /// Implements the concept of a covalent bond between two or more atoms. A bond is
     /// considered to be a number of electrons connecting two ore more atoms.
-    ///type filter text
+    /// type filter text
+    /// </summary>
     // @cdk.module interfaces
     // @cdk.githash
-    ///
     // @author      egonw
     // @cdk.created 2005-08-24
     // @cdk.keyword bond
     // @cdk.keyword atom
     // @cdk.keyword electron
-    /// </summary>
     public interface IBond
         : IElectronContainer, IMolecularEntity
     {
+        /// <summary>
+        /// Atoms making up this bond.
+        /// </summary>
         IList<IAtom> Atoms { get; }
 
         /// <summary>
@@ -62,10 +63,9 @@ namespace NCDK
 
         /// <summary>
         /// Returns true if the given atom participates in this bond.
-        ///
+        /// </summary>
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns>true if the atom participates in this bond</returns>
-        /// </summary>
         bool Contains(IAtom atom);
 
         /// <summary>
@@ -96,19 +96,13 @@ namespace NCDK
         bool IsConnectedTo(IBond bond);
 
         /// <summary>
-        /// Flag used for marking uncertainty of the bond order.
-        /// If used on an
-        /// <ul>
-        ///  <li><see cref="IAtomContainer"/> it means that one or several of the bonds have
-        ///         this flag raised (which may indicate aromaticity).</li>
-        ///  <li><see cref="IBond"/> it means that it's unclear whether the bond is a single or
-        ///         double bond.</li>
-        ///  <li><see cref="IAtom"/> it is a way for the Smiles parser to indicate that this atom was
-        ///         written with a lower case letter, e.g. 'c' rather than 'C'</li>
-        /// </ul>
+        /// It's unclear whether the bond is a single or double bond.
         /// </summary>
         bool IsSingleOrDouble { get; set; }
 
+        /// <summary>
+        /// It has reactive center. It is used for example in reaction.
+        /// </summary>
         bool IsReactiveCenter { get; set; }
     }
 }

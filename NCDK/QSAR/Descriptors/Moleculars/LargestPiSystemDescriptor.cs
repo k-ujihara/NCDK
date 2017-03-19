@@ -27,30 +27,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Class that returns the number of atoms in the largest pi system.
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td>checkAromaticity</td>
-    /// <td>false</td>
-    /// <td>True is the aromaticity has to be checked</td>
-    /// </tr>
-    /// </table>
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term>checkAromaticity</term>
+    /// <term>false</term>
+    /// <term>True is the aromaticity has to be checked</term>
+    /// </item>
+    /// </list>
+    /// </para>
     /// Returns a single value named <i>nAtomPi</i>
-    ///
+    /// </remarks>
     // @author chhoppe from EUROSCREEN
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
     // @cdk.githash
     // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:largestPiSystem
-    /// </summary>
     public class LargestPiSystemDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool checkAromaticity = false;
@@ -107,13 +107,15 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// Calculate the count of atoms of the largest pi system in the supplied <see cref="IAtomContainer"/>.
-        /// <p/>
-        /// <p>The method require one parameter:
-        /// <ol>
-        /// <li>if checkAromaticity is true, the method check the aromaticity,
-        /// <li>if false, means that the aromaticity has already been checked
-        /// </ol>
         /// </summary>
+        /// <remarks>
+        /// <para>The method require one parameter:
+        /// <list type="bullet"> 
+        /// <item>if checkAromaticity is true, the method check the aromaticity,</item>
+        /// <item>if false, means that the aromaticity has already been checked</item>
+        /// </list>
+        /// </para>
+        /// </remarks>
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated</param>
         /// <returns>the number of atoms in the largest pi system of this AtomContainer</returns>
         /// <seealso cref="Parameters"/>
@@ -182,30 +184,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     largestPiSystemAtomsCount), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>
         /// Performs a breadthFirstSearch in an AtomContainer starting with a
         /// particular sphere, which usually consists of one start atom, and searches
         /// for a pi system.
-        ///
-        /// <param name="container">The AtomContainer to</param>
-        ///                  be searched
-        /// <param name="sphere">A sphere of atoms to</param>
-        ///                  start the search with
-        /// <param name="path">An array list which stores the atoms belonging to the pi system</param>
-        // @throws CDKException
-        ///          Description of the
-        ///          Exception
         /// </summary>
+        /// <param name="container">The AtomContainer to be searched</param>
+        /// <param name="sphere">A sphere of atoms to start the search with</param>
+        /// <param name="path">An array list which stores the atoms belonging to the pi system</param>
+        /// <exception cref="CDKException"></exception>
         private void BreadthFirstSearch(IAtomContainer container, List<IAtom> sphere, List<IAtom> path)
         {
             IAtom nextAtom;

@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeWriter
     {

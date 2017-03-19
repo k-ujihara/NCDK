@@ -71,10 +71,10 @@ namespace NCDK.Graphs
     public sealed class ShortestPaths
     {
         /* empty path when no valid path was found */
-        private static readonly int[] EMPTY_PATH = new int[0];
+        private static readonly int[] EmptyPath = new int[0];
 
         /* empty paths when no valid path was found */
-        private static readonly int[][] EMPTY_PATHS = new int[0][] { };
+        private static readonly int[][] EmptyPaths = new int[0][] { };
 
         /* route to each vertex */
         private readonly Route[] routeTo;
@@ -178,8 +178,8 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Perform a breath-first-search (BFS) from the start atom. The distanceTo[]
-        /// is updated on each iteration. The routeTo[] keeps track of our route back
+        /// Perform a breath-first-search (BFS) from the start atom. The <see cref="distTo"/>[]
+        /// is updated on each iteration. The <see cref="routeTo"/>[] keeps track of our route back
         /// to the source. The method has aspects similar to Dijkstra's shortest path
         /// but we are working with vertices and thus our edges are unweighted and is
         /// more similar to a simple BFS.
@@ -217,8 +217,8 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Perform a breath-first-search (BFS) from the start atom. The distanceTo[]
-        /// is updated on each iteration. The routeTo[] keeps track of our route back
+        /// Perform a breath-first-search (BFS) from the start atom. The <see cref="distTo"/>[]
+        /// is updated on each iteration. The <see cref="routeTo"/>[] keeps track of our route back
         /// to the source. The method has aspects similar to Dijkstra's shortest path
         /// but we are working with vertices and thus our edges are unweighted and is
         /// more similar to a simple BFS. The ordering limits the paths found to only
@@ -293,14 +293,14 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
         /// <returns>path from the <i>start</i> to the <paramref name="end"/> vertex</returns>
-        /// <seealso cref="PathTo(IAtom)"/>
-        /// <seealso cref="AtomsTo(int)"/>
-        /// <seealso cref="AtomsTo(IAtom)"/>
+        /// <seealso cref="GetPathTo(IAtom)"/>
+        /// <seealso cref="GetAtomsTo(int)"/>
+        /// <seealso cref="GetAtomsTo(IAtom)"/>
         public int[] GetPathTo(int end)
         {
-            if (end < 0 || end >= routeTo.Length) return EMPTY_PATH;
+            if (end < 0 || end >= routeTo.Length) return EmptyPath;
 
-            return routeTo[end] != null ? routeTo[end].GetToPath(distTo[end] + 1) : EMPTY_PATH;
+            return routeTo[end] != null ? routeTo[end].GetToPath(distTo[end] + 1) : EmptyPath;
         }
 
         /// <summary>
@@ -328,9 +328,9 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
         /// <returns>path from the <i>start</i> to the <paramref name="end"/> vertex</returns>
-        /// <seealso cref="AtomsTo(IAtom)"/>
-        /// <seealso cref="AtomsTo(int)"/>
-        /// <seealso cref="PathTo(int)"/>
+        /// <seealso cref="GetAtomsTo(IAtom)"/>
+        /// <seealso cref="GetAtomsTo(int)"/>
+        /// <seealso cref="GetPathTo(int)"/>
         public int[] GetPathTo(IAtom end)
         {
             return GetPathTo(container.Atoms.IndexOf(end));
@@ -382,9 +382,9 @@ namespace NCDK.Graphs
         /// <returns>all shortest paths from the start to the end vertex</returns>
         public int[][] GetPathsTo(int end)
         {
-            if (end < 0 || end >= routeTo.Length) return EMPTY_PATHS;
+            if (end < 0 || end >= routeTo.Length) return EmptyPaths;
 
-            return routeTo[end] != null ? routeTo[end].GetToPaths(distTo[end] + 1) : EMPTY_PATHS;
+            return routeTo[end] != null ? routeTo[end].GetToPaths(distTo[end] + 1) : EmptyPaths;
         }
 
         /// <summary>
@@ -448,9 +448,9 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
         /// <returns>path from the <i>start</i> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s</returns>
-        /// <seealso cref="AtomsTo(int)"/>
-        /// <seealso cref="PathTo(int)"/>
-        /// <seealso cref="PathTo(IAtom)"/>
+        /// <seealso cref="GetAtomsTo(int)"/>
+        /// <seealso cref="GetPathTo(int)"/>
+        /// <seealso cref="GetPathTo(IAtom)"/>
         public IAtom[] GetAtomsTo(int end)
         {
             int[] path = GetPathTo(end);
@@ -488,9 +488,9 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">the <paramref name="end"/> atom to find a path to</param>
         /// <returns>path from the <i>start</i> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s.</returns>
-        /// <seealso cref="AtomsTo(int)"/>
-        /// <seealso cref="PathTo(int)"/>
-        /// <seealso cref="PathTo(IAtom)"/>
+        /// <seealso cref="GetAtomsTo(int)"/>
+        /// <seealso cref="GetPathTo(int)"/>
+        /// <seealso cref="GetPathTo(IAtom)"/>
         public IAtom[] GetAtomsTo(IAtom end)
         {
             return GetAtomsTo(container.Atoms.IndexOf(end));
@@ -573,7 +573,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">vertex to measure the distance to</param>
         /// <returns>distance to this vertex</returns>
-        /// <seealso cref="DistanceTo(IAtom)"/>
+        /// <seealso cref="GetDistanceTo(IAtom)"/>
         public int GetDistanceTo(int end)
         {
             return (end < 0 || end >= nPathsTo.Length) ? int.MaxValue : distTo[end];
@@ -610,7 +610,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <param name="end">atom to measure the distance to</param>
         /// <returns>distance to the given atom</returns>
-        /// <seealso cref="DistanceTo(int)"/>
+        /// <seealso cref="GetDistanceTo(int)"/>
         public int GetDistanceTo(IAtom end)
         {
             return GetDistanceTo(container.Atoms.IndexOf(end));
@@ -683,6 +683,7 @@ namespace NCDK.Graphs
             /// <summary>
             /// Create a new sequential route from the parent and include the new vertex <paramref name="v"/>.
             /// </summary>
+            /// <param name="parentObject"></param>
             /// <param name="parent">parent route</param>
             /// <param name="v">additional vertex</param>
             public SequentialRoute(ShortestPaths parentObject, Route parent, int v)

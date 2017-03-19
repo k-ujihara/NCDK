@@ -205,8 +205,8 @@ namespace NCDK
         {
             int benzol = 6;
             IAtomType a = (IAtomType)NewChemObject();
-            a.SetProperty(CDKPropertyName.CHEMICAL_GROUP_CONSTANT, benzol);
-            Assert.AreEqual(benzol, a.GetProperty<int>(CDKPropertyName.CHEMICAL_GROUP_CONSTANT));
+            a.SetProperty(CDKPropertyName.ChemicalGroupConstant, benzol);
+            Assert.AreEqual(benzol, a.GetProperty<int>(CDKPropertyName.ChemicalGroupConstant));
         }
 
         [TestMethod()]
@@ -220,8 +220,8 @@ namespace NCDK
         {
             int five = 5;
             IAtomType a = (IAtomType)NewChemObject();
-            a.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, five);
-            Assert.AreEqual(five, a.GetProperty<int>(CDKPropertyName.PART_OF_RING_OF_SIZE));
+            a.SetProperty(CDKPropertyName.PartOfRingOfSize, five);
+            Assert.AreEqual(five, a.GetProperty<int>(CDKPropertyName.PartOfRingOfSize));
         }
 
         [TestMethod()]
@@ -249,8 +249,8 @@ namespace NCDK
         {
             string hoseCode = "C-4;HHHC(;///***)";
             IAtomType a = (IAtomType)NewChemObject();
-            a.SetProperty(CDKPropertyName.CHEMICAL_GROUP_CONSTANT, hoseCode);
-            Assert.AreEqual(hoseCode, a.GetProperty<string>(CDKPropertyName.CHEMICAL_GROUP_CONSTANT));
+            a.SetProperty(CDKPropertyName.ChemicalGroupConstant, hoseCode);
+            Assert.AreEqual(hoseCode, a.GetProperty<string>(CDKPropertyName.ChemicalGroupConstant));
         }
 
         [TestMethod()]

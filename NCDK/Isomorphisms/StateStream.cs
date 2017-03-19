@@ -27,18 +27,14 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Given a (subgraph-)isomorphism state this class can lazily iterate over the
-     * mappings in a non-recursive manner. The class currently implements and {@link
-     * IEnumerator} but is better suited to the {@code Stream} class (which will be
-     * available in JDK 8).
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// Given a (subgraph-)isomorphism state this class can lazily iterate over the
+    /// mappings in a non-recursive manner.
+    /// </summary>
+    // @author John May
+    // @cdk.module isomorphism
     internal sealed class StateStream : IEnumerable<int[]>
     {
-
         /// <summary>A mapping state.</summary>
         private readonly State state;
 
@@ -48,11 +44,10 @@ namespace NCDK.Isomorphisms
         /// <summary>Current candidates.</summary>
         private int n = 0, m = -1;
 
-        /**
-         * Create a stream for the provided state.
-         *
-         * @param state the state to stream over
-         */
+        /// <summary>
+        /// Create a stream for the provided state.
+        /// </summary>
+        /// <param name="state">the state to stream over</param>
         public StateStream(State state)
         {
             this.state = state;
@@ -74,11 +69,10 @@ namespace NCDK.Isomorphisms
             return GetEnumerator();
         }
 
-        /**
-         * Finds the next mapping from the current state.
-         *
-         * @return the next state (or null if none)
-         */
+        /// <summary>
+        /// Finds the next mapping from the current state.
+        /// </summary>
+        /// <returns>the next state (or null if none)</returns>
         private int[] FindNext()
         {
             while (Map()) ;
@@ -86,17 +80,15 @@ namespace NCDK.Isomorphisms
             return null;
         }
 
-        /**
-         * Progress the state-machine - the function return false when a mapping is
-         * found on the mapping is done.
-         *
-         * @return the state is partial
-         */
+        /// <summary>
+        /// Progress the state-machine - the function return false when a mapping is
+        /// found on the mapping is done.
+        /// </summary>
+        /// <returns>the state is partial</returns>
         private bool Map()
         {
-
             // backtrack - we've tried all possible n or m, remove the last mapping
-            if ((n == state.NMax() || m == state.MMax()) && !stack.IsEmpty)
+            if ((n == state.NMax() || m == state.MMax()) && !stack.IsEmpty())
                 state.Remove(n = stack.PopN(), m = stack.PopM());
 
             while ((m = state.NextM(n, m)) < state.MMax())
@@ -114,16 +106,15 @@ namespace NCDK.Isomorphisms
         }
 
 
-        /**
-         * A fixed size stack to keep track of which vertices are mapped. This stack
-         * allows us to turn the recursive algorithms it to lazy iterating mappers.
-         * A reclusive call is usually implemented as call-stack which stores the
-         * variable in each subroutine invocation. For the mapping we actually only
-         * need store the candidates.
-         */
+        /// <summary>
+        /// A fixed size stack to keep track of which vertices are mapped. This stack
+        /// allows us to turn the recursive algorithms it to lazy iterating mappers.
+        /// A reclusive call is usually implemented as call-stack which stores the
+        /// variable in each subroutine invocation. For the mapping we actually only
+        /// need store the candidates.
+        /// </summary>
         private sealed class CandidateStack
         {
-
             /// <summary>Candidate storage.</summary>
             private readonly int[] ns, ms;
 
@@ -136,44 +127,40 @@ namespace NCDK.Isomorphisms
                 ms = new int[capacity];
             }
 
-            /**
-             * Push a candidate mapping on to the stack.
-             *
-             * @param n query candidate
-             * @param m target candidate
-             */
+            /// <summary>
+            /// Push a candidate mapping on to the stack.
+            /// </summary>
+            /// <param name="n">query candidate</param>
+            /// <param name="m">target candidate</param>
             public void Push(int n, int m)
             {
                 ns[nSize++] = n;
                 ms[mSize++] = m;
             }
 
-            /**
-             * Pops the G1 candidate.
-             *
-             * @return the previous 'n' candidate
-             */
+            /// <summary>
+            /// Pops the G1 candidate.
+            /// </summary>
+            /// <returns>the previous 'n' candidate</returns>
             public int PopN()
             {
                 return ns[--nSize];
             }
 
-            /**
-             * Pops the G2 candidate.
-             *
-             * @return the previous 'm' candidate
-             */
+            /// <summary>
+            /// Pops the G2 candidate.
+            /// </summary>
+            /// <returns>the previous 'm' candidate</returns>
             public int PopM()
             {
                 return ms[--mSize];
             }
 
-            /**
-             * Is the stack empty - if so no candidates can be popped.
-             *
-             * @return
-             */
-            public bool IsEmpty => nSize == 0 && mSize == 0;
+            /// <summary>
+            /// Is the stack empty - if so no candidates can be popped.
+            /// </summary>
+            /// <returns></returns>
+            public bool IsEmpty() => nSize == 0 && mSize == 0;
         }
     }
 }

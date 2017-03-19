@@ -88,7 +88,7 @@ namespace NCDK.Graphs.InChi
             {
                 throw new CDKException("Failed to convert InChI to molecule: " + jie.Message, jie);
             }
-            GenerateAtomContainerFromInchi(builder);
+            GenerateAtomContainerFromInChI(builder);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace NCDK.Graphs.InChi
             {
                 throw new CDKException("Failed to convert InChI to molecule: " + jie.Message, jie);
             }
-            GenerateAtomContainerFromInchi(builder);
+            GenerateAtomContainerFromInChI(builder);
         }
 
         /// <summary>
@@ -134,14 +134,14 @@ namespace NCDK.Graphs.InChi
             {
                 throw new CDKException("Failed to convert InChI to molecule: " + jie.Message);
             }
-            GenerateAtomContainerFromInchi(builder);
+            GenerateAtomContainerFromInChI(builder);
         }
 
         /// <summary>
         /// Gets structure from InChI, and converts InChI library data structure into an IAtomContainer.
         /// </summary>
         /// <param name="builder"></param>
-        protected internal void GenerateAtomContainerFromInchi(IChemObjectBuilder builder)
+        protected internal void GenerateAtomContainerFromInChI(IChemObjectBuilder builder)
         {
             try
             {
@@ -198,7 +198,7 @@ namespace NCDK.Graphs.InChi
                     }
                 }
 
-                molecule.Add(cAt);
+                molecule.Atoms.Add(cAt);
             }
 
             for (int i = 0; i < output.Bonds.Count; i++)
@@ -352,7 +352,7 @@ namespace NCDK.Graphs.InChi
                     }
 
                     Trace.Assert(stereoElement != null);
-                    molecule.Add(stereoElement);
+                    molecule.StereoElements.Add(stereoElement);
                 }
                 else if (stereo0d.StereoType == INCHI_STEREOTYPE.DoubleBond)
                 {
@@ -389,7 +389,7 @@ namespace NCDK.Graphs.InChi
                     // unspecified not stored
                     if (conformation.IsUnset) continue;
 
-                    molecule.Add(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.GetBond(x, a),
+                    molecule.StereoElements.Add(new DoubleBondStereochemistry(stereoBond, new IBond[]{molecule.GetBond(x, a),
                             molecule.GetBond(b, y)}, conformation));
                 }
                 else

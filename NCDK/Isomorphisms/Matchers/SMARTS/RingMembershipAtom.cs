@@ -19,20 +19,18 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This query is found in a specified number of ring. The ring membership is
-    /// specified with the SMARTS {@code R<NUMBER>}. The membership depends on the
+    /// specified with the SMARTS <c>R&lt;NUMBER&gt;</c>. The membership depends on the
     /// ring set used and as such is not a portable term. If the Smallest Set of
     /// Smallest Rings (SSSR) is used then changing the order of atoms
     /// <i>may</i> change which atoms match in a pattern.
-    ///
+    /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
-    /// </summary>
     public class RingMembershipAtom : SMARTSAtom
     {
-
         /// <summary>
-        /// Number of rings to which this atom belongs, if < 0 check any ring
+        /// Number of rings to which this atom belongs, if &lt; 0 check any ring
         /// membership.
         /// </summary>
         private int ringNumber;
@@ -40,12 +38,12 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// <summary>
         /// Ring membership query atom. Check if the an atom belongs to <i>num</i> of
         /// rings. To specify any ring membership, <i>num</i> should be specified as
-        /// < 0. Generally in SMARTS it's better negate ring membership with {@code
-        /// [!R]} however for legacy reasons {@code [R0]} was accepted and checks
+        /// &lt; 0. Generally in SMARTS it's better negate ring membership with <c>[!R]</c>
+        /// however for legacy reasons <c>[R0]</c> was accepted and checks
         /// this atoms belongs to 0 rings.
-        ///
-        /// <param name="num">number of rings which this atom belongs to, < 0 any ring.</param>
         /// </summary>
+        /// <param name="num">number of rings which this atom belongs to, &lt; 0 any ring.</param>
+        /// <param name="builder"></param>
         public RingMembershipAtom(int num, IChemObjectBuilder builder)
             : base(builder)
         {

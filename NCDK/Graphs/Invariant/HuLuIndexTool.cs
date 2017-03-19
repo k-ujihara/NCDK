@@ -242,7 +242,7 @@ namespace NCDK.Graphs.Invariant
             Debug.WriteLine(line);
         }
 
-        /// <summary> Lists a 1D array to the System console. */
+        /// <summary> Lists a 1D array to the System console. </summary>
         public static void DisplayArray(double[] array)
         {
             string line = "";

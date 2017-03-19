@@ -39,13 +39,13 @@ namespace NCDK.Graphs
         private readonly List<int[]> paths;
 
         /// <summary> Construct the edge short cycles for the
-        ///  given graph. */
+        ///  given graph. </summary>
         public EdgeShortCycles(int[][] graph)
             : this(new InitialCycles(graph))
         { }
 
         /// <summary> Construct the edge short cycles for the
-        ///  given initial cycles. */
+        ///  given initial cycles. </summary>
         public EdgeShortCycles(InitialCycles initialCycles)
         {
             int[][] graph = initialCycles.Graph;

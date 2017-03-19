@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace FaulonSignatures.Simple
+namespace NCDK.FaulonSignatures.Simple
 {
-  /// <summary>
+    /// <summary>
     /// A very simple graph class - the equivalent of a client library class.
-    /// 
-    // @author maclean
-    ///
     /// </summary>
+    // @author maclean
     public class SimpleGraph
     {
         public class Edge : IComparable<Edge>

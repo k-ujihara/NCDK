@@ -60,52 +60,47 @@ namespace NCDK.Fingerprint
     /// malformed symbols are present, their atomic number is taken as one more than the last element currently supported in <see cref="PeriodicTable"/>.
     /// </para>
     /// </remarks>
-    ///
     // @author Syed Asad Rahman (2012)
     // @cdk.keyword fingerprint
     // @cdk.keyword similarity
     // @cdk.module fingerprint
     // @cdk.githash
-    ///
-    /// </summary>
     [Serializable]
     internal class ShortestPathFingerprinter : RandomNumber, IFingerprinter
     {
         /// <summary>
-        // The default length of created fingerprints.
+        /// The default length of created fingerprints.
         /// </summary>
         const int DEFAULT_SIZE = 1024;
+
         /// <summary>
-        // The default length of created fingerprints.
+        /// The default length of created fingerprints.
         /// </summary>
         private int fingerprintLength;
 
         /// <summary>
-        // Creates a fingerprint generator of length
-        // <code>DEFAULT_SIZE</code>
+        /// Creates a fingerprint generator of length <see cref="DEFAULT_SIZE"/>. 
         /// </summary>
         public ShortestPathFingerprinter()
             : this(DEFAULT_SIZE)
         { }
 
         /// <summary>
-        // Constructs a fingerprint generator that creates fingerprints of the given fingerprintLength, using a generation
-        // algorithm with shortest paths.
-        ///
-        /// <param name="fingerprintLength">The desired fingerprintLength of the fingerprint</param>
+        /// Constructs a fingerprint generator that creates fingerprints of the given fingerprintLength, using a generation
+        /// algorithm with shortest paths.
         /// </summary>
+        /// <param name="fingerprintLength">The desired fingerprintLength of the fingerprint</param>
         public ShortestPathFingerprinter(int fingerprintLength)
         {
             this.fingerprintLength = fingerprintLength;
         }
 
         /// <summary>
-        // Generates a shortest path based BitArray fingerprint for the given AtomContainer.
-        ///
-        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
-        // @exception CDKException if there error in aromaticity perception or other CDK functions
-        // @return A <see cref="BitArray"/> representing the fingerprint
+        /// Generates a shortest path based BitArray fingerprint for the given AtomContainer.
         /// </summary>
+        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
+        /// <exception cref="CDKException">if there error in aromaticity perception or other CDK functions</exception>
+        /// <returns>A <see cref="BitArray"/> representing the fingerprint</returns>
         public IBitFingerprint GetBitFingerprint(IAtomContainer ac)
         {
             IAtomContainer atomContainer = null;
@@ -128,12 +123,11 @@ namespace NCDK.Fingerprint
         }
 
         /// <summary>
-        // {@inheritDoc}
-        ///
-        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
-        // @return IDictionary of raw fingerprint paths/features
-        // @ method is not supported
+        /// <inheritdoc/>
         /// </summary>
+        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
+        /// <returns><see cref="IDictionary{T, T}"/> of raw fingerprint paths/features</returns>
+        /// <exception cref="NotSupportedException">method is not supported</exception>
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)
         {
             throw new NotSupportedException();

@@ -58,7 +58,6 @@ namespace NCDK.Beam
 
         /// <summary>
         /// The empty set is a set which includes no int values.
-        ///
         /// <returns>int set with no items</returns>
         /// </summary>
         public static IntSet IsEmpty => CreateComplement(Universe);
@@ -69,8 +68,7 @@ namespace NCDK.Beam
         /// <example><code>
         ///     IntSet.AllOf(0, 2, 5); // a set with 0,2 and 5
         /// </code></example>
-        /// <param name="x"> a value</param>
-        /// <param name="xs">more values</param>
+        /// <param name="xs">values</param>
         /// <returns>int set with specified items</returns>
         public static IntSet AllOf(params int[] xs)
         {
@@ -91,8 +89,7 @@ namespace NCDK.Beam
         /// <example><code>
         ///     IntSet.NoneOf(0, 2, 5); // a set with all but 0,2 and 5
         /// </code></example>
-        /// <param name="x"> a value</param>
-        /// <param name="xs">more values</param>
+        /// <param name="xs">values</param>
         /// <returns>int set without the specified items</returns>
         public static IntSet NoneOf(params int[] xs)
         {

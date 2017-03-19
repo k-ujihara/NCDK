@@ -51,7 +51,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
-            m.Add(new DoubleBondStereochemistry(m.Bonds[1], new IBond[] { m.Bonds[0], m.Bonds[2] },
+            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[1], new IBond[] { m.Bonds[0], m.Bonds[2] },
                     DoubleBondConformation.Together));
             CorrectGeometricConfiguration.Correct(m);
             AssertPoint(m.Atoms[0], -0.74, 5.0, 0.1);
@@ -75,7 +75,7 @@ namespace NCDK.Layout
             m.AddBond(m.Atoms[1], m.Atoms[2], BondOrder.Double);
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
             m.AddBond(m.Atoms[3], m.Atoms[4], BondOrder.Single);
-            m.Add(new DoubleBondStereochemistry(m.Bonds[1], new IBond[] { m.Bonds[0], m.Bonds[2] },
+            m.StereoElements.Add(new DoubleBondStereochemistry(m.Bonds[1], new IBond[] { m.Bonds[0], m.Bonds[2] },
                     DoubleBondConformation.Opposite));
             CorrectGeometricConfiguration.Correct(m);
             AssertPoint(m.Atoms[0], -0.74, 5.0, 0.1);

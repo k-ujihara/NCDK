@@ -25,19 +25,21 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace NCDK.Hash {
+namespace NCDK.Hash
+{
     /// <summary>
     // @author John May
     // @cdk.module test-hash
     /// </summary>
     [TestClass()]
-    public class BasicAtomEncoderTest {
-
+    public class BasicAtomEncoderTest
+    {
         [TestMethod()]
-        public void TestAtomicNumber() {
+        public void TestAtomicNumber()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.ATOMIC_NUMBER;
+            IAtomEncoder encoder = BasicAtomEncoder.AtomicNumber;
 
             m_atom.SetupGet(n => n.AtomicNumber).Returns(6);
             Assert.AreEqual(6, encoder.Encode(atom, container));
@@ -47,10 +49,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestAtomicNumber_Null() {
+        public void TestAtomicNumber_Null()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.ATOMIC_NUMBER;
+            IAtomEncoder encoder = BasicAtomEncoder.AtomicNumber;
 
             m_atom.SetupGet(n => n.AtomicNumber).Returns((int?)null);
             Assert.AreEqual(32451169, encoder.Encode(atom, container));
@@ -59,10 +62,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestMassNumber() {
+        public void TestMassNumber()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.MASS_NUMBER;
+            IAtomEncoder encoder = BasicAtomEncoder.MassNumber;
 
             m_atom.Setup(n => n.MassNumber).Returns(12);
             Assert.AreEqual(12, encoder.Encode(atom, container));
@@ -72,10 +76,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestMassNumber_Null() {
+        public void TestMassNumber_Null()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.MASS_NUMBER;
+            IAtomEncoder encoder = BasicAtomEncoder.MassNumber;
 
             m_atom.SetupGet(n => n.MassNumber).Returns((int?)null);
             Assert.AreEqual(32451179, encoder.Encode(atom, container));
@@ -84,10 +89,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestFormalNumber() {
+        public void TestFormalNumber()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.FORMAL_CHARGE;
+            IAtomEncoder encoder = BasicAtomEncoder.FormalCharge;
 
             m_atom.SetupGet(n => n.FormalCharge).Returns(-2);
             Assert.AreEqual(-2, encoder.Encode(atom, container));
@@ -97,10 +103,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestFormalNumber_Null() {
+        public void TestFormalNumber_Null()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.FORMAL_CHARGE;
+            IAtomEncoder encoder = BasicAtomEncoder.FormalCharge;
 
             m_atom.SetupGet(n => n.FormalCharge).Returns((int?)null);
             Assert.AreEqual(32451193, encoder.Encode(atom, container));
@@ -109,10 +116,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestNConnectedAtoms() {
+        public void TestNConnectedAtoms()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.N_CONNECTED_ATOMS;
+            IAtomEncoder encoder = BasicAtomEncoder.NConnectedAtoms;
 
             m_container.Setup(n => n.GetConnectedAtoms(atom)).Returns(new IAtom[2]);
             Assert.AreEqual(2, encoder.Encode(atom, container));
@@ -121,10 +129,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestBondOrderSum() {
+        public void TestBondOrderSum()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.BOND_ORDER_SUM;
+            IAtomEncoder encoder = BasicAtomEncoder.BondOrderSum;
 
             m_container.Setup(n => n.GetBondOrderSum(atom)).Returns(3D);
             Assert.AreEqual(3D.GetHashCode(), encoder.Encode(atom, container));
@@ -133,10 +142,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestOrbitalHybridization() {
+        public void TestOrbitalHybridization()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
+            IAtomEncoder encoder = BasicAtomEncoder.OrbitalHybridization;
 
             m_atom.SetupGet(n => n.Hybridization).Returns(Hybridization.SP2);
             Assert.AreEqual((int)Hybridization.SP2.Ordinal, encoder.Encode(atom, container));
@@ -146,10 +156,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestOrbitalHybridization_Null() {
+        public void TestOrbitalHybridization_Null()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.ORBITAL_HYBRIDIZATION;
+            IAtomEncoder encoder = BasicAtomEncoder.OrbitalHybridization;
 
             m_atom.SetupGet(n => n.Hybridization).Returns(Hybridization.Unset);
             Assert.AreEqual(32451301, encoder.Encode(atom, container));
@@ -158,10 +169,11 @@ namespace NCDK.Hash {
         }
 
         [TestMethod()]
-        public void TestFreeRadicals() {
+        public void TestFreeRadicals()
+        {
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
-            AtomEncoder encoder = BasicAtomEncoder.FREE_RADICALS;
+            IAtomEncoder encoder = BasicAtomEncoder.FreeRadicals;
 
             m_container.Setup(n => n.GetConnectedSingleElectrons(atom)).Returns(new ISingleElectron[1]);
             Assert.AreEqual(1, encoder.Encode(atom, container));

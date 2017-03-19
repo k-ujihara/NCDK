@@ -85,6 +85,7 @@ namespace NCDK.Graphs
         /// Determine the essential cycles from a precomputed set of initial cycles
         /// and relevant cycles.
         /// </summary>
+        /// <param name="relevant"></param>
         /// <param name="initial">a molecule graph</param>
         internal EssentialCycles(RelevantCycles relevant, InitialCycles initial)
         {

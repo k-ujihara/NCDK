@@ -20,12 +20,10 @@ namespace NCDK.IO.Listener
 {
     /// <summary>
     /// Allows monitoring of progress of writing activities.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    /// </summary>
     public interface IWriterListener : IChemObjectIOListener
     {
     }

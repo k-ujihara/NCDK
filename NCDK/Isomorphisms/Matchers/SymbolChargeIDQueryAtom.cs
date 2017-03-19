@@ -21,10 +21,8 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /// <summary>
     // @cdk.module  isomorphism
     // @cdk.githash
-    /// </summary>
     public class SymbolChargeIDQueryAtom : QueryAtom, IQueryAtom
     {
         public SymbolChargeIDQueryAtom(IChemObjectBuilder builder)
@@ -39,7 +37,6 @@ namespace NCDK.Isomorphisms.Matchers
         }
 
         public void SetOperator(string str) { }
-
 
         public override bool Matches(IAtom atom)
         {

@@ -24,37 +24,39 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     ///  IDescriptor based on the weight of atoms of a certain element type.
-    ///
+    /// </summary>
+    /// <remarks>
+    ///  <para>
     ///  If the wild-card symbol *
     ///  is specified, the returned value is the molecular weight.
     ///  If an invalid element symbol is specified, the return value is
     ///  0 and no exception is thrown
-    ///  <p>
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>elementSymbol</td>
-    ///     <td>*</td>
-    ///     <td>If *, returns the molecular weight, otherwise the weight for the given element</td>
-    ///   </tr>
-    /// </table>
-    ///
+    ///  </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>elementSymbol</term>
+    ///     <term>*</term>
+    ///     <term>If *, returns the molecular weight, otherwise the weight for the given element</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// Returns a single value named <i>wX</i> where <i>X</i> is the chemical symbol
     /// or <i>MW</i> if * is specified as a parameter.
-    ///
+    /// </para>
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:weight
-    /// </summary>
     public class WeightDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private string elementName = "*";
@@ -74,7 +76,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the WeightDescriptor object.
         /// </summary>
-        /// <param name="params">The new parameters value</param>
         /// <exception cref="CDKException">if more than 1 parameter is specified or if the parameter is not of type string</exception>
         public override object[] Parameters
         {
@@ -187,14 +188,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

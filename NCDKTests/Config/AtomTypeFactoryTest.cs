@@ -140,9 +140,9 @@ namespace NCDK.Config
             Assert.AreEqual(Hybridization.SP3, atomType.Hybridization);
             Assert.AreEqual(0, atomType.FormalCharge);
             Assert.AreEqual(4, atomType.FormalNeighbourCount);
-            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PI_BOND_COUNT));
+            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PiBondCount));
             Assert.AreEqual(BondOrder.Single, atomType.MaxBondOrder);
             Assert.AreEqual(4.0, atomType.BondOrderSum.Value, 0.1);
 
@@ -153,9 +153,9 @@ namespace NCDK.Config
             Assert.AreEqual(Hybridization.SP2, atomType.Hybridization);
             Assert.AreEqual(0, atomType.FormalCharge);
             Assert.AreEqual(1, atomType.FormalNeighbourCount);
-            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.PI_BOND_COUNT));
+            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.PiBondCount));
             Assert.AreEqual(BondOrder.Double, atomType.MaxBondOrder);
             Assert.AreEqual(2.0, atomType.BondOrderSum.Value, 0.1);
 
@@ -166,9 +166,9 @@ namespace NCDK.Config
             Assert.AreEqual(Hybridization.Planar3, atomType.Hybridization);
             Assert.AreEqual(0, atomType.FormalCharge);
             Assert.AreEqual(3, atomType.FormalNeighbourCount);
-            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PI_BOND_COUNT));
+            Assert.IsNotNull(atomType.GetProperty<object>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(1, atomType.GetProperty<int>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(0, atomType.GetProperty<int>(CDKPropertyName.PiBondCount));
             Assert.AreEqual(BondOrder.Single, atomType.MaxBondOrder);
             Assert.AreEqual(3.0, atomType.BondOrderSum.Value, 0.1);
         }
@@ -186,8 +186,8 @@ namespace NCDK.Config
             Assert.AreEqual(4, atomType.FormalNeighbourCount);
             Assert.AreEqual(Hybridization.SP3, atomType.Hybridization);
             Assert.AreEqual(0, atomType.FormalCharge);
-            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.LONE_PAIR_COUNT));
-            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.PI_BOND_COUNT));
+            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.LonePairCount));
+            Assert.AreEqual(0, atomType.GetProperty<int?>(CDKPropertyName.PiBondCount));
         }
 
         [TestMethod()]
@@ -241,17 +241,17 @@ namespace NCDK.Config
             Assert.AreEqual("C", atomType.Symbol);
             Assert.AreEqual("C", atomType.AtomTypeName);
             Assert.AreEqual("[CSP]-[0-4][-]?+;[A-Za-z\\+\\-&&[^=%]]{0,6}[(].*+",
-                    atomType.GetProperty<string>(CDKPropertyName.SPHERICAL_MATCHER));
+                    atomType.GetProperty<string>(CDKPropertyName.SphericalMatcher));
             Assert.AreEqual(Hybridization.SP3, atomType.Hybridization);
 
             atomType = factory.GetAtomType("Sthi");
             Assert.IsNotNull(atomType);
             Assert.AreEqual("S", atomType.Symbol);
             Assert.AreEqual("Sthi", atomType.AtomTypeName);
-            Assert.AreEqual("S-[2];[H]{0,3}+=C.*+", atomType.GetProperty<string>(CDKPropertyName.SPHERICAL_MATCHER));
+            Assert.AreEqual("S-[2];[H]{0,3}+=C.*+", atomType.GetProperty<string>(CDKPropertyName.SphericalMatcher));
             Assert.AreEqual(Hybridization.SP2, atomType.Hybridization);
             Assert.IsTrue(atomType.IsHydrogenBondAcceptor);
-            Assert.AreEqual(5, atomType.GetProperty<int?>(CDKPropertyName.PART_OF_RING_OF_SIZE));
+            Assert.AreEqual(5, atomType.GetProperty<int?>(CDKPropertyName.PartOfRingOfSize));
         }
 
         [TestMethod()]

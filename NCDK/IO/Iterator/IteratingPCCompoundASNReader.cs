@@ -51,21 +51,21 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Constructs a new IteratingPCCompoundASNReader that can read Molecule from a given Reader.
         /// </summary>
-        /// <param name="in_"> The Reader to read from</param>
+        /// <param name="ins"> The Reader to read from</param>
         /// <param name="builder"></param>
-        public IteratingPCCompoundASNReader(TextReader in_, IChemObjectBuilder builder)
+        public IteratingPCCompoundASNReader(TextReader ins, IChemObjectBuilder builder)
         {
             this.builder = builder;
-            SetReader(in_);
+            SetReader(ins);
         }
 
         /// <summary>
         /// Constructs a new <see cref="IteratingPCCompoundASNReader"/> that can read molecule from a given <see cref="Stream"/> and <see cref="IChemObjectBuilder"/>.
         /// </summary>
-        /// <param name="in_">The input stream</param>
+        /// <param name="ins">The input stream</param>
         /// <param name="builder">The builder</param>
-        public IteratingPCCompoundASNReader(Stream in_, IChemObjectBuilder builder)
-            : this(new StreamReader(in_), builder)
+        public IteratingPCCompoundASNReader(Stream ins, IChemObjectBuilder builder)
+            : this(new StreamReader(ins), builder)
         { }
 
         public override IResourceFormat Format => PubChemSubstancesASNFormat.Instance;

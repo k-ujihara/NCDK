@@ -118,7 +118,7 @@ namespace NCDK.IO
         /// reads the content from a PMP input. It can only return a
         /// IChemObject of type ChemFile
         /// </summary>
-        /// <param name="object">class must be of type ChemFile</param>
+        /// <param name="obj">class must be of type ChemFile</param>
         /// <seealso cref="IChemFile"/>
         public override T Read<T>(T obj)
         {

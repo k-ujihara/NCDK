@@ -22,8 +22,8 @@ namespace NCDK.NInChI
     /// <summary>
     /// Enumeration of InChI 2D stereo definitions.
     /// Corresponds to <tt>inchi_BondStereo2D</tt> in <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public enum INCHI_BOND_STEREO
     {
         /// <summary>

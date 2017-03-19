@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;

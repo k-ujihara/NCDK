@@ -33,39 +33,35 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This class calculates ALOGP (Ghose-Crippen LogKow) and the
     /// Ghose-Crippen molar refractivity {@cdk.cite GHOSE1986,GHOSE1987}.
-    ///
+    /// </summary>
+    /// <remarks>
     /// <b>Note</b> The code assumes that aromaticity has been detected before
     /// evaluating this descriptor. The code also expects that the molecule
     /// will have hydrogens explicitly set. For SD files, this is usually not
     /// a problem since hydrogens are explicit. But for the case of molecules
     /// obtained from SMILES, hydrogens must be made explicit.
     ///
-    /// <p>TODO: what should sub return if have missing fragment?
+    /// <para>TODO: what should sub return if have missing fragment?
     /// Just report sum for other fragments? Or report as -9999 and
     /// then do not use descriptor if have this  value for any
-    /// chemicals in cluster?
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// chemicals in cluster?</para>
+    /// 
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
+    /// </para> 
+    /// <para>
     /// Returns three values
-    /// <ol>
-    /// <li>ALogP  - Ghose-Crippen LogKow
-    /// <li>ALogP2
-    /// <li>amr  - molar refractivity
-    /// </ol>
-    /// </summary>
+    /// <list type="bullet">
+    /// <item><term>ALogP</term><description>Ghose-Crippen LogKow</description></item>
+    /// <item><term>ALogP2</term><description></description></item>
+    /// <item><term>amr</term><description>molar refractivity</description></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author     Todd Martin
     // @cdk.module qsarmolecular
     // @cdk.githash
@@ -2352,19 +2348,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames, e);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType => new DoubleArrayResultType(3);
 
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         protected static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification("http://www.blueobelisk.org/ontologies/chemoinformatics-algorithms/#ALOGP",

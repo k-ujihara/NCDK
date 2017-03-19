@@ -50,25 +50,24 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Ring
 {
-    /// <summary>
-    ///
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk> 2009-2010
-    /// </summary>
     public interface RingFinder
     {
         /// <summary>
         /// Returns Collection of atoms in Rings based on Hanser Ring Finding method
-        /// <param name="molecule">/// <returns>report collected the rings</param></returns>
+        /// <param name="molecule"></param>
+        /// <returns>report collected the rings</returns>
         /// </summary>
         IEnumerable<IList<IAtom>> FindRings(IAtomContainer molecule);
 
         /// <summary>
         /// Returns CDK object Ring set based on Hanser Ring Finding method
-        /// <param name="molecule">/// <returns>report collected the rings</param></returns>
-        // @throws CDKException
         /// </summary>
+        /// <param name="molecule"></param>
+        /// <returns>report collected the rings</returns>
+        /// <exception cref="CDKException"></exception>
         IRingSet GetRingSet(IAtomContainer molecule);
     }
 }

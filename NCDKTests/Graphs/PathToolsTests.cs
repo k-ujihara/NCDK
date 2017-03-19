@@ -52,9 +52,9 @@ namespace NCDK.Graphs
             IAtom atom2 = new Atom("C");
             atom2.IsVisited = true;
             IBond bond1 = new Bond(atom1, atom2, BondOrder.Single);
-            atomContainer.Add(atom1);
-            atomContainer.Add(atom2);
-            atomContainer.Add(bond1);
+            atomContainer.Atoms.Add(atom1);
+            atomContainer.Atoms.Add(atom2);
+            atomContainer.Bonds.Add(bond1);
 
             PathTools.ResetFlags(atomContainer);
 

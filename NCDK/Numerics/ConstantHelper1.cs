@@ -1,23 +1,8 @@
 ﻿
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 
 using System;
 using System.Runtime.CompilerServices;
@@ -26,7 +11,6 @@ namespace NCDK.Numerics
 {
     internal class ConstantHelper
     {
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Byte GetByteWithAllBitsSet()
         {
@@ -35,12 +19,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Byte*)&value) = (Byte)0xff;
+                   *((Byte*)&value) = (Byte)0xff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static SByte GetSByteWithAllBitsSet()
         {
@@ -49,12 +32,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((SByte*)&value) = (SByte)0xff;
+                   *((SByte*)&value) = (SByte)0xff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static UInt16 GetUInt16WithAllBitsSet()
         {
@@ -63,12 +45,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((UInt16*)&value) = (UInt16)0xffff;
+                   *((UInt16*)&value) = (UInt16)0xffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Int16 GetInt16WithAllBitsSet()
         {
@@ -77,12 +58,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Int16*)&value) = (Int16)0xffff;
+                   *((Int16*)&value) = (Int16)0xffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static UInt32 GetUInt32WithAllBitsSet()
         {
@@ -91,12 +71,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((UInt32*)&value) = (UInt32)0xffffffff;
+                   *((UInt32*)&value) = (UInt32)0xffffffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Int32 GetInt32WithAllBitsSet()
         {
@@ -105,12 +84,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Int32*)&value) = (Int32)0xffffffff;
+                   *((Int32*)&value) = (Int32)0xffffffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static UInt64 GetUInt64WithAllBitsSet()
         {
@@ -119,12 +97,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((UInt64*)&value) = (UInt64)0xffffffffffffffff;
+                   *((UInt64*)&value) = (UInt64)0xffffffffffffffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Int64 GetInt64WithAllBitsSet()
         {
@@ -133,12 +110,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Int64*)&value) = (Int64)0xffffffffffffffff;
+                   *((Int64*)&value) = (Int64)0xffffffffffffffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Single GetSingleWithAllBitsSet()
         {
@@ -147,12 +123,11 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Int32*)&value) = (Int32)0xffffffff;
+                   *((Int32*)&value) = (Int32)0xffffffff;
                 }
             }
             return value;
         }
-
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         public static Double GetDoubleWithAllBitsSet()
         {
@@ -161,11 +136,10 @@ namespace NCDK.Numerics
             {
                 unchecked
                 {
-                   ///((Int64*)&value) = (Int64)0xffffffffffffffff;
+                   *((Int64*)&value) = (Int64)0xffffffffffffffff;
                 }
             }
             return value;
         }
-
     }
 }

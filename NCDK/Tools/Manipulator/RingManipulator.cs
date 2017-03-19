@@ -26,10 +26,8 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class RingManipulator
     {
 
@@ -38,9 +36,8 @@ namespace NCDK.Tools.Manipulator
         ///
         /// The method assumes that aromaticity of atoms and bonds have been
         /// detected beforehand
-        ///
-        /// <param name="ring">The ring to examine</param>
         /// </summary>
+        /// <param name="ring">The ring to examine</param>
         public static void MarkAromaticRings(IRing ring)
         {
             // return as soon as the conditions are not met:

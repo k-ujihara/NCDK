@@ -24,13 +24,12 @@ namespace NCDK.IO.InChI
 {
     /// <summary>
     /// Tool to help process INChI 1.12beta content.
-    ///
+    /// </summary>
     // @cdk.module extra
     // @cdk.githash
-    /// </summary>
-    public class INChIContentProcessorTool
+    public class InChIContentProcessorTool
     {
-        public INChIContentProcessorTool() { }
+        public InChIContentProcessorTool() { }
 
         private static readonly Regex pattern1 = new Regex("([A-Z][a-z]?)(\\d+)?(.*)", RegexOptions.Compiled);
         private static readonly Regex pattern2 = new Regex("^(\\d+)-?(.*)", RegexOptions.Compiled);
@@ -67,7 +66,7 @@ namespace NCDK.IO.InChI
                         Debug.WriteLine("  occurence: ", occurence);
                         for (int i = 1; i <= occurence; i++)
                         {
-                            parsedContent.Add(parsedContent.Builder.CreateAtom(symbol));
+                            parsedContent.Atoms.Add(parsedContent.Builder.CreateAtom(symbol));
                         }
                     }
                     remainder = match.Groups[3].Value;
@@ -132,7 +131,7 @@ namespace NCDK.IO.InChI
                             IAtom sourceAtom = container.Atoms[source - 1];
                             bondToAdd = container.Builder.CreateBond(sourceAtom, targetAtom,
                                     BondOrder.Single);
-                            container.Add(bondToAdd);
+                            container.Bonds.Add(bondToAdd);
                         }
                         remainder = matcher.Groups[2].Value;
                         source = target;

@@ -23,33 +23,27 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Topological descriptor characterizing the carbon connectivity.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// The class calculates 9 descriptors in the following order
-    /// <ul>
-    /// <li>C1SP1 triply hound carbon bound to one other carbon
-    /// <li>C2SP1    triply bound carbon bound to two other carbons
-    /// <li>C1SP2    doubly hound carbon bound to one other carbon
-    /// <li>C2SP2    doubly bound carbon bound to two other carbons
-    /// <li>C3SP2    doubly bound carbon bound to three other carbons
-    /// <li>C1SP3    singly bound carbon bound to one other carbon
-    /// <li>C2SP3    singly bound carbon bound to two other carbons
-    /// <li>C3SP3    singly bound carbon bound to three other carbons
-    /// <li>C4SP3    singly bound carbon bound to four other carbons
-    /// </ul>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td></td>
-    /// <td></td>
-    /// <td>no parameters</td>
-    /// </tr>
-    /// </table>
-    ///
+    /// <list type="bullet">
+    /// <item>C1SP1 triply hound carbon bound to one other carbon</item>
+    /// <item>C2SP1    triply bound carbon bound to two other carbons</item>
+    /// <item>C1SP2    doubly hound carbon bound to one other carbon</item>
+    /// <item>C2SP2    doubly bound carbon bound to two other carbons</item>
+    /// <item>C3SP2    doubly bound carbon bound to three other carbons</item>
+    /// <item>C1SP3    singly bound carbon bound to one other carbon</item>
+    /// <item>C2SP3    singly bound carbon bound to two other carbons</item>
+    /// <item>C3SP3    singly bound carbon bound to three other carbons</item>
+    /// <item>C4SP3    singly bound carbon bound to four other carbons</item>
+    /// </list>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2007-09-28
     // @cdk.module qsarmolecular
@@ -58,7 +52,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:carbonTypes
     // @cdk.keyword topological bond order ctypes
     // @cdk.keyword descriptor
-    /// </summary>
     public class CarbonTypesDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "C1SP1", "C2SP1", "C1SP2", "C2SP2", "C3SP2", "C1SP3", "C2SP3", "C3SP3", "C4SP3" };
@@ -177,14 +170,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return maxOrder;
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerArrayResultType(9);
     }
 }

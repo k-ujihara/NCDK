@@ -20,11 +20,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matcher any Atom including explicit hydrogens.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class AnyAtom : SMARTSAtom
     {
         /// <summary>

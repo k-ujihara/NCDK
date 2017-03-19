@@ -28,18 +28,18 @@ namespace NCDK.SMSD.Global
 {
     /// <summary>
     /// Class that manages MCS timeout.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class TimeOut
     {
         private static TimeOut instance = null;
 
         /// <summary>
         /// Get Instance of the timeout. This starts the timeout counter.
-        /// <returns>Instance</returns>
         /// </summary>
+        /// <returns>Instance</returns>
         public static TimeOut Instance
         {
             [MethodImpl(MethodImplOptions.Synchronized)]

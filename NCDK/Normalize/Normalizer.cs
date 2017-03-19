@@ -27,38 +27,36 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.MCSS;
 using NCDK.Smiles;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 
 namespace NCDK.Normalize
 {
-    /**
-     * Adjusts parts of an AtomContainer to the congiguratin of a fragment.
-     *
-     * @author        shk3
-     * @cdk.created   2004-03-04
-     * @cdk.module    smiles
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Adjusts parts of an AtomContainer to the congiguratin of a fragment.
+    /// </summary>
+    // @author        shk3
+    // @cdk.created   2004-03-04
+    // @cdk.module    smiles
+    // @cdk.githash
     public class Normalizer
     {
-
-        /**
-         *  The method takes an xml files like the following:<br>
-         *  &lt;replace-set&gt;<br>
-         *  &lt;replace&gt;O=N=O&lt;/replace&gt;<br>
-         *  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;<br>
-         *  &lt;/replace-set&gt;<br>
-         *  All parts in ac which are the same as replace will be changed according to replacement.
-         *  Currently the following changes are done: BondOrder, FormalCharge.
-         *  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
-         *  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
-         *
-         * @param  ac                          The atomcontainer to normalize.
-         * @param  doc                         The configuration file.
-         * @return                             Did a replacement take place?
-         * @exception  InvalidSmilesException  doc contains an invalid smiles.
-         */
+        /// <summary>
+        ///  The method takes an xml files like the following:
+        ///  <code>
+        ///  &lt;replace-set&gt;
+        ///  &lt;replace&gt;O=N=O&lt;/replace&gt;
+        ///  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;
+        ///  &lt;/replace-set&gt;
+        ///  </code>
+        ///  All parts in ac which are the same as replace will be changed according to replacement.
+        ///  Currently the following changes are done: BondOrder, FormalCharge.
+        ///  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
+        ///  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
+        /// </summary>
+        /// <param name="ac">The atomcontainer to normalize.</param>
+        /// <param name="doc">The configuration file.</param>
+        /// <returns>Did a replacement take place?</returns>
+        /// <exception cref="InvalidSmilesException"> doc contains an invalid smiles.</exception>
         public static bool Normalize(IAtomContainer ac, XDocument doc)
         {
             var nl = doc.Elements("replace-set");

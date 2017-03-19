@@ -24,29 +24,29 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// Effective polarizability of a heavy atom
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
+    /// </remarks>
+    /// <seealso cref="Polarizability"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-03
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:effectivePolarizability
-    /// <seealso cref="Polarizability"/>
-    /// </summary>
     public class EffectiveAtomPolarizabilityDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private Polarizability pol;

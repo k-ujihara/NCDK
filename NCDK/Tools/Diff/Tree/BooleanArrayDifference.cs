@@ -26,11 +26,10 @@ namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
     /// Difference between two bool[]'s.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public class BooleanArrayDifference
         : AbstractDifferenceList, IDifferenceList
     {
@@ -43,12 +42,11 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Constructs a new <see cref="IDifference"/> object.
-        ///
+        /// </summary>
         /// <param name="name">a name reflecting the nature of the created <see cref="IDifference"/></param>
         /// <param name="first">the first object to compare</param>
         /// <param name="second">the second object to compare</param>
         /// <returns>an <see cref="IDifference"/> reflecting the differences between the first and second object</returns>
-        /// </summary>
         public static IDifference Construct(string name, bool[] first, bool[] second)
         {
             if (first == null && second == null) return null;
@@ -94,9 +92,8 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Returns a <see cref="string"/> representation for this <see cref="IDifference"/>.
-        ///
-        /// <returns>a <see cref="string"/></returns>
         /// </summary>
+        /// <returns>a <see cref="string"/></returns>
         public override string ToString()
         {
             if (differences.Count() == 0) return "";

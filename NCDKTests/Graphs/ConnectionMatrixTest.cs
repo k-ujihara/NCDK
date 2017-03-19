@@ -51,7 +51,7 @@ namespace NCDK.Graphs
         {
             IAtomContainer container = new AtomContainer();
             container.Atoms.Add(container.Builder.CreateAtom("I"));
-            container.Add(container.Builder.CreateLonePair(container.Atoms[0]));
+            container.LonePairs.Add(container.Builder.CreateLonePair(container.Atoms[0]));
             container.Atoms.Add(container.Builder.CreateAtom("H"));
             container.Builder.CreateBond(container.Atoms[0], container.Atoms[1], BondOrder.Single);
 

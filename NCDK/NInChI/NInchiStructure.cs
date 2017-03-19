@@ -20,9 +20,7 @@ using System.Collections.Generic;
 
 namespace NCDK.NInChI
 {
-    /// <summary>
     // @author Sam Adams
-    /// </summary>
     public class NInchiStructure
     {
         /// <summary>

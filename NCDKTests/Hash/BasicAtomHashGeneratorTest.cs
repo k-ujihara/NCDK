@@ -16,10 +16,10 @@ namespace NCDK.Hash
         public void TestGenerate()
         {
 
-            var m_seedMock = new Mock<AtomHashGenerator>(); var seedMock = m_seedMock.Object;
+            var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            AtomHashGenerator generator = new BasicAtomHashGenerator(seedMock, new Xorshift(), 0);
+            IAtomHashGenerator generator = new BasicAtomHashGenerator(seedMock, new Xorshift(), 0);
 
             m_seedMock.Setup(n => n.Generate(container)).Returns(new long[0]);
             m_container.SetupGet(n => n.Bonds).Returns(new IBond[0]);
@@ -33,39 +33,39 @@ namespace NCDK.Hash
         public void TestGenerate_ZeroDepth()
         {
 
-            var m_seedMock = new Mock<AtomHashGenerator>(); var seedMock = m_seedMock.Object;
+            var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<AtomHashGenerator>().Object, new Xorshift(), 0);
+            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<IAtomHashGenerator>().Object, new Xorshift(), 0);
 
             Assert.IsTrue(Compares.AreDeepEqual(
                 new long[] { 1L, 1L, 1L },
-                generator.Generate(new long[] { 1L, 1L, 1L }, StereoEncoder.EMPTY, new int[][] { new int[] { }, new int[] { }, new int[] { } },
+                generator.Generate(new long[] { 1L, 1L, 1L }, StereoEncoder.Empty, new int[][] { new int[] { }, new int[] { }, new int[] { } },
                     Suppressed.None)));
         }
 
         [TestMethod()]
         public void TestGenerate_Disconnected()
         {
-            var m_seedMock = new Mock<AtomHashGenerator>(); var seedMock = m_seedMock.Object;
+            var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<AtomHashGenerator>().Object, new Xorshift(), 2);
+            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<IAtomHashGenerator>().Object, new Xorshift(), 2);
             // there are no neighbours, the values should be rotated
             long expected = generator.Distribute(generator.Distribute(1));
             Assert.IsTrue(Compares.AreDeepEqual(
                 new long[] { expected, expected, expected },
-                generator.Generate(new long[] { 1L, 1L, 1L }, StereoEncoder.EMPTY, new int[][] { new int[] { }, new int[] { }, new int[] { } },
+                generator.Generate(new long[] { 1L, 1L, 1L }, StereoEncoder.Empty, new int[][] { new int[] { }, new int[] { }, new int[] { } },
                 Suppressed.None)));
         }
 
         [TestMethod()]
         public void TestGenerate_Simple()
         {
-            var m_seedMock = new Mock<AtomHashGenerator>(); var seedMock = m_seedMock.Object;
+            var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<AtomHashGenerator>().Object, new Xorshift(), 2);
+            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<IAtomHashGenerator>().Object, new Xorshift(), 2);
 
             // first iteration, values are distributed and then neighbours xor'd
             // in. when two neighbout have the same value the second should be
@@ -79,17 +79,17 @@ namespace NCDK.Hash
 
             Assert.IsTrue(Compares.AreDeepEqual(
                 second,
-                generator.Generate(new long[] { 1L, 2L, 1L }, StereoEncoder.EMPTY, new int[][] { new int[] { 1 }, new int[] { 0, 2 }, new int[] { 1 } },
+                generator.Generate(new long[] { 1L, 2L, 1L }, StereoEncoder.Empty, new int[][] { new int[] { 1 }, new int[] { 0, 2 }, new int[] { 1 } },
                     Suppressed.None)));
         }
 
         [TestMethod()]
         public void TestRotation()
         {
-            var m_seedMock = new Mock<AtomHashGenerator>(); var seedMock = m_seedMock.Object;
+            var m_seedMock = new Mock<IAtomHashGenerator>(); var seedMock = m_seedMock.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<AtomHashGenerator>().Object, new Xorshift(), 2);
+            BasicAtomHashGenerator generator = new BasicAtomHashGenerator(new Mock<IAtomHashGenerator>().Object, new Xorshift(), 2);
 
             int[][] graph = new int[][] { new int[] { 1, 2, 3 }, new int[] { 0 }, new int[] { 0 }, new int[] { 0 } };
 

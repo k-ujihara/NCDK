@@ -28,14 +28,12 @@ using System.Linq;
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
+    /// </summary>
+    /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    ///
-    /// <seealso cref="ChemModelManipulator"/>
-    /// </summary>
     public class AtomContainerSetManipulator
     {
-
         public static int GetAtomCount(IAtomContainerSet<IAtomContainer> set)
         {
             int count = 0;
@@ -83,7 +81,7 @@ namespace NCDK.Tools.Manipulator
             {
                 if (atomContainer.Contains(electrons))
                 {
-                    atomContainer.Remove(electrons);
+                    atomContainer.RemoveElectronContainer(electrons);
                     IAtomContainerSet<IAtomContainer> molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                     if (molecules.Count > 1)
                     {
@@ -100,10 +98,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns all the AtomContainer's of a MoleculeSet.
-        ///
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>A list of individual IAtomContainer's</returns>
-        /// </summary>
         public static IEnumerable<T> GetAllAtomContainers<T>(IEnumerable<T> set) where T : IAtomContainer
         {
             foreach (var atomContainer in set)
@@ -114,9 +111,9 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>The summed charges of all atoms in this set.</returns>
-        /// </summary>
         public static double GetTotalCharge(IAtomContainerSet<IAtomContainer> set)
         {
             double charge = 0;
@@ -130,9 +127,9 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>The summed formal charges of all atoms in this set.</returns>
-        /// </summary>
         public static double GetTotalFormalCharge(IAtomContainerSet<IAtomContainer> set)
         {
             int charge = 0;
@@ -146,9 +143,9 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>The summed implicit hydrogens of all atoms in this set.</returns>
-        /// </summary>
         public static int GetTotalHydrogenCount(IEnumerable<IAtomContainer> set) 
         {
             int hCount = 0;
@@ -210,10 +207,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Does not recursively return the contents of the AtomContainer.
-        ///
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>a list of individual ChemObject's</returns>
-        /// </summary>
         public static IEnumerable<IChemObject> GetAllChemObjects(IAtomContainerSet<IAtomContainer> set)
         {
             yield return set;
@@ -225,18 +221,18 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// <p>Sorts the IAtomContainers in the given IAtomContainerSet by the following
-        /// criteria with decreasing priority:</p>
-        /// <ul>
-        ///   <li>Compare atom count
-        ///   <li>Compare molecular weight (heavy atoms only)
-        ///   <li>Compare bond count
-        ///   <li>Compare sum of bond orders (heavy atoms only)
-        /// </ul>
-        /// <p>If no difference can be found with the above criteria, the IAtomContainers are
-        /// considered equal.</p>
-        /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
+        /// <para>Sorts the IAtomContainers in the given IAtomContainerSet by the following
+        /// criteria with decreasing priority:</para>
+        /// <list type="bullet">
+        ///   <item>Compare atom count</item>
+        ///   <item>Compare molecular weight (heavy atoms only)</item>
+        ///   <item>Compare bond count</item>
+        ///   <item>Compare sum of bond orders (heavy atoms only)</item>
+        /// </list>
+        /// <para>If no difference can be found with the above criteria, the IAtomContainers are
+        /// considered equal.</para>
         /// </summary>
+        /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
         public static void Sort<T>(IAtomContainerSet<T> atomContainerSet) where T : IAtomContainer
         {
             var atomContainerList = atomContainerSet.ToList();
@@ -249,10 +245,9 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Tells if an AtomContainerSet contains at least one AtomContainer with the
         /// same ID as atomContainer. Note this checks Id for equality, not pointers.
-        ///
+        /// </summary>
         /// <param name="id">The IAtomContainer to look for</param>
         /// <param name="atomContainerSet">The collection of IAtomContainer objects</param>
-        /// </summary>
         public static bool ContainsByID(IAtomContainerSet<IAtomContainer> atomContainerSet, string id)
         {
             foreach (var ac in atomContainerSet)

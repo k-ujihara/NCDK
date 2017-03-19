@@ -1,4 +1,4 @@
-/* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
+Ôªø/* Copyright (C) 2005-2007  The Chemistry Development Kit (CDK) project
  *                    2009  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -29,8 +29,8 @@ namespace NCDK.Geometries
 {
     /// <summary>
     /// Calculator of radial distribution functions. The RDF has bins defined around
-    /// a point, i.e. the first bin starts at 0 Å and ends at 0.5*resolution
-    /// Å, and the second bins ends at 1.5*resolution Å.
+    /// a point, i.e. the first bin starts at 0 ‚Ñ´ and ends at 0.5*resolution
+    /// ‚Ñ´, and the second bins ends at 1.5*resolution ‚Ñ´.
     /// </summary>
     /// <example>
     /// By default, the RDF is unweighted. By implementing and registering a
@@ -66,10 +66,10 @@ namespace NCDK.Geometries
         /// Constructs a RDF calculator that calculates a unweighted, digitized
         /// RDF function.
         /// </summary>
-        /// <param name="startCutoff">radial length in Ångstrom at which the RDF starts</param>
-        /// <param name="cutoff">radial length in Ångstrom at which the RDF stops</param>
+        /// <param name="startCutoff">radial length in √Öngstrom at which the RDF starts</param>
+        /// <param name="cutoff">radial length in √Öngstrom at which the RDF stops</param>
         /// <param name="resolution">width of the bins</param>
-        /// <param name="peakWidth">width of the gaussian applied to the peaks in Ångstrom</param>
+        /// <param name="peakWidth">width of the gaussian applied to the peaks in √Öngstrom</param>
         public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth)
             : this(startCutoff, cutoff, resolution, peakWidth, null)
         { }
@@ -77,10 +77,10 @@ namespace NCDK.Geometries
         /// <summary>
         /// Constructs a RDF calculator that calculates a digitized RDF function.
         /// </summary>
-        /// <param name="startCutoff">radial length in Ångstrom at which the RDF starts</param>
-        /// <param name="cutoff">radial length in Ångstrom at which the RDF stops</param>
+        /// <param name="startCutoff">radial length in √Öngstrom at which the RDF starts</param>
+        /// <param name="cutoff">radial length in √Öngstrom at which the RDF stops</param>
         /// <param name="resolution">width of the bins</param>
-        /// <param name="peakWidth">width of the gaussian applied to the peaks in Ångstrom</param>
+        /// <param name="peakWidth">width of the gaussian applied to the peaks in √Öngstrom</param>
         /// <param name="weightFunction">the weight function. If null, then an unweighted RDF is calculated</param>
         public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth,
                 IRDFWeightFunction weightFunction)
@@ -93,8 +93,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calculates a RDF for <code>Atom</code> atom in the environment
-        /// of the atoms in the <code>AtomContainer</code>.
+        /// Calculates a RDF for <paramref name="atom"/> in the environment of the atoms in the <paramref name="container"/>.
         /// </summary>
         public double[] Calculate(IAtomContainer container, IAtom atom)
         {

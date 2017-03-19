@@ -171,7 +171,7 @@ namespace NCDK.Groups
         public void GetLeftTransversalTest()
         {
             PermutationGroup group = GetCubeGroup();
-            List<Permutation> transversal = group.GetLeftTransversal(1);
+            var transversal = group.GetLeftTransversal(1);
             Assert.AreEqual(3, transversal.Count);
         }
 
@@ -191,7 +191,7 @@ namespace NCDK.Groups
             PermutationGroup subgroup = new PermutationGroup(size, generators);
 
             // generate the traversal
-            List<Permutation> transversal = group.Transversal(subgroup);
+            var transversal = group.Transversal(subgroup);
 
             int subgroupOrder = (int)subgroup.Order();
             int groupOrder = (int)group.Order();
@@ -272,7 +272,7 @@ namespace NCDK.Groups
         {
             int size = 4;
             PermutationGroup group = PermutationGroup.MakeSymN(size);
-            List<Permutation> all = group.All();
+            var all = group.GenerateAll();
             Assert.AreEqual(Factorial(size), all.Count);
         }
 

@@ -21,35 +21,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NCDK.Common.Base;
 using NCDK.Default;
 using NCDK.Hash.Stereo;
 
 namespace NCDK.Hash
-{/**
- * @author John May
- * @cdk.module test-hash
- */
+{
+    // @author John May
+    // @cdk.module test-hash
     [TestClass()]
     public class PerturbedAtomHashGeneratorTest
     {
-
         [TestMethod()]
         public void TestGenerate()
         {
-
             IAtomContainer m1 = Cyclopentylcyclopentane();
             IAtomContainer m2 = Decahydronaphthalene();
 
-            SeedGenerator seeding = new SeedGenerator(BasicAtomEncoder.ATOMIC_NUMBER);
+            SeedGenerator seeding = new SeedGenerator(BasicAtomEncoder.AtomicNumber);
             Pseudorandom pseudorandom = new Xorshift();
 
-            MoleculeHashGenerator basic = new BasicMoleculeHashGenerator(new BasicAtomHashGenerator(seeding, pseudorandom,
-                    8));
-            MoleculeHashGenerator perturb = new BasicMoleculeHashGenerator(new PerturbedAtomHashGenerator(seeding,
-                    new BasicAtomHashGenerator(seeding, pseudorandom, 8), pseudorandom, StereoEncoderFactory.EMPTY,
+            IMoleculeHashGenerator basic = new BasicMoleculeHashGenerator(new BasicAtomHashGenerator(seeding, pseudorandom, 8));
+            IMoleculeHashGenerator perturb = new BasicMoleculeHashGenerator(new PerturbedAtomHashGenerator(seeding,
+                    new BasicAtomHashGenerator(seeding, pseudorandom, 8), pseudorandom, StereoEncoderFactory.Empty,
                     new MinimumEquivalentCyclicSet(), AtomSuppression.Unsuppressed));
             // basic encoding should say these are the same
             Assert.AreEqual(basic.Generate(m1), basic.Generate(m2));
@@ -63,8 +58,8 @@ namespace NCDK.Hash
         {
             Xorshift prng = new Xorshift();
             PerturbedAtomHashGenerator generator = new PerturbedAtomHashGenerator(new SeedGenerator(
-                    BasicAtomEncoder.ATOMIC_NUMBER), new BasicAtomHashGenerator(new SeedGenerator(
-                    BasicAtomEncoder.ATOMIC_NUMBER), prng, 8), prng, StereoEncoderFactory.EMPTY,
+                    BasicAtomEncoder.AtomicNumber), new BasicAtomHashGenerator(new SeedGenerator(
+                    BasicAtomEncoder.AtomicNumber), prng, 8), prng, StereoEncoderFactory.Empty,
                     new MinimumEquivalentCyclicSet(), AtomSuppression.Unsuppressed);
             long[][] perturbed = new long[][] { new long[] { 1, 2, 3, 4 }, new long[] { 1, 1, 1, 1 }, new long[] { 1, 2, 2, 4 }, new long[] { 2, 2, 2, 2 }, };
 
@@ -93,9 +88,7 @@ namespace NCDK.Hash
             return mol;
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C10H18/c1-2-6-10-8-4-3-7-9(10)5-1/h9-10H,1-8H2
-        /// </summary>
         public IAtomContainer Decahydronaphthalene()
         {
             IAtom[] atoms = new IAtom[]{new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"), new Atom("C"),

@@ -178,7 +178,7 @@ namespace NCDK.Renderers.Visitors
 
         private double ScaleY(double yCoord)
         {
-            return (yCoord * -transform.Value.M22); // Scale Y
+            return (yCoord * transform.Value.M22); // Scale Y
         }
 
         private WPF::Point Transform(WPF::Point coord)
@@ -377,8 +377,8 @@ namespace NCDK.Renderers.Visitors
                 return;
             }
 
-            int xCoord = (int)bounds.GetCenterX();
-            int yCoord = (int)bounds.GetCenterY();
+            var xCoord = bounds.GetCenterX();
+            var yCoord = bounds.GetCenterY();
             if (atomSymbol.alignment == 1)
             { // RIGHT
                 this.graphics.DrawText(new FormattedText(
@@ -431,7 +431,7 @@ namespace NCDK.Renderers.Visitors
             var width = ScaleX(rectangle.width);
             var height = ScaleY(rectangle.height);
             var p = Transform(rectangle.coord);
-            var rect = new WPF.Rect(p.X, p.Y, p.X + width, p.Y + height);
+            var rect = new WPF.Rect(p.X, p.Y, width, height);
             if (rectangle.filled)
             {
                 this.graphics.DrawRectangle(new SolidColorBrush(rectangle.color), null, rect);
@@ -467,7 +467,7 @@ namespace NCDK.Renderers.Visitors
                 switch (element.Type)
                 {
                     case PathType.MoveTo:
-                        if (pf == null)
+                        if (pf != null)
                             g.Figures.Add(pf);
                         pf = new PathFigure();
                         pf.StartPoint = Transform(pp[0]);
@@ -491,7 +491,6 @@ namespace NCDK.Renderers.Visitors
                         break;
                 }
             }
-
 
             this.graphics.DrawGeometry(
                 path.fill ? new SolidColorBrush(path.color) : null,

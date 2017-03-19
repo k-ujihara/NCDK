@@ -24,35 +24,29 @@ using System.Linq;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism extracts an atom because of the stabilization of a radical.
-     * It returns the reaction mechanism which has been cloned the IAtomContainer.</p>
-     * <p>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</p>
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism extracts an atom because of the stabilization of a radical.
+    /// It returns the reaction mechanism which has been cloned the IAtomContainer.</para>
+    /// <para>This reaction could be represented as Y-B-[C*] => [Y*] + B=C</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class RadicalSiteIonizationMechanism : IReactionMechanism
     {
 
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-         *                    The first atom is the atom which contains the ISingleElectron and the second
-         *                    third is the atom which will be removed
-         *                    the first atom
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond.
-         *                       It is the bond which is moved
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
+        ///                    The first atom is the atom which contains the ISingleElectron and the second
+        ///                    third is the atom which will be removed
+        ///                    the first atom</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond.
+        ///                       It is the bond which is moved</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
@@ -83,10 +77,10 @@ namespace NCDK.Reactions.Mechanisms
             int posBond2 = molecule.Bonds.IndexOf(bond2);
 
             BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[posBond1]);
-            reactantCloned.Remove(reactantCloned.Bonds[posBond2]);
+            reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond2]);
 
             var selectron = reactantCloned.GetConnectedSingleElectrons(atom1C);
-            reactantCloned.Remove(selectron.Last());
+            reactantCloned.SingleElectrons.Remove(selectron.Last());
             atom1C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             IAtomType type = atMatcher.FindMatchingAtomType(reactantCloned, atom1C);
@@ -97,7 +91,7 @@ namespace NCDK.Reactions.Mechanisms
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom2C);
             if (type == null || type.AtomTypeName.Equals("X")) return null;
 
-            reactantCloned.Add(atom2C.Builder.CreateSingleElectron(atom3C));
+            reactantCloned.SingleElectrons.Add(atom2C.Builder.CreateSingleElectron(atom3C));
             atom3C.Hybridization = Hybridization.Unset;
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactantCloned);
             type = atMatcher.FindMatchingAtomType(reactantCloned, atom3C);

@@ -26,11 +26,11 @@ namespace NCDK.IO.Formats
 {
     // @cdk.module test-ioformats
     [TestClass()]
-    public class INChIFormatTest : ChemFormatMatcherTest
+    public class InChIFormatTest : ChemFormatMatcherTest
     {
-        public INChIFormatTest()
+        public InChIFormatTest()
         {
-            base.SetChemFormatMatcher((IChemFormatMatcher)INChIFormat.Instance);
+            base.SetChemFormatMatcher((IChemFormatMatcher)InChIFormat.Instance);
         }
     }
 }

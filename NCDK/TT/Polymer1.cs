@@ -1,22 +1,30 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
+
+/* Copyright (C) 2001-2007  Edgar Luttmann <edgar@uni-paderborn.de>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  */
 
 using System;
 using System.Collections.Generic;
@@ -25,12 +33,24 @@ using System.Linq;
 
 namespace NCDK.Default
 {
+    /// <summary>
+    /// Subclass of Molecule to store Polymer specific attributes that a Polymer has.
+    /// </summary>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.created 2001-08-06
+    // @cdk.keyword polymer
     [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
     {
         private IDictionary<string, IMonomer> monomers;
 
+        /// <summary>
+        /// Constructs a new Polymer to store the Monomers.
+        /// </summary>
         public Polymer()
         {
             monomers = new Dictionary<string, IMonomer>();
@@ -45,11 +65,11 @@ namespace NCDK.Default
         {
             if (!Contains(oAtom))
             {
-                base.Add(oAtom);    // this calls notify
+                base.Atoms.Add(oAtom);    // this calls notify
 
                 if (oMonomer != null)
                 { // Not sure what's better here...throw nullpointer exception?
-                    oMonomer.Add(oAtom);
+                    oMonomer.Atoms.Add(oAtom);
                     if (!monomers.ContainsKey(oMonomer.MonomerName))
                     {
                         monomers.Add(oMonomer.MonomerName, oMonomer);
@@ -58,11 +78,13 @@ namespace NCDK.Default
             }
         }
 
+		/// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
             return monomers.Where(n => n.Key != "");
         }
 
+		/// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
             IMonomer ret;
@@ -71,11 +93,13 @@ namespace NCDK.Default
             return ret;
         }
 
+		/// <inheritdoc/>
         public virtual IEnumerable<string> GetMonomerNames()
         {
             return monomers.Keys;
         }
 
+		/// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
             IMonomer monomer;
@@ -113,12 +137,24 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+    /// <summary>
+    /// Subclass of Molecule to store Polymer specific attributes that a Polymer has.
+    /// </summary>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
+    // @cdk.created 2001-08-06
+    // @cdk.keyword polymer
     [Serializable]
     public class Polymer
         : AtomContainer, IPolymer
     {
         private IDictionary<string, IMonomer> monomers;
 
+        /// <summary>
+        /// Constructs a new Polymer to store the Monomers.
+        /// </summary>
         public Polymer()
         {
             monomers = new Dictionary<string, IMonomer>();
@@ -133,11 +169,11 @@ namespace NCDK.Silent
         {
             if (!Contains(oAtom))
             {
-                base.Add(oAtom);    // this calls notify
+                base.Atoms.Add(oAtom);    // this calls notify
 
                 if (oMonomer != null)
                 { // Not sure what's better here...throw nullpointer exception?
-                    oMonomer.Add(oAtom);
+                    oMonomer.Atoms.Add(oAtom);
                     if (!monomers.ContainsKey(oMonomer.MonomerName))
                     {
                         monomers.Add(oMonomer.MonomerName, oMonomer);
@@ -146,11 +182,13 @@ namespace NCDK.Silent
             }
         }
 
+		/// <inheritdoc/>
         public virtual IEnumerable<KeyValuePair<string, IMonomer>> GetMonomerMap()
         {
             return monomers.Where(n => n.Key != "");
         }
 
+		/// <inheritdoc/>
         public virtual IMonomer GetMonomer(string cName)
         {
             IMonomer ret;
@@ -159,11 +197,13 @@ namespace NCDK.Silent
             return ret;
         }
 
+		/// <inheritdoc/>
         public virtual IEnumerable<string> GetMonomerNames()
         {
             return monomers.Keys;
         }
 
+		/// <inheritdoc/>
         public virtual void RemoveMonomer(string name)
         {
             IMonomer monomer;

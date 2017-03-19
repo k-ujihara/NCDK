@@ -41,47 +41,47 @@ using System.Reflection;
 
 namespace NCDK.Depict
 {
-    /**
-     * Utility class for abbreviating (sub)structures. Using either self assigned structural
-     * motifs or pre-loading a common set a structure depiction can be made more concise with
-     * the use of abbreviations (sometimes called superatoms). <p/>
-     *
-     * Basic usage:
-     * <code>{@code
-     * Abbreviations abrv = new Abbreviations();
-     *
-     * // add some abbreviations, when overlapping (e.g. Me,Et,tBu) first one wins
-     * abrv.Add("[Na+].[H-] NaH");
-     * abrv.Add("*c1ccccc1 Ph");
-     * abrv.Add("*C(C)(C)C tBu");
-     * abrv.Add("*CC Et");
-     * abrv.Add("*C Me");
-     *
-     * // maybe we don't want 'Me' in the depiction
-     * abrv.SetEnabled("Me", false);
-     *
-     * // assign abbreviations with some filters
-     * int numAdded = abrv.Apply(mol);
-     *
-     * // generate all but don't assign, need to be added manually
-     * // set/update the CDKConstants.CTAB_SGROUPS property of mol
-     * List<Sgroup> sgroups = abrv.Generate(mol);
-     * }</code>
-     *
-     * Predefined sets of abbreviations can be loaded, the following are
-     * on the classpath.
-     *
-     * <code>{@code
-     * // https://www.github.com/openbabel/superatoms
-     * abrv.LoadFromFile("obabel_superatoms.smi");
-     * }</code>
-     *
-     * @cdk.keyword abbreviate
-     * @cdk.keyword depict
-     * @cdk.keyword superatom
-     * @see CDKConstants#CTAB_SGROUPS
-     * @see Sgroup
-     */
+    /// <summary>
+    /// Utility class for abbreviating (sub)structures. Using either self assigned structural
+    /// motifs or pre-loading a common set a structure depiction can be made more concise with
+    /// the use of abbreviations (sometimes called superatoms). 
+    /// </summary>
+    /// <example>
+    /// Basic usage:
+    /// <code>
+    /// Abbreviations abrv = new Abbreviations();
+    ///
+    /// // add some abbreviations, when overlapping (e.g. Me,Et,tBu) first one wins
+    /// abrv.Add("[Na+].[H-] NaH");
+    /// abrv.Add("*c1ccccc1 Ph");
+    /// abrv.Add("*C(C)(C)C tBu");
+    /// abrv.Add("*CC Et");
+    /// abrv.Add("*C Me");
+    ///
+    /// // maybe we don't want 'Me' in the depiction
+    /// abrv.SetEnabled("Me", false);
+    ///
+    /// // assign abbreviations with some filters
+    /// int numAdded = abrv.Apply(mol);
+    ///
+    /// // generate all but don't assign, need to be added manually
+    /// // set/update the CDKConstants.CTAB_SGROUPS property of mol
+    /// List&lt;Sgroup&gt; sgroups = abrv.Generate(mol);
+    /// </code>
+    ///
+    /// Predefined sets of abbreviations can be loaded, the following are
+    /// on the classpath.
+    ///
+    /// <code>
+    /// // https://www.github.com/openbabel/superatoms
+    /// abrv.LoadFromFile("obabel_superatoms.smi");
+    /// </code>
+    /// </example>
+    /// <seealso cref="CDKPropertyName.CtabSgroups"/>
+    /// <seealso cref="Sgroup"/>
+    // @cdk.keyword abbreviate
+    // @cdk.keyword depict
+    // @cdk.keyword superatom
     public class Abbreviations : IEnumerable<string>
     {
         private const int MAX_FRAG = 50;
@@ -237,9 +237,9 @@ namespace NCDK.Depict
             }
 
             var res = new List<IAtomContainer>();
-            if (!bfrag.IsEmpty)
+            if (!bfrag.IsEmpty())
                 res.Add(bfrag);
-            if (!efrag.IsEmpty)
+            if (!efrag.IsEmpty())
                 res.Add(efrag);
             return res;
         }
@@ -286,7 +286,7 @@ namespace NCDK.Depict
             // mark which atoms have already been abbreviated or are
             // part of an existing Sgroup
             var usedAtoms = new HashSet<IAtom>();
-            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups != null)
             {
                 foreach (var sgroup in sgroups)
@@ -380,7 +380,7 @@ namespace NCDK.Depict
         public int Apply(IAtomContainer mol)
         {
             var newSgroups = Generate(mol);
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
 
             if (sgroups == null)
                 sgroups = new List<Sgroup>();
@@ -395,7 +395,7 @@ namespace NCDK.Depict
                 if (!sgroup.Bonds.Any() || coverage < 0.4d)
                     sgroups.Add(sgroup);
             }
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new ReadOnlyCollection<Sgroup>(sgroups));
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new ReadOnlyCollection<Sgroup>(sgroups));
             return sgroups.Count - prev;
         }
 

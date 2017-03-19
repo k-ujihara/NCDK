@@ -82,7 +82,7 @@ namespace NCDK.Beam
         /// <param name="v">vertex</param>
         /// <param name="c">count</param>
         /// <param name="visited">which vertices have been visited</param>
-        /// <returns>size of the component from </returns>{@code v}
+        /// <returns>size of the component from </returns><paramref name="v"/>
         private static int Visit(Graph g, int v, int c, bool[] visited)
         {
             visited[v] = true;

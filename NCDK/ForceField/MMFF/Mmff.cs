@@ -32,13 +32,13 @@ namespace NCDK.ForceField.MMFF
     /// Facade to access Merck Molecular Force Field (MMFF) functions.
     /// </summary>
     /// <remarks>
-    /// <ul>
-    ///     <li>{@cdk.cite Halgren96a}</li>
-    ///     <li>{@cdk.cite Halgren96b}</li>
-    ///     <li>{@cdk.cite Halgren96c}</li>
-    ///     <li>{@cdk.cite Halgren96d}</li>
-    ///     <li>{@cdk.cite Halgren96e}</li>     
-    /// </ul>
+    /// <list type="bullet">
+    ///     <item>{@cdk.cite Halgren96a}</item>
+    ///     <item>{@cdk.cite Halgren96b}</item>
+    ///     <item>{@cdk.cite Halgren96c}</item>
+    ///     <item>{@cdk.cite Halgren96d}</item>
+    ///     <item>{@cdk.cite Halgren96e}</item>     
+    /// </list>
     /// 
     /// <h4>Atom Types</h4>
     /// 

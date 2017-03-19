@@ -33,53 +33,47 @@ namespace NCDK.IO
     /// Reads the content of a IUPAC/NIST Chemical Identifier (INChI) plain text
     /// document. This reader parses output generated with INChI 1.12beta like:
     /// <code>
-    ///
     /// Input_File: "E:\Program Files\INChI\inchi-samples\Figure04.mol"
     ///
     /// Structure: 1
     /// INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H
     /// AuxInfo=1.12Beta/0/N:1,2,3,4,5,6/E:(1,2,3,4,5,6)/rA:6CCCCCC/rB:s1;d1;d2;s3;s4d5;/rC:5.6378,-4.0013,0;5.6378,-5.3313,0;4.4859,-3.3363,0;4.4859,-5.9963,0;3.3341,-4.0013,0;3.3341,-5.3313,0;
     /// </code>
-    ///
+    /// </summary>
+    /// <seealso cref="InChIReader"/>
     // @cdk.module extra
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author      Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2004-08-01
-    ///
     // @cdk.keyword file format, INChI
     // @cdk.keyword chemical identifier
     // @cdk.require java1.4+
-    ///
-    // @see     org.openscience.cdk.io.INChIReader
-    /// </summary>
-    public class INChIPlainTextReader : DefaultChemObjectReader
+    public class InChIPlainTextReader : DefaultChemObjectReader
     {
         private TextReader input;
-        private INChIContentProcessorTool inchiTool;
+        private InChIContentProcessorTool inchiTool;
 
         /// <summary>
         /// Construct a INChI reader from a Reader object.
-        ///
-        /// <param name="input">the Reader with the content</param>
         /// </summary>
-        public INChIPlainTextReader(TextReader input)
+        /// <param name="input">the Reader with the content</param>
+        public InChIPlainTextReader(TextReader input)
         {
             this.Init();
             SetReader(input);
-            inchiTool = new INChIContentProcessorTool();
+            inchiTool = new InChIContentProcessorTool();
         }
 
-        public INChIPlainTextReader(Stream input)
+        public InChIPlainTextReader(Stream input)
             : this(new StreamReader(input))
         { }
 
-        public INChIPlainTextReader()
+        public InChIPlainTextReader()
             : this(new StringReader(""))
         { }
 
-        public override IResourceFormat Format => INChIPlainTextFormat.Instance;
+        public override IResourceFormat Format => InChIPlainTextFormat.Instance;
 
         public override void SetReader(TextReader input)
         {
@@ -105,10 +99,9 @@ namespace NCDK.IO
         /// <summary>
         /// Reads a IChemObject of type object from input.
         /// Supported types are: ChemFile.
-        ///
-        /// <param name="object">type of requested IChemObject</param>
-        /// <returns>the content in a ChemFile object</returns>
         /// </summary>
+        /// <param name="obj">type of requested IChemObject</param>
+        /// <returns>the content in a ChemFile object</returns>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -125,9 +118,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Reads a ChemFile object from input.
-        ///
-        /// <returns>ChemFile with the content read from the input</returns>
         /// </summary>
+        /// <returns>ChemFile with the content read from the input</returns>
         private IChemFile ReadChemFile(IChemFile cf)
         {
             // have to do stuff here

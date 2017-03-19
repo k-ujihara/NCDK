@@ -22,19 +22,18 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matcher checks the number of implicit hydrogens of the Atom.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class ImplicitHCountAtom : SMARTSAtom
     {
         private readonly int hcount;
 
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="hcount">/// </summary></param>
+        /// </summary>
+        /// <param name="hcount"></param>
         public ImplicitHCountAtom(int hcount, IChemObjectBuilder builder)
             : base(builder)
         {

@@ -21,10 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Hash.Stereo;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK.Hash
@@ -32,14 +30,14 @@ namespace NCDK.Hash
     /// <summary>
     /// Fluent API for creating hash generators. The maker is first configured with
     /// one or more attributes. Once fully configured the generator is made by
-    /// invoking {@link #Atomic()}, {@link #Molecular()} or {@link #Ensemble()}. The
+    /// invoking <see cref="Atomic"/>, <see cref="Molecular"/> or <see cref="Ensemble"/>. The
     /// order of the built-in configuration methods does not matter however when
-    /// specifying custom encoders with {@link #Encode(AtomEncoder)} the order they
+    /// specifying custom encoders with <see cref="Encode(IAtomEncoder)"/>  the order they
     /// are added is the order they will be used. Therefore one can expect different
     /// hash codes if there is a change in the order they are specified.
-    ///
-    /// <h4>Examples</h4>
-    /// <example><code>
+    /// </summary>
+    /// <example>Examples
+    /// <code>
     /// // simple
     /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(16)
     ///                                                           .Elemental()
@@ -61,18 +59,16 @@ namespace NCDK.Hash
     ///                                                           .Perturbed()
     ///                                                           .Molecular();
     /// </code></example>
-    ///
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     public sealed class HashGeneratorMaker
     {
         /* no default depth */
         private int depth = -1;
 
         /* ordered list of custom encoders */
-        private List<AtomEncoder> customEncoders = new List<AtomEncoder>();
+        private List<IAtomEncoder> customEncoders = new List<IAtomEncoder>();
 
         /* ordered set of basic encoders */
         private SortedSet<BasicAtomEncoder> encoderSet = new SortedSet<BasicAtomEncoder>();
@@ -89,11 +85,10 @@ namespace NCDK.Hash
         /// <summary>
         /// Specify the depth of the hash generator. Larger values discriminate more
         /// molecules.
-        ///
+        /// </summary>
         /// <param name="depth">how deep should the generator hash</param>
         /// <returns>reference for fluent API</returns>
         /// <exception cref="ArgumentException">if the depth was less then zero</exception>
-        /// </summary>
         public HashGeneratorMaker Depth(int depth)
         {
             if (depth < 0) throw new ArgumentException("depth must not be less than 0");
@@ -105,11 +100,11 @@ namespace NCDK.Hash
         /// Discriminate elements.
         ///
         /// <returns>fluent API reference (self)</returns>
-        /// @see BasicAtomEncoder#ATOMIC_NUMBER
+        /// <seealso cref="BasicAtomEncoder.AtomicNumber"/>
         /// </summary>
         public HashGeneratorMaker Elemental()
         {
-            encoderSet.Add(BasicAtomEncoder.ATOMIC_NUMBER);
+            encoderSet.Add(BasicAtomEncoder.AtomicNumber);
             return this;
         }
 
@@ -117,62 +112,57 @@ namespace NCDK.Hash
         /// Discriminate isotopes.
         ///
         /// <returns>fluent API reference (self)</returns>
-        /// @see BasicAtomEncoder#MASS_NUMBER
+        /// <seealso cref="BasicAtomEncoder.MassNumber"/>
         /// </summary>
         public HashGeneratorMaker Isotopic()
         {
-            encoderSet.Add(BasicAtomEncoder.MASS_NUMBER);
+            encoderSet.Add(BasicAtomEncoder.MassNumber);
             return this;
         }
 
         /// <summary>
         /// Discriminate protonation states.
-        ///
-        /// <returns>fluent API reference (self)</returns>
-        /// @see BasicAtomEncoder#FORMAL_CHARGE
         /// </summary>
+        /// <returns>fluent API reference (self)</returns>
+        /// <seealso cref="BasicAtomEncoder.FormalCharge"/>
         public HashGeneratorMaker Charged()
         {
-            encoderSet.Add(BasicAtomEncoder.FORMAL_CHARGE);
+            encoderSet.Add(BasicAtomEncoder.FormalCharge);
             return this;
         }
 
         /// <summary>
         /// Discriminate atomic orbitals.
-        ///
-        /// <returns>fluent API reference (self)</returns>
-        /// @see BasicAtomEncoder#ORBITAL_HYBRIDIZATION
         /// </summary>
+        /// <returns>fluent API reference (self)</returns>
+        /// <seealso cref="BasicAtomEncoder.OrbitalHybridization"/>
         public HashGeneratorMaker Orbital()
         {
-            encoderSet.Add(BasicAtomEncoder.ORBITAL_HYBRIDIZATION);
+            encoderSet.Add(BasicAtomEncoder.OrbitalHybridization);
             return this;
         }
 
         /// <summary>
         /// Discriminate free radicals.
-        ///
-        /// <returns>fluent API reference (self)</returns>
-        /// @see BasicAtomEncoder#FREE_RADICALS
         /// </summary>
+        /// <returns>fluent API reference (self)</returns>
+        /// <seealso cref="BasicAtomEncoder.FreeRadicals"/>
         public HashGeneratorMaker Radical()
         {
-            encoderSet.Add(BasicAtomEncoder.FREE_RADICALS);
+            encoderSet.Add(BasicAtomEncoder.FreeRadicals);
             return this;
         }
 
         /// <summary>
         /// Generate different hash codes for stereoisomers. The currently supported
         /// geometries are:
-        ///
-        /// <ul>
-        ///     <li>Tetrahedral</li>
-        ///     <li>Double Bond</li>
-        ///     <li>Cumulative Double Bonds</li>
-        /// </ul>
-        ///
-        /// <returns>fluent API reference (self)</returns>
+        /// <list type="bullet">
+        ///     <item>Tetrahedral</item>
+        ///     <item>Double Bond</item>
+        ///     <item>Cumulative Double Bonds</item>
+        /// </list> 
         /// </summary>
+        /// <returns>fluent API reference (self)</returns>
         public HashGeneratorMaker Chiral()
         {
             this.stereoEncoders.Add(new GeometricTetrahedralEncoderFactory());
@@ -187,9 +177,8 @@ namespace NCDK.Hash
         /// Suppress any explicit hydrogens in the encoding of hash values. The
         /// generation of hashes acts as though the hydrogens are not present and as
         /// such preserves stereo-encoding.
-        ///
-        /// <returns>fluent API reference (self)</returns>
         /// </summary>
+        /// <returns>fluent API reference (self)</returns>
         public HashGeneratorMaker SuppressHydrogens()
         {
             this.suppression = AtomSuppression.AnyHydrogens;
@@ -200,13 +189,12 @@ namespace NCDK.Hash
         /// Discriminate atoms experiencing uniform environments. This method uses
         /// <see cref="MinimumEquivalentCyclicSet"/>  to break symmetry but depending on
         /// application one may need a more comprehensive method. Please refer to
-        /// {@link #PerturbWith(EquivalentSetFinder)} for further configuration
+        /// <see cref="PerturbWith(EquivalentSetFinder)"/> for further configuration
         /// details.
-        ///
+        /// </summary>
         /// <returns>fluent API reference (self)</returns>
         /// <seealso cref="MinimumEquivalentCyclicSet"/>
         /// <seealso cref="PerturbWith(EquivalentSetFinder)"/>
-        /// </summary>
         public HashGeneratorMaker Perturbed()
         {
             return PerturbWith(new MinimumEquivalentCyclicSet());
@@ -226,29 +214,31 @@ namespace NCDK.Hash
         /// The <see cref="MinimumEquivalentCyclicSetUnion"/> is provided for demonstration
         /// only, and as such, is deprecated.
         ///
-        /// <ul> <li>MinimumEquivalentCyclicSet - fastest, attempt to break symmetry
+        /// <list type="bullet">
+        /// <item>MinimumEquivalentCyclicSet - fastest, attempt to break symmetry
         /// by changing a single smallest set of the equivalent atoms which occur in
-        /// a ring</li> <li><strike>MinimumEquivalentCyclicSetUnion</strike>
+        /// a ring</item> 
+        /// <item><strike>MinimumEquivalentCyclicSetUnion</strike>
         /// (deprecated) - distinguishes more molecules by changing all smallest sets
         /// of the equivalent atoms which occur in a ring. This method is provided
-        /// from example only</li> <li>AllEquivalentCyclicSet - slowest,
-        /// systematically perturb all equivalent atoms that occur in a ring</li>
-        /// </ul>
+        /// from example only</item> 
+        /// <item>AllEquivalentCyclicSet - slowest,
+        /// systematically perturb all equivalent atoms that occur in a ring</item>
+        /// </list>
         ///
         /// At the time of writing (Feb, 2013) the number of known false possibles
         /// found in PubChem-Compound (aprx. 46,000,000 structures) are as follows:
-        ///
-        /// <ul> <li>MinimumEquivalentCyclicSet - 128 molecules, 64 false positives
-        /// (128/2)</li> <li>MinimumEquivalentCyclicSetUnion - 8 molecules, 4 false
-        /// positives (8/2)</li> <li>AllEquivalentCyclicSet - 0 molecules</li> </ul>
-        ///
-        /// <param name="equivSetFinder">equivalent set finder, used to determine which</param>
-        ///                       atoms will be perturbed to try and break symmetry.
+        /// <list type="bullet">
+        /// <item>MinimumEquivalentCyclicSet - 128 molecules, 64 false positives (128/2)</item>
+        /// <item>MinimumEquivalentCyclicSetUnion - 8 molecules, 4 false positives (8/2)</item>
+        /// <item>AllEquivalentCyclicSet - 0 molecules</item>
+        /// </list>
+        /// </summary>
+        /// <param name="equivSetFinder">equivalent set finder, used to determine which atoms will be perturbed to try and break symmetry.</param>
         /// <returns>fluent API reference (self)</returns>
         /// <seealso cref="AllEquivalentCyclicSet"/>
         /// <seealso cref="MinimumEquivalentCyclicSet"/>
         /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
-        /// </summary>
         internal HashGeneratorMaker PerturbWith(EquivalentSetFinder equivSetFinder)
         {
             this.equivSetFinder = equivSetFinder;
@@ -259,12 +249,11 @@ namespace NCDK.Hash
         /// Add a custom encoder to the hash generator which will be built. Although
         /// not enforced, the encoder should be stateless and should not modify any
         /// passed inputs.
-        ///
+        /// </summary>
         /// <param name="encoder">an atom encoder</param>
         /// <returns>fluent API reference (self)</returns>
-        /// <exception cref="NullPointerException">no encoder provided</exception>
-        /// </summary>
-        public HashGeneratorMaker Encode(AtomEncoder encoder)
+        /// <exception cref="NullReferenceException">no encoder provided</exception>
+        public HashGeneratorMaker Encode(IAtomEncoder encoder)
         {
             if (encoder == null) throw new ArgumentNullException("no encoder provided");
             customEncoders.Add(encoder);
@@ -273,14 +262,13 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Combines the separate stereo encoder factories into a single factory.
-        ///
-        /// <returns>a single stereo encoder factory</returns>
         /// </summary>
+        /// <returns>a single stereo encoder factory</returns>
         private IStereoEncoderFactory MakeStereoEncoderFactory()
         {
             if (stereoEncoders.Count == 0)
             {
-                return StereoEncoderFactory.EMPTY;
+                return StereoEncoderFactory.Empty;
             }
             else if (stereoEncoders.Count == 1)
             {
@@ -299,37 +287,34 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Given the current configuration create an <see cref="EnsembleHashGenerator"/>.
-        ///
+        /// </summary>
         /// <returns>instance of the generator</returns>
         /// <exception cref="ArgumentException">no depth or encoders were configured</exception>
-        /// </summary>
         public EnsembleHashGenerator Ensemble()
         {
             throw new NotSupportedException("not yet supported");
         }
 
         /// <summary>
-        /// Given the current configuration create an <see cref="MoleculeHashGenerator"/>.
-        ///
+        /// Given the current configuration create an <see cref="IMoleculeHashGenerator"/>.
+        /// </summary>
         /// <returns>instance of the generator</returns>
         /// <exception cref="ArgumentException">no depth or encoders were configured</exception>
-        /// </summary>
-        public MoleculeHashGenerator Molecular()
+        public IMoleculeHashGenerator Molecular()
         {
             return new BasicMoleculeHashGenerator(Atomic());
         }
 
         /// <summary>
-        /// Given the current configuration create an <see cref="AtomHashGenerator"/>.
-        ///
+        /// Given the current configuration create an <see cref="IAtomHashGenerator"/>.
+        /// </summary>
         /// <returns>instance of the generator</returns>
         /// <exception cref="ArgumentException">no depth or encoders were configured</exception>
-        /// </summary>
-        public AtomHashGenerator Atomic()
+        public IAtomHashGenerator Atomic()
         {
             if (depth < 0) throw new ArgumentException("no depth specified, use .Depth(int)");
 
-            List<AtomEncoder> encoders = new List<AtomEncoder>();
+            List<IAtomEncoder> encoders = new List<IAtomEncoder>();
 
             // set is ordered
             encoders.AddRange(encoderSet);
@@ -339,7 +324,7 @@ namespace NCDK.Hash
             // we also use the 'Basic' generator (see below)
             bool suppress = suppression != AtomSuppression.Unsuppressed;
 
-            AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
+            IAtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
             SeedGenerator seeds = new SeedGenerator(encoder, suppression);
 
             AbstractAtomHashGenerator simple = suppress ? (AbstractAtomHashGenerator)new SuppressedAtomHashGenerator(seeds, new Xorshift(),
@@ -365,7 +350,6 @@ namespace NCDK.Hash
         /// </summary>
         private sealed class ConjugatedEncoderFactory : IStereoEncoderFactory
         {
-
             private readonly IStereoEncoderFactory left, right;
 
             /// <summary>
@@ -392,7 +376,6 @@ namespace NCDK.Hash
         /// </summary>
         private sealed class ConjugatedEncoder : IStereoEncoder
         {
-
             private readonly IStereoEncoder left, right;
 
             /// <summary>
@@ -409,11 +392,10 @@ namespace NCDK.Hash
 
             /// <summary>
             /// Encodes using the left and then the right encoder.
-            ///
+            /// </summary>
             /// <param name="current">current invariants</param>
             /// <param name="next">next invariants</param>
             /// <returns>whether either encoder modified any values</returns>
-            /// </summary>
             public bool Encode(long[] current, long[] next)
             {
                 bool modified = left.Encode(current, next);
@@ -429,6 +411,5 @@ namespace NCDK.Hash
                 right.Reset();
             }
         }
-
     }
 }

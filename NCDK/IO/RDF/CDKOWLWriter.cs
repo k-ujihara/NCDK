@@ -57,9 +57,9 @@ namespace NCDK.IO.RDF
         /// </summary>
         public override IResourceFormat Format => CDKOWLFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            this.output = out_;
+            this.output = output;
         }
 
         public override void SetWriter(Stream output)

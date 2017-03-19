@@ -42,7 +42,7 @@ namespace NCDK.Graphs
     /// The ESSSR should not be confused with the extended set of smallest rings
     /// (ESSR) {@cdk.cite Downs89}.
     /// </para>
-    /// <h4>Algorithm</h4> 
+    /// <b>Algorithm</b> 
     /// <para>
     /// To our knowledge no algorithm has been published for
     /// the ESSSR. The <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem Specifications</a>
@@ -56,17 +56,17 @@ namespace NCDK.Graphs
     /// </para>
     /// <list type="bullet">
     /// <item>Compute a minimum cycle basis (or SSSR) of the graph (may not be unique)</item> 
-    /// <item>For each vertex <i>v</i> and two adjacent vertices (<i>u</i> and <i>w</i>) check if the path <i>-u-v-w-</i> belongs to any cycles already in the basis</item> 
-    /// <item>If no such cycle can be found compute the shortest cycle which travels through <i>-u-v-w-</i> and add it to the basis. The shortest cycle is the shortest path from <i>u</i> to <i>w</i> which does not travel through <i>v</i></item>
+    /// <item>For each vertex 'v' and two adjacent vertices ('u' and <i>w</i>) check if the path <i>-u-v-w-</i> belongs to any cycles already in the basis</item> 
+    /// <item>If no such cycle can be found compute the shortest cycle which travels through <i>-u-v-w-</i> and add it to the basis. The shortest cycle is the shortest path from 'u' to <i>w</i> which does not travel through 'v'</item>
     /// </list>
     /// <para>
     /// In the case of <i>naphthalene</i> the
     /// minimum cycle basis is the two phenyl rings. Taking either bridgehead atom of
-    /// <i>naphthalene</i> to be <i>v</i> and choosing <i>u</i> and <i>w</i> to be in
+    /// <i>naphthalene</i> to be 'v' and choosing 'u' and <i>w</i> to be in
     /// different phenyl rings it is easy to see the shortest cycle through
     /// <i>-u-v-w-</i> is the 10 member envelope ring.
     /// </para>
-    /// <h4>Canonical and Non-Canonical Generation</h4>
+    /// <b>Canonical and Non-Canonical Generation</b>
     /// <para>
     /// The algorithm can generate a canonical or non-canonical (preferred) set of
     /// cycles. As one can see from the above description depending on the order we
@@ -84,16 +84,16 @@ namespace NCDK.Graphs
     /// Although this canonical sorting allows one to reliable generate the same set
     /// of cycles for a graph this is not true for subgraphs. For two graphs
     /// <i>G</i>, <i>H</i> and a canonical ordering (<i>π</i>). If <i>H</i> is a
-    /// subgraph of <i>G</i> then for two vertices <i>u</i>, <i>v</i>. It follows
+    /// subgraph of <i>G</i> then for two vertices 'u', 'v'. It follows
     /// that <i>π(u)</i> &lt; <i>π(v)</i> ∈ <i>H</i> ⇏ <i>π(u)</i> &lt; <i>π(v)</i> ∈
     /// <i>G</i>. In other words, we can canonically label a graph and inspect the
-    /// ordering of vertices <i>u</i> and <i>v</i>. We now take a subgraph which
-    /// contains both <i>u</i> and <i>v</i> - the ordering does not need to be the
+    /// ordering of vertices 'u' and 'v'. We now take a subgraph which
+    /// contains both 'u' and 'v' - the ordering does not need to be the
     /// same as the full graph. This means that a subgraph may contain a ring in its
     /// ESSSR which does not belong to the ESSSR of the full graph.
     /// </para>
     /// <para>
-    /// To resolve this problem you can turn off the <paramref name="canonical"/> option. This
+    /// To resolve this problem you can turn off the <see cref="canonical"/> option. This
     /// relaxes the existing condition (Step 2.) and adds all shortest cycles through
     /// each triple (-u-v-w-) to the basis. The number of cycles generated may be
     /// larger however it is now possible to ensure that if <i>H</i> is a subgraph of
@@ -188,8 +188,7 @@ namespace NCDK.Graphs
     /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1211">1211</a></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211"/></term>
     /// <term><list type="table">
-    /// <item><term>{6, 6, 6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b
-    /// style="color: #FF4444;"><u>10</u></b>, 18, 18, 20, 20, 22, 22, 22}</term></item>
+    /// <item><term>{6, 6, 6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b><u>10</u></b>, 18, 18, 20, 20, 22, 22, 22}</term></item>
     /// <item><term>{6, 6, 6, 6, 6, 6, 10, 10, 18, 18, 20, 20, 22, 22, 22}</term></item>
     /// <item><term>{6, 6, 6, 6, 6, 6, 10, 10}</term></item>
     /// </list></term>
@@ -360,7 +359,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Temporarily disconnect <paramref name="v"/> from the <paramref name="graph"/> by forming loops
+        /// Temporarily disconnect <paramref name="v"/> from the <see cref="graph"/> by forming loops
         /// for each of it's neighbours, <paramref name="ws"/>. A loop is an edge in which both
         /// end points are the. Technically <paramref name="v"/> is never removed but we can't
         /// reach <paramref name="v"/> from any other vertex which is sufficient to trace the
@@ -382,7 +381,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Reconnect <paramref name="v"/> with the <paramref name="graph"/> by un-looping each of it's
+        /// Reconnect <paramref name="v"/> with the <see cref="graph"/> by un-looping each of it's
         /// neighbours, <paramref name="ws"/>.
         /// </summary>
         /// <param name="ws">vertices adjacent to <paramref name="v"/></param>

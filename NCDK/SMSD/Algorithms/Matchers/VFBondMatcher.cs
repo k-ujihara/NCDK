@@ -27,10 +27,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
     /// Interface for the BondMatcher (bonds) in graph.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public interface VFBondMatcher
     {
         bool Matches(TargetProperties container, IBond atom);

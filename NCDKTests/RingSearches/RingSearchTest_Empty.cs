@@ -69,7 +69,7 @@ namespace NCDK.RingSearches {
         [TestMethod()]
         public void TestRingFragments()
         {
-            Assert.IsTrue(new RingSearch(empty).RingFragments().IsEmpty);
+            Assert.IsTrue(new RingSearch(empty).RingFragments().IsEmpty());
         }
 
         [TestMethod()]

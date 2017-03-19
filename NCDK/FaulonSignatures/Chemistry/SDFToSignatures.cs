@@ -1,11 +1,9 @@
 using System;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class SDFToSignatures
     {
-        /// <summary>
-        /// <param name="args">/// </summary></param>
         public static void Main(string[] args)
         {
             if (args.Length < 1)

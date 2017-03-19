@@ -42,53 +42,53 @@ namespace NCDK.Default
         {
             IChemModel chemModel = new ChemModel();
             Assert.IsNotNull(chemModel);
-            Assert.IsTrue(chemModel.IsEmpty);
+            Assert.IsTrue(chemModel.IsEmpty());
 
             IAtom atom = new Atom("N");
             IRing mol = new Ring();   // NCDK does not allow to add AtomContainer to RingSet
             IAtomContainerSet<IAtomContainer> mset = new AtomContainerSet<IAtomContainer>();
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
             mset.Add(mol);    
             chemModel.MoleculeSet = mset;
-            Assert.IsFalse(chemModel.IsEmpty);
-            mol.Remove(atom);
-            Assert.IsFalse(chemModel.IsEmpty);
+            Assert.IsFalse(chemModel.IsEmpty());
+            mol.Atoms.Remove(atom);
+            Assert.IsFalse(chemModel.IsEmpty());
             chemModel.MoleculeSet = null;
-            Assert.IsTrue(chemModel.IsEmpty);
+            Assert.IsTrue(chemModel.IsEmpty());
 
             IChemModel model1 = new ChemModel();
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
             IReaction react = new Reaction();
             react.Reactants.Add(mol);
             IReactionSet rset = new ReactionSet();
             rset.Add(react);
             model1.ReactionSet = rset;
-            Assert.IsFalse(model1.IsEmpty);
-            mol.Remove(atom);
-            Assert.IsFalse(model1.IsEmpty);
+            Assert.IsFalse(model1.IsEmpty());
+            mol.Atoms.Remove(atom);
+            Assert.IsFalse(model1.IsEmpty());
             model1.ReactionSet = null;
-            Assert.IsTrue(model1.IsEmpty);
+            Assert.IsTrue(model1.IsEmpty());
 
             IChemModel model2 = new ChemModel();
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
             IRingSet ringset = new RingSet();
             ringset.AddRange(mset.Cast<IRing>());  // NCDK does not allow to add AtomContainer to Ring directly
             model2.RingSet = ringset;
-            Assert.IsFalse(model2.IsEmpty);
-            mol.Remove(atom);
-            Assert.IsFalse(model2.IsEmpty);
+            Assert.IsFalse(model2.IsEmpty());
+            mol.Atoms.Remove(atom);
+            Assert.IsFalse(model2.IsEmpty());
             model2.RingSet = null;
-            Assert.IsTrue(model2.IsEmpty);
+            Assert.IsTrue(model2.IsEmpty());
 
             IChemModel model3 = new ChemModel();
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
             ICrystal cry = new Crystal(mol);
             model3.Crystal = cry;
-            Assert.IsFalse(model3.IsEmpty);
-            mol.Remove(atom);
-            Assert.IsFalse(model3.IsEmpty);
+            Assert.IsFalse(model3.IsEmpty());
+            mol.Atoms.Remove(atom);
+            Assert.IsFalse(model3.IsEmpty());
             model3.Crystal = null;
-            Assert.IsTrue(model3.IsEmpty);
+            Assert.IsTrue(model3.IsEmpty());
         }
     }
 }

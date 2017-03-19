@@ -30,68 +30,80 @@ using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms.MCSS
 {
-    /**
-      * This class implements the Resolution Graph (RGraph).
-      * The RGraph is a graph based representation of the search problem.
-      * An RGraph is constructed from the two compared graphs (G1 and G2).
-      * Each vertex (node) in the RGraph represents a possible association
-      * from an edge in G1 with an edge in G2. Thus two compatible bonds
-      * in two molecular graphs are represented by a vertex in the RGraph.
-      * Each edge in the RGraph corresponds to a common adjacency relationship
-      * between the 2 couple of compatible edges associated to the 2 RGraph nodes
-      * forming this edge.
-      *
-      * <p>Example:
-      * <code>
-      *    G1 : C-C=O  and G2 : C-C-C=0
-      *         1 2 3           1 2 3 4
-      * </code>
-      *
-      *  <p>The resulting RGraph(G1,G2) will contain 3 nodes:
-      *  <ul>
-      *    <li>Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2
-      *    <li>Node B : association between bond C-C :  1-2 in G1 and 2-3 in G2
-      *    <li>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
-      *  </ul>
-      *  The RGraph will also contain one edge representing the
-      *  adjacency between node B and C  that is : bonds 1-2 and 2-3 in G1
-      *  and bonds 2-3 and 3-4 in G2.
-      *
-      *  <p>Once the RGraph has been built from the two compared graphs
-      *  it becomes a very interesting tool to perform all kinds of
-      *  structural search (isomorphism, substructure search, maximal common
-      *  substructure,....).
-      *
-      *  <p>The  search may be constrained by mandatory elements (e.g. bonds that
-      *  have to be present in the mapped common substructures).
-      *
-      *  <p>Performing a query on an RGraph requires simply to set the constrains
-      *  (if any) and to invoke the parsing method (Parse())
-      *
-      *  <p>The RGraph has been designed to be a generic tool. It may be constructed
-      *  from any kind of source graphs, thus it is not restricted to a chemical
-      *  context.
-      *
-      *  <p>The RGraph model is independent from the CDK model and the link between
-      *  both model is performed by the RTools class. In this way the RGraph
-      *  class may be reused in other graph context (conceptual graphs,....)
-      *
-      *  <p><b>Important note</b>: This implementation of the algorithm has not been
-      *                      optimized for speed at this stage. It has been
-      *                      written with the goal to clearly retrace the
-      *                      principle of the underlined search method. There is
-      *                      room for optimization in many ways including the
-      *                      the algorithm itself.
-      *
-      *  <p>This algorithm derives from the algorithm described in
-      *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
-      *
-      * @author      Stephane Werner from IXELIS mail@ixelis.net
-      * @cdk.created 2002-07-17
-      * @cdk.require java1.4+
-      * @cdk.module  standard
-     * @cdk.githash
-      */
+    /// <summary>
+    /// This class implements the Resolution Graph (RGraph).
+    /// The RGraph is a graph based representation of the search problem.
+    /// An RGraph is constructed from the two compared graphs (G1 and G2).
+    /// Each vertex (node) in the RGraph represents a possible association
+    /// from an edge in G1 with an edge in G2. Thus two compatible bonds
+    /// in two molecular graphs are represented by a vertex in the RGraph.
+    /// Each edge in the RGraph corresponds to a common adjacency relationship
+    /// between the 2 couple of compatible edges associated to the 2 RGraph nodes
+    /// forming this edge.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Example:
+    /// <code>
+    ///    G1 : C-C=O  and G2 : C-C-C=0
+    ///         1 2 3           1 2 3 4
+    /// </code>
+    /// </para>
+    /// <para>
+    /// The resulting RGraph(G1,G2) will contain 3 nodes:
+    /// <list type="bullet">
+    ///    <item>Node A : association between bond C-C :  1-2 in G1 and 1-2 in G2</item>
+    ///    <item>Node B : association between bond C-C :  1-2 in G1 and 2-3 in G2</item>
+    ///    <item>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2</item>
+    /// </list> 
+    /// </para>
+    /// <para>
+    /// The RGraph will also contain one edge representing the
+    /// adjacency between node B and C  that is : bonds 1-2 and 2-3 in G1
+    /// and bonds 2-3 and 3-4 in G2.
+    /// </para>
+    /// <para>
+    /// Once the RGraph has been built from the two compared graphs
+    /// it becomes a very interesting tool to perform all kinds of
+    /// structural search (isomorphism, substructure search, maximal common
+    /// substructure,....).
+    /// </para>
+    /// <para>
+    /// The  search may be constrained by mandatory elements (e.g. bonds that
+    /// have to be present in the mapped common substructures).
+    /// </para>
+    /// <para>
+    /// Performing a query on an RGraph requires simply to set the constrains
+    /// (if any) and to invoke the parsing method (Parse())
+    /// </para>
+    /// <para>
+    ///  The RGraph has been designed to be a generic tool. It may be constructed
+    ///  from any kind of source graphs, thus it is not restricted to a chemical
+    ///  context.
+    /// </para>
+    /// <para>
+    ///  The RGraph model is independent from the CDK model and the link between
+    ///  both model is performed by the RTools class. In this way the RGraph
+    ///  class may be reused in other graph context (conceptual graphs,....)
+    /// </para>
+    /// <para>
+    /// <b>Important note</b>: This implementation of the algorithm has not been
+    ///                      optimized for speed at this stage. It has been
+    ///                      written with the goal to clearly retrace the
+    ///                      principle of the underlined search method. There is
+    ///                      room for optimization in many ways including the
+    ///                      the algorithm itself.
+    /// </para>
+    /// <para>
+    /// This algorithm derives from the algorithm described in
+    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
+    /// </para>
+    /// </remarks>
+    // @author      Stephane Werner from IXELIS mail@ixelis.net
+    // @cdk.created 2002-07-17
+    // @cdk.require java1.4+
+    // @cdk.module  standard
+    // @cdk.githash
     public class RGraph
     {
         // an RGraph is a list of RGraph nodes
@@ -144,9 +156,9 @@ namespace NCDK.Isomorphisms.MCSS
         /// </summary>
         public long Start { get; set; }
 
-        /**
-         * Constructor for the RGraph object and creates an empty RGraph.
-         */
+        /// <summary>
+        /// Constructor for the RGraph object and creates an empty RGraph.
+        /// </summary>
         public RGraph()
         {
             graph = new List<RNode>();
@@ -154,25 +166,25 @@ namespace NCDK.Isomorphisms.MCSS
             graphBitSet = new BitArray(0);  // realloc in AddNode(RNode newNode)
         }
 
-        /**
-         *  Reinitialisation of the TGraph.
-         */
+        /// <summary>
+        ///  Reinitialisation of the TGraph.
+        /// </summary>
         public void Clear()
         {
             graph.Clear();
             graphBitSet.SetAll(false);
         }
 
-        /**
-         *  Returns the graph object of this RGraph.
-         * @return      The graph object, a list
-         */
+        /// <summary>
+        ///  Returns the graph object of this RGraph.
+        /// </summary>
+        /// <returns>The graph object, a list</returns>
         public IList<RNode> Graph => this.graph;
 
-        /**
-         *  Adds a new node to the RGraph.
-         * @param  newNode  The node to add to the graph
-         */
+        /// <summary>
+        ///  Adds a new node to the RGraph.
+        /// </summary>
+        /// <param name="newNode">The node to add to the graph</param>
         public void AddNode(RNode newNode)
         {
             graph.Add(newNode);
@@ -180,20 +192,19 @@ namespace NCDK.Isomorphisms.MCSS
             graphBitSet.Set(graph.Count - 1, true);
         }
 
-        /**
-         *  Parsing of the RGraph. This is the main method
-         *  to perform a query. Given the constrains c1 and c2
-         *  defining mandatory elements in G1 and G2 and given
-         *  the search options, this method builds an initial set
-         *  of starting nodes (B) and parses recursively the
-         *  RGraph to find a list of solution according to
-         *  these parameters.
-         *
-         * @param  c1  constrain on the graph G1
-         * @param  c2  constrain on the graph G2
-         * @param  findAllStructure true if we want all results to be generated
-         * @param  findAllMap true is we want all possible 'mappings'
-         */
+        /// <summary>
+        ///  Parsing of the RGraph. This is the main method
+        ///  to perform a query. Given the constrains c1 and c2
+        ///  defining mandatory elements in G1 and G2 and given
+        ///  the search options, this method builds an initial set
+        ///  of starting nodes (B) and parses recursively the
+        ///  RGraph to find a list of solution according to
+        ///  these parameters.
+        /// </summary>
+        /// <param name="c1">constrain on the graph G1</param>
+        /// <param name="c2">constrain on the graph G2</param>
+        /// <param name="findAllStructure">true if we want all results to be generated</param>
+        /// <param name="findAllMap">true is we want all possible 'mappings'</param>
         public void Parse(BitArray c1, BitArray c2, bool findAllStructure, bool findAllMap)
         {
             // initialize the list of solution
@@ -211,16 +222,15 @@ namespace NCDK.Isomorphisms.MCSS
             ParseRec(new BitArray(b.Count), b, new BitArray(b.Count));
         }
 
-        /**
-         *  Parsing of the RGraph. This is the recursive method
-         *  to perform a query. The method will recursively
-         *  parse the RGraph thru connected nodes and visiting the
-         *  RGraph using allowed adjacency relationship.
-         *
-         * @param  traversed  node already parsed
-         * @param  extension  possible extension node (allowed neighbors)
-         * @param  forbiden   node forbidden (set of node incompatible with the current solution)
-         */
+        /// <summary>
+        ///  Parsing of the RGraph. This is the recursive method
+        ///  to perform a query. The method will recursively
+        ///  parse the RGraph thru connected nodes and visiting the
+        ///  RGraph using allowed adjacency relationship.
+        /// </summary>
+        /// <param name="traversed">node already parsed</param>
+        /// <param name="extension">possible extension node (allowed neighbors)</param>
+        /// <param name="forbidden">node forbidden (set of node incompatible with the current solution)</param>
         private void ParseRec(BitArray traversed, BitArray extension, BitArray forbidden)
         {
             BitArray newTraversed = null;
@@ -301,14 +311,13 @@ namespace NCDK.Isomorphisms.MCSS
             }
         }
 
-        /**
-         * Checks if a potential solution is a real one
-         * (not included in a previous solution)
-         *  and add this solution to the solution list
-         * in case of success.
-         *
-         * @param  traversed  new potential solution
-         */
+        /// <summary>
+        /// Checks if a potential solution is a real one
+        /// (not included in a previous solution)
+        ///  and add this solution to the solution list
+        /// in case of success.
+        /// </summary>
+        /// <param name="traversed">new potential solution</param>
         private void Solution(BitArray traversed)
         {
             bool included = false;
@@ -376,11 +385,11 @@ namespace NCDK.Isomorphisms.MCSS
             }
         }
 
-        /**
-         *  Determine if there are potential solution remaining.
-         * @param       potentialNode  set of remaining potential nodes
-         * @return      true if it is worse to continue the search
-         */
+        /// <summary>
+        ///  Determine if there are potential solution remaining.
+        /// </summary>
+        /// <param name="potentialNode">set of remaining potential nodes</param>
+        /// <returns>true if it is worse to continue the search</returns>
         private bool MustContinue(BitArray potentialNode)
         {
             bool result = true;
@@ -424,15 +433,15 @@ namespace NCDK.Isomorphisms.MCSS
             return result;
         }
 
-        /**
-         *  Builds the initial extension set. This is the
-         *  set of node that may be used as seed for the
-         *  RGraph parsing. This set depends on the constrains
-         *  defined by the user.
-         * @param  c1  constraint in the graph G1
-         * @param  c2  constraint in the graph G2
-         * @return the new extension set
-         */
+        /// <summary>
+        ///  Builds the initial extension set. This is the
+        ///  set of node that may be used as seed for the
+        ///  RGraph parsing. This set depends on the constrains
+        ///  defined by the user.
+        /// </summary>
+        /// <param name="c1">constraint in the graph G1</param>
+        /// <param name="c2">constraint in the graph G2</param>
+        /// <returns>the new extension set</returns>
         private BitArray BuildB(BitArray c1, BitArray c2)
         {
             this.c1 = c1;
@@ -452,23 +461,21 @@ namespace NCDK.Isomorphisms.MCSS
             return bs;
         }
 
-        /**
-         *  Returns the list of solutions.
-         *
-         * @return    The solution list
-         */
+        /// <summary>
+        ///  Returns the list of solutions.
+        /// </summary>
+        /// <returns>The solution list</returns>
         public IList<BitArray> Solutions => solutionList;
 
-        /**
-         *  Converts a RGraph bitset (set of RNode)
-         * to a list of RMap that represents the
-         * mapping between to substructures in G1 and G2
-         * (the projection of the RGraph bitset on G1
-         * and G2).
-         *
-         * @param  set  the BitArray
-         * @return      the RMap list
-         */
+        /// <summary>
+        ///  Converts a RGraph bitset (set of RNode)
+        /// to a list of RMap that represents the
+        /// mapping between to substructures in G1 and G2
+        /// (the projection of the RGraph bitset on G1
+        /// and G2).
+        /// </summary>
+        /// <param name="set">the BitArray</param>
+        /// <returns>the RMap list</returns>
         public IList<RMap> BitSetToRMap(BitArray set)
         {
             IList<RMap> rMapList = new List<RMap>();
@@ -481,49 +488,45 @@ namespace NCDK.Isomorphisms.MCSS
             return rMapList;
         }
 
-        /**
-         *  Sets the 'AllStructres' option. If true
-         * all possible solutions will be generated. If false
-         * the search will stop as soon as a solution is found.
-         * (e.g. when we just want to know if a G2 is
-         *  a substructure of G1 or not).
-         *
-         * @param  findAllStructure
-         */
+        /// <summary>
+        ///  Sets the 'AllStructres' option. If true
+        /// all possible solutions will be generated. If false
+        /// the search will stop as soon as a solution is found.
+        /// (e.g. when we just want to know if a G2 is
+        ///  a substructure of G1 or not).
+        /// </summary>
+        /// <param name="findAllStructure"></param>
         public void SetAllStructure(bool findAllStructure)
         {
             this.findAllStructure = findAllStructure;
         }
 
-        /**
-         *  Sets the 'finAllMap' option. If true
-         * all possible 'mappings' will be generated. If false
-         * the search will keep only one 'mapping' per structure
-         * association.
-         *
-         * @param  findAllMap
-         */
+        /// <summary>
+        ///  Sets the 'finAllMap' option. If true
+        /// all possible 'mappings' will be generated. If false
+        /// the search will keep only one 'mapping' per structure
+        /// association.
+        /// </summary>
+        /// <param name="findAllMap"></param>
         public void SetAllMap(bool findAllMap)
         {
             this.findAllMap = findAllMap;
         }
 
-        /**
-         * Sets the maxIteration for the RGraph parsing. If set to -1,
-         * then no iteration maximum is taken into account.
-         *
-         * @param  it  The new maxIteration value
-         */
+        /// <summary>
+        /// Sets the maxIteration for the RGraph parsing. If set to -1,
+        /// then no iteration maximum is taken into account.
+        /// </summary>
+        /// <param name="it">The new maxIteration value</param>
         public void SetMaxIteration(int it)
         {
             this.maxIteration = it;
         }
 
-        /**
-         *  Returns a string representation of the RGraph.
-         * @return the string representation of the RGraph
-         */
-
+        /// <summary>
+        ///  Returns a string representation of the RGraph.
+        /// </summary>
+        /// <returns>the string representation of the RGraph</returns>
         public override string ToString()
         {
             string message = "";
@@ -539,11 +542,11 @@ namespace NCDK.Isomorphisms.MCSS
 
         /////////////////////////////////
         // BitArray tools
-        /**
-         *  Projects a RGraph bitset on the source graph G1.
-         * @param  set  RGraph BitArray to project
-         * @return      The associate BitArray in G1
-         */
+        /// <summary>
+        ///  Projects a RGraph bitset on the source graph G1.
+        /// </summary>
+        /// <param name="set">RGraph BitArray to project</param>
+        /// <returns>The associate BitArray in G1</returns>
         public BitArray ProjectG1(BitArray set)
         {
             BitArray projection = new BitArray(FirstGraphSize);
@@ -557,11 +560,11 @@ namespace NCDK.Isomorphisms.MCSS
             return projection;
         }
 
-        /**
-         *  Projects a RGraph bitset on the source graph G2.
-         * @param  set  RGraph BitArray to project
-         * @return      The associate BitArray in G2
-         */
+        /// <summary>
+        ///  Projects a RGraph bitset on the source graph G2.
+        /// </summary>
+        /// <param name="set">RGraph BitArray to project</param>
+        /// <returns>The associate BitArray in G2</returns>
         public BitArray ProjectG2(BitArray set)
         {
             BitArray projection = new BitArray(SecondGraphSize);
@@ -575,12 +578,12 @@ namespace NCDK.Isomorphisms.MCSS
             return projection;
         }
 
-        /**
-         *  Test if set A is contained in  set B.
-         * @param  A  a bitSet
-         * @param  B  a bitSet
-         * @return    true if  A is contained in  B
-         */
+        /// <summary>
+        ///  Test if set A is contained in  set B.
+        /// </summary>
+        /// <param name="A">a bitSet</param>
+        /// <param name="B">a bitSet</param>
+        /// <returns>true if  A is contained in  B</returns>
         private bool IsContainedIn(BitArray A, BitArray B)
         {
             bool result = false;
@@ -602,4 +605,3 @@ namespace NCDK.Isomorphisms.MCSS
         }
     }
 }
-

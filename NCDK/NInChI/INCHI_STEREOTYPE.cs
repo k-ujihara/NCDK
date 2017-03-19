@@ -22,8 +22,8 @@ namespace NCDK.NInChI
     /// <summary>
     /// Enumeration of InChI 0D parity types.
     /// Corresponds to <tt>inchi_StereoType0D</tt> in <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public enum INCHI_STEREOTYPE
     {
         /// <summary>
@@ -32,7 +32,7 @@ namespace NCDK.NInChI
         None = 0,
 
         /// <summary>
-        /// Stereogenic bond >A=B< or cumulene >A=C=C=B<.
+        /// Stereogenic bond &gt;A=B&lt; or cumulene &gt;A=C=C=B&lt;.
         /// </summary>
         DoubleBond = 1,
 

@@ -53,7 +53,7 @@ namespace NCDK.Depict
             }
         }
 
-        private static DrawingContext CreateGraphics2d(string fmt, Stream out_, Dimension dim)
+        private static DrawingContext CreateGraphics2d(string fmt, Stream output, Dimension dim)
         {
 #if !IMPLEMENTED
             throw new System.NotImplementedException();

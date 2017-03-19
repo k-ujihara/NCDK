@@ -21,13 +21,12 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// <summary>
     /// An AST tree visitor. It is a prototype that translate Smarts to MQL.
     /// It is far from fully functioning.
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    /// </summary>
     public class Smarts2MQLVisitor : SMARTSParserVisitor
     {
         public object Visit(ASTRingIdentifier node, object data)

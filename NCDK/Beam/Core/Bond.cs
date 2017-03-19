@@ -36,25 +36,27 @@ namespace NCDK.Beam
     /// Enumeration of valid <see cref="Edge"/> labels. The connections include all the
     /// valid undirected and directed bond types and <see cref="Dot"/>. Opposed to the
     /// other types, <see cref="Dot"/> indicates that two atoms are not connected.
-    /// <table style="font-family: Courier, monospace;"> 
-    /// <tr>
-    /// <th><see cref="Bond"/></th>
-    /// <th><see cref="Token"/></th>
-    /// <th><see cref="Order"/></th>
-    /// <th><see cref="Inverse()"/></th>
-    /// </tr>
-    /// <tr><td><see cref="Dot"/></td><td>.</td><td>0</td><td></td></tr>
-    /// <tr><td><see cref="Implicit"/></td><td></td><td>undefined (2 or 3)</td><td></td></tr>
-    /// <tr><td><see cref="Single"/></td><td>-</td><td>2</td><td></td></tr>
-    /// <tr><td><see cref="Aromatic"/></td><td>:</td><td>3</td><td></td></tr>
-    /// <tr><td><see cref="Double"/></td><td>=</td><td>4</td><td></td></tr>
-    /// <tr><td><see cref="Triple"/></td><td>#</td><td>6</td><td></td></tr>
-    /// <tr><td><see cref="Quadruple"/></td><td>$</td><td>8</td><td></td></tr>
-    /// <tr><td><see cref="Up"/></td><td>/</td><td>2</td><td><see cref="Down"/></td></tr>
-    /// <tr><td><see cref="Down"/></td><td>\</td><td>2</td><td><see cref="Up"/></td></tr>
-    /// </table>
     /// </summary>
-    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</a></remarks>
+    /// <remarks>
+    /// <list type="table">
+    /// <item>
+    /// <term><see cref="Bond"/></term>
+    /// <term><see cref="Token"/></term>
+    /// <term><see cref="Order"/></term>
+    /// <term><see cref="Inverse()"/></term>
+    /// </item>
+    /// <item><term><see cref="Dot"/></term><term>.</term><term>0</term><term></term></item>
+    /// <item><term><see cref="Implicit"/></term><term></term><term>undefined (2 or 3)</term><term></term></item>
+    /// <item><term><see cref="Single"/></term><term>-</term><term>2</term><term></term></item>
+    /// <item><term><see cref="Aromatic"/></term><term>:</term><term>3</term><term></term></item>
+    /// <item><term><see cref="Double"/></term><term>=</term><term>4</term><term></term></item>
+    /// <item><term><see cref="Triple"/></term><term>#</term><term>6</term><term></term></item>
+    /// <item><term><see cref="Quadruple"/></term><term>$</term><term>8</term><term></term></item>
+    /// <item><term><see cref="Up"/></term><term>/</term><term>2</term><term><see cref="Down"/></term></item>
+    /// <item><term><see cref="Down"/></term><term>\</term><term>2</term><term><see cref="Up"/></term></item>
+    /// </list>
+    /// <a href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</a>
+    /// </remarks>
     // @author John May
     public class Bond
     {

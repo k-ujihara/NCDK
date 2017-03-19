@@ -25,19 +25,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matcher checks the hybridization state of an atom.
-    ///
+    /// </summary>
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
-
     public class HybridizationNumberAtom : SMARTSAtom
     {
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="hybridizationNumber">the hybridiation</param>
         /// </summary>
+        /// <param name="hybridizationNumber">the hybridiation</param>
         public HybridizationNumberAtom(int hybridizationNumber, IChemObjectBuilder builder)
             : base(builder)
         {

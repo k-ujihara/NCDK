@@ -87,7 +87,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Determine if an object is selected.
         /// </summary>
-        /// <param name="object">the object</param>
+        /// <param name="obj">the object</param>
         /// <returns>object is selected</returns>
         internal static bool IsSelected(IChemObject obj, RendererModel model)
         {

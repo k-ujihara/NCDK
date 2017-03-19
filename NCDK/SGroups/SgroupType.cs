@@ -31,32 +31,32 @@ namespace NCDK.SGroups
     /// <p/>
     /// <br/>
     /// <b>Display shortcuts</b>
-    /// <ul>
-    /// <li>SUP, abbreviation Sgroup (formerly called superatom)</li>
-    /// <li>MUL, multiple group</li>
-    /// <li>GEN, generic</li>
-    /// </ul>
+    /// <list type="bullet">
+    /// <item>SUP, abbreviation Sgroup (formerly called superatom)</item>
+    /// <item>MUL, multiple group</item>
+    /// <item>GEN, generic</item>
+    /// </list>
     /// <b>Polymers</b>
-    /// <ul>
-    /// <li>SRU, SRU type</li>
-    /// <li>MON, monomer</li>
-    /// <li>MER, Mer type</li>
-    /// <li>COP, copolymer</li>
-    /// <li>CRO, crosslink</li>
-    /// <li>MOD, modification</li>
-    /// <li>GRA, graft</li>
-    /// <li>Any, any polymer</li> 
-    /// </ul>
+    /// <list type="bullet">
+    /// <item>SRU, SRU type</item>
+    /// <item>MON, monomer</item>
+    /// <item>MER, Mer type</item>
+    /// <item>COP, copolymer</item>
+    /// <item>CRO, crosslink</item>
+    /// <item>MOD, modification</item>
+    /// <item>GRA, graft</item>
+    /// <item>Any, any polymer</item> 
+    /// </list>
     /// <b>Components, Mixtures, and formulations</b>
-    /// <ul>
-    /// <li>COM, component</li>
-    /// <li>MIX, mixture</li>
-    /// <li>FOR, formulation</li>
-    /// </ul>
+    /// <list type="bullet">
+    /// <item>COM, component</item>
+    /// <item>MIX, mixture</item>
+    /// <item>FOR, formulation</item>
+    /// </list>
     /// <b>Non-chemical</b>
-    /// <ul>
-    /// <li>DAT, data Sgroup</li>
-    /// </ul>
+    /// <list type="bullet">
+    /// <item>DAT, data Sgroup</item>
+    /// </list>
     /// </summary>
     public class SgroupType
     {

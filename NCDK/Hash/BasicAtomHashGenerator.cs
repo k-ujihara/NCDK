@@ -21,20 +21,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Hash.Stereo;
 using System;
 
 namespace NCDK.Hash
 {
     /// <summary>
-    /// A generator for basic atom hash codes. This implementation is based on the
-    /// description by {@cdk.cite Ihlenfeldt93}. The hash codes use an initial
-    /// generator to seed the values of each atom. The initial values are then
-    /// combined over a series of cycles up to a specified depth. At each cycle the
+    /// A generator for basic atom hash codes. This implementation is based on the description by 
+    /// <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</a>. 
+    /// The hash codes use an initial combined over a series of cycles up to a specified depth. At each cycle the
     /// hash values of adjacent invariants are incorporated.
-    ///
-    /// <h4>Which depth should I use?</h4> The <i>depth</i> determines the number of
+    /// </summary>
+    /// <remarks>
+    /// Which depth should I use?
+    /// <para>The <i>depth</i> determines the number of
     /// cycles and thus how <i>deep</i> the hashing is, larger values discriminate
     /// more molecules but can take longer to compute. The original publication
     /// recommends a depth of 32 however values as low as 6 can yield good results.
@@ -46,31 +46,27 @@ namespace NCDK.Hash
     /// function. Depending on the types of molecules in your data set the depth
     /// should be adjusted accordingly. For example, a library of large-lipids would
     /// require deeper hashing to discriminate differences in chain length.
-    ///
-    /// <h4>Usage</h4>
-    /// <example><code>
+    /// </para> 
+    /// <a href="http://mathworld.wolfram.com/GraphDiameter.html">Graph Diameter</a>
+    /// </remarks>
+    /// <example>
+    /// Usage
+    /// <code>
     /// SeedGenerator     seeding   = ...
-    /// AtomHashGenerator generator = new BasicAtomHashGenerator(seeding,
-    ///                                                          new Xorshift(),
-    ///                                                          32);
+    /// AtomHashGenerator generator = new BasicAtomHashGenerator(seeding, new Xorshift(), 32);
     ///
     /// IAtomContainer benzene = MoleculeFactory.Benzene();
     /// long[]         hashes  = generator.Generate(benzene);
-    /// </code></example>
-    ///
+    /// </code>
+    /// </example>
+    /// <seealso cref="SeedGenerator"/>
     // @author John May
     // @cdk.module hash
-    /// <seealso cref="SeedGenerator"/>
-    // @see <a href="http://mathworld.wolfram.com/GraphDiameter.html">Graph
-    ///      Diameter</a>
-    // @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
-    ///      Publication</a>
     // @cdk.githash
-    /// </summary>
-    internal sealed class BasicAtomHashGenerator : AbstractAtomHashGenerator, AtomHashGenerator
+    internal sealed class BasicAtomHashGenerator : AbstractAtomHashGenerator, IAtomHashGenerator
     {
         /* a generator for the initial atom seeds */
-        private readonly AtomHashGenerator seedGenerator;
+        private readonly IAtomHashGenerator seedGenerator;
 
         /* creates stereo encoders for IAtomContainers */
         private readonly IStereoEncoderFactory factory;
@@ -81,19 +77,15 @@ namespace NCDK.Hash
         /// <summary>
         /// Create a basic hash generator using the provided seed generator to
         /// initialise atom invariants and using the provided stereo factory.
-        ///
-        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
-        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
-        ///                      distribution
-        /// <param name="factory">a stereo encoder factory</param>
-        /// <param name="depth">depth of the hashing function, larger values take</param>
-        ///                      longer
-        /// <exception cref="ArgumentException">depth was less then 0</exception>
-        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
-        ///                                  null
-        /// <seealso cref="SeedGenerator"/>
         /// </summary>
-        public BasicAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
+        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash distribution</param>
+        /// <param name="factory">a stereo encoder factory</param>
+        /// <param name="depth">depth of the hashing function, larger values take longer</param>
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="ArgumentNullException">    seed generator or pseudo random was null</exception>
+        /// <seealso cref="SeedGenerator"/>
+        public BasicAtomHashGenerator(IAtomHashGenerator seedGenerator, Pseudorandom pseudorandom,
                 IStereoEncoderFactory factory, int depth)
                 : base(pseudorandom)
         {
@@ -107,19 +99,15 @@ namespace NCDK.Hash
         /// <summary>
         /// Create a basic hash generator using the provided seed generator to
         /// initialise atom invariants and no stereo configuration.
-        ///
-        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
-        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
-        ///                      distribution
-        /// <param name="depth">depth of the hashing function, larger values take</param>
-        ///                      longer
-        /// <exception cref="ArgumentException">depth was less then 0</exception>
-        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
-        ///                                  null
-        /// <seealso cref="SeedGenerator"/>
         /// </summary>
-        public BasicAtomHashGenerator(AtomHashGenerator seedGenerator, Pseudorandom pseudorandom, int depth)
-                : this(seedGenerator, pseudorandom, StereoEncoderFactory.EMPTY, depth)
+        /// <param name="seedGenerator">generator to seed the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash distribution</param>
+        /// <param name="depth">depth of the hashing function, larger values take longer</param>
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="ArgumentNullException">    seed generator or pseudo random was null</exception>
+        /// <seealso cref="SeedGenerator"/>
+        public BasicAtomHashGenerator(IAtomHashGenerator seedGenerator, Pseudorandom pseudorandom, int depth)
+                : this(seedGenerator, pseudorandom, StereoEncoderFactory.Empty, depth)
         { }
 
         public override long[] Generate(IAtomContainer container)
@@ -132,14 +120,14 @@ namespace NCDK.Hash
         /// Package-private method for generating the hash for the given molecule.
         /// The initial invariants are passed as to the method along with an
         /// adjacency list representation of the graph.
-        ///
-        /// <param name="current">initial invariants</param>
-        /// <param name="graph">adjacency list representation</param>
-        /// <returns>hash codes for atoms</returns>
         /// </summary>
+        /// <param name="current">initial invariants</param>
+        /// <param name="encoder"></param>
+        /// <param name="graph">adjacency list representation</param>
+        /// <param name="suppressed"></param>
+        /// <returns>hash codes for atoms</returns>
         public override long[] Generate(long[] current, IStereoEncoder encoder, int[][] graph, Suppressed suppressed)
         {
-
             int n = graph.Length;
             long[] next = Copy(current);
 
@@ -173,29 +161,24 @@ namespace NCDK.Hash
         }
 
         /// <summary>
-        /// Determine the next value of the atom at index <i>v</i>. The value is
+        /// Determine the next value of the atom at index <paramref name="v"/>. The value is
         /// calculated by combining the current values of adjacent atoms. When a
         /// duplicate value is found it can not be directly included and is
         /// <i>rotated</i> the number of times it has previously been seen.
-        ///
+        /// </summary>
         /// <param name="graph">adjacency list representation of connected atoms</param>
         /// <param name="v">the atom to calculate the next value for</param>
         /// <param name="current">the current values</param>
         /// <param name="unique">buffer for working out which adjacent values are unique</param>
-        /// <param name="included">buffer for storing the rotated <i>unique</i> value, this</param>
-        ///                 value is <i>rotated</i> each time the same value is
-        ///                 found.
-        /// <returns>the next value for <i>v</i></returns>
-        /// </summary>
+        /// <param name="included">buffer for storing the rotated <paramref name="unique"/> value, this value is <i>rotated</i> each time the same value is found.</param>
+        /// <returns>the next value for <paramref name="v"/></returns>
         internal long Next(int[][] graph, int v, long[] current, long[] unique, long[] included)
         {
-
             long invariant = Distribute(current[v]);
             int nUnique = 0;
 
             foreach (var w in graph[v])
             {
-
                 long adjInv = current[w];
 
                 // find index of already included neighbor

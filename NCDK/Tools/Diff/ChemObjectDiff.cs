@@ -16,23 +16,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
-using System.Linq;
-using System.Collections.Generic;
 using NCDK.Tools.Diff.Tree;
 
 namespace NCDK.Tools.Diff
 {
     /// <summary>
     /// Compares two <see cref="IChemObject"/> classes.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
-    public class ChemObjectDiff {
-
+    public class ChemObjectDiff
+    {
         /// <summary>
         /// Overwrite the default public constructor because this class is not
         /// supposed to be instantiated.
@@ -41,27 +36,29 @@ namespace NCDK.Tools.Diff
 
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
-        public static string Diff(IChemObject first, IChemObject second) {
+        public static string Diff(IChemObject first, IChemObject second)
+        {
             IDifference difference = Difference(first, second);
-            if (difference == null) {
+            if (difference == null)
+            {
                 return "";
-            } else {
+            }
+            else
+            {
                 return difference.ToString();
             }
         }
 
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as an <see cref="IDifference"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>an <see cref="IDifference"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
         public static IDifference Difference(IChemObject first, IChemObject second)
         {
             if (!(first is IChemObject && second is IChemObject))
@@ -75,12 +72,14 @@ namespace NCDK.Tools.Diff
             bool[] firstFlags = new[] { firstElem.IsVisited };
             bool[] secondFlags = new[] { secondElem.IsVisited };
             coDiff.AddChild(BooleanArrayDifference.Construct("flag", firstFlags, secondFlags));
-            if (coDiff.ChildCount() > 0) {
+            if (coDiff.ChildCount() > 0)
+            {
                 return coDiff;
-            } else {
+            }
+            else
+            {
                 return null;
             }
         }
-
     }
 }

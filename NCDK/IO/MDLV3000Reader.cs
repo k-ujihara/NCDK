@@ -35,20 +35,16 @@ namespace NCDK.IO
     /// <summary>
     /// Class that implements the MDL mol V3000 format. This reader reads the
     /// element symbol and 2D or 3D coordinates from the ATOM block.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author      Egon Willighagen <egonw@users.sf.net>
     // @cdk.created 2006
-    ///
     // @cdk.keyword MDL molfile V3000
     // @cdk.require java1.4+
-    /// </summary>
     public class MDLV3000Reader : DefaultChemObjectReader
     {
-
         TextReader input = null;
 
         private Regex keyValueTuple;
@@ -160,9 +156,9 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        // @ when no file content is detected
-        /// <returns>Last line read</returns>
         /// </summary>
+        /// <returns>Last line read</returns>
+        /// <exception cref="CDKException">when no file content is detected</exception>
         public string ReadHeader(IAtomContainer readData)
         {
             // read four lines
@@ -178,11 +174,11 @@ namespace NCDK.IO
                     // no header
                     return line1;
                 }
-                readData.SetProperty(CDKPropertyName.TITLE, line1);
+                readData.SetProperty(CDKPropertyName.Title, line1);
             }
             ReadLine();
             string line3 = ReadLine();
-            if (line3.Length > 0) readData.SetProperty(CDKPropertyName.COMMENT, line3);
+            if (line3.Length > 0) readData.SetProperty(CDKPropertyName.Comment, line3);
             string line4 = ReadLine();
             if (!line4.Contains("3000"))
             {
@@ -193,8 +189,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Reads the atoms, coordinates and charges.
-        ///
-        /// <p>IMPORTANT: it does not support the atom list and its negation!
+        /// <para>IMPORTANT: it does not support the atom list and its negation!</para>
         /// </summary>
         public void ReadAtomBlock(IAtomContainer readData)
         {
@@ -531,9 +526,9 @@ namespace NCDK.IO
                         foreach (var endpt in endpts)
                             sgroup.Atoms.Add(endpt);
 
-                        IList<Sgroup> sgroups = readData.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+                        IList<Sgroup> sgroups = readData.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
                         if (sgroups == null)
-                            readData.SetProperty(CDKPropertyName.CTAB_SGROUPS, sgroups = new List<Sgroup>(4));
+                            readData.SetProperty(CDKPropertyName.CtabSgroups, sgroups = new List<Sgroup>(4));
                         sgroups.Add(sgroup);
                     }
 
@@ -639,9 +634,8 @@ namespace NCDK.IO
         /// <summary>
         /// Reads the command on this line. If the line is continued on the next, that
         /// part is added.
-        ///
-        /// <returns>Returns the command on this line.</returns>
         /// </summary>
+        /// <returns>Returns the command on this line.</returns>
         private string ReadCommand(string line)
         {
             if (line.StartsWith("M  V30 "))

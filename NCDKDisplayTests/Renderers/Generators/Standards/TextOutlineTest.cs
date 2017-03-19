@@ -45,7 +45,7 @@ namespace NCDK.Renderers.Generators.Standards
         public void UntransformedBounds()
         {
             TextOutline clOutline = new TextOutline("Cl", font, emSize);
-            var bounds = clOutline.Bounds;
+            var bounds = clOutline.GetBounds();
             Assert.AreEqual(0.67, bounds.X, 0.01);
             Assert.AreEqual(-9.12, bounds.Y, 0.01);
             Assert.AreEqual(9.90, bounds.Width, 0.01);
@@ -57,8 +57,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             TextOutline original = new TextOutline("Cl", font, emSize);
             TextOutline transformed = original.Translate(5, 0);
-            var oBounds = original.Bounds;
-            var tBounds = transformed.Bounds;
+            var oBounds = original.GetBounds();
+            var tBounds = transformed.GetBounds();
             Assert.AreEqual(oBounds.X + 5, tBounds.X, 0.01);
             Assert.AreEqual(oBounds.Y, tBounds.Y, 0.01);
             Assert.AreEqual(oBounds.Width, tBounds.Width, 0.01);
@@ -70,8 +70,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             TextOutline original = new TextOutline("Cl", font, emSize);
             TextOutline transformed = original.Translate(0, -5);
-            var oBounds = original.Bounds;
-            var tBounds = transformed.Bounds;
+            var oBounds = original.GetBounds();
+            var tBounds = transformed.GetBounds();
             Assert.AreEqual(oBounds.X, tBounds.X, 0.01);
             Assert.AreEqual(oBounds.Y - 5, tBounds.Y, 0.01);
             Assert.AreEqual(oBounds.Width, tBounds.Width, 0.01);
@@ -121,8 +121,8 @@ namespace NCDK.Renderers.Generators.Standards
         {
             TextOutline original = new TextOutline("Cl", font, emSize);
             TextOutline transformed = original.Resize(2, 2);
-            var oBounds = original.Bounds;
-            var tBounds = transformed.Bounds;
+            var oBounds = original.GetBounds();
+            var tBounds = transformed.GetBounds();
             Assert.AreEqual(oBounds.X - oBounds.Width / 2, tBounds.X, 0.01);
             Assert.AreEqual(oBounds.Y - oBounds.Height / 2, tBounds.Y, 0.01);
             Assert.AreEqual(oBounds.Width * 2, tBounds.Width, 0.01);
@@ -153,7 +153,7 @@ namespace NCDK.Renderers.Generators.Standards
         public void TestToString()
         {
             TextOutline outline = new TextOutline("Cl", font, emSize);
-            var bounds = outline.Bounds;
+            var bounds = outline.GetBounds();
             Assert.AreEqual(
                 "Cl [x=" + ToString(bounds.X) + ", y=" + ToString(bounds.Y)
                 + ", w=" + ToString(bounds.Width) + ", h=" + ToString(bounds.Height) + "]",

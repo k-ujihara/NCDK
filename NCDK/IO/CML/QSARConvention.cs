@@ -30,12 +30,10 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// This is an implementation for the CDK convention.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author egonw
-    /// </summary>
     public class QSARConvention : CMLCoreModule
     {
         private string currentDescriptorAlgorithmSpecification;

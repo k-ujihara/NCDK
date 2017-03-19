@@ -36,7 +36,6 @@ namespace NCDK.IO
     // @cdk.module  io
     // @cdk.githash
     // @cdk.iooptions
-    /// 
     // @cdk.keyword file format, PubChem Compound XML
     public class PCCompoundXMLReader : DefaultChemObjectReader
     {

@@ -27,7 +27,7 @@ using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Elements.Path;
 using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Linq;

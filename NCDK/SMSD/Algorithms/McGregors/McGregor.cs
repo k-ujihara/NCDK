@@ -33,10 +33,10 @@ namespace NCDK.SMSD.Algorithms.McGregors
     /// Class which reports MCS solutions based on the McGregor algorithm
     /// published in 1982.
     ///
-    ///  <p>The SMSD algorithm is described in this paper.
-    /// <font color="#FF0000">please refer Rahman <i>et.al. 2009</i></font>
+    ///  <para>The SMSD algorithm is described in this paper.
+    /// please refer Rahman <i>et.al. 2009</i>
     ///  {@cdk.cite SMSD2009}.
-    ///  </p>
+    ///  </para>
     /// </summary>
     // @cdk.module smsd
     // @cdk.githash

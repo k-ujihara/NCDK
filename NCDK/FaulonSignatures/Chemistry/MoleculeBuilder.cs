@@ -1,7 +1,4 @@
-using FaulonSignatures;
-using static FaulonSignatures.Chemistry.Molecule;
-
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeBuilder : AbstractGraphBuilder
     {
@@ -17,15 +14,15 @@ namespace FaulonSignatures.Chemistry
         {
             if (edgeLabel.Equals(""))
             {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, BondOrder.Single);
+                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Single);
             }
             else if (edgeLabel.Equals("="))
             {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, BondOrder.Double);
+                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Double);
             }
             else if (edgeLabel.Equals("#"))
             {
-                this.molecule.AddBond(vertexIndex1, vertexIndex2, BondOrder.Triple);
+                this.molecule.AddBond(vertexIndex1, vertexIndex2, Molecule.BondOrder.Triple);
             }
         }
 

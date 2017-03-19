@@ -122,8 +122,8 @@ namespace NCDK.Beam
         /// <param name="g">  the chemical graph</param>
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="acc">accumulator for new edges</param>
-        /// <exception cref="">thrown if the edge could not be converted</exception>
-       private bool RePlaceImplWithExpl(Graph g,
+        /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
+        private bool RePlaceImplWithExpl(Graph g,
                                             Edge e,
                                             IDictionary<Edge, Edge> acc)
         {

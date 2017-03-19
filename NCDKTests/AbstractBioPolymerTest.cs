@@ -49,7 +49,7 @@ namespace NCDK
             IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
             IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
-            oBioPolymer.Add(oAtom1);
+            oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono2, oStrand2);
             Assert.IsNotNull(oBioPolymer.Atoms[0]);
@@ -80,7 +80,7 @@ namespace NCDK
             IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
             IAtom oAtom3 = oBioPolymer.Builder.CreateAtom("C3");
-            oBioPolymer.Add(oAtom1);
+            oBioPolymer.Atoms.Add(oAtom1);
             oBioPolymer.AddAtom(oAtom2, oMono1, oStrand1);
             oBioPolymer.AddAtom(oAtom3, oMono2, oStrand2);
             Assert.IsNotNull(oBioPolymer.Atoms[0]);
@@ -127,8 +127,8 @@ namespace NCDK
 
             IAtom oAtom1 = oBioPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oBioPolymer.Builder.CreateAtom("C2");
-            oBioPolymer.Add(oAtom1);
-            oBioPolymer.Add(oAtom2);
+            oBioPolymer.Atoms.Add(oAtom1);
+            oBioPolymer.Atoms.Add(oAtom2);
 
             Assert.AreEqual(2, oBioPolymer.Atoms.Count);
         }

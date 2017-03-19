@@ -18,19 +18,17 @@ using System;
 
 namespace NCDK.Common.Mathematics
 {
-    /// <summary> Base class for random number generators that generates bits streams.
-
+    /// <summary> 
+    /// Base class for random number generators that generates bits streams.
+    /// </summary>
     // @version $Id: BitsStreamGenerator.java 1244107 2012-02-14 16:17:55Z erans $
     // @since 2.0
-
-    /// </summary>
     public abstract class BitsStreamGenerator
     {
-        /// <summary> Next gaussian. */
+       /// <summary> Next gaussian. </summary>
         private double nextGaussian;
 
-        /// <summary> Creates a new random number generator.
-        /// </summary>
+        /// <summary> Creates a new random number generator.</summary>
         public BitsStreamGenerator()
         {
             nextGaussian = double.NaN;
@@ -46,11 +44,11 @@ namespace NCDK.Common.Mathematics
         public abstract void SetSeed(long seed);
 
         /// <summary> Generate next pseudorandom number.
-        /// <p>This method is the core generation algorithm. It is used by all the
+        /// <para>This method is the core generation algorithm. It is used by all the
         /// public generation methods for the various primitive types {@link
         /// #NextBoolean()}, {@link #NextBytes(byte[])}, {@link #NextDouble()},
         /// {@link #NextFloat()}, {@link #NextGaussian()}, {@link #NextInt()},
-        /// {@link #Next(int)} and {@link #NextLong()}.</p>
+        /// {@link #Next(int)} and {@link #NextLong()}.</para>
         /// <param name="bits">number of random bits to produce</param>
         /// <returns>random bits generated</returns>
         /// </summary>
@@ -137,18 +135,18 @@ namespace NCDK.Common.Mathematics
 
         /// <summary>
         /// {@inheritDoc}
-        /// <p>This default implementation is copied from Apache Harmony
-        /// java.util.Random (r929253).</p>
+        /// <para>This default implementation is copied from Apache Harmony
+        /// java.util.Random (r929253).</para>
         ///
-        /// <p>Implementation notes: <ul>
-        /// <li>If n is a power of 2, this method returns
-        /// {@code (int) ((n * (long) Next(31)) >> 31)}.</li>
+        /// <para>Implementation notes: <list type="bullet">
+        /// <item>If n is a power of 2, this method returns
+        /// {@code (int) ((n * (long) Next(31)) >> 31)}.</item>
         ///
-        /// <li>If n is not a power of 2, what is returned is {@code Next(31) % n}
+        /// <item>If n is not a power of 2, what is returned is {@code Next(31) % n}
         /// with {@code Next(31)} values rejected (i.e. regenerated) until a
         /// value that is larger than the remainder of {@code int.MaxValue / n}
         /// is generated. Rejection of this initial segment is necessary to ensure
-        /// a uniform distribution.</li></ul></p>
+        /// a uniform distribution.</item></list></para>
         /// </summary>
         public int NextInt(int n)
         {

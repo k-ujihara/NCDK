@@ -23,21 +23,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace NCDK.Isomorphisms.MCSS
 {
     /// <summary>
     ///  An RMap implements the association between an edge (bond) in G1 and an edge
     ///  (bond) in G2, G1 and G2 being the compared graphs in a RGraph context.
-    ///
+    /// </summary>
     // @author      Stephane Werner, IXELIS <mail@ixelis.net>
     // @cdk.created 2002-07-24
     // @cdk.module  standard
     // @cdk.githash
-    /// </summary>
     public class RMap
     {
         public int Id1 { get; set; } = 0;
@@ -45,10 +40,9 @@ namespace NCDK.Isomorphisms.MCSS
 
         /// <summary>
         ///  Constructor for the RMap.
-        ///
+        /// </summary>
         /// <param name="id1">number of the edge (bond) in the graph 1</param>
         /// <param name="id2">number of the edge (bond) in the graph 2</param>
-        /// </summary>
         public RMap(int id1, int id2)
         {
             Id1 = id1;
@@ -57,10 +51,9 @@ namespace NCDK.Isomorphisms.MCSS
 
         /// <summary>
         ///  The equals method.
-        ///
+        /// </summary>
         /// <param name="o">The object to compare.</param>
         /// <returns>true=if both ids equal, else false.</returns>
-        /// </summary>
         public override bool Equals(object o)
         {
             var aa = o as RMap;

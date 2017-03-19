@@ -20,11 +20,9 @@ using NCDK.Tools;
 
 namespace NCDK.IO.Formats
 {
-    /// <summary>
-    ///     // @cdk.module ioformats
+    // @cdk.module ioformats
     // @cdk.githash
     // @cdk.set     io-formats
-    /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
     // @cdk.set     io-formats

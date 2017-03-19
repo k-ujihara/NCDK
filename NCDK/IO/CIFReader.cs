@@ -40,18 +40,15 @@ namespace NCDK.IO
     /// In addition, the things it does read are considered experimental.
     ///
     /// <para>The CIF example on the IUCR website has been tested, as well as Crambin (1CRN)
-    /// in the PDB database.
-    ///
+    /// in the PDB database.</para>
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @cdk.keyword file format, CIF
     // @cdk.keyword file format, mmCIF
-    ///
     // @author  E.L. Willighagen
     // @cdk.created 2003-10-12
     // @cdk.iooptions
-    /// </summary>
     public class CIFReader : DefaultChemObjectReader
     {
         private TextReader input;

@@ -29,23 +29,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     ///  If r(i) is the largest matrix entry in row i of the distance matrix D, then the radius is defined as the smallest of the r(i).
     ///  The graph diameter D is defined as the largest vertex eccentricity in the graph.
     ///  (http://www.edusoft-lc.com/molconn/manuals/400/chaptwo.html)
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
     ///
     /// Returns a single value named <i>PetitjeanNumber</i>.
-    ///
+    /// </para>
+    /// </remarks>
     // @author         mfe4
     // @cdk.created    December 7, 2004
     // @cdk.created    2004-11-03
@@ -54,7 +56,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:petitjeanNumber
     // @cdk.keyword    Petit-Jean, number
-    /// </summary>
     public class PetitjeanNumberDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "PetitjeanNumber" };
@@ -99,14 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(petitjeanNumber), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleResult(0.0);
 
         /// <summary>

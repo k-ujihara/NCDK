@@ -159,7 +159,6 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IAtom atom = (IAtom)NewChemObject();
@@ -257,7 +256,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IAtom atom = (IAtom)NewChemObject();

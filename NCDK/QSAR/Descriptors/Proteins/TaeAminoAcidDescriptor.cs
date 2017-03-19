@@ -28,15 +28,19 @@ namespace NCDK.QSAR.Descriptors.Proteins
 {
     /// <summary>
     /// An implementation of the TAE descriptors for amino acids.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
     /// are derived from pre-calculated quantum mechanical parameters. This class
     /// uses the parameters for amino acids and thus evaluates a set of 147 descriptors for peptide
     /// sequences.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// The class expects that it will be supplied an object which implements the <see cref="IBioPolymer"/>. Thus ordinary
     /// AtomContainer objects  will result in an exception.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// The descriptors are returned in the following order (see
     /// <a href="http://www.chem.rpi.edu/chemweb/recondoc/TAE.doc">here</a>
     /// for a detailed description of the individual descriptors):
@@ -72,29 +76,29 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// Lapl3 Lapl4 Lapl5 Lapl6 Lapl7
     /// Lapl8 Lapl9 Lapl10
     /// </code>
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td></td>
-    /// <td></td>
-    /// <td>no parameters</td>
-    /// </tr>
-    /// </table>
-    ///
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term></term>
+    /// <term></term>
+    /// <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="IBioPolymer"/>
     // @author      Rajarshi Guha
     // @cdk.created 2006-08-23
     // @cdk.module  qsarprotein
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:taeAminoAcid
-    // @see         IBioPolymer
-    /// </summary>
     public class TaeAminoAcidDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private Dictionary<string, double[]> taeParams = new Dictionary<string, double[]>();
@@ -283,17 +287,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
             return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(147);
     }
 }

@@ -25,18 +25,16 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
     ///
     /// Daylight spec indicates that if match a single bond
     /// using '-', it should be an aliphatic single bond
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class OrderQueryBond : SMARTSBond
     {
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="order">the order of bond</param>
         /// </summary>
+        /// <param name="order">the order of bond</param>
         public OrderQueryBond(BondOrder order, IChemObjectBuilder builder)
             : base(builder)
         {

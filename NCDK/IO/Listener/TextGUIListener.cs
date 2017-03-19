@@ -26,19 +26,18 @@ namespace NCDK.IO.Listener
     /// <summary>
     /// Allows processing of IOSetting quesions which are passed to the user
     /// by using the System.out and System.in by default.
-    ///
-    /// <p>This listener can also be used to list all the questions a ChemObjectWriter
-    /// has, by using a dummy StringWriter, and a <code>null</code> Reader.
-    ///
+    /// </summary>
+    /// <remarks>
+    /// This listener can also be used to list all the questions a ChemObjectWriter
+    /// has, by using a dummy StringWriter, and a <see langword="null"/> Reader.
+    /// </remarks>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    /// </summary>
     public class TextGUIListener : IReaderListener, IWriterListener
     {
-        private TextReader in_;
-        private TextWriter out_;
+        private TextReader ins;
+        private TextWriter output;
 
         private Importance level = Importance.High;
 
@@ -59,7 +58,7 @@ namespace NCDK.IO.Listener
         /// </summary>
         public void SetOutputWriter(TextWriter writer)
         {
-            out_ = writer;
+            output = writer;
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace NCDK.IO.Listener
         /// </summary>
         public void SetInputReader(TextReader reader)
         {
-            in_ = reader;
+            ins = reader;
         }
 
         public void FrameRead(ReaderEvent evt) { }
@@ -75,30 +74,30 @@ namespace NCDK.IO.Listener
         /// <summary>
         /// Processes the IOSettings by listing the question, giving the options
         /// and asking the user to provide their choice.
-        ///
-        /// <p>Note: if the input reader is <code>null</code>, then the method
-        /// does not wait for an answer, and takes the default.
         /// </summary>
+        /// <remarks>
+        /// Note: if the input reader is <see langword="null"/>, then the method
+        /// does not wait for an answer, and takes the default.</remarks>
         public void ProcessIOSettingQuestion(IOSetting setting)
         {
             // post the question
             if (setting.Level.Ordinal <= this.level.Ordinal)
             {
                 // output the option name
-                this.out_.Write("[" + setting.Name + "]: ");
+                this.output.Write("[" + setting.Name + "]: ");
                 // post the question
-                this.out_.Write(setting.Question);
+                this.output.Write(setting.Question);
                 if (setting is BooleanIOSetting)
                 {
                     BooleanIOSetting boolSet = (BooleanIOSetting)setting;
                     bool set = boolSet.IsSet;
                     if (set)
                     {
-                        this.out_.Write(" [Yn]");
+                        this.output.Write(" [Yn]");
                     }
                     else
                     {
-                        this.out_.Write(" [yN]");
+                        this.output.Write(" [yN]");
                     }
                 }
                 else if (setting is OptionIOSetting)
@@ -107,24 +106,24 @@ namespace NCDK.IO.Listener
                     var settings = optionSet.GetOptions();
                     for (int i = 0; i < settings.Count; i++)
                     {
-                        this.out_.WriteLine();
+                        this.output.WriteLine();
                         string option = (string)settings[i];
-                        this.out_.Write((i + 1) + ". " + option);
+                        this.output.Write((i + 1) + ". " + option);
                         if (option.Equals(setting.Setting))
                         {
-                            this.out_.Write(" (Default)");
+                            this.output.Write(" (Default)");
                         }
                     }
                 }
                 else
                 {
-                    this.out_.Write(" [" + setting.Setting + "]");
+                    this.output.Write(" [" + setting.Setting + "]");
                 }
-                this.out_.WriteLine();
-                this.out_.Flush();
+                this.output.WriteLine();
+                this.output.Flush();
 
                 // get the answer, only if input != null
-                if (this.in_ == null)
+                if (this.ins == null)
                 {
                     // don't really ask questions. This is intentional behaviour to
                     // allow for listing all questions. The settings is now defaulted,
@@ -137,9 +136,9 @@ namespace NCDK.IO.Listener
                     {
                         try
                         {
-                            this.out_.Write("> ");
-                            this.out_.Flush();
-                            string answer = in_.ReadLine();
+                            this.output.Write("> ");
+                            this.output.Flush();
+                            string answer = ins.ReadLine();
                             if (answer.Length == 0)
                             {
                                 // pressed ENTER -> take default
@@ -171,16 +170,16 @@ namespace NCDK.IO.Listener
                         }
                         catch (IOException)
                         {
-                            this.out_.WriteLine("Cannot read from STDIN. Skipping question.");
+                            this.output.WriteLine("Cannot read from STDIN. Skipping question.");
                         }
                         catch (FormatException)
                         {
-                            this.out_.WriteLine("Answer is not a number.");
+                            this.output.WriteLine("Answer is not a number.");
                         }
                         catch (CDKException exception)
                         {
-                            this.out_.WriteLine();
-                            this.out_.WriteLine(exception.ToString());
+                            this.output.WriteLine();
+                            this.output.WriteLine(exception.ToString());
                         }
                     }
                 }

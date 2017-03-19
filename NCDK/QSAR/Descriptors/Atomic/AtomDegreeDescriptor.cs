@@ -28,19 +28,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
     /// <summary>
     /// This class returns the number of not-Hs substituents of an atom, also defined as "atom degree".
     ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
+    /// </para>
     /// </summary>
     // @author      mfe4
     // @cdk.created 2004-11-13
@@ -65,11 +66,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// This method calculates the number of not-H substituents of an atom.
-        ///
+        /// </summary>
         /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
         /// <param name="container">The <see cref="IAtomContainer"/> for which this descriptor is to be calculated for</param>
         /// <returns>The number of bonds on the shortest path between two atoms</returns>
-        /// </summary>
         public override DescriptorValue Calculate(IAtom atom, IAtomContainer container)
         {
             int atomDegree = 0;

@@ -27,11 +27,10 @@ namespace NCDK.Tools
 {
     /// <summary>
     /// Generates a Grid of points in 3D space within given boundaries.
-    ///
+    /// </summary>
     // @author cho
     // @cdk.githash
     // @cdk.created 2005-09-30
-    /// </summary>
     public class GridGenerator
     {
         public double LatticeConstant { get; set; } = 0.5;
@@ -55,8 +54,10 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// <param name="initialValue">used as initial value for the Grid points</param>
         /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <param name="initialValue">used as initial value for the Grid points</param>
         public GridGenerator(double min, double max, double initialValue)
         {
             SetDimension(min, max);
@@ -311,10 +312,10 @@ namespace NCDK.Tools
         /// <summary>
         /// Method transforms the Grid into pmesh format. Only Grid points
         /// with specific value defined with cutoff are considered.
-        /// <code>
-        /// cutoff <0, the values considered must be <=cutoff
-        /// cutoff >0, the values considered must be >=cutoff
-        /// </code>
+        /// <para>
+        /// cutoff &lt; 0, the values considered must be &lt;=cutoff
+        /// cutoff &gt; 0, the values considered must be &gt;=cutoff
+        /// </para>
         /// </summary>
         public void WriteGridInPmeshFormat(string outPutFileName, double cutOff)
         {

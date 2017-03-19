@@ -70,15 +70,15 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void TestINChI()
+        public void TestInChI()
         {
-            ExpectFormat("NCDK.Data.InChI.guanine.inchi.xml", INChIFormat.Instance);
+            ExpectFormat("NCDK.Data.InChI.guanine.inchi.xml", InChIFormat.Instance);
         }
 
         [TestMethod()]
-        public void TestINChIPlainText()
+        public void TestInChIPlainText()
         {
-            ExpectFormat("NCDK.Data.InChI.guanine.inchi", INChIPlainTextFormat.Instance);
+            ExpectFormat("NCDK.Data.InChI.guanine.inchi", InChIPlainTextFormat.Instance);
         }
 
         [TestMethod()]

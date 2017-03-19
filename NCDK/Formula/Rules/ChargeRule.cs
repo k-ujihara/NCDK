@@ -47,11 +47,6 @@ namespace NCDK.Formula.Rules
     {
         private double charge = 0.0;
 
-        /// <summary>
-        /// Constructor for the ChargeRule object.
-        /// </summary>
-        /// <exception cref="IOException">           If an error occurs when reading atom type information</exception>
-        /// <exception cref="ClassNotFoundException">If an error occurs during tom typing</exception>
         public ChargeRule() { }
 
         /// <summary>

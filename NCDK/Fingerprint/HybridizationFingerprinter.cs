@@ -190,8 +190,8 @@ namespace NCDK.Fingerprint
                         x = y[0];
                     }
 
-                    /// we store the lexicographically lower one of the
-                    /// string and its reverse
+                    // we store the lexicographically lower one of the
+                    // string and its reverse
                     string sb_string = sb.ToString();
                     char[] revForm_array = sb_string.ToCharArray();
                     Array.Reverse(revForm_array);
@@ -202,7 +202,7 @@ namespace NCDK.Fingerprint
                         allPaths.Add(rev_string);
                 }
             }
-            /// now lets clean stuff up
+            // now lets clean stuff up
             ICollection<string> cleanPath = new HashSet<string>();
             foreach (var s in allPaths)
             {
@@ -212,7 +212,7 @@ namespace NCDK.Fingerprint
                 cleanPath.Add(s2);
             }
 
-            /// convert paths to hashes
+            // convert paths to hashes
             int[] hashes = new int[cleanPath.Count];
             {
                 int i = 0;

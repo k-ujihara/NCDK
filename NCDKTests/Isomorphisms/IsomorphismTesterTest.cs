@@ -45,16 +45,16 @@ namespace NCDK.Isomorphisms
         public void SetUp()
         {
             pinene_1 = new AtomContainer();
-            pinene_1.Add(new Atom("C")); // 1
-            pinene_1.Add(new Atom("C")); // 2
-            pinene_1.Add(new Atom("C")); // 3
-            pinene_1.Add(new Atom("C")); // 4
-            pinene_1.Add(new Atom("C")); // 5
-            pinene_1.Add(new Atom("C")); // 6
-            pinene_1.Add(new Atom("C")); // 7
-            pinene_1.Add(new Atom("C")); // 8
-            pinene_1.Add(new Atom("C")); // 9
-            pinene_1.Add(new Atom("C")); // 10
+            pinene_1.Atoms.Add(new Atom("C")); // 1
+            pinene_1.Atoms.Add(new Atom("C")); // 2
+            pinene_1.Atoms.Add(new Atom("C")); // 3
+            pinene_1.Atoms.Add(new Atom("C")); // 4
+            pinene_1.Atoms.Add(new Atom("C")); // 5
+            pinene_1.Atoms.Add(new Atom("C")); // 6
+            pinene_1.Atoms.Add(new Atom("C")); // 7
+            pinene_1.Atoms.Add(new Atom("C")); // 8
+            pinene_1.Atoms.Add(new Atom("C")); // 9
+            pinene_1.Atoms.Add(new Atom("C")); // 10
 
             pinene_1.AddBond(pinene_1.Atoms[0], pinene_1.Atoms[1], BondOrder.Double); // 1
             pinene_1.AddBond(pinene_1.Atoms[1], pinene_1.Atoms[2], BondOrder.Single); // 2
@@ -69,16 +69,16 @@ namespace NCDK.Isomorphisms
             pinene_1.AddBond(pinene_1.Atoms[7], pinene_1.Atoms[9], BondOrder.Single); // 11
 
             pinene_2 = new AtomContainer();
-            pinene_2.Add(new Atom("C")); // 1
-            pinene_2.Add(new Atom("C")); // 2
-            pinene_2.Add(new Atom("C")); // 3
-            pinene_2.Add(new Atom("C")); // 4
-            pinene_2.Add(new Atom("C")); // 5
-            pinene_2.Add(new Atom("C")); // 6
-            pinene_2.Add(new Atom("C")); // 7
-            pinene_2.Add(new Atom("C")); // 8
-            pinene_2.Add(new Atom("C")); // 9
-            pinene_2.Add(new Atom("C")); // 10
+            pinene_2.Atoms.Add(new Atom("C")); // 1
+            pinene_2.Atoms.Add(new Atom("C")); // 2
+            pinene_2.Atoms.Add(new Atom("C")); // 3
+            pinene_2.Atoms.Add(new Atom("C")); // 4
+            pinene_2.Atoms.Add(new Atom("C")); // 5
+            pinene_2.Atoms.Add(new Atom("C")); // 6
+            pinene_2.Atoms.Add(new Atom("C")); // 7
+            pinene_2.Atoms.Add(new Atom("C")); // 8
+            pinene_2.Atoms.Add(new Atom("C")); // 9
+            pinene_2.Atoms.Add(new Atom("C")); // 10
 
             pinene_2.AddBond(pinene_2.Atoms[0], pinene_2.Atoms[4], BondOrder.Single); // 1
             pinene_2.AddBond(pinene_2.Atoms[0], pinene_2.Atoms[5], BondOrder.Single); // 2
@@ -93,16 +93,16 @@ namespace NCDK.Isomorphisms
             pinene_2.AddBond(pinene_2.Atoms[7], pinene_2.Atoms[6], BondOrder.Single); // 11
 
             pinene_non = new AtomContainer();
-            pinene_non.Add(new Atom("C")); // 1
-            pinene_non.Add(new Atom("C")); // 2
-            pinene_non.Add(new Atom("C")); // 3
-            pinene_non.Add(new Atom("C")); // 4
-            pinene_non.Add(new Atom("C")); // 5
-            pinene_non.Add(new Atom("C")); // 6
-            pinene_non.Add(new Atom("C")); // 7
-            pinene_non.Add(new Atom("C")); // 8
-            pinene_non.Add(new Atom("C")); // 9
-            pinene_non.Add(new Atom("C")); // 10
+            pinene_non.Atoms.Add(new Atom("C")); // 1
+            pinene_non.Atoms.Add(new Atom("C")); // 2
+            pinene_non.Atoms.Add(new Atom("C")); // 3
+            pinene_non.Atoms.Add(new Atom("C")); // 4
+            pinene_non.Atoms.Add(new Atom("C")); // 5
+            pinene_non.Atoms.Add(new Atom("C")); // 6
+            pinene_non.Atoms.Add(new Atom("C")); // 7
+            pinene_non.Atoms.Add(new Atom("C")); // 8
+            pinene_non.Atoms.Add(new Atom("C")); // 9
+            pinene_non.Atoms.Add(new Atom("C")); // 10
 
             pinene_non.AddBond(pinene_non.Atoms[0], pinene_non.Atoms[5], BondOrder.Single); // 1
             pinene_non.AddBond(pinene_non.Atoms[0], pinene_non.Atoms[7], BondOrder.Single); // 2

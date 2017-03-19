@@ -24,10 +24,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Collections;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Isomorphisms.MCSS
 {
@@ -39,12 +36,11 @@ namespace NCDK.Isomorphisms.MCSS
     ///  of the mapped edges (in an RMap), of its neighbours in the RGraph it belongs
     ///  to and of the set of incompatible nodes (nodes that may not be along with
     ///  this node in the same solution)
-    ///
+    /// </summary>
     // @author      Stephane Werner from IXELIS mail@ixelis.net
     // @cdk.created 2002-07-17
     // @cdk.module  standard
     // @cdk.githash
-    /// </summary>
     public class RNode
     {
         /// <summary>
@@ -64,22 +60,20 @@ namespace NCDK.Isomorphisms.MCSS
 
         /// <summary>
         ///  Constructor for the RNode object.
-        ///
+        /// </summary>
         /// <param name="id1">number of the bond in the graph 1</param>
         /// <param name="id2">number of the bond in the graph 2</param>
-        /// </summary>
         public RNode(int id1, int id2)
         {
             RMap = new RMap(id1, id2);
             Extension = new BitArray(0);
             Forbidden = new BitArray(0);
         }
-        
+
         /// <summary>
         ///  Returns a string representation of the RNode.
-        ///
-        /// <returns>the string representation of the RNode</returns>
         /// </summary>
+        /// <returns>the string representation of the RNode</returns>
         public override string ToString()
         {
             return ("id1 : " + RMap.Id1 + ", id2 : " + RMap.Id2 + "\n" 

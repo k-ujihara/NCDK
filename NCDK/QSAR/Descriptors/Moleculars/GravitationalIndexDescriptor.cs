@@ -32,34 +32,37 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// For modelling purposes the value of the descriptor is calculated
     /// both with and without H atoms. Furthermore the square and cube roots
     /// of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The descriptor routine generates 9 descriptors:
-    /// <ul>
-    /// <li>GRAV-1 -  gravitational index of heavy atoms
-    /// <li>GRAV-2 -  square root of gravitational index of heavy atoms
-    /// <li>GRAV-3 -  cube root of gravitational index of heavy atoms
-    /// <li>GRAVH-1 -  gravitational index - hydrogens included
-    /// <li>GRAVH-2 -  square root of hydrogen-included gravitational index
-    /// <li>GRAVH-3 -  cube root of hydrogen-included gravitational index
-    /// <li>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)
-    /// <li>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)
-    /// <li>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)
-    /// </ul>
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td></td>
-    /// <td></td>
-    /// <td>no parameters</td>
-    /// </tr>
-    /// </table>
-    ///
+    /// <list type="bullet"> 
+    /// <item>GRAV-1 -  gravitational index of heavy atoms</item>
+    /// <item>GRAV-2 -  square root of gravitational index of heavy atoms</item>
+    /// <item>GRAV-3 -  cube root of gravitational index of heavy atoms</item>
+    /// <item>GRAVH-1 -  gravitational index - hydrogens included</item>
+    /// <item>GRAVH-2 -  square root of hydrogen-included gravitational index</item>
+    /// <item>GRAVH-3 -  cube root of hydrogen-included gravitational index</item>
+    /// <item>GRAV-4 -  grav1 for all pairs of atoms (not just bonded pairs)</item>
+    /// <item>GRAV-5 -  grav2 for all pairs of atoms (not just bonded pairs)</item>
+    /// <item>GRAV-6 -  grav3 for all pairs of atoms (not just bonded pairs)</item>
+    /// </list>
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term></term>
+    /// <term></term>
+    /// <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2004-11-23
     // @cdk.module qsarmolecular
@@ -68,7 +71,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:gravitationalIndex
     // @cdk.keyword gravitational index
     // @cdk.keyword descriptor
-    /// </summary>
     public class GravitationalIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private struct Pair
@@ -257,17 +259,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(9);
     }
 }

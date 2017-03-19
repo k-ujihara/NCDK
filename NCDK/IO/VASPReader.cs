@@ -26,7 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 
 namespace NCDK.IO
 {
@@ -255,9 +254,9 @@ namespace NCDK.IO
                     frac[1] = xred[i][1];
                     frac[2] = xred[i][2];
                     atom.FractionalPoint3D = new Vector3(frac[0], frac[1], frac[2]);
-                    crystal.Add(atom);
+                    crystal.Atoms.Add(atom);
                 }
-                crystal.SetProperty(CDKPropertyName.REMARK, info);
+                crystal.SetProperty(CDKPropertyName.Remark, info);
                 chemModel.Crystal = crystal;
 
                 Trace.TraceInformation("New Frame set!");

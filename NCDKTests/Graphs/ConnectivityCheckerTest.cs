@@ -74,8 +74,8 @@ namespace NCDK.Graphs
             atom1.Id = "atom1";
             Atom atom2 = new Atom("C");
             atom2.Id = "atom2";
-            atomCon.Add(atom1);
-            atomCon.Add(atom2);
+            atomCon.Atoms.Add(atom1);
+            atomCon.Atoms.Add(atom2);
             IAtomContainerSet<IAtomContainer> moleculeSet = ConnectivityChecker.PartitionIntoMolecules(atomCon);
             Assert.IsNotNull(moleculeSet);
             Assert.AreEqual(2, moleculeSet.Count);
@@ -118,15 +118,15 @@ namespace NCDK.Graphs
             // make two molecules; one with an LonePair, the other with a SingleElectron
             IAtomContainer mol1 = new AtomContainer();
             Atom atom1 = new Atom("C");
-            mol1.Add(atom1);
+            mol1.Atoms.Add(atom1);
             LonePair lp1 = new LonePair(atom1);
-            mol1.Add(lp1);
+            mol1.LonePairs.Add(lp1);
             // mol2
             IAtomContainer mol2 = new AtomContainer();
             Atom atom2 = new Atom("C");
-            mol2.Add(atom2);
+            mol2.Atoms.Add(atom2);
             SingleElectron se2 = new SingleElectron(atom2);
-            mol2.Add(se2);
+            mol2.SingleElectrons.Add(se2);
 
             atomCon.Add(mol1);
             atomCon.Add(mol2);

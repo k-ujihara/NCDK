@@ -94,7 +94,7 @@ namespace NCDK.QSAR
         /// 
         /// engine.Process(someAtomContainer);
         /// </code>
-        /// This approach allows one to use find classes using the interface based approach (<see cref="GetDescriptorClassNameByInterface(string, string[])"/>.
+        /// This approach allows one to use find classes using the interface based approach (<see cref="GetDescriptorClassNameByInterface(string, IEnumerable{Assembly})"/>.
         /// If you use this method it is preferable to specify the jar files to examine
         /// </example>
         public DescriptorEngine(IList<string> classNames, IChemObjectBuilder builder)
@@ -537,19 +537,20 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns a list containing the classes that implement a specific interface.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// The interface name specified can be null or an empty string. In this case the interface name
         /// is automatcally set to <i>IDescriptor</i>.  Specifying <i>IDescriptor</i> will
         /// return all available descriptor classes. Valid interface names are
-        /// <ul>
-        /// <li>IMolecularDescriptor
-        /// <li>IAtomicDescripto
-        /// <li>IBondDescriptor
-        /// <li>IDescriptor
-        /// </ul>
-        /// </summary>
+        /// <list type="bullet">
+        /// <item>IMolecularDescriptor</item>
+        /// <item>IAtomicDescripto</item>
+        /// <item>IBondDescriptor</item>
+        /// <item>IDescriptor</item>
+        /// </list>
+        /// </remarks>
         /// <param name="interfaceName">The name of the interface that classes should implement</param>
-        /// <param name="jarFileNames">A string[] containing the fully qualified names of the jar files
+        /// <param name="assemblies">A string[] containing the fully qualified names of the jar files
         ///                      to examine for descriptor classes. In general this can be set to NULL, in which case
         ///                      the system classpath is examined for available jar files. This parameter can be set for
         ///                      situations where the system classpath is not available or is modified such as in an application
@@ -594,7 +595,7 @@ namespace NCDK.QSAR
         /// </para>
         /// </summary>
         /// <param name="packageName">The name of the package containing the required descriptor</param>
-        /// <param name="jarFileNames">A string[] containing the fully qualified names of the jar files
+        /// <param name="assemblies">A string[] containing the fully qualified names of the jar files
         ///                     to examine for descriptor classes. In general this can be set to NULL, in which case
         ///                     the system classpath is examined for available jar files. This parameter can be set for
         ///                     situations where the system classpath is not available or is modified such as in an application

@@ -25,12 +25,10 @@ namespace NCDK.Features
 {
     /// <summary>
     /// Utility that helps determine which data features are present.
-    ///
+    /// </summary>
     // @author egonw
     // @cdk.githash
-    ///
     // @see    DataFeatures
-    /// </summary>
     public class MoleculeFeaturesTool
     {
         public static bool HasPartialCharges(IAtomContainer molecule)

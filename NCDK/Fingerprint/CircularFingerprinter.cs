@@ -340,12 +340,12 @@ namespace NCDK.Fingerprint
         /// calculates an integer number that stores the bit-packed identity of the given atom
         private int InitialIdentityECFP(int aidx)
         {
-            /// <summary>
-            /// Atom properties from the source reference: (1) number of heavy atom
-            /// neighbours (2) atom degree: valence minus # hydrogens (3) atomic
-            /// number (4) atomic mass (5) atom charge (6) number of hydrogen
-            /// neighbours (7) whether the atom is in a ring
-            /// </summary>
+            // <summary>
+            // Atom properties from the source reference: (1) number of heavy atom
+            // neighbours (2) atom degree: valence minus # hydrogens (3) atomic
+            // number (4) atomic mass (5) atom charge (6) number of hydrogen
+            // neighbours (7) whether the atom is in a ring
+            // </summary>
             IAtom atom = mol.Atoms[aidx];
 
             int nheavy = atomAdj[aidx].Length, nhydr = hcount[aidx];

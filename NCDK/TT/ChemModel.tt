@@ -138,11 +138,11 @@ namespace <#= ns.NS #>
             <# if (!ns.IsSilent) { #> NotifyChanged(evt); <# } #>
         }
 
-        public bool IsEmpty
+        public bool IsEmpty()
             => (setOfMolecules == null || setOfMolecules.IsEmpty)
             && (setOfReactions == null || setOfReactions.IsEmpty)
             && (ringSet == null || ringSet.IsEmpty)
-            && (crystal == null || crystal.IsEmpty);
+            && (crystal == null || crystal.IsEmpty());
     }
 }
 <#

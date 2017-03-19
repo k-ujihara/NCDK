@@ -148,9 +148,9 @@ namespace NCDK.Reactions.Types
         {
             IReactionProcess type = new SharingAnionReaction();
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[1].FormalCharge = -1;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
@@ -176,8 +176,8 @@ namespace NCDK.Reactions.Types
 
             IAtomContainer product = setOfReactions[0].Products[0];
             IAtomContainer molecule2 = builder.CreateAtomContainer();
-            molecule2.Add(builder.CreateAtom("C"));
-            molecule2.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.CreateAtom("C"));
+            molecule2.Atoms.Add(builder.CreateAtom("C"));
             molecule2.AddBond(molecule2.Atoms[0], molecule2.Atoms[1], BondOrder.Double);
 
             AddExplicitHydrogens(molecule2);
@@ -293,9 +293,9 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
             molecule.Atoms[1].FormalCharge = -1;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
@@ -325,8 +325,8 @@ namespace NCDK.Reactions.Types
             //C=[O]
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
 
             try
@@ -349,7 +349,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {

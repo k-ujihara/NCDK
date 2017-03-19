@@ -118,10 +118,10 @@ namespace NCDK.Renderers.Generators
             Assert.IsFalse(generator.InvisibleHydrogen(hydrogen, model));
 
             IAtom nonHydrogen = base.builder.CreateAtom("C");
-            model.Set(typeof(ShowExplicitHydrogens), false);
+            model.SetV(typeof(ShowExplicitHydrogens), false);
             Assert.IsFalse(generator.InvisibleHydrogen(nonHydrogen, model));
 
-            model.Set(typeof(ShowExplicitHydrogens), true);
+            model.SetV(typeof(ShowExplicitHydrogens), true);
             Assert.IsFalse(generator.InvisibleHydrogen(nonHydrogen, model));
         }
 
@@ -134,7 +134,7 @@ namespace NCDK.Renderers.Generators
             IAtomContainer dummyContainer = base.builder.CreateAtomContainer();
 
             // we force the issue by making isKekule=true
-            model.Set(typeof(KekuleStructure), true);
+            model.SetV(typeof(KekuleStructure), true);
 
             Assert.IsFalse(generator.InvisibleCarbon(carbon, dummyContainer, model));
         }
@@ -145,7 +145,7 @@ namespace NCDK.Renderers.Generators
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[1];
 
-            model.Set(typeof(KekuleStructure), true);
+            model.SetV(typeof(KekuleStructure), true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 
@@ -173,7 +173,7 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[0];
-            model.Set(typeof(ShowEndCarbons), true);
+            model.SetV(typeof(ShowEndCarbons), true);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 
@@ -191,7 +191,7 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[1];
-            atomContainer.AddSingleElectron(atomContainer.Atoms[1]);
+            atomContainer.AddSingleElectronTo(atomContainer.Atoms[1]);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 
@@ -306,12 +306,12 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer methane = MakeMethane();
             // don't generate elements for hydrogens
-            model.Set(typeof(ShowExplicitHydrogens), false);
+            model.SetV(typeof(ShowExplicitHydrogens), false);
             var carbonOnly = GetAllSimpleElements(generator, methane);
             Assert.AreEqual(1, carbonOnly.Count);
 
             // do generate elements for hydrogens
-            model.Set(typeof(ShowExplicitHydrogens), true);
+            model.SetV(typeof(ShowExplicitHydrogens), true);
             var carbonPlusHydrogen = GetAllSimpleElements(generator, methane);
             Assert.AreEqual(5, carbonPlusHydrogen.Count);
         }
@@ -320,9 +320,9 @@ namespace NCDK.Renderers.Generators
         public virtual void KekuleTest()
         {
             IAtomContainer singleBond = MakeSingleBond();
-            model.Set(typeof(KekuleStructure), true);
+            model.SetV(typeof(KekuleStructure), true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
-            model.Set(typeof(KekuleStructure), false);
+            model.SetV(typeof(KekuleStructure), false);
             Assert.AreEqual(0, GetAllSimpleElements(generator, singleBond).Count);
         }
 
@@ -330,9 +330,9 @@ namespace NCDK.Renderers.Generators
         public virtual void ShowEndCarbonsTest()
         {
             IAtomContainer singleBond = MakeCCC();
-            model.Set(typeof(ShowEndCarbons), true);
+            model.SetV(typeof(ShowEndCarbons), true);
             Assert.AreEqual(2, GetAllSimpleElements(generator, singleBond).Count);
-            model.Set(typeof(ShowEndCarbons), false);
+            model.SetV(typeof(ShowEndCarbons), false);
             Assert.AreEqual(0, GetAllSimpleElements(generator, singleBond).Count);
         }
 
@@ -370,7 +370,7 @@ namespace NCDK.Renderers.Generators
         public virtual void TestSquare()
         {
             IAtomContainer square = MakeSquare();
-            model.Set(typeof(KekuleStructure), true);
+            model.SetV(typeof(KekuleStructure), true);
 
             // generate all four atoms
             IRenderingElement root = generator.Generate(square, model);

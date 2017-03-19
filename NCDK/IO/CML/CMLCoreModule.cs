@@ -757,7 +757,7 @@ namespace NCDK.IO.CML
                 {
                     //                cdo.SetObjectProperty("Molecule", "inchi", atts.GetValue("value"));
                     if (element.Attribute("value") != null)
-                        currentMolecule.SetProperty(CDKPropertyName.INCHI, element.Attribute("value").Value);
+                        currentMolecule.SetProperty(CDKPropertyName.InChI, element.Attribute("value").Value);
                 }
             }
             else if ("scalar".Equals(name))
@@ -1499,13 +1499,13 @@ namespace NCDK.IO.CML
                     else
                     {
                         //                    cdo.SetObjectProperty("Molecule", "Name", cData);
-                        currentMolecule.SetProperty(CDKPropertyName.TITLE, cData);
+                        currentMolecule.SetProperty(CDKPropertyName.Title, cData);
                     }
                 }
             }
             else if ("formula".Equals(name))
             {
-                currentMolecule.SetProperty(CDKPropertyName.FORMULA, cData);
+                currentMolecule.SetProperty(CDKPropertyName.Formula, cData);
             }
             else
             {
@@ -1535,11 +1535,11 @@ namespace NCDK.IO.CML
             if (inchi != null)
             {
                 //            cdo.SetObjectProperty("Molecule", "inchi", inchi);
-                currentMolecule.SetProperty(CDKPropertyName.INCHI, inchi);
+                currentMolecule.SetProperty(CDKPropertyName.InChI, inchi);
             }
             if (formula != null && formula.Count > 0)
             {
-                currentMolecule.SetProperty(CDKPropertyName.FORMULA, formula);
+                currentMolecule.SetProperty(CDKPropertyName.Formula, formula);
             }
             IEnumerator<string> customs = moleculeCustomProperty.GetEnumerator();
 
@@ -1783,14 +1783,14 @@ namespace NCDK.IO.CML
                             //                        cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                             // FIXME: huh?
                             if (eltitles[i] != null)
-                                currentAtom.SetProperty(CDKPropertyName.TITLE, (string)eltitles[i]);
+                                currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
                         }
                     }
                     else
                     {
                         //                    cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                         // FIXME: huh?
-                        if (eltitles[i] != null) currentAtom.SetProperty(CDKPropertyName.TITLE, (string)eltitles[i]);
+                        if (eltitles[i] != null) currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
                     }
                 }
 
@@ -1961,7 +1961,7 @@ namespace NCDK.IO.CML
                         TetrahedralStereo stereo = (parity == 1 ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise);
                         TetrahedralChirality chirality = new TetrahedralChirality(currentMolecule.Atoms[i], ligandAtoms,
                                 stereo);
-                        currentMolecule.AddStereoElement(chirality);
+                        currentMolecule.StereoElements.Add(chirality);
                     }
                     catch (FormatException e)
                     {

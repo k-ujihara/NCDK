@@ -35,15 +35,13 @@ namespace NCDK.StructGen
     /// constitutional space from there.
     /// This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
     ///
-    /// <p>Unlike the VicinitySampler, this methods does not sample
-    /// the full Faulon vicinity.
-    ///
-    // @see         org.openscience.cdk.structgen.VicinitySampler
-    ///
+    /// <para>Unlike the VicinitySampler, this methods does not sample
+    /// the full Faulon vicinity.</para>
+    /// </summary>
+    /// <seealso cref="VicinitySampler"/>
     // @cdk.githash
     // @cdk.keyword structure generator
     // @cdk.module structgen
-    /// </summary>
     public class RandomGenerator
     {
         private static System.Random random = new System.Random();
@@ -54,9 +52,8 @@ namespace NCDK.StructGen
 
         /// <summary>
         /// Constructs a RandomGenerator with a given starting structure.
-        ///
-        /// <param name="molecule">The starting structure</param>
         /// </summary>
+        /// <param name="molecule">The starting structure</param>
         public RandomGenerator(IAtomContainer molecule)
         {
             SetMolecule(molecule);
@@ -66,9 +63,8 @@ namespace NCDK.StructGen
         /// Proposes a structure which can be accepted or rejected by an external
         /// entity. If rejected, the structure is not used as a starting point
         /// for the next random move in structure space.
-        ///
-        /// <returns>A proposed molecule</returns>
         /// </summary>
+        /// <returns>A proposed molecule</returns>
         public IAtomContainer ProposeStructure()
         {
             Debug.WriteLine("RandomGenerator->ProposeStructure() Start");
@@ -239,7 +235,7 @@ namespace NCDK.StructGen
             }
             else if (b1 != null)
             {
-                ac.Remove(b1);
+                ac.Bonds.Remove(b1);
             }
 
             if (b12 > 0)
@@ -256,7 +252,7 @@ namespace NCDK.StructGen
             }
             else if (b2 != null)
             {
-                ac.Remove(b2);
+                ac.Bonds.Remove(b2);
             }
 
             if (b21 > 0)
@@ -273,7 +269,7 @@ namespace NCDK.StructGen
             }
             else if (b3 != null)
             {
-                ac.Remove(b3);
+                ac.Bonds.Remove(b3);
             }
 
             if (b22 > 0)
@@ -290,7 +286,7 @@ namespace NCDK.StructGen
             }
             else if (b4 != null)
             {
-                ac.Remove(b4);
+                ac.Bonds.Remove(b4);
             }
 
             Debug.WriteLine("a11 a12 a21 a22: " + a11 + " " + a12 + " " + a21 + " " + a22);
@@ -299,9 +295,8 @@ namespace NCDK.StructGen
 
         /// <summary>
         /// Assigns a starting structure to this generator.
-        ///
-        /// <param name="molecule">a starting structure for this generator</param>
         /// </summary>
+        /// <param name="molecule">a starting structure for this generator</param>
         public void SetMolecule(IAtomContainer molecule)
         {
             this.molecule = molecule;
@@ -310,9 +305,8 @@ namespace NCDK.StructGen
         /// <summary>
         /// Returns the molecule which reflects the current state of this
         /// stochastic structure generator.
-        ///
-        /// <returns>The molecule</returns>
         /// </summary>
+        /// <returns>The molecule</returns>
         public IAtomContainer Molecule => this.molecule;
     }
 }

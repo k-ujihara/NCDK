@@ -55,13 +55,12 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 {
     /// <summary>
     /// Class for parsing and generating query graph.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFQueryBuilder : IQuery
     {
-
         private IList<INode> nodesList;
         private IList<IEdge> edgesList;
         private IDictionary<INode, IAtom> nodeBondMap;
@@ -93,11 +92,11 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
         /// <summary>
         /// Return a node for a given atom else return null
-        /// <param name="atom">/// <returns>Node in the graph for a given atom</param></returns>
         /// </summary>
+        /// <param name="atom"></param>
+        /// <returns>Node in the graph for a given atom</returns>
         public INode GetNode(IAtom atom)
         {
-
             foreach (var v in nodeBondMap)
             {
                 if (v.Value.Equals(atom))
@@ -136,9 +135,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
         /// <summary>
         /// Add and return a node for a query atom
-        /// <param name="matcher">/// @param atom</param>
-        /// <returns>added Node</returns>
         /// </summary>
+        /// <returns>added Node</returns>
         public INode AddNode(VFAtomMatcher matcher, IAtom atom)
         {
             NodeBuilder node = new NodeBuilder(matcher);
@@ -164,9 +162,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
         /// <summary>
         /// Construct and return an edge for a given query and target node
-        /// <param name="source">/// @param target</param>
-        /// <param name="matcher">/// <returns>connected edges</param></returns>
         /// </summary>
+        /// <returns>connected edges</returns>
         public IEdge Connect(INode source, INode target, VFBondMatcher matcher)
         {
             NodeBuilder sourceImpl = (NodeBuilder)source;

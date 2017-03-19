@@ -25,7 +25,6 @@ using NCDK.Numerics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using static NCDK.Renderers.Generators.Standards.VecmathUtil;
 
 namespace NCDK.Renderers.Generators.Standards
@@ -43,7 +42,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// right unless the element is listed here. This allows us to correctly
         /// displayed H2O not OH2 and CH4 not H4C.
         /// </summary>
-        private static readonly ISet<Config.Elements> PREFIXED_H
+        private static readonly ISet<Config.Elements> PrefixedH
             = new HashSet<Config.Elements>()
                 {
                     Config.Elements.Oxygen,
@@ -63,12 +62,12 @@ namespace NCDK.Renderers.Generators.Standards
         /// A positive value favours placing them on the right, a negative on the
         /// left.
         /// </summary>
-        private const double VERTICAL_THRESHOLD = 0.1;
+        private const double VerticalThreshold = 0.1;
 
         /// <summary>
         /// Tau = 2π.
         /// </summary>
-        private const double TAU = Math.PI + Math.PI;
+        private const double Tau = Math.PI + Math.PI;
 
         public static HydrogenPosition ValueOf(string str)
         {
@@ -135,7 +134,7 @@ namespace NCDK.Renderers.Generators.Standards
             }
             else if (neighbors.Count == 1)
             {
-                return vectors[0].X > VERTICAL_THRESHOLD ? Left : Right;
+                return vectors[0].X > VerticalThreshold ? Left : Right;
             }
             else
             {
@@ -166,18 +165,18 @@ namespace NCDK.Renderers.Generators.Standards
                 foreach (var position in Values)
                 {
                     // adjust the extents such that this position is '0'
-                    double bias = TAU - V[position.Ordinal].Direction;
+                    double bias = Tau - V[position.Ordinal].Direction;
                     double afterBias = after + bias;
                     double beforeBias = before + bias;
 
                     // ensure values are 0 <= x < Tau
-                    if (beforeBias >= TAU) beforeBias -= TAU;
-                    if (afterBias >= TAU) afterBias -= TAU;
+                    if (beforeBias >= Tau) beforeBias -= Tau;
+                    if (afterBias >= Tau) afterBias -= Tau;
 
                     // we can now determine the extents before and after this
                     // hydrogen position
                     double afterExtent = afterBias;
-                    double beforeExtent = TAU - beforeBias;
+                    double beforeExtent = Tau - beforeBias;
 
                     // the total extent is amount of space between these two bonds
                     // when sweeping round. The offset is how close this hydrogen
@@ -299,7 +298,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <returns>the position</returns>
         internal static HydrogenPosition UsingDefaultPlacement(IAtom atom)
         {
-            if (PREFIXED_H.Contains(Config.Elements.OfNumber(atom.AtomicNumber.Value))) return Left;
+            if (PrefixedH.Contains(Config.Elements.OfNumber(atom.AtomicNumber.Value))) return Left;
             return Right;
         }
     }

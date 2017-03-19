@@ -42,9 +42,9 @@ namespace NCDK.Default
             Atom a1 = new Atom("C");
             Atom a2 = new Atom("C");
             Bond b1 = new Bond(a1, a2);
-            mol.Add(a1);
-            mol.Add(a2);
-            mol.Add(b1);
+            mol.Atoms.Add(a1);
+            mol.Atoms.Add(a2);
+            mol.Bonds.Add(b1);
             som.Add(mol);
             cm.MoleculeSet = som;
             cs.Add(cm);

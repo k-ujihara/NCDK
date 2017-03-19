@@ -31,18 +31,16 @@ namespace <#= ns.NS #>
 {
     /// <summary>
     /// Atom that represents part of an residue in an enzyme, like Arg255.
-    ///
+    /// </summary>
     // @see  PseudoAtom
     // @cdk.module pdb
     // @cdk.githash
-    /// </summary>
     public class EnzymeResidueLocator : PseudoAtom
     {
         /// <summary>
         /// Constructs an EnzymeResidueLocator from a string containing the locator.
-        ///
-        /// <param name="label">The string describing the residue and its location.</param>
         /// </summary>
+        /// <param name="label">The string describing the residue and its location.</param>
         public EnzymeResidueLocator(string label)
             : base(label)
         {
@@ -50,9 +48,8 @@ namespace <#= ns.NS #>
 
         /// <summary>
         /// Constructs an EnzymeResidueLocator from an existing Atom.
-        ///
-        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         /// </summary>
+        /// <param name="atom">Atom that should be converted into a EnzymeResidueLocator.</param>
         public EnzymeResidueLocator(IAtom atom)
             : base(atom)
         {

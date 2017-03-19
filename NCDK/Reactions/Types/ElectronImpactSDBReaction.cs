@@ -39,12 +39,12 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
     /// </example>
-    /// <seealso cref="RemovingSEofBMechanism"/>
+    /// <seealso cref="Mechanisms.RemovingSEofBMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-04-01
     // @cdk.module     reaction
@@ -105,10 +105,8 @@ namespace NCDK.Reactions.Types
                         && !reactant.GetConnectedSingleElectrons(atom1).Any()
                         && !reactant.GetConnectedSingleElectrons(atom2).Any())
                 {
-                    /// <summary>/
                     for (int j = 0; j < 2; j++)
                     {
-
                         var atomList = new List<IAtom>();
                         if (j == 0)
                         {

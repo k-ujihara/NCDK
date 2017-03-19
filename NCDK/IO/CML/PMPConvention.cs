@@ -31,18 +31,14 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     ///  Implementation of the PMPMol Covention for CML.
-    ///
-    ///  <p>PMP stands for PolyMorph Predictor and is a module
-    ///  of Cerius2 (tm).
-    ///
+    /// <para>PMP stands for PolyMorph Predictor and is a module
+    ///  of Cerius2 (tm).</para>
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    /// </summary>
     public class PMPConvention : CMLCoreModule
     {
-
         public PMPConvention(IChemFile chemFile)
             : base(chemFile)
         {

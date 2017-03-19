@@ -33,7 +33,6 @@ namespace NCDK.ForceField.MMFF
     [TestClass()]
     public class MmffAromaticTypeMappingTest
     {
-
         [TestMethod()]
         public void IndexOfHetroAt0()
         {
@@ -311,7 +310,6 @@ namespace NCDK.ForceField.MMFF
         [TestMethod()]
         public void IntractableNumberOfCycles()
         {
-
             // to ensure intractable cycles are handled we create a complete graph
             // where every vertex is attached to every other vertex. K8 is sufficient
             // to trigger an abort when finding cycles

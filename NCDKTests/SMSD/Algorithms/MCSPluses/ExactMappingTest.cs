@@ -25,10 +25,8 @@ using System.Collections.Generic;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
-    /// <summary>
     // @cdk.module test-smsd
     // @author Asad
-    /// </summary>
     [TestClass()]
     public class ExactMappingTest
     {
@@ -38,8 +36,7 @@ namespace NCDK.SMSD.Algorithms.MCSPluses
         public void TestSomeMethod()
         {
             // TODO review the generated test code and remove the default call to fail.
-            Assert.IsNotNull(ExactMapping.ExtractMapping(new List<IList<int>>(), new List<int>(),
-                    new List<int>()));
+            Assert.IsNotNull(ExactMapping.ExtractMapping(new List<IList<int>>(), new List<int>(), new List<int>()));
         }
     }
 }

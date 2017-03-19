@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using System.Collections.Generic;
 
 namespace NCDK.Hash
@@ -34,22 +33,19 @@ namespace NCDK.Hash
     /// provided invariants. An example of a pre-condition could be that we only
     /// return the vertices which are present in rings (cyclic). This condition
     /// removes all terminal atoms which although equivalent are not relevant.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal abstract class EquivalentSetFinder
     {
         /// <summary>
-        /// Find a set of equivalent vertices (atoms) and return this set as an array
-        /// of indices.
-        ///
+        /// Find a set of equivalent vertices (atoms) and return this set as an array of indices.
+        /// </summary>
         /// <param name="invariants">the values for each vertex</param>
         /// <param name="container">the molecule which which the graph is based on</param>
         /// <param name="graph">adjacency list representation of the graph</param>
         /// <returns>set of equivalent vertices</returns>
-        /// </summary>
         public abstract ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph);
     }
 }

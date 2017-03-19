@@ -119,9 +119,9 @@ namespace NCDK.Renderers
             RendererModel model = new RendererModel();
             // test the default setting
             Assert.IsTrue(model.Notification);
-            model.SetNotification(false);
+            model.Notification = false;
             Assert.IsFalse(model.Notification);
-            model.SetNotification(true);
+            model.Notification = true;
             Assert.IsTrue(model.Notification);
         }
 
@@ -237,7 +237,7 @@ namespace NCDK.Renderers
             RendererModel model = new RendererModel();
             // test default
             MockListener listener = new MockListener();
-            model.AddCDKChangeListener(listener);
+            model.Listeners.Add(listener);
             Assert.IsFalse(listener.IsChanged);
             model.FireChange();
             Assert.IsTrue(listener.IsChanged);
@@ -245,7 +245,7 @@ namespace NCDK.Renderers
             // test unregistering
             listener.IsChanged = false;
             Assert.IsFalse(listener.IsChanged);
-            model.RemoveCDKChangeListener(listener);
+            model.Listeners.Remove(listener);
             model.FireChange();
             Assert.IsFalse(listener.IsChanged);
         }

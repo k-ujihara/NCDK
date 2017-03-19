@@ -20,43 +20,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 namespace NCDK.IO
 {
     /// <summary>
     /// This class is the interface that all IO readers should implement.
     /// Programs need only care about this interface for any kind of IO.
     /// Currently, database IO and file IO is supported.
-    ///
-    /// <p>The easiest way to implement a new ChemObjectReader is to
+    /// <para>
+    /// The easiest way to implement a new ChemObjectReader is to
     /// subclass the DefaultChemObjectReader.
-    ///
-    /// <p>I don't know how this should be enforced, but a Reader should
+    /// </para>
+    /// <para>
+    /// I don't know how this should be enforced, but a Reader should
     /// also provide an empty constructor so that ClassLoader/Instance
     /// can be used to instantiate a ChemObjectReader.
-    ///
+    /// </para>
+    /// </summary>
+    /// <seealso cref="DefaultChemObjectReader"/>
     // @cdk.module io
     // @cdk.githash
-    ///
-    /// <seealso cref="DefaultChemObjectReader"/>
-    ///
     // @author Egon Willighagen <egonw@users.sf.net>
-    ///*/
     public interface ISimpleChemObjectReader : IChemObjectReader
     {
         /// <summary>
         /// Reads an IChemObject of type "object" from input. The constructor
         /// of the actual implementation may take a Reader as input to get
         /// a very flexible reader that can read from string, files, etc.
-        ///
-        /// <param name="object">the type of object to return</param>
-        /// <returns>returns an object of that contains the content (or</returns>
-        ///         part) of the input content
-        ///
-        /// <exception cref="CDKException">it is thrown if</exception>
-        ///            the type of information is not available from
-        ///            the input
-        ///*/
+        /// </summary>
+        /// <param name="obj">the type of object to return</param>
+        /// <returns>returns an object of that contains the content (or part) of the input content</returns>
+        /// <exception cref="CDKException">it is thrown if the type of information is not available from the input</exception>
         T Read<T>(T obj) where T : IChemObject;
     }
 }

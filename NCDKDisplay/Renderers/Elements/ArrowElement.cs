@@ -44,10 +44,8 @@ namespace NCDK.Renderers.Elements
         /// Constructor for an arrow element, based on starting point, end point, width,
         /// direction, and color.
         /// </summary>
-        /// <param name="startX">X coordinate of the point where the arrow starts.</param>
-        /// <param name="startY">Y coodrinate of the point where the arrow starts.</param>
-        /// <param name="endX">X coordinate of the point where the arrow ends.</param>
-        /// <param name="endY">Y coordinate of the point where the arrow ends.</param>
+        /// <param name="start">Coordinate of the point where the arrow starts.</param>
+        /// <param name="end">Coordinate of the point where the arrow ends.</param>
         /// <param name="width">width of the arrow line.</param>
         /// <param name="direction">true is the arrow points from start to end, false if from end to start</param>
         /// <param name="color"><see cref="Color"/> of the arrow</param>

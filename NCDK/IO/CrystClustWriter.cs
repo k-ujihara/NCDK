@@ -28,7 +28,6 @@ namespace NCDK.IO
     /// </summary>
     // @author Egon Willighagen
     // @cdk.created 2004-01-01
-    ///
     // @cdk.module extra
     // @cdk.githash
     // @cdk.iooptions
@@ -39,10 +38,10 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new CrystClustWriter class. Output will be stored in the Writer  class given as parameter.
         /// </summary>
-        /// <param name="out_">Writer to redirect the output to.</param>
-        public CrystClustWriter(TextWriter out_)
+        /// <param name="output">Writer to redirect the output to.</param>
+        public CrystClustWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public CrystClustWriter(Stream output)
@@ -55,9 +54,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => CrystClustFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -122,17 +121,21 @@ namespace NCDK.IO
         /// </summary>
         /// <remarks>
         /// Format:
-        ///            line      data
-        ///           -------    --------------------------
-        ///              1       spacegroup
-        ///            2,3,4     cell parameter: a
-        ///            5,6,7                     b
-        ///            8,9,10                    c
-        ///             11       number of atoms
-        ///             12       number of asym. units
-        ///            13-16     atomtype: charge, atomcoord x, y, z
-        ///            17-20     idem second atom
-        ///            21-24     idem third atom etc
+        /// <list type="table">
+        /// <listheader>
+        /// <term>line</term>
+        /// <term>data</term>
+        /// </listheader>
+        /// <term><item>1</item><item>spacegroup</item></term>
+        /// <term><item>2,3,4</item><item>cell parameter: a</item></term>
+        /// <term><item>5,6,7</item><item>b</item></term>
+        /// <term><item>8,9,10</item><item>c</item></term>
+        /// <term><item>11</item><item>number of atoms</item></term>
+        /// <term><item>12</item><item>number of asym. units</item></term>
+        /// <term><item>13-16</item><item>atomtype: charge, atomcoord x, y, z</item></term>
+        /// <term><item>17-20</item><item>idem second atom</item></term>
+        /// <term><item>21-24</item><item>idem third atom etc</item></term>
+        /// </list>            
         /// </remarks>
         /// <param name="crystal">the Crystal to serialize</param>
         private void WriteCrystal(ICrystal crystal)

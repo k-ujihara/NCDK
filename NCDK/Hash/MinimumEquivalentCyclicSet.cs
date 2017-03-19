@@ -23,7 +23,6 @@
  */
 
 using NCDK.RingSearches;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Hash
@@ -32,18 +31,19 @@ namespace NCDK.Hash
     /// Finds the smallest set of equivalent values are members of a ring. If there
     /// are multiple smallest sets then the set with the lowest invariant value is
     /// returned. This class is intended to drive the systematic perturbation of the
-    /// {@link org.openscience.cdk.hash.PerturbedAtomHashGenerator}.
-    ///
+    /// <see cref="PerturbedAtomHashGenerator"/>.
+    /// <para>
     /// This method will not distinguish all possible molecules but represents a good
     /// enough approximation to quickly narrow down an identity search. At the time
     /// of writing (Feb, 2013) there are only 128 molecules (64 false positives) in
     /// PubChem-Compound (46E6 molecules) which are not separated. In many data sets
     /// this method will suffice however the exact <see cref="AllEquivalentCyclicSet"/> is
-    /// provided. <p/><br/>
-    ///
-    /// This method is currently the default used by the {@link
-    /// org.openscience.cdk.hash.HashGeneratorMaker} but can also be explicitly
-    /// specified. <example>
+    /// provided.</para>
+    /// <para>
+    /// This method is currently the default used by the <see cref="HashGeneratorMaker"/> but can also be explicitly specified. 
+    /// </para>
+    /// </summary>
+    /// <example>
     /// <code>
     /// MoleculeHashGenerator generator =
     ///   new HashGeneratorMaker().Depth(6)
@@ -59,15 +59,13 @@ namespace NCDK.Hash
     ///                           .Molecular();
     /// </code>
     /// </example>
-    ///
-    // @author John May
-    // @cdk.module hash
-    // @see org.openscience.cdk.hash.PerturbedAtomHashGenerator
+    /// <seealso cref="PerturbedAtomHashGenerator"/>
     /// <seealso cref="MinimumEquivalentCyclicSetUnion"/>
     /// <seealso cref="AllEquivalentCyclicSet"/>
-    // @see org.openscience.cdk.hash.HashGeneratorMaker
+    /// <seealso cref="HashGeneratorMaker"/>
+    // @author John May
+    // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal sealed class MinimumEquivalentCyclicSet : EquivalentSetFinder
     {
         public override ISet<int> Find(long[] invariants, IAtomContainer container, int[][] graph)

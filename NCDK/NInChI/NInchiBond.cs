@@ -23,8 +23,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates properties of InChI Bond.  See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiBond
     {
         /// <summary>

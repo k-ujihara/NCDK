@@ -39,28 +39,27 @@ using System.Runtime.CompilerServices;
 namespace NCDK.SMSD
 {
     /// <summary>
-    ///  <p>This class implements the Isomorphism- a multipurpose structure comparison tool.
+    ///  <para>This class implements the Isomorphism- a multipurpose structure comparison tool.
     ///  It allows users to, i) find the maximal common Substructure(s) (MCS);
     ///  ii) perform the mapping of a substructure in another structure, and;
-    ///  iii) map two isomorphic structures.</p>
-    ///
-    ///  <p>It also comes with various published algorithms. The user is free to
+    ///  iii) map two isomorphic structures.</para>
+    ///  <para>It also comes with various published algorithms. The user is free to
     ///  choose his favorite algorithm to perform MCS or substructure search.
     ///  For example 0: Isomorphism algorithm, 1: MCSPlus, 2: VFLibMCS, 3: CDKMCS, 4:
-    ///  Substructure</p>
+    ///  Substructure</para>
     ///
-    ///  <p>It also has a set of robust chemical filters (i.e. bond energy, fragment
-    ///  count, stereo & bond match) to sort the reported MCS solutions in a chemically
+    ///  <para>It also has a set of robust chemical filters (i.e. bond energy, fragment
+    ///  count, stereo &amp; bond match) to sort the reported MCS solutions in a chemically
     ///  relevant manner. Each comparison can be made with or without using the bond
-    ///  sensitive mode and with implicit or explicit hydrogens.</p>
+    ///  sensitive mode and with implicit or explicit hydrogens.</para>
     ///
-    ///  <p>If you are using <font color="#FF0000">Isomorphism, please cite Rahman <i>et.al. 2009</i></font>
+    ///  <para>If you are using <b>Isomorphism, please cite Rahman <i>et.al. 2009</i></b>
     ///  {@cdk.cite SMSD2009}. The Isomorphism algorithm is described in this paper.
-    ///  </p>
-    ///
-    ///
-    /// <p>An example for <b>Substructure search</b>:</p>
-    ///  <font color="#003366">
+    ///  </para>
+    /// </summary>
+    /// 
+    /// <example>
+    /// <para>An example for <b>Substructure search</b>:</para>
     ///  <code>
     ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
     ///  // Benzene
@@ -83,7 +82,7 @@ namespace NCDK.SMSD
     ///   IAtomContainer Mol2 = comparison.ProductMolecule;
     ///  // Print the mapping between molecules
     ///   Console.Out.WriteLine(" Mappings: ");
-    ///   for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
+    ///   foreach (var mapping in comparison.GetFirstMapping().EntrySet()) {
     ///      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
     ///
     ///      IAtom eAtom = Mol1.Atoms[mapping.Key];
@@ -92,12 +91,9 @@ namespace NCDK.SMSD
     ///   }
     ///   Console.Out.WriteLine("");
     ///  }
-    ///
     ///  </code>
-    ///  </font>
     ///
-    /// <p>An example for <b>MCS search</b>:</p>
-    ///  <font color="#003366">
+    /// <para>An example for <b>MCS search</b>:</para>
     ///  <code>
     ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
     ///  // Benzene
@@ -120,7 +116,7 @@ namespace NCDK.SMSD
     ///  IAtomContainer Mol2 = comparison.ProductMolecule;
     ///  // Print the mapping between molecules
     ///  Console.Out.WriteLine(" Mappings: ");
-    ///  for (Map.Entry <int, int> mapping : comparison.GetFirstMapping().EntrySet()) {
+    ///  foreach (var mapping in comparison.GetFirstMapping().EntrySet()) {
     ///      Console.Out.WriteLine((mapping.Key + 1) + " " + (mapping.Value + 1));
     ///
     ///      IAtom eAtom = Mol1.Atoms[mapping.Key];
@@ -128,17 +124,12 @@ namespace NCDK.SMSD
     ///      Console.Out.WriteLine(eAtom.Symbol + " " + pAtom.Symbol);
     ///  }
     ///  Console.Out.WriteLine("");
-    ///
     ///  </code>
-    ///  </font>
-    ///
+    ///  </example>
     // @cdk.require java1.5+
-    ///
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
-    /// </summary>
     [Serializable]
     public sealed class Isomorphism : AbstractMCS
     {
@@ -161,16 +152,17 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// This is the algorithm factory and entry port for all the MCS algorithm in the Isomorphism
-        /// supported algorithm {@link org.openscience.cdk.smsd.interfaces.Algorithm} types:
-        /// <OL>
-        /// <lI>0: Default,
-        /// <lI>1: MCSPlus,
-        /// <lI>2: VFLibMCS,
-        /// <lI>3: CDKMCS,
-        /// <lI>4: SubStructure
-        /// </OL>
-        /// <param name="algorithmType">{@link org.openscience.cdk.smsd.interfaces.Algorithm}</param>
-        /// <param name="bondTypeFlag">/// </summary></param>
+        /// supported algorithm <see cref="Algorithm"/> types:
+        /// <list type="bullet">
+        /// <item>0: Default,</item>
+        /// <item>1: MCSPlus,</item>
+        /// <item>2: VFLibMCS,</item>
+        /// <item>3: CDKMCS,</item>
+        /// <item>4: SubStructure</item>
+        /// </list> 
+        /// </summary>
+        /// <param name="algorithmType"><see cref="Algorithm"/></param>
+        /// <param name="bondTypeFlag"></param>
         public Isomorphism(Algorithm algorithmType, bool bondTypeFlag)
         {
             this.algorithmType = algorithmType;

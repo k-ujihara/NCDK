@@ -27,16 +27,14 @@ using System.Diagnostics;
 namespace NCDK.Reactions
 {
     /// <summary>
-    /// <p>The base class for all chemical reactions objects in this cdk.
-    /// It provides methods for adding parameters</p>
-    ///
+    /// The base class for all chemical reactions objects in this cdk.
+    /// It provides methods for adding parameters
+    /// </summary>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2008-02-01
     // @cdk.module     reaction
     // @cdk.set        reaction-types
     // @cdk.githash
-    /// </summary>
     public class ReactionEngine
     {
         private EntryDictionary dictionary;

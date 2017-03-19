@@ -117,31 +117,30 @@ namespace NCDK.QSAR
         /// </item>
         /// </list>
         /// </remarks>
-        /// <returns>An object containing the descriptor specification</returns>
+        /// <value>An object containing the descriptor specification</value>
         IImplementationSpecification Specification { get; }
 
         /// <summary>
         /// The names of the parameters for this descriptor. The method
-        /// returns <see langword="null"/> or a zero-length <c>object[]</c> array if the descriptor
+        /// returns <see langword="null"/> or a zero-length <see cref="string"/> array if the descriptor
         ///  does not have any parameters.
         /// </summary>
-        /// <returns>An array of string containing the names of the parameters</returns>
-        ///         that this descriptor can accept.
+        /// <value>An array of string containing the names of the parameters that this descriptor can accept.</value>
         string[] ParameterNames { get; }
 
         /// <summary>
         /// Returns a class matching that of the parameter with the given name. May
-        /// only return null for when 'name' does not match any parameters returned
+        /// only return <see langword="null"/> for when <paramref name="name"/> does not match any parameters returned
         /// by the <see cref="Parameters"/> method.
         /// </summary>
         /// <param name="name">The name of the parameter whose type is requested</param>
-        /// <returns>An Object of the class corresponding to the parameter with the supplied name</returns>
+        /// <value>An Object of the class corresponding to the parameter with the supplied name</value>
         object GetParameterType(string name);
 
         /// <summary>
         /// The current parameter values. If not parameters have been set,
         /// it must return the default parameters. The method returns <see langword="null"/> or a
-        /// zero-length <c>object[]</c> array if the descriptor does not have any
+        /// zero-length <see cref="object"/> array if the descriptor does not have any
         /// parameters.
         /// </summary>
         /// <remarks>
@@ -151,6 +150,8 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns an array of names for each descriptor value calculated.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// Many descriptors return multiple values. In general it is useful for the
         /// descriptor to indicate the names for each value.
@@ -163,11 +164,11 @@ namespace NCDK.QSAR
         /// </para>
         /// <para>
         /// Note that by default if a descriptor returns a single value
-        /// (such as <see cref="NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor"/>
+        /// (such as <see cref="Descriptors.Moleculars.ALOGPDescriptor"/>
         /// the return array will have a single element
         /// </para>
-        /// </summary>
-        /// <returns>An array of descriptor names, equal in length to the number of descriptor calculated.</returns>
+        /// </remarks>
+        /// <value>An array of descriptor names, equal in length to the number of descriptor calculated.</value>
         string[] DescriptorNames { get; }
     }
 }

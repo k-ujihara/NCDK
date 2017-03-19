@@ -45,8 +45,8 @@ namespace NCDK
 
             IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
-            oPolymer.Add(oAtom1);
-            oPolymer.Add(oAtom2);
+            oPolymer.Atoms.Add(oAtom1);
+            oPolymer.Atoms.Add(oAtom2);
 
             Assert.AreEqual(2, oPolymer.Atoms.Count);
             Assert.AreEqual(0, oPolymer.GetMonomerMap().Count());
@@ -63,7 +63,7 @@ namespace NCDK
             IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
             IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
 
-            oPolymer.Add(oAtom1);
+            oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
             Assert.IsNotNull(oPolymer.Atoms[0]);
@@ -93,7 +93,7 @@ namespace NCDK
             IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
             IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
-            oPolymer.Add(oAtom1);
+            oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
 
@@ -135,7 +135,7 @@ namespace NCDK
             IAtom oAtom1 = oPolymer.Builder.CreateAtom("C1");
             IAtom oAtom2 = oPolymer.Builder.CreateAtom("C2");
             IAtom oAtom3 = oPolymer.Builder.CreateAtom("C3");
-            oPolymer.Add(oAtom1);
+            oPolymer.Atoms.Add(oAtom1);
             oPolymer.AddAtom(oAtom2, oMono1);
             oPolymer.AddAtom(oAtom3, oMono2);
             IDictionary<string, IMonomer> monomers = new Dictionary<string, IMonomer>();

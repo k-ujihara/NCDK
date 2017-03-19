@@ -110,7 +110,7 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline outline = new TextOutline("Cl", font, emSize);
             AtomSymbol symbol = new AtomSymbol(outline, Array.Empty<TextOutline>());
             AtomSymbol transformed = symbol.Resize(2, 2);
-            var orgBounds = outline.Bounds;
+            var orgBounds = outline.GetBounds();
             var newBounds = transformed.GetOutlines()[0].Bounds;
             Assert.AreEqual(orgBounds.Left - orgBounds.Width / 2, newBounds.Left, 0.01);
             Assert.AreEqual(orgBounds.Top - orgBounds.Height / 2, newBounds.Top, 0.01);
@@ -124,7 +124,7 @@ namespace NCDK.Renderers.Generators.Standards
             TextOutline outline = new TextOutline("Cl", font, emSize);
             AtomSymbol symbol = new AtomSymbol(outline, Array.Empty<TextOutline>());
             AtomSymbol transformed = symbol.Center(2, 2);
-            var oBounds = outline.Bounds;
+            var oBounds = outline.GetBounds();
             var newBounds = transformed.GetOutlines()[0].Bounds;
 
             double dx = 2 - oBounds.GetCenterX();

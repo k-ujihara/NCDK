@@ -51,8 +51,8 @@ namespace NCDK.Graphs
                 // create ethane
                 IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
                 IAtomContainer ethaneMolecule = builder.CreateAtomContainer();
-                ethaneMolecule.Add(builder.CreateAtom("C"));
-                ethaneMolecule.Add(builder.CreateAtom("C"));
+                ethaneMolecule.Atoms.Add(builder.CreateAtom("C"));
+                ethaneMolecule.Atoms.Add(builder.CreateAtom("C"));
                 ethaneMolecule.AddBond(ethaneMolecule.Atoms[0], ethaneMolecule.Atoms[1], BondOrder.Single);
                 ethane = new SpanningTree(ethaneMolecule);
             }
@@ -97,9 +97,9 @@ namespace NCDK.Graphs
 
             IChemObjectBuilder builder = Default.ChemObjectBuilder.Instance;
             IAtomContainer disconnectedStructure = builder.CreateAtomContainer();
-            disconnectedStructure.Add(builder.CreateAtom("Na"));
+            disconnectedStructure.Atoms.Add(builder.CreateAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;
-            disconnectedStructure.Add(builder.CreateAtom("Cl"));
+            disconnectedStructure.Atoms.Add(builder.CreateAtom("Cl"));
             disconnectedStructure.Atoms[1].FormalCharge = -1;
             path = ethane
                     .GetPath(disconnectedStructure, disconnectedStructure.Atoms[0], disconnectedStructure.Atoms[1]);
@@ -115,9 +115,9 @@ namespace NCDK.Graphs
 
             IChemObjectBuilder builder = azulene.GetSpanningTree().Builder;
             IAtomContainer disconnectedStructure = builder.CreateAtomContainer();
-            disconnectedStructure.Add(builder.CreateAtom("Na"));
+            disconnectedStructure.Atoms.Add(builder.CreateAtom("Na"));
             disconnectedStructure.Atoms[0].FormalCharge = +1;
-            disconnectedStructure.Add(builder.CreateAtom("Cl"));
+            disconnectedStructure.Atoms.Add(builder.CreateAtom("Cl"));
             disconnectedStructure.Atoms[1].FormalCharge = -1;
             SpanningTree stree = new SpanningTree(disconnectedStructure);
             Assert.IsTrue(stree.IsDisconnected);

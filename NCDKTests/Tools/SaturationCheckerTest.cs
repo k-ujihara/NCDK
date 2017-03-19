@@ -401,7 +401,7 @@ namespace NCDK.Tools
             IAtomContainer hydrogenRadical = builder.CreateAtomContainer();
             IAtom hradical = builder.CreateAtom("H");
             hydrogenRadical.Atoms.Add(hradical);
-            hydrogenRadical.Add(builder.CreateSingleElectron(hradical));
+            hydrogenRadical.SingleElectrons.Add(builder.CreateSingleElectron(hradical));
             Assert.AreEqual(0, satcheck.CalculateNumberOfImplicitHydrogens(hradical, hydrogenRadical));
 
             IAtomContainer hydrogen = builder.CreateAtomContainer();
@@ -416,7 +416,7 @@ namespace NCDK.Tools
             coRad.Atoms.Add(c);
             coRad.Atoms.Add(o);
             coRad.Bonds.Add(bond);
-            coRad.Add(builder.CreateSingleElectron(c));
+            coRad.SingleElectrons.Add(builder.CreateSingleElectron(c));
             Assert.AreEqual(1, satcheck.CalculateNumberOfImplicitHydrogens(c, coRad));
         }
     }

@@ -23,11 +23,10 @@ namespace NCDK.Tools.Diff
 {
     /// <summary>
     /// Compares two <see cref="IAtomContainer"/> classes.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public class AtomContainerDiff
     {
         /// <summary>
@@ -38,11 +37,10 @@ namespace NCDK.Tools.Diff
 
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as a <see cref="string"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>a <see cref="string"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
         public static string Diff(IChemObject first, IChemObject second)
         {
             IDifference diff = Difference(first, second);
@@ -58,11 +56,10 @@ namespace NCDK.Tools.Diff
 
         /// <summary>
         /// Compare two <see cref="IChemObject"/> classes and return the difference as an <see cref="IDifference"/>.
-        ///
+        /// </summary>
         /// <param name="first">the first of the two classes to compare</param>
         /// <param name="second">the second of the two classes to compare</param>
         /// <returns>an <see cref="IDifference"/> representation of the difference between the first and second <see cref="IChemObject"/>.</returns>
-        /// </summary>
         public static IDifference Difference(IChemObject first, IChemObject second)
         {
             if (!(first is IAtomContainer && second is IAtomContainer))
@@ -122,4 +119,4 @@ namespace NCDK.Tools.Diff
             }
         }
     }
-    }
+}

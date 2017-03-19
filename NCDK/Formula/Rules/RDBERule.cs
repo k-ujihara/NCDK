@@ -334,13 +334,13 @@ namespace NCDK.Formula.Rules
             {
                 if (!hasMore) return null;
 
-                object[] out_ = new object[m];
+                object[] output = new object[m];
                 for (int i = 0; i < m; i++)
                 {
-                    out_[i] = inArray[index[i]];
+                    output[i] = inArray[index[i]];
                 }
                 MoveIndex();
-                return out_;
+                return output;
             }
 
             /// <summary>

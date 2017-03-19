@@ -21,33 +21,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using static NCDK.Graphs.GraphUtil;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Vento-Foggia (VF) state for matching isomorphisms (identity) {@cdk.cite
-     * Cordella04}. <p/> Note: no heuristics or sorting are performed as all and
-     * should be checked externally
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// Vento-Foggia (VF) state for matching isomorphisms (identity) {@cdk.cite
+    /// Cordella04}. </summary>
+    /// <remarks>Note: no heuristics or sorting are performed as all and
+    /// should be checked externally
+    /// </remarks>
+    // @author John May
+    // @cdk.module isomorphism
     internal sealed class VFState : AbstractVFState
     {
-        /**
-         * The query (container1) and target (container2) of the isomorphism
-         * matching.
-         */
+        /// <summary>
+        /// The query (container1) and target (container2) of the isomorphism
+        /// matching.
+        /// </summary>
         private readonly IAtomContainer container1, container2;
 
-        /**
-         * Lookup for the query bonds (bonds1) and target bonds (bonds2) of the
-         * isomorphism matching.
-         */
+        /// <summary>
+        /// Lookup for the query bonds (bonds1) and target bonds (bonds2) of the
+        /// isomorphism matching.
+        /// </summary>
         private readonly EdgeToBondMap bonds1, bonds2;
 
         /// <summary>Defines how atoms are matched.</summary>
@@ -56,21 +53,18 @@ namespace NCDK.Isomorphisms
         /// <summary>Defines how bonds are matched.</summary>
         private readonly BondMatcher bondMatcher;
 
-        /**
-         * Create a VF state for matching isomorphisms. The query is passed first
-         * and should read as, find container1 in container2.
-         *
-         * @param container1  the molecule to search for (query)
-         * @param container2  the molecule to search in (target)
-         * @param g1          adjacency list of the query
-         * @param g2          adjacency list of the target
-         * @param bonds1      bond lookup of the query
-         * @param bonds2      bond lookup of the target
-         * @param atomMatcher what semantic attributes (symbol, charge, query)
-         *                    determines atoms to be compatible
-         * @param bondMatcher what semantic attributes (order/aromatic, query)
-         *                    determines bonds to be compatible
-         */
+        /// <summary>
+        /// Create a VF state for matching isomorphisms. The query is passed first
+        /// and should read as, find container1 in container2.
+        /// </summary>
+        /// <param name="container1">the molecule to search for (query)</param>
+        /// <param name="container2">the molecule to search in (target)</param>
+        /// <param name="g1">adjacency list of the query</param>
+        /// <param name="g2">adjacency list of the target</param>
+        /// <param name="bonds1">bond lookup of the query</param>
+        /// <param name="bonds2">bond lookup of the target</param>
+        /// <param name="atomMatcher">what semantic attributes (symbol, charge, query) determines atoms to be compatible</param>
+        /// <param name="bondMatcher">what semantic attributes (order/aromatic, query) determines bonds to be compatible</param>
         public VFState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2, EdgeToBondMap bonds1,
                 EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher)
             : base(g1, g2)
@@ -83,25 +77,21 @@ namespace NCDK.Isomorphisms
             this.bondMatcher = bondMatcher;
         }
 
-        /**
-         * Check the feasibility of the candidate pair {n, m}. A candidate pair is
-         * syntactically feasible iff all k-look-ahead rules hold. These look ahead
-         * rules check adjacency relation of the mapping. If an edge is mapped in g1
-         * it should also be mapped in g2 and vise-versa (0-look-ahead). If an edge
-         * in g1 is unmapped but the edge is adjacent to an another mapped vertex
-         * (terminal) then the number of such edges should be equal in g1 compared
-         * to g2 (1-look-ahead). If the edge is unmapped and non-terminal then the
-         * number of such edges should be equal in g1 compared to g2 (2-look-ahead).
-         * <p/>
-         *
-         * @param n a candidate vertex from g1
-         * @param m a candidate vertex from g2
-         * @return the mapping is feasible
-         */
-
+        /// <summary>
+        /// Check the feasibility of the candidate pair {n, m}. A candidate pair is
+        /// syntactically feasible iff all k-look-ahead rules hold. These look ahead
+        /// rules check adjacency relation of the mapping. If an edge is mapped in g1
+        /// it should also be mapped in g2 and vise-versa (0-look-ahead). If an edge
+        /// in g1 is unmapped but the edge is adjacent to an another mapped vertex
+        /// (terminal) then the number of such edges should be equal in g1 compared
+        /// to g2 (1-look-ahead). If the edge is unmapped and non-terminal then the
+        /// number of such edges should be equal in g1 compared to g2 (2-look-ahead).
+        /// </summary>
+        /// <param name="n">a candidate vertex from g1</param>
+        /// <param name="m">a candidate vertex from g2</param>
+        /// <returns>the mapping is feasible</returns>
         public override bool Feasible(int n, int m)
         {
-
             // verify atom semantic feasibility
             if (!atomMatcher.Matches(container1.Atoms[n], container2.Atoms[m])) return false;
 

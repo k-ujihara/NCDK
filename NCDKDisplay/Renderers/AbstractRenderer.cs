@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2009  Gilleain Torrance <gilleain.torrance@gmail.com>
+Ôªø/* Copyright (C) 2008-2009  Gilleain Torrance <gilleain.torrance@gmail.com>
  *               2008-2009  Arvid Berg <goglepox@users.sf.net>
  *               2009-2010  Egon Willighagen <egonw@users.sf.net>
  *
@@ -21,7 +21,7 @@
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -34,12 +34,12 @@ namespace NCDK.Renderers
     /// <para>The base class for all renderers, handling the core aspects of rendering
     /// such as the location of the model in 'model space' and the location on
     /// the screen to draw the model. It also holds a reference to the list of
-    /// <see cref="IGenerator"/> instances that are used to create the diagram. These
+    /// <see cref="IGenerator{T}"/> instances that are used to create the diagram. These
     /// generators are accessed through the generateDiagram method.</para>
     ///
     /// <para>The terminology 'model space' and 'screen space' refer to the coordinate
     /// systems for the model and the drawing, respectively. So the 2D points for
-    /// atoms in the model might be 1 unit apart (roughly representing Ångstrom,
+    /// atoms in the model might be 1 unit apart (roughly representing √Öngstrom,
     /// perhaps) but the circles in the diagram that represent those atoms might be
     /// 10 pixels apart on screen. Therefore screen space will be 10 times model
     /// space for this example.</para>
@@ -99,7 +99,7 @@ namespace NCDK.Renderers
         /// to create a different set of <see cref="IRenderingElement"/>s grouped
         /// together into a tree.
         /// </summary>
-        /// <param name="object">the object of type T to draw</param>
+        /// <param name="obj">the object of type T to draw</param>
         /// <returns>the diagram as a tree of <see cref="IRenderingElement"/>s</returns>
         public virtual IRenderingElement GenerateDiagram(T obj)
         {
@@ -224,7 +224,7 @@ namespace NCDK.Renderers
             try
             {
                 transform = new TranslateTransform(drawCenter.X, drawCenter.Y);
-                transform.Value.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
+                //transform.Value.Scale(1, -1); // Converts between CDK Y-up & Java2D Y-down coordinate-systems
                 transform.Value.Scale(scale, scale);
                 transform.Value.Scale(zoom, zoom);
                 transform.Value.Translate(-this.modelCenter.X, -this.modelCenter.Y);

@@ -35,34 +35,39 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// are also well know modeling variables. This descriptor calculates the MI values
     /// along the X, Y and Z axes as well as the ratio's X/Y, X/Z and Y/Z. Finally it also
     /// calculates the radius of gyration of the molecule.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The descriptor generates 7 values in the following order
-    /// <ul>
-    /// <li>MOMI-X - MI along X axis
-    /// <li>MOMI-Y - MI along Y axis
-    /// <li>MOMI-Z - MI along Z axis
-    /// <li>MOMI-XY - X/Y
-    /// <li>MOMI-XZ - X/Z
-    /// <li>MOMI-YZ Y/Z
-    /// <li>MOMI-R - Radius of gyration
-    /// </ul>
+    /// <list type="bullet"> 
+    /// <item>MOMI-X - MI along X axis</item>
+    /// <item>MOMI-Y - MI along Y axis</item>
+    /// <item>MOMI-Z - MI along Z axis</item>
+    /// <item>MOMI-XY - X/Y</item>
+    /// <item>MOMI-XZ - X/Z</item>
+    /// <item>MOMI-YZ Y/Z</item>
+    /// <item>MOMI-R - Radius of gyration</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// One important aspect of the algorithm is that if the eigenvalues of the MI tensor
     /// are below 1e-3, then the ratio's are set to a default of 1000.
-    /// <p/>
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    /// <tr>
-    /// <td>Name</td>
-    /// <td>Default</td>
-    /// <td>Description</td>
-    /// </tr>
-    /// <tr>
-    /// <td></td>
-    /// <td></td>
-    /// <td>no parameters</td>
-    /// </tr>
-    /// </table>
-    ///
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    /// <item>
+    /// <term>Name</term>
+    /// <term>Default</term>
+    /// <term>Description</term>
+    /// </item>
+    /// <item>
+    /// <term></term>
+    /// <term></term>
+    /// <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author           Rajarshi Guha
     // @cdk.created      2005-02-07
     // @cdk.module       qsarmolecular
@@ -70,7 +75,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set          qsar-descriptors
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
-    /// </summary>
     public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "MOMI-X", "MOMI-Y", "MOMI-Z", "MOMI-XY", "MOMI-XZ", "MOMI-YZ", "MOMI-R" };
@@ -212,17 +216,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(7);
     }
 }

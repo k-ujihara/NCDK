@@ -26,7 +26,6 @@ namespace NCDK.Maths
 {
     public interface IRandomNumbersTool
     {
-
     }
 
     [Serializable]
@@ -73,14 +72,13 @@ namespace NCDK.Maths
         private UInt64 seed;
     }
 
-    /**
-     * Class supplying useful methods to generate random numbers.
-     * This class isn't supposed to be instantiated. You should use it by calling
-     * its static methods.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Class supplying useful methods to generate random numbers.
+    /// This class isn't supposed to be instantiated. You should use it by calling
+    /// its static methods.
+    /// </summary>
+    // @cdk.module standard
+    // @cdk.githash
     public class RandomNumbersTool
     {
         private static BitsStreamGenerator random;
@@ -128,7 +126,7 @@ namespace NCDK.Maths
         /// </summary>
         /// <param name="lo">the lower bound for the generated integer.</param>
         /// <param name="hi">the upper bound for the generated integer.</param>
-        /// <returns> a random integer between <code>lo</code> and <code>hi</code>.</returns>
+        /// <returns>a random integer between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static int RandomInt(int lo, int hi)
         {
             return (Math.Abs(random.Next()) % (hi - lo + 1)) + lo;
@@ -143,14 +141,12 @@ namespace NCDK.Maths
             return RandomLong(0, 1);
         }
 
-        /**
-         * Generates a random long between the specified values.
-         * <p/>
-         *
-         * @param lo the lower bound for the generated long.
-         * @param hi the upper bound for the generated long.
-         * @return a random long between <code>lo</code> and <code>hi</code>.
-         */
+        /// <summary>
+        /// Generates a random long between the specified values.
+        /// </summary>
+        /// <param name="lo">the lower bound for the generated long.</param>
+        /// <param name="hi">the upper bound for the generated long.</param>
+        /// <returns>a random long between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static long RandomLong(long lo, long hi)
         {
             return NextLong(random, hi - lo + 1L) + lo;
@@ -189,7 +185,7 @@ namespace NCDK.Maths
         /// </summary>
         /// <param name="lo">the lower bound for the generated float.</param>
         /// <param name="hi">the upper bound for the generated float.</param>
-        /// <returns>a random float between <code>lo</code> and <code>hi</code>.</returns>
+        /// <returns>a random float between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static float RandomFloat(float lo, float hi)
         {
             return (hi - lo) * random.NextFloat() + lo;
@@ -204,91 +200,71 @@ namespace NCDK.Maths
             return random.NextDouble();
         }
 
-        /**
-         * Generates a random double between the specified values.
-         * <p/>
-         *
-         * @param lo the lower bound for the generated double.
-         * @param hi the upper bound for the generated double.
-         * @return a random double between <code>lo</code> and <code>hi</code>.
-         */
+        /// <summary>
+        /// Generates a random double between the specified values.
+        /// </summary>
+        /// <param name="lo">the lower bound for the generated double.</param>
+        /// <param name="hi">the upper bound for the generated double.</param>
+        /// <returns>a random double between <paramref name="lo"/> and <paramref name="hi"/>.</returns>
         public static double RandomDouble(double lo, double hi)
         {
             return (hi - lo) * random.NextDouble() + lo;
         }
 
-        /**
-         * Generates a random bool.
-         * <p/>
-         *
-         * @return a random bool.
-         */
+        /// <summary>
+        /// Generates a random bool.
+        /// </summary>
+        /// <returns>a random bool.</returns>
         public static bool RandomBoolean()
         {
             return (RandomInt() == 1);
         }
-
-        /**
-         * Generates a random bit: either <code>0</code> or <code>1</code>.
-         * <p/>
-         *
-         * @return a random bit.
-         */
+        
+        /// <summary>
+        /// Generates a random bit: either <code>0</code> or <code>1</code>.
+        /// </summary>
+        /// <returns>a random bit.</returns>
         public static int RandomBit()
         {
             return RandomInt();
         }
 
-        /**
-         * Returns a bool value based on a biased coin toss.
-         * <p/>
-         *
-         * @param p the probability of success.
-         * @return <see langword="true"/> if a success was found; <see langword="false"/>
-         *         otherwise.
-         */
+        /// <summary>
+        /// Returns a bool value based on a biased coin toss.
+        /// </summary>
+        /// <param name="p">the probability of success.</param>
+        /// <returns><see langword="true"/> if a success was found; <see langword="false"/> otherwise.</returns>
         public static bool FlipCoin(double p)
         {
             return (RandomDouble() < p ? true : false);
         }
 
-        /**
-         * Generates a random float from a Gaussian distribution with the specified
-         * deviation.
-         * <p/>
-         *
-         * @param dev the desired deviation.
-         * @return a random float from a Gaussian distribution with deviation
-         *         <code>dev</code>.
-         */
+        /// <summary>
+        /// Generates a random float from a Gaussian distribution with the specified deviation.
+        /// </summary>
+        /// <param name="dev">the desired deviation.</param>
+        /// <returns>a random float from a Gaussian distribution with deviation <paramref name="dev"/>.</returns>
         public static float GaussianFloat(float dev)
         {
             return (float)random.NextGaussian() * dev;
         }
 
-        /**
-         * Generates a random double from a Gaussian distribution with the specified
-         * deviation.
-         * <p/>
-         *
-         * @param dev the desired deviation.
-         * @return a random double from a Gaussian distribution with deviation
-         *         <code>dev</code>.
-         */
+        /// <summary>
+        /// Generates a random double from a Gaussian distribution with the specified deviation.
+        /// </summary>
+        /// <param name="dev">the desired deviation.</param>
+        /// <returns>a random float from a Gaussian distribution with deviation <paramref name="dev"/>.</returns>
         public static double GaussianDouble(double dev)
         {
             return random.NextGaussian() * dev;
         }
 
-        /**
-         * Generates a random double from an Exponential distribution with the specified
-         * mean value.
-         * <p/>
-         *
-         * @param mean the desired mean value.
-         * @return a random double from an Exponential distribution with mean value
-         *         <code>mean</code>.
-         */
+        /// <summary>
+        /// Generates a random double from an Exponential distribution with the specified
+        /// mean value.
+        /// </summary>
+        /// <param name="mean">the desired mean value.</param>
+        /// <returns>a random double from an Exponential distribution with mean value <paramref name="mean"/>.</returns>
         public static double ExponentialDouble(double mean)
         {
             return -mean * Math.Log(RandomDouble());
@@ -305,8 +281,7 @@ namespace NCDK.Maths
         /// <summary>Next gaussian.</summary>
         private double nextGaussian;
 
-        /** Creates a new random number generator.
-         */
+        /// <summary>Creates a new random number generator.</summary>
         public BitsStreamGenerator()
         {
             nextGaussian = double.NaN;
@@ -321,15 +296,23 @@ namespace NCDK.Maths
         /// <inheritdoc/>
         public abstract void SetSeed(long seed);
 
-        /** Generate next pseudorandom number.
-         * <p>This method is the core generation algorithm. It is used by all the
-         * public generation methods for the various primitive types {@link
-         * #NextBoolean()}, {@link #NextBytes(byte[])}, {@link #NextDouble()},
-         * {@link #NextFloat()}, {@link #NextGaussian()}, {@link #NextInt()},
-         * {@link #Next(int)} and {@link #NextLong()}.</p>
-         * @param bits number of random bits to produce
-         * @return random bits generated
-         */
+        /// <summary> 
+        /// Generate next pseudorandom number.
+        /// <para>
+        /// This method is the core generation algorithm. It is used by all the
+        /// public generation methods for the various primitive types 
+        /// <see cref="NextBool()"/>,
+        /// <see cref="NextBytes(byte[])"/>, 
+        /// <see cref="NextDouble()"/>,
+        /// <see cref="NextFloat()"/>,
+        /// <see cref="NextGaussian()"/>,
+        /// <see cref="Next()"/>,
+        /// <see cref="NextInt(int)"/>,
+        /// <see cref="NextLong()"/>
+        /// </para>
+        /// </summary>
+        /// <param name="bits">number of random bits to produce</param>
+        /// <returns>random bits generated</returns>
         protected abstract uint Next(int bits);
 
         /// <inheritdoc/>
@@ -413,21 +396,20 @@ namespace NCDK.Maths
             return (int)Next(32);
         }
 
-        /**
-         * {@inheritDoc}
-         * <p>This default implementation is copied from Apache Harmony
-         * java.util.Random (r929253).</p>
-         *
-         * <p>Implementation notes: <ul>
-         * <li>If n is a power of 2, this method returns
-         * {@code (int) ((n * (long) Next(31)) >> 31)}.</li>
-         *
-         * <li>If n is not a power of 2, what is returned is {@code Next(31) % n}
-         * with {@code Next(31)} values rejected (i.e. regenerated) until a
-         * value that is larger than the remainder of {@code int.MaxValue / n}
-         * is generated. Rejection of this initial segment is necessary to ensure
-         * a uniform distribution.</li></ul></p>
-         */
+        /// <summary>
+        /// This default implementation is copied from Apache Harmony java.util.Random (r929253).
+        /// </summary>
+        /// <remarks>
+        /// Implementation notes: 
+        /// <list type="bullet">
+        /// <item>If n is a power of 2, this method returns <c>(int) ((n * (long) Next(31)) >> 31)</c>.</item>
+        /// <item>If n is not a power of 2, what is returned is <c>Next(31) % n</c>
+        /// with <c>Next(31)</c> values rejected (i.e. regenerated) until a
+        /// value that is larger than the remainder of <c>int.MaxValue / n</c>
+        /// is generated. Rejection of this initial segment is necessary to ensure
+        /// a uniform distribution.</item>
+        /// </list>
+        /// </remarks>
         public int NextInt(int n)
         {
             if (n > 0)
@@ -457,263 +439,12 @@ namespace NCDK.Maths
             return high | low;
         }
 
-        /**
-         * Clears the cache used by the default implementation of
-         * {@link #nextGaussian}.
-         */
+        /// <summary>
+        /// Clears the cache used by the default implementation of <see cref="NextGaussian()"/> 
+        /// </summary>
         public void Clear()
         {
             nextGaussian = double.NaN;
         }
     }
-
-    /** This class implements a powerful pseudo-random number generator
-        * developed by Makoto Matsumoto and Takuji Nishimura during
-        * 1996-1997.
-
-        * <p>This generator features an extremely long period
-        * (2<sup>19937</sup>-1) and 623-dimensional equidistribution up to 32
-        * bits accuracy. The home page for this generator is located at <a
-        * href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">
-        * http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</a>.</p>
-
-        * <p>This generator is described in a paper by Makoto Matsumoto and
-        * Takuji Nishimura in 1998: <a
-        * href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/mt.pdf">Mersenne
-        * Twister: A 623-Dimensionally Equidistributed Uniform Pseudo-Random
-        * Number Generator</a>, ACM Transactions on Modeling and Computer
-        * Simulation, Vol. 8, No. 1, January 1998, pp 3--30</p>
-
-        * <p>This class is mainly a Java port of the 2002-01-26 version of
-        * the generator written in C by Makoto Matsumoto and Takuji
-        * Nishimura. Here is their original copyright:</p>
-
-        * <table border="0" width="80%" cellpadding="10" align="center" bgcolor="#E0E0E0">
-        * <tr><td>Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
-        *     All rights reserved.</td></tr>
-
-        * <tr><td>Redistribution and use in source and binary forms, with or without
-        * modification, are permitted provided that the following conditions
-        * are met:
-        * <ol>
-        *   <li>Redistributions of source code must retain the above copyright
-        *       notice, this list of conditions and the following disclaimer.</li>
-        *   <li>Redistributions in binary form must reproduce the above copyright
-        *       notice, this list of conditions and the following disclaimer in the
-        *       documentation and/or other materials provided with the distribution.</li>
-        *   <li>The names of its contributors may not be used to endorse or promote
-        *       products derived from this software without specific prior written
-        *       permission.</li>
-        * </ol></td></tr>
-
-        * <tr><td><strong>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-        * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-        * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-        * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        * DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
-        * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
-        * OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-        * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-        * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
-        * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-        * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
-        * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
-        * DAMAGE.</strong></td></tr>
-        * </table>
-
-        * @version $Id: MersenneTwister.java 1244107 2012-02-14 16:17:55Z erans $
-        * @since 2.0
-
-        */
-    public class MersenneTwister : BitsStreamGenerator
-    {
-        /// <summary>Size of the bytes pool.</summary>
-        private const int N = 624;
-
-        /// <summary>Period second parameter.</summary>
-        private const int M = 397;
-
-        /// <summary>X * MATRIX_A for X = {0, 1}.</summary>
-        private static readonly uint[] MAG01 = { 0x0, 0x9908b0df };
-
-        /// <summary>Bytes pool.</summary>
-        private uint[] mt;
-
-        /// <summary>Current index in the bytes pool.</summary>
-        private uint mti;
-
-        /** Creates a new random number generator.
-         * <p>The instance is initialized using the current time plus the
-         * system identity hash code of this instance as the seed.</p>
-         */
-        public MersenneTwister()
-        {
-            mt = new uint[N];
-            SetSeed(System.DateTime.Now.Ticks);
-        }
-
-        /** Creates a new random number generator using a single int seed.
-         * @param seed the initial seed (32 bits integer)
-         */
-        public MersenneTwister(int seed)
-        {
-            mt = new uint[N];
-            SetSeed(seed);
-        }
-
-        /** Creates a new random number generator using an int array seed.
-         * @param seed the initial seed (32 bits integers array), if null
-         * the seed of the generator will be related to the current time
-         */
-        public MersenneTwister(int[] seed)
-        {
-            mt = new uint[N];
-            SetSeed(seed);
-        }
-
-        /** Creates a new random number generator using a single long seed.
-         * @param seed the initial seed (64 bits integer)
-         */
-        public MersenneTwister(long seed)
-        {
-            mt = new uint[N];
-            SetSeed(seed);
-        }
-
-        /** Reinitialize the generator as if just built with the given int seed.
-         * <p>The state of the generator is exactly the same as a new
-         * generator built with the same seed.</p>
-         * @param seed the initial seed (32 bits integer)
-         */
-        public override void SetSeed(int seed)
-        {
-            // we use a long masked by 0xffffffffL as a poor man unsigned int
-            long longMT = seed;
-            // NB: unlike original C code, we are working with java longs, the cast below makes masking unnecessary
-            mt[0] = (uint)longMT;
-            for (mti = 1; mti < N; ++mti)
-            {
-                // See Knuth TAOCP Vol2. 3rd Ed. P.106 for multiplier.
-                // initializer from the 2002-01-09 C version by Makoto Matsumoto
-                longMT = (1812433253L * (longMT ^ (longMT >> 30)) + mti) & 0xffffffffL;
-                mt[mti] = (uint)longMT;
-            }
-
-            Clear(); // Clear normal deviate cache
-        }
-
-        /** Reinitialize the generator as if just built with the given int array seed.
-         * <p>The state of the generator is exactly the same as a new
-         * generator built with the same seed.</p>
-         * @param seed the initial seed (32 bits integers array), if null
-         * the seed of the generator will be the current system time plus the
-         * system identity hash code of this instance
-         */
-        public override void SetSeed(int[] seed)
-        {
-            if (seed == null)
-            {
-                SetSeed(System.DateTime.Now.Ticks);
-                return;
-            }
-
-            SetSeed(19650218);
-            int i = 1;
-            int j = 0;
-
-            for (int k = Math.Max(N, seed.Length); k != 0; k--)
-            {
-                long l0 = (mt[i] & 0x7fffffffL) | (((int)mt[i] < 0) ? 0x80000000L : 0x0L);
-                long l1 = (mt[i - 1] & 0x7fffffffL) | (((int)mt[i - 1] < 0) ? 0x80000000L : 0x0L);
-                long l = (l0 ^ ((l1 ^ (l1 >> 30)) * 1664525L)) + seed[j] + j; // non linear
-                mt[i] = (uint)(l & 0xffffffffL);
-                i++; j++;
-                if (i >= N)
-                {
-                    mt[0] = mt[N - 1];
-                    i = 1;
-                }
-                if (j >= seed.Length)
-                {
-                    j = 0;
-                }
-            }
-
-            for (int k = N - 1; k != 0; k--)
-            {
-                long l0 = (mt[i] & 0x7fffffffL) | (((int)mt[i] < 0) ? 0x80000000L : 0x0L);
-                long l1 = (mt[i - 1] & 0x7fffffffL) | (((int)mt[i - 1] < 0) ? 0x80000000L : 0x0L);
-                long l = (l0 ^ ((l1 ^ (l1 >> 30)) * 1566083941L)) - i; // non linear
-                mt[i] = (uint)(l & 0xffffffffL);
-                i++;
-                if (i >= N)
-                {
-                    mt[0] = mt[N - 1];
-                    i = 1;
-                }
-            }
-
-            mt[0] = 0x80000000; // MSB is 1; assuring non-zero initial array
-
-            Clear(); // Clear normal deviate cache
-
-        }
-
-        /** Reinitialize the generator as if just built with the given long seed.
-         * <p>The state of the generator is exactly the same as a new
-         * generator built with the same seed.</p>
-         * @param seed the initial seed (64 bits integer)
-         */
-        public override void SetSeed(long seed)
-        {
-            SetSeed(new int[] { (int)(((ulong)seed) >> 32), (int)(seed & 0xffffffffL) });
-        }
-
-        /** Generate next pseudorandom number.
-         * <p>This method is the core generation algorithm. It is used by all the
-         * public generation methods for the various primitive types {@link
-         * #NextBoolean()}, {@link #NextBytes(byte[])}, {@link #NextDouble()},
-         * {@link #NextFloat()}, {@link #NextGaussian()}, {@link #NextInt()},
-         * {@link #Next(int)} and {@link #NextLong()}.</p>
-         * @param bits number of random bits to produce
-         * @return random bits generated
-         */
-        protected override uint Next(int bits)
-        {
-            uint y;
-
-            if (mti >= N)
-            { // generate N words at one time
-                uint mtNext = mt[0];
-                for (int k = 0; k < N - M; ++k)
-                {
-                    uint mtCurr = mtNext;
-                    mtNext = mt[k + 1];
-                    y = (mtCurr & 0x80000000) | (mtNext & 0x7fffffff);
-                    mt[k] = mt[k + M] ^ (y >> 1) ^ MAG01[y & 0x1];
-                }
-                for (int k = N - M; k < N - 1; ++k)
-                {
-                    uint mtCurr = mtNext;
-                    mtNext = mt[k + 1];
-                    y = (mtCurr & 0x80000000) | (mtNext & 0x7fffffff);
-                    mt[k] = mt[k + (M - N)] ^ (y >> 1) ^ MAG01[y & 0x1];
-                }
-                y = (mtNext & 0x80000000) | (mt[0] & 0x7fffffff);
-                mt[N - 1] = mt[M - 1] ^ (y >> 1) ^ MAG01[y & 0x1];
-
-                mti = 0;
-            }
-
-            y = mt[mti++];
-
-            // tempering
-            y ^= y >> 11;
-            y ^= (y << 7) & 0x9d2c5680;
-            y ^= (y << 15) & 0xefc60000;
-            y ^= y >> 18;
-
-            return y >> (32 - bits);
-        }
-    }
-}
+ }

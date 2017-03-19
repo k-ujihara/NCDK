@@ -66,7 +66,6 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         }
 
         /// <summary>
-        /// 
         /// </summary>
         /// <param name="atom"></param>
         /// <returns></returns>
@@ -107,7 +106,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
         /// </summary>
         /// <param name="left">expression</param>
         /// <param name="right">expression</param>
-        /// <returns><conjunction of the left and right expressions/returns>
+        /// <returns>conjunction of the left and right expressions</returns>
         public static SMARTSAtom And(IQueryAtom left, IQueryAtom right)
         {
             return new Conjunction(left.Builder, left, right);

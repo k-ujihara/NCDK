@@ -1,8 +1,6 @@
-using System;
-
 namespace NCDK.Hash
 {
-    public interface AtomHashGenerator
+    public interface IAtomHashGenerator
     {
         /// <summary>
         /// Generate invariant 64-bit hash codes for the atoms of the molecule.

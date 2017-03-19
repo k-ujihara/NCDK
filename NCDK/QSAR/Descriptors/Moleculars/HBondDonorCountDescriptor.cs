@@ -24,40 +24,46 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This descriptor calculates the number of hydrogen bond donors using a slightly simplified version of the
     /// <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The following groups are counted as hydrogen bond donors:
-    /// <ul>
-    /// <li>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</li>
-    /// <li>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</li>
-    /// </ul>
-    /// <p>
+    /// <list type="bullet"> 
+    /// <item>Any-OH where the formal charge of the oxygen is non-negative (i.e. formal charge >= 0)</item>
+    /// <item>Any-NH where the formal charge of the nitrogen is non-negative (i.e. formal charge >= 0)</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// This descriptor uses no parameters.
-    /// <p>
+    /// </para>
+    /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain either <b>implicit</b> or <b>explicit
     /// hydrogen</b> atoms. It does not work with atoms that contain neither implicit nor explicit hydrogens.
-    ///
+    /// </para>
+    /// <para>
     /// Returns a single value named <i>nHBDon</i>.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author      ulif
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:hBondDonors
-    /// </summary>
     public class HBondDonorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "nHBDon" };
@@ -143,14 +149,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(hBondDonors), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

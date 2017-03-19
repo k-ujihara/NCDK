@@ -28,13 +28,11 @@ namespace NCDK.LibIO.CML
 {
     /// <summary>
     /// Customize persistence of MDMolecule by adding support for residues and charge groups.
-    ///
+    /// </summary>
     // @author ola
     // @cdk.module libiomd
     // @cdk.githash
-    ///
     // @cdk.set       libio-cml-customizers
-    /// </summary>
     public class MDMoleculeCustomizer : ICMLCustomizer
     {
         internal static readonly XNamespace NS_MD = "http://www.bioclipse.net/mdmolecule/";

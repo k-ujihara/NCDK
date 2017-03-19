@@ -20,14 +20,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using NCDK.IO.Formats;
 using NCDK.IO.Listener;
 using NCDK.IO.Setting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using NCDK.Numerics;
 
 namespace NCDK.IO
 {
@@ -39,9 +36,9 @@ namespace NCDK.IO
     /// The easiest way to implement a new <see cref="IChemObjectReader"/> is to
     /// subclass the <see cref="DefaultChemObjectReader"/>.
     /// </summary>
+    /// <seealso cref="DefaultChemObjectReader"/>
     // @cdk.module  io
     // @cdk.githash
-    /// <seealso cref="DefaultChemObjectReader"/>
     // @author Egon Willighagen &gt;egonw&amp;sci.kun.nl&lt; 
     public interface IChemObjectIO : IDisposable
     {
@@ -52,16 +49,15 @@ namespace NCDK.IO
 
         /// <summary>
         /// Returns whether the given <see cref="IChemObject"/> can be read or written.
-        /// 
-        // @param classObject <see cref="IChemObject"/> of which is tested if it can be handled.
-        // @return true, if the <see cref="IChemObject"/> can be handled.
         /// </summary>
+        /// <param name="type"> classObject <see cref="IChemObject"/> of which is tested if it can be handled.</param>
+        /// <returns>true, if the <see cref="IChemObject"/> can be handled.</returns>
         bool Accepts(Type type);
 
         /// <summary>
         /// Closes this IChemObjectIO's resources.
         /// </summary>
-        /// <exception cref="IOException">when the wrapper IO class cannot be closed.</exception>
+        /// <exception cref="System.IO.IOException">when the wrapper IO class cannot be closed.</exception>
         void Close();
 
         /// <summary>

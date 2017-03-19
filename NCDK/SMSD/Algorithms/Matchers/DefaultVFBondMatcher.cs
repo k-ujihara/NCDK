@@ -52,10 +52,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
     /// Checks if a bond is matching between query and target molecules.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class DefaultVFBondMatcher : VFBondMatcher
     {
         private IBond queryBond = null;
@@ -65,8 +65,6 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Bond type flag
-        /// </summary>
-        /// <summary>
         /// Constructor
         /// </summary>
         public DefaultVFBondMatcher()

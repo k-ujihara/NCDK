@@ -23,7 +23,6 @@
  *
  */
 using System.Xml.Linq;
-using static NCDK.LibIO.CML.CMLElement;
 
 namespace NCDK.LibIO.CML
 {

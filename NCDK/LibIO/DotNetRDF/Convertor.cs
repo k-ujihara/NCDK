@@ -377,10 +377,10 @@ namespace NCDK.LibIO.DotNetRDF
         }
 
         /// <summary>
-        /// Converts a <see cref="Resource"/> object into the matching <see cref="Order"/>.
+        /// Converts a <see cref="Resource"/> object into the matching <see cref="BondOrder"/>.
         /// </summary>
-        /// <param name="rdfOrder">Resource for which the matching <see cref="Order"/> should be given.</param>
-        /// <returns>the matching <see cref="Order"/>.</returns>
+        /// <param name="rdfOrder">Resource for which the matching <see cref="BondOrder"/> should be given.</param>
+        /// <returns>the matching <see cref="BondOrder"/>.</returns>
         public BondOrder Resource2Order(INode rdfOrder)
         {
             switch (rdfOrder?.ToString())
@@ -486,7 +486,7 @@ namespace NCDK.LibIO.DotNetRDF
                     IBond bond = builder.CreateBond(atomList);
                     var order = g.GetTriplesWithSubjectPredicate(rdfBond, P_HASORDER).Select(n => n.Object).FirstOrDefault();
                     bond.Order = Resource2Order(order);
-                    mol.Add(bond);
+                    mol.Bonds.Add(bond);
                     DeserializeElectronContainerFields(rdfBond, bond);
                 }
             }

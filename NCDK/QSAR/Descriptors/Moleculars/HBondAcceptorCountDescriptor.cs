@@ -26,48 +26,52 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
     /// <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The following groups are counted as hydrogen bond acceptors:
-    /// <ul>
-    /// <li>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
-    /// <ol>
-    /// <li>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</li>
-    /// <li>an oxygen that is adjacent to a nitrogen</li>
-    /// </ol>
-    /// <li>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge <= 0) <b>except</b></li>
-    /// <ol>
-    /// <li>a nitrogen that is adjacent to an oxygen</li>
-    /// </ol>
-    /// </ul>
-    ///
+    /// <list type="bullet"> 
+    /// <item>any oxygen where the formal charge of the oxygen is non-positive (i.e. formal charge &lt;= 0) <b>except</b></item>
+    /// <list type="bullet"> 
+    /// <item>an aromatic ether oxygen (i.e. an ether oxygen that is adjacent to at least one aromatic carbon)</item>
+    /// <item>an oxygen that is adjacent to a nitrogen</item>
+    /// </list>
+    /// <item>any nitrogen where the formal charge of the nitrogen is non-positive (i.e. formal charge &lt;= 0) <b>except</b></item>
+    /// <list type="bullet"> 
+    /// <item>a nitrogen that is adjacent to an oxygen</item>
+    /// </list>
+    /// </list>
+    /// </para>
+    /// <para>
     /// Returns a single value named <i>nHBAcc</i>.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table>
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>checkAromaticity</td>
-    ///     <td>false</td>
-    ///     <td>true if the aromaticity has to be checked</td>
-    ///   </tr>
-    /// </table>
-    /// <p>
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>checkAromaticity</term>
+    ///     <term>false</term>
+    ///     <term>true if the aromaticity has to be checked</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// This descriptor works properly with AtomContainers whose atoms contain <b>implicit hydrogens</b> or <b>explicit
     /// hydrogens</b>.
-    ///
+    /// </para>
+    /// </remarks>
     // @author      ulif
     // @cdk.created 2005-22-07
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:hBondacceptors
-    /// </summary>
     public class HBondAcceptorCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
-
         // only parameter of this descriptor; true if aromaticity has to be checked prior to descriptor calculation, false otherwise
         private bool checkAromaticity = false;
         private static readonly string[] NAMES = { "nHBAcc" };
@@ -91,10 +95,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 
         /// <summary>
         /// The parameters attribute of the HBondAcceptorCountDescriptor object.
-        ///
-        // @param  params            a bool true means that aromaticity has to be checked
-        // @exception  CDKException  Description of the Exception
         /// </summary>
+        /// <value>a bool true means that aromaticity has to be checked</value>
+        /// <exception cref="CDKException"></exception>
         public override object[] Parameters
         {
             set
@@ -125,10 +128,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        ///  Calculates the number of H bond acceptors.
+        /// Calculates the number of H bond acceptors.
         /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
-        /// <returns>                  number of H bond acceptors</returns>
+        /// <returns>number of H bond acceptors</returns>
         public override DescriptorValue Calculate(IAtomContainer atomContainer)
         {
             int hBondAcceptors = 0;
@@ -190,14 +193,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new IntegerResult(hBondAcceptors), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.</para>
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

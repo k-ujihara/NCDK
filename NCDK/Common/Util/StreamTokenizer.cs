@@ -57,7 +57,7 @@ namespace NCDK.Common.Util
 
         private bool pushedBack;
         private bool forceLower;
-        /// <summary> The line number of the last token Read */
+       /// <summary> The line number of the last token Read </summary>
 
         private bool eolIsSignificantP = false;
         private bool slashSlashCommentsP = false;
@@ -140,13 +140,12 @@ namespace NCDK.Common.Util
         /// <summary>
         /// If the current token is a number, this field contains the value
         /// of that number. The current token is a number when the value of
-        /// the <code>ttype</code> field is <see cref="TT_NUMBER"/>.
-        /// <p>
-        /// The initial value of this field is 0.0.
+        /// the <see cref="TType"/> field is <see cref="TT_NUMBER"/>.
         /// </summary>
+        /// <value>The initial value of this field is 0.0.</value>
         public double NumberValue { get; private set; }
 
-        /// <summary> Private constructor that initializes everything except the streams. */
+       /// <summary> Private constructor that initializes everything except the streams. </summary>
         private StreamTokenizer()
         {
             WordChars('a', 'z');
@@ -301,7 +300,7 @@ namespace NCDK.Common.Util
         /// constants in this tokenizer.
         /// <para>
         /// When the <see cref="NextToken"/> method encounters a string
-        /// constant, the <code>ttype</code> field is set to the string
+        /// constant, the <see cref="TType"/> field is set to the string
         /// delimiter and the <code>sval</code> field is set to the body of
         /// the string.
         /// </para>
@@ -721,7 +720,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Causes the next call to the <see cref="NextToken"/>  method of this
-        /// tokenizer to return the current value in the <code>ttype</code>
+        /// tokenizer to return the current value in the <see cref="TType"/>
         /// field, and not to modify the value in the<see cref="NumberValue"/> or
         /// <see cref="StringValue"/> field.
         /// </summary>

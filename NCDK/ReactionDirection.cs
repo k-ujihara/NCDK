@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NCDK
+﻿namespace NCDK
 {
     /// <summary>
     /// Permissible reaction directions.

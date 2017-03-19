@@ -51,28 +51,28 @@ namespace NCDK.SMSD.Algorithms.VFLib
 {
     /// <summary>
     /// Interface for the Edges (bonds) in graph.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public interface IEdge
     {
         /// <summary>
         /// Returns source Node.
-        /// <returns>source node.</returns>
         /// </summary>
+        /// <returns>source node.</returns>
         INode Source { get; }
 
         /// <summary>
         /// Returns target Node.
-        /// <returns>target Node.</returns>
         /// </summary>
+        /// <returns>target Node.</returns>
         INode Target { get; }
 
         /// <summary>
         /// Returns bond matcher.
-        /// <returns>Query Bond.</returns>
         /// </summary>
+        /// <returns>Query Bond.</returns>
         VFBondMatcher BondMatcher { get; }
     }
 }

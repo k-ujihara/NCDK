@@ -22,10 +22,9 @@ namespace NCDK.QSAR.Result
 {
     /// <summary>
     /// Object that provides access to the calculated descriptor value.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     [Serializable]
     public class IntegerResult : IDescriptorResult
     {

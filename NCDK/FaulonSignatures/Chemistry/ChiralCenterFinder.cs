@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class ChiralCenterFinder
     {

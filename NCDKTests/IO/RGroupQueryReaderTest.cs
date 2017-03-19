@@ -144,8 +144,8 @@ namespace NCDK.IO
                     {
                         if (atom.Symbol.Equals("P"))
                         {
-                            Assert.IsNotNull(atom.GetProperty<bool?>(CDKPropertyName.REST_H));
-                            Assert.AreEqual(atom.GetProperty<bool>(CDKPropertyName.REST_H), true);
+                            Assert.IsNotNull(atom.GetProperty<bool?>(CDKPropertyName.RestH));
+                            Assert.AreEqual(atom.GetProperty<bool>(CDKPropertyName.RestH), true);
                             restH_Identified = true;
                         }
                     }
@@ -241,11 +241,11 @@ namespace NCDK.IO
                 { // smallest configuration
                     foreach (var atom in atc.Atoms)
                     {
-                        if (atom.GetProperty<bool?>(CDKPropertyName.REST_H) != null)
+                        if (atom.GetProperty<bool?>(CDKPropertyName.RestH) != null)
                         {
                             countRestHForSmallestConfigurations++;
                             if (atom.Symbol.Equals("P"))
-                                Assert.AreEqual(atom.GetProperty<bool>(CDKPropertyName.REST_H), true);
+                                Assert.AreEqual(atom.GetProperty<bool>(CDKPropertyName.RestH), true);
                         }
                     }
                 }

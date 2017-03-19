@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -52,7 +37,7 @@ namespace NCDK.Default
     // @cdk.keyword association
     // @cdk.keyword bond
     [Serializable]
-    public class Association : ElectronContainer, ICloneable, IChemObjectListener
+    public class Association : ElectronContainer, IChemObjectListener
     {
         /// <summary>
         /// The atoms which take part in the association.
@@ -124,7 +109,7 @@ namespace NCDK.Silent
     // @cdk.keyword association
     // @cdk.keyword bond
     [Serializable]
-    public class Association : ElectronContainer, ICloneable, IChemObjectListener
+    public class Association : ElectronContainer, IChemObjectListener
     {
         /// <summary>
         /// The atoms which take part in the association.

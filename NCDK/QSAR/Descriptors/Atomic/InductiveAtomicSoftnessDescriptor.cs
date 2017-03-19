@@ -22,65 +22,40 @@ using NCDK.QSAR.Result;
 using System;
 using System.Diagnostics;
 
-namespace NCDK.QSAR.Descriptors.Atomic {
+namespace NCDK.QSAR.Descriptors.Atomic
+{
     /// <summary>
     ///  Inductive atomic softness of an atom in a polyatomic system can be defined
-    ///  as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. <p>
-    ///
-    ///  This descriptor uses these parameters:
-    ///  <tableborder="1">
-    ///
-    ///    <tr>
-    ///
-    ///      <td>
-    ///        Name
-    ///      </td>
-    ///
-    ///      <td>
-    ///        Default
-    ///      </td>
-    ///
-    ///      <td>
-    ///        Description
-    ///      </td>
-    ///
-    ///    </tr>
-    ///
-    ///    <tr>
-    ///
-    ///      <td>
-    ///
-    ///      </td>
-    ///
-    ///      <td>
-    ///
-    ///      </td>
-    ///
-    ///      <td>
-    ///        no parameters
-    ///      </td>
-    ///
-    ///    </tr>
-    ///
-    ///  </table>
-    ///
-    ///
-    ///@author         mfe4
-    ///@cdk.created    2004-11-03
-    ///@cdk.module     qsaratomic
-    // @cdk.githash
-    ///@cdk.set        qsar-descriptors
-    // @cdk.dictref qsar-descriptors:atomicSoftness
+    ///  as charge delocalizing ability. Only works with 3D coordinates, which must be calculated beforehand. 
     /// </summary>
-    public class InductiveAtomicSoftnessDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor {
+    /// <remarks>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader>
+    ///   <term>Name</term>
+    ///   <term>Default</term>
+    ///   <term>Description</term>
+    /// </listheader>
+    /// <item>
+    ///   <term></term>
+    ///   <term></term>
+    ///   <term>no parameters</term>
+    /// </item>
+    /// </list>
+    /// </remarks>
+    // @author         mfe4
+    // @cdk.created    2004-11-03
+    // @cdk.module     qsaratomic
+    // @cdk.githash
+    // @cdk.set        qsar-descriptors
+    // @cdk.dictref qsar-descriptors:atomicSoftness
+    public class InductiveAtomicSoftnessDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
+    {
         private static readonly string[] NAMES = { "indAtomSoftness" };
         private AtomTypeFactory factory = null;
 
         /// <summary>
         ///  Constructor for the InductiveAtomicSoftnessDescriptor object
-        ///
-        /// <exception cref="exception">IOException</exception>
-        /// <exception cref="exception">ClassNotFoundException</exception>
         /// </summary>
         public InductiveAtomicSoftnessDescriptor() { }
 
@@ -100,7 +75,8 @@ namespace NCDK.QSAR.Descriptors.Atomic {
 
         public override string[] DescriptorNames => NAMES;
 
-        private DescriptorValue GetDummyDescriptorValue(Exception e) {
+        private DescriptorValue GetDummyDescriptorValue(Exception e)
+        {
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(double.NaN), NAMES, e);
         }
 
@@ -111,12 +87,16 @@ namespace NCDK.QSAR.Descriptors.Atomic {
         /// <param name="atom">The IAtom for which the DescriptorValue is requested</param>
         /// <param name="ac">AtomContainer</param>
         /// <returns>a double with polarizability of the heavy atom</returns>
-        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac) {
+        public override DescriptorValue Calculate(IAtom atom, IAtomContainer ac)
+        {
             if (factory == null)
-                try {
+                try
+                {
                     factory = AtomTypeFactory.GetInstance("NCDK.Config.Data.jmol_atomtypes.txt",
                             ac.Builder);
-                } catch (Exception exception) {
+                }
+                catch (Exception exception)
+                {
                     return GetDummyDescriptorValue(exception);
                 }
 
@@ -129,26 +109,35 @@ namespace NCDK.QSAR.Descriptors.Atomic {
             double radius;
             string symbol;
             IAtomType type;
-            try {
+            try
+            {
                 symbol = atom.Symbol;
                 type = factory.GetAtomType(symbol);
                 radiusTarget = type.CovalentRadius.Value;
-            } catch (Exception execption) {
+            }
+            catch (Exception execption)
+            {
                 Debug.WriteLine(execption);
                 return GetDummyDescriptorValue(execption);
             }
 
-            foreach (var curAtom in allAtoms) {
-                if (atom.Point3D == null || curAtom.Point3D == null) {
+            foreach (var curAtom in allAtoms)
+            {
+                if (atom.Point3D == null || curAtom.Point3D == null)
+                {
                     return GetDummyDescriptorValue(new CDKException(
                             "The target atom or current atom had no 3D coordinates. These are required"));
                 }
-                if (!atom.Equals(curAtom)) {
+                if (!atom.Equals(curAtom))
+                {
                     partial = 0;
                     symbol = curAtom.Symbol;
-                    try {
+                    try
+                    {
                         type = factory.GetAtomType(symbol);
-                    } catch (Exception exception) {
+                    }
+                    catch (Exception exception)
+                    {
                         Debug.WriteLine(exception);
                         return GetDummyDescriptorValue(exception);
                     }
@@ -164,11 +153,11 @@ namespace NCDK.QSAR.Descriptors.Atomic {
 
             atomicSoftness = 2 * atomicSoftness;
             atomicSoftness = atomicSoftness * 0.172;
-            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(
-                    atomicSoftness), NAMES);
+            return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(atomicSoftness), NAMES);
         }
 
-        private double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2) {
+        private double CalculateSquareDistanceBetweenTwoAtoms(IAtom atom1, IAtom atom2)
+        {
             double distance;
             double tmp;
             Vector3 firstPoint = atom1.Point3D.Value;

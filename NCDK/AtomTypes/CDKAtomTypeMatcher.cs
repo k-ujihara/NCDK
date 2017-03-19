@@ -1049,8 +1049,7 @@ namespace NCDK.AtomTypes
             return null;
         }
 
-        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom,
-                                            RingSearch searcher, IEnumerable<IBond> connectedBonds)
+        private IAtomType PerceiveNitrogens(IAtomContainer atomContainer, IAtom atom, RingSearch searcher, IEnumerable<IBond> connectedBonds)
         {
             // if hybridization is given, use that
             if (HasOneSingleElectron(atomContainer, atom))
@@ -1371,7 +1370,7 @@ namespace NCDK.AtomTypes
         /// <param name="atom">an atom to test</param>
         /// <param name="container">container of the atom</param>
         /// <returns>whether the atom's only bonds are to heteroatoms</returns>
-        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom)"/>
+        /// <seealso cref="PerceiveNitrogens(IAtomContainer, IAtom, RingSearch, IEnumerable{IBond})"/>
         private bool IsSingleHeteroAtom(IAtom atom, IAtomContainer container)
         {
             IEnumerable<IAtom> connected = container.GetConnectedAtoms(atom);
@@ -1454,10 +1453,9 @@ namespace NCDK.AtomTypes
 
         /// <summary>
         /// Filter a bond list keeping only bonds between heavy atoms.
-        ///
+        /// </summary>
         /// <param name="bonds">a list of bond</param>
         /// <returns>the bond list only with heavy bonds</returns>
-        ////
         private IList<IBond> HeavyBonds(IEnumerable<IBond> bonds)
         {
             IList<IBond> heavy = new List<IBond>(bonds.Count());
@@ -3483,20 +3481,20 @@ namespace NCDK.AtomTypes
         /// <summary>
         /// Count the number of doubly bonded atoms.
         /// </summary>
-        /// <param name="container">the molecule in which to look</param>
+        /// <param name="connectedBonds"></param>
         /// <param name="atom">the atom being looked at</param>
         /// <param name="order">the desired bond order of the attached bonds</param>
         /// <param name="symbol">If not null, then it only counts the double bonded atoms which match the given symbol.</param>
         /// <returns>the number of doubly bonded atoms</returns>
-        private int CountAttachedBonds(IEnumerable<IBond> connectedBondss, IAtom atom, BondOrder order, string symbol)
+        private int CountAttachedBonds(IEnumerable<IBond> connectedBonds, IAtom atom, BondOrder order, string symbol)
         {
-            var connectedBonds = connectedBondss.ToArray();
+            var aConnectedBonds = connectedBonds.ToArray();
             // count the number of double bonded oxygens
-            int neighborcount = connectedBonds.Length;
+            int neighborcount = aConnectedBonds.Length;
             int doubleBondedAtoms = 0;
             for (int i = neighborcount - 1; i >= 0; i--)
             {
-                IBond bond = connectedBonds[i];
+                IBond bond = aConnectedBonds[i];
                 if (bond.Order == order)
                 {
                     if (bond.Atoms.Count == 2)

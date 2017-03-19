@@ -30,15 +30,13 @@ namespace NCDK.Modeling.Builder3D
 {
     /// <summary>
     ///  A set of static utility classes for geometric calculations on Atoms.
-    ///
-    ///@author         Peter Murray-Rust,chhoppe,egonw
-    ///@cdk.created    2003-??-??
+    /// </summary>
+    // @author         Peter Murray-Rust,chhoppe,egonw
+    // @cdk.created    2003-??-??
     // @cdk.module    builder3d
     // @cdk.githash
-    /// </summary>
     public class AtomTetrahedralLigandPlacer3D
     {
-
         private IDictionary<string, object> pSet = null;
         public const double DEFAULT_BOND_LENGTH_H = 1.0;
 
@@ -57,9 +55,8 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         ///  Constructor for the setParameterSet object.
-        ///
-        /// <param name="moleculeParameter">Description of the Parameter</param>
         /// </summary>
+        /// <param name="moleculeParameter">Description of the Parameter</param>
         public void SetParameterSet(IDictionary<string, object> moleculeParameter)
         {
             pSet = moleculeParameter;
@@ -71,12 +68,11 @@ namespace NCDK.Modeling.Builder3D
         ///  It knows about C, O, N, S only and will give tetrahedral or trigonal
         ///  geometry elsewhere. Bond lengths are computed from covalent radii or taken
         ///  out of a parameter set if available. Angles are tetrahedral or trigonal
-        ///
-        /// <param name="atomContainer">the set of atoms involved</param>
-        // @throws CDKException
-        ///@cdk.keyword           coordinate calculation
-        ///@cdk.keyword           3D model
         /// </summary>
+        /// <param name="atomContainer">the set of atoms involved</param>
+        /// <exception cref="CDKException"></exception>
+        // @cdk.keyword           coordinate calculation
+        // @cdk.keyword           3D model
         public void Add3DCoordinatesForSinglyBondedLigands(IAtomContainer atomContainer)
         {
             IAtom refAtom = null;
@@ -124,13 +120,12 @@ namespace NCDK.Modeling.Builder3D
         /// <summary>
         ///  Rescales Point2 so that length 1-2 is sum of covalent radii.
         ///  If covalent radii cannot be found, use bond length of 1.0
-        ///
+        /// </summary>
         /// <param name="atom1">stationary atom</param>
         /// <param name="atom2">movable atom</param>
         /// <param name="point2">coordinates for atom 2</param>
         /// <returns>new coordinates for atom 2</returns>
         /// <exception cref="Exception"> Description of the Exception</exception>
-        /// </summary>
         public Vector3 RescaleBondLength(IAtom atom1, IAtom atom2, Vector3 point2)
         {
             Vector3 point1 = atom1.Point3D.Value;
@@ -173,7 +168,7 @@ namespace NCDK.Modeling.Builder3D
         ///  refAtom A (i) 1 points required; if A, B, C, D coplanar, no points. else
         ///  vector is resultant of BA, CA, DA fails if atom itself has no coordinates
         ///  or >4 ligands
-        ///
+        /// </summary>
         /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>
         /// <param name="length">A-X length</param>
         /// <param name="angle">B-A-X angle (used in certain cases)</param>
@@ -181,13 +176,11 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="noCoords">Description of the Parameter</param>
         /// <param name="withCoords">Description of the Parameter</param>
         /// <param name="atomC">Description of the Parameter</param>
-        /// <returns>Point3D[] points calculated. If request could not be</returns>
+        /// <returns>Point3D[] points calculated. If request could not be
         ///      fulfilled (e.g. too many atoms, or strange geometry, returns empty
-        ///      array (zero length, not null)
-        // @throws CDKException
-        ///@cdk.keyword           coordinate generation
-        /// </summary>
-
+        ///      array (zero length, not null)</returns>
+        /// <exception cref="CDKException"></exception>
+        // @cdk.keyword           coordinate generation
         public Vector3[] Get3DCoordinatesForLigands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, int nwanted, double length, double angle)
         {
@@ -266,7 +259,7 @@ namespace NCDK.Modeling.Builder3D
         /// <summary>
         ///  Main method for the calculation of the ligand coordinates for sp2 atoms.
         ///  Decides if one or two coordinates should be created
-        ///
+        /// </summary>
         /// <param name="refAtom">central atom (Atom)</param>
         /// <param name="noCoords">Description of the Parameter</param>
         /// <param name="withCoords">Description of the Parameter</param>
@@ -274,7 +267,6 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="length">Description of the Parameter</param>
         /// <param name="angle">Description of the Parameter</param>
         /// <returns>coordinates as Points3d []</returns>
-        /// </summary>
         public Vector3[] Get3DCoordinatesForSP2Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, double length, double angle)
         {
@@ -304,17 +296,16 @@ namespace NCDK.Modeling.Builder3D
         /// <summary>
         ///  Main method for the calculation of the ligand coordinates for sp3 atoms.
         ///  Decides how many coordinates should be created
-        ///
+        /// </summary>
         /// <param name="refAtom">central atom (Atom)</param>
         /// <param name="nwanted">how many ligands should be created</param>
         /// <param name="length">bond length</param>
-        /// <param name="angle">angle in a B-A-(X) system; a=central atom;</param>
-        ///      x=ligand with unknown coordinates
+        /// <param name="angle">angle in a B-A-(X) system; a=central atom;
+        ///      x=ligand with unknown coordinates</param>
         /// <param name="noCoords">Description of the Parameter</param>
         /// <param name="withCoords">Description of the Parameter</param>
         /// <param name="atomC">Description of the Parameter</param>
         /// <returns>Description of the Return Value</returns>
-        /// </summary>
         public Vector3[] Get3DCoordinatesForSP3Ligands(IAtom refAtom, IAtomContainer noCoords, IAtomContainer withCoords,
                 IAtom atomC, int nwanted, double length, double angle)
         {
@@ -359,12 +350,11 @@ namespace NCDK.Modeling.Builder3D
         ///  required; +x,0,0 (ii) 2 points: use +x,0,0 and -x,0,0 (iii) 3 points:
         ///  equilateral triangle in the xy plane (iv) 4 points x,x,x, x,-x,-x, -x,x,-x,
         ///  -x,-x,x where 3x**2 = bond length
-        ///
+        /// </summary>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="nwanted">number of points to calculate (1-4)</param>
         /// <param name="length">from aPoint</param>
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
-        /// </summary>
         public Vector3[] Calculate3DCoordinates0(Vector3 aPoint, int nwanted, double length)
         {
             Vector3[] points = new Vector3[0];
@@ -405,7 +395,7 @@ namespace NCDK.Modeling.Builder3D
         ///  2 points: 2 vectors in ABC plane, staggered and eclipsed wrt C (iii) 3
         ///  points: 1 staggered wrt C, the others +- gauche wrt C If C is null, a
         ///  random non-colinear C is generated
-        ///
+        /// </summary>
         /// <param name="aPoint">to which substituents are added</param>
         /// <param name="nwanted">number of points to calculate (1-3)</param>
         /// <param name="length">A-X length</param>
@@ -413,9 +403,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="bPoint">Description of the Parameter</param>
         /// <param name="cPoint">Description of the Parameter</param>
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
-        /// </summary>
-        public Vector3[] Calculate3DCoordinates1(Vector3 aPoint, Vector3 bPoint, Vector3? cPoint, int nwanted,
-                double length, double angle)
+        public Vector3[] Calculate3DCoordinates1(Vector3 aPoint, Vector3 bPoint, Vector3? cPoint, int nwanted, double length, double angle)
         {
             Vector3[] points = new Vector3[nwanted];
             // BA vector
@@ -477,8 +465,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="length">A-X length</param>
         /// <param name="angle">B-A-X angle</param>
         /// <returns>Vector3[] nwanted points (or zero if failed)</returns>
-        public Vector3[] Calculate3DCoordinates2(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, int nwanted,
-                double length, double angle)
+        public Vector3[] Calculate3DCoordinates2(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, int nwanted, double length, double angle)
         {
             //Debug.WriteLine("3DCoordinates2");
             Vector3[] newPoints = new Vector3[0];
@@ -569,8 +556,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="length">bond length</param>
         /// <param name="angle">angle between B(C)-A-X</param>
         /// <returns>new Point (Vector3)</returns>
-        public Vector3 Calculate3DCoordinatesSP2_1(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, double length,
-                double angle)
+        public Vector3 Calculate3DCoordinatesSP2_1(Vector3 aPoint, Vector3 bPoint, Vector3 cPoint, double length, double angle)
         {
             //Debug.WriteLine("3DCoordinatesSP2_1");
             Vector3 ba = bPoint - aPoint;
@@ -752,7 +738,6 @@ namespace NCDK.Modeling.Builder3D
         /// <returns>int value of branch point position</returns>
         public int MakeStereocenter(Vector3 atomA, IBond ax, Vector3 atomB, Vector3 atomC, Vector3[] branchPoints)
         {
-
             Vector3 b = new Vector3((atomB.X - atomA.X), (atomB.Y - atomA.Y), (atomB.Z - atomA.Z));
             Vector3 c = new Vector3((atomC.X - atomA.X), (atomC.Y - atomA.Y), (atomC.Z - atomA.Z));
             Vector3 n1 = Vector3.Cross(b, c);

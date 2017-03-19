@@ -56,7 +56,7 @@ namespace NCDK.Graphs.InChi
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac);
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
-            Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
+            Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace NCDK.Graphs.InChi
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, "FixedH");
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
-            Assert.AreEqual("InChI=1/ClH/h1H", gen.Inchi);
+            Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace NCDK.Graphs.InChi
             ac.Atoms.Add(a);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, (string)null);
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
-            Assert.AreEqual("InChI=1S/ClH/h1H", gen.Inchi);
+            Assert.AreEqual("InChI=1S/ClH/h1H", gen.InChI);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NCDK.Graphs.InChi
             options.Add(INCHI_OPTION.FixedH);
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(ac, options);
             Assert.AreEqual(gen.ReturnStatus, INCHI_RET.OKAY);
-            Assert.AreEqual("InChI=1/ClH/h1H", gen.Inchi);
+            Assert.AreEqual("InChI=1/ClH/h1H", gen.InChI);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace NCDK.Graphs.InChi
             InChIGenerator generator = InChIGeneratorFactory.Instance.GetInChIGenerator(container);
 
             string expected = "InChI=1S/C9H20O3/c1-5(7(3)10)9(12)6(2)8(4)11/h5-12H,1-4H3/t5-,6-,7-,8+,9-/m1/s1";
-            string actual = generator.Inchi;
+            string actual = generator.InChI;
 
             Assert.AreEqual(expected, actual, "Incorrect InCHI generated for topological centre");
 
@@ -209,7 +209,7 @@ namespace NCDK.Graphs.InChi
                 // excluding the aromatic bonds gives the normal InChI
                 Assert.AreEqual(INCHI_RET.OKAY, genNoAromaticity.ReturnStatus, "return status was not okay");
                 Assert.AreEqual("InChI=1S/CH2N4/c1-2-4-5-3-1/h1H,(H,2,3,4,5)",
-                        genNoAromaticity.Inchi, "InChIs did not match");
+                        genNoAromaticity.InChI, "InChIs did not match");
             }
             finally
             {

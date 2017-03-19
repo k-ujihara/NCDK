@@ -29,40 +29,34 @@ namespace NCDK.QSAR.Descriptors.Bonds
     ///  The calculation of bond total Partial charge is calculated
     ///  determining the difference the Partial Total Charge on atoms
     ///  A and B of a bond. Based in Gasteiger Charge.
-    ///  <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>bondPosition</td>
-    ///     <td>0</td>
-    ///     <td>The position of the target bond</td>
-    ///   </tr>
-    /// </table>
-    ///
+    ///  </summary>
+    /// <remarks>
+    ///  <para>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term>bondPosition</term><term>0</term><term>The position of the target bond</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="Atomic.PartialPiChargeDescriptor"/>
+    /// <seealso cref="Atomic.PartialSigmaChargeDescriptor"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-05-18
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondPartialTCharge
-    ///
-    // @see NCDK.QSAR.Descriptors.Atomic.PartialPiChargeDescriptor
-    // @see NCDK.QSAR.Descriptors.Atomic.PartialSigmaChargeDescriptor
-    /// </summary>
     public class BondPartialTChargeDescriptor : AbstractBondDescriptor
     {
         private GasteigerMarsiliPartialCharges peoe = null;
         private GasteigerPEPEPartialCharges pepe = null;
 
-        /// <summary>Number of maximum iterations*/
+       /// <summary>Number of maximum iterations</summary>
         private int maxIterations = -1;
-        /// <summary>Number of maximum resonance structures*/
+       /// <summary>Number of maximum resonance structures</summary>
         private int maxResonStruc = -1;
-        /// <summary> make a lone pair electron checker. Default true*/
+       /// <summary> make a lone pair electron checker. Default true</summary>
         private bool lpeChecker = true;
 
         private static readonly string[] NAMES = { "pCB" };

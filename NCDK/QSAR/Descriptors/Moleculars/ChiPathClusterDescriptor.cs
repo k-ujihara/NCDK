@@ -30,28 +30,30 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates chi path cluster descriptors.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// The code currently evluates the simple and valence chi chain descriptors of orders 3, 4,5 and 6.
     /// It utilizes the graph isomorphism code of the CDK to find fragments matching
     /// SMILES strings representing the fragments corresponding to each type of chain.
-    /// <p/>
+    /// <para>
     /// The order of the values returned is
-    /// <ol>
-    /// <li>SPC-4 - Simple path cluster, order 4
-    /// <li>SPC-5 - Simple path cluster, order 5
-    /// <li>SPC-6 - Simple path cluster, order 6
-    /// <li>VPC-4 - Valence path cluster, order 4
-    /// <li>VPC-5 - Valence path cluster, order 5
-    /// <li>VPC-6 - Valence path cluster, order 6
-    /// </ol>
-    /// <p/>
-    /// <p/>
+    /// <list type="bullet"> 
+    /// <item>SPC-4 - Simple path cluster, order 4</item>
+    /// <item>SPC-5 - Simple path cluster, order 5</item>
+    /// <item>SPC-6 - Simple path cluster, order 6</item>
+    /// <item>VPC-4 - Valence path cluster, order 4</item>
+    /// <item>VPC-5 - Valence path cluster, order 5</item>
+    /// <item>VPC-6 - Valence path cluster, order 6</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
     /// the various fragments. As a result calculations may be slow. In addition, recent
     /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
     /// branches etc.) whereas these descriptors use the older more complex fragment
     /// definitions.
-    ///
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-11-13
     // @cdk.module qsarmolecular
@@ -60,7 +62,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPathCluster
     // @cdk.keyword chi path cluster index
     // @cdk.keyword descriptor
-    /// </summary>
     public class ChiPathClusterDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
@@ -152,17 +153,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames, e);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating</returns>
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(6);
 
         private IList<IList<int>> Order4(IAtomContainer atomContainer)

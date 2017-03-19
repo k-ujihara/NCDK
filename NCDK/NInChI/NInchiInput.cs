@@ -22,8 +22,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates structure input for InChI generation.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiInput : NInchiStructure
     {
         /// <summary>
@@ -36,7 +36,6 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.
-        // @
         /// </summary>
         public NInchiInput()
         {
@@ -45,9 +44,8 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.
-        /// <param name="opts">Options string.</param>
-        // @
         /// </summary>
+        /// <param name="opts">Options string.</param>
         public NInchiInput(string opts)
         {
             Options = opts == null ? "" : NInchiWrapper.CheckOptions(opts);
@@ -55,9 +53,8 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.
-        /// <param name="opts">List of options.</param>
-        // @
         /// </summary>
+        /// <param name="opts">List of options.</param>
         public NInchiInput(IList<INCHI_OPTION> opts)
         {
             Options = NInchiWrapper.CheckOptions(opts);
@@ -65,7 +62,6 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.
-        // @
         /// </summary>
         public NInchiInput(NInchiStructure struct_)
             : this()
@@ -75,7 +71,6 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.
-        // @
         /// </summary>
         public NInchiInput(NInchiStructure struct_, string opts)
             : this(opts)

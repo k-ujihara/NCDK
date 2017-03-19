@@ -57,14 +57,12 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
     /// <summary>
     /// This class finds mapping states between query and target
     /// molecules.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFState : IState
     {
-
         private List<Match> candidates;
         private IQuery query;
         private TargetProperties target;
@@ -86,7 +84,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.target = target;
             this.candidates = new List<Match>();
             LoadRootCandidates();
-
         }
 
         private VFState(VFState state, Match match)

@@ -1,24 +1,28 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
-using System;
+/* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ */
+ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -26,9 +30,33 @@ using NCDK.Numerics;
 
 namespace NCDK.Default
 {
+    /// <summary>
+    /// Implements the concept of a covalent bond between two or more atoms. A bond is
+    /// considered to be a number of electrons connecting two or more  of atoms.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// It should be noted that the majority of applications will consider 2-center bonds,
+    /// especially since the bond orders currently supported are really only valid for
+    /// 2-center bonds. However the code does support multi-center bonds, though the
+    /// orders may not make sense at this point.
+    /// </para>
+    /// <para>
+    /// In general code that assumes bonds are 2-centered can use this class seamlessly, as
+    /// the semantics are identical to the older versions. Care shoud be exercised when
+    /// using multi-center bonds using this class as the orders may not make sense.
+    /// </para>
+    /// </remarks>
+    // @author steinbeck
+    // @cdk.module  silent
+    // @cdk.githash
+    // @cdk.created 2003-10-02
+    // @cdk.keyword bond
+    // @cdk.keyword atom
+    // @cdk.keyword electron
     [Serializable]
     public class Bond
-        : ElectronContainer, IBond, IChemObjectListener, ICloneable
+        : ElectronContainer, IBond, IChemObjectListener
     {
         internal bool isAromatic;
         internal bool isAliphatic;
@@ -38,32 +66,62 @@ namespace NCDK.Default
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
-
+		
+        /// <summary>
+        /// Constructs an empty bond.
+        /// </summary>
         public Bond()
             : this(Array.Empty<IAtom>())
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
         public Bond(IAtom atom1, IAtom atom2)
             : this(atom1, atom2, BondOrder.Single, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
+        /// <param name="order">the bond order</param>
         public Bond(IAtom atom1, IAtom atom2, BondOrder order)
             : this(atom1, atom2, order, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a multi-center bond, with undefined order and no stereo information.
+        /// </summary>
+        /// <param name="atoms"><see cref="IEnumerable{T}"/> of <see cref="IAtom"/> containing the atoms constituting the bond</param>
         public Bond(IEnumerable<IAtom> atoms)
             : this(atoms, BondOrder.Unset, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a multi-center bond, with a specified order and no stereo information.
+        /// </summary>
+        /// <param name="atoms">An array of <see cref="IAtom"/> containing the atoms constituting the bond</param>
+        /// <param name="order">The order of the bond</param>
         public Bond(IEnumerable<IAtom> atoms, BondOrder order)
             : this(atoms, order, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
+        /// <param name="order">the bond order</param>
+        /// <param name="stereo">a descriptor the stereochemical orientation of this bond</param>
         public Bond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
             : this(new IAtom[] { atom1, atom2, }, order, stereo)
         {
@@ -92,8 +150,27 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
+		/// <summary>
+        /// Returns the atom connected to the given atom.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method is only strictly relevant for 2-center bonds
+        /// since in multi-center bonds, a given atom will be connected
+        /// to multiple atoms.
+        /// </para>
+        /// <para>
+        /// If called for a multi-center bond, then the next atom in the
+        /// atom list is returned. This is probably not what is expected and
+        /// hence the user should instead call <see cref="GetConnectedAtoms(IAtom)"/>. 
+        /// </para>
+        /// </remarks>
+        /// <param name="atom">The atom the bond partner is searched of</param>
+        /// <returns> the connected atom or null  if the atom is not part of the bond</returns>
+        /// <seealso cref="GetConnectedAtoms(IAtom)"/>
         public virtual IAtom GetConnectedAtom(IAtom atom)
         {
             if (atoms[0] == atom)
@@ -103,20 +180,28 @@ namespace NCDK.Default
             return null;
         }
 
-        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
+        /// <summary>
+        /// Returns all the atoms in the bond connected to the specified atom.
+        /// </summary>
+        /// <remarks>
+        /// Though this can be used for traditional 2-center bonds, it is oriented
+        /// towards multi-center bonds, where a single atom is connected to multiple
+        /// atoms.</remarks>
+        /// <param name="atom">The atom whose partners are to be searched for</param>
+        /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
+        /// <seealso cref="GetConnectedAtom(IAtom)"/>
+		public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             if (!atoms.Contains(atom))
                 return null;
             return atoms.Where(n => n != atom);
         }
 
+        /// <summary>
+        /// Returns true if the given atom participates in this bond.
+        /// </summary>
+        /// <param name="atom"> The atom to be tested if it participates in this bond</param>
+        /// <returns>true if the atom participates in this bond</returns>
         public virtual bool Contains(IAtom atom)
         {
             if (atom == null)
@@ -124,7 +209,17 @@ namespace NCDK.Default
             return atoms.Contains(atom);
         }
 
-        public virtual BondOrder Order
+        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
+        {
+            this.atoms.Clear();
+            foreach (var atom in atoms)
+                this.atoms.Add(atom);
+        }
+
+        /// <summary>
+        /// The bond order of this bond.
+        /// </summary>
+		public virtual BondOrder Order
         {
             get { return order; }
             set
@@ -142,7 +237,10 @@ namespace NCDK.Default
             this.ElectronCount = order.Numeric * 2;
         }
 
-        public virtual BondStereo Stereo
+        /// <summary>
+        /// The stereo descriptor for this bond.
+        /// </summary>
+		public virtual BondStereo Stereo
         {
             get { return stereo; }
             set
@@ -152,7 +250,10 @@ namespace NCDK.Default
             }
         }
 
-        public virtual Vector2 Geometric2DCenter
+        /// <summary>
+        /// The geometric 2D center of the bond.
+        /// </summary>
+		public virtual Vector2 Geometric2DCenter
         {
             get
             {
@@ -162,6 +263,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// The geometric 3D center of the bond.
+        /// </summary>
         public virtual Vector3 Geometric3DCenter
         {
             get
@@ -173,11 +277,7 @@ namespace NCDK.Default
             }
         }
 
-        public virtual bool IsConnectedTo(IBond bond)
-        {
-            return atoms.Any(atom => bond.Contains(atom));
-        }
-
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
             get { return isAromatic; }
@@ -188,6 +288,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
             get { return isAliphatic; }
@@ -198,6 +299,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsInRing
         {
             get { return isInRing; }
@@ -208,6 +310,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -218,6 +321,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
             get { return isReactiveCenter; }
@@ -264,13 +368,29 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        public override bool Compare(object obj)
+        /// <summary>
+        /// Compares a bond with this bond.
+        /// </summary>
+        /// <param name="obj">Object of type Bond</param>
+        /// <returns> true if the bond is equal to this bond</returns>
+		public override bool Compare(object obj)
         {
             var bond = obj as Bond;
             if (bond == null)
                 return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
+        }
+
+        /// <summary>
+        /// Checks whether a bond is connected to another one.
+        /// This can only be true if the bonds have an Atom in common.
+        /// </summary>
+        /// <param name="bond">The bond which is checked to be connect with this one</param>
+        /// <returns>true if the bonds share an atom, otherwise false</returns>
+		public virtual bool IsConnectedTo(IBond bond)
+        {
+            return atoms.Any(atom => bond.Contains(atom));
         }
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
@@ -281,9 +401,33 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+    /// <summary>
+    /// Implements the concept of a covalent bond between two or more atoms. A bond is
+    /// considered to be a number of electrons connecting two or more  of atoms.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// It should be noted that the majority of applications will consider 2-center bonds,
+    /// especially since the bond orders currently supported are really only valid for
+    /// 2-center bonds. However the code does support multi-center bonds, though the
+    /// orders may not make sense at this point.
+    /// </para>
+    /// <para>
+    /// In general code that assumes bonds are 2-centered can use this class seamlessly, as
+    /// the semantics are identical to the older versions. Care shoud be exercised when
+    /// using multi-center bonds using this class as the orders may not make sense.
+    /// </para>
+    /// </remarks>
+    // @author steinbeck
+    // @cdk.module  silent
+    // @cdk.githash
+    // @cdk.created 2003-10-02
+    // @cdk.keyword bond
+    // @cdk.keyword atom
+    // @cdk.keyword electron
     [Serializable]
     public class Bond
-        : ElectronContainer, IBond, IChemObjectListener, ICloneable
+        : ElectronContainer, IBond, IChemObjectListener
     {
         internal bool isAromatic;
         internal bool isAliphatic;
@@ -293,32 +437,62 @@ namespace NCDK.Silent
         internal BondOrder order;
         internal BondStereo stereo;
         private IList<IAtom> atoms;
-
+		
+        /// <summary>
+        /// Constructs an empty bond.
+        /// </summary>
         public Bond()
             : this(Array.Empty<IAtom>())
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
         public Bond(IAtom atom1, IAtom atom2)
             : this(atom1, atom2, BondOrder.Single, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
+        /// <param name="order">the bond order</param>
         public Bond(IAtom atom1, IAtom atom2, BondOrder order)
             : this(atom1, atom2, order, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a multi-center bond, with undefined order and no stereo information.
+        /// </summary>
+        /// <param name="atoms"><see cref="IEnumerable{T}"/> of <see cref="IAtom"/> containing the atoms constituting the bond</param>
         public Bond(IEnumerable<IAtom> atoms)
             : this(atoms, BondOrder.Unset, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a multi-center bond, with a specified order and no stereo information.
+        /// </summary>
+        /// <param name="atoms">An array of <see cref="IAtom"/> containing the atoms constituting the bond</param>
+        /// <param name="order">The order of the bond</param>
         public Bond(IEnumerable<IAtom> atoms, BondOrder order)
             : this(atoms, order, BondStereo.None)
         {
         }
 
+        /// <summary>
+        /// Constructs a bond with a single bond order.
+        /// </summary>
+        /// <param name="atom1">the first Atom in the bond</param>
+        /// <param name="atom2">the second Atom in the bond</param>
+        /// <param name="order">the bond order</param>
+        /// <param name="stereo">a descriptor the stereochemical orientation of this bond</param>
         public Bond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
             : this(new IAtom[] { atom1, atom2, }, order, stereo)
         {
@@ -347,8 +521,27 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
 
+		/// <summary>
+        /// Returns the atom connected to the given atom.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This method is only strictly relevant for 2-center bonds
+        /// since in multi-center bonds, a given atom will be connected
+        /// to multiple atoms.
+        /// </para>
+        /// <para>
+        /// If called for a multi-center bond, then the next atom in the
+        /// atom list is returned. This is probably not what is expected and
+        /// hence the user should instead call <see cref="GetConnectedAtoms(IAtom)"/>. 
+        /// </para>
+        /// </remarks>
+        /// <param name="atom">The atom the bond partner is searched of</param>
+        /// <returns> the connected atom or null  if the atom is not part of the bond</returns>
+        /// <seealso cref="GetConnectedAtoms(IAtom)"/>
         public virtual IAtom GetConnectedAtom(IAtom atom)
         {
             if (atoms[0] == atom)
@@ -358,20 +551,28 @@ namespace NCDK.Silent
             return null;
         }
 
-        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
-        {
-            this.atoms.Clear();
-            foreach (var atom in atoms)
-                this.atoms.Add(atom);
-        }
-
-        public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
+        /// <summary>
+        /// Returns all the atoms in the bond connected to the specified atom.
+        /// </summary>
+        /// <remarks>
+        /// Though this can be used for traditional 2-center bonds, it is oriented
+        /// towards multi-center bonds, where a single atom is connected to multiple
+        /// atoms.</remarks>
+        /// <param name="atom">The atom whose partners are to be searched for</param>
+        /// <returns>An array of the connected atoms, null if the atom is not part of the bond</returns>
+        /// <seealso cref="GetConnectedAtom(IAtom)"/>
+		public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             if (!atoms.Contains(atom))
                 return null;
             return atoms.Where(n => n != atom);
         }
 
+        /// <summary>
+        /// Returns true if the given atom participates in this bond.
+        /// </summary>
+        /// <param name="atom"> The atom to be tested if it participates in this bond</param>
+        /// <returns>true if the atom participates in this bond</returns>
         public virtual bool Contains(IAtom atom)
         {
             if (atom == null)
@@ -379,7 +580,17 @@ namespace NCDK.Silent
             return atoms.Contains(atom);
         }
 
-        public virtual BondOrder Order
+        public virtual void SetAtoms(IEnumerable<IAtom> atoms)
+        {
+            this.atoms.Clear();
+            foreach (var atom in atoms)
+                this.atoms.Add(atom);
+        }
+
+        /// <summary>
+        /// The bond order of this bond.
+        /// </summary>
+		public virtual BondOrder Order
         {
             get { return order; }
             set
@@ -396,7 +607,10 @@ namespace NCDK.Silent
             this.ElectronCount = order.Numeric * 2;
         }
 
-        public virtual BondStereo Stereo
+        /// <summary>
+        /// The stereo descriptor for this bond.
+        /// </summary>
+		public virtual BondStereo Stereo
         {
             get { return stereo; }
             set
@@ -405,7 +619,10 @@ namespace NCDK.Silent
             }
         }
 
-        public virtual Vector2 Geometric2DCenter
+        /// <summary>
+        /// The geometric 2D center of the bond.
+        /// </summary>
+		public virtual Vector2 Geometric2DCenter
         {
             get
             {
@@ -415,6 +632,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// The geometric 3D center of the bond.
+        /// </summary>
         public virtual Vector3 Geometric3DCenter
         {
             get
@@ -426,11 +646,7 @@ namespace NCDK.Silent
             }
         }
 
-        public virtual bool IsConnectedTo(IBond bond)
-        {
-            return atoms.Any(atom => bond.Contains(atom));
-        }
-
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
             get { return isAromatic; }
@@ -440,6 +656,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsAliphatic
         {
             get { return isAliphatic; }
@@ -449,6 +666,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsInRing
         {
             get { return isInRing; }
@@ -458,6 +676,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -467,6 +686,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual bool IsReactiveCenter
         {
             get { return isReactiveCenter; }
@@ -512,13 +732,29 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        public override bool Compare(object obj)
+        /// <summary>
+        /// Compares a bond with this bond.
+        /// </summary>
+        /// <param name="obj">Object of type Bond</param>
+        /// <returns> true if the bond is equal to this bond</returns>
+		public override bool Compare(object obj)
         {
             var bond = obj as Bond;
             if (bond == null)
                 return false;
             return !atoms.Any(atom => !bond.Contains(atom));
             // bond order is ignored
+        }
+
+        /// <summary>
+        /// Checks whether a bond is connected to another one.
+        /// This can only be true if the bonds have an Atom in common.
+        /// </summary>
+        /// <param name="bond">The bond which is checked to be connect with this one</param>
+        /// <returns>true if the bonds share an atom, otherwise false</returns>
+		public virtual bool IsConnectedTo(IBond bond)
+        {
+            return atoms.Any(atom => bond.Contains(atom));
         }
 
         public void OnStateChanged(ChemObjectChangeEventArgs evt)

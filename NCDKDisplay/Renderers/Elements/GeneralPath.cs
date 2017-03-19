@@ -101,14 +101,14 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Create a filled path of the specified Java 2D Shape and color.
         /// </summary>
-        /// <param name="shape">Java 2D shape</param>
+        /// <param name="shape">shape</param>
         /// <param name="color">the color to fill the shape with</param>
         /// <returns>a new general path</returns>
         public static GeneralPath ShapeOf(Geometry shape, Color color)
         {
             PathGeometry pathIt = shape is PathGeometry ?
                 (PathGeometry)shape :
-                shape.GetFlattenedPathGeometry();
+                shape.GetFlattenedPathGeometry(0.01, ToleranceType.Absolute);
             var elements = ToPathElements(pathIt);
             return new GeneralPath(elements, color, pathIt.FillRule, 0, true);
         }

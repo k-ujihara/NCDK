@@ -5,17 +5,16 @@ namespace NCDK.Modeling.Builder3D
 {
     /// <summary>
     /// Set the right atoms order to get the parameters.
-    ///
+    /// </summary>
     // @author         chhoppe
     // @cdk.created    2004-10-8
     // @cdk.module     forcefield
     // @cdk.githash
-    /// </summary>
     public class MMFF94ParametersCall
     {
         private IDictionary<string, IList> pSet = null;
 
-        //private final static double DEFAULT_BOND_LENGTH = 1.5;
+        //private final static double DefaultBondLength = 1.5;
         //private final static double DEFAULT_ANGLE = 90;            // Only to test
         //private final static double DEFAULT_TORSION_ANGLE = 90;
 
@@ -23,9 +22,8 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         /// Initialize the AtomOrder class.
-        ///
-        /// <param name="parameterSet">Force Field parameter as Map</param>
         /// </summary>
+        /// <param name="parameterSet">Force Field parameter as Map</param>
         public void Initialize(IDictionary<string, IList> parameterSet)
         {
             pSet = parameterSet;
@@ -37,7 +35,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="id1">atom1 id</param>
         /// <param name="id2">atom2 id</param>
         /// <returns>The distance value from the force field parameter set</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// <exception cref="System.Exception"> Description of the Exception</exception>
         /// </summary>
         public IList GetBondData(string code, string id1, string id2)
         {
@@ -52,7 +50,7 @@ namespace NCDK.Modeling.Builder3D
             } 
             // else { Console.Out.WriteLine("KEYError:Unknown distance key in pSet: "
             // + code + ";" + id2 + " ;" + id1+" take default bon length:" +
-            // DEFAULT_BOND_LENGTH); return DEFAULT_BOND_LENGTH; }
+            // DefaultBondLength); return DefaultBondLength; }
             
             //Debug.WriteLine("dkey = " + dkey);
             return (IList)pSet[dkey];
@@ -65,7 +63,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="id2">ID from Atom 2.</param>
         /// <param name="id3">ID from Atom 3.</param>
         /// <returns>The angle data from the force field parameter set</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// <exception cref="System.Exception"> Description of the Exception</exception>
         public IList GetAngleData(string angleType, string id1, string id2, string id3)
         {
             string akey = "";
@@ -94,7 +92,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="id2">ID from Atom 2.</param>
         /// <param name="id3">ID from Atom 3.</param>
         /// <returns>The bond-angle interaction data from the force field parameter set</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// <exception cref="System.Exception"> Description of the Exception</exception>
         public IList GetBondAngleInteractionData(string strbndType, string id1, string id2, string id3)
         {
             string akey = "";
@@ -138,7 +136,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="jR">ID from Atom 2.</param>
         /// <param name="kR">ID from Atom 3.</param>
         /// <returns>The bond-angle interaction data from the force field parameter set</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// <exception cref="System.Exception"> Description of the Exception</exception>
         public IList GetDefaultStretchBendData(int iR, int jR, int kR)
         {
             string dfsbkey = "";
@@ -160,7 +158,7 @@ namespace NCDK.Modeling.Builder3D
         /// <param name="id1">atom1 id</param>
         /// <param name="id2">atom2 id</param>
         /// <returns>The distance value from the force field parameter set</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
+        /// <exception cref="System.Exception"> Description of the Exception</exception>
         public IList GetTorsionData(string code, string id1, string id2, string id3, string id4)
         {
             string dkey = "";

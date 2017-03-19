@@ -30,7 +30,9 @@ using System.Linq;
 namespace NCDK.Hash
 {
     /// <summary>
-    /// A perturbed hash generator {@cdk.cite Ihlenfeldt93} which differentiates
+    /// A perturbed hash generator 
+    /// <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</a> 
+    /// which differentiates
     /// molecules with uniform atom environments and symmetry. The generator first
     /// calculates the basic hash codes (<see cref="BasicAtomHashGenerator"/>) and then
     /// checks for duplicate values (uniform environments). These duplicate values
@@ -39,29 +41,27 @@ namespace NCDK.Hash
     /// |<i>S</i>| different invariant values with the original value to produce a
     /// unique value of each atom. There may still be duplicate values but providing
     /// the depth is appropriate then the atoms are truly equivalent.
-    /// <p/><br/>
+    /// </summary>
+    /// <example>
     /// The class requires a lot of configuration however it can be easily built with
     /// the <see cref="HashGeneratorMaker"/>.
-    /// <example><code>
+    /// <code>
     /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(8)
     ///                                                           .Elemental()
     ///                                                           .Perturbed()
     ///                                                           .Molecular();
     /// IAtomContainer molecule = ...;
     /// long hash = generator.Generate(molecule);
-    /// </code></example>
-    ///
+    /// </code>
+    /// </example>
+    /// <seealso cref="HashGeneratorMaker"/>
+    // @see 
     // @author John May
     // @cdk.module hash
     // @see org.openscience.cdk.hash.SeedGenerator
-    // @see <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Original
-    ///      Publication</a>
     // @cdk.githash
-    /// <seealso cref="HashGeneratorMaker"/>
-    /// </summary>
-    internal sealed class PerturbedAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
+    internal sealed class PerturbedAtomHashGenerator : AbstractHashGenerator, IAtomHashGenerator
     {
-
         /* creates stereo encoders for IAtomContainers */
         private readonly IStereoEncoderFactory factory;
 
@@ -69,7 +69,7 @@ namespace NCDK.Hash
         private readonly AbstractAtomHashGenerator simple;
 
         /* seed generator */
-        private readonly AtomHashGenerator seeds;
+        private readonly IAtomHashGenerator seeds;
 
         /* find the set of vertices in which we will add systematic differences */
         private readonly EquivalentSetFinder finder;
@@ -80,20 +80,16 @@ namespace NCDK.Hash
         /// <summary>
         /// Create a perturbed hash generator using the provided seed generator to
         /// initialise atom invariants and using the provided stereo factory.
-        ///
-        /// <param name="simple">generator to encode the initial values of atoms</param>
-        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash</param>
-        ///                      distribution
-        /// <param name="factory">a stereo encoder factory</param>
-        /// <param name="finder">equivalent set finder for driving the systematic</param>
-        ///                      perturbation
-        /// <param name="suppression">suppression of atoms (these atoms are 'ignored'</param>
-        ///                      in the hash generation)
-        /// <exception cref="ArgumentException">depth was less then 0</exception>
-        /// <exception cref="NullPointerException">    seed generator or pseudo random was</exception>
-        ///                                  null
-        /// @see org.openscience.cdk.hash.SeedGenerator
         /// </summary>
+        /// <param name="seeds"></param>
+        /// <param name="simple">generator to encode the initial values of atoms</param>
+        /// <param name="pseudorandom">pseudorandom number generator used to randomise hash distribution</param>
+        /// <param name="factory">a stereo encoder factory</param>
+        /// <param name="finder">equivalent set finder for driving the systematic perturbation</param>
+        /// <param name="suppression">suppression of atoms (these atoms are 'ignored' in the hash generation)</param>
+        /// <exception cref="ArgumentException">depth was less then 0</exception>
+        /// <exception cref="ArgumentNullException">    seed generator or pseudo random was null</exception>
+        /// <seealso cref="SeedGenerator"/>
         public PerturbedAtomHashGenerator(SeedGenerator seeds, AbstractAtomHashGenerator simple, Pseudorandom pseudorandom,
                IStereoEncoderFactory factory, EquivalentSetFinder finder, AtomSuppression suppression)
                 : base(pseudorandom)
@@ -116,7 +112,6 @@ namespace NCDK.Hash
 
         private long[] Generate(IAtomContainer container, long[] seeds, IStereoEncoder encoder, int[][] graph)
         {
-
             Suppressed suppressed = suppression.Suppress(container);
 
             // compute original values then find indices equivalent values
@@ -143,7 +138,6 @@ namespace NCDK.Hash
             // systematically perturb equivalent vertex
             for (int i = 0; i < m; i++)
             {
-
                 int equivalentIndex = equivalents[i];
 
                 // perturb the value and reset stereo configuration
@@ -169,13 +163,11 @@ namespace NCDK.Hash
         /// This process scans the rows and xors all unique values in the row
         /// together. If a duplicate value is found it is rotated using a
         /// pseudorandom number generator.
-        ///
+        /// </summary>
         /// <param name="perturbed">n x m, matrix</param>
         /// <returns>the combined values of each row</returns>
-        /// </summary>
         internal long[] Combine(long[][] perturbed)
         {
-
             int n = perturbed.Length;
             int m = perturbed[0].Length;
 
@@ -184,7 +176,6 @@ namespace NCDK.Hash
 
             for (int i = 0; i < n; i++)
             {
-
                 Array.Sort(perturbed[i]);
 
                 for (int j = 0; j < m; j++)

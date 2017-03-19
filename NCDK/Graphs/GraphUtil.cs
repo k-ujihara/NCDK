@@ -96,8 +96,8 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Create a subgraph by specifying the vertices from the original {@literal
-        /// graph} to {@literal include} in the subgraph. The provided vertices also
+        /// Create a subgraph by specifying the vertices from the original <paramref name="graph"/>
+        /// to <paramref name="include"/> in the subgraph. The provided vertices also
         /// provide the mapping between vertices in the subgraph and the original.
         /// </summary>
         /// <example><code>
@@ -106,7 +106,7 @@ namespace NCDK.Graphs
         ///
         /// int[][] h = Subgraph(g, vs);
         /// // for the vertices in h, the provided 'vs' gives the original index
-        /// For(int v = 0; v < h.Length; v++) {
+        /// for (int v = 0; v &lt; h.Length; v++) {
         ///     // vs[v] is 'v' in 'g'
         /// }
         /// </code></example>

@@ -1122,7 +1122,7 @@ namespace NCDK.Layout
             sgroup.Atoms.Add(mol.Atoms[2]);
             sgroup.Bonds.Add(mol.Bonds[0]);
             sgroup.Bonds.Add(mol.Bonds[2]);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new[] { sgroup });
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
@@ -1152,7 +1152,7 @@ namespace NCDK.Layout
             sgroup.PutValue(SgroupKey.CtabConnectivity, "HT");
             foreach (var atom in mol.Atoms)
                 sgroup.Atoms.Add(atom);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new[] { sgroup });
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
 
             Layout(mol);
             var brackets = (IList<SgroupBracket>)sgroup.GetValue(SgroupKey.CtabBracket);
@@ -1197,7 +1197,7 @@ namespace NCDK.Layout
             sgroup2.Atoms.Add(mol.Atoms[3]);
             sgroup2.Bonds.Add(mol.Bonds[1]);
             sgroup2.Bonds.Add(mol.Bonds[3]);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new[] { sgroup1, sgroup2 });
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup1, sgroup2 });
 
             Layout(mol);
             var brackets1 = (IList<SgroupBracket>)sgroup1.GetValue(SgroupKey.CtabBracket);
@@ -1247,7 +1247,7 @@ namespace NCDK.Layout
             sgroup2.Atoms.Add(mol.Atoms[4]);
             sgroup2.Atoms.Add(mol.Atoms[5]);
 
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new[] { sgroup1, sgroup2 });
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup1, sgroup2 });
             Layout(mol);
 
             int numCrossing = 0;
@@ -1279,7 +1279,7 @@ namespace NCDK.Layout
                     break;
             }
             sgroup.PutValue(SgroupKey.CtabParentAtomList, patoms);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, new[] { sgroup });
+            mol.SetProperty(CDKPropertyName.CtabSgroups, new[] { sgroup });
             Layout(mol);
             for (int i = 0; i < 6; i++)
             {

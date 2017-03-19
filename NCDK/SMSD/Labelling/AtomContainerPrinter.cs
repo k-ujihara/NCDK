@@ -4,17 +4,12 @@ using System.Text;
 
 namespace NCDK.SMSD.Labelling
 {
-    /// <summary>
     // @cdk.module smsd
     // @cdk.githash
-    /// </summary>
-
     public class AtomContainerPrinter
     {
-
         private class Edge : IComparable<Edge>
         {
-
             public string firstString;
             public string lastString;
             public int first;

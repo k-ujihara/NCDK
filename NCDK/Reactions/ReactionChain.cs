@@ -27,21 +27,19 @@ namespace NCDK.Reactions
     /// chain. That would mean no exist branches or cycles and in this concept
     /// you have a start reaction and final reaction. Each reaction is included
     /// in a step of the chain.
-    ///
+    /// </summary>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     // @cdk.module  extra
     // @cdk.githash
-    /// </summary>
     public class ReactionChain : ReactionSet
     {
         Dictionary<IReaction, int> hashMapChain = new Dictionary<IReaction, int>();
 
         /// <summary>
         /// Added a IReaction for this chain in position.
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <param name="position">The position in this chain where the reaction is to be inserted</param>
-        /// </summary>
         public void Add(IReaction reaction, int position)
         {
             hashMapChain[reaction] = position;
@@ -50,12 +48,11 @@ namespace NCDK.Reactions
 
         /// <summary>
         /// Get the position of the reaction into this chain reaction object.
+        /// </summary>
         /// <param name="reaction">The IReaction to look at</param>
         /// <returns>The position of the IReaction in this chain</returns>
-        /// </summary>
         public int GetReactionStep(IReaction reaction)
         {
-
             if (hashMapChain.ContainsKey(reaction))
                 return hashMapChain[reaction];
             else
@@ -63,12 +60,10 @@ namespace NCDK.Reactions
         }
 
         /// <summary>
-        /// Get the reaction of this chain reaction object at the position.
-        ///
+        /// The reaction of this chain reaction object at the position.
+        /// </summary>
         /// <param name="position">The position of the IReaction in this chain to look for</param>
         /// <returns>Reaction The IReaction to look at</returns>
-        ///
-        /// </summary>
         public override IReaction this[int position]
         {
             get

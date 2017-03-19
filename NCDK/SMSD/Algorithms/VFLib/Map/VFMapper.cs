@@ -47,12 +47,10 @@
  *
  */
 using NCDK.SMSD.Algorithms.VFLib.Builder;
-
 using NCDK.SMSD.Algorithms.VFLib.Query;
 using NCDK.SMSD.Global;
 using NCDK.SMSD.Tools;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace NCDK.SMSD.Algorithms.VFLib.Map
@@ -60,14 +58,12 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
     /// <summary>
     /// This class finds MCS between query and target molecules
     /// using VF2 algorithm.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFMapper : IMapper
     {
-
         private IQuery query;
         private List<IDictionary<INode, IAtom>> maps;
         private int currentMCSSize = -1;
@@ -89,8 +85,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
         }
 
         /// <summary>
-        /// <param name="aTimeManager">the timeManager to set</param>
         /// </summary>
+        /// <param name="aTimeManager">the timeManager to set</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static void SetTimeManager(TimeManager aTimeManager)
         {
@@ -98,9 +94,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             timeManager = aTimeManager;
         }
 
-        /// <summary>
-        ///
-        /// <param name="query">/// </summary></param>
         public VFMapper(IQuery query)
         {
             SetTimeManager(new TimeManager());

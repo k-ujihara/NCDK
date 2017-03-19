@@ -21,7 +21,7 @@ namespace NCDK.Default
         private static IAtomContainer GetBaseAtomContainer(int natom, string title)
         {
             IAtomContainer container = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
-            container.SetProperty(CDKPropertyName.TITLE, title);
+            container.SetProperty(CDKPropertyName.Title, title);
             for (int i = 0; i < natom; i++)
             {
                 Vector3 coord = new Vector3();
@@ -74,7 +74,7 @@ namespace NCDK.Default
         {
             ConformerContainer container = new ConformerContainer();
             Assert.IsNotNull(container);
-            base_.SetProperty(CDKPropertyName.TITLE, "myMolecule");
+            base_.SetProperty(CDKPropertyName.Title, "myMolecule");
             container.Add(base_);
             Assert.AreEqual(1, container.Count());
 
@@ -102,7 +102,7 @@ namespace NCDK.Default
         public virtual void TestIsEmpty()
         {
             ConformerContainer container = new ConformerContainer(confs);
-            Assert.IsTrue(!container.IsEmpty);
+            Assert.IsTrue(!container.IsEmpty());
         }
 
         [TestMethod()]
@@ -174,7 +174,7 @@ namespace NCDK.Default
         public virtual void TestAdd_IAtomContainer()
         {
             ConformerContainer container = new ConformerContainer(confs);
-            base_.SetProperty(CDKPropertyName.TITLE, "junk");
+            base_.SetProperty(CDKPropertyName.Title, "junk");
             container.Add(base_);
         }
 

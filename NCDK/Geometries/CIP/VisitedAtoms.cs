@@ -33,7 +33,7 @@ namespace NCDK.Geometries.CIP
     public class VisitedAtoms
     {
         /// <summary>
-        /// <see cref="List"/> to hold the visited <see cref="IAtom"/>s.
+        /// <see cref="List{T}"/> to hold the visited <see cref="IAtom"/>s.
         /// </summary>
         private List<IAtom> visitedItems;
 

@@ -21,7 +21,7 @@
  */
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;

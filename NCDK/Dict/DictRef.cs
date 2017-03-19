@@ -34,7 +34,7 @@ namespace NCDK.Dict
     // @cdk.module  standard
     // @cdk.githash
     [Serializable]
-    public class DictRef : ICloneable
+    public class DictRef
     {
         string type;
         string reference;
@@ -54,9 +54,9 @@ namespace NCDK.Dict
             return "DictRef{T=" + this.type + ", R=" + reference + "}";
         }
 
-        public object Clone()
+        public virtual DictRef Clone()
         {
-            return this.MemberwiseClone();
+            return (DictRef)this.MemberwiseClone();
         }
     }
 }

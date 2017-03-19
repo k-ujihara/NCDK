@@ -19,7 +19,6 @@
  */
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
-using NCDK.Renderers.Visitor;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
@@ -36,7 +35,7 @@ namespace NCDK.Renderers.Visitors
     public abstract class AbstractWPFDrawVisitor : IDrawVisitor
     {
         /// <summary>
-        /// This is initially null, and must be set in the setTransform method!
+        /// This is initially null, and must be set in the <see cref="SetTransform(Transform)"/> method!
         /// </summary>
         protected Transform transform = null;
 

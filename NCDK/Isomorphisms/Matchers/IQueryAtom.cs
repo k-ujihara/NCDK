@@ -4,15 +4,15 @@ namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
     /// Defines the ability to be matched against <see cref="IAtom"/>'s. Most prominent application
-    /// is in isomorphism and substructure matching in the {@link org.openscience.cdk.isomorphism.UniversalIsomorphismTester}.
+    /// is in isomorphism and substructure matching in the <see cref="UniversalIsomorphismTester"/>.
     /// </summary>
     public interface IQueryAtom : IAtom
     {
         /// <summary>
-        /// Returns true of the given <code>atom</code> matches this IQueryAtom.
+        /// Returns true of the given <paramref name="atom"/> matches this <see cref="IQueryAtom"/>.
         /// </summary>
-        /// <param name="atom">IAtom to match against</param>
-        /// <returns>true, if this IQueryAtom matches the given IAtom</returns>
+        /// <param name="atom"><see cref="IAtom"/> to match against</param>
+        /// <returns>true, if this <see cref="IQueryAtom"/> matches the given <see cref="IAtom"/></returns>
         bool Matches(IAtom atom);
     }
 }

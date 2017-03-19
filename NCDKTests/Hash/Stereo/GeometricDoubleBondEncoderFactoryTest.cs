@@ -184,7 +184,7 @@ namespace NCDK.Hash.Stereo
 
             int[][] g = new int[][] { new[] { 1 }, new[] { 0, 2, 4 }, new[] { 1, 3, 5 }, new[] { 2 }, new[] { 1 }, new[] { 2 } };
 
-            Assert.IsTrue(factory.Create(mol, g) == StereoEncoder.EMPTY);
+            Assert.IsTrue(factory.Create(mol, g) == StereoEncoder.Empty);
         }
 
         [TestMethod()]
@@ -252,7 +252,7 @@ namespace NCDK.Hash.Stereo
         {
             // for a double atom with only one substituent the permutation parity
             // should be the identity (i.e. 1)
-            Assert.AreEqual(PermutationParity.IDENTITY, Permutation(new int[] { 1, 2 }));
+            Assert.AreEqual(PermutationParity.Identity, Permutation(new int[] { 1, 2 }));
         }
 
         [TestMethod()]

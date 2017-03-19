@@ -27,11 +27,10 @@ namespace NCDK.Groups
     /// <summary>
     /// Implementation of a union-find data structure, largely copied from
     /// code due to Derrick Stolee.
-    ///
+    /// </summary>
     // @author maclean
     // @cdk.module standard
     // @cdk.keyword union-find
-    /// </summary>
     public class DisjointSetForest
     {
         /// <summary>
@@ -43,9 +42,8 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Initialize a disjoint set forest with a number of elements.
-        ///
-        /// <param name="numberOfElements">the number of elements in the forest</param>
         /// </summary>
+        /// <param name="numberOfElements">the number of elements in the forest</param>
         public DisjointSetForest(int numberOfElements)
         {
             forest = new int[numberOfElements];
@@ -57,21 +55,19 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Get the value of the forest at this index - note that this will <i>not</i>
-        /// necessarily give the set for that element : use {@link #getSets} after
+        /// necessarily give the set for that element : use <see cref="GetSets"/>  after
         /// union-ing elements.
-        ///
+        /// </summary>
         /// <param name="i">the index in the forest</param>
         /// <returns>the value at this index</returns>
-        /// </summary>
         public int this[int i] => forest[i];
 
         /// <summary>
         /// Travel up the tree that this element is in, until the root of the set
         /// is found, and return that root.
-        ///
+        /// </summary>
         /// <param name="element">the starting point</param>
         /// <returns>the root of the set containing element</returns>
-        /// </summary>
         public int GetRoot(int element)
         {
             if (forest[element] < 0)
@@ -86,10 +82,9 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Union these two elements - in other words, put them in the same set.
-        ///
+        /// </summary>
         /// <param name="elementX">an element</param>
         /// <param name="elementY">an element</param>
-        /// </summary>
         public void MakeUnion(int elementX, int elementY)
         {
             int xRoot = GetRoot(elementX);
@@ -114,9 +109,8 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Retrieve the sets as 2D-array of ints.
-        ///
-        /// <returns>the sets</returns>
         /// </summary>
+        /// <returns>the sets</returns>
         public int[][] GetSets()
         {
             int n = 0;

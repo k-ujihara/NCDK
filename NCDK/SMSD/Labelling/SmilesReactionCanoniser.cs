@@ -1,9 +1,7 @@
 namespace NCDK.SMSD.Labelling
 {
-    /// <summary>
     // @cdk.module smsd
     // @cdk.githash
-    /// </summary>
     public class SmilesReactionCanoniser : AbstractReactionLabeller, ICanonicalReactionLabeller
     {
         private CanonicalLabellingAdaptor labeller = new CanonicalLabellingAdaptor();

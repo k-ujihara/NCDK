@@ -36,9 +36,9 @@ namespace NCDK.Graphs
         public void ConstructorTest()
         {
             IAtomContainer atomContainer = new AtomContainer();
-            atomContainer.Add(new Atom("C"));
-            atomContainer.Add(new Atom("O"));
-            atomContainer.Add(new Atom("S"));
+            atomContainer.Atoms.Add(new Atom("C"));
+            atomContainer.Atoms.Add(new Atom("O"));
+            atomContainer.Atoms.Add(new Atom("S"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[2], BondOrder.Single);
             AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(atomContainer);
@@ -49,12 +49,12 @@ namespace NCDK.Graphs
         public void TestCountAtomPermutation()
         {
             AtomContainer ac = new AtomContainer();
-            ac.Add(new Atom("C"));
-            ac.Add(new Atom("N"));
-            ac.Add(new Atom("P"));
-            ac.Add(new Atom("O"));
-            ac.Add(new Atom("S"));
-            ac.Add(new Atom("Br"));
+            ac.Atoms.Add(new Atom("C"));
+            ac.Atoms.Add(new Atom("N"));
+            ac.Atoms.Add(new Atom("P"));
+            ac.Atoms.Add(new Atom("O"));
+            ac.Atoms.Add(new Atom("S"));
+            ac.Atoms.Add(new Atom("Br"));
             ac.AddBond(ac.Atoms[0], ac.Atoms[1], BondOrder.Single);
             ac.AddBond(ac.Atoms[1], ac.Atoms[2], BondOrder.Single);
             ac.AddBond(ac.Atoms[2], ac.Atoms[3], BondOrder.Single);
@@ -73,9 +73,9 @@ namespace NCDK.Graphs
         public void ContainerFromPermutationTest()
         {
             IAtomContainer atomContainer = new AtomContainer();
-            atomContainer.Add(new Atom("C"));
-            atomContainer.Add(new Atom("O"));
-            atomContainer.Add(new Atom("S"));
+            atomContainer.Atoms.Add(new Atom("C"));
+            atomContainer.Atoms.Add(new Atom("O"));
+            atomContainer.Atoms.Add(new Atom("S"));
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[1], BondOrder.Single);
             atomContainer.AddBond(atomContainer.Atoms[0], atomContainer.Atoms[2], BondOrder.Single);
             AtomContainerAtomPermutor acap = new AtomContainerAtomPermutor(atomContainer);

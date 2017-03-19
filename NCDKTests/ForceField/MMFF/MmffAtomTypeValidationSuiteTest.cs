@@ -58,7 +58,7 @@ namespace NCDK.ForceField.MMFF
                 {
                     if (!expected[i].Equals(actual[i]))
                     {
-                        container.Atoms[i].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, 1);
+                        container.Atoms[i].SetProperty(CDKPropertyName.AtomAtomMapping, 1);
                     }
                 }
                 try

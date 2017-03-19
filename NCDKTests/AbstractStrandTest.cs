@@ -85,8 +85,8 @@ namespace NCDK
             IStrand oStrand = (IStrand)NewChemObject();
             IAtom oAtom1 = oStrand.Builder.CreateAtom("C1");
             IAtom oAtom2 = oStrand.Builder.CreateAtom("C2");
-            oStrand.Add(oAtom1);
-            oStrand.Add(oAtom2);
+            oStrand.Atoms.Add(oAtom1);
+            oStrand.Atoms.Add(oAtom2);
 
             Assert.AreEqual(2, oStrand.Atoms.Count);
         }
@@ -100,8 +100,8 @@ namespace NCDK
             IAtom oAtom1 = oStrand.Builder.CreateAtom("C1");
             IAtom oAtom2 = oStrand.Builder.CreateAtom("C2");
             IAtom oAtom3 = oStrand.Builder.CreateAtom("C3");
-            oStrand.Add(oAtom1);
-            oStrand.Add(oAtom2);
+            oStrand.AddAtom(oAtom1);
+            oStrand.AddAtom(oAtom2);
             oStrand.AddAtom(oAtom3, oMono1);
 
             Assert.AreEqual(2, oStrand.GetMonomer("").Atoms.Count);

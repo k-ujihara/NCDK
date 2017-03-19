@@ -9171,18 +9171,18 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                otherwise, are homogeneous within the column. Also the metadata for each column must
                be given explicitly
                <ul xmlns="">
-               <li>columns: For the first <h:tt>columns</h:tt> columns, 
+               <item>columns: For the first <h:tt>columns</h:tt> columns, 
                where each column is a (homogeneous) <h:a href="el.array">array</h:a> of 
                size <h:tt>rows</h:tt> data. This is the "normal" orientation of data tables
                but the table display could be transposed by XSLT transformation if required.
            Access is to columns, and thence to the data within them. DataTyping, delimiters,
            etc are delegated to the arrays, which must all be of the same size.
-           </li>
-           <li>rows: with explicit <tt>row</tt>s. The metadata is carried in a <tt>header</tt>
-           element. Within each row the data are whitespace (or delimiter) separated.</li>
-           <li>content: with a single <tt>content</tt> with columns moving fastest. The metadata is
+           </item>
+           <item>rows: with explicit <tt>row</tt>s. The metadata is carried in a <tt>header</tt>
+           element. Within each row the data are whitespace (or delimiter) separated.</item>
+           <item>content: with a single <tt>content</tt> with columns moving fastest. The metadata is
             carried in a <tt>header</tt>
-           element. Within the content the data are whitespace (or delimiter) separated.</li>
+           element. Within the content the data are whitespace (or delimiter) separated.</item>
            </ul>
             For 
            verification it is recommended that tables carry <h:tt>rows</h:tt> and <h:tt>columns</h:tt> attributes.

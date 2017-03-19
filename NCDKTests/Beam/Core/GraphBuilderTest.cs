@@ -33,7 +33,7 @@ using static NCDK.Beam.Configuration.DoubleBond;
 
 namespace NCDK.Beam
 {
-    /// <summary> <author>John May </author>*/
+   /// <summary> <author>John May </author></summary>
     [TestClass()]
     public class GraphBuilderTest
     {

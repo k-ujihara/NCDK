@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     /// <summary>
     /// A trivial test molecule class, to show how to implement signatures for chemistry libraries.
@@ -334,7 +334,7 @@ namespace FaulonSignatures.Chemistry
             }
         }
 
-        public void AddBond(int atomNumberA, int atomNumberB, BondOrder order)
+        public void AddBond(int atomNumberA, int atomNumberB, Molecule.BondOrder order)
         {
             Atom a = this.atoms[atomNumberA];
             Atom b = this.atoms[atomNumberB];

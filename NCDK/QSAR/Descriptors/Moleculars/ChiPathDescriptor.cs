@@ -30,23 +30,25 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates chi path descriptors.
-    /// <p/>
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// It utilizes the graph isomorphism code of the CDK to find fragments matching
     /// SMILES strings representing the fragments corresponding to each type of chain.
-    /// <p/>
+    /// <para>
     /// The order of the values returned is
-    /// <ol>
-    /// <li>SP-0, SP-1, ..., SP-7 - Simple path, orders 0 to 7
-    /// <li>VP-0, VP-1, ..., VP-7 - Valence path, orders 0 to 7
-    /// </ol>
-    /// <p/>
+    /// <list type="bullet"> 
+    /// <item>SP-0, SP-1, ..., SP-7 - Simple path, orders 0 to 7</item>
+    /// <item>VP-0, VP-1, ..., VP-7 - Valence path, orders 0 to 7</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
     /// the various fragments. As a result calculations may be slow. In addition, recent
     /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
     /// branches etc.) whereas these descriptors use the older more complex fragment
     /// definitions.
-    ///
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-11-12
     // @cdk.module qsarmolecular
@@ -55,7 +57,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiPath
     // @cdk.keyword chi path index
     // @cdk.keyword descriptor
-    /// </summary>
     public class ChiPathDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;

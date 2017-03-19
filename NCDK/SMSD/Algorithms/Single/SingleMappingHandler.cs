@@ -32,12 +32,11 @@ using System.Runtime.CompilerServices;
 namespace NCDK.SMSD.Algorithms.Single
 {
     /// <summary>
-    /// This is a handler class for single atom mapping
-    /// ({@link org.openscience.cdk.smsd.algorithm.single.SingleMapping}).
+    /// This is a handler class for single atom mapping <see cref="SingleMapping"/>.
+   /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class SingleMappingHandler : AbstractMCSAlgorithm, IMCSBase
     {
 
@@ -50,10 +49,6 @@ namespace NCDK.SMSD.Algorithms.Single
         private IAtomContainer target = null;
         private bool removeHydrogen = false;
 
-        /// <summary>
-        ///
-        /// <param name="removeH">true</param>
-        /// </summary>
         public SingleMappingHandler(bool removeH)
         {
 
@@ -107,10 +102,6 @@ namespace NCDK.SMSD.Algorithms.Single
             //SetStereoScore();
         }
 
-        /// <summary> {@inheritDoc}
-        ///
-        /// Set the mappings
-        /// </summary>
         private void SetAllMapping(IList<IDictionary<IAtom, IAtom>> mappings)
         {
             try

@@ -24,7 +24,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Graphs;
 using NCDK.Smiles;
 using NCDK.Templates;
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 using System;
 using System.Collections.Generic;
 

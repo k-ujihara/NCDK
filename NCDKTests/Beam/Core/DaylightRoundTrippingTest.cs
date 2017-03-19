@@ -217,7 +217,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _6_hydroxy_1_4_hexadiene()
+        public void Test_6_hydroxy_1_4_hexadiene()
         {
             RoundTrip("[CH2]=[CH]-[CH2]-[CH]=[CH]-[CH2]-[OH]");
             RoundTrip("C=CCC=CCO");
@@ -240,7 +240,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _3_propyl_4_isopropyl_1_heptene()
+        public void Test_3_propyl_4_isopropyl_1_heptene()
         {
             RoundTrip("C=CC(CCC)C(C(C)C)CCC");
         }
@@ -254,13 +254,13 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _1_methyl_3_bromo_cyclohexene_1_1()
+        public void Test_1_methyl_3_bromo_cyclohexene_1_1()
         {
             RoundTrip("CC1=CC(Br)CCC1");
         }
 
         [TestMethod()]
-        public void _1_methyl_3_bromo_cyclohexene_1_2()
+        public void Test_1_methyl_3_bromo_cyclohexene_1_2()
         {
             RoundTrip("CC1=CC(CCC1)Br");
         }
@@ -272,7 +272,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _1_oxan_2_yl_piperidine()
+        public void Test_1_oxan_2_yl_piperidine()
         {
             RoundTrip("O1CCCCC1N1CCCCC1", "O1CCCCC1N2CCCCC2");
         }

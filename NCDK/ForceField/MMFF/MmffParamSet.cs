@@ -58,25 +58,25 @@ namespace NCDK.ForceField.MMFF
 
         MmffParamSet()
         {
-            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFCHG.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFCHG.PAR"))
             {
-                ParseMMFFCHARGE(in_, bcis);
+                ParseMMFFCHARGE(ins, bcis);
             }
-            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFFORMCHG.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFFORMCHG.PAR"))
             {
-                ParseMMFFFORMCHG(in_, fCharges);
+                ParseMMFFFORMCHG(ins, fCharges);
             }
-            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFPROP.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFPROP.PAR"))
             {
-                ParseMMFFPPROP(in_, properties);
+                ParseMMFFPPROP(ins, properties);
             }
-            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "MMFFPBCI.PAR"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "MMFFPBCI.PAR"))
             {
-                ParseMMFFPBCI(in_, properties);
+                ParseMMFFPBCI(ins, properties);
             }
-            using (Stream in_ = ResourceLoader.GetAsStream(GetType(),  "mmff-symb-mapping.tsv"))
+            using (Stream ins = ResourceLoader.GetAsStream(GetType(),  "mmff-symb-mapping.tsv"))
             {
-                ParseMMFFTypeMap(in_, typeMap);
+                ParseMMFFTypeMap(ins, typeMap);
             }
         }
 
@@ -182,9 +182,9 @@ namespace NCDK.ForceField.MMFF
             return atype;
         }
 
-        private static void ParseMMFFCHARGE(Stream in_, IDictionary<BondKey, decimal> map)
+        private static void ParseMMFFCHARGE(Stream ins, IDictionary<BondKey, decimal> map)
         {
-            using (var br = new StreamReader(in_, System.Text.Encoding.UTF8))
+            using (var br = new StreamReader(ins, System.Text.Encoding.UTF8))
             {
                 string line;
                 while ((line = br.ReadLine()) != null)
@@ -204,9 +204,9 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        private static void ParseMMFFPBCI(Stream in_, MmffProp[] props)
+        private static void ParseMMFFPBCI(Stream ins, MmffProp[] props)
         {
-            using (var br = new StreamReader(in_, Encoding.UTF8))
+            using (var br = new StreamReader(ins, Encoding.UTF8))
             {
                 string line;
                 while ((line = br.ReadLine()) != null)
@@ -223,9 +223,9 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        private static void ParseMMFFPPROP(Stream in_, MmffProp[] props)
+        private static void ParseMMFFPPROP(Stream ins, MmffProp[] props)
         {
-            using (var br = new StreamReader(in_, Encoding.UTF8))
+            using (var br = new StreamReader(ins, Encoding.UTF8))
             {
                 string line;
                 while ((line = br.ReadLine()) != null)
@@ -248,9 +248,9 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        private static void ParseMMFFTypeMap(Stream in_, IDictionary<string, int> types)
+        private static void ParseMMFFTypeMap(Stream ins, IDictionary<string, int> types)
         {
-            using (var br = new StreamReader(in_, Encoding.UTF8))
+            using (var br = new StreamReader(ins, Encoding.UTF8))
             {
                 string line = br.ReadLine(); // header
                 while ((line = br.ReadLine()) != null)
@@ -265,9 +265,9 @@ namespace NCDK.ForceField.MMFF
             }
         }
 
-        private static void ParseMMFFFORMCHG(Stream in_, IDictionary<string, decimal> fcharges)
+        private static void ParseMMFFFORMCHG(Stream ins, IDictionary<string, decimal> fcharges)
         {
-            using (var br = new StreamReader(in_, Encoding.UTF8))
+            using (var br = new StreamReader(ins, Encoding.UTF8))
             {
                 string line = br.ReadLine(); // header
                 while ((line = br.ReadLine()) != null)
@@ -289,7 +289,7 @@ namespace NCDK.ForceField.MMFF
             private readonly int cls;
 
             /// <summary>
-            // MMFF atom types for the bond.
+            /// MMFF atom types for the bond.
             /// </summary>
             private readonly int type1, type2;
 

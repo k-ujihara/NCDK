@@ -21,15 +21,13 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// Match an atom with the defined degree. The degree is also referred to as the
-    /// explicit connectivity and is encoded in smarts using {@code D<NUMBER>}.
-    ///
+    /// explicit connectivity and is encoded in smarts using <c>D&lt;NUMBER&gt;</c>.
+    /// </summary>
     // @cdk.module smarts
     // @cdk.keyword SMARTS
     // @cdk.githash
-    /// </summary>
     public sealed class ExplicitConnectionAtom : SMARTSAtom
     {
-
         /// <summary>Number of explicit connections.</summary>
         private int degree;
 

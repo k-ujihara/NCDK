@@ -38,17 +38,17 @@ namespace NCDK.Hash {
 
         [TestMethod()][ExpectedException(typeof(System.ArgumentNullException))]
         public void TestConstruct_NullPRNG() {
-            new BasicMoleculeHashGenerator(new Mock<AtomHashGenerator>().Object, null);
+            new BasicMoleculeHashGenerator(new Mock<IAtomHashGenerator>().Object, null);
         }
 
         [TestMethod()]
         public void TestGenerate() {
 
-            var m_atomGenerator = new Mock<AtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
+            var m_atomGenerator = new Mock<IAtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
             var m_prng = new Mock<Pseudorandom>(); var prng = m_prng.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, prng);
+            IMoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, prng);
 
             m_atomGenerator.Setup(n => n.Generate(container)).Returns(new long[] { 1, 1, 1, 1 });
             m_prng.Setup(n => n.Next(1L)).Returns(1L);
@@ -69,11 +69,11 @@ namespace NCDK.Hash {
         [TestMethod()]
         public void TestGenerate_Rotation() {
 
-            var m_atomGenerator = new Mock<AtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
+            var m_atomGenerator = new Mock<IAtomHashGenerator>(); var atomGenerator = m_atomGenerator.Object;
             Xorshift xorshift = new Xorshift();
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            MoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, new Xorshift());
+            IMoleculeHashGenerator generator = new BasicMoleculeHashGenerator(atomGenerator, new Xorshift());
 
             m_atomGenerator.Setup(n => n.Generate(container)).Returns(new long[] { 5L, 5L, 5L, 5L });
 

@@ -33,23 +33,20 @@ namespace NCDK.IO
     /// It reads Z matrices like in Gaussian input files. It seems that it cannot
     /// handle Z matrices where values are given via a stringID for which the value
     /// is given later.
-    ///
+    /// </summary>
     // @cdk.module extra
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, Z-matrix
-    /// </summary>
     public class ZMatrixReader : DefaultChemObjectReader
     {
         private TextReader input;
 
         /// <summary>
-        /// Constructs a ZMatrixReader from a Reader that contains the
+        /// Constructs a <see cref="ZMatrixReader"/> from a Reader that contains the
         /// data to be parsed.
-        ///
-        /// <param name="input">Reader containing the data to read</param>
         /// </summary>
+        /// <param name="input">Reader containing the data to read</param>
         public ZMatrixReader(TextReader input)
         {
             this.input = input;
@@ -82,14 +79,13 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        ///  Returns a IChemObject of type object bye reading from
+        ///  Returns a <see cref="IChemObject"/> of type object bye reading from
         ///  the input.
         ///
-        ///  The function supports only reading of ChemFile's.
-        ///
-        /// <param name="object">IChemObject that types the class to return.</param>
-        /// <exception cref="CDKException">when a IChemObject is requested that cannot be read.</exception>
+        ///  The function supports only reading of <see cref="IChemFile"/>'s.
         /// </summary>
+        /// <param name="obj">IChemObject that types the class to return.</param>
+        /// <exception cref="CDKException">when a <see cref="IChemObject"/> is requested that cannot be read.</exception>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -99,12 +95,10 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        ///  Private method that actually parses the input to read a ChemFile
-        ///  object.
-        ///
+        ///  Private method that actually parses the input to read a <see cref="IChemFile"/> object.
+        /// </summary>
         /// <param name="file">the file to read from</param>
         /// <returns>A ChemFile containing the data parsed from input.</returns>
-        /// </summary>
         private IChemFile ReadChemFile(IChemFile file)
         {
             IChemSequence chemSequence = file.Builder.CreateChemSequence();
@@ -127,7 +121,7 @@ namespace NCDK.IO
                 var setOfMolecules = file.Builder.CreateAtomContainerSet();
 
                 IAtomContainer m = file.Builder.CreateAtomContainer();
-                m.SetProperty(CDKPropertyName.TITLE, info);
+                m.SetProperty(CDKPropertyName.Title, info);
 
                 string[] types = new string[number_of_atoms];
                 double[] d = new double[number_of_atoms];

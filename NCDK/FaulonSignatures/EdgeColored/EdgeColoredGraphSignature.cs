@@ -1,7 +1,7 @@
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
-namespace FaulonSignatures.EdgeColored
+namespace NCDK.FaulonSignatures.EdgeColored
 {
     /// <summary>
     /// A test implementation of signatures for <see cref="EdgeColoredGraph"/>s.

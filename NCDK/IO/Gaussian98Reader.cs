@@ -37,6 +37,7 @@ namespace NCDK.IO
     /// A reader for Gaussian98 output. 
     /// <para>Gaussian 98 is a quantum chemistry program
     /// by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+    /// </para>
     /// <para>Molecular coordinates, energies, and normal coordinates of vibrations are
     /// read. Each set of coordinates is added to the ChemFile in the order they are
     /// found. Energies and vibrations are associated with the previously read set
@@ -205,7 +206,7 @@ namespace NCDK.IO
                     {
 
                         // Found an energy
-                        model.SetProperty(CDKPropertyName.REMARK, line.Trim());
+                        model.SetProperty(CDKPropertyName.Remark, line.Trim());
                     }
                     else if (line.IndexOf("Harmonic frequencies") >= 0)
                     {
@@ -227,7 +228,7 @@ namespace NCDK.IO
                         levelOfTheory = ParseLevelOfTheory(line);
                         Debug.WriteLine("Level of Theory for this model: " + levelOfTheory);
                         description = lastRoute + ", model no. " + modelCounter;
-                        model.SetProperty(CDKPropertyName.DESCRIPTION, description);
+                        model.SetProperty(CDKPropertyName.Description, description);
                     }
                     else
                     {
@@ -437,7 +438,7 @@ namespace NCDK.IO
                     st1.MoveNext();
                     double shielding = double.Parse(st1.Current);
                     Trace.TraceInformation("Type of shielding: " + label);
-                    ac.Atoms[atomIndex].SetProperty(CDKPropertyName.ISOTROPIC_SHIELDING, shielding);
+                    ac.Atoms[atomIndex].SetProperty(CDKPropertyName.IsotropicShielding, shielding);
                     ++atomIndex;
                 }
                 catch (Exception exc)
@@ -460,7 +461,6 @@ namespace NCDK.IO
             summary.Append(line);
             try
             {
-
                 do
                 {
                     line = input.ReadLine().Trim();

@@ -29,12 +29,10 @@ namespace NCDK.IO.CML
     /// This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
     /// files and uses a local version for validation. More information about
     /// CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen <egonw@sci.kun.nl>
-    ///*/
     public class CMLResolver : XmlResolver
     {
         public override object GetEntity(Uri absoluteUri, string role, Type ofObjectToReturn)
@@ -64,10 +62,9 @@ namespace NCDK.IO.CML
         /// Returns an InputSource of the appropriate CML DTD. It accepts
         /// two CML DTD names: cml1_0.dtd and cml1_0_1.dtd. Returns null
         /// for any other name.
-        ///
+        /// </summary>
         /// <param name="type">the name of the CML DTD version</param>
         /// <returns>the InputSource to the CML DTD</returns>
-        /// </summary>
         private Stream GetCMLType(string type)
         {
             try

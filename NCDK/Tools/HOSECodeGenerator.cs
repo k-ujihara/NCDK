@@ -183,8 +183,8 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="CDKHueckelAromaticityDetector"/> prior to
-        /// using <see cref="GetHOSECode()"/>. This method only gives proper results if the molecule is
+        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="Aromaticities.Aromaticity.Apply(IAtomContainer)"/> prior to
+        /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
         /// IMPORTANT: Your molecule must contain implicit or explicit hydrogens
@@ -204,8 +204,8 @@ namespace NCDK.Tools
         /// Produces a HOSE code for Atom <paramref name="root"/> in the <see cref="IAtomContainer"/> <paramref name="ac"/>. The HOSE
         /// code is produced for the number of spheres given by <paramref name="noOfSpheres"/>.
         /// IMPORTANT: if you want aromaticity to be included in the code, you need
-        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="CDKHueckelAromaticityDetector"/> prior to
-        /// using <see cref="GetHOSECode()"/>. This method only gives proper results if the molecule is
+        /// to run the IAtomContainer <paramref name="ac"/> to the <see cref="Aromaticities.Aromaticity.Apply(IAtomContainer)"/> prior to
+        /// using <see cref="GetHOSECode(IAtomContainer, IAtom, int, bool)"/>. This method only gives proper results if the molecule is
         /// fully saturated (if not, the order of the HOSE code might depend on atoms in higher spheres).
         /// This method is known to fail for protons sometimes.
         /// IMPORTANT: Your molecule must contain implicit or explicit hydrogens
@@ -312,6 +312,7 @@ namespace NCDK.Tools
         ///  recursion is done in <see cref="NextSphere"/>.
         /// </summary>
         /// <param name="root">The atom at which we start the search</param>
+        /// <param name="addTreeNode"></param>
         /// <exception cref="CDKException"> If something goes wrong.</exception>
         private void BreadthFirstSearch(IAtom root, bool addTreeNode)
         {

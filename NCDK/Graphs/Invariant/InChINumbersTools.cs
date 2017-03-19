@@ -38,7 +38,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="atomContainer">The <see cref="IAtomContainer"/> to analyze.</param>
         /// <returns>The number from 1 to the number of heavy atoms.</returns>
-        /// <exception cref="">When the InChI could not be generated</exception>
+        /// <exception cref="CDKException">When the InChI could not be generated</exception>
         public static long[] GetNumbers(IAtomContainer atomContainer)
         {
             string aux = AuxInfo(atomContainer);
@@ -234,8 +234,9 @@ namespace NCDK.Graphs.Invariant
         /// using the specified InChI options.
         /// </summary>
         /// <param name="container">the structure to obtain the numbers of</param>
+        /// <param name="options"></param>
         /// <returns>auxiliary info</returns>
-        /// <exception cref="">the inchi could not be generated</exception>
+        /// <exception cref="CDKException">the inchi could not be generated</exception>
         public static string AuxInfo(IAtomContainer container, params INCHI_OPTION[] options)
         {
             InChIGeneratorFactory factory = InChIGeneratorFactory.Instance;

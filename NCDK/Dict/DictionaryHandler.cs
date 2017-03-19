@@ -24,7 +24,7 @@ using System.Xml.Linq;
 namespace NCDK.Dict
 {
     /// <summary>
-    // Class for unmarshalling a dictionary schema file.
+    /// Class for unmarshalling a dictionary schema file.
     /// </summary>
     // @cdk.module     dict
     // @cdk.githash

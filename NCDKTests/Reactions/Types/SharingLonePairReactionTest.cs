@@ -242,9 +242,9 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.Atoms[0].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
 
             try
@@ -272,8 +272,8 @@ namespace NCDK.Reactions.Types
             var setOfProducts = builder.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
             molecule.Atoms[1].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
 
@@ -297,7 +297,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {

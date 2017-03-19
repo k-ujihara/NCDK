@@ -222,9 +222,9 @@ namespace NCDK.IO
             adenine.SetProperty("two", "b");
             sdf.Write(adenine);
             sdf.Close();
-            string out_ = sw.ToString();
-            Assert.IsTrue(out_.Contains("> <one>"));
-            Assert.IsTrue(out_.Contains("> <two>"));
+            string output = sw.ToString();
+            Assert.IsTrue(output.Contains("> <one>"));
+            Assert.IsTrue(output.Contains("> <two>"));
         }
 
         [TestMethod()]
@@ -237,9 +237,9 @@ namespace NCDK.IO
             adenine.SetProperty("two", "b");
             sdf.Write(adenine);
             sdf.Close();
-            string out_ = sw.ToString();
-            Assert.IsTrue(out_.Contains("> <one>"));
-            Assert.IsFalse(out_.Contains("> <two>"));
+            string output = sw.ToString();
+            Assert.IsTrue(output.Contains("> <one>"));
+            Assert.IsFalse(output.Contains("> <two>"));
         }
 
         [TestMethod()]
@@ -252,9 +252,9 @@ namespace NCDK.IO
             adenine.SetProperty("two", "b");
             sdf.Write(adenine);
             sdf.Close();
-            string out_ = sw.ToString();
-            Assert.IsTrue(out_.Contains("> <two>"));
-            Assert.IsFalse(out_.Contains("> <one>"));
+            string output = sw.ToString();
+            Assert.IsTrue(output.Contains("> <two>"));
+            Assert.IsFalse(output.Contains("> <one>"));
         }
 
         [TestMethod()]
@@ -267,9 +267,9 @@ namespace NCDK.IO
             adenine.SetProperty("two", "b");
             sdf.Write(adenine);
             sdf.Close();
-            string out_ = sw.ToString();
-            Assert.IsFalse(out_.Contains("> <two>"));
-            Assert.IsFalse(out_.Contains("> <one>"));
+            string output = sw.ToString();
+            Assert.IsFalse(output.Contains("> <two>"));
+            Assert.IsFalse(output.Contains("> <one>"));
         }
     }
 }

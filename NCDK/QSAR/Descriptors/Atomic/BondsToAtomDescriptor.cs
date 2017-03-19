@@ -23,28 +23,28 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     ///  This class returns the number of bonds on the shortest path between two atoms.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>focusPosition</td>
-    ///     <td>0</td>
-    ///     <td>The position of the second atom</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>focusPosition</term>
+    ///     <term>0</term>
+    ///     <term>The position of the second atom</term>
+    ///   </item>
+    /// </list> 
+    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:bondsToAtom
-    /// </summary>
     public class BondsToAtomDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private int focusPosition = 0;
@@ -109,9 +109,8 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// The parameterNames attribute of the BondsToAtomDescriptor object
-        ///
-        /// <returns>The parameterNames value</returns>
         /// </summary>
+        /// <returns>The parameterNames value</returns>
         public override string[] ParameterNames { get; } = new string[] { "focusPosition" };
 
         /// <summary>

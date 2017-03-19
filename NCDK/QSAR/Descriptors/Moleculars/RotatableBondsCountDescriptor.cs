@@ -25,39 +25,38 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     ///  The number of rotatable bonds is given by the SMARTS specified by Daylight on
-    ///  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a><p>
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>includeTerminals</td>
-    ///     <td>false</td>
-    ///     <td>True if terminal bonds are included</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>excludeAmides</td>
-    ///     <td>false</td>
-    ///     <td>True if amide C-N bonds should be excluded</td>
-    ///   </tr>
-    /// </table>
-    ///
+    ///  <a href="http://www.daylight.com/dayhtml_tutorials/languages/smarts/smarts_examples.html#EXMPL">SMARTS tutorial</a>
+    /// </summary>
+    /// <remarks>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>includeTerminals</term>
+    ///     <term>false</term>
+    ///     <term>True if terminal bonds are included</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>excludeAmides</term>
+    ///     <term>false</term>
+    ///     <term>True if amide C-N bonds should be excluded</term>
+    ///   </item>
+    /// </list>
+    /// </para>
     /// Returns a single value named <i>nRotB</i>
-    ///
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:rotatableBondsCount
-    ///
     // @cdk.keyword bond count, rotatable
     // @cdk.keyword descriptor
-    /// </summary>
     public class RotatableBondsCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private bool includeTerminals = false;
@@ -80,7 +79,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// The parameters attribute of the RotatableBondsCountDescriptor object
         /// </summary>
-        /// <exception cref=""></exception>
+        /// <exception cref="CDKException"></exception>
         public override object[] Parameters
         {
             set
@@ -210,14 +209,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return n;
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

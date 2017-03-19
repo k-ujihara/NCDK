@@ -36,10 +36,10 @@ namespace NCDK.SMSD.Tools
 {
     /// <summary>
     /// Class that handles molecules for MCS search.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class MolHandler
     {
         private IAtomContainer atomContainer = null;

@@ -131,11 +131,11 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Check whether the row which was added at index <paramref name="j"/> has been
-        /// eliminated. <see cref="Eliminate"/> should be invoked first.
+        /// eliminated. <see cref="Eliminate()"/> should be invoked first.
         /// </summary>
         /// <param name="j">row index</param>
         /// <returns>whether the row was eliminated</returns>
-        /// <seealso cref="Eliminate"/>
+        /// <seealso cref="Eliminate()"/>
         public bool Eliminated(int j)
         {
             return BitArrays.IsEmpty(Row(j));

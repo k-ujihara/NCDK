@@ -34,7 +34,6 @@ namespace <#= ns.NS #>
     // @author      miguelrojasch <miguelrojasch@yahoo.es>
     public class ReactionScheme : ReactionSet, IReactionScheme
     {
-
         /// <summary>
         /// A List of reaction schemes
         /// </summary>
@@ -63,6 +62,7 @@ namespace <#= ns.NS #>
             reactionScheme.Remove(scheme);
         }
 
+        /// <inheritdoc/>
         public IEnumerable<IReaction> Reactions => this;
 
         /// <inheritdoc/>

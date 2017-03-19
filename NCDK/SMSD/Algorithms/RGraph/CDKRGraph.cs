@@ -28,7 +28,6 @@ using NCDK.Common.Collections;
 using NCDK.SMSD.Tools;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.RGraph
 {
@@ -42,59 +41,58 @@ namespace NCDK.SMSD.Algorithms.RGraph
     /// Each edge in the CDKRGraph corresponds to a common adjacency relationship
     /// between the 2 couple of compatible edges associated to the 2 CDKRGraph nodes
     /// forming this edge.
-    ///
-    /// <p>Example:
+    /// </summary>
+    /// <remarks>
+    /// <para>Example:
     /// <code>
     ///    G1 : C-C=O  and G2 : C-C-C=0
     ///         1 2 3           1 2 3 4
     /// </code>
-    ///
-    ///  <p>The resulting CDKRGraph(G1,G2) will contain 3 nodes:
-    ///  <ul>
-    ///    <li>Node sourceBitSet : association between bond C-C :  1-2 in G1 and 1-2 in G2
-    ///    <li>Node targetBitSet : association between bond C-C :  1-2 in G1 and 2-3 in G2
-    ///    <li>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2
-    ///  </ul>
+    /// </para>
+    /// <para>The resulting CDKRGraph(G1,G2) will contain 3 nodes:
+    /// <list type="bullet">
+    ///    <item>Node sourceBitSet : association between bond C-C :  1-2 in G1 and 1-2 in G2</item>
+    ///    <item>Node targetBitSet : association between bond C-C :  1-2 in G1 and 2-3 in G2</item>
+    ///    <item>Node C : association between bond C=0 :  2-3 in G1 and 3-4 in G2</item>
+    ///  </list>   
     ///  The CDKRGraph will also contain one edge representing the
     ///  adjacency between node targetBitSet and C  that is : bonds 1-2 and 2-3 in G1
     ///  and bonds 2-3 and 3-4 in G2.
-    ///
-    ///  <p>Once the CDKRGraph has been built from the two compared graphs
+    /// </para>
+    ///  <para>Once the CDKRGraph has been built from the two compared graphs
     ///  maxIterator becomes a very interesting tool to perform all kinds of
     ///  structural search (isomorphism, substructure search, maximal common
     ///  substructure,....).
-    ///
-    ///  <p>The  search may be constrained by mandatory elements (e.g. bonds that
+    /// </para>
+    ///  <para>The  search may be constrained by mandatory elements (e.g. bonds that
     ///  have to be present in the mapped common substructures).
-    ///
-    ///  <p>Performing a query on an CDKRGraph requires simply to set the constrains
+    /// </para>
+    ///  <para>Performing a query on an CDKRGraph requires simply to set the constrains
     ///  (if any) and to invoke the parsing method (Parse())
-    ///
-    ///  <p>The CDKRGraph has been designed to be a generic tool. It may be constructed
+    /// </para>
+    ///  <para>The CDKRGraph has been designed to be a generic tool. It may be constructed
     ///  from any kind of source graphs, thus maxIterator is not restricted to a chemical
     ///  context.
-    ///
-    ///  <p>The CDKRGraph model is indendant from the CDK model and the link between
+    /// </para>
+    ///  <para>The CDKRGraph model is indendant from the CDK model and the link between
     ///  both model is performed by the RTools class. In this way the CDKRGraph
     ///  class may be reused in other graph context (conceptual graphs,....)
-    ///
-    ///  <p><bitSet>Important note</bitSet>: This implementation of the algorithm has not been
+    /// </para>
+    ///  <para><bitSet>Important note</bitSet>: This implementation of the algorithm has not been
     ///                      optimized for speed at this stage. It has been
     ///                      written with the goal to clearly retrace the
     ///                      principle of the underlined search method. There is
     ///                      room for optimization in many ways including the
     ///                      the algorithm itself.
-    ///
-    ///  <p>This algorithm derives from the algorithm described in
-    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
-    ///
-    // @author      Stephane Werner from IXELIS mail@ixelis.net,
-    ///              Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
+    /// </para>
+    ///  <para>This algorithm derives from the algorithm described in
+    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.</para>
+    /// </remarks>
+    // @author      Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
     // @cdk.created 2002-07-17
     // @cdk.require java1.4+
     // @cdk.module  smsd
     // @cdk.githash
-    /// </summary>
     public class CDKRGraph
     {
         /// <summary>
@@ -193,11 +191,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
         ///  to perform a query. The method will recursively
         ///  parse the CDKRGraph thru connected nodes and visiting the
         ///  CDKRGraph using allowed adjacency relationship.
-        ///
+        /// </summary>
         /// <param name="traversed">node already parsed</param>
         /// <param name="extension">possible extension node (allowed neighbors)</param>
-        /// <param name="forbiden">node forbidden (set of node incompatible with the current solution)</param>
-        /// </summary>
+        /// <param name="forbidden">node forbidden (set of node incompatible with the current solution)</param>
         private void ParseRec(BitArray traversed, BitArray extension, BitArray forbidden)
         {
             BitArray newTraversed = null;
@@ -402,9 +399,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
         ///  set of node that may be used as seed for the
         ///  CDKRGraph parsing. This set depends on the constrains
         ///  defined by the user.
+        /// </summary>
         /// <param name="sourceBitSet">constraint in the graph G1</param>
         /// <param name="targetBitSet">constraint in the graph G2</param>
-        /// <returns>/// </summary></returns>
+        /// <returns></returns>
         private BitArray BuildB(BitArray sourceBitSet, BitArray targetBitSet)
         {
             this.SourceBitSet = sourceBitSet;
@@ -455,8 +453,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// the search will stop as soon as a solution is found.
         /// (e.g. when we just want to know if a G2 is
         ///  a substructure of G1 or not).
-        ///
-        /// <param name="findAllStructure">/// </summary></param>
+        /// </summary>
+        /// <param name="findAllStructure"></param>
         public void SetAllStructure(bool findAllStructure)
         {
             this.IsFindAllStructure = findAllStructure;
@@ -467,8 +465,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// all possible 'mappings' will be generated. If false
         /// the search will keep only one 'mapping' per structure
         /// association.
-        ///
-        /// <param name="findAllMap">/// </summary></param>
+        /// </summary>
+        /// <param name="findAllMap"></param>
         public void SetAllMap(bool findAllMap)
         {
             this.IsFindAllMap = findAllMap;
@@ -477,9 +475,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
         /// <summary>
         /// Sets the maxIteration for the CDKRGraph parsing. If set to -1,
         /// then no iteration maximum is taken into account.
-        ///
-        /// <param name="maxIterator">The new maxIteration value</param>
         /// </summary>
+        /// <param name="maxIterator">The new maxIteration value</param>
         public void SetMaxIteration(int maxIterator)
         {
             this.MaxIteration = maxIterator;
@@ -506,9 +503,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
         // BitArray tools
         /// <summary>
         ///  Projects a CDKRGraph bitset on the source graph G1.
+        /// </summary>
         /// <param name="set">CDKRGraph BitArray to project</param>
         /// <returns>The associate BitArray in G1</returns>
-        /// </summary>
         public BitArray ProjectG1(BitArray set)
         {
             BitArray projection = new BitArray(FirstGraphSize);
@@ -524,9 +521,9 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         /// <summary>
         ///  Projects a CDKRGraph bitset on the source graph G2.
+        /// </summary>
         /// <param name="set">CDKRGraph BitArray to project</param>
         /// <returns>The associate BitArray in G2</returns>
-        /// </summary>
         public BitArray ProjectG2(BitArray set)
         {
             BitArray projection = new BitArray(SecondGraphSize);
@@ -542,10 +539,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         /// <summary>
         ///  Test if set sourceBitSet is contained in  set targetBitSet.
+        /// </summary>
         /// <param name="sourceBitSet">a bitSet</param>
         /// <param name="targetBitSet">a bitSet</param>
         /// <returns>true if  sourceBitSet is contained in  targetBitSet</returns>
-        /// </summary>
         private bool IsContainedIn(BitArray sourceBitSet, BitArray targetBitSet)
         {
             bool result = false;

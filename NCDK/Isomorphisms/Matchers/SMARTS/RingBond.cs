@@ -19,16 +19,14 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This smarts bond matches any bond that is in a ring.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class RingBond : SMARTSBond
     {
         /// <summary>
         /// Creates a new instance
-        ///
         /// </summary>
         public RingBond(IChemObjectBuilder builder)
             : base(builder)

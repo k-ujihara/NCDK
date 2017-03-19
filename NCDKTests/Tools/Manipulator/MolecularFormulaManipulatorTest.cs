@@ -354,7 +354,7 @@ namespace NCDK.Tools.Manipulator
         ///
         // @throws IOException
         // @throws ClassNotFoundException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetTotalExactMassWithCharge_IMolecularFormula()
@@ -375,7 +375,7 @@ namespace NCDK.Tools.Manipulator
         ///
         // @throws IOException
         // @throws ClassNotFoundException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetTotalExactMassWithChargeNeg_IMolecularFormula()

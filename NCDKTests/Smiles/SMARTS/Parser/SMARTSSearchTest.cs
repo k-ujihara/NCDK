@@ -1506,7 +1506,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[#7,C;+0,+1]");
             IAtomContainer smi = CreateFromSmiles("[Na+].[Na+].[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24");
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(smi);
             int[] results = Match(sqt, smi);
             Assert.AreEqual(8, results[0]);

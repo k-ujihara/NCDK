@@ -33,6 +33,6 @@ namespace NCDK
         /// Returns the version of this CDK library.
         /// </summary>
         /// <returns>A <see cref="string"/> representation of the version number.</returns>
-        public static string Version => "0.0.1 based on cdk-1.5.13";
+        public static string Version => typeof(CDK).Assembly.GetName().Version.ToString();
     }
 }

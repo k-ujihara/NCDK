@@ -35,29 +35,28 @@ namespace NCDK.Tautomers
     /// <summary>
     /// Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
     /// Algorithm described in {@cdk.cite Thalheim2010}.
-    /// <br>
-    /// <B>Provide your input molecules in Kekule form, and make sure atom type are perceived.</B></br>
+    /// <para>
+    /// <b>Provide your input molecules in Kekule form, and make sure atom type are perceived.</b>
+    /// </para>
+    /// <para>
     /// When creating an input molecule by reading an MDL file, make sure to set implicit hydrogens. See the
-    /// InChITautomerGeneratorTest test case.
-    ///
+    /// InChITautomerGeneratorTest test case.</para>
+    /// </summary>
     // @author Mark Rijnbeek
     // @cdk.module tautomer
     // @cdk.githash
-    /// </summary>
     public class InChITautomerGenerator
     {
         /// <summary>
         /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by jniinchi.
+        /// </summary>
         /// <param name="molecule">molecule for which to generate tautomers</param>
         /// <returns>a list of tautomers, if any</returns>
-        // @throws CDKException
-        // @throws CloneNotSupportedException
-        /// </summary>
+        /// <exception cref="CDKException"></exception>
         public IList<IAtomContainer> GetTautomers(IAtomContainer molecule)
         {
-
             InChIGenerator gen = InChIGeneratorFactory.Instance.GetInChIGenerator(molecule);
-            string inchi = gen.Inchi;
+            string inchi = gen.InChI;
             if (inchi == null)
                 throw new CDKException(nameof(InChIGenerator)
                         + " failed to create an InChI for the provided molecule, InChI -> null.");
@@ -67,12 +66,11 @@ namespace NCDK.Tautomers
         /// <summary>
         /// Overloaded {@link #GetTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
         /// provided as input argument.
+        /// </summary>
         /// <param name="inputMolecule">and input molecule for which to generate tautomers</param>
         /// <param name="inchi">InChI for the input molecule</param>
         /// <returns>a list of tautomers</returns>
-        // @throws CDKException
-        // @throws CloneNotSupportedException
-        /// </summary>
+        /// <exception cref="CDKException"></exception>
         public List<IAtomContainer> GetTautomers(IAtomContainer inputMolecule, string inchi)
         {
             //Initial checks
@@ -89,7 +87,7 @@ namespace NCDK.Tautomers
             //Preparation: translate the InChi
             IDictionary<int, IAtom> inchiAtomsByPosition = GetElementsByPosition(inchi, inputMolecule);
             IAtomContainer inchiMolGraph = ConnectAtoms(inchi, inputMolecule, inchiAtomsByPosition);
-            List<IAtomContainer> mappedContainers = MapInputMoleculeToInchiMolgraph(inchiMolGraph, inputMolecule);
+            List<IAtomContainer> mappedContainers = MapInputMoleculeToInChIMolgraph(inchiMolGraph, inputMolecule);
             inchiMolGraph = mappedContainers[0];
             inputMolecule = mappedContainers[1];
             List<int> mobHydrAttachPositions = new List<int>();
@@ -104,10 +102,10 @@ namespace NCDK.Tautomers
         /// Parses the InChI's formula (ignoring hydrogen) and returns a map
         /// with with a position for each atom, increasing in the order
         /// of the elements as listed in the formula.
+        /// </summary>
         /// <param name="inputInchi">user input InChI</param>
         /// <param name="inputMolecule">user input molecule</param>
-        /// <returns><Integer,IAtom> map indicating position and atom</returns>
-        /// </summary>
+        /// <returns><see cref="IDictionary{TKey, TValue}"/> indicating position and atom</returns>
         private IDictionary<int, IAtom> GetElementsByPosition(string inputInchi, IAtomContainer inputMolecule)
         {
             IDictionary<int, IAtom> inchiAtomsByPosition = new Dictionary<int, IAtom>();
@@ -161,9 +159,9 @@ namespace NCDK.Tautomers
         /// </summary>
         /// <param name="inputInchi">user input InChI</param>
         /// <param name="inputMolecule">user input molecule</param>
-        /// <param name="inchiAtomsByPosition">/// <returns>molecule with single bonds and no hydrogens.</param></returns>
-        private IAtomContainer ConnectAtoms(string inputInchi, IAtomContainer inputMolecule,
-                IDictionary<int, IAtom> inchiAtomsByPosition)
+        /// <param name="inchiAtomsByPosition"></param>
+        /// <returns>molecule with single bonds and no hydrogens.</returns>
+        private IAtomContainer ConnectAtoms(string inputInchi, IAtomContainer inputMolecule, IDictionary<int, IAtom> inchiAtomsByPosition)
         {
             string inchi = inputInchi;
             inchi = inchi.Substring(inchi.IndexOf('/') + 1);
@@ -249,7 +247,7 @@ namespace NCDK.Tautomers
         /// <param name="inchiMolGraph">molecule (bare) as defined in InChI</param>
         /// <param name="inputMolecule">user input molecule</param>
         /// <exception cref="CDKException"></exception>
-        private List<IAtomContainer> MapInputMoleculeToInchiMolgraph(IAtomContainer inchiMolGraph, IAtomContainer inputMolecule)
+        private List<IAtomContainer> MapInputMoleculeToInChIMolgraph(IAtomContainer inchiMolGraph, IAtomContainer inputMolecule)
         {
             List<IAtomContainer> mappedContainers = new List<IAtomContainer>();
             Isomorphism isomorphism = new Isomorphism(Algorithm.TurboSubStructure, false);
@@ -368,7 +366,7 @@ namespace NCDK.Tautomers
                     if (!mobHydrAttachPositions.Contains(position)
                             && atom.Hybridization.Equals(Hybridization.SP3))
                     {
-                        skeleton.Remove(atom);
+                        skeleton.Atoms.Remove(atom);
                         removedAtoms.Add(atom);
                         atomRemoved = true;
                         goto break_ATOMS;
@@ -379,7 +377,7 @@ namespace NCDK.Tautomers
                         {
                             if (bond.Contains(atom) && bond.Order.Equals(BondOrder.Triple))
                             {
-                                skeleton.Remove(atom);
+                                skeleton.Atoms.Remove(atom);
                                 removedAtoms.Add(atom);
                                 atomRemoved = true;
                                 goto break_ATOMS;
@@ -416,7 +414,7 @@ namespace NCDK.Tautomers
                                     break;
                             }
                             other.Valency = other.Valency - decValence;
-                            skeleton.Remove(bond);
+                            skeleton.Bonds.Remove(bond);
                             bondRemoved = true;
                             goto break_BONDS;
                         }

@@ -29,14 +29,12 @@ namespace NCDK.Tools
     /// <summary>
     /// Assumes CDK atom types to be detected and adds missing hydrogens based on the
     /// atom typing.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module valencycheck
     // @cdk.githash
-    /// </summary>
     public class CDKValencyChecker : IValencyChecker
     {
-
         private AtomTypeFactory atomTypeList;
         private const string ATOM_TYPE_LIST = "NCDK.Dict.Data.cdk-atom-types.owl";
 
@@ -64,7 +62,6 @@ namespace NCDK.Tools
             return true;
         }
 
-
         public bool IsSaturated(IAtom atom, IAtomContainer container)
         {
             Console.Out.WriteLine(atom.AtomTypeName);
@@ -77,7 +74,7 @@ namespace NCDK.Tools
                         "Atom tfindAndConfigureAtomTypesForAllAtomsype is too general; cannot decide the number of implicit hydrogen to add for: "
                                 + atom.AtomTypeName);
 
-            if (type.GetProperty<object>(CDKPropertyName.PI_BOND_COUNT) == null)
+            if (type.GetProperty<object>(CDKPropertyName.PiBondCount) == null)
                 throw new CDKException("Atom type is too general; cannot determine the number of pi bonds for: "
                         + atom.AtomTypeName);
 
@@ -85,7 +82,7 @@ namespace NCDK.Tools
             BondOrder maxBondOrder = container.GetMaximumBondOrder(atom);
             int? hcount = atom.ImplicitHydrogenCount == null ? 0 : atom.ImplicitHydrogenCount;
 
-            int piBondCount = type.GetProperty<int?>(CDKPropertyName.PI_BOND_COUNT).Value;
+            int piBondCount = type.GetProperty<int?>(CDKPropertyName.PiBondCount).Value;
             int formalNeighborCount = type.FormalNeighbourCount.Value;
 
             int typeMaxBondOrder = piBondCount + 1;

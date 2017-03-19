@@ -32,33 +32,41 @@ namespace NCDK.Pharmacophore
 {
     /// <summary>
     /// Identifies atoms whose 3D arrangement matches a specified pharmacophore query.
-    /// <p/>
+    /// <para>
     /// A pharmacophore is defined by a set of atoms and distances between them. More generically
     /// we can restate this as a set of pharmacophore groups and the distances between them. Note
     /// that a pharmacophore group may consist of one or more atoms and the distances can be
     /// specified as a distance range rather than an exact distance.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// The goal of a pharmacophore query is to identify atom in a molecule whose 3D arrangement
     /// match a specified query.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// To perform a query one must first create a set of pharmacophore groups and specify the
     /// distances between them. Each pharmacophore group is represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreAtom}
     /// and the distances between them are represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}.
     /// These are collected in a <see cref="QueryAtomContainer"/>.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// Given the query pharmacophore one can use this class to check with it occurs in a specified molecule.
     /// Note that for full generality pharmacophore searches are performed using conformations of molecules.
     /// This can easily be accomplished using this class together with the {@link org.openscience.cdk.ConformerContainer}
     /// class.  See the example below.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// Currently this class will allow you to perform pharmacophore searches using triads, quads or any number
     /// of pharmacophore groups. However, only distances and angles between pharmacophore groups are considered, so
     /// alternative constraints such as torsions and so on cannot be considered at this point.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// After a query has been performed one can retrieve the matching groups (as opposed to the matching atoms
     /// of the target molecule). However since a pharmacophore group (which is an object of class <see cref="PharmacophoreAtom"/>)
     /// allows you to access the indices of the corresponding atoms in the target molecule, this is not very
     /// difficult.
+    /// </para>
+    /// </summary> 
+    /// <example>
     /// Example usage:
     /// <code>
     /// QueryAtomContainer query = new QueryAtomContainer();
@@ -98,20 +106,23 @@ namespace NCDK.Pharmacophore
     ///   }
     /// }
     /// </code>
-    ///
-    /// <h3>Extensions to SMARTS</h3>
-    ///
+    /// </example>
+    /// <remarks>
+    /// <para>Extensions to SMARTS</para>
+    /// <para>
     /// The pharmacophore supports some extentions to the SMARTS language that lead
     /// to flexible pharmacophore definitions  Note that these extensions are specific to
     /// pharmacophore usage and are not generally provided by the SMARTS parser itself.
-    /// <p>
-    /// <ul>
-    /// <li> | - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
+    /// </para>
+    /// <list type="bullet">
+    /// <item> | - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
     /// be a pharmacophore group that is meant to match a 5 membered ring or a 6 membered ring. This cannot be
     /// written in a single ordinary SMARTS pattern. However using this one extension one can write
     /// <code>A1AAAA1|A1AAAAA1</code>
-    /// </ul>
-    /// </summary>
+    /// <item>
+    /// </item>
+    /// </item></list>l
+    /// </remarks>
     /// <seealso cref="PharmacophoreAtom"/>
     /// <seealso cref="PharmacophoreBond"/>
     /// <seealso cref="PharmacophoreQueryAtom"/>
@@ -128,7 +139,7 @@ namespace NCDK.Pharmacophore
 
         private Mappings mappings = null;
 
-        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.Daylight(), Cycles.Or(Cycles.All(), Cycles.Relevant));
+        private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// An empty constructor.
@@ -187,7 +198,7 @@ namespace NCDK.Pharmacophore
             if (!CheckQuery(pharmacophoreQuery))
                 throw new CDKException(
                         "A problem in the query. Make sure all pharmacophore groups of the same symbol have the same same SMARTS");
-            string title = atomContainer.GetProperty<string>(CDKPropertyName.TITLE);
+            string title = atomContainer.GetProperty<string>(CDKPropertyName.Title);
 
             if (initializeTarget)
                 pharmacophoreMolecule = GetPharmacophoreMolecule(atomContainer);
@@ -283,7 +294,7 @@ namespace NCDK.Pharmacophore
         /// The method returns a List of List's. Each List represents the pharmacophore groups in the
         /// target molecule that matched the query. Each pharmacophore group contains the indices of the
         /// atoms (in the target molecule) that correspond to the group.
-        /// 
+        /// </para>
         /// </summary>
         /// <returns>a List of a List of pharmacophore groups in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreAtom"/>
@@ -338,9 +349,8 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Set a pharmacophore query.
-        ///
-        /// <param name="query">The query</param>
         /// </summary>
+        /// <param name="query">The query</param>
         public void SetPharmacophoreQuery(PharmacophoreQuery query)
         {
             pharmacophoreQuery = query;
@@ -348,11 +358,10 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Convert the input into a pcore molecule.
-        /// 
+        /// </summary>
         /// <param name="input">the compound being converted from</param>
         /// <returns>pcore molecule </returns>
         /// <exception cref="CDKException">match failed</exception>
-        /// </summary>
         private IAtomContainer GetPharmacophoreMolecule(IAtomContainer input)
         {
             // XXX: prepare query, to be moved
@@ -363,7 +372,7 @@ namespace NCDK.Pharmacophore
             var matched = new HashSet<string>();
             var uniqueAtoms = new LinkedHashSet<PharmacophoreAtom>();
 
-            Debug.WriteLine($"Converting [{input.GetProperty<string>(CDKPropertyName.TITLE)}] to a pcore molecule");
+            Debug.WriteLine($"Converting [{input.GetProperty<string>(CDKPropertyName.Title)}] to a pcore molecule");
 
             // lets loop over each pcore query atom
             foreach (var atom in pharmacophoreQuery.Atoms)

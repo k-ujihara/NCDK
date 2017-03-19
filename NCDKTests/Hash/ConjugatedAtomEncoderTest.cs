@@ -46,7 +46,7 @@ namespace NCDK.Hash
         [ExpectedException(typeof(ArgumentException))]
         public void TestConstruction_Empty()
         {
-            new ConjugatedAtomEncoder(new AtomEncoder[0]);
+            new ConjugatedAtomEncoder(new IAtomEncoder[0]);
         }
 
         /// <summary>
@@ -55,17 +55,17 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestConstruction_Modification()
         {
-            var m_a = new Mock<AtomEncoder>(); var a = m_a.Object;
-            var m_b = new Mock<AtomEncoder>(); var b = m_b.Object;
-            var m_c = new Mock<AtomEncoder>(); var c = m_c.Object;
+            var m_a = new Mock<IAtomEncoder>(); var a = m_a.Object;
+            var m_b = new Mock<IAtomEncoder>(); var b = m_b.Object;
+            var m_c = new Mock<IAtomEncoder>(); var c = m_c.Object;
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            var encoders = new List<AtomEncoder>();
+            var encoders = new List<IAtomEncoder>();
             encoders.Add(a);
             encoders.Add(b);
             encoders.Add(c);
-            AtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
+            IAtomEncoder encoder = new ConjugatedAtomEncoder(encoders);
 
             encoders.RemoveAt(2); // removing b should not affect the new encoder
 
@@ -83,24 +83,24 @@ namespace NCDK.Hash
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void TestCreate_Null()
         {
-            ConjugatedAtomEncoder.Create(null, new AtomEncoder[0]);
+            ConjugatedAtomEncoder.Create(null, new IAtomEncoder[0]);
         }
 
         [TestMethod()]
         [ExpectedException(typeof(System.ArgumentNullException))]
         public void TestCreate_Null2()
         {
-            ConjugatedAtomEncoder.Create(new Mock<AtomEncoder>().Object, null);
+            ConjugatedAtomEncoder.Create(new Mock<IAtomEncoder>().Object, null);
         }
 
         [TestMethod()]
         public void TestEncode_Single()
         {
-            var m_a = new Mock<AtomEncoder>(); var a = m_a.Object;
+            var m_a = new Mock<IAtomEncoder>(); var a = m_a.Object;
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            AtomEncoder encoder = new ConjugatedAtomEncoder(new[] { a });
+            IAtomEncoder encoder = new ConjugatedAtomEncoder(new[] { a });
 
             encoder.Encode(atom, container);
 
@@ -111,13 +111,13 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestEncode()
         {
-            var m_a = new Mock<AtomEncoder>(); var a = m_a.Object;
-            var m_b = new Mock<AtomEncoder>(); var b = m_b.Object;
-            var m_c = new Mock<AtomEncoder>(); var c = m_c.Object;
+            var m_a = new Mock<IAtomEncoder>(); var a = m_a.Object;
+            var m_b = new Mock<IAtomEncoder>(); var b = m_b.Object;
+            var m_c = new Mock<IAtomEncoder>(); var c = m_c.Object;
             var m_atom = new Mock<IAtom>(); var atom = m_atom.Object;
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            AtomEncoder encoder = new ConjugatedAtomEncoder(new[] { a, b, c, });
+            IAtomEncoder encoder = new ConjugatedAtomEncoder(new[] { a, b, c, });
 
             encoder.Encode(atom, container);
 

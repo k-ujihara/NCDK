@@ -29,22 +29,20 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with utilities for the <code>AtomType</code> class.
     /// - changed 21/7/05 by cho: add properties for mmff94 atom type
-    ///
+    /// </summary>
     // @author     mfe4
     // @author     egonw
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class AtomTypeManipulator
     {
         /// <summary>
         /// Method that assign properties to an atom given a particular atomType.
-        /// An <code>ArgumentException</code> is thrown if the given <code>IAtomType</code>
+        /// An <see cref="ArgumentException"/> is thrown if the given <see cref="IAtomType"/> 
         /// is null. <b>This method overwrites non-null values.</b>
-        ///
+        /// </summary>
         /// <param name="atom">Atom to configure</param>
         /// <param name="atomType">AtomType. Must not be null.</param>
-        /// </summary>
         public static void Configure(IAtom atom, IAtomType atomType)
         {
             if (atomType == null)
@@ -81,17 +79,17 @@ namespace NCDK.Tools.Manipulator
                 atom.FormalNeighbourCount = atomType.FormalNeighbourCount;
                 atom.IsHydrogenBondAcceptor = atomType.IsHydrogenBondAcceptor;
                 atom.IsHydrogenBondDonor = atomType.IsHydrogenBondDonor;
-                var constant = atomType.GetProperty<int?>(CDKPropertyName.CHEMICAL_GROUP_CONSTANT);
+                var constant = atomType.GetProperty<int?>(CDKPropertyName.ChemicalGroupConstant);
                 if (constant != null)
                 {
-                    atom.SetProperty(CDKPropertyName.CHEMICAL_GROUP_CONSTANT, constant);
+                    atom.SetProperty(CDKPropertyName.ChemicalGroupConstant, constant);
                 }
                 atom.IsAromatic = atomType.IsAromatic;
 
-                object color = atomType.GetProperty<object>(CDKPropertyName.COLOR);
+                object color = atomType.GetProperty<object>(CDKPropertyName.Color);
                 if (color != null)
                 {
-                    atom.SetProperty(CDKPropertyName.COLOR, color);
+                    atom.SetProperty(CDKPropertyName.Color, color);
                 }
                 if (atomType.AtomicNumber != null) atom.AtomicNumber = atomType.AtomicNumber;
                 if (atomType.ExactMass != null) atom.ExactMass = atomType.ExactMass;

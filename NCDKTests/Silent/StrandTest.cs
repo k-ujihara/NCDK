@@ -23,10 +23,9 @@ using System.Linq;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link Strand}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="IStrand"/>. 
     /// </summary>
+    // @cdk.module test-silent
     [TestClass()]
     public class StrandTest : AbstractStrandTest
     {
@@ -54,8 +53,8 @@ namespace NCDK.Silent
             IAtom oAtom4 = oStrand.Builder.CreateAtom("C4");
             IAtom oAtom5 = oStrand.Builder.CreateAtom("C5");
 
-            oStrand.Add(oAtom1);
-            oStrand.Add(oAtom2);
+            oStrand.AddAtom(oAtom1);
+            oStrand.AddAtom(oAtom2);
             oStrand.AddAtom(oAtom3, oMono1);
             oStrand.AddAtom(oAtom4, oMono2);
             oStrand.AddAtom(oAtom5, oMono3);

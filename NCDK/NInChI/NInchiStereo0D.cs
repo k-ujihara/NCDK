@@ -22,8 +22,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates properites of InChI Stereo Parity.  See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiStereo0D
     {
         /// <summary>
@@ -122,10 +122,11 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Convenience method for generating 0D stereo parities at tetrahedral
+        /// Convenience method for generating 0D stereo parities at tetrahedral
         /// atom centres.
-        ///
-        /// <p><b>Usage notes from <i>inchi_api.h</i>:</b>
+        ///</summary>
+        /// <remarks>
+        /// <b>Usage notes from <i>inchi_api.h</i>:</b>
         /// <code>
         ///  4 neighbors
         ///
@@ -158,22 +159,21 @@ namespace NCDK.NInChI
         ///
         ///  tetrahedral atom
         ///  ================
-        ///  CML atomParity > 0 &lt;=&gt; INCHI_PARITY_EVEN
-        ///  CML atomParity < 0 &lt;=&gt; INCHI_PARITY_ODD
+        ///  CML atomParity &gt; 0 &lt;=&gt; INCHI_PARITY_EVEN
+        ///  CML atomParity &lt; 0 &lt;=&gt; INCHI_PARITY_ODD
         ///
         ///                               | 1   1   1   1  |  where xW is x-coordinate of
         ///                               | xW  xX  xY  xZ |  atom W, etc. (xyz is a
         ///  CML atomParity = determinant | yW  yX  yY  yZ |  'right-handed' Cartesian
         ///                               | zW  zX  xY  zZ |  coordinate system)
         /// </code>
-        ///
+        /// </remarks>
         /// <param name="atC">Central atom</param>
         /// <param name="at0">Neighbour atom 0</param>
         /// <param name="at1">Neighbour atom 1</param>
         /// <param name="at2">Neighbour atom 2</param>
         /// <param name="at3">Neighbour atom 3</param>
         /// <param name="parity">Parity</param>
-        /// </summary>
         public static NInchiStereo0D CreateNewTetrahedralStereo0D(NInchiAtom atC, NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                 INCHI_PARITY parity)
@@ -183,13 +183,14 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Convenience method for generating 0D stereo parities at stereogenic
+        /// Convenience method for generating 0D stereo parities at stereogenic
         /// double bonds.
-        ///
-        /// <p><b>Usage notes from <i>inchi_api.h</i>:</b>
+        /// </summary>
+        /// <remarks>
+        /// <b>Usage notes from <i>inchi_api.h</i>:</b>
         /// <code>
         ///  =============================================
-        ///  stereogenic bond >A=B< or cumulene >A=C=C=B<
+        ///  stereogenic bond &gt;A=B&lt; or cumulene &gt;A=C=C=B&lt;
         ///  =============================================
         ///
         ///                              neighbor[4]  : {#X,#A,#B,#Y} in this order
@@ -210,13 +211,13 @@ namespace NCDK.NInChI
         ///  CML 'C' (cis)      &lt;=&gt; INCHI_PARITY_ODD
         ///  CML 'T' (trans)    &lt;=&gt; INCHI_PARITY_EVEN
         /// </code>
-        ///
+        /// </remarks>
         /// <param name="at0">Neighbour atom 0</param>
         /// <param name="at1">Neighbour atom 1</param>
         /// <param name="at2">Neighbour atom 2</param>
         /// <param name="at3">Neighbour atom 3</param>
         /// <param name="parity">Parity</param>
-        /// <returns>/// </summary></returns>
+        /// <returns></returns>
         public static NInchiStereo0D CreateNewDoublebondStereo0D(NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                  INCHI_PARITY parity)

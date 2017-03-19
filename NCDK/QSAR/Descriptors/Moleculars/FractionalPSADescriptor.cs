@@ -41,15 +41,13 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// to <see cref="TPSADescriptor"/> / <b>molecular weight</b>, in units of square Angstroms per Dalton.
     ///
     /// Other related descriptors may also be useful to add, e.g. ratio of polar to hydrophobic surface area.
-    ///
+    /// </summary>
     // @cdk.module qsarmolecular
     // @cdk.githash
-    ///
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:fractionalPSA
     // @cdk.keyword volume
     // @cdk.keyword descriptor
-    /// </summary>
     public class FractionalPSADescriptor : IMolecularDescriptor
     {
         public FractionalPSADescriptor() { }
@@ -88,7 +86,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Calculates the topological polar surface area and expresses it as a ratio to molecule size.
         /// </summary>
-        /// <param name="atomContainer">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
+        /// <param name="mol">The <see cref="IAtomContainer"/> whose volume is to be calculated</param>
         /// <returns>Descriptor(s) retaining to polar surface area</returns>
         public DescriptorValue Calculate(IAtomContainer mol)
         {

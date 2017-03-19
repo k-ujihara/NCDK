@@ -25,7 +25,7 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Class defining an set object of MolecularFormulas. It maintains
-    /// a list of list IMolecularFormula.<para>
+    /// a list of list IMolecularFormula.
     /// </summary>
     // @cdk.module  data
     // @author      miguelrojasch

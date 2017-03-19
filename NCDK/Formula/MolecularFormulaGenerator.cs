@@ -104,6 +104,7 @@ namespace NCDK.Formula
         /// <summary>
         /// Initiate the MolecularFormulaGenerator.
         /// </summary>
+        /// <param name="builder"></param>
         /// <param name="minMass">Lower boundary of the target mass range</param>
         /// <param name="maxMass">Upper boundary of the target mass range</param>
         /// <param name="mfRange">A range of elemental compositions defining the search space</param>

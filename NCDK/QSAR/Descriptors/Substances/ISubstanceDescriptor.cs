@@ -27,24 +27,11 @@ namespace NCDK.QSAR.Descriptors.Substances
         /// <summary>
         /// Calculates the descriptor value for the given <see cref="ISubstance"/>.
         /// </summary>
-        /// <param name="substance">An <see cref="ISubstance"/> for which this descriptor
-        ///                  should be calculated</param>
-        /// <returns>An object of <see cref="DescriptorValue"/> that contain the
-        ///         calculated value as well as specification details</returns>
+        /// <param name="substance">An <see cref="ISubstance"/> for which this descriptor should be calculated</param>
+        /// <returns>An object of <see cref="DescriptorValue"/> that contain the calculated value as well as specification details</returns>
         DescriptorValue Calculate(ISubstance substance);
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// <para>Additionally, the length indicated by the result type must match the actual
-        /// length of a descriptor calculated with the current parameters. Typically, the
-        /// length of array result types vary with the values of the parameters. See
-        /// <see cref="IDescriptor"/> for more details.
-        /// </para>
-        /// </summary>
+        /// <inheritdoc/>
         IDescriptorResult DescriptorResultType { get; }
     }
 }

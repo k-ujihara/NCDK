@@ -24,37 +24,32 @@ using System.Linq;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism displaces the Charge(radical, charge + or charge -) because of
-     * a double bond which is associated.
-     * It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</p>
-     * <p>This reaction could be represented as [A*]-Y=Z => A=Z-[Y*]</p>
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism displaces the Charge(radical, charge + or charge -) because of
+    /// a double bond which is associated.
+    /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
+    /// <para>This reaction could be represented as [A*]-Y=Z => A=Z-[Y*]</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class RearrangementChargeMechanism : IReactionMechanism
     {
 
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two three.
-         *                    The first atom is the atom which must contain the charge to be moved, the second
-         *                    is the atom which is in the middle and the third is the atom which acquires the new charge
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed two bond.
-         *                       The first bond is the bond to increase the order and the second is the bond
-         *                       to decrease the order
-         *                       It is the bond which is moved
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed two three.
+        ///                    The first atom is the atom which must contain the charge to be moved, the second
+        ///                    is the atom which is in the middle and the third is the atom which acquires the new charge
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed two bond.</param>
+        ///                       The first bond is the bond to increase the order and the second is the bond
+        ///                       to decrease the order
+        ///                       It is the bond which is moved</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
@@ -84,7 +79,7 @@ namespace NCDK.Reactions.Mechanisms
 
             BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[posBond1]);
             if (bond2.Order == BondOrder.Single)
-                reactantCloned.Remove(reactantCloned.Bonds[posBond2]);
+                reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond2]);
             else
                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond2]);
 
@@ -92,9 +87,9 @@ namespace NCDK.Reactions.Mechanisms
             if (reactantCloned.GetConnectedSingleElectrons(atom1C).Any())
             {
                 var selectron = reactantCloned.GetConnectedSingleElectrons(atom1C);
-                reactantCloned.Remove(selectron.Last());
+                reactantCloned.SingleElectrons.Remove(selectron.Last());
 
-                reactantCloned.Add(bond2.Builder.CreateSingleElectron(atom3C));
+                reactantCloned.SingleElectrons.Add(bond2.Builder.CreateSingleElectron(atom3C));
 
             }
             else if (atom1C.FormalCharge > 0)
@@ -111,12 +106,12 @@ namespace NCDK.Reactions.Mechanisms
                 int charge = atom1C.FormalCharge.Value;
                 atom1C.FormalCharge = charge + 1;
                 var ln = reactantCloned.GetConnectedLonePairs(atom1C);
-                reactantCloned.Remove(ln.Last());
+                reactantCloned.LonePairs.Remove(ln.Last());
                 atom1C.IsAromatic = false;
 
                 charge = atom3C.FormalCharge.Value;
                 atom3C.FormalCharge = charge - 1;
-                reactantCloned.Add(bond2.Builder.CreateLonePair(atom3C));
+                reactantCloned.LonePairs.Add(bond2.Builder.CreateLonePair(atom3C));
                 atom3C.IsAromatic = false;
             }
             else

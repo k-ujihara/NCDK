@@ -37,20 +37,17 @@ namespace NCDK.SMSD.Algorithms.VFLib
     /// is a substructure for target molecule. If this case is true
     /// then it returns only all mapping.
     ///
-    /// This is much faster than {@link
-    /// org.openscience.cdk.smsd.algorithm.vflib.VFlibMCSHandler} class
+    /// This is much faster than <see cref="VFlibMCSHandler"/> class
     /// as it only reports first match and backtracks.
     ///
     /// This class should only be used to report if a query
     /// graph is a substructure of the target graph.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFlibSubStructureHandler : AbstractSubGraph, IMCSBase
     {
-
         private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
         private static IDictionary<IAtom, IAtom> atomsMCS = null;
         private static List<IDictionary<IAtom, IAtom>> allAtomMCSCopy = null;
@@ -98,11 +95,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
+        /// <summary>
         /// Set the VFLib MCS software
-        ///
-        /// <param name="reactant">/// @param product</param>
         /// </summary>
         public void Set(MolHandler reactant, MolHandler product)
         {
@@ -110,10 +104,6 @@ namespace NCDK.SMSD.Algorithms.VFLib
             mol2 = product.Molecule;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
-        /// <param name="source">/// @param target</param>
-        /// </summary>
         public void Set(IQueryAtomContainer source, IAtomContainer target)
         {
             queryMol = source;

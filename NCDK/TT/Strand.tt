@@ -74,7 +74,7 @@ namespace <#= ns.NS #>
         /// atom gets added to a Monomer of type "Unknown" in a Strand of type  "Unknown".
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
-        public override void Add(IAtom oAtom)
+        public virtual void AddAtom(IAtom oAtom)
         {
             AddAtom(oAtom, GetMonomer(""));
         }
@@ -87,13 +87,13 @@ namespace <#= ns.NS #>
         public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
-            base.Add(oAtom);
+            Atoms.Add(oAtom);
             if (atomCount != base.Atoms.Count)
             {
                 if (oMonomer == null)
                     oMonomer = GetMonomer("");
 
-                oMonomer.Add(oAtom);
+                oMonomer.Atoms.Add(oAtom);
                 if (!monomers.ContainsKey(oMonomer.MonomerName))
                     monomers.Add(oMonomer.MonomerName, oMonomer);
             }

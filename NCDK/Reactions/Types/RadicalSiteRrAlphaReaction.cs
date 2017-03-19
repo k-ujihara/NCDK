@@ -28,11 +28,11 @@ using System.Linq;
 namespace NCDK.Reactions.Types
 {
     /// <summary>
-    /// <para>
-    /// This reaction could be represented as [A*]-(C)_2-C3[R] => A([RH])-(C_2)-[C3*]. Due to
+    /// <para>This reaction could be represented as [A*]-(C)_2-C3[R] => A([RH])-(C_2)-[C3*]. Due to
     /// the single electron of atom A the R is moved.</para>
     /// <para>It is processed by the RadicalSiteRearrangementMechanism class</para>
-    ///
+    /// </summary>
+    /// <example>
     /// <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
@@ -44,21 +44,17 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
-    ///
-    ///
+    /// </example>
+    /// <seealso cref="Mechanisms.RadicalSiteRearrangementMechanism"/>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2006-10-20
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    ///
-    /// <seealso cref="RadicalSiteRearrangementMechanism"/>
-    ///*/
     public class RadicalSiteRrAlphaReaction : ReactionEngine, IReactionProcess
     {
 
@@ -83,17 +79,12 @@ namespace NCDK.Reactions.Types
         ///  Initiate process.
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency
         ///  from the class tools.HydrogenAdder.
-        ///
-        ///
-        /// <exception cref="CDKException"> Description of the Exception</exception>
-
-        /// <param name="reactants">reactants of the reaction.</param>
-       /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         /// </summary>
-
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <param name="reactants">reactants of the reaction.</param>
+        /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
             Debug.WriteLine("initiate reaction: RadicalSiteRrAlphaReaction");
 
             if (reactants.Count != 1)
@@ -121,7 +112,7 @@ namespace NCDK.Reactions.Types
                     aring.IsInRing = true;
                 }
             }
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -130,7 +121,6 @@ namespace NCDK.Reactions.Types
             {
                 if (atomi.IsReactiveCenter && reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
                 {
-
                     hcg.GetSpheres(reactant, atomi, 1, true);
                     var atom1s = hcg.GetNodesInSphere(1);
 
@@ -142,7 +132,6 @@ namespace NCDK.Reactions.Types
                                 && (atoml.FormalCharge ?? 0) == 0
                                 && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
                         {
-
                             foreach (var atomR in reactant.GetConnectedAtoms(atoml))
                             {
                                 if (atom1s.Contains(atomR)) continue;
@@ -150,7 +139,6 @@ namespace NCDK.Reactions.Types
                                         && atomR.IsReactiveCenter
                                         && (atomR.FormalCharge ?? 0) == 0)
                                 {
-
                                     var atomList = new List<IAtom>();
                                     atomList.Add(atomR);
                                     atomList.Add(atomi);
@@ -166,11 +154,8 @@ namespace NCDK.Reactions.Types
                                         continue;
                                     else
                                         setOfReactions.Add(reaction);
-
                                 }
-
                             }
-
                         }
                     }
                 }
@@ -185,10 +170,8 @@ namespace NCDK.Reactions.Types
         /// C: Atom with single electron
         /// C5: Atom with the R to move
         ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             HOSECodeGenerator hcg = new HOSECodeGenerator();

@@ -27,20 +27,18 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// This matcher checks the periodic group number of an atom.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class PeriodicGroupNumberAtom : SMARTSAtom
     {
         int groupNumber;
 
         /// <summary>
         /// Creates a new instance
-        ///
-        /// <param name="groupNumber">the periodic group number</param>
         /// </summary>
+        /// <param name="groupNumber">the periodic group number</param>
         public PeriodicGroupNumberAtom(int groupNumber, IChemObjectBuilder builder)
             : base(builder)
         {

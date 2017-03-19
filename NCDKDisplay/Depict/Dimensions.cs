@@ -94,7 +94,7 @@ namespace NCDK.Depict
                 int col = 1 + i % nCol;
                 int row = 1 + i / nCol;
                 Bounds bound = bounds[i];
-                if (bound.IsEmpty)
+                if (bound.IsEmpty())
                     continue;
                 double width = bound.Width;
                 double height = bound.Height;

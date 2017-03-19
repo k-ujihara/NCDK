@@ -357,7 +357,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[NX3;H2,H1;!$(NC=O)]");
             IAtomContainer smi = CreateFromSmiles("CCCc1cc(=O)nc([nH]1)S");
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(smi);
             int[] result = SMARTSSearchTest.Match(sqt, smi);
             Assert.AreEqual(1, result[0]);
@@ -369,7 +369,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[NX3;H2,H1;!$(NC=O)]");
             IAtomContainer smi = CreateFromSmiles("CCCc1nc(c2n1[nH]c(nc2=O)c1cc(ccc1OCC)S(=O)(=O)N1CCN(CC1)CC)C");
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(smi);
             int[] result = SMARTSSearchTest.Match(sqt, smi);
             Assert.AreEqual(1, result[0]);
@@ -401,7 +401,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[NX3;H2,H1;!$(NC=O)]");
             IAtomContainer smi = CreateFromSmiles("Cc1ccc[n+]2c1[nH]cc(c2=O)c1n[nH]nn1");
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(smi);
             int[] result = SMARTSSearchTest.Match(sqt, smi);
             Assert.AreEqual(1, result[0]);
@@ -430,7 +430,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             SMARTSQueryTool sqt = CreateFromSmarts("[NX3;H2,H1;!$(NC=O)]");
             IAtomContainer smi = CreateFromSmiles("Cc1cc(=O)c(c[nH]1)C(=O)NC(c1ccc(cc1)O)C(=O)NC1C(=O)N2C1SCC(=C2C(=O)O)CSc1nnnn1C");
-            sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+            sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(smi);
             int[] result = SMARTSSearchTest.Match(sqt, smi);
             Assert.AreEqual(1, result[0]);
@@ -446,7 +446,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             using (IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance))
             {
                 SMARTSQueryTool sqt = new SMARTSQueryTool("[NX3;H2,H1;!$(NC=O)]", Default.ChemObjectBuilder.Instance);
-                sqt.SetAromaticity(new Aromaticity(ElectronDonation.Cdk(), Cycles.CDKAromaticSet));
+                sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder));
                 int nmatch = 0;
                 int nmol = 0;
                 foreach (var container in reader)

@@ -98,7 +98,6 @@ namespace NCDK.RingSearches
     /// <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph Theory) - Wikipedia</a>
     /// <a href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</a>
     /// <seealso cref="SpanningTree"/>
-    /// <seealso cref="SSSRFinder"/>
     /// <seealso cref="AllRingsFinder"/>
     /// <seealso cref="CyclicVertexSearch"/>
     // @author John May
@@ -106,10 +105,10 @@ namespace NCDK.RingSearches
     // @cdk.githash
     public sealed class RingSearch
     {
-        /* depending on molecule size, delegate the search to one of two sub-classes */
+        /// <summary>depending on molecule size, delegate the search to one of two sub-classes</summary>
         private readonly CyclicVertexSearch searcher;
 
-        /* input atom container */
+        /// <summary>input atom container</summary>
         private readonly IAtomContainer container;
 
         /// <summary>
@@ -117,7 +116,7 @@ namespace NCDK.RingSearches
         /// </summary>
         /// <param name="container">non-null input structure</param>
         /// <exception cref="ArgumentNullException">if the container was null</exception>
-        /// <exception cref="">if the container contains a bond which references an atom which could not be found</exception>
+        /// <exception cref="ArgumentException">if the container contains a bond which references an atom which could not be found</exception>
         public RingSearch(IAtomContainer container)
             : this(container, GraphUtil.ToAdjList(container))
         { }
@@ -177,7 +176,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Determine whether the edge between the vertices <i>u</i> and <i>v</i> is
+        /// Determine whether the edge between the vertices <paramref name="u"/> and <paramref name="v"/> is
         /// cyclic.
         /// </summary>
         /// <param name="u">an end point of the edge</param>

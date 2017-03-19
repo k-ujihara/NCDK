@@ -23,8 +23,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Type-safe enumeration of InChI options.  See <tt>inchi_api.h</tt>.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class INCHI_OPTION
     {
         public string Name { get; private set; }

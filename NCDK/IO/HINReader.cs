@@ -16,7 +16,6 @@
  *  License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using NCDK.IO.Formats;
 using System;
 using System.Collections.Generic;
@@ -25,29 +24,26 @@ using System.IO;
 using NCDK.Numerics;
 
 namespace NCDK.IO
-{ 
+{
     /// <summary>
     /// Reads an object from HIN formated input.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author  Rajarshi Guha <rajarshi.guha@gmail.com>
     // @cdk.created 2004-01-27
-    ///
     // @cdk.keyword file format, HIN
     // @cdk.iooptions
-    /// </summary>
-    public class HINReader : DefaultChemObjectReader {
-
+    public class HINReader : DefaultChemObjectReader
+    {
         private TextReader input;
 
         /// <summary>
         /// Construct a new reader from a Reader type object
-        ///
-        /// <param name="input">reader from which input is read</param>
         /// </summary>
-        public HINReader(TextReader input) {
+        /// <param name="input">reader from which input is read</param>
+        public HINReader(TextReader input)
+        {
             this.input = input;
         }
 
@@ -63,7 +59,8 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => HINFormat.Instance;
 
-        public override void Close()  {
+        public override void Close()
+        {
             input.Close();
         }
 
@@ -91,16 +88,17 @@ namespace NCDK.IO
         /// <summary>
         /// Reads the content from a HIN input. It can only return a
         /// IChemObject of type ChemFile
-        ///
-        /// <param name="object">class must be of type ChemFile</param>
-        ///
-        /// @see org.openscience.cdk.ChemFile
         /// </summary>
+        /// <param name="obj">class must be of type ChemFile</param>
+        /// <seealso cref="IChemFile"/>
         public override T Read<T>(T obj)
         {
-            if (obj is IChemFile) {
+            if (obj is IChemFile)
+            {
                 return (T)ReadChemFile((IChemFile)obj);
-            } else {
+            }
+            else
+            {
                 throw new CDKException("Only supported is reading of ChemFile objects.");
             }
         }
@@ -122,10 +120,10 @@ namespace NCDK.IO
         ///  placed in a MoleculeSet object which in turn is placed in a ChemModel
         ///  which in turn is placed in a ChemSequence object and which is finally
         ///  placed in a ChemFile object and returned to the user.
-        ///
-        /// <returns>A ChemFile containing the data parsed from input.</returns>
         /// </summary>
-        private IChemFile ReadChemFile(IChemFile file) {
+        /// <returns>A ChemFile containing the data parsed from input.</returns>
+        private IChemFile ReadChemFile(IChemFile file)
+        {
             IChemSequence chemSequence = file.Builder.CreateChemSequence();
             IChemModel chemModel = file.Builder.CreateChemModel();
             IAtomContainerSet<IAtomContainer> setOfMolecules = file.Builder.CreateAtomContainerSet();
@@ -134,13 +132,16 @@ namespace NCDK.IO
             IList<string> aroringText = new List<string>();
             IList<IAtomContainer> mols = new List<IAtomContainer>();
 
-            try {
+            try
+            {
                 string line;
 
                 // read in header info
-                while (true) {
+                while (true)
+                {
                     line = input.ReadLine();
-                    if (line.StartsWith("mol")) {
+                    if (line.StartsWith("mol"))
+                    {
                         info = GetMolName(line);
                         break;
                     }
@@ -148,16 +149,18 @@ namespace NCDK.IO
 
                 // start the actual molecule data - may be multiple molecule
                 line = input.ReadLine();
-                while (true) {
+                while (true)
+                {
                     if (line == null) break; // end of file
                     if (line.StartsWith(";")) continue; // comment line
 
-                    if (line.StartsWith("mol")) {
+                    if (line.StartsWith("mol"))
+                    {
                         info = GetMolName(line);
                         line = input.ReadLine();
                     }
                     IAtomContainer m = file.Builder.CreateAtomContainer();
-                    m.SetProperty(CDKPropertyName.TITLE, info);
+                    m.SetProperty(CDKPropertyName.Title, info);
 
                     // Each element of cons is an List of length 3 which stores
                     // the start and end indices and bond order of each bond
@@ -167,8 +170,10 @@ namespace NCDK.IO
 
                     // read data for current molecule
                     int atomSerial = 0;
-                    while (true) {
-                        if (line == null || line.Contains("endmol")) {
+                    while (true)
+                    {
+                        if (line == null || line.Contains("endmol"))
+                        {
                             break;
                         }
                         if (line.StartsWith(";")) continue; // comment line
@@ -187,10 +192,12 @@ namespace NCDK.IO
 
                         BondOrder bo = BondOrder.Single;
 
-                        for (int j = 11; j < (11 + nbond * 2); j += 2) {
+                        for (int j = 11; j < (11 + nbond * 2); j += 2)
+                        {
                             int s = int.Parse(toks[j]) - 1; // since atoms start from 1 in the file
                             char bt = toks[j + 1][0];
-                            switch (bt) {
+                            switch (bt)
+                            {
                                 case 's':
                                     bo = BondOrder.Single;
                                     break;
@@ -216,11 +223,12 @@ namespace NCDK.IO
                     }
 
                     // now just store all the bonds we have
-                    foreach (var ar in cons) {
+                    foreach (var ar in cons)
+                    {
                         IAtom s = m.Atoms[(int)ar[0]];
                         IAtom e = m.Atoms[(int)ar[1]];
-                        BondOrder bo = (BondOrder) ar[2];
-                        if (!IsConnected(m, s, e)) m.Add(file.Builder.CreateBond(s, e, bo));
+                        BondOrder bo = (BondOrder)ar[2];
+                        if (!IsConnected(m, s, e)) m.Bonds.Add(file.Builder.CreateBond(s, e, bo));
                     }
                     mols.Add(m);
 
@@ -234,24 +242,30 @@ namespace NCDK.IO
                     // The docs do not explicitly state the the keyword comes
                     // after *all* molecules. So we save and then reprocess
                     // all the molecules in a second pass
-                    while (true) {
+                    while (true)
+                    {
                         line = input.ReadLine();
                         if (line == null || line.StartsWith("mol")) break;
                         if (line.StartsWith("aromaticring")) aroringText.Add(line.Trim());
                     }
                 }
 
-            } catch (IOException) {
+            }
+            catch (IOException)
+            {
                 // FIXME: should make some noise now
                 file = null;
             }
 
-            if (aroringText.Count > 0) { // process aromaticring annotations
-                foreach (var line in aroringText) {
+            if (aroringText.Count > 0)
+            { // process aromaticring annotations
+                foreach (var line in aroringText)
+                {
                     string[] toks = line.Split(' ');
                     int natom = int.Parse(toks[1]);
                     int n = 0;
-                    for (int i = 2; i < toks.Length; i += 2) {
+                    for (int i = 2; i < toks.Length; i += 2)
+                    {
                         int molnum = int.Parse(toks[i]); // starts from 1
                         int atnum = int.Parse(toks[i + 1]); // starts from 1
                         mols[molnum - 1].Atoms[atnum - 1].IsAromatic = true;
@@ -270,8 +284,10 @@ namespace NCDK.IO
             return file;
         }
 
-        private bool IsConnected(IAtomContainer atomContainer, IAtom atom1, IAtom atom2) {
-            foreach (var bond in atomContainer.Bonds) {
+        private bool IsConnected(IAtomContainer atomContainer, IAtom atom1, IAtom atom2)
+        {
+            foreach (var bond in atomContainer.Bonds)
+            {
                 if (bond.Contains(atom1) && bond.Contains(atom2)) return true;
             }
             return false;

@@ -20,8 +20,6 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
@@ -31,29 +29,28 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// CyclicVertexSearch for graphs with more then 64 vertices.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module core
-    /// </summary>
-    internal class JumboCyclicVertexSearch 
+    internal class JumboCyclicVertexSearch
         : CyclicVertexSearch
     {
-        /* graph representation */
+        /// <summary>graph representation</summary>
         private readonly int[][] g;
 
-        /* set of known cyclic vertices */
-        private readonly BitArray  cyclic;
+        /// <summary>set of known cyclic vertices</summary>
+        private readonly BitArray cyclic;
 
-        /* cycle systems as they are discovered */
+        /// <summary>cycle systems as they are discovered</summary>
         private List<BitArray> cycles = new List<BitArray>(1);
 
-        /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
+        /// <summary>indicates if the 'cycle' at 'i' in 'cycles' is fused</summary>
         private List<bool> fused = new List<bool>(1);
 
-        /* set of visited vertices */
+        /// <summary>set of visited vertices</summary>
         private BitArray visited;
 
-        /* the vertices in our path at a given vertex index */
+        /// <summary>the vertices in our path at a given vertex index</summary>
         private BitArray[] state;
 
         /// <summary>vertex colored by each component.</summary>
@@ -61,10 +58,10 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
-        ///
-        /// <param name="graph">adjacency list representation of a graph</param>
         /// </summary>
-        public JumboCyclicVertexSearch(int[][] graph) {
+        /// <param name="graph">adjacency list representation of a graph</param>
+        public JumboCyclicVertexSearch(int[][] graph)
+        {
             this.g = graph;
             int n = graph.Length;
 
@@ -82,12 +79,14 @@ namespace NCDK.RingSearches
 
             // if g is a fragment we will not have visited everything
             int v = 0;
-            while (BitArrays.Cardinality(visited) != n) {
+            while (BitArrays.Cardinality(visited) != n)
+            {
                 v++;
                 // each search expands to the whole fragment, as we
                 // may have fragments we need to visit 0 and then
                 // check every other vertex
-                if (!visited[v]) {
+                if (!visited[v])
+                {
                     Search(v, Copy(empty), Copy(empty));
                 }
             }
@@ -95,30 +94,29 @@ namespace NCDK.RingSearches
             // allow the states to be collected
             state = null;
             visited = null;
-
         }
 
         /// <summary>
-        /// Perform a depth first search from the vertex <i>v</i>.
-        ///
+        /// Perform a depth first search from the vertex <paramref name="v"/>.
+        /// </summary>
         /// <param name="v">vertex to search from</param>
         /// <param name="prev">the state before we vistaed our parent (previous state)</param>
         /// <param name="curr">the current state (including our parent)</param>
-        /// </summary>
-        private void Search(int v, BitArray prev, BitArray curr) {
-
+        private void Search(int v, BitArray prev, BitArray curr)
+        {
             state[v] = curr; // set the state before we visit v
             curr = Copy(curr); // include v in our current state (state[v] is unmodified)
             curr.Set(v, true);
             visited.Or(curr); // mark v as visited (or being visited)
 
             // for each neighbor w of v
-            foreach (var w in g[v]) {
-
+            foreach (var w in g[v])
+            {
                 // if w is in our prev state we have a cycle of size >3.
                 // we don't check out current state as this will always
                 // include w - they are adjacent
-                if (prev[w]) {
+                if (prev[w])
+                {
                     // we have a cycle, xor the state when we last visited 'w'
                     // with our current state. this set is all the vertices
                     // we visited since then
@@ -127,12 +125,12 @@ namespace NCDK.RingSearches
 
                 // check w hasn't been visited or isn't being visited further up the stack.
                 // this mainly stops us re-visiting the vertex we came from
-                else if (!visited[w]) {
+                else if (!visited[w])
+                {
                     // recursively call for the neighbor 'w'
                     Search(w, state[v], curr);
                 }
             }
-
         }
 
         /// <summary>Synchronisation lock.</summary>
@@ -143,15 +141,18 @@ namespace NCDK.RingSearches
         /// indicates which cycle a given vertex belongs. If a vertex belongs to more
         /// then one cycle it is colored '0'. If a vertex belongs to no cycle it is
         /// colored '-1'.
-        ///
-        /// <returns>vertex colors</returns>
         /// </summary>
-        public int[] VertexColor() {
+        /// <returns>vertex colors</returns>
+        public int[] VertexColor()
+        {
             int[] result = colors;
-            if (result == null) {
-                lock (syncLock) {
+            if (result == null)
+            {
+                lock (syncLock)
+                {
                     result = colors;
-                    if (result == null) {
+                    if (result == null)
+                    {
                         colors = result = BuildVertexColor();
                     }
                 }
@@ -163,16 +164,18 @@ namespace NCDK.RingSearches
         /// Build an indexed lookup of vertex color. The vertex color indicates which
         /// cycle a given vertex belongs. If a vertex belongs to more then one cycle
         /// it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-        ///
-        /// <returns>vertex colors</returns>
         /// </summary>
-        private int[] BuildVertexColor() {
+        /// <returns>vertex colors</returns>
+        private int[] BuildVertexColor()
+        {
             int[] color = new int[g.Length];
 
             int n = 1;
             Arrays.Fill(color, -1);
-            foreach (var cycle in cycles) {
-                for (int i = BitArrays.NextSetBit(cycle, 0); i >= 0; i = BitArrays.NextSetBit(cycle, i + 1)) {
+            foreach (var cycle in cycles)
+            {
+                for (int i = BitArrays.NextSetBit(cycle, 0); i >= 0; i = BitArrays.NextSetBit(cycle, i + 1))
+                {
                     color[i] = color[i] < 0 ? n : 0;
                 }
                 n++;
@@ -181,19 +184,16 @@ namespace NCDK.RingSearches
             return color;
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
-        public bool Cyclic(int v) {
+        /// <inheritdoc/>
+        public bool Cyclic(int v)
+        {
             return cyclic[v];
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
-        public bool Cyclic(int u, int v) {
-
-             int[] colors = VertexColor();
+        /// <inheritdoc/>
+        public bool Cyclic(int u, int v)
+        {
+            int[] colors = VertexColor();
 
             // if either vertex has no color then the edge can not
             // be cyclic
@@ -202,9 +202,11 @@ namespace NCDK.RingSearches
             // if the vertex color is 0 it is shared between
             // two components (i.e. spiro-rings) we need to
             // check each component
-            if (colors[u] == 0 || colors[v] == 0) {
+            if (colors[u] == 0 || colors[v] == 0)
+            {
                 // either vertices are shared - need to do the expensive check
-                foreach (var cycle in cycles) {
+                foreach (var cycle in cycles)
+                {
                     if (cycle[u] && cycle[v]) return true;
                 }
                 return false;
@@ -214,30 +216,29 @@ namespace NCDK.RingSearches
             return colors[u] == colors[v];
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
-       public int[] Cyclic() {
+        /// <inheritdoc/>
+        public int[] Cyclic()
+        {
             return ToArray(cyclic);
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
-        public int[][] Isolated() {
+        /// <inheritdoc/>
+        public int[][] Isolated()
+        {
             List<int[]> isolated = new List<int[]>(cycles.Count());
-            for (int i = 0; i < cycles.Count(); i++) {
+            for (int i = 0; i < cycles.Count(); i++)
+            {
                 if (!fused[i]) isolated.Add(ToArray(cycles[i]));
             }
             return isolated.ToArray();
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
-        public int[][] Fused() {
+        /// <inheritdoc/>
+        public int[][] Fused()
+        {
             List<int[]> fused = new List<int[]>(cycles.Count());
-            for (int i = 0; i < cycles.Count(); i++) {
+            for (int i = 0; i < cycles.Count(); i++)
+            {
                 if (this.fused[i]) fused.Add(ToArray(cycles[i]));
             }
             return fused.ToArray();
@@ -247,30 +248,31 @@ namespace NCDK.RingSearches
         /// Add the cycle vertices to our discovered cycles. The cycle is first
         /// checked to see if it is isolated (shares at most one vertex) or
         /// <i>potentially</i> fused.
-        ///
-        /// <param name="cycle">newly discovered cyclic vertex set</param>
         /// </summary>
-        private void Add(BitArray cycle) {
-
+        /// <param name="cycle">newly discovered cyclic vertex set</param>
+        private void Add(BitArray cycle)
+        {
             BitArray intersect = And(cycle, cyclic);
 
-            if (BitArrays.Cardinality(intersect) > 1) {
+            if (BitArrays.Cardinality(intersect) > 1)
+            {
                 AddFUsed(cycle);
-            } else {
+            }
+            else
+            {
                 AddIsolated(cycle);
             }
 
             cyclic.Or(cycle);
-
         }
 
         /// <summary>
         /// Add an a new isolated cycle which is currently edge disjoint with all
         /// other cycles.
-        ///
-        /// <param name="cycle">newly discovered cyclic vertices</param>
         /// </summary>
-        private void AddIsolated(BitArray cycle) {
+        /// <param name="cycle">newly discovered cyclic vertices</param>
+        private void AddIsolated(BitArray cycle)
+        {
             cycles.Add(cycle);
             fused.Add(false);
         }
@@ -278,45 +280,48 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
         /// fused it will still be added as isolated.
-        ///
-        /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the</param>
-        ///              set bits
         /// </summary>
-        private void AddFUsed(BitArray cycle) {
-
+        /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the set bits</param>
+        private void AddFUsed(BitArray cycle)
+        {
             int i = IndexOfFUsed(0, cycle);
 
-            if (i != -1) {
+            if (i != -1)
+            {
                 // add new cycle and mark as fused
                 cycles[i].Or(cycle);
                 fused[i] = true;
                 int j = i;
 
                 // merge other cycles we could be fused with into 'i'
-                while ((j = IndexOfFUsed(j + 1, cycle)) != -1) {
+                while ((j = IndexOfFUsed(j + 1, cycle)) != -1)
+                {
                     cycles[i].Or(cycles[j]);
                     cycles.RemoveAt(j);
                     fused.RemoveAt(j);
                     j--;
                 }
-            } else {
+            }
+            else
+            {
                 AddIsolated(cycle);
             }
-
         }
 
         /// <summary>
         /// Find the next index that the <i>cycle</i> intersects with by at least two
         /// vertices. If the intersect of a vertex set with another contains more
         /// then two vertices it cannot be edge disjoint.
-        ///
+        /// </summary>
         /// <param name="start">start searching from here</param>
         /// <param name="cycle">test whether any current cycles are fused with this one</param>
         /// <returns>the index of the first fused after 'start', -1 if none</returns>
-        /// </summary>
-        private int IndexOfFUsed(int start, BitArray cycle) {
-            for (int i = start; i < cycles.Count(); i++) {
-                if (BitArrays.Cardinality(And(cycles[i], cycle)) > 1) {
+        private int IndexOfFUsed(int start, BitArray cycle)
+        {
+            for (int i = start; i < cycles.Count(); i++)
+            {
+                if (BitArrays.Cardinality(And(cycles[i], cycle)) > 1)
+                {
                     return i;
                 }
             }
@@ -325,17 +330,19 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Convert the set bits of a BitArray to an int[].
-        ///
+        /// </summary>
         /// <param name="set">input with 0 or more set bits</param>
         /// <returns>the bits which are set in the input</returns>
-        /// </summary>
-        public static int[] ToArray(BitArray set) {
+        public static int[] ToArray(BitArray set)
+        {
             int[] vertices = new int[BitArrays.Cardinality(set)];
             int i = 0;
 
             // fill the cyclic vertices with the bits that have been set
-            for (int v = 0; i < vertices.Length; v++) {
-                if (set[v]) {
+            for (int v = 0; i < vertices.Length; v++)
+            {
+                if (set[v])
+                {
                     vertices[i++] = v;
                 }
             }
@@ -346,12 +353,12 @@ namespace NCDK.RingSearches
         /// <summary>
         /// XOR the to bit sets together and return the result. Neither input is
         /// modified.
-        ///
+        /// </summary>
         /// <param name="x">first bit set</param>
         /// <param name="y">second bit set</param>
         /// <returns>the XOR of the two bit sets</returns>
-        /// </summary>
-        public static BitArray Xor(BitArray x, BitArray y) {
+        public static BitArray Xor(BitArray x, BitArray y)
+        {
             BitArray z = Copy(x);
             z.Xor(y);
             return z;
@@ -360,12 +367,12 @@ namespace NCDK.RingSearches
         /// <summary>
         /// AND the to bit sets together and return the result. Neither input is
         /// modified.
-        ///
+        /// </summary>
         /// <param name="x">first bit set</param>
         /// <param name="y">second bit set</param>
         /// <returns>the AND of the two bit sets</returns>
-        /// </summary>
-        public static BitArray And(BitArray x, BitArray y) {
+        public static BitArray And(BitArray x, BitArray y)
+        {
             BitArray z = Copy(x);
             z.And(y);
             return z;
@@ -373,14 +380,13 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Copy the original bit set.
-        ///
+        /// </summary>
         /// <param name="org">input bit set</param>
         /// <returns>copy of the input</returns>
-        /// </summary>
-        public static BitArray Copy(BitArray org) {
+        public static BitArray Copy(BitArray org)
+        {
             BitArray cpy = (BitArray)org.Clone();
             return cpy;
         }
-
     }
 }

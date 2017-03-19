@@ -39,9 +39,9 @@ namespace NCDK.Layout
     ///  be used for Automated Structure Diagram Generation or in the interactive
     ///  buildup of molecules by the user.
     /// </summary>
-    ///@author      steinbeck
-    ///@cdk.created 2003-08-29
-    ///@cdk.module  sdg
+    // @author      steinbeck
+    // @cdk.created 2003-08-29
+    // @cdk.module  sdg
     // @cdk.githash
     public class AtomPlacer
     {
@@ -193,7 +193,7 @@ namespace NCDK.Layout
             Vector2 distanceMeasure = atom.Point2D.Value;
             distanceMeasure += newDirection;
 
-            /// get the two sharedAtom partners with the smallest distance to the new center
+            // get the two sharedAtom partners with the smallest distance to the new center
             sortedAtoms = AtomContainerManipulator.GetAtomArray(placedNeighbours);
             GeometryUtil.SortBy2DDistance(sortedAtoms, distanceMeasure);
             Vector2 closestPoint1 = sortedAtoms[0].Point2D.Value;

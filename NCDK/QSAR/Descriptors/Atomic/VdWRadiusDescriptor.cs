@@ -24,28 +24,20 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     ///  This class return the VdW radius of a given atom.
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td></td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    ///  This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term></term></item>
+    /// </list>
+    /// </remarks>
     // @author         mfe4
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.githash
     // @cdk.set        qsar-descriptors
     // @cdk.dictref qsar-descriptors:vdwradius
-    /// </summary>
     public class VdWRadiusDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {
         private static readonly string[] NAMES = { "vdwRadius" };
@@ -53,7 +45,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  Constructor for the VdWRadiusDescriptor object.
         /// </summary>
-        /// <exception cref="IOException">if an error ocurrs when reading atom type information</exception>
+        /// <exception cref="System.IO.IOException">if an error ocurrs when reading atom type information</exception>
         public VdWRadiusDescriptor() { }
 
         /// <summary>

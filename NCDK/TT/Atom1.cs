@@ -1,23 +1,30 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
+/* Copyright (C) 2000-2007  Christoph Steinbeck <steinbeck@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using NCDK.Config;
 using System;
 using NCDK.Numerics;
@@ -25,10 +32,39 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    [Serializable]
+    /// <summary>
+    /// Represents the idea of an chemical atom.
+    /// </summary>
+    /// <example>
+    /// An Atom class is instantiated with at least the atom symbol:
+    /// <code>
+    ///   Atom a = new Atom("C");
+    /// </code>
+    ///
+    /// Once instantiated all field not filled by passing parameters
+    /// to the constructor are null. Atoms can be configured by using
+    /// the IsotopeFactory.configure() method:
+    /// <code>
+    ///   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
+    ///   if.configure(a);
+    /// </code>
+    ///
+    /// More examples about using this class can be found in the
+    /// Junit test for this class.
+    /// </example>
+    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author     steinbeck
+    // @cdk.created    2000-10-02
+    // @cdk.keyword    atom
+	[Serializable]
     public class Atom
         : AtomType, IAtom
     {
+		// Let's keep this exact specification of what kind of point2d we're talking
+		// of here, since there are so many around in the java standard api
+
         internal double? charge;
         internal int? implicitHydrogenCount;
         internal Vector2? point2D;
@@ -37,28 +73,58 @@ namespace NCDK.Default
         internal int? stereoParity;
         internal bool isSingleOrDouble;
 
+        /// <summary>
+        /// Constructs an completely unset Atom.
+        /// </summary>
         public Atom()
             : this((string)null)
         { }
 
+        /// <summary>
+        /// Constructs an Atom from a String containing an element symbol.
+        /// </summary>
+        /// <param name="elementSymbol">The String describing the element for the Atom</param>
         public Atom(string elementSymbol)
             : this(new Element(elementSymbol, Elements.OfString(elementSymbol).AtomicNumber))
         {
             FormalCharge = 0;
         }
 
+        /// <summary>
+        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="elementSymbol">The Element</param>
+        /// <param name="point2d">The Point</param>
         public Atom(string elementSymbol, Vector2 point2d)
             : base(elementSymbol)
         {
             this.point2D = point2d;
         }
 
+        /// <summary>
+        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
+        /// </summary>
+        /// <param name="elementSymbol">The Element</param>
+        /// <param name="point3d">The Point</param>
         public Atom(string elementSymbol, Vector3 point3d)
             : base(elementSymbol)
         {
             this.point3D = point3d;
         }
 
+        /// <summary>    
+        /// Constructs an isotope by copying the symbol, atomic number,
+        /// flags, identifier, exact mass, natural abundance, mass
+        /// number, maximum bond order, bond order sum, van der Waals
+        /// and covalent radii, formal charge, hybridization, electron
+        /// valency, formal neighbour count and atom type name from the
+        /// given IAtomType. It does not copy the listeners and
+        /// properties. If the element is an instanceof
+        /// IAtom, then the 2D, 3D and fractional coordinates, partial
+        /// atomic charge, hydrogen count and stereo parity are copied
+        /// too.
+        /// </summary>
+        /// <param name="element"><see cref="IAtomType"/> to copy information from</param>
         public Atom(IElement element)
             : base(element)
         {
@@ -74,6 +140,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// The partial charge of this atom.
+        /// </summary>
         public virtual double? Charge
         {
             get { return charge; }
@@ -84,6 +153,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// The number of implicit hydrogen count of this atom.
+        /// </summary>
         public virtual int? ImplicitHydrogenCount
         {
             get { return implicitHydrogenCount; }
@@ -94,6 +166,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a 2D space.
+        /// </summary>
         public virtual Vector2? Point2D
         {
             get { return point2D; }
@@ -104,6 +179,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a 3D space.
+        /// </summary>
         public virtual Vector3? Point3D
         {
             get { return point3D; }
@@ -114,6 +192,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a <see cref="Crystal"/> unit cell.
+        /// </summary>
         public virtual Vector3? FractionalPoint3D
         {
             get { return fractionalPoint3D; }
@@ -124,6 +205,9 @@ namespace NCDK.Default
             }
         }
 
+        /// <summary>
+        /// The stereo parity for this atom.
+        /// </summary>
         public virtual int? StereoParity
         {
             get { return stereoParity; }
@@ -134,6 +218,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -144,6 +229,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public override bool Compare(object obj)
         {
             var aa = obj as IAtom;
@@ -193,10 +279,39 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    [Serializable]
+    /// <summary>
+    /// Represents the idea of an chemical atom.
+    /// </summary>
+    /// <example>
+    /// An Atom class is instantiated with at least the atom symbol:
+    /// <code>
+    ///   Atom a = new Atom("C");
+    /// </code>
+    ///
+    /// Once instantiated all field not filled by passing parameters
+    /// to the constructor are null. Atoms can be configured by using
+    /// the IsotopeFactory.configure() method:
+    /// <code>
+    ///   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
+    ///   if.configure(a);
+    /// </code>
+    ///
+    /// More examples about using this class can be found in the
+    /// Junit test for this class.
+    /// </example>
+    /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author     steinbeck
+    // @cdk.created    2000-10-02
+    // @cdk.keyword    atom
+	[Serializable]
     public class Atom
         : AtomType, IAtom
     {
+		// Let's keep this exact specification of what kind of point2d we're talking
+		// of here, since there are so many around in the java standard api
+
         internal double? charge;
         internal int? implicitHydrogenCount;
         internal Vector2? point2D;
@@ -205,28 +320,58 @@ namespace NCDK.Silent
         internal int? stereoParity;
         internal bool isSingleOrDouble;
 
+        /// <summary>
+        /// Constructs an completely unset Atom.
+        /// </summary>
         public Atom()
             : this((string)null)
         { }
 
+        /// <summary>
+        /// Constructs an Atom from a String containing an element symbol.
+        /// </summary>
+        /// <param name="elementSymbol">The String describing the element for the Atom</param>
         public Atom(string elementSymbol)
             : this(new Element(elementSymbol, Elements.OfString(elementSymbol).AtomicNumber))
         {
             FormalCharge = 0;
         }
 
+        /// <summary>
+        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="elementSymbol">The Element</param>
+        /// <param name="point2d">The Point</param>
         public Atom(string elementSymbol, Vector2 point2d)
             : base(elementSymbol)
         {
             this.point2D = point2d;
         }
 
+        /// <summary>
+        /// Constructs an <see cref="IAtom"/> from an element name and a <see cref="Vector3"/>.
+        /// </summary>
+        /// <param name="elementSymbol">The Element</param>
+        /// <param name="point3d">The Point</param>
         public Atom(string elementSymbol, Vector3 point3d)
             : base(elementSymbol)
         {
             this.point3D = point3d;
         }
 
+        /// <summary>    
+        /// Constructs an isotope by copying the symbol, atomic number,
+        /// flags, identifier, exact mass, natural abundance, mass
+        /// number, maximum bond order, bond order sum, van der Waals
+        /// and covalent radii, formal charge, hybridization, electron
+        /// valency, formal neighbour count and atom type name from the
+        /// given IAtomType. It does not copy the listeners and
+        /// properties. If the element is an instanceof
+        /// IAtom, then the 2D, 3D and fractional coordinates, partial
+        /// atomic charge, hydrogen count and stereo parity are copied
+        /// too.
+        /// </summary>
+        /// <param name="element"><see cref="IAtomType"/> to copy information from</param>
         public Atom(IElement element)
             : base(element)
         {
@@ -242,6 +387,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// The partial charge of this atom.
+        /// </summary>
         public virtual double? Charge
         {
             get { return charge; }
@@ -251,6 +399,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// The number of implicit hydrogen count of this atom.
+        /// </summary>
         public virtual int? ImplicitHydrogenCount
         {
             get { return implicitHydrogenCount; }
@@ -260,6 +411,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a 2D space.
+        /// </summary>
         public virtual Vector2? Point2D
         {
             get { return point2D; }
@@ -269,6 +423,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a 3D space.
+        /// </summary>
         public virtual Vector3? Point3D
         {
             get { return point3D; }
@@ -278,6 +435,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// A point specifying the location of this atom in a <see cref="Crystal"/> unit cell.
+        /// </summary>
         public virtual Vector3? FractionalPoint3D
         {
             get { return fractionalPoint3D; }
@@ -287,6 +447,9 @@ namespace NCDK.Silent
             }
         }
 
+        /// <summary>
+        /// The stereo parity for this atom.
+        /// </summary>
         public virtual int? StereoParity
         {
             get { return stereoParity; }
@@ -296,6 +459,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -305,6 +469,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public override bool Compare(object obj)
         {
             var aa = obj as IAtom;

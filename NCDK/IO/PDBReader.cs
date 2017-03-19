@@ -36,7 +36,6 @@ using NCDK.Numerics;
 using System.Text;
 using NCDK.Default;
 
-
 namespace NCDK.IO
 {
     /// <summary>
@@ -57,7 +56,7 @@ namespace NCDK.IO
     // @cdk.bug     1794439
     public class PDBReader : DefaultChemObjectReader
     {
-        private TextReader _oInput;                                                                  // The internal used TextReader
+        private TextReader oInput;                                                                  // The internal used TextReader
         private BooleanIOSetting useRebondTool;
         private BooleanIOSetting readConnect;
         private BooleanIOSetting useHetDictionary;
@@ -96,7 +95,7 @@ namespace NCDK.IO
         /// <param name="oIn">The Reader to read from</param>
         public PDBReader(TextReader oIn)
         {
-            _oInput = oIn;
+            oInput = oIn;
             InitIOSettings();
             pdbFactory = null;
             hetDictionary = null;
@@ -111,7 +110,7 @@ namespace NCDK.IO
 
         public override void SetReader(TextReader input)
         {
-            this._oInput = input;
+            this.oInput = input;
         }
 
         public override void SetReader(Stream input)
@@ -159,15 +158,15 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Read a <code>ChemFile</code> from a file in PDB format. The molecules
-        /// in the file are stored as <code>BioPolymer</code>s in the
-        /// <code>ChemFile</code>. The residues are the monomers of the
-        /// <code>BioPolymer</code>, and their names are the concatenation of the
+        /// Read a <see cref="IChemFile"/> from a file in PDB format. The molecules
+        /// in the file are stored as <see cref="IBioPolymer"/>s in the
+        /// <see cref="IChemFile"/>. The residues are the monomers of the
+        /// <see cref="IBioPolymer"/>, and their names are the concatenation of the
         /// residue, chain id, and the sequence number. Separate chains (denoted by
-        /// TER records) are stored as separate <code>BioPolymer</code> molecules.
+        /// TER records) are stored as separate <see cref="IBioPolymer"/> molecules.
         /// </summary>
         /// <remarks>
-        /// <para>Connectivity information is not currently read.
+        /// Connectivity information is not currently read.
         /// </remarks>
         /// <returns>The ChemFile that was read from the PDB file.</returns>
         private IChemFile ReadChemFile(IChemFile oFile)
@@ -203,7 +202,7 @@ namespace NCDK.IO
             {
                 do
                 {
-                    cRead = _oInput.ReadLine();
+                    cRead = oInput.ReadLine();
                     Debug.WriteLine("Read line: ", cRead);
                     if (cRead != null)
                     {
@@ -410,12 +409,12 @@ namespace NCDK.IO
                             case "REMARK":
                                 {
                                     #region
-                                    var comment = oFile.GetProperty<string>(CDKPropertyName.COMMENT, "");
+                                    var comment = oFile.GetProperty<string>(CDKPropertyName.Comment, "");
                                     if (lineLength > 12)
                                     {
                                         comment = comment + cRead.Substring(11).Trim()
                                                 + Environment.NewLine;
-                                        oFile.SetProperty(CDKPropertyName.COMMENT, comment);
+                                        oFile.SetProperty(CDKPropertyName.Comment, comment);
                                     }
                                     else
                                     {
@@ -428,7 +427,7 @@ namespace NCDK.IO
                                 {
                                     #region
                                     string title = cRead.Substring(10).Trim();
-                                    oFile.SetProperty(CDKPropertyName.TITLE, title);
+                                    oFile.SetProperty(CDKPropertyName.Title, title);
                                     #endregion
                                 }
                                 break;
@@ -495,7 +494,7 @@ namespace NCDK.IO
                                     //                                  1         2         3         4         5         6         7
                                     //                        01234567890123456789012345678901234567890123456789012345678901234567890123456789
                                     PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.HELIX;
+                                    structure.StructureType = PDBStructure.Helix;
                                     structure.StartChainID = cRead[19];
                                     structure.StartSequenceNumber = int.Parse(cRead.Substring(21, 4).Trim());
                                     structure.StartInsertionCode = cRead[25];
@@ -510,7 +509,7 @@ namespace NCDK.IO
                                 {
                                     #region
                                     PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.SHEET;
+                                    structure.StructureType = PDBStructure.Sheet;
                                     structure.StartChainID = cRead[21];
                                     structure.StartSequenceNumber = int.Parse(cRead.Substring(22, 4).Trim());
                                     structure.StartInsertionCode = cRead[26];
@@ -525,7 +524,7 @@ namespace NCDK.IO
                                 {
                                     #region
                                     PDBStructure structure = new PDBStructure();
-                                    structure.StructureType = PDBStructure.TURN;
+                                    structure.StructureType = PDBStructure.Turn;
                                     structure.StartChainID = cRead[19];
                                     structure.StartSequenceNumber = int.Parse(cRead.Substring(20, 4).Trim());
                                     structure.StartInsertionCode = cRead[24];
@@ -561,7 +560,7 @@ namespace NCDK.IO
             // try to close the Input
             try
             {
-                _oInput.Close();
+                oInput.Close();
             }
             catch (Exception e)
             {
@@ -647,8 +646,9 @@ namespace NCDK.IO
         /// shorter than 59 characters, a <see cref="ApplicationException"/> is thrown.
         /// </summary>
         /// <param name="cLine">the PDB ATOM or HEATATM record.</param>
-        /// <returns>the <code>Atom</code> created from the record.</returns>
-        /// <exception cref="">if the line is too short (less than 59 characters).</exception>
+        /// <param name="lineLength"></param>
+        /// <returns>the <see cref="PDBAtom"/>created from the record.</returns>
+        /// <exception cref="InvalidDataException">if the line is too short (less than 59 characters).</exception>
         private PDBAtom ReadAtom(string cLine, int lineLength)
         {
             // a line can look like (two in old format, then two in new format):
@@ -666,7 +666,7 @@ namespace NCDK.IO
 
             if (lineLength < 59)
             {
-                throw new ApplicationException("PDBReader error during ReadAtom(): line too short");
+                throw new InvalidDataException("PDBReader error during ReadAtom(): line too short");
             }
             string elementSymbol;
             if (cLine.Length > 78)
@@ -862,7 +862,7 @@ namespace NCDK.IO
 
         public override void Close()
         {
-            _oInput.Close();
+            oInput.Close();
         }
 
         private void InitIOSettings()

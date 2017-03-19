@@ -27,20 +27,14 @@ namespace NCDK.Formula
 {
     /// <summary>
     /// Checks the functionality of the MolecularFormulaChecker.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public class MolecularFormulaCheckerTest : CDKTestCase
     {
-
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private IsotopeFactory ifac;
 
-        /// <summary>
-        ///  Constructor for the MolecularFormulaCheckerTest object.
-        ///
-        /// </summary>
         public MolecularFormulaCheckerTest()
             : base()
         {
@@ -54,40 +48,23 @@ namespace NCDK.Formula
             }
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMolecularFormulaChecker_List()
         {
             Assert.IsNotNull(new MolecularFormulaChecker(new List<IRule>()));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestGetRules()
         {
-
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(new List<IRule>());
 
             Assert.IsNotNull(MFChecker.Rules);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValidSum_IMolecularFormula()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
@@ -98,18 +75,11 @@ namespace NCDK.Formula
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
             Assert.AreEqual(0.0, MFChecker.IsValidSum(formula), 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValid_NOT()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
@@ -121,19 +91,12 @@ namespace NCDK.Formula
 
             IMolecularFormula formulaWith = MFChecker.IsValid(formula);
 
-            Assert.AreEqual(0.0, formulaWith.GetProperty((new MMElementRule()).GetType().ToString()));
-
+            Assert.AreEqual(0.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValid_IMolecularFormula()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
@@ -146,18 +109,11 @@ namespace NCDK.Formula
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
             Assert.AreEqual(0.0, MFChecker.IsValidSum(formula), 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValid_NOT_2Rules()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 100);
@@ -171,20 +127,13 @@ namespace NCDK.Formula
 
             IMolecularFormula formulaWith = MFChecker.IsValid(formula);
 
-            Assert.AreEqual(0.0, formulaWith.GetProperty((new MMElementRule()).GetType().ToString()));
-            Assert.AreEqual(1.0, formulaWith.GetProperty((new ChargeRule()).GetType().ToString()));
-
+            Assert.AreEqual(0.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()));
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValidSum_True_2Rules()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 4);
@@ -197,18 +146,11 @@ namespace NCDK.Formula
             MolecularFormulaChecker MFChecker = new MolecularFormulaChecker(rules);
 
             Assert.AreEqual(1.0, MFChecker.IsValidSum(formula), 0.001);
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestIsValid_True_2Rules()
         {
-
             IMolecularFormula formula = new MolecularFormula();
             formula.Add(ifac.GetMajorIsotope("C"), 1);
             formula.Add(ifac.GetMajorIsotope("H"), 4);
@@ -222,9 +164,8 @@ namespace NCDK.Formula
 
             IMolecularFormula formulaWith = MFChecker.IsValid(formula);
 
-            Assert.AreEqual(1.0, formulaWith.GetProperty((new MMElementRule()).GetType().ToString()));
-            Assert.AreEqual(1.0, formulaWith.GetProperty((new ChargeRule()).GetType().ToString()));
-
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new MMElementRule()).GetType().ToString()));
+            Assert.AreEqual(1.0, formulaWith.GetProperty<double>((new ChargeRule()).GetType().ToString()));
         }
     }
 }

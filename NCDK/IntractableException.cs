@@ -1,21 +1,19 @@
-using System;
-
 namespace NCDK
 {
-    public sealed class Intractable
+    public sealed class IntractableException
         : CDKException
     {
-        public Intractable(string message)
+        public IntractableException(string message)
             : base(message)
         {
         }
 
-        public Intractable(long t)
+        public IntractableException(long t)
             : this("Operation", t)
         {
         }
 
-        public Intractable(string desc, long t)
+        public IntractableException(string desc, long t)
             : this(desc + " did not finish after " + t + " ms.")
         {
         }

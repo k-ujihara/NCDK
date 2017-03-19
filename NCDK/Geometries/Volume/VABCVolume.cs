@@ -1,4 +1,4 @@
-/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
+Ôªø/* Copyright (C) 2011  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -63,7 +63,7 @@ namespace NCDK.Geometries.Volume
         /// that atom types have been perceived.
         /// </summary>
         /// <param name="molecule"><see cref="IAtomContainer"/> to calculate the volume of.</param>
-        /// <returns>the volume in cubic Ångstrom.</returns>
+        /// <returns>the volume in cubic √Öngstrom.</returns>
         public static double Calculate(IAtomContainer molecule)
         {
             if (atomTypeList == null)

@@ -102,6 +102,7 @@ namespace NCDK.Graphs
         /// biconnected component. This allows a minor optimisation to trigger.
         /// </summary>
         /// <param name="graph">input graph</param>
+        /// <param name="limit"></param>
         /// <param name="biconnected">the graph is known to be biconnected</param>
         /// <exception cref="ArgumentNullException">the <paramref name="graph"/> was null</exception>
         private InitialCycles(int[][] graph, int limit, bool biconnected)
@@ -191,7 +192,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Access the <see cref="Edge"/> at the given index.
+        /// Access the <see cref="edges"/> at the given index.
         /// </summary>
         /// <param name="i">index of edge</param>
         /// <returns>the edge at the given index</returns>
@@ -403,13 +404,13 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Given two paths from a common start vertex <paramref name="r"/> check whether there
+        /// Given two paths from a common start vertex <c>r</c> check whether there
         /// are any intersects. If the paths are different length the shorter of the
         /// two should be given as <paramref name="p"/>.
         /// </summary>
-        /// <param name="p">a path from <paramref name="r"/></param>
-        /// <param name="q">a path from <paramref name="r"/></param>
-        /// <returns>whether the only intersect is <paramref name="r"/></returns>
+        /// <param name="p">a path from <c>r</c></param>
+        /// <param name="q">a path from <c>r</c></param>
+        /// <returns>whether the only intersect is <c>r</c></returns>
         public static bool GetSingletonIntersect(int[] p, int[] q)
         {
             int n = p.Length;

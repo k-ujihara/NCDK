@@ -21,7 +21,6 @@ using NCDK.IO.Iterator;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace NCDK.Pharmacophore
 {
@@ -52,12 +51,12 @@ namespace NCDK.Pharmacophore
             Assert.AreEqual(4, def1.Atoms.Count);
             Assert.AreEqual(2, def1.Bonds.Count);
             Assert.AreEqual("An imaginary pharmacophore definition", def1.GetProperty<string>("description"));
-            Assert.AreEqual("Imaginary", def1.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("Imaginary", def1.GetProperty<string>(CDKPropertyName.Title));
 
             var def2 = defs[1];
             Assert.AreEqual(3, def2.Atoms.Count);
             Assert.AreEqual(3, def2.Bonds.Count);
-            Assert.IsNull(def2.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.IsNull(def2.GetProperty<string>(CDKPropertyName.Title));
 
             string[] ids = { "Aromatic", "Hydroxyl", "BasicAmine" };
             foreach (var atom in def2.Atoms)

@@ -30,14 +30,13 @@ namespace NCDK.Templates
 {
     /// <summary>
     /// Tool that provides templates for the (natural) amino acids.
-    ///
+    /// </summary>
     // @author      Martin Eklund <martin.eklund@farmbio.uu.se>
     // @cdk.module  pdb
     // @cdk.githash
     // @cdk.keyword templates
     // @cdk.keyword amino acids, stuctures
     // @cdk.created 2005-02-08
-    /// </summary>
     public class AminoAcids
     {
         private static object syncLock = new object();
@@ -45,8 +44,8 @@ namespace NCDK.Templates
         /// <summary>
         /// Creates matrix with info about the bonds in the amino acids.
         /// 0 = bond id, 1 = atom1 in bond, 2 = atom2 in bond, 3 = bond order.
-        /// <returns>info</returns>
         /// </summary>
+        /// <returns>info</returns>
         public static int[][] CreateAABondInfo()
         {
             if (aminoAcids == null)
@@ -94,9 +93,8 @@ namespace NCDK.Templates
 
         /// <summary>
         /// Creates amino acid AminoAcid objects.
-        ///
-        /// <returns>aminoAcids, a Dictionary containing the amino acids as AminoAcids.</returns>
         /// </summary>
+        /// <returns>aminoAcids, a Dictionary containing the amino acids as AminoAcids.</returns>
         public static AminoAcid[] CreateAAs()
         {
             if (aminoAcids != null)

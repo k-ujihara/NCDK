@@ -36,13 +36,11 @@ namespace NCDK.Hash.Stereo
     /// (+1) and (-1) respectively. If a tetrahedral atom has an implicit hydrogen
     /// (only 3 ligands) the forth coordinate should be that of the atom at the
     /// centre with no elevation {@cdk.cite Cieplak2001}.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    // @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak,
-    ///      T and Wisniewski, J.L. 2001</a>
+    // @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</a>
     // @cdk.githash
-    /// </summary>
     internal sealed class Tetrahedral2DParity : GeometricParity
     {
         /* four coordinates */
@@ -54,12 +52,10 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Create a new geometric parity for 2D tetrahedral geometry by specifying
         /// the coordinates and the elevations.
-        ///
+        /// </summary>
         /// <param name="coordinates">non-null, 4 2D coordinates</param>
         /// <param name="elevations">non-null, 4 elevations (-1,0,+1)</param>
-        /// <exception cref="ArgumentException">if the number of coordinates/elevations</exception>
-        ///                                  was not exactly 4
-        /// </summary>
+        /// <exception cref="ArgumentException">if the number of coordinates/elevations was not exactly 4</exception>
         public Tetrahedral2DParity(Vector2[] coordinates, int[] elevations)
         {
             if (coordinates.Length != 4 || elevations.Length != 4)

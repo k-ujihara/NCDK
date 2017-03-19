@@ -47,10 +47,10 @@ namespace NCDK
             IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
             IChemObjectBuilder builder = som.Builder;
             T con1 = NewContainerObject();
-            con1.Add(builder.CreateAtom("C"));
-            con1.Add(builder.CreateAtom("C"));
+            con1.Atoms.Add(builder.CreateAtom("C"));
+            con1.Atoms.Add(builder.CreateAtom("C"));
             T con2 = NewContainerObject();
-            con2.Add(builder.CreateAtom("C"));
+            con2.Atoms.Add(builder.CreateAtom("C"));
             som.Add(con1);
             som.Add(con2);
             Assert.IsNotNull(som[0]);
@@ -77,10 +77,10 @@ namespace NCDK
             T a = NewContainerObject();
             T b = NewContainerObject();
 
-            a.Add(builder.CreateAtom("C"));
-            a.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.CreateAtom("C"));
 
-            b.Add(builder.CreateAtom("C"));
+            b.Atoms.Add(builder.CreateAtom("C"));
 
             set.Add(a, 1);
             set.Add(b, 2);
@@ -133,9 +133,9 @@ namespace NCDK
             T a = NewContainerObject();
             T b = NewContainerObject();
 
-            a.Add(builder.CreateAtom("C"));
-            a.Add(builder.CreateAtom("C"));
-            b.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.CreateAtom("C"));
+            a.Atoms.Add(builder.CreateAtom("C"));
+            b.Atoms.Add(builder.CreateAtom("C"));
 
             set.Add(a);
             set.Add(b);

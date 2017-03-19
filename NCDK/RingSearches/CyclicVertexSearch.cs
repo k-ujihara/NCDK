@@ -20,7 +20,6 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -33,44 +32,39 @@ namespace NCDK.RingSearches
     /// if those cycles are isolated or are part of a fused system. We define a cycle
     /// as isolated if it edge disjoint with all other cycles. This corresponds to
     /// the isolated and spiro rings of a chemical structures.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module core
     // @cdk.githash
-    /// </summary>
     public interface CyclicVertexSearch
     {
         /// <summary>
-        /// Returns true if the vertex <i>v</i> is in a cycle.
-        ///
+        /// Returns true if the vertex <paramref name="v"/> is in a cycle.
+        /// </summary>
         /// <param name="v">a vertex identifier by index</param>
         /// <returns>whether the vertex is in a cycle</returns>
-        /// </summary>
         bool Cyclic(int v);
 
         /// <summary>
-        /// Is the edge between the two vertices <i>u</i> and <i>v</i> in a cycle?
-        ///
+        /// Is the edge between the two vertices <paramref name="u"/> and <paramref name="v"/> in a cycle?
+        /// </summary>
         /// <param name="u">a vertex</param>
         /// <param name="v">another vertex</param>
         /// <returns>whether the edge is cycle</returns>
-        /// </summary>
         bool Cyclic(int u, int v);
 
         /// <summary>
         /// The set of cyclic vertices.
-        ///
-        /// <returns>the cyclic vertices of the molecule.</returns>
         /// </summary>
+        /// <returns>the cyclic vertices of the molecule.</returns>
         int[] Cyclic();
 
         /// <summary>
         /// Construct the sets of vertices which belong to isolated cycles. Each row
         /// in the array describes a set of cyclic vertices which is edge disjoint
         /// with all other elementary cycles.
-        ///
-        /// <returns>vertices belonging to the isolated rings</returns>
         /// </summary>
+        /// <returns>vertices belonging to the isolated rings</returns>
         int[][] Isolated();
 
         /// <summary>
@@ -78,19 +72,16 @@ namespace NCDK.RingSearches
         /// at least one edge). Each row in the array describes a set of vertices in
         /// a separate fused system. Each fused system is edge disjoint with every
         /// other fused system.
-        ///
-        /// <returns>vertices belonging to the fused cycles</returns>
         /// </summary>
+        /// <returns>vertices belonging to the fused cycles</returns>
         int[][] Fused();
 
         /// <summary>
         /// Build an indexed lookup of vertex color. The vertex color indicates which
         /// cycle a given vertex belongs. If a vertex belongs to more then one cycle
         /// it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-        ///
-        /// <returns>vertex colors</returns>
         /// </summary>
+        /// <returns>vertex colors</returns>
         int[] VertexColor();
     }
 }
-

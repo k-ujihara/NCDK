@@ -27,9 +27,8 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// Modules that ignore all content, for use in XML in namespaces other than CML.
-    ///
-    // @author egonw
     /// </summary>
+    // @author egonw
     sealed class OtherNamespace : ICMLModule
     {
         /// <inheritdoc/>

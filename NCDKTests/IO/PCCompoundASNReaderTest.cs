@@ -73,7 +73,7 @@ namespace NCDK.IO
 
             // some extracted props
             Assert.AreEqual("InChI=1/C9H17NO4/c1-7(11)14-8(5-9(12)13)6-10(2,3)4/h8H,5-6H2,1-4H3",
-                    molecule.GetProperty<string>(CDKPropertyName.INCHI));
+                    molecule.GetProperty<string>(CDKPropertyName.InChI));
             Assert.AreEqual("CC(=O)OC(CC(=O)[O-])C[N+](C)(C)C", molecule.GetProperty<string>(CDKPropertyName.SMILES));
         }
     }

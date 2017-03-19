@@ -32,13 +32,11 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Writes the SMILES strings to a plain text file.
-    ///
+    /// </summary>
     // @cdk.module  smiles
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, SMILES
-    /// </summary>
     public class SMILESWriter : DefaultChemObjectWriter
     {
         private TextWriter writer;
@@ -47,12 +45,11 @@ namespace NCDK.IO
 
         /// <summary>
         /// Constructs a new SMILESWriter that can write a list of SMILES to a Writer
-        ///
-        /// <param name="out">The Writer to write to</param>
         /// </summary>
-        public SMILESWriter(TextWriter out_)
+        /// <param name="output">The Writer to write to</param>
+        public SMILESWriter(TextWriter output)
         {
-            this.writer = out_;
+            this.writer = output;
             InitIOSettings();
         }
 
@@ -66,9 +63,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => SMILESFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            this.writer = out_;
+            this.writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -79,7 +76,6 @@ namespace NCDK.IO
         /// <summary>
         /// Flushes the output and closes this object.
         /// </summary>
-
         public override void Close()
         {
             writer.Flush();
@@ -95,10 +91,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes the content from object to output.
-        ///
-        /// <param name="object">IChemObject of which the data is outputted.</param>
         /// </summary>
-
+        /// <param name="obj">IChemObject of which the data is outputted.</param>
         public override void Write(IChemObject obj)
         {
             if (obj is IAtomContainerSet<IAtomContainer>)
@@ -117,9 +111,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes a list of molecules to an Stream.
-        ///
-        /// <param name="som">MoleculeSet that is written to an Stream</param>
         /// </summary>
+        /// <param name="som">MoleculeSet that is written to an Stream</param>
         public void WriteAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
         {
             WriteAtomContainer(som[0]);
@@ -137,9 +130,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes the content from molecule to output.
-        ///
-        /// <param name="molecule">Molecule of which the data is outputted.</param>
         /// </summary>
+        /// <param name="molecule">Molecule of which the data is outputted.</param>
         public void WriteAtomContainer(IAtomContainer molecule)
         {
             SmilesGenerator sg = new SmilesGenerator();

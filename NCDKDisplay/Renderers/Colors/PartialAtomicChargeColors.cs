@@ -30,6 +30,7 @@ namespace NCDK.Renderers.Colors
     /// the Atom's color:
     /// uncharged atoms are colored white, positively charged
     /// atoms are blue, and negatively charge atoms are red.
+    /// </para>
     /// </remarks>
     // @cdk.module  render
     // @cdk.githash

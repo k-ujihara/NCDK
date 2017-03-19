@@ -1,4 +1,4 @@
-namespace FaulonSignatures.Simple
+namespace NCDK.FaulonSignatures.Simple
 {
     public class SimpleGraphFactory
     {

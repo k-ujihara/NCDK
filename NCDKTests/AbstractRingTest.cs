@@ -67,12 +67,12 @@ namespace NCDK
             IBond b1 = ring.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = ring.Builder.CreateBond(c3, c2, BondOrder.Single);
             IBond b3 = ring.Builder.CreateBond(c1, c3, BondOrder.Single);
-            ring.Add(c1);
-            ring.Add(c2);
-            ring.Add(c3);
-            ring.Add(b1);
-            ring.Add(b2);
-            ring.Add(b3);
+            ring.Atoms.Add(c1);
+            ring.Atoms.Add(c2);
+            ring.Atoms.Add(c3);
+            ring.Bonds.Add(b1);
+            ring.Bonds.Add(b2);
+            ring.Bonds.Add(b3);
 
             Assert.AreEqual(b1, ring.GetNextBond(b2, c2));
             Assert.AreEqual(b1, ring.GetNextBond(b3, c1));

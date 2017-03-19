@@ -41,8 +41,8 @@
       <HintPath>..\packages\Castle.Core.4.0.0\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Moq, Version=4.5.30.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.5.30\lib\net45\Moq.dll</HintPath>
+    <Reference Include="Moq, Version=4.7.1.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.7.1\lib\net45\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -165,7 +165,7 @@
     <Compile Include="IO\Formats\Gaussian94FormatTest.cs" />
     <Compile Include="IO\Formats\Gaussian95FormatTest.cs" />
     <Compile Include="IO\Formats\GROMOS96FormatTest.cs" />
-    <Compile Include="IO\Formats\INChIPlainTextFormatTest.cs" />
+    <Compile Include="IO\Formats\InChIPlainTextFormatTest.cs" />
     <Compile Include="IO\Formats\JaguarFormatTest.cs" />
     <Compile Include="IO\Formats\JMEFormatTest.cs" />
     <Compile Include="IO\Formats\MacroModelFormatTest.cs" />
@@ -817,8 +817,8 @@
     <Compile Include="IO\MDLReaderTest.cs" />
     <Compile Include="IO\MDLRXNReaderTest.cs" />
     <Compile Include="IO\MDLRXNV2000ReaderTest.cs" />
-    <Compile Include="IO\INChIPlainTextReaderTest.cs" />
-    <Compile Include="IO\INChIReaderTest.cs" />
+    <Compile Include="IO\InChIPlainTextReaderTest.cs" />
+    <Compile Include="IO\InChIReaderTest.cs" />
     <Compile Include="IO\Iterator\IteratingMDLConformerReaderTest.cs" />
     <Compile Include="IO\MDLRXNV3000ReaderTest.cs" />
     <Compile Include="IO\MDLRXNWriterTest.cs" />
@@ -872,9 +872,9 @@
     <Compile Include="Graphs\EssentialCyclesTest.cs" />
     <Compile Include="Graphs\GreedyBasisTest.cs" />
     <Compile Include="Graphs\MinimumCycleBasisTest.cs" />
-    <Compile Include="Graphs\InChi\InChIGeneratorFactoryTest.cs" />
-    <Compile Include="Graphs\InChi\InChIGeneratorTest.cs" />
-    <Compile Include="Graphs\InChi\InChIToStructureTest.cs" />
+    <Compile Include="Graphs\InChI\InChIGeneratorFactoryTest.cs" />
+    <Compile Include="Graphs\InChI\InChIGeneratorTest.cs" />
+    <Compile Include="Graphs\InChI\InChIToStructureTest.cs" />
     <Compile Include="Graphs\Invariant\CanonicalLabelerTest.cs" />
     <Compile Include="Graphs\Invariant\CanonTest.cs" />
     <Compile Include="Graphs\Invariant\InChINumbersToolsTest.cs" />
@@ -930,7 +930,7 @@
     <Compile Include="IO\Formats\GhemicalMMFormatTest.cs" />
     <Compile Include="IO\Formats\GhemicalSPMFormatTest.cs" />
     <Compile Include="IO\Formats\HINFormatTest.cs" />
-    <Compile Include="IO\Formats\INChIFormatTest.cs" />
+    <Compile Include="IO\Formats\InChIFormatTest.cs" />
     <Compile Include="IO\Formats\MDLFormatTest.cs" />
     <Compile Include="IO\Formats\MDLRXNFormatTest.cs" />
     <Compile Include="IO\Formats\MDLRXNV3000FormatTest.cs" />
@@ -1673,6 +1673,7 @@
     <EmbeddedResource Include="Data\CDD\aromring_validation.zip" />
     <EmbeddedResource Include="Data\CDD\pyridineacid.mol" />
     <None Include="app.config" />
+    <EmbeddedResource Include="IO\structure-with-radical.mol" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
   </ItemGroup>

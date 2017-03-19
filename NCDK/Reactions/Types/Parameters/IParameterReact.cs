@@ -20,11 +20,10 @@ namespace NCDK.Reactions.Types.Parameters
 {
     /// <summary>
     /// Interface for classes that generate parameters used in reactions.
-    ///
+    /// </summary>
     // @author      miguelrojasch
     // @cdk.module  reaction
     // @cdk.githash
-    /// </summary>
     public interface IParameterReact
     {
         /// <summary>
@@ -38,4 +37,3 @@ namespace NCDK.Reactions.Types.Parameters
         object Value { get; set; }
     }
 }
-

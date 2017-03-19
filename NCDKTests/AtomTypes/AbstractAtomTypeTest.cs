@@ -47,7 +47,7 @@ namespace NCDK.AtomTypes
         ///
         /// <param name="testedAtomTypes">List of atom types tested so far.</param>
         /// <param name="expectedTypes">Expected atom types for the atoms given in <code>mol</code>.</param>
-        /// <param name="mol">The <code>IAtomContainer</code> with <code>IAtom</code>s for which atom types should be perceived.</param>
+        /// <param name="mol">The <see cref="IAtomContainer"/> with <code>IAtom</code>s for which atom types should be perceived.</param>
         // @     Thrown if something went wrong during the atom type perception.
         /// </summary>
         public virtual void AssertAtomTypes(IDictionary<string, int> testedAtomTypes, string[] expectedTypes, IAtomContainer mol)
@@ -85,7 +85,7 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// Method that tests if the matched <code>IAtomType</code> and the <code>IAtom</code> are
+        /// Method that tests if the matched <see cref="IAtomType"/> and the <code>IAtom</code> are
         /// consistent. For example, it tests if hybridization states and formal charges are equal.
         ///
         // @cdk.bug 1897589

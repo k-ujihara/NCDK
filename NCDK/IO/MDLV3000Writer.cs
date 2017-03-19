@@ -40,14 +40,13 @@ namespace NCDK.IO
     /// supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
     /// V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
     /// ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
-    /// <p/>
     /// Supported Features:
-    /// <ul>
-    ///     <li>Atom Block, non-query features</li>
-    ///     <li>Bond Block, non-query features</li>
-    ///     <li>Sgroup Block, partial support for all chemical Sgroups, complete support for: Abbreviations,
-    ///     MultipleGroup, SRUs, (Un)ordered Mixtures</li>
-    /// </ul>
+    /// <list type="bullet">
+    ///     <item>Atom Block, non-query features</item>
+    ///     <item>Bond Block, non-query features</item>
+    ///     <item>Sgroup Block, partial support for all chemical Sgroups, complete support for: Abbreviations,
+    ///     MultipleGroup, SRUs, (Un)ordered Mixtures</item>
+    /// </list>
     /// The 3D block and enhanced stereochemistry is not currently supported.
     /// </summary>
     public sealed class MDLV3000Writer : DefaultChemObjectWriter
@@ -66,10 +65,10 @@ namespace NCDK.IO
         /// <summary>
         /// Create a new V3000 writer, output to the provided output stream.
         /// </summary>
-        /// <param name="out_">output location</param>
-        public MDLV3000Writer(Stream out_)
+        /// <param name="output">output location</param>
+        public MDLV3000Writer(Stream output)
         {
-            this.SetWriter(out_);
+            this.SetWriter(output);
         }
 
         /// <summary>
@@ -101,10 +100,10 @@ namespace NCDK.IO
         /// Write the three line header of the MDL format: title, version/timestamp, remark.
         /// </summary>
         /// <param name="mol">molecule being output</param>
-        /// <exception cref="">low-level IO error</exception>
+        /// <exception cref="IOException">low-level IO error</exception>
         private void WriteHeader(IAtomContainer mol)
         {
-            string title = mol.GetProperty<string>(CDKPropertyName.TITLE);
+            string title = mol.GetProperty<string>(CDKPropertyName.Title);
             if (title != null)
                 writer.WriteDirect(title.Substring(0, Math.Min(80, title.Length)));
             writer.WriteDirect('\n');
@@ -120,7 +119,7 @@ namespace NCDK.IO
             writer.WriteDirect(DateTime.UtcNow.ToString("MMddyyHHmm"));
             writer.WriteDirect('\n');
 
-            string comment = mol.GetProperty<string>(CDKPropertyName.REMARK);
+            string comment = mol.GetProperty<string>(CDKPropertyName.Remark);
             if (comment != null)
                 writer.WriteDirect(comment.Substring(0, Math.Min(80, comment.Length - 80)));
             writer.WriteDirect('\n');
@@ -227,7 +226,7 @@ namespace NCDK.IO
                 {
                     writer.Write("0 0 0 ");
                 }
-                writer.Write(NullAsZero(atom.GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING)));
+                writer.Write(NullAsZero(atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping)));
 
                 if (chg != 0 && chg >= -15 && chg <= 15)
                     writer.Write(" CHG=").Write(chg);
@@ -290,16 +289,15 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="mol">molecule</param>
         /// <param name="idxs">index lookup</param>
-        /// <exception cref="">low-level IO error</exception>
-        /// <exception cref="">inconsistent state etc</exception>
-        private void WriteBondBlock(IAtomContainer mol,
-                                    IDictionary<IChemObject, int> idxs)
+        /// <exception cref="IOException">low-level IO error</exception>
+        /// <exception cref="InvalidOperationException">inconsistent state etc</exception>
+        private void WriteBondBlock(IAtomContainer mol, IDictionary<IChemObject, int> idxs)
         {
             if (mol.Bonds.Count == 0)
                 return;
 
             // collect multicenter Sgroups before output
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             var multicenterSgroups = new Dictionary<IBond, Sgroup>();
             if (sgroups != null)
             {
@@ -386,7 +384,6 @@ namespace NCDK.IO
             writer.Write("END BOND\n");
         }
 
-
         /// <summary>
         /// CTfile specification is ambiguous as to how parity values should be written
         /// for implicit hydrogens. Old applications (Symyx Draw) seem to push any
@@ -429,7 +426,7 @@ namespace NCDK.IO
         /// <returns>the sgroups</returns>
         private IList<Sgroup> GetSgroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 sgroups = Array.Empty<Sgroup>();
             return sgroups;
@@ -458,8 +455,8 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="sgroups">the sgroups, non-null</param>
         /// <param name="idxs">index map for looking up atom and bond indexes</param>
-        // @ low-level IO error
-        // @ unsupported format feature or invalid state
+        /// <exception cref="IOException">low-level IO error</exception>
+        /// <exception cref="CDKException">unsupported format feature or invalid state</exception>
         private void WriteSgroupBlock(IEnumerable<Sgroup> sgroups, IDictionary<IChemObject, int> idxs)
         {
             // Short of building a full dependency graph we write the parents
@@ -575,8 +572,8 @@ namespace NCDK.IO
         /// Writes a molecule to the V3000 format.
         /// </summary>
         /// <param name="mol">molecule</param>
-        /// <exception cref="">low-level IO error</exception>
-        /// <exception cref="">state exception (e.g undef bonds), unsupported format feature etc</exception>
+        /// <exception cref="IOException">low-level IO error</exception>
+        /// <exception cref="CDKException">state exception (e.g undef bonds), unsupported format feature etc</exception>
         private void WriteMol(IAtomContainer mol)
         {
             WriteHeader(mol);
@@ -623,8 +620,8 @@ namespace NCDK.IO
         /// Writes a molecule to the V3000 format. 
         /// </summary>
         /// <param name="obj"></param>
-        /// <exception cref="CDKException">low-level IO error</exception>
-        /// <exception cref="">state exception (e.g undef bonds), unsupported format feature, object not supported etc</exception>
+        /// <exception cref="IOException">low-level IO error</exception>
+        /// <exception cref="CDKException">state exception (e.g undef bonds), unsupported format feature, object not supported etc</exception>
         public override void Write(IChemObject obj)
         {
             try
@@ -696,7 +693,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="str">the string</param>
             /// <returns>self-reference for chaining</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter WriteDirect(string str)
             {
                 this.writer.Write(str);
@@ -708,7 +705,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="c">the character</param>
             /// <returns>self-reference for chaining</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter WriteDirect(char c)
             {
                 this.writer.Write(c);
@@ -758,7 +755,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="num">value</param>
             /// <returns>self-reference for chaining.</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(double num)
             {
                 return Write(Strings.JavaFormat(num, "F4"));
@@ -769,7 +766,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="num">value</param>
             /// <returns>self-reference for chaining.</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(int num)
             {
                 return Write(num.ToString());
@@ -780,7 +777,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="str">value</param>
             /// <returns>self-reference for chaining.</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(string str)
             {
                 int i = str.IndexOf('\n');
@@ -805,7 +802,7 @@ namespace NCDK.IO
             /// </summary>
             /// <param name="c">char</param>
             /// <returns>self-reference for chaining.</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(char c)
             {
                 if (c == '\n' && currLength == PREFIX.Length)
@@ -825,7 +822,7 @@ namespace NCDK.IO
             /// <param name="chemObjects">collection of chemobjects</param>
             /// <param name="idxs">index map</param>
             /// <returns>self-reference for chaining.</returns>
-            /// <exception cref="">low-level IO error</exception>
+            /// <exception cref="IOException">low-level IO error</exception>
             public V30LineWriter Write(IEnumerable<IChemObject> chemObjects, IDictionary<IChemObject, int> idxs)
             {
                 var chemObjectList = chemObjects.ToList();

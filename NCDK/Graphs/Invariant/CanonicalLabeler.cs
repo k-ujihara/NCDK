@@ -76,6 +76,7 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
+        /// <param name="atoms"></param>
         private void Step2(List<InvPair> v, IAtomContainer atoms)
         {
             PrimeProduct(v, atoms);
@@ -85,6 +86,7 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
+        /// <param name="atoms"></param>
         private void Step3(List<InvPair> v, IAtomContainer atoms)
         {
             SortArrayList(v);
@@ -143,6 +145,7 @@ namespace NCDK.Graphs.Invariant
         /// Calculates the product of the neighbouring primes.
         /// </summary>
         /// <param name="v">the invariance pair vector</param>
+        /// <param name="atomContainer"></param>
         private void PrimeProduct(List<InvPair> v, IAtomContainer atomContainer)
         {
             long summ;
@@ -159,8 +162,7 @@ namespace NCDK.Graphs.Invariant
                 inv.Curr = summ;
             }
         }
-
-
+        
         /// <summary>
         /// Sorts the vector according to the current invariance, corresponds to step 3
         /// </summary>

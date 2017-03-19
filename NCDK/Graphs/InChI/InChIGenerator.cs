@@ -66,9 +66,7 @@ namespace NCDK.Graphs.InChi
     public class InChIGenerator
     {
         protected NInchiInput input;
-
         protected NInchiOutput output;
-
         private readonly bool auxNone;
 
         /// <summary>
@@ -102,7 +100,7 @@ namespace NCDK.Graphs.InChi
             try
             {
                 input = new NInchiInput(options);
-                GenerateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
+                GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
                 auxNone = input.Options != null && input.Options.Contains("AuxNone");
             }
             catch (NInchiException jie)
@@ -124,7 +122,7 @@ namespace NCDK.Graphs.InChi
             try
             {
                 input = new NInchiInput(new List<INCHI_OPTION>(options));
-                GenerateInchiFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
+                GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
                 auxNone = input.Options != null && input.Options.Contains("AuxNone");
             }
             catch (NInchiException jie)
@@ -139,7 +137,8 @@ namespace NCDK.Graphs.InChi
         /// the InChI.
         /// </summary>
         /// <param name="atomContainer">AtomContainer to generate InChI for.</param>
-        private void GenerateInchiFromCDKAtomContainer(IAtomContainer atomContainer, bool ignore)
+        /// <param name="ignore"></param>
+        private void GenerateInChIFromCDKAtomContainer(IAtomContainer atomContainer, bool ignore)
         {
             this.atomContainer = atomContainer;
 
@@ -561,17 +560,17 @@ namespace NCDK.Graphs.InChi
         /// <summary>
         /// Gets generated InChI string.
         /// </summary>
-        public string Inchi => output.Inchi;
+        public string InChI => output.InChI;
 
         /// <summary>
         /// Gets generated InChIKey string.
         /// </summary>
-        public string GetInchiKey()
+        public string GetInChIKey()
         {
             NInchiOutputKey key;
             try
             {
-                key = NInchiWrapper.GetInchiKey(output.Inchi);
+                key = NInchiWrapper.GetInchiKey(output.InChI);
                 if (key.ReturnStatus == INCHI_KEY.OK)
                 {
                     return key.Key;

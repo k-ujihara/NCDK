@@ -30,10 +30,10 @@ namespace NCDK.SMSD.Algorithms.Single
     /// <summary>
     /// This class handles single atom mapping.
     /// Either query and/or target molecule with single atom is mapped by this class.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class SingleMapping
     {
         private IAtomContainer source = null;
@@ -48,10 +48,11 @@ namespace NCDK.SMSD.Algorithms.Single
 
         /// <summary>
         /// Returns single mapping solutions.
-        /// <param name="source">/// @param target</param>
-        /// <param name="removeHydrogen">/// <returns>Mappings</param></returns>
-        // @throws CDKException
         /// </summary>
+        /// <param name="source">/// @param target</param>
+        /// <param name="removeHydrogen"></param>
+        /// <returns>Mappings</returns>
+        /// <exception cref="CDKException"></exception>
         protected internal IList<IDictionary<IAtom, IAtom>> GetOverLaps(IAtomContainer source, IAtomContainer target, bool removeHydrogen)
         {
             mappings = new List<IDictionary<IAtom, IAtom>>();
@@ -74,10 +75,8 @@ namespace NCDK.SMSD.Algorithms.Single
 
         /// <summary>
         /// Returns single mapping solutions.
-        /// <param name="source">/// @param target</param>
-        /// <param name="removeHydrogen">/// <returns>Mappings</param></returns>
-        // @throws CDKException
         /// </summary>
+        /// <exception cref="CDKException"></exception>
         protected internal IList<IDictionary<IAtom, IAtom>> GetOverLaps(IQueryAtomContainer source, IAtomContainer target, bool removeHydrogen)
         {
             mappings = new List<IDictionary<IAtom, IAtom>>();

@@ -32,18 +32,14 @@ namespace NCDK.Tools
     /// Methods are implemented for Atom, Bond, AtomContainer, AtomContainerSet
     /// and Reaction. It will only create missing IDs. If you want to create new
     /// IDs for all ChemObjects, you need to delete them first.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    ///
     // @author   Egon Willighagen
     // @cdk.created  2003-04-01
-    ///
     // @cdk.keyword  id, creation
-    /// </summary>
     public abstract class IDCreator
     {
-
         // counters for generated in current session IDs
         private static int reactionCount = 0;
         private static int atomCount = 0;
@@ -83,10 +79,11 @@ namespace NCDK.Tools
         /// in a set of 2 molecules the first atom of the first molecule will be "a1"
         /// while the first atom of the second molecule will be "aX" where X equals
         /// to the number of atoms in the first molecule plus 1.
-        /// <br/>
+        /// </summary>
+        /// <remarks>
         /// The new policy is to keep the singularity of IDs only within a single
         /// molecule, i.e. in a set of two molecules first atoms of each will be "a1".
-        /// </summary>
+        /// </remarks>
         private static int policy = SET_UNIQUE_POLICY;
 
         /// <summary>
@@ -108,9 +105,8 @@ namespace NCDK.Tools
         /// scheme often used in CML. Supports IAtomContainer, IAtomContainerSet,
         /// IChemFile, IChemModel, IChemSequence, IReaction, IReactionSet,
         /// and derived interfaces.
-        ///
-        /// <param name="chemObject">IChemObject to create IDs for.</param>
         /// </summary>
+        /// <param name="chemObject">IChemObject to create IDs for.</param>
         public static void CreateIDs(IChemObject chemObject)
         {
             if (chemObject == null) return;
@@ -166,10 +162,11 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Sets the ID on the object and adds it to the tabu list.
-        ///
-        /// <param name="object">IChemObject to set the ID for</param>
-        /// <param name="tabuList">Tabu list to add the ID to</param>
         /// </summary>
+        /// <param name="prefix"></param>
+        /// <param name="identifier"></param>
+        /// <param name="obj">IChemObject to set the ID for</param>
+        /// <param name="tabuList">Tabu list to add the ID to</param>
         private static int SetId(string prefix, int identifier, IChemObject obj, IList<string> tabuList)
         {
             identifier += 1;
@@ -185,9 +182,8 @@ namespace NCDK.Tools
         /// <summary>
         /// Labels the Atom's and Bond's in the AtomContainer using the a1, a2, b1, b2
         /// scheme often used in CML.
-        ///
-        /// <seealso cref="CreateIDs(IChemObject)"/>
         /// </summary>
+        /// <seealso cref="CreateIDs(IChemObject)"/>
         private static void CreateIDsForAtomContainer(IAtomContainer container, IList<string> tabuList)
         {
             if (tabuList == null) tabuList = AtomContainerManipulator.GetAllIDs(container);

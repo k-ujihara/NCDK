@@ -123,7 +123,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
@@ -145,9 +145,9 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer reactant = builder.CreateAtomContainer();//CreateFromSmiles("C=CC")
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
             reactant.AddBond(reactant.Atoms[0], reactant.Atoms[1], BondOrder.Double);
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             try

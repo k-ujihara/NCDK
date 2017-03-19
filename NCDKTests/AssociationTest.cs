@@ -46,7 +46,7 @@ namespace NCDK
             Assert.AreEqual(2, association.AssociatedAtoms.Count);
         }
 
-        /// <summary> Test for RFC #9 */
+       /// <summary> Test for RFC #9 </summary>
         [TestMethod()]
         public void TestToString()
         {

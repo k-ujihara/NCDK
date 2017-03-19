@@ -24,79 +24,78 @@ using System.Collections.Generic;
 
 namespace NCDK.Groups
 {
-    /**
-     * A tool for determining the automorphism group of the atoms in a molecule, or
-     * for checking for a canonical form of a molecule.
-     *
-     * If two bonds are equivalent under an automorphism in the group, then
-     * roughly speaking they are in symmetric positions in the molecule. For
-     * example, the C-C bonds attaching two methyl groups to a benzene ring
-     * are 'equivalent' in this sense.
-     *
-     * <p>There are a couple of ways to use it - firstly, get the automorphisms.</p>
-     *
-     * <code>
-     *     IAtomContainer ac = ... // get an atom container somehow
-     *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-     *     PermutationGroup autG = refiner.GetAutomorphismGroup(ac);
-     *     foreach (var automorphism in autG.All()) {
-     *         ... // do something with the permutation
-     *     }
-     * </code>
-     *
-     * <p>Another is to check an atom container to see if it is canonical:</p>
-     *
-     * <code>
-     *     IAtomContainer ac = ... // get an atom container somehow
-     *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-     *     if (refiner.IsCanonical(ac)) {
-     *         ... // do something with the atom container
-     *     }
-     * </code>
-     *
-     * Note that it is not necessary to call {@link #Refine(IAtomContainer)} before
-     * either of these methods. However if both the group and the canonical check
-     * are required, then the code should be:
-     *
-     * <code>
-     *     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-     *     refiner.Refine(ac);
-     *     bool isCanon = refiner.IsCanonical();
-     *     PermutationGroup autG = refiner.GetAutomorphismGroup();
-     * </code>
-     *
-     * This way, the refinement is not carried out multiple times. Finally, remember
-     * to call {@link #reset} if the refiner is re-used on multiple structures.
-     *
-     * @author maclean
-     * @cdk.module group
-     */
+    /// <summary>
+    /// A tool for determining the automorphism group of the atoms in a molecule, or
+    /// for checking for a canonical form of a molecule.
+    ///
+    /// If two bonds are equivalent under an automorphism in the group, then
+    /// roughly speaking they are in symmetric positions in the molecule. For
+    /// example, the C-C bonds attaching two methyl groups to a benzene ring
+    /// are 'equivalent' in this sense.
+    /// </summary>
+    /// <example>
+    /// There are a couple of ways to use it - firstly, get the automorphisms.
+    ///
+    /// <code>
+    ///     IAtomContainer ac = ... // get an atom container somehow
+    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+    ///     PermutationGroup autG = refiner.GetAutomorphismGroup(ac);
+    ///     foreach (var automorphism in autG.All()) {
+    ///         ... // do something with the permutation
+    ///     }
+    /// </code>
+    ///
+    /// Another is to check an atom container to see if it is canonical:
+    ///
+    /// <code>
+    ///     IAtomContainer ac = ... // get an atom container somehow
+    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+    ///     if (refiner.IsCanonical(ac)) {
+    ///         ... // do something with the atom container
+    ///     }
+    /// </code>
+    /// 
+    /// Note that it is not necessary to call {@link #Refine(IAtomContainer)} before
+    /// either of these methods. However if both the group and the canonical check
+    /// are required, then the code should be:
+    ///
+    /// <code>
+    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
+    ///     refiner.Refine(ac);
+    ///     bool isCanon = refiner.IsCanonical();
+    ///     PermutationGroup autG = refiner.GetAutomorphismGroup();
+    /// </code>
+    ///
+    /// This way, the refinement is not carried out multiple times. Finally, remember
+    /// to call <see cref="Reset"/> if the refiner is re-used on multiple structures.
+    /// </example>
+    // @author maclean
+    // @cdk.module group
     public class BondDiscretePartitionRefiner : AbstractDiscretePartitionRefiner
     {
-        /**
-         * The connectivity between bonds; two bonds are connected
-         * if they share an atom.
-         */
+        /// <summary>
+        /// The connectivity between bonds; two bonds are connected
+        /// if they share an atom.
+        /// </summary>
         private int[][] connectionTable;
 
-        /**
-         * Specialised option to allow generating automorphisms that ignore the bond order.
-         */
+        /// <summary>
+        /// Specialised option to allow generating automorphisms that ignore the bond order.
+        /// </summary>
         private bool ignoreBondOrders;
 
-        /**
-         * Make a bond partition refiner that takes bond-orders into account.
-         */
+        /// <summary>
+        /// Make a bond partition refiner that takes bond-orders into account.
+        /// </summary>
         public BondDiscretePartitionRefiner()
                 : this(false)
         { }
 
-        /**
-         * Make a bond partition refiner and specify whether bonds-orders should be
-         * considered when calculating the automorphisms.
-         *
-         * @param ignoreBondOrders if true, ignore the bond orders
-         */
+        /// <summary>
+        /// Make a bond partition refiner and specify whether bonds-orders should be
+        /// considered when calculating the automorphisms.
+        /// </summary>
+        /// <param name="ignoreBondOrders">if true, ignore the bond orders</param>
         public BondDiscretePartitionRefiner(bool ignoreBondOrders)
         {
             this.ignoreBondOrders = ignoreBondOrders;
@@ -121,25 +120,23 @@ namespace NCDK.Groups
             return 0;
         }
 
-        /**
-         * Used by the equitable refiner to get the indices of bonds connected to
-         * the bond at <code>bondIndex</code>.
-         *
-         * @param bondIndex the index of the incident bond
-         * @return an array of bond indices
-         */
+        /// <summary>
+        /// Used by the equitable refiner to get the indices of bonds connected to
+        /// the bond at <code>bondIndex</code>.
+        /// </summary>
+        /// <param name="bondIndex">the index of the incident bond</param>
+        /// <returns>an array of bond indices</returns>
         public virtual int[] GetConnectedIndices(int bondIndex)
         {
             return connectionTable[bondIndex];
         }
 
-        /**
-         * Get the bond partition, based on the element types of the atoms at either end
-         * of the bond, and the bond order.
-         *
-         * @param atomContainer the container with the bonds to partition
-         * @return a partition of the bonds based on the element types and bond order
-         */
+        /// <summary>
+        /// Get the bond partition, based on the element types of the atoms at either end
+        /// of the bond, and the bond order.
+        /// </summary>
+        /// <param name="atomContainer">the container with the bonds to partition</param>
+        /// <returns>a partition of the bonds based on the element types and bond order</returns>
         public Partition GetBondPartition(IAtomContainer atomContainer)
         {
             int bondCount = atomContainer.Bonds.Count;
@@ -200,48 +197,45 @@ namespace NCDK.Groups
             return bondPartition;
         }
 
-        /**
-         * Reset the connection table.
-         */
+        /// <summary>
+        /// Reset the connection table.
+        /// </summary>
         public void Reset()
         {
             connectionTable = null;
         }
 
-        /**
-         * Refine an atom container, which has the side effect of calculating
-         * the automorphism group.
-         *
-         * If the group is needed afterwards, call {@link #GetAutomorphismGroup()}
-         * instead of {@link #GetAutomorphismGroup(IAtomContainer)} otherwise the
-         * refine method will be called twice.
-         *
-         * @param atomContainer the atomContainer to refine
-         */
+        /// <summary>
+        /// Refine an atom container, which has the side effect of calculating
+        /// the automorphism group.
+        ///
+        /// If the group is needed afterwards, call <see cref="AbstractDiscretePartitionRefiner.GetAutomorphismGroup"/>
+        /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
+        /// refine method will be called twice.
+        /// </summary>
+        /// <param name="atomContainer">the atomContainer to refine</param>
         public void Refine(IAtomContainer atomContainer)
         {
             Refine(atomContainer, GetBondPartition(atomContainer));
         }
 
-        /**
-         * Refine a bond partition based on the connectivity in the atom container.
-         *
-         * @param partition the initial partition of the bonds
-         * @param atomContainer the atom container to use
-         */
+        /// <summary>
+        /// Refine a bond partition based on the connectivity in the atom container.
+        /// </summary>
+        /// <param name="partition">the initial partition of the bonds</param>
+        /// <param name="atomContainer">the atom container to use</param>
         public void Refine(IAtomContainer atomContainer, Partition partition)
         {
             Setup(atomContainer);
             base.Refine(partition);
         }
 
-        /**
-         * Checks if the atom container is canonical. Note that this calls
-         * {@link #refine} first.
-         *
-         * @param atomContainer the atom container to check
-         * @return true if the atom container is canonical
-         */
+        /// <summary>
+        /// Checks if the atom container is canonical. Note that this calls
+        /// <see cref="Refine(IAtomContainer)"/> first.
+        /// </summary>
+        /// <param name="atomContainer">the atom container to check</param>
+        /// <returns>true if the atom container is canonical</returns>
         public bool IsCanonical(IAtomContainer atomContainer)
         {
             Setup(atomContainer);
@@ -249,15 +243,14 @@ namespace NCDK.Groups
             return IsCanonical();
         }
 
-        /**
-         * Gets the automorphism group of the atom container. By default it uses an
-         * initial partition based on the bond 'types' (so all the C-C bonds are in
-         * one cell, all the C=N in another, etc). If this behaviour is not
-         * desired, then use the {@link #ignoreBondOrders} flag in the constructor.
-         *
-         * @param atomContainer the atom container to use
-         * @return the automorphism group of the atom container
-         */
+        /// <summary>
+        /// Gets the automorphism group of the atom container. By default it uses an
+        /// initial partition based on the bond 'types' (so all the C-C bonds are in
+        /// one cell, all the C=N in another, etc). If this behaviour is not
+        /// desired, then use the <see cref="ignoreBondOrders"/> flag in the constructor.
+        /// </summary>
+        /// <param name="atomContainer">the atom container to use</param>
+        /// <returns>the automorphism group of the atom container</returns>
         public PermutationGroup GetAutomorphismGroup(IAtomContainer atomContainer)
         {
             Setup(atomContainer);
@@ -265,15 +258,14 @@ namespace NCDK.Groups
             return base.GetAutomorphismGroup();
         }
 
-        /**
-         * Speed up the search for the automorphism group using the automorphisms in
-         * the supplied group. Note that the behaviour of this method is unknown if
-         * the group does not contain automorphisms...
-         *
-         * @param atomContainer the atom container to use
-         * @param group the group of known automorphisms
-         * @return the full automorphism group
-         */
+        /// <summary>
+        /// Speed up the search for the automorphism group using the automorphisms in
+        /// the supplied group. Note that the behaviour of this method is unknown if
+        /// the group does not contain automorphisms...
+        /// </summary>
+        /// <param name="atomContainer">the atom container to use</param>
+        /// <param name="group">the group of known automorphisms</param>
+        /// <returns>the full automorphism group</returns>
         public PermutationGroup GetAutomorphismGroup(IAtomContainer atomContainer, PermutationGroup group)
         {
             Setup(atomContainer, group);
@@ -281,13 +273,12 @@ namespace NCDK.Groups
             return GetAutomorphismGroup();
         }
 
-        /**
-         * Get the automorphism group of the molecule given an initial partition.
-         *
-         * @param atomContainer the atom container to use
-         * @param initialPartition an initial partition of the bonds
-         * @return the automorphism group starting with this partition
-         */
+        /// <summary>
+        /// Get the automorphism group of the molecule given an initial partition.
+        /// </summary>
+        /// <param name="atomContainer">the atom container to use</param>
+        /// <param name="initialPartition">an initial partition of the bonds</param>
+        /// <returns>the automorphism group starting with this partition</returns>
         public PermutationGroup GetAutomorphismGroup(IAtomContainer atomContainer, Partition initialPartition)
         {
             Setup(atomContainer);
@@ -295,12 +286,11 @@ namespace NCDK.Groups
             return base.GetAutomorphismGroup();
         }
 
-        /**
-         * Get the automorphism partition (equivalence classes) of the bonds.
-         *
-         * @param atomContainer the molecule to calculate equivalence classes for
-         * @return a partition of the bonds into equivalence classes
-         */
+        /// <summary>
+        /// Get the automorphism partition (equivalence classes) of the bonds.
+        /// </summary>
+        /// <param name="atomContainer">the molecule to calculate equivalence classes for</param>
+        /// <returns>a partition of the bonds into equivalence classes</returns>
         public Partition GetAutomorphismPartition(IAtomContainer atomContainer)
         {
             Setup(atomContainer);

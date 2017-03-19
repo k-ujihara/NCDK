@@ -23,12 +23,10 @@ namespace NCDK.IO.Listener
 {
     /// <summary>
     /// Allows monitoring of progress of file reader activities.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Egon Willighagen
-    /// </summary>
     public interface IChemObjectIOListener
     {
         /// <summary>

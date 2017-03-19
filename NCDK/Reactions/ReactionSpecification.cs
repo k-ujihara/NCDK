@@ -22,14 +22,12 @@ namespace NCDK.Reactions
 {
     /// <summary>
     /// Class that is used to distribute reactions specifications.
-    ///
+    /// </summary>
     // @author      Miguel Rojas
     // @cdk.module  reaction
     // @cdk.githash
-    /// </summary>
     public class ReactionSpecification : IImplementationSpecification
     {
-
         private string specificationReference;
         private string implementationTitle;
         private string implementationIdentifier;
@@ -37,19 +35,18 @@ namespace NCDK.Reactions
 
         /// <summary>
         /// Container for specifying the type of reaction.
-        ///
-        /// <param name="specificationReference">Reference to a formal definition in a</param>
+        /// </summary>
+        /// <param name="specificationReference">Reference to a formal definition in a
         ///          dictionary (e.g. in STMML format) of the descriptor, preferably
         ///          refering to the original article. The format of the content is
-        ///          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.
+        ///          expected to be &lt;dictionaryNameSpace&gt;:&lt;entryID&gt;.</param>
         /// <param name="implementationTitle">Title for the reaction process.</param>
-        /// <param name="implementationIdentifier">Unique identifier for the actual</param>
+        /// <param name="implementationIdentifier">Unique identifier for the actual
         ///          implementation, preferably including the exact version number of
         ///          the source code. E.g. $Id$ can be used when the source code is
-        ///          in a CVS repository.
-        /// <param name="implementationVendor">Name of the organisation/person/program/whatever</param>
-        ///          who wrote/packaged the implementation.
-        /// </summary>
+        ///          in a CVS repository.</param>
+        /// <param name="implementationVendor">Name of the organisation/person/program/whatever
+        ///          who wrote/packaged the implementation.</param>
         public ReactionSpecification(string specificationReference, string implementationTitle,
                 string implementationIdentifier, string implementationVendor)
         {

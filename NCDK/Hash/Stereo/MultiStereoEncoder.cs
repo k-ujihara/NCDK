@@ -33,12 +33,10 @@ namespace NCDK.Hash.Stereo
     /// <summary>
     /// A multiple stereo encoder. Given a list of other encoders this class wraps
     /// them up into a single method call. Once each encoder has been configured it
-    /// is marked and will not be visited again unless the encoder is {@link
-    /// #Reset()}.
-    ///
+    /// is marked and will not be visited again unless the encoder is <see cref="Reset"/>. 
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
     internal sealed class MultiStereoEncoder : IStereoEncoder
     {
         /* indices of unconfigured encoders */
@@ -64,7 +62,6 @@ namespace NCDK.Hash.Stereo
 
             for (int i = BitArrays.NextSetBit(unconfigured, 0); i >= 0; i = BitArrays.NextSetBit(unconfigured, i + 1))
             {
-
                 if (encoders[i].Encode(current, next))
                 {
                     unconfigured.Set(i, false); // don't configure again (unless reset)

@@ -1,23 +1,26 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
+/* Copyright (C) 1997-2007  Christoph Steinbeck
+ *
+ *  Contact: cdk-devel@lists.sourceforge.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,7 +31,7 @@ namespace NCDK.Default
 {
     [Serializable]
     public class AtomContainer
-        : ChemObject, IAtomContainer, IChemObjectListener, ICloneable
+        : ChemObject, IAtomContainer, IChemObjectListener
     {
         internal IList<IAtom> atoms;
         internal IList<IBond> bonds;
@@ -106,6 +109,7 @@ namespace NCDK.Default
                   container.StereoElements)
         { }
 
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
             get { return isAromatic; }
@@ -116,6 +120,7 @@ namespace NCDK.Default
             }
         }
         
+        /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -126,13 +131,23 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
+
+        /// <inheritdoc/>
         public virtual IList<IBond> Bonds => bonds;
+
+        /// <inheritdoc/>
         public virtual IList<ILonePair> LonePairs => lonePairs;
+
+        /// <inheritdoc/>
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
+
+        /// <inheritdoc/>
         public virtual IList<IStereoElement> StereoElements => stereoElements;
+
+        /// <inheritdoc/>
         public virtual void SetStereoElements(IEnumerable<IStereoElement> elements) => stereoElements = new List<IStereoElement>(elements);
-        public virtual void AddStereoElement(IStereoElement element) => stereoElements.Add(element);
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -145,6 +160,7 @@ namespace NCDK.Default
             return bonds.Where(bond => bond.Contains(atom1) && bond.GetConnectedAtom(atom1) == atom2).FirstOrDefault();
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             foreach (var bond in Bonds)
@@ -153,21 +169,25 @@ namespace NCDK.Default
             yield break;
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IBond> GetConnectedBonds(IAtom atom)
         {
             return bonds.Where(bond => bond.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<ILonePair> GetConnectedLonePairs(IAtom atom)
         {
             return LonePairs.Where(lonePair => lonePair.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom)
         {
             return SingleElectrons.Where(singleElectron => singleElectron.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetConnectedElectronContainers(IAtom atom)
         {
             foreach (var e in GetConnectedBonds(atom))
@@ -186,11 +206,13 @@ namespace NCDK.Default
                 .Where(order => !order.IsUnset);
         }
 
+        /// <inheritdoc/>
         public virtual double GetBondOrderSum(IAtom atom)
         {
             return GetBondOrders(atom).Select(order => order.Numeric).Sum();
         }
 
+        /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
             var max = BondOrder.Single;
@@ -202,6 +224,7 @@ namespace NCDK.Default
             return max;
         }
 
+        /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
             var min = BondOrder.Quadruple;
@@ -213,128 +236,82 @@ namespace NCDK.Default
             return min;
         }
 
+        /// <inheritdoc/>
         public virtual void Add(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms.Where(atom => !Contains(atom)))
-                Add(atom);
+                Atoms.Add(atom);
             foreach (var bond in atomContainer.Bonds.Where(bond => !Contains(bond)))
-                Add(bond);
+                Bonds.Add(bond);
             foreach (var lonePair in atomContainer.LonePairs.Where(lonePair => !Contains(lonePair)))
-                Add(lonePair);
+                LonePairs.Add(lonePair);
             foreach (var singleElectron in atomContainer.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
-                Add(singleElectron);
+                SingleElectrons.Add(singleElectron);
             foreach (var se in atomContainer.StereoElements)
                 stereoElements.Add(se);
 
              NotifyChanged();         }
 
-        public virtual void Add(IStereoElement element)
-        {
-            stereoElements.Add(element);
-        }
-
-        public virtual void Add(IAtom atom)
-        {
-            if (Atoms.Contains(atom))
-                return;
-            atoms.Add(atom);
-        }
-
-        public virtual void Add(IBond bond)
-        {
-            bonds.Add(bond);
-        }
-
-        public virtual void Add(ILonePair lonePair)
-        {
-            lonePairs.Add(lonePair);
-        }
-
-        public virtual void Add(ISingleElectron singleElectron)
-        {
-            singleElectrons.Add(singleElectron);
-        }
-
-        public virtual void Add(IElectronContainer electronContainer)
+        /// <inheritdoc/>
+        public virtual void AddElectronContainer(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
             {
-                Add(bond);
+                Bonds.Add(bond);
                 return;
             }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
             { 
-                Add(lonePair);
+                LonePairs.Add(lonePair);
                 return;
             }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
             {
-                Add(singleElectron);
+                SingleElectrons.Add(singleElectron);
                 return;
             }
         }
 
+        /// <inheritdoc/>
         public virtual void Remove(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
-                Remove(atom);
+                Atoms.Remove(atom);
             foreach (var bond in atomContainer.Bonds)
-                Remove(bond);
+                Bonds.Remove(bond);
             foreach (var lonePair in atomContainer.LonePairs)
-                Remove(lonePair);
+                LonePairs.Remove(lonePair);
             foreach (var singleElectron in atomContainer.SingleElectrons)
-                Remove(singleElectron);
+                SingleElectrons.Remove(singleElectron);
         }
 
-        public virtual void Remove(IAtom atom)
-        {
-            atom.Listeners?.Remove(this);
-            atoms.Remove(atom);
-        }
-
-        public virtual void Remove(IBond bond)
-        {
-            bond.Listeners?.Remove(this);
-            bonds.Remove(bond);
-        }
-
-        public virtual void Remove(ILonePair lonePair)
-        {
-            lonePair.Listeners?.Remove(this);
-            lonePairs.Remove(lonePair);
-        }
-
-        public virtual void Remove(ISingleElectron singleElectron)
-        {
-            singleElectron.Listeners?.Remove(this);
-            singleElectrons.Remove(singleElectron);
-        }
-
-        public virtual void Remove(IElectronContainer electronContainer)
+        /// <inheritdoc/>
+        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
             {
-                Remove(bond);
+                Bonds.Remove(bond);
                 return;
             }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
             {
-                Remove(lonePair);
+                LonePairs.Remove(lonePair);
                 return;
             }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
             {
-                Remove(singleElectron);
+                SingleElectrons.Remove(singleElectron);
                 return;
             }
         }
 
+        /// <inheritdoc/>
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
             {
@@ -358,10 +335,11 @@ namespace NCDK.Default
                     stereoElements.Remove(stereoElement);
             }
 
-            Remove(atom);
+            Atoms.Remove(atom);
 
              NotifyChanged();         }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllElements()
         {
             RemoveAllElectronContainers();
@@ -372,6 +350,7 @@ namespace NCDK.Default
 
              NotifyChanged();         }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
             RemoveAllBonds();
@@ -384,6 +363,7 @@ namespace NCDK.Default
 
              NotifyChanged();         }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllBonds()
         {
             foreach (var e in bonds)
@@ -391,41 +371,45 @@ namespace NCDK.Default
             bonds.Clear();
              NotifyChanged();         }
 
+        /// <inheritdoc/>
         public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
             var bond = Builder.CreateBond(atom1, atom2, order, stereo);
-            Add(bond);
+            Bonds.Add(bond);
             // no OnStateChanged
         }
 
+        /// <inheritdoc/>
         public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
             IBond bond = Builder.CreateBond(atom1, atom2, order);
-            Add(bond);
+            Bonds.Add(bond);
             // no OnStateChanged
         }
 
-        public virtual void AddLonePair(IAtom atom)
+        /// <inheritdoc/>
+        public virtual void AddLonePairTo(IAtom atom)
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
             var e = Builder.CreateLonePair(atom);
             e.Listeners?.Add(this);
-            Add(e);
+            LonePairs.Add(e);
             // no OnStateChanged
         }
 
-        public virtual void AddSingleElectron(IAtom atom)
+        /// <inheritdoc/>
+        public virtual void AddSingleElectronTo(IAtom atom)
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
             var e = Builder.CreateSingleElectron(atom);
             e.Listeners?.Add(this);
-            Add(e);
+            SingleElectrons.Add(e);
             // no OnStateChanged
         }
 
@@ -439,15 +423,23 @@ namespace NCDK.Default
         {
             var bond = GetBond(atom1, atom2);
             if (bond != null)
-                Remove(bond);
+                Bonds.Remove(bond);
             return bond;
         }
 
+        /// <inheritdoc/>
         public virtual bool Contains(IAtom atom) => atoms.Any(n => n == atom);
+
+        /// <inheritdoc/>
         public virtual bool Contains(IBond bond) => bonds.Any(n => n == bond);
+
+        /// <inheritdoc/>
         public virtual bool Contains(ILonePair lonePair) => lonePairs.Any(n => n == lonePair);
+
+        /// <inheritdoc/>
         public virtual bool Contains(ISingleElectron singleElectron) => singleElectrons.Any(n => n == singleElectron);
 
+        /// <inheritdoc/>
         public virtual bool Contains(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
@@ -462,6 +454,7 @@ namespace NCDK.Default
             return false;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -471,7 +464,7 @@ namespace NCDK.Default
             return sb.ToString();
         }
 
-        protected virtual string ToStringInner()
+        internal virtual string ToStringInner()
         {
             var sb = new StringBuilder();
             sb.Append(GetHashCode());
@@ -499,6 +492,7 @@ namespace NCDK.Default
             }
         }
 
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
@@ -511,15 +505,18 @@ namespace NCDK.Default
             return clone;
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetElectronContainers()
         {
             return bonds.Cast<IElectronContainer>().Concat(LonePairs).Concat(SingleElectrons);
         }
 
+        /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
              NotifyChanged(evt);         }
 
+        /// <inheritdoc/>
         public void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
@@ -527,6 +524,7 @@ namespace NCDK.Default
                 this.atoms.Add(atom);
         }
 
+        /// <inheritdoc/>
         public void SetBonds(IEnumerable<IBond> bonds)
         {
             this.bonds.Clear();
@@ -534,14 +532,15 @@ namespace NCDK.Default
                 this.bonds.Add(bond);
         }
 
-        public virtual bool IsEmpty => atoms.Count == 0;
+        /// <inheritdoc/>
+        public virtual bool IsEmpty() => atoms.Count == 0;
     }
 }
 namespace NCDK.Silent
 {
     [Serializable]
     public class AtomContainer
-        : ChemObject, IAtomContainer, IChemObjectListener, ICloneable
+        : ChemObject, IAtomContainer, IChemObjectListener
     {
         internal IList<IAtom> atoms;
         internal IList<IBond> bonds;
@@ -619,6 +618,7 @@ namespace NCDK.Silent
                   container.StereoElements)
         { }
 
+        /// <inheritdoc/>
         public virtual bool IsAromatic
         {
             get { return isAromatic; }
@@ -628,6 +628,7 @@ namespace NCDK.Silent
             }
         }
         
+        /// <inheritdoc/>
         public virtual bool IsSingleOrDouble
         {
             get { return isSingleOrDouble; }
@@ -637,13 +638,23 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public virtual IList<IAtom> Atoms => atoms;
+
+        /// <inheritdoc/>
         public virtual IList<IBond> Bonds => bonds;
+
+        /// <inheritdoc/>
         public virtual IList<ILonePair> LonePairs => lonePairs;
+
+        /// <inheritdoc/>
         public virtual IList<ISingleElectron> SingleElectrons => singleElectrons;
+
+        /// <inheritdoc/>
         public virtual IList<IStereoElement> StereoElements => stereoElements;
+
+        /// <inheritdoc/>
         public virtual void SetStereoElements(IEnumerable<IStereoElement> elements) => stereoElements = new List<IStereoElement>(elements);
-        public virtual void AddStereoElement(IStereoElement element) => stereoElements.Add(element);
 
         /// <summary>
         /// Returns the bond that connects the two given atoms.
@@ -656,6 +667,7 @@ namespace NCDK.Silent
             return bonds.Where(bond => bond.Contains(atom1) && bond.GetConnectedAtom(atom1) == atom2).FirstOrDefault();
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IAtom> GetConnectedAtoms(IAtom atom)
         {
             foreach (var bond in Bonds)
@@ -664,21 +676,25 @@ namespace NCDK.Silent
             yield break;
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IBond> GetConnectedBonds(IAtom atom)
         {
             return bonds.Where(bond => bond.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<ILonePair> GetConnectedLonePairs(IAtom atom)
         {
             return LonePairs.Where(lonePair => lonePair.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<ISingleElectron> GetConnectedSingleElectrons(IAtom atom)
         {
             return SingleElectrons.Where(singleElectron => singleElectron.Contains(atom));
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetConnectedElectronContainers(IAtom atom)
         {
             foreach (var e in GetConnectedBonds(atom))
@@ -697,11 +713,13 @@ namespace NCDK.Silent
                 .Where(order => !order.IsUnset);
         }
 
+        /// <inheritdoc/>
         public virtual double GetBondOrderSum(IAtom atom)
         {
             return GetBondOrders(atom).Select(order => order.Numeric).Sum();
         }
 
+        /// <inheritdoc/>
         public virtual BondOrder GetMaximumBondOrder(IAtom atom)
         {
             var max = BondOrder.Single;
@@ -713,6 +731,7 @@ namespace NCDK.Silent
             return max;
         }
 
+        /// <inheritdoc/>
         public virtual BondOrder GetMinimumBondOrder(IAtom atom)
         {
             var min = BondOrder.Quadruple;
@@ -724,128 +743,82 @@ namespace NCDK.Silent
             return min;
         }
 
+        /// <inheritdoc/>
         public virtual void Add(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms.Where(atom => !Contains(atom)))
-                Add(atom);
+                Atoms.Add(atom);
             foreach (var bond in atomContainer.Bonds.Where(bond => !Contains(bond)))
-                Add(bond);
+                Bonds.Add(bond);
             foreach (var lonePair in atomContainer.LonePairs.Where(lonePair => !Contains(lonePair)))
-                Add(lonePair);
+                LonePairs.Add(lonePair);
             foreach (var singleElectron in atomContainer.SingleElectrons.Where(singleElectron => !Contains(singleElectron)))
-                Add(singleElectron);
+                SingleElectrons.Add(singleElectron);
             foreach (var se in atomContainer.StereoElements)
                 stereoElements.Add(se);
 
                     }
 
-        public virtual void Add(IStereoElement element)
-        {
-            stereoElements.Add(element);
-        }
-
-        public virtual void Add(IAtom atom)
-        {
-            if (Atoms.Contains(atom))
-                return;
-            atoms.Add(atom);
-        }
-
-        public virtual void Add(IBond bond)
-        {
-            bonds.Add(bond);
-        }
-
-        public virtual void Add(ILonePair lonePair)
-        {
-            lonePairs.Add(lonePair);
-        }
-
-        public virtual void Add(ISingleElectron singleElectron)
-        {
-            singleElectrons.Add(singleElectron);
-        }
-
-        public virtual void Add(IElectronContainer electronContainer)
+        /// <inheritdoc/>
+        public virtual void AddElectronContainer(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
             {
-                Add(bond);
+                Bonds.Add(bond);
                 return;
             }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
             { 
-                Add(lonePair);
+                LonePairs.Add(lonePair);
                 return;
             }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
             {
-                Add(singleElectron);
+                SingleElectrons.Add(singleElectron);
                 return;
             }
         }
 
+        /// <inheritdoc/>
         public virtual void Remove(IAtomContainer atomContainer)
         {
             foreach (var atom in atomContainer.Atoms)
-                Remove(atom);
+                Atoms.Remove(atom);
             foreach (var bond in atomContainer.Bonds)
-                Remove(bond);
+                Bonds.Remove(bond);
             foreach (var lonePair in atomContainer.LonePairs)
-                Remove(lonePair);
+                LonePairs.Remove(lonePair);
             foreach (var singleElectron in atomContainer.SingleElectrons)
-                Remove(singleElectron);
+                SingleElectrons.Remove(singleElectron);
         }
 
-        public virtual void Remove(IAtom atom)
-        {
-            atom.Listeners?.Remove(this);
-            atoms.Remove(atom);
-        }
-
-        public virtual void Remove(IBond bond)
-        {
-            bond.Listeners?.Remove(this);
-            bonds.Remove(bond);
-        }
-
-        public virtual void Remove(ILonePair lonePair)
-        {
-            lonePair.Listeners?.Remove(this);
-            lonePairs.Remove(lonePair);
-        }
-
-        public virtual void Remove(ISingleElectron singleElectron)
-        {
-            singleElectron.Listeners?.Remove(this);
-            singleElectrons.Remove(singleElectron);
-        }
-
-        public virtual void Remove(IElectronContainer electronContainer)
+        /// <inheritdoc/>
+        public virtual void RemoveElectronContainer(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
             if (bond != null)
             {
-                Remove(bond);
+                Bonds.Remove(bond);
                 return;
             }
             var lonePair = electronContainer as ILonePair;
             if (lonePair != null)
             {
-                Remove(lonePair);
+                LonePairs.Remove(lonePair);
                 return;
             }
             var singleElectron = electronContainer as ISingleElectron;
             if (singleElectron != null)
             {
-                Remove(singleElectron);
+                SingleElectrons.Remove(singleElectron);
                 return;
             }
         }
 
+        /// <inheritdoc/>
         public virtual void RemoveAtomAndConnectedElectronContainers(IAtom atom)
         {
             {
@@ -869,10 +842,11 @@ namespace NCDK.Silent
                     stereoElements.Remove(stereoElement);
             }
 
-            Remove(atom);
+            Atoms.Remove(atom);
 
                     }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllElements()
         {
             RemoveAllElectronContainers();
@@ -883,6 +857,7 @@ namespace NCDK.Silent
 
                     }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllElectronContainers()
         {
             RemoveAllBonds();
@@ -895,6 +870,7 @@ namespace NCDK.Silent
 
                     }
 
+        /// <inheritdoc/>
         public virtual void RemoveAllBonds()
         {
             foreach (var e in bonds)
@@ -902,41 +878,45 @@ namespace NCDK.Silent
             bonds.Clear();
                     }
 
+        /// <inheritdoc/>
         public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
             var bond = Builder.CreateBond(atom1, atom2, order, stereo);
-            Add(bond);
+            Bonds.Add(bond);
             // no OnStateChanged
         }
 
+        /// <inheritdoc/>
         public virtual void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
         {
             if (!(Contains(atom1) && Contains(atom2)))
                 throw new InvalidOperationException();
             IBond bond = Builder.CreateBond(atom1, atom2, order);
-            Add(bond);
+            Bonds.Add(bond);
             // no OnStateChanged
         }
 
-        public virtual void AddLonePair(IAtom atom)
+        /// <inheritdoc/>
+        public virtual void AddLonePairTo(IAtom atom)
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
             var e = Builder.CreateLonePair(atom);
             e.Listeners?.Add(this);
-            Add(e);
+            LonePairs.Add(e);
             // no OnStateChanged
         }
 
-        public virtual void AddSingleElectron(IAtom atom)
+        /// <inheritdoc/>
+        public virtual void AddSingleElectronTo(IAtom atom)
         {
             if (!Contains(atom))
                 throw new InvalidOperationException();
             var e = Builder.CreateSingleElectron(atom);
             e.Listeners?.Add(this);
-            Add(e);
+            SingleElectrons.Add(e);
             // no OnStateChanged
         }
 
@@ -950,15 +930,23 @@ namespace NCDK.Silent
         {
             var bond = GetBond(atom1, atom2);
             if (bond != null)
-                Remove(bond);
+                Bonds.Remove(bond);
             return bond;
         }
 
+        /// <inheritdoc/>
         public virtual bool Contains(IAtom atom) => atoms.Any(n => n == atom);
+
+        /// <inheritdoc/>
         public virtual bool Contains(IBond bond) => bonds.Any(n => n == bond);
+
+        /// <inheritdoc/>
         public virtual bool Contains(ILonePair lonePair) => lonePairs.Any(n => n == lonePair);
+
+        /// <inheritdoc/>
         public virtual bool Contains(ISingleElectron singleElectron) => singleElectrons.Any(n => n == singleElectron);
 
+        /// <inheritdoc/>
         public virtual bool Contains(IElectronContainer electronContainer)
         {
             var bond = electronContainer as IBond;
@@ -973,6 +961,7 @@ namespace NCDK.Silent
             return false;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -982,7 +971,7 @@ namespace NCDK.Silent
             return sb.ToString();
         }
 
-        protected virtual string ToStringInner()
+        internal virtual string ToStringInner()
         {
             var sb = new StringBuilder();
             sb.Append(GetHashCode());
@@ -1010,6 +999,7 @@ namespace NCDK.Silent
             }
         }
 
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AtomContainer)base.Clone(map);            
@@ -1022,15 +1012,18 @@ namespace NCDK.Silent
             return clone;
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerable<IElectronContainer> GetElectronContainers()
         {
             return bonds.Cast<IElectronContainer>().Concat(LonePairs).Concat(SingleElectrons);
         }
 
+        /// <inheritdoc/>
         public void OnStateChanged(ChemObjectChangeEventArgs evt)
         {
                     }
 
+        /// <inheritdoc/>
         public void SetAtoms(IEnumerable<IAtom> atoms)
         {
             this.atoms.Clear();
@@ -1038,6 +1031,7 @@ namespace NCDK.Silent
                 this.atoms.Add(atom);
         }
 
+        /// <inheritdoc/>
         public void SetBonds(IEnumerable<IBond> bonds)
         {
             this.bonds.Clear();
@@ -1045,6 +1039,7 @@ namespace NCDK.Silent
                 this.bonds.Add(bond);
         }
 
-        public virtual bool IsEmpty => atoms.Count == 0;
+        /// <inheritdoc/>
+        public virtual bool IsEmpty() => atoms.Count == 0;
     }
 }

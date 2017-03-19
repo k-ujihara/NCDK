@@ -127,7 +127,7 @@ namespace NCDK.Graphs.InChi
         public void TestGetAtomContainer_IChemObjectBuilder()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/CH5/h1H4", Default.ChemObjectBuilder.Instance);
-            parser.GenerateAtomContainerFromInchi(Silent.ChemObjectBuilder.Instance);
+            parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
             // test if the created IAtomContainer is done with the Silent module...
             // OK, this is not typical use, but maybe the above generate method should be private
@@ -138,7 +138,7 @@ namespace NCDK.Graphs.InChi
         public void AtomicOxygen()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/O", Default.ChemObjectBuilder.Instance);
-            parser.GenerateAtomContainerFromInchi(Silent.ChemObjectBuilder.Instance);
+            parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
             Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
@@ -149,7 +149,7 @@ namespace NCDK.Graphs.InChi
         public void HeavyOxygenWater()
         {
             InChIToStructure parser = new InChIToStructure("InChI=1S/H2O/h1H2/i1+2", Default.ChemObjectBuilder.Instance);
-            parser.GenerateAtomContainerFromInchi(Silent.ChemObjectBuilder.Instance);
+            parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
             Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             Assert.IsNotNull(container.Atoms[0].ImplicitHydrogenCount);
@@ -162,7 +162,7 @@ namespace NCDK.Graphs.InChi
         {
             InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3+",
                     Default.ChemObjectBuilder.Instance);
-            parser.GenerateAtomContainerFromInchi(Silent.ChemObjectBuilder.Instance);
+            parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
             Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();
@@ -177,7 +177,7 @@ namespace NCDK.Graphs.InChi
         {
             InChIToStructure parser = new InChIToStructure("InChI=1/C4H8/c1-3-4-2/h3-4H,1-2H3/b4-3-",
                     Default.ChemObjectBuilder.Instance);
-            parser.GenerateAtomContainerFromInchi(Silent.ChemObjectBuilder.Instance);
+            parser.GenerateAtomContainerFromInChI(Silent.ChemObjectBuilder.Instance);
             IAtomContainer container = parser.AtomContainer;
             Assert.IsInstanceOfType(container, typeof(Silent.AtomContainer));
             IEnumerator<IStereoElement> ses = container.StereoElements.GetEnumerator();

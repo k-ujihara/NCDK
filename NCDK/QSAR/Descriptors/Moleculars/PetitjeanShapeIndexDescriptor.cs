@@ -29,32 +29,33 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates the Petitjean shape indices,
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
     /// and considered the molecular graph. This class also implements the geometric analog
     /// of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
-    /// <p/>
-    /// The descriptor returns a <code>DoubleArrayResult</code> which contains
-    /// <ol>
-    /// <li>topoShape - topological shape index
-    /// <li>geomShape - geometric shape index
-    /// </ol>
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td></td>
-    ///     <td></td>
-    ///     <td>no parameters</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///
+    /// <para>
+    /// The descriptor returns a <see cref="DoubleArrayResult"/> which contains
+    /// <list type="bullet"> 
+    /// <item>topoShape - topological shape index</item>
+    /// <item>geomShape - geometric shape index</item>
+    /// </list>
+    /// </para>
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term></term>
+    ///     <term></term>
+    ///     <term>no parameters</term>
+    ///   </item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author      Rajarshi Guha
     // @cdk.created 2006-01-14
     // @cdk.module  qsarmolecular
@@ -62,7 +63,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:petitjeanShapeIndex
     // @cdk.keyword Petit-Jean, shape index
-    /// </summary>
     public class PetitjeanShapeIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "topoShape", "geomShape" };
@@ -158,14 +158,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(2);
     }
 }

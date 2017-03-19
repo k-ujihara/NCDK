@@ -91,7 +91,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// Constructor for the MMElementRule object.
         /// </summary>
-        /// <exception cref="IOException">If an error occurs when reading atom type information</exception>
+        /// <exception cref="System.IO.IOException">If an error occurs when reading atom type information</exception>
         public MMElementRule()
         {
             // initiate Hashmap default

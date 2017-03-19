@@ -31,16 +31,15 @@ namespace NCDK.Hash
     /// Defines an internal super-class for AtomHashGenerators. The single required
     /// method allows atom hash generators to either ignore 'suppressed' atoms or use
     /// the information.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
-    internal abstract class AbstractAtomHashGenerator : AbstractHashGenerator, AtomHashGenerator
+    internal abstract class AbstractAtomHashGenerator : AbstractHashGenerator, IAtomHashGenerator
     {
         /// <summary>
         /// Empty BitArray for use when the 'suppressed' atoms are ignored.
         /// </summary>
-        readonly BitArray EMPTY_BITSET = new BitArray(0);
+        readonly BitArray EmptyBitSet = new BitArray(0);
 
         public AbstractAtomHashGenerator(Pseudorandom pseudorandom)
                 : base(pseudorandom)
@@ -50,14 +49,12 @@ namespace NCDK.Hash
 
         /// <summary>
         /// Internal method invoked by 'molecule' hash generators.
-        ///
+        /// </summary>
         /// <param name="current">the current invariants</param>
         /// <param name="encoder">encoder used for encoding stereo-chemistry</param>
         /// <param name="graph">adjacency list representation of the molecule</param>
-        /// <param name="suppressed">bit set marks vertices which are 'suppressed' (may be</param>
-        ///                   ignored)
+        /// <param name="suppressed">bit set marks vertices which are 'suppressed' (may be ignored)</param>
         /// <returns>the atom hash values</returns>
-        /// </summary>
         public abstract long[] Generate(long[] current, IStereoEncoder encoder, int[][] graph, Suppressed suppressed);
     }
 }

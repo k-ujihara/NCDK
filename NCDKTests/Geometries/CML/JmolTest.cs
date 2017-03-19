@@ -44,7 +44,7 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Special CML characteristics:
-        /// <ul><li> &lt;crystal></li></ul>
+        /// <ul><item> &lt;crystal></item></ul>
         /// </summary>
         [TestMethod()]
         public void TestEstron()

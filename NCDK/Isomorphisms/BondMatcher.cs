@@ -22,95 +22,84 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 using NCDK.Isomorphisms.Matchers;
-using System;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Defines compatibility checking of bonds for (subgraph)-isomorphism mapping.
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// Defines compatibility checking of bonds for (subgraph)-isomorphism mapping.
+    /// </summary>
+    // @author John May
+    // @cdk.module isomorphism
     public abstract class BondMatcher
     {
-
-        /**
-         * Determines if {@code bond1} is compatible with {@code bond2}.
-         *
-         * @param bond1 a bond from the query structure
-         * @param bond2 a bond from the target structure
-         * @return the bonds are compatible
-         */
+        /// <summary>
+        /// Determines if <paramref name="bond1"/> is compatible with <paramref name="bond2"/>.
+        /// </summary>
+        /// <param name="bond1">a bond from the query structure</param>
+        /// <param name="bond2">a bond from the target structure</param>
+        /// <returns>the bonds are compatible</returns>
         public abstract bool Matches(IBond bond1, IBond bond2);
 
-        /**
-         * All bonds are compatible.
-         *
-         * @return a bond matcher
-         */
+        /// <summary>
+        /// All bonds are compatible.
+        ///
+        /// <returns>a bond matcher</returns>
+        /// </summary>
         public static BondMatcher CreateAnyMatcher() => new AnyMatcher();
 
-        /**
-         * Bonds are compatible if they are both aromatic or their orders are equal
-         * and they are non-aromatic. Under this matcher a single/double bond will
-         * not match a single/double bond which is aromatic.
-         *
-         * @return a bond matcher
-         */
+        /// <summary>
+        /// Bonds are compatible if they are both aromatic or their orders are equal
+        /// and they are non-aromatic. Under this matcher a single/double bond will
+        /// not match a single/double bond which is aromatic.
+        /// </summary>
+        /// <returns>a bond matcher</returns>
         public static BondMatcher CreateStrictOrderMatcher()
         {
             return new StrictOrderMatcher();
         }
 
-        /**
-         * Bonds are compatible if they are both aromatic or their orders are equal.
-         * This matcher allows a single/double bond to match a single/double
-         * aromatic bond.
-         *
-         * @return a bond matcher
-         */
+        /// <summary>
+        /// Bonds are compatible if they are both aromatic or their orders are equal.
+        /// This matcher allows a single/double bond to match a single/double
+        /// aromatic bond.
+        /// </summary>
+        /// <returns>a bond matcher</returns>
         public static BondMatcher CreateOrderMatcher()
         {
             return new OrderMatcher();
         }
 
-        /**
-         * Bonds are compatible if the first {@code bond1} (an <see cref="IQueryBond"/>)
-         * matches the second, {@code bond2}.
-         *
-         * @return a bond matcher
-         */
+        /// <summary>
+        /// Bonds are compatible if the first <c>bond1</c> (an <see cref="IQueryBond"/>)
+        /// matches the second, <c>bond2</c>.
+        /// </summary>
+        /// <returns>a bond matcher</returns>
         public static BondMatcher CreateQueryMatcher()
         {
             return new QueryMatcher();
         }
 
-        /**
-         * Bonds are compatible if they are both aromatic or their orders are
-         * equal.
-         */
+        /// <summary>
+        /// Bonds are compatible if they are both aromatic or their orders are
+        /// equal.
+        /// </summary>
         private sealed class OrderMatcher : BondMatcher
         {
-
             /// <inheritdoc/>
-
             public override bool Matches(IBond bond1, IBond bond2)
             {
                 return bond1.IsAromatic && bond2.IsAromatic || bond1.Order == bond2.Order;
             }
         }
 
-        /**
-         * Bonds are compatible if they are both aromatic or their orders are equal
-         * and they are non-aromatic. In this matcher a single or double bond will
-         * not match a single or double bond which is part of an aromatic system.
-         */
+        /// <summary>
+        /// Bonds are compatible if they are both aromatic or their orders are equal
+        /// and they are non-aromatic. In this matcher a single or double bond will
+        /// not match a single or double bond which is part of an aromatic system.
+        /// </summary>
         private sealed class StrictOrderMatcher : BondMatcher
         {
-
             /// <inheritdoc/>
-
             public override bool Matches(IBond bond1, IBond bond2)
             {
                 return bond1.IsAromatic == bond2.IsAromatic
@@ -128,10 +117,10 @@ namespace NCDK.Isomorphisms
             }
         }
 
-        /**
-         * Bonds are compatible if the first {@code bond1} (an <see cref="IQueryBond"/>)
-         * matches the second, {@code bond2}.
-         */
+        /// <summary>
+        /// Bonds are compatible if the first <c>bond1</c> (an <see cref="IQueryBond"/>)
+        /// matches the second, <c>bond2</c>.
+        /// </summary>
         private sealed class QueryMatcher : BondMatcher
         {
             /// <inheritdoc/>

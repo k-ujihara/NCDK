@@ -85,9 +85,9 @@ namespace NCDK.Formula
         /// Search and find the closest difference in an array in terms of mass and
         /// intensity. Always return the position in this List.
         /// </summary>
-        /// <param name="diffValue">The difference to look for</param>
-        /// <param name="normMass">A List of normalized masses</param>
-        /// <returns>The position in the List</returns>
+        /// <param name="isoContainer"></param>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
         private int GetClosestDataDiff(IsotopeContainer isoContainer, IsotopePattern pattern)
         {
             double diff = 100;

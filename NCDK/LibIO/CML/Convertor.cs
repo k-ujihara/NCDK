@@ -35,13 +35,11 @@ using System.Xml.Linq;
 
 namespace NCDK.LibIO.CML
 {
-    /// <summary>
     // @cdk.module       libiocml
     // @cdk.githash
     // @cdk.keyword      CML
     // @cdk.keyword      class convertor
     // @cdk.require      java1.5+
-    /// </summary>
     public class Convertor
     {
         public const string NS_CML = "http://www.xml-cml.org/schema";
@@ -54,10 +52,9 @@ namespace NCDK.LibIO.CML
 
         /// <summary>
         /// Constructs a CML convertor.
-        ///
+        /// </summary>
         /// <param name="useCMLIDs">Uses object IDs like 'a1' instead of 'a&lt;hash>'.</param>
         /// <param name="prefix">Namespace prefix to use. If null, then no prefix is used;</param>
-        /// </summary>
         public Convertor(bool useCMLIDs, string prefix)
         {
             this.useCMLIDs = useCMLIDs;
@@ -330,7 +327,7 @@ namespace NCDK.LibIO.CML
                 var value = props[key];
                 if (value is string)
                 {
-                    if (!key.ToString().Equals(CDKPropertyName.TITLE))
+                    if (!key.ToString().Equals(CDKPropertyName.Title))
                     {
                         CMLScalar scalar = new CMLScalar();
                         this.CheckPrefix(scalar);
@@ -475,15 +472,15 @@ namespace NCDK.LibIO.CML
                 else
                     cmlMolecule.Ref = structure.Id;
 
-            if (structure.GetProperty<string>(CDKPropertyName.TITLE) != null)
+            if (structure.GetProperty<string>(CDKPropertyName.Title) != null)
             {
-                cmlMolecule.Title = structure.GetProperty<string>(CDKPropertyName.TITLE);
+                cmlMolecule.Title = structure.GetProperty<string>(CDKPropertyName.Title);
             }
-            if (structure.GetProperty<string>(CDKPropertyName.INCHI) != null)
+            if (structure.GetProperty<string>(CDKPropertyName.InChI) != null)
             {
                 CMLIdentifier ident = new CMLIdentifier();
                 ident.Convention = "iupac:inchi";
-                ident.SetAttributeValue(CMLElement.Attribute_value,  structure.GetProperty<string>(CDKPropertyName.INCHI).ToString());
+                ident.SetAttributeValue(CMLElement.Attribute_value,  structure.GetProperty<string>(CDKPropertyName.InChI).ToString());
                 cmlMolecule.Add(ident);
             }
             if (!isRef)
@@ -513,7 +510,7 @@ namespace NCDK.LibIO.CML
                 if (key is string && !isRef)
                 {
                     object value = props[key];
-                    if (!key.Equals(CDKPropertyName.TITLE) && !key.Equals(CDKPropertyName.INCHI))
+                    if (!key.Equals(CDKPropertyName.Title) && !key.Equals(CDKPropertyName.InChI))
                     {
                         // ok, should output this
                         CMLScalar scalar = new CMLScalar();
@@ -526,7 +523,7 @@ namespace NCDK.LibIO.CML
                 }
                 // FIXME: At the moment the order writing the formula is into properties
                 // but it should be that IMolecularFormula is a extension of IAtomContainer
-                if (key is string && !isRef && key.ToString().Equals(CDKPropertyName.FORMULA))
+                if (key is string && !isRef && key.ToString().Equals(CDKPropertyName.Formula))
                 {
                     if (props[key] is IMolecularFormula)
                     {
@@ -813,7 +810,7 @@ namespace NCDK.LibIO.CML
                 //if (key is string)
                 {
                     string stringKey = (string)key;
-                    if (stringKey.Equals(CDKPropertyName.TITLE))
+                    if (stringKey.Equals(CDKPropertyName.Title))
                     {
                         // don't output this one. It's covered by AddTitle()
                     }

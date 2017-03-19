@@ -3,14 +3,10 @@ using NCDK.Smiles;
 
 namespace NCDK.SMSD.Labelling
 {
-    /// <summary>
     // @cdk.module smsd
     // @cdk.githash
-    /// </summary>
-
     public class CanonicalLabellingAdaptor : ICanonicalMoleculeLabeller
     {
-
         public IAtomContainer GetCanonicalMolecule(IAtomContainer container)
         {
             return AtomContainerAtomPermutor.Permute(GetCanonicalPermutation(container), container);

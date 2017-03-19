@@ -23,7 +23,6 @@ using System.IO;
 using System;
 using NCDK.Common.Mathematics;
 using NCDK.Numerics;
-using NCDK.Common.Primitives;
 using NCDK.Tools.Manipulator;
 using NCDK.Geometries;
 using System.Linq;
@@ -37,9 +36,7 @@ namespace NCDK.IO
     // @cdk.module  extra
     // @cdk.githash
     // @cdk.iooptions
-    /// 
     // @author Egon Willighagen
-    /// 
     // @cdk.keyword file format, ShelX
     public class ShelXWriter : DefaultChemObjectWriter
     {
@@ -48,10 +45,10 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new ShelXWriter class. Output will be stored in the Writer class given as parameter.
         /// </summary>
-        /// <param name="out_">Writer to redirect the output to.</param>
-        public ShelXWriter(TextWriter out_)
+        /// <param name="output">Writer to redirect the output to.</param>
+        public ShelXWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public ShelXWriter(Stream output)
@@ -64,9 +61,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => ShelXFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -113,7 +110,7 @@ namespace NCDK.IO
 
         private void WriteCrystal(ICrystal crystal)
         {
-            var title = crystal.GetProperty<string>(CDKPropertyName.TITLE);
+            var title = crystal.GetProperty<string>(CDKPropertyName.Title);
             if (title != null && title.Trim().Length > 0)
             {
                 Writeln("TITL " + title.ToString().Trim());

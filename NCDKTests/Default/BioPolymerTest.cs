@@ -59,7 +59,7 @@ namespace NCDK.Default
         IAtom oAtom4 = oBioPolymer.Builder.CreateAtom("C4");
         IAtom oAtom5 = oBioPolymer.Builder.CreateAtom("C5");
 
-        oBioPolymer.Add(oAtom1);
+        oBioPolymer.Atoms.Add(oAtom1);
         oBioPolymer.AddAtom(oAtom2, oStrand1);
         oBioPolymer.AddAtom(oAtom3, oMono1, oStrand1);
         oBioPolymer.AddAtom(oAtom4, oMono2, oStrand2);

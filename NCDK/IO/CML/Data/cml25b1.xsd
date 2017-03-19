@@ -9891,19 +9891,19 @@ should be referred to as a reaction sequence, and not a mechanism.</h:blockquote
                otherwise, are homogeneous within the column. Also the metadata for each column must
                be given explicitly.
                <ul xmlns="">
-               <li>columns:  
+               <item>columns:  
                There is a single <h:a href="el.arrayList">arrayList</h:a> child containing (homogeneous) child
                elements (<h:a href="el.array">array</h:a> or <h:a href="el.list">list</h:a>of 
                size <h:tt>rows</h:tt> data. This is the "normal" orientation of data tables
                but the table display could be transposed by XSLT transformation if required.
            Access is to columns, and thence to the data within them. DataTyping, delimiters,
            etc are delegated to the arrays or lists, which must all be of the same size.
-           </li>
-           <li>rows: with explicit <tt>trow</tt>s. The metadata is carried in a <tt>theader</tt>
-           element of size <tt>cols</tt>. Within each trow the data are contained in tcells</li>
-           <li>content: The metadata is carried in a <tt>theader</tt>
+           </item>
+           <item>rows: with explicit <tt>trow</tt>s. The metadata is carried in a <tt>theader</tt>
+           element of size <tt>cols</tt>. Within each trow the data are contained in tcells</item>
+           <item>content: The metadata is carried in a <tt>theader</tt>
            element of size <tt>cols</tt>. data are contained in a single <tt>tableContent</tt> 
-           with columns moving fastest. Within the content the data are whitespace (or delimiter) separated.</li>
+           with columns moving fastest. Within the content the data are whitespace (or delimiter) separated.</item>
            </ul>
             For 
            verification it is recommended that tables carry <h:tt>rows</h:tt> and <h:tt>columns</h:tt> attributes.

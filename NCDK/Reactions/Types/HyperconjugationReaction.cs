@@ -31,7 +31,8 @@ namespace NCDK.Reactions.Types
     /// "double bond - no bond resonance"</para>
     /// <para>This reaction could be represented like</para>
     /// <code>[C+]-C => C=C + [H+] </code>
-    ///
+    /// </summary>
+    /// <example>
     /// <code>
     ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
     ///  setOfReactants.Add(new AtomContainer());
@@ -40,17 +41,14 @@ namespace NCDK.Reactions.Types
     ///  type.Parameters = parameters;
     ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
     ///  </code>
-    ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
-    ///
-    ///
+    /// </example>
     // @author         Miguel Rojas
-    ///
     // @cdk.created    2006-07-04
     // @cdk.module     reaction
     // @cdk.githash
@@ -95,7 +93,7 @@ namespace NCDK.Reactions.Types
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
-            /// if the parameter hasActiveCenter is not fixed yet, set the active centers
+            // if the parameter hasActiveCenter is not fixed yet, set the active centers
             IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
@@ -162,10 +160,8 @@ namespace NCDK.Reactions.Types
         /// -: Singlebond
         /// B: Atom
         ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             foreach (var atomi in reactant.Atoms)

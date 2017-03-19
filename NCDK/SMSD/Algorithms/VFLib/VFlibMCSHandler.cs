@@ -39,19 +39,17 @@ namespace NCDK.SMSD.Algorithms.VFLib
     /// This class should be used to find MCS between query
     /// graph and target graph.
     ///
-    /// First the algorithm runs VF lib {@link org.openscience.cdk.smsd.algorithm.vflib.map.VFMCSMapper}
+    /// First the algorithm runs VF lib <see cref="VFMCSMapper"/>
     /// and reports MCS between
     /// run query and target graphs. Then these solutions are extended
-    /// using McGregor {@link org.openscience.cdk.smsd.algorithm.mcgregor.McGregor}
+    /// using McGregor <see cref="McGregors.McGregor"/>
     /// algorithm where ever required.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFlibMCSHandler : AbstractMCSAlgorithm, IMCSBase
     {
-
         private static List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
         private static IDictionary<IAtom, IAtom> atomsMCS = null;
         private static List<IDictionary<IAtom, IAtom>> allAtomMCSCopy = null;

@@ -378,7 +378,7 @@ namespace NCDK.Depict
         ///
         /// <param name="mols">molecules</param>
         /// <returns>coordinates</returns>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private List<double> PrepareCoords(IEnumerable<IAtomContainer> mols)
         {
@@ -602,7 +602,7 @@ namespace NCDK.Depict
 
         private int AccessAtomMap(IAtom atom)
         {
-            var mapidx = atom.GetProperty<int?>(CDKPropertyName.ATOM_ATOM_MAPPING);
+            var mapidx = atom.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
             if (mapidx == null)
                 return 0;
             return mapidx.Value;
@@ -690,7 +690,7 @@ namespace NCDK.Depict
         /// <returns>bound element</returns>
         private Bounds GenerateTitle(IChemObject chemObj)
         {
-            string title = chemObj.GetProperty<string>(CDKPropertyName.TITLE);
+            string title = chemObj.GetProperty<string>(CDKPropertyName.Title);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
             double scale = 1 / GetParameterValueV<double>(typeof(BasicSceneGenerator.Scale)) * GetParameterValueV<double>(typeof(RendererModel.TitleFontScale));
@@ -699,7 +699,7 @@ namespace NCDK.Depict
 
         private Bounds GenerateReactionConditions(IReaction chemObj, Color fg)
         {
-            string title = chemObj.GetProperty<string>(CDKPropertyName.REACTION_CONDITIONS);
+            string title = chemObj.GetProperty<string>(CDKPropertyName.ReactionConditions);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
             double scale = 1 / GetParameterValueV<double>(typeof(BasicSceneGenerator.Scale));
@@ -831,7 +831,7 @@ namespace NCDK.Depict
 
         /// <summary>
         /// Display atom-atom mapping numbers on a reaction. Each atom map index
-        /// is loaded from the property <see cref="CDKPropertyName.ATOM_ATOM_MAPPING"/>.
+        /// is loaded from the property <see cref="CDKPropertyName.AtomAtomMapping"/>.
         /// </summary>
         /// <remarks>
         /// Note: A depiction can not have both atom numbers and atom
@@ -840,7 +840,7 @@ namespace NCDK.Depict
         /// </remarks>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="withAtomNumbers"/>
-        /// <seealso cref="CDKPropertyName.ATOM_ATOM_MAPPING"/>
+        /// <seealso cref="CDKPropertyName.AtomAtomMapping"/>
         /// <seealso cref="StandardGenerator.ANNOTATION_LABEL"/>
         public DepictionGenerator WithAtomMapNumbers()
         {
@@ -885,7 +885,7 @@ namespace NCDK.Depict
 
         /// <summary>
         /// Display a molecule title with each depiction. The title
-        /// is specified by setting the <see cref="CDKPropertyName.TITLE"/>
+        /// is specified by setting the <see cref="CDKPropertyName.Title"/>
         /// property. For reactions only the main components have their
         /// title displayed.
         /// </summary>

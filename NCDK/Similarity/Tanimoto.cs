@@ -30,48 +30,44 @@ using System.Linq;
 
 namespace NCDK.Similarity
 {
-    /**
-     *  Calculates the Tanimoto coefficient for a given pair of two
-     *  fingerprint bitsets or real valued feature vectors.
-     *
-     *  The Tanimoto coefficient is one way to
-     *  quantitatively measure the "distance" or similarity of
-     *  two chemical structures.
-     *
-     *  <p>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
-     *  We assume that you have two structures stored in cdk.Molecule objects.
-     *  A tanimoto coefficient can then be calculated like:
-     *  <code>
-     *   BitArray fingerprint1 = Fingerprinter.GetBitFingerprint(molecule1);
-     *   BitArray fingerprint2 = Fingerprinter.GetBitFingerprint(molecule2);
-     *   double tanimoto_coefficient = Tanimoto.Calculate(fingerprint1, fingerprint2);
-     *  </code>
-     *
-     *  <p>The FingerPrinter assumes that hydrogens are explicitely given, if this
-     *  is desired!
-     *  <p>Note that the continuous Tanimoto coefficient does not lead to a metric space
-     *
-     *@author         steinbeck
-     * @cdk.githash
-     *@cdk.created    2005-10-19
-     *@cdk.keyword    jaccard
-     *@cdk.keyword    similarity, tanimoto
-     * @cdk.module fingerprint
-     */
-    // see also SignatureFingerprintTanimotoTest
+    /// <summary>
+    ///  Calculates the Tanimoto coefficient for a given pair of two
+    ///  fingerprint bitsets or real valued feature vectors.
+    ///
+    ///  The Tanimoto coefficient is one way to
+    ///  quantitatively measure the "distance" or similarity of
+    ///  two chemical structures.
+    ///
+    ///  <para>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
+    ///  We assume that you have two structures stored in cdk.Molecule objects.
+    ///  A tanimoto coefficient can then be calculated like:
+    ///  <code>
+    ///   BitArray fingerprint1 = Fingerprinter.GetBitFingerprint(molecule1);
+    ///   BitArray fingerprint2 = Fingerprinter.GetBitFingerprint(molecule2);
+    ///   double tanimoto_coefficient = Tanimoto.Calculate(fingerprint1, fingerprint2);
+    ///  </code>
+    /// </para>
+    ///  <para>The FingerPrinter assumes that hydrogens are explicitely given, if this
+    ///  is desired!</para>
+    ///  <para>Note that the continuous Tanimoto coefficient does not lead to a metric space</para>
+    /// </summary>
+    ///@author         steinbeck
+    // @cdk.githash
+    // @cdk.created    2005-10-19
+    // @cdk.keyword    jaccard
+    // @cdk.keyword    similarity, tanimoto
+    // @cdk.module fingerprint
     public class Tanimoto
     {
-
         private Tanimoto() { }
 
-        /**
-         * Evaluates Tanimoto coefficient for two bit sets.
-         * <p>
-         * @param bitset1 A bitset (such as a fingerprint) for the first molecule
-         * @param bitset2 A bitset (such as a fingerprint) for the second molecule
-         * @return The Tanimoto coefficient
-         * @throws CDKException  if bitsets are not of the same length
-         */
+        /// <summary>
+        /// Evaluates Tanimoto coefficient for two bit sets.
+        /// </summary>
+        /// <param name="bitset1">A bitset (such as a fingerprint) for the first molecule</param>
+        /// <param name="bitset2">A bitset (such as a fingerprint) for the second molecule</param>
+        /// <returns>The Tanimoto coefficient</returns>
+        /// <exception cref="CDKException"> if bitsets are not of the same length</exception>
         public static double Calculate(BitArray bitset1, BitArray bitset2)
         {
             double _bitset1_cardinality = BitArrays.Cardinality(bitset1);
@@ -86,14 +82,13 @@ namespace NCDK.Similarity
             return _common_bit_count / (_bitset1_cardinality + _bitset2_cardinality - _common_bit_count);
         }
 
-        /**
-         * Evaluates Tanimoto coefficient for two <code>IBitFingerprint</code>.
-         * <p>
-         * @param fingerprint1 fingerprint for the first molecule
-         * @param fingerprint2 fingerprint for the second molecule
-         * @return The Tanimoto coefficient
-         * @throws IllegalArgumentException if bitsets are not of the same length
-         */
+        /// <summary>
+        /// Evaluates Tanimoto coefficient for two <see cref="IBitFingerprint"/>.
+        /// </summary>
+        /// <param name="fingerprint1">fingerprint for the first molecule</param>
+        /// <param name="fingerprint2">fingerprint for the second molecule</param>
+        /// <returns>The Tanimoto coefficient</returns>
+        /// <exception cref="ArgumentException">if bitsets are not of the same length</exception>
         public static double Calculate(IBitFingerprint fingerprint1, IBitFingerprint fingerprint2)
         {
             if (fingerprint1.Count != fingerprint2.Count)
@@ -112,14 +107,13 @@ namespace NCDK.Similarity
             return cardinalityCommon / (cardinality1 + cardinality2 - cardinalityCommon);
         }
 
-        /**
-         * Evaluates the continuous Tanimoto coefficient for two real valued vectors.
-         * <p>
-         * @param features1 The first feature vector
-         * @param features2 The second feature vector
-         * @return The continuous Tanimoto coefficient
-         * @throws CDKException  if the features are not of the same length
-         */
+        /// <summary>
+        /// Evaluates the continuous Tanimoto coefficient for two real valued vectors.
+        /// </summary>
+        /// <param name="features1">The first feature vector</param>
+        /// <param name="features2">The second feature vector</param>
+        /// <returns>The continuous Tanimoto coefficient</returns>
+        /// <exception cref="CDKException"> if the features are not of the same length</exception>
         public static double Calculate(double[] features1, double[] features2)
         {
 
@@ -142,17 +136,17 @@ namespace NCDK.Similarity
             return ab / (a2 + b2 - ab);
         }
 
-        /**
-         * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
-         * <p>
-         * Note that feature/count type fingerprints may be of different length.
-         *
-         * Uses Tanimoto method from 10.1021/ci800326z
-         *
-         * @param features1 The first feature map
-         * @param features2 The second feature map
-         * @return The Tanimoto coefficient
-         */
+        /// <summary>
+        /// Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+        /// </summary>
+        /// <remarks>
+        /// Note that feature/count type fingerprints may be of different length.
+        ///
+        /// Uses Tanimoto method from 10.1021/ci800326z
+        /// </remarks>
+        /// <param name="features1">The first feature map</param>
+        /// <param name="features2">The second feature map</param>
+        /// <returns>The Tanimoto coefficient</returns>
         public static double Calculate(IDictionary<string, int> features1, IDictionary<string, int> features2)
         {
             var common = features1.Keys.Intersect(features2.Keys);
@@ -173,33 +167,32 @@ namespace NCDK.Similarity
             return xy / (x + y - xy);
         }
 
-        /**
-         * Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
-         * <p>
-         * Note that feature/count type fingerprints may be of different length.
-         * Uses Tanimoto method from 10.1021/ci800326z
-         *
-         * @param fp1 The first fingerprint
-         * @param fp2 The second fingerprint
-         * @return The Tanimoto coefficient
-         * @see #method1
-         * @see #method2
-         */
+        /// <summary>
+        /// Evaluate continuous Tanimoto coefficient for two feature,count fingerprint representations.
+        /// </summary>
+        /// <remarks>
+        /// Note that feature/count type fingerprints may be of different length.
+        /// Uses Tanimoto method from 10.1021/ci800326z
+        /// </remarks>
+        /// <param name="fp1">The first fingerprint</param>
+        /// <param name="fp2">The second fingerprint</param>
+        /// <returns>The Tanimoto coefficient</returns>
+        /// <seealso cref="Method1(ICountFingerprint, ICountFingerprint)"/>
+        /// <seealso cref="Method2(ICountFingerprint, ICountFingerprint)"/>
         public static double Calculate(ICountFingerprint fp1, ICountFingerprint fp2)
         {
             return Method2(fp1, fp2);
         }
 
-        /**
-         * Calculates Tanimoto distance for two count fingerprints using method 1.
-         *
-         * The feature/count type fingerprints may be of different length.
-         * Uses Tanimoto method from {@cdk.cite Steffen09}.
-         * 
-         * @param fp1 count fingerprint 1
-         * @param fp2 count fingerprint 2
-         * @return a Tanimoto distance
-         */
+        /// <summary>
+        /// Calculates Tanimoto distance for two count fingerprints using method 1.
+        ///
+        /// The feature/count type fingerprints may be of different length.
+        /// Uses Tanimoto method from {@cdk.cite Steffen09}.
+        /// </summary>
+        /// <param name="fp1">count fingerprint 1</param>
+        /// <param name="fp2">count fingerprint 2</param>
+        /// <returns>a Tanimoto distance</returns>
         public static double Method1(ICountFingerprint fp1, ICountFingerprint fp2)
         {
             long xy = 0, x = 0, y = 0;
@@ -222,13 +215,12 @@ namespace NCDK.Similarity
             return ((double)xy / (x + y - xy));
         }
 
-        /**
-         * Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
-         *
-         * @param fp1 count fingerprint 1
-         * @param fp2 count fingerprint 2
-         * @return a Tanimoto distance
-         */
+        /// <summary>
+        /// Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
+        /// </summary>
+        /// <param name="fp1">count fingerprint 1</param>
+        /// <param name="fp2">count fingerprint 2</param>
+        /// <returns>a Tanimoto distance</returns>
         public static double Method2(ICountFingerprint fp1, ICountFingerprint fp2)
         {
 

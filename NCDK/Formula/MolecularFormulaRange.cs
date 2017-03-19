@@ -41,7 +41,7 @@ namespace NCDK.Formula
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-    public class MolecularFormulaRange : ICloneable
+    public class MolecularFormulaRange
     {
         private IDictionary<IIsotope, int> isotopesMax;
         private IDictionary<IIsotope, int> isotopesMin;

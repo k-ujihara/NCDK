@@ -35,26 +35,29 @@ namespace NCDK.Layout
 {
     /// <summary>
     /// An overlap resolver that tries to resolve overlaps by rotating (reflecting),
-    /// bending, and stretching bonds. <p/>
-    /// 
+    /// bending, and stretching bonds. 
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// The RBS (rotate, bend, stretch) algorithm is first described by {@cdk.cite Shelley83},
     /// and later in more detail by {@cdk.cite HEL99}.
-    /// <p/>
+    /// </para>
+    /// <para>
     /// Essentially we have a measure of <see cref="Congestion"/>. From that we find 
     /// un-bonded atoms that contribute significantly (i.e. overlap). To resolve
     /// that overlap we try resolving the overlap by changing (acyclic) bonds in the
     /// shortest path between the congested pair. Operations, from most to least 
     /// favourable, are:
-    /// <ul>
-    ///     <li>Rotation (or reflection), {@link #Rotate(Collection)}</li>
-    ///     <li>Inversion (not described in lit), {@link #Invert(Collection)}</li>
-    ///     <li>Stretch, {@link #Stretch(AtomPair, IntStack, Vector2[])}</li>
-    ///     <li>Bend, {@link #Bend(AtomPair, IntStack, Vector2[])}</li>
-    /// </ul>
-    /// </summary>
+    /// <list type="bullet">
+    ///     <item>Rotation (or reflection), {@link #Rotate(Collection)}</item>
+    ///     <item>Inversion (not described in lit), {@link #Invert(Collection)}</item>
+    ///     <item>Stretch, {@link #Stretch(AtomPair, IntStack, Vector2[])}</item>
+    ///     <item>Bend, {@link #Bend(AtomPair, IntStack, Vector2[])}</item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     sealed class LayoutRefiner
     {
-
         /// <summary>
         /// These value are constants but could be parametrised in future.
         /// </summary>
@@ -88,7 +91,6 @@ namespace NCDK.Layout
         // percentage based threshold we accept an modification if
         // the improvement is this much better.
         public const int ROTATE_DELTA_THRESHOLD = 5;
-
 
         // Maximum number of iterations whilst improving
         private const int MAX_ITERATIONS = 10;
@@ -303,11 +305,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Check if any of the bonds adjacent to u, v (not bonded) are crossing.
-        ///
+        /// </summary>
         /// <param name="u">an atom (idx)</param>
         /// <param name="v">another atom (idx)</param>
         /// <returns>there are crossing bonds</returns>
-        /// </summary>
         private bool HaveCrossingBonds(int u, int v)
         {
             int[] us = adjList[u];
@@ -331,17 +332,15 @@ namespace NCDK.Layout
         /// <summary>
         /// Attempt to reduce congestion through rotation of flippable bonds between
         /// congest pairs.
-        ///
-        /// <param name="pairs">congested pairs of atoms</param>
         /// </summary>
+        /// <param name="pairs">congested pairs of atoms</param>
         void Rotate(ICollection<AtomPair> pairs)
         {
-
             // bond has already been tried in this phase so
             // don't need to test again
             var tried = new HashSet<IBond>();
 
-            Pair:
+        Pair:
             foreach (var pair in pairs)
             {
                 foreach (var bond in pair.bndAt)
@@ -397,7 +396,6 @@ namespace NCDK.Layout
                     }
                     else
                     {
-
                         // almost no difference from flipping... bond is probably symmetric
                         // mark to avoid in future iterations
                         if (Math.Abs(delta) < 0.1)
@@ -410,17 +408,15 @@ namespace NCDK.Layout
                     }
                 }
             }
-            continue_Pair:
+        continue_Pair:
             ;
-
         }
 
         /// <summary>
         /// Special case congestion minimisation, rotate terminals bonds around ring
         /// systems so they are inside the ring.
-        ///
-        /// <param name="pairs">congested atom pairs</param>
         /// </summary>
+        /// <param name="pairs">congested atom pairs</param>
         void Invert(IEnumerable<AtomPair> pairs)
         {
             foreach (var pair in pairs)
@@ -438,7 +434,6 @@ namespace NCDK.Layout
         // of the ring
         private bool MacroCycleInversion(AtomPair pair)
         {
-
             foreach (var v in pair.seqAt)
             {
                 IAtom atom = mol.Atoms[v];
@@ -461,7 +456,6 @@ namespace NCDK.Layout
 
                 foreach (var bond in acyclic)
                 {
-
                     Arrays.Fill(visited, false);
                     stackBackup.len = Visit(visited, stackBackup.xs, v, idxs[bond.GetConnectedAtom(atom)], 0);
 
@@ -484,7 +478,6 @@ namespace NCDK.Layout
                     RestoreCoords(stackBackup, backup);
                 }
             }
-
             return false;
         }
 
@@ -520,15 +513,13 @@ namespace NCDK.Layout
         /// to resolve the overlap. The bend that produces the minimum congestion is
         /// stored in the provided stack and coords with the congestion score
         /// returned.
-        ///
+        /// </summary>
         /// <param name="pair">congested atom pair</param>
         /// <param name="stack">best result vertices</param>
         /// <param name="coords">best result coords</param>
         /// <returns>congestion score of best result</returns>
-        /// </summary>
         private double Bend(AtomPair pair, IntStack stack, Vector2[] coords)
         {
-
             stackBackup.Clear();
 
             Trace.Assert(stack.len == 0);
@@ -540,7 +531,6 @@ namespace NCDK.Layout
             // from each other
             if (pair.bndAt.Count > 4 && (pair.bndAtCode & 0x1F) == 0x6)
             {
-
                 IBond bndA = pair.bndAt[2];
                 IBond bndB = pair.bndAt[3];
 
@@ -589,7 +579,6 @@ namespace NCDK.Layout
             // path from inside out
             else
             {
-
                 // try bending all bonds and accept the best one
                 foreach (var bond in pair.bndAt)
                 {
@@ -653,15 +642,13 @@ namespace NCDK.Layout
         /// attempt to resolve the overlap. The stretch that produces the minimum
         /// congestion is stored in the provided stack and coords with the congestion
         /// score returned.
-        ///
+        /// </summary>
         /// <param name="pair">congested atom pair</param>
         /// <param name="stack">best result vertices</param>
         /// <param name="coords">best result coords</param>
         /// <returns>congestion score of best result</returns>
-        /// </summary>
         private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords)
         {
-
             stackBackup.Clear();
 
             double score = congestion.Score();
@@ -669,7 +656,6 @@ namespace NCDK.Layout
 
             foreach (var bond in pair.bndAt)
             {
-
                 // don't stretch ring bonds
                 if (bond.IsInRing)
                     continue;
@@ -717,9 +703,8 @@ namespace NCDK.Layout
         /// Resolves conflicts either by bending bonds or stretching bonds in the
         /// shortest path between an overlapping pair. Bending and stretch are tried
         /// for each pair and the best resolution is used.
-        ///
-        /// <param name="pairs">pairs</param>
         /// </summary>
+        /// <param name="pairs">pairs</param>
         private void BendOrStretch(IEnumerable<AtomPair> pairs)
         {
 
@@ -728,13 +713,11 @@ namespace NCDK.Layout
 
             foreach (var pair in pairs)
             {
-
                 double score = congestion.Score();
 
                 // each attempt will be more aggressive/distorting
                 for (pair.attempt = 1; pair.attempt <= 3; pair.attempt++)
                 {
-
                     bendStack.Clear();
                     stretchStack.Clear();
 
@@ -758,7 +741,6 @@ namespace NCDK.Layout
                         congestion.Update(stretchStack.xs, stretchStack.len);
                         break;
                     }
-
                 }
             }
         }
@@ -806,10 +788,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Backup the coordinates of atoms (idxs) in the stack to the provided
         /// destination.
-        ///
+        /// </summary>
         /// <param name="dest">destination</param>
         /// <param name="stack">atom indexes to backup</param>
-        /// </summary>
         private void BackupCoords(Vector2[] dest, IntStack stack)
         {
             for (int i = 0; i < stack.len; i++)
@@ -822,10 +803,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Restore the coordinates of atoms (idxs) in the stack to the provided
         /// source.
-        ///
+        /// </summary>
         /// <param name="stack">atom indexes to backup</param>
         /// <param name="src">source of coordinates</param>
-        /// </summary>
         private void RestoreCoords(IntStack stack, Vector2[] src)
         {
             for (int i = 0; i < stack.len; i++)
@@ -838,11 +818,10 @@ namespace NCDK.Layout
         /// <summary>
         /// Reflect all atoms (indexes) int he provided stack around the line formed
         /// of the beg and end atoms.
-        ///
+        /// </summary>
         /// <param name="stack">atom indexes to reflect</param>
         /// <param name="beg">beg atom of a bond</param>
         /// <param name="end">end atom of a bond</param>
-        /// </summary>
         private void Reflect(IntStack stack, IAtom beg, IAtom end)
         {
             Vector2 begP = beg.Point2D.Value;
@@ -866,12 +845,11 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Reflect a point (p) in a line formed of 'base', 'a', and 'b'.
-        ///
-        /// <param name="p">point to reflect</param>
-        /// <param name="base">base of the refection source</param>
+        /// </summary>
+        /// <param name="ap">point to reflect</param>
+        /// <param name="base_">base of the refection source</param>
         /// <param name="a">a reflection coef</param>
         /// <param name="b">b reflection coef</param>
-        /// </summary>
         private static void Reflect(IAtom ap, Vector2 base_, double a, double b)
         {
             double x = a * (ap.Point2D.Value.X - base_.X) + b * (ap.Point2D.Value.Y - base_.Y) + base_.X;
@@ -879,16 +857,14 @@ namespace NCDK.Layout
             ap.Point2D = new Vector2(x, y);
         }
 
-
         /// <summary>
         /// Bend select atoms around a provided pivot by the specified amount (r).
-        ///
+        /// </summary>
         /// <param name="indexes">array of atom indexes</param>
         /// <param name="from">start offset into the array (inclusive)</param>
         /// <param name="to">end offset into the array (exclusive)</param>
         /// <param name="pivotAtm">the point about which we are pivoting</param>
         /// <param name="r">radians to bend by</param>
-        /// </summary>
         private void Bend(int[] indexes, int from, int to, IAtom pivotAtm, double r)
         {
             double s = Math.Sin(r);
@@ -909,12 +885,11 @@ namespace NCDK.Layout
         /// <summary>
         /// Stretch the distance between beg and end, moving all atoms provided in
         /// the stack.
-        ///
+        /// </summary>
         /// <param name="stack">atoms to be moved</param>
         /// <param name="beg">begin atom of a bond</param>
         /// <param name="end">end atom of a bond</param>
         /// <param name="amount">amount to try stretching by (absolute)</param>
-        /// </summary>
         private void Stretch(IntStack stack, IAtom beg, IAtom end, double amount)
         {
             Vector2 begPoint = beg.Point2D.Value;
@@ -934,17 +909,15 @@ namespace NCDK.Layout
             }
         }
 
-
         /// <summary>
         /// Internal - makes atom (seq) and bond priority queues for resolving
         /// overlap. Only (acyclic - but not really) atoms and bonds in the shortest
         /// path between the two atoms can resolve an overlap. We create prioritised
         /// sequences of atoms/bonds where the more central in the shortest path.
-        ///
+        /// </summary>
         /// <param name="path">shortest path between atoms</param>
         /// <param name="seqAt">prioritised atoms, first atom is the middle of the path</param>
         /// <param name="bndAt">prioritised bonds, first bond is the middle of the path</param>
-        /// </summary>
         private void MakeAtmBndQueues(int[] path, int[] seqAt, IBond[] bndAt)
         {
             int len = path.Length;
@@ -980,15 +953,14 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Recursively visit 'v' and all vertices adjacent to it (excluding 'p')
-        /// adding all except 'v' to the result array.
-        ///
+        /// Recursively visit <paramref name="v"/> and all vertices adjacent to it (excluding <paramref name="p"/>)
+        /// adding all except <paramref name="v"/> to the result array.
+        /// </summary>
         /// <param name="visited">visit flags array, should be cleared before search</param>
         /// <param name="result">visited vertices</param>
         /// <param name="p">previous vertex</param>
         /// <param name="v">start vertex</param>
         /// <returns>number of visited vertices</returns>
-        /// </summary>
         private int VisitAdj(bool[] visited, int[] result, int p, int v)
         {
             int n = 0;
@@ -1006,16 +978,15 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Recursively visit 'v' and all vertices adjacent to it (excluding 'p')
+        /// Recursively visit <paramref name="v"/> and all vertices adjacent to it (excluding <paramref name="p"/>)
         /// adding them to the result array.
-        ///
+        /// </summary>
         /// <param name="visited">visit flags array, should be cleared before search</param>
         /// <param name="result">visited vertices</param>
         /// <param name="p">previous vertex</param>
         /// <param name="v">start vertex</param>
         /// <param name="n">current number of visited vertices</param>
         /// <returns>new number of visited vertices</returns>
-        /// </summary>
         private int Visit(bool[] visited, int[] result, int p, int v, int n)
         {
             visited[v] = true;
@@ -1030,14 +1001,12 @@ namespace NCDK.Layout
             return n;
         }
 
-
         /// <summary>
         /// Access the common atom shared by two bonds.
-        ///
+        /// </summary>
         /// <param name="bndA">first bond</param>
         /// <param name="bndB">second bond</param>
         /// <returns>common atom or null if non exists</returns>
-        /// </summary>
         private static IAtom GetCommon(IBond bndA, IBond bndB)
         {
             IAtom beg = bndA.Atoms[0];
@@ -1052,7 +1021,7 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Congested pair of un-bonded atoms, described by the index of the atoms
-        /// (fst, snd). The atoms (seqAt) and bonds (bndAt) in the shortest path
+        /// (<see cref="fst"/>, <see cref="snd"/>). The atoms (<see cref="seqAt"/>) and bonds (<see cref="bndAt"/>) in the shortest path
         /// between the pair are stored as well as a bndAtCode for checking special
         /// case ring bond patterns.
         /// </summary>
@@ -1096,10 +1065,9 @@ namespace NCDK.Layout
             /// Create the bond code bit mask, lowest bit is whether the path is
             /// odd/even then the other bits are whether the bonds are in a ring or
             /// not.
-            ///
-            /// <param name="bonds">bonds to encode</param>
-            /// <returns>the bond code</returns>
             /// </summary>
+            /// <param name="enumBonds">bonds to encode</param>
+            /// <returns>the bond code</returns>
             static int bndCode(IEnumerable<IBond> enumBonds)
             {
                 var bonds = enumBonds.ToList();

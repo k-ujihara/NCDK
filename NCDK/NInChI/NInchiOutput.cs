@@ -20,8 +20,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates output from InChI generation.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiOutput
     {
         public INCHI_RET ReturnStatus { get; protected internal set; }
@@ -29,7 +29,7 @@ namespace NCDK.NInChI
         /// <summary>
         /// InChI ASCIIZ string
         /// </summary>
-        public string Inchi { get; protected internal set; }
+        public string InChI { get; protected internal set; }
 
         /// <summary>
         /// Aux info ASCIIZ string
@@ -56,7 +56,7 @@ namespace NCDK.NInChI
         public NInchiOutput(INCHI_RET ret, string inchi, string auxInfo, string message, string log)
         {
             ReturnStatus = ret;
-            Inchi = inchi;
+            InChI = inchi;
             AuxInfo = auxInfo;
             Message = message;
             Log = log;
@@ -64,7 +64,7 @@ namespace NCDK.NInChI
       
         public override string ToString()
         {
-            return "InChI_Output: " + ReturnStatus + "/" + Inchi + "/" + AuxInfo + "/" + Message + "/" + Log;
+            return "InChI_Output: " + ReturnStatus + "/" + InChI + "/" + AuxInfo + "/" + Message + "/" + Log;
         }
     }
 }

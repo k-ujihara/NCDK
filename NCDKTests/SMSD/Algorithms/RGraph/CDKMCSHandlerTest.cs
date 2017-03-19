@@ -90,7 +90,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         /// <summary>
         /// Test of set method, of class CDKMCSHandler.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @throws IOException
         /// </summary>
         [TestMethod()]

@@ -25,19 +25,19 @@ using System.Text;
 namespace NCDK.NInChI
 {
     /// <summary>
-    /// <p>JNI Wrapper for International Chemical Identifier (InChI) C++ library.
+    /// <para>.NET Framework Wrapper for International Chemical Identifier (InChI) C++ library.</para>
     ///
-    /// <p>This class is not intended to be used directly, but should be accessed
+    /// <para>This class is not intended to be used directly, but should be accessed
     /// through subclasses that read data formats and load them into the InChI
-    /// data structures.
+    /// data structures.</para>
     ///
-    /// <p>Subclasses should load data through the addAtom, addBond and addParity
+    /// <para>Subclasses should load data through the addAtom, addBond and addParity
     /// methods. Once the molecule is fully loaded then the generateInchi method
     /// should be called. Ideally this should all take place within the subclass's
     /// constructor. The public get methods will all return null until this has
-    /// happened.
+    /// happened.</para>
     ///
-    /// <p>See <tt>inchi_api.h</tt>.
+    /// <para>See <tt>inchi_api.h</tt>.</para>
     /// </summary>
     // @author Sam Adams
     unsafe public class NInchiWrapper
@@ -448,12 +448,13 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Generates the InChI for a chemical structure.</p>
+        /// <para>Generates the InChI for a chemical structure.</para>
+        /// </summary>
+        /// <remarks>
+        /// <para>If no InChI creation/stereo modification options are specified then a standard
+        /// InChI is produced, otherwise the generated InChI will be a non-standard one.</para>
         ///
-        /// <p>If no InChI creation/stereo modification options are specified then a standard
-        /// InChI is produced, otherwise the generated InChI will be a non-standard one.</p>
-        ///
-        /// <p><b>Valid options:</b></p>
+        /// <para><b>Valid options:</b></para>
         /// <code>
         ///  Structure perception (compatible with stdInChI):
         ///    /NEWPSOFF   /DoNotAddH   /SNon
@@ -463,7 +464,7 @@ namespace NCDK.NInChI
         ///    /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
         /// </code>
         ///
-        /// <p><b>Other options:</b></p>
+        /// <para><b>Other options:</b></para>
         /// <code>
         ///  /AuxNone    Omit auxiliary information (default: Include)
         ///  /Wnumber    Set time-out per structure in seconds; W0 means unlimited
@@ -473,10 +474,9 @@ namespace NCDK.NInChI
         ///              Warn and produce empty InChI for empty structure
         ///  /SaveOpt    Save custom InChI creation options (non-standard InChI)
         /// </code>
-        ///
-        /// <param name="input">/// @return</param>
-        // @
-        /// </summary>
+        /// </remarks>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static NInchiOutput GetInchi(NInchiInput input)
         {
             if (input == null)
@@ -514,9 +514,9 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Calculates the Standard InChI string for a chemical structure.</p>
-        /// <p>The only valid structure perception options are NEWPSOFF/DoNotAddH/SNon. In any other structural
-        /// perception options are specified then the calculation will fail.</p>
+        /// <para>Calculates the Standard InChI string for a chemical structure.</para>
+        /// <para>The only valid structure perception options are NEWPSOFF/DoNotAddH/SNon. In any other structural
+        /// perception options are specified then the calculation will fail.</para>
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -557,10 +557,10 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Converts an InChI into an InChI for validation purposes (the same as the -InChI2InChI option).</p>
-        /// <p>This method may also be used to filter out specific layers. For instance, /Snon would remove the
+        /// <para>Converts an InChI into an InChI for validation purposes (the same as the -InChI2InChI option).</para>
+        /// <para>This method may also be used to filter out specific layers. For instance, /Snon would remove the
         /// stereochemical layer; Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers.
-        /// In order to keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed.</p>         
+        /// In order to keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed.</para>         
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -721,7 +721,7 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Checks if the string represents valid InChI/standard InChI.</p>
+        /// <para>Checks if the string represents valid InChI/standard InChI.</para>
         /// </summary>
         /// <param name="inchi">source InChI</param>
         /// <param name="strict">if <see langword="false"/>, just briefly check for proper layout (prefix, version, etc.) The result

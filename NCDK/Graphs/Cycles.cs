@@ -40,9 +40,9 @@ namespace NCDK.Graphs
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
-    /// <item><see cref="All()"/> - all simple cycles in the graph, the number of
+    /// <item><see cref="AllFinder()"/> - all simple cycles in the graph, the number of
     /// cycles generated may be very large and may not be feasible for some
-    /// molecules, such as, fullerene.</item> <item><see cref="MCB"/> (aka. SSSR) - minimum
+    /// molecules, such as, fullerene.</item> <item><see cref="MCBFinder"/> (aka. SSSR) - minimum
     /// cycle basis (MCB) of a graph, these cycles are linearly independent and can
     /// be used to generate all of cycles in the graph. It is important to note the
     /// MCB is not unique and a that there may be multiple equally valid MCBs. The
@@ -50,25 +50,25 @@ namespace NCDK.Graphs
     /// originally SSSR was defined as a strictly fundamental cycle basis {@cdk.cite
     /// Berger04}. Not every graph has a strictly fundamental cycle basis the
     /// definition has come to mean the MCB. Due to the non-uniqueness of the
-    /// MCB/SSSR its use is discouraged.</item> <item><see cref="Relevant"/> - relevant
+    /// MCB/SSSR its use is discouraged.</item> <item><see cref="RelevantFinder"/> - relevant
     /// cycles of a graph, the smallest set of uniquely defined short cycles. If a
     /// graph has a single MCB then the relevant cycles and MCB are the same. If the
     /// graph has multiple MCB then the relevant cycles is the union of all MCBs. The
     /// number of relevant cycles may be exponential but it is possible to determine
     /// how many relevant cycles there are in polynomial time without generating
     /// them. For chemical graphs the number of relevant cycles is usually within
-    /// manageable bounds. </item> <item><see cref="Essential"/> - essential cycles of a
+    /// manageable bounds. </item> <item><see cref="EssentialFinder"/> - essential cycles of a
     /// graph. Similar to the relevant cycles the set is unique for a graph. If a
     /// graph has a single MCB then the essential cycles and MCB are the same. If the
     /// graph has multiple MCB then the essential cycles is the intersect of all
     /// MCBs. That is the cycles which appear in every MCB. This means that is is
     /// possible to have no essential cycles in a molecule which clearly has cycles
-    /// (e.g. bridged system like bicyclo[2.2.2]octane). </item> <item> {@link
-    /// #TripletShort} - the triple short cycles are the shortest cycle through
+    /// (e.g. bridged system like bicyclo[2.2.2]octane). </item> 
+    /// <item><see cref="TripletShortFinder"/> - the triple short cycles are the shortest cycle through
     /// each triple of vertices. This allows one to generate the envelope rings of
     /// some molecules (e.g. naphthalene) without generating all cycles. The cycles
     /// are primarily useful for the CACTVS Substructure Keys (PubChem fingerprint).
-    /// </item> <item> <see cref="VertexShort"/> - the shortest cycles through each vertex.
+    /// </item> <item> <see cref="VertexShortFinder"/> - the shortest cycles through each vertex.
     /// Unlike the MCB, linear independence is not checked and it may not be possible
     /// to generate all other cycles from this set. In practice the vertex/edge short
     /// cycles are similar to MCB. </item> <item> <see cref="EdgeShort"/> - the shortest
@@ -97,6 +97,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="paths">the cycle paths (closed vertex walks)</param>
         /// <param name="container">the input container</param>
+        /// <param name="bondMap"></param>
         private Cycles(int[][] paths, IAtomContainer container, EdgeToBondMap bondMap)
         {
             this.paths = paths;
@@ -143,7 +144,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <example>
         /// <code>
-        /// CycleFinder cf = Cycles.All();
+        /// CycleFinder cf = Cycles.AllFinder;
         /// foreach (var m in ms) {
         ///     try {
         ///         Cycles   cycles = cf.Find(m);
@@ -156,13 +157,10 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>finder for all simple cycles</returns>
-        /// <seealso cref="All(IAtomContainer)"/>
+        /// <seealso cref="FindAll(IAtomContainer)"/>
         /// <seealso cref="AllCycles"/>
         /// <seealso cref="AllRingsFinder"/>
-        public static CycleFinder All()
-        {
-            return CycleComputation.ALL;
-        }
+        public static CycleFinder AllFinder => CycleComputation.All;
 
         /// <summary>
         /// All cycles of smaller than or equal to the specified length. If a length
@@ -171,7 +169,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="length">maximum size or cycle to find</param>
         /// <returns>cycle finder</returns>
-        public static CycleFinder All(int length)
+        public static CycleFinder GetAllFinder(int length)
         {
             return new AllUpToLength(length);
         }
@@ -196,7 +194,7 @@ namespace NCDK.Graphs
         /// <returns>finder for all simple cycles</returns>
         /// <seealso cref="FindMCB(IAtomContainer)"/>
         /// <seealso cref="MinimumCycleBasis"/>
-        public static CycleFinder MCB => CycleComputation.MCB;
+        public static CycleFinder MCBFinder => CycleComputation.MCB;
 
         /// <summary>
         /// A cycle finder which will compute the relevant cycle basis (RC) of a molecule.
@@ -217,7 +215,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static CycleFinder Relevant => CycleComputation.RELEVANT;
+        public static CycleFinder RelevantFinder => CycleComputation.RELEVANT;
 
         /// <summary>
         /// A cycle finder which will compute the essential cycles of a molecule.
@@ -238,7 +236,7 @@ namespace NCDK.Graphs
         /// <returns>finder for essential cycles</returns>
         /// <seealso cref="FindRelevant(IAtomContainer)"/>
         /// <seealso cref="RelevantCycles"/>
-        public static CycleFinder Essential => CycleComputation.ESSENTIAL;
+        public static CycleFinder EssentialFinder => CycleComputation.ESSENTIAL;
 
         /// <summary>
         /// A cycle finder which will compute the triplet short cycles of a
@@ -263,7 +261,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <seealso cref="FindTripletShort(IAtomContainer)"/>
         /// <seealso cref="TripletShortCycles"/>
-        public static CycleFinder TripletShort => CycleComputation.TRIPLET_SHORT;
+        public static CycleFinder TripletShortFinder => CycleComputation.TRIPLET_SHORT;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -287,7 +285,7 @@ namespace NCDK.Graphs
         /// </example>
         /// <returns>finder for vertex short cycles</returns>
         /// <seealso cref="FindVertexShort(IAtomContainer)"/>
-        public static CycleFinder VertexShort => CycleComputation.VERTEX_SHORT;
+        public static CycleFinder VertexShortFinder => CycleComputation.VERTEX_SHORT;
 
         /// <summary>
         /// Create a cycle finder which will compute the shortest cycles of each
@@ -314,9 +312,12 @@ namespace NCDK.Graphs
         public static CycleFinder EdgeShort => CycleComputation.EDGE_SHORT;
 
         /// <summary>
-        /// Create a cycle finder which will compute a set of cycles traditionally
+        /// Finder for cdk aromatic cycles.
+        /// </summary>
+        /// <remarks>
+        /// A cycle finder which will compute a set of cycles traditionally
         /// used by the CDK to test for aromaticity. This set of cycles is the
-        /// MCB/SSSR and <see cref="all"/> cycles for fused systems with 3 or less rings.
+        /// MCB/SSSR and <see cref="AllFinder()"/> cycles for fused systems with 3 or less rings.
         /// This allows on to test aromaticity of envelope rings in compounds such as
         /// azulene without generating an huge number of cycles for large fused
         /// systems (e.g. fullerenes). The use case was that computation of all
@@ -325,10 +326,10 @@ namespace NCDK.Graphs
         /// check all cycles/rings without using the MCB/SSSR. This computation will
         /// fail for complex fused systems but the failure is fast and one can easily
         /// 'fall back' to a smaller set of cycles after catching the exception.
-        /// </summary>
+        /// </remarks>
         /// <example>
         /// <code>
-        /// CycleFinder cf = Cycles.CDKAromaticSet;
+        /// CycleFinder cf = Cycles.CDKAromaticSetFinder;
         /// foreach (var m in ms) {
         ///     try {
         ///         Cycles   cycles = cf.Find(m);
@@ -339,9 +340,8 @@ namespace NCDK.Graphs
         /// }
         /// </code>
         /// </example>
-        /// <returns>finder for cdk aromatic cycles</returns>
         /// <seealso cref="FindEdgeShort(IAtomContainer)"/>
-        public static CycleFinder CDKAromaticSet => CycleComputation.CDK_AROMATIC;
+        public static CycleFinder CDKAromaticSetFinder => CycleComputation.CDK_AROMATIC;
 
         /// <summary>
         /// Find all cycles in a fused system or if there were too many cycles
@@ -363,11 +363,8 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>a cycle finder which computes all cycles if possible or provides the vertex short cycles</returns>
-        [Obsolete("use " + nameof(Or) +" to define a custom fall - back)")]
-        public static CycleFinder FindAllOrVertexShort()
-        {
-            return Or(All(), VertexShort);
-        }
+        [Obsolete("use " + nameof(Or) + " to define a custom fall - back)")]
+        public static CycleFinder AllOrVertexShortFinder { get; } = Or(AllFinder, VertexShortFinder);
 
         /// <summary>
         /// Find and mark all cyclic atoms and bonds in the provided molecule.
@@ -386,6 +383,8 @@ namespace NCDK.Graphs
         /// be created.
         /// </summary>
         /// <param name="mol">molecule</param>
+        /// <param name="adjList"></param>
+        /// <param name="bondMap"></param>
         /// <seealso cref="IMolecularEntity.IsInRing"/>
         public static void MarkRingAtomsAndBonds(IAtomContainer mol, int[][] adjList, EdgeToBondMap bondMap)
         {
@@ -417,12 +416,12 @@ namespace NCDK.Graphs
         /// <example>
         /// <code>
         /// // all cycles or all cycles size &lt;= 6
-        /// CycleFinder cf = Cycles.Or(Cycles.All(), Cycles.All(6));
+        /// CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.All(6));
         /// </code>
         /// It is possible to nest multiple levels.
         /// <code>
         /// // all cycles or relevant or essential
-        /// CycleFinder cf = Cycles.Or(Cycles.All(), Cycles.Or(Cycles.Relevant, Cycles.Essential));
+        /// CycleFinder cf = Cycles.Or(Cycles.AllFinder, Cycles.Or(Cycles.Relevant, Cycles.Essential));
         /// </code>
         /// </example>
         /// <param name="primary">primary cycle finding method</param>
@@ -437,7 +436,7 @@ namespace NCDK.Graphs
         /// Find all simple cycles in a molecule. The threshold values can not be
         /// tuned and is set at a value which will complete in reasonable time for
         /// most molecules. To change the threshold values please use the stand-alone
-        /// <see cref="AllCycles"/> or {@link org.openscience.cdk.ringsearch.AllRingsFinder}.
+        /// <see cref="AllCycles"/> or <see cref="AllRingsFinder"/>.
         /// All cycles is every possible simple cycle (i.e. non-repeating vertices)
         /// in the chemical graph. As an example - all simple cycles of anthracene
         /// includes, 3 cycles of length 6, 2 of length 10 and 1 of length 14.
@@ -455,15 +454,14 @@ namespace NCDK.Graphs
         /// }
         /// </code>
         /// </example>
-        ///
         /// <returns>all simple cycles</returns>
-        /// <exception cref="">the algorithm reached a limit which caused it to abort in reasonable time</exception>
-        /// <seealso cref="All()"/>
+        /// <exception cref="IntractableException">the algorithm reached a limit which caused it to abort in reasonable time</exception>
+        /// <seealso cref="AllFinder()"/>
         /// <seealso cref="AllCycles"/>
         /// <seealso cref="AllRingsFinder"/>
-        public static Cycles All(IAtomContainer container)
+        public static Cycles FindAll(IAtomContainer container)
         {
-            return All().Find(container, container.Atoms.Count);
+            return AllFinder.Find(container, container.Atoms.Count);
         }
 
         /// <summary>
@@ -472,10 +470,10 @@ namespace NCDK.Graphs
         /// <param name="container">input container</param>
         /// <param name="length">maximum size or cycle to find</param>
         /// <returns>all cycles</returns>
-        /// <exception cref="">computation was not feasible</exception>
-        public static Cycles All(IAtomContainer container, int length)
+        /// <exception cref="IntractableException">computation was not feasible</exception>
+        public static Cycles FindAll(IAtomContainer container, int length)
         {
-            return All().Find(container, length);
+            return AllFinder.Find(container, length);
         }
 
         /// <summary>
@@ -490,11 +488,11 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>cycles belonging to the minimum cycle basis</returns>
-        /// <seealso cref="MCB"/>
+        /// <seealso cref="MCBFinder"/>
         /// <seealso cref="MinimumCycleBasis"/>
         public static Cycles FindMCB(IAtomContainer container)
         {
-            return _invoke(MCB, container);
+            return _invoke(MCBFinder, container);
         }
 
         /// <summary>
@@ -510,7 +508,7 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>cycles belonging to the minimum cycle basis</returns>
-        /// <seealso cref="MCB"/>
+        /// <seealso cref="MCBFinder"/>
         /// <seealso cref="FindMCB(IAtomContainer)"/>
         /// <seealso cref="MinimumCycleBasis"/>
         public static Cycles SSSR(IAtomContainer container)
@@ -530,11 +528,11 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>relevant cycles</returns>
-        /// <seealso cref="Relevant"/>
+        /// <seealso cref="RelevantFinder"/>
         /// <seealso cref="RelevantCycles"/>
         public static Cycles FindRelevant(IAtomContainer container)
         {
-            return _invoke(Relevant, container);
+            return _invoke(RelevantFinder, container);
         }
 
         /// <summary>
@@ -549,11 +547,11 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>essential cycles</returns>
-        /// <seealso cref="Relevant"/>
+        /// <seealso cref="RelevantFinder"/>
         /// <seealso cref="RelevantCycles"/>
         public static Cycles FindEssential(IAtomContainer container)
         {
-            return _invoke(Essential, container);
+            return _invoke(EssentialFinder, container);
         }
 
         /// <summary>
@@ -568,11 +566,11 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>triplet short cycles</returns>
-        /// <seealso cref="TripletShort"/>
+        /// <seealso cref="TripletShortFinder"/>
         /// <seealso cref="TripletShortCycles"/>
         public static Cycles FindTripletShort(IAtomContainer container)
         {
-            return _invoke(TripletShort, container);
+            return _invoke(TripletShortFinder, container);
         }
 
         /// <summary>
@@ -587,11 +585,11 @@ namespace NCDK.Graphs
         /// </code>
         /// </example>
         /// <returns>triplet short cycles</returns>
-        /// <seealso cref="VertexShort"/>
+        /// <seealso cref="VertexShortFinder"/>
         /// <seealso cref="VertexShortCycles"/>
         public static Cycles FindVertexShort(IAtomContainer container)
         {
-            return _invoke(VertexShort, container);
+            return _invoke(VertexShortFinder, container);
         }
 
         /// <summary>
@@ -653,15 +651,15 @@ namespace NCDK.Graphs
             {
                 return finder.Find(container, length);
             }
-            catch (Intractable e)
+            catch (IntractableException e)
             {
-                throw new ApplicationException("Cycle computation should not be intractable: ", e);
+                throw new IntractableException($"Cycle computation should not be intractable: {e.Message}");
             }
         }
 
         /// <summary>Interbank enumeration of cycle finders.</summary>
         private abstract class CycleComputation
-                  : CycleFinder
+            : CycleFinder
         {
             public static CycleComputation MCB = new MCB_CycleComputation();
             class MCB_CycleComputation
@@ -700,7 +698,7 @@ namespace NCDK.Graphs
                 }
             }
 
-            public static CycleComputation ALL = new ALL_CycleComputation();
+            public static CycleComputation All = new ALL_CycleComputation();
             class ALL_CycleComputation
                 : CycleComputation
             {
@@ -710,7 +708,7 @@ namespace NCDK.Graphs
                     int threshold = 684; // see. AllRingsFinder.Threshold.Pubchem_99
                     AllCycles ac = new AllCycles(graph, Math.Min(length, graph.Length), threshold);
                     if (!ac.Completed)
-                        throw new Intractable("A large number of cycles were being generated and the"
+                        throw new IntractableException("A large number of cycles were being generated and the"
                                 + " computation was aborted. Please use AllCycles/AllRingsFinder with"
                                 + " and specify a larger threshold or use a CycleFinger with a fall-back"
                                 + " to a set unique cycles: e.g. Cycles.FindAllOrVertexShort().");
@@ -773,7 +771,7 @@ namespace NCDK.Graphs
                     }
                     else
                     {
-                        return ALL.Apply(graph, length);
+                        return All.Apply(graph, length);
                     }
                 }
             }
@@ -797,8 +795,9 @@ namespace NCDK.Graphs
             /// biconnected.
             /// </summary>
             /// <param name="graph">the graph (adjacency list)</param>
+            /// <param name="length"></param>
             /// <returns>the cycles of the graph</returns>
-            /// <exception cref="">the computation reached a set limit</exception>
+            /// <exception cref="Exception">the computation reached a set limit</exception>
             public abstract int[][] Apply(int[][] graph, int length);
 
             /// <inheritdoc/>
@@ -933,7 +932,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Obtain the bond between the atoms at index 'u' and 'v'. If the 'bondMap'
+        /// Obtain the bond between the atoms at index <paramref name="u"/> and 'v'. If the 'bondMap'
         /// is non-null it is used for direct lookup otherwise the slower linear
         /// lookup in 'container' is used.
         /// </summary>
@@ -1014,13 +1013,14 @@ namespace NCDK.Graphs
             /// Find rings in a biconnected component.
             /// </summary>
             /// <param name="g">adjacency list</param>
+            /// <param name="length"></param>
             /// <returns></returns>
-            /// <exception cref="">computation was not feasible</exception>
+            /// <exception cref="IntractableException">computation was not feasible</exception>
             private int[][] FindInFUsed(int[][] g, int length)
             {
                 AllCycles allCycles = new AllCycles(g, Math.Min(g.Length, length), threshold);
                 if (!allCycles.Completed)
-                    throw new Intractable("A large number of cycles were being generated and the"
+                    throw new IntractableException("A large number of cycles were being generated and the"
                             + " computation was aborted. Please us AllCycles/AllRingsFinder with"
                             + " and specify a larger threshold or an alternative cycle set.");
                 return allCycles.GetPaths();
@@ -1065,7 +1065,7 @@ namespace NCDK.Graphs
                 {
                     return primary.Find(molecule, graph, length);
                 }
-                catch (Intractable)
+                catch (IntractableException)
                 {
                     // auxiliary may still thrown an exception
                     return auxiliary.Find(molecule, graph, length);

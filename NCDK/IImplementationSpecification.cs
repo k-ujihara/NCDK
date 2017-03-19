@@ -16,25 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-
 namespace NCDK
 {
     /// <summary>
     /// Interface that is used to describe the specification of a certain
     /// implementation of an algorithm.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public interface IImplementationSpecification
     {
         /// <summary>
-        /// Pointer to a dictionary or ontology describing a unique
-        /// algorithm.
-        ///
-        /// <returns>the URN pointing to a (virtual) dictionary or ontology.</returns>
+        /// Pointer to a dictionary or ontology describing a unique algorithm.
         /// </summary>
+        /// <returns>the URN pointing to a (virtual) dictionary or ontology.</returns>
         string SpecificationReference { get; }
 
         /// <summary>
@@ -48,17 +43,14 @@ namespace NCDK
         /// <summary>
         /// Identifier for this implementation which must include
         /// version information. The format is free.
-        ///
-        /// <returns>a free format identifier for this implementation</returns>
         /// </summary>
+        /// <returns>a free format identifier for this implementation</returns>
         string ImplementationIdentifier { get; }
 
         /// <summary>
-        /// Human-readable name for the vendor that holds copyright for this
-        /// implementation.
-        ///
-        /// <returns>the copyright holder of the implementation</returns>
+        /// Human-readable name for the vendor that holds copyright for this implementation.
         /// </summary>
+        /// <returns>the copyright holder of the implementation</returns>
         string ImplementationVendor { get; }
     }
 }

@@ -30,10 +30,10 @@ namespace NCDK.SMSD.Helper
 {
     /// <summary>
     /// Class that stores raw Mapping(s) after each algorithm is executed.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class FinalMappings : IFinalMapping
     {
         private static List<IDictionary<int, int>> mappings = null;

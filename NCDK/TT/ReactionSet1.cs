@@ -1,23 +1,26 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
+/* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,30 +28,69 @@ using System.Text;
 
 namespace NCDK.Default
 {
-    [Serializable]
+    /// <summary>
+    /// A set of reactions, for example those taking part in a reaction.
+    /// </summary>
+    /// <example>
+    /// To retrieve the reactions from the set, there are two options:
+    /// <code>
+    /// Iterator reactions = reactionSet.reactions();
+    /// while (reactions.hasNext()) {
+    ///     IReaction reaction = (IReaction)reactions.next();
+    /// }
+    /// </code>
+    ///
+    /// and
+    ///
+    /// <code>
+    /// for (int i=0; i &lt; reactionSet.getReactionCount(); i++) {
+    ///    IReaction reaction = reactionSet.getReaction(i);
+    /// }
+    /// </code>
+    /// </example>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @cdk.keyword reaction
+	[Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
-        private IList<IReaction> reactions = new List<IReaction>();
+        /// <summary>
+        /// Array of Reactions.
+        /// </summary>
+		private IList<IReaction> reactions = new List<IReaction>();
 
+        /// <summary>
+        /// Constructs an empty ReactionSet.
+        /// </summary>
         public ReactionSet()
         {
         }
 
-        public virtual IReaction this[int index]
+        /// <summary>
+        /// Returns the Reaction at position <paramref name="number"/> in the container.
+        /// </summary>
+        /// <param name="number">The position of the Reaction to be returned</param>
+        /// <returns>The Reaction at position <paramref name="number"/></returns>
+        public virtual IReaction this[int number]
         {
-            get { return reactions[index]; }
+            get { return reactions[number]; }
 
             set
             {
-                reactions[index] = value;
+                reactions[number] = value;
                 value.Listeners.Add(this);
             }
         }
 
         public int Count => reactions.Count;
         public bool IsReadOnly => reactions.IsReadOnly;
-        public void Add(IReaction reaction)
+        
+		/// <summary>
+        /// Adds an reaction to this container.
+        /// </summary>
+        /// <param name="reaction">The reaction to be added to this container</param>
+		public void Add(IReaction reaction)
         {
             reactions.Add(reaction);
              NotifyChanged();         }
@@ -83,14 +125,18 @@ namespace NCDK.Default
              NotifyChanged();             return ret;
         }
 
-        public void RemoveAt(int index)
+        /// <summary>
+        /// Remove a reaction from this set.
+        /// </summary>
+        /// <param name="index">The position of the reaction to be removed.</param>
+		public void RemoveAt(int index)
         {
             reactions.RemoveAt(index);
              NotifyChanged();         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public bool IsEmpty => reactions.Count == 0;
+        public bool IsEmpty() => reactions.Count == 0;
 
         public override string ToString()
         {
@@ -121,30 +167,69 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
-    [Serializable]
+    /// <summary>
+    /// A set of reactions, for example those taking part in a reaction.
+    /// </summary>
+    /// <example>
+    /// To retrieve the reactions from the set, there are two options:
+    /// <code>
+    /// Iterator reactions = reactionSet.reactions();
+    /// while (reactions.hasNext()) {
+    ///     IReaction reaction = (IReaction)reactions.next();
+    /// }
+    /// </code>
+    ///
+    /// and
+    ///
+    /// <code>
+    /// for (int i=0; i &lt; reactionSet.getReactionCount(); i++) {
+    ///    IReaction reaction = reactionSet.getReaction(i);
+    /// }
+    /// </code>
+    /// </example>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @cdk.keyword reaction
+	[Serializable]
     public class ReactionSet
         : ChemObject, IReactionSet, IChemObjectListener, ICloneable
     {
-        private IList<IReaction> reactions = new List<IReaction>();
+        /// <summary>
+        /// Array of Reactions.
+        /// </summary>
+		private IList<IReaction> reactions = new List<IReaction>();
 
+        /// <summary>
+        /// Constructs an empty ReactionSet.
+        /// </summary>
         public ReactionSet()
         {
         }
 
-        public virtual IReaction this[int index]
+        /// <summary>
+        /// Returns the Reaction at position <paramref name="number"/> in the container.
+        /// </summary>
+        /// <param name="number">The position of the Reaction to be returned</param>
+        /// <returns>The Reaction at position <paramref name="number"/></returns>
+        public virtual IReaction this[int number]
         {
-            get { return reactions[index]; }
+            get { return reactions[number]; }
 
             set
             {
-                reactions[index] = value;
+                reactions[number] = value;
                 value.Listeners.Add(this);
             }
         }
 
         public int Count => reactions.Count;
         public bool IsReadOnly => reactions.IsReadOnly;
-        public void Add(IReaction reaction)
+        
+		/// <summary>
+        /// Adds an reaction to this container.
+        /// </summary>
+        /// <param name="reaction">The reaction to be added to this container</param>
+		public void Add(IReaction reaction)
         {
             reactions.Add(reaction);
                     }
@@ -179,14 +264,18 @@ namespace NCDK.Silent
                         return ret;
         }
 
-        public void RemoveAt(int index)
+        /// <summary>
+        /// Remove a reaction from this set.
+        /// </summary>
+        /// <param name="index">The position of the reaction to be removed.</param>
+		public void RemoveAt(int index)
         {
             reactions.RemoveAt(index);
                     }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public bool IsEmpty => reactions.Count == 0;
+        public bool IsEmpty() => reactions.Count == 0;
 
         public override string ToString()
         {

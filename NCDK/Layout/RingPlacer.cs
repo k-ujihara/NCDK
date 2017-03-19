@@ -39,13 +39,11 @@ namespace NCDK.Layout
     /// Various situations are supported, like condensation, spiro-attachment, etc.
     /// They can be used for Automated Structure Diagram Generation or in the interactive
     /// buildup of ringsystems by the user.
-    ///
+    /// </summary>
     // @cdk.module sdg
     // @cdk.githash
-    ///*/
     public class RingPlacer
     {
-
         // indicate we want to snap to regular polygons for bridges, not generally applicable
         // but useful for macro cycles
         internal const string SNAP_HINT = "sdg.snap.bridged";
@@ -263,7 +261,6 @@ namespace NCDK.Layout
             ringCenterVector = ringCenterVector * (radius - offset);
             ringCenter += ringCenterVector;
 
-
             Vector2 originRingCenterVector = ringCenter;
 
             bondAtom1Vector -= originRingCenterVector;
@@ -379,8 +376,7 @@ namespace NCDK.Layout
         /// <param name="sharedAtomsCenter">The geometric center of these atoms</param>
         /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
         /// <param name="bondLength">The standard bondlength</param>
-        public void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter,
-                Vector2 ringCenterVector, double bondLength)
+        public void PlaceSpiroRing(IRing ring, IAtomContainer sharedAtoms, Vector2 sharedAtomsCenter, Vector2 ringCenterVector, double bondLength)
         {
             Debug.WriteLine("placeSpiroRing");
             double radius = GetNativeRingRadius(ring, bondLength);
@@ -579,12 +575,12 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="a">first coordinate</param>
         /// <param name="b">second coordinate</param>
-        /// <param name="ref">reference vector</param>
+        /// <param name="reference">reference vector</param>
         /// <returns>perpendicular vector</returns>
-        private static Vector2 GetPerpendicular(Vector2 a, Vector2 b, Vector2 ref_)
+        private static Vector2 GetPerpendicular(Vector2 a, Vector2 b, Vector2 reference)
         {
             Vector2 pVec = new Vector2(-(a.Y - b.Y), a.X - b.X);
-            if (Vector2.Dot(pVec, ref_) < 0)
+            if (Vector2.Dot(pVec, reference) < 0)
                 pVec = -pVec;
             return pVec;
         }
@@ -732,7 +728,6 @@ namespace NCDK.Layout
                         (numSharedAtoms == 1 && handleType == SPIRO) ||
                         (numSharedAtoms > 2 && handleType == BRIDGED))
                     {
-
                         Vector2 sharedAtomsCenter = GeometryUtil.Get2DCenter(sharedAtoms);
                         Vector2 oldRingCenter = GeometryUtil.Get2DCenter(ring);
                         Vector2 tempVector = sharedAtomsCenter;

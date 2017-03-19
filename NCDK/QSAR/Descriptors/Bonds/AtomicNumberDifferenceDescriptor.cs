@@ -26,15 +26,14 @@ using System.IO;
 namespace NCDK.QSAR.Descriptors.Bonds
 {
     /// <summary>
-    /// Describes the imbalance in atomic number of the IBond.
-    ///
+    /// Describes the imbalance in atomic number of the <see cref="IBond"/> .
+    /// </summary>
     // @author      Egon Willighagen
     // @cdk.created 2007-12-29
     // @cdk.module  qsarbond
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
-    /// </summary>
     public class AtomicNumberDifferenceDescriptor : AbstractBondDescriptor, IBondDescriptor
     {
         private static IsotopeFactory factory = null;

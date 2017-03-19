@@ -62,7 +62,7 @@ namespace NCDK.Fragment
         private const string IS_LINKER_ATOM = "linker";
         private const string IS_CONNECTED_TO_RING = "rcon";
 
-        MoleculeHashGenerator generator;
+        IMoleculeHashGenerator generator;
         SmilesGenerator smigen;
 
         IDictionary<long, IAtomContainer> frameMap = new Dictionary<long, IAtomContainer>();
@@ -96,8 +96,8 @@ namespace NCDK.Fragment
         /// </summary>
         /// <param name="singleFrameworkOnly">if <see langword="true"/>, only the true Murcko framework is generated.</param>
         /// <param name="minimumFragmentSize">the smallest size of fragment to consider</param>
-        /// <param name="generator">An instance of a <see cref="MoleculeHashGenerator"/> to be used to check for duplicate fragments</param>
-        public MurckoFragmenter(bool singleFrameworkOnly, int minimumFragmentSize, MoleculeHashGenerator generator)
+        /// <param name="generator">An instance of a <see cref="IMoleculeHashGenerator"/> to be used to check for duplicate fragments</param>
+        public MurckoFragmenter(bool singleFrameworkOnly, int minimumFragmentSize, IMoleculeHashGenerator generator)
         {
             this.singleFrameworkOnly = singleFrameworkOnly;
             this.minimumFragmentSize = minimumFragmentSize;
@@ -192,7 +192,7 @@ namespace NCDK.Fragment
                 if (IsZeroAtomLinker(bond)) bondsToDelete.Add(bond);
             }
             foreach (var bond in bondsToDelete)
-                clone.Remove(bond);
+                clone.Bonds.Remove(bond);
 
             // at this point, the ring systems are disconnected components
             var ringSystems = ConnectivityChecker.PartitionIntoMolecules(clone);

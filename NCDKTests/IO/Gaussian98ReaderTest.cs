@@ -49,7 +49,7 @@ namespace NCDK.IO
                 atomContainer = ac;
                 for (int g = 0; g < atomContainer.Atoms.Count; g++)
                 {
-                    obj = atomContainer.Atoms[g].GetProperty<double?>(CDKPropertyName.ISOTROPIC_SHIELDING);
+                    obj = atomContainer.Atoms[g].GetProperty<double?>(CDKPropertyName.IsotropicShielding);
                     if (obj != null)
                     {
                         //shielding = (double)object;

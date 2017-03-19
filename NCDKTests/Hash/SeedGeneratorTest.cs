@@ -24,7 +24,7 @@ namespace NCDK.Hash
 
             var m_container = new Mock<IAtomContainer>(); var container = m_container.Object;
 
-            var m_encoder = new Mock<AtomEncoder>(); var encoder = m_encoder.Object;
+            var m_encoder = new Mock<IAtomEncoder>(); var encoder = m_encoder.Object;
             SeedGenerator generator = new SeedGenerator(encoder);
 
             var m_c1 = new Mock<IAtom>(); var c1 = m_c1.Object;
@@ -68,7 +68,7 @@ namespace NCDK.Hash
             var m_m1 = new Mock<IAtomContainer>(); var m1 = m_m1.Object;
             var m_m2 = new Mock<IAtomContainer>(); var m2 = m_m2.Object;
 
-            var m_encoder = new Mock<AtomEncoder>(); var encoder = m_encoder.Object;
+            var m_encoder = new Mock<IAtomEncoder>(); var encoder = m_encoder.Object;
             SeedGenerator generator = new SeedGenerator(encoder);
 
             var m_c1 = new Mock<IAtom>(); var c1 = m_c1.Object;

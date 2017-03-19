@@ -31,20 +31,23 @@ using System.Diagnostics;
 using System.Linq;
 using NCDK.Numerics;
 
-namespace NCDK.Layout {
+namespace NCDK.Layout
+{
     /// <summary>
     /// Assigns non-planar labels (wedge/hatch) to the tetrahedral and extended tetrahedral 
-    /// stereocentres in a 2D depiction. Labels are assigned to atoms using the following priority. <ol> <li>bond to non-stereo atoms</li> <li>acyclic
-    /// bonds</li> <li>bonds to atoms with lower degree (i.e. terminal)</li> <li>lower atomic number</li>
-    /// </ol>
-    /// <p/>
+    /// stereocentres in a 2D depiction. Labels are assigned to atoms using the following priority. 
+    /// <list type="bullet">
+    /// <item>bond to non-stereo atoms</item> 
+    /// <item>acyclic bonds</item> 
+    /// <item>bonds to atoms with lower degree (i.e. terminal)</item>
+    /// <item>lower atomic number</item>
+    /// </list>
     /// Unspecified bonds are also marked.
-    /// 
+    /// </summary>
     // @author John May
     // @cdk.module sdg
-    /// </summary>
-    internal sealed class NonplanarBonds {
-
+    internal sealed class NonplanarBonds
+    {
         /// <summary>The structure we are assigning labels to.</summary>
         private readonly IAtomContainer container;
 
@@ -75,7 +78,8 @@ namespace NCDK.Layout {
         /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be</exception>
         ///                                  assigned to a tetrahedral centre
         /// </summary>
-        public static IAtomContainer Assign(IAtomContainer container) {
+        public static IAtomContainer Assign(IAtomContainer container)
+        {
             GraphUtil.EdgeToBondMap edgeToBond = GraphUtil.EdgeToBondMap.WithSpaceFor(container);
             new NonplanarBonds(container, GraphUtil.ToAdjList(container, edgeToBond), edgeToBond);
             return container;
@@ -89,7 +93,8 @@ namespace NCDK.Layout {
         /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be</exception>
         ///                                  assigned to a tetrahedral centre
         /// </summary>
-        NonplanarBonds(IAtomContainer container, int[][] g, GraphUtil.EdgeToBondMap edgeToBond) {
+        NonplanarBonds(IAtomContainer container, int[][] g, GraphUtil.EdgeToBondMap edgeToBond)
+        {
 
             this.container = container;
             this.tetrahedralElements = new ITetrahedralChirality[container.Atoms.Count];
@@ -102,8 +107,10 @@ namespace NCDK.Layout {
             // clear existing up/down labels to avoid collision, this isn't strictly
             // needed if the atom positions weren't adjusted but we can't guarantee
             // that so it's safe to clear them
-            foreach (var bond in container.Bonds) {
-                switch (bond.Stereo.Ordinal) {
+            foreach (var bond in container.Bonds)
+            {
+                switch (bond.Stereo.Ordinal)
+                {
                     case BondStereo.O.Up:
                     case BondStereo.O.UpInverted:
                     case BondStereo.O.Down:
@@ -113,7 +120,8 @@ namespace NCDK.Layout {
                 }
             }
 
-            for (int i = 0; i < container.Atoms.Count; i++) {
+            for (int i = 0; i < container.Atoms.Count; i++)
+            {
                 IAtom atom = container.Atoms[i];
                 atomToIndex[atom] = i;
                 if (atom.Point2D == null)
@@ -123,14 +131,17 @@ namespace NCDK.Layout {
             // index the tetrahedral elements by their focus
             int[] foci = new int[container.Atoms.Count];
             int n = 0;
-            foreach (var element in container.StereoElements) {
-                if (element is ITetrahedralChirality) {
+            foreach (var element in container.StereoElements)
+            {
+                if (element is ITetrahedralChirality)
+                {
                     ITetrahedralChirality tc = (ITetrahedralChirality)element;
                     int focus = atomToIndex[tc.ChiralAtom];
                     tetrahedralElements[focus] = tc;
                     foci[n++] = focus;
                 }
-                else if (element is IDoubleBondStereochemistry) {
+                else if (element is IDoubleBondStereochemistry)
+                {
                     IBond doubleBond = ((IDoubleBondStereochemistry)element).StereoBond;
                     doubleBondElements[atomToIndex[doubleBond.Atoms[0]]] =
                             doubleBondElements[atomToIndex[doubleBond.Atoms[1]]] = (IDoubleBondStereochemistry)element;
@@ -157,7 +168,8 @@ namespace NCDK.Layout {
             }
 
             // Unspecified double bond, indicated with an up/down wavy bond
-            foreach (var bond in FindUnspecifiedDoubleBonds(g)) {
+            foreach (var bond in FindUnspecifiedDoubleBonds(g))
+            {
                 LabelUnspecified(bond);
             }
         }
@@ -183,7 +195,8 @@ namespace NCDK.Layout {
         ///
         /// <param name="element">a extended tetrahedral element</param>
         /// </summary>
-        private void Label(ExtendedTetrahedral element) {
+        private void Label(ExtendedTetrahedral element)
+        {
 
             IAtom focus = element.Focus;
             IAtom[] atoms = element.Peripherals;
@@ -193,7 +206,8 @@ namespace NCDK.Layout {
 
             var focusBonds = container.GetConnectedBonds(focus);
 
-            if (focusBonds.Count() != 2) {
+            if (focusBonds.Count() != 2)
+            {
                 Trace.TraceWarning(
                     "Non-cumulated carbon presented as the focus of extended tetrahedral stereo configuration");
                 return;
@@ -247,21 +261,28 @@ namespace NCDK.Layout {
 
             // we now check which side was more favourable and assign two labels
             // to that side only
-            if (priority[0] + priority[1] < priority[2] + priority[3]) {
-                if (priority[0] < 5) {
+            if (priority[0] + priority[1] < priority[2] + priority[3])
+            {
+                if (priority[0] < 5)
+                {
                     bonds[0].SetAtoms(new IAtom[] { left, atoms[0] });
                     bonds[0].Stereo = labels[0];
                 }
-                if (priority[1] < 5) {
+                if (priority[1] < 5)
+                {
                     bonds[1].SetAtoms(new IAtom[] { left, atoms[1] });
                     bonds[1].Stereo = labels[1];
                 }
-            } else {
-                if (priority[2] < 5) {
+            }
+            else
+            {
+                if (priority[2] < 5)
+                {
                     bonds[2].SetAtoms(new IAtom[] { right, atoms[2] });
                     bonds[2].Stereo = labels[2];
                 }
-                if (priority[3] < 5) {
+                if (priority[3] < 5)
+                {
                     bonds[3].SetAtoms(new IAtom[] { right, atoms[3] });
                     bonds[3].Stereo = labels[3];
                 }
@@ -275,7 +296,8 @@ namespace NCDK.Layout {
         /// <param name="element">a tetrahedral element</param>
         /// <exception cref="ArgumentException">the labels could not be assigned</exception>
         /// </summary>
-        private void Label(ITetrahedralChirality element) {
+        private void Label(ITetrahedralChirality element)
+        {
 
             IAtom focus = element.ChiralAtom;
             var atoms = element.Ligands;
@@ -287,10 +309,14 @@ namespace NCDK.Layout {
             // unspecified centre, no need to assign labels
             if (p == 0) return;
 
-            for (int i = 0; i < 4; i++) {
-                if (atoms[i] == focus) {
+            for (int i = 0; i < 4; i++)
+            {
+                if (atoms[i] == focus)
+                {
                     p *= Parity(i); // implicit H, adjust parity
-                } else {
+                }
+                else
+                {
                     bonds[n] = container.GetBond(focus, atoms[i]);
                     atoms[n] = atoms[i];
                     n++;
@@ -308,15 +334,18 @@ namespace NCDK.Layout {
             // be inverted, atoms could be laid out like this automatically, consider
             // CC1C[C@H]2CC[C@@H]1C2
             int invert = -1;
-            if (n == 3) {
+            if (n == 3)
+            {
                 // find a triangle of non-sequential neighbors (sorted clockwise)
                 // which has anti-clockwise winding
-                for (int i = 0; i < n; i++) {
+                for (int i = 0; i < n; i++)
+                {
                     Vector2 a = atoms[rank[i]].Point2D.Value;
                     Vector2 b = focus.Point2D.Value;
                     Vector2 c = atoms[rank[(i + 2) % n]].Point2D.Value;
                     double det = (a.X - c.X) * (b.Y - c.Y) - (a.Y - c.Y) * (b.X - c.X);
-                    if (det > 0) {
+                    if (det > 0)
+                    {
                         invert = rank[(i + 1) % n];
                         break;
                     }
@@ -325,7 +354,8 @@ namespace NCDK.Layout {
 
             // assign all up/down labels to an auxiliary array
             BondStereo[] labels = new BondStereo[n];
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < n; i++)
+            {
                 int v = rank[i];
 
                 // 4 neighbors (invert every other one)
@@ -335,9 +365,11 @@ namespace NCDK.Layout {
             }
 
             // set the label for the highest priority and available bond
-            foreach (var v in Priority(atomToIndex[focus], atoms, n)) {
+            foreach (var v in Priority(atomToIndex[focus], atoms, n))
+            {
                 IBond bond = bonds[v];
-                if (bond.Stereo == BondStereo.None && bond.Order == BondOrder.Single) {
+                if (bond.Stereo == BondStereo.None && bond.Order == BondOrder.Single)
+                {
                     bond.SetAtoms(new IAtom[] { focus, atoms[v] }); // avoids UpInverted/DownInverted
                     bond.Stereo = labels[v];
                     return;
@@ -355,7 +387,8 @@ namespace NCDK.Layout {
         /// <param name="x">a value</param>
         /// <returns>the parity</returns>
         /// </summary>
-        private int Parity(int x) {
+        private int Parity(int x)
+        {
             return (x & 0x1) == 1 ? -1 : +1;
         }
 
@@ -366,8 +399,10 @@ namespace NCDK.Layout {
         /// <param name="stereo">configuration</param>
         /// <returns>the parity</returns>
         /// </summary>
-        private int Parity(TetrahedralStereo stereo) {
-            switch (stereo.Ordinal) {
+        private int Parity(TetrahedralStereo stereo)
+        {
+            switch (stereo.Ordinal)
+            {
                 case TetrahedralStereo.O.Clockwise:
                     return -1;
                 case TetrahedralStereo.O.AntiClockwise:
@@ -383,7 +418,8 @@ namespace NCDK.Layout {
         /// <param name="i">atom index</param>
         /// <returns>number of adjacent centres</returns>
         /// </summary>
-        private int NAdjacentCentres(int i) {
+        private int NAdjacentCentres(int i)
+        {
             int n = 0;
             foreach (var atom in tetrahedralElements[i].Ligands)
                 if (tetrahedralElements[atomToIndex[atom]] != null) n++;
@@ -399,14 +435,17 @@ namespace NCDK.Layout {
         /// <param name="n">number of atoms</param>
         /// <returns>prioritised indices</returns>
         /// </summary>
-        private int[] Priority(int focus, IList<IAtom> atoms, int n) {
+        private int[] Priority(int focus, IList<IAtom> atoms, int n)
+        {
             int[] rank = new int[n];
             for (int i = 0; i < n; i++)
                 rank[i] = i;
-            for (int j = 1; j < n; j++) {
+            for (int j = 1; j < n; j++)
+            {
                 int v = rank[j];
                 int i = j - 1;
-                while ((i >= 0) && HasPriority(focus, atomToIndex[atoms[v]], atomToIndex[atoms[rank[i]]])) {
+                while ((i >= 0) && HasPriority(focus, atomToIndex[atoms[v]], atomToIndex[atoms[rank[i]]]))
+                {
                     rank[i + 1] = rank[i--];
                 }
                 rank[i + 1] = v;
@@ -423,7 +462,8 @@ namespace NCDK.Layout {
         /// <param name="j">adjacent atom index</param>
         /// <returns>whether atom i has priority</returns>
         /// </summary>
-        bool HasPriority(int focus, int i, int j) {
+        bool HasPriority(int focus, int i, int j)
+        {
 
             // prioritise bonds to non-centres
             if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
@@ -466,12 +506,15 @@ namespace NCDK.Layout {
         /// <param name="n">the number of neighbors</param>
         /// <returns>the permutation parity of the sort</returns>
         /// </summary>
-        private int SortClockwise(int[] indices, IAtom focus, IList<IAtom> atoms, int n) {
+        private int SortClockwise(int[] indices, IAtom focus, IList<IAtom> atoms, int n)
+        {
             int x = 0;
-            for (int j = 1; j < n; j++) {
+            for (int j = 1; j < n; j++)
+            {
                 int v = indices[j];
                 int i = j - 1;
-                while ((i >= 0) && Less(v, indices[i], atoms, focus.Point2D.Value)) {
+                while ((i >= 0) && Less(v, indices[i], atoms, focus.Point2D.Value))
+                {
                     indices[i + 1] = indices[i--];
                     x++;
                 }
@@ -491,14 +534,16 @@ namespace NCDK.Layout {
         /// <returns>atom i is before j</returns>
         /// @see <a href="http://stackoverflow.com/a/6989383">Sort points in clockwise order, ciamej</a>
         /// </summary>
-        static bool Less(int i, int j, IList<IAtom> atoms, Vector2 center) {
+        static bool Less(int i, int j, IList<IAtom> atoms, Vector2 center)
+        {
 
             Vector2 a = atoms[i].Point2D.Value;
             Vector2 b = atoms[j].Point2D.Value;
 
             if (a.X - center.X >= 0 && b.X - center.X < 0) return true;
             if (a.X - center.X < 0 && b.X - center.X >= 0) return false;
-            if (a.X - center.X == 0 && b.X - center.X == 0) {
+            if (a.X - center.X == 0 && b.X - center.X == 0)
+            {
                 if (a.Y - center.Y >= 0 || b.Y - center.Y >= 0) return a.Y > b.Y;
                 return b.Y > a.Y;
             }
@@ -522,7 +567,8 @@ namespace NCDK.Layout {
         /// 
         /// <param name="doubleBond">the bond to mark as unspecified</param>
         /// </summary>
-        private void LabelUnspecified(IBond doubleBond) {
+        private void LabelUnspecified(IBond doubleBond)
+        {
 
             IAtom aBeg = doubleBond.Atoms[0];
             IAtom aEnd = doubleBond.Atoms[1];
@@ -535,27 +581,33 @@ namespace NCDK.Layout {
             IAtom[] adj = new IAtom[4];
 
             // build up adj list of all potential atoms
-            foreach (var neighbor in graph[beg]) {
+            foreach (var neighbor in graph[beg])
+            {
                 IBond bond = edgeToBond[beg, neighbor];
-                if (bond.Order == BondOrder.Single) {
+                if (bond.Order == BondOrder.Single)
+                {
                     if (nAdj == 4) return; // more than 4? not a stereo-dbond
                     focus[nAdj] = aBeg;
                     adj[nAdj++] = container.Atoms[neighbor];
                 }
                 // conjugated and someone else has marked it as unspecified
-                if (bond.Stereo == BondStereo.UpOrDown || bond.Stereo == BondStereo.UpOrDownInverted) {
+                if (bond.Stereo == BondStereo.UpOrDown || bond.Stereo == BondStereo.UpOrDownInverted)
+                {
                     return;
                 }
             }
-            foreach (var neighbor in graph[end]) {
+            foreach (var neighbor in graph[end])
+            {
                 IBond bond = edgeToBond[end, neighbor];
-                if (bond.Order == BondOrder.Single) {
+                if (bond.Order == BondOrder.Single)
+                {
                     if (nAdj == 4) return; // more than 4? not a stereo-dbond
                     focus[nAdj] = aEnd;
                     adj[nAdj++] = container.Atoms[neighbor];
                 }
                 // conjugated and someone else has marked it as unspecified
-                if (bond.Stereo == BondStereo.UpOrDown || bond.Stereo == BondStereo.UpOrDownInverted) {
+                if (bond.Stereo == BondStereo.UpOrDown || bond.Stereo == BondStereo.UpOrDownInverted)
+                {
                     return;
                 }
             }
@@ -564,9 +616,11 @@ namespace NCDK.Layout {
 
             // set the bond to up/down wavy to mark unspecified stereochemistry taking care not
             // to accidentally mark another stereocentre as unspecified
-            for (int i = 0; i < nAdj; i++) {
+            for (int i = 0; i < nAdj; i++)
+            {
                 if (doubleBondElements[atomToIndex[adj[rank[i]]]] == null &&
-                        tetrahedralElements[atomToIndex[adj[rank[i]]]] == null) {
+                        tetrahedralElements[atomToIndex[adj[rank[i]]]] == null)
+                {
                     edgeToBond[atomToIndex[focus[rank[i]]],
                                    atomToIndex[adj[rank[i]]]].Stereo = BondStereo.UpOrDown;
                     return;
@@ -583,9 +637,11 @@ namespace NCDK.Layout {
         /// 
         /// <returns>set of double bonds</returns>
         /// </summary>
-        private List<IBond> FindUnspecifiedDoubleBonds(int[][] adjList) {
+        private List<IBond> FindUnspecifiedDoubleBonds(int[][] adjList)
+        {
             var unspecifiedDoubleBonds = new List<IBond>();
-            foreach (var bond in container.Bonds) {
+            foreach (var bond in container.Bonds)
+            {
                 // non-double bond, ignore it
                 if (bond.Order != BondOrder.Double)
                     continue;
@@ -620,10 +676,12 @@ namespace NCDK.Layout {
             return unspecifiedDoubleBonds;
         }
 
-        private bool HasLinearEqualPaths(int[][] adjList, int start, int prev) {
+        private bool HasLinearEqualPaths(int[][] adjList, int start, int prev)
+        {
             int a = -1;
             int b = -1;
-            foreach (var w in adjList[start]) {
+            foreach (var w in adjList[start])
+            {
                 if (w == prev) continue;
                 else if (a == -1) a = w;
                 else if (b == -1) b = w;
@@ -639,7 +697,8 @@ namespace NCDK.Layout {
                 return false;
             IAtom aNext = aAtom;
             IAtom bNext = bAtom;
-            while (aNext != null && bNext != null) {
+            while (aNext != null && bNext != null)
+            {
                 aAtom = aNext;
                 bAtom = bNext;
                 visit.Add(aAtom);
@@ -658,24 +717,28 @@ namespace NCDK.Layout {
                 var hCntA = aAtom.ImplicitHydrogenCount;
                 var hCntB = bAtom.ImplicitHydrogenCount;
                 int cntA = 0, cntB = 0;
-                foreach (var w in adjList[atomToIndex[aAtom]]) {
+                foreach (var w in adjList[atomToIndex[aAtom]])
+                {
                     IAtom atom = container.Atoms[w];
                     if (visit.Contains(atom))
                         continue;
                     // hydrogen
-                    if (atom.AtomicNumber == 1 && adjList[w].Length == 1) {
+                    if (atom.AtomicNumber == 1 && adjList[w].Length == 1)
+                    {
                         hCntA++;
                         continue;
                     }
                     aNext = cntA == 0 ? atom : null;
                     cntA++;
                 }
-                foreach (var w in adjList[atomToIndex[bAtom]]) {
+                foreach (var w in adjList[atomToIndex[bAtom]])
+                {
                     IAtom atom = container.Atoms[w];
                     if (visit.Contains(atom))
                         continue;
                     // hydrogen
-                    if (atom.AtomicNumber == 1 && adjList[w].Length == 1) {
+                    if (atom.AtomicNumber == 1 && adjList[w].Length == 1)
+                    {
                         hCntB++;
                         continue;
                     }
@@ -699,7 +762,8 @@ namespace NCDK.Layout {
             return true;
         }
 
-        private bool NotEqual(int? a, int? b) {
+        private bool NotEqual(int? a, int? b)
+        {
             return a == null ? b != null : !a.Equals(b);
         }
 
@@ -712,19 +776,25 @@ namespace NCDK.Layout {
         /// <param name="allowedDoubleBond">a double bond that is allowed</param>
         /// <returns>the atom is adjacent to one or more plain single bonds</returns>
         /// </summary>
-        private bool HasOnlyPlainBonds(int v, IBond allowedDoubleBond) {
+        private bool HasOnlyPlainBonds(int v, IBond allowedDoubleBond)
+        {
             int count = 0;
-            foreach (var neighbor in graph[v]) {
+            foreach (var neighbor in graph[v])
+            {
                 IBond adjBond = edgeToBond[v, neighbor];
                 // non single bonds
-                if (adjBond.Order.Numeric > 1) {
-                    if (allowedDoubleBond != adjBond) {
+                if (adjBond.Order.Numeric > 1)
+                {
+                    if (allowedDoubleBond != adjBond)
+                    {
                         return false;
                     }
                 }
                 // single bonds
-                else {
-                    if (adjBond.Stereo == BondStereo.UpOrDown || adjBond.Stereo == BondStereo.UpOrDownInverted) {
+                else
+                {
+                    if (adjBond.Stereo == BondStereo.UpOrDown || adjBond.Stereo == BondStereo.UpOrDownInverted)
+                    {
                         return false;
                     }
                     count++;

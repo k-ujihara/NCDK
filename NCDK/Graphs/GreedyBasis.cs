@@ -34,10 +34,10 @@ namespace NCDK.Graphs
     /// Greedily compute a cycle basis from a provided set of initial cycles using
     /// Gaussian elimination.
     /// </summary>
+    /// <seealso cref="RelevantCycles"/>
     // @author John May
     // @cdk.module core
     // @cdk.githash
-    /// <seealso cref="RelevantCycles"/>
     internal class GreedyBasis
     {
         /// <summary>Cycles which are members of the basis</summary>

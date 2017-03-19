@@ -35,8 +35,8 @@ namespace NCDK.Isomorphisms.Matchers
         static SymbolSetQueryAtomTest()
         {
             symbolSet = new SymbolSetQueryAtom(Default.ChemObjectBuilder.Instance);
-            symbolSet.AddSymbol("C");
-            symbolSet.AddSymbol("Fe");
+            symbolSet.Symbols.Add("C");
+            symbolSet.Symbols.Add("Fe");
         }
 
         [TestMethod()]
@@ -51,18 +51,18 @@ namespace NCDK.Isomorphisms.Matchers
         [TestMethod()]
         public void TestRemoveSymbol()
         {
-            symbolSet.RemoveSymbol("Fe");
-            Assert.AreEqual(1, symbolSet.GetSymbolSet().Count);
-            Assert.IsFalse(symbolSet.HasSymbol("Fe"));
-            Assert.IsTrue(symbolSet.HasSymbol("C"));
-            symbolSet.AddSymbol("Fe");
+            symbolSet.Symbols.Remove("Fe");
+            Assert.AreEqual(1, symbolSet.Symbols.Count);
+            Assert.IsFalse(symbolSet.Symbols.Contains("Fe"));
+            Assert.IsTrue(symbolSet.Symbols.Contains("C"));
+            symbolSet.Symbols.Add("Fe");
         }
 
         [TestMethod()]
         public void TestHasSymbol()
         {
-            Assert.IsTrue(symbolSet.HasSymbol("C"));
-            Assert.IsFalse(symbolSet.HasSymbol("N"));
+            Assert.IsTrue(symbolSet.Symbols.Contains("C"));
+            Assert.IsFalse(symbolSet.Symbols.Contains("N"));
         }
     }
 }

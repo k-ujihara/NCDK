@@ -40,7 +40,7 @@ namespace NCDK.LibIO.MD
 
         /// <summary>
         /// Empty constructor.
-        /// </sumEmpty constructor.mary>
+        /// </summary>
         public ChargeGroup() { }
 
         /// <summary>

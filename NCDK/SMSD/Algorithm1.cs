@@ -31,12 +31,12 @@ namespace NCDK.SMSD
     /// This class represents various algorithm type supported by SMSD.
     /// Presently SMSD supports 5 different kinds of algorithms:
     /// <ol>
-    /// <li>0: defaul</li>
-    /// <li>1: MCSPlus</li>
-    /// <li>2: VFLibMCS</li>
-    /// <li>3: CDKMCS</li>
-    /// <li>4: SubStructure</li>
-    /// <li>5: TurboSubStructure</li>
+    /// <item>0: defaul</item>
+    /// <item>1: MCSPlus</item>
+    /// <item>2: VFLibMCS</item>
+    /// <item>3: CDKMCS</item>
+    /// <item>4: SubStructure</item>
+    /// <item>5: TurboSubStructure</item>
     /// </ol>
     /// </summary>
     // @cdk.module smsd

@@ -27,15 +27,11 @@ namespace NCDK.Groups
     /// <summary>
     /// Refiner for atom containers, which refines partitions of the bonds to
     /// equitable partitions. Used by the <see cref="BondDiscretePartitionRefiner"/>.
-    ///
+    /// </summary>
     // @author maclean
     // @cdk.module group
-    ///
-    /// </summary>
-    public class BondEquitablePartitionRefiner : AbstractEquitablePartitionRefiner,
-            IEquitablePartitionRefiner
+    public class BondEquitablePartitionRefiner : AbstractEquitablePartitionRefiner, IEquitablePartitionRefiner
     {
-
         /// <summary>
         /// A reference to the discrete refiner, which has the connectivity info.
         /// </summary>
@@ -43,9 +39,8 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Make an equitable partition refiner using the supplied connection table.
-        ///
-        /// <param name="discreteRefiner">the connections between vertices</param>
         /// </summary>
+        /// <param name="discreteRefiner">the connections between vertices</param>
         public BondEquitablePartitionRefiner(BondDiscretePartitionRefiner discreteRefiner)
         {
             this.discreteRefiner = discreteRefiner;

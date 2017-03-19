@@ -38,26 +38,27 @@ namespace NCDK.StructGen
     /// and add more structures to the panel using the "More" button.
     /// In order to use this class, use MFAnalyser to get an AtomContainer from
     /// a molecular formula string.
-    ///
-    /// <p>Assign hydrogen counts to each heavy atom. The hydrogens should not be
+    /// </summary>
+    /// <remarks>
+    /// <para>Assign hydrogen counts to each heavy atom. The hydrogens should not be
     /// in the atom pool but should be assigned implicitly to the heavy atoms in
     /// order to reduce computational cost.
     /// Assign this AtomContainer to the
     /// SingleStructureRandomGenerator and retrieve a randomly generated, but correctly bonded
     /// structure by using the Generate() method. You can then repeatedly call
-    /// the Generate() method in order to retrieve further structures.
-    ///
-    /// <p>Agenda:
-    /// <ul>
-    ///  <li>add a method for randomly adding hydrogens to the atoms
-    ///  <li>add a seed for random generator for reproducability
-    /// </ul>
-    ///
+    /// the Generate() method in order to retrieve further structures.</para>
+    /// <para>
+    /// Agenda:
+    /// <list type="bullet">
+    ///  <item>add a method for randomly adding hydrogens to the atoms</item>
+    ///  <item>add a seed for random generator for reproducability</item>
+    /// </list>
+    /// </para>
+    /// </remarks>
     // @author      steinbeck
     // @cdk.created 2001-09-04
     // @cdk.module  structgen
     // @cdk.githash
-    /// </summary>
     public class SingleStructureRandomGenerator
     {
         IAtomContainer atomContainer;
@@ -142,9 +143,8 @@ namespace NCDK.StructGen
 
         /// <summary>
         /// Gets the AnotherUnsaturatedNode attribute of the SingleStructureRandomGenerator object.
-        ///
-        /// <returns>The AnotherUnsaturatedNode value</returns>
         /// </summary>
+        /// <returns>The AnotherUnsaturatedNode value</returns>
         private IAtom GetAnotherUnsaturatedNode(IAtom exclusionAtom)
         {
             IAtom atom;

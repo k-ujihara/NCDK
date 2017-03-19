@@ -157,7 +157,7 @@ namespace NCDK.Config
                 atom.BondOrderSum = atomType.BondOrderSum;
                 atom.CovalentRadius = atomType.CovalentRadius;
                 atom.Hybridization = atomType.Hybridization;
-                atom.SetProperty(CDKPropertyName.COLOR, atomType.GetProperty<object>(CDKPropertyName.COLOR));
+                atom.SetProperty(CDKPropertyName.Color, atomType.GetProperty<object>(CDKPropertyName.Color));
                 atom.AtomicNumber = atomType.AtomicNumber;
                 atom.ExactMass = atomType.ExactMass;
             }

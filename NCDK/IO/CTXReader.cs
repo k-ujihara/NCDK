@@ -164,7 +164,7 @@ namespace NCDK.IO
             {
                 name = name + input.ReadLine().Trim();
             }
-            container.SetProperty(CDKPropertyName.TITLE, name);
+            container.SetProperty(CDKPropertyName.Title, name);
         }
 
         private void ProcessAtomsBlock(int lineCount, IAtomContainer container)

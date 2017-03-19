@@ -24,7 +24,6 @@
 using NCDK.Renderers;
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
 using NCDK.Renderers.Visitors;
 using System;
 using System.Collections.Generic;
@@ -265,7 +264,7 @@ namespace NCDK.Depict
                 // MAIN COMPONENTS DRAW
                 // x,y base coordinates include the margin and centering (only if fitting to a size)
                 double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-                double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
+                double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
                 double xBase = margin + (total.w - totalRequiredWidth) / 2;
                 double yBase = margin + Math.Max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
                 for (int i = 0; i < mainComp.Count; i++)
@@ -299,14 +298,14 @@ namespace NCDK.Depict
 
                     // skip empty elements
                     Bounds bounds = this.mainComp[i];
-                    if (bounds.IsEmpty)
+                    if (bounds.IsEmpty())
                         continue;
 
                     Draw(visitor, zoom, bounds, rect(x, y, w, h));
                 }
 
                 // RXN TITLE DRAW
-                if (!title.IsEmpty)
+                if (!title.IsEmpty())
                 {
                     double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                     double h = rescale * title.Height;
@@ -333,7 +332,7 @@ namespace NCDK.Depict
                 }
 
                 // CONDITIONS DRAW
-                if (!conditions.IsEmpty)
+                if (!conditions.IsEmpty())
                 {
                     yBase += mainCompOffset;        // back to top
                     yBase += (fitting * mainRequired.h) / 2;    // now on center line (arrow)
@@ -424,7 +423,7 @@ namespace NCDK.Depict
             // MAIN COMPONENTS DRAW
             // x,y base coordinates include the margin and centering (only if fitting to a size)
             double totalRequiredWidth = 2 * margin + Math.Max(0, nCol - 1) * padding + Math.Max(0, nSideCol - 1) * padding + (rescale * xOffsets[nCol]);
-            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
+            double totalRequiredHeight = 2 * margin + Math.Max(0, nRow - 1) * padding + (!title.IsEmpty() ? padding : 0) + Math.Max(mainCompOffset, 0) + fitting * mainRequired.h + fitting * Math.Max(0, titleRequired.h);
             double xBase = margin + (total.w - totalRequiredWidth) / 2;
             double yBase = margin + Math.Max(mainCompOffset, 0) + (total.h - totalRequiredHeight) / 2;
             for (int i = 0; i < mainComp.Count; i++)
@@ -458,14 +457,14 @@ namespace NCDK.Depict
 
                 // skip empty elements
                 Bounds bounds = this.mainComp[i];
-                if (bounds.IsEmpty)
+                if (bounds.IsEmpty())
                     continue;
 
                 Draw(visitor, zoom, bounds, rect(x, y, w, h));
             }
 
             // RXN TITLE DRAW
-            if (!title.IsEmpty)
+            if (!title.IsEmpty())
             {
                 double y = yBase + nRow * padding + rescale * yOffsets[nRow];
                 double h = rescale * title.Height;
@@ -492,7 +491,7 @@ namespace NCDK.Depict
             }
 
             // CONDITIONS DRAW
-            if (!conditions.IsEmpty)
+            if (!conditions.IsEmpty())
             {
                 yBase += mainCompOffset;         // back to top
                 yBase += (fitting * mainRequired.h) / 2;     // now on center line (arrow)

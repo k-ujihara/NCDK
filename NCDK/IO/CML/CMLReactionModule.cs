@@ -27,12 +27,9 @@ using System.Xml.Linq;
 
 namespace NCDK.IO.CML
 {
-    /// <summary>
     // @author Egon Willighagen <elw38@cam.ac.uk>
-    ///
     // @cdk.module io
     // @cdk.githash
-    /// </summary>
     public class CMLReactionModule : CMLCoreModule
     {
 #if DEBUG
@@ -228,11 +225,10 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Get the IAtomContainer contained in a IAtomContainerSet object with a ID.
-        ///
+        /// </summary>
         /// <param name="molSet">The IAtomContainerSet</param>
         /// <param name="id">The ID the look</param>
         /// <returns>The IAtomContainer with the ID</returns>
-        /// </summary>
         private IAtomContainer GetMoleculeFromID(IAtomContainerSet<IAtomContainer> molSet, string id)
         {
             foreach (var mol in molSet)

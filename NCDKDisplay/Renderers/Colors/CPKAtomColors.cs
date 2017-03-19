@@ -37,89 +37,89 @@ namespace NCDK.Renderers.Colors
         ////////////
 
         // CPK colours.
-        private static readonly Color LIGHT_GREY = Color.FromRgb(0xC8, 0xC8, 0xC8);
-        private static readonly Color SKY_BLUE = Color.FromRgb(0x8F, 0x8F, 0xFF);
-        private static readonly Color RED = Color.FromRgb(0xF0, 0x00, 0x00);
+        private static readonly Color LightGrey = Color.FromRgb(0xC8, 0xC8, 0xC8);
+        private static readonly Color SkyBlue = Color.FromRgb(0x8F, 0x8F, 0xFF);
+        private static readonly Color Red = Color.FromRgb(0xF0, 0x00, 0x00);
         private static readonly Color Yellow = Color.FromRgb(0xFF, 0xC8, 0x32);
-        private static readonly Color WHITE = Color.FromRgb(0xFF, 0xFF, 0xFF);
-        private static readonly Color PINK = Color.FromRgb(0xFF, 0xC0, 0xCB);
-        private static readonly Color GOLDEN_ROD = Color.FromRgb(0xDA, 0xA5, 0x20);
+        private static readonly Color White = Color.FromRgb(0xFF, 0xFF, 0xFF);
+        private static readonly Color Pink = Color.FromRgb(0xFF, 0xC0, 0xCB);
+        private static readonly Color GoldenRod = Color.FromRgb(0xDA, 0xA5, 0x20);
         private static readonly Color Blue = Color.FromRgb(0x00, 0x00, 0xFF);
-        private static readonly Color ORANGE = Color.FromRgb(0xFF, 0xA5, 0x00);
-        private static readonly Color DARK_GREY = Color.FromRgb(0x80, 0x80, 0x90);
-        private static readonly Color BROWN = Color.FromRgb(0xA5, 0x2A, 0x2A);
-        private static readonly Color PURPLE = Color.FromRgb(0xA0, 0x20, 0xF0);
-        private static readonly Color DEEP_PINK = Color.FromRgb(0xFF, 0x14, 0x93);
-        private static readonly Color GREEN = Color.FromRgb(0x00, 0xFF, 0x00);
-        private static readonly Color FIRE_BRICK = Color.FromRgb(0xB2, 0x22, 0x22);
-        private static readonly Color FOREST_GREEN = Color.FromRgb(0x22, 0x8B, 0x22);
+        private static readonly Color Orange = Color.FromRgb(0xFF, 0xA5, 0x00);
+        private static readonly Color DarkGrey = Color.FromRgb(0x80, 0x80, 0x90);
+        private static readonly Color Brown = Color.FromRgb(0xA5, 0x2A, 0x2A);
+        private static readonly Color Purple = Color.FromRgb(0xA0, 0x20, 0xF0);
+        private static readonly Color DeepPink = Color.FromRgb(0xFF, 0x14, 0x93);
+        private static readonly Color Green = Color.FromRgb(0x00, 0xFF, 0x00);
+        private static readonly Color FireBrick = Color.FromRgb(0xB2, 0x22, 0x22);
+        private static readonly Color ForestGreen = Color.FromRgb(0x22, 0x8B, 0x22);
 
         // The atom color look-up table.
-        private static readonly IDictionary<int, Color> ATOM_COLORS_MASSNUM = new Dictionary<int, Color>();
-        private static readonly IDictionary<string, Color> ATOM_COLORS_SYMBOL = new Dictionary<string, Color>();
+        private static readonly IDictionary<int, Color> AtomColorsMassNum = new Dictionary<int, Color>();
+        private static readonly IDictionary<string, Color> AtomColorsSymbol = new Dictionary<string, Color>();
 
         // Build table.
         static CPKAtomColors()
         {
             // Colors keyed on (uppercase) atomic symbol.
-            ATOM_COLORS_SYMBOL["H"] = WHITE;
-            ATOM_COLORS_SYMBOL["HE"] = PINK;
-            ATOM_COLORS_SYMBOL["LI"] = FIRE_BRICK;
-            ATOM_COLORS_SYMBOL["B"] = GREEN;
-            ATOM_COLORS_SYMBOL["C"] = LIGHT_GREY;
-            ATOM_COLORS_SYMBOL["N"] = SKY_BLUE;
-            ATOM_COLORS_SYMBOL["O"] = RED;
-            ATOM_COLORS_SYMBOL["F"] = GOLDEN_ROD;
-            ATOM_COLORS_SYMBOL["NA"] = Blue;
-            ATOM_COLORS_SYMBOL["MG"] = FOREST_GREEN;
-            ATOM_COLORS_SYMBOL["AL"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["SI"] = GOLDEN_ROD;
-            ATOM_COLORS_SYMBOL["P"] = ORANGE;
-            ATOM_COLORS_SYMBOL["S"] = Yellow;
-            ATOM_COLORS_SYMBOL["CL"] = GREEN;
-            ATOM_COLORS_SYMBOL["CA"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["TI"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["CR"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["MN"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["FE"] = ORANGE;
-            ATOM_COLORS_SYMBOL["NI"] = BROWN;
-            ATOM_COLORS_SYMBOL["CU"] = BROWN;
-            ATOM_COLORS_SYMBOL["ZN"] = BROWN;
-            ATOM_COLORS_SYMBOL["BR"] = BROWN;
-            ATOM_COLORS_SYMBOL["AG"] = DARK_GREY;
-            ATOM_COLORS_SYMBOL["I"] = PURPLE;
-            ATOM_COLORS_SYMBOL["BA"] = ORANGE;
-            ATOM_COLORS_SYMBOL["AU"] = GOLDEN_ROD;
+            AtomColorsSymbol["H"] = White;
+            AtomColorsSymbol["HE"] = Pink;
+            AtomColorsSymbol["LI"] = FireBrick;
+            AtomColorsSymbol["B"] = Green;
+            AtomColorsSymbol["C"] = LightGrey;
+            AtomColorsSymbol["N"] = SkyBlue;
+            AtomColorsSymbol["O"] = Red;
+            AtomColorsSymbol["F"] = GoldenRod;
+            AtomColorsSymbol["NA"] = Blue;
+            AtomColorsSymbol["MG"] = ForestGreen;
+            AtomColorsSymbol["AL"] = DarkGrey;
+            AtomColorsSymbol["SI"] = GoldenRod;
+            AtomColorsSymbol["P"] = Orange;
+            AtomColorsSymbol["S"] = Yellow;
+            AtomColorsSymbol["CL"] = Green;
+            AtomColorsSymbol["CA"] = DarkGrey;
+            AtomColorsSymbol["TI"] = DarkGrey;
+            AtomColorsSymbol["CR"] = DarkGrey;
+            AtomColorsSymbol["MN"] = DarkGrey;
+            AtomColorsSymbol["FE"] = Orange;
+            AtomColorsSymbol["NI"] = Brown;
+            AtomColorsSymbol["CU"] = Brown;
+            AtomColorsSymbol["ZN"] = Brown;
+            AtomColorsSymbol["BR"] = Brown;
+            AtomColorsSymbol["AG"] = DarkGrey;
+            AtomColorsSymbol["I"] = Purple;
+            AtomColorsSymbol["BA"] = Orange;
+            AtomColorsSymbol["AU"] = GoldenRod;
 
             // Colors keyed on atomic number.
-            ATOM_COLORS_MASSNUM[1] = ATOM_COLORS_SYMBOL["H"];
-            ATOM_COLORS_MASSNUM[2] = ATOM_COLORS_SYMBOL["HE"];
-            ATOM_COLORS_MASSNUM[3] = ATOM_COLORS_SYMBOL["LI"];
-            ATOM_COLORS_MASSNUM[5] = ATOM_COLORS_SYMBOL["B"];
-            ATOM_COLORS_MASSNUM[6] = ATOM_COLORS_SYMBOL["C"];
-            ATOM_COLORS_MASSNUM[7] = ATOM_COLORS_SYMBOL["N"];
-            ATOM_COLORS_MASSNUM[8] = ATOM_COLORS_SYMBOL["O"];
-            ATOM_COLORS_MASSNUM[9] = ATOM_COLORS_SYMBOL["F"];
-            ATOM_COLORS_MASSNUM[11] = ATOM_COLORS_SYMBOL["NA"];
-            ATOM_COLORS_MASSNUM[12] = ATOM_COLORS_SYMBOL["MG"];
-            ATOM_COLORS_MASSNUM[13] = ATOM_COLORS_SYMBOL["AL"];
-            ATOM_COLORS_MASSNUM[14] = ATOM_COLORS_SYMBOL["SI"];
-            ATOM_COLORS_MASSNUM[15] = ATOM_COLORS_SYMBOL["P"];
-            ATOM_COLORS_MASSNUM[16] = ATOM_COLORS_SYMBOL["S"];
-            ATOM_COLORS_MASSNUM[17] = ATOM_COLORS_SYMBOL["CL"];
-            ATOM_COLORS_MASSNUM[20] = ATOM_COLORS_SYMBOL["CA"];
-            ATOM_COLORS_MASSNUM[22] = ATOM_COLORS_SYMBOL["TI"];
-            ATOM_COLORS_MASSNUM[24] = ATOM_COLORS_SYMBOL["CR"];
-            ATOM_COLORS_MASSNUM[25] = ATOM_COLORS_SYMBOL["MN"];
-            ATOM_COLORS_MASSNUM[26] = ATOM_COLORS_SYMBOL["FE"];
-            ATOM_COLORS_MASSNUM[28] = ATOM_COLORS_SYMBOL["NI"];
-            ATOM_COLORS_MASSNUM[29] = ATOM_COLORS_SYMBOL["CU"];
-            ATOM_COLORS_MASSNUM[30] = ATOM_COLORS_SYMBOL["ZN"];
-            ATOM_COLORS_MASSNUM[35] = ATOM_COLORS_SYMBOL["BR"];
-            ATOM_COLORS_MASSNUM[47] = ATOM_COLORS_SYMBOL["AG"];
-            ATOM_COLORS_MASSNUM[53] = ATOM_COLORS_SYMBOL["I"];
-            ATOM_COLORS_MASSNUM[56] = ATOM_COLORS_SYMBOL["BA"];
-            ATOM_COLORS_MASSNUM[79] = ATOM_COLORS_SYMBOL["AU"];
+            AtomColorsMassNum[1] = AtomColorsSymbol["H"];
+            AtomColorsMassNum[2] = AtomColorsSymbol["HE"];
+            AtomColorsMassNum[3] = AtomColorsSymbol["LI"];
+            AtomColorsMassNum[5] = AtomColorsSymbol["B"];
+            AtomColorsMassNum[6] = AtomColorsSymbol["C"];
+            AtomColorsMassNum[7] = AtomColorsSymbol["N"];
+            AtomColorsMassNum[8] = AtomColorsSymbol["O"];
+            AtomColorsMassNum[9] = AtomColorsSymbol["F"];
+            AtomColorsMassNum[11] = AtomColorsSymbol["NA"];
+            AtomColorsMassNum[12] = AtomColorsSymbol["MG"];
+            AtomColorsMassNum[13] = AtomColorsSymbol["AL"];
+            AtomColorsMassNum[14] = AtomColorsSymbol["SI"];
+            AtomColorsMassNum[15] = AtomColorsSymbol["P"];
+            AtomColorsMassNum[16] = AtomColorsSymbol["S"];
+            AtomColorsMassNum[17] = AtomColorsSymbol["CL"];
+            AtomColorsMassNum[20] = AtomColorsSymbol["CA"];
+            AtomColorsMassNum[22] = AtomColorsSymbol["TI"];
+            AtomColorsMassNum[24] = AtomColorsSymbol["CR"];
+            AtomColorsMassNum[25] = AtomColorsSymbol["MN"];
+            AtomColorsMassNum[26] = AtomColorsSymbol["FE"];
+            AtomColorsMassNum[28] = AtomColorsSymbol["NI"];
+            AtomColorsMassNum[29] = AtomColorsSymbol["CU"];
+            AtomColorsMassNum[30] = AtomColorsSymbol["ZN"];
+            AtomColorsMassNum[35] = AtomColorsSymbol["BR"];
+            AtomColorsMassNum[47] = AtomColorsSymbol["AG"];
+            AtomColorsMassNum[53] = AtomColorsSymbol["I"];
+            AtomColorsMassNum[56] = AtomColorsSymbol["BA"];
+            AtomColorsMassNum[79] = AtomColorsSymbol["AU"];
         }
 
         //////////
@@ -133,7 +133,7 @@ namespace NCDK.Renderers.Colors
         /// <returns>A color for the atom.</returns>
         public Color GetAtomColor(IAtom atom)
         {
-            return GetAtomColor(atom, DEEP_PINK);
+            return GetAtomColor(atom, DeepPink);
         }
 
         /// <summary>
@@ -146,13 +146,13 @@ namespace NCDK.Renderers.Colors
         {
             Color color = defaultColor;
             string symbol = atom.Symbol.ToUpperInvariant();
-            if (atom.AtomicNumber != null && ATOM_COLORS_MASSNUM.ContainsKey(atom.AtomicNumber.Value))
+            if (atom.AtomicNumber != null && AtomColorsMassNum.ContainsKey(atom.AtomicNumber.Value))
             {
-                color = ATOM_COLORS_MASSNUM[atom.AtomicNumber.Value]; // lookup by atomic number.
+                color = AtomColorsMassNum[atom.AtomicNumber.Value]; // lookup by atomic number.
             }
-            else if (ATOM_COLORS_SYMBOL.ContainsKey(symbol))
+            else if (AtomColorsSymbol.ContainsKey(symbol))
             {
-                color = ATOM_COLORS_SYMBOL[symbol]; // lookup by atomic symbol.
+                color = AtomColorsSymbol[symbol]; // lookup by atomic symbol.
             }
 
             return Color.FromRgb(color.R, color.G, color.B); // return atom copy.

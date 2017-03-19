@@ -74,11 +74,11 @@ to instance directory rather than schema directory.
   <xsd:documentation xml:lang="en">
     <div class="curation">
       <ul>
-        <li> Created by hand starting from output of dtd2xsd.
+        <item> Created by hand starting from output of dtd2xsd.
       editing to enhance datatypes and content models, etc.
-      2001-09-21</li>
-        <li>First draft 2001-10-02</li>
-        <li>Next draft 2002-09-20 (sic)</li>
+      2001-09-21</item>
+        <item>First draft 2001-10-02</item>
+        <item>Next draft 2002-09-20 (sic)</item>
       </ul>
       <p>This schema represents a fundamental core for future CML. Some of the earlier
       elements may be obsolete, and some will be moved into new CML schemaspaces. The 
@@ -408,8 +408,8 @@ XSLT validation error: <val:value-of select="$error"/>
         <p>The periodic table (up to
          element number 118. In addition the following strings are allowed:
          <ul>
-            <li><tt>Dummy</tt>. This does not correspond to a "real" atom and can 
-         support a point in space or within a chemical graph.</li>
+            <item><tt>Dummy</tt>. This does not correspond to a "real" atom and can 
+         support a point in space or within a chemical graph.</item>
          </ul>
          </p> 
       </div>
@@ -1042,10 +1042,10 @@ XSLT validation error: <val:value-of select="$error"/>
       <div class="description">
         <p>It can be used for:</p>
         <ul>
-           <li>Recording experimentally determined bond angles (e.g. in
-        a crystallographic paper).</li>
-           <li>Providing the angle component for internal coordinates (e.g.
-        z-matrix).</li>
+           <item>Recording experimentally determined bond angles (e.g. in
+        a crystallographic paper).</item>
+           <item>Providing the angle component for internal coordinates (e.g.
+        z-matrix).</item>
         </ul>
       </div>
       <div class="example"><code>&lt;molecule id="m1"&gt;
@@ -1315,10 +1315,10 @@ XSLT validation error: <val:value-of select="$error"/>
           <div class="description">A child of <a href="el.molecule">molecule</a> and contains
         <tt>atom</tt> information. There are two strategies:
         <ul>
-                  <li>Create individual <a href="el.atom">atom</a> elements under 
+                  <item>Create individual <a href="el.atom">atom</a> elements under 
                   <a href="el.atomArray">atomArray</a>
-        (in any order). This gives the greatest flexibility but is the most verbose.</li>
-                  <li>Create <tt>*Array</tt> attributes (e.g. of 
+        (in any order). This gives the greatest flexibility but is the most verbose.</item>
+                  <item>Create <tt>*Array</tt> attributes (e.g. of 
                   <a href="st.elementTypeArrayType">elementTypeArrayType</a> under 
         <a href="el.atomArray">atomArray</a>. This requires all arrays to be of identical lengths
         with explicit values for all atoms in every array. 
@@ -1328,7 +1328,7 @@ XSLT validation error: <val:value-of select="$error"/>
         It also cannot be checked as easily by schema- and schematron validation. The
         <tt>atomIDArray</tt> attribute is mandatory. It is allowed (though not yet recommended) to
         add <tt>*Array</tt> children such as <a href="el.floatArray">floatArray</a>
-                  </li>
+                  </item>
                </ul>
                <p>The attributes are directly related to the scalar attributes under
         <a href="el.atom">atom</a> which should be consulted for more info.</p>
@@ -1724,9 +1724,9 @@ XSLT validation error: <val:value-of select="$error"/>
                <tt>bondArray</tt> is a child of <tt>molecule</tt> and contains
           <tt>bond</tt> information. There are two strategies:</p>
             <ul>
-               <li>Create individual <tt>bond</tt> elements under <tt>bondArray</tt>
-        (in any order). This gives the greatest flexibility but is the most verbose.</li>
-               <li>Create <tt>*Array</tt> attributes (e.g. of <tt>orderArrayType</tt> under 
+               <item>Create individual <tt>bond</tt> elements under <tt>bondArray</tt>
+        (in any order). This gives the greatest flexibility but is the most verbose.</item>
+               <item>Create <tt>*Array</tt> attributes (e.g. of <tt>orderArrayType</tt> under 
         <tt>bondArray</tt>. This requires all arrays to be of identical lengths
         with explicit values for all bonds in every array. 
         This is NOT suitable for complexType
@@ -1738,7 +1738,7 @@ XSLT validation error: <val:value-of select="$error"/>
         <tt>atomRef1Array</tt> and <tt>atomRef2Array</tt> attributes are then
         mandatory. It is allowed (though not yet recommended) to
         add <tt>*Array</tt> children such as <tt>floatArray</tt>
-               </li>
+               </item>
             </ul>
             <p>The attributes are directly related to the scalar attributes under
         <a href="el.atom">
@@ -2331,26 +2331,26 @@ validate <tt>name</tt>s.</p>
         of stereochemistry.</p>
         <p>At present the following are supported:</p>
         <ul>
-          <li>No atomRefs attribute. <b>Deprecated, but probably unavoidable</b>. 
+          <item>No atomRefs attribute. <b>Deprecated, but probably unavoidable</b>. 
           This must be a child of <tt>bond</tt> where it picks up the two atomRefs
           in the <tt>atomRefs2</tt> attribute. Possible values are C/T (which only makes sense
           if there is exactly one ligand at each end of the bond) and W/H. The latter
           should be raplaced by <tt>atomParity</tt> wherever possible. Note that W/H makes
-          no sense without 2D atom coordinates.</li>
-          <li><b>atomRefs4 attribute</b>. The 4 atoms represent a cis or trans configuration. 
+          no sense without 2D atom coordinates.</item>
+          <item><b>atomRefs4 attribute</b>. The 4 atoms represent a cis or trans configuration. 
           This may or may not be a child of <tt>bond</tt>; if so the second and third atomRefs
           should be identical with the two atomRefs in the bond. This structure can be used
           to guide processors in processing stereochemistry and is recommended, since there is
           general agreement on the semantics. The semantics of <tt>stereo</tt> not related to
           bonds is less clear (e.g. cumulenes, substituted ring nuclei) etc.It is 
           currently an error to have more than one <tt>stereo</tt> referring to the same ordered
-          4-atom list</li>
-          <li><b>atomRefs attribute</b>. There are other stereochemical conventions such as cis/trans
+          4-atom list</item>
+          <item><b>atomRefs attribute</b>. There are other stereochemical conventions such as cis/trans
           for metal complexes which require a variable number of reference atoms. This allows 
           users to create their own - at present we do not see CML creating exhaustive tables.
           For example cis/trans square-planar complexes might require 4 (or 5) atoms for their
           definition, octahedral 6 or 7, etc. In principle this is very powerful and could
-          supplement or replace the use of <i>cis-</i>, <i>mer-</i>, etc.</li>
+          supplement or replace the use of <i>cis-</i>, <i>mer-</i>, etc.</item>
         </ul>
         <p>the <tt>atomRefs</tt> and <tt>atomRefs4</tt> attributes cannot be used
         simultaneously.</p></div>
@@ -2639,10 +2639,10 @@ validate <tt>name</tt>s.</p>
          <p>The atoms need not
      be formally bonded. It can be used for:</p>
          <ul>
-            <li>Recording experimentally determined torsion angles (e.g. in
-     a crystallographic paper).</li>
-            <li>Providing the torsion component for internal coordinates (e.g.
-     z-matrix).</li>
+            <item>Recording experimentally determined torsion angles (e.g. in
+     a crystallographic paper).</item>
+            <item>Providing the torsion component for internal coordinates (e.g.
+     z-matrix).</item>
          </ul>
          <p>Note that the order of atoms is important.</p>
    </div>
@@ -4329,11 +4329,11 @@ it is a de-activator or inhibitor.
             <div class="description"><p>The type of this information. This is not controlled, but examples
             might include:</p>
             <ul>
-              <li>description</li>
-              <li>summary</li>
-              <li>note</li>
-              <li>usage</li>
-              <li>qualifier</li>
+              <item>description</item>
+              <item>summary</item>
+              <item>note</item>
+              <item>usage</item>
+              <item>qualifier</item>
             </ul>
           </div>
          </xsd:documentation>
@@ -4734,12 +4734,12 @@ Transcribed from IUPAC website
       <div class="summary">A scientific unit</div>
       <div class="description"><p>A scientific unit. Units are of the following types:</p>
         <ul>
-        <li>SI Units. These may be one of the seven fundamental types 
+        <item>SI Units. These may be one of the seven fundamental types 
         (e.g. meter) or may be derived (e.g. joule). An SI unit is 
         identifiable because it has no parentSI attribute and will have
-        a unitType attribute.</li>
-        <li>nonSI Units. These will normally have a parent SI unit
-        (e.g. calorie has joule as an SI parent). </li>
+        a unitType attribute.</item>
+        <item>nonSI Units. These will normally have a parent SI unit
+        (e.g. calorie has joule as an SI parent). </item>
         <li/>
         </ul>
         <p>Example:</p>

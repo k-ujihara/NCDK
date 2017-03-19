@@ -22,29 +22,24 @@ using System;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A too simplistic implementation of an isomorphism test for chemical graphs.
-     *
-     * <p><b>Important:</b> as it uses the MorganNumbersTools it does not take bond
-     * order into account.
-     *
-     * <p>Alternatively, you can use the UniversalIsomorphismTester.
-     *
-     * @cdk.module standard
-     * @cdk.githash
-     *
-     * @author     steinbeck
-     * @cdk.created    2001-09-10
-     *
-     * @cdk.keyword    isomorphism
-     *
-     * @see        org.openscience.cdk.graph.invariant.MorganNumbersTools
-     * @see        org.openscience.cdk.isomorphism.UniversalIsomorphismTester
-     */
+    /// <summary>
+    /// A too simplistic implementation of an isomorphism test for chemical graphs.
+    /// </summary>
+    /// <remarks>
+    /// <b>Important:</b> as it uses the MorganNumbersTools it does not take bond
+    /// order into account.
+    /// <para>Alternatively, you can use the <see cref="UniversalIsomorphismTester"/>.</para>
+    /// </remarks>
+    /// <seealso cref="MorganNumbersTools"/>
+    /// <seealso cref="UniversalIsomorphismTester"/>
+    // @cdk.module standard
+    // @cdk.githash
+    // @author     steinbeck
+    // @cdk.created    2001-09-10
+    // @cdk.keyword    isomorphism
     [Serializable]
     public class IsomorphismTester
     {
-
         long[] baseTable;
         long[] sortedBaseTable;
         long[] compareTable;
@@ -52,40 +47,38 @@ namespace NCDK.Isomorphisms
         IAtomContainer base_ = null;
         IAtomContainer compare = null;
 
-        /**
-         *  Constructor for the IsomorphismTester object
-         */
+        /// <summary>
+        ///  Constructor for the IsomorphismTester object
+        /// </summary>
         public IsomorphismTester() { }
 
-        /**
-         *  Constructor for the IsomorphismTester object
-         */
+        /// <summary>
+        ///  Constructor for the IsomorphismTester object
+        /// </summary>
         public IsomorphismTester(IAtomContainer mol)
         {
             SetBaseTable(mol);
         }
 
-        /**
-         *  Checks whether a given molecule is isomorphic with the one
-         *  that has been assigned to this IsomorphismTester at construction time.
-         *
-         * @param  mol1                     A first molecule to check against the second one
-         * @param  mol2                     A second molecule to check against the first
-         * @return                          True, if the two molecules are isomorphic
-         */
+        /// <summary>
+        ///  Checks whether a given molecule is isomorphic with the one
+        ///  that has been assigned to this IsomorphismTester at construction time.
+        /// </summary>
+        /// <param name="mol1">A first molecule to check against the second one</param>
+        /// <param name="mol2">A second molecule to check against the first</param>
+        /// <returns>True, if the two molecules are isomorphic</returns>
         public bool IsIsomorphic(IAtomContainer mol1, IAtomContainer mol2)
         {
             SetBaseTable(mol1);
             return IsIsomorphic(mol2);
         }
 
-        /**
-         *  Checks whether a given molecule is isomorphic with the one
-         *  that has been assigned to this IsomorphismTester at construction time.
-         *
-         * @param  mol2                     A molecule to check
-         * @return                          True, if the two molecules are isomorphic
-         */
+        /// <summary>
+        ///  Checks whether a given molecule is isomorphic with the one
+        ///  that has been assigned to this IsomorphismTester at construction time.
+        /// </summary>
+        /// <param name="mol2">A molecule to check</param>
+        /// <returns>True, if the two molecules are isomorphic</returns>
         public bool IsIsomorphic(IAtomContainer mol2)
         {
             bool found;
@@ -125,11 +118,10 @@ namespace NCDK.Isomorphisms
             return true;
         }
 
-        /**
-         *  Sets the BaseTable attribute of the IsomorphismTester object
-         *
-         * @param  mol                      The new BaseTable value
-         */
+        /// <summary>
+        ///  Sets the BaseTable attribute of the IsomorphismTester object
+        /// </summary>
+        /// <param name="mol">The new BaseTable value</param>
         private void SetBaseTable(IAtomContainer mol)
         {
             this.base_ = mol;
@@ -139,11 +131,10 @@ namespace NCDK.Isomorphisms
             Array.Sort(sortedBaseTable);
         }
 
-        /**
-         *  Sets the CompareTable attribute of the IsomorphismTester object
-         *
-         * @param  mol                      The new CompareTable value
-         */
+        /// <summary>
+        ///  Sets the CompareTable attribute of the IsomorphismTester object
+        /// </summary>
+        /// <param name="mol">The new CompareTable value</param>
         private void SetCompareTable(IAtomContainer mol)
         {
             this.compare = mol;

@@ -22,24 +22,20 @@
  */
 namespace NCDK.Groups
 {
-
     /// <summary>
     /// Interface that the discrete partition refiner uses to interact with
     /// a particular implementation of an equitable partition refiner.
-    ///
+    /// </summary>
     // @author maclean
     // @cdk.module group
-    /// </summary>
     public interface IEquitablePartitionRefiner
     {
-
         /// <summary>
         /// Refines the coarse partition into an equitable partition that
         /// is at least as fine, or finer.
-        ///
+        /// </summary>
         /// <param name="coarse">the partition to refine</param>
         /// <returns>a partition that is at least as fine, or finer</returns>
-        /// </summary>
         Partition Refine(Partition coarse);
     }
 }

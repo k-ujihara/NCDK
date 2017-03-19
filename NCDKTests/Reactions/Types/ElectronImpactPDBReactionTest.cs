@@ -69,13 +69,13 @@ namespace NCDK.Reactions.Types
         {
             /* ionize >C=C< , set the reactive center */
             IAtomContainer reactant = builder.CreateAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("O"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("O"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
             reactant.AddBond(reactant.Atoms[0], reactant.Atoms[1], BondOrder.Double);
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             reactant.AddBond(reactant.Atoms[2], reactant.Atoms[3], BondOrder.Single);
@@ -140,9 +140,9 @@ namespace NCDK.Reactions.Types
         {
             /* ionize all possible double bonds */
             IAtomContainer reactant = builder.CreateAtomContainer();//Miles("C=CC")
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
             reactant.AddBond(reactant.Atoms[0], reactant.Atoms[1], BondOrder.Double);
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             AddExplicitHydrogens(reactant);
@@ -181,13 +181,13 @@ namespace NCDK.Reactions.Types
         {
             /* ionize >C=C< , set the reactive center */
             IAtomContainer reactant = builder.CreateAtomContainer();//CreateFromSmiles("C=CCC(=O)CC")
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("O"));
-            reactant.Add(builder.CreateAtom("C"));
-            reactant.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("O"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
+            reactant.Atoms.Add(builder.CreateAtom("C"));
             reactant.AddBond(reactant.Atoms[0], reactant.Atoms[1], BondOrder.Double);
             reactant.AddBond(reactant.Atoms[1], reactant.Atoms[2], BondOrder.Single);
             reactant.AddBond(reactant.Atoms[2], reactant.Atoms[3], BondOrder.Single);
@@ -308,7 +308,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
@@ -330,17 +330,17 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();//Miles("C=CC")
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[5], BondOrder.Single);

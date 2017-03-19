@@ -42,7 +42,7 @@ namespace NCDK.IO
         private static IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         /// <summary>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @throws IOException
         // @cdk.bug 2675188
         /// </summary>

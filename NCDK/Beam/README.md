@@ -159,7 +159,7 @@ beam is still in development but you can obtain the latest build from the [EBI s
 
 ## License BSD 2-Clause
 
-Copyright (c) 2016, Kazuya Ujihara (C# port)
+Copyright (c) 2016-2017, Kazuya Ujihara (C# port)
 Copyright (c) 2013, European Bioinformatics Institute (EMBL-EBI)
 All rights reserved.
 

@@ -28,10 +28,14 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace NCDK.IO {
+namespace NCDK.IO
+{
     /// <summary>
     /// Converts a Molecule into CDK source code that would build the same
-    /// molecule. It's typical use is:
+    /// molecule. 
+    /// </summary>
+    /// <example>
+    /// It's typical use is:
     /// <code>
     /// StringWriter stringWriter = new StringWriter();
     /// ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
@@ -39,33 +43,35 @@ namespace NCDK.IO {
     /// writer.Close();
     /// Console.Out.Write(stringWriter.ToString());
     /// </code>
-    ///
+    /// </example>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created 2003-10-01
-    ///
     // @cdk.keyword file format, CDK source code
     // @cdk.iooptions
-    /// </summary>
-    public class NCDKSourceCodeWriter : DefaultChemObjectWriter {
+    public class NCDKSourceCodeWriter : DefaultChemObjectWriter
+    {
         private TextWriter writer;
 
         private BooleanIOSetting write2DCoordinates;
         private BooleanIOSetting write3DCoordinates;
         private StringIOSetting builder;
 
-        public NCDKSourceCodeWriter(TextWriter out_) {
+        public NCDKSourceCodeWriter(TextWriter output)
+        {
             InitIOSettings();
-            try {
-                SetWriter(out_);
-            } catch (Exception) {
+            try
+            {
+                SetWriter(output);
+            }
+            catch (Exception)
+            {
             }
         }
 
-        public NCDKSourceCodeWriter(Stream out_)
-            : this(new StreamWriter(out_))
+        public NCDKSourceCodeWriter(Stream output)
+            : this(new StreamWriter(output))
         { }
 
         public NCDKSourceCodeWriter()
@@ -74,18 +80,21 @@ namespace NCDK.IO {
 
         public override IResourceFormat Format => CDKSourceCodeFormat.Instance;
 
-        public override void SetWriter(TextWriter out_) {
-            writer = out_;
+        public override void SetWriter(TextWriter output)
+        {
+            writer = output;
         }
 
-        public override void SetWriter(Stream output) {
+        public override void SetWriter(Stream output)
+        {
             SetWriter(new StreamWriter(output));
         }
 
         /// <summary>
         /// Flushes the output and closes this object.
         /// </summary>
-        public override void Close() {
+        public override void Close()
+        {
             writer.Flush();
             writer.Close();
         }
@@ -96,18 +105,25 @@ namespace NCDK.IO {
             return false;
         }
 
-        public override void Write(IChemObject obj) {
+        public override void Write(IChemObject obj)
+        {
             CustomizeJob();
-            if (obj is IAtomContainer) {
-                try {
+            if (obj is IAtomContainer)
+            {
+                try
+                {
                     WriteAtomContainer((IAtomContainer)obj);
                     writer.Flush();
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     Trace.TraceError(ex.Message);
                     Debug.WriteLine(ex);
                     throw new CDKException("Exception while writing to CDK source code: " + ex.Message, ex);
                 }
-            } else {
+            }
+            else
+            {
                 throw new CDKException("Only supported is writing of IAtomContainer objects.");
             }
         }
@@ -132,7 +148,8 @@ namespace NCDK.IO {
             }
         }
 
-        private void WriteAtomContainer(IAtomContainer molecule) {
+        private void WriteAtomContainer(IAtomContainer molecule)
+        {
             writer.Write("{");
             writer.WriteLine();
             writer.Write("  IChemObjectBuilder builder = ");
@@ -148,33 +165,41 @@ namespace NCDK.IO {
             writer.WriteLine();
         }
 
-        private void WriteAtom(IAtom atom) {
-            if (atom is IPseudoAtom) {
+        private void WriteAtom(IAtom atom)
+        {
+            if (atom is IPseudoAtom)
+            {
                 writer.Write($"  IPseudoAtom {atom.Id} = builder.CreatePseudoAtom();");
                 writer.WriteLine();
                 writer.Write($"  atom.Label = \"{((IPseudoAtom)atom).Label}\");");
                 writer.WriteLine();
-            } else {
+            }
+            else
+            {
                 writer.Write($"  IAtom {atom.Id} = builder.CreateAtom(\"{atom.Symbol}\");");
                 writer.WriteLine();
             }
-            if (atom.FormalCharge != null) {
+            if (atom.FormalCharge != null)
+            {
                 writer.Write($"  {atom.Id}.FormalCharge = {atom.FormalCharge};");
                 writer.WriteLine();
             }
-            if (write2DCoordinates.IsSet && atom.Point2D != null) {
+            if (write2DCoordinates.IsSet && atom.Point2D != null)
+            {
                 Vector2 p2d = atom.Point2D.Value;
                 writer.Write($"  {atom.Id}.Point2D = new Vector2({p2d.X}, {p2d.Y});");
                 writer.WriteLine();
             }
-            if (write3DCoordinates.IsSet && atom.Point3D != null) {
+            if (write3DCoordinates.IsSet && atom.Point3D != null)
+            {
                 Vector3 p3d = atom.Point3D.Value;
                 writer.Write($"  {atom.Id}.Point3D = new Vector3({p3d.X}, {p3d.Y}, {p3d.Z});");
                 writer.WriteLine();
             }
         }
 
-        private void WriteBond(IBond bond) {
+        private void WriteBond(IBond bond)
+        {
             writer.Write($"  IBond {bond.Id} = builder.CreateBond({bond.Atoms[0].Id}, {bond.Atoms[1].Id}, BondOrder.{bond.Order});");
             writer.WriteLine();
         }
@@ -186,7 +211,8 @@ namespace NCDK.IO {
         public int RequiredDataFeatures =>
                 DataFeatures.HAS_GRAPH_REPRESENTATION | DataFeatures.HAS_ATOM_ELEMENT_SYMBOL;
 
-        private void InitIOSettings() {
+        private void InitIOSettings()
+        {
             write2DCoordinates = IOSettings.Add(new BooleanIOSetting("write2DCoordinates", IOSetting.Importance.Low,
                     "Should 2D coordinates be added?", "true"));
 
@@ -197,7 +223,8 @@ namespace NCDK.IO {
                     "Which IChemObjectBuilder should be used?", "Default.ChemObjectBuilder"));
         }
 
-        private void CustomizeJob() {
+        private void CustomizeJob()
+        {
             FireIOSettingQuestion(write2DCoordinates);
             FireIOSettingQuestion(write3DCoordinates);
             FireIOSettingQuestion(builder);

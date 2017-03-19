@@ -25,11 +25,10 @@ using System.Collections.Generic;
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
+    /// </summary>
+    /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    ///
-    /// <seealso cref="ChemModelManipulator"/>
-    /// </summary>
     public class ReactionManipulator
     {
 
@@ -95,7 +94,7 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = reactants[i];
                 if (mol.Contains(electrons))
                 {
-                    mol.Remove(electrons);
+                    mol.RemoveElectronContainer(electrons);
                 }
             }
             IAtomContainerSet<IAtomContainer> products = reaction.Products;
@@ -104,17 +103,16 @@ namespace NCDK.Tools.Manipulator
                 IAtomContainer mol = products[i];
                 if (mol.Contains(electrons))
                 {
-                    mol.Remove(electrons);
+                    mol.RemoveElectronContainer(electrons);
                 }
             }
         }
 
         /// <summary>
         /// Get all molecule of a <see cref="IReaction"/>: reactants + products.
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllMolecules(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -127,10 +125,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// get all products of a IReaction
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllProducts(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -144,10 +141,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// get all reactants of a IReaction
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction</param>
         /// <returns>The IAtomContainerSet</returns>
-        /// </summary>
         public static IAtomContainerSet<IAtomContainer> GetAllReactants(IReaction reaction)
         {
             IAtomContainerSet<IAtomContainer> moleculeSet = reaction.Builder.CreateAtomContainerSet();
@@ -162,9 +158,9 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Returns a new Reaction object which is the reverse of the given
         /// Reaction.
+        /// </summary>
         /// <param name="reaction">the reaction being considered</param>
         /// <returns>the reverse reaction</returns>
-        /// </summary>
         public static IReaction Reverse(IReaction reaction)
         {
             IReaction reversedReaction = reaction.Builder.CreateReaction();
@@ -197,9 +193,9 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns all the AtomContainer's of a Reaction.
+        /// </summary>
         /// <param name="reaction">The reaction being considered</param>
         /// <returns>a list of the IAtomContainer objects comprising the reaction</returns>
-        /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IReaction reaction)
         {
             return MoleculeSetManipulator.GetAllAtomContainers(GetAllMolecules(reaction));
@@ -277,11 +273,10 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// get the IAtom which is mapped
-        ///
+        /// </summary>
         /// <param name="reaction">The IReaction which contains the mapping</param>
         /// <param name="chemObject">The IChemObject which will be searched its mapped IChemObject</param>
         /// <returns>The mapped IChemObject</returns>
-        /// </summary>
         public static IChemObject GetMappedChemObject(IReaction reaction, IChemObject chemObject)
         {
             foreach (var mapping in reaction.Mappings)

@@ -42,7 +42,7 @@ namespace NCDK.Aromaticities
     public class DaylightModelTest
     {
 
-        private static ElectronDonation model = ElectronDonation.Daylight();
+        private static ElectronDonation model = ElectronDonation.DaylightModel;
 
         [TestMethod()]
         public void Benzene()

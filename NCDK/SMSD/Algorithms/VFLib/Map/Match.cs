@@ -45,15 +45,14 @@
  * THE SOFTWARE.
  */
 
-
 namespace NCDK.SMSD.Algorithms.VFLib.Map
 {
     /// <summary>
     /// Holds matching query and target nodes.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class Match
     {
 
@@ -62,7 +61,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
         /// <summary>
         /// Constructor
-        /// <param name="query">/// @param target</param>
         /// </summary>
         public Match(INode query, IAtom target)
         {

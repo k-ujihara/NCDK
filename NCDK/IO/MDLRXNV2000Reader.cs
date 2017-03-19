@@ -27,34 +27,33 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace NCDK.IO {
+namespace NCDK.IO
+{
     /// <summary>
     /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
     /// This MDL RXN reader uses the MDLV2000 reader to read each mol file
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author     Egon Willighagen
     // @author        Thomas Kuhn
     // @cdk.created    2003-07-24
-    ///
     // @cdk.keyword    file format, MDL RXN
     // @cdk.bug        1849923
-    /// </summary>
-    public class MDLRXNV2000Reader : DefaultChemObjectReader {
-
+    public class MDLRXNV2000Reader : DefaultChemObjectReader
+    {
         TextReader input = null;
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
         /// </summary>
+        /// <param name="ins">The Reader to read from</param>
         public MDLRXNV2000Reader(TextReader ins)
             : this(ins, ChemObjectReaderModes.Relaxed)
         { }
 
-        public MDLRXNV2000Reader(TextReader ins, ChemObjectReaderModes mode) {
+        public MDLRXNV2000Reader(TextReader ins, ChemObjectReaderModes mode)
+        {
             input = ins;
             base.mode = mode;
         }
@@ -92,49 +91,64 @@ namespace NCDK.IO {
         }
 
         /// <summary>
-         /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-         /// this (from file, database, internet etc). If the specific implementation
-         /// does not support a specific IChemObject it will throw an Exception.
-         ///
-         /// <param name="object">The object that subclasses</param>
-         ///      IChemObject
-         /// <returns>The IChemObject read</returns>
-         // @exception  CDKException
-         /// </summary>
+        /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
+        /// this (from file, database, internet etc). If the specific implementation
+        /// does not support a specific IChemObject it will throw an Exception.
+        /// </summary>
+        /// <param name="obj">The object that subclasses <see cref="IChemObject"/></param>
+        /// <returns>The <see cref="IChemObject"/> read</returns>
+        /// <exception cref="CDKException"></exception>
         public override T Read<T>(T obj)
         {
-            if (obj is IReaction) {
+            if (obj is IReaction)
+            {
                 return (T)ReadReaction(obj.Builder);
-            } else if (obj is IReactionSet) {
+            }
+            else if (obj is IReactionSet)
+            {
                 IReactionSet reactionSet = obj.Builder.CreateReactionSet();
                 reactionSet.Add(ReadReaction(obj.Builder));
                 return (T)reactionSet;
-            } else if (obj is IChemModel) {
+            }
+            else if (obj is IChemModel)
+            {
                 IChemModel model = obj.Builder.CreateChemModel();
                 IReactionSet reactionSet = obj.Builder.CreateReactionSet();
                 reactionSet.Add(ReadReaction(obj.Builder));
                 model.ReactionSet = reactionSet;
                 return (T)model;
-            } else if (obj is IChemFile) {
+            }
+            else if (obj is IChemFile)
+            {
                 IChemFile chemFile = obj.Builder.CreateChemFile();
                 IChemSequence sequence = obj.Builder.CreateChemSequence();
                 sequence.Add((IChemModel)Read(obj.Builder.CreateChemModel()));
                 chemFile.Add(sequence);
                 return (T)chemFile;
-            } else {
+            }
+            else
+            {
                 throw new CDKException("Only supported are Reaction and ChemModel, and not " + obj.GetType().Name
                         + ".");
             }
         }
 
-        public bool Accepts(IChemObject obj) {
-            if (obj is IReaction) {
+        public bool Accepts(IChemObject obj)
+        {
+            if (obj is IReaction)
+            {
                 return true;
-            } else if (obj is IChemModel) {
+            }
+            else if (obj is IChemModel)
+            {
                 return true;
-            } else if (obj is IChemFile) {
+            }
+            else if (obj is IChemFile)
+            {
                 return true;
-            } else if (obj is IReactionSet) {
+            }
+            else if (obj is IReactionSet)
+            {
                 return true;
             }
             return false;
@@ -142,35 +156,41 @@ namespace NCDK.IO {
 
         /// <summary>
         /// Read a Reaction from a file in MDL RXN format
-        ///
-        /// <returns>The Reaction that was read from the MDL file.</returns>
         /// </summary>
-        private IReaction ReadReaction(IChemObjectBuilder builder) {
+        /// <returns>The Reaction that was read from the MDL file.</returns>
+        private IReaction ReadReaction(IChemObjectBuilder builder)
+        {
             IReaction reaction = builder.CreateReaction();
-            try {
+            try
+            {
                 input.ReadLine(); // first line should be $RXN
                 input.ReadLine(); // second line
                 input.ReadLine(); // third line
                 input.ReadLine(); // fourth line
-            } catch (IOException exception) {
+            }
+            catch (IOException exception)
+            {
                 Debug.WriteLine(exception);
                 throw new CDKException("Error while reading header of RXN file", exception);
             }
 
             int reactantCount = 0;
             int productCount = 0;
-            try {
+            try
+            {
                 string countsLine = input.ReadLine();
-                
+
                 // this line contains the number of reactants and products
                 var tokens = Strings.Tokenize(countsLine);
                 reactantCount = int.Parse(tokens[0]);
                 Trace.TraceInformation("Expecting " + reactantCount + " reactants in file");
                 productCount = int.Parse(tokens[1]);
                 Trace.TraceInformation("Expecting " + productCount + " products in file");
-            } catch (Exception exception)
+            }
+            catch (Exception exception)
             {
-                if (exception is IOException | exception is FormatException) {
+                if (exception is IOException | exception is FormatException)
+                {
                     Debug.WriteLine(exception);
                     throw new CDKException("Error while counts line of RXN file", exception);
                 }
@@ -178,12 +198,15 @@ namespace NCDK.IO {
             }
 
             // now read the reactants
-            try {
-                for (int i = 1; i <= reactantCount; i++) {
+            try
+            {
+                for (int i = 1; i <= reactantCount; i++)
+                {
                     StringBuilder molFile = new StringBuilder();
                     input.ReadLine(); // announceMDLFileLine
                     string molFileLine = "";
-                    do {
+                    do
+                    {
                         molFileLine = input.ReadLine();
                         molFile.Append(molFileLine);
                         molFile.Append(Environment.NewLine);
@@ -198,10 +221,14 @@ namespace NCDK.IO {
                     // add reactant
                     reaction.Reactants.Add(reactant);
                 }
-            } catch (CDKException exception) {
+            }
+            catch (CDKException exception)
+            {
                 // rethrow exception from MDLReader
                 throw exception;
-            } catch (Exception exception) {
+            }
+            catch (Exception exception)
+            {
                 if (exception is IOException | exception is ArgumentException)
                 {
                     Debug.WriteLine(exception);
@@ -267,13 +294,16 @@ namespace NCDK.IO {
             int mappingCount = 0;
             //        IAtom[] reactantAtoms = reactingSide.GetAtoms();
             //        IAtom[] producedAtoms = producedSide.GetAtoms();
-            for (int i = 0; i < reactingSide.Atoms.Count; i++) {
-                for (int j = 0; j < producedSide.Atoms.Count; j++) {
+            for (int i = 0; i < reactingSide.Atoms.Count; i++)
+            {
+                for (int j = 0; j < producedSide.Atoms.Count; j++)
+                {
                     IAtom eductAtom = reactingSide.Atoms[i];
                     IAtom productAtom = producedSide.Atoms[j];
-                    if (eductAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING) != null
-                            && eductAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING).Equals(
-                                    productAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING))) {
+                    if (eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping) != null
+                            && eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping).Equals(
+                                    productAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping)))
+                    {
                         reaction.Mappings.Add(builder.CreateMapping(eductAtom, productAtom));
                         mappingCount++;
                         break;
@@ -285,7 +315,8 @@ namespace NCDK.IO {
             return reaction;
         }
 
-        public override void Close() {
+        public override void Close()
+        {
             input.Close();
         }
 

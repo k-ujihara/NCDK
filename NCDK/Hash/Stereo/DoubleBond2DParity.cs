@@ -33,14 +33,12 @@ namespace NCDK.Hash.Stereo
     /// <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
     /// on the same side (Z or cis). If one of the substituents is parallel to the
     /// double bond then the configuration is unspecified and 0 is returned.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal sealed class DoubleBond2DParity : GeometricParity
     {
-
         // coordinates of the double bond atoms
         // l1      r1
         //  \     /
@@ -49,17 +47,18 @@ namespace NCDK.Hash.Stereo
         // l2      r2
         private Vector2 l, r, l1, r1, l2, r2;
 
-        /* the area below which we return unspecified parity */
-        private const double THRESHOLD = 0.1;
+        /// <summary>
+        /// the area below which we return unspecified parity
+        /// </summary>
+        private const double Threshold = 0.1;
 
         /// <summary>
         /// Create a new double bond parity for the 2D coordinates of the atoms.
-        ///
+        /// </summary>
         /// <param name="left">one atom of the double bond</param>
         /// <param name="right">the other atom of a double bond</param>
         /// <param name="leftSubstituent">the substituent atom connected to the left atom</param>
         /// <param name="rightSubstituent">the substituent atom connected to the right atom</param>
-        /// </summary>
         public DoubleBond2DParity(Vector2 left, Vector2 right, Vector2 leftSubstituent, Vector2 rightSubstituent)
         {
             this.l = left;
@@ -76,8 +75,8 @@ namespace NCDK.Hash.Stereo
         /// side of a bond. If one of the sides has two substituents and the other
         /// side has two then you can pass left/right atom of the double bond as
         /// the second substituent.
-        ///
-        /// <code>
+        /// </summary>
+        /// <example>
         ///  l1      r1
         ///   \     /
         ///    l = r
@@ -85,18 +84,17 @@ namespace NCDK.Hash.Stereo
         ///  l2
         ///
         ///  should be passed as:
+        /// <code>
         ///      new DoubleBond2DParity(l, r, l1, l2, r1, r);
         /// </code>
-        ///
+        /// </example>
         /// <param name="left">one atom of the double bond</param>
         /// <param name="right">the other atom of a double bond</param>
         /// <param name="leftSubstituent1">first substituent atom connected to the left atom</param>
         /// <param name="leftSubstituent2">second substituent atom connected to the left atom</param>
         /// <param name="rightSubstituent1">first substituent atom connected to the right atom</param>
         /// <param name="rightSubstituent2">second substituent atom connected to the right atom</param>
-        /// </summary>
-        public DoubleBond2DParity(Vector2 left, Vector2 right, Vector2 leftSubstituent1, Vector2 leftSubstituent2,
-                Vector2 rightSubstituent1, Vector2 rightSubstituent2)
+        public DoubleBond2DParity(Vector2 left, Vector2 right, Vector2 leftSubstituent1, Vector2 leftSubstituent2, Vector2 rightSubstituent1, Vector2 rightSubstituent2)
         {
             this.l = left;
             this.r = right;
@@ -108,9 +106,8 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Calculate the configuration of the double bond as a parity.
-        ///
-        /// <returns>opposite (+1), together (-1) or unspecified (0)</returns>
         /// </summary>
+        /// <returns>opposite (+1), together (-1) or unspecified (0)</returns>
         public override int Parity
         {
             get
@@ -122,23 +119,21 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Determine the rotation parity of one side of the double bond. This parity
         /// is the sign of the area of a triangle.
-        ///
         /// <code>
         /// a
         ///  \
         ///   b = c
         /// </code>
-        ///
+        /// </summary>
         /// <param name="a">coordinates of the substituent atom</param>
         /// <param name="b">coordinates of the atom next to the substituent</param>
         /// <param name="c">coordinates of the atom double bonds to <i>b</i></param>
         /// <returns>clockwise (+1), anti-clockwise (-1) or unspecified (0)</returns>
-        /// </summary>
         private static int GetParity(Vector2 a, Vector2 b, Vector2 c)
         {
             double det = (a.X - c.X) * (b.Y - c.Y) - (a.Y - c.Y) * (b.X - c.X);
 
-            return Math.Abs(det) < THRESHOLD ? 0 : (int)Math.Sign(det);
+            return Math.Abs(det) < Threshold ? 0 : (int)Math.Sign(det);
         }
     }
 }

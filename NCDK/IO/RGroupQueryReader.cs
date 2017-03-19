@@ -40,18 +40,16 @@ namespace NCDK.IO
     /// member of each Rgroup in the query.
     ///
     /// <para>The RGFile format is described in the manual
-    /// <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">
-    /// "CTFile Formats"</a> , Chapter 5.
-    ///
+    /// <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">"CTFile Formats"</a> , Chapter 5.
+    /// </para>
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group
     // @author Mark Rijnbeek
-    /// </summary>
     public class RGroupQueryReader : DefaultChemObjectReader
     {
         /// <summary>
@@ -76,7 +74,7 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
         /// from a given Stream.
-        /// <param name="in">The Stream to read from.</param>
+        /// <param name="ins">The Stream to read from.</param>
         /// </summary>
         public RGroupQueryReader(Stream ins)
             : this(new StreamReader(ins))
@@ -85,8 +83,8 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new RgroupQueryReader that can read RgroupAtomContainerSet
         /// from a given Reader.
-        /// <param name="in">The Reader to read from.</param>
         /// </summary>
+        /// <param name="ins">The Reader to read from.</param>
         public RGroupQueryReader(TextReader ins)
         {
             input = ins;
@@ -120,11 +118,11 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Check input IChemObject and proceed to parse.
-        /// Accepts/returns IChemObject of type RGroupQuery only.
-        /// <returns>IChemObject read from file</returns>
-        /// <param name="object">class must be of type RGroupQuery</param>
+        /// Check input <see cref="IChemObject"/> and proceed to parse.
+        /// Accepts/returns <see cref="IChemObject"/> of type <see cref="RGroupQuery"/> only.
         /// </summary>
+        /// <returns><see cref="IChemObject"/> read from file</returns>
+        /// <param name="obj">class must be of type <see cref="RGroupQuery"/></param>
         public override T Read<T>(T obj)
         {
             return (T)Read((IChemObject)obj);
@@ -143,13 +141,11 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Parse the RGFile. Uses of {@link org.openscience.cdk.io.MDLV2000Reader}
+        /// Parse the RGFile. Uses of <see cref="MDLV2000Reader"/>
         /// to parse individual $CTAB blocks.
-        ///
+        /// </summary>
         /// <param name="rGroupQuery">empty</param>
         /// <returns>populated query</returns>
-        // @
-        /// </summary>
         private RGroupQuery ParseRGFile(RGroupQuery rGroupQuery)
         {
             IChemObjectBuilder defaultChemObjectBuilder = rGroupQuery.Builder;
@@ -451,9 +447,10 @@ namespace NCDK.IO
 
         /// <summary>
         /// Checks that a given line starts as expected, according to RGFile format.
-        /// <param name="line">/// @param expect</param>
-        /// <param name="lineCount">/// @</param>
         /// </summary>
+        /// <param name="line"></param>
+        /// <param name="expect"></param>
+        /// <param name="lineCount"></param>
         private void CheckLineBeginsWith(string line, string expect, int lineCount)
         {
             if (line == null)

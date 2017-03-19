@@ -33,14 +33,13 @@ using NCDK.IO;
 using NCDK.Tools.Manipulator;
 using NCDK.Geometries;
 
-
 namespace NCDK.Layout
 {
     /// <summary>
     /// Helper class for Structure Diagram Generation. Handles templates. This is
     /// our layout solution for ring systems which are notoriously difficult to
     /// layout, like cubane, adamantane, porphyrin, etc.
-    ///
+    /// </summary>
     // @author steinbeck
     // @cdk.created 2003-09-04
     // @cdk.keyword layout
@@ -49,13 +48,11 @@ namespace NCDK.Layout
     // @cdk.require java1.4+
     // @cdk.module sdg
     // @cdk.githash
-    /// </summary>
     public sealed class TemplateHandler
     {
         private readonly List<IAtomContainer> templates = new List<IAtomContainer>();
         private readonly List<Pattern> anonPatterns = new List<Pattern>();
         private readonly List<Pattern> elemPatterns = new List<Pattern>();
-
 
         private readonly AtomMatcher elemAtomMatcher = new ElemAtomMatcher();
         class ElemAtomMatcher : AtomMatcher
@@ -142,9 +139,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Adds a Molecule to the list of templates use by this TemplateHandler.
-        ///
-        /// <param name="molecule">The molecule to be added to the TemplateHandler</param>
         /// </summary>
+        /// <param name="molecule">The molecule to be added to the TemplateHandler</param>
         public void AddMolecule(IAtomContainer molecule)
         {
             if (!GeometryUtil.Has2DCoordinates(molecule))
@@ -152,7 +148,7 @@ namespace NCDK.Layout
 
             // we want a consistent scale!
             GeometryUtil.ScaleMolecule(molecule, GeometryUtil.GetScaleFactor(molecule,
-                                                                             StructureDiagramGenerator.DEFAULT_BOND_LENGTH));
+                                                                             StructureDiagramGenerator.DefaultBondLength));
 
             templates.Add(molecule);
             anonPatterns.Add(VentoFoggia.FindSubstructure(molecule,
@@ -184,10 +180,9 @@ namespace NCDK.Layout
         /// Checks if one of the loaded templates is isomorph to the given
         /// Molecule. If so, it assigns the coordinates from the template to the
         /// respective atoms in the Molecule, and marks the atoms as ISPLACED.
-        ///
+        /// </summary>
         /// <param name="molecule">The molecule to be check for potential templates</param>
         /// <returns>True if there was a possible mapping</returns>
-        /// </summary>
         public bool MapTemplateExact(IAtomContainer molecule)
         {
             foreach (var template in templates)
@@ -212,10 +207,9 @@ namespace NCDK.Layout
         /// Checks if one of the loaded templates is a substructure in the given
         /// Molecule. If so, it assigns the coordinates from the template to the
         /// respective atoms in the Molecule, and marks the atoms as ISPLACED.
-        ///
+        /// </summary>
         /// <param name="molecule">The molecule to be check for potential templates</param>
         /// <returns>True if there was a possible mapping</returns>
-        /// </summary>
         public bool MapTemplates(IAtomContainer molecule)
         {
             // match element patterns first so hetero atoms are oriented correctly
@@ -256,10 +250,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Gets the templateAt attribute of the TemplateHandler object
-        ///
+        /// </summary>
         /// <param name="position">Description of the Parameter</param>
         /// <returns>The templateAt value</returns>
-        /// </summary>
         public IAtomContainer GetTemplateAt(int position)
         {
             return templates[position];
@@ -269,15 +262,12 @@ namespace NCDK.Layout
         /// Checks if one of the loaded templates is a substructure in the given
         /// Molecule and returns all matched substructures in a IAtomContainerSet.
         /// This method does not assign any coordinates.
-        ///
-        /// <param name="molecule">The molecule to be check for potential templates</param>
-        /// <returns>an IAtomContainerSet of all matched substructures of</returns>
-        /// the molecule
-        /// <exception cref="CDKException">if an error occurs</exception>
         /// </summary>
+        /// <param name="molecule">The molecule to be check for potential templates</param>
+        /// <returns>an IAtomContainerSet of all matched substructures of the molecule</returns>
+        /// <exception cref="CDKException">if an error occurs</exception>
         public IAtomContainerSet<IAtomContainer> GetMappedSubstructures(IAtomContainer molecule)
         {
-
             var matchedSubstructures = molecule.Builder.CreateAtomContainerSet();
             var matchedChemObjs = new HashSet<IChemObject>();
 
@@ -317,10 +307,9 @@ namespace NCDK.Layout
         /// does not have coordinates an error is thrown.
         ///
         /// For safety we clone the molecule.
-        ///
+        /// </summary>
         /// <param name="template">the molecule</param>
         /// <returns>new template handler</returns>
-        /// </summary>
         public static TemplateHandler CreateSingleton(IAtomContainer template)
         {
             TemplateHandler handler = new TemplateHandler();
@@ -332,10 +321,10 @@ namespace NCDK.Layout
         /// <summary>
         /// Create a template from a substructure pattern. Using this template handler in the diagram
         /// generator then allows us to align to common reference.
-        ///
-        /// <param name="template">the molecule</param>
-        /// <returns>new template handler</returns>
         /// </summary>
+        /// <param name="ptrn">pattern</param>
+        /// <param name="mols">the molecules</param>
+        /// <returns>new template handler</returns>
         public static TemplateHandler CreateFromSubstructure(Pattern ptrn, IEnumerable<IAtomContainer> mols)
         {
             foreach (var mol in mols)
@@ -349,10 +338,10 @@ namespace NCDK.Layout
         /// <summary>
         /// Create a template from a substructure pattern. Using this template handler in the diagram
         /// generator then allows us to align to common reference.
-        ///
-        /// <param name="template">the molecule</param>
-        /// <returns>new template handler</returns>
         /// </summary>
+        /// <param name="ptrn">pattern</param>
+        /// <param name="mol">the molecule</param>
+        /// <returns>new template handler</returns>
         public static TemplateHandler CreateFromSubstructure(Pattern ptrn, IAtomContainer mol)
         {
             foreach (var template in ptrn.MatchAll(mol).ToSubstructures())
@@ -362,9 +351,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Convert to an identity template library.
-        ///
-        /// <returns>identity template library</returns>
         /// </summary>
+        /// <returns>identity template library</returns>
         internal IdentityTemplateLibrary ToIdentityTemplateLibrary()
         {
             IdentityTemplateLibrary lib = IdentityTemplateLibrary.Empty();

@@ -28,30 +28,26 @@ namespace NCDK.SMSD
 {
     /// <summary>
     /// Interface that holds basic core interface for all MCS algorithm.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public interface IMCSBase
     {
         /// <summary>
         /// Initialise the query and target molecule.
-        ///
+        /// </summary>
         /// <param name="source">source molecule</param>
         /// <param name="target">target molecule</param>
-        // @throws CDKException
-        ///
-        /// </summary>
+        /// <exception cref="CDKException"></exception>
         void Set(MolHandler source, MolHandler target);
 
         /// <summary>
         /// Initialise the query and target molecule.
-        ///
+        /// </summary>
         /// <param name="source">source molecule</param>
         /// <param name="target">target molecule</param>
-        // @throws CDKException
-        ///
-        /// </summary>
+        /// <exception cref="CDKException"></exception>
         void Set(IQueryAtomContainer source, IAtomContainer target);
 
         /// <summary>
@@ -59,8 +55,8 @@ namespace NCDK.SMSD
         /// Each map in the list has atom-atom equivalence of the mappings
         /// between query and target molecule i.e. map.Key for the query
         /// and map.Value for the target molecule
-        /// <returns>All possible MCS atom Mappings</returns>
         /// </summary>
+        /// <returns>All possible MCS atom Mappings</returns>
         IList<IDictionary<IAtom, IAtom>> GetAllAtomMapping();
 
         /// <summary>
@@ -68,20 +64,20 @@ namespace NCDK.SMSD
         /// Each map in the list has atom-atom equivalence index of the mappings
         /// between query and target molecule i.e. map.Key for the query
         /// and map.Value for the target molecule
-        /// <returns>All possible MCS Mapping Index</returns>
         /// </summary>
+        /// <returns>All possible MCS Mapping Index</returns>
         IList<IDictionary<int, int>> GetAllMapping();
 
         /// <summary>
         /// Returns one of the best matches with atoms mapped.
-        /// <returns>Best Atom Mapping</returns>
         /// </summary>
+        /// <returns>Best Atom Mapping</returns>
         IDictionary<IAtom, IAtom> GetFirstAtomMapping();
 
         /// <summary>
         /// Returns one of the best matches with atom indexes mapped.
-        /// <returns>Best Mapping Index</returns>
         /// </summary>
+        /// <returns>Best Mapping Index</returns>
         IDictionary<int, int> GetFirstMapping();
     }
 }

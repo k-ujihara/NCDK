@@ -19,7 +19,6 @@
  */
 using NCDK.IO.Listener;
 using System;
-using System.Linq;
 using System.IO;
 
 namespace NCDK.IO

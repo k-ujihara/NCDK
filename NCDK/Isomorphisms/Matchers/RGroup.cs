@@ -25,22 +25,22 @@
 namespace NCDK.Isomorphisms.Matchers
 {
     /// <summary>
-    /// Represents a single substitute structure in an <see cref="RGroupList"/>. <P>
+    /// Represents a single substitute structure in an <see cref="RGroupList"/>.
+    /// <para>
     /// The order of attachment points is provided (first and second only, conform
     /// RGFile spec). This order is relevant when the structure connects to the root
-    /// with more than one bond.
-    /// <P>
-    /// See also <see cref="RGroupList"/> and <see cref="RGroupQuery"/>.
-    ///
+    /// with more than one bond.</para>
+    /// </summary>
+    /// <seealso cref="RGroupList"/>
+    /// <seealso cref="RGroupQuery"/>
     // @cdk.module  isomorphism
     // @cdk.githash
     // @cdk.keyword Rgroup
     // @cdk.keyword R group
     // @cdk.keyword R-group
     // @author Mark Rijnbeek
-    /// </summary>
-    public class RGroup {
-
+    public class RGroup
+    {
         /// <summary>
         /// Standard label/title to be used for the root atom container.
         /// </summary>
@@ -48,10 +48,11 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         /// Makes a label/title to be used for a substituent.
+        /// </summary>
         /// <param name="rgroupNum">R-Group number (1..32)</param>
         /// <returns>label for substituent, like "R3"</returns>
-        /// </summary>
-        public static string MakeLabel(int rgroupNum) {
+        public static string MakeLabel(int rgroupNum)
+        {
             return "(R" + rgroupNum + ")";
         }
 

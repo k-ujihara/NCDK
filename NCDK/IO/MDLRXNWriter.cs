@@ -34,24 +34,23 @@ namespace NCDK.IO
     /// <summary>
     /// Writes a reaction to a MDL rxn or SDF file. Attention: Stoichiometric
     /// coefficients have to be natural numbers.
-    ///
+    /// </summary>
+    /// <example>
     /// <code>
     /// MDLRXNWriter writer = new MDLRXNWriter(new FileWriter(new File("output.mol")));
     /// writer.Write((Molecule)molecule);
     /// writer.Close();
     /// </code>
-    ///
+    /// </example>
+    /// <remarks>
     /// See {@cdk.cite DAL92}.
-    ///
+    /// </remarks>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, MDL RXN file
-    /// </summary>
     public class MDLRXNWriter : DefaultChemObjectWriter
     {
-
         private TextWriter writer;
         private int reactionNumber;
         public IDictionary<string, object> rdFields = null;
@@ -59,21 +58,19 @@ namespace NCDK.IO
         /// <summary>
         /// Constructs a new MDLWriter that can write an array of
         /// Molecules to a Writer.
-        ///
-        /// <param name="out">The Writer to write to</param>
         /// </summary>
-        public MDLRXNWriter(TextWriter out_)
+        /// <param name="output">The Writer to write to</param>
+        public MDLRXNWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
             this.reactionNumber = 1;
         }
 
         /// <summary>
         /// Constructs a new MDLWriter that can write an array of
         /// Molecules to a given Stream.
-        ///
-        /// <param name="output">The Stream to write to</param>
         /// </summary>
+        /// <param name="output">The Stream to write to</param>
         public MDLRXNWriter(Stream output)
             : this(new StreamWriter(output))
         { }
@@ -84,9 +81,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => MDLFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -96,13 +93,14 @@ namespace NCDK.IO
 
         /// <summary>
         /// Here you can set a map which will be used to build rd fields in the file.
-        /// The entries will be translated to rd fields like this:<br>
-        /// &gt; &lt;key&gt;<br>
-        /// &gt; value<br>
-        /// empty line<br>
-        ///
-        /// <param name="map">The map to be used, map of string-string pairs</param>
+        /// The entries will be translated to rd fields like this:
+        /// <code>
+        /// &gt; &lt;key&gt;
+        /// &gt; value
+        /// empty line
+        /// </code>
         /// </summary>
+        /// <param name="map">The map to be used, map of string-string pairs</param>
         public void SetRdFields(IDictionary<string, object> map)
         {
             rdFields = map;
@@ -126,11 +124,9 @@ namespace NCDK.IO
         /// <summary>
         /// Writes a IChemObject to the MDL RXN file formated output.
         /// It can only output ChemObjects of type Reaction
-        ///
-        /// <param name="object">class must be of type Molecule or MoleculeSet.</param>
-        ///
-        /// @see org.openscience.cdk.ChemFile
         /// </summary>
+        /// <param name="obj">class must be of type Molecule or MoleculeSet.</param>
+        /// <seealso cref="IChemFile"/> 
         public override void Write(IChemObject obj)
         {
             if (obj is IReactionSet)
@@ -149,12 +145,10 @@ namespace NCDK.IO
 
         /// <summary>
         ///  Writes an array of Reaction to an Stream in MDL rdf format.
-        ///
-        /// <param name="reactions">Array of Reactions that is written to an Stream</param>
         /// </summary>
+        /// <param name="reactions">Array of Reactions that is written to an Stream</param>
         private void WriteReactionSet(IReactionSet reactions)
         {
-
             foreach (var iReaction in reactions)
             {
                 WriteReaction(iReaction);
@@ -163,9 +157,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes a Reaction to an Stream in MDL sdf format.
-        ///
-        /// <param name="reaction">A Reaction that is written to an Stream</param>
         /// </summary>
+        /// <param name="reaction">A Reaction that is written to an Stream</param>
         private void WriteReaction(IReaction reaction)
         {
             int reactantCount = reaction.Reactants.Count;
@@ -188,7 +181,7 @@ namespace NCDK.IO
                 writer.Write("$RXN");
                 writer.WriteLine();
                 // reaction name
-                string line = reaction.GetProperty<string>(CDKPropertyName.TITLE);
+                string line = reaction.GetProperty<string>(CDKPropertyName.Title);
                 if (line == null) line = "";
                 if (line.Length > 80) line = line.Substring(0, 80);
                 writer.Write(line);
@@ -196,7 +189,7 @@ namespace NCDK.IO
                 // user/program/date&time/reaction registry no. line
                 writer.WriteLine();
                 // comment line
-                line = reaction.GetProperty<string>(CDKPropertyName.REMARK);
+                line = reaction.GetProperty<string>(CDKPropertyName.Remark);
                 if (line == null) line = "";
                 if (line.Length > 80) line = line.Substring(0, 80);
                 writer.Write(line);
@@ -212,8 +205,8 @@ namespace NCDK.IO
                 foreach (var mapping in reaction.Mappings)
                 {
                     var it = mapping.GetRelatedChemObjects().ToList();
-                    it[0].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, i + 1);
-                    it[1].SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, i + 1);
+                    it[0].SetProperty(CDKPropertyName.AtomAtomMapping, i + 1);
+                    it[1].SetProperty(CDKPropertyName.AtomAtomMapping, i + 1);
                     i++;
                 }
                 WriteAtomContainerSet(reaction.Reactants);
@@ -240,7 +233,6 @@ namespace NCDK.IO
                     writer.WriteLine();
                 }
                 reactionNumber++;
-
             }
             catch (IOException ex)
             {
@@ -252,9 +244,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Writes a MoleculeSet to an Stream for the reaction.
-        ///
-        /// <param name="som">The MoleculeSet that is written to an Stream</param>
         /// </summary>
+        /// <param name="som">The MoleculeSet that is written to an Stream</param>
         private void WriteAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
         {
             for (int i = 0; i < som.Count; i++)
@@ -286,11 +277,10 @@ namespace NCDK.IO
         /// <summary>
         /// Formats an int to fit into the connectiontable and changes it
         /// to a string.
-        ///
+        /// </summary>
         /// <param name="i">The int to be formated</param>
         /// <param name="l">Length of the string</param>
         /// <returns>The string to be written into the connectiontable</returns>
-        /// </summary>
         private string FormatMDLInt(int i, int l)
         {
             var s = i.ToString(CultureInfo.InvariantCulture.NumberFormat);

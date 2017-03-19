@@ -35,7 +35,6 @@ namespace NCDK.Layout
     /// </summary>
     sealed class Congestion
     {
-
         // lower bound on scores
         private const double MIN_SCORE = 0.00001;
 
@@ -56,9 +55,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Calculate the initial score.
-        ///
-        /// <returns>congestion score</returns>
         /// </summary>
+        /// <returns>congestion score</returns>
         private double InitScore()
         {
             double score = 0;
@@ -83,11 +81,10 @@ namespace NCDK.Layout
         /// Update the score considering that some atoms have moved. We only
         /// need to update the score of atom that have moved vs those that haven't
         /// since all those that moved did so together.
-        /// 
+        /// </summary>
         /// <param name="visit">visit flags</param>
         /// <param name="vs">visit list</param>
         /// <param name="n">number of visited in visit list</param>
-        /// </summary>
         public void Update(bool[] visit, int[] vs, int n)
         {
             int len = atoms.Length;
@@ -112,10 +109,9 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Update the score considering the atoms have moved (provided). 
-        ///
+        /// </summary>
         /// <param name="vs">visit list</param>
         /// <param name="n">number of visited in visit list</param>
-        /// </summary>
         public void Update(int[] vs, int n)
         {
             int len = atoms.Length;
@@ -140,9 +136,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// The congestion score.
-        ///
-        /// <returns>the current score</returns>
         /// </summary>
+        /// <returns>the current score</returns>
         public double Score()
         {
             return score;
@@ -150,11 +145,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Access the contribution of an atom pair to the congestion.
-        ///
+        /// </summary>
         /// <param name="i">atom idx</param>
         /// <param name="j">atom idx</param>
         /// <returns>score</returns>
-        /// </summary>
         public double Contribution(int i, int j)
         {
             return contribution[i][j];

@@ -38,11 +38,10 @@ namespace NCDK.IO.RandomAccess
     /// The index stores offset, length and a third field reserved for future use.
     /// Subsequent access for a record N uses this index to seek the record and return the molecule.
     /// Useful for very big files.
-    ///
+    /// </summary>
     // @author     Nina Jeliazkova <nina@acad.bg>
     // @cdk.module io
     // @cdk.githash
-    /// </summary>
     public abstract class RandomAccessReader : DefaultRandomAccessChemObjectReader
     {
         protected Stream raFile;
@@ -64,7 +63,7 @@ namespace NCDK.IO.RandomAccess
         /// </summary>
         /// <param name="file">the file object containg the molecules to be indexed</param>
         /// <param name="builder">a chem object builder</param>
-        /// <exception cref="">if there is an error during reading</exception>
+        /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
         public RandomAccessReader(string file, IChemObjectBuilder builder)
             : this(file, builder, null)
         { }
@@ -75,7 +74,7 @@ namespace NCDK.IO.RandomAccess
         /// <param name="file">file the file object containg the molecules to be indexed</param>
         /// <param name="builder">builder a chem object builder</param>
         /// <param name="listener">listen for read event</param>
-        /// <exception cref="">if there is an error during reading</exception>
+        /// <exception cref="System.IO.IOException">if there is an error during reading</exception>
         public RandomAccessReader(string file, IChemObjectBuilder builder, IReaderListener listener)
             : base()
         {
@@ -148,7 +147,7 @@ namespace NCDK.IO.RandomAccess
         /// The reader is already set to read the record buffer.
         /// </summary>
         /// <returns>the read IChemObject</returns>
-        /// <exception cref="">an error occurred whilst reading the file</exception>
+        /// <exception cref="System.IO.IOException">an error occurred whilst reading the file</exception>
         protected virtual IChemObject ProcessContent()
         {
             return chemObjectReader.Read(builder.CreateChemFile());

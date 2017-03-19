@@ -26,38 +26,41 @@ namespace NCDK.IO
 {
     /// <summary>
     /// A reader for GAMESS log file.
-    ///
-    /// <p><b>Expected behaviour</b>:
-    /// <br>The "GamessReader" object is able to read GAMESS output log file format.
-    ///
-    /// <p><b>Limitations</b>: <br>This reader was developed from a small set of
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// <b>Expected behaviour</b>:
+    /// The "GamessReader" object is able to read GAMESS output log file format.
+    /// </para>
+    /// <para>
+    /// <b>Limitations</b>: This reader was developed from a small set of
     /// example log files, and therefore, is not guaranteed to properly read all
     /// GAMESS output. If you have problems, please contact the author of this code,
     /// not the developers of GAMESS.
-    ///
-    /// <!-- <p><b>State information</b>: <br> [] -->
-    /// <!-- <p><b>Dependencies</b>: <br> [all OS/Software/Hardware dependencies] -->
-    ///
-    /// <p><b>Implementation</b>
-    /// <br>Available Feature(s):
-    /// <ul>
-    ///     <li><b>Molecular coordinates</b>: Each set of coordinates is added to the ChemFile in the order they are found.</li>
-    /// </ul>
+    /// </para>
+    /// <para>
+    /// <b>Implementation</b>
+    /// Available Feature(s):
+    /// <list type="bullet">
+    ///     <item><b>Molecular coordinates</b>: Each set of coordinates is added to the ChemFile in the order they are found.</item>
+    /// </list> 
+    /// </para>
+    /// <para>
     /// Unavailable Feature(s):
-    /// <ul>
-    /// <!--    <li><b>GAMESS version number</b>: The version number can be retrieved.</li> -->
-    /// <!--    <li><b>Point group symmetry information</b>: The point group is associated with the set of molecules.</li> -->
-    /// <!--    <li><b>MOPAC charges</b>: The point group is associated with the set of molecules.</li> -->
-    ///     <li><b>Energies</b>: They are associated with the previously read set of coordinates.</li>
-    ///     <li><b>Normal coordinates of vibrations</b>: They are associated with the previously read set of coordinates.</li>
-    /// </ul>
-    ///
-    /// <!-- <p><b>Security:</b> -->
-    ///
-    /// <p><b>References</b>:
-    /// <br><a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a
-    /// quantum chemistry program by Gordon research group atIowa State University.
-    ///
+    /// <list type="bullet">
+    /// <!--    <item><b>GAMESS version number</b>: The version number can be retrieved.</item> -->
+    /// <!--    <item><b>Point group symmetry information</b>: The point group is associated with the set of molecules.</item> -->
+    /// <!--    <item><b>MOPAC charges</b>: The point group is associated with the set of molecules.</item> -->
+    ///     <item><b>Energies</b>: They are associated with the previously read set of coordinates.</item>
+    ///     <item><b>Normal coordinates of vibrations</b>: They are associated with the previously read set of coordinates.</item>
+    /// </list> 
+    /// </para>
+    /// <para>
+    /// <b>References</b>:
+    /// <a href="http://www.msg.ameslab.gov/GAMESS/GAMESS.html">GAMESS</a> is a
+    /// quantum chemistry program by Gordon research group at Iowa State University.
+    /// </para>
+    /// </remarks>
     // @cdk.module  extra
     // @cdk.githash
     // @cdk.keyword Gamess
@@ -65,11 +68,7 @@ namespace NCDK.IO
     // @cdk.keyword output
     // @cdk.keyword log file
     // @cdk.iooptions
-    ///
     // @author Bradley A. Smith
-    ///
-    /// <!-- @see #GamessWriter(Reader) -->
-    /// </summary>
     //TODO Update class comments with appropriate information.
     //TODO Update "see" tag with reference to GamessWriter when it will be implemented.
     //TODO Update "author" tag with appropriate information.
@@ -78,19 +77,19 @@ namespace NCDK.IO
         /// <summary>
         /// bool constant used to specify that the coordinates are given in Bohr units.
         /// </summary>
-        public const bool BOHR_UNIT = true;
+        public const bool BohrUnit = true;
 
         /// <summary>
         /// Double constant that contains the conversion factor from Bohr unit to
-        /// Ångstrom unit.
+        /// Ångstrom unit.
         /// </summary>
         //TODO Check the accuracy of this comment.
-        public const double BOHR_TO_ANGSTROM = 0.529177249;
+        public const double BohrToAngstrom = 0.529177249;
 
         /// <summary>
-        /// bool constant used to specify that the coordinates are given in Ångstrom units.
+        /// bool constant used to specify that the coordinates are given in Ångstrom units.
         /// </summary>
-        public const bool ANGSTROM_UNIT = false;
+        public const bool AngstromUnit = false;
 
         /// <summary>
         /// The "TextReader" object used to read data from the "file system" file.
@@ -189,7 +188,7 @@ namespace NCDK.IO
                     // The following line do no contain data, so it is ignored.
                     this.input.ReadLine();
                     moleculeSet.Add(this.ReadCoordinates(file.Builder.CreateAtomContainer(),
-                            GamessReader.BOHR_UNIT));
+                            GamessReader.BohrUnit));
                     //break; //<- stops when the first set of coordinates is found.
                 }
                 else if (currentReadLine.IndexOf(" COORDINATES OF ALL ATOMS ARE (ANGS)") >= 0)
@@ -199,7 +198,7 @@ namespace NCDK.IO
                     this.input.ReadLine();
 
                     moleculeSet.Add(this.ReadCoordinates(file.Builder.CreateAtomContainer(),
-                            GamessReader.ANGSTROM_UNIT));
+                            GamessReader.AngstromUnit));
                     //break; //<- stops when the first set of coordinates is found.
                 }
                 currentReadLine = this.input.ReadLine();
@@ -212,9 +211,12 @@ namespace NCDK.IO
         /// the "input" field, scales coordinate to angstr???m unit, builds each atom with
         /// the right associated coordinates, builds a new molecule with these atoms
         /// and returns the complete molecule.
-        /// <para><b>Implementation</b>:
-        /// Dummy atoms are ignored.</br>para>
         /// </summary>
+        /// <remarks>
+        /// <para><b>Implementation</b>:
+        /// Dummy atoms are ignored.</para>
+        /// </remarks>
+        /// <param name="molecule"></param>
         /// <param name="coordinatesUnits">The unit in which coordinates are given.</param>
         /// <exception cref="IOException">may be thrown by the "input" object.</exception>
         /// <seealso cref="GamessReader.input"/>
@@ -364,22 +366,21 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Scales coordinates to Ångström unit if they are given in Bohr unit.
-        /// If coordinates are already given in Ångström unit, then no modifications
+        /// Scales coordinates to Ångström unit if they are given in Bohr unit.
+        /// If coordinates are already given in Ångström unit, then no modifications
         /// are performed.
         /// </summary>
-        /// <param name="coordinatesUnits"><see cref="BOHR_UNIT"/> if coordinates are given in Bohr unit and <see cref="ANGSTROM_UNIT"/>
-        ///                              if they are given in Ångström unit.</param>
-        /// <returns>The scaling conversion factor: 1 if no scaling is needed and <see cref="BOHR_TO_ANGSTROM"/> if scaling has to be performed.</returns>
-        /// <seealso cref="BOHR_TO_ANGSTROM"/>
-        /// <seealso cref="BOHR_UNIT"/>
-        /// <seealso cref="ANGSTROM_UNIT"/>
+        /// <param name="coordinatesUnits"><see cref="BohrUnit"/> if coordinates are given in Bohr unit and <see cref="AngstromUnit"/> if they are given in Ångström unit.</param>
+        /// <returns>The scaling conversion factor: 1 if no scaling is needed and <see cref="BohrToAngstrom"/> if scaling has to be performed.</returns>
+        /// <seealso cref="BohrToAngstrom"/>
+        /// <seealso cref="BohrUnit"/>
+        /// <seealso cref="AngstromUnit"/>
         //TODO Update method comments with appropriate information.
         private static double ScalesCoordinatesUnits(bool coordinatesUnits)
         {
-            if (coordinatesUnits == GamessReader.BOHR_UNIT)
+            if (coordinatesUnits == GamessReader.BohrUnit)
             {
-                return PhysicalConstants.BOHR_TO_ANGSTROM;
+                return PhysicalConstants.BohrToAngstrom;
             }
             else
             { //condition is: (coordinatesUnits == GamessReader.ANGTROM_UNIT)

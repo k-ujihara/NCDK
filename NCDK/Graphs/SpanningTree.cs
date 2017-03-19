@@ -154,7 +154,6 @@ namespace NCDK.Graphs
                     //Debug.WriteLine("ST : includes bond between atoms "+v1+","+v2);
                 }
                 if (sptSize >= (totalVertexCount - 1)) break;
-
             }
             // if atomcontainer is connected then the number of bonds in the spanning tree = (No atoms-1)
             //i.e.  edgesRings = new Bond[E-V+1];
@@ -184,9 +183,9 @@ namespace NCDK.Graphs
         {
             IAtomContainer container = molecule.Builder.CreateAtomContainer();
             for (int a = 0; a < totalVertexCount; a++)
-                container.Add(molecule.Atoms[a]);
+                container.Atoms.Add(molecule.Atoms[a]);
             for (int b = 0; b < totalEdgeCount; b++)
-                if (bondsInTree[b]) container.Add(molecule.Bonds[b]);
+                if (bondsInTree[b]) container.Bonds.Add(molecule.Bonds[b]);
             return container;
         }
 
@@ -203,9 +202,9 @@ namespace NCDK.Graphs
         {
             IAtomContainer path = spt.Builder.CreateAtomContainer();
             PathTools.ResetFlags(spt);
-            path.Add(atom1);
+            path.Atoms.Add(atom1);
             PathTools.DepthFirstTargetSearch(spt, atom1, atom2, path);
-            if (path.Atoms.Count == 1) path.Remove(atom1); // no path found: remove initial atom
+            if (path.Atoms.Count == 1) path.Atoms.Remove(atom1); // no path found: remove initial atom
             return path;
         }
 
@@ -213,9 +212,9 @@ namespace NCDK.Graphs
         {
             IRing ring = spt.Builder.CreateRing();
             PathTools.ResetFlags(spt);
-            ring.Add(bond.Atoms[0]);
+            ring.Atoms.Add(bond.Atoms[0]);
             PathTools.DepthFirstTargetSearch(spt, bond.Atoms[0], bond.Atoms[1], ring);
-            ring.Add(bond);
+            ring.Bonds.Add(bond);
             return ring;
         }
 
@@ -265,14 +264,14 @@ namespace NCDK.Graphs
                         IBond ringBond = ring.Bonds[b];
                         if (!fragContainer.Contains(ringBond))
                         {
-                            fragContainer.Add(ringBond);
+                            fragContainer.Bonds.Add(ringBond);
                             for (int atomCount = 0; atomCount < ringBond.Atoms.Count; atomCount++)
                             {
                                 IAtom atom = ringBond.Atoms[atomCount];
                                 if (!fragContainer.Contains(atom))
                                 {
                                     atom.IsInRing = true;
-                                    fragContainer.Add(atom);
+                                    fragContainer.Atoms.Add(atom);
                                 }
                             }
                         }
@@ -334,8 +333,7 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// All basic rings and the all pairs of basic rings share at least one edge
-        /// combined.
+        /// All basic rings and the all pairs of basic rings share at least one edge combined.
         /// </summary>
         /// <returns>subset of all rings</returns>
         /// <exception cref="NoSuchAtomException">atom was not found in the molecule</exception>
@@ -388,13 +386,13 @@ namespace NCDK.Graphs
             {
                 c = cb[i][b] + cb[j][b];
                 if ((c == 1) && (cb[i][b] == 1))
-                    ring.Add(molecule.Bonds[b]);
-                else if ((c == 1) && (cb[j][b] == 1)) ring.Add(molecule.Bonds[b]);
+                    ring.Bonds.Add(molecule.Bonds[b]);
+                else if ((c == 1) && (cb[j][b] == 1)) ring.Bonds.Add(molecule.Bonds[b]);
             }
             for (int a = 0; a < ring1.Atoms.Count; a++)
-                ring.Add(ring1.Atoms[a]);
+                ring.Atoms.Add(ring1.Atoms[a]);
             for (int a = 0; a < ring2.Atoms.Count; a++)
-                ring.Add(ring2.Atoms[a]);
+                ring.Atoms.Add(ring2.Atoms[a]);
 
             return ring;
         }

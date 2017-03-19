@@ -51,10 +51,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
     /// Checks if atom is matching between query and target molecules.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class DefaultMCSPlusAtomMatcher : AtomMatcher
     {
         private int maximumNeighbors;
@@ -104,8 +104,9 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Constructor
+        /// </summary>
         /// <param name="smartQueryAtom">query atom</param>
-        /// <param name="container">/// </summary></param>
+        /// <param name="container"></param>
         public DefaultMCSPlusAtomMatcher(IQueryAtom smartQueryAtom, IQueryAtomContainer container)
             : this()
         {
@@ -136,8 +137,6 @@ namespace NCDK.SMSD.Algorithms.Matchers
             this.maximumNeighbors = maximum;
         }
 
-        /// <summary>
-        /// <param name="symbol">/// </summary></param>
         public void SetSymbol(string symbol)
         {
             this.symbol = symbol;

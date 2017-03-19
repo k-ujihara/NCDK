@@ -158,6 +158,7 @@ namespace NCDK.Geometries
         /// <param name="refAtom">(A) to which new ligands coordinates could be added</param>
         /// <param name="length">A-X length</param>
         /// <param name="angle">B-A-X angle (used in certain cases)</param>
+        /// <param name="nwanted"></param>
         /// <returns>Point3D[] points calculated. If request could not be fulfilled (e.g. too many atoms, or strange geometry, returns empty array (zero length, not null)</returns>
        // @cdk.keyword coordinate generation
         public static Vector3?[] Calculate3DCoordinatesForLigands(IAtomContainer atomContainer, IAtom refAtom, int nwanted, double length, double angle)
@@ -277,6 +278,8 @@ namespace NCDK.Geometries
         /// If C is null, a random non-colinear C is generated
         /// </summary>
         /// <param name="aPoint">to which substituents are added</param>
+        /// <param name="bPoint">first ligand of A</param>
+        /// <param name="cPoint">second ligand of A</param>
         /// <param name="nwanted">number of points to calculate (1-3)</param>
         /// <param name="length">A-X length</param>
         /// <param name="angle">B-A-X angle</param>

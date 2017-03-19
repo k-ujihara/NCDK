@@ -20,10 +20,9 @@ namespace NCDK.QSAR.Result
 {
     /// <summary>
     /// Object that provides access to the calculated descriptor value.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class BooleanResult : BooleanResultType
     {
         public bool Value { get; private set; }

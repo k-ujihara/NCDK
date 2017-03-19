@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using static FaulonSignatures.Chemistry.Molecule;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeReader
     {
@@ -140,15 +139,15 @@ namespace FaulonSignatures.Chemistry
             return molecule;
         }
 
-        private static BondOrder ConvertIntToBondOrder(int o)
+        private static Molecule.BondOrder ConvertIntToBondOrder(int o)
         {
             switch (o)
             {
-                case 1: return BondOrder.Single;
-                case 2: return BondOrder.Double;
-                case 3: return BondOrder.Triple;
-                case 4: return BondOrder.Aromatic;
-                default: return BondOrder.Single;
+                case 1: return Molecule.BondOrder.Single;
+                case 2: return Molecule.BondOrder.Double;
+                case 3: return Molecule.BondOrder.Triple;
+                case 4: return Molecule.BondOrder.Aromatic;
+                default: return Molecule.BondOrder.Single;
             }
         }
     }

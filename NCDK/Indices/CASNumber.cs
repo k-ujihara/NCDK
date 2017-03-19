@@ -1,4 +1,4 @@
-/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
+﻿/* Copyright (C) 2003-2007  The Chemistry Development Kit (CDK) project
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -20,31 +20,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System.Text.RegularExpressions;
 
 namespace NCDK.Indices
 {
     /// <summary>
     /// Tools to work with CAS registry numbers.
-    ///
-    /// <para><b>References:</b>
-    /// <ul>
-    ///     <li><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></li>
-    ///     <li><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></li>
-    /// </ul>
-    /// </para>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// References:
+    /// <list type="bullet">
+    ///     <item><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></item>
+    ///     <item><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></item>
+    /// </list> 
+    /// <a href="http://www.cas.org">CAS website</a>
+    /// </remarks>
     // @author Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.githash
-    // @author Nathana&euml;l "M.Le_maudit" Mazuir
-    ///
-    // @see <a href="http://www.cas.org">CAS website</a>
-    ///
+    // @author Nathanaël "M.Le_maudit" Mazuir
     // @cdk.created 2003-06-30
     // @cdk.keyword CAS number
-    // @cdk.require java1.4+
-    /// </summary>
     public class CASNumber
     {
         const string format = "^(\\d+)-(\\d\\d)-(\\d)$";

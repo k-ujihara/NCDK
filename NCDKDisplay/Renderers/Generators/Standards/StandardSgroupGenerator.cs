@@ -56,11 +56,11 @@ namespace NCDK.Renderers.Generators.Standards
         private StandardSgroupGenerator(RendererModel parameters, StandardAtomGenerator atomGenerator, double stroke, Typeface font, double emSize, Color foreground)
         {
             this.font = font;
-            this.scale = parameters.Get<double>(typeof(BasicSceneGenerator.Scale));
+            this.scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
             this.stroke = stroke;
-            double length = parameters.Get<double>(typeof(BasicSceneGenerator.BondLength)) / scale;
-            this.bracketDepth = parameters.Get<double>(typeof(StandardGenerator.SgroupBracketDepth)) * length;
-            this.labelScale = parameters.Get<double>(typeof(StandardGenerator.SgroupFontScale));
+            double length = parameters.GetV<double>(typeof(BasicSceneGenerator.BondLength)) / scale;
+            this.bracketDepth = parameters.GetV<double>(typeof(StandardGenerator.SgroupBracketDepth)) * length;
+            this.labelScale = parameters.GetV<double>(typeof(StandardGenerator.SgroupFontScale));
 
             // foreground is based on the carbon color
             this.foreground = foreground;
@@ -83,7 +83,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="symbolRemap">a map that will hold symbol remapping</param>
         public static void PrepareDisplayShortcuts(IAtomContainer container, IDictionary<IAtom, string> symbolRemap)
         {
-            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null || !sgroups.Any())
                 return;
 
@@ -270,7 +270,7 @@ namespace NCDK.Renderers.Generators.Standards
         IRenderingElement GenerateSgroups(IAtomContainer container, AtomSymbol[] symbols)
         {
             ElementGroup result = new ElementGroup();
-            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CTAB_SGROUPS);
+            var sgroups = container.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
 
             if (sgroups == null || !sgroups.Any())
                 return result;
@@ -352,7 +352,7 @@ namespace NCDK.Renderers.Generators.Standards
 
             Color highlight = sgroupAtoms.First().GetProperty<Color>(StandardGenerator.HIGHLIGHT_COLOR);
             StandardGenerator.HighlightStyle style = parameters.Get<HighlightStyle>(typeof(StandardGenerator.Highlighting));
-            double glowWidth = parameters.Get<double>(typeof(StandardGenerator.OuterGlowWidth));
+            double glowWidth = parameters.GetV<double>(typeof(StandardGenerator.OuterGlowWidth));
 
             Vector2 labelCoords = GeometryUtil.Get2DCenter(sgroupAtoms);
 
@@ -556,7 +556,7 @@ namespace NCDK.Renderers.Generators.Standards
                 result.Add(GeneralPath.ShapeOf(leftBracket.GetOutline(), foreground));
                 result.Add(GeneralPath.ShapeOf(rightBracket.GetOutline(), foreground));
 
-                var rightBracketBounds = rightBracket.Bounds;
+                var rightBracketBounds = rightBracket.GetBounds();
 
                 // subscript/superscript suffix annotation
                 if (subscriptSuffix != null && subscriptSuffix.Any())

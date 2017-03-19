@@ -1,16 +1,15 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NCDK
 {
-    public interface IAtomContainerSet : IChemObject, ICloneable
+    public interface IAtomContainerSet : IChemObject
     {
         void SetMultiplier(int position, double? multiplier);
         IReadOnlyList<double?> GetMultipliers();
         bool SetMultipliers(IEnumerable<double?> multipliers);
         double? GetMultiplier(int number);
-        bool IsEmpty { get; }
+        bool IsEmpty();
     }
 
     public interface IAtomContainerSet<T>

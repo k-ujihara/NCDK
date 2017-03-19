@@ -45,10 +45,10 @@ namespace NCDK.Default
             Assert.AreEqual(0, container.Bonds.Count);
 
             // test whether the ElectronContainer is correctly initialized
-            container.Add(container.Builder.CreateBond(
+            container.Bonds.Add(container.Builder.CreateBond(
                 container.Builder.CreateAtom("C"),
                 container.Builder.CreateAtom("C"), BondOrder.Double));
-            container.Add(container.Builder.CreateLonePair(container.Builder.CreateAtom("N")));
+            container.LonePairs.Add(container.Builder.CreateLonePair(container.Builder.CreateAtom("N")));
         }
 
         [TestMethod()]
@@ -59,16 +59,16 @@ namespace NCDK.Default
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             IAtomContainer container = new AtomContainer(acetone);
             Assert.AreEqual(4, container.Atoms.Count);

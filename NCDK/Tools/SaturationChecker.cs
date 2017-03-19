@@ -35,28 +35,25 @@ namespace NCDK.Tools
     /// <summary>
     /// Provides methods for checking whether an atoms valences are saturated with
     /// respect to a particular atom type.
-    ///
-    /// <p>Important: this class does not deal with hybridization states, which makes
+    /// </summary>
+    /// <remarks>
+    /// Important: this class does not deal with hybridization states, which makes
     /// it fail, for example, for situations where bonds are marked as aromatic (either
-    /// 1.5 or single an Aromatic).
-    ///
+    /// 1.5 or single an Aromatic).</remarks>
     // @author     steinbeck
     // @author  Egon Willighagen
     // @cdk.created    2001-09-04
-    ///
     // @cdk.keyword    saturation
     // @cdk.keyword    atom, valency
-    ///
     // @cdk.module     valencycheck
     // @cdk.githash
-    /// </summary>
     public class SaturationChecker : IValencyChecker, IDeduceBondOrderTool
     {
         AtomTypeFactory structgenATF;
 
         /// <summary>
-        /// <param name="builder">the ChemObjectBuilder implementation used to construct the AtomType's.</param>
         /// </summary>
+        /// <param name="builder">the ChemObjectBuilder implementation used to construct the AtomType's.</param>
         protected AtomTypeFactory GetAtomTypeFactory(IChemObjectBuilder builder)
         {
             if (structgenATF == null)
@@ -118,7 +115,6 @@ namespace NCDK.Tools
         /// <summary>
         /// Determines of all atoms on the AtomContainer are saturated.
         /// </summary>
-
         public bool IsSaturated(IAtomContainer container)
         {
             return AllSaturated(container);
@@ -171,7 +167,6 @@ namespace NCDK.Tools
         /// <summary>
         /// Checks whether an Atom is saturated by comparing it with known AtomTypes.
         /// </summary>
-
         public bool IsSaturated(IAtom atom, IAtomContainer ac)
         {
             var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
@@ -215,11 +210,10 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Checks if the current atom has exceeded its bond order sum value.
-        ///
+        /// </summary>
         /// <param name="atom">The Atom to check</param>
         /// <param name="ac">The atomcontainer context</param>
         /// <returns>oversaturated or not</returns>
-        /// </summary>
         public bool IsOverSaturated(IAtom atom, IAtomContainer ac)
         {
             var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
@@ -252,11 +246,10 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Returns the currently maximum formable bond order for this atom.
-        ///
+        /// </summary>
         /// <param name="atom">The atom to be checked</param>
         /// <param name="ac">The AtomContainer that provides the context</param>
         /// <returns>the currently maximum formable bond order for this atom</returns>
-        /// </summary>
         public double GetCurrentMaxBondOrder(IAtom atom, IAtomContainer ac)
         {
             var atomTypes = GetAtomTypeFactory(atom.Builder).GetAtomTypes(atom.Symbol);
@@ -298,10 +291,9 @@ namespace NCDK.Tools
         /// Saturates a molecule by setting appropriate bond orders.
         /// This method is known to fail, especially on pyrolle-like compounds.
         /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-        ///
+        /// </summary>
         // @cdk.keyword bond order, calculation
         // @cdk.created 2003-10-03
-        /// </summary>
         public void NewSaturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
@@ -505,9 +497,7 @@ namespace NCDK.Tools
         /// cdk.test.limitations package.
         /// This method is known to fail, especially on pyrolle-like compounds.
         /// Consider using import org.openscience.cdk.smiles.DeduceBondSystemTool, which should work better
-        ///
         /// </summary>
-
         public void Saturate(IAtomContainer atomContainer)
         {
             for (int i = 1; i < 4; i++)
@@ -660,6 +650,9 @@ namespace NCDK.Tools
         /// generated with the AtomTypeFactory.
         /// </summary>
         /// <param name="atom">Description of the Parameter</param>
+        /// <param name="bondOrderSum"></param>
+        /// <param name="singleElectronSum"></param>
+        /// <param name="connectedBonds"></param>
         /// <param name="throwExceptionForUnknowAtom">Should an exception be thrown if an unknown atomtype is found or 0 returned ?</param>
         /// <returns>Description of the Return Value</returns>
         /// <seealso cref="AtomTypeFactory"/>

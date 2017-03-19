@@ -36,10 +36,13 @@ namespace NCDK
         void Add(IReactionScheme reactScheme);
 
         /// <summary>
-        /// ll schemes in this.
+        /// ll schemes in this scheme.
         /// </summary>
         ICollection<IReactionScheme> Schemes { get; }
 
+        /// <summary>
+        /// The reactions in this scheme.
+        /// </summary>
         IEnumerable<IReaction> Reactions { get; }
 
         /// <summary>

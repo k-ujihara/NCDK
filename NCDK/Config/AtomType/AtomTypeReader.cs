@@ -98,13 +98,13 @@ namespace NCDK.Config.AtomType
                                         }
                                         break;
                                     case "cdk:sphericalMatcher":
-                                        atomType.SetProperty(CDKPropertyName.SPHERICAL_MATCHER, value);
+                                        atomType.SetProperty(CDKPropertyName.SphericalMatcher, value);
                                         break;
                                     case "cdk:ringSize":
-                                        atomType.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, int.Parse(value));
+                                        atomType.SetProperty(CDKPropertyName.PartOfRingOfSize, int.Parse(value));
                                         break;
                                     case "cdk:ringConstant":
-                                        atomType.SetProperty(CDKPropertyName.CHEMICAL_GROUP_CONSTANT, int.Parse(value));
+                                        atomType.SetProperty(CDKPropertyName.ChemicalGroupConstant, int.Parse(value));
                                         break;
                                     case "cdk:aromaticAtom":
                                         atomType.IsAromatic |= true;
@@ -112,10 +112,10 @@ namespace NCDK.Config.AtomType
                                     case "emboss:vdwrad":
                                         break;
                                     case "cdk:piBondCount":
-                                        atomType.SetProperty(CDKPropertyName.PI_BOND_COUNT, int.Parse(value));
+                                        atomType.SetProperty(CDKPropertyName.PiBondCount, int.Parse(value));
                                         break;
                                     case "cdk:lonePairCount":
-                                        atomType.SetProperty(CDKPropertyName.LONE_PAIR_COUNT, int.Parse(value));
+                                        atomType.SetProperty(CDKPropertyName.LonePairCount, int.Parse(value));
                                         break;
                                     default:
                                         break;

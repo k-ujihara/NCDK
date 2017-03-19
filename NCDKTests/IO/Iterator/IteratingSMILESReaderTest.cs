@@ -88,7 +88,7 @@ namespace NCDK.IO.Iterator
             IteratingSMILESReader reader = new IteratingSMILESReader(ins, Default.ChemObjectBuilder.Instance);
             foreach (var mol in reader)
             {
-                string title = (string)mol.GetProperty<string>(CDKPropertyName.TITLE);
+                string title = (string)mol.GetProperty<string>(CDKPropertyName.Title);
                 Assert.IsNotNull(title);
             }
 
@@ -170,11 +170,11 @@ namespace NCDK.IO.Iterator
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);
-            Assert.AreEqual("empty1", m1.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("empty1", m1.GetProperty<string>(CDKPropertyName.Title));
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m2 = smis.Current;
             Assert.AreEqual(0, m2.Atoms.Count);
-            Assert.AreEqual("empty2", m2.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("empty2", m2.GetProperty<string>(CDKPropertyName.Title));
             Assert.IsFalse(smis.MoveNext());
         }
 
@@ -187,16 +187,16 @@ namespace NCDK.IO.Iterator
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m1 = smis.Current;
             Assert.AreEqual(0, m1.Atoms.Count);
-            Assert.AreEqual("okay", m1.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("okay", m1.GetProperty<string>(CDKPropertyName.Title));
             Assert.IsTrue(smis.MoveNext());
             IAtomContainer m2 = smis.Current;
             Assert.AreEqual(0, m2.Atoms.Count);
-            Assert.AreEqual("bad", m2.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("bad", m2.GetProperty<string>(CDKPropertyName.Title));
             Assert.AreEqual("n1cccc1 bad", m2.GetProperty<string>(IteratingSMILESReader.BAD_SMILES_INPUT));
             smis.MoveNext();
             IAtomContainer m3 = smis.Current;
             Assert.AreEqual(0, m3.Atoms.Count);
-            Assert.AreEqual("okay", m3.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.AreEqual("okay", m3.GetProperty<string>(CDKPropertyName.Title));
             Assert.IsFalse(smis.MoveNext());
         }
     }

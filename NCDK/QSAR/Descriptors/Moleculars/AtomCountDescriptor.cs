@@ -22,34 +22,32 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// IDescriptor based on the number of atoms of a certain element type.
-    ///
-    /// It is
-    /// possible to use the wild card symbol '*' as element type to get the count of
-    /// all atoms.
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>elementName</td>
-    ///     <td>*</td>
-    ///     <td>Symbol of the element we want to count</td>
-    ///   </tr>
-    /// </table>
-    ///
+    /// </summary>
+    /// <remarks>
+    /// It is possible to use the wild card symbol '*' as element type to get the count of all atoms.
+    /// <para>This descriptor uses these parameters:
+    /// <list type="table">
+    ///   <item>
+    ///     <term>Name</term>
+    ///     <term>Default</term>
+    ///     <term>Description</term>
+    ///   </item>
+    ///   <item>
+    ///     <term>elementName</term>
+    ///     <term>*</term>
+    ///     <term>Symbol of the element we want to count</term>
+    ///   </item>
+    /// </list>
+    /// </para>
     /// Returns a single value with name <i>nX</i> where <i>X</i> is the atomic symbol.  If *
     /// is specified then the name is <i>nAtom</i>
-    ///
+    /// </remarks>
     // @author      mfe4
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:atomCount
-    /// </summary>
     public class AtomCountDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private string elementName = "*";
@@ -62,19 +60,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             elementName = "*";
         }
 
-        /// <summary>
-        /// A map which specifies which descriptor
-        /// is implemented by this class.
-        ///
-        /// These fields are used in the map:
-        /// <ul>
-        /// <li>Specification-Reference: refers to an entry in a unique dictionary
-        /// <li>Implementation-Title: anything
-        /// <li>Implementation-Identifier: a unique identifier for this version of
-        ///  this class
-        /// <li>Implementation-Vendor: CDK, JOELib, or anything else
-        /// </ul>
-        /// </summary>
+        /// <inheritdoc/>
         public override IImplementationSpecification Specification => _Specification;
         private static DescriptorSpecification _Specification { get; } =
             new DescriptorSpecification(
@@ -186,14 +172,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                     atomCount), DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <p/>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        /// </summary>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new IntegerResult(1);
 
         /// <summary>

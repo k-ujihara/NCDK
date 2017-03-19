@@ -26,20 +26,18 @@ namespace NCDK.Hash.Stereo
     /// <summary>
     /// Describes a factory for stereo elements. The factory create encoders for
     /// specific stereo elements.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     public interface IStereoEncoderFactory
     {
         /// <summary>
         /// Create a stereo-encoder for possible stereo-chemical configurations.
-        ///
+        /// </summary>
         /// <param name="container">the container</param>
         /// <param name="graph">adjacency list representation of the container</param>
         /// <returns>a new stereo encoder</returns>
-        /// </summary>
         IStereoEncoder Create(IAtomContainer container, int[][] graph);
     }
 
@@ -48,13 +46,13 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Empty factory for when stereo encoding is not required
         /// </summary>
-        public readonly static IStereoEncoderFactory EMPTY = new EmptyStereoEncoderFactory();
+        public readonly static IStereoEncoderFactory Empty = new EmptyStereoEncoderFactory();
 
         class EmptyStereoEncoderFactory : IStereoEncoderFactory
         {
             public IStereoEncoder Create(IAtomContainer container, int[][] graph)
             {
-                return StereoEncoder.EMPTY;
+                return StereoEncoder.Empty;
             }
         }
     }

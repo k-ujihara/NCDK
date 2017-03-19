@@ -53,11 +53,6 @@ namespace NCDK.Formula.Rules
 
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestDefault()
         {
@@ -134,7 +129,7 @@ namespace NCDK.Formula.Rules
             formula.Add(ifac.GetMajorIsotope("O"), 2);
             formula.Charge = 0;
 
-            /// <summary> experimental results*/
+           /// <summary> experimental results</summary>
 
             List<double[]> spectrum = new List<double[]>();
             spectrum.Add(new double[] { 133.0977, 100.00 });

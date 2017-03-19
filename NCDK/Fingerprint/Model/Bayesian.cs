@@ -491,7 +491,7 @@ namespace NCDK.Fingerprint.Model
         /// Reads the incoming stream and attempts to convert it into an instantiated model. The input most be compatible
         /// with the format used by the Serialise() method, otherwise an exception will be thrown.
         /// </summary>
-        /// <param name="str">string containing the serialised model</param>
+        /// <param name="rdr">containing the serialised model</param>
         /// <returns>instantiated model that can be used for predictions</returns>
         public static Bayesian Deserialise(TextReader rdr)
         {

@@ -27,15 +27,11 @@ namespace NCDK.Groups
     /// <summary>
     /// Refiner for atom containers, which refines partitions of the atoms to
     /// equitable partitions. Used by the <see cref="AtomDiscretePartitionRefiner"/>.
-    ///
+    /// </summary>
     // @author maclean
     // @cdk.module group
-    ///
-    /// </summary>
-    public class AtomEquitablePartitionRefiner : AbstractEquitablePartitionRefiner,
-            IEquitablePartitionRefiner
+    public class AtomEquitablePartitionRefiner : AbstractEquitablePartitionRefiner, IEquitablePartitionRefiner
     {
-
         /// <summary>
         /// A reference to the discrete refiner, which has the connectivity info.
         /// </summary>

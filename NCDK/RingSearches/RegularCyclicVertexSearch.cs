@@ -20,8 +20,6 @@
  * along with this program; if not, write to the Free Software Foundation, Inc.,
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
 using System.Linq;
 using System.Collections.Generic;
 using NCDK.Common.Primitives;
@@ -31,30 +29,29 @@ namespace NCDK.RingSearches
 {
     /// <summary>
     /// CyclicVertexSearch for graphs with 64 vertices or less. This search is
-    /// optimised using primitive {@literal long} values to represent vertex sets.
-    ///
+    /// optimised using primitive <see cref="long"/> values to represent vertex sets.
+    /// </summary>
     // @author John May
     // @cdk.module core
-    /// </summary>
     internal class RegularCyclicVertexSearch
         : CyclicVertexSearch
     {
-        /* graph representation */
+        /// <summary>graph representation</summary>
         private readonly int[][] g;
 
-        /* set of known cyclic vertices */
+        /// <summary>set of known cyclic vertices</summary>
         private long cyclic;
 
-        /* cycle systems as they are discovered */
+        /// <summary>cycle systems as they are discovered</summary>
         private List<long> cycles = new List<long>(1);
 
-        /* indicates if the 'cycle' at 'i' in 'cycles' is fused */
+        /// <summary>indicates if the 'cycle' at 'i' in 'cycles' is fused</summary>
         private List<bool> fused = new List<bool>(1);
 
-        /* set of visited vertices */
+        /// <summary>set of visited vertices</summary>
         private long visited;
 
-        /* the vertices in our path at a given vertex index */
+        /// <summary>the vertices in our path at a given vertex index</summary>
         private long[] state;
 
         /// <summary>Vertex colors - which component does each vertex belong.</summary>
@@ -62,12 +59,10 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Create a new cyclic vertex search for the provided graph.
-        ///
-        /// <param name="graph">adjacency list representation of a graph</param>
         /// </summary>
+        /// <param name="graph">adjacency list representation of a graph</param>
         internal RegularCyclicVertexSearch(int[][] graph)
         {
-
             this.g = graph;
             int n = graph.Length;
 
@@ -98,12 +93,11 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Perform a depth first search from the vertex <i>v</i>.
-        ///
+        /// Perform a depth first search from the vertex <paramref name="v"/>.
+        /// </summary>
         /// <param name="v">vertex to search from</param>
         /// <param name="prev">the state before we vistaed our parent (previous state)</param>
         /// <param name="curr">the current state (including our parent)</param>
-        /// </summary>
         private void Search(int v, long prev, long curr)
         {
             state[v] = curr; // store the state before we visited v
@@ -113,17 +107,14 @@ namespace NCDK.RingSearches
             // neighbors of v
             foreach (var w in g[v])
             {
-
                 // w has been visited or is partially visited further up stack
                 if (Visited(w))
                 {
-
                     // if w is in our prev state we have a cycle of size >2.
                     // we don't check out current state as this will always
                     // include w - they are adjacent
                     if (IsBitSet(prev, w))
                     {
-
                         // xor the state when we last visited 'w' with our current
                         // state. this set is all the vertices we visited since then
                         // and are all in a cycle
@@ -140,10 +131,9 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Returns whether the vertex 'v' has been visited.
-        ///
+        /// </summary>
         /// <param name="v">a vertex</param>
         /// <returns>whether the vertex has been visited</returns>
-        /// </summary>
         private bool Visited(int v)
         {
             return IsBitSet(visited, v);
@@ -153,9 +143,8 @@ namespace NCDK.RingSearches
         /// Add the cycle vertices to our discovered cycles. The cycle is first
         /// checked to see if it is isolated (shares at most one vertex) or
         /// <i>potentially</i> fused.
-        ///
-        /// <param name="cycle">newly discovered cyclic vertex set</param>
         /// </summary>
+        /// <param name="cycle">newly discovered cyclic vertex set</param>
         private void Add(long cycle)
         {
 
@@ -178,9 +167,8 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Add an a new isolated cycle which is currently edge disjoint with all
         /// other cycles.
-        ///
-        /// <param name="cycle">newly discovered cyclic vertices</param>
         /// </summary>
+        /// <param name="cycle">newly discovered cyclic vertices</param>
         private void AddIsolated(long cycle)
         {
             cycles.Add(cycle);
@@ -190,13 +178,10 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Adds a <i>potentially</i> fused cycle. If the cycle is discovered not be
         /// fused it will still be added as isolated.
-        ///
-        /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the</param>
-        ///              set bits
         /// </summary>
+        /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the set bits</param>
         private void AddFUsed(long cycle)
         {
-
             // find index of first fused cycle
             int i = IndexOfFUsed(0, cycle);
 
@@ -205,7 +190,7 @@ namespace NCDK.RingSearches
                 // include the new cycle vertices and mark as fused
                 cycles[i] = cycle | cycles[i];
                 fused[i] = true;
-                
+
                 // merge other cycles we are share an edge with
                 int j = i;
                 while ((j = IndexOfFUsed(j + 1, cycles[i])) != -1)
@@ -228,11 +213,10 @@ namespace NCDK.RingSearches
         /// Find the next index that the <i>cycle</i> intersects with by at least two
         /// vertices. If the intersect of a vertex set with another contains more
         /// then two vertices it cannot be edge disjoint.
-        ///
+        /// </summary>
         /// <param name="start">start searching from here</param>
         /// <param name="cycle">test whether any current cycles are fused with this one</param>
         /// <returns>the index of the first fused after 'start', -1 if none</returns>
-        /// </summary>
         private int IndexOfFUsed(int start, long cycle)
         {
             for (int i = start; i < cycles.Count(); i++)
@@ -254,9 +238,8 @@ namespace NCDK.RingSearches
         /// indicates which cycle a given vertex belongs. If a vertex belongs to more
         /// then one cycle it is colored '0'. If a vertex belongs to no cycle it is
         /// colored '-1'.
-        ///
-        /// <returns>vertex colors</returns>
         /// </summary>
+        /// <returns>vertex colors</returns>
         public int[] VertexColor()
         {
             int[] result = colors;
@@ -278,9 +261,8 @@ namespace NCDK.RingSearches
         /// Build an indexed lookup of vertex color. The vertex color indicates which
         /// cycle a given vertex belongs. If a vertex belongs to more then one cycle
         /// it is colored '0'. If a vertex belongs to no cycle it is colored '-1'.
-        ///
-        /// <returns>vertex colors</returns>
         /// </summary>
+        /// <returns>vertex colors</returns>
         private int[] BuildVertexColor()
         {
             int[] color = new int[g.Length];
@@ -297,24 +279,18 @@ namespace NCDK.RingSearches
                 }
                 n++;
             }
-
             return color;
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public bool Cyclic(int v)
         {
             return IsBitSet(cyclic, v);
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public bool Cyclic(int u, int v)
         {
-
             int[] colors = VertexColor();
 
             // if either vertex has no color then the edge can not
@@ -342,17 +318,13 @@ namespace NCDK.RingSearches
             return colors[u] == colors[v];
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public int[] Cyclic()
         {
             return ToArray(cyclic);
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public int[][] Isolated()
         {
             List<int[]> isolated = new List<int[]>(cycles.Count());
@@ -363,9 +335,7 @@ namespace NCDK.RingSearches
             return isolated.ToArray();
         }
 
-        /// <summary>
-        // @inheritDoc
-        /// </summary>
+        /// <inheritdoc/>
         public int[][] Fused()
         {
             List<int[]> fused = new List<int[]>(cycles.Count());
@@ -379,13 +349,11 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Convert the bits of a {@code long} to an array of integers. The size of
         /// the output array is the number of bits set in the value.
-        ///
+        /// </summary>
         /// <param name="set">value to convert</param>
         /// <returns>array of the set bits in the long value</returns>
-        /// </summary>
         internal static int[] ToArray(long set)
         {
-
             int[] vertices = new int[Longs.BitCount(set)];
             int i = 0;
 
@@ -400,11 +368,10 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Determine if the specified bit on the value is set.
-        ///
+        /// </summary>
         /// <param name="value">bits indicate that vertex is in the set</param>
         /// <param name="bit">bit to test</param>
         /// <returns>whether the specified bit is set</returns>
-        /// </summary>
         internal static bool IsBitSet(long value, int bit)
         {
             return (value & 1L << bit) != 0;
@@ -412,15 +379,13 @@ namespace NCDK.RingSearches
 
         /// <summary>
         /// Set the specified bit on the value and return the modified value.
-        ///
+        /// </summary>
         /// <param name="value">the value to set the bit on</param>
         /// <param name="bit">the bit to set</param>
         /// <returns>modified value</returns>
-        /// </summary>
         internal static long SetBit(long value, int bit)
         {
             return value | 1L << bit;
         }
-
     }
 }

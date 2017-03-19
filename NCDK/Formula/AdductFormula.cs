@@ -38,7 +38,7 @@ namespace NCDK.Formula
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-    public class AdductFormula : IEnumerable<IMolecularFormula>, IAdductFormula, ICloneable
+    public class AdductFormula : IEnumerable<IMolecularFormula>, IAdductFormula
     {
         /// <summary> Internal List of IMolecularFormula.</summary>
         private List<IMolecularFormula> components;

@@ -92,28 +92,28 @@ namespace NCDK.Graphs
                 componentsMap[bond.Atoms[0]].Bonds.Add(bond);
 
             foreach (var electron in container.SingleElectrons)
-                componentsMap[electron.Atom].Add(electron);
+                componentsMap[electron.Atom].SingleElectrons.Add(electron);
 
             foreach (var lonePair in container.LonePairs)
-                componentsMap[lonePair.Atom].Add(lonePair);
+                componentsMap[lonePair.Atom].LonePairs.Add(lonePair);
 
             foreach (var stereo in container.StereoElements)
             {
                 if (stereo is ITetrahedralChirality)
                 {
                     IAtom a = ((ITetrahedralChirality)stereo).ChiralAtom;
-                    if (componentsMap.ContainsKey(a)) componentsMap[a].Add(stereo);
+                    if (componentsMap.ContainsKey(a)) componentsMap[a].StereoElements.Add(stereo);
                 }
                 else if (stereo is IDoubleBondStereochemistry)
                 {
                     IBond bond = ((IDoubleBondStereochemistry)stereo).StereoBond;
                     if (componentsMap.ContainsKey(bond.Atoms[0]) && componentsMap.ContainsKey(bond.Atoms[1]))
-                        componentsMap[bond.Atoms[0]].Add(stereo);
+                        componentsMap[bond.Atoms[0]].StereoElements.Add(stereo);
                 }
                 else if (stereo is ExtendedTetrahedral)
                 {
                     IAtom atom = ((ExtendedTetrahedral)stereo).Focus;
-                    if (componentsMap.ContainsKey(atom)) componentsMap[atom].Add(stereo);
+                    if (componentsMap.ContainsKey(atom)) componentsMap[atom].StereoElements.Add(stereo);
                 }
                 else
                 {

@@ -35,22 +35,18 @@ namespace NCDK.IO
     /// <summary>
     /// Prepares input file for running MOPAC.
     /// Optimization is switched on if there are no coordinates.
-    ///
+    /// </summary>
     // @author      Nina Jeliazkova <nina@acad.bg>
     // @cdk.githash
     // @cdk.module  io
-    /// </summary>
     public class Mopac7Writer : DefaultChemObjectWriter
     {
-
         private TextWriter writer;
 
-
         private const char BLANK = ' ';
+
         /// <summary>
         /// Creates a writer to serialize a molecule as Mopac7 input.
-        ///
-        // @
         /// </summary>
         public Mopac7Writer()
             : this(new StreamWriter(new MemoryStream()))
@@ -59,26 +55,23 @@ namespace NCDK.IO
         /// <summary>
         /// Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
         /// given <see cref="Stream"/>.
-        ///
-        /// <param name="out"><see cref="Stream"/> to which the output is written</param>
-        // @throws     Exception
         /// </summary>
-        public Mopac7Writer(Stream out_)
-                : this(new StreamWriter(out_))
+        /// <param name="output"><see cref="Stream"/> to which the output is written</param>
+        /// <exception cref="Exception"></exception>
+        public Mopac7Writer(Stream output)
+                : this(new StreamWriter(output))
         { }
 
         /// <summary>
         /// Creates a writer to serialize a molecule as Mopac7 input. Output is written to the
-        /// given <see cref="Writer"/>.
-        ///
-        /// <param name="out"><see cref="Writer"/> to which the output is written</param>
-        // @throws     Exception
+        /// given <see cref="TextWriter"/>.
         /// </summary>
-        public Mopac7Writer(TextWriter out_)
+        /// <param name="output"><see cref="TextWriter"/> to which the output is written</param>
+        public Mopac7Writer(TextWriter output)
         {
             //numberFormat = NumberFormat.GetInstance(Locale.US);
             //numberFormat.SetMaximumFractionDigits(4);
-            writer = out_;
+            writer = output;
             InitIOSettings();
         }
 
@@ -117,7 +110,6 @@ namespace NCDK.IO
                     }
                     writer.Write("0");
                     writer.WriteLine();
-
                 }
                 catch (IOException ioException)
                 {
@@ -130,7 +122,6 @@ namespace NCDK.IO
 
         private void WriteAtom(IAtom atom, double xCoord, double yCoord, double zCoord, int optimize)
         {
-
             writer.Write(atom.Symbol);
             writer.Write(BLANK);
             writer.Write(xCoord.ToString("F4"));

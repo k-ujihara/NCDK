@@ -27,13 +27,10 @@ using NCDK.Tools.Manipulator;
 
 namespace NCDK.ForceField.MMFF
 {
-    /// <summary>
     // @author John May
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class MmffTest
     {
-
         private static SmilesParser smipar = null;
         private static Mmff mmff = null;
 
@@ -116,243 +113,223 @@ namespace NCDK.ForceField.MMFF
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3OH */
+        /// <summary>TABLE V - CH3OH</summary>
         [TestMethod()]
         public void Methanol()
         {
             IAtomContainer mol = LoadSmi("CO");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.28, -0.68, 0.0, 0.0, 0.0, 0.4);
+            AssertPartialCharges(mol, 0.28, -0.68, 0.0, 0.0, 0.0, 0.4);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3NH2 */
+        /// <summary>TABLE V - CH3NH2</summary>
         [TestMethod()]
         public void Methylamine()
         {
             IAtomContainer mol = LoadSmi("CN");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.27, -0.99, 0.0, 0.0, 0.0, 0.36, 0.36);
+            AssertPartialCharges(mol, 0.27, -0.99, 0.0, 0.0, 0.0, 0.36, 0.36);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3CN */
+        /// <summary>TABLE V - CH3CN</summary>
         [TestMethod()]
         public void Acetonitrile()
         {
             IAtomContainer mol = LoadSmi("CC#N");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.2, 0.357, -0.557, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.2, 0.357, -0.557, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3OCH3 */
+        /// <summary>TABLE V - CH3OCH3</summary>
         [TestMethod()]
         public void Dimethylether()
         {
             IAtomContainer mol = LoadSmi("COC");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.28, -0.56, 0.28, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.28, -0.56, 0.28, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3SH */
+        /// <summary>TABLE V - CH3SH</summary>
         [TestMethod()]
         public void Methanethiol()
         {
             IAtomContainer mol = LoadSmi("CS");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.23, -0.41, 0.0, 0.0, 0.0, 0.18);
+            AssertPartialCharges(mol, 0.23, -0.41, 0.0, 0.0, 0.0, 0.18);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3Cl */
+        /// <summary>TABLE V - CH3Cl</summary>
         [TestMethod()]
         public void Chloromethane()
         {
             IAtomContainer mol = LoadSmi("CCl");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.29, -0.29, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.29, -0.29, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - C2H6 */
+        /// <summary>TABLE V - C2H6</summary>
         [TestMethod()]
         public void Ethane()
         {
             IAtomContainer mol = LoadSmi("CC");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3CONH2 (note wrong formula) */
+        /// <summary>TABLE V - CH3CONH2 (note wrong formula)</summary>
         [TestMethod()]
         public void Acetamide()
         {
             IAtomContainer mol = LoadSmi("O=C(N)C");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.57, 0.569, -0.8, 0.061, 0.37, 0.37, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, -0.57, 0.569, -0.8, 0.061, 0.37, 0.37, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3COOH */
+        /// <summary>TABLE V - CH3COOH</summary>
         [TestMethod()]
         public void AceticAcid()
         {
             IAtomContainer mol = LoadSmi("CC(O)=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.061, 0.659, -0.65, -0.57, 0.0, 0.0, 0.0, 0.5);
+            AssertPartialCharges(mol, 0.061, 0.659, -0.65, -0.57, 0.0, 0.0, 0.0, 0.5);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - (CH3)2CO */
+        /// <summary>TABLE V - (CH3)2CO</summary>
         [TestMethod()]
         public void Acetone()
         {
             IAtomContainer mol = LoadSmi("CC(=O)C");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.061, 0.447, -0.57, 0.061, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.061, 0.447, -0.57, 0.061, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3COOCH3  */
+        /// <summary>TABLE V - CH3COOCH3</summary>
         [TestMethod()]
         public void Methylacetate()
         {
             IAtomContainer mol = LoadSmi("O=C(OC)C");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.57, 0.659, -0.43, 0.28, 0.061, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, -0.57, 0.659, -0.43, 0.28, 0.061, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - C6H6 */
+        /// <summary>TABLE V - C6H6</summary>
         [TestMethod()]
         public void Benzene()
         {
             IAtomContainer mol = LoadSmi("c1ccccc1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.15, -0.15, -0.15, -0.15, -0.15, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15);
+            AssertPartialCharges(mol, -0.15, -0.15, -0.15, -0.15, -0.15, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15, 0.15);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - C5H5N */
+        /// <summary>TABLE V - C5H5N</summary>
         [TestMethod()]
         public void Pyridine()
         {
             IAtomContainer mol = LoadSmi("C1=CC=NC=C1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.15, -0.15, 0.16, -0.62, 0.16, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15);
+            AssertPartialCharges(mol, -0.15, -0.15, 0.16, -0.62, 0.16, -0.15, 0.15, 0.15, 0.15, 0.15, 0.15);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - C6H5NH2 */
+        /// <summary>TABLE V - C6H5NH2</summary>
         [TestMethod()]
         public void Aniline()
         {
             IAtomContainer mol = LoadSmi("C1=CC=C(N)C=C1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.15, -0.15, -0.15, 0.1, -0.9, -0.15, -0.15, 0.15, 0.15, 0.15, 0.4, 0.4, 0.15, 0.15);
+            AssertPartialCharges(mol, -0.15, -0.15, -0.15, 0.1, -0.9, -0.15, -0.15, 0.15, 0.15, 0.15, 0.4, 0.4, 0.15, 0.15);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - imidazole */
+        /// <summary>TABLE V - imidazole</summary>
         [TestMethod()]
         public void Imidazole()
         {
             IAtomContainer mol = LoadSmi("C=1NC=NC1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.3016, 0.0332, 0.0365, -0.5653, 0.0772, 0.15, 0.27, 0.15, 0.15);
+            AssertPartialCharges(mol, -0.3016, 0.0332, 0.0365, -0.5653, 0.0772, 0.15, 0.27, 0.15, 0.15);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - H2O */
+        /// <summary>TABLE V - H2O</summary>
         [TestMethod()]
         public void Water()
         {
             IAtomContainer mol = LoadSmi("O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.86, 0.43, 0.43);
+            AssertPartialCharges(mol, -0.86, 0.43, 0.43);
             AssertPartialChargeSum(mol, 0);
         }
 
-        /* TABLE V - CH3CO2- */
+        /// <summary>TABLE V - CH3CO2-</summary>
         [TestMethod()]
         public void Acetate()
         {
             IAtomContainer mol = LoadSmi("CC([O-])=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.106, 0.906, -0.9, -0.9, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, -0.106, 0.906, -0.9, -0.9, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, -1);
         }
 
-        /* TABLE V - CH3NH3(+)  */
+        /// <summary>TABLE V - CH3NH3(+)</summary>
         [TestMethod()]
         public void Methanaminium()
         {
             IAtomContainer mol = LoadSmi("C[NH3+]");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.503, -0.853, 0.0, 0.0, 0.0, 0.45, 0.45, 0.45);
+            AssertPartialCharges(mol, 0.503, -0.853, 0.0, 0.0, 0.0, 0.45, 0.45, 0.45);
             AssertPartialChargeSum(mol, +1);
         }
 
-        /* TABLE V - Imidazolium(+) */
+        /// <summary>TABLE V - Imidazolium(+)</summary>
         [TestMethod()]
         public void Imidazolium()
         {
             IAtomContainer mol = LoadSmi("[nH+]1c[nH]cc1");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.7, 0.65, -0.7, 0.2, 0.2, 0.45, 0.15, 0.45, 0.15, 0.15);
+            AssertPartialCharges(mol, -0.7, 0.65, -0.7, 0.2, 0.2, 0.45, 0.15, 0.45, 0.15, 0.15);
             AssertPartialChargeSum(mol, +1);
         }
 
-        /* TABLE V - (-)O2C(CH2)6NH3(+) */
+        /// <summary>TABLE V - (-)O2C(CH2)6NH3(+)</summary>
         [TestMethod()]
-        public void _7aminoheptanoicAcid()
+        public void Test_7aminoheptanoicAcid()
         {
             IAtomContainer mol = LoadSmi("[NH3+]CCCCCCC([O-])=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.853, 0.503, 0.0, 0.0, 0.0, 0.0, -0.106, 0.906, -0.9, -0.9, 0.45, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, -0.853, 0.503, 0.0, 0.0, 0.0, 0.0, -0.106, 0.906, -0.9, -0.9, 0.45, 0.45, 0.45, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
@@ -362,8 +339,7 @@ namespace NCDK.ForceField.MMFF
             IAtomContainer mol = LoadSmi("CCOCC");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.0, 0.28, -0.56, 0.28, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.0, 0.28, -0.56, 0.28, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             AssertPartialChargeSum(mol, 0);
         }
 
@@ -374,64 +350,57 @@ namespace NCDK.ForceField.MMFF
             return mol;
         }
 
-        /* [PO4]3- */
+        /// <summary>[PO4]3-</summary>
         [TestMethod()]
         public void Phosphate()
         {
             IAtomContainer mol = LoadSmi("[O-]P([O-])([O-])=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -1.075, 1.3, -1.075, -1.075, -1.075);
+            AssertPartialCharges(mol, -1.075, 1.3, -1.075, -1.075, -1.075);
         }
 
-        /* [HOPO3]2- */
+        /// <summary>[HOPO3]2-</summary>
         [TestMethod()]
         public void HydrogenPhosphate()
         {
             IAtomContainer mol = LoadSmi("OP([O-])([O-])=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.7712, 1.3712, -1.033, -1.033, -1.033, 0.5);
+            AssertPartialCharges(mol, -0.7712, 1.3712, -1.033, -1.033, -1.033, 0.5);
         }
 
-        /* [H2OPO3]- */
+        /// <summary>[H2OPO3]-</summary>
         [TestMethod()]
         public void DihydrogenPhosphate()
         {
             IAtomContainer mol = LoadSmi("OP([O-])(O)=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.7712, 1.4424, -0.95, -0.7712, -0.95, 0.5, 0.5);
+            AssertPartialCharges(mol, -0.7712, 1.4424, -0.95, -0.7712, -0.95, 0.5, 0.5);
         }
 
-        /* H3OPO3 */
+        /// <summary>H3OPO3</summary>
         [TestMethod()]
         public void PhosphoricAcid()
         {
             IAtomContainer mol = LoadSmi("OP(O)(O)=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 -0.7712, 1.514, -0.7712, -0.7712, -0.7, 0.5, 0.5, 0.5);
+            AssertPartialCharges(mol, -0.7712, 1.514, -0.7712, -0.7712, -0.7, 0.5, 0.5, 0.5);
         }
 
-        /* SEYWUO - validation suite showing positive charge charging */
+        /// <summary>SEYWUO - validation suite showing positive charge charging</summary>
         [TestMethod()]
         public void SEYWUO()
         {
             IAtomContainer mol = LoadSmi("[H]OC(=S)[N-][N+]1=C(N([H])[H])C([H])([H])N([H])C1=O");
             Assert.IsTrue(mmff.AssignAtomTypes(mol));
-            AssertAtomTypes(mol,
-                            "HOCS", "OC=S", "C=S", "S=C", "NM", "NCN+", "CNN+", "NCN+", "HNN+", "HNN+", "CR", "HC", "HC", "NC=O", "HNCO", "CONN", "O=CN");
+            AssertAtomTypes(mol, "HOCS", "OC=S", "C=S", "S=C", "NM", "NCN+", "CNN+", "NCN+", "HNN+", "HNN+", "CR", "HC", "HC", "NC=O", "HNCO", "CONN", "O=CN");
             Assert.IsTrue(mmff.EffectiveCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.0, 0.0, -0.25, 0.0, -0.5, 0.25, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+            AssertPartialCharges(mol, 0.0, 0.0, -0.25, 0.0, -0.5, 0.25, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
             Assert.IsTrue(mmff.PartialCharges(mol));
-            AssertPartialCharges(mol,
-                                 0.4, -0.55, 0.31, -0.38, -0.179, -0.8364, 0.6038, -0.7544, 0.45, 0.45, 0.4051, 0.0, 0.0, -0.7301, 0.37, 1.011, -0.57);
+            AssertPartialCharges(mol, 0.4, -0.55, 0.31, -0.38, -0.179, -0.8364, 0.6038, -0.7544, 0.45, 0.45, 0.4051, 0.0, 0.0, -0.7301, 0.37, 1.011, -0.57);
         }
 
         private void AssertAtomTypes(IAtomContainer mol, params string[] expected)
@@ -457,9 +426,7 @@ namespace NCDK.ForceField.MMFF
             double actual = 0;
             for (int i = 0; i < mol.Atoms.Count; i++)
                 actual += mol.Atoms[i].Charge.Value;
-            Assert.AreEqual(
-                         expected, actual, 0.001,
-                         "Unexpected partial charge sum");
+            Assert.AreEqual(expected, actual, 0.001, "Unexpected partial charge sum");
         }
     }
 }

@@ -217,7 +217,7 @@ namespace NCDK.IO
         {
             IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0  1  0  0",
                     builder, 1);
-            Assert.AreEqual(1, atom.GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
+            Assert.AreEqual(1, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]
@@ -225,7 +225,7 @@ namespace NCDK.IO
         {
             IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0 42  0  0",
                     builder, 1);
-            Assert.AreEqual(42, atom.GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
+            Assert.AreEqual(42, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]
@@ -233,7 +233,7 @@ namespace NCDK.IO
         {
             IAtom atom = reader.ReadAtomFast("    7.8089   -1.3194    0.0000 C   0  0  0  0  0  0  0  0  0999  0  0",
                     builder, 1);
-            Assert.AreEqual(999, atom.GetProperty<int>(CDKPropertyName.ATOM_ATOM_MAPPING));
+            Assert.AreEqual(999, atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping));
         }
 
         [TestMethod()]

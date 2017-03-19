@@ -63,7 +63,7 @@ namespace NCDK.SMSD.Filters
         /// <summary>
         /// Test of sortResultsByFragments method, of class ChemicalFilters.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSortResultsByFragments()
@@ -168,7 +168,7 @@ namespace NCDK.SMSD.Filters
         /// <summary>
         /// Test of getSortedEnergy method, of class ChemicalFilters.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetSortedEnergy()
@@ -187,7 +187,7 @@ namespace NCDK.SMSD.Filters
         /// <summary>
         /// Test of getSortedFragment method, of class ChemicalFilters.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetSortedFragment()
@@ -206,7 +206,7 @@ namespace NCDK.SMSD.Filters
         /// <summary>
         /// Test of getStereoMatches method, of class ChemicalFilters.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetStereoMatches()

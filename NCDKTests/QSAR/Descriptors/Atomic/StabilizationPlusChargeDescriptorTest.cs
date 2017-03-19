@@ -179,9 +179,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             molB.AddBond(molB.Atoms[1], molB.Atoms[2], BondOrder.Single);
             molB.Atoms.Add(builder.CreateAtom("Cl"));
             molB.Atoms[3].FormalCharge = 1;
-            molB.AddSingleElectron(molB.Atoms[3]);
-            molB.AddLonePair(molB.Atoms[3]);
-            molB.AddLonePair(molB.Atoms[3]);
+            molB.AddSingleElectronTo(molB.Atoms[3]);
+            molB.AddLonePairTo(molB.Atoms[3]);
+            molB.AddLonePairTo(molB.Atoms[3]);
             molB.AddBond(molB.Atoms[2], molB.Atoms[3], BondOrder.Single);
 
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molB);

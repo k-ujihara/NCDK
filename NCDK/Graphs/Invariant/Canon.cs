@@ -48,7 +48,7 @@ namespace NCDK.Graphs.Invariant
     ///  producer should not be considered a complete canonical labelled but in
     ///  practice performs well. For a more accurate and computationally expensive
     ///  labelling, please using the <see cref="InChINumbersTools"/>.
-    /// <code>
+    /// </remarks>
     /// <example><code>
     /// IAtomContainer m = ...;
     /// int[][]        g = GraphUtil.ToAdjList(m);
@@ -59,7 +59,7 @@ namespace NCDK.Graphs.Invariant
     /// // obtain symmetry classes
     /// long[] labels = Canon.Symmetry(m, g);
     /// </code>
-    ///</remarks>
+    ///</example>
     // @author John May
     // @cdk.module standard
     // @cdk.githash
@@ -80,11 +80,12 @@ namespace NCDK.Graphs.Invariant
         private bool symOnly = false;
 
         /// <summary>
-        /// Create a canon labelling for the graph (g) with the specified invariants.
+        /// Create a canon labelling for the graph (<paramref name="g"/>) with the specified invariants.
         /// </summary>
         /// <param name="g">a graph (adjacency list representation)</param>
         /// <param name="hydrogens">binary vector of terminal hydrogens</param>
         /// <param name="partition">an initial partition of the vertices</param>
+        /// <param name="symOnly"></param>
         private Canon(int[][] g, long[] partition, bool[] hydrogens, bool symOnly)
         {
             this.g = g;
@@ -189,7 +190,6 @@ namespace NCDK.Graphs.Invariant
 
             while (n < ord)
             {
-
                 // refine the initial invariants using product of primes from
                 // adjacent ranks
                 while ((n = ranker.Rank(currVs, nextVs, nnu, curr, prev)) > m && n < ord)
@@ -255,6 +255,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="ws">indices (adjacent neighbors)</param>
         /// <param name="ranks">invariant ranks</param>
+        /// <param name="hydrogens"></param>
         /// <returns>the prime product</returns>
         private long PrimeProduct(int[] ws, long[] ranks, bool[] hydrogens)
         {
@@ -294,7 +295,7 @@ namespace NCDK.Graphs.Invariant
         /// <param name="container">an atom container to generate labels for</param>
         /// <param name="graph">graph representation (adjacency list)</param>
         /// <returns>initial invariants</returns>
-        /// <exception cref="">an atom had unset atomic number, hydrogen count or formal charge</exception>
+        /// <exception cref="NullReferenceException">an atom had unset atomic number, hydrogen count or formal charge</exception>
         public static long[] BasicInvariants(IAtomContainer container, int[][] graph)
         {
             long[] labels = new long[graph.Length];
@@ -336,7 +337,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="atom">an atom</param>
         /// <returns>the atomic number</returns>
-        /// <exception cref="">the atom was non-pseudo at did not have an atomic number</exception>
+        /// <exception cref="NullReferenceException">the atom was non-pseudo at did not have an atomic number</exception>
         private static int GetAtomicNumber(IAtom atom)
         {
             int? elem = atom.AtomicNumber;
@@ -350,7 +351,7 @@ namespace NCDK.Graphs.Invariant
         /// </summary>
         /// <param name="atom">an atom</param>
         /// <returns>the implicit hydrogen count</returns>
-        /// <exception cref="">the atom was non-pseudo at did not have an implicit hydrogen count</exception>
+        /// <exception cref="NullReferenceException">the atom was non-pseudo at did not have an implicit hydrogen count</exception>
         private static int GetImplH(IAtom atom)
         {
             int? h = atom.ImplicitHydrogenCount;
@@ -375,6 +376,7 @@ namespace NCDK.Graphs.Invariant
         /// Locate explicit hydrogens that are attached to exactly one other atom.
         /// </summary>
         /// <param name="ac">a structure</param>
+        /// <param name="g"></param>
         /// <returns>binary set of terminal hydrogens</returns>
         public static bool[] TerminalHydrogens(IAtomContainer ac, int[][] g)
         {

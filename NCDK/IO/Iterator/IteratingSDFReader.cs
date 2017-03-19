@@ -36,11 +36,12 @@ namespace NCDK.IO.Iterator
     /// Iterating MDL SDF reader. It allows to iterate over all molecules
     /// in the SD file, without reading them into memory first. Suitable
     /// for (very) large SDF files. For parsing the molecules in the
-    /// SD file, it uses the <code>MDLV2000Reader</code> or
-    /// <code>MDLV3000Reader</code> reader; it does <b>not</b> work
+    /// SD file, it uses the <see cref="MDLV2000Reader"/> or
+    /// <see cref="MDLV3000Reader"/> reader; it does <b>not</b> work
     /// for SDF files with MDL formats prior to the V2000 format.
-    ///
-    /// <p>Example use:
+    /// </summary>
+    /// <example>
+    /// Example use:
     /// <code>
     /// File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
     /// IteratingMDLReader reader = new IteratingMDLReader(
@@ -50,32 +51,24 @@ namespace NCDK.IO.Iterator
     ///   IAtomContainer molecule = (IAtomContainer)reader.Next();
     /// }
     /// </code>
-    ///
+    /// </example>
+    /// <seealso cref="MDLV2000Reader"/>
+    /// <seealso cref="MDLV3000Reader"/>
     // @cdk.module io
     // @cdk.githash
-    ///
-    // @see org.openscience.cdk.io.MDLV2000Reader
-    // @see org.openscience.cdk.io.MDLV3000Reader
-    ///
     // @author     Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created    2003-10-19
-    ///
     // @cdk.keyword    file format, MDL molfile
     // @cdk.keyword    file format, SDF
     // @cdk.iooptions
-    /// </summary>
     public class IteratingSDFReader : DefaultIteratingChemObjectReader<IAtomContainer>
     {
-
         private TextReader input;
         private string currentLine;
         private IChemFormat currentFormat;
         private readonly ReaderFactory factory = new ReaderFactory();
         private IChemObjectBuilder builder;
         private BooleanIOSetting forceReadAs3DCoords;
-
-        // if an error is encountered the reader will skip over the error
-        private bool skip = false;
 
         private static readonly string LINE_SEPARATOR = Environment.NewLine;
 
@@ -86,27 +79,24 @@ namespace NCDK.IO.Iterator
         private static Regex SDF_FIELD_START = new Regex("\\A>\\s", RegexOptions.Compiled);
 
         // map of MDL formats to their readers
-        private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(
-                                                                                             5);
+        private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(5);
 
         /// <summary>
         /// Constructs a new IteratingMDLReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
-        /// <param name="builder">The builder</param>
         /// </summary>
-        public IteratingSDFReader(TextReader in_, IChemObjectBuilder builder)
-            : this(in_, builder, false)
+        /// <param name="ins">The Reader to read from</param>
+        /// <param name="builder">The builder</param>
+        public IteratingSDFReader(TextReader ins, IChemObjectBuilder builder)
+            : this(ins, builder, false)
         { }
 
         /// <summary>
         /// Constructs a new IteratingMDLReader that can read Molecule from a given Stream.
-        ///
-        /// <param name="in">The Stream to read from</param>
-        /// <param name="builder">The builder</param>
         /// </summary>
-        public IteratingSDFReader(Stream in_, IChemObjectBuilder builder)
-            : this(new StreamReader(in_), builder)
+        /// <param name="ins">The Stream to read from</param>
+        /// <param name="builder">The builder</param>
+        public IteratingSDFReader(Stream ins, IChemObjectBuilder builder)
+            : this(new StreamReader(ins), builder)
         { }
 
         /// <summary>
@@ -116,13 +106,12 @@ namespace NCDK.IO.Iterator
         /// is read the iterating reader will stop at the broken molecule. However if
         /// skip is set to true then the reader will keep trying to read more molecules
         /// until the end of the file is reached.
-        ///
-        /// <param name="in">the <see cref="Stream"/> to read from</param>
+        /// </summary>
+        /// <param name="ins">the <see cref="Stream"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        /// </summary>
-        public IteratingSDFReader(Stream in_, IChemObjectBuilder builder, bool skip)
-            : this(new StreamReader(in_), builder, skip)
+        public IteratingSDFReader(Stream ins, IChemObjectBuilder builder, bool skip)
+            : this(new StreamReader(ins), builder, skip)
         { }
 
         /// <summary>
@@ -132,15 +121,14 @@ namespace NCDK.IO.Iterator
         /// is read the iterating reader will stop at the broken molecule. However if
         /// skip is set to true then the reader will keep trying to read more molecules
         /// until the end of the file is reached.
-        ///
-        /// <param name="in">the <see cref="Reader"/> to read from</param>
+        /// </summary>
+        /// <param name="ins">the <see cref="TextReader"/> to read from</param>
         /// <param name="builder">builder to use</param>
         /// <param name="skip">whether to skip null molecules</param>
-        /// </summary>
-        public IteratingSDFReader(TextReader in_, IChemObjectBuilder builder, bool skip)
+        public IteratingSDFReader(TextReader ins, IChemObjectBuilder builder, bool skip)
         {
             this.builder = builder;
-            SetReader(in_);
+            SetReader(ins);
             InitIOSettings();
             Skip = skip;
         }
@@ -148,15 +136,13 @@ namespace NCDK.IO.Iterator
         public override IResourceFormat Format => currentFormat;
 
         /// <summary>
-        ///                Method will return an appropriate reader for the provided format. Each reader is stored
-        ///                in a map, if no reader is available for the specified format a new reader is created. The
-        ///                {@see ISimpleChemObjectReadr#SetErrorHandler(IChemObjectReaderErrorHandler)} and
-        ///                {@see ISimpleChemObjectReadr#SetReaderMode(DefaultIteratingChemObjectReader)}
-        ///                methods are set.
-        ///
+        /// Method will return an appropriate reader for the provided format. Each reader is stored
+        /// in a map, if no reader is available for the specified format a new reader is created. The
+        /// <see cref="IChemObjectReader.ErrorHandler"/> and
+        /// <see cref="IChemObjectReader.ReaderMode"/> are set.
+        /// </summary>
         /// <param name="format">The format to obtain a reader for</param>
         /// <returns>instance of a reader appropriate for the provided format</returns>
-        /// </summary>
         private ISimpleChemObjectReader GetReader(IChemFormat format)
         {
             // create a new reader if not mapped
@@ -230,7 +216,7 @@ namespace NCDK.IO.Iterator
                         ReadDataBlockInto(molecule);
                         yield return molecule;
                     }
-                    else if (skip)
+                    else if (Skip)
                     {
                         // null molecule and skip = true, eat up the rest of the entry until '$$$$'
                         string line;
@@ -285,15 +271,8 @@ namespace NCDK.IO.Iterator
         ///        Indicate whether the reader should skip over SDF records
         ///        that cause problems. If true the reader will fetch the next
         ///        molecule
-        /// <param name="skip">ignore error molecules continue reading</param>
         /// </summary>
-        public bool Skip
-        {
-            set
-            {
-                this.skip = value;
-            }
-        }
+        public bool Skip { get; set; }
 
         private string ExtractFieldData(string str)
         {

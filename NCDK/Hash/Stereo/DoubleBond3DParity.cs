@@ -32,11 +32,10 @@ namespace NCDK.Hash.Stereo
     /// provided as a parity (+1,-1) where +1 indicates the substituents are on
     /// <i>opposite</i> sides (E or trans) and -1 indicates they are <i>together</i>
     /// on the same side (Z or cis).
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    /// </summary>
     internal sealed class DoubleBond3DParity : GeometricParity
     {
         // coordinates of the double bond atoms:
@@ -47,12 +46,11 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Create a new double bond parity for the 2D coordinates of the atoms.
-        ///
+        /// </summary>
         /// <param name="left">one atom of the double bond</param>
         /// <param name="right">the other atom of a double bond</param>
         /// <param name="leftSubstituent">the substituent atom connected to the left atom</param>
         /// <param name="rightSubstituent">the substituent atom connected to the right atom</param>
-        /// </summary>
         public DoubleBond3DParity(Vector3 left, Vector3 right, Vector3 leftSubstituent, Vector3 rightSubstituent)
         {
             this.u = left;
@@ -63,9 +61,8 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Calculate the configuration of the double bond as a parity.
-        ///
-        /// <returns>opposite (+1), together (-1)</returns>
         /// </summary>
+        /// <returns>opposite (+1), together (-1)</returns>
         public override int Parity
         {
             get
@@ -95,11 +92,10 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Create a vector by specifying the source and destination coordinates.
-        ///
+        /// </summary>
         /// <param name="src">start point of the vector</param>
         /// <param name="dest">end point of the vector</param>
         /// <returns>a new vector</returns>
-        /// </summary>
         private static double[] ToVector(Vector3 src, Vector3 dest)
         {
             return new double[] { dest.X - src.X, dest.Y - src.Y, dest.Z - src.Z };
@@ -107,11 +103,10 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Dot product of two 3D coordinates
-        ///
+        /// </summary>
         /// <param name="u">either 3D coordinates</param>
         /// <param name="v">other 3D coordinates</param>
         /// <returns>the dot-product</returns>
-        /// </summary>
         private static double Dot(double[] u, double[] v)
         {
             return (u[0] * v[0]) + (u[1] * v[1]) + (u[2] * v[2]);
@@ -119,11 +114,10 @@ namespace NCDK.Hash.Stereo
 
         /// <summary>
         /// Cross product of two 3D coordinates
-        ///
+        /// </summary>
         /// <param name="u">either 3D coordinates</param>
         /// <param name="v">other 3D coordinates</param>
         /// <returns>the cross-product</returns>
-        /// </summary>
         private static double[] CrossProduct(double[] u, double[] v)
         {
             return new double[] { (u[1] * v[2]) - (v[1] * u[2]), (u[2] * v[0]) - (v[2] * u[0]), (u[0] * v[1]) - (v[0] * u[1]) };

@@ -49,7 +49,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of init method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_1()
@@ -68,7 +68,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of init method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestInit_3args_2()
@@ -108,7 +108,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of setChemFilters method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSetChemFilters()
@@ -126,7 +126,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getFragmentSize method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFragmentSize()
@@ -145,7 +145,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getStereoScore method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetStereoScore()
@@ -164,7 +164,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getEnergyScore method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetEnergyScore()
@@ -183,7 +183,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getFirstMapping method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstMapping()
@@ -202,7 +202,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getAllMapping method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllMapping()
@@ -226,7 +226,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getFirstAtomMapping method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetFirstAtomMapping()
@@ -245,7 +245,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getAllAtomMapping method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetAllAtomMapping()
@@ -269,7 +269,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getReactantMolecule method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetReactantMolecule()
@@ -288,7 +288,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of getProductMolecule method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestGetProductMolecule()
@@ -326,7 +326,7 @@ namespace NCDK.SMSD.Factory
         /// <summary>
         /// Test of isStereoMisMatch method, of class SubStructureSearchAlgorithms.
         // @throws InvalidSmilesException
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestIsStereoMisMatch()

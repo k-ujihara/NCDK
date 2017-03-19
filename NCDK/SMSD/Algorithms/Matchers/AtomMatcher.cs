@@ -25,11 +25,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 {
     /// <summary>
     /// Interface for the AtomMatcher (atoms) in graph.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
-
     public interface AtomMatcher
     {
         bool Matches(IAtomContainer container, IAtom atom);

@@ -121,7 +121,8 @@ namespace NCDK.Aromaticities
             BitArray available = new BitArray(atoms.Length);
 
             // for all atoms, select those that require a double-bond
-            ATOMS: for (int i = 0; i < atoms.Length; i++)
+        ATOMS:
+            for (int i = 0; i < atoms.Length; i++)
             {
                 IAtom atom = atoms[i];
 

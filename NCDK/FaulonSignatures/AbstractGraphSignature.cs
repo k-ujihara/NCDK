@@ -2,7 +2,7 @@ using NCDK.Common.Primitives;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     /// <summary>
     /// A signature for an entire graph.
@@ -78,7 +78,7 @@ namespace FaulonSignatures
         /// <summary>
         /// Return the canonical signature string for the vertex at index 
         /// <code>vertexIndex</code> in the graph with a height of 
-        /// <code>height</code>.
+        /// <paramref name="height"/>.
         /// </summary>
         /// <param name="vertexIndex">the vertex index</param>
         /// <param name="height">the maximum height of the signature</param>

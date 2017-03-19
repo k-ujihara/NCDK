@@ -29,11 +29,10 @@ namespace NCDK.Reactions.Types
     /// <para>IReactionProcess which produces a protonation.
     /// As most commonly encountered, this reaction results in the formal migration
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</para>
-    /// </summary>
-    /// <example>
     /// <code>[X-] + [H+] => X -H</code>
     /// <code>|X + [H+]   => [X+]-H</code>
-    ///
+    /// </summary>
+    /// <example>
     /// <para>Below you have an example how to initiate the mechanism.</para>
     /// <para>It is processed by the AdductionLPMechanism class</para>
     /// <code>
@@ -47,7 +46,7 @@ namespace NCDK.Reactions.Types
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to specify the reaction in a fixed point.</para>
-    /// <code>atoms[0].SetFlag(CDKConstants.REACTIVE_CENTER,true);</code>
+    /// <code>atoms[0].IsReactiveCenter = true;</code>
     /// <para>Moreover you must put the parameter true</para>
     /// <para>If the reactive center is not specified then the reaction process will
     /// try to find automatically the possible reaction centers.</para>
@@ -62,16 +61,13 @@ namespace NCDK.Reactions.Types
     {
         /// <summary>
         /// Constructor of the AdductionProtonLPReaction object.
-        ///
         /// </summary>
         public AdductionProtonLPReaction() { }
 
         /// <summary>
         ///  Gets the specification attribute of the AdductionProtonLPReaction object.
-        ///
-        /// <returns>The specification value</returns>
         /// </summary>
-
+        /// <returns>The specification value</returns>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#AdductionProtonLP",
@@ -81,17 +77,12 @@ namespace NCDK.Reactions.Types
         ///  Initiate process.
         ///  It is needed to call the addExplicitHydrogensToSatisfyValency
         ///  from the class tools.HydrogenAdder.
-        ///
-        ///
-        /// <exception cref="CDKException"> Description of the Exception</exception>
-
-        /// <param name="reactants">reactants of the reaction</param>
-       /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         /// </summary>
-
+        /// <exception cref="CDKException"> Description of the Exception</exception>
+        /// <param name="reactants">reactants of the reaction</param>
+        /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
             Debug.WriteLine("initiate reaction: AdductionProtonLPReaction");
 
             if (reactants.Count != 1)
@@ -114,11 +105,10 @@ namespace NCDK.Reactions.Types
             foreach (var atomi in reactant.Atoms)
             {
                 if (atomi.IsReactiveCenter
-   && (atomi.FormalCharge ?? 0) <= 0
-   && reactant.GetConnectedLonePairs(atomi).Any()
-   && !reactant.GetConnectedSingleElectrons(atomi).Any())
+                   && (atomi.FormalCharge ?? 0) <= 0
+                   && reactant.GetConnectedLonePairs(atomi).Any()
+                   && !reactant.GetConnectedSingleElectrons(atomi).Any())
                 {
-
                     var atomList = new List<IAtom>();
                     atomList.Add(atomi);
                     IAtom atomH = reactant.Builder.CreateAtom("H");
@@ -136,7 +126,6 @@ namespace NCDK.Reactions.Types
                         continue;
                     else
                         setOfReactions.Add(reaction);
-
                 }
             }
 
@@ -149,10 +138,8 @@ namespace NCDK.Reactions.Types
         /// <code>
         /// [X-]
         ///  </code>
-        ///
-        /// <param name="reactant">The molecule to set the activity</param>
-        // @
         /// </summary>
+        /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
         {
             if (AtomContainerManipulator.GetTotalCharge(reactant) > 0) return;

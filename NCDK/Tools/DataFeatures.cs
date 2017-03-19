@@ -21,31 +21,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace NCDK.Tools
 {
     /// <summary>
     /// Class with constants for possible data features defined in the
     /// a Data Feature Ontology. Actual integers are random
     /// and should <b>not</b> be used directly.
-    ///
-    /// <p>To test whether a IChemFormat supports a certain feature, the
+    /// </summary>
+    /// <example>
+    /// To test whether a IChemFormat supports a certain feature, the
     /// following code can be used:
     /// <code>
     /// int features = new XYZFormat().SupportedDataFeatures;
-    /// bool has3DCoords = (features & HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
+    /// bool has3DCoords = (features &amp; HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
     /// </code>
-    ///
-    /// <p>This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml"
-    /// >Blue Obelisk Data Features Ontology</a>.
-    ///
+    /// 
+    /// This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml">Blue Obelisk Data Features Ontology</a>.
+    /// </example>
     // @author     Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module annotation
     // @cdk.githash
-    ///*/
     public class DataFeatures
     {
         /// <summary>Indicated that no feature are defined.</summary>

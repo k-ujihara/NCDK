@@ -71,9 +71,8 @@ namespace NCDK.Smiles
         /// Create a new converter for the Beam SMILES toolkit. The converter needs
         /// an <see cref="IChemObjectBuilder"/>. Currently the 'cdk-silent' builder will
         /// give the best performance.
-        ///
-        // @param builder chem object builder
         /// </summary>
+        /// <param name="builder">chem object builder</param>
         public BeamToCDK(IChemObjectBuilder builder)
         {
             this.builder = builder;
@@ -105,19 +104,18 @@ namespace NCDK.Smiles
             // atom-centric stereo-specification (only tetrahedral ATM)
             for (int u = 0; u < g.Order; u++)
             {
-
                 Configuration c = g.ConfigurationOf(u);
                 if (c.Type == Tetrahedral)
                 {
                     IStereoElement se = NewTetrahedral(u, g.Neighbors(u), atoms, c);
 
-                    if (se != null) ac.Add(se);
+                    if (se != null) ac.StereoElements.Add(se);
                 }
                 else if (c.Type == Configuration.Types.ExtendedTetrahedral)
                 {
                     IStereoElement se = NewExtendedTetrahedral(u, g, atoms);
 
-                    if (se != null) ac.Add(se);
+                    if (se != null) ac.StereoElements.Add(se);
                 }
             }
 
@@ -128,7 +126,7 @@ namespace NCDK.Smiles
             AddDoubleBondStereochemistry(g, ac);
 
             // title suffix
-            ac.SetProperty(CDKPropertyName.TITLE, g.Title);
+            ac.SetProperty(CDKPropertyName.Title, g.Title);
 
             return ac;
         }
@@ -169,7 +167,7 @@ namespace NCDK.Smiles
                 IBond[] ligands = new IBond[]{ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
                         ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])};
 
-                ac.Add(new DoubleBondStereochemistry(db, ligands, conformation));
+                ac.StereoElements.Add(new DoubleBondStereochemistry(db, ligands, conformation));
             }
         }
 
@@ -286,7 +284,7 @@ namespace NCDK.Smiles
 
             if (beamAtom.IsAromatic()) cdkAtom.IsAromatic = true;
 
-            if (beamAtom.AtomClass > 0) cdkAtom.SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, beamAtom.AtomClass);
+            if (beamAtom.AtomClass > 0) cdkAtom.SetProperty(CDKPropertyName.AtomAtomMapping, beamAtom.AtomClass);
 
             return cdkAtom;
         }

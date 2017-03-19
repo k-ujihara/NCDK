@@ -1,5 +1,53 @@
-
-using NCDK.Common.Collections;
+/*
+ *
+ * Copyright (C) 2007-2010  Syed Asad Rahman {asad@ebi.atomContainer.uk}
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received atom copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ *  Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
+ *
+ *  This code has been kindly provided by Stephane Werner
+ *  and Thierry Hanser from IXELIS mail@ixelis.net
+ *
+ *  IXELIS sarl - Semantic Information Systems
+ *  17 rue des C???res 67200 Strasbourg, France
+ *  Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
+ *
+ *  CDK Contact: cdk-devel@lists.sf.net
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU Lesser General Public License
+ *  as published by the Free Software Foundation; either version 2.1
+ *  of the License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received atom copy of the GNU Lesser General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ */
 using NCDK.Isomorphisms.Matchers;
 using NCDK.SMSD.Algorithms.Matchers;
 using NCDK.SMSD.Global;
@@ -9,111 +57,61 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-/**
-*
-* Copyright (C) 2007-2010  Syed Asad Rahman {asad@ebi.atomContainer.uk}
-*
-* Contact: cdk-devel@lists.sourceforge.net
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public License
-* as published by the Free Software Foundation; either version 2.1
-* of the License, or (at your option) any later version.
-* All we ask is that proper credit is given for our work, which includes
-* - but is not limited to - adding the above copyright notice to the beginning
-* of your source code files, and to any copyright notice that you may distribute
-* with programs based on this work.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
-*
-* You should have received atom copy of the GNU Lesser General Public License
-* along with this program; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-*  Copyright (C) 2002-2007  Stephane Werner <mail@ixelis.net>
-*
-*  This code has been kindly provided by Stephane Werner
-*  and Thierry Hanser from IXELIS mail@ixelis.net
-*
-*  IXELIS sarl - Semantic Information Systems
-*  17 rue des C???res 67200 Strasbourg, France
-*  Tel/Fax : +33(0)3 88 27 81 39 Email: mail@ixelis.net
-*
-*  CDK Contact: cdk-devel@lists.sf.net
-*
-*  This program is free software; you can redistribute it and/or
-*  modify it under the terms of the GNU Lesser General Public License
-*  as published by the Free Software Foundation; either version 2.1
-*  of the License, or (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU Lesser General Public License for more details.
-*
-*  You should have received atom copy of the GNU Lesser General Public License
-*  along with this program; if not, write to the Free Software
-*  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
-*
-*/
+
 namespace NCDK.SMSD.Algorithms.RGraph
 {
-    /**
-     *  This class implements atom multipurpose structure comparison tool.
-     *  It allows to find maximal common substructure, find the
-     *  mapping of atom substructure in another structure, and the mapping of
-     *  two isomorphic structures.
-     *
-     *  <p>Structure comparison may be associated to bondA1 constraints
-     *  (mandatory bonds, e.graphContainer. scaffolds, reaction cores,...) on each source graph.
-     *  The constraint flexibility allows atom number of interesting queries.
-     *  The substructure analysis relies on the CDKRGraph generic class (see: CDKRGraph)
-     *  This class implements the link between the CDKRGraph model and the
-     *  the CDK model in this way the CDKRGraph remains independant and may be used
-     *  in other contexts.
-     *
-     *  <p>This algorithm derives from the algorithm described in
-     *  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
-     *
-     *  <p>With the <code>IsSubgraph()</code> method, the second, and only the second
-     *  argument <tBond>may</tBond> be atom IQueryAtomContainer, which allows one to do MQL like queries.
-     *  The first IAtomContainer must never be an IQueryAtomContainer. An example:<code>
-     *  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-     *  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-     *  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
-     *  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
-     *  bool isSubstructure = graphContainer.IsSubgraph(atomContainer, query);
-     *  </code>
-     *
-     *  <p><font color="#FF0000">WARNING</font>:
-     *    As atom result of the adjacency perception used in this algorithm
-     *    there is atom single limitation : cyclopropane and isobutane are seen as isomorph
-     *    This is due to the fact that these two compounds are the only ones where
-     *    each bondA1 is connected two each other bondA1 (bonds are fully conected)
-     *    with the same number of bonds and still they have different structures
-     *    The algotihm could be easily enhanced with atom simple atom mapping manager
-     *    to provide an atom level overlap definition that would reveal this case.
-     *    We decided not to penalize the whole procedure because of one single
-     *    exception query. Furthermore isomorphism may be discarded since  the number of atoms are
-     *    not the same (3 != 4) and in most case this will be already
-     *    screened out by atom fingerprint based filtering.
-     *    It is possible to add atom special treatment for this special query.
-     *    Be reminded that this algorithm matches bonds only.
-     * </p>
-     *
-     * @author      Stephane Werner from IXELIS mail@ixelis.net,
-     *              Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
-     * @cdk.created 2002-07-17
-     * @cdk.require java1.5+
-     * @cdk.module  smsd
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  This class implements atom multipurpose structure comparison tool.
+    ///  It allows to find maximal common substructure, find the
+    ///  mapping of atom substructure in another structure, and the mapping of
+    ///  two isomorphic structures.
+    /// </summary>
+    /// <remarks>
+    ///  <para>Structure comparison may be associated to bondA1 constraints
+    ///  (mandatory bonds, e.graphContainer. scaffolds, reaction cores,...) on each source graph.
+    ///  The constraint flexibility allows atom number of interesting queries.
+    ///  The substructure analysis relies on the CDKRGraph generic class (see: CDKRGraph)
+    ///  This class implements the link between the CDKRGraph model and the
+    ///  the CDK model in this way the CDKRGraph remains independant and may be used
+    ///  in other contexts.</para>
+    ///
+    ///  <para>This algorithm derives from the algorithm described in
+    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.</para>
+    ///
+    ///  <para>With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer, bool)"/> method, the second, and only the second
+    ///  argument <b>may</b> be atom <see cref="IQueryAtomContainer"/>, which allows one to do MQL like queries.
+    ///  The first IAtomContainer must never be an <see cref="IQueryAtomContainer"/>. An example:
+    ///  <code>
+    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
+    ///  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
+    ///  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
+    ///  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
+    ///  bool isSubstructure = graphContainer.IsSubgraph(atomContainer, query);
+    ///  </code>
+    /// </para>
+    ///  <para><b>WARNING</b>:
+    ///    As atom result of the adjacency perception used in this algorithm
+    ///    there is atom single limitation : cyclopropane and isobutane are seen as isomorph
+    ///    This is due to the fact that these two compounds are the only ones where
+    ///    each bondA1 is connected two each other bondA1 (bonds are fully conected)
+    ///    with the same number of bonds and still they have different structures
+    ///    The algotihm could be easily enhanced with atom simple atom mapping manager
+    ///    to provide an atom level overlap definition that would reveal this case.
+    ///    We decided not to penalize the whole procedure because of one single
+    ///    exception query. Furthermore isomorphism may be discarded since  the number of atoms are
+    ///    not the same (3 != 4) and in most case this will be already
+    ///    screened out by atom fingerprint based filtering.
+    ///    It is possible to add atom special treatment for this special query.
+    ///    Be reminded that this algorithm matches bonds only.
+    /// </para>
+    /// </remarks>
+    // @author      Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
+    // @cdk.created 2002-07-17
+    // @cdk.require java1.5+
+    // @cdk.module  smsd
+    // @cdk.githash
     public class CDKMCS
     {
-
         const int ID1 = 0;
         const int ID2 = 1;
         private static TimeManager timeManager = null;
@@ -126,18 +124,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
         // most common queries but of course it is possible to define other type of
         // queries exploiting the constrain and option combinations
         //
-        ////
+        //
         // Isomorphism search
-        /**
-         * Tests if sourceGraph and targetGraph are isomorph.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     true if the 2 molecule are isomorph
-         * @throws CDKException if the first molecule is an instance
-         * of IQueryAtomContainer
-         */
+        /// <summary>
+        /// Tests if sourceGraph and targetGraph are isomorph.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>true if the 2 molecule are isomorph</returns>
+        /// <exception cref="CDKException">if the first molecule is an instance of IQueryAtomContainer</exception>
         public static bool IsIsomorph(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             if (sourceGraph is IQueryAtomContainer)
@@ -173,17 +169,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return (GetIsomorphMap(sourceGraph, targetGraph, shouldMatchBonds) != null);
         }
 
-        /**
-         * Returns the first isomorph mapping found or null.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the first isomorph mapping found projected of sourceGraph. This is atom List of CDKRMap objects containing Ids of matching bonds.
-         * @throws CDKException
-         */
-        public static IList<CDKRMap> GetIsomorphMap(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns the first isomorph mapping found or null.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the first isomorph mapping found projected of sourceGraph. This is atom List of CDKRMap objects containing Ids of matching bonds.</returns>
+        /// <exception cref="CDKException"></exception>
+        public static IList<CDKRMap> GetIsomorphMap(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             if (sourceGraph is IQueryAtomContainer)
             {
@@ -203,19 +197,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return result;
         }
 
-        /**
-         * Returns the first isomorph 'atom mapping' found for targetGraph in sourceGraph.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the first isomorph atom mapping found projected on sourceGraph.
-         * This is atom List of CDKRMap objects containing Ids of matching atoms.
-         * @throws CDKException if the first molecules is not an instance of
-         *  {@link org.openscience.cdk.isomorphism.matchers.IQueryAtomContainer}
-         */
-        public static IList<CDKRMap> GetIsomorphAtomsMap(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns the first isomorph 'atom mapping' found for targetGraph in sourceGraph.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the first isomorph atom mapping found projected on sourceGraph.</returns>
+        /// This is atom List of CDKRMap objects containing Ids of matching atoms.
+        /// <exception cref="CDKException">if the first molecules is not an instance of <see cref="IQueryAtomContainer"/></exception>
+        public static IList<CDKRMap> GetIsomorphAtomsMap(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             if (sourceGraph is IQueryAtomContainer)
             {
@@ -238,52 +229,46 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * Returns all the isomorph 'mappings' found between two
-         * atom containers.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the list of all the 'mappings'
-         * @throws CDKException
-         */
-        public static IList<IList<CDKRMap>> GetIsomorphMaps(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns all the isomorph 'mappings' found between two
+        /// atom containers.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the list of all the 'mappings'</returns>
+        /// <exception cref="CDKException"></exception>
+        public static IList<IList<CDKRMap>> GetIsomorphMaps(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
-            return Search(sourceGraph, targetGraph, GetBitSet(sourceGraph), GetBitSet(targetGraph), true, true,
-                    shouldMatchBonds);
+            return Search(sourceGraph, targetGraph, GetBitSet(sourceGraph), GetBitSet(targetGraph), true, true, shouldMatchBonds);
         }
 
-        /////
+        //
         // Subgraph search
-        /**
-         * Returns all the subgraph 'bondA1 mappings' found for targetGraph in sourceGraph.
-         * This is an ArrayList of ArrayLists of CDKRMap objects.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the list of all the 'mappings' found projected of sourceGraph
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Returns all the subgraph 'bondA1 mappings' found for targetGraph in sourceGraph.
+        /// This is an ArrayList of ArrayLists of CDKRMap objects.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the list of all the 'mappings' found projected of sourceGraph</returns>
+        /// <exception cref="CDKException"></exception>
         public static IList<IList<CDKRMap>> GetSubgraphMaps(IAtomContainer sourceGraph, IAtomContainer targetGraph,
                 bool shouldMatchBonds)
         {
             return Search(sourceGraph, targetGraph, new BitArray(sourceGraph.Bonds.Count), GetBitSet(targetGraph), true, true, shouldMatchBonds);
         }
 
-        /**
-         * Returns the first subgraph 'bondA1 mapping' found for targetGraph in sourceGraph.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the first subgraph bondA1 mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching bonds.
-         * @throws CDKException
-         */
-        public static IList<CDKRMap> GetSubgraphMap(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns the first subgraph 'bondA1 mapping' found for targetGraph in sourceGraph.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the first subgraph bondA1 mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching bonds.</returns>
+        /// <exception cref="CDKException"></exception>
+        public static IList<CDKRMap> GetSubgraphMap(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             IList<CDKRMap> result = null;
             var rMapsList = Search(sourceGraph, targetGraph, new BitArray(sourceGraph.Bonds.Count), GetBitSet(targetGraph), false,
@@ -297,17 +282,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return result;
         }
 
-        /**
-         * Returns all subgraph 'atom mappings' found for targetGraph in sourceGraph.
-         * This is an ArrayList of ArrayLists of CDKRMap objects.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     all subgraph atom mappings found projected on sourceGraph. This is atom
-         *             List of CDKRMap objects containing Ids of matching atoms.
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Returns all subgraph 'atom mappings' found for targetGraph in sourceGraph.
+        /// This is an ArrayList of ArrayLists of CDKRMap objects.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>all subgraph atom mappings found projected on sourceGraph. This is atom
+        ///             List of CDKRMap objects containing Ids of matching atoms.</returns>
+        /// <exception cref="CDKException"></exception>
         public static IList<IList<CDKRMap>> GetSubgraphAtomsMaps(IAtomContainer sourceGraph, IAtomContainer targetGraph,
                 bool shouldMatchBonds)
         {
@@ -325,18 +309,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * Returns the first subgraph 'atom mapping' found for targetGraph in sourceGraph.
-         *
-         * @param  sourceGraph first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return    the first subgraph atom mapping found projected on sourceGraph.
-         *            This is atom List of CDKRMap objects containing Ids of matching atoms.
-         * @throws CDKException
-         */
-        public static IList<CDKRMap> GetSubgraphAtomsMap(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns the first subgraph 'atom mapping' found for targetGraph in sourceGraph.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the first subgraph atom mapping found projected on sourceGraph.
+        ///            This is atom List of CDKRMap objects containing Ids of matching atoms.</returns>
+        /// <exception cref="CDKException"></exception>
+        public static IList<CDKRMap> GetSubgraphAtomsMap(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             IList<CDKRMap> list = CheckSingleAtomCases(sourceGraph, targetGraph);
             if (list == null)
@@ -354,15 +336,14 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * Tests if targetGraph atom subgraph of sourceGraph.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     true if targetGraph atom subgraph on sourceGraph
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Tests if targetGraph atom subgraph of sourceGraph.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>true if targetGraph atom subgraph on sourceGraph</returns>
+        /// <exception cref="CDKException"></exception>
         public static bool IsSubgraph(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             if (sourceGraph is IQueryAtomContainer)
@@ -415,18 +396,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
         }
 
         // Maximum common substructure search
-        /**
-         * Returns all the maximal common substructure between 2 atom containers.
-         *
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @param shouldMatchBonds
-         * @return     the list of all the maximal common substructure
-         *             found projected of sourceGraph (list of AtomContainer )
-         * @throws CDKException
-         */
-        public static IList<IAtomContainer> GetOverlaps(IAtomContainer sourceGraph, IAtomContainer targetGraph,
-                bool shouldMatchBonds)
+        /// <summary>
+        /// Returns all the maximal common substructure between 2 atom containers.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the list of all the maximal common substructure
+        ///             found projected of sourceGraph (list of <see cref="IAtomContainer"/>)</returns>
+        /// <exception cref="CDKException"></exception>
+        public static IList<IAtomContainer> GetOverlaps(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             IList<IList<CDKRMap>> rMapsList = Search(sourceGraph, targetGraph, new BitArray(sourceGraph.Bonds.Count), new BitArray(targetGraph.Bonds.Count), true, false,
                 shouldMatchBonds);
@@ -440,13 +419,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return GetMaximum(graphList, shouldMatchBonds);
         }
 
-        /**
-         * Transforms an AtomContainer into atom BitArray (which's size = number of bondA1
-         * in the atomContainer, all the bit are set to true).
-         *
-         * @param  atomContainer  AtomContainer to transform
-         * @return     The bitSet
-         */
+        /// <summary>
+        /// Transforms an AtomContainer into atom BitArray (which's size = number of bondA1
+        /// in the atomContainer, all the bit are set to true).
+        ///
+        /// <param name="atomContainer">AtomContainer to transform</param>
+        /// <returns>The bitSet</returns>
+        /// </summary>
         public static BitArray GetBitSet(IAtomContainer atomContainer)
         {
             BitArray bitSet;
@@ -468,20 +447,19 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return bitSet;
         }
 
-        //////////////////////////////////////////////////
+        //
         //          Internal methods
-        /**
-         * Builds the CDKRGraph ( resolution graph ), from two atomContainer
-         * (description of the two molecules to compare)
-         * This is the interface point between the CDK model and
-         * the generic MCSS algorithm based on the RGRaph.
-         *
-         * @param  sourceGraph  Description of the first molecule
-         * @param  targetGraph  Description of the second molecule
-         * @param shouldMatchBonds
-         * @return     the rGraph
-         * @throws CDKException
-         */
+        /// <summary>
+        /// Builds the CDKRGraph ( resolution graph ), from two atomContainer
+        /// (description of the two molecules to compare)
+        /// This is the interface point between the CDK model and
+        /// the generic MCSS algorithm based on the RGRaph.
+        /// </summary>
+        /// <param name="sourceGraph">Description of the first molecule</param>
+        /// <param name="targetGraph">Description of the second molecule</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>the rGraph</returns>
+        /// <exception cref="CDKException"></exception>
         public static CDKRGraph BuildRGraph(IAtomContainer sourceGraph, IAtomContainer targetGraph, bool shouldMatchBonds)
         {
             CDKRGraph rGraph = new CDKRGraph();
@@ -490,29 +468,24 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return rGraph;
         }
 
-        /**
-         * General Rgraph parsing method (usually not used directly)
-         * This method is the entry point for the recursive search
-         * adapted to the atom container input.
-         *
-         * @param  sourceGraph                first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph                second molecule. May be an IQueryAtomContainer.
-         * @param  sourceBitSet                initial condition ( bonds from sourceGraph that
-         *                           must be contains in the solution )
-         * @param  targetBitSet                initial condition ( bonds from targetGraph that
-         *                           must be contains in the solution )
-         * @param  findAllStructure  if false stop at the first structure found
-         * @param  findAllMap        if true search all the 'mappings' for one same
-         *                           structure
-         * @param shouldMatchBonds
-         * @return                   atom List of Lists of CDKRMap objects that represent the search solutions
-         * @throws CDKException
-         */
+        /// <summary>
+        /// General Rgraph parsing method (usually not used directly)
+        /// This method is the entry point for the recursive search
+        /// adapted to the atom container input.
+        /// </summary>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <param name="sourceBitSet">initial condition ( bonds from sourceGraph that must be contains in the solution )</param>
+        /// <param name="targetBitSet">initial condition ( bonds from targetGraph that must be contains in the solution )</param>
+        /// <param name="findAllStructure">if false stop at the first structure found</param>
+        /// <param name="findAllMap">if true search all the 'mappings' for one same structure</param>
+        /// <param name="shouldMatchBonds"></param>
+        /// <returns>atom List of Lists of CDKRMap objects that represent the search solutions</returns>
+        /// <exception cref="CDKException"></exception>
         public static IList<IList<CDKRMap>> Search(IAtomContainer sourceGraph, IAtomContainer targetGraph,
                 BitArray sourceBitSet, BitArray targetBitSet, bool findAllStructure, bool findAllMap,
                 bool shouldMatchBonds)
         {
-
             // handle single query atom case separately
             if (targetGraph.Atoms.Count == 1)
             {
@@ -568,14 +541,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         //////////////////////////////////////
         //    Manipulation tools
-        /**
-         * Projects atom list of CDKRMap on atom molecule.
-         *
-         * @param  rMapList  the list to project
-         * @param  graph         the molecule on which project
-         * @param  key        the key in the CDKRMap of the molecule graph
-         * @return           an AtomContainer
-         */
+        /// <summary>
+        /// Projects atom list of CDKRMap on atom molecule.
+        /// </summary>
+        /// <param name="rMapList">the list to project</param>
+        /// <param name="graph">the molecule on which project</param>
+        /// <param name="key">the key in the CDKRMap of the molecule graph</param>
+        /// <returns>an AtomContainer</returns>
         public static IAtomContainer Project(IList<CDKRMap> rMapList, IAtomContainer graph, int key)
         {
             IAtomContainer atomContainer = graph.Builder.CreateAtomContainer();
@@ -619,14 +591,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return atomContainer;
         }
 
-        /**
-         * Projects atom list of RMapsList on atom molecule.
-         *
-         * @param  rMapsList  list of RMapsList to project
-         * @param  graph          the molecule on which project
-         * @param  key         the key in the CDKRMap of the molecule graph
-         * @return            atom list of AtomContainer
-         */
+        /// <summary>
+        /// Projects atom list of RMapsList on atom molecule.
+        /// </summary>
+        /// <param name="rMapsList">list of RMapsList to project</param>
+        /// <param name="graph">the molecule on which project</param>
+        /// <param name="key">the key in the CDKRMap of the molecule graph</param>
+        /// <returns>atom list of AtomContainer</returns>
         public static IList<IAtomContainer> ProjectList(IList<IList<CDKRMap>> rMapsList, IAtomContainer graph, int key)
         {
             IList<IAtomContainer> graphList = new List<IAtomContainer>();
@@ -639,14 +610,12 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return graphList;
         }
 
-        /**
-         * Removes all redundant solution.
-         *
-         * @param  graphList  the list of structure to clean
-         * @return            the list cleaned
-         * @throws CDKException if there is atom problem in obtaining
-         * subgraphs
-         */
+        /// <summary>
+        /// Removes all redundant solution.
+        /// </summary>
+        /// <param name="graphList">the list of structure to clean</param>
+        /// <returns>the list cleaned</returns>
+        /// <exception cref="CDKException">if there is atom problem in obtaining subgraphs</exception>
         private static IList<IAtomContainer> GetMaximum(IList<IAtomContainer> graphList, bool shouldMatchBonds)
         {
             List<IAtomContainer> reducedGraphList = new List<IAtomContainer>(graphList);
@@ -674,15 +643,13 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return reducedGraphList;
         }
 
-        /**
-         *  Checks for single atom cases before doing subgraph/isomorphism search
-         *
-         * @param  sourceGraph  AtomContainer to match on. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  AtomContainer as query. May be an IQueryAtomContainer.
-         * @return     List of List of CDKRMap objects for the Atoms (not Bonds!), null if no single atom case
-         * @throws CDKException if the first molecule is an instance
-         * of IQueryAtomContainer
-         */
+        /// <summary>
+        ///  Checks for single atom cases before doing subgraph/isomorphism search
+        /// </summary>
+        /// <param name="sourceGraph">AtomContainer to match on. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">AtomContainer as query. May be an IQueryAtomContainer.</param>
+        /// <returns>List of List of CDKRMap objects for the Atoms (not Bonds!), null if no single atom case</returns>
+        /// <exception cref="CDKException">if the first molecule is an instance of IQueryAtomContainer</exception>
         public static List<CDKRMap> CheckSingleAtomCases(IAtomContainer sourceGraph, IAtomContainer targetGraph)
         {
             if (sourceGraph is IQueryAtomContainer)
@@ -749,16 +716,14 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         *  This makes maps of matching atoms out of atom maps of matching bonds as produced by the Get(Subgraph|Ismorphism)Maps methods.
-         *
-         * @param  list   The list produced by the getMap method.
-         * @param  sourceGraph  The first atom container. Must not be atom IQueryAtomContainer.
-         * @param  targetGraph  The second one (first and second as in getMap). May be an QueryAtomContaienr.
-         * @return     A Vector of Vectors of CDKRMap objects of matching Atoms.
-         */
-        public static IList<IList<CDKRMap>> MakeAtomsMapsOfBondsMaps(IList<IList<CDKRMap>> list, IAtomContainer sourceGraph,
-                IAtomContainer targetGraph)
+        /// <summary>
+        ///  This makes maps of matching atoms out of atom maps of matching bonds as produced by the Get(Subgraph|Ismorphism)Maps methods.
+        /// </summary>
+        /// <param name="list">The list produced by the getMap method.</param>
+        /// <param name="sourceGraph">The first atom container. Must not be atom IQueryAtomContainer.</param>
+        /// <param name="targetGraph">The second one (first and second as in getMap). May be an QueryAtomContaienr.</param>
+        /// <returns>A Vector of Vectors of CDKRMap objects of matching Atoms.</returns>
+        public static IList<IList<CDKRMap>> MakeAtomsMapsOfBondsMaps(IList<IList<CDKRMap>> list, IAtomContainer sourceGraph, IAtomContainer targetGraph)
         {
             if (list == null)
             {
@@ -776,16 +741,14 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return result;
         }
 
-        /**
-         *  This makes atom map of matching atoms out of atom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
-         *
-         * @param  list   The list produced by the getMap method.
-         * @param  sourceGraph  first molecule. Must not be an IQueryAtomContainer.
-         * @param  targetGraph  second molecule. May be an IQueryAtomContainer.
-         * @return     The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.
-         */
-        public static IList<CDKRMap> MakeAtomsMapOfBondsMap(IList<CDKRMap> list, IAtomContainer sourceGraph,
-                IAtomContainer targetGraph)
+        /// <summary>
+        ///  This makes atom map of matching atoms out of atom map of matching bonds as produced by the Get(Subgraph|Ismorphism)Map methods.
+        /// </summary>
+        /// <param name="list">The list produced by the getMap method.</param>
+        /// <param name="sourceGraph">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="targetGraph">second molecule. May be an IQueryAtomContainer.</param>
+        /// <returns>The mapping found projected on sourceGraph. This is atom List of CDKRMap objects containing Ids of matching atoms.</returns>
+        public static IList<CDKRMap> MakeAtomsMapOfBondsMap(IList<CDKRMap> list, IAtomContainer sourceGraph, IAtomContainer targetGraph)
         {
             if (list == null)
             {
@@ -858,17 +821,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return result;
         }
 
-        /**
-         *  Builds  the nodes of the CDKRGraph ( resolution graph ), from
-         *  two atom containers (description of the two molecules to compare)
-         *
-         * @param  graph   the target CDKRGraph
-         * @param  ac1   first molecule. Must not be an IQueryAtomContainer.
-         * @param  ac2   second molecule. May be an IQueryAtomContainer.
-         * @throws CDKException if it takes too long to identify overlaps
-         */
-        private static void NodeConstructor(CDKRGraph graph, IAtomContainer ac1, IAtomContainer ac2,
-                bool shouldMatchBonds)
+        /// <summary>
+        ///  Builds  the nodes of the CDKRGraph ( resolution graph ), from
+        ///  two atom containers (description of the two molecules to compare)
+        /// </summary>
+        /// <param name="graph">the target CDKRGraph</param>
+        /// <param name="ac1">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="ac2">second molecule. May be an IQueryAtomContainer.</param>
+        /// <exception cref="CDKException">if it takes too long to identify overlaps</exception>
+        private static void NodeConstructor(CDKRGraph graph, IAtomContainer ac1, IAtomContainer ac2, bool shouldMatchBonds)
         {
             if (ac1 is IQueryAtomContainer)
             {
@@ -919,10 +880,8 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        private static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2,
-                bool shouldMatchBonds)
+        private static bool IsMatchFeasible(IAtomContainer ac1, IBond bondA1, IAtomContainer ac2, IBond bondA2, bool shouldMatchBonds)
         {
-
             //Bond Matcher
             BondMatcher bondMatcher = new DefaultBondMatcher(ac1, bondA1, shouldMatchBonds);
             //Atom Matcher
@@ -938,17 +897,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return false;
         }
 
-        /**
-         *  Build edges of the RGraphs
-         *  This method create the edge of the CDKRGraph and
-         *  calculates the incompatibility and neighbourhood
-         *  relationships between CDKRGraph nodes.
-         *
-         * @param  graph   the rGraph
-         * @param  ac1   first molecule. Must not be an IQueryAtomContainer.
-         * @param  ac2   second molecule. May be an IQueryAtomContainer.
-         * @throws CDKException if it takes too long to get the overlaps
-         */
+        /// <summary>
+        ///  Build edges of the RGraphs
+        ///  This method create the edge of the CDKRGraph and
+        ///  calculates the incompatibility and neighbourhood
+        ///  relationships between CDKRGraph nodes.
+        /// </summary>
+        /// <param name="graph">the rGraph</param>
+        /// <param name="ac1">first molecule. Must not be an IQueryAtomContainer.</param>
+        /// <param name="ac2">second molecule. May be an IQueryAtomContainer.</param>
+        /// <exception cref="CDKException">if it takes too long to get the overlaps</exception>
         private static void ArcConstructor(CDKRGraph graph, IAtomContainer ac1, IAtomContainer ac2)
         {
             // each node is incompatible with itself
@@ -1014,27 +972,25 @@ namespace NCDK.SMSD.Algorithms.RGraph
             }
         }
 
-        /**
-         * Determines if two bonds have at least one atom in common.
-         *
-         * @param  atom  first bondA1
-         * @param  bondB  second bondA1
-         * @return    the symbol of the common atom or "" if
-         *            the 2 bonds have no common atom
-         */
+        /// <summary>
+        /// Determines if two bonds have at least one atom in common.
+        /// </summary>
+        /// <param name="bondA">first bondA1</param>
+        /// <param name="bondB">second bondA1</param>
+        /// <returns>the symbol of the common atom or "" if
+        ///            the 2 bonds have no common atom</returns>
         private static bool HasCommonAtom(IBond bondA, IBond bondB)
         {
             return bondA.Contains(bondB.Atoms[0]) || bondA.Contains(bondB.Atoms[1]);
         }
 
-        /**
-         *  Determines if 2 bondA1 have 1 atom in common and returns the common symbol
-         *
-         * @param  atom  first bondA1
-         * @param  bondB  second bondA1
-         * @return    the symbol of the common atom or "" if
-         *            the 2 bonds have no common atom
-         */
+        /// <summary>
+        ///  Determines if 2 bondA1 have 1 atom in common and returns the common symbol
+        /// </summary>
+        /// <param name="bondA">first bondA1</param>
+        /// <param name="bondB">second bondA1</param>
+        /// <returns>the symbol of the common atom or "" if
+        ///            the 2 bonds have no common atom</returns>
         private static string GetCommonSymbol(IBond bondA, IBond bondB)
         {
             string symbol = "";
@@ -1051,17 +1007,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
             return symbol;
         }
 
-        /**
-         *  Determines if 2 bondA1 have 1 atom in common if second is atom query AtomContainer
-         *
-         * @param  atom1  first bondA1
-         * @param  bondB1  second bondA1
-         * @return    the symbol of the common atom or "" if
-         *            the 2 bonds have no common atom
-         */
+        /// <summary>
+        ///  Determines if 2 bondA1 have 1 atom in common if second is atom query AtomContainer
+        /// </summary>
+        /// <param name="bondA1">first bondA1</param>
+        /// <param name="bondB1">second bondA1</param>
+        /// <returns>the symbol of the common atom or "" if
+        ///            the 2 bonds have no common atom</returns>
         private static bool QueryAdjacency(IBond bondA1, IBond bondB1, IBond bondA2, IBond bondB2)
         {
-
             IAtom atom1 = null;
             IAtom atom2 = null;
 
@@ -1095,16 +1049,15 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /**
-         *  Determines if 2 bondA1 have 1 atom in common if second is atom query AtomContainer
-         *  and wheter the order of the atoms is correct (atoms match).
-         *
-         * @param  bondA1  first bondA1
-         * @param  bond2  second bondA1
-         * @param queryBond1 first query bondA1
-         * @param queryBond2 second query bondA1
-         * @return    the symbol of the common atom or "" if the 2 bonds have no common atom
-         */
+        /// <summary>
+        ///  Determines if 2 bondA1 have 1 atom in common if second is atom query AtomContainer
+        ///  and wheter the order of the atoms is correct (atoms match).
+        /// </summary>
+        /// <param name="bond1">first bondA1</param>
+        /// <param name="bond2">second bondA1</param>
+        /// <param name="queryBond1">first query bondA1</param>
+        /// <param name="queryBond2">second query bondA1</param>
+        /// <returns>the symbol of the common atom or "" if the 2 bonds have no common atom</returns>
         private static bool QueryAdjacencyAndOrder(IBond bond1, IBond bond2, IBond queryBond1, IBond queryBond2)
         {
 
@@ -1152,18 +1105,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /**
-         *  Checks some simple heuristics for whether the subgraph query can
-         *  realistically be atom subgraph of the supergraph. If, for example, the
-         *  number of nitrogen atoms in the query is larger than that of the supergraph
-         *  it cannot be part of it.
-         *
-         * @param  ac1  the supergraph to be checked. Must not be an IQueryAtomContainer.
-         * @param  ac2  the subgraph to be tested for. May be an IQueryAtomContainer.
-         * @return    true if the subgraph ac2 has atom chance to be atom subgraph of ac1
-         * @throws CDKException if the first molecule is an instance
-         * of IQueryAtomContainer
-         */
+        /// <summary>
+        ///  Checks some simple heuristics for whether the subgraph query can
+        ///  realistically be atom subgraph of the supergraph. If, for example, the
+        ///  number of nitrogen atoms in the query is larger than that of the supergraph
+        ///  it cannot be part of it.
+        /// </summary>
+        /// <param name="ac1">the supergraph to be checked. Must not be an IQueryAtomContainer.</param>
+        /// <param name="ac2">the subgraph to be tested for. May be an IQueryAtomContainer.</param>
+        /// <returns>true if the subgraph ac2 has atom chance to be atom subgraph of ac1</returns>
+        /// <exception cref="CDKException">if the first molecule is an instance of IQueryAtomContainer</exception>
         private static bool TestSubgraphHeuristics(IAtomContainer ac1, IAtomContainer ac2)
         {
             if (ac1 is IQueryAtomContainer)
@@ -1370,27 +1321,25 @@ namespace NCDK.SMSD.Algorithms.RGraph
 
         }
 
-        /**
-         * @return the timeout
-         */
+        /// <summary></summary>
+        /// <returns>the timeout</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected static double GetTimeOut()
         {
             return TimeOut.Instance.Time;
         }
 
-        /**
-         * @return the timeManager
-         */
+        /// <summary></summary>
+        /// <returns>the time manager</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static TimeManager GetTimeManager()
         {
             return timeManager;
         }
 
-        /**
-         * @param aTimeManager the timeManager to set
-         */
+        /// <summary>
+        /// </summary>
+        /// <param name="aTimeManager">the time manager to set</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         internal static void SetTimeManager(TimeManager aTimeManager)
         {

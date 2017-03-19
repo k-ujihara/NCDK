@@ -20,7 +20,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 
 namespace NCDK.Signature
 {
@@ -32,11 +32,10 @@ namespace NCDK.Signature
     /// quotient graph with one vertex and one loop edge. At the other extreme, a
     /// structure where every atom is in a different class will have a quotient
     /// graph the same as the molecule.
-    ///
+    /// </summary>
     // @cdk.module signature
     // @author maclean
     // @cdk.githash
-    /// </summary>
     public class SignatureQuotientGraph : AbstractQuotientGraph
     {
         /// <summary>
@@ -47,20 +46,18 @@ namespace NCDK.Signature
         /// <summary>
         /// Construct a quotient graph from the symmetry classes generated from the
         /// atom container.
-        ///
-        /// <param name="atomContainer">the structure to use</param>
         /// </summary>
+        /// <param name="atomContainer">the structure to use</param>
         public SignatureQuotientGraph(IAtomContainer atomContainer)
             : this(atomContainer, -1)
         { }
 
         /// <summary>
         /// Construct a quotient graph using symmetry classes defined by signatures
-        /// of height <code>height</code>.
-        ///
+        /// of height <paramref name="height"/>.
+        /// </summary>
         /// <param name="atomContainer">the structure to use</param>
         /// <param name="height">the height of the signatures</param>
-        /// </summary>
         public SignatureQuotientGraph(IAtomContainer atomContainer, int height)
         {
             this.atomContainer = atomContainer;

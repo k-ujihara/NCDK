@@ -1,7 +1,6 @@
-using FaulonSignatures;
-using static FaulonSignatures.AbstractVertexSignature;
+using static NCDK.FaulonSignatures.AbstractVertexSignature;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeSignature : AbstractGraphSignature
     {

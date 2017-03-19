@@ -30,31 +30,34 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Evaluates chi chain descriptors.
-    /// <p/>
+    /// </summary>
+    /// <remarks>
     /// The code currently evluates the simple and valence chi chain descriptors of orders 3, 4, 5, 6 and 7.
     /// It utilizes the graph isomorphism code of the CDK to find fragments matching
     /// SMILES strings representing the fragments corresponding to each type of chain.
-    /// <p/>
+    /// <para>
     /// The order of the values returned is
-    /// <ol>
-    /// <li>SCH-3 - Simple chain, order 3
-    /// <li>SCH-4 - Simple chain, order 4
-    /// <li>SCH-5 - Simple chain, order 5
-    /// <li>SCH-6 - Simple chain, order 6
-    /// <li>SCH-7 - Simple chain, order 7
-    /// <li>VCH-3 - Valence chain, order 3
-    /// <li>VCH-4 - Valence chain, order 4
-    /// <li>VCH-5 - Valence chain, order 5
-    /// <li>VCH-6 - Valence chain, order 6
-    /// <li>VCH-7 - Valence chain, order 7
-    /// </ol>
-    /// <p/>
+    /// <list type="bullet">
+    /// <item>SCH-3 - Simple chain, order 3</item>
+    /// <item>SCH-4 - Simple chain, order 4</item>
+    /// <item>SCH-5 - Simple chain, order 5</item>
+    /// <item>SCH-6 - Simple chain, order 6</item>
+    /// <item>SCH-7 - Simple chain, order 7</item>
+    /// <item>VCH-3 - Valence chain, order 3</item>
+    /// <item>VCH-4 - Valence chain, order 4</item>
+    /// <item>VCH-5 - Valence chain, order 5</item>
+    /// <item>VCH-6 - Valence chain, order 6</item>
+    /// <item>VCH-7 - Valence chain, order 7</item>
+    /// </list>
+    /// </para>
+    /// <para>
     /// <b>Note</b>: These descriptors are calculated using graph isomorphism to identify
     /// the various fragments. As a result calculations may be slow. In addition, recent
     /// versions of Molconn-Z use simplified fragment definitions (i.e., rings without
     /// branches etc.) whereas these descriptors use the older more complex fragment
     /// definitions.
-    ///
+    /// </para>
+    /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2006-11-12
     // @cdk.module qsarmolecular
@@ -63,7 +66,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.dictref qsar-descriptors:chiChain
     // @cdk.keyword chi chain index
     // @cdk.keyword descriptor
-    /// </summary>
     public class ChiChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private SmilesParser sp;
@@ -182,17 +184,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             return new DescriptorValue(_Specification, ParameterNames, Parameters, retval, DescriptorNames);
         }
 
-        /// <summary>
-        /// Returns the specific type of the DescriptorResult object.
-        /// <para>
-        /// The return value from this method really indicates what type of result will
-        /// be obtained from the <see cref="DescriptorValue"/> object. Note that the same result
-        /// can be achieved by interrogating the <see cref="DescriptorValue"/> object; this method
-        /// allows you to do the same thing, without actually calculating the descriptor.
-        ///</para>
-        /// </summary>
-        /// <returns>an object that implements the <see cref="IDescriptorResult"/> interface indicating
-        ///         the actual type of values returned by the descriptor in the <see cref="DescriptorValue"/> object</returns>
+        /// <inheritdoc/>
         public override IDescriptorResult DescriptorResultType { get; } = new DoubleArrayResultType(10);
 
         private IList<IList<int>> Order3(IAtomContainer container)

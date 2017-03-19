@@ -76,7 +76,7 @@ namespace NCDK.Default
             Assert.AreEqual(1, clone.GetMonomerNames().Count());
             Assert.AreEqual(1, clone.Atoms.Count);
 
-            oPolymer.Add(new Atom("N"));
+            oPolymer.Atoms.Add(new Atom("N"));
             clone = (Polymer)oPolymer.Clone();
             Assert.AreEqual(1, clone.GetMonomerMap().Count());
             Assert.AreEqual(2, clone.Atoms.Count);

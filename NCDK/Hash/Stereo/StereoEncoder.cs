@@ -21,30 +21,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using System;
-
 namespace NCDK.Hash.Stereo
 {
     /// <summary>
     /// An encoder for stereo chemistry. The stereo configuration is encoded by
-    /// checking the {@code current[]} invariant values. If there is a configuration
-    /// then the appropriate value is the {@code next[]} is modified.
-    ///
+    /// checking the <c>current[]</c> invariant values. If there is a configuration
+    /// then the appropriate value is the <c>next[]</c> is modified.
+    /// </summary>
     // @author John May
     // @cdk.module hash
-    /// </summary>
     public interface IStereoEncoder
     {
         /// <summary>
         /// Encode one or more stereo elements based on the current invariants. If
         /// any stereo element are uncovered then the corresponding value in the
-        /// next[] array is modified.
-        ///
+        /// <paramref name="next"/>[] array is modified.
+        /// </summary>
         /// <param name="current">current invariants</param>
         /// <param name="next">next invariants</param>
         /// <returns>whether any stereo configurations were encoded</returns>
-        /// </summary>
         bool Encode(long[] current, long[] next);
 
         /// <summary>
@@ -59,7 +54,7 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// empty stereo encoder when no stereo can be perceived
         /// </summary>
-        public static readonly IStereoEncoder EMPTY = new EmptyStereoEncoder();
+        public static readonly IStereoEncoder Empty = new EmptyStereoEncoder();
 
         class EmptyStereoEncoder : IStereoEncoder
         {

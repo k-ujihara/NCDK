@@ -45,14 +45,12 @@ namespace NCDK.Beam
         /// <summary>
         /// The vertex/atom which this topology describes.
         /// </summary>
-        /// <returns>vertex</returns>
-        /// <exception cref="">Unknown topology</exception>
+        /// <exception cref="ArgumentException">Unknown topology</exception>
         public abstract int Atom { get; }
 
         /// <summary>
         /// The configuration of the topology.
         /// </summary>
-        /// <returns>configuration for this topology</returns>
         public abstract Configuration Configuration { get; }
 
         /// <summary>
@@ -81,7 +79,7 @@ namespace NCDK.Beam
         public abstract Topology OrderBy(int[] rank);
 
         /// <summary>
-        /// Transform the topology to one with the given {@literal mapping}.
+        /// Transform the topology to one with the given <paramref name="mapping"/>.
         /// </summary>
         /// <param name="mapping">the mapping used to transform the topology</param>
         /// <returns>a new topology with it's vertices mapped</returns>
@@ -233,16 +231,16 @@ namespace NCDK.Beam
         /// <remarks>
         /// Implicit Valence Explicit Example
         /// <code>
-        // @ 4       @TH1     O[C@H](N)C or O[C@]([H])(N)C
-        // @@ 4       @TH2     O[C@@H](N)C or O[C@@]([H])(N)C
-        // @ 3       @TH1     C[S@](N)=O
-        // @@ 3       @TH2     C[S@@](N)=O
-        // @ 2       @AL1     OC=[C@]=CO
-        // @ 2       @AL2     OC=[C@@]=CO
-        // @ 5       @TB1     S[As@](F)(Cl)(Br)C=O
-        // @@ 5       @TB2     S[As@@](F)(Cl)(Br)C=O
-        // @ 5       @OH1     S[Co@@](F)(Cl)(Br)(I)C=O
-        // @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S
+        /// @ 4       @TH1     O[C@H](N)C or O[C@]([H])(N)C
+        /// @@ 4       @TH2     O[C@@H](N)C or O[C@@]([H])(N)C
+        /// @ 3       @TH1     C[S@](N)=O
+        /// @@ 3       @TH2     C[S@@](N)=O
+        /// @ 2       @AL1     OC=[C@]=CO
+        /// @ 2       @AL2     OC=[C@@]=CO
+        /// @ 5       @TB1     S[As@](F)(Cl)(Br)C=O
+        /// @@ 5       @TB2     S[As@@](F)(Cl)(Br)C=O
+        /// @ 5       @OH1     S[Co@@](F)(Cl)(Br)(I)C=O
+        /// @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S
         /// </code>
         /// </remarks>
         /// <param name="g">chemical graph</param>

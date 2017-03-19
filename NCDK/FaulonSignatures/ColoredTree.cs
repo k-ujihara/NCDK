@@ -1,16 +1,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
-  /// <summary>
+    /// <summary>
     /// A signature string is read back in as a colored tree, not a DAG since some 
     /// of the information in the DAG is lost when printing out. A colored tree can
     /// be reconstructed into a graph.
-    /// 
-    // @author maclean
-    ///
     /// </summary>
+    // @author maclean
     public class ColoredTree
     {
 

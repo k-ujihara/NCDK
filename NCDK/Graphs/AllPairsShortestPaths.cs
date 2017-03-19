@@ -159,7 +159,7 @@ namespace NCDK.Graphs
 
             public bool Compare(object obj) => this == obj;
 
-            public bool IsEmpty => true;
+            public bool IsEmpty() => true;
 
             public bool IsPlaced
             {
@@ -191,22 +191,7 @@ namespace NCDK.Graphs
             public void Add(IAtomContainer atomContainer)
             { throw new InvalidOperationException("not supported"); }
 
-            public void Add(IElectronContainer electronContainer)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void Add(IAtom atom)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void Add(IBond bond)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void Add(ILonePair lonePair)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void Add(IStereoElement element)
-            { throw new InvalidOperationException("not supported"); }
-
-            public void Add(ISingleElectron singleElectron)
+            public void AddElectronContainer(IElectronContainer electronContainer)
             { throw new InvalidOperationException("not supported"); }
 
             public void AddBond(IAtom atom1, IAtom atom2, BondOrder order)
@@ -215,13 +200,10 @@ namespace NCDK.Graphs
             public void AddBond(IAtom atom1, IAtom atom2, BondOrder order, BondStereo stereo)
             { }
 
-            public void AddLonePair(IAtom atom)
+            public void AddLonePairTo(IAtom atom)
             { }
 
-            public void AddSingleElectron(IAtom atom)
-            { }
-
-            public void AddStereoElement(IStereoElement element)
+            public void AddSingleElectronTo(IAtom atom)
             { }
 
             public object Clone()
@@ -285,19 +267,7 @@ namespace NCDK.Graphs
 
             public IList<IStereoElement> StereoElements => Array.Empty<IStereoElement>();
 
-            public void Remove(ILonePair lonePair)
-            { }
-
-            public void Remove(ISingleElectron singleElectron)
-            { }
-
-            public void Remove(IElectronContainer electronContainer)
-            { }
-
-            public void Remove(IAtom atom)
-            { }
-
-            public void Remove(IBond bond)
+            public void RemoveElectronContainer(IElectronContainer electronContainer)
             { }
 
             public IBond RemoveBond(IAtom atom0, IAtom atom1)

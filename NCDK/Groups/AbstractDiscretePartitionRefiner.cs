@@ -24,57 +24,54 @@ using System.Text;
 
 namespace NCDK.Groups
 {
-    /**
-     * Refines vertex partitions until they are discrete, and therefore equivalent
-     * to permutations. These permutations are automorphisms of the graph that was
-     * used during the refinement to guide the splitting of partition blocks.
-     *
-     * @author maclean
-     * @cdk.module group
-     */
+    /// <summary>
+    /// Refines vertex partitions until they are discrete, and therefore equivalent
+    /// to permutations. These permutations are automorphisms of the graph that was
+    /// used during the refinement to guide the splitting of partition blocks.
+    /// </summary>
+    // @author maclean
+    // @cdk.module group
     public abstract class AbstractDiscretePartitionRefiner
     {
-
-        /**
-         * The result of a comparison between the current partition
-         * and the best permutation found so far.
-         *
-         */
+        /// <summary>
+        /// The result of a comparison between the current partition
+        /// and the best permutation found so far.
+        /// </summary>
         public enum Result
         {
-            WORSE, EQUAL, BETTER
-        };
+            Worse, Equal, Better
+        }
 
-        /**
-         * If true, then at least one partition has been refined
-         * to a permutation (IE extends to a discrete partition).
-         */
+        /// <summary>
+        /// If true, then at least one partition has been refined
+        /// to a permutation (IE extends to a discrete partition).
+        /// </summary>
         private bool bestExist;
 
-        /**
-         * The best permutation is the one that gives the maximal
-         * half-matrix string (so far) when applied to the graph.
-         */
+        /// <summary>
+        /// The best permutation is the one that gives the maximal
+        /// half-matrix string (so far) when applied to the graph.
+        /// </summary>
         private Permutation best;
 
-        /**
-         * The first permutation seen when refining.
-         */
+        /// <summary>
+        /// The first permutation seen when refining.
+        /// </summary>
         private Permutation first;
 
-        /**
-         * An equitable refiner.
-         */
+        /// <summary>
+        /// An equitable refiner.
+        /// </summary>
         private IEquitablePartitionRefiner equitableRefiner;
 
-        /**
-         * The automorphism group that is used to prune the search.
-         */
+        /// <summary>
+        /// The automorphism group that is used to prune the search.
+        /// </summary>
         private PermutationGroup group;
 
-        /**
-         * A refiner - it is necessary to call {@link #setup} before use.
-         */
+        /// <summary>
+        /// A refiner - it is necessary to call {@link #setup} before use.
+        /// </summary>
         public AbstractDiscretePartitionRefiner()
         {
             this.bestExist = false;
@@ -82,31 +79,28 @@ namespace NCDK.Groups
             this.equitableRefiner = null;
         }
 
-        /**
-         * Get the number of vertices in the graph to be refined.
-         *
-         * @return a count of the vertices in the underlying graph
-         */
+        /// <summary>
+        /// Get the number of vertices in the graph to be refined.
+        /// </summary>
+        /// <returns>a count of the vertices in the underlying graph</returns>
         public abstract int GetVertexCount();
 
-        /**
-         * Get the connectivity between two vertices as an integer, to allow
-         * for multigraphs : so a single edge is 1, a double edge 2, etc. If
-         * there is no edge, then 0 should be returned.
-         *
-         * @param vertexI a vertex of the graph
-         * @param vertexJ a vertex of the graph
-         * @return the multiplicity of the edge (0, 1, 2, 3, ...)
-         */
+        /// <summary>
+        /// Get the connectivity between two vertices as an integer, to allow
+        /// for multigraphs : so a single edge is 1, a double edge 2, etc. If
+        /// there is no edge, then 0 should be returned.
+        /// </summary>
+        /// <param name="vertexI">a vertex of the graph</param>
+        /// <param name="vertexJ">a vertex of the graph</param>
+        /// <returns>the multiplicity of the edge (0, 1, 2, 3, ...)</returns>
         public abstract int GetConnectivity(int vertexI, int vertexJ);
 
-        /**
-         * Setup the group and refiner; it is important to call this method before
-         * calling {@link #refine} otherwise the refinement process will fail.
-         *
-         * @param group a group (possibly empty) of automorphisms
-         * @param refiner the equitable refiner
-         */
+        /// <summary>
+        /// Setup the group and refiner; it is important to call this method before
+        /// calling <see cref="Refine(Partition)"/>  otherwise the refinement process will fail.
+        /// </summary>
+        /// <param name="group">a group (possibly empty) of automorphisms</param>
+        /// <param name="refiner">the equitable refiner</param>
         public void Setup(PermutationGroup group, IEquitablePartitionRefiner refiner)
         {
             this.bestExist = false;
@@ -115,21 +109,21 @@ namespace NCDK.Groups
             this.equitableRefiner = refiner;
         }
 
-        /**
-         * Check that the first refined partition is the identity.
-         *
-         * @return true if the first is the identity permutation
-         */
+        /// <summary>
+        /// Check that the first refined partition is the identity.
+        ///
+        /// <returns>true if the first is the identity permutation</returns>
+        /// </summary>
         public bool FirstIsIdentity()
         {
             return this.first.IsIdentity();
         }
 
-        /**
-         * The automorphism partition is a partition of the elements of the group.
-         *
-         * @return a partition of the elements of group
-         */
+        /// <summary>
+        /// The automorphism partition is a partition of the elements of the group.
+        ///
+        /// <returns>a partition of the elements of group</returns>
+        /// </summary>
         public Partition GetAutomorphismPartition()
         {
             int n = group.Count;
@@ -199,12 +193,11 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Get the upper-half of the adjacency matrix under the permutation.
-         *
-         * @param permutation a permutation of the adjacency matrix
-         * @return a string containing the permuted values of half the matrix
-         */
+        /// <summary>
+        /// Get the upper-half of the adjacency matrix under the permutation.
+        /// </summary>
+        /// <param name="permutation">a permutation of the adjacency matrix</param>
+        /// <returns>a string containing the permuted values of half the matrix</returns>
         public string GetHalfMatrixString(Permutation permutation)
         {
             StringBuilder builder = new StringBuilder(permutation.Count);
@@ -219,94 +212,85 @@ namespace NCDK.Groups
             return builder.ToString();
         }
 
-        /**
-         * Get the half-matrix string under the best permutation.
-         *
-         * @return the upper-half adjacency matrix string permuted by the best
-         */
+        /// <summary>
+        /// Get the half-matrix string under the best permutation.
+        /// </summary>
+        /// <returns>the upper-half adjacency matrix string permuted by the best</returns>
         public string GetBestHalfMatrixString()
         {
             return GetHalfMatrixString(best);
         }
 
-        /**
-         * Get the half-matrix string under the first permutation.
-         *
-         * @return the upper-half adjacency matrix string permuted by the first
-         */
+        /// <summary>
+        /// Get the half-matrix string under the first permutation.
+        /// </summary>
+        /// <returns>the upper-half adjacency matrix string permuted by the first</returns>
         public string GetFirstHalfMatrixString()
         {
             return GetHalfMatrixString(first);
         }
 
-        /**
-         * Get the initial (unpermuted) half-matrix string.
-         *
-         * @return the upper-half adjacency matrix string
-         */
+        /// <summary>
+        /// Get the initial (unpermuted) half-matrix string.
+        /// </summary>
+        /// <returns>the upper-half adjacency matrix string</returns>
         public string GetHalfMatrixString()
         {
             return GetHalfMatrixString(new Permutation(GetVertexCount()));
         }
 
-        /**
-         * Get the automorphism group used to prune the search.
-         *
-         * @return the automorphism group
-         */
+        /// <summary>
+        /// Get the automorphism group used to prune the search.
+        /// </summary>
+        /// <returns>the automorphism group</returns>
         public PermutationGroup GetAutomorphismGroup()
         {
             return this.group;
         }
 
-        /**
-         * Get the best permutation found.
-         *
-         * @return the permutation that gives the maximal half-matrix string
-         */
+        /// <summary>
+        /// Get the best permutation found.
+        /// </summary>
+        /// <returns>the permutation that gives the maximal half-matrix string</returns>
         public Permutation GetBest()
         {
             return this.best;
         }
 
-        /**
-         * Get the first permutation reached by the search.
-         *
-         * @return the first permutation reached
-         */
+        /// <summary>
+        /// Get the first permutation reached by the search.
+        /// </summary>
+        /// <returns>the first permutation reached</returns>
         public Permutation GetFirst()
         {
             return this.first;
         }
 
-        /**
-         * Check for a canonical graph, without generating the whole
-         * automorphism group.
-         *
-         * @return true if the graph is canonical
-         */
+        /// <summary>
+        /// Check for a canonical graph, without generating the whole
+        /// automorphism group.
+        /// </summary>
+        /// <returns>true if the graph is canonical</returns>
         public bool IsCanonical()
         {
             return best.IsIdentity();
         }
 
-        /**
-         * Refine the partition. The main entry point for subclasses.
-         *
-         * @param partition the initial partition of the vertices
-         */
+        /// <summary>
+        /// Refine the partition. The main entry point for subclasses.
+        /// </summary>
+        /// <param name="partition">the initial partition of the vertices</param>
         public void Refine(Partition partition)
         {
             Refine(this.group, partition);
         }
 
-        /**
-         * Does the work of the class, that refines a coarse partition into a finer
-         * one using the supplied automorphism group to prune the search.
-         *
-         * @param group the automorphism group of the graph
-         * @param coarser the partition to refine
-         */
+        /// <summary>
+        /// Does the work of the class, that refines a coarse partition into a finer
+        /// one using the supplied automorphism group to prune the search.
+        /// </summary>
+        /// <param name="group">the automorphism group of the graph</param>
+        /// <param name="coarser">the partition to refine</param>
         private void Refine(PermutationGroup group, Partition coarser)
         {
             int vertexCount = GetVertexCount();
@@ -321,7 +305,7 @@ namespace NCDK.Groups
 
             Permutation pi1 = new Permutation(firstNonDiscreteCell);
 
-            Result result = Result.BETTER;
+            Result result = Result.Better;
             if (bestExist)
             {
                 pi1 = finer.SetAsPermutation(firstNonDiscreteCell);
@@ -339,11 +323,11 @@ namespace NCDK.Groups
                 }
                 else
                 {
-                    if (result == Result.BETTER)
+                    if (result == Result.Better)
                     {
                         best = new Permutation(pi1);
                     }
-                    else if (result == Result.EQUAL)
+                    else if (result == Result.Equal)
                     {
                         group.Enter(pi1.Multiply(best.Invert()));
                     }
@@ -351,7 +335,7 @@ namespace NCDK.Groups
             }
             else
             {
-                if (result != Result.WORSE)
+                if (result != Result.Worse)
                 {
                     var blockCopy = finer.CopyBlock(firstNonDiscreteCell);
                     for (int vertexInBlock = 0; vertexInBlock < vertexCount; vertexInBlock++)
@@ -396,13 +380,12 @@ namespace NCDK.Groups
             }
         }
 
-        /**
-         * Check a permutation to see if it is better, equal, or worse than the
-         * current best.
-         *
-         * @param perm the permutation to check
-         * @return BETTER, EQUAL, or WORSE
-         */
+        /// <summary>
+        /// Check a permutation to see if it is better, equal, or worse than the
+        /// current best.
+        /// </summary>
+        /// <param name="perm">the permutation to check</param>
+        /// <returns><see cref="Result.Better"/>, <see cref="Result.Equal"/>, or <see cref="Result.Worse"/></returns>
         private Result CompareRowwise(Permutation perm)
         {
             int m = perm.Count;
@@ -412,11 +395,11 @@ namespace NCDK.Groups
                 {
                     int x = GetConnectivity(best[i], best[j]);
                     int y = GetConnectivity(perm[i], perm[j]);
-                    if (x > y) return Result.WORSE;
-                    if (x < y) return Result.BETTER;
+                    if (x > y) return Result.Worse;
+                    if (x < y) return Result.Better;
                 }
             }
-            return Result.EQUAL;
+            return Result.Equal;
         }
     }
 }

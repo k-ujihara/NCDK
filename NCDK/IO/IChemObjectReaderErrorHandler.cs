@@ -25,51 +25,46 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Interface for classes aimed to handle <see cref="IChemObjectReader"/> errors.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author     Egon Willighagen <egonw@users.sf.net>
-    /// </summary>
     public interface IChemObjectReaderErrorHandler
     {
         /// <summary>
         /// Method that should react on an error message send by an
         /// <see cref="IChemObjectReader"/>.
-        ///
-        /// <param name="message">Error found while reading.</param>
         /// </summary>
-         void HandleError(string message);
+        /// <param name="message">Error found while reading.</param>
+        void HandleError(string message);
 
         /// <summary>
         /// Method that should react on an error message send by an
         /// <see cref="IChemObjectReader"/>.
-        ///
+        /// </summary>
         /// <param name="message">Error found while reading.</param>
         /// <param name="exception">Exception thrown while reading.</param>
-        /// </summary>
-         void HandleError(string message, Exception exception);
+        void HandleError(string message, Exception exception);
 
         /// <summary>
         /// Method that should react on an error message send by an
         /// <see cref="IChemObjectReader"/>.
-        ///
+        /// </summary>
         /// <param name="message">Error found while reading.</param>
         /// <param name="row">Row in the file where the error is found.</param>
         /// <param name="colStart">Start column in the file where the error is found.</param>
         /// <param name="colEnd">End column in the file where the error is found.</param>
-        /// </summary>
-         void HandleError(string message, int row, int colStart, int colEnd);
+        void HandleError(string message, int row, int colStart, int colEnd);
 
         /// <summary>
         /// Method that should react on an error message send by an
         /// <see cref="IChemObjectReader"/>.
-        ///
+        /// </summary>
         /// <param name="message">Error found while reading.</param>
-        /// <param name="exception">Exception thrown while reading.</param>
+        /// <param name="row"></param>
         /// <param name="colStart">Start column in the file where the error is found.</param>
         /// <param name="colEnd">End column in the file where the error is found.</param>
-        /// </summary>
-         void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
+        /// <param name="exception">Exception thrown while reading.</param>
+        void HandleError(string message, int row, int colStart, int colEnd, Exception exception);
     }
 }

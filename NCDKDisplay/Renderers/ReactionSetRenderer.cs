@@ -22,7 +22,7 @@
 using NCDK.Renderers.Elements;
 using NCDK.Renderers.Fonts;
 using NCDK.Renderers.Generators;
-using NCDK.Renderers.Visitor;
+using NCDK.Renderers.Visitors;
 using System.Collections.Generic;
 using System.Windows;
 using static NCDK.Renderers.Generators.BasicSceneGenerator;
@@ -88,7 +88,7 @@ namespace NCDK.Renderers
     /// </para>
     /// <para>
     /// So, if the bond length on screen is set to 40, and the average bond length
-    /// of the model is 2 (unitless, but roughly Ångstrom scale) then the
+    /// of the model is 2 (unitless, but roughly Angstrom scale) then the
     /// scale will be 20. If the model is 10 units wide, then the diagram drawn at
     /// 100% zoom will be 10/// 20 = 200 in width on screen. If the screen is 400
     /// pixels wide, then fitting it to the screen will make the zoom 200%. Since the

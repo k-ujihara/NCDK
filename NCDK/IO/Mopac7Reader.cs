@@ -32,12 +32,13 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads MOPAC output, extracts several electronic parameters and assigns them as a molecule
-    /// properties.<p>
-    ///
-    /// Parameters: "NO. OF FILLED LEVELS",    "TOTAL ENERGY","FINAL HEAT OF FORMATION",
-    /// "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".<p>
-    /// Doesn't update structure coordinates ! (TODO fix)
+    /// properties.
     /// </summary>
+    /// <remarks>
+    /// Parameters: "NO. OF FILLED LEVELS",    "TOTAL ENERGY","FINAL HEAT OF FORMATION",
+    /// "IONIZATION POTENTIAL", "ELECTRONIC ENERGY","CORE-CORE REPULSION","MOLECULAR WEIGHT".
+    /// Doesn't update structure coordinates ! (TODO fix)
+    /// </remarks>
     // @author      Nina Jeliazkova <nina@acad.bg>
     // @cdk.githash
     // @cdk.module  io
@@ -51,9 +52,9 @@ namespace NCDK.IO
         private static string filledLevels = "NO. OF FILLED LEVELS";
 
         /// <summary>
-        /// Constructs a new Mopac7reader that can read a molecule from a given <see cref="Reader"/>.
+        /// Constructs a new Mopac7reader that can read a molecule from a given <see cref="TextReader"/>.
         /// </summary>
-        /// <param name="input">The <see cref="Reader"/> to read from</param>
+        /// <param name="input">The <see cref="TextReader"/> to read from</param>
         public Mopac7Reader(TextReader input)
         {
             this.input = input;

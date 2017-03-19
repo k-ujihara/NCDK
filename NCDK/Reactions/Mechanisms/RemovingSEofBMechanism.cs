@@ -23,33 +23,26 @@ using System.Collections.Generic;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * This mechanism extracts a single electron from a bonding orbital which located in
-     * an bond. It could have single, double as triple order. It returns the
-     * reaction mechanism which has been cloned the <see cref="IAtomContainer"/> with a decrease
-     * of the order of the bond and a ISingleElectron more.
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// This mechanism extracts a single electron from a bonding orbital which located in
+    /// an bond. It could have single, double as triple order. It returns the
+    /// reaction mechanism which has been cloned the <see cref="IAtomContainer"/> with a decrease
+    /// of the order of the bond and a ISingleElectron more.
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class RemovingSEofBMechanism : IReactionMechanism
     {
-
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
-         *                    The first atom receives the charge and the second the single electron
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed two atoms. The first atom receives the charge and the second the single electron</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder,
@@ -77,13 +70,13 @@ namespace NCDK.Reactions.Mechanisms
             int posBond1 = molecule.Bonds.IndexOf(bond1);
 
             if (bond1.Order == BondOrder.Single)
-                reactantCloned.Remove(reactantCloned.Bonds[posBond1]);
+                reactantCloned.Bonds.Remove(reactantCloned.Bonds[posBond1]);
             else
                 BondManipulator.DecreaseBondOrder(reactantCloned.Bonds[posBond1]);
 
             int charge = atom1C.FormalCharge.Value;
             atom1C.FormalCharge = charge + 1;
-            reactantCloned.Add(atom1C.Builder.CreateSingleElectron(atom2C));
+            reactantCloned.SingleElectrons.Add(atom1C.Builder.CreateSingleElectron(atom2C));
 
             // check if resulting atom type is reasonable
             atom1C.Hybridization = Hybridization.Unset;

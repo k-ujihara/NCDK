@@ -83,14 +83,14 @@ namespace NCDK.Config.AtomType
                     else if (elm.Name == XName_formalNeighbourCount)
                         neighborCount = int.Parse(elm.Value);
                     else if (elm.Name == XName_lonePairCount)
-                        anAtomType.SetProperty(CDKPropertyName.LONE_PAIR_COUNT, int.Parse(elm.Value));
+                        anAtomType.SetProperty(CDKPropertyName.LonePairCount, int.Parse(elm.Value));
                     else if (elm.Name == XName_singleElectronCount)
-                        anAtomType.SetProperty(CDKPropertyName.SINGLE_ELECTRON_COUNT, int.Parse(elm.Value));
+                        anAtomType.SetProperty(CDKPropertyName.SingleElectronCount, int.Parse(elm.Value));
                     else if (elm.Name == XName_piBondCount)
                         piBondCount = int.Parse(elm.Value);
                 }
 
-                anAtomType.SetProperty(CDKPropertyName.PI_BOND_COUNT, piBondCount);
+                anAtomType.SetProperty(CDKPropertyName.PiBondCount, piBondCount);
                 anAtomType.FormalNeighbourCount = neighborCount;
                 if (maxBondOrder != BondOrder.Unset)
                     anAtomType.MaxBondOrder = maxBondOrder;

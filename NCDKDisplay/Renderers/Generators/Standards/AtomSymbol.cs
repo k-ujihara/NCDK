@@ -29,7 +29,7 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Generators.Standards
 {
     /// <summary>
-    /// Intermediate between an <see cref="Renderers.Elements.IRenderingElement"/> and the atom
+    /// Intermediate between an <see cref="Elements.IRenderingElement"/> and the atom
     /// data. The atom symbol represents a visible atom element with zero of more
     /// adjuncts. The adjuncts are hydrogen count, charge, and mass. The atom symbol
     /// is immutable and modifying a property or transforming the symbol makes a new
@@ -210,8 +210,7 @@ namespace NCDK.Renderers.Generators.Standards
             List<TextOutline> transformedAnnAdjuncts = new List<TextOutline>(adjuncts.Count);
             foreach (var adjunct in annotationAdjuncts)
                 transformedAnnAdjuncts.Add(adjunct.Transform(transform));
-            return new AtomSymbol(element.Transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment,
-                    hull.Transform(transform));
+            return new AtomSymbol(element.Transform(transform), transformedAdjuncts, transformedAnnAdjuncts, alignment, hull.Transform(transform));
         }
 
         /// <summary>

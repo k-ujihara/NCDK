@@ -27,10 +27,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.IO.Iterator;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,8 +39,8 @@ namespace NCDK.Fingerprint.Model
 {
     /// <summary>
     /// Validation test for the Bayesian model building & serialisation.
-    // @cdk.module test-standard
     /// </summary>
+    // @cdk.module test-standard
     [TestClass()]
     public class BayesianTest
     {
@@ -280,9 +278,9 @@ namespace NCDK.Fingerprint.Model
 
             try
             {
-                using (Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
+                using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
+                    IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
                     foreach (var mol in rdr)
                     {
@@ -344,9 +342,9 @@ namespace NCDK.Fingerprint.Model
             bool failed = false;
             try
             {
-                using (Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
+                using (Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile))
                 {
-                    IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
+                    IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
 
                     int row = 0;
                     foreach (var mol in rdr)
@@ -392,8 +390,8 @@ namespace NCDK.Fingerprint.Model
 
             try
             {
-                Stream in_ = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
-                IteratingSDFReader rdr = new IteratingSDFReader(in_, Default.ChemObjectBuilder.Instance);
+                Stream ins = ResourceLoader.GetAsStream("NCDK.Data.CDD." + sdfile);
+                IteratingSDFReader rdr = new IteratingSDFReader(ins, Default.ChemObjectBuilder.Instance);
                 Bayesian model = new Bayesian(classType, folding);
 
                 int row = 0, numActives = 0;
@@ -408,7 +406,7 @@ namespace NCDK.Fingerprint.Model
                     model.AddMolecule(mol, active == 1);
                     numActives += active;
                 }
-                in_.Close();
+                ins.Close();
 
                 WriteLine("    Training with " + row + " rows, " + numActives + " actives, " + (row - numActives)
                         + " inactives");

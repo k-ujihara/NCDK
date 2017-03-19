@@ -47,7 +47,7 @@ namespace NCDK.Fingerprint
         private readonly int n;
         private readonly SmilesGenerator gen = SmilesGenerator.Unique().Aromatic();
         private readonly Regex DIGITS = new Regex("[0-9]+", RegexOptions.Compiled);
-        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.Daylight(), Cycles.Or(Cycles.All(), Cycles.Relevant));
+        private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
 
         /// <summary>
         /// Initialize the fingerprinter with a defult substring length of 4.

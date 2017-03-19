@@ -23,32 +23,25 @@ using System.Linq;
 
 namespace NCDK.Reactions.Mechanisms
 {
-    /**
-     * <p>This mechanism displaces the charge (lonePair) because of
-     * deficiency of charge.
-     * It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</p>
-     * <p>This reaction could be represented as [A*]-B| => A=[B*]</p>
-     *
-     * @author         miguelrojasch
-     * @cdk.created    2008-02-10
-     * @cdk.module     reaction
-     * @cdk.githash
-     */
+    /// <summary>
+    /// <para>This mechanism displaces the charge (lonePair) because of
+    /// deficiency of charge.
+    /// It returns the reaction mechanism which has been cloned the <see cref="IAtomContainer"/>.</para>
+    /// <para>This reaction could be represented as [A*]-B| => A=[B*]</para>
+    /// </summary>
+    // @author         miguelrojasch
+    // @cdk.created    2008-02-10
+    // @cdk.module     reaction
+    // @cdk.githash
     public class SharingElectronMechanism : IReactionMechanism
     {
-
-        /**
-         * Initiates the process for the given mechanism. The atoms to apply are mapped between
-         * reactants and products.
-         *
-         *
-         * @param atomContainerSet
-         * @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms
-         * @param bondList    The list of bonds taking part in the mechanism. Only allowed one bond
-         * @return            The Reaction mechanism
-         *
-         */
-
+        /// <summary>
+        /// Initiates the process for the given mechanism. The atoms to apply are mapped between
+        /// reactants and products.
+        /// </summary>
+        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms</param>
+        /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
+        /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);
@@ -77,7 +70,7 @@ namespace NCDK.Reactions.Mechanisms
             BondManipulator.IncreaseBondOrder(reactantCloned.Bonds[posBond1]);
 
             var lonePair = reactantCloned.GetConnectedLonePairs(atom1C);
-            reactantCloned.Remove(lonePair.Last());
+            reactantCloned.LonePairs.Remove(lonePair.Last());
             int charge = atom1C.FormalCharge.Value;
             atom1C.FormalCharge = charge + 1;
 

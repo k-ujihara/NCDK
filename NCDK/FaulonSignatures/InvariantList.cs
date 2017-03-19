@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FaulonSignatures
+namespace NCDK.FaulonSignatures
 {
     public class InvariantList : IComparable<InvariantList>
     {

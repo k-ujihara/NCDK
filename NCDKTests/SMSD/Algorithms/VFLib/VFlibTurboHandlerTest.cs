@@ -79,7 +79,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
 
         /// <summary>
         /// Test of set method, of class VFlibSubStructureHandler.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         [TestMethod()]
         public void TestSet_String_String()

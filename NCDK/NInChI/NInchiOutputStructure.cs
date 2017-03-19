@@ -20,8 +20,8 @@ namespace NCDK.NInChI
 {
     /// <summary>
     /// Encapsulates output from InChI to structure conversion.
-    // @author Sam Adams
     /// </summary>
+    // @author Sam Adams
     public class NInchiOutputStructure : NInchiStructure
     {
         /// <summary>
@@ -48,13 +48,15 @@ namespace NCDK.NInChI
         }
 
         /// <summary>
-        /// <p>Warning flags, see INCHIDIFF in inchicmp.h.
-        ///
-        /// <p>[x][y]:
-        /// <br>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-        /// <br>x=1 => Disconnected layer if Reconnected layer is present
-        /// <br>y=1 => Main layer or Mobile-H
-        /// <br>y=0 => Fixed-H layer
+        /// <para>Warning flags, see INCHIDIFF in inchicmp.h.</para>
+        /// <para>[x][y]:
+        /// <list type="bullet">
+        /// <item>x=0 => Reconnected if present in InChI otherwise Disconnected/Normal</item>
+        /// <item>x=1 => Disconnected layer if Reconnected layer is present</item>
+        /// <item>y=1 => Main layer or Mobile-H</item>
+        /// <item>y=0 => Fixed-H layer</item>
+        /// </list> 
+        /// </para>
         /// </summary>
         public ulong[,] WarningFlags
         {

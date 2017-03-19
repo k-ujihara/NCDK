@@ -46,16 +46,16 @@ namespace NCDK.Templates
         public static IAtomContainer MakeAlphaPinene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -86,12 +86,12 @@ namespace NCDK.Templates
             IAtomContainer currentChain = new AtomContainer();
 
             //Add the initial atom
-            currentChain.Add(new Atom("C"));
+            currentChain.Atoms.Add(new Atom("C"));
 
             //Add further atoms and bonds as needed, a pair at a time.
             for (int atomCount = 1; atomCount < chainLength; atomCount++)
             {
-                currentChain.Add(new Atom("C"));
+                currentChain.Atoms.Add(new Atom("C"));
                 MolAddBond(currentChain, atomCount, atomCount - 1, BondOrder.Single);
             }
 
@@ -101,14 +101,14 @@ namespace NCDK.Templates
         public static IAtomContainer MakeEthylCyclohexane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -129,12 +129,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeCyclohexene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -153,12 +153,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeCyclohexane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -177,11 +177,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeCyclopentane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -199,10 +199,10 @@ namespace NCDK.Templates
         public static IAtomContainer MakeCyclobutane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -219,10 +219,10 @@ namespace NCDK.Templates
         public static IAtomContainer MakeCyclobutadiene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Double); // 2
@@ -234,12 +234,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakePropylCycloPropane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 4
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
             MolAddBond(mol, 2, 0, BondOrder.Single); // 3
@@ -258,18 +258,18 @@ namespace NCDK.Templates
         public static IAtomContainer MakeBiphenyl()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -291,20 +291,20 @@ namespace NCDK.Templates
         public static IAtomContainer MakePhenylEthylBenzene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
-            mol.Add(new Atom("C")); // 12
-            mol.Add(new Atom("C")); // 13
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 12
+            mol.Atoms.Add(new Atom("C")); // 13
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -328,13 +328,13 @@ namespace NCDK.Templates
         public static IAtomContainer MakePhenylAmine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("N")); // 6
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("N")); // 6
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -351,12 +351,12 @@ namespace NCDK.Templates
         public static IAtomContainer Make4x3CondensedRings()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -374,16 +374,16 @@ namespace NCDK.Templates
         public static IAtomContainer MakeSpiroRings()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -402,14 +402,14 @@ namespace NCDK.Templates
         public static IAtomContainer MakeBicycloRings()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -426,16 +426,16 @@ namespace NCDK.Templates
         public static IAtomContainer MakeFUsedRings()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -455,17 +455,17 @@ namespace NCDK.Templates
         public static IAtomContainer MakeMethylDecaline()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -486,25 +486,25 @@ namespace NCDK.Templates
         public static IAtomContainer MakeEthylPropylPhenantren()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
-            mol.Add(new Atom("C")); // 12
-            mol.Add(new Atom("C")); // 13
-            mol.Add(new Atom("C")); // 14
-            mol.Add(new Atom("C")); // 15
-            mol.Add(new Atom("C")); // 16
-            mol.Add(new Atom("C")); // 17
-            mol.Add(new Atom("C")); // 18
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 12
+            mol.Atoms.Add(new Atom("C")); // 13
+            mol.Atoms.Add(new Atom("C")); // 14
+            mol.Atoms.Add(new Atom("C")); // 15
+            mol.Atoms.Add(new Atom("C")); // 16
+            mol.Atoms.Add(new Atom("C")); // 17
+            mol.Atoms.Add(new Atom("C")); // 18
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Double); // 2
@@ -534,23 +534,23 @@ namespace NCDK.Templates
         public static IAtomContainer MakeSteran()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
-            mol.Add(new Atom("C")); // 12
-            mol.Add(new Atom("C")); // 13
-            mol.Add(new Atom("C")); // 14
-            mol.Add(new Atom("C")); // 15
-            mol.Add(new Atom("C")); // 16
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 12
+            mol.Atoms.Add(new Atom("C")); // 13
+            mol.Atoms.Add(new Atom("C")); // 14
+            mol.Atoms.Add(new Atom("C")); // 15
+            mol.Atoms.Add(new Atom("C")); // 16
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -585,16 +585,16 @@ namespace NCDK.Templates
         public static IAtomContainer MakeAzulene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -619,15 +619,15 @@ namespace NCDK.Templates
         public static IAtomContainer MakeIndole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("N")); // 8
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("N")); // 8
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -651,11 +651,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyrrole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -676,11 +676,11 @@ namespace NCDK.Templates
             IAtomContainer mol = new AtomContainer();
             IAtom nitrogenAnion = new Atom("N");
             nitrogenAnion.FormalCharge = -1;
-            mol.Add(new Atom("C")); // 0
-            mol.Add(nitrogenAnion); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(nitrogenAnion); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -699,11 +699,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeImidazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -722,11 +722,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyrazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -745,11 +745,11 @@ namespace NCDK.Templates
         public static IAtomContainer Make124Triazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("N")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("N")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -768,11 +768,11 @@ namespace NCDK.Templates
         public static IAtomContainer Make123Triazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -791,11 +791,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeTetrazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("N")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("N")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -814,11 +814,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeOxazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("O")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("O")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -837,11 +837,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeIsoxazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("O")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("O")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -860,11 +860,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeIsothiazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("S")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("S")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -883,11 +883,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeThiadiazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("S")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("N")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("S")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("N")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -906,11 +906,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeOxadiazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("O")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("N")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("O")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("N")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -929,12 +929,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyridine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -954,14 +954,14 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyridineOxide()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
             mol.Atoms[1].FormalCharge = 1;
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("O")); // 6
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("O")); // 6
             mol.Atoms[6].FormalCharge = -1;
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
@@ -983,12 +983,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyrimidine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1008,12 +1008,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakePyridazine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("N")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("N")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1033,12 +1033,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeTriazine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("N")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("N")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("N")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("N")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1058,11 +1058,11 @@ namespace NCDK.Templates
         public static IAtomContainer MakeThiazole()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("N")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("S")); // 3
-            mol.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("N")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("S")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Double); // 2
@@ -1076,12 +1076,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeSingleRing()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
                                     //        mol.Add(new Atom("C")); // 6
                                     //        mol.Add(new Atom("C")); // 7
                                     //        mol.Add(new Atom("C")); // 8
@@ -1105,20 +1105,20 @@ namespace NCDK.Templates
         public static IAtomContainer MakeDiamantane()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
-            mol.Add(new Atom("C")); // 12
-            mol.Add(new Atom("C")); // 13
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 12
+            mol.Atoms.Add(new Atom("C")); // 13
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1145,25 +1145,25 @@ namespace NCDK.Templates
         public static IAtomContainer MakeBranchedAliphatic()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("C")); // 7
-            mol.Add(new Atom("C")); // 8
-            mol.Add(new Atom("C")); // 9
-            mol.Add(new Atom("C")); // 10
-            mol.Add(new Atom("C")); // 11
-            mol.Add(new Atom("C")); // 12
-            mol.Add(new Atom("C")); // 13
-            mol.Add(new Atom("C")); // 14
-            mol.Add(new Atom("C")); // 15
-            mol.Add(new Atom("C")); // 16
-            mol.Add(new Atom("C")); // 17
-            mol.Add(new Atom("C")); // 18
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("C")); // 7
+            mol.Atoms.Add(new Atom("C")); // 8
+            mol.Atoms.Add(new Atom("C")); // 9
+            mol.Atoms.Add(new Atom("C")); // 10
+            mol.Atoms.Add(new Atom("C")); // 11
+            mol.Atoms.Add(new Atom("C")); // 12
+            mol.Atoms.Add(new Atom("C")); // 13
+            mol.Atoms.Add(new Atom("C")); // 14
+            mol.Atoms.Add(new Atom("C")); // 15
+            mol.Atoms.Add(new Atom("C")); // 16
+            mol.Atoms.Add(new Atom("C")); // 17
+            mol.Atoms.Add(new Atom("C")); // 18
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1190,12 +1190,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeBenzene()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("C")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
 
             MolAddBond(mol, 0, 1, BondOrder.Single); // 1
             MolAddBond(mol, 1, 2, BondOrder.Double); // 2
@@ -1209,14 +1209,14 @@ namespace NCDK.Templates
         public static IAtomContainer MakeQuinone()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("O")); // 0
-            mol.Add(new Atom("C")); // 1
-            mol.Add(new Atom("C")); // 2
-            mol.Add(new Atom("C")); // 3
-            mol.Add(new Atom("C")); // 4
-            mol.Add(new Atom("C")); // 5
-            mol.Add(new Atom("C")); // 6
-            mol.Add(new Atom("O")); // 7
+            mol.Atoms.Add(new Atom("O")); // 0
+            mol.Atoms.Add(new Atom("C")); // 1
+            mol.Atoms.Add(new Atom("C")); // 2
+            mol.Atoms.Add(new Atom("C")); // 3
+            mol.Atoms.Add(new Atom("C")); // 4
+            mol.Atoms.Add(new Atom("C")); // 5
+            mol.Atoms.Add(new Atom("C")); // 6
+            mol.Atoms.Add(new Atom("O")); // 7
 
             MolAddBond(mol, 0, 1, BondOrder.Double); // 1
             MolAddBond(mol, 1, 2, BondOrder.Single); // 2
@@ -1232,13 +1232,13 @@ namespace NCDK.Templates
         public static IAtomContainer MakePiperidine()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("N"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("H"));
+            mol.Atoms.Add(new Atom("N"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("H"));
 
             MolAddBond(mol, 0, 1, BondOrder.Single);
             MolAddBond(mol, 1, 2, BondOrder.Single);
@@ -1256,12 +1256,12 @@ namespace NCDK.Templates
         public static IAtomContainer MakeTetrahydropyran()
         {
             IAtomContainer mol = new AtomContainer();
-            mol.Add(new Atom("O"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
-            mol.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("O"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms.Add(new Atom("C"));
 
             MolAddBond(mol, 0, 1, BondOrder.Single);
             MolAddBond(mol, 1, 2, BondOrder.Single);
@@ -1282,56 +1282,56 @@ namespace NCDK.Templates
             IAtomContainer mol = new AtomContainer(); // Adenine
             IAtom a1 = mol.Builder.CreateAtom("C");
             a1.Point2D = new Vector2(21.0223, -17.2946);
-            mol.Add(a1);
+            mol.Atoms.Add(a1);
             IAtom a2 = mol.Builder.CreateAtom("C");
             a2.Point2D = new Vector2(21.0223, -18.8093);
-            mol.Add(a2);
+            mol.Atoms.Add(a2);
             IAtom a3 = mol.Builder.CreateAtom("C");
             a3.Point2D = new Vector2(22.1861, -16.6103);
-            mol.Add(a3);
+            mol.Atoms.Add(a3);
             IAtom a4 = mol.Builder.CreateAtom("N");
             a4.Point2D = new Vector2(19.8294, -16.8677);
-            mol.Add(a4);
+            mol.Atoms.Add(a4);
             IAtom a5 = mol.Builder.CreateAtom("N");
             a5.Point2D = new Vector2(22.2212, -19.5285);
-            mol.Add(a5);
+            mol.Atoms.Add(a5);
             IAtom a6 = mol.Builder.CreateAtom("N");
             a6.Point2D = new Vector2(19.8177, -19.2187);
-            mol.Add(a6);
+            mol.Atoms.Add(a6);
             IAtom a7 = mol.Builder.CreateAtom("N");
             a7.Point2D = new Vector2(23.4669, -17.3531);
-            mol.Add(a7);
+            mol.Atoms.Add(a7);
             IAtom a8 = mol.Builder.CreateAtom("N");
             a8.Point2D = new Vector2(22.1861, -15.2769);
-            mol.Add(a8);
+            mol.Atoms.Add(a8);
             IAtom a9 = mol.Builder.CreateAtom("C");
             a9.Point2D = new Vector2(18.9871, -18.0139);
-            mol.Add(a9);
+            mol.Atoms.Add(a9);
             IAtom a10 = mol.Builder.CreateAtom("C");
             a10.Point2D = new Vector2(23.4609, -18.8267);
-            mol.Add(a10);
+            mol.Atoms.Add(a10);
             IBond b1 = mol.Builder.CreateBond(a1, a2, BondOrder.Double);
-            mol.Add(b1);
+            mol.Bonds.Add(b1);
             IBond b2 = mol.Builder.CreateBond(a1, a3, BondOrder.Single);
-            mol.Add(b2);
+            mol.Bonds.Add(b2);
             IBond b3 = mol.Builder.CreateBond(a1, a4, BondOrder.Single);
-            mol.Add(b3);
+            mol.Bonds.Add(b3);
             IBond b4 = mol.Builder.CreateBond(a2, a5, BondOrder.Single);
-            mol.Add(b4);
+            mol.Bonds.Add(b4);
             IBond b5 = mol.Builder.CreateBond(a2, a6, BondOrder.Single);
-            mol.Add(b5);
+            mol.Bonds.Add(b5);
             IBond b6 = mol.Builder.CreateBond(a3, a7, BondOrder.Double);
-            mol.Add(b6);
+            mol.Bonds.Add(b6);
             IBond b7 = mol.Builder.CreateBond(a3, a8, BondOrder.Single);
-            mol.Add(b7);
+            mol.Bonds.Add(b7);
             IBond b8 = mol.Builder.CreateBond(a4, a9, BondOrder.Double);
-            mol.Add(b8);
+            mol.Bonds.Add(b8);
             IBond b9 = mol.Builder.CreateBond(a5, a10, BondOrder.Double);
-            mol.Add(b9);
+            mol.Bonds.Add(b9);
             IBond b10 = mol.Builder.CreateBond(a6, a9, BondOrder.Single);
-            mol.Add(b10);
+            mol.Bonds.Add(b10);
             IBond b11 = mol.Builder.CreateBond(a7, a10, BondOrder.Single);
-            mol.Add(b11);
+            mol.Bonds.Add(b11);
 
             return mol;
         }
@@ -1346,56 +1346,56 @@ namespace NCDK.Templates
             IAtomContainer mol = builder.CreateAtomContainer();
             IAtom a1 = builder.CreateAtom("C");
             a1.FormalCharge = 0;
-            mol.Add(a1);
+            mol.Atoms.Add(a1);
             IAtom a2 = builder.CreateAtom("C");
             a2.FormalCharge = 0;
-            mol.Add(a2);
+            mol.Atoms.Add(a2);
             IAtom a3 = builder.CreateAtom("C");
             a3.FormalCharge = 0;
-            mol.Add(a3);
+            mol.Atoms.Add(a3);
             IAtom a4 = builder.CreateAtom("C");
             a4.FormalCharge = 0;
-            mol.Add(a4);
+            mol.Atoms.Add(a4);
             IAtom a5 = builder.CreateAtom("C");
             a5.FormalCharge = 0;
-            mol.Add(a5);
+            mol.Atoms.Add(a5);
             IAtom a6 = builder.CreateAtom("C");
             a6.FormalCharge = 0;
-            mol.Add(a6);
+            mol.Atoms.Add(a6);
             IAtom a7 = builder.CreateAtom("C");
             a7.FormalCharge = 0;
-            mol.Add(a7);
+            mol.Atoms.Add(a7);
             IAtom a8 = builder.CreateAtom("C");
             a8.FormalCharge = 0;
-            mol.Add(a8);
+            mol.Atoms.Add(a8);
             IAtom a9 = builder.CreateAtom("C");
             a9.FormalCharge = 0;
-            mol.Add(a9);
+            mol.Atoms.Add(a9);
             IAtom a10 = builder.CreateAtom("C");
             a10.FormalCharge = 0;
-            mol.Add(a10);
+            mol.Atoms.Add(a10);
             IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
-            mol.Add(b1);
+            mol.Bonds.Add(b1);
             IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-            mol.Add(b2);
+            mol.Bonds.Add(b2);
             IBond b3 = builder.CreateBond(a3, a4, BondOrder.Double);
-            mol.Add(b3);
+            mol.Bonds.Add(b3);
             IBond b4 = builder.CreateBond(a4, a5, BondOrder.Single);
-            mol.Add(b4);
+            mol.Bonds.Add(b4);
             IBond b5 = builder.CreateBond(a5, a6, BondOrder.Double);
-            mol.Add(b5);
+            mol.Bonds.Add(b5);
             IBond b6 = builder.CreateBond(a6, a7, BondOrder.Single);
-            mol.Add(b6);
+            mol.Bonds.Add(b6);
             IBond b7 = builder.CreateBond(a7, a8, BondOrder.Double);
-            mol.Add(b7);
+            mol.Bonds.Add(b7);
             IBond b8 = builder.CreateBond(a3, a8, BondOrder.Single);
-            mol.Add(b8);
+            mol.Bonds.Add(b8);
             IBond b9 = builder.CreateBond(a8, a9, BondOrder.Single);
-            mol.Add(b9);
+            mol.Bonds.Add(b9);
             IBond b10 = builder.CreateBond(a9, a10, BondOrder.Double);
-            mol.Add(b10);
+            mol.Bonds.Add(b10);
             IBond b11 = builder.CreateBond(a1, a10, BondOrder.Single);
-            mol.Add(b11);
+            mol.Bonds.Add(b11);
             return mol;
         }
 
@@ -1409,78 +1409,78 @@ namespace NCDK.Templates
             IAtomContainer mol = builder.CreateAtomContainer();
             IAtom a1 = builder.CreateAtom("C");
             a1.FormalCharge = 0;
-            mol.Add(a1);
+            mol.Atoms.Add(a1);
             IAtom a2 = builder.CreateAtom("C");
             a2.FormalCharge = 0;
-            mol.Add(a2);
+            mol.Atoms.Add(a2);
             IAtom a3 = builder.CreateAtom("C");
             a3.FormalCharge = 0;
-            mol.Add(a3);
+            mol.Atoms.Add(a3);
             IAtom a4 = builder.CreateAtom("C");
             a4.FormalCharge = 0;
-            mol.Add(a4);
+            mol.Atoms.Add(a4);
             IAtom a5 = builder.CreateAtom("C");
             a5.FormalCharge = 0;
-            mol.Add(a5);
+            mol.Atoms.Add(a5);
             IAtom a6 = builder.CreateAtom("C");
             a6.FormalCharge = 0;
-            mol.Add(a6);
+            mol.Atoms.Add(a6);
             IAtom a7 = builder.CreateAtom("C");
             a7.FormalCharge = 0;
-            mol.Add(a7);
+            mol.Atoms.Add(a7);
             IAtom a8 = builder.CreateAtom("C");
             a8.FormalCharge = 0;
-            mol.Add(a8);
+            mol.Atoms.Add(a8);
             IAtom a9 = builder.CreateAtom("C");
             a9.FormalCharge = 0;
-            mol.Add(a9);
+            mol.Atoms.Add(a9);
             IAtom a10 = builder.CreateAtom("C");
             a10.FormalCharge = 0;
-            mol.Add(a10);
+            mol.Atoms.Add(a10);
             IAtom a11 = builder.CreateAtom("C");
             a11.FormalCharge = 0;
-            mol.Add(a11);
+            mol.Atoms.Add(a11);
             IAtom a12 = builder.CreateAtom("C");
             a12.FormalCharge = 0;
-            mol.Add(a12);
+            mol.Atoms.Add(a12);
             IAtom a13 = builder.CreateAtom("C");
             a13.FormalCharge = 0;
-            mol.Add(a13);
+            mol.Atoms.Add(a13);
             IAtom a14 = builder.CreateAtom("C");
             a14.FormalCharge = 0;
-            mol.Add(a14);
+            mol.Atoms.Add(a14);
             IBond b1 = builder.CreateBond(a1, a2, BondOrder.Double);
-            mol.Add(b1);
+            mol.Bonds.Add(b1);
             IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-            mol.Add(b2);
+            mol.Bonds.Add(b2);
             IBond b3 = builder.CreateBond(a3, a4, BondOrder.Double);
-            mol.Add(b3);
+            mol.Bonds.Add(b3);
             IBond b4 = builder.CreateBond(a4, a5, BondOrder.Single);
-            mol.Add(b4);
+            mol.Bonds.Add(b4);
             IBond b5 = builder.CreateBond(a5, a6, BondOrder.Double);
-            mol.Add(b5);
+            mol.Bonds.Add(b5);
             IBond b6 = builder.CreateBond(a6, a7, BondOrder.Single);
-            mol.Add(b6);
+            mol.Bonds.Add(b6);
             IBond b7 = builder.CreateBond(a7, a8, BondOrder.Double);
-            mol.Add(b7);
+            mol.Bonds.Add(b7);
             IBond b8 = builder.CreateBond(a8, a9, BondOrder.Single);
-            mol.Add(b8);
+            mol.Bonds.Add(b8);
             IBond b9 = builder.CreateBond(a9, a10, BondOrder.Double);
-            mol.Add(b9);
+            mol.Bonds.Add(b9);
             IBond b10 = builder.CreateBond(a5, a10, BondOrder.Single);
-            mol.Add(b10);
+            mol.Bonds.Add(b10);
             IBond b11 = builder.CreateBond(a10, a11, BondOrder.Single);
-            mol.Add(b11);
+            mol.Bonds.Add(b11);
             IBond b12 = builder.CreateBond(a11, a12, BondOrder.Double);
-            mol.Add(b12);
+            mol.Bonds.Add(b12);
             IBond b13 = builder.CreateBond(a3, a12, BondOrder.Single);
-            mol.Add(b13);
+            mol.Bonds.Add(b13);
             IBond b14 = builder.CreateBond(a12, a13, BondOrder.Single);
-            mol.Add(b14);
+            mol.Bonds.Add(b14);
             IBond b15 = builder.CreateBond(a13, a14, BondOrder.Double);
-            mol.Add(b15);
+            mol.Bonds.Add(b15);
             IBond b16 = builder.CreateBond(a1, a14, BondOrder.Single);
-            mol.Add(b16);
+            mol.Bonds.Add(b16);
             return mol;
         }
 
@@ -1495,193 +1495,193 @@ namespace NCDK.Templates
             IAtomContainer mol = builder.CreateAtomContainer();
             IAtom a1 = builder.CreateAtom("C");
             a1.FormalCharge = 0;
-            mol.Add(a1);
+            mol.Atoms.Add(a1);
             IAtom a2 = builder.CreateAtom("C");
             a2.FormalCharge = 0;
-            mol.Add(a2);
+            mol.Atoms.Add(a2);
             IAtom a3 = builder.CreateAtom("C");
             a3.FormalCharge = 0;
-            mol.Add(a3);
+            mol.Atoms.Add(a3);
             IAtom a4 = builder.CreateAtom("C");
             a4.FormalCharge = 0;
-            mol.Add(a4);
+            mol.Atoms.Add(a4);
             IAtom a5 = builder.CreateAtom("C");
             a5.FormalCharge = 0;
-            mol.Add(a5);
+            mol.Atoms.Add(a5);
             IAtom a6 = builder.CreateAtom("C");
             a6.FormalCharge = 0;
-            mol.Add(a6);
+            mol.Atoms.Add(a6);
             IAtom a7 = builder.CreateAtom("C");
             a7.FormalCharge = 0;
-            mol.Add(a7);
+            mol.Atoms.Add(a7);
             IAtom a8 = builder.CreateAtom("C");
             a8.FormalCharge = 0;
-            mol.Add(a8);
+            mol.Atoms.Add(a8);
             IAtom a9 = builder.CreateAtom("C");
             a9.FormalCharge = 0;
-            mol.Add(a9);
+            mol.Atoms.Add(a9);
             IAtom a10 = builder.CreateAtom("C");
             a10.FormalCharge = 0;
-            mol.Add(a10);
+            mol.Atoms.Add(a10);
             IAtom a11 = builder.CreateAtom("C");
             a11.FormalCharge = 0;
-            mol.Add(a11);
+            mol.Atoms.Add(a11);
             IAtom a12 = builder.CreateAtom("C");
             a12.FormalCharge = 0;
-            mol.Add(a12);
+            mol.Atoms.Add(a12);
             IAtom a13 = builder.CreateAtom("C");
             a13.FormalCharge = 0;
-            mol.Add(a13);
+            mol.Atoms.Add(a13);
             IAtom a14 = builder.CreateAtom("C");
             a14.FormalCharge = 0;
-            mol.Add(a14);
+            mol.Atoms.Add(a14);
             IAtom a15 = builder.CreateAtom("C");
             a15.FormalCharge = 0;
-            mol.Add(a15);
+            mol.Atoms.Add(a15);
             IAtom a16 = builder.CreateAtom("C");
             a16.FormalCharge = 0;
-            mol.Add(a16);
+            mol.Atoms.Add(a16);
             IAtom a17 = builder.CreateAtom("C");
             a17.FormalCharge = 0;
-            mol.Add(a17);
+            mol.Atoms.Add(a17);
             IAtom a18 = builder.CreateAtom("C");
             a18.FormalCharge = 0;
-            mol.Add(a18);
+            mol.Atoms.Add(a18);
             IAtom a19 = builder.CreateAtom("C");
             a19.FormalCharge = 0;
-            mol.Add(a19);
+            mol.Atoms.Add(a19);
             IAtom a20 = builder.CreateAtom("C");
             a20.FormalCharge = 0;
-            mol.Add(a20);
+            mol.Atoms.Add(a20);
             IAtom a21 = builder.CreateAtom("C");
             a21.FormalCharge = 0;
-            mol.Add(a21);
+            mol.Atoms.Add(a21);
             IAtom a22 = builder.CreateAtom("C");
             a22.FormalCharge = 0;
-            mol.Add(a22);
+            mol.Atoms.Add(a22);
             IAtom a23 = builder.CreateAtom("C");
             a23.FormalCharge = 0;
-            mol.Add(a23);
+            mol.Atoms.Add(a23);
             IAtom a24 = builder.CreateAtom("C");
             a24.FormalCharge = 0;
-            mol.Add(a24);
+            mol.Atoms.Add(a24);
             IAtom a25 = builder.CreateAtom("C");
             a25.FormalCharge = 0;
-            mol.Add(a25);
+            mol.Atoms.Add(a25);
             IAtom a26 = builder.CreateAtom("C");
             a26.FormalCharge = 0;
-            mol.Add(a26);
+            mol.Atoms.Add(a26);
             IAtom a27 = builder.CreateAtom("C");
             a27.FormalCharge = 0;
-            mol.Add(a27);
+            mol.Atoms.Add(a27);
             IAtom a28 = builder.CreateAtom("C");
             a28.FormalCharge = 0;
-            mol.Add(a28);
+            mol.Atoms.Add(a28);
             IAtom a29 = builder.CreateAtom("C");
             a29.FormalCharge = 0;
-            mol.Add(a29);
+            mol.Atoms.Add(a29);
             IAtom a30 = builder.CreateAtom("C");
             a30.FormalCharge = 0;
-            mol.Add(a30);
+            mol.Atoms.Add(a30);
             IAtom a31 = builder.CreateAtom("C");
             a31.FormalCharge = 0;
-            mol.Add(a31);
+            mol.Atoms.Add(a31);
             IAtom a32 = builder.CreateAtom("C");
             a32.FormalCharge = 0;
-            mol.Add(a32);
+            mol.Atoms.Add(a32);
             IAtom a33 = builder.CreateAtom("C");
             a33.FormalCharge = 0;
-            mol.Add(a33);
+            mol.Atoms.Add(a33);
             IAtom a34 = builder.CreateAtom("C");
             a34.FormalCharge = 0;
-            mol.Add(a34);
+            mol.Atoms.Add(a34);
             IAtom a35 = builder.CreateAtom("C");
             a35.FormalCharge = 0;
-            mol.Add(a35);
+            mol.Atoms.Add(a35);
             IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
-            mol.Add(b1);
+            mol.Bonds.Add(b1);
             IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-            mol.Add(b2);
+            mol.Bonds.Add(b2);
             IBond b3 = builder.CreateBond(a3, a4, BondOrder.Single);
-            mol.Add(b3);
+            mol.Bonds.Add(b3);
             IBond b4 = builder.CreateBond(a4, a5, BondOrder.Single);
-            mol.Add(b4);
+            mol.Bonds.Add(b4);
             IBond b5 = builder.CreateBond(a5, a6, BondOrder.Single);
-            mol.Add(b5);
+            mol.Bonds.Add(b5);
             IBond b6 = builder.CreateBond(a1, a6, BondOrder.Single);
-            mol.Add(b6);
+            mol.Bonds.Add(b6);
             IBond b7 = builder.CreateBond(a6, a7, BondOrder.Single);
-            mol.Add(b7);
+            mol.Bonds.Add(b7);
             IBond b8 = builder.CreateBond(a7, a8, BondOrder.Single);
-            mol.Add(b8);
+            mol.Bonds.Add(b8);
             IBond b9 = builder.CreateBond(a8, a9, BondOrder.Single);
-            mol.Add(b9);
+            mol.Bonds.Add(b9);
             IBond b10 = builder.CreateBond(a9, a10, BondOrder.Single);
-            mol.Add(b10);
+            mol.Bonds.Add(b10);
             IBond b11 = builder.CreateBond(a10, a11, BondOrder.Single);
-            mol.Add(b11);
+            mol.Bonds.Add(b11);
             IBond b12 = builder.CreateBond(a6, a11, BondOrder.Single);
-            mol.Add(b12);
+            mol.Bonds.Add(b12);
             IBond b13 = builder.CreateBond(a9, a12, BondOrder.Single);
-            mol.Add(b13);
+            mol.Bonds.Add(b13);
             IBond b14 = builder.CreateBond(a12, a13, BondOrder.Single);
-            mol.Add(b14);
+            mol.Bonds.Add(b14);
             IBond b15 = builder.CreateBond(a13, a14, BondOrder.Single);
-            mol.Add(b15);
+            mol.Bonds.Add(b15);
             IBond b16 = builder.CreateBond(a14, a15, BondOrder.Single);
-            mol.Add(b16);
+            mol.Bonds.Add(b16);
             IBond b17 = builder.CreateBond(a15, a16, BondOrder.Single);
-            mol.Add(b17);
+            mol.Bonds.Add(b17);
             IBond b18 = builder.CreateBond(a9, a16, BondOrder.Single);
-            mol.Add(b18);
+            mol.Bonds.Add(b18);
             IBond b19 = builder.CreateBond(a14, a17, BondOrder.Single);
-            mol.Add(b19);
+            mol.Bonds.Add(b19);
             IBond b20 = builder.CreateBond(a17, a18, BondOrder.Single);
-            mol.Add(b20);
+            mol.Bonds.Add(b20);
             IBond b21 = builder.CreateBond(a18, a19, BondOrder.Single);
-            mol.Add(b21);
+            mol.Bonds.Add(b21);
             IBond b22 = builder.CreateBond(a19, a20, BondOrder.Single);
-            mol.Add(b22);
+            mol.Bonds.Add(b22);
             IBond b23 = builder.CreateBond(a20, a21, BondOrder.Single);
-            mol.Add(b23);
+            mol.Bonds.Add(b23);
             IBond b24 = builder.CreateBond(a14, a21, BondOrder.Single);
-            mol.Add(b24);
+            mol.Bonds.Add(b24);
             IBond b25 = builder.CreateBond(a19, a22, BondOrder.Single);
-            mol.Add(b25);
+            mol.Bonds.Add(b25);
             IBond b26 = builder.CreateBond(a22, a23, BondOrder.Single);
-            mol.Add(b26);
+            mol.Bonds.Add(b26);
             IBond b27 = builder.CreateBond(a23, a24, BondOrder.Single);
-            mol.Add(b27);
+            mol.Bonds.Add(b27);
             IBond b28 = builder.CreateBond(a24, a25, BondOrder.Single);
-            mol.Add(b28);
+            mol.Bonds.Add(b28);
             IBond b29 = builder.CreateBond(a25, a26, BondOrder.Single);
-            mol.Add(b29);
+            mol.Bonds.Add(b29);
             IBond b30 = builder.CreateBond(a26, a27, BondOrder.Single);
-            mol.Add(b30);
+            mol.Bonds.Add(b30);
             IBond b31 = builder.CreateBond(a27, a28, BondOrder.Single);
-            mol.Add(b31);
+            mol.Bonds.Add(b31);
             IBond b32 = builder.CreateBond(a28, a29, BondOrder.Single);
-            mol.Add(b32);
+            mol.Bonds.Add(b32);
             IBond b33 = builder.CreateBond(a3, a29, BondOrder.Single);
-            mol.Add(b33);
+            mol.Bonds.Add(b33);
             IBond b34 = builder.CreateBond(a27, a30, BondOrder.Single);
-            mol.Add(b34);
+            mol.Bonds.Add(b34);
             IBond b35 = builder.CreateBond(a30, a31, BondOrder.Single);
-            mol.Add(b35);
+            mol.Bonds.Add(b35);
             IBond b36 = builder.CreateBond(a3, a31, BondOrder.Single);
-            mol.Add(b36);
+            mol.Bonds.Add(b36);
             IBond b37 = builder.CreateBond(a27, a32, BondOrder.Single);
-            mol.Add(b37);
+            mol.Bonds.Add(b37);
             IBond b38 = builder.CreateBond(a32, a33, BondOrder.Single);
-            mol.Add(b38);
+            mol.Bonds.Add(b38);
             IBond b39 = builder.CreateBond(a24, a33, BondOrder.Single);
-            mol.Add(b39);
+            mol.Bonds.Add(b39);
             IBond b40 = builder.CreateBond(a24, a34, BondOrder.Single);
-            mol.Add(b40);
+            mol.Bonds.Add(b40);
             IBond b41 = builder.CreateBond(a34, a35, BondOrder.Single);
-            mol.Add(b41);
+            mol.Bonds.Add(b41);
             IBond b42 = builder.CreateBond(a19, a35, BondOrder.Single);
-            mol.Add(b42);
+            mol.Bonds.Add(b42);
             return mol;
         }
 
@@ -1696,228 +1696,228 @@ namespace NCDK.Templates
             IAtomContainer mol = builder.CreateAtomContainer();
             IAtom a1 = builder.CreateAtom("C");
             a1.FormalCharge = 0;
-            mol.Add(a1);
+            mol.Atoms.Add(a1);
             IAtom a2 = builder.CreateAtom("C");
             a2.FormalCharge = 0;
-            mol.Add(a2);
+            mol.Atoms.Add(a2);
             IAtom a3 = builder.CreateAtom("C");
             a3.FormalCharge = 0;
-            mol.Add(a3);
+            mol.Atoms.Add(a3);
             IAtom a4 = builder.CreateAtom("C");
             a4.FormalCharge = 0;
-            mol.Add(a4);
+            mol.Atoms.Add(a4);
             IAtom a5 = builder.CreateAtom("C");
             a5.FormalCharge = 0;
-            mol.Add(a5);
+            mol.Atoms.Add(a5);
             IAtom a6 = builder.CreateAtom("C");
             a6.FormalCharge = 0;
-            mol.Add(a6);
+            mol.Atoms.Add(a6);
             IAtom a7 = builder.CreateAtom("C");
             a7.FormalCharge = 0;
-            mol.Add(a7);
+            mol.Atoms.Add(a7);
             IAtom a8 = builder.CreateAtom("C");
             a8.FormalCharge = 0;
-            mol.Add(a8);
+            mol.Atoms.Add(a8);
             IAtom a9 = builder.CreateAtom("C");
             a9.FormalCharge = 0;
-            mol.Add(a9);
+            mol.Atoms.Add(a9);
             IAtom a10 = builder.CreateAtom("C");
             a10.FormalCharge = 0;
-            mol.Add(a10);
+            mol.Atoms.Add(a10);
             IAtom a11 = builder.CreateAtom("C");
             a11.FormalCharge = 0;
-            mol.Add(a11);
+            mol.Atoms.Add(a11);
             IAtom a12 = builder.CreateAtom("C");
             a12.FormalCharge = 0;
-            mol.Add(a12);
+            mol.Atoms.Add(a12);
             IAtom a13 = builder.CreateAtom("C");
             a13.FormalCharge = 0;
-            mol.Add(a13);
+            mol.Atoms.Add(a13);
             IAtom a14 = builder.CreateAtom("C");
             a14.FormalCharge = 0;
-            mol.Add(a14);
+            mol.Atoms.Add(a14);
             IAtom a15 = builder.CreateAtom("C");
             a15.FormalCharge = 0;
-            mol.Add(a15);
+            mol.Atoms.Add(a15);
             IAtom a16 = builder.CreateAtom("C");
             a16.FormalCharge = 0;
-            mol.Add(a16);
+            mol.Atoms.Add(a16);
             IAtom a17 = builder.CreateAtom("C");
             a17.FormalCharge = 0;
-            mol.Add(a17);
+            mol.Atoms.Add(a17);
             IAtom a18 = builder.CreateAtom("C");
             a18.FormalCharge = 0;
-            mol.Add(a18);
+            mol.Atoms.Add(a18);
             IAtom a19 = builder.CreateAtom("C");
             a19.FormalCharge = 0;
-            mol.Add(a19);
+            mol.Atoms.Add(a19);
             IAtom a20 = builder.CreateAtom("C");
             a20.FormalCharge = 0;
-            mol.Add(a20);
+            mol.Atoms.Add(a20);
             IAtom a21 = builder.CreateAtom("C");
             a21.FormalCharge = 0;
-            mol.Add(a21);
+            mol.Atoms.Add(a21);
             IAtom a22 = builder.CreateAtom("C");
             a22.FormalCharge = 0;
-            mol.Add(a22);
+            mol.Atoms.Add(a22);
             IAtom a23 = builder.CreateAtom("C");
             a23.FormalCharge = 0;
-            mol.Add(a23);
+            mol.Atoms.Add(a23);
             IAtom a24 = builder.CreateAtom("C");
             a24.FormalCharge = 0;
-            mol.Add(a24);
+            mol.Atoms.Add(a24);
             IAtom a25 = builder.CreateAtom("C");
             a25.FormalCharge = 0;
-            mol.Add(a25);
+            mol.Atoms.Add(a25);
             IAtom a26 = builder.CreateAtom("C");
             a26.FormalCharge = 0;
-            mol.Add(a26);
+            mol.Atoms.Add(a26);
             IAtom a27 = builder.CreateAtom("C");
             a27.FormalCharge = 0;
-            mol.Add(a27);
+            mol.Atoms.Add(a27);
             IAtom a28 = builder.CreateAtom("C");
             a28.FormalCharge = 0;
-            mol.Add(a28);
+            mol.Atoms.Add(a28);
             IAtom a29 = builder.CreateAtom("C");
             a29.FormalCharge = 0;
-            mol.Add(a29);
+            mol.Atoms.Add(a29);
             IAtom a30 = builder.CreateAtom("C");
             a30.FormalCharge = 0;
-            mol.Add(a30);
+            mol.Atoms.Add(a30);
             IAtom a31 = builder.CreateAtom("C");
             a31.FormalCharge = 0;
-            mol.Add(a31);
+            mol.Atoms.Add(a31);
             IAtom a32 = builder.CreateAtom("C");
             a32.FormalCharge = 0;
-            mol.Add(a32);
+            mol.Atoms.Add(a32);
             IAtom a33 = builder.CreateAtom("C");
             a33.FormalCharge = 0;
-            mol.Add(a33);
+            mol.Atoms.Add(a33);
             IAtom a34 = builder.CreateAtom("C");
             a34.FormalCharge = 0;
-            mol.Add(a34);
+            mol.Atoms.Add(a34);
             IAtom a35 = builder.CreateAtom("C");
             a35.FormalCharge = 0;
-            mol.Add(a35);
+            mol.Atoms.Add(a35);
             IAtom a36 = builder.CreateAtom("C");
             a36.FormalCharge = 0;
-            mol.Add(a36);
+            mol.Atoms.Add(a36);
             IAtom a37 = builder.CreateAtom("C");
             a37.FormalCharge = 0;
-            mol.Add(a37);
+            mol.Atoms.Add(a37);
             IAtom a38 = builder.CreateAtom("C");
             a38.FormalCharge = 0;
-            mol.Add(a38);
+            mol.Atoms.Add(a38);
             IAtom a39 = builder.CreateAtom("C");
             a39.FormalCharge = 0;
-            mol.Add(a39);
+            mol.Atoms.Add(a39);
             IAtom a40 = builder.CreateAtom("C");
             a40.FormalCharge = 0;
-            mol.Add(a40);
+            mol.Atoms.Add(a40);
             IAtom a41 = builder.CreateAtom("C");
             a41.FormalCharge = 0;
-            mol.Add(a41);
+            mol.Atoms.Add(a41);
             IAtom a42 = builder.CreateAtom("C");
             a42.FormalCharge = 0;
-            mol.Add(a42);
+            mol.Atoms.Add(a42);
             IBond b1 = builder.CreateBond(a1, a2, BondOrder.Single);
-            mol.Add(b1);
+            mol.Bonds.Add(b1);
             IBond b2 = builder.CreateBond(a2, a3, BondOrder.Single);
-            mol.Add(b2);
+            mol.Bonds.Add(b2);
             IBond b3 = builder.CreateBond(a3, a4, BondOrder.Single);
-            mol.Add(b3);
+            mol.Bonds.Add(b3);
             IBond b4 = builder.CreateBond(a4, a5, BondOrder.Single);
-            mol.Add(b4);
+            mol.Bonds.Add(b4);
             IBond b5 = builder.CreateBond(a5, a6, BondOrder.Single);
-            mol.Add(b5);
+            mol.Bonds.Add(b5);
             IBond b6 = builder.CreateBond(a1, a6, BondOrder.Single);
-            mol.Add(b6);
+            mol.Bonds.Add(b6);
             IBond b7 = builder.CreateBond(a6, a7, BondOrder.Single);
-            mol.Add(b7);
+            mol.Bonds.Add(b7);
             IBond b8 = builder.CreateBond(a7, a8, BondOrder.Single);
-            mol.Add(b8);
+            mol.Bonds.Add(b8);
             IBond b9 = builder.CreateBond(a8, a9, BondOrder.Single);
-            mol.Add(b9);
+            mol.Bonds.Add(b9);
             IBond b10 = builder.CreateBond(a9, a10, BondOrder.Single);
-            mol.Add(b10);
+            mol.Bonds.Add(b10);
             IBond b11 = builder.CreateBond(a10, a11, BondOrder.Single);
-            mol.Add(b11);
+            mol.Bonds.Add(b11);
             IBond b12 = builder.CreateBond(a11, a12, BondOrder.Single);
-            mol.Add(b12);
+            mol.Bonds.Add(b12);
             IBond b13 = builder.CreateBond(a7, a12, BondOrder.Single);
-            mol.Add(b13);
+            mol.Bonds.Add(b13);
             IBond b14 = builder.CreateBond(a10, a13, BondOrder.Single);
-            mol.Add(b14);
+            mol.Bonds.Add(b14);
             IBond b15 = builder.CreateBond(a13, a14, BondOrder.Single);
-            mol.Add(b15);
+            mol.Bonds.Add(b15);
             IBond b16 = builder.CreateBond(a14, a15, BondOrder.Single);
-            mol.Add(b16);
+            mol.Bonds.Add(b16);
             IBond b17 = builder.CreateBond(a15, a16, BondOrder.Single);
-            mol.Add(b17);
+            mol.Bonds.Add(b17);
             IBond b18 = builder.CreateBond(a16, a17, BondOrder.Single);
-            mol.Add(b18);
+            mol.Bonds.Add(b18);
             IBond b19 = builder.CreateBond(a17, a18, BondOrder.Single);
-            mol.Add(b19);
+            mol.Bonds.Add(b19);
             IBond b20 = builder.CreateBond(a13, a18, BondOrder.Single);
-            mol.Add(b20);
+            mol.Bonds.Add(b20);
             IBond b21 = builder.CreateBond(a16, a19, BondOrder.Single);
-            mol.Add(b21);
+            mol.Bonds.Add(b21);
             IBond b22 = builder.CreateBond(a19, a20, BondOrder.Single);
-            mol.Add(b22);
+            mol.Bonds.Add(b22);
             IBond b23 = builder.CreateBond(a20, a21, BondOrder.Single);
-            mol.Add(b23);
+            mol.Bonds.Add(b23);
             IBond b24 = builder.CreateBond(a21, a22, BondOrder.Single);
-            mol.Add(b24);
+            mol.Bonds.Add(b24);
             IBond b25 = builder.CreateBond(a22, a23, BondOrder.Single);
-            mol.Add(b25);
+            mol.Bonds.Add(b25);
             IBond b26 = builder.CreateBond(a23, a24, BondOrder.Single);
-            mol.Add(b26);
+            mol.Bonds.Add(b26);
             IBond b27 = builder.CreateBond(a19, a24, BondOrder.Single);
-            mol.Add(b27);
+            mol.Bonds.Add(b27);
             IBond b28 = builder.CreateBond(a22, a25, BondOrder.Single);
-            mol.Add(b28);
+            mol.Bonds.Add(b28);
             IBond b29 = builder.CreateBond(a25, a26, BondOrder.Single);
-            mol.Add(b29);
+            mol.Bonds.Add(b29);
             IBond b30 = builder.CreateBond(a26, a27, BondOrder.Single);
-            mol.Add(b30);
+            mol.Bonds.Add(b30);
             IBond b31 = builder.CreateBond(a27, a28, BondOrder.Single);
-            mol.Add(b31);
+            mol.Bonds.Add(b31);
             IBond b32 = builder.CreateBond(a28, a29, BondOrder.Single);
-            mol.Add(b32);
+            mol.Bonds.Add(b32);
             IBond b33 = builder.CreateBond(a29, a30, BondOrder.Single);
-            mol.Add(b33);
+            mol.Bonds.Add(b33);
             IBond b34 = builder.CreateBond(a25, a30, BondOrder.Single);
-            mol.Add(b34);
+            mol.Bonds.Add(b34);
             IBond b35 = builder.CreateBond(a28, a31, BondOrder.Single);
-            mol.Add(b35);
+            mol.Bonds.Add(b35);
             IBond b36 = builder.CreateBond(a31, a32, BondOrder.Single);
-            mol.Add(b36);
+            mol.Bonds.Add(b36);
             IBond b37 = builder.CreateBond(a32, a33, BondOrder.Single);
-            mol.Add(b37);
+            mol.Bonds.Add(b37);
             IBond b38 = builder.CreateBond(a33, a34, BondOrder.Single);
-            mol.Add(b38);
+            mol.Bonds.Add(b38);
             IBond b39 = builder.CreateBond(a34, a35, BondOrder.Single);
-            mol.Add(b39);
+            mol.Bonds.Add(b39);
             IBond b40 = builder.CreateBond(a35, a36, BondOrder.Single);
-            mol.Add(b40);
+            mol.Bonds.Add(b40);
             IBond b41 = builder.CreateBond(a31, a36, BondOrder.Single);
-            mol.Add(b41);
+            mol.Bonds.Add(b41);
             IBond b42 = builder.CreateBond(a34, a37, BondOrder.Single);
-            mol.Add(b42);
+            mol.Bonds.Add(b42);
             IBond b43 = builder.CreateBond(a37, a38, BondOrder.Single);
-            mol.Add(b43);
+            mol.Bonds.Add(b43);
             IBond b44 = builder.CreateBond(a38, a39, BondOrder.Single);
-            mol.Add(b44);
+            mol.Bonds.Add(b44);
             IBond b45 = builder.CreateBond(a39, a40, BondOrder.Single);
-            mol.Add(b45);
+            mol.Bonds.Add(b45);
             IBond b46 = builder.CreateBond(a3, a40, BondOrder.Single);
-            mol.Add(b46);
+            mol.Bonds.Add(b46);
             IBond b47 = builder.CreateBond(a40, a41, BondOrder.Single);
-            mol.Add(b47);
+            mol.Bonds.Add(b47);
             IBond b48 = builder.CreateBond(a41, a42, BondOrder.Single);
-            mol.Add(b48);
+            mol.Bonds.Add(b48);
             IBond b49 = builder.CreateBond(a37, a42, BondOrder.Single);
-            mol.Add(b49);
+            mol.Bonds.Add(b49);
             return mol;
         }
 

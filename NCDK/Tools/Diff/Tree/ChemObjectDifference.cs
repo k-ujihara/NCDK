@@ -26,11 +26,10 @@ namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
     /// <see cref="IDifference"/> between two <see cref="IChemObject"/>s.
-    ///
+    /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    /// </summary>
     public class ChemObjectDifference
             : AbstractDifferenceList, IDifferenceList
     {

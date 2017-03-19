@@ -83,7 +83,7 @@ namespace NCDK.IO
             IAtomContainer mol = new AtomContainer();
             mol.Atoms.Add(new Atom("C"));
             mol.Atoms[0].ImplicitHydrogenCount = 3;
-            mol.AddSingleElectron(mol.Atoms[0]);
+            mol.AddSingleElectronTo(mol.Atoms[0]);
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 C 0 0 0 0 RAD=1 VAL=3\n"));
         }
@@ -189,7 +189,7 @@ namespace NCDK.IO
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 3;
             mol.Atoms[5].ImplicitHydrogenCount = 0;
-            mol.AddStereoElement(new TetrahedralChirality(mol.Atoms[1],
+            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
                                                           new IAtom[]{mol.Atoms[0],  // oxygen (look from)
                                                                   mol.Atoms[2],  // Et
                                                                   mol.Atoms[4],  // Me
@@ -220,7 +220,7 @@ namespace NCDK.IO
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 0;
             mol.Atoms[5].ImplicitHydrogenCount = 3;
-            mol.AddStereoElement(new TetrahedralChirality(mol.Atoms[1],
+            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
                                                           new IAtom[]{mol.Atoms[0],  // oxygen (look from)
                                                                   mol.Atoms[2],  // Et
                                                                   mol.Atoms[4],  // H
@@ -250,7 +250,7 @@ namespace NCDK.IO
             mol.Atoms[2].ImplicitHydrogenCount = 2;
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 3;
-            mol.AddStereoElement(new TetrahedralChirality(mol.Atoms[1],
+            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
                                                           new IAtom[]{mol.Atoms[0],  // oxygen (look from)
                                                                   mol.Atoms[2],  // Et
                                                                   mol.Atoms[1],  // H (implicit)
@@ -278,7 +278,7 @@ namespace NCDK.IO
             mol.Atoms[2].ImplicitHydrogenCount = 2;
             mol.Atoms[3].ImplicitHydrogenCount = 3;
             mol.Atoms[4].ImplicitHydrogenCount = 3;
-            mol.AddStereoElement(new TetrahedralChirality(mol.Atoms[1],
+            mol.StereoElements.Add(new TetrahedralChirality(mol.Atoms[1],
                                                           new IAtom[]{mol.Atoms[0],  // oxygen (look from)
                                                                   mol.Atoms[1],  // H (implicit)
                                                                   mol.Atoms[2],  // Et
@@ -313,7 +313,7 @@ namespace NCDK.IO
             sgroup.Subscript = "n";
             sgroup.PutValue(SgroupKey.CtabConnectivity, "HH");
             sgroups.Add(sgroup);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, sgroups);
+            mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 SRU 0 ATOMS=(2 2 3) XBONDS=(2 1 3) LABEL=n CONNECT=HH\n"));
         }
@@ -345,7 +345,7 @@ namespace NCDK.IO
             sgroup.Type = SgroupType.CtabMultipleGroup;
             sgroup.Subscript = repeatAtoms.ToString();
             sgroups.Add(sgroup);
-            mol.SetProperty(CDKPropertyName.CTAB_SGROUPS, sgroups);
+            mol.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
             string res = WriteToStr(mol);
             Assert.IsTrue(res.Contains("M  V30 1 MUL 0 ATOMS=(50 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 2-\n"
                                                     + "M  V30 2 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 -\n"

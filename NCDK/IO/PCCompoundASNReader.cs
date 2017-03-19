@@ -37,7 +37,6 @@ namespace NCDK.IO
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @cdk.keyword file format, PubChem Compound ASN
     public class PCCompoundASNReader : DefaultChemObjectReader
     {
@@ -221,7 +220,7 @@ namespace NCDK.IO
                         if ("InChI".Equals(urn.Label))
                         {
                             string value = GetQuotedValue(line.Substring(line.IndexOf("value sval") + 10));
-                            molecule.SetProperty(CDKPropertyName.INCHI, value);
+                            molecule.SetProperty(CDKPropertyName.InChI, value);
                         }
                         else if ("SMILES".Equals(urn.Label) && "Canonical".Equals(urn.Name))
                         {

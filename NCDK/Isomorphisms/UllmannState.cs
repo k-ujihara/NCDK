@@ -27,18 +27,17 @@ using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A mutable state for matching graphs using the Ullmann algorithm {@cdk.cite
-     * Ullmann76}. There are a couple of modifications in this implementation.
-     * Firstly the mappings are stored in two vectors m1 and m2 and simply allows us
-     * to return {@link #Mapping()} without searching the compatibility matrix.
-     * Secondly the compatibility matrix is non-binary and instead of removing
-     * entries they are <i>marked</i>. The backtracking then resets these entries
-     * rather and avoids storing/copying the matrix between states.
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// A mutable state for matching graphs using the Ullmann algorithm {@cdk.cite
+    /// Ullmann76}. There are a couple of modifications in this implementation.
+    /// Firstly the mappings are stored in two vectors m1 and m2 and simply allows us
+    /// to return <see cref="Mapping"/>  without searching the compatibility matrix.
+    /// Secondly the compatibility matrix is non-binary and instead of removing
+    /// entries they are <i>marked</i>. The backtracking then resets these entries
+    /// rather and avoids storing/copying the matrix between states.
+    /// </summary>
+    // @author John May
+    // @cdk.module isomorphism
     internal sealed class UllmannState : State
     {
         /// <summary>Adjacency list representations.</summary>
@@ -62,19 +61,18 @@ namespace NCDK.Isomorphisms
         /// <summary>Indicates a vertex is unmapped.</summary>
         private static int UNMAPPED = -1;
 
-        /**
-         * Create a state for matching subgraphs using the Ullmann refinement
-         * procedure.
-         *
-         * @param container1  query container
-         * @param container2  target container
-         * @param g1          query container adjacency list
-         * @param g2          target container adjacency list
-         * @param bonds1      query container bond map
-         * @param bonds2      target container bond map
-         * @param atomMatcher method of matching atom semantics
-         * @param bondMatcher method of matching bond semantics
-         */
+        /// <summary>
+        /// Create a state for matching subgraphs using the Ullmann refinement
+        /// procedure.
+        /// </summary>
+        /// <param name="container1">query container</param>
+        /// <param name="container2">target container</param>
+        /// <param name="g1">query container adjacency list</param>
+        /// <param name="g2">target container adjacency list</param>
+        /// <param name="bonds1">query container bond map</param>
+        /// <param name="bonds2">target container bond map</param>
+        /// <param name="atomMatcher">method of matching atom semantics</param>
+        /// <param name="bondMatcher">method of matching bond semantics</param>
         public UllmannState(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
                 EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
@@ -103,14 +101,12 @@ namespace NCDK.Isomorphisms
         }
 
         /// <inheritdoc/>
-
         public override int NextN(int n)
         {
             return size; // we progress down the rows of the matrix
         }
 
         /// <inheritdoc/>
-
         public override int NextM(int n, int m)
         {
             for (int i = m + 1; i < g2.Length; i++)
@@ -119,21 +115,18 @@ namespace NCDK.Isomorphisms
         }
 
         /// <inheritdoc/>
-
         public override int NMax()
         {
             return g1.Length;
         }
 
         /// <inheritdoc/>
-
         public override int MMax()
         {
             return g2.Length;
         }
 
         /// <inheritdoc/>
-
         public override bool Add(int n, int m)
         {
             if (!matrix.Get1(n, m)) return false;
@@ -159,7 +152,6 @@ namespace NCDK.Isomorphisms
         }
 
         /// <inheritdoc/>
-
         public override void Remove(int n, int m)
         {
             size--;
@@ -167,17 +159,16 @@ namespace NCDK.Isomorphisms
             matrix.ResetRows(n, -(n + 1));
         }
 
-        /**
-         * Refines the compatibility removing any mappings which have now become
-         * invalid (since the last mapping). The matrix is refined from the row
-         * after the current {@code row} - all previous rows are fixed. If when
-         * refined we find a query vertex has no more candidates left in the target
-         * we can never reach a feasible matching and refinement is aborted (false
-         * is returned).
-         *
-         * @param row refine from here
-         * @return match is still feasible
-         */
+        /// <summary>
+        /// Refines the compatibility removing any mappings which have now become
+        /// invalid (since the last mapping). The matrix is refined from the row
+        /// after the current <paramref name="row"/> - all previous rows are fixed. If when
+        /// refined we find a query vertex has no more candidates left in the target
+        /// we can never reach a feasible matching and refinement is aborted (false
+        /// is returned).
+        /// </summary>
+        /// <param name="row">refine from here</param>
+        /// <returns>match is still feasible</returns>
         private bool Refine(int row)
         {
             int marking = -(row + 1);
@@ -207,15 +198,14 @@ namespace NCDK.Isomorphisms
             return true;
         }
 
-        /**
-         * Verify that for every vertex adjacent to n, there should be at least one
-         * feasible candidate adjacent which can be mapped. If no such candidate
-         * exists the mapping of n -> m is not longer valid.
-         *
-         * @param n query vertex
-         * @param m target vertex
-         * @return mapping is still valid
-         */
+        /// <summary>
+        /// Verify that for every vertex adjacent to n, there should be at least one
+        /// feasible candidate adjacent which can be mapped. If no such candidate
+        /// exists the mapping of n -> m is not longer valid.
+        /// </summary>
+        /// <param name="n">query vertex</param>
+        /// <param name="m">target vertex</param>
+        /// <returns>mapping is still valid</returns>
         private bool Verify(int n, int m)
         {
             foreach (var n_prime in g1[n])
@@ -234,13 +224,12 @@ namespace NCDK.Isomorphisms
             return true;
         }
 
-        /**
-         * Check if there are any feasible mappings left for the query vertex n. We
-         * scan the compatibility matrix to see if any value is > 0.
-         *
-         * @param n query vertex
-         * @return a candidate is present
-         */
+        /// <summary>
+        /// Check if there are any feasible mappings left for the query vertex n. We
+        /// scan the compatibility matrix to see if any value is > 0.
+        /// </summary>
+        /// <param name="n">query vertex</param>
+        /// <returns>a candidate is present</returns>
         private bool HasCandidate(int n)
         {
             //for (var i = 0; i < matrix.mCols; n++)
@@ -252,14 +241,12 @@ namespace NCDK.Isomorphisms
         }
 
         /// <inheritdoc/>
-
         public override int[] Mapping()
         {
             return Arrays.CopyOf(m1, m1.Length);
         }
 
         /// <inheritdoc/>
-
         public override int Count => size;
     }
 }

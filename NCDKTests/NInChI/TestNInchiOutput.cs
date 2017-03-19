@@ -40,7 +40,7 @@ namespace NCDK.NInChI
         public void TestGetInchi()
         {
             NInchiOutput output = new NInchiOutput(INCHI_RET.Unknown, "Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", null, null, null);
-            Assert.AreEqual("Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", output.Inchi);
+            Assert.AreEqual("Inchi=1/C6H6/c1-2-4-6-5-3-1/h1-6H", output.InChI);
         }
 
         /// <summary>

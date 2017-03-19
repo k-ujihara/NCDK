@@ -38,7 +38,7 @@ namespace <#= ns.NS #>
     // @cdk.keyword association
     // @cdk.keyword bond
     [Serializable]
-    public class Association : ElectronContainer, ICloneable, IChemObjectListener
+    public class Association : ElectronContainer, IChemObjectListener
     {
         /// <summary>
         /// The atoms which take part in the association.

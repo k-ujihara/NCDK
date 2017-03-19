@@ -32,25 +32,21 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author     Egon Willighagen
     // @cdk.created    2003-07-24
-    ///
     // @cdk.keyword    file format, MDL RXN
-    /// </summary>
     public class MDLRXNReader : DefaultChemObjectReader
     {
         TextReader input = null;
 
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
         /// </summary>
+        /// <param name="ins">The Reader to read from</param>
         public MDLRXNReader(TextReader ins)
             : this(ins, ChemObjectReaderModes.Relaxed)
         {
@@ -98,15 +94,13 @@ namespace NCDK.IO
         }
 
         /// <summary>
-         /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
-         /// this (from file, database, internet etc). If the specific implementation
-         /// does not support a specific IChemObject it will throw an Exception.
-         ///
-         /// <param name="object">The object that subclasses</param>
-         ///      IChemObject
-         /// <returns>The IChemObject read</returns>
-         // @exception  CDKException
-         /// </summary>
+        /// Takes an object which subclasses IChemObject, e.g.Molecule, and will read
+        /// this (from file, database, internet etc). If the specific implementation
+        /// does not support a specific <see cref="IChemObject"/> it will throw an Exception.
+        /// </summary>
+        /// <param name="obj">The object that subclasses <see cref="IChemObject"/></param>
+        /// <returns>The IChemObject read</returns>
+        /// <exception cref="CDKException"></exception>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -154,11 +148,10 @@ namespace NCDK.IO
         }
 
         /// <summary>
-       /// Read a ChemFile from a file in MDL RDF format.
-       ///
-       /// <param name="chemFile">The IChemFile</param>
-       /// <returns>The IChemFile that was read from the RDF file.</returns>
-       /// </summary>
+        /// Read a ChemFile from a file in MDL RDF format.
+        /// </summary>
+        /// <param name="chemFile">The IChemFile</param>
+        /// <returns>The IChemFile that was read from the RDF file.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
@@ -170,11 +163,10 @@ namespace NCDK.IO
         }
 
         /// <summary>
-       /// Read a IChemModel from a file in MDL RDF format.
-       ///
-       /// <param name="chemModel">The IChemModel</param>
-       /// <returns>The IChemModel that was read from the RDF file</returns>
-       /// </summary>
+        /// Read a IChemModel from a file in MDL RDF format.
+        /// </summary>
+        /// <param name="chemModel">The IChemModel</param>
+        /// <returns>The IChemModel that was read from the RDF file</returns>
         private IChemModel ReadChemModel(IChemModel chemModel)
         {
             IReactionSet setOfReactions = chemModel.ReactionSet;
@@ -444,9 +436,9 @@ namespace NCDK.IO
                 {
                     IAtom eductAtom = reactingSide.Atoms[i];
                     IAtom productAtom = producedSide.Atoms[j];
-                    if (eductAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING) != null
-                            && eductAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING).Equals(
-                                    productAtom.GetProperty<object>(CDKPropertyName.ATOM_ATOM_MAPPING)))
+                    if (eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping) != null
+                            && eductAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping).Equals(
+                                    productAtom.GetProperty<object>(CDKPropertyName.AtomAtomMapping)))
                     {
                         reaction.Mappings.Add(builder.CreateMapping(eductAtom, productAtom));
                         mappingCount++;

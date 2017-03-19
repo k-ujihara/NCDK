@@ -41,7 +41,7 @@ namespace NCDK.Aromaticities
     [TestClass()]
     public class ExocyclicAtomTypeModelTest
     {
-        private static ElectronDonation model = ElectronDonation.CdkAllowingExocyclic();
+        private static ElectronDonation model = ElectronDonation.CDKAllowingExocyclicModel;
 
         [TestMethod()]
         public void Benzene()

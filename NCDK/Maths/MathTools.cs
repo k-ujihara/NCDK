@@ -20,19 +20,16 @@ namespace NCDK.Maths
 {
     /// <summary>
     /// Class providing convenience methods for simple mathematical operations.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     public class MathTools
     {
-
         /// <summary>
-        /// Analog of Math.max that returns the largest double value in an array of doubles.
-        ///
+        /// Analog of <see cref="System.Math.Max(double, double)"/>  that returns the largest double value in an array of doubles.
+        /// </summary>
         /// <param name="values">the values to be searched for the largest value among them</param>
         /// <returns>the largest value among a set of given values</returns>
-        /// </summary>
         public static double Max(double[] values)
         {
             double max = values[0];
@@ -42,11 +39,10 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Analog of Math.min that returns the largest double value in an array of double.
-        ///
+        /// Analog of <see cref="System.Math.Min(double, double)"/> that returns the largest double value in an array of double.
+        /// </summary>
         /// <param name="values">the values to be searched for the smallest value among them</param>
         /// <returns>the smallest value among a set of given values</returns>
-        /// </summary>
         public static double Min(double[] values)
         {
             double min = values[0];
@@ -56,8 +52,8 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Analog of Math.max that returns the largest int value in an array of ints.
-        ///*/
+        /// Analog of <see cref="System.Math.Max(int, int)"/> that returns the largest int value in an array of ints.
+        /// </summary>
         public static int Max(int[] values)
         {
             int max = values[0];
@@ -72,8 +68,8 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Analog of Math.max that returns the largest int value in an array of ints.
-        ///*/
+        /// Analog of <see cref="System.Math.Min(int, int)"/> that returns the largest int value in an array of ints.
+        /// </summary>
         public static int Min(int[] values)
         {
             int min = values[0];

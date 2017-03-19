@@ -38,14 +38,12 @@ namespace NCDK.SMSD.Filters
 {
     /// <summary>
     /// Class that ranks MCS final solution according to the chemical rules.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class ChemicalFilters
     {
-
         private List<IDictionary<int, int>> allMCS = null;
         private IDictionary<int, int> firstSolution = null;
         private List<IDictionary<IAtom, IAtom>> allAtomMCS = null;
@@ -60,15 +58,11 @@ namespace NCDK.SMSD.Filters
         /// This class has all the three chemical filters supported by the SMSD.
         /// i.e ring matches, bond energy etc
         ///
-        /// <OL>
-        /// <lI>a: Bond energy,
-        /// <lI>b: Fragment count,
-        /// <lI>c: Stereo matches
-        /// </OL>
-        ///
-        /// <param name="allMCS">/// @param allAtomMCS</param>
-        /// <param name="firstSolution">/// @param firstAtomMCS</param>
-        /// <param name="sourceMol">/// @param targetMol</param>
+        /// <list type="bullet">
+        /// <item>a: Bond energy,</item>
+        /// <item>b: Fragment count,</item>
+        /// <item>c: Stereo matches</item>
+        /// </list> 
         /// </summary>
         public ChemicalFilters(List<IDictionary<int, int>> allMCS, List<IDictionary<IAtom, IAtom>> allAtomMCS,
                 IDictionary<int, int> firstSolution, IDictionary<IAtom, IAtom> firstAtomMCS, IAtomContainer sourceMol,
@@ -171,8 +165,8 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Sort MCS solution by stereo and bond type matches.
-        // @throws CDKException
         /// </summary>
+        /// <exception cref="CDKException"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByStereoAndBondMatch()
         {
@@ -309,9 +303,8 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Sort MCS solution by bond breaking energy.
-        ///
-        // @throws CDKException
         /// </summary>
+        /// <exception cref="CDKException"></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public void SortResultsByEnergies()
         {
@@ -927,7 +920,7 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Get stereo value as integer
-        /// <param name="bond">/// </summary></param>
+        /// </summary>
         public static int ConvertBondStereo(IBond bond)
         {
             int value = 0;
@@ -957,7 +950,7 @@ namespace NCDK.SMSD.Filters
 
         /// <summary>
         /// Get stereo value as Stereo enum
-        /// <param name="stereoValue">/// </summary></param>
+        /// </summary>
         public static BondStereo ConvertStereo(int stereoValue)
         {
             BondStereo stereo = BondStereo.None;

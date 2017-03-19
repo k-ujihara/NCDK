@@ -28,15 +28,14 @@ using System.Collections.Generic;
 namespace NCDK.SMSD.Tools
 {
     /// <summary>
-    ///
     /// Class that stores bond breaking/formation energy between two atoms.
-    ///
+    /// </summary>
+    /// <remarks>
     /// Reference: Huheey, pps. A-21 to A-34; T.L. Cottrell,
     /// "The Strengths of Chemical Bonds," 2nd ed., Butterworths, London, 1958;
     /// B. deB. Darwent, "National Standard Reference Data Series,
     /// "National Bureau of Standards, No. 31, Washington, DC, 1970;
     /// S.W. Benson, J. Chem. Educ., 42, 502 (1965).
-    ///
     ///
     /// Common Bond Energies (D) and Bond Lengths (r)
     ///
@@ -180,14 +179,12 @@ namespace NCDK.SMSD.Tools
     /// Kr-F (KrF2)    50    190
     /// Xe-O    84    175
     /// Xe-F    130    195
-    ///
+    /// </remarks>
     // @cdk.githash
     // @cdk.module smsd
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class BondEnergies
     {
-
         private static IDictionary<int, BondEnergy> bondEngergies = null;
         /// <summary>
         /// Singleton pattern instance for the Bond Energy class

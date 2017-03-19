@@ -33,7 +33,10 @@ namespace NCDK.QSAR
     // @cdk.githash
     public abstract class AbstractMolecularDescriptor : AbstractDescriptor, IMolecularDescriptor
     {
+        /// <inheritdoc/>
         public abstract IDescriptorResult DescriptorResultType { get; }
+
+        /// <inheritdoc/>
         public abstract DescriptorValue Calculate(IAtomContainer container);
     }
 }

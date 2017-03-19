@@ -23,39 +23,32 @@ using System;
 namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
-    ///  The calculation of sigma partial charges in sigma-bonded systems of an heavy atom
-    ///  was made by Marsilli-Gasteiger. It is implemented with the Partial Equalization
-    ///  of Orbital Electronegativity (PEOE).
-    ///
-    /// <p>This descriptor uses these parameters:
-    /// <table border="1">
-    ///   <tr>
-    ///     <td>Name</td>
-    ///     <td>Default</td>
-    ///     <td>Description</td>
-    ///   </tr>
-    ///   <tr>
-    ///     <td>maxIterations</td>
-    ///     <td>0</td>
-    ///     <td>Number of maximum iterations</td>
-    ///   </tr>
-    /// </table>
-    ///
-    ///
+    /// The calculation of sigma partial charges in sigma-bonded systems of an heavy atom
+    /// was made by Marsilli-Gasteiger. It is implemented with the Partial Equalization
+    /// of Orbital Electronegativity (PEOE).
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This descriptor uses these parameters:
+    /// <list type="table">
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term>maxIterations</term><term>0</term><term>Number of maximum iterations</term></item>
+    /// </list>
+    /// </para>
+    /// </remarks>
+    /// <seealso cref="GasteigerMarsiliPartialCharges"/>
     // @author      Miguel Rojas
     // @cdk.created 2006-04-15
     // @cdk.module  qsaratomic
     // @cdk.githash
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:partialSigmaCharge
-    /// <seealso cref="GasteigerMarsiliPartialCharges"/>
-    /// </summary>
     public class PartialSigmaChargeDescriptor : AbstractAtomicDescriptor
     {
         private static readonly string[] NAMES = { "partialSigmaCharge" };
 
         private GasteigerMarsiliPartialCharges peoe = null;
-        /// <summary>Number of maximum iterations*/
+        /// <summary>Number of maximum iterations</summary>
         private int maxIterations;
 
         /// <summary>

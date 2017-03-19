@@ -87,11 +87,11 @@ namespace NCDK.Hash
             IAtomContainer cid138898 = CID138898();
             IAtomContainer cid241107 = CID241107();
 
-            MoleculeHashGenerator basic = new HashGeneratorMaker().Depth(12).Elemental().Perturbed().Molecular();
+            IMoleculeHashGenerator basic = new HashGeneratorMaker().Depth(12).Elemental().Perturbed().Molecular();
             // basic equivalence method can't tell these apart
             Assert.AreEqual(basic.Generate(cid138898), basic.Generate(cid241107));
 
-            MoleculeHashGenerator cmplx = new HashGeneratorMaker().Depth(12).Elemental()
+            IMoleculeHashGenerator cmplx = new HashGeneratorMaker().Depth(12).Elemental()
                     .PerturbWith(new AllEquivalentCyclicSet()).Molecular();
 
             // complex equivalence method can tell these apart

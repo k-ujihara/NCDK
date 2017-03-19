@@ -28,22 +28,20 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with convenience methods that provide methods to manipulate
     /// MolecularFormulaRange's.
-    ///
+    /// </summary>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
     // @cdk.githash
-    /// </summary>
     public class MolecularFormulaRangeManipulator
     {
 
         /// <summary>
         /// Extract from a set of MolecularFormula the range of each each element found and
         /// put the element and occurrence in a new MolecularFormulaRange.
-        ///
+        /// </summary>
         /// <param name="mfSet">The set of molecularFormules to inspect</param>
         /// <returns>A MolecularFormulaRange containing range occurrence of the elements</returns>
-        /// </summary>
         public static MolecularFormulaRange GetRange(IMolecularFormulaSet mfSet)
         {
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
@@ -95,10 +93,9 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Returns the maximal occurrence of the IIsotope into IMolecularFormula
         /// from this MolelecularFormulaRange.
-        ///
+        /// </summary>
         /// <param name="mfRange">The MolecularFormulaRange to analyze</param>
         /// <returns>A IMolecularFormula containing the maximal occurrence of each isotope</returns>
-        /// </summary>
         public static IMolecularFormula GetMaximalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
             IMolecularFormula formula = builder.CreateMolecularFormula();
@@ -114,10 +111,9 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Returns the minimal occurrence of the IIsotope into IMolecularFormula
         /// from this MolelecularFormulaRange.
-        ///
+        /// </summary>
         /// <param name="mfRange">The MolecularFormulaRange to analyze</param>
         /// <returns>A IMolecularFormula containing the minimal occurrence of each isotope</returns>
-        /// </summary>
         public static IMolecularFormula GetMinimalFormula(MolecularFormulaRange mfRange, IChemObjectBuilder builder)
         {
             IMolecularFormula formula = builder.CreateMolecularFormula();

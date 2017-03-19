@@ -23,26 +23,21 @@
  */
 namespace NCDK.Hash
 {
-
-
     /// <summary>
     /// A fast pseudorandom number generator based on feedback shift registers.
-    ///
+    /// <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
+    /// <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift random number generators</a>
+    /// </summary>
     // @author John May
-    // @see <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
-    // @see <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift
-    ///      random number generators</a>
     // @cdk.githash
     // @cdk.module hash
-    /// </summary>
     internal sealed class Xorshift : Pseudorandom
     {
         /// <summary>
-        /// Generate the next pseudorandom number for the provided <i>seed</i>.
-        ///
+        /// Generate the next pseudorandom number for the provided <paramref name="seed"/>.
+        /// </summary>
         /// <param name="seed">random number seed</param>
         /// <returns>the next pseudorandom number</returns>
-        /// </summary>
         public override long Next(long seed)
         {
             seed = (long)((ulong)seed ^ (ulong)seed << 21);

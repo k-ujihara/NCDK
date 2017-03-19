@@ -420,10 +420,10 @@ namespace NCDK.IO
                 else
                     outputContainer = new QueryAtomContainer(molecule.Builder);
 
-                outputContainer.SetProperty(CDKPropertyName.TITLE, title);
-                outputContainer.SetProperty(CDKPropertyName.REMARK, remark);
+                outputContainer.SetProperty(CDKPropertyName.Title, title);
+                outputContainer.SetProperty(CDKPropertyName.Remark, remark);
 
-                if (outputContainer.IsEmpty)
+                if (outputContainer.IsEmpty())
                 {
                     outputContainer.SetAtoms(atoms);
                     outputContainer.SetBonds(bonds);
@@ -472,7 +472,7 @@ namespace NCDK.IO
                         // we adjust the winding as needed
                         if (hidx == 0 || hidx == 2)
                             winding = winding.Invert();
-                        molecule.AddStereoElement(new TetrahedralChirality(focus, carriers, winding));
+                        molecule.StereoElements.Add(new TetrahedralChirality(focus, carriers, winding));
                     }
                     Next_Parities:
                     ;
@@ -657,13 +657,13 @@ namespace NCDK.IO
         /// <summary>
         /// Parse an atom line from the atom block using the format: {@code
         /// xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee}
-        /// where: <ul> <li>x: x coordinate</li> <li>y: y coordinate</li> <li>z: z
-        /// coordinate</li> <li>a: atom symbol</li> <li>d: mass difference</li>
-        /// <li>c: charge</li> <li>s: stereo parity</li> <li>h: hydrogen count + 1
-        /// (not read - query)</li> <li>b: stereo care (not read - query)</li> <li>v:
-        /// valence</li> <li>H: H0 designator (not read - query)</li> <li>r: not
-        /// used</li> <li>i: not used</li> <li>m: atom reaction mapping</li> <li>n:
-        /// inversion/retention flag</li> <li>e: exact change flag</li> </ul>
+        /// where: <list type="bullet"> <item>x: x coordinate</item> <item>y: y coordinate</item> <item>z: z
+        /// coordinate</item> <item>a: atom symbol</item> <item>d: mass difference</item>
+        /// <item>c: charge</item> <item>s: stereo parity</item> <item>h: hydrogen count + 1
+        /// (not read - query)</item> <item>b: stereo care (not read - query)</item> <item>v:
+        /// valence</item> <item>H: H0 designator (not read - query)</item> <item>r: not
+        /// used</item> <item>i: not used</item> <item>m: atom reaction mapping</item> <item>n:
+        /// inversion/retention flag</item> <item>e: exact change flag</item> </list>
         /// 
         /// The parsing is strict and does not allow extra columns (i.e. NMR shifts)
         /// malformed input.
@@ -744,7 +744,7 @@ namespace NCDK.IO
 
             if (valence > 0 && valence < 16) atom.Valency = valence == 15 ? 0 : valence;
 
-            if (mapping != 0) atom.SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, mapping);
+            if (mapping != 0) atom.SetProperty(CDKPropertyName.AtomAtomMapping, mapping);
 
             return atom;
         }
@@ -752,14 +752,14 @@ namespace NCDK.IO
         /// <summary>
         /// Read a bond from a line in the MDL bond block. The bond block is
         /// formatted as follows, {@code 111222tttsssxxxrrrccc}, where:
-        /// <ul>
-        ///     <li>111: first atom number</li>
-        ///     <li>222: second atom number</li>
-        ///     <li>ttt: bond type</li>
-        ///     <li>xxx: bond stereo</li>
-        ///     <li>rrr: bond topology</li>
-        ///     <li>ccc: reaction center</li>
-        /// </ul>
+        /// <list type="bullet">
+        ///     <item>111: first atom number</item>
+        ///     <item>222: second atom number</item>
+        ///     <item>ttt: bond type</item>
+        ///     <item>xxx: bond stereo</item>
+        ///     <item>rrr: bond topology</item>
+        ///     <item>ccc: reaction center</item>
+        /// </list>
         /// </summary>
         /// <param name="line">the input line</param>
         /// <param name="builder">builder to create objects with</param>
@@ -851,7 +851,7 @@ namespace NCDK.IO
         /// <param name="input">input resource</param>
         /// <param name="container">the structure with atoms / bonds present</param>
         /// <param name="nAtoms">the number of atoms in the atoms block</param>
-        /// <exception cref="">low-level IO error</exception>
+        /// <exception cref="IOException">low-level IO error</exception>
         internal void ReadPropertiesFast(TextReader input, IAtomContainer container, int nAtoms)
         {
             string line;
@@ -887,7 +887,7 @@ namespace NCDK.IO
                     // an atom value is stored as comment on an atom
                     index = ReadMolfileInt(line, 3) - 1;
                     string comment = Strings.Substring(line, 7);
-                    container.Atoms[offset + index].SetProperty(CDKPropertyName.COMMENT, comment);
+                    container.Atoms[offset + index].SetProperty(CDKPropertyName.Comment, comment);
                 }
                 else if (key == PropertyKey.GROUP_ABBREVIATION)
                 {
@@ -958,7 +958,7 @@ namespace NCDK.IO
                         SpinMultiplicity multiplicity = SpinMultiplicity.OfValue(value);
 
                         for (int e = 0; e < multiplicity.SingleElectrons; e++)
-                            container.AddSingleElectron(container.Atoms[offset + index]);
+                            container.AddSingleElectronTo(container.Atoms[offset + index]);
                     }
                 }
                 else if (key == PropertyKey.M_RGP)
@@ -1014,7 +1014,7 @@ namespace NCDK.IO
                     }
                     index = ReadMolfileInt(line, 7) - 1;
                     string atomLabel = Strings.Substring(line, 11);  // DO NOT TRIM
-                    container.Atoms[offset + index].SetProperty(CDKPropertyName.ACDLABS_LABEL, atomLabel);
+                    container.Atoms[offset + index].SetProperty(CDKPropertyName.ACDLabsAtomLabel, atomLabel);
                 }
                 else if (key == PropertyKey.M_STY)
                 {
@@ -1262,7 +1262,7 @@ namespace NCDK.IO
                         newSgroup.AddParent(sgroupCpyList[sgroupOrgList.IndexOf(parent)]);
                     }
                 }
-                container.SetProperty(CDKPropertyName.CTAB_SGROUPS, sgroupCpyList);
+                container.SetProperty(CDKPropertyName.CtabSgroups, sgroupCpyList);
             }
         }
 
@@ -1610,7 +1610,7 @@ namespace NCDK.IO
         /// <param name="linecount">the current line count</param>
         /// <returns>an atom to add to a container</returns>
         /// <exception cref="CDKException">a CDK error occurred</exception>
-        /// <exception cref="">the isotopes file could not be read</exception>
+        /// <exception cref="System.IO.IOException">the isotopes file could not be read</exception>
         private IAtom ReadAtomSlow(string line, IChemObjectBuilder builder, int linecount)
         {
             IAtom atom;
@@ -1810,7 +1810,7 @@ namespace NCDK.IO
                     int reactionAtomID = int.Parse(reactionAtomIDString);
                     if (reactionAtomID != 0)
                     {
-                        atom.SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, reactionAtomID);
+                        atom.SetProperty(CDKPropertyName.AtomAtomMapping, reactionAtomID);
                     }
                 }
                 catch (Exception exception)
@@ -1850,9 +1850,8 @@ namespace NCDK.IO
         /// <param name="explicitValence">stores the explicit valence of each atom (bond order sum)</param>
         /// <param name="linecount">the current line count</param>
         /// <returns>a new bond</returns>
-        /// <exception cref="">the bond line could not be parsed</exception>
-        private IBond ReadBondSlow(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence,
-                int linecount)
+        /// <exception cref="CDKException">the bond line could not be parsed</exception>
+        private IBond ReadBondSlow(string line, IChemObjectBuilder builder, IAtom[] atoms, int[] explicitValence, int linecount)
         {
             int atom1 = int.Parse(Strings.Substring(line, 0, 3).Trim());
             int atom2 = int.Parse(Strings.Substring(line, 3, 3).Trim());
@@ -1979,8 +1978,8 @@ namespace NCDK.IO
         /// <param name="container">the container with the atoms / bonds loaded</param>
         /// <param name="nAtoms">the number of atoms in the atom block</param>
         /// <param name="linecount">the line count</param>
-        /// <exception cref="">internal low-level error</exception>
-        /// <exception cref="">the properties block could not be parsed</exception>
+        /// <exception cref="IOException">internal low-level error</exception>
+        /// <exception cref="CDKException">the properties block could not be parsed</exception>
         private void ReadPropertiesSlow(TextReader input, IAtomContainer container, int nAtoms, int linecount)
         {
             Trace.TraceInformation("Reading property block");
@@ -2098,7 +2097,7 @@ namespace NCDK.IO
                                 }
                                 for (int j = 0; j < spin.SingleElectrons; j++)
                                 {
-                                    container.Add(container.Builder.CreateSingleElectron(radical));
+                                    container.SingleElectrons.Add(container.Builder.CreateSingleElectron(radical));
                                 }
                             }
                         }
@@ -2168,7 +2167,7 @@ namespace NCDK.IO
                 {
                     int atomNumber = int.Parse(Strings.Substring(line, 3, 3).Trim());
                     IAtom atomWithComment = container.Atoms[atomNumber - 1];
-                    atomWithComment.SetProperty(CDKPropertyName.COMMENT, Strings.Substring(line, 7));
+                    atomWithComment.SetProperty(CDKPropertyName.Comment, Strings.Substring(line, 7));
                 }
 
                 if (!lineRead)
@@ -2205,10 +2204,9 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="input">input source</param>
         /// <param name="container">the container</param>
-        /// <exception cref="">an error occur whilst reading the input</exception>
+        /// <exception cref="System.IO.IOException">an error occur whilst reading the input</exception>
         internal static void ReadNonStructuralData(TextReader input, IAtomContainer container)
         {
-
             string line, header = null;
             bool wrap = false;
 
@@ -2216,22 +2214,18 @@ namespace NCDK.IO
 
             while (!EndOfRecord(line = input.ReadLine()))
             {
-
                 string newHeader = DataHeader(line);
 
                 if (newHeader != null)
                 {
-
                     if (header != null) container.SetProperty(header, data.ToString());
 
                     header = newHeader;
                     wrap = false;
                     data.Length = 0;
-
                 }
                 else
                 {
-
                     if (data.Length > 0 || !line.Equals(" ")) line = line.Trim();
 
                     if (string.IsNullOrEmpty(line)) continue;

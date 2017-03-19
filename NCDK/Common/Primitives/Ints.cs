@@ -36,17 +36,17 @@ namespace NCDK.Common.Primitives
         }
 
         /// <summary>
-        /// Returns an array containing the same values as {@code array}, but
-        /// guaranteed to be of a specified minimum length. If {@code array} already
-        /// has a length of at least {@code minLength}, it is returned directly.
-        /// Otherwise, a new array of size {@code minLength + padding} is returned,
-        /// containing the values of {@code array}, and zeroes in the remaining places.
+        /// Returns an array containing the same values as <paramref name="array"/>, but
+        /// guaranteed to be of a specified minimum length. If <paramref name="array"/> already
+        /// has a length of at least <paramref name="minLength"/>, it is returned directly.
+        /// Otherwise, a new array of size <paramref name="array"/> + <paramref name="padding"/> is returned,
+        /// containing the values of <paramref name="array"/>, and zeroes in the remaining places.
         /// </summary>
         /// <param name="array">the source array</param>
         /// <param name="minLength">the minimum length the returned array must guarantee</param>
         /// <param name="padding">an extra amount to "grow" the array by if growth is necessary</param>
-        /// <returns>an array containing the values of {@code array}, with guaranteed minimum length {@code minLength}</returns>
-        /// <exception cref="">if {@code minLength} or {@code padding} is negative</exception>
+        /// <returns>an array containing the values of <paramref name="array"/>, with guaranteed minimum length <paramref name="minLength"/></returns>
+        /// <exception cref="ArgumentException">if <paramref name="minLength"/> or <paramref name="padding"/> is negative</exception>
         public static int[] EnsureCapacity(
             int[] array, int minLength, int padding)
         {

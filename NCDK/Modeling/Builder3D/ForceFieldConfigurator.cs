@@ -32,20 +32,20 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Modeling.Builder3D
 {
-    /**
-     *  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
-     *  Therefore, it uses the class <see cref="MM2BasedParameterSetReader"/>.
-     *  private Dictionary parameterSet;
-     *  key=nameofdatafield+atomid1+;atomid2;atomxid
-     *
-     *  <p>MM2 and MMFF94 force field are implemented
-     *  With force field data it configures the cdk atom (assign atomtype, van der Waals radius, charge...)
-     *
-     * @author     chhoppe
-     * @cdk.created    2004-09-07
-     * @cdk.module     forcefield
-     * @cdk.githash
-     */
+    /// <summary>
+    ///  Reads in a force field configuration file, set the atom types into a vector, and the data into a hashtable
+    ///  Therefore, it uses the class <see cref="MM2BasedParameterSetReader"/>.
+    ///  private Dictionary parameterSet;
+    ///  key=nameofdatafield+atomid1+;atomid2;atomxid
+    ///
+    ///  <para>MM2 and MMFF94 force field are implemented
+    ///  With force field data it configures the cdk atom (assign atomtype, van der Waals radius, charge...)
+    /// </para>
+    /// </summary>
+    // @author     chhoppe
+    // @cdk.created    2004-09-07
+    // @cdk.module     forcefield
+    // @cdk.githash
     public class ForceFieldConfigurator
     {
         private string ffName = "mmff94";
@@ -76,12 +76,10 @@ namespace NCDK.Modeling.Builder3D
             return fftypes;
         }
 
-        /**
-         *  Sets the forceFieldType attribute of the ForceFieldConfigurator object
-         *
-         * @param  ffname  The new forceFieldType name
-         */
-
+        /// <summary>
+        ///  Sets the forceFieldType attribute of the ForceFieldConfigurator object
+        /// </summary>
+        /// <param name="ffname">The new forceFieldType name</param>
         public bool CheckForceFieldType(string ffname)
         {
             bool check = false;
@@ -101,11 +99,10 @@ namespace NCDK.Modeling.Builder3D
             return true;
         }
 
-        /**
-         *Constructor for the ForceFieldConfigurator object
-         *
-         * @param  ffname  name of the force field data file
-         */
+        /// <summary>
+        ///Constructor for the ForceFieldConfigurator object
+        /// </summary>
+        /// <param name="ffname">name of the force field data file</param>
         public void SetForceFieldConfigurator(string ffname, IChemObjectBuilder builder)
         {
             ffname = ffname.ToLowerInvariant();
@@ -159,29 +156,25 @@ namespace NCDK.Modeling.Builder3D
             //throw new CDKException("Data file for "+ffName+" force field could not be found");
         }
 
-        /**
-         *  Sets the atomTypes attribute of the ForceFieldConfigurator object
-         *
-         * @param  atomtypes  The new atomTypes
-         */
+        /// <summary>
+        ///  Sets the atomTypes attribute of the ForceFieldConfigurator object
+        /// </summary>
+        /// <param name="atomtypes">The new atomTypes</param>
         public void SetAtomTypes(List<IAtomType> atomtypes)
         {
             atomTypes = atomtypes;
         }
 
-        /**
-         *  Sets the parameters attribute of the ForceFieldConfigurator object
-         *
-         * @param  parameterset  The new parameter values
-         */
+        /// <summary>
+        ///  Sets the parameters attribute of the ForceFieldConfigurator object
+        /// </summary>
+        /// <param name="parameterset">The new parameter values</param>
         public void SetParameters(IDictionary<string, object> parameterset)
         {
             parameterSet = parameterset;
         }
 
-        /**
-         *  Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field
-         */
+        /// <summary>Sets the parameters attribute of the ForceFieldConfigurator object, default is mm2 force field</summary>
         public void SetMM2Parameters(IChemObjectBuilder builder)
         {
             try
@@ -205,30 +198,27 @@ namespace NCDK.Modeling.Builder3D
             atomTypes = mmff94.AtomTypes;
         }
 
-        /**
-         *  Gets the atomTypes attribute of the ForceFieldConfigurator object
-         *
-         * @return    The atomTypes vector
-         */
+        /// <summary>
+        ///  Gets the atomTypes attribute of the ForceFieldConfigurator object
+        /// </summary>
+        /// <returns>The atomTypes vector</returns>
         public IList<IAtomType> AtomTypes => atomTypes;
 
-        /**
-         *  Gets the parameterSet attribute of the ForceFieldConfigurator object
-         *
-         * @return    The parameterSet hashtable
-         */
+        /// <summary>
+        ///  Gets the parameterSet attribute of the ForceFieldConfigurator object
+        /// </summary>
+        /// <returns>The parameterSet hashtable</returns>
         public IDictionary<string, object> GetParameterSet()
         {
             return this.parameterSet;
         }
 
-        /**
-         *  Find the atomType for a id
-         *
-         * @param  ID                           Atomtype id of the forcefield
-         * @return                              The atomType
-         * @exception  NoSuchAtomTypeException  atomType is not known.
-         */
+        /// <summary>
+        ///  Find the atomType for a id
+        /// </summary>
+        /// <param name="ID">Atomtype id of the forcefield</param>
+        /// <returns>The atomType</returns>
+        /// <exception cref="NoSuchAtomTypeException"> atomType is not known.</exception>
         private IAtomType GetAtomType(string ID)
         {
             IAtomType at = null;
@@ -243,12 +233,11 @@ namespace NCDK.Modeling.Builder3D
             throw new NoSuchAtomTypeException("AtomType " + ID + " could not be found");
         }
 
-        /**
-         *  Method assigns atom types to atoms (calculates sssr and aromaticity)
-         *
-         *@return                sssrf set
-         *@exception  CDKException  Problems detecting aromaticity or making hose codes.
-         */
+        /// <summary>
+        ///  Method assigns atom types to atoms (calculates sssr and aromaticity)
+        /// </summary>
+        /// <returns>sssrf set</returns>
+        /// <exception cref="CDKException"> Problems detecting aromaticity or making hose codes.</exception>
         public IRingSet AssignAtomTyps(IAtomContainer molecule)
         {
             IAtom atom = null;
@@ -351,12 +340,11 @@ namespace NCDK.Modeling.Builder3D
             return ringSetMolecule;
         }
 
-        /**
-         *  Returns true if atom is in hetero ring system
-         *
-         *@param  ac  AtomContainer
-         *@return     true/false
-         */
+        /// <summary>
+        ///  Returns true if atom is in hetero ring system
+        /// </summary>
+        /// <param name="ac">AtomContainer</param>
+        /// <returns>true/false</returns>
         private bool IsHeteroRingSystem(IAtomContainer ac)
         {
             if (ac != null)
@@ -372,14 +360,13 @@ namespace NCDK.Modeling.Builder3D
             return false;
         }
 
-        /**
-         *  Assigns an atom type to an atom
-         *
-         * @param  atom  The atom to be aasigned
-         * @param  ID    the atom type id
-         * @exception  NoSuchAtomTypeException  atomType is not known
-         * @return       the assigned atom
-         */
+        /// <summary>
+        ///  Assigns an atom type to an atom
+        /// </summary>
+        /// <param name="atom">The atom to be aasigned</param>
+        /// <param name="ID">the atom type id</param>
+        /// <exception cref="NoSuchAtomTypeException"> atomType is not known</exception>
+        /// <returns>the assigned atom</returns>
         private IAtom SetAtom(IAtom atom, string ID)
         {
             IAtomType at = GetAtomType(ID);
@@ -399,10 +386,10 @@ namespace NCDK.Modeling.Builder3D
                 value = (double)data[0];
                 atom.Charge = value;
             }
-            var color = at.GetProperty<object>(CDKPropertyName.COLOR);
+            var color = at.GetProperty<object>(CDKPropertyName.Color);
             if (color != null)
             {
-                atom.SetProperty(CDKPropertyName.COLOR, color);
+                atom.SetProperty(CDKPropertyName.Color, color);
             }
             if (at.AtomicNumber != 0)
             {
@@ -428,14 +415,13 @@ namespace NCDK.Modeling.Builder3D
             return atom;
         }
 
-        /**
-         *  Configures an atom to a mm2 based atom type
-         *
-         * @param  atom              atom to be configured
-         * @param  hoseCode          the 4 sphere hose code of the atom
-         * @return                   atom
-         * @exception  NoSuchAtomTypeException  atomType is not known
-         */
+        /// <summary>
+        ///  Configures an atom to a mm2 based atom type
+        /// </summary>
+        /// <param name="atom">atom to be configured</param>
+        /// <param name="hoseCode">the 4 sphere hose code of the atom</param>
+        /// <returns>atom</returns>
+        /// <exception cref="NoSuchAtomTypeException"> atomType is not known</exception>
         public IAtom ConfigureMM2BasedAtom(IAtom atom, string hoseCode, bool hetRing)
         {
             //Debug.WriteLine("CONFIGURE MM2 ATOM");
@@ -639,14 +625,13 @@ namespace NCDK.Modeling.Builder3D
             return hosecode;
         }
 
-        /**
-         *  Configures an atom to a mmff94 based atom type
-         *
-         * @param  atom              atom to be configured
-         * @param  hoseCode          the 4 sphere hose code of the atom
-         * @return                   atom
-         * @exception  NoSuchAtomTypeException  atomType is not known
-         */
+        /// <summary>
+        ///  Configures an atom to a mmff94 based atom type
+        /// </summary>
+        /// <param name="atom">atom to be configured</param>
+        /// <param name="hoseCode">the 4 sphere hose code of the atom</param>
+        /// <returns>atom</returns>
+        /// <exception cref="NoSuchAtomTypeException"> atomType is not known</exception>
         public IAtom ConfigureMMFF94BasedAtom(IAtom atom, string hoseCode, bool isInHetRing)
         {
             //Debug.WriteLine("****** Configure MMFF94 AtomType ******");

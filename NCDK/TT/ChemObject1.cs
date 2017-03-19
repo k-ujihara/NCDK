@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -244,9 +229,9 @@ namespace NCDK.Default
         private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <summary>
-        /// A <see cref="IDictionary{object, object}"/> with the <see cref="IChemObject"/>'s properties.
+        /// A <see cref="IDictionary{T, T}"/> with the <see cref="IChemObject"/>'s properties.
         /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{object, object}"/></returns>
+        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         public virtual IDictionary<object, object> GetProperties() 
         {
@@ -505,9 +490,9 @@ namespace NCDK.Silent
         private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <summary>
-        /// A <see cref="IDictionary{object, object}"/> with the <see cref="IChemObject"/>'s properties.
+        /// A <see cref="IDictionary{T, T}"/> with the <see cref="IChemObject"/>'s properties.
         /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{object, object}"/></returns>
+        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
         /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
         public virtual IDictionary<object, object> GetProperties() 
         {

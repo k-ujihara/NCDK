@@ -20,19 +20,16 @@ namespace NCDK.IO.Listener
 {
     /// <summary>
     /// Allows monitoring of progress of file reader activities.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @author Bradley A. Smith <bradley@baysmith.com>
-    /// </summary>
     public interface IReaderListener : IChemObjectIOListener
     {
         /// <summary>
         /// Indicates that a new frame has been read.
-        ///
-        /// <param name="event">information about the event.</param>
         /// </summary>
-        void FrameRead(ReaderEvent evt);
+        /// <param name="event">information about the event.</param>
+        void FrameRead(ReaderEvent @event);
     }
 }

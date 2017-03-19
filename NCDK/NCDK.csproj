@@ -21,8 +21,11 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>0612,0618,0672,0164,0168</NoWarn>
+    <NoWarn>
+    </NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +35,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\NCDK.xml</DocumentationFile>
+    <NoWarn>0162,0164,0219,0612,0618,0672,0809,1591,3021,1573</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="dotNetRDF, Version=1.0.12.0, Culture=neutral, PublicKeyToken=6055ffe4c97cc780, processorArchitecture=MSIL">
@@ -126,7 +131,7 @@
     <Compile Include="Common\Hash\Crc32.cs" />
     <Compile Include="Common\Mathematics\BitsStreamGenerator.cs" />
     <Compile Include="Common\Mathematics\JavaRandom.cs" />
-    <Compile Include="Common\Mathematics\MersenneTwister.cs" />
+    <Compile Include="Maths\MersenneTwister.cs" />
     <Compile Include="Common\Mathematics\Vectors.cs" />
     <Compile Include="Common\Primitives\Ints.cs" />
     <Compile Include="Common\Primitives\Longs.cs" />
@@ -179,12 +184,16 @@
     <Compile Include="FaulonSignatures\VirtualGraphBuilder.cs" />
     <Compile Include="FaulonSignatures\VisitableColoredTree.cs" />
     <Compile Include="FaulonSignatures\VisitableDAG.cs" />
+    <Compile Include="Hash\BasicAtomEncoder1.cs">
+      <DependentUpon>BasicAtomEncoder.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Hybridization1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Hybridization.tt</DependentUpon>
     </Compile>
-    <Compile Include="IO\CML\CMLConstants.cs" />
     <Compile Include="LibIO\CML\CMLLabel.cs" />
     <Compile Include="LibIO\CML\CMLAtomArray.cs" />
     <Compile Include="LibIO\CML\CMLCrystal.cs" />
@@ -213,6 +222,10 @@
     <Compile Include="Events\ICDKChangeListener.cs" />
     <None Include="Beam\Snap.txt" />
     <None Include="FaulonSignatures\Snap.txt" />
+    <Content Include="Hash\BasicAtomEncoder.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BasicAtomEncoder1.cs</LastGenOutput>
+    </Content>
     <Content Include="LibIO\CML\CMLElementDefines.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementDefines.cs</LastGenOutput>
@@ -874,13 +887,13 @@
     <Compile Include="Isomorphisms\Matchers\IQueryAtomContainer.cs" />
     <Compile Include="Isomorphisms\Matchers\IQueryBond.cs" />
     <Compile Include="Graphs\Matrix\IGraphMatrix.cs" />
-    <Compile Include="Hash\AtomEncoder.cs" />
-    <Compile Include="Hash\AtomHashGenerator.cs" />
+    <Compile Include="Hash\IAtomEncoder.cs" />
+    <Compile Include="Hash\IAtomHashGenerator.cs" />
     <Compile Include="Hash\EnsembleHashGenerator.cs" />
-    <Compile Include="Hash\MoleculeHashGenerator.cs" />
+    <Compile Include="Hash\IMoleculeHashGenerator.cs" />
     <Compile Include="LibIO\CML\ICMLCustomizer.cs" />
     <Compile Include="CDKException.cs" />
-    <Compile Include="Intractable.cs" />
+    <Compile Include="IntractableException.cs" />
     <Compile Include="NoSuchAtomException.cs" />
     <Compile Include="NoSuchAtomTypeException.cs" />
   </ItemGroup>
@@ -1131,7 +1144,6 @@
     <Compile Include="Hash\AbstractHashGenerator.cs" />
     <Compile Include="Hash\AllEquivalentCyclicSet.cs" />
     <Compile Include="Hash\AtomSuppression.cs" />
-    <Compile Include="Hash\BasicAtomEncoder.cs" />
     <Compile Include="Hash\BasicAtomHashGenerator.cs" />
     <Compile Include="Hash\BasicMoleculeHashGenerator.cs" />
     <Compile Include="Hash\ConjugatedAtomEncoder.cs" />
@@ -1229,8 +1241,8 @@
     <Compile Include="IO\Formats\HINFormat.cs" />
     <Compile Include="IO\Formats\IChemFormat.cs" />
     <Compile Include="IO\Formats\IChemFormatMatcher.cs" />
-    <Compile Include="IO\Formats\INChIFormat.cs" />
-    <Compile Include="IO\Formats\INChIPlainTextFormat.cs" />
+    <Compile Include="IO\Formats\InChIFormat.cs" />
+    <Compile Include="IO\Formats\InChIPlainTextFormat.cs" />
     <Compile Include="IO\Formats\IResourceFormat.cs" />
     <Compile Include="IO\Formats\JaguarFormat.cs" />
     <Compile Include="IO\Formats\JMEFormat.cs" />
@@ -1301,10 +1313,10 @@
     <Compile Include="IO\IChemObjectWriter.cs" />
     <Compile Include="IO\Setting\ISetting.cs" />
     <Compile Include="IO\ISimpleChemObjectReader.cs" />
-    <Compile Include="IO\INChIPlainTextReader.cs" />
-    <Compile Include="IO\INChIReader.cs" />
-    <Compile Include="IO\INChI\INChIContentProcessorTool.cs" />
-    <Compile Include="IO\INChI\INChIHandler.cs" />
+    <Compile Include="IO\InChIPlainTextReader.cs" />
+    <Compile Include="IO\InChIReader.cs" />
+    <Compile Include="IO\InChI\InChIContentProcessorTool.cs" />
+    <Compile Include="IO\InChI\InChIHandler.cs" />
     <Compile Include="IO\Iterator\DefaultIteratingChemObjectReader.cs" />
     <Compile Include="IO\Iterator\IIteratingChemObjectReader.cs" />
     <Compile Include="IO\Iterator\IteratingMDLConformerReader.cs" />
@@ -1825,7 +1837,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphs\Invariant\primes.dat" />
-    <EmbeddedResource Include="IO\structure-with-radical.mol" />
     <EmbeddedResource Include="Layout\chebi-ring-templates.smi" />
     <EmbeddedResource Include="Layout\custom-templates.smi" />
     <EmbeddedResource Include="Layout\macro.smi" />
@@ -1878,6 +1889,10 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -34,22 +34,18 @@ namespace NCDK.IO.Iterator
     /// in the SMILES file, without being read into memory all. Suitable
     /// for very large SMILES files. These SMILES files are expected to have one
     /// molecule on each line. If a line could not be parsed and empty molecule is
-    /// returned and the property {@link #BAD_SMILES_INPUT} is set to the attempted
+    /// returned and the property <see cref="BAD_SMILES_INPUT"/> is set to the attempted
     /// input. The error is also logged.
-    ///
-    /// <p>For parsing each SMILES it still uses the normal SMILESReader.
-    ///
+    /// 
+    /// <para>For parsing each SMILES it still uses the normal <see cref="SMILESReader"/>.</para>
+    /// </summary>
+    /// <seealso cref="SMILESReader"/>
     // @cdk.module smiles
     // @cdk.githash
     // @cdk.iooptions
-    ///
-    // @see org.openscience.cdk.io.SMILESReader
-    ///
     // @author     Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.created    2004-12-16
-    ///
     // @cdk.keyword    file format, SMILES
-    /// </summary>
     public class IteratingSMILESReader : DefaultIteratingChemObjectReader<IAtomContainer>
     {
         private TextReader input;
@@ -62,12 +58,11 @@ namespace NCDK.IO.Iterator
 
         /// <summary>
         /// Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
-        /// <param name="builder">The builder to use</param>
-        /// @see org.openscience.cdk.Default.ChemObjectBuilder
-        /// @see org.openscience.cdk.silent.Silent.ChemObjectBuilder
         /// </summary>
+        /// <param name="ins">The Reader to read from</param>
+        /// <param name="builder">The builder to use</param>
+        /// <seealso cref="Default.ChemObjectBuilder"/>
+        /// <seealso cref="Silent.ChemObjectBuilder"/>
         public IteratingSMILESReader(TextReader ins, IChemObjectBuilder builder)
         {
             sp = new SmilesParser(builder);
@@ -76,28 +71,24 @@ namespace NCDK.IO.Iterator
         }
 
         /// <summary>
-        /// Constructs a new IteratingSMILESReader that can read Molecule from a given Stream and IChemObjectBuilder.
-        ///
-        /// <param name="in">The input stream</param>
-        /// <param name="builder">The builder</param>
+        /// Constructs a new <see cref="IteratingSMILESReader"/> that can read Molecule from a given <see cref="Stream"/>  and <see cref="IChemObjectBuilder"/> .
         /// </summary>
+        /// <param name="ins">The input stream</param>
+        /// <param name="builder">The builder</param>
         public IteratingSMILESReader(Stream ins, IChemObjectBuilder builder)
            : this(new StreamReader(ins), builder)
         { }
 
         /// <summary>
         /// Get the format for this reader.
-        ///
-        /// <returns>An instance of {@link NCDK.IO.Formats.SMILESFormat}</returns>
         /// </summary>
+        /// <returns>An instance of <see cref="SMILESFormat"/></returns>
         public override IResourceFormat Format => SMILESFormat.Instance;
 
         /// <summary>
         /// Checks whether there is another molecule to read.
-        ///
-        /// <returns>true if there are molecules to read, false otherwise</returns>
         /// </summary>
-
+        /// <returns>true if there are molecules to read, false otherwise</returns>
         public override IEnumerator<IAtomContainer> GetEnumerator()
         {
             string line;
@@ -109,7 +100,7 @@ namespace NCDK.IO.Iterator
                 {
                     string suffix = Suffix(line);
                     nextMolecule = ReadSmiles(line);
-                    nextMolecule.SetProperty(CDKPropertyName.TITLE, suffix);
+                    nextMolecule.SetProperty(CDKPropertyName.Title, suffix);
                 }
                 catch (Exception exception)
                 {
@@ -125,10 +116,9 @@ namespace NCDK.IO.Iterator
         /// <summary>
         /// Obtain the suffix after a line containing SMILES. The suffix follows
         /// any ' ' or '\t' termination characters.
-        ///
+        /// </summary>
         /// <param name="line">input line</param>
         /// <returns>the suffix - or an empty line</returns>
-        /// </summary>
         private string Suffix(string line)
         {
             for (int i = 0; i < line.Length; i++)
@@ -141,10 +131,9 @@ namespace NCDK.IO.Iterator
 
         /// <summary>
         /// Read the SMILES given in the input line - or return an empty container.
-        ///
+        /// </summary>
         /// <param name="line">input line</param>
         /// <returns>the read container (or an empty one)</returns>
-        /// </summary>
         private IAtomContainer ReadSmiles(string line)
         {
             try
@@ -162,10 +151,7 @@ namespace NCDK.IO.Iterator
 
         /// <summary>
         /// Close the reader.
-        ///
-        // @ if there is an error during closing
         /// </summary>
-
         public override void Close()
         {
             if (input != null) input.Close();

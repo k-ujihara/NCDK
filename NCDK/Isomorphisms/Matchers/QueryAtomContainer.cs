@@ -20,10 +20,8 @@ using System.Text;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /**
-     * @cdk.module  isomorphism
-     * @cdk.githash
-     */
+    // @cdk.module  isomorphism
+    // @cdk.githash
     public class QueryAtomContainer : Default.AtomContainer, IQueryAtomContainer
     {
         public override string ToString()
@@ -35,30 +33,24 @@ namespace NCDK.Isomorphisms.Matchers
             return sb.ToString();
         }
 
-        /**
-         * Constructs an AtomContainer with a copy of the atoms and electronContainers
-         * of another AtomContainer (A shallow copy, i.e., with the same objects as in
-         * the original AtomContainer).
-         *
-         * @param  container  An AtomContainer to copy the atoms and electronContainers from
-         */
+        /// <summary>
+        /// Constructs an AtomContainer with a copy of the atoms and electronContainers
+        /// of another AtomContainer (A shallow copy, i.e., with the same objects as in
+        /// the original AtomContainer).
+        /// </summary>
+        /// <param name="container">An AtomContainer to copy the atoms and electronContainers from</param>
+        /// <param name="builder"></param>
         public QueryAtomContainer(IAtomContainer container, IChemObjectBuilder builder)
             : base(container)
         {
             this.Builder = builder;
         }
 
-        /**
-         *  Constructs an empty AtomContainer that will contain a certain number of
-         *  atoms and electronContainers. It will set the starting array lengths to the
-         *  defined values, but will not create any Atom or ElectronContainer's.
-         *
-         *@param  atomCount        Number of atoms to be in this container
-         *@param  bondCount        Number of bonds to be in this container
-         *@param  lpCount          Number of lone pairs to be in this container
-         *@param  seCount          Number of single electrons to be in this container
-         *
-         */
+        /// <summary>
+        ///  Constructs an empty AtomContainer that will contain a certain number of
+        ///  atoms and electronContainers. It will set the starting array lengths to the
+        ///  defined values, but will not create any Atom or ElectronContainer's.
+        /// </summary>
         public QueryAtomContainer(IChemObjectBuilder builder)
             : base()
         {

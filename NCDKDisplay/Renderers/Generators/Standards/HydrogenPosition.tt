@@ -20,8 +20,5 @@ namespace NCDK.Renderers.Generators.Standards
             true
         ); 
 #>
-        public string Name => ToString();
-
-        public bool IsUnset => this.Ordinal == 0;
     }
 }

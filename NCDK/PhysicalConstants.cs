@@ -1,4 +1,4 @@
-/* Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
+﻿/* Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -28,16 +28,16 @@ namespace NCDK
         /// <summary>
         /// Mass of a proton.
         /// </summary>
-        public const double MASS_PROTON = 1.6726485E-27;
+        public const double MassProton = 1.6726485E-27;
 
          /// <summary>
          /// Mass of an electron.
          /// </summary>
-        public const double MASS_ELECTRON = 9.109534E-31;
+        public const double MassElectron = 9.109534E-31;
 
-         /// <summary>
-         /// Factor for the conversion of Bohr's to Angstrom's.
-         /// </summary>
-        public const double BOHR_TO_ANGSTROM = 0.529177249;
+        /// <summary>
+        /// Factor for the conversion of Bohr's to Ångström's.
+        /// </summary>
+        public const double BohrToAngstrom = 0.529177249;
     }
 }

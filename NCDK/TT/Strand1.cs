@@ -1,20 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2015-2017  Kazuya Ujihara
 
@@ -88,7 +73,7 @@ namespace NCDK.Default
         /// atom gets added to a Monomer of type "Unknown" in a Strand of type  "Unknown".
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
-        public override void Add(IAtom oAtom)
+        public virtual void AddAtom(IAtom oAtom)
         {
             AddAtom(oAtom, GetMonomer(""));
         }
@@ -101,13 +86,13 @@ namespace NCDK.Default
         public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
-            base.Add(oAtom);
+            Atoms.Add(oAtom);
             if (atomCount != base.Atoms.Count)
             {
                 if (oMonomer == null)
                     oMonomer = GetMonomer("");
 
-                oMonomer.Add(oAtom);
+                oMonomer.Atoms.Add(oAtom);
                 if (!monomers.ContainsKey(oMonomer.MonomerName))
                     monomers.Add(oMonomer.MonomerName, oMonomer);
             }
@@ -238,7 +223,7 @@ namespace NCDK.Silent
         /// atom gets added to a Monomer of type "Unknown" in a Strand of type  "Unknown".
         /// </summary>
         /// <param name="oAtom">The atom to add</param>
-        public override void Add(IAtom oAtom)
+        public virtual void AddAtom(IAtom oAtom)
         {
             AddAtom(oAtom, GetMonomer(""));
         }
@@ -251,13 +236,13 @@ namespace NCDK.Silent
         public virtual void AddAtom(IAtom oAtom, IMonomer oMonomer)
         {
             int atomCount = base.Atoms.Count;
-            base.Add(oAtom);
+            Atoms.Add(oAtom);
             if (atomCount != base.Atoms.Count)
             {
                 if (oMonomer == null)
                     oMonomer = GetMonomer("");
 
-                oMonomer.Add(oAtom);
+                oMonomer.Atoms.Add(oAtom);
                 if (!monomers.ContainsKey(oMonomer.MonomerName))
                     monomers.Add(oMonomer.MonomerName, oMonomer);
             }

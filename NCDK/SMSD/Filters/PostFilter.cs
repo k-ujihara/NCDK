@@ -30,27 +30,23 @@ namespace NCDK.SMSD.Filters
 {
     /// <summary>
     /// Class that cleans redundant mappings from the solution set.
-    /// <OL>
-    ///
-    /// <lI>1: Stereo match, bond type, ring etc,
-    /// <lI>2: Fragment size,
-    /// <lI>3: Bond breaking energy
-    ///
-    /// </OL>
+    /// <list type="bullet">
+    /// <item>1: Stereo match, bond type, ring etc,</item>
+    /// <item>2: Fragment size,</item>
+    /// <item>3: Bond breaking energy</item>
+    /// </list> 
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class PostFilter
     {
-
         /// <summary>
-        ///
         /// Creates a new instance of Post Filter and removes
         /// redundant Mapping(s).
-        ///
-        /// <param name="mappings">/// <returns>Filtered non-redundant mappings</param></returns>
         /// </summary>
+        /// <param name="mappings"></param>
+        /// <returns>Filtered non-redundant mappings</returns>
         public static IList<IDictionary<int, int>> Filter(IList<IList<int>> mappings)
         {
             FinalMappings finalMappings = FinalMappings.Instance;
@@ -80,10 +76,6 @@ namespace NCDK.SMSD.Filters
             return false;
         }
 
-        /// <summary>
-        ///
-        /// <param name="mappingOrg">/// @return</param>
-        /// </summary>
         private static List<IDictionary<int, int>> RemoveRedundantMapping(IList<IList<int>> mappingOrg)
         {
             List<IDictionary<int, int>> nonRedundantMapping = new List<IDictionary<int, int>>();

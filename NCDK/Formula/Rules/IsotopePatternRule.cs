@@ -16,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -55,8 +56,7 @@ namespace NCDK.Formula.Rules
         /// <summary>
         /// Constructor for the <see cref="IsotopePatternRule"/> object.
         /// </summary>
-        /// <exception cref="IOException">If an error occurs when reading atom type information</exception>
-        /// <exception cref="">If an error occurs during tom typing</exception>
+        /// <exception cref="System.IO.IOException">If an error occurs when reading atom type information</exception>
         public IsotopePatternRule()
         {
             isotopeGe = new IsotopePatternGenerator(0.01);
@@ -74,9 +74,9 @@ namespace NCDK.Formula.Rules
                 // return the parameters as used for the rule validation
                 var parameters = new object[]
                 {
-                // fixed CDK
-                pattern == null ? (IList<double[]>)null : pattern.Isotopes.Select(n => new double[] { n.Mass, n.Intensity }).ToList(),
-                toleranceMass
+                    // fixed CDK
+                    pattern == null ? (IList<double[]>)null : pattern.Isotopes.Select(n => new double[] { n.Mass, n.Intensity }).ToList(),
+                    toleranceMass
                 };
                 return parameters;
             }
@@ -97,13 +97,13 @@ namespace NCDK.Formula.Rules
                 isotopePatternSimilarity.Tolerance = (double)value[1];
             }
         }
-        
+
         /// <summary>
         /// Validate the isotope pattern of this <see cref="IMolecularFormula"/>. Important, first
         /// you have to add with the <see cref="Parameters"/> a <see cref="IMolecularFormulaSet"/>
         /// which represents the isotope pattern to compare.
         /// </summary>
-        /// <param name="formula">arameter is the IMolecularFormula</param>
+        /// <param name="formula">arameter is the <see cref="IMolecularFormula"/></param>
         /// <returns>A double value meaning 1.0 True, 0.0 False</returns>
         public double Validate(IMolecularFormula formula)
         {

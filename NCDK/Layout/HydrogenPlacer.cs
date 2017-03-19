@@ -31,27 +31,24 @@ namespace NCDK.Layout
     /// This is a wrapper class for some existing methods in AtomPlacer. It helps you
     /// to layout 2D and 3D coordinates for hydrogen atoms added to a molecule which
     /// already has coordinates for the rest of the atoms.
-    ///
-    /// <blockquote><code>
+    /// </summary>
+    /// <example><code>
     /// IAtomContainer container      = ...;
     /// HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
     /// hydrogenPlacer.PlaceHydrogens2D(container, 1.5);
-    /// </code></blockquote>
-    ///
+    /// </code></example>
+    /// <seealso cref="AtomPlacer"/>
     // @author Christoph Steinbeck
     // @cdk.created 2003-08-06
     // @cdk.module sdg
     // @cdk.githash
-    /// <seealso cref="AtomPlacer"/>
-    /// </summary>
     public sealed class HydrogenPlacer
     {
         /// <summary>
         /// Place all hydrogens connected to atoms which have already been laid out.
-        ///
+        /// </summary>
         /// <param name="container">atom container</param>
         /// <param name="bondLength">bond length to user</param>
-        /// </summary>
         public void PlaceHydrogens2D(IAtomContainer container, double bondLength)
         {
             Debug.WriteLine("placing hydrogens on all atoms");
@@ -69,14 +66,11 @@ namespace NCDK.Layout
         /// <summary>
         /// Place hydrogens connected to the given atom using the average bond length
         /// in the container.
-        ///
+        /// </summary>
         /// <param name="container">atom container of which <i>atom</i> is a member</param>
         /// <param name="atom">the atom of which to place connected hydrogens</param>
-        /// <exception cref="ArgumentException">if the <i>atom</i> does not have 2d</exception>
-        ///                                  coordinates
-        /// <seealso cref="PlaceHydrogens2D(IAtomContainer,
-        ///      double)"/>
-        /// </summary>
+        /// <exception cref="ArgumentException">if the <i>atom</i> does not have 2d coordinates</exception>
+        /// <seealso cref="PlaceHydrogens2D(IAtomContainer, double)"/>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom)
         {
             double bondLength = GeometryUtil.GetBondLengthAverage(container);
@@ -84,19 +78,16 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Place hydrogens connected to the provided atom <i>atom</i> using the
-        /// specified <i>bondLength</i>.
-        ///
-        /// <param name="container">atom container</param>
-        /// <param name="bondLength">bond length to user</param>
-        /// <exception cref="ArgumentException">thrown if the <i>atom</i> or</exception>
-        ///                                  <i>container</i> was null or the atom
-        ///                                  has connected atoms which have not been
-        ///                                  placed.
+        /// Place hydrogens connected to the provided atom <paramref name="atom"/> using the
+        /// specified <paramref name="bondLength"/>.
         /// </summary>
+        /// <param name="container">atom container</param>
+        /// <param name="atom"></param>
+        /// <param name="bondLength">bond length to user</param>
+        /// <exception cref="ArgumentException">thrown if the <paramref name="atom"/> or 
+        /// <i>container</i> was null or the atom has connected atoms which have not been placed.</exception>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom, double bondLength)
         {
-
             if (container == null) throw new ArgumentException("cannot place hydrogens, no container provided");
             if (atom.Point2D == null)
                 throw new ArgumentException("cannot place hydrogens on atom without coordinates");

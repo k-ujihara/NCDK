@@ -63,7 +63,7 @@ namespace NCDK.SMSD.Algorithms.Single
 
         /// <summary>
         /// Test of set method, of class SingleMappingHandler.
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         // @throws IOException
         /// </summary>
         [TestMethod()]

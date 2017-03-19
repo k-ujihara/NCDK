@@ -36,25 +36,21 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Adds implicit hydrogens and specifies valency using the MDL valence model.
-    ///
+    /// <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens: taking liberties with valence</a>
+    /// </summary>
     // @author John May
     // @cdk.module io
-    // @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
-    ///      and Implicit Hydrogens: taking liberties with valence</a>
-    /// </summary>
     internal sealed class MDLValence
     {
         private MDLValence() { }
 
         /// <summary>
         /// Apply the MDL valence model to the provided atom container.
-        ///
+        /// </summary>
         /// <param name="container">an atom container loaded from an MDL format</param>
         /// <returns>the container (for convenience)</returns>
-        /// </summary>
         public static IAtomContainer Apply(IAtomContainer container)
         {
-
             int n = container.Atoms.Count;
 
             int[] valences = new int[n];
@@ -109,17 +105,17 @@ namespace NCDK.IO
         /// (bond order sum) return the implicit valence for that atom. This valence
         /// is from the MDL valence model which was decoded by NextMove Software and
         /// licenced as below.
-        ///
-        /// <blockquote> $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
+        /// </summary>
+        /// <remarks>
+        /// $Id: MDLValence.h 2288 2012-11-26 03:39:27Z glandrum $
         ///
         /// Copyright (C) 2012 NextMove Software
         ///
-        // @@ All Rights Reserved @@ This file is part of the RDKit. The contents
+        /// @@ All Rights Reserved @@ This file is part of the RDKit. The contents
         /// are covered by the terms of the BSD license which is included in the file
-        /// license.txt, found at the root of the RDKit source tree. </blockquote>
-        /// @see <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit
-        ///      and Implicit Hydrogens taking liberties with valence</a>
-        /// </summary>
+        /// license.txt, found at the root of the RDKit source tree.
+        /// <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens taking liberties with valence</a>
+        /// </remarks>
         public static int ImplicitValence(int elem, int q, int val)
         {
             switch (elem)

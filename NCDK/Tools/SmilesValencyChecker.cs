@@ -32,16 +32,14 @@ namespace NCDK.Tools
     /// <summary>
     /// Small customization of ValencyHybridChecker suggested by Todd Martin
     /// specially tuned for SMILES parsing.
-    ///
+    /// </summary>
     // @author       Egon Willighagen
     // @cdk.created  2004-06-12
     // @cdk.keyword  atom, valency
     // @cdk.module   valencycheck
     // @cdk.githash
-    /// </summary>
     public class SmilesValencyChecker : IValencyChecker, IDeduceBondOrderTool
     {
-
         private string atomTypeList = null;
         protected AtomTypeFactory structgenATF;
 
@@ -57,12 +55,9 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Saturates a molecule by setting appropriate bond orders.
-        ///
-        // @cdk.keyword            bond order, calculation
-        ///
-        // @cdk.created 2003-10-03
         /// </summary>
-
+        // @cdk.keyword            bond order, calculation
+        // @cdk.created 2003-10-03
         public void Saturate(IAtomContainer atomContainer)
         {
             Trace.TraceInformation("Saturating atomContainer by adjusting bond orders...");
@@ -174,9 +169,8 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Tries to saturate a bond by increasing its bond orders by 1.0.
-        ///
-        /// <returns>true if the bond could be increased</returns>
         /// </summary>
+        /// <returns>true if the bond could be increased</returns>
         public bool SaturateByIncreasingBondOrder(IBond bond, IAtomContainer atomContainer)
         {
             IAtom[] atoms = BondManipulator.GetAtomArray(bond);
@@ -232,7 +226,6 @@ namespace NCDK.Tools
         /// <summary>
         /// Determines of all atoms on the AtomContainer are saturated.
         /// </summary>
-
         public bool IsSaturated(IAtomContainer container)
         {
             return AllSaturated(container);

@@ -1,7 +1,7 @@
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class MoleculeQuotientGraph : AbstractQuotientGraph
     {

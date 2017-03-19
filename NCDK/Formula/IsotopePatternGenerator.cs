@@ -40,7 +40,7 @@ namespace NCDK.Formula
         private IsotopeFactory isoFactory;
         private IsotopePattern abundance_Mass = null;
 
-        /// <summary> Minimal abundance of the isotopes to be added in the combinatorial search.*/
+       /// <summary> Minimal abundance of the isotopes to be added in the combinatorial search.</summary>
         private double minAbundance = .1;
 
         /// <summary>

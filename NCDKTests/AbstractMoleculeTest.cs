@@ -58,22 +58,22 @@ namespace NCDK
             IAtom c2 = acetone.Builder.CreateAtom("C");
             IAtom o = acetone.Builder.CreateAtom("O");
             IAtom c3 = acetone.Builder.CreateAtom("C");
-            acetone.Add(c1);
-            acetone.Add(c2);
-            acetone.Add(c3);
-            acetone.Add(o);
+            acetone.Atoms.Add(c1);
+            acetone.Atoms.Add(c2);
+            acetone.Atoms.Add(c3);
+            acetone.Atoms.Add(o);
             IBond b1 = acetone.Builder.CreateBond(c1, c2, BondOrder.Single);
             IBond b2 = acetone.Builder.CreateBond(c1, o, BondOrder.Double);
             IBond b3 = acetone.Builder.CreateBond(c1, c3, BondOrder.Single);
-            acetone.Add(b1);
-            acetone.Add(b2);
-            acetone.Add(b3);
+            acetone.Bonds.Add(b1);
+            acetone.Bonds.Add(b2);
+            acetone.Bonds.Add(b3);
 
             // add lone pairs on oxygen
             ILonePair lp1 = acetone.Builder.CreateLonePair(o);
             ILonePair lp2 = acetone.Builder.CreateLonePair(o);
-            acetone.Add(lp1);
-            acetone.Add(lp2);
+            acetone.LonePairs.Add(lp1);
+            acetone.LonePairs.Add(lp2);
 
             Assert.AreEqual(2, acetone.LonePairs.Count);
         }

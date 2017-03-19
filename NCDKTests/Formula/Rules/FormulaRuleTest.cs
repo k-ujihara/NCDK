@@ -24,9 +24,8 @@ namespace NCDK.Formula.Rules
 {
     /// <summary>
     /// Tests for formula restriction rules.
-    ///
-    // @cdk.module test-formula
     /// </summary>
+    // @cdk.module test-formula
     [TestClass()]
     public abstract class FormulaRuleTest : CDKTestCase
     {
@@ -47,18 +46,20 @@ namespace NCDK.Formula.Rules
 
         /// <summary>
         /// Makes sure that the extending class has set the super.rule.
+        /// </summary>
+        /// <example>
         /// Each extending class should have this bit of code (JUnit4 formalism):
-        /// <pre>
-        // @Before public static void SetUp() {
+        /// <code>
+        /// public static void SetUp() {
         ///   // Pass a Class, not an Object!
         ///   SetRule(typeof(SomeDescriptor));
         /// }
-        ///
-        /// <p>The unit tests in the extending class may use this instance, but
+        /// </code>
+        /// </example>
+        /// <remarks>
+        /// The unit tests in the extending class may use this instance, but
         /// are not required.
-        ///
-        /// </pre>
-        /// </summary>
+        /// </remarks>
         [TestMethod()]
         public void TestHasSetSuperDotRule()
         {

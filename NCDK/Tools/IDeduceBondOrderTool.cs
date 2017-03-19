@@ -26,12 +26,11 @@ namespace NCDK.Tools
     /// A common interface for tools that deduce bond orders from connectivity
     /// and optionally additional information, like number of implicit or
     /// explicit hydrogens, or hybridization states.
-    ///
+    /// </summary>
     // @author      Egon Willighagen
     // @cdk.created 2006-08-16
     // @cdk.module  valencycheck
     // @cdk.githash
-    /// </summary>
     public interface IDeduceBondOrderTool
     {
         void Saturate(IAtomContainer ac);

@@ -26,25 +26,24 @@ namespace NCDK.SMSD
 {
     /// <summary>
     /// Interface for mappings.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
-
     public interface IFinalMapping : IEnumerable<IDictionary<int, int>>
     {
 
         /// <summary>
         /// Adds mapping to the mapping list
-        /// <param name="mapping">List of all MCS mapping between a given</param>
-        /// reactant and product
         /// </summary>
+        /// <param name="mapping">List of all MCS mapping between a given
+        /// reactant and product</param>
         void Add(IDictionary<int, int> mapping);
 
         /// <summary>
         /// Sets mapping list
-        /// <param name="list">List of all MCS mapping between a given</param>
-        /// reactant and product
+        /// <param name="list">List of all MCS mapping between a given
+        /// reactant and product</param>
         /// </summary>
         void Set(IList<IDictionary<int, int>> list);
 
@@ -55,14 +54,14 @@ namespace NCDK.SMSD
 
         /// <summary>
         /// Returns the stored mappings
-        /// <returns>get of MCS mapping List</returns>
         /// </summary>
+        /// <returns>get of MCS mapping List</returns>
         IList<IDictionary<int, int>> GetFinalMapping();
 
         /// <summary>
         /// Returns number of stored mappings
-        /// <returns>size of the mapping</returns>
         /// </summary>
+        /// <returns>size of the mapping</returns>
         int Count { get; }
     }
 }

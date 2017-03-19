@@ -34,18 +34,15 @@ using System.Collections.Generic;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    ///
     /// Small ring descriptors: these are based on enumeration of all the small rings (sizes 3 to 9) in a molecule,
     /// which can be obtained quickly and deterministically.
-    ///
+    /// </summary>
     // @cdk.module qsarmolecular
     // @cdk.githash
-    ///
     // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:smallrings
     // @cdk.keyword smallrings
     // @cdk.keyword descriptor
-    /// </summary>
     public class SmallRingDescriptor : IMolecularDescriptor
     {
         private static readonly string[] NAMES = {"nSmallRings", // total number of small rings (of size 3 through 9)

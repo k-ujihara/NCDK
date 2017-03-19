@@ -147,7 +147,7 @@ namespace NCDK.IO
         {
             IAtomContainer mock = Mock(3);
             Read("V    1 A Comment", mock);
-            Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.COMMENT, "A Comment"));
+            Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.Comment, "A Comment"));
         }
 
         [TestMethod()]
@@ -164,7 +164,7 @@ namespace NCDK.IO
         {
             IAtomContainer mock = Mock(3);
             Read("M  ZZC   1 6", mock);
-            Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.ACDLABS_LABEL, "6"));
+            Moq.Mock.Get(mock.Atoms[0]).Verify(n => n.SetProperty(CDKPropertyName.ACDLabsAtomLabel, "6"));
         }
 
         static IAtomContainer Mock(int n)

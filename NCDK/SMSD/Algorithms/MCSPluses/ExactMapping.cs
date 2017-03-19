@@ -24,60 +24,51 @@
 */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NCDK.SMSD.Algorithms.MCSPluses
 {
     /// <summary>
     /// This class handles MCS between two identical molecules.
     /// Hence they generate am MCS where all atoms are mapped.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class ExactMapping
     {
-
         /// <summary>
-        ///
-        /// Extract atom mapping from the cliques and stores it in a List
-        /// <param name="compGraphNodes">/// @param cliqueListOrg</param>
+        /// Extract atom mapping from the cliques and stores it in an <see cref="IEnumerable{T}"/>.
         /// </summary>
-        private static IList<int> ExtractCliqueMapping(IList<int> compGraphNodes, IList<int> cliqueListOrg)
+        private static IEnumerable<int> ExtractCliqueMapping(IEnumerable<int> compGraphNodes, IEnumerable<int> cliqueListOrg)
         {
-
-            List<int> cliqueMapping = new List<int>();
-            List<int> cliqueList = new List<int>(cliqueListOrg);
-            int cliqueSize = cliqueList.Count;
-            int vecSize = compGraphNodes.Count;
-            //        Console.Out.WriteLine("VEC  SIZE " + vec_size);
-            for (int a = 0; a < cliqueSize; a++)
+            foreach (var clique in cliqueListOrg)
             {
-                for (int b = 0; b < vecSize; b += 3)
-                {
-                    if (cliqueList[a] == compGraphNodes[b + 2])
+                var btor = compGraphNodes.GetEnumerator();
+                while (btor.MoveNext())
+                { 
+                    var p1 = btor.Current; btor.MoveNext();
+                    var p2 = btor.Current; btor.MoveNext();
+                    var p3 = btor.Current;
+                    if (clique == p3)
                     {
-                        cliqueMapping.Add(compGraphNodes[b]);
-                        cliqueMapping.Add(compGraphNodes[b + 1]);
+                        yield return p1;
+                        yield return p2;
                     }
                 }
             }
-
-            return cliqueMapping;
+            yield break;
         }
 
-        //extract atom mapping from the clique List and print it on the screen
         /// <summary>
-        ///
-        /// <param name="mappings">/// @param compGraphNodes</param>
-        /// <param name="cliqueListOrg">/// <returns>mappings</param></returns>
+        /// extract atom mapping from the clique List and print it on the screen
         /// </summary>
-        public static IList<IList<int>> ExtractMapping(IList<IList<int>> mappings, IList<int> compGraphNodes,
-                IList<int> cliqueListOrg)
+        public static IList<IList<int>> ExtractMapping(IList<IList<int>> mappings, IList<int> compGraphNodes, IList<int> cliqueListOrg)
         {
             try
             {
-                IList<int> cliqueList = ExtractCliqueMapping(compGraphNodes, cliqueListOrg);
-                mappings.Add(cliqueList);
+                var cliqueList = ExtractCliqueMapping(compGraphNodes, cliqueListOrg);
+                mappings.Add(cliqueList.ToList());
             }
             catch (Exception e)
             {

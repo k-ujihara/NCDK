@@ -25,14 +25,12 @@ using System.Collections.Generic;
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
+    /// </summary>
+    /// <seealso cref="ChemModelManipulator"/>
     // @cdk.module standard
     // @cdk.githash
-    ///
-    /// <seealso cref="ChemModelManipulator"/>
-    /// </summary>
     public class MoleculeSetManipulator
     {
-
         public static int GetAtomCount(IAtomContainerSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAtomCount(set);
@@ -55,39 +53,39 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Returns all the AtomContainer's of a MoleculeSet.
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <returns>a list containing individual IAtomContainer's</returns>
-        /// </summary>
         public static IEnumerable<IAtomContainer> GetAllAtomContainers(IAtomContainerSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetAllAtomContainers(set);
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>The total charge on the collection of molecules</returns>
-        /// </summary>
         public static double GetTotalCharge(IAtomContainerSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalCharge(set);
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>The total formal charge on the collection of molecules</returns>
-        /// </summary>
         public static double GetTotalFormalCharge(IAtomContainerSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalFormalCharge(set);
         }
 
         /// <summary>
+        /// </summary>
         /// <param name="set">The collection of IAtomContainer objects</param>
         /// <seealso cref="AtomContainerSetManipulator"/>
         /// <returns>the total implicit hydrogen count on the collection of molecules</returns>
-        /// </summary>
         public static int GetTotalHydrogenCount(IAtomContainerSet<IAtomContainer> set)
         {
             return AtomContainerSetManipulator.GetTotalHydrogenCount(set);

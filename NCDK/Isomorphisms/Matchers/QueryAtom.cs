@@ -21,10 +21,8 @@ using NCDK.Tools;
 
 namespace NCDK.Isomorphisms.Matchers
 {
-    /// <summary>
     // @cdk.module  isomorphism
     // @cdk.githash
-    /// </summary>
     public abstract class QueryAtom : Default.Atom, IQueryAtom
     {
         public abstract bool Matches(IAtom atom);

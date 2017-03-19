@@ -20,39 +20,41 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using FaulonSignatures;
+using NCDK.FaulonSignatures;
 using System.Collections.Generic;
 
 namespace NCDK.Signature
 {
     /// <summary>
-    /// <p>
+    /// <para>
     /// A molecule signature is a way to produce <see cref="AtomSignature"/>s and to get
     /// the canonical {@cdk.cite FAU04} signature string for a molecule. There are
     /// several possible uses for a molecule signature.
-    /// </p>
-    ///
-    /// <p>
+    /// </para>
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// Firstly, a signature with a height greater than the diameter of a molecule
     /// can be used to reconstruct the molecule. In this sense, the signature string
     /// is like a SMILES {@cdk.cite WEI88, WEI89} string. It is more verbose, but it
     /// will work for all molecules.
-    /// </p>
+    /// </para>
     ///
-    /// <p>
+    /// <para>
     /// Secondly, the set of signatures for a molecule partition the atoms into
     /// equivalence classes (or 'orbits' - see the <see cref="Orbit"/> class). This is
     /// similar to partitioning atoms by Morgan number {@cdk.cite MOR65} except that
     /// it works for 3-regular graphs like fullerenes.
-    /// </p>
+    /// </para>
     ///
-    /// <p>
+    /// <para>
     /// Thirdly, signatures can be calculated at different heights to give
     /// descriptions of the connectivity around atoms. 'Height' is the same as the
     /// idea of a 'sphere' in HOSE codes, and signatures are also path descriptors in
     /// this sense.
-    /// </p>
-    ///
+    /// </para>
+    /// </remarks>
+    /// <example>
     /// So, for example, to get the canonical signature for a molecule:
     ///
     /// <code>
@@ -76,11 +78,10 @@ namespace NCDK.Signature
     /// it is also possible to get AtomSignatures using the signatureForVertex method
     /// - which is just a convenience method equivalent to calling the constructor of
     /// an AtomSignature class.
-    ///
+    /// </example>
     // @cdk.module signature
     // @author maclean
     // @cdk.githash
-    /// </summary>
     public class MoleculeSignature : AbstractGraphSignature
     {
         /// <summary>
@@ -90,7 +91,6 @@ namespace NCDK.Signature
 
         /// <summary>
         /// Creates a signature that represents this molecule.
-        ///
         /// <param name="molecule">the molecule to convert to a signature</param>
         /// </summary>
         public MoleculeSignature(IAtomContainer molecule)
@@ -100,12 +100,11 @@ namespace NCDK.Signature
         }
 
         /// <summary>
-        /// Creates a signature with a maximum height of <code>height</code>
-        /// for molecule <code>molecule</code>.
-        ///
+        /// Creates a signature with a maximum height of <paramref name="height"/>
+        /// for molecule <paramref name="molecule"/>.
+        /// </summary>
         /// <param name="molecule">the molecule to convert to a signature</param>
         /// <param name="height">the maximum height of the signature</param>
-        /// </summary>
         public MoleculeSignature(IAtomContainer molecule, int height)
             : base(height)
         {
@@ -149,9 +148,8 @@ namespace NCDK.Signature
 
         /// <summary>
         /// Calculates the orbits of the atoms of the molecule.
-        ///
-        /// <returns>a list of orbits</returns>
         /// </summary>
+        /// <returns>a list of orbits</returns>
         public List<Orbit> CalculateOrbits()
         {
             List<Orbit> orbits = new List<Orbit>();
@@ -171,11 +169,10 @@ namespace NCDK.Signature
         /// <summary>
         /// Builder for molecules (rather, for atom containers) from signature
         /// strings.
-        ///
+        /// </summary>
         /// <param name="signatureString">the signature string to use</param>
         /// <param name="coBuilder"><see cref="IChemObjectBuilder"/> to build the returned atom container from</param>
         /// <returns>an atom container</returns>
-        /// </summary>
         public static IAtomContainer FromSignatureString(string signatureString, IChemObjectBuilder coBuilder)
         {
             ColoredTree tree = AtomSignature.Parse(signatureString);
@@ -186,10 +183,9 @@ namespace NCDK.Signature
 
         /// <summary>
         /// Make a canonical signature string of a given height.
-        ///
+        /// </summary>
         /// <param name="height">the maximum height to make signatures</param>
         /// <returns>the canonical signature string</returns>
-        /// </summary>
         public string ToCanonicalSignatureString(int height)
         {
             string canonicalSignature = null;

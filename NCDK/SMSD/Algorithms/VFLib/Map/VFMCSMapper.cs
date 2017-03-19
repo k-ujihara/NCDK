@@ -60,11 +60,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
     /// <summary>
     /// This class finds MCS between query and target molecules
     /// using VF2 algorithm.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class VFMCSMapper : IMapper
     {
         private IQuery query = null;
@@ -107,11 +106,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.maps = new List<IDictionary<INode, IAtom>>();
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="targetMolecule">targetMolecule graph</param>
-        /// <returns></returns>
         public bool HasMap(IAtomContainer targetMolecule)
         {
             IState state = new VFState(query, new TargetProperties(targetMolecule));
@@ -143,11 +138,7 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return maps.Count;
         }
 
-        /// <summary>
         /// <inheritdoc/>
-        /// </summary>
-        /// <param name="targetMolecule">targetMolecule graph</param>
-        /// <returns></returns>
         public bool HasMap(TargetProperties targetMolecule)
         {
             IState state = new VFState(query, targetMolecule);

@@ -30,10 +30,10 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
     /// <summary>
     /// Class for building/storing nodes (atoms) in the graph with atom
     /// query capabilities.
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class NodeBuilder : INode
     {
 
@@ -43,7 +43,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Builder
 
         /// <summary>
         /// Construct a node for a query atom
-        /// <param name="matcher">/// </summary></param>
+        /// <param name="matcher"></param>
+        /// </summary>
         protected internal NodeBuilder(VFAtomMatcher matcher)
         {
             edgesList = new List<IEdge>();

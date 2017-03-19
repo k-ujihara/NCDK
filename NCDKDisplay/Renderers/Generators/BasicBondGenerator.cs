@@ -234,7 +234,9 @@ namespace NCDK.Renderers.Generators
 
             foreach (var bond in container.Bonds)
             {
-                group.Add(MarkedElement.MarkupBond(this.Generate(bond, model), bond));
+                var bondElement = this.Generate(bond, model);
+                if (bondElement != null)
+                    group.Add(MarkedElement.MarkupBond(bondElement, bond));
             }
             return group;
         }
@@ -320,9 +322,9 @@ namespace NCDK.Renderers.Generators
 
         private void CreateLines(Vector2 point1, Vector2 point2, double width, double dist, Color color, ElementGroup group)
         {
-            var out_ = GenerateDistanceData(point1, point2, dist);
-            LineElement l1 = new LineElement(ToPoint(out_[0]), ToPoint(out_[2]), width, color);
-            LineElement l2 = new LineElement(ToPoint(out_[1]), ToPoint(out_[3]), width, color);
+            var output = GenerateDistanceData(point1, point2, dist);
+            LineElement l1 = new LineElement(ToPoint(output[0]), ToPoint(output[2]), width, color);
+            LineElement l2 = new LineElement(ToPoint(output[1]), ToPoint(output[3]), width, color);
             group.Add(l1);
             group.Add(l2);
         }

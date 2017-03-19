@@ -1,4 +1,4 @@
-namespace FaulonSignatures.EdgeColored
+namespace NCDK.FaulonSignatures.EdgeColored
 {
     public class EdgeColoredGraphFactory
     {

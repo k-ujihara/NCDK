@@ -27,13 +27,12 @@ namespace NCDK.Isomorphisms.Matchers
     ///  add symbols to this container. This QueryAtom will only give a match if it
     ///  does NOT contain the symbol of the Atom to match (example: add "C" to get a
     ///  match for all non-"C"-Atoms).
-    ///
-    ///@author        kha
-    // @cdk.githash
-    ///@cdk.created   2004-09-16
-    ///@see           SymbolSetQueryAtom
-    ///@cdk.module    isomorphism
     /// </summary>
+    // @author        kha
+    // @cdk.githash
+    // @cdk.created   2004-09-16
+    // @see           SymbolSetQueryAtom
+    // @cdk.module    isomorphism
     public class InverseSymbolSetQueryAtom : QueryAtom, IQueryAtom
     {
         private ICollection<string> symbols = new HashSet<string>();
@@ -48,50 +47,45 @@ namespace NCDK.Isomorphisms.Matchers
         public void SetOperator(string str) { }
 
         /// <summary>
-        ///  The matches implementation of the QueryAtom interface.
-        ///
-        /// <param name="atom">The atom to be matched by this QueryAtom</param>
-        /// <returns>true if Atom matched</returns>
+        ///  The matches implementation of the <see cref="QueryAtom"/> interface.
         /// </summary>
-
+        /// <param name="atom">The atom to be matched by this <see cref="QueryAtom"/></param>
+        /// <returns>true if Atom matched</returns>
         public override bool Matches(IAtom atom)
         {
             return !symbols.Contains(atom.Symbol);
         }
 
         /// <summary>
-        ///  Add a symbol to this QueryAtom
-        ///
-        /// <param name="symbol">The symbol to add</param>
+        ///  Add a symbol to this <see cref="QueryAtom"/>
         /// </summary>
+        /// <param name="symbol">The symbol to add</param>
         public void AddSymbol(string symbol)
         {
             symbols.Add(symbol);
         }
 
         /// <summary>
-        ///  Remove a symbol from this QueryAtom
-        ///
-        /// <param name="symbol">The symbol to remove</param>
+        /// Remove a symbol from this <see cref="QueryAtom"/>
         /// </summary>
+        /// <param name="symbol">The symbol to remove</param>
         public void RemoveSymbol(string symbol)
         {
             symbols.Remove(symbol);
         }
 
         /// <summary>
-        ///  Check whether a symbol is already registered
-        ///
+        /// Check whether a symbol is already registered
+        /// </summary>
         /// <param name="symbol">The symbol to check for</param>
         /// <returns>true if symbol already registered</returns>
-        /// </summary>
         public bool HasSymbol(string symbol)
         {
             return symbols.Contains(symbol);
         }
 
         /// <summary>
-        ///  Retrieve the Set of symbols
+        /// Retrieve the Set of symbols
         ///
         /// <returns>The symbol Set</returns>
         /// </summary>
@@ -102,10 +96,8 @@ namespace NCDK.Isomorphisms.Matchers
 
         /// <summary>
         ///  The ToString method
-        ///
-        /// <returns>The string representation of this object.</returns>
         /// </summary>
-
+        /// <returns>The string representation of this object.</returns>
         public override string ToString()
         {
             StringBuilder s = new StringBuilder();

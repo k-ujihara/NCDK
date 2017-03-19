@@ -35,7 +35,7 @@ namespace NCDK.Graphs
     /// {@cdk.cite HAN96}. Vertices are sequentially Removed from the graph by
     /// reducing incident edges and forming new 'Path edges'. The order in which the
     /// vertices are to be Removed should be pre-defined in the constructor as the
-    /// <see cref="rank[]"/> parameter.
+    /// <see cref="rank"/>[] parameter.
     /// <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</a>
     /// </summary>
     /// <seealso cref="GraphUtil"/>
@@ -271,6 +271,7 @@ namespace NCDK.Graphs
             /// </summary>
             /// <param name="u">an endpoint</param>
             /// <param name="v">anOther endpoint</param>
+            /// <param name="size"></param>
             public SimpleEdge(int u, int v, int size)
                 : base(u, v, new BitArray(size)) // fixed CDK's bug. EMPTY_SET is not value type.
             {

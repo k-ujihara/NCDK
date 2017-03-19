@@ -228,7 +228,7 @@ namespace NCDK.Config
             }
             else
             {
-                var piBondCount = type.GetProperty<int?>(CDKPropertyName.PI_BOND_COUNT);
+                var piBondCount = type.GetProperty<int?>(CDKPropertyName.PiBondCount);
                 if (piBondCount != null && formalNeighbourCount != null)
                 {
                     this.valency = (int)piBondCount + (int)formalNeighbourCount;

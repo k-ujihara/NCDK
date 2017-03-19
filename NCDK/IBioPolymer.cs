@@ -1,9 +1,39 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+/* Copyright (C) 2006-2007  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *  */
+ using System.Collections.Generic;
 
 namespace NCDK
 {
+    /// <summary>
+    /// A BioPolymer is a subclass of a Polymer which is supposed to store
+    /// additional informations about the Polymer which are connected to BioPolymers.
+    /// </summary>
+    // @cdk.module  interfaces
+    // @cdk.githash
+    // @author      Edgar Luttmann <edgar@uni-paderborn.de>
+    // @cdk.created 2001-08-06
+    // @cdk.keyword polymer
+    // @cdk.keyword biopolymer
     public interface IBioPolymer
         : IPolymer
     {
@@ -34,9 +64,29 @@ namespace NCDK
         /// <returns>The Monomer object which was asked for</returns>
         IMonomer GetMonomer(string monName, string strandName);
 
+        /// <summary>
+        /// Map containing the strands in the Polymer.
+        /// </summary>
+        /// <returns><see cref="IDictionary{TKey, TValue}"/> containing the strands in the Polymer</returns>
         IDictionary<string, IStrand> GetStrandMap();
+
+        /// <summary>
+        /// Retrieve a Monomer object by specifying its name.
+        /// </summary>
+        /// <param name="cName">The name of the monomer to look for</param>
+        /// <returns>The Monomer object which was asked for</returns>
         IStrand GetStrand(string cName);
+
+        /// <summary>
+        /// Returns a collection of the names of all <see cref="IStrand"/>s in this <see cref="IBioPolymer"/>.
+        /// </summary>
+        /// <returns><see cref="IEnumerable{T}"/> of all the strand names.</returns>
         IEnumerable<string> GetStrandNames();
+
+        /// <summary>
+        /// Removes a particular strand, specified by its name.
+        /// </summary>
+        /// <param name="name">The name of the strand to remove</param>
         void RemoveStrand(string name);
     }
 }

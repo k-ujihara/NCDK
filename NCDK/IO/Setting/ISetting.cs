@@ -26,12 +26,12 @@ namespace NCDK.IO.Setting
 {
     /// <summary>
     /// A simple setting that can be managed by the SettingManager.Currently the only
-    /// required method is {@link #Name} and provides the key with which setting are
+    /// required method is <see cref="Name"/> and provides the key with which setting are
     /// added and retrieved with.    
     /// </summary>
+    /// <seealso cref="SettingManager{T}"/>
     // @author      johnmay
     // @cdk.created 20.03.2012
-    /// <seealso cref="SettingManager"/>
     public interface ISetting
     {
         /// <summary>

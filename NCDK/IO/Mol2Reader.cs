@@ -20,7 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
@@ -38,17 +37,15 @@ namespace NCDK.IO
     /// <summary>
     /// Reads a molecule from an Mol2 file, such as written by Sybyl.
     /// See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
-    ///
+    /// </summary>
     // @author Egon Willighagen
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
     // @cdk.created 2003-08-21
     // @cdk.keyword file format, Mol2
-    /// </summary>
     public class Mol2Reader : DefaultChemObjectReader
     {
-
         bool firstLineisMolecule = false;
 
         TextReader input = null;
@@ -72,9 +69,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
         /// </summary>
+        /// <param name="ins">The Reader to read from</param>
         public Mol2Reader(TextReader ins)
         {
             input = ins;
@@ -212,9 +208,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Read a Reaction from a file in MDL RXN format
-        ///
-        /// <returns>The Reaction that was read from the MDL file.</returns>
         /// </summary>
+        /// <returns>The Reaction that was read from the MDL file.</returns>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
         {
             AtomTypeFactory atFactory = null;
@@ -246,11 +241,11 @@ namespace NCDK.IO
 
                 // ok, if we're coming from the chemfile functoion, we've alreay read the molecule RTI
                 if (firstLineisMolecule)
-                    molecule.SetProperty(CDKPropertyName.TITLE, line);
+                    molecule.SetProperty(CDKPropertyName.Title, line);
                 else
                 {
                     line = input.ReadLine();
-                    molecule.SetProperty(CDKPropertyName.TITLE, line);
+                    molecule.SetProperty(CDKPropertyName.Title, line);
                 }
 
                 // get atom and bond counts

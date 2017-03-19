@@ -32,70 +32,67 @@ using System.Reflection;
 
 namespace NCDK.Hash
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-hash
-    /// </summary>
     [TestClass()]
     public class HashGeneratorMakerTest
     {
-
         [TestMethod()]
         public void TestElemental()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Elemental().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Elemental().Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(1, encoders.Count);
-            Assert.AreEqual(BasicAtomEncoder.ATOMIC_NUMBER, encoders[0]);
+            Assert.AreEqual(BasicAtomEncoder.AtomicNumber, encoders[0]);
         }
 
         [TestMethod()]
         public void TestIsotopic()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Isotopic().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Isotopic().Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(1, encoders.Count);
-            Assert.AreEqual(BasicAtomEncoder.MASS_NUMBER, encoders[0]);
+            Assert.AreEqual(BasicAtomEncoder.MassNumber, encoders[0]);
         }
 
         [TestMethod()]
         public void TestCharged()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Charged().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Charged().Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(1, encoders.Count);
-            Assert.AreEqual(BasicAtomEncoder.FORMAL_CHARGE, encoders[0]);
+            Assert.AreEqual(BasicAtomEncoder.FormalCharge, encoders[0]);
         }
 
         [TestMethod()]
         public void TestRadical()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Radical().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Radical().Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(1, encoders.Count);
-            Assert.AreEqual(BasicAtomEncoder.FREE_RADICALS, encoders[0]);
+            Assert.AreEqual(BasicAtomEncoder.FreeRadicals, encoders[0]);
         }
 
         [TestMethod()]
         public void TestOrbital()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Orbital().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Orbital().Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(1, encoders.Count);
-            Assert.AreEqual(BasicAtomEncoder.ORBITAL_HYBRIDIZATION, encoders[0]);
+            Assert.AreEqual(BasicAtomEncoder.OrbitalHybridization, encoders[0]);
         }
 
         [TestMethod()]
         public void TestChiral()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Elemental().Chiral().Atomic();
-            Assert.AreNotEqual(StereoEncoderFactory.EMPTY, Encoder(generator));
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Elemental().Chiral().Atomic();
+            Assert.AreNotEqual(StereoEncoderFactory.Empty, Encoder(generator));
         }
 
         [TestMethod()]
         public void TestPerturbed()
         {
-            AtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().Perturbed().Atomic();
+            IAtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().Perturbed().Atomic();
 
             Assert.IsTrue(g1 is PerturbedAtomHashGenerator);
         }
@@ -104,7 +101,7 @@ namespace NCDK.Hash
         public void TestPerturbedWith()
         {
             var m_mock = new Mock<EquivalentSetFinder>(); var mock = m_mock.Object;
-            AtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().PerturbWith(mock).Atomic();
+            IAtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().PerturbWith(mock).Atomic();
 
             Assert.IsTrue(g1 is PerturbedAtomHashGenerator);
             var field = g1.GetType().GetField("finder", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
@@ -114,8 +111,8 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestOrdering()
         {
-            AtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().Isotopic().Charged().Atomic();
-            AtomHashGenerator g2 = new HashGeneratorMaker().Depth(0).Isotopic().Charged().Elemental().Atomic();
+            IAtomHashGenerator g1 = new HashGeneratorMaker().Depth(0).Elemental().Isotopic().Charged().Atomic();
+            IAtomHashGenerator g2 = new HashGeneratorMaker().Depth(0).Isotopic().Charged().Elemental().Atomic();
             Assert.AreEqual(3, GetEncoders(g1).Count);
             Assert.IsTrue(Compares.AreDeepEqual(GetEncoders(g1), GetEncoders(g2)));
         }
@@ -130,9 +127,9 @@ namespace NCDK.Hash
         [TestMethod()]
         public void TestEncode()
         {
-            var m_e1 = new Mock<AtomEncoder>(); var e1 = m_e1.Object;
-            var m_e2 = new Mock<AtomEncoder>(); var e2 = m_e2.Object;
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Encode(e1).Encode(e2).Atomic();
+            var m_e1 = new Mock<IAtomEncoder>(); var e1 = m_e1.Object;
+            var m_e2 = new Mock<IAtomEncoder>(); var e2 = m_e2.Object;
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(0).Encode(e1).Encode(e2).Atomic();
             var encoders = GetEncoders((BasicAtomHashGenerator)generator);
             Assert.AreEqual(2, encoders.Count);
             Assert.AreEqual(e1, encoders[0]);
@@ -188,20 +185,20 @@ namespace NCDK.Hash
         [TestMethod()]
         public void SuppressHydrogens()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(0).SuppressHydrogens().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Elemental().Depth(0).SuppressHydrogens().Atomic();
             Assert.IsInstanceOfType(generator, typeof(SuppressedAtomHashGenerator));
         }
 
         [TestMethod()]
         public void TestDepth()
         {
-            AtomHashGenerator generator = new HashGeneratorMaker().Depth(5).Elemental().Atomic();
+            IAtomHashGenerator generator = new HashGeneratorMaker().Depth(5).Elemental().Atomic();
             var depthField = generator.GetType().GetField("depth", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             int value = (int)depthField.GetValue(generator);
             Assert.AreEqual(5, value);
         }
 
-        public static IStereoEncoderFactory Encoder(AtomHashGenerator generator)
+        public static IStereoEncoderFactory Encoder(IAtomHashGenerator generator)
         {
             if (generator is BasicAtomHashGenerator)
             {
@@ -218,7 +215,7 @@ namespace NCDK.Hash
         ///
         /// <param name="generator">/// @return</param>
         /// </summary>
-        public static IList<AtomEncoder> GetEncoders(AtomHashGenerator generator)
+        public static IList<IAtomEncoder> GetEncoders(IAtomHashGenerator generator)
         {
             var field = generator.GetType().GetField("seedGenerator", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (field == null)
@@ -240,10 +237,10 @@ namespace NCDK.Hash
                 return GetEncoders((ConjugatedAtomEncoder)o2);
             }
             Exit:
-            return new List<AtomEncoder>();
+            return new List<IAtomEncoder>();
         }
 
-        internal static IList<AtomEncoder> GetEncoders(ConjugatedAtomEncoder conjugated)
+        internal static IList<IAtomEncoder> GetEncoders(ConjugatedAtomEncoder conjugated)
         {
             var field = conjugated.GetType().GetField("encoders", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             if (field == null)
@@ -251,9 +248,9 @@ namespace NCDK.Hash
                 Console.Error.WriteLine("Field 'encoders' is not found.");
                 goto Exit;
             }
-            return (IList<AtomEncoder>)field.GetValue(conjugated);
+            return (IList<IAtomEncoder>)field.GetValue(conjugated);
             Exit:
-            return new List<AtomEncoder>();
+            return new List<IAtomEncoder>();
         }
     }
 }

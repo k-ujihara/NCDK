@@ -33,14 +33,12 @@ namespace NCDK.SMSD.Algorithms.RGraph
 {
     /// <summary>
     /// This class acts as a handler class for <see cref="CDKMCS"/> algorithm.
-    ///
+    /// </summary>
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    /// </summary>
     public class CDKSubGraphHandler : AbstractSubGraph, IMCSBase
     {
-
         //    //~--- fields -------------------------------------------------------------
         private IAtomContainer source;
         private IAtomContainer target;

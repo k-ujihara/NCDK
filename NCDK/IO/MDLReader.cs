@@ -20,8 +20,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using NCDK.Common.Mathematics;
 using NCDK.Common.Primitives;
 using NCDK.Config;
 using NCDK.IO.Formats;
@@ -30,7 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using NCDK.Numerics;
 using System.Text.RegularExpressions;
 
@@ -41,32 +38,30 @@ namespace NCDK.IO
     /// is read into a <see cref="IChemSequence"/> of <see cref="IChemModel"/>'s. Each ChemModel will contain one
     /// Molecule. If the MDL molfile contains a property block, the <see cref="MDLV2000Reader"/> should be
     /// used.
-    ///
-    /// <p>If all z coordinates are 0.0, then the xy coordinates are taken as
+    /// <para>
+    /// If all z coordinates are 0.0, then the xy coordinates are taken as
     /// 2D, otherwise the coordinates are read as 3D.
-    ///
-    /// <p>The title of the MOL file is read and can be retrieved with:
+    /// </para>
+    /// <para>
+    /// The title of the MOL file is read and can be retrieved with:
     /// <code>
-    ///   molecule.GetProperty<string>(CDKPropertyName.TITLE);
+    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.TITLE);
     /// </code>
-    ///
+    /// </para>
+    /// </summary>
+    /// <seealso cref="MDLV2000Reader"/>
     // @cdk.module io
     // @cdk.githash
     // @cdk.iooptions
-    ///
     // @author     steinbeck
     // @author     Egon Willighagen
     // @cdk.created    2000-10-02
     // @cdk.keyword    file format, MDL molfile
     // @cdk.keyword    file format, SDF
-    ///
-    // @see        org.openscience.cdk.io.MDLV2000Reader
-    // @deprecated This reader is only for molfiles without a version tag, typically the most
-    ///             common molfile now encountered is V2000 and the <see cref="MDLV2000Reader"/> should be used
-    ///             instead. The V2000 reader can actually read files missing the version tag when
-    ///             in relaxed mode.
-    /// </summary>
-    [Obsolete]
+    [Obsolete("This reader is only for molfiles without a version tag, typically the most" 
+        + "common molfile now encountered is V2000 and the" + nameof(MDLV2000Reader) + "should be used"
+        + "instead. The V2000 reader can actually read files missing the version tag when"
+        + "in relaxed mode.")]
     public class MDLReader : DefaultChemObjectReader
     {
         TextReader input = null;
@@ -80,34 +75,32 @@ namespace NCDK.IO
 
         /// <summary>
         ///  Constructs a new MDLReader that can read Molecule from a given Stream.
-        ///
-        /// <param name="in">The Stream to read from</param>
         /// </summary>
-        public MDLReader(Stream in_)
-            : this(in_, ChemObjectReaderModes.Relaxed)
+        /// <param name="ins">The Stream to read from</param>
+        public MDLReader(Stream ins)
+            : this(ins, ChemObjectReaderModes.Relaxed)
         {
         }
 
-        public MDLReader(Stream in_, ChemObjectReaderModes mode)
-            : this(new StreamReader(in_))
+        public MDLReader(Stream ins, ChemObjectReaderModes mode)
+            : this(new StreamReader(ins))
         {
             base.mode = mode;
         }
 
         /// <summary>
         /// Constructs a new MDLReader that can read Molecule from a given Reader.
-        ///
-        /// <param name="in">The Reader to read from</param>
         /// </summary>
-        public MDLReader(TextReader in_)
-            : this(in_, ChemObjectReaderModes.Relaxed)
+        /// <param name="ins">The Reader to read from</param>
+        public MDLReader(TextReader ins)
+            : this(ins, ChemObjectReaderModes.Relaxed)
         {
         }
 
-        public MDLReader(TextReader in_, ChemObjectReaderModes mode)
+        public MDLReader(TextReader ins, ChemObjectReaderModes mode)
         {
             base.mode = mode;
-            input = in_;
+            input = ins;
             InitIOSettings();
         }
 
@@ -132,16 +125,13 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        ///  Takes an object which subclasses IChemObject, e.g. Molecule, and will read
+        ///  Takes an object which subclasses <see cref="IChemObject"/>, e.g. Molecule, and will read
         ///  this (from file, database, internet etc). If the specific implementation
-        ///  does not support a specific IChemObject it will throw an Exception.
-        ///
-        /// <param name="object">The object that subclasses</param>
-        ///      IChemObject
-        /// <returns>The IChemObject read</returns>
-        ///@exception  CDKException
+        ///  does not support a specific <see cref="IChemObject"/> it will throw an Exception.
         /// </summary>
-
+        /// <param name="obj">The object that subclasses <see cref="IChemObject"/></param>
+        /// <returns>The IChemObject read</returns>
+        /// <exception cref="CDKException"></exception>
         public override T Read<T>(T obj)
         {
             if (obj is IChemFile)
@@ -180,9 +170,8 @@ namespace NCDK.IO
 
         /// <summary>
         /// Read a ChemFile from a file in MDL SDF format.
-        ///
-        /// <returns>The ChemFile that was read from the MDL file.</returns>
         /// </summary>
+        /// <returns>The ChemFile that was read from the MDL file.</returns>
         private IChemFile ReadChemFile(IChemFile chemFile)
         {
             IChemSequence chemSequence = chemFile.Builder.CreateChemSequence();
@@ -310,9 +299,8 @@ namespace NCDK.IO
 
         /// <summary>
         ///  Read a Molecule from a file in MDL sd format
-        ///
-        /// <returns>The Molecule that was read from the MDL file.</returns>
         /// </summary>
+        /// <returns>The Molecule that was read from the MDL file.</returns>
         private IAtomContainer ReadMolecule(IAtomContainer molecule)
         {
             Debug.WriteLine("Reading new molecule");
@@ -356,7 +344,7 @@ namespace NCDK.IO
                 }
                 if (line.Length > 0)
                 {
-                    molecule.SetProperty(CDKPropertyName.TITLE, line);
+                    molecule.SetProperty(CDKPropertyName.Title, line);
                 }
                 line = input.ReadLine();
                 linecount++;
@@ -366,7 +354,7 @@ namespace NCDK.IO
                 Debug.WriteLine("Line " + linecount + ": " + line);
                 if (line.Length > 0)
                 {
-                    molecule.SetProperty(CDKPropertyName.REMARK, line);
+                    molecule.SetProperty(CDKPropertyName.Remark, line);
                 }
 
                 Trace.TraceInformation("Reading rest of file");
@@ -556,7 +544,7 @@ namespace NCDK.IO
                             int reactionAtomID = int.Parse(reactionAtomIDString);
                             if (reactionAtomID != 0)
                             {
-                                atom.SetProperty(CDKPropertyName.ATOM_ATOM_MAPPING, reactionAtomID);
+                                atom.SetProperty(CDKPropertyName.AtomAtomMapping, reactionAtomID);
                             }
                         }
                         catch (Exception exception)
@@ -687,7 +675,7 @@ namespace NCDK.IO
                         a1.IsAromatic = true;
                         a2.IsAromatic = true;
                     }
-                    molecule.Add(newBond);
+                    molecule.Bonds.Add(newBond);
                 }
 
             }

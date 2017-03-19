@@ -253,19 +253,19 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
 
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("O"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("O"));
             molecule.Atoms[1].FormalCharge = +1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[5], BondOrder.Single);
@@ -297,13 +297,13 @@ namespace NCDK.Reactions.Types
             var setOfProducts = builder.CreateAtomContainerSet();
 
             IAtomContainer expected1 = builder.CreateAtomContainer();
-            expected1.Add(builder.CreateAtom("C"));
-            expected1.Add(builder.CreateAtom("O"));
+            expected1.Atoms.Add(builder.CreateAtom("C"));
+            expected1.Atoms.Add(builder.CreateAtom("O"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[1], BondOrder.Single);
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[2], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[4], BondOrder.Single);
@@ -319,11 +319,11 @@ namespace NCDK.Reactions.Types
             }
 
             IAtomContainer expected2 = builder.CreateAtomContainer();
-            expected2.Add(builder.CreateAtom("C"));
+            expected2.Atoms.Add(builder.CreateAtom("C"));
             expected2.Atoms[0].FormalCharge = +1;
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[1], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
@@ -345,7 +345,7 @@ namespace NCDK.Reactions.Types
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
         ///
         /// <param name="molecule">The IAtomContainer to analyze</param>
-        // @throws CDKException
+        /// <exception cref="CDKException"></exception>
         /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
@@ -367,20 +367,20 @@ namespace NCDK.Reactions.Types
         {
             //CreateFromSmiles("C[N+]C")
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("N"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("N"));
             molecule.Atoms[1].FormalCharge = +1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[5], BondOrder.Single);
@@ -415,14 +415,14 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("CN")
             IAtomContainer expected1 = builder.CreateAtomContainer();
-            expected1.Add(builder.CreateAtom("C"));
-            expected1.Add(builder.CreateAtom("N"));
+            expected1.Atoms.Add(builder.CreateAtom("C"));
+            expected1.Atoms.Add(builder.CreateAtom("N"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[1], BondOrder.Single);
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[2], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[4], BondOrder.Single);
@@ -436,11 +436,11 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("[C+]")
             IAtomContainer expected2 = builder.CreateAtomContainer();
-            expected2.Add(builder.CreateAtom("C"));
+            expected2.Atoms.Add(builder.CreateAtom("C"));
             expected2.Atoms[0].FormalCharge = +1;
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[1], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
@@ -463,18 +463,18 @@ namespace NCDK.Reactions.Types
         {
             //CreateFromSmiles("C=[N+]C")
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("C"));
-            molecule.Add(builder.CreateAtom("N"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("N"));
             molecule.Atoms[1].FormalCharge = 1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Double);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[2], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[4], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[5], BondOrder.Single);
@@ -507,12 +507,12 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("C=N")
             IAtomContainer expected1 = builder.CreateAtomContainer();
-            expected1.Add(builder.CreateAtom("C"));
-            expected1.Add(builder.CreateAtom("N"));
+            expected1.Atoms.Add(builder.CreateAtom("C"));
+            expected1.Atoms.Add(builder.CreateAtom("N"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[1], BondOrder.Double);
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
-            expected1.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[2], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[3], BondOrder.Single);
             expected1.AddBond(expected1.Atoms[1], expected1.Atoms[4], BondOrder.Single);
@@ -524,11 +524,11 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("[C+]")
             IAtomContainer expected2 = builder.CreateAtomContainer();
-            expected2.Add(builder.CreateAtom("C"));
+            expected2.Atoms.Add(builder.CreateAtom("C"));
             expected2.Atoms[0].FormalCharge = +1;
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[1], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);
@@ -550,14 +550,14 @@ namespace NCDK.Reactions.Types
         {
             //CreateFromSmiles("[F+]C")
             IAtomContainer molecule = builder.CreateAtomContainer();
-            molecule.Add(builder.CreateAtom("F"));
+            molecule.Atoms.Add(builder.CreateAtom("F"));
             molecule.Atoms[0].FormalCharge = +1;
-            molecule.Add(builder.CreateAtom("C"));
+            molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[1], BondOrder.Single);
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
-            molecule.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
+            molecule.Atoms.Add(builder.CreateAtom("H"));
             molecule.AddBond(molecule.Atoms[0], molecule.Atoms[2], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[3], BondOrder.Single);
             molecule.AddBond(molecule.Atoms[1], molecule.Atoms[4], BondOrder.Single);
@@ -586,8 +586,8 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("FH")
             IAtomContainer expected1 = builder.CreateAtomContainer();
-            expected1.Add(builder.CreateAtom("F"));
-            expected1.Add(builder.CreateAtom("H"));
+            expected1.Atoms.Add(builder.CreateAtom("F"));
+            expected1.Atoms.Add(builder.CreateAtom("H"));
             expected1.AddBond(expected1.Atoms[0], expected1.Atoms[1], BondOrder.Single);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(expected1);
             lpcheck.Saturate(expected1);
@@ -597,11 +597,11 @@ namespace NCDK.Reactions.Types
 
             //CreateFromSmiles("[C+]")
             IAtomContainer expected2 = builder.CreateAtomContainer();
-            expected2.Add(builder.CreateAtom("C"));
+            expected2.Atoms.Add(builder.CreateAtom("C"));
             expected2.Atoms[0].FormalCharge = +1;
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
-            expected2.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
+            expected2.Atoms.Add(builder.CreateAtom("H"));
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[1], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[2], BondOrder.Single);
             expected2.AddBond(expected2.Atoms[0], expected2.Atoms[3], BondOrder.Single);

@@ -20,11 +20,10 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
 {
     /// <summary>
     /// Abstract smarts bond.
-    ///
+    /// </summary>
     // @cdk.module  smarts
     // @cdk.githash
     // @cdk.keyword SMARTS
-    /// </summary>
     public class SMARTSBond : QueryBond, IQueryBond
     {
         public SMARTSBond(IChemObjectBuilder builder)

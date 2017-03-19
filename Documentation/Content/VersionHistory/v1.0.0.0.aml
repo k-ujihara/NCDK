@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<topic id="ce71932b-728b-4efb-b633-b2576df0de36" revisionNumber="1">
+	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+		<introduction>
+			<para>
+        Version 1.0.0.0 was released on 2017-03-19.
+      </para>
+		</introduction>
+
+		<section>
+			<title>Changes in This Release</title>
+			<content>
+
+				<list class="bullet">
+					<listItem>
+						<para>Initinal release based on Chemistry Development Kit based on cdk-1.5.13.</para>
+					</listItem>
+
+				</list>
+
+			</content>
+		</section>
+
+		<relatedTopics>
+			<link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+		</relatedTopics>
+
+	</developerConceptualDocument>
+</topic>

@@ -1,6 +1,4 @@
-using static FaulonSignatures.Chemistry.Molecule;
-
-namespace FaulonSignatures.Chemistry
+namespace NCDK.FaulonSignatures.Chemistry
 {
     public class AtomSignature : AbstractVertexSignature
     {
@@ -58,14 +56,13 @@ namespace FaulonSignatures.Chemistry
 
         public override string GetEdgeLabel(int vertexIndex, int otherVertexIndex)
         {
-            BondOrder bondOrder =
-                molecule.GetBondOrder(vertexIndex, otherVertexIndex);
+            var bondOrder = molecule.GetBondOrder(vertexIndex, otherVertexIndex);
             switch (bondOrder)
             {
-                case BondOrder.Single: return "";
-                case BondOrder.Double: return "=";
-                case BondOrder.Triple: return "#";
-                case BondOrder.Aromatic: return "p";
+                case Molecule.BondOrder.Single: return "";
+                case Molecule.BondOrder.Double: return "=";
+                case Molecule.BondOrder.Triple: return "#";
+                case Molecule.BondOrder.Aromatic: return "p";
                 default: return "";
             }
         }

@@ -34,12 +34,11 @@ namespace NCDK.StructGen
     /// provided with a starting constitution and it makes random moves in
     /// constitutional space from there. This generator was first suggested by
     /// Faulon {@cdk.cite FAU96}.
-    ///
+    /// </summary>
     // @cdk.keyword  structure generator
     // @cdk.module   structgen
     // @cdk.githash
     // @cdk.bug      1632610
-    /// </summary>
     public class VicinitySampler
     {
         /// <summary>

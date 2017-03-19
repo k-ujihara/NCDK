@@ -31,13 +31,11 @@ namespace NCDK.Isomorphisms
 {
     /// <summary>
     /// A collection of substructure integration tests. These give a high-level view
-    /// of what we expect to match. To run these tests the subclass should {@link
-    /// #Create(IAtomContainer)} a pattern for the
-    /// input.
-    ///
+    /// of what we expect to match. To run these tests the subclass should <see cref="Create(IAtomContainer)"/> 
+    /// a pattern for the input.
+    /// </summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public abstract class SubstructureTest
     {
@@ -396,21 +394,21 @@ namespace NCDK.Isomorphisms
         void AssertMatch(IAtomContainer query, IAtomContainer target, int count)
         {
             Assert.AreEqual(count, Create(query).MatchAll(target).GetStereochemistry().Count(),
-                query.GetProperty<string>(TITLE) + " should match " + target.GetProperty<string>(TITLE) + " " + count + " times");
+                query.GetProperty<string>(Title) + " should match " + target.GetProperty<string>(Title) + " " + count + " times");
         }
 
         void AssertMatch(IAtomContainer query, IAtomContainer target)
         {
             Assert.IsTrue(
                     Create(query).Matches(target),
-                    query.GetProperty<string>(TITLE) + " should match " + target.GetProperty<string>(TITLE));
+                    query.GetProperty<string>(Title) + " should match " + target.GetProperty<string>(Title));
         }
 
         void AssertMismatch(IAtomContainer query, IAtomContainer target)
         {
             Assert.IsFalse(
                 Create(query).Matches(target),
-                query.GetProperty<string>(TITLE) + " should not matched " + target.GetProperty<string>(TITLE));
+                query.GetProperty<string>(Title) + " should not matched " + target.GetProperty<string>(Title));
         }
 
         private static readonly SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);
@@ -419,7 +417,7 @@ namespace NCDK.Isomorphisms
         IAtomContainer Smi(string smi)
         {
             IAtomContainer container = sp.ParseSmiles(smi);
-            container.SetProperty(TITLE, smi);
+            container.SetProperty(Title, smi);
             return container;
         }
 
@@ -429,7 +427,7 @@ namespace NCDK.Isomorphisms
         IAtomContainer Sma(string sma)
         {
             IAtomContainer container = SMARTSParser.Parse(sma, Silent.ChemObjectBuilder.Instance);
-            container.SetProperty(TITLE, sma);
+            container.SetProperty(Title, sma);
             return container;
         }
     }

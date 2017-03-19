@@ -22,10 +22,9 @@ namespace NCDK.QSAR.Result
 {
     /// <summary>
     /// IDescriptorResult type for bools.
-    ///
+    /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    /// </summary>
     [Serializable]
     public class DoubleResultType : IDescriptorResult
     {

@@ -102,9 +102,9 @@ namespace NCDK.IO
 
         public override IResourceFormat Format => CMLRSSFormat.Instance;
 
-        public override void SetWriter(TextWriter out_)
+        public override void SetWriter(TextWriter output)
         {
-            writer = out_;
+            writer = output;
         }
 
         public override void SetWriter(Stream output)
@@ -115,7 +115,7 @@ namespace NCDK.IO
         public override bool Accepts(Type type) => true;
 
         /// <summary>
-        /// Writes a IChemObject to the MDL molfile formated output.
+        /// Writes a <see cref="IChemObject"/> to the MDL molfile formated output.
         /// </summary>
         /// <param name="obj">Best choice is a set of molecules</param>
         /// <see cref="IChemObjectWriter.Write(IChemObject)"/>
@@ -178,7 +178,7 @@ namespace NCDK.IO
                     var link2Element = new XElement(NS_RSS10 + "link");
                     link2Element.Value = easylink;
                     itemElement.Add(link2Element);
-                    string title = (string)chemObject.GetProperties()[CDKPropertyName.TITLE];
+                    string title = (string)chemObject.GetProperties()[CDKPropertyName.Title];
                     if (TitleMap[chemObject] != null)
                     {
                         var title2Element = new XElement(NS_RSS10 + "title");

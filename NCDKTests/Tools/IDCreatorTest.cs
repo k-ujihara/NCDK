@@ -40,10 +40,10 @@ namespace NCDK.Tools
             IAtomContainer mol = new AtomContainer();
             Atom atom1 = new Atom("C");
             Atom atom2 = new Atom("C");
-            mol.Add(atom1);
-            mol.Add(atom2);
+            mol.Atoms.Add(atom1);
+            mol.Atoms.Add(atom2);
             Bond bond = new Bond(atom1, atom2);
-            mol.Add(bond);
+            mol.Bonds.Add(bond);
 
             IDCreator.CreateIDs(mol);
             Assert.AreEqual("a1", atom1.Id);
@@ -58,7 +58,7 @@ namespace NCDK.Tools
             IAtomContainer mol = new AtomContainer();
             Atom atom = new Atom("C");
             atom.Id = "atom1";
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
 
             IDCreator.CreateIDs(mol);
 
@@ -75,8 +75,8 @@ namespace NCDK.Tools
             Atom atom1 = new Atom("C");
             Atom atom2 = new Atom("C");
             atom1.Id = "a1";
-            mol.Add(atom2);
-            mol.Add(atom1);
+            mol.Atoms.Add(atom2);
+            mol.Atoms.Add(atom1);
 
             IDCreator.CreateIDs(mol);
             Assert.AreEqual("a2", atom2.Id);
@@ -95,8 +95,8 @@ namespace NCDK.Tools
             Atom atom0 = new Atom("C");
             Atom atom2 = new Atom("C");
             atom0.Id = "a1";
-            mol.Add(atom2);
-            mol.Add(atom0);
+            mol.Atoms.Add(atom2);
+            mol.Atoms.Add(atom0);
             molSet.Add(mol);
 
             IDCreator.CreateIDs(molSet);
@@ -107,8 +107,8 @@ namespace NCDK.Tools
             Atom atom1 = new Atom("C");
             atom2 = new Atom("C");
             atom1.Id = "a2";
-            mol.Add(atom2);
-            mol.Add(atom1);
+            mol.Atoms.Add(atom2);
+            mol.Atoms.Add(atom1);
             molSet.Add(mol);
 
             IDCreator.CreateIDs(molSet);
@@ -118,8 +118,8 @@ namespace NCDK.Tools
             mol = new AtomContainer();
             atom1 = new Atom("C");
             atom2 = new Atom("C");
-            mol.Add(atom2);
-            mol.Add(atom1);
+            mol.Atoms.Add(atom2);
+            mol.Atoms.Add(atom1);
             molSet.Add(mol);
 
             atom0.Id = "atomX";

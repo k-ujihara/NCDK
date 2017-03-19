@@ -31,20 +31,16 @@ namespace NCDK.QSAR.Descriptors.Atomic
 {
     /// <summary>
     /// This class returns the proton affinity of an atom containing.
+    /// </summary>
+    /// <remarks>
+    /// <para>
     /// This descriptor uses these parameters:
     /// <list type="table">
-    /// <listheader>
-    /// <term>Name</term>
-    /// <term>Default</term>
-    /// <term>Description</term>
-    /// <item>
-    /// <term></term>
-    /// <term></term>
-    /// <term>no parameters</term>
-    /// </item>
-    /// </listheader>
+    /// <listheader><term>Name</term><term>Default</term><term>Description</term></listheader>
+    /// <item><term></term><term></term><term>no parameters</term></item>
     /// </list>
-    /// </summary>
+    /// </para> 
+    /// </remarks> 
     // @author       Miguel Rojas
     // @cdk.created  2006-05-26
     // @cdk.module   qsaratomic
@@ -55,7 +51,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     {
         private static readonly string[] NAMES = { "protonAffiHOSE" };
 
-        /// <summary> Maximum spheres to use by the HoseCode model.*/
+       /// <summary> Maximum spheres to use by the HoseCode model.</summary>
         int maxSpheresToUse = 10;
 
         private Affinitydb db;
@@ -114,7 +110,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
             value = db.ExtractAffinity(container, atom);
             return new DescriptorValue(_Specification, ParameterNames, Parameters, new DoubleResult(value), NAMES);
-
         }
 
         /// <summary>
@@ -299,7 +294,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         /// <summary>
-        /// Extract the information from a line which contains HOSE_ID & energy.
+        /// Extract the information from a line which contains HOSE_ID &amp; energy.
         /// </summary>
         /// <param name="str">string with the information</param>
         /// <returns>List with string = HOSECode and string = energy</returns>

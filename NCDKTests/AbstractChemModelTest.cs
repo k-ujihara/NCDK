@@ -370,7 +370,7 @@ namespace NCDK
         public void TestIsEmpty()
         {
             IChemModel chemModel = (IChemModel)NewChemObject();
-            Assert.IsTrue(chemModel.IsEmpty, "new chem model is empty");
+            Assert.IsTrue(chemModel.IsEmpty(), "new chem model is empty");
         }
 
         [TestMethod()]
@@ -381,20 +381,20 @@ namespace NCDK
             IChemObjectBuilder builder = chemModel.Builder;
 
             Assert.IsNotNull(chemModel);
-            Assert.IsTrue(chemModel.IsEmpty);
+            Assert.IsTrue(chemModel.IsEmpty());
 
             IAtom atom = builder.CreateAtom();
             IAtomContainer mol = builder.CreateAtomContainer();
             IAtomContainerSet<IAtomContainer> mset = builder.CreateAtomContainerSet();
 
-            mol.Add(atom);
+            mol.Atoms.Add(atom);
             mset.Add(mol);
             chemModel.MoleculeSet = mset;
-            Assert.IsFalse(chemModel.IsEmpty, "chem model with a molecule set should not be empty");
-            mol.Remove(atom);
-            Assert.IsFalse(chemModel.IsEmpty, "chem model with a (empty) molecule set should not be empty");
+            Assert.IsFalse(chemModel.IsEmpty(), "chem model with a molecule set should not be empty");
+            mol.Atoms.Remove(atom);
+            Assert.IsFalse(chemModel.IsEmpty(), "chem model with a (empty) molecule set should not be empty");
             chemModel.MoleculeSet = null;
-            Assert.IsTrue(chemModel.IsEmpty, "chemo model with no molecule set should be empty");
+            Assert.IsTrue(chemModel.IsEmpty(), "chemo model with no molecule set should be empty");
         }
 
         [TestMethod()]
@@ -411,11 +411,11 @@ namespace NCDK
 
             IReactionSet set = builder.CreateReactionSet();
             model.ReactionSet = set;
-            Assert.IsTrue(model.IsEmpty, "model has an empty reaction set and should be empty");
+            Assert.IsTrue(model.IsEmpty(), "model has an empty reaction set and should be empty");
             set.Add(reaction);
-            Assert.IsFalse(model.IsEmpty, "model has a reaction set and should not be empty");
+            Assert.IsFalse(model.IsEmpty(), "model has a reaction set and should not be empty");
             model.ReactionSet = null;
-            Assert.IsTrue(model.IsEmpty, "model has no reaction set");
+            Assert.IsTrue(model.IsEmpty(), "model has no reaction set");
 
         }
 
@@ -429,13 +429,13 @@ namespace NCDK
             IRing container = builder.CreateRing();    // NCDK does not allow to add Ring to RingSet
             IRingSet ringset = builder.CreateRingSet();
 
-            Assert.IsTrue(model.IsEmpty);
+            Assert.IsTrue(model.IsEmpty());
             model.RingSet = ringset;
-            Assert.IsTrue(model.IsEmpty);
+            Assert.IsTrue(model.IsEmpty());
             ringset.Add(container);
-            Assert.IsFalse(model.IsEmpty);
+            Assert.IsFalse(model.IsEmpty());
             model.RingSet = null;
-            Assert.IsTrue(model.IsEmpty);
+            Assert.IsTrue(model.IsEmpty());
 
         }
 
@@ -448,11 +448,11 @@ namespace NCDK
 
             ICrystal crystal = builder.CreateCrystal();
             model.Crystal = crystal;
-            Assert.IsTrue(model.IsEmpty);
-            crystal.Add(builder.CreateAtom("C"));
-            Assert.IsFalse(model.IsEmpty);
+            Assert.IsTrue(model.IsEmpty());
+            crystal.Atoms.Add(builder.CreateAtom("C"));
+            Assert.IsFalse(model.IsEmpty());
             model.Crystal = null;
-            Assert.IsTrue(model.IsEmpty);
+            Assert.IsTrue(model.IsEmpty());
 
         }
     }

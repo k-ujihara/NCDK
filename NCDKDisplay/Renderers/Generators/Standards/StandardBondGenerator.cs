@@ -36,7 +36,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 using static NCDK.Renderers.Generators.BasicSceneGenerator;
 using static NCDK.Renderers.Generators.Standards.StandardGenerator;
@@ -118,7 +117,7 @@ namespace NCDK.Renderers.Generators.Standards
             ringMap = RingPreferenceMap(container);
 
             // set parameters
-            this.scale = parameters.GetV<double>(typeof(BasicSceneGenerator.Scale));
+            this.scale = parameters.GetV<double>(typeof(Scale));
             this.stroke = stroke;
             double length = parameters.GetV<double>(typeof(BondLength)) / scale;
             this.separation = (parameters.GetV<double>(typeof(BondSeparation)) * parameters.GetV<double>(typeof(BondLength))) / scale;

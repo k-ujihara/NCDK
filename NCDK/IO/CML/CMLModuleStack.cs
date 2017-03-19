@@ -27,12 +27,10 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// Low weight alternative to Sun's Stack class.
-    ///
+    /// </summary>
     // @cdk.module io
     // @cdk.githash
-    ///
     // @cdk.keyword stack
-    /// </summary>
     public class CMLModuleStack
     {
         ICMLModule[] stack = new ICMLModule[64];
@@ -56,9 +54,8 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Retrieves and deletes to last added entry.
-        ///
-        /// <seealso cref="Current"/>
         /// </summary>
+        /// <seealso cref="Current"/>
         public ICMLModule Pop()
         {
             return stack[--sp];
@@ -66,9 +63,8 @@ namespace NCDK.IO.CML
 
         /// <summary>
         /// Returns the last added entry.
-        ///
-        /// <seealso cref="Pop"/>
         /// </summary>
+        /// <seealso cref="Pop"/>
         public ICMLModule Current
         {
             get

@@ -22,7 +22,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
 using NCDK.Geometries;
 using NCDK.Graphs;
 using NCDK.Layout;
@@ -39,20 +38,23 @@ namespace NCDK.Modeling.Builder3D
 {
     /// <summary>
     ///  The main class to generate the 3D coordinates of a molecule ModelBuilder3D.
+    /// </summary>
+    /// <example>
     ///  Its use looks like:
     ///  <code>
     ///  ModelBuilder3D mb3d = ModelBuilder3D.Instance;
     ///  IAtomContainer molecule = mb3d.Generate3DCoordinates(molecule, false);
     ///  </code>
-    ///
-    ///  <p>Standing problems:
-    ///  <ul>
-    ///    <li>condensed ring systems which are unknown for the template class
-    ///    <li>vdWaals clashes
-    ///    <li>stereochemistry
-    ///    <li>chains running through ring systems
-    ///  </ul>
-    /// </summary>
+    /// </example>
+    /// <remarks>
+    /// Standing problems:
+    /// <list type="bullet">
+    ///    <item>condensed ring systems which are unknown for the template class</item>
+    ///    <item>vdWaals clashes</item>
+    ///    <item>stereochemistry</item>
+    ///    <item>chains running through ring systems</item>
+    ///  </list>
+    ///  </remarks>
     // @author      cho
     // @author      steinbeck
     // @cdk.created 2004-09-07

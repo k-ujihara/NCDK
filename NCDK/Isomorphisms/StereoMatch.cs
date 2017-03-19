@@ -21,29 +21,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
-using System;
 using System.Collections.Generic;
-using NCDK.Common.Base;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * Filters out (sub)graph-isomorphism matches that have invalid stereochemistry
-     * configuration. The class is not currently set up to handle partial mappings
-     * (MCS) but could easily be extended to handle such cases. <p/> The class
-     * implements the Guava predicate and can be used easily filter the mappings.
-     *
-     * <blockquote><code>{@code
-     * Predicate<int[]> f              = new StereoMatch(query, target);
-     * Iterable<int[]>  mappings       = ...; // from subgraph isomorphism etc.
-     * Iterable<int[]>  stereoMappings = Iterables.Filter(mappings, f);
-     * }</code></blockquote>
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// Filters out (sub)graph-isomorphism matches that have invalid stereochemistry
+    /// configuration. The class is not currently set up to handle partial mappings
+    /// (MCS) but could easily be extended to handle such cases. <p/> The class
+    /// implements the Guava predicate and can be used easily filter the mappings.
+    /// </summary>
+    /// <example><code>
+    /// var f = new StereoMatch(query, target);
+    /// var mappings = ...; // from subgraph isomorphism etc.
+    /// var stereoMappings = Iterables.Filter(mappings, f);
+    /// </code></example>
+    // @author John May
+    // @cdk.module isomorphism
     internal sealed class StereoMatch : NCDK.Common.Base.Predicate<int[]>
     {
         /// <summary>Query and target contains.</summary>
@@ -61,13 +56,12 @@ namespace NCDK.Isomorphisms
         /// <summary>Indices of focus atoms of stereo elements.</summary>
         private readonly int[] queryStereoIndices, targetStereoIndices;
 
-        /**
-         * Create a predicate for checking mappings between a provided
-         * {@code query} and {@code target}.
-         *
-         * @param query query container
-         * @param target target container
-         */
+        /// <summary>
+        /// Create a predicate for checking mappings between a provided
+        /// <paramref name="query"/> and <paramref name="target"/>.
+        /// </summary>
+        /// <param name="query">query container</param>
+        /// <param name="target">target container</param>
         internal StereoMatch(IAtomContainer query, IAtomContainer target)
         {
             this.query = query;
@@ -83,17 +77,14 @@ namespace NCDK.Isomorphisms
             targetStereoIndices = IndexElements(targetMap, targetElements, targetTypes, target);
         }
 
-        /**
-        * Is the {@code mapping} of the stereochemistry in the query preserved in
-        * the target.
-        *
-        * @param mapping permutation of the query vertices
-        * @return the stereo chemistry is value
-        */
-
+        /// <summary>
+        /// Is the <paramref name="mapping"/> of the stereochemistry in the query preserved in
+        /// the target.
+        /// </summary>
+        /// <param name="mapping">permutation of the query vertices</param>
+        /// <returns>the stereo chemistry is value</returns>
         public bool Apply(int[] mapping)
         {
-
             // n.b. not true for unspecified queries e.g. [C@?H](*)(*)*
             if (queryStereoIndices.Length > targetStereoIndices.Length) return false;
 
@@ -112,14 +103,13 @@ namespace NCDK.Isomorphisms
             return true;
         }
 
-        /**
-         * Verify the tetrahedral stereochemistry (clockwise/anticlockwise) of atom
-         * {@code u} is preserved in the target when the {@code mapping} is used.
-         *
-         * @param u       tetrahedral index in the target
-         * @param mapping mapping of vertices
-         * @return the tetrahedral configuration is preserved
-         */
+        /// <summary>
+        /// Verify the tetrahedral stereochemistry (clockwise/anticlockwise) of atom
+        /// <paramref name="u"/> is preserved in the target when the <paramref name="mapping"/> is used.
+        /// </summary>
+        /// <param name="u">tetrahedral index in the target</param>
+        /// <param name="mapping">mapping of vertices</param>
+        /// <returns>the tetrahedral configuration is preserved</returns>
         private bool CheckTetrahedral(int u, int[] mapping)
         {
             int v = mapping[u];
@@ -141,21 +131,19 @@ namespace NCDK.Isomorphisms
             return p == q;
         }
 
-        /**
-         * Transforms the neighbors {@code us} adjacent to {@code u} into the target
-         * indices using the mapping {@code mapping}. The transformation accounts
-         * for an implicit hydrogen in the query being an explicit hydrogen in the
-         * target.
-         *
-         * @param u       central atom of tetrahedral element
-         * @param v       mapped central atom of the tetrahedral element
-         * @param us      neighboring vertices of u (u plural)
-         * @param mapping mapping from the query to the target
-         * @return the neighbors us, transformed into the neighbors around v
-         */
+        /// <summary>
+        /// Transforms the neighbors <paramref name="us"/> adjacent to <paramref name="u"/> into the target
+        /// indices using the mapping <paramref name="mapping"/>. The transformation accounts
+        /// for an implicit hydrogen in the query being an explicit hydrogen in the
+        /// target.
+        /// </summary>
+        /// <param name="u">central atom of tetrahedral element</param>
+        /// <param name="v">mapped central atom of the tetrahedral element</param>
+        /// <param name="us">neighboring vertices of u (u plural)</param>
+        /// <param name="mapping">mapping from the query to the target</param>
+        /// <returns>the neighbors us, transformed into the neighbors around v</returns>
         private int[] Map(int u, int v, int[] us, int[] mapping)
         {
-
             // implicit hydrogen in query but explicit in target, modify the mapping
             // such that the central atom, u, mapps to the hydrogen
             if (query.Atoms[u].ImplicitHydrogenCount == 1 && target.Atoms[v].ImplicitHydrogenCount == 0)
@@ -175,19 +163,17 @@ namespace NCDK.Isomorphisms
             return us;
         }
 
-        /**
-         * Verify the geometric stereochemistry (cis/trans) of the double bond
-         * {@code u1=u2} is preserved in the target when the {@code mapping} is
-         * used.
-         *
-         * @param u1      one index of the double bond
-         * @param u2      other index of the double bond
-         * @param mapping mapping of vertices
-         * @return the geometric configuration is preserved
-         */
+        /// <summary>
+        /// Verify the geometric stereochemistry (cis/trans) of the double bond
+        /// <c>u1=u2</c> is preserved in the target when the <paramref name="mapping"/> is
+        /// used.
+        /// </summary>
+        /// <param name="u1">one index of the double bond</param>
+        /// <param name="u2">other index of the double bond</param>
+        /// <param name="mapping">mapping of vertices</param>
+        /// <returns>the geometric configuration is preserved</returns>
         private bool CheckGeometric(int u1, int u2, int[] mapping)
         {
-
             int v1 = mapping[u1];
             int v2 = mapping[u2];
 
@@ -238,13 +224,12 @@ namespace NCDK.Isomorphisms
             return p == q;
         }
 
-        /**
-         * Access the neighbors of {@code element} as their indices.
-         *
-         * @param element tetrahedral element
-         * @param map     atom index lookup
-         * @return the neighbors
-         */
+        /// <summary>
+        /// Access the neighbors of <paramref name="element"/> as their indices.
+        /// </summary>
+        /// <param name="element">tetrahedral element</param>
+        /// <param name="map">atom index lookup</param>
+        /// <returns>the neighbors</returns>
         private int[] Neighbors(ITetrahedralChirality element, IDictionary<IAtom, int> map)
         {
             IList<IAtom> atoms = element.Ligands;
@@ -254,12 +239,11 @@ namespace NCDK.Isomorphisms
             return vs;
         }
 
-        /**
-         * Given an array of atoms, find the first hydrogen atom.
-         *
-         * @param atoms array of non-null atoms.
-         * @return a hydrogen atom
-         */
+        /// <summary>
+        /// Given an array of atoms, find the first hydrogen atom.
+        /// </summary>
+        /// <param name="atoms">array of non-null atoms.</param>
+        /// <returns>a hydrogen atom</returns>
         private IAtom FindHydrogen(IEnumerable<IAtom> atoms)
         {
             foreach (var a in atoms)
@@ -269,14 +253,13 @@ namespace NCDK.Isomorphisms
             return null;
         }
 
-        /**
-         * Compute the permutation parity of the values {@code vs}. The parity is
-         * whether we need to do an odd or even number of swaps to put the values in
-         * sorted order.
-         *
-         * @param vs values
-         * @return parity of the permutation (odd = -1, even = +1)
-         */
+        /// <summary>
+        /// Compute the permutation parity of the values <paramref name="vs"/>. The parity is
+        /// whether we need to do an odd or even number of swaps to put the values in
+        /// sorted order.
+        /// </summary>
+        /// <param name="vs">values</param>
+        /// <returns>parity of the permutation (odd = -1, even = +1)</returns>
         private int PermutationParity(int[] vs)
         {
             int n = 0;
@@ -286,25 +269,23 @@ namespace NCDK.Isomorphisms
             return (n & 0x1) == 1 ? -1 : 1;
         }
 
-        /**
-         * Given an index of an atom in the query get the index of the other atom in
-         * the double bond.
-         *
-         * @param i query atom index
-         * @return the other atom index involved in a double bond
-         */
+        /// <summary>
+        /// Given an index of an atom in the query get the index of the other atom in
+        /// the double bond.
+        /// </summary>
+        /// <param name="i">query atom index</param>
+        /// <returns>the other atom index involved in a double bond</returns>
         private int OtherIndex(int i)
         {
             IDoubleBondStereochemistry element = (IDoubleBondStereochemistry)queryElements[i];
             return queryMap[element.StereoBond.GetConnectedAtom(query.Atoms[i])];
         }
 
-        /**
-         * Create an index of atoms for the provided <paramref name="container"/>.
-         *
-         * @param container the container to index the atoms of
-         * @return the index/lookup of atoms to the index they appear
-         */
+        /// <summary>
+        /// Create an index of atoms for the provided <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">the container to index the atoms of</param>
+        /// <returns>the index/lookup of atoms to the index they appear</returns>
         private static IDictionary<IAtom, int> IndexAtoms(IAtomContainer container)
         {
             IDictionary<IAtom, int> map = new Dictionary<IAtom, int>(container.Atoms.Count);
@@ -313,19 +294,17 @@ namespace NCDK.Isomorphisms
             return map;
         }
 
-        /**
-         * Index the stereo elements of the <paramref name="container"/> into the the {@code
-         * elements} and {@code types} arrays. The {@code map} is used for looking
-         * up the index of atoms.
-         *
-         * @param map       index of atoms
-         * @param elements  array to fill with stereo elements
-         * @param types     type of stereo element indexed
-         * @param container the container to index the elements of
-         * @return indices of atoms involved in stereo configurations
-         */
-        private static int[] IndexElements(IDictionary<IAtom, int> map, IStereoElement[] elements, Types[] types,
-                IAtomContainer container)
+        /// <summary>
+        /// Index the stereo elements of the <paramref name="container"/> into the the 
+        /// <paramref name="elements"/> and <paramref name="types"/> arrays. The <paramref name="map"/> is used for looking
+        /// up the index of atoms.
+        /// </summary>
+        /// <param name="map">index of atoms</param>
+        /// <param name="elements">array to fill with stereo elements</param>
+        /// <param name="types">type of stereo element indexed</param>
+        /// <param name="container">the container to index the elements of</param>
+        /// <returns>indices of atoms involved in stereo configurations</returns>
+        private static int[] IndexElements(IDictionary<IAtom, int> map, IStereoElement[] elements, Types[] types, IAtomContainer container)
         {
             int[] indices = new int[container.Atoms.Count];
             int nElements = 0;
@@ -352,23 +331,21 @@ namespace NCDK.Isomorphisms
             return Arrays.CopyOf(indices, nElements);
         }
 
-        /**
-         * Get the parity (-1,+1) of the tetrahedral configuration.
-         *
-         * @param stereo configuration
-         * @return the parity
-         */
+        /// <summary>
+        /// Get the parity (-1,+1) of the tetrahedral configuration.
+        /// </summary>
+        /// <param name="stereo">configuration</param>
+        /// <returns>the parity</returns>
         private int Parity(TetrahedralStereo stereo)
         {
             return stereo == TetrahedralStereo.Clockwise ? 1 : -1;
         }
 
-        /**
-         * Get the parity (-1,+1) of the geometric (double bond) configuration.
-         *
-         * @param conformation configuration
-         * @return the parity
-         */
+        /// <summary>
+        /// Get the parity (-1,+1) of the geometric (double bond) configuration.
+        /// </summary>
+        /// <param name="conformation">configuration</param>
+        /// <returns>the parity</returns>
         private int Parity(DoubleBondConformation conformation)
         {
             return conformation == DoubleBondConformation.Together ? 1 : -1;

@@ -90,6 +90,7 @@ namespace NCDK.Beam
         /// Create a new parser for the specified buffer.
         /// </summary>
         /// <param name="buffer">character buffer holding a SMILES string</param>
+        /// <param name="strict"></param>
         /// <exception cref="InvalidSmilesException">if the SMILES could not be parsed</exception>"
         public Parser(CharBuffer buffer, bool strict)
         {
@@ -111,7 +112,7 @@ namespace NCDK.Beam
         /// Create a new (loose) parser for the specified string.
         /// </summary>
         /// <param name="str">SMILES string</param>
-        /// <exception cref="">thrown if the SMILES could not be parsed</exception>
+        /// <exception cref="InvalidSmilesException">thrown if the SMILES could not be parsed</exception>
         public Parser(string str)
             : this(CharBuffer.FromString(str), false)
         {
@@ -325,6 +326,7 @@ namespace NCDK.Beam
         /// Add an atom and bond with the atom on the stack (if available and non-dot bond).
         /// </summary>
         /// <param name="a">an atom to add</param>
+        /// <param name="buffer"></param>
         private void AddAtom(Atom a, CharBuffer buffer)
         {
             int v = g.AddAtom(a);
@@ -733,6 +735,7 @@ namespace NCDK.Beam
         /// Handle the ring open/closure of the specified ring number 'rnum'.
         /// </summary>
         /// <param name="rnum">ring number</param>
+        /// <param name="buffer"></param>
         /// <exception cref="InvalidSmilesException">bond types did not match on ring closure</exception>
         private void Ring(int rnum, CharBuffer buffer)
         {
@@ -798,6 +801,7 @@ namespace NCDK.Beam
         /// Close the ring bond with the specified 'rnum'.
         /// </summary>
         /// <param name="rnum">ring number</param>
+        /// <param name="buffer"></param>
         /// <exception cref="InvalidSmilesException">bond types did not match</exception>
         private void CloseRing(int rnum, CharBuffer buffer)
         {
@@ -845,6 +849,7 @@ namespace NCDK.Beam
         /// </remarks>
         /// <param name="a">a bond</param>
         /// <param name="b">other bond</param>
+        /// <param name="buffer"></param>
         /// <returns>the bond to use for this edge</returns>
         /// <exception cref="InvalidSmilesException">ring bonds did not match</exception>
         public static Bond DecideBond(Bond a, Bond b, CharBuffer buffer)
@@ -866,7 +871,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <param name="str">SMILES string</param>
         /// <returns>the chemical graph for the provided SMILES notation</returns>
-        /// <exception cref="">thrown if the SMILES could not be interpreted</exception>
+        /// <exception cref="InvalidSmilesException">thrown if the SMILES could not be interpreted</exception>
         public static Graph Parse(string str)
         {
             return new Parser(str).Molecule();

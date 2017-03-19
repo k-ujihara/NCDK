@@ -34,7 +34,7 @@ namespace NCDK.AtomTypes
         /// <summary>
         /// Method that assigns an atom type to a given atom belonging to an atom container.
         /// </summary>
-        /// <param name="container">AtomContainer of which the <code>atom</code> is part</param>
+        /// <param name="container">AtomContainer of which the <paramref name="atom"/> is part</param>
         /// <param name="atom">Atom for which a matching atom type is searched</param>
         /// <returns>The matching AtomType</returns>
         /// <exception cref="CDKException">when something went wrong with going through the AtomType's</exception>

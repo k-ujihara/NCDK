@@ -22,13 +22,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 
     /// <summary>
     /// An AST Tree visitor. It dumps the whole AST tree into console
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24
     // @cdk.module smarts
     // @cdk.githash
     // @cdk.keyword SMARTS AST
-    /// </summary>
     public class SmartsDumpVisitor : SMARTSParserVisitor
     {
 

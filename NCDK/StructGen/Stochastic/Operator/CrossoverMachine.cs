@@ -19,52 +19,54 @@
 using NCDK.Graphs;
 using NCDK.Maths;
 using NCDK.Tools;
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.StructGen.Stochastic.Operator
 {
-    /**
-     * Modified molecular structures by applying crossover operator on a pair of parent structures
-     * and generate a pair of offspring structures. Each of the two offspring structures inherits
-     * a certain fragments from both of its parents.
-     *
-     * @cdk.module structgen
-     * @cdk.githash
-     */
+    /// <summary>
+    /// Modified molecular structures by applying crossover operator on a pair of parent structures
+    /// and generate a pair of offspring structures. Each of the two offspring structures inherits
+    /// a certain fragments from both of its parents.
+    /// </summary>
+    // @cdk.module structgen
+    // @cdk.githash
     public class CrossoverMachine
     {
         PartialFilledStructureMerger pfsm;
 
-        /** selects a partitioning mode*/
-        int splitMode = 2;
-        /** selects a partitioning scale*/
-        int numatoms = 5;
-        /// <summary>Indicates that <code>crossover</code> is using SPLIT_MODE_RADNDOM mode.</summary>
-        public const int SPLIT_MODE_RADNDOM = 0;
-        /// <summary>Indicates that <code>crossover</code> is using SPLIT_MODE_DEPTH_FIRST mode.</summary>
-        public const int SPLIT_MODE_DEPTH_FIRST = 1;
-        /// <summary>Indicates that <code>crossover</code> is using SPLIT_MODE_BREADTH_FIRST mode.</summary>
-        public const int SPLIT_MODE_BREADTH_FIRST = 2;
+        /// <summary>
+        /// Indicates which mode <see cref="CrossoverMachine"/> is using.
+        /// </summary>
+        public enum SplitModes
+        {
+            /// <summary>Random mode.</summary>
+            Random = 0,
+            /// <summary>Depth first mode.</summary>
+            DepthFirst = 1,
+            /// <summary>Breadth first mode.</summary>
+            BreadthFirst = 2,
+        }
 
-        /**
-         * Constructs a new CrossoverMachine operator.
-         */
+        /// <summary>selects a partitioning mode</summary>
+        SplitModes splitMode = SplitModes.BreadthFirst;
+        /// <summary>selects a partitioning scale</summary>
+        int numatoms = 5;
+
+        /// <summary>Constructs a new CrossoverMachine operator.</summary>
         public CrossoverMachine()
         {
             pfsm = new PartialFilledStructureMerger();
         }
 
-        /**
-         * Performs the n point crossover of two <see cref="IAtomContainer"/>.
-         * Precondition: The atoms in the molecules are ordered by properties to
-         * preserve (e. g. atom symbol). Due to its randomized nature, this method
-         * fails in around 3% of all cases. A CDKException with message "Could not
-         * mate these properly" will then be thrown.
-         *
-         * @return The children.
-         * @exception CDKException if it was not possible to form offsprings.
-         */
+        /// <summary>
+        /// Performs the n point crossover of two <see cref="IAtomContainer"/>.
+        /// Precondition: The atoms in the molecules are ordered by properties to
+        /// preserve (e. g. atom symbol). Due to its randomized nature, this method
+        /// fails in around 3% of all cases. A CDKException with message "Could not
+        /// mate these properly" will then be thrown.
+        /// </summary>
+        /// <returns>The children.</returns>
+        /// <exception cref="CDKException">if it was not possible to form offsprings.</exception>
         public IList<IAtomContainer> DoCrossover(IAtomContainer dad, IAtomContainer mom)
         {
             int tries = 0;
@@ -77,13 +79,11 @@ namespace NCDK.StructGen.Stochastic.Operator
                 IList<int> redAtoms = new List<int>();
                 IList<int> blueAtoms = new List<int>();
 
-                /* *randomly divide atoms into two parts: redAtoms and blueAtoms.** */
-                if (splitMode == SPLIT_MODE_RADNDOM)
+                // randomly divide atoms into two parts: redAtoms and blueAtoms.
+                if (splitMode == SplitModes.Random)
                 {
-                    /*
-                     * better way to randomly divide atoms into two parts: redAtoms
-                     * and blueAtoms.
-                     */
+                    // better way to randomly divide atoms into two parts: redAtoms
+                    // and blueAtoms.
                     for (int i = 0; i < dim; i++)
                         redAtoms.Add(i);
                     for (int i = 0; i < (dim - numatoms); i++)
@@ -95,10 +95,10 @@ namespace NCDK.StructGen.Stochastic.Operator
                 }
                 else
                 {
-                    /* split graph using depth/breadth first traverse */
+                    // split graph using depth/breadth first traverse 
                     ChemGraph graph = new ChemGraph(dad);
                     graph.NumAtoms = numatoms;
-                    if (splitMode == SPLIT_MODE_DEPTH_FIRST)
+                    if (splitMode == SplitModes.DepthFirst)
                     {
                         redAtoms = graph.PickDFGraph();
                     }
@@ -227,7 +227,8 @@ namespace NCDK.StructGen.Stochastic.Operator
                             && ConnectivityChecker.IsConnected(children[1])) return children;
                 }
                 tries++;
-                if (tries > 20) throw new CDKException("Could not mate these properly");
+                if (tries > 20)
+                    throw new CDKException("Could not mate these properly");
             }
         }
     }

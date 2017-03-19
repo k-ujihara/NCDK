@@ -74,9 +74,9 @@ namespace NCDK.Tools
         ///   </item>
         ///  </list>
         /// </summary>
+        /// <param name="molecule"></param>
         /// <param name="aromaticity">bool true/false true if aromaticity should be calculated</param>
         /// <returns>sssrf ringSetofTheMolecule</returns>
-        /// <exception cref="Exception"> Description of the Exception</exception>
         public IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule, bool aromaticity)
         {
             SmilesGenerator sg = new SmilesGenerator();
@@ -111,16 +111,16 @@ namespace NCDK.Tools
                     ringSetA.AddRange(ringSetMolecule.GetRings(atom2));
                     RingSetManipulator.Sort(ringSetA);
                     IRing sring = (IRing)ringSetA.Last();
-                    atom2.SetProperty(CDKPropertyName.PART_OF_RING_OF_SIZE, sring.RingSize);
+                    atom2.SetProperty(CDKPropertyName.PartOfRingOfSize, sring.RingSize);
                     atom2.SetProperty(
-                        CDKPropertyName.CHEMICAL_GROUP_CONSTANT,
+                        CDKPropertyName.ChemicalGroupConstant,
                         RingSystemClassifier(sring, GetSubgraphSmiles(sring, molecule)));
                     atom2.IsInRing = true;
                     atom2.IsAliphatic = false;
                 }
                 else
                 {
-                    atom2.SetProperty(CDKPropertyName.CHEMICAL_GROUP_CONSTANT, NotInRing);
+                    atom2.SetProperty(CDKPropertyName.ChemicalGroupConstant, NotInRing);
                     atom2.IsInRing = false;
                     atom2.IsAliphatic = true;
                 }
@@ -128,7 +128,7 @@ namespace NCDK.Tools
                 {
                     hoseCode = hcg.GetHOSECode(molecule, atom2, 3);
                     hoseCode = RemoveAromaticityFlagsFromHoseCode(hoseCode);
-                    atom2.SetProperty(CDKPropertyName.SPHERICAL_MATCHER, hoseCode);
+                    atom2.SetProperty(CDKPropertyName.SphericalMatcher, hoseCode);
                 }
                 catch (CDKException ex1)
                 {
@@ -143,12 +143,11 @@ namespace NCDK.Tools
         /// written as 'o1ccc[c]1' note there is no hydrogen there since it was an external attachment.
         /// To get unique subgraph SMILES we need to adjust valencies of atoms by adding Hydrogens. We
         /// base this on the sum of bond orders removed.
-        ///
+        /// </summary>
         /// <param name="subgraph">subgraph (atom and bond refs in 'molecule')</param>
         /// <param name="molecule">the molecule</param>
         /// <returns>the canonical smiles of the subgraph</returns>
         /// <exception cref="CDKException">something went wrong with SMILES gen</exception>
-        /// </summary>
         private static string GetSubgraphSmiles(IAtomContainer subgraph, IAtomContainer molecule)
         {
             var bonds = new HashSet<IBond>();
@@ -182,11 +181,10 @@ namespace NCDK.Tools
 
         /// <summary>
         /// Canonical SMILES for the provided molecule.
-        ///
+        /// </summary>
         /// <param name="mol">molecule</param>
         /// <returns>the cansmi string</returns>
         /// <exception cref="CDKException">something went wrong with SMILES gen</exception>
-        /// </summary>
         private static string Cansmi(IAtomContainer mol)
         {
             return SmilesGenerator.Unique().Create(mol);
@@ -208,11 +206,10 @@ namespace NCDK.Tools
         /// <summary>
         ///  Identifies ringSystem and returns a number which corresponds to
         ///  CDKChemicalRingConstant
-        ///
+        /// </summary>
         /// <param name="ring">Ring class with the ring system</param>
         /// <param name="smile">smile of the ring system</param>
         /// <returns>chemicalRingConstant</returns>
-        /// </summary>
         private int RingSystemClassifier(IRing ring, string smile)
         {
             /* Console.Out.WriteLine("IN AtomTypeTools Smile:"+smile); */

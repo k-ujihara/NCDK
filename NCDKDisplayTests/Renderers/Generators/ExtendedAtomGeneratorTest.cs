@@ -186,7 +186,7 @@ namespace NCDK.Renderers.Generators
         {
             IAtomContainer atomContainer = base.MakeCCC();
             IAtom carbon = atomContainer.Atoms[1];
-            atomContainer.AddSingleElectron(atomContainer.Atoms[1]);
+            atomContainer.AddSingleElectronTo(atomContainer.Atoms[1]);
             Assert.IsTrue(generator.ShowCarbon(carbon, atomContainer, model));
         }
 

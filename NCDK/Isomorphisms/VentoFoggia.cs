@@ -33,48 +33,43 @@ using System.Collections;
 
 namespace NCDK.Isomorphisms
 {
-    /**
-     * A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite
-     * Cordella04}.
-     *
-     * <p/>
-     *
-     * Find and count the number molecules which contain the query substructure.
-     *
-     * <blockquote><code>
-     * IAtomContainer query   = ...;
-     * Pattern        pattern = VentoFoggia.FindSubstructure(query);
-     *
-     * int hits = 0;
-     * foreach (var m in ms)
-     *     if (pattern.Matches(m))
-     *         hits++;
-     * </code></blockquote>
-     * <p/>
-     *
-     * Finding the matching to molecules which contain the query substructure. It is
-     * more efficient to obtain the {@link #match} and check it's size rather than
-     * test if it {@link #matches}. These methods automatically verify
-     * stereochemistry.
-     *
-     * <blockquote><code>
-     * IAtomContainer query   = ...;
-     * Pattern        pattern = VentoFoggia.FindSubstructure(query);
-     *
-     * int hits = 0;
-     * foreach (var m in ms) {
-     *     int[] match = pattern.Match(m);
-     *     if (match.Length > 0)
-     *         hits++;
-     * }
-     * </code></blockquote>
-     *
-     * @author John May
-     * @cdk.module isomorphism
-     */
+    /// <summary>
+    /// A structure pattern which utilises the Vento-Foggia (VF) algorithm {@cdk.cite Cordella04}.
+    /// </summary>
+    /// <example>
+    /// Find and count the number molecules which contain the query substructure.
+    ///
+    /// <code>
+    /// IAtomContainer query   = ...;
+    /// Pattern        pattern = VentoFoggia.FindSubstructure(query);
+    ///
+    /// int hits = 0;
+    /// foreach (var m in ms)
+    ///     if (pattern.Matches(m))
+    ///         hits++;
+    /// </code>
+    ///
+    /// Finding the matching to molecules which contain the query substructure. It is
+    /// more efficient to obtain the <see cref="Match(IAtomContainer)"/> and check it's size rather than
+    /// test if it <see cref="MatchAll(IAtomContainer)"/>. These methods automatically verify
+    /// stereochemistry.
+    ///
+    /// <code>
+    /// IAtomContainer query   = ...;
+    /// Pattern        pattern = VentoFoggia.FindSubstructure(query);
+    ///
+    /// int hits = 0;
+    /// foreach (var m in ms) {
+    ///     int[] match = pattern.Match(m);
+    ///     if (match.Length > 0)
+    ///         hits++;
+    /// }
+    /// </code>
+    /// </example>
+    // @author John May
+    // @cdk.module isomorphism
     public sealed class VentoFoggia : Pattern
     {
-
         /// <summary>The query structure.</summary>
         private readonly IAtomContainer query;
 
@@ -96,14 +91,13 @@ namespace NCDK.Isomorphisms
         /// <summary>Is the query matching query atoms/bonds etc?</summary>
         private readonly bool queryMatching;
 
-        /**
-         * Non-public constructor for-now the atom/bond semantics are fixed.
-         *
-         * @param query        the query structure
-         * @param atomMatcher  how atoms should be matched
-         * @param bondMatcher  how bonds should be matched
-         * @param substructure substructure search
-         */
+        /// <summary>
+        /// Non-public constructor for-now the atom/bond semantics are fixed.
+        /// </summary>
+        /// <param name="query">the query structure</param>
+        /// <param name="atomMatcher">how atoms should be matched</param>
+        /// <param name="bondMatcher">how bonds should be matched</param>
+        /// <param name="substructure">substructure search</param>
         private VentoFoggia(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher, bool substructure)
         {
             this.query = query;
@@ -131,13 +125,12 @@ namespace NCDK.Isomorphisms
             return new Mappings(query, target, iterable);
         }
 
-        /**
-         * Create a pattern which can be used to find molecules which contain the
-         * {@code query} structure.
-         *
-         * @param query the substructure to find
-         * @return a pattern for finding the {@code query}
-         */
+        /// <summary>
+        /// Create a pattern which can be used to find molecules which contain the
+        /// <paramref name="query"/> structure.
+        /// </summary>
+        /// <param name="query">the substructure to find</param>
+        /// <returns>a pattern for finding the <paramref name="query"/></returns>
         public static new Pattern FindSubstructure(IAtomContainer query)
         {
             bool isQuery = query is IQueryAtomContainer;
@@ -146,13 +139,12 @@ namespace NCDK.Isomorphisms
                                     isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
         }
 
-        /**
-         * Create a pattern which can be used to find molecules which are the same
-         * as the {@code query} structure.
-         *
-         * @param query the substructure to find
-         * @return a pattern for finding the {@code query}
-         */
+        /// <summary>
+        /// Create a pattern which can be used to find molecules which are the same
+        /// as the <paramref name="query"/> structure.
+        /// </summary>
+        /// <param name="query">the substructure to find</param>
+        /// <returns>a pattern for finding the <paramref name="query"/></returns>
         public static new Pattern FindIdentical(IAtomContainer query)
         {
             bool isQuery = query is IQueryAtomContainer;
@@ -161,29 +153,27 @@ namespace NCDK.Isomorphisms
                                  isQuery ? BondMatcher.CreateQueryMatcher() : BondMatcher.CreateOrderMatcher());
         }
 
-        /**
-         * Create a pattern which can be used to find molecules which contain the
-         * {@code query} structure.
-         *
-         * @param query the substructure to find
-         * @param atomMatcher how atoms are matched
-         * @param bondMatcher how bonds are matched
-         * @return a pattern for finding the {@code query}
-         */
+        /// <summary>
+        /// Create a pattern which can be used to find molecules which contain the
+        /// <paramref name="query"/> structure.
+        /// </summary>
+        /// <param name="query">the substructure to find</param>
+        /// <param name="atomMatcher">how atoms are matched</param>
+        /// <param name="bondMatcher">how bonds are matched</param>
+        /// <returns>a pattern for finding the <paramref name="query"/></returns>
         public static Pattern FindSubstructure(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             return new VentoFoggia(query, atomMatcher, bondMatcher, true);
         }
 
-        /**
-         * Create a pattern which can be used to find molecules which are the same
-         * as the {@code query} structure.
-         *
-         * @param query the substructure to find
-         * @param atomMatcher how atoms are matched
-         * @param bondMatcher how bonds are matched
-         * @return a pattern for finding the {@code query}
-         */
+        /// <summary>
+        /// Create a pattern which can be used to find molecules which are the same
+        /// as the <paramref name="query"/> structure.
+        /// </summary>
+        /// <param name="query">the substructure to find</param>
+        /// <param name="atomMatcher">how atoms are matched</param>
+        /// <param name="bondMatcher">how bonds are matched</param>
+        /// <returns>a pattern for finding the <paramref name="query"/></returns>
         public static Pattern FindIdentical(IAtomContainer query, AtomMatcher atomMatcher, BondMatcher bondMatcher)
         {
             return new VentoFoggia(query, atomMatcher, bondMatcher, false);
@@ -191,7 +181,6 @@ namespace NCDK.Isomorphisms
 
         private sealed class VFIterable : IEnumerable<int[]>
         {
-
             /// <summary>Query and target containers.</summary>
             private readonly IAtomContainer container1, container2;
 
@@ -210,19 +199,18 @@ namespace NCDK.Isomorphisms
             /// <summary>The query is a subgraph.</summary>
             private readonly bool subgraph;
 
-            /**
-             * Create a match for the following parameters.
-             *
-             * @param container1  query structure
-             * @param container2  target structure
-             * @param g1          query adjacency list
-             * @param g2          target adjacency list
-             * @param bonds1      query bond map
-             * @param bonds2      target bond map
-             * @param atomMatcher how atoms are matched
-             * @param bondMatcher how bonds are matched
-             * @param subgraph    perform subgraph search
-             */
+            /// <summary>
+            /// Create a match for the following parameters.
+            /// </summary>
+            /// <param name="container1">query structure</param>
+            /// <param name="container2">target structure</param>
+            /// <param name="g1">query adjacency list</param>
+            /// <param name="g2">target adjacency list</param>
+            /// <param name="bonds1">query bond map</param>
+            /// <param name="bonds2">target bond map</param>
+            /// <param name="atomMatcher">how atoms are matched</param>
+            /// <param name="bondMatcher">how bonds are matched</param>
+            /// <param name="subgraph">perform subgraph search</param>
             public VFIterable(IAtomContainer container1, IAtomContainer container2, int[][] g1, int[][] g2,
                     EdgeToBondMap bonds1, EdgeToBondMap bonds2, AtomMatcher atomMatcher, BondMatcher bondMatcher,
                     bool subgraph)
@@ -262,4 +250,3 @@ namespace NCDK.Isomorphisms
         }
     }
 }
-

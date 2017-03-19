@@ -75,8 +75,8 @@ namespace NCDK.IO
 
             Assert.AreEqual("Petra", container.Id);
 
-            Assert.IsNotNull(container.GetProperty<string>(CDKPropertyName.TITLE));
-            Assert.AreEqual("CH4O", container.GetProperty<string>(CDKPropertyName.TITLE));
+            Assert.IsNotNull(container.GetProperty<string>(CDKPropertyName.Title));
+            Assert.AreEqual("CH4O", container.GetProperty<string>(CDKPropertyName.Title));
         }
     }
 }
