@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Dict;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,6 +28,8 @@ namespace NCDK.QSAR
 {
     /// <summary>
     /// A class that provides access to automatic descriptor calculation and more.
+    /// </summary>
+    /// <remarks>
     /// <para>
     /// The aim of this class is to provide an easy to use interface to automatically evaluate
     /// all the CDK descriptors for a given molecule. Note that at a given time this class
@@ -38,15 +39,10 @@ namespace NCDK.QSAR
     /// The available descriptors are determined by scanning all the jar files in the users CLASSPATH
     /// and selecting classes that belong to the CDK QSAR atomic or molecular descriptors package.
     /// </para>
-    /// </summary>
+    /// </remarks>
     /// <example>
     /// An example of its usage would be
-    /// <code>
-    /// Molecule someMolecule;
-    /// ...
-    /// DescriptorEngine descriptoEngine = new DescriptorEngine(DescriptorEngine.MOLECULAR, null);
-    /// descriptorEngine.Process(someMolecule);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.QSAR.DescriptorEngine_Example.cs"]/*' />
     /// <para>
     /// The class allows the user to obtain a List of all the available descriptors in terms of their
     /// Java class names as well as instances of each descriptor class.   For each descriptor, it is possible to
@@ -81,25 +77,15 @@ namespace NCDK.QSAR
         /// </summary>
         /// <example>
         /// This constructor instantiates the engine but does not perform any initialization. As a result calling
-        /// the <c>Process()</c> method will fail. To use the engine via this constructor you should use
+        /// the <see cref="Process(IAtomContainer)"/> method will fail. To use the engine via this constructor you should use
         /// the following code
-        /// <code>
-        /// List classNames = DescriptorEngine.GetDescriptorClassNameByPackage("NCDK.Descriptors.Moleculars", null);
-        /// DescriptorEngine engine = DescriptorEngine(classNames);
-        /// 
-        /// List instances =  engine.InstantiateDescriptors(classNames);
-        /// List specs = engine.InitializeSpecifications(instances)
-        /// engine.SetDescriptorInstances(instances);
-        /// engine.SetDescriptorSpecifications(specs);
-        /// 
-        /// engine.Process(someAtomContainer);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.QSAR.DescriptorEngine_Example.cs+ctor"]/*' />
         /// This approach allows one to use find classes using the interface based approach (<see cref="GetDescriptorClassNameByInterface(string, IEnumerable{Assembly})"/>.
         /// If you use this method it is preferable to specify the jar files to examine
         /// </example>
-        public DescriptorEngine(IList<string> classNames, IChemObjectBuilder builder)
+        public DescriptorEngine(IEnumerable<string> classNames, IChemObjectBuilder builder)
         {
-            this.classNames = classNames;
+            this.classNames = classNames.ToList();
             this.builder = builder;
             descriptors = InstantiateDescriptors(classNames);
             speclist = InitializeSpecifications(descriptors).ToList();
@@ -112,15 +98,13 @@ namespace NCDK.QSAR
         /// <summary>
         /// Create a descriptor engine for all descriptor types. Descriptors are
         /// loaded using the service provider mechanism. To include custom
-        /// descriptors one should declare in {@code META-INF/services} a file named
+        /// descriptors one should declare as an embedded resource named
         /// as the interface you are providing (e.g. <see cref="IMolecularDescriptor"/>).
         /// This file declares the implementations provided by the jar as class names.
         /// </summary>
         /// <typeparam name="T">class of the descriptor to use (<see cref="IMolecularDescriptor"/>)</typeparam>
         /// <returns></returns>
-        /// <remarks>
-        /// <a href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service Provider Interface (SPI) Introduction</a>
-        /// </remarks>
+        /// <seealso href="http://docs.oracle.com/javase/tutorial/sound/SPI-intro.html">Service Provider Interface (SPI) Introduction</seealso>
         public static DescriptorEngine Create<T>(IChemObjectBuilder builder) where T : IDescriptor
         {
             var o = new DescriptorEngine();
@@ -144,12 +128,14 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Calculates all available (or only those specified) descriptors for a molecule.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// The results for a given descriptor as well as associated parameters and
         /// specifications are used to create a <see cref="DescriptorValue"/>
         /// object which is then added to the molecule as a property keyed
         /// on the <see cref="DescriptorSpecification"/> object for that descriptor</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="molecule">The molecule for which we want to calculate descriptors</param>
         /// <exception cref="CDKException">if an error occured during descriptor calculation or the descriptors and/or specifications have not been initialized</exception>
         public void Process(IAtomContainer molecule)
@@ -213,6 +199,8 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns the type of the descriptor as defined in the descriptor dictionary.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, first child element that is called
@@ -227,7 +215,7 @@ namespace NCDK.QSAR
         /// The descriptor can be identified either by the name of the class implementing the descriptor
         /// or else the specification reference value of the descriptor which can be obtained from an instance
         /// of the descriptor class.</para>
-        /// </summary>
+        /// </remarks>
         /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors specification reference</param>
         /// <returns>The type of the descriptor as stored in the dictionary, null if no entry is found matching the supplied identifier</returns>
         public string GetDictionaryType(string identifier)
@@ -267,20 +255,25 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns the type of the descriptor as defined in the descriptor dictionary.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
+        /// <para>
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, first child element that is called
         /// "isClassifiedAs" is returned. Note that the OWL descriptor spec allows both the class of
         /// descriptor (electronic, topological etc) as well as the type of descriptor (molecular, atomic)
         /// to be specified in an "isClassifiedAs" element. Thus we ignore any such element that
         /// indicates the descriptors class.
-        /// <p/>
+        /// </para>
+        /// <para>
         /// The method assumes that any descriptor entry will have only one "isClassifiedAs" entry describing
         /// the descriptors type.
-        /// <p/>
-        /// The descriptor can be identified it DescriptorSpecification object
-        /// </summary>
-        /// <param name="descriptorSpecification">A DescriptorSpecification object</param>
+        /// </para>
+        /// <para>
+        /// The descriptor can be identified it <see cref="DescriptorSpecification"/> object
+        /// </para>
+        /// </remarks>
+        /// <param name="descriptorSpecification">A <see cref="DescriptorSpecification"/> object</param>
         /// <returns>the type of the descriptor as stored in the dictionary, null if no entry is found matching the supplied identifier</returns>
         public string GetDictionaryType(IImplementationSpecification descriptorSpecification)
         {
@@ -289,23 +282,26 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns the class(es) of the decsriptor as defined in the descriptor dictionary.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
+        /// <para>
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, the meta-data list is examined to
         /// look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
         /// found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
         /// multiple ways (geometric and electronic for example), in general, a given descriptor will
         /// have multiple classes associated with it.
-        /// <p/>
+        /// </para>
+        /// <para>
         /// The descriptor can be identified either by the name of the class implementing the descriptor
         /// or else the specification reference value of the descriptor which can be obtained from an instance
         /// of the descriptor class.
-        ///
-        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors</param>
-        ///                   specification reference
-        /// <returns>A List containing the names of the QSAR descriptor classes that this  descriptor was declared</returns>
-        ///         to belong to. If an entry for the specified identifier was not found, null is returned.
-        /// </summary>
+        /// </para>
+        /// </remarks>
+        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors
+        ///                   specification reference</param>
+        /// <returns>An array containing the names of the QSAR descriptor classes that this  descriptor was declared
+        ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
         public string[] GetDictionaryClass(string identifier)
         {
             var dictEntries = dict.Entries;
@@ -347,21 +343,23 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns the class(es) of the descriptor as defined in the descriptor dictionary.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
+        /// <para>
         /// The method will look for the identifier specified by the user in the QSAR descriptor
         /// dictionary. If a corresponding entry is found, the meta-data list is examined to
         /// look for a dictRef attribute that contains a descriptorClass value. if such an attribute is
         /// found, the value of the contents attribute  add to a list. Since a descriptor may be classed in
         /// multiple ways (geometric and electronic for example), in general, a given descriptor will
         /// have multiple classes associated with it.
-        /// <p/>
-        /// The descriptor can be identified by its DescriptorSpecification object.
-        ///
+        /// </para>
+        /// <para>
+        /// The descriptor can be identified by its <see cref="DescriptorSpecification"/> object.
+        /// </para>
+        /// </remarks>
         /// <param name="descriptorSpecification">A DescriptorSpecification object</param>
-        /// <returns>A List containing the names of the QSAR descriptor classes that this  descriptor was declared</returns>
-        ///         to belong to. If an entry for the specified identifier was not found, null is returned.
-        /// </summary>
-
+        /// <returns>An array containing the names of the QSAR descriptor classes that this  descriptor was declared
+        ///         to belong to. If an entry for the specified identifier was not found, null is returned.</returns>
         public string[] GetDictionaryClass(IImplementationSpecification descriptorSpecification)
         {
             return GetDictionaryClass(descriptorSpecification.SpecificationReference);
@@ -369,16 +367,16 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Gets the definition of the descriptor.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// All descriptors in the descriptor dictioanry will have a definition element. This function
         /// returns the value of that element. Many descriptors also have a description element which is
         /// more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
         /// and I'm not sure what I should return it as
-        ///
-        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors</param>
-        ///                   specification reference
+        /// </remarks>
+        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors
+        ///                   specification reference</param>
         /// <returns>The definition</returns>
-        /// </summary>
         public string GetDictionaryDefinition(string identifier)
         {
             var dictEntries = dict.Entries;
@@ -405,15 +403,15 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Gets the definition of the descriptor.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// All descriptors in the descriptor dictioanry will have a definition element. This function
         /// returns the value of that element. Many descriptors also have a description element which is
         /// more detailed. However the value of these elements can contain arbitrary mark up (such as MathML)
         /// and I'm not sure what I should return it as
-        ///
+        /// </remarks>
         /// <param name="descriptorSpecification">A DescriptorSpecification object</param>
         /// <returns>The definition</returns>
-        /// </summary>
         public string GetDictionaryDefinition(DescriptorSpecification descriptorSpecification)
         {
             return GetDictionaryDefinition(descriptorSpecification.SpecificationReference);
@@ -421,11 +419,10 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Gets the label (title) of the descriptor.
-        ///
-        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors</param>
-        ///                   specification reference
-        /// <returns>The title</returns>
         /// </summary>
+        /// <param name="identifier">A string containing either the descriptors fully qualified class name or else the descriptors
+        ///                   specification reference</param>
+        /// <returns>The title</returns>
         public string GetDictionaryTitle(string identifier)
         {
             var dictEntries = dict.Entries;
@@ -451,10 +448,9 @@ namespace NCDK.QSAR
 
         /// <summary>
         ///  Gets the label (title) of the descriptor.
-        ///
+        /// </summary>
         /// <param name="descriptorSpecification">The specification object</param>
         /// <returns> The title</returns>
-        /// </summary>
         public string GetDictionaryTitle(DescriptorSpecification descriptorSpecification)
         {
             return GetDictionaryTitle(descriptorSpecification.SpecificationReference);
@@ -462,11 +458,10 @@ namespace NCDK.QSAR
 
         /// <summary>
         /// Returns the DescriptorSpecification objects for all available descriptors.
-        ///
-        /// <returns>An array of <code>DescriptorSpecification</code> objects. These are the keys</returns>
-        ///         with which the <code>DescriptorValue</code> objects can be obtained from a
-        ///         molecules property list
         /// </summary>
+        /// <returns>A <see cref="IList{T}"/> of <see cref="DescriptorSpecification"/> objects. These are the keys
+        ///         with which the <see cref="DescriptorValue"/> objects can be obtained from a
+        ///         molecules property list</returns>
         public IList<IImplementationSpecification> GetDescriptorSpecifications()
         {
             return speclist;
@@ -477,9 +472,9 @@ namespace NCDK.QSAR
         /// </summary>
         /// <param name="specs">A list of specification objects</param>
         /// <seealso cref="GetDescriptorSpecifications"/>
-        public void SetDescriptorSpecifications(IList<IImplementationSpecification> specs)
+        public void SetDescriptorSpecifications(IEnumerable<IImplementationSpecification> specs)
         {
-            speclist = specs;
+            speclist = specs.ToList();
         }
 
         /// <summary>
@@ -492,18 +487,18 @@ namespace NCDK.QSAR
         }
 
         /// <summary>
-        /// Returns a List containing the instantiated descriptor classes.
+        /// Returns a <see cref="IList{T}"/> containing the instantiated descriptor classes.
         /// </summary>
-        /// <returns>A List containing descriptor classes</returns>
+        /// <returns>A <see cref="IList{T}"/> containing descriptor classes</returns>
         public IList<IDescriptor> GetDescriptorInstances()
         {
             return descriptors;
         }
 
         /// <summary>
-        /// Set the list of <code>Descriptor</code> objects.
+        /// Set the list of <see cref="IDescriptor"/> objects.
         /// </summary>
-        /// <param name="descriptors">A List of descriptor objects</param>
+        /// <param name="descriptors">A <see cref="IList{T}"/> of descriptor objects</param>
         /// <see cref="GetDescriptorInstances"/>
         public void SetDescriptorInstances(IList<IDescriptor> descriptors)
         {
@@ -622,7 +617,7 @@ namespace NCDK.QSAR
             yield break;
         }
 
-        public List<IDescriptor> InstantiateDescriptors(IEnumerable<string> descriptorClassNames)
+        public IList<IDescriptor> InstantiateDescriptors(IEnumerable<string> descriptorClassNames)
         {
             var assembly = Assembly.GetExecutingAssembly();
             var descriptors = new List<IDescriptor>();

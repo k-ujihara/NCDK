@@ -36,8 +36,7 @@ namespace NCDK.Beam
     /// Enumeration of atom-based relative configurations. Each value defines a
     /// configuration of a given topology.
     /// </summary>
-    /// <remarks>
-    /// <a href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</a></remarks>
+    /// <seealso href="http://www.opensmiles.org/opensmiles.html#chirality">Chirality, OpenSMILES</seealso>
     // @author John May
     public sealed class Configuration
     {

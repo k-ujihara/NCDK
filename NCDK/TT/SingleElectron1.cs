@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2004-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -34,10 +34,10 @@ namespace NCDK.Default
     /// A radical in CDK is represented by an AtomContainer that contains an Atom
     /// and a SingleElectron type ElectronContainer:
     /// <code>
-    ///   AtomContainer radical = new AtomContainer();
-    ///   Atom carbon = new Atom("C");
-    ///   carbon.setImplicitHydrogens(3);
-    ///   radical.addElectronContainer(new SingleElectron(carbon));
+    /// AtomContainer radical = new AtomContainer();
+    /// Atom carbon = new Atom("C");
+    /// carbon.ImplicitHydrogenCount = 3;
+    /// radical.SingleElectrons.Add(new SingleElectron(carbon));
     /// </code>
     /// </example>
     // @cdk.module  silent
@@ -126,10 +126,10 @@ namespace NCDK.Silent
     /// A radical in CDK is represented by an AtomContainer that contains an Atom
     /// and a SingleElectron type ElectronContainer:
     /// <code>
-    ///   AtomContainer radical = new AtomContainer();
-    ///   Atom carbon = new Atom("C");
-    ///   carbon.setImplicitHydrogens(3);
-    ///   radical.addElectronContainer(new SingleElectron(carbon));
+    /// AtomContainer radical = new AtomContainer();
+    /// Atom carbon = new Atom("C");
+    /// carbon.ImplicitHydrogenCount = 3;
+    /// radical.SingleElectrons.Add(new SingleElectron(carbon));
     /// </code>
     /// </example>
     // @cdk.module  silent

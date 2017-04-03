@@ -34,8 +34,8 @@ namespace NCDK.Config.Fragments
     /// A class representing the 79 E-state atom types in terms of SMARTS.
     /// </summary>
     /// <remarks>
-    /// These fragments were originally described in {@cdk.cite HALL1995} and were
-    /// converted into SMARTS forms by the <a href="http://www.rdkit.org">RDKit</a> project
+    /// These fragments were originally described in <token>cdk-cite-HALL1995</token> and were
+    /// converted into SMARTS forms by the <see href="http://www.rdkit.org">RDKit</see> project
     /// </remarks>
     // @cdk.module  standard
     // @author  Greg Landrum
@@ -49,7 +49,7 @@ namespace NCDK.Config.Fragments
         /// The names of the fragments.
         /// </summary>
         /// <remarks>
-        /// See <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</a> for the corresponding chemical groups
+        /// See <see href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</see> for the corresponding chemical groups
         /// </remarks>
         private static readonly string[] NAMES = new[] {"sLi", "ssBe", "ssssBe", "ssBH", "sssB", "ssssB", "sCH3", "dCH2", "ssCH2",
             "tCH", "dsCH", "aaCH", "sssCH", "ddC", "tsC", "dssC", "aasC", "aaaC", "ssssC", "sNH3", "sNH2", "ssNH2",

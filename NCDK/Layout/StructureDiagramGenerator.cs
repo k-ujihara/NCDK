@@ -44,16 +44,11 @@ namespace NCDK.Layout
     /// <example>
     /// Usage: Create an instance of this class, thereby assigning a molecule,
     /// call <see cref="GenerateCoordinates()"/> and get your molecule back:
-    /// <code>
-    /// StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-    /// sdg.Molecule = someMolecule;
-    /// sdg.GenerateCoordinates();
-    /// Molecule layedOutMol = sdg.Molecule;
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Layout.StructureDiagramGenerator_Example.cs"]/*' />
     /// </example>
     /// <remarks>
-    /// The method will fail if the molecule is disconnected. The
-    /// PartitionIntoMolecules(AtomContainer) can help here.
+    /// The method will fail if the molecule is disconnected. The 
+    /// <see cref="ConnectivityChecker.PartitionIntoMolecules(IAtomContainer)"/> can help here.
     /// </remarks>
     /// <seealso cref="ConnectivityChecker.PartitionIntoMolecules(IAtomContainer)"/>
     // @author steinbeck
@@ -321,7 +316,7 @@ namespace NCDK.Layout
 
                 // Get the smallest set of smallest rings on this molecule
                 
-                sssr = Cycles.SSSR(molecule).ToRingSet();
+                sssr = Cycles.FindSSSR(molecule).ToRingSet();
                 if (!sssr.Any())
                 {
                     return;
@@ -534,7 +529,7 @@ namespace NCDK.Layout
         /// <summary>
         /// Select the global orientation of the layout. We click round at 30 degree increments
         /// and select the orientation that a) is the widest or b) has the most bonds aligned to
-        /// +/- 30 degrees {@cdk.cite Clark06}.
+        /// +/- 30 degrees <token>cdk-cite-Clark06</token>.
         /// </summary>
         /// <param name="mol">molecule</param>
         /// <param name="widthDiff">parameter at which to consider orientations equally good (wide select)</param>
@@ -1109,7 +1104,7 @@ namespace NCDK.Layout
             if (macro)
             {
                 foreach (var ring in rs)
-                    ring.SetProperty(RingPlacer.SNAP_HINT, true);
+                    ring.SetProperty(RingPlacer.SnapHint, true);
             }
 
             {
@@ -1120,9 +1115,9 @@ namespace NCDK.Layout
                 {
                     if (ring.IsPlaced)
                     {
-                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.FUSED, BondLength);
-                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.BRIDGED, BondLength);
-                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.SPIRO, BondLength);
+                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.Fused, BondLength);
+                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.Bridged, BondLength);
+                        ringPlacer.PlaceConnectedRings(rs, ring, RingPlacer.Spiro, BondLength);
                     }
                     thisRing++;
                     if (thisRing == rs.Count)
@@ -1137,7 +1132,7 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Peel back terminal rings to the complex 'core': {@cdk.cite Helson99}, {@cdk.cite Clark06}.
+        /// Peel back terminal rings to the complex 'core': <token>cdk-cite-Helson99</token>, <token>cdk-cite-Clark06</token>.
         /// </summary>
         /// <param name="rs">ring set</param>
         /// <returns>the ring set core</returns>

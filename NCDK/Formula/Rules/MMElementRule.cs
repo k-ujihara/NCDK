@@ -29,7 +29,7 @@ namespace NCDK.Formula.Rules
     /// take account if the IElement is not contained in the matrix. It will be jumped. 
     /// <para>
     /// The rules is based from Tobias Kind paper with the title "Seven Golden Rules for heuristic
-    /// filtering of molecular formula" {@cdk.cite kind2007}.
+    /// filtering of molecular formula" <token>cdk-cite-kind2007</token>.
     /// </para>
     /// </summary>
     /// <remarks>

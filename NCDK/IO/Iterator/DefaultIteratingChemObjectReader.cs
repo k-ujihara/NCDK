@@ -33,9 +33,6 @@ namespace NCDK.IO.Iterator
     public abstract class DefaultIteratingChemObjectReader<T> : ChemObjectIO,
             IIteratingChemObjectReader<T> where T : IChemObject
     {
-        protected ChemObjectReaderModes mode = ChemObjectReaderModes.Relaxed;
-        protected IChemObjectReaderErrorHandler errorHandler = null;
-
         public override bool Accepts(Type type)
         {
             return false; // it's an iterator, idiot.
@@ -51,35 +48,23 @@ namespace NCDK.IO.Iterator
             throw new NotSupportedException();
         }
 
-        public ChemObjectReaderModes ReaderMode
-        {
-            set
-            {
-                this.mode = value;
-            }
-        }
+        public ChemObjectReaderModes ReaderMode { get; set; } = ChemObjectReaderModes.Relaxed;
 
         /// <inheritdoc/>
-        public IChemObjectReaderErrorHandler ErrorHandler
-        {
-            set
-            {
-                this.errorHandler = value;
-            }
-        }
+        public IChemObjectReaderErrorHandler ErrorHandler { get; set; }
 
         /// <inheritdoc/>
         public void HandleError(string message)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message);
-            if (this.mode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
         }
 
         /// <inheritdoc/>
         public void HandleError(string message, Exception exception)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, exception);
-            if (this.mode == ChemObjectReaderModes.Strict)
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, exception);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict)
             {
                 throw new CDKException(message, exception);
             }
@@ -88,15 +73,15 @@ namespace NCDK.IO.Iterator
         /// <inheritdoc/>
         public void HandleError(string message, int row, int colStart, int colEnd)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, row, colStart, colEnd);
-            if (this.mode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
         }
 
         /// <inheritdoc/>
         public void HandleError(string message, int row, int colStart, int colEnd, Exception exception)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, row, colStart, colEnd, exception);
-            if (this.mode == ChemObjectReaderModes.Strict)
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict)
             {
                 throw new CDKException(message, exception);
             }

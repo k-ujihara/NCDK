@@ -22,7 +22,7 @@ using System;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.ch.ic.ac.uk/local/organic/t2_mmod.html">here</a>.
+    /// See <see href="http://www.ch.ic.ac.uk/local/organic/t2_mmod.html">here</see>.
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

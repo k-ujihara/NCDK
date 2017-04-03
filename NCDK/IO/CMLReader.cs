@@ -36,7 +36,7 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads a molecule in CML 1.X and 2.0 format.
-    /// CML is an XML based application {@cdk.cite PMR99}, and this Reader applies the method described in {@cdk.cite WIL01}.
+    /// CML is an XML based application <token>cdk-cite-PMR99</token>, and this Reader applies the method described in <token>cdk-cite-WIL01</token>.
     /// </summary>
     // @author      Egon L. Willighagen
     // @cdk.created 2001-02-01

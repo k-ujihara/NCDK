@@ -50,11 +50,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// <summary>
         /// Query molecule
         /// </summary>
-        /// <param name="cTab1Copy">/// @param cTab2Copy</param>
-        /// <param name="signArray">/// @param neighborBondnumA</param>
-        /// <param name="setBondnumA">/// @param iBondNeighborsA</param>
-        /// <param name="cBondNeighborsA">/// @param mappingSize</param>
-        /// <param name="iBondSetA">/// @param cBondSetA</param>
         protected internal QueryProcessor(List<string> cTab1Copy, List<string> cTab2Copy, string[] signArray,
                 int neighborBondnumA, int setBondnumA, List<int> iBondNeighborsA, List<string> cBondNeighborsA,
                 int mappingSize, List<int> iBondSetA, List<string> cBondSetA)

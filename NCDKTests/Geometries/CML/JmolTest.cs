@@ -31,7 +31,7 @@ namespace NCDK.IO.CML
     /// <summary>
     /// TestCase for reading CML files using a few test files
     /// in data/cmltest as found in the Jmol distribution
-    /// (<a href="http://www.jmol.org/">http://www.jmol.org/</a>).
+    /// (<see href="http://www.jmol.org/">http://www.jmol.org/</see>).
     ///
     // @cdk.module test-io
     /// </summary>

@@ -135,15 +135,14 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Apply the labeling {@code labels[]} to the graph {@code g}. The labels
+        /// Apply the labeling <paramref name="labels"/> to the graph <paramref name="g"/>. The labels
         /// are converted to a permutation which is then applied to the Graph and
         /// rearrange it's vertex Order.
         /// </summary>
         /// <param name="g">the graph to permute</param>
         /// <param name="labels">the vertex labels - for example from a cannibalisation algorithm</param>
         /// <returns>a copy of the original graph with it's vertices permuted by the labelling</returns>
-        public static Graph Canonicalize(Graph g,
-                                      long[] labels)
+        public static Graph Canonicalize(Graph g, long[] labels)
         {
             int[] is_ = new int[g.Order];
 

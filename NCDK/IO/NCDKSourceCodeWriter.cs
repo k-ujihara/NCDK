@@ -31,18 +31,11 @@ using System.IO;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Converts a Molecule into CDK source code that would build the same
+    /// Converts a Molecule into NCDK source code that would build the same
     /// molecule. 
     /// </summary>
     /// <example>
-    /// It's typical use is:
-    /// <code>
-    /// StringWriter stringWriter = new StringWriter();
-    /// ChemObjectWriter writer = new CDKSourceCodeWriter(stringWriter);
-    /// writer.Write((Molecule)molecule);
-    /// writer.Close();
-    /// Console.Out.Write(stringWriter.ToString());
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.NCDKSourceCodeWriter_Example.cs"]/*' />
     /// </example>
     // @cdk.module io
     // @cdk.githash

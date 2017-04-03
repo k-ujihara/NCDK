@@ -37,9 +37,9 @@ namespace NCDK.Geometries
     // @cdk.created 2005-08-04
     // @cdk.module  standard
     // @cdk.githash
-    public class BondTools
+    public static class BondTools
     {
-        /// FIXME: class JavaDoc should use {@cdk.cite BLA} for the CDK News article
+        /// FIXME: class JavaDoc should use <token>cdk-cite-BLA</token> for the CDK News article
 
         /// <summary>
         /// Tells if a certain bond is center of a valid double bond configuration.

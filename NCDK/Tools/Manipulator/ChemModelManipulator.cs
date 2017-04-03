@@ -34,7 +34,7 @@ namespace NCDK.Tools.Manipulator
     /// </code>
     /// will find the Atom in the model by traversing the ChemModel's
     /// MoleculeSet, Crystal and ReactionSet fields and remove
-    /// it with the RemoveAtomAndConnectedElectronContainers(Atom) method.
+    /// it with the <see cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/> method.
     /// </summary>
     /// <seealso cref="IAtomContainer.RemoveAtomAndConnectedElectronContainers(IAtom)"/>
     // @cdk.module standard

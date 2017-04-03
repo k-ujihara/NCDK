@@ -33,12 +33,12 @@ namespace NCDK.Reactions.Mechanisms
     // @cdk.githash
     public class TautomerizationMechanism : IReactionMechanism
     {
-
         /// <summary>
         /// Initiates the process for the given mechanism. The atoms and bonds to apply are mapped between
         /// reactants and products.
         /// </summary>
-        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed fourth atoms.</param>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed fourth atoms.</param>
         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed two bond.
         ///     The first bond is the bond to decrease the order and the second is the bond to increase the order.
         ///     It is the bond which is moved</param>

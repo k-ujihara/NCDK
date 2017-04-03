@@ -25,11 +25,10 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IBioPolymer} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IBioPolymer"/> implementations.
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-interfaces
+    [TestClass()]
     public abstract class AbstractBioPolymerTest : AbstractPolymerTest
     {
         [TestMethod()]
@@ -63,7 +62,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestGetMonomerNames()
         {
             IBioPolymer oBioPolymer = (IBioPolymer)NewChemObject();
@@ -120,7 +118,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestAddAtom_IAtom()
         {
             IBioPolymer oBioPolymer = (IBioPolymer)NewChemObject();
@@ -267,7 +264,6 @@ namespace NCDK
         /// Method to test whether the class complies with RFC #9.
         /// </summary>
         [TestMethod()]
-
         public override void TestToString()
         {
             IBioPolymer bp = (IBioPolymer)NewChemObject();
@@ -283,13 +279,11 @@ namespace NCDK
         /// Method to test the Clone() method
         /// </summary>
         [TestMethod()]
-
         public override void TestClone()
         {
             IBioPolymer polymer = (IBioPolymer)NewChemObject();
             object clone = polymer.Clone();
             Assert.IsTrue(clone is IBioPolymer);
         }
-
     }
 }

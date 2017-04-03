@@ -26,18 +26,15 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NCDK
 {
     /// <summary>
-    /// TestCase for {@link IAminoAcid} implementations.
-    ///
+    /// TestCase for <see cref="IAminoAcid"/> implementations.
+    /// </summary>
     // @cdk.module test-interfaces
-    ///
     // @author  Edgar Luttman <edgar@uni-paderborn.de>
     // @cdk.created 2001-08-09
-    /// </summary>
     [TestClass()]
     public abstract class AbstractAminoAcidTest
         : AbstractMonomerTest
     {
-
         [TestMethod()]
         public virtual void TestAddCTerminus_IAtom()
         {

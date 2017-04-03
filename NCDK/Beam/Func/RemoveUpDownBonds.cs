@@ -117,8 +117,8 @@ namespace NCDK.Beam
         {
             int u = e.Either(), v = e.Other(u);
 
-            RePlaceImplWithExpl(g, e, u, ordering, acc);
-            RePlaceImplWithExpl(g, e, v, ordering, acc);
+            ReplaceImplWithExpl(g, e, u, ordering, acc);
+            ReplaceImplWithExpl(g, e, v, ordering, acc);
         }
 
         private class S : IComparer<Edge>
@@ -156,7 +156,7 @@ namespace NCDK.Beam
         /// <param name="ordering"></param>
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
-        private void RePlaceImplWithExpl(Graph g,
+        private void ReplaceImplWithExpl(Graph g,
                                       Edge e,
                                       int u,
                                       int[] ordering,

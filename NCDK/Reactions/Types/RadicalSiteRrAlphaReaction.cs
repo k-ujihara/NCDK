@@ -16,61 +16,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Aromaticities;
-using NCDK.Reactions.Types.Parameters;
-using NCDK.RingSearches;
-using NCDK.Tools;
-using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-
 namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// <para>This reaction could be represented as [A*]-(C)_2-C3[R] => A([RH])-(C_2)-[C3*]. Due to
     /// the single electron of atom A the R is moved.</para>
-    /// <para>It is processed by the RadicalSiteRearrangementMechanism class</para>
     /// </summary>
-    /// <example>
-    /// <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new RadicalSiteRrAlphaReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not localized then the reaction process will
-    /// try to find automatically the possible reactive center.</para>
-    /// </example>
     /// <seealso cref="Mechanisms.RadicalSiteRearrangementMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-10-20
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    public class RadicalSiteRrAlphaReaction : ReactionEngine, IReactionProcess
+    public partial class RadicalSiteRrAlphaReaction : AbstractRadicalSiteReaction
     {
-
-        /// <summary>
-        /// Constructor of the RadicalSiteRrAlphaReaction object
-        ///
-        /// </summary>
         public RadicalSiteRrAlphaReaction() { }
 
-        /// <summary>
-        ///  Gets the specification attribute of the RadicalSiteRrAlphaReaction object
-        ///
-        /// <returns>The specification value</returns>
-        /// </summary>
-
-        public ReactionSpecification Specification =>
+        /// <inheritdoc/>
+        public override ReactionSpecification Specification =>
              new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RadicalSiteRrAlpha", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
@@ -83,130 +46,9 @@ namespace NCDK.Reactions.Types
         /// <exception cref="CDKException"> Description of the Exception</exception>
         /// <param name="reactants">reactants of the reaction.</param>
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: RadicalSiteRrAlphaReaction");
-
-            if (reactants.Count != 1)
-            {
-                throw new CDKException("RadicalSiteRrAlphaReaction only expects one reactant");
-            }
-            if (agents != null)
-            {
-                throw new CDKException("RadicalSiteRrAlphaReaction don't expects agents");
-            }
-
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
-            IAtomContainer reactant = reactants[0];
-
-            AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
-            Aromaticity.CDKLegacy.Apply(reactant);
-            AllRingsFinder arf = new AllRingsFinder();
-            IRingSet ringSet = arf.FindAllRings(reactant);
-            for (int ir = 0; ir < ringSet.Count; ir++)
-            {
-                IRing ring = (IRing)ringSet[ir];
-                for (int jr = 0; jr < ring.Atoms.Count; jr++)
-                {
-                    IAtom aring = ring.Atoms[jr];
-                    aring.IsInRing = true;
-                }
-            }
-            // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
-
-            HOSECodeGenerator hcg = new HOSECodeGenerator();
-            foreach (var atomi in reactant.Atoms)
-            {
-                if (atomi.IsReactiveCenter && reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
-                {
-                    hcg.GetSpheres(reactant, atomi, 1, true);
-                    var atom1s = hcg.GetNodesInSphere(1);
-
-                    hcg.GetSpheres(reactant, atomi, 2, true);
-                    foreach (var atoml in hcg.GetNodesInSphere(2))
-                    {
-                        if (atoml != null && atoml.IsReactiveCenter
-                                && !atoml.IsInRing
-                                && (atoml.FormalCharge ?? 0) == 0
-                                && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
-                        {
-                            foreach (var atomR in reactant.GetConnectedAtoms(atoml))
-                            {
-                                if (atom1s.Contains(atomR)) continue;
-                                if (reactant.GetBond(atomR, atoml).IsReactiveCenter
-                                        && atomR.IsReactiveCenter
-                                        && (atomR.FormalCharge ?? 0) == 0)
-                                {
-                                    var atomList = new List<IAtom>();
-                                    atomList.Add(atomR);
-                                    atomList.Add(atomi);
-                                    atomList.Add(atoml);
-                                    var bondList = new List<IBond>();
-                                    bondList.Add(reactant.GetBond(atomR, atoml));
-
-                                    IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet<IAtomContainer>();
-
-                                    moleculeSet.Add(reactant);
-                                    IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
-                                    if (reaction == null)
-                                        continue;
-                                    else
-                                        setOfReactions.Add(reaction);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return setOfReactions;
-        }
-
-        /// <summary>
-        /// set the active center for this molecule.
-        /// The active center will be those which correspond with [A*]-(C)_2-C3[R]
-        /// <code>
-        /// C: Atom with single electron
-        /// C5: Atom with the R to move
-        ///  </code>
-        /// </summary>
-        /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
-        {
-            HOSECodeGenerator hcg = new HOSECodeGenerator();
-            foreach (var atomi in reactant.Atoms)
-            {
-                if (reactant.GetConnectedSingleElectrons(atomi).Count() == 1)
-                {
-
-                    hcg.GetSpheres(reactant, atomi, 1, true);
-                    var atom1s = hcg.GetNodesInSphere(1);
-
-                    hcg.GetSpheres(reactant, atomi, 2, true);
-                    foreach (var atoml in hcg.GetNodesInSphere(2))
-                    {
-                        if (atoml != null && !atoml.IsInRing
-                                && (atoml.FormalCharge ?? 0) == 0
-                                && !atoml.Equals("H") && reactant.GetMaximumBondOrder(atoml) == BondOrder.Single)
-                        {
-
-                            foreach (var atomR in reactant.GetConnectedAtoms(atoml))
-                            {
-                                if (atom1s.Contains(atomR)) continue;
-                                if ((atomR.FormalCharge ?? 0) == 0)
-                                {
-
-                                    atomi.IsReactiveCenter = true;
-                                    atoml.IsReactiveCenter = true;
-                                    atomR.IsReactiveCenter = true;
-                                    reactant.GetBond(atomR, atoml).IsReactiveCenter = true; ;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return base.Initiate(reactants, agents, 2, true, atom => (atom.FormalCharge ?? 0) == 0);
         }
     }
 }

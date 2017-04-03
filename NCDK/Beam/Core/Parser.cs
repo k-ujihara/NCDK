@@ -685,7 +685,7 @@ namespace NCDK.Beam
         /// concatenated signs (e.g. ++, --) and other bad form (e.g. '++-1') is
         /// intercepted.
         /// </summary>
-        /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#charge">Charge -OpenSMILES Specification</a></remarks>
+        /// <seealso href="http://www.opensmiles.org/opensmiles.html#charge">Charge -OpenSMILES Specification</seealso >
         /// <param name="buffer">a character buffer</param>
         /// <returns>the formal charge value</returns>, 0 if none present
         public static int ReadCharge(CharBuffer buffer)
@@ -717,7 +717,7 @@ namespace NCDK.Beam
         /// identified by a ':' followed by one or more digits. The atom class may be
         /// padded such that ':005' and ':5' are equivalent.
         /// </summary>
-        /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#atomclass">Atom Class - OpenSMILES Specification</a></remarks>
+        /// <seealso href="http://www.opensmiles.org/opensmiles.html#atomclass">Atom Class - OpenSMILES Specification</seealso >
         /// <param name="buffer">a character buffer</param>
         /// <returns>the atom class, or 0</returns>
         public static int ReadClass(CharBuffer buffer)

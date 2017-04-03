@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Further information is given in
     /// Wiener path number: half the sum of all the distance matrix entries; Wiener
     /// polarity number: half the sum of all the distance matrix entries with a
-    /// value of 3. For more information see {@cdk.cite Wiener1947,TOD2000}.
+    /// value of 3. For more information see <token>cdk-cite-Wiener1947</token>; <token>cdk-cite-TOD2000</token>.
     /// </para>
     /// <para>
     /// This descriptor uses no parameters.

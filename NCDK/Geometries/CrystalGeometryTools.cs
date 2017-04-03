@@ -33,7 +33,7 @@ namespace NCDK.Geometries
     // @cdk.githash
     // @author  Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.keyword fractional coordinates, crystal
-    public class CrystalGeometryTools
+    public static class CrystalGeometryTools
     {
         /// <summary>
         /// Inverts three cell axes.
@@ -88,7 +88,7 @@ namespace NCDK.Geometries
         /// To calculate Cartesian coordinates, it places the a axis on the x axes,
         /// the b axis in the xy plane, making an angle gamma with the a axis, and places
         /// the c axis to fulfill the remaining constraints. (See also
-        /// <a href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the CCL archive</a>.)
+        /// <see href="http://server.ccl.net/cca/documents/molecular-modeling/node4.html">the CCL archive</see>.)
         /// </para>
         /// </summary>
         /// <param name="alength">length of the a axis</param>

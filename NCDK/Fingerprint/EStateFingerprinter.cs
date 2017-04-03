@@ -29,26 +29,26 @@ using System.Collections.Generic;
 namespace NCDK.Fingerprint
 {
     /// <summary>
-    /// This fingerprinter generates 79 bit fingerprints using the E-State
-    /// fragments.
-    ///
-    /// <para>The E-State fragments are those described in {@cdk.cite HALL1995} and
+    /// This fingerprinter generates 79 bit fingerprints using the E-State fragments.
+    /// </summary>
+    /// <remarks>
+    /// <para>The E-State fragments are those described in <token>cdk-cite-HALL1995</token> and
     /// the SMARTS patterns were taken from
-    /// <a href="http://www.rdkit.org">RDKit</a>. Note that this fingerprint simply
+    /// <see href="http://www.rdkit.org">RDKit</see>. Note that this fingerprint simply
     /// indicates the presence or occurrence of the fragments. If you need counts
-    /// of the fragments take a look at {@link
-    /// NCDK.QSAR.Descriptors.Moleculars.KierHallSmartsDescriptor},
+    /// of the fragments take a look at <see cref="QSAR.Descriptors.Moleculars.KierHallSmartsDescriptor"/>,
     /// which also lists the substructures corresponding to each bit position.
     /// </para>
     /// <para>This class assumes that aromaticity perception and atom typing have
     /// been performed prior to generating the fingerprint.
     /// </para>
-    /// <para><b>Warning - ESTATE substructure keys cannot be used for substructure
+    /// <note type="warning">
+    /// ESTATE substructure keys cannot be used for substructure
     /// filtering. It is possible for some keys to match substructures and not match
     /// the superstructures. Some keys check for hydrogen counts which may not be
-    /// preserved in a superstructure.</b>
-    /// </para>
-    /// </summary>
+    /// preserved in a superstructure.
+    /// </note>
+    /// </remarks>
     // @author Rajarhi Guha
     // @cdk.created 2008-07-23
     // @cdk.keyword fingerprint

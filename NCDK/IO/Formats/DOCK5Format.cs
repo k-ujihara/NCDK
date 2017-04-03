@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://dock.compbio.ucsf.edu">here</a>.
+    /// See <see href="http://dock.compbio.ucsf.edu">here</see>.
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

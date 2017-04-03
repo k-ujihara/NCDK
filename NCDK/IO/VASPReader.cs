@@ -273,7 +273,7 @@ namespace NCDK.IO
        /// ABINIT tokens are words separated by space(s). Characters
        /// following a "#" are ignored till the end of the line.
        ///
-       /// <returns>a <code>string</code> value</returns>
+       /// <returns>a <see cref="string"/> value</returns>
        /// <exception cref="IOException">if an error occurs</exception>
        /// </summary>
         public string NextVASPToken(bool newLine)

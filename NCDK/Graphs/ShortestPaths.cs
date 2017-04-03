@@ -22,43 +22,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace NCDK.Graphs
 {
     /// <summary>
     /// Find and reconstruct the shortest paths from a given start atom to any other
     /// connected atom. The number of shortest paths (<see cref="GetNPathsTo(int)"/>) and the
-    /// distance ({@link #DistanceTo(int)}) can be accessed before reconstructing all
+    /// distance (<see cref="GetDistanceTo(int)"/>) can be accessed before reconstructing all
     /// the paths. When no path is found (i.e. not-connected) an empty path is always
     /// returned. 
     /// </summary>
-    /// <example><code>
-    /// IAtomContainer benzene = MoleculeFactory.MakeBenzene();
-    ///
-    /// IAtom c1 = benzene.Atoms[0];
-    /// IAtom c4 = benzene.Atoms[3];
-    ///
-    /// // shortest paths from C1
-    /// ShortestPaths sp = new ShortestPaths(benzene, c1);
-    ///
-    /// // number of paths from C1 to C4
-    /// int nPaths = sp.GetNPathsTo(c4);
-    ///
-    /// // distance between C1 to C4
-    /// int distance = sp.DistanceTo(c4);
-    ///
-    /// // reconstruct a path to the C4 - determined by storage order
-    /// int[] path = sp.PathTo(c4);
-    ///
-    /// // reconstruct all paths
-    /// int[][] paths = sp.PathsTo(c4);
-    /// int[] org = paths[0];  // paths[0] == path
-    /// int[] alt = paths[1];
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs"]/*' />
+    /// </example>
     /// <remarks>
-    /// <p/> If shortest paths from multiple start atoms are required 
+    /// If shortest paths from multiple start atoms are required 
     /// <see cref="AllPairsShortestPaths"/> will have a small performance advantage. Please use
     /// <see cref="Matrix.TopologicalMatrix"/> if only the
     /// shortest distances between atoms is required.
@@ -222,7 +200,7 @@ namespace NCDK.Graphs
         /// to the source. The method has aspects similar to Dijkstra's shortest path
         /// but we are working with vertices and thus our edges are unweighted and is
         /// more similar to a simple BFS. The ordering limits the paths found to only
-        /// those in which all vertices precede the 'start' in the given ordering.
+        /// those in which all vertices precede the <see cref="start"/> in the given ordering.
         /// This ordering limits ensure we only generate paths in one direction.
         /// </summary>
         private void Compute(int[][] adjacent, int[] ordering)
@@ -270,29 +248,22 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Reconstruct a shortest path to the provided <paramref name="end"/> vertex. The path
+        /// Reconstruct a shortest path to the provided <paramref name="end"/> vertex. 
+        /// </summary>
+        /// <remarks>
+        /// The path
         /// is an inclusive fixed size array of vertex indices. If there are multiple
         /// shortest paths the first shortest path is determined by vertex storage
         /// order. When there is no path an empty array is returned. It is considered
         /// there to be no path if the end vertex belongs to the same container but
         /// is a member of a different fragment, or the vertex is not present in the
         /// container at all.
-        /// </summary>
+        /// </remarks>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp = ...;
-        ///
-        /// // reconstruct first path
-        /// int[] path = sp.PathTo(5);
-        ///
-        /// // check there is only one path
-        /// if (sp.GetNPathsTo(5) == 1) {
-        ///     int[] path = sp.PathTo(5); // reconstruct the path
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetPathTo_int"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
-        /// <returns>path from the <i>start</i> to the <paramref name="end"/> vertex</returns>
+        /// <returns>path from the <see cref="start"/> to the <paramref name="end"/> vertex</returns>
         /// <seealso cref="GetPathTo(IAtom)"/>
         /// <seealso cref="GetAtomsTo(int)"/>
         /// <seealso cref="GetAtomsTo(IAtom)"/>
@@ -313,21 +284,10 @@ namespace NCDK.Graphs
         /// container at all.
         /// </summary>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp   = ...;
-        /// IAtom         end  = ...;
-        ///
-        /// // reconstruct first path
-        /// int[] path = sp.PathTo(end);
-        ///
-        /// // check there is only one path
-        /// if (sp.GetNPathsTo(end) == 1) {
-        ///     int[] path = sp.PathTo(end); // reconstruct the path
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetPathTo_IAtom"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
-        /// <returns>path from the <i>start</i> to the <paramref name="end"/> vertex</returns>
+        /// <returns>path from the <see cref="start"/> to the <paramref name="end"/> vertex</returns>
         /// <seealso cref="GetAtomsTo(IAtom)"/>
         /// <seealso cref="GetAtomsTo(int)"/>
         /// <seealso cref="GetPathTo(int)"/>
@@ -337,10 +297,10 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Returns whether the first shortest path from the <i>start</i> to a given
+        /// Returns whether the first shortest path from the <see cref="start"/> to a given
         /// <paramref name="end"/> vertex which only passed through vertices smaller then
         /// <see cref="start"/>. This is useful for reducing the search space, the idea is
-        /// used by {@cdk.cite Vismara97} in the computation of cycle prototypes.
+        /// used by <token>cdk-cite-Vismara97</token> in the computation of cycle prototypes.
         /// </summary>
         /// <param name="end">the end vertex</param>
         /// <returns>whether the path to the <paramref name="end"/> only passed through vertices preceding the <see cref="start"/></returns>
@@ -365,18 +325,7 @@ namespace NCDK.Graphs
         /// <see cref="GetNPathsTo(int)"/>) before attempting to reconstruct all shortest paths.
         /// </remarks>
         /// <example>
-        /// <code>
-        /// int           threshold = 20;
-        /// ShortestPaths sp        = ...;
-        ///
-        /// // reconstruct shortest paths
-        /// int[][] paths = sp.PathsTo(5);
-        ///
-        /// // only reconstruct shortest paths below a threshold
-        /// if(sp.GetNPathsTo(5) &lt; threshold){
-        ///     int[][] path = sp.PathsTo(5); // reconstruct shortest paths
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetPathsTo_int"]/*' />
         /// </example>
         /// <param name="end">the end vertex</param>
         /// <returns>all shortest paths from the start to the end vertex</returns>
@@ -396,26 +345,16 @@ namespace NCDK.Graphs
         /// vertex is not present in the container at all. 
         /// </summary>
         /// <remarks>
-        /// <b>Important:</b> for every possible branch the number of possible paths
+        /// <note type="important">
+        /// For every possible branch the number of possible paths
         /// doubles and could be in the order of tens of thousands. Although the
         /// chance of finding such a molecule is highly unlikely (C720 fullerene has
-        /// at maximum 1024 paths). It is safer to check the number of paths ({@link
-        /// #GetNPathsTo(int)}) before attempting to reconstruct all shortest paths.
+        /// at maximum 1024 paths). It is safer to check the number of paths 
+        /// (<see cref="GetNPathsTo(int)"/>) before attempting to reconstruct all shortest paths.
+        /// </note>
         /// </remarks>
         /// <example>
-        /// <code>
-        /// int           threshold = 20;
-        /// ShortestPaths sp        = ...;
-        /// IAtom         end       = ...;
-        ///
-        /// // reconstruct all shortest paths
-        /// int[][] paths = sp.PathsTo(end);
-        ///
-        /// // only reconstruct shortest paths below a threshold
-        /// if (sp.GetNPathsTo(end) &lt; threshold) {
-        ///     int[][] path = sp.PathsTo(end); // reconstruct shortest paths
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetPathsTo_IAtom"]/*' />
         /// </example>
         /// <param name="end">the end atom</param>
         /// <returns>all shortest paths from the start to the end vertex</returns>
@@ -434,20 +373,10 @@ namespace NCDK.Graphs
         /// container at all.
         /// </summary>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp = ...;
-        ///
-        /// // reconstruct a shortest path
-        /// IAtom[] path = sp.GetAtomsTo(5);
-        ///
-        /// // ensure single shortest path
-        /// if (sp.GetNPathsTo(5) == 1) {
-        ///     IAtom[] path = sp.GetAtomsTo(5); // reconstruct shortest path
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetAtomsTo_int"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to find a path to</param>
-        /// <returns>path from the <i>start</i> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s</returns>
+        /// <returns>path from the <see cref="start"/> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s</returns>
         /// <seealso cref="GetAtomsTo(int)"/>
         /// <seealso cref="GetPathTo(int)"/>
         /// <seealso cref="GetPathTo(IAtom)"/>
@@ -473,21 +402,10 @@ namespace NCDK.Graphs
         /// container at all.
         /// </summary>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp   = ...;
-        /// IAtom         end  = ...;
-        ///
-        /// // reconstruct a shortest path
-        /// IAtom[] path = sp.GetAtomsTo(end);
-        ///
-        /// // ensure single shortest path
-        /// if (sp.GetNPathsTo(end) == 1) {
-        ///     IAtom[] path = sp.GetAtomsTo(end); // reconstruct shortest path
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetAtomsTo_IAtom"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> atom to find a path to</param>
-        /// <returns>path from the <i>start</i> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s.</returns>
+        /// <returns>path from the <see cref="start"/> to the <paramref name="end"/> atoms as fixed size array of <see cref="IAtom"/>s.</returns>
         /// <seealso cref="GetAtomsTo(int)"/>
         /// <seealso cref="GetPathTo(int)"/>
         /// <seealso cref="GetPathTo(IAtom)"/>
@@ -503,13 +421,7 @@ namespace NCDK.Graphs
         /// fragment, or the vertex is not present in the container at all.
         /// </summary>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp   = ...;
-        ///
-        /// sp.GetNPathsTo(5); // number of paths
-        ///
-        /// sp.GetNPathsTo(-1); // returns 0 - there are no paths
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetNPathsTo_int"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to which the number of paths will be returned</param>
         /// <returns>the number of paths to the end vertex</returns>
@@ -525,15 +437,7 @@ namespace NCDK.Graphs
         /// fragment, or the atom is not present in the container at all.<p/>
         /// </summary>
         /// <example>
-        /// <code>
-        /// ShortestPaths sp   = ...;
-        /// IAtom         end  = ...l
-        ///
-        /// sp.GetNPathsTo(end); // number of paths
-        ///
-        /// sp.GetNPathsTo(null);           // returns 0 - there are no paths
-        /// sp.GetNPathsTo(new Atom("C"));  // returns 0 - there are no paths
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetNPathsTo_IAtom"]/*' />
         /// </example>
         /// <param name="end">the <paramref name="end"/> vertex to which the number of paths will be  returned</param>
         /// <returns>the number of paths to the end vertex</returns>
@@ -549,27 +453,9 @@ namespace NCDK.Graphs
         /// vertices.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer container = ...;
-        /// ShortestPaths  sp        = ...; // start = 0
-        ///
-        /// int n = container.Atoms.Count;
-        ///
-        /// if(sp.DistanceTo(5) &lt; n) {
-        ///     // these is a path from 0 to 5
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetDistanceTo_int_1"]/*' />
         /// Conveniently the distance is also the index of the last vertex in the path.
-        /// <code>
-        /// IAtomContainer container = ...;
-        /// ShortestPaths  sp        = ...;  // start = 0
-        ///
-        /// int path = sp.PathTo(5);
-        ///
-        /// int start = path[0];
-        /// int end   = path[sp.DistanceTo(5)];
-        ///
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetDistanceTo_int_2"]/*' />
         /// </example>
         /// <param name="end">vertex to measure the distance to</param>
         /// <returns>distance to this vertex</returns>
@@ -586,27 +472,9 @@ namespace NCDK.Graphs
         /// atoms.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer container = ...;
-        /// ShortestPaths  sp        = ...; // start atom
-        /// IAtom          end       = ...;
-        ///
-        /// int n = container.Atoms.Count;
-        ///
-        /// if( sp.DistanceTo(end) &lt; n ) {
-        ///     // these is a path from start to end
-        /// }
-        /// </code>
-        /// Conveniently the distance is also the index of the last vertex in the
-        /// path.
-        /// <code>
-        /// IAtomContainer container = ...;
-        /// ShortestPaths  sp        = ...; // start atom
-        /// IAtom          end       = ...;
-        ///
-        /// int atoms = sp.GetAtomsTo(end);
-        /// // end == atoms[sp.DistanceTo(end)];
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetDistanceTo_IAtom_1"]/*' />
+        /// Conveniently the distance is also the index of the last vertex in the path.
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ShortestPaths_Example.cs+GetDistanceTo_IAtom_2"]/*' />
         /// </example>
         /// <param name="end">atom to measure the distance to</param>
         /// <returns>distance to the given atom</returns>

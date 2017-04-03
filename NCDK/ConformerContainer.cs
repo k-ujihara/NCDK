@@ -34,20 +34,10 @@ namespace NCDK
     /// for a given conformer.
     /// </remarks>
     /// <example>
-    /// The class behaves in many ways as a List&lt;IAtomContainer&gt; object, though a few methods are not
+    /// The class behaves in many ways as a <see cref="IList{T}"/> of <see cref="IAtomContainer"/> object, though a few methods are not
     /// implemented. Though it is possible to add conformers by hand, this data structure is
     /// probably best used in combination with <see cref="IteratingMDLConformerReader"/> as
-    /// <code>
-    /// IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
-    ///          new FileReader(new File(filename)),
-    ///          Default.ChemObjectBuilder.Instance);
-    /// while (reader.HasNext()) {
-    ///     ConformerContainer cc = (ConformerContainer) reader.Next();
-    ///     foreach (var conformer in cc) {
-    ///         // do something with each conformer
-    ///     }
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ConformerContainer_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="IteratingMDLConformerReader"/>
     // @cdk.module data
@@ -155,7 +145,7 @@ namespace NCDK
         /// it then checks all the coordinates to see whether they match. If all
         /// coordinates match it returns true else false.
         /// </remarks>
-        /// <param name="o">The IAtomContainer to check for</param>
+        /// <param name="o">The <see cref="IAtomContainer"/> to check for</param>
         /// <returns>true if it is present, false otherwise</returns>
         public bool Contains(IAtomContainer o)
         {
@@ -163,14 +153,14 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Returns the conformers in the form of an array of IAtomContainers.
+        /// Returns the conformers in the form of an array of <see cref="IAtomContainer"/>s.
         /// <para>
         /// Beware that if you have a large number of conformers you may run out
-        /// memory during construction of the array since IAtomContainer's are not
+        /// memory during construction of the array since <see cref="IAtomContainer"/>'s are not
         /// light weight objects!
         /// </para>
         /// </summary>
-        /// <returns>The conformers as an array of individual IAtomContainers.</returns>
+        /// <returns>The conformers as an array of individual <see cref="IAtomContainer"/>s.</returns>
         public IAtomContainer[] ToArray()
         {
             IAtomContainer[] ret = new IAtomContainer[coordinates.Count];
@@ -191,7 +181,7 @@ namespace NCDK
         /// <summary>
         /// Add a conformer to the end of the list.
         /// <para>
-        /// This method allows you to add a IAtomContainer object as another conformer.
+        /// This method allows you to add a <see cref="IAtomContainer"/> object as another conformer.
         /// Before adding it ensures that the title of specific object matches the
         /// stored title for these conformers. It will also check that the number of
         /// atoms in the specified molecule match the number of atoms in the current set
@@ -226,7 +216,7 @@ namespace NCDK
         /// <summary>
         /// Remove the specified conformer.
         /// </summary>
-        /// <param name="atomContainer">The conformer to remove (should be castable to IAtomContainer)</param>
+        /// <param name="atomContainer">The conformer to remove (should be castable to <see cref="IAtomContainer"/>)</param>
         /// <returns>true if the specified conformer was present and removed, false if not found</returns>
         public bool Remove(IAtomContainer atomContainer)
         {
@@ -312,14 +302,14 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Returns the lowest index at which the specific IAtomContainer appears in the list or -1 if is not found.
+        /// Returns the lowest index at which the specific <see cref="IAtomContainer"/> appears in the list or -1 if is not found.
         /// <para>
-        /// A given IAtomContainer will occur in the list if the title matches the stored title for
+        /// A given <see cref="IAtomContainer"/> will occur in the list if the title matches the stored title for
         /// the conformers in this container and if the coordinates for each atom in the specified molecule
         /// are equal to the coordinates of the corresponding atoms in a conformer.
         /// </para>
         /// </summary>
-        /// <param name="atomContainer">The IAtomContainer whose presence is being tested</param>
+        /// <param name="atomContainer">The <see cref="IAtomContainer"/> whose presence is being tested</param>
         /// <returns>The index where o was found</returns>
         public int IndexOf(IAtomContainer atomContainer)
         {
@@ -349,14 +339,14 @@ namespace NCDK
         }
 
         /// <summary>
-        /// Returns the highest index at which the specific IAtomContainer appears in the list or -1 if is not found.
+        /// Returns the highest index at which the specific <see cref="IAtomContainer"/> appears in the list or -1 if is not found.
         /// <para>
-        /// A given IAtomContainer will occur in the list if the title matches the stored title for
+        /// A given <see cref="IAtomContainer"/> will occur in the list if the title matches the stored title for
         /// the conformers in this container and if the coordinates for each atom in the specified molecule
         /// are equal to the coordinates of the corresponding atoms in a conformer.
         /// </para>
         /// </summary>
-        /// <param name="o">The IAtomContainer whose presence is being tested</param>
+        /// <param name="o">The <see cref="IAtomContainer"/> whose presence is being tested</param>
         /// <returns>The index where o was found</returns>
         public int LastIndexOf(IAtomContainer o)
         {

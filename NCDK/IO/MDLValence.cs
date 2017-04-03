@@ -36,8 +36,8 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Adds implicit hydrogens and specifies valency using the MDL valence model.
-    /// <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens: taking liberties with valence</a>
     /// </summary>
+    /// <seealso href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens: taking liberties with valence</seealso>
     // @author John May
     // @cdk.module io
     internal sealed class MDLValence
@@ -114,8 +114,8 @@ namespace NCDK.IO
         /// @@ All Rights Reserved @@ This file is part of the RDKit. The contents
         /// are covered by the terms of the BSD license which is included in the file
         /// license.txt, found at the root of the RDKit source tree.
-        /// <a href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens taking liberties with valence</a>
         /// </remarks>
+        /// <seealso href="http://nextmovesoftware.com/blog/2013/02/27/explicit-and-implicit-hydrogens-taking-liberties-with-valence/">Explicit and Implicit Hydrogens taking liberties with valence</seealso>
         public static int ImplicitValence(int elem, int q, int val)
         {
             switch (elem)

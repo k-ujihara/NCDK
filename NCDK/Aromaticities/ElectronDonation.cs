@@ -48,9 +48,8 @@ namespace NCDK.Aromaticities
     /// </remarks>
     /// <example>
     /// To obtain an instance of the model simply invoke the named method.
-    /// <code>
-    /// ElectronDonation model = ElectronDonation.CDKModel;
-    /// </code></example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.ElectronDonation_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module standard
     // @cdk.githash
@@ -94,12 +93,14 @@ namespace NCDK.Aromaticities
 
         /// <summary>
         /// Electron donation model to use for aromaticity perception.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// Use the preset CDK atom types to determine the electron contribution of
         /// atoms. If an atom type has not been perceived or hybridisation is unset a
-        /// runtime exception is thrown. </para>
-        /// </summary>
-        /// <remarks>
+        /// runtime exception is thrown.
+        /// </para>
+        /// <para>
         /// The model accepts cyclic atoms which
         /// are <see cref="Hybridization.SP2"/> or
         /// <see cref="Hybridization.Planar3"/>
@@ -113,19 +114,22 @@ namespace NCDK.Aromaticities
         /// <item>C.minus.planar: 2 electrons </item> <item>O.planar3: 2 electrons </item>
         /// <item>N.sp2.3: 1 electron </item> <item>C.sp2: 1 electron </item> </list>
         /// Exocyclic pi bonds are not allowed to contribute.
+        /// </para>
         /// </remarks>
         /// <seealso cref="IAtomType.AtomTypeName"/>
         public static ElectronDonation CDKAllowingExocyclicModel { get; } = new AtomTypeModel(true);
 
         /// <summary>
         /// Electron donation model to use for aromaticity perception.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// A very simple aromaticity model which only allows atoms adjacent to
         /// cyclic pi bonds. Lone pairs are not consider and as such molecules like
         /// furan and pyrrole are non-aromatic. The model is useful for storing
         /// aromaticity in MDL and Mol2 file formats where aromatic systems involving
         /// a lone pair can not be properly represented.</para>
-        /// </summary>
+        /// </remarks>
         public static ElectronDonation PiBondsModel { get; } = new PiBondModel();
 
         /// <summary>

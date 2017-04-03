@@ -20,7 +20,6 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using NCDK.Beam;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
@@ -31,9 +30,10 @@ using System.Text;
 namespace NCDK.Smiles
 {
     /// <summary>
-    /// Generate a SMILES {@cdk.cite WEI88, WEI89} string for a provided structure.
+    /// Generate a SMILES <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token> string for a provided structure.
     /// The generator can produce several <i>flavour</i> of SMILES.
-    /// 
+    /// </summary>
+    /// <remarks>
     /// <list type="bullet">
     ///     <item>generic - non-canonical SMILES string, different atom ordering
     ///         produces different SMILES. No isotope or stereochemistry encoded.
@@ -47,23 +47,17 @@ namespace NCDK.Smiles
     ///     <item>absolute - canonical SMILES string, different atom ordering
     ///         produces the same SMILES. Isotope and stereochemistry is encoded.</item>
     /// </list>
-    /// </summary>
+    /// </remarks>
     /// <example>
     /// A generator instance is created using one of the static methods, the SMILES
     /// are then created by invoking <see cref="Create(IAtomContainer)"/>.
-    /// <code>
-    /// IAtomContainer  ethanol = ...;
-    /// SmilesGenerator sg      = SmilesGenerator.Generic();
-    /// string          smi     = sg.Create(ethanol); // CCO or OCC
-    ///
-    /// SmilesGenerator sg      = SmilesGenerator.Unique();
-    /// string          smi     = sg.Create(ethanol); // only CCO
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+1"]/*' />
     /// <para>
     /// The isomeric and absolute generator encode tetrahedral and double bond
     /// stereochemistry using <see cref="IStereoElement"/>s
     /// provided on the <see cref="IAtomContainer"/>. If stereochemistry is not being
-    /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.</para> 
+    /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.
+    /// </para> 
     /// <para>
     /// By default the generator will not write aromatic SMILES. Kekulé SMILES are
     /// generally preferred for compatibility and aromaticity can easily be
@@ -72,76 +66,21 @@ namespace NCDK.Smiles
     /// These flags can be set manually or with the
     /// <see cref="Aromaticities.Aromaticity"/> utility.
     /// </para>
-    /// <code>
-    /// IAtomContainer  benzene = ...;
-    ///
-    /// // with no flags set the output is always kekule
-    /// SmilesGenerator sg      = SmilesGenerator.Generic();
-    /// string          smi     = sg.Create(benzene); // C1=CC=CC=C1
-    ///
-    /// SmilesGenerator sg      = SmilesGenerator.Generic()
-    ///                                          .Aromatic();
-    /// string          smi     = sg.Create(ethanol); // C1=CC=CC=C1
-    ///
-    /// foreach (var a in benzene.Atoms)
-    ///     a.IsAromatic = true;
-    /// foreach (var b in benzene.Bond())
-    ///     b.IsAromatic = true;
-    ///
-    /// // with flags set, the aromatic generator encodes this information
-    /// SmilesGenerator sg      = SmilesGenerator.Generic();
-    /// string          smi     = sg.Create(benzene); // C1=CC=CC=C1
-    ///
-    /// SmilesGenerator sg      = SmilesGenerator.Generic()
-    ///                                          .Aromatic();
-    /// string          smi     = sg.Create(ethanol); // c1ccccc1
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+2"]/*' />
     /// <para>
     /// By default atom classes are not written. Atom classes can be written but
     /// creating a generator <see cref="WithAtomClasses()"/>.</para>
-    ///
-    /// <code>
-    /// IAtomContainer  benzene = ...;
-    ///
-    /// // see CDKConstants for property key
-    /// benzene.Atoms[3]
-    ///        .SetProperty(ATOM_ATOM_MAPPING, 42);
-    ///
-    /// SmilesGenerator sg      = SmilesGenerator.Generic();
-    /// string          smi     = sg.Create(benzene); // C1=CC=CC=C1
-    ///
-    /// SmilesGenerator sg      = SmilesGenerator.Generic()
-    ///                                          .WithAtomClasses();
-    /// string          smi     = sg.Create(ethanol); // C1=CC=[CH:42]C=C1
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+3"]/*' />
     /// <para>
     /// Auxiliary data can be stored with SMILES by knowing the output order of
     /// atoms. The following example demonstrates the storage of 2D coordinates.
     /// </para>
-    /// <code>
-    /// IAtomContainer  mol = ...;
-    /// SmilesGenerator sg  = SmilesGenerator.Generic();
-    ///
-    /// int   n     = mol.Atoms.Count;
-    /// int[] order = new int[n];
-    ///
-    /// // the order array is filled up as the SMILES is generated
-    /// string smi = sg.Create(mol, order);
-    ///
-    /// // load the coordinates array such that they are in the order the atoms
-    /// // are read when parsing the SMILES
-    /// Vector2[] coords = new Vector2[mol.Atoms.Count];
-    /// for (int i = 0; i &lt; coords.Length; i++)
-    ///     coords[order[i]] = container.Atoms[i].Point2D;
-    ///
-    /// // SMILES string suffixed by the coordinates
-    /// string smi2d = smi + " " + Arrays.ToString(coords);
-    ///
-    /// </code>
-    /// <para>
-    /// * the unique SMILES generation uses a fast equitable labelling procedure
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+4"]/*' />
+    /// <note type="note">
+    ///   the unique SMILES generation uses a fast equitable labelling procedure
     ///   and as such there are some structures which may not be unique. The number
-    ///   of such structures is generally minimal.</para>
+    ///   of such structures is generally minimal.
+    ///   </note>
     /// </example>
     /// <seealso cref="Aromaticities.Aromaticity"/> 
     /// <seealso cref="Stereo.StereoElementFactory"/>
@@ -157,7 +96,6 @@ namespace NCDK.Smiles
     // @cdk.githash
     public sealed class SmilesGenerator
     {
-
         private readonly bool isomeric, canonical, aromatic, classes;
         private readonly CDKToBeam converter;
 
@@ -188,12 +126,8 @@ namespace NCDK.Smiles
         /// not recommended as different parsers can interpret where bonds should be
         /// placed.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer  container = ...;
-        /// SmilesGenerator smilesGen = SmilesGenerator.Unique()
-        ///                                            .Aromatic();
-        /// smilesGen.CreateSMILES(container);
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Aromatic"]/*' />
         /// </example>
         /// <returns>a generator for aromatic SMILES</returns>
         public SmilesGenerator Aromatic()
@@ -203,15 +137,11 @@ namespace NCDK.Smiles
 
         /// <summary>
         /// Specifies that the generator should write atom classes in SMILES. Atom
-        /// classes are provided by the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
+        /// classes are provided by the <see cref="CDKPropertyName.AtomAtomMapping"/> 
         /// property. This method returns a new SmilesGenerator to use.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer  container = ...;
-        /// SmilesGenerator smilesGen = SmilesGenerator.Unique()
-        ///                                            .AtomClasses();
-        /// smilesGen.CreateSMILES(container); // C[CH2:4]O second atom has class = 4
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses"]/*' />
         /// </example>
         /// <returns>a generator for SMILES with atom classes</returns>
         public SmilesGenerator WithAtomClasses()
@@ -326,25 +256,7 @@ namespace NCDK.Smiles
         /// as a string.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer  mol = ...;
-        /// SmilesGenerator sg  = SmilesGenerator.Generic();
-        ///
-        /// int   n     = mol.Atoms.Count;
-        /// int[] order = new int[n];
-        ///
-        /// // the order array is filled up as the SMILES is generated
-        /// string smi = sg.Create(mol, order);
-        ///
-        /// // load the coordinates array such that they are in the order the atoms
-        /// // are read when parsing the SMILES
-        /// Vector2[] coords = new Vector2[mol.Atoms.Count];
-        /// for (int i = 0; i &lt; coords.Length; i++)
-        ///     coords[order[i]] = container.Atoms[i].Point2D;
-        ///
-        /// // SMILES string suffixed by the coordinates
-        /// string smi2d = smi + " " + Arrays.ToString(coords);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create"]/*' />
         /// </example>
         /// <param name="molecule">the molecule to write</param>
         /// <param name="order">array to store the output order of atoms</param>
@@ -363,7 +275,6 @@ namespace NCDK.Smiles
                 // apply the canonical labelling
                 if (canonical)
                 {
-
                     // determine the output order
                     int[] labels = Labels(molecule);
 
@@ -371,7 +282,6 @@ namespace NCDK.Smiles
 
                     if (isomeric)
                     {
-
                         // FIXME: required to ensure canonical double bond labelling
                         g.Sort(new Graph.VisitHighOrderFirst());
 
@@ -407,7 +317,7 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Generate a SMILES for the given <code>Reaction</code>.
+        /// Generate a SMILES for the given <paramref name="reaction"/>.
         /// </summary>
         /// <param name="reaction">the reaction in question</param>
         /// <returns>the SMILES representation of the reaction</returns>

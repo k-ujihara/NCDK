@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.emsl.pnl.gov/docs/nwchem/">here</a>.
+    /// See <see href="http://www.emsl.pnl.gov/docs/nwchem/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

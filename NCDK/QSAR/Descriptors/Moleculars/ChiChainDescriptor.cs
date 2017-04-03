@@ -191,7 +191,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             var ret = new List<IList<int>>();
 
-            IRingSet rings = Cycles.SSSR(container).ToRingSet();
+            IRingSet rings = Cycles.FindSSSR(container).ToRingSet();
 
             int nring = rings.Count;
             for (int i = 0; i < nring; i++)

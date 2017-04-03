@@ -40,8 +40,8 @@ namespace NCDK.Graphs
     /// vertices is no-longer available. The status of a vertex can be queried with
     /// <see cref="Matched(int)"/>  and the matched vertex obtained with <see cref="Other(int)"/>.
     /// </para>
-    /// <a href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory), Wikipedia</a>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Matching_(graph_theory)">Matching (graph theory), Wikipedia</seealso>
     // @author John May
     // @cdk.module standard
     public sealed class Matching

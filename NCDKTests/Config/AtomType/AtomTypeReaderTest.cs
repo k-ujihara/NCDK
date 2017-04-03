@@ -60,7 +60,7 @@ namespace NCDK.Config.AtomType
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes(new ChemObject().Builder);
             Assert.IsNotNull(types);
-            Assert.AreEqual(2, types.Count);
+            Assert.AreEqual(2, types.Count());
         }
 
         [TestMethod()]
@@ -85,7 +85,7 @@ namespace NCDK.Config.AtomType
             Assert.IsNotNull(reader);
             var types = reader.ReadAtomTypes(new ChemObject().Builder);
             Assert.IsNotNull(types);
-            Assert.AreEqual(2, types.Count); 
+            Assert.AreEqual(2, types.Count()); 
         }
 
         [TestMethod()]
@@ -106,7 +106,7 @@ namespace NCDK.Config.AtomType
 
             AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
-            var types = reader.ReadAtomTypes(new ChemObject().Builder);
+            var types = reader.ReadAtomTypes(new ChemObject().Builder).ToList();
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Count);
 
@@ -144,7 +144,7 @@ namespace NCDK.Config.AtomType
 
             AtomTypeReader reader = new AtomTypeReader(new StringReader(data));
             Assert.IsNotNull(reader);
-            var types = reader.ReadAtomTypes(new ChemObject().Builder);
+            var types = reader.ReadAtomTypes(new ChemObject().Builder).ToList();
             Assert.IsNotNull(types);
             Assert.AreEqual(1, types.Count);
 

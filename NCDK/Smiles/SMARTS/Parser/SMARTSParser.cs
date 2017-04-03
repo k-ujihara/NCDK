@@ -27,30 +27,23 @@ namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
     /// This parser implements a nearly complete subset of the SMARTS syntax as defined on
-    /// <a href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the
-    /// Daylight website</a>. 
+    /// <see href="http://www.daylight.com/dayhtml/doc/theory/theory.smarts.html">the Daylight website</see>. 
     /// </summary>
     /// <example>
-    /// <para>Example code using SMARTS substructure search looks like:
-    /// <code>
-    /// SmilesParser sp = new SmilesParser();
-    /// AtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C");
-    /// QueryAtomContainer query = SMARTSParser.Parse("C*C");
-    /// bool queryMatch = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
-    /// </code>
+    /// <para>
+    /// Example code using SMARTS substructure search looks like:
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+1"]/*' />
     /// </para>
-    ///
-    /// <para>See the cdk.test.smiles.smarts.parser.ParserTest for examples of the implemented
+    /// <para>See the <see cref="NCDK.Smiles.SMARTS.Parser.ParserTest"/> for examples of the implemented
     /// subset.
     /// </para>
+    /// </example>
+    /// <remarks>
     /// This parser is based on JJTree and it generates an AST (Abstract Syntax Tree)
     /// <para>To get the AST, the code looks like:
-    /// <code>
-    /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
-    /// ASTStart = parser.Start();
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.Parser.SMARTSParser_Example.cs+2"]/*' />
     /// </para>
-    /// </example>
+    /// </remarks>
     /// <seealso cref="Isomorphisms.Matchers.SMARTS.SMARTSAtom"/>
     // @author      Dazhi Jiao
     // @cdk.created 2007-04-23
@@ -65,8 +58,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         private int componentId = 0;
 
         /// <summary>
-        /// This method parses a Smarts string and returns an instance of 
-        /// <code>QueryAtomContainer</code>
+        /// This method parses a Smarts string and returns an instance of <see cref="QueryAtomContainer"/>. 
         /// </summary>
         public static QueryAtomContainer Parse(string smarts, IChemObjectBuilder builder)
         {
@@ -125,7 +117,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         ///                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
         ///                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
         ///                               "c" | "o" | "n" | "p" | "as" | "se" ]
-        /// ]]></summary>
+        /// ]]>
+        /// </summary>
         public ASTStart Start()
         {
             /*@bgen(jjtree) Start */

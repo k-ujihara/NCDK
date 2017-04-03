@@ -57,7 +57,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Test example from website. See
-        /// <a href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</a>.
+        /// <see href="http://www.tripos.com/custResources/mol2Files/mol2_format3.html">Tripos example</see>.
         /// </summary>
         [TestMethod()]
         public void TestExampleFromWebsite()
@@ -106,14 +106,11 @@ namespace NCDK.IO
 
         /// <summary>
         /// Tests the Mol2Reader with about 30% of the NCI molecules.
-        ///
-        // @ if an error occurs
         /// </summary>
         [TestCategory("SlowTest")]
         [TestMethod()]
         public void TestNCIfeb03_2D()
         {
-            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.NCI_feb03_2D.mol2.gz";
             Stream ins = new GZipStream(ResourceLoader.GetAsStream(filename), CompressionMode.Decompress);
             TextReader br = new StreamReader(ins);
@@ -136,10 +133,10 @@ namespace NCDK.IO
             }
         }
 
+        [TestCategory("SlowTest")]
         [TestMethod()]
         public void TestMultiMol()
         {
-            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.actives.mol2";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
@@ -152,10 +149,10 @@ namespace NCDK.IO
             Assert.AreEqual(24, mols[29].Atoms.Count);
         }
 
+        [TestCategory("SlowTest")]
         [TestMethod()]
         public void TestMultiMolButSingle()
         {
-            //Assume.AssumeTrue(RunSlowTests());
             string filename = "NCDK.Data.Mol2.fromWebsite.mol2";
             Trace.TraceInformation("Testing: ", filename);
             var ins = ResourceLoader.GetAsStream(filename);
@@ -165,7 +162,6 @@ namespace NCDK.IO
             var mols = ChemFileManipulator.GetAllAtomContainers(chemFile).ToList();
             Assert.AreEqual(1, mols.Count);
             Assert.AreEqual(12, mols[0].Atoms.Count);
-
         }
 
         [TestMethod()]

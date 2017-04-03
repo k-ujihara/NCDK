@@ -35,11 +35,11 @@ namespace NCDK.Hash.Stereo
     /// hatch bonds go into the plane (-ve), these elevations are specified with a
     /// (+1) and (-1) respectively. If a tetrahedral atom has an implicit hydrogen
     /// (only 3 ligands) the forth coordinate should be that of the atom at the
-    /// centre with no elevation {@cdk.cite Cieplak2001}.
+    /// centre with no elevation <token>cdk-cite-Cieplak2001</token>.
     /// </summary>
+    /// <seealso href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</seealso>
     // @author John May
     // @cdk.module hash
-    // @see <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</a>
     // @cdk.githash
     internal sealed class Tetrahedral2DParity : GeometricParity
     {

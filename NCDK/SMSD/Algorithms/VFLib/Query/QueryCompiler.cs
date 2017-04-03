@@ -64,7 +64,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Query
 
         /// <summary>
         /// Construct query object from the molecule
-        /// <param name="molecule">/// @param shouldMatchBonds</param>
         /// </summary>
         public QueryCompiler(IAtomContainer molecule, bool shouldMatchBonds)
         {

@@ -54,7 +54,7 @@ namespace NCDK
         void AddAtom(IAtom oAtom, IMonomer oMonomer, IStrand oStrand);
 
         /// <summary>
-        /// Retrieve a <code>Monomer</code> object by specifying its name.
+        /// Retrieve a <see cref="IMonomer"/> object by specifying its name.
         /// You have to specify the strand to enable
         /// monomers with the same name in different strands. There is at least one such case: every
         /// strand contains a monomer called "".

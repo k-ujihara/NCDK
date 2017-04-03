@@ -20,7 +20,7 @@ using NCDK.Tools;
 
 namespace NCDK.IO.Formats {
     /// <summary>
-    /// See<a href="http://www.uku.fi/~thassine/ghemical/">here</a>.
+    /// See<see href="http://www.uku.fi/~thassine/ghemical/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

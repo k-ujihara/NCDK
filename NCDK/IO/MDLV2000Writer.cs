@@ -33,39 +33,24 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using NCDK.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace NCDK.IO
 {
     /// <summary>
-    /// Writes MDL molfiles, which contains a single molecule (see {@cdk.cite DAL92}).
+    /// Writes MDL molfiles, which contains a single molecule (see <token>cdk-cite-DAL92</token>).
     /// </summary>
     /// <example>
     /// For writing a MDL molfile you can this code:
-    /// <code>
-    /// MDLV2000Writer writer = new MDLV2000Writer(
-    ///   new FileWriter(new File("output.mol"))
-    /// );
-    /// writer.Write((IAtomContainer)molecule);
-    /// writer.Close();
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.MDLV2000Writer_Example.cs"]/*' />
     /// The writer has two IO settings: one for writing 2D coordinates, even if
     /// 3D coordinates are given for the written data; the second writes aromatic
     /// bonds as bond type 4, which is, strictly speaking, a query bond type, but
     /// my many tools used to reflect aromaticity. The full IO setting API is
-    /// explained in CDK News {@cdk.cite WILLIGHAGEN2004}. One programmatic option
+    /// explained in CDK News <token>cdk-cite-WILLIGHAGEN2004</token>. One programmatic option
     /// to set the option for writing 2D coordinates looks like:
-    /// <code>
-    /// Properties customSettings = new Properties();
-    /// customSettings.SetProperty(
-    ///  "ForceWriteAs2DCoordinates", "true"
-    /// );
-    /// PropertiesListener listener =
-    ///   new PropertiesListener(customSettings);
-    /// writer.Listeners.Add(listener);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.MDLV2000Writer_Example.cs+listener"]/*' />
     /// </example>
     // @cdk.module io
     // @cdk.githash

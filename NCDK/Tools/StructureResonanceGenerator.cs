@@ -40,14 +40,11 @@ namespace NCDK.Tools
     /// <para>It is based on rearrangements of electrons and charge</para>
     /// <para>The method is based on call by reactions which occur in a resonance.</para>
     ///
-    /// <code>
-    /// StructureResonanceGenerator srG = new StructureReseonanceGenerator(true,true,true,true,false);
-    /// MoleculeSet setOf = srG.GetResonances(new Molecule());
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.StructureResonanceGenerator_Example.cs+1"]/*' />
     ///
     /// <para>We have the possibility to localize the reactive center. Good method if you
     /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.StructureResonanceGenerator_Example.cs+2"]/*' />
     /// <para>Moreover you must put the parameter as true</para>
     /// <para>If the reactive center is not localized then the reaction process will
     /// try to find automatically the possible reactive center.</para>
@@ -69,7 +66,8 @@ namespace NCDK.Tools
         /// <seealso cref="SetDefaultReactions"/>
         public StructureResonanceGenerator()
                 : this(false)
-        { }
+        {
+        }
 
         /// <summary>
         /// Construct an instance of StructureResonanceGenerator. Default restrictions
@@ -107,8 +105,8 @@ namespace NCDK.Tools
 
         private void CallDefaultReactions()
         {
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
 
@@ -124,8 +122,8 @@ namespace NCDK.Tools
             Reactions.Add(type);
 
             type = new PiBondingMovementReaction();
-            List<IParameterReact> paramList2 = new List<IParameterReact>();
-            IParameterReact param2 = new SetReactionCenter();
+            List<IParameterReaction> paramList2 = new List<IParameterReaction>();
+            IParameterReaction param2 = new SetReactionCenter();
             param2.IsSetParameter = false;
             paramList2.Add(param2);
             try

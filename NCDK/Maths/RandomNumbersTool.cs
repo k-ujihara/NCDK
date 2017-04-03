@@ -116,9 +116,9 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        ///  Generates a random integer between <code>0</code> and <code>1</code>.
+        ///  Generates a random integer between '0' and '1'.
         /// </summary>
-        /// <returns> a random integer between <code>0</code> and <code>1</code>.</returns>
+        /// <returns> a random integer between '0' and '1'.</returns>
         public static int RandomInt() => RandomInt(0, 1);
 
         /// <summary>
@@ -133,9 +133,9 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Generates a random long between <code>0</code> and <code>1</code>.
+        /// Generates a random long between '0' and '1'.
         /// </summary>
-        /// <returns>a random long between <code>0</code> and <code>1</code>.</returns>
+        /// <returns>a random long between '0' and '1'.</returns>
         public static long RandomLong()
         {
             return RandomLong(0, 1);
@@ -158,7 +158,7 @@ namespace NCDK.Maths
         /// <param name="rng">random number generator</param>
         /// <param name="n">max value</param>
         /// <returns>a long random number between 0 and n</returns>
-        /// <remarks><a href="http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range">Random Long Number in range, Stack Overflow</a></remarks>
+        /// <seealso href="http://stackoverflow.com/questions/2546078/java-random-long-number-in-0-x-n-range">Random Long Number in range, Stack Overflow</seealso >
         private static long NextLong(BitsStreamGenerator rng, long n)
         {
             if (n <= 0) throw new ArgumentException("n must be greater than 0");
@@ -172,9 +172,9 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Generates a random float between <code>0</code> and <code>1</code>.
+        /// Generates a random float between '0' and '1'.
         /// </summary>
-        /// <returns>a random float between <code>0</code> and <code>1</code>.</returns>
+        /// <returns>a random float between '0' and '1'.</returns>
         public static float RandomFloat()
         {
             return random.NextFloat();
@@ -192,9 +192,9 @@ namespace NCDK.Maths
         }
 
         /// <summary>
-        /// Generates a random double between <code>0</code> and <code>1</code>.
+        /// Generates a random double between '0' and '1'.
         /// </summary>
-        /// <returns>a random double between <code>0</code> and <code>1</code>.</returns>
+        /// <returns>a random double between '0' and '1'.</returns>
         public static double RandomDouble()
         {
             return random.NextDouble();
@@ -221,7 +221,7 @@ namespace NCDK.Maths
         }
         
         /// <summary>
-        /// Generates a random bit: either <code>0</code> or <code>1</code>.
+        /// Generates a random bit: either '0' or '1'.
         /// </summary>
         /// <returns>a random bit.</returns>
         public static int RandomBit()

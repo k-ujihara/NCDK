@@ -26,12 +26,13 @@ namespace NCDK.Tools.Manipulator
 {
     /// <summary>
     /// Class with convenience methods that provide methods to manipulate
-    /// MolecularFormulaSet's. For example:
-    /// <code>
-    ///  IMolecularFormula molecularFormula = MolecularManipulatorSet.GetMaxOccurrenceElements(molecularFormulaSet);
-    /// </code>
-    /// .
+    /// MolecularFormulaSet's. 
     /// </summary>
+    /// <example>
+    /// <code>
+    ///  IMolecularFormula molecularFormula = MolecularFormulaSetManipulator.GetMaxOccurrenceElements(molecularFormulaSet);
+    /// </code>
+    /// </example>
     // @cdk.module  formula
     // @author      miguelrojasch
     // @cdk.created 2007-11-20
@@ -47,7 +48,6 @@ namespace NCDK.Tools.Manipulator
         /// <seealso cref="GetMinOccurrenceElements(IMolecularFormulaSet)"/> 
         public static IMolecularFormula GetMaxOccurrenceElements(IMolecularFormulaSet mfSet)
         {
-
             IMolecularFormula molecularFormula = mfSet.Builder.CreateMolecularFormula();
             foreach (var mf in mfSet)
             {

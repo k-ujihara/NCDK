@@ -34,7 +34,7 @@ using System.Linq;
 namespace NCDK.Fragment
 {
     /// <summary>
-    /// An implementation of the Murcko fragmenation method {@cdk.cite MURCKO96}.
+    /// An implementation of the Murcko fragmenation method <token>cdk-cite-MURCKO96</token>.
     /// </summary>
     /// <remarks>
     /// As an implementation of <see cref="IFragmenter"/> this class will return

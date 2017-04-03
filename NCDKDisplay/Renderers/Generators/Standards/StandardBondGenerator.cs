@@ -724,7 +724,7 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         /// <summary>
-        /// Displays an offset double bond as per the IUPAC recomendation (GR-1.10) {@cdk.cite Brecher08}. 
+        /// Displays an offset double bond as per the IUPAC recomendation (GR-1.10) <token>cdk-cite-Brecher08</token>. 
         /// An offset bond has one line drawn between the two atoms and other draw to one
         /// side. The side is determined by the 'atom1Bond' parameter. The first atom should not have a
         /// displayed symbol.

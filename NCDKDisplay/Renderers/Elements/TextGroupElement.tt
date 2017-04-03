@@ -7,8 +7,6 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Compass-point positions for text element annotation children.
         /// </summary>
-		public struct Position : System.IComparable
-	    {
 <# 
         GenerateEnumBody(
             "Position", 
@@ -19,6 +17,7 @@ namespace NCDK.Renderers.Elements
             true
         ); 
 #>
+		{
 		}
 	}
 }

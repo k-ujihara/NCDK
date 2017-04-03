@@ -166,7 +166,7 @@ namespace NCDK.Renderers.Generators
                 var molecules = ConnectivityChecker.PartitionIntoMolecules(atomContainer);
                 foreach (var mol in molecules)
                 {
-                    ringSet.Add(Cycles.SSSR(mol).ToRingSet());
+                    ringSet.Add(Cycles.FindSSSR(mol).ToRingSet());
                 }
 
                 return ringSet;

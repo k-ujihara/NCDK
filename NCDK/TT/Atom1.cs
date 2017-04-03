@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2000-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -45,8 +45,8 @@ namespace NCDK.Default
     /// to the constructor are null. Atoms can be configured by using
     /// the IsotopeFactory.configure() method:
     /// <code>
-    ///   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
-    ///   if.configure(a);
+    ///   IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    ///   factory.Configure(a);
     /// </code>
     ///
     /// More examples about using this class can be found in the
@@ -292,8 +292,8 @@ namespace NCDK.Silent
     /// to the constructor are null. Atoms can be configured by using
     /// the IsotopeFactory.configure() method:
     /// <code>
-    ///   IsotopeFactory if = IsotopeFactory.getInstance(a.getNewBuilder());
-    ///   if.configure(a);
+    ///   IsotopeFactory factory = SomeIsotopeFactory.GetInstance(a.Builder);
+    ///   factory.Configure(a);
     /// </code>
     ///
     /// More examples about using this class can be found in the

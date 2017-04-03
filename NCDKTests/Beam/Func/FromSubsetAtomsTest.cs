@@ -99,7 +99,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _1H_imidazole_kekule()
+        public void Test_1H_imidazole_kekule()
         {
             Transform("[H]N1C=CN=C1",
                       "[H][N]1[CH]=[CH][N]=[CH]1");

@@ -26,7 +26,7 @@ using System.Collections.Generic;
 namespace NCDK.Signature
 {
     /// <summary>
-    /// The signature {@cdk.cite FAU03, FAU04} for a molecule rooted at a particular atom.
+    /// The signature <token>cdk-cite-FAU03</token>; <token>cdk-cite-FAU04</token> for a molecule rooted at a particular atom.
     /// </summary>
     /// <remarks>
     ///
@@ -36,9 +36,9 @@ namespace NCDK.Signature
     /// be written out as a string, for example ethane:
     /// </para>
     ///
-    /// <code>
+    /// <para>
     ///   [C]([C]([H][H][H])[H][H][H])
-    /// </code>
+    /// </para>
     ///
     /// <para>
     /// where each atom is represented by an atom symbol in square brackets. The
@@ -46,14 +46,14 @@ namespace NCDK.Signature
     /// cycle, the signature string will have numbers after the atom symbol, like:
     /// </para>
     ///
-    /// <code>
+    /// <para>
     /// [C]([C]([C,0])[C]([C,0]))
-    /// </code>
+    /// </para>
     ///
     /// <para>
     /// these are known as 'colors' and indicate ring closures, in a roughly similar
     /// way to SMILES notation. Note that the colors start from 0 in this
-    /// implementation, in contrast to the examples in {@cdk.cite FAU04}.
+    /// implementation, in contrast to the examples in <token>cdk-cite-FAU04</token>.
     /// </para>
     ///
     /// <para>

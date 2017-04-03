@@ -21,7 +21,7 @@ namespace NCDK.IO
     /// <summary>
     /// Signals that something has happened in a file reader. This class is
     /// primarily in place for future development when additional information
-    /// may be passed to <code>ReaderListener</code>s.
+    /// may be passed to <see cref="Listener.IReaderListener"/>s.
     /// </summary>
     // @cdk.module io
     // @cdk.githash

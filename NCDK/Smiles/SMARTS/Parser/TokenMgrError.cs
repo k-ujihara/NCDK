@@ -26,39 +26,36 @@ namespace NCDK.Smiles.SMARTS.Parser
     public class TokenMgrError : Exception
     {
         /// <summary>
-        /// The version identifier for this Serializable class.
-        /// Increment only if the <i>serialized</i> form of the
-        /// class changes.
+        /// Ordinals for various reasons why an Error of this type can be thrown.
         /// </summary>
-        private const long serialVersionUID = 1L;
+        internal enum ErrorCodes
+        {
+            /// <summary>
+            /// Lexical error occurred.
+            /// </summary>
+            LexicalError = 0,
 
-        // Ordinals for various reasons why an Error of this type can be thrown.
-        
-        /// <summary>
-        /// Lexical error occurred.
-        /// </summary>
-        internal const int LEXICAL_ERROR = 0;
+            /// <summary>
+            /// An attempt was made to create a second instance of a static token manager.
+            /// </summary>
+            StaticLexicalError = 1,
 
-        /// <summary>
-        /// An attempt was made to create a second instance of a static token manager.
-        /// </summary>
-        internal const int STATIC_LEXER_ERROR = 1;
+            /// <summary>
+            /// Tried to change to an invalid lexical state.
+            /// </summary>
+            InvalidLexicalState = 2,
 
-        /// <summary>
-        /// Tried to change to an invalid lexical state.
-        /// </summary>
-        internal const int INVALID_LEXICAL_STATE = 2;
-
-        /// <summary>
-        /// Detected (and bailed out of) an infinite loop in the token manager.
-        /// </summary>
-        internal const int LOOP_DETECTED = 3;
+            /// <summary>
+            /// Detected (and bailed out of) an infinite loop in the token manager.
+            /// </summary>
+            LoopDetected = 3,
+        }
 
         /// <summary>
         /// Indicates the reason why the exception is thrown. It will have
         /// one of the above 4 values.
         /// </summary>
-        internal int errorCode;
+        internal ErrorCodes errorCode;
 
         /// <summary>
         /// Replaces unprintable characters by their escaped (or unicode escaped)
@@ -117,15 +114,23 @@ namespace NCDK.Smiles.SMARTS.Parser
         /// <summary>
         /// Returns a detailed message for the Error when it is thrown by the
         /// token manager to indicate a lexical error.
-        /// Parameters :
-        ///    EOFSeen     : indicates if EOF caused the lexical error
-        ///    curLexState : lexical state in which this error occurred
-        ///    errorLine   : line number when the error occurred
-        ///    errorColumn : column number when the error occurred
-        ///    errorAfter  : prefix that was seen before this error occurred
-        ///    curchar     : the offending character
-        /// Note: You can customize the lexical error message by modifying this method.
         /// </summary>
+        /// <remarks>
+        /// Parameters :
+        /// <list type="bullet">
+        /// <item><term></term><description></description></item>
+        /// <item><term></term><description></description></item>
+        /// <item><term>EOFSeen</term><description>indicates if EOF caused the lexical error</description></item>
+        /// <item><term>curLexState</term><description>lexical state in which this error occurred</description></item>
+        /// <item><term>errorLine</term><description>line number when the error occurred</description></item>
+        /// <item><term>errorColumn</term><description>column number when the error occurred</description></item>
+        /// <item><term>errorAfter</term><description>prefix that was seen before this error occurred</description></item>
+        /// <item><term>curchar</term><description>the offending character</description></item>
+        /// </list>
+        /// <note type="note">
+        /// You can customize the lexical error message by modifying this method.
+        /// </note>
+        /// </remarks>
         protected static string LexicalError(bool EOFSeen, int lexState, int errorLine, int errorColumn, string errorAfter, char curChar)
         {
             return ("Lexical error at line " +
@@ -137,31 +142,35 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>
         /// You can also modify the body of this method to customize your error messages.
-        /// For example, cases like LOOP_DETECTED and INVALID_LEXICAL_STATE are not
-        /// of end-users concern, so you can return something like :
-        ///
-        ///     "Internal Error : Please file a bug report .... "
-        ///
-        /// from this method for such cases in the release version of your parser.
         /// </summary>
+        /// <remarks>
+        /// For example, cases like <see cref="ErrorCodes.LoopDetected"/> and <see cref="ErrorCodes.InvalidLexicalState"/> are not
+        /// of end-users concern, so you can return something like :
+        /// <para>
+        /// <pre>
+        ///     "Internal Error : Please file a bug report .... "
+        /// </pre>     
+        /// </para>
+        /// from this method for such cases in the release version of your parser.
+        /// </remarks>
         public override string Message => base.Message;
 
         // Constructors of various flavors follow.
-        
+
         /// <summary>No arg constructor.</summary>
         public TokenMgrError()
         {
         }
 
         /// <summary>Constructor with message and reason.</summary>
-        public TokenMgrError(string message, int reason)
+        internal TokenMgrError(string message, ErrorCodes reason)
             : base(message)
         {
             errorCode = reason;
         }
 
         /// <summary>Full Constructor.</summary>
-        public TokenMgrError(bool EOFSeen, int lexState, int errorLine, int errorColumn, string errorAfter, char curChar, int reason)
+        internal TokenMgrError(bool EOFSeen, int lexState, int errorLine, int errorColumn, string errorAfter, char curChar, ErrorCodes reason)
             : this(LexicalError(EOFSeen, lexState, errorLine, errorColumn, errorAfter, curChar), reason)
         { }
     }

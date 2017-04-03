@@ -30,42 +30,15 @@ namespace NCDK.Graphs
     /// <summary>
     /// Compute the relevant cycles (<i>C<sub>R</sub></i>) of a graph. A cycle is
     /// relevant if it cannot be represented as the ⊕-sum (xor) of strictly
-    /// shorter cycles {@cdk.cite Berger04}. This is the smallest set of short cycles
+    /// shorter cycles <token>cdk-cite-Berger04</token>. This is the smallest set of short cycles
     /// which is <i>uniquely</i> defined for a graph. The set can also be thought of
     /// as the union of all minimum cycle bases. The set of cycles may be exponential
     /// in number but can be checked (see <see cref="Count"/>) before construction
-    /// {@cdk.cite Vismara97}.
+    /// <token>cdk-cite-Vismara97</token>.
     /// </summary>
-    /// <example><code>
-    /// // import static org.openscience.cdk.graph.GraphUtil.*;
-    /// IAtomContainer m = ...;
-    ///
-    /// // compute on the whole graph
-    /// RelevantCycles relevant = new RelevantCycles(ToAdjList(m));
-    ///
-    /// // it is much faster to compute on the separate ring systems of the molecule
-    /// int[][]    graph      = ToAdjList(m);
-    /// RingSearch ringSearch = new RingSearch(m, graph);
-    ///
-    /// // all isolated cycles are relevant
-    /// for (int[] isolated : ringSearch.Isolated()){
-    ///     int[] path = Cycle(graph, isolated);
-    /// }
-    ///
-    /// // compute the relevant cycles for each system
-    /// for (int[] fused : ringSearch.Fused()){
-    ///
-    ///     int[][] subgraph = Subgraph(graph, fused);
-    ///     RelevantCycles relevant = new RelevantCycles(subgraph);
-    ///
-    ///     For(int[] path : relevant.GetPaths()){
-    ///         // convert the sub graph vertices back to the super graph indices
-    ///         For(int i = 0; i &lt; path.Length; i++) {
-    ///             path[i] = fused[path[i];
-    ///         }
-    ///     }
-    /// }
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.RelevantCycles_Example.cs"]/*' />
+    /// </example>
     /// <seealso cref="RingSearches.RingSearch"/>
     /// <seealso cref="GreedyBasis"/>
     // @author John May
@@ -132,16 +105,9 @@ namespace NCDK.Graphs
         /// <summary>
         /// Reconstruct the paths of all relevant cycles.
         /// </summary>
-        /// <example><code>
-        /// RelevantCycles relevant = ...
-        ///
-        /// // ensure the number is manageable
-        /// if(relevant.Count() &lt; 100) {
-        ///   For(int[] path : relevant.GetPaths()){
-        ///     // process the path
-        ///   }
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.RelevantCycles_Example.cs+GetPaths"]/*' />
+        /// </example>
         /// <returns>array of vertex paths</returns>
         public int[][] GetPaths()
         {

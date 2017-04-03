@@ -28,7 +28,7 @@ namespace NCDK.Graphs
 {
     /// <summary>
     /// Describes a path graph (<b>P-Graph</b>) to find all cycles in a graph
-    /// {@cdk.cite HAN96}.
+    /// <token>cdk-cite-HAN96</token>.
     /// </summary>
     // @author John May
     // @cdk.keyword cycle

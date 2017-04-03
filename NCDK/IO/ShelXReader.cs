@@ -41,7 +41,7 @@ namespace NCDK.IO
     /// </summary>
     /// <remarks>
     /// The ShelXL format is described on the net:
-    /// <a href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</a>.
+    /// <see href="http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html">http://www.msg.ucsf.edu/local/programs/shelxl/ch_07.html</see>.
     /// </remarks>
     // @cdk.module io
     // @cdk.githash

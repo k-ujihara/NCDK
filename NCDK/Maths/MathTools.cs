@@ -23,7 +23,7 @@ namespace NCDK.Maths
     /// </summary>
     // @cdk.module standard
     // @cdk.githash
-    public class MathTools
+    public static class MathTools
     {
         /// <summary>
         /// Analog of <see cref="System.Math.Max(double, double)"/>  that returns the largest double value in an array of doubles.

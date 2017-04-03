@@ -40,12 +40,12 @@ namespace NCDK.Graphs
     /// <remarks> 
     /// <para>
     /// The ESSSR should not be confused with the extended set of smallest rings
-    /// (ESSR) {@cdk.cite Downs89}.
+    /// (ESSR) <token>cdk-cite-Downs89</token>.
     /// </para>
     /// <b>Algorithm</b> 
     /// <para>
     /// To our knowledge no algorithm has been published for
-    /// the ESSSR. The <a href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem Specifications</a>
+    /// the ESSSR. The <see href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">PubChem Specifications</see>
     /// states - <i>"An ESSSR ring is any ring which does not
     /// share three consecutive atoms with any other ring in the chemical structure.
     /// For example, naphthalene has three ESSSR rings (two phenyl fragments and the
@@ -108,7 +108,7 @@ namespace NCDK.Graphs
     /// when using canonical and non-canonical generation. Also shown are the sizes
     /// of rings stored in the PubChem fingerprint associated with the entry. The
     /// fingerprints were obtained directly from PubChem and decoded using the 
-    /// <a href= "ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">specification</a>.
+    /// <see href="ftp://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem_fingerprints.pdf">specification</see>.
     /// Sizes underlined and coloured red represent rings which may
     /// or may not be present depending on the atom ordering. It can be seen from the
     /// PubChem fingerprint that even using a consistent canonical labelling rings
@@ -122,7 +122,7 @@ namespace NCDK.Graphs
     /// <term>Source</term>
     /// </listheader>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=135973">135973</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=135973">135973</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=135973"/></term>
     /// <term>
     ///     <list type="table">
@@ -140,7 +140,7 @@ namespace NCDK.Graphs
     /// </term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9249">9249</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9249">9249</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=9249"/></term>
     /// <term><list type="table">
     /// <item><term>{3, 3, <b style="color: #FF4444;"><u>4</u></b>, 6, 6}</term> </item>
@@ -155,7 +155,7 @@ namespace NCDK.Graphs
     /// </list></term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=931">931</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=931">931</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=931"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 10}</term></item>
@@ -169,7 +169,7 @@ namespace NCDK.Graphs
     /// </list></term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5702">5702</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5702">5702</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=5702"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b
@@ -185,7 +185,7 @@ namespace NCDK.Graphs
     /// </list></term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1211">1211</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1211">1211</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1211"/></term>
     /// <term><list type="table">
     /// <item><term>{6, 6, 6, 6, 6, 6, <b style="color: #FF4444;"><u>10</u></b>, <b><u>10</u></b>, 18, 18, 20, 20, 22, 22, 22}</term></item>
@@ -199,7 +199,7 @@ namespace NCDK.Graphs
     /// </list></term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=17858819">17858819</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=17858819">17858819</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=17858819"/></term>
     /// <term><list type="table">
     /// <item><term>{5, 6, 9}</term></item>
@@ -213,7 +213,7 @@ namespace NCDK.Graphs
     /// </list></term>
     /// </item>
     /// <item>
-    /// <term>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1909">1909</a></term>
+    /// <term>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=1909">1909</see></term>
     /// <term><img src="http://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=1909"/></term>
     /// <term><list type="table">
     /// <item><term>{5, 5, 5, 6, <b style="color: #FF4444;"><u>9</u></b>, 16, 17, 17, 17, 18}</term></item>

@@ -73,7 +73,7 @@ namespace NCDK.Fingerprint
             Assert.IsNotNull(fingerprinter);
 
             IAtomContainer mol = TestMoleculeFactory.MakeIndole();
-            IRingSet rs = Cycles.SSSR(mol).ToRingSet();
+            IRingSet rs = Cycles.FindSSSR(mol).ToRingSet();
             IList<IRingSet> rslist = RingPartitioner.PartitionRings(rs);
             BitArray bs = fingerprinter.GetBitFingerprint(mol, rs, rslist).AsBitSet();
             IAtomContainer frag1 = TestMoleculeFactory.MakePyrrole();

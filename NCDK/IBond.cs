@@ -42,23 +42,23 @@ namespace NCDK
         IList<IAtom> Atoms { get; }
 
         /// <summary>
-        /// Sets the array of atoms making up this bond.
+        /// Sets atoms making up this bond.
         /// </summary>
-        /// <param name="atoms">An array of atoms that forms this bond</param>
+        /// <param name="atoms">Atoms that forms this bond</param>
         void SetAtoms(IEnumerable<IAtom> atoms);
 
         /// <summary>
         /// Returns the atom connected to the given atom.
         /// </summary>
         /// <param name="atom">The atom the bond partner is searched of</param>
-        /// <returns>the connected atom or <c>null</c> if the given atom is not part of the bond</returns>
+        /// <returns>the connected atom or <see langword="null"/> if the given atom is not part of the bond</returns>
         IAtom GetConnectedAtom(IAtom atom);
 
         /// <summary>
         /// Returns all the atoms in the bond connected to the given atom.
         /// </summary>
         /// <param name="atom">The atoms the bond partner is searched of</param>
-        /// <returns>the connected atoms or <c>null</c> if the given atom is not part of the bond</returns>
+        /// <returns>the connected atoms or <see langword="null"/> if the given atom is not part of the bond</returns>
         IEnumerable<IAtom> GetConnectedAtoms(IAtom atom);
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace NCDK
         /// Checks whether a bond is connected to another one. This can only be true if the bonds have an Atom in common.
         /// </summary>
         /// <param name="bond">The bond which is checked to be connect with this one</param>
-        /// <returns><c>true</c>, if the bonds share an atom, otherwise <c>false</c></returns>
+        /// <returns><see langword="true"/>, if the bonds share an atom, otherwise <see langword="false"/></returns>
         bool IsConnectedTo(IBond bond);
 
         /// <summary>

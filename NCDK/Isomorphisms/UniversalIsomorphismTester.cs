@@ -51,24 +51,9 @@ namespace NCDK.Isomorphisms
     ///  in other contexts.
     ///  <para>
     ///  This algorithm derives from the algorithm described in
-    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
+    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.
     ///  </para>
-    /// </remarks>
-    /// <example>
-    ///  With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer)"/> method,
-    ///  the second, and only the second argument <b>may</b> be a <see cref="IQueryAtomContainer"/>,
-    ///  which allows one to do SMARTS or MQL like queries.
-    ///  The first <see cref="IAtomContainer"/> must never be an <see cref="IQueryAtomContainer"/>.
-    ///  An example:
-    ///  <code>
-    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-    ///  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-    ///  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
-    ///  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
-    ///  bool isSubstructure = UniversalIsomorphismTester.IsSubgraph(atomContainer, query);
-    ///  </code>
-    ///
-    ///  <para>WARNING:
+    /// <note type="warning">
     ///    As a result of the adjacency perception used in this algorithm
     ///    there is a single limitation: cyclopropane and isobutane are seen as isomorph.
     ///    This is due to the fact that these two compounds are the only ones where
@@ -82,15 +67,25 @@ namespace NCDK.Isomorphisms
     ///    screened out by a fingerprint based filtering.
     ///    It is possible to add a special treatment for this special query.
     ///    Be reminded that this algorithm matches bonds only.
-    /// </para>
+    /// </note>
     /// <para>
-    /// <b>Note</b>While most isomorphism queries involve a multi-atom query structure
+    /// <note type="note">
+    /// While most isomorphism queries involve a multi-atom query structure
     /// there may be cases in which the query atom is a single atom. In such a case
     /// a mapping of target bonds to query bonds is not feasible. In such a case, the RMap objects
     /// correspond to atom indices rather than bond indices. In general, this will not affect user
     /// code and the same sequence of method calls for matching multi-atom query structures will
     /// work for single atom query structures as well.
+    /// </note>
     /// </para>
+    /// </remarks>
+    /// <example>
+    ///  With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer)"/> method,
+    ///  the second, and only the second argument <b>may</b> be a <see cref="IQueryAtomContainer"/>,
+    ///  which allows one to do SMARTS or MQL like queries.
+    ///  The first <see cref="IAtomContainer"/> must never be an <see cref="IQueryAtomContainer"/>.
+    ///  An example:
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.UniversalIsomorphismTester_Example.cs"]/*' />
     /// </example>
     // @author      Stephane Werner from IXELIS mail@ixelis.net
     // @cdk.created 2002-07-17

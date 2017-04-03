@@ -23,9 +23,8 @@ namespace NCDK.Types.Parameters
 {
     /// <summary>
     /// Tests for ParameterReact implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class ParameterReactTest : CDKTestCase
     {
@@ -39,14 +38,14 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestParameterReact()
         {
-            IParameterReact paramSet = new ParameterReact();
+            IParameterReaction paramSet = new ParameterReaction();
             Assert.IsNotNull(paramSet);
         }
 
         [TestMethod()]
         public void TestSetParameter_boolean()
         {
-            IParameterReact paramSet = new ParameterReact();
+            IParameterReaction paramSet = new ParameterReaction();
 
             paramSet.IsSetParameter = true;
             Assert.IsTrue(paramSet.IsSetParameter);
@@ -56,14 +55,14 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestIsSetParameter()
         {
-            IParameterReact paramSet = new ParameterReact();
+            IParameterReaction paramSet = new ParameterReaction();
             Assert.IsFalse(paramSet.IsSetParameter);
         }
 
         [TestMethod()]
         public void TestSetValue_object()
         {
-            IParameterReact paramSet = new ParameterReact();
+            IParameterReaction paramSet = new ParameterReaction();
             paramSet.Value = null;
             Assert.IsNull(paramSet.Value);
 
@@ -72,7 +71,7 @@ namespace NCDK.Types.Parameters
         [TestMethod()]
         public void TestGetValue()
         {
-            IParameterReact paramSet = new ParameterReact();
+            IParameterReaction paramSet = new ParameterReaction();
             paramSet.Value = new object();
             Assert.IsNotNull(paramSet.Value);
         }

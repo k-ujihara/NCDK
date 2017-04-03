@@ -30,17 +30,13 @@ using System;
 
 namespace NCDK.SMSD
 {
-    /// <summary>
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    ///
     // @cdk.module test-smsd
     // @cdk.require java1.6+
-    /// </summary>
     //[TestCategory("SlowTest")]
     [TestClass()]
     public class SMSDBondSensitiveTest
     {
-
         private static IAtomContainer Napthalene { get; } = Molecules.CreateNaphthalene();
         private static IAtomContainer Cyclohexane { get; } = Molecules.CreateCyclohexane();
         private static IAtomContainer Benzene { get; } = Molecules.CreateBenzene();
@@ -48,7 +44,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSubgraph()
         {
-
             Isomorphism sbf = new Isomorphism(Algorithm.SubStructure, true);
             sbf.Init(Benzene, Napthalene, true, true);
             sbf.SetChemFilters(false, false, false);
@@ -80,12 +75,10 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestVFLib()
         {
-
             Isomorphism sbf = new Isomorphism(Algorithm.VFLibMCS, true);
             sbf.Init(Benzene, Benzene, true, true);
             sbf.SetChemFilters(true, true, true);
             Assert.IsTrue(sbf.IsSubgraph());
-
         }
 
         [TestMethod()]
@@ -110,7 +103,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestMCSPlus()
         {
-
             Isomorphism ebimcs = new Isomorphism(Algorithm.MCSPlus, false);
             ebimcs.Init(Cyclohexane, Benzene, true, true);
             ebimcs.SetChemFilters(true, true, true);
@@ -126,7 +118,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSD()
         {
-
             //        Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
             //        ebimcs.Init(Cyclohexane, Benzene, true, true);
             //        ebimcs.SetChemFilters(true, true, true);
@@ -161,7 +152,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSDCyclohexaneBenzeneSubgraph()
         {
-
             //        IQueryAtomContainer queryContainer = QueryAtomContainerCreator.CreateSymbolAndBondOrderQueryContainer(Cyclohexane);
 
             Isomorphism ebimcs = new Isomorphism(Algorithm.VFLibMCS, true);
@@ -173,7 +163,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSDBondSensitive()
         {
-
             Isomorphism ebimcs3 = new Isomorphism(Algorithm.CDKMCS, true);
             ebimcs3.Init(Cyclohexane, Benzene, true, true);
             ebimcs3.SetChemFilters(false, false, false);
@@ -208,7 +197,6 @@ namespace NCDK.SMSD
         [TestMethod()]
         public void TestSMSDChemicalFilters()
         {
-
             Isomorphism ebimcs1 = new Isomorphism(Algorithm.Default, true);
             ebimcs1.Init(Napthalene, Benzene, true, true);
             ebimcs1.SetChemFilters(true, true, true);
@@ -245,7 +233,6 @@ namespace NCDK.SMSD
         //    }
         /// <summary>
         /// frag is a subgraph of the het mol
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestSMSDAdpAtpSubgraph()
@@ -278,7 +265,6 @@ namespace NCDK.SMSD
             Assert.IsTrue(comparison.IsSubgraph());
             Assert.AreEqual(2, comparison.GetAllMapping().Count);
             Assert.AreEqual(27, comparison.GetFirstMapping().Count);
-
         }
 
         [TestMethod()]

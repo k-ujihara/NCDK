@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 1997-2007  Christoph Steinbeck
  *

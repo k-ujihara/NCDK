@@ -30,21 +30,20 @@ namespace NCDK.Stereo
     /// Stereochemistry projection types. 
     /// </summary>
     // @author John May
-    public struct Projection
-    {
 <# 
-        GenerateEnumBody(
-            "Projection", 
-             new[]
-            {
-                "Unset",
-                "Fischer:Fischer projections are used for linear chain-form carbohydrates. They are drawn vertically with all atoms at right angles around stereocenters.",
-                "Haworth:Haworth projection are used to depict ring-form carbohydrates. The ring may be of size 5, 6, or 7 (rarer). Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.",
-                "Chair:Projection of the low energy conformation (chair) of a cyclohexane. Used for carbohydrates.",
-            },
-            true
-        ); 
+    GenerateEnumBody(
+        "Projection", 
+            new[]
+        {
+            "Unset",
+            "Fischer:Fischer projections are used for linear chain-form carbohydrates. They are drawn vertically with all atoms at right angles around stereocenters.",
+            "Haworth:Haworth projection are used to depict ring-form carbohydrates. The ring may be of size 5, 6, or 7 (rarer). Here the ring is flat and the substituents connected to stereocenters are drawn directly above or below the plane of the ring.",
+            "Chair:Projection of the low energy conformation (chair) of a cyclohexane. Used for carbohydrates.",
+        },
+        true
+    ); 
 #>
+	{
         public bool IsUnset => this.Ordinal == 0;
     }
 }

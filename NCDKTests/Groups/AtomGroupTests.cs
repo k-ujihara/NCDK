@@ -25,14 +25,11 @@ using NCDK.Smiles;
 
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-group
-    /// </summary>
     [TestClass()]
     public class AtomGroupTests : CDKTestCase
     {
-
         public IAtomContainer GetMol(string smiles)
         {
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);

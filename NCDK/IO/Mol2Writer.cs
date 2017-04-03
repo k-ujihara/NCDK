@@ -26,7 +26,7 @@ namespace NCDK.IO
 {
     /// <summary>
     /// An output Writer that writes molecular data into the
-    /// <a href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</a>.
+    /// <see href="http://www.tripos.com/data/support/mol2.pdf">Tripos Mol2 format</see>.
     /// Writes the atoms and the bonds only at this moment.
     /// </summary>
     // @cdk.module io

@@ -6,12 +6,12 @@ namespace NCDK.SMSD.Labelling
     /// General permutation generator, that uses orderly generation by ranking and
     /// unranking. The basic idea is that all permutations of length N can be ordered
     /// (lexicographically) like:
-    /// <code>
+    /// <pre>
     /// 0 [0, 1, 2]
     /// 1 [0, 2, 1]
     /// 2 [1, 0, 2]
     /// ...
-    /// </code>
+    /// </pre>
     /// where the number to the left of each permutation is the <i>rank</i> - really
     /// just the index in this ordered list. The list is created on demand, by a
     /// process called <i>unranking</i> where the rank is converted to the
@@ -49,11 +49,10 @@ namespace NCDK.SMSD.Labelling
         private Random random;
 
         /// <summary>
-        /// Create a permutor that will generate permutations of numbers up to
-        /// <code>size</code>.
-        ///
-        /// <param name="size">the size of the permutations to generate</param>
+        /// Create a permutor that will generate permutations of numbers up to 
+        /// <paramref name="size"/>.
         /// </summary>
+        /// <param name="size">the size of the permutations to generate</param>
         public Permutor(int size)
         {
             this.currentRank = 0;
@@ -84,9 +83,8 @@ namespace NCDK.SMSD.Labelling
 
         /// <summary>
         /// Set the currently used permutation.
-        ///
-        /// <param name="permutation">the permutation to use, as an int array</param>
         /// </summary>
+        /// <param name="permutation">the permutation to use, as an int array</param>
         public void SetPermutation(int[] permutation)
         {
             //        this.currentRank = this.RankPermutationLexicographically(permutation);
@@ -95,9 +93,8 @@ namespace NCDK.SMSD.Labelling
 
         /// <summary>
         /// Randomly skip ahead in the list of permutations.
-        ///
-        /// <returns>a permutation in the range (current, N!)</returns>
         /// </summary>
+        /// <returns>a permutation in the range (current, N!)</returns>
         public int[] GetRandomNextPermutation()
         {
             int d = maxRank - currentRank;
@@ -108,9 +105,8 @@ namespace NCDK.SMSD.Labelling
 
         /// <summary>
         /// Get the next permutation in the list.
-        ///
-        /// <returns>the next permutation</returns>
         /// </summary>
+        /// <returns>the next permutation</returns>
         public int[] GetNextPermutation()
         {
             this.currentRank++;
@@ -119,9 +115,8 @@ namespace NCDK.SMSD.Labelling
 
         /// <summary>
         /// Get the permutation that is currently being used.
-        ///
-        /// <returns>the permutation as an int array</returns>
         /// </summary>
+        /// <returns>the permutation as an int array</returns>
         public int[] GetCurrentPermutation()
         {
             return this.UnrankPermutationLexicographically(currentRank, size);
@@ -129,9 +124,8 @@ namespace NCDK.SMSD.Labelling
 
         /// <summary>
         /// Calculate the max possible rank for permutations of N numbers.
-        ///
-        /// <returns>the maximum number of permutations</returns>
         /// </summary>
+        /// <returns>the maximum number of permutations</returns>
         public int CalculateMaxRank()
         {
             return Factorial(size) - 1;
@@ -155,10 +149,9 @@ namespace NCDK.SMSD.Labelling
         /// Convert a permutation (in the form of an int array) into a 'rank' - which
         /// is just a single number that is the order of the permutation in a lexico-
         /// graphically ordered list.
-        ///
+        /// </summary>
         /// <param name="permutation">the permutation to use</param>
         /// <returns>the rank as a number</returns>
-        /// </summary>
         private int RankPermutationLexicographically(int[] permutation)
         {
             int rank = 0;
@@ -182,16 +175,16 @@ namespace NCDK.SMSD.Labelling
         /// <summary>
         /// Performs the opposite to the rank method, producing the permutation that
         /// has the order <paramref name="rank"/> in the lexicographically ordered list.
-        ///
+        /// </summary>
+        /// <remarks>
         /// As an implementation note, the algorithm assumes that the permutation is
         /// in the form [1,...N] not the more usual [0,...N-1] for a list of size N.
         /// This is why there is the final step of 'shifting' the permutation. The
         /// shift also reduces the numbers by one to make them array indices.
-        ///
+        /// </remarks>
         /// <param name="rank">the order of the permutation to generate</param>
         /// <param name="size">the length/size of the permutation</param>
         /// <returns>a permutation as an int array</returns>
-        /// </summary>
         private int[] UnrankPermutationLexicographically(int rank, int size)
         {
             int[] permutation = new int[size + 1];

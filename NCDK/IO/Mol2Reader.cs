@@ -36,7 +36,7 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads a molecule from an Mol2 file, such as written by Sybyl.
-    /// See the specs <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
+    /// See the specs <see href="http://www.tripos.com/data/support/mol2.pdf">here</see>.
     /// </summary>
     // @author Egon Willighagen
     // @cdk.module io

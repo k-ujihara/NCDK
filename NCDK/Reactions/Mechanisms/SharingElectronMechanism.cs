@@ -39,7 +39,8 @@ namespace NCDK.Reactions.Mechanisms
         /// Initiates the process for the given mechanism. The atoms to apply are mapped between
         /// reactants and products.
         /// </summary>
-        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms</param>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList"> The list of atoms taking part in the mechanism. Only allowed two atoms</param>
         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
         /// <returns>The Reaction mechanism</returns>
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)

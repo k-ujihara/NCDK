@@ -32,7 +32,7 @@ namespace NCDK.IO.RandomAccess
     // @cdk.githash
     public abstract class DefaultRandomAccessChemObjectReader : IList<IChemObject>
     {
-        protected ChemObjectReaderModes mode = ChemObjectReaderModes.Relaxed;
+        protected ChemObjectReaderModes ReaderMode { get; set; } = ChemObjectReaderModes.Relaxed;
 
         /// <summary>
         /// Holder of reader event listeners.
@@ -68,7 +68,7 @@ namespace NCDK.IO.RandomAccess
 
         public void SetReaderMode(ChemObjectReaderModes mode)
         {
-            this.mode = mode;
+            this.ReaderMode = mode;
         }
 
         public abstract int IndexOf(IChemObject item);

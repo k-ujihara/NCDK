@@ -20,7 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
 using NCDK.Tools.Manipulator;
 using System;
@@ -30,7 +29,7 @@ namespace NCDK.Layout
 {
     /// <summary>
     /// Measure and update a score of congestion in a molecule layout 
-    /// {@cdk.cite HEL99}, {@cdk.cite Clark06}. This can be tuned in
+    /// <token>cdk-cite-HEL99</token>, <token>cdk-cite-Clark06</token>. This can be tuned in
     /// several ways but currently uses a basic '1/(dist^2)'.
     /// </summary>
     sealed class Congestion

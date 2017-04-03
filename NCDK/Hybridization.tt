@@ -8,28 +8,27 @@ namespace NCDK
     /// <summary>
     /// Hybridization states.
     /// </summary>
-    public struct Hybridization : System.IComparable
-    {
 <# 
-        GenerateEnumBody(
-            "Hybridization", 
-             new[]
-            {
-                "Unset:A undefined hybridization.",
-                "S",
-                "SP1:A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.",
-                "SP2:A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.",
-                "SP3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.",
-                "Planar3:trigonal planar (lone pair in pz)",
-                "SP3D1:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with one d orbital.",
-                "SP3D2:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with two d orbitals.",
-                "SP3D3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with three d orbitals.",
-                "SP3D4:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with four d orbitals.",
-                "SP3D5:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with five d orbitals.",
-            },
-            true
-        ); 
+    GenerateEnumBody(
+        "Hybridization", 
+            new[]
+        {
+            "Unset:A undefined hybridization.",
+            "S",
+            "SP1:A geometry of neighboring atoms when an s orbital is hybridized with one p orbital.",
+            "SP2:A geometry of neighboring atoms when an s orbital is hybridized with two p orbitals.",
+            "SP3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals.",
+            "Planar3:trigonal planar (lone pair in pz)",
+            "SP3D1:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with one d orbital.",
+            "SP3D2:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with two d orbitals.",
+            "SP3D3:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with three d orbitals.",
+            "SP3D4:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with four d orbitals.",
+            "SP3D5:A geometry of neighboring atoms when an s orbital is hybridized with three p orbitals with five d orbitals.",
+        },
+        true
+    ); 
 #>
+	{
         public string Name => ToString();
 
         public bool IsUnset => this.Ordinal == 0;

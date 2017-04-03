@@ -32,8 +32,12 @@ namespace NCDK
     /// <summary>
     /// Enumeration that defines the two possible chiralities for this stereochemistry type.
     /// </summary>
-    public struct TetrahedralStereo
+    public partial struct TetrahedralStereo : System.IComparable<TetrahedralStereo>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="TetrahedralStereo"/>.
+		/// </summary>
+		/// <seealso cref="TetrahedralStereo"/>
         public static class O
         {
             public const int Unset = 0;
@@ -43,8 +47,13 @@ namespace NCDK
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -120,6 +129,7 @@ namespace NCDK
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -128,16 +138,27 @@ namespace NCDK
             return this.Ordinal == ((TetrahedralStereo)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (TetrahedralStereo)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(TetrahedralStereo o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct TetrahedralStereo 
+	{
         public bool IsUnset => this.Ordinal == 0;
 
         /// <summary>

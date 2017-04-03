@@ -26,37 +26,46 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-
 using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace NCDK.Beam
 {
-    /// <summary>Enumeration of valid OpenSMILES elements.
+    /// <summary>
+    /// Enumeration of valid OpenSMILES elements.
     /// </summary>
     /// <remarks>
-    /// <h4>Organic subsets</h4> Several of the elements belong to the organic
+    /// <para>Organic subsets</para>
+    /// <para>
+    /// Several of the elements belong to the organic
     /// subset. Atoms of an organic element type can be written just as their symbol
-    /// (see. <a href="http://www.opensmiles.org/opensmiles.html#orgsbst">Organic
-    /// Subset, OpenSMILES Specification</a>).
-    /// 
-    /// <list type="bullet"><item><see cref="Unknown"/> (*)</item> 
-    /// <item><see cref="Boron"/></item> <item><see cref="Carbon"/></item> <item><see cref="Nitrogen"/></item> <item><see cref="Oxygen"/></item>
-    /// <item><see cref="Fluorine"/></item> <item><see cref="Phosphorus"/></item> <item><see cref="Sulfur"/>
-    /// </item> <item><see cref="Chlorine"/></item> <item><see cref="Bromine"/></item> <item><see cref="Iodine"/></item> 
+    /// (see. <see href="http://www.opensmiles.org/opensmiles.html#orgsbst">Organic Subset, OpenSMILES Specification</see>).
+    /// </para>
+    /// <list type="bullet">
+    /// <item><see cref="Unknown"/> (*)</item> 
+    /// <item><see cref="Boron"/></item>
+    /// <item><see cref="Carbon"/></item>
+    /// <item><see cref="Nitrogen"/></item>
+    /// <item><see cref="Oxygen"/></item>
+    /// <item><see cref="Fluorine"/></item> 
+    /// <item><see cref="Phosphorus"/></item>
+    /// <item><see cref="Sulfur"/></item> 
+    /// <item><see cref="Chlorine"/></item>
+    /// <item><see cref="Bromine"/></item> 
+    /// <item><see cref="Iodine"/></item> 
     /// </list>
     /// </remarks>
     /// <example>
-    /// <h4>Usage</h4>
+    /// <para>Usage</para>
     /// 
     /// Elements can be created by either using the value directly or by looking up
     /// it's symbol. If the element may be aromatic the lower-case symbol can also be
     /// used. For example the variable 'e' in the three statements below all have the
     /// same value, <see cref="Element.Carbon"/>.
+    /// 
     /// <code>
     /// Element e = Element.Carbon;
     /// Element e = Element.OfSymbol("C");
@@ -84,7 +93,7 @@ namespace NCDK.Beam
     /// string  symbol = e.Symbol;
     /// </code>
     /// </example>
-    /// <remarks><a href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms, OpenSMILES Specification</a></remarks>
+    /// <seealso href="http://www.opensmiles.org/opensmiles.html#inatoms">Atoms, OpenSMILES Specification</seealso>
     // @author John May
     public class Element
     {

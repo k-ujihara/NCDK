@@ -81,7 +81,7 @@ namespace NCDK.IO.CML
                     Debug.WriteLine($"new bond order: {border}");
                     // assume cdk bond object has already started
                     //                cdo.SetObjectProperty("Bond", "order", border);
-                    currentBond.Order = BondManipulator.CreateBondOrder(double.Parse(border));
+                    CurrentBond.Order = BondManipulator.CreateBondOrder(double.Parse(border));
                 }
             }
             else

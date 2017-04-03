@@ -44,14 +44,14 @@ namespace NCDK.Pharmacophore
     /// </para>
     /// <para>
     /// To perform a query one must first create a set of pharmacophore groups and specify the
-    /// distances between them. Each pharmacophore group is represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreAtom}
-    /// and the distances between them are represented by a {@link org.openscience.cdk.pharmacophore.PharmacophoreBond}.
+    /// distances between them. Each pharmacophore group is represented by a <see cref="PharmacophoreAtom"/> 
+    /// and the distances between them are represented by a <see cref="PharmacophoreBond"/> .
     /// These are collected in a <see cref="QueryAtomContainer"/>.
     /// </para>
     /// <para>
     /// Given the query pharmacophore one can use this class to check with it occurs in a specified molecule.
     /// Note that for full generality pharmacophore searches are performed using conformations of molecules.
-    /// This can easily be accomplished using this class together with the {@link org.openscience.cdk.ConformerContainer}
+    /// This can easily be accomplished using this class together with the <see cref="ConformerContainer"/> 
     /// class.  See the example below.
     /// </para>
     /// <para>
@@ -67,45 +67,7 @@ namespace NCDK.Pharmacophore
     /// </para>
     /// </summary> 
     /// <example>
-    /// Example usage:
-    /// <code>
-    /// QueryAtomContainer query = new QueryAtomContainer();
-    /// <p/>
-    /// PharmacophoreQueryAtom o = new PharmacophoreQueryAtom("D", "[OX1]");
-    /// PharmacophoreQueryAtom n1 = new PharmacophoreQueryAtom("A", "[N]");
-    /// PharmacophoreQueryAtom n2 = new PharmacophoreQueryAtom("A", "[N]");
-    /// <p/>
-    /// query.Atoms.Add(o);
-    /// query.Atoms.Add(n1);
-    /// query.Atoms.Add(n2);
-    /// <p/>
-    /// PharmacophoreQueryBond b1 = new PharmacophoreQueryBond(o, n1, 4.0, 4.5);
-    /// PharmacophoreQueryBond b2 = new PharmacophoreQueryBond(o, n2, 4.0, 5.0);
-    /// PharmacophoreQueryBond b3 = new PharmacophoreQueryBond(n1, n2, 5.4, 5.8);
-    /// <p/>
-    /// query.Bonds.Add(b1);
-    /// query.Bonds.Add(b2);
-    /// query.Bonds.Add(b3);
-    /// <p/>
-    /// string filename = "/Users/rguha/pcore1.sdf";
-    /// IteratingMDLConformerReader reader = new IteratingMDLConformerReader(
-    ///      new FileReader(new File(filename)), Default.ChemObjectBuilder.Instance);
-    /// <p/>
-    /// ConformerContainer conformers;
-    /// if (reader.HasNext()) conformers = (ConformerContainer) reader.Next();
-    /// <p/>
-    /// bool firstTime = true;
-    /// foreach (var conf in conformers) {
-    ///   bool status;
-    ///   if (firstTime) {
-    ///     status = matcher.Matches(conf, true);
-    ///     firstTime = false;
-    ///   } else status = matcher.Matches(conf, false);
-    ///   if (status) {
-    ///     // OK, matched. Do something
-    ///   }
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Pharmacophore.PharmacophoreMatcher_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// <para>Extensions to SMARTS</para>
@@ -114,14 +76,10 @@ namespace NCDK.Pharmacophore
     /// to flexible pharmacophore definitions  Note that these extensions are specific to
     /// pharmacophore usage and are not generally provided by the SMARTS parser itself.
     /// </para>
-    /// <list type="bullet">
-    /// <item> | - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
+    /// <b>|</b> - this allows one to perform a logical OR between two or more SMARTS patterns. An example might
     /// be a pharmacophore group that is meant to match a 5 membered ring or a 6 membered ring. This cannot be
     /// written in a single ordinary SMARTS pattern. However using this one extension one can write
-    /// <code>A1AAAA1|A1AAAAA1</code>
-    /// <item>
-    /// </item>
-    /// </item></list>l
+    /// <pre>A1AAAA1|A1AAAAA1</pre>.
     /// </remarks>
     /// <seealso cref="PharmacophoreAtom"/>
     /// <seealso cref="PharmacophoreBond"/>
@@ -187,7 +145,7 @@ namespace NCDK.Pharmacophore
         ///                         this is not performed. The latter case is only useful when dealing with conformers
         ///                         since for a given molecule, all conformers will have the same pharmacophore groups
         ///                         and only the constraints will change from one conformer to another.</param>
-        /// <returns>true is the target molecule contains the query pharmacophore</returns>
+        /// <returns><see langword="true"/> is the target molecule contains the query pharmacophore</returns>
         /// <exception cref="CDKException">
         ///          if the query pharmacophore was not set or the query is invalid or if the molecule
         ///          does not have 3D coordinates</exception>
@@ -220,12 +178,11 @@ namespace NCDK.Pharmacophore
 
             if (pharmacophoreMolecule.Atoms.Count < pharmacophoreQuery.Atoms.Count)
             {
-                Debug.WriteLine("Target [" + title + "] did not match the query SMARTS. Skipping constraints");
+                Debug.WriteLine($"Target [{title}] did not match the query SMARTS. Skipping constraints");
                 return false;
             }
 
-            mappings = Pattern.FindSubstructure(pharmacophoreQuery)
-                              .MatchAll(pharmacophoreMolecule);
+            mappings = Pattern.FindSubstructure(pharmacophoreQuery).MatchAll(pharmacophoreMolecule);
 
             // XXX: doing one search then discarding
             return mappings.AtLeast(1);
@@ -233,14 +190,14 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Get the matching pharmacophore constraints.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The method should be called after performing the match, otherwise the return value is null.
         /// The method returns a List of List's. Each List represents the pharmacophore constraints in the
         /// target molecule that matched the query. Since constraints are conceptually modeled on bonds
         /// the result is a list of list of IBond. You should coerce these to the appropriate pharmacophore
         /// bond to get at the underlying grops.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <returns>a List of a List of pharmacophore constraints in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreBond"/>
         /// <seealso cref="PharmacophoreAngleBond"/>
@@ -260,13 +217,13 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Return a list of HashMap's that allows one to get the query constraint for a given pharmacophore bond.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// If the matching is successful, the return value is a List of HashMaps, each
         /// HashMap corresponding to a separate match. Each HashMap is keyed on the <see cref="PharmacophoreBond"/>
         /// in the target molecule that matched a constraint (<see cref="PharmacophoreQueryBond"/> or
         /// <see cref="PharmacophoreQueryAngleBond"/>. The value is the corresponding query bond.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <returns>A List of HashMaps, identifying the query constraint corresponding to a matched constraint in the target molecule.</returns>
         public List<IDictionary<IBond, IBond>> GetTargetQueryBondMappings()
         {
@@ -289,13 +246,13 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Get the matching pharmacophore groups.
-        /// <para>
+        /// </summary>
+        /// <remarks>
         /// The method should be called after performing the match, otherwise the return value is null.
         /// The method returns a List of List's. Each List represents the pharmacophore groups in the
         /// target molecule that matched the query. Each pharmacophore group contains the indices of the
         /// atoms (in the target molecule) that correspond to the group.
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <returns>a List of a List of pharmacophore groups in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreAtom"/>
         public IList<IList<PharmacophoreAtom>> GetMatchingPharmacophoreAtoms()
@@ -306,6 +263,8 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Get the uniue matching pharmacophore groups.
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// The method should be called after performing the match, otherwise the return value is null.
         /// The method returns a List of List's. Each List represents the pharmacophore groups in the
@@ -315,7 +274,7 @@ namespace NCDK.Pharmacophore
         /// <para>
         /// This is analogous to the USA form of return value from a SMARTS match.
         /// </para>
-        /// </summary>
+        /// </remarks>
         /// <returns>a List of a List of pharmacophore groups in the target molecule that match the query</returns>
         /// <seealso cref="PharmacophoreAtom"/>
         public IList<IList<PharmacophoreAtom>> GetUniqueMatchingPharmacophoreAtoms()
@@ -496,11 +455,9 @@ namespace NCDK.Pharmacophore
                         pharmacophoreMolecule.Bonds.Add(pbond);
                         nangleDefs++;
                     }
-
                 }
                 Debug.WriteLine("Added " + nangleDefs + " defs to the target pcore molecule");
             }
-
             return pharmacophoreMolecule;
         }
 

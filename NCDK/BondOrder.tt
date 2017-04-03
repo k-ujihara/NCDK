@@ -5,24 +5,23 @@ namespace NCDK
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
-    public struct BondOrder : System.IComparable
-    {
 <# 
-        GenerateEnumBody(
-            "BondOrder", 
-             new[]
-            {
-                "Unset",
-                "Single",
-                "Double",
-                "Triple",
-                "Quadruple",
-                "Quintuple",
-                "Sextuple",
-            },
-            true
-        ); 
+    GenerateEnumBody(
+        "BondOrder", 
+            new[]
+        {
+            "Unset",
+            "Single",
+            "Double",
+            "Triple",
+            "Quadruple",
+            "Quintuple",
+            "Sextuple",
+        },
+        true
+    ); 
 #>
+	{
         /// <summary>
         /// A numeric value for the number of bonded electron pairs.
         /// </summary>

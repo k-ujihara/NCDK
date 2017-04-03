@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
@@ -31,14 +30,12 @@ namespace NCDK.Smiles.SMARTS.Parser
     /// Verifies stereo matching. We check the counts to ensure that
     /// tetrahedral/geometric stereo isn't matching absolute values (i.e. R/S or
     /// odd/even // parity from MDL molfile)
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-smarts
-    /// </summary>
     [TestClass()]
     public class SmartsStereoTest
     {
-
         [TestMethod()]
         public void NonAbsoluteGeometric_trans()
         {

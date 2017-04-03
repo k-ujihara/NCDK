@@ -28,34 +28,38 @@ namespace NCDK.Stereo
 {
     /// <summary>
     /// Methods to determine or check the stereo class of a set of atoms.
-    ///
-    /// Some of these methods were adapted from Jmol's smiles search package.
     /// </summary>
+    /// <remarks>
+    /// Some of these methods were adapted from Jmol's smiles search package.
+    /// </remarks>
     // @author maclean
     // @cdk.module standard
     // @cdk.githash
     public class StereoTool
     {
-
         /// <summary>
         /// Currently unused, but intended for the StereoTool to indicate what it
         /// 'means' by an assignment of some atoms to a class.
         /// </summary>
         public enum StereoClass
         {
-            Tetrahedral, SQUARE_PLANAR, TRIGONAL_BIPYRAMIDAL, OCTAHEDRAL
+            Tetrahedral, SquarePlanar, TrigonalBipyramidal, Octahedral
         }
 
         /// <summary>
         /// The handedness of a tetrahedron, in terms of the point-plane distance
         /// of three of the corners, compared to the fourth.
-        ///
-        /// PLUS indices a positive point-plane distance,
-        /// MINUS is a negative point-plane distance.
         /// </summary>
         public enum TetrahedralSign
         {
-            PLUS, MINUS
+            /// <summary>
+            /// Indices a positive point-plane distance
+            /// </summary>
+            Plus,
+            /// <summary>
+            /// A negative point-plane distance
+            /// </summary>
+            Minus
         }
 
         /// <summary>
@@ -63,21 +67,21 @@ namespace NCDK.Stereo
         /// </summary>
         public enum SquarePlanarShape
         {
-            U_SHAPE, FOUR_SHAPE, Z_SHAPE
+            UShape, FourShape, ZShape
         }
 
         /// <summary>
         /// The maximum angle in radians for two lines to be 'diaxial'.
         /// Where 0.95 is about 172 degrees.
         /// </summary>
-        public const double MAX_AXIS_ANGLE = 0.95;
+        public const double MaxAxisAngle = 0.95;
 
         /// <summary>
         /// The maximum tolerance for the normal calculated during colinearity.
         /// </summary>
-        public const double MIN_COLINEAR_NORMAL = 0.05;
+        public const double MinColinarNormal = 0.05;
 
-        public const double PLANE_TOLERANCE = 0.05;
+        public const double PlaneTolerance = 0.05;
 
         /// <summary>
         /// Checks these four atoms for square planarity.
@@ -103,8 +107,7 @@ namespace NCDK.Stereo
             return IsSquarePlanar(pointA, pointB, pointC, pointD, out normal);
         }
 
-        private static bool IsSquarePlanar(Vector3 pointA, Vector3 pointB, Vector3 pointC, Vector3 pointD,
-                out Vector3 normal)
+        private static bool IsSquarePlanar(Vector3 pointA, Vector3 pointB, Vector3 pointC, Vector3 pointD, out Vector3 normal)
         {
             // define a plane using ABC, also checking that the are not colinear
             Vector3 vectorAB = new Vector3();
@@ -164,15 +167,15 @@ namespace NCDK.Stereo
             double bDotC = Vector3.Dot(normalB, normalC);
             if (aDotB > 0 && aDotC > 0 && bDotC > 0)
             { // UUU or DDD
-                return SquarePlanarShape.U_SHAPE;
+                return SquarePlanarShape.UShape;
             }
             else if (aDotB > 0 && aDotC < 0 && bDotC < 0)
             { // UUD or DDU
-                return SquarePlanarShape.FOUR_SHAPE;
+                return SquarePlanarShape.FourShape;
             }
             else
             { // UDD or DUU
-                return SquarePlanarShape.Z_SHAPE;
+                return SquarePlanarShape.ZShape;
             }
         }
 
@@ -189,7 +192,7 @@ namespace NCDK.Stereo
             foreach (var point in points)
             {
                 double distance = StereoTool.SignedDistanceToPlane(planeNormal, pointInPlane, point);
-                if (distance < PLANE_TOLERANCE)
+                if (distance < PlaneTolerance)
                 {
                     continue;
                 }
@@ -279,7 +282,7 @@ namespace NCDK.Stereo
         }
 
         /// <summary>
-        /// Take four atoms, and return TetrahedralStereo.Clockwise or TetrahedralStereo.AntiClockwise.
+        /// Take four atoms, and return <see cref="TetrahedralStereo.Clockwise"/> or <see cref="TetrahedralStereo.AntiClockwise"/>.
         /// The first atom is the one pointing towards the observer.
         /// </summary>
         /// <param name="atom1">the atom pointing towards the observer</param>
@@ -293,7 +296,7 @@ namespace NCDK.Stereo
             // the first atom. PLUS indicates ACW.
             TetrahedralSign sign = StereoTool.GetHandedness(atom2, atom3, atom4, atom1);
 
-            if (sign == TetrahedralSign.PLUS)
+            if (sign == TetrahedralSign.Plus)
             {
                 return TetrahedralStereo.AntiClockwise;
             }
@@ -341,11 +344,11 @@ namespace NCDK.Stereo
             // relative to the plane normal.
             if (distance > 0)
             {
-                return TetrahedralSign.PLUS;
+                return TetrahedralSign.Plus;
             }
             else
             {
-                return TetrahedralSign.MINUS;
+                return TetrahedralSign.Minus;
             }
         }
 
@@ -371,7 +374,7 @@ namespace NCDK.Stereo
         private static bool IsColinear(Vector3 normal)
         {
             double baCrossACLen = normal.Length();
-            return baCrossACLen < StereoTool.MIN_COLINEAR_NORMAL;
+            return baCrossACLen < StereoTool.MinColinarNormal;
         }
 
         /// <summary>
@@ -397,8 +400,8 @@ namespace NCDK.Stereo
         /// third vector at right angles to AB and AC.
         /// </summary>
         /// <remarks>
-        /// NOTE : the returned normal is normalized; that is, it has been
-        /// divided by its length.</remarks>
+        /// <note type="note">
+        /// The returned normal is normalized; that is, it has been divided by its length.</note></remarks>
         /// <param name="ptA">the 'middle' point</param>
         /// <param name="ptB">one of the end points</param>
         /// <param name="ptC">one of the end points</param>

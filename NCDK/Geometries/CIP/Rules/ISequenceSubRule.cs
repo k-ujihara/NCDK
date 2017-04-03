@@ -26,7 +26,7 @@ namespace NCDK.Geometries.CIP.Rules
 {
     /// <summary>
     /// Sequence sub rule used in the CIP method to decide which of the two ligands takes
-    /// precedence {@cdk.cite Cahn1966}. A list ordered based on these rules will be
+    /// precedence <token>cdk-cite-Cahn1966</token>. A list ordered based on these rules will be
     /// sorted from low to high precedence.
     /// </summary>
     /// <remarks>

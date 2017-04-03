@@ -23,7 +23,7 @@ namespace NCDK.IO.Formats
 {
     /// <summary>
     /// XML version of the PDB format.
-    /// See <a href="http://pdbml.rcsb.org/">here</a>.
+    /// See <see href="http://pdbml.rcsb.org/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

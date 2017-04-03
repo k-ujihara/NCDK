@@ -26,23 +26,25 @@ namespace NCDK.Graphs
 {
     /// <summary>
     /// General permutation generator, that uses orderly generation by ranking and
-    /// unranking. The basic idea is that all permutations of length N can be ordered
-    /// (lexicographically) like:
-    /// <code>
-    /// 0 [0, 1, 2]
-    /// 1 [0, 2, 1]
-    /// 2 [1, 0, 2]
-    /// ...
-    /// </code>
+    /// unranking.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The basic idea is that all permutations of length N can be ordered
+    /// (lexicographically) like:<br/>
+    /// 0 [0, 1, 2]<br/>
+    /// 1 [0, 2, 1]<br/>
+    /// 2 [1, 0, 2]<br/>
+    /// ...<br/>
     /// where the number to the left of each permutation is the <i>rank</i> - really
     /// just the index in this ordered list. The list is created on demand, by a
     /// process called <i>unranking</i> where the rank is converted to the
     /// permutation that appears at that point in the list.
-    ///
+    /// </para>
     /// <para>The algorithms used are from the book "Combinatorial Generation :
     /// Algorithms, Generation, and Search" (or C.A.G.E.S.) by D.L. Kreher and D.R.
     /// Stinson. CRC Press (18 Dec 1998). ISBN-13 : 978-0849339882.</para>
-    /// </summary>
+    /// </remarks>
     // @author         maclean
     // @cdk.created    2009-09-09
     // @cdk.keyword    permutation

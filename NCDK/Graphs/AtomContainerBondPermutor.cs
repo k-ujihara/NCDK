@@ -20,12 +20,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using NCDK.Common.Collections;
-using System.Collections.ObjectModel;
-
 namespace NCDK.Graphs
 {
     /// <summary>
@@ -35,12 +29,7 @@ namespace NCDK.Graphs
     /// the input atom container.
     /// </summary>
     /// <example>
-    /// Typical use:<code>
-    /// AtomContainerBondPermutor permutor = new AtomContainerBondPermutor(container);
-    /// while (permutor.MoveNext()) {
-    ///   IAtomContainer permutedContainer = permutor.Next();
-    ///   ...
-    /// }</code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.AtomContainerBondPermutor_Example.cs"]/*' />
     /// </example>
     // @author         maclean
     // @cdk.githash

@@ -24,10 +24,9 @@ using System.Linq;
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IAdductFormula} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IAdductFormula"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractAdductFormulaTest : AbstractMolecularFormulaSetTest
     {
@@ -259,7 +258,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public override void TestRePlaceMolecularFormula_int_IMolecularFormula()
+        public override void TestReplaceMolecularFormula_int_IMolecularFormula()
         {
             IAdductFormula mfS = Builder.CreateAdductFormula();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();

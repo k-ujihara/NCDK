@@ -24,7 +24,7 @@ using System.Linq;
 using NCDK.Stereo;
 using System.Diagnostics;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// This class generates the IUPAC International Chemical Identifier (InChI) for
@@ -36,26 +36,7 @@ namespace NCDK.Graphs.InChi
     /// currently handled completely.</para>
     /// </remarks>
     /// <example>
-    /// Example usage
-    /// <code>
-    /// // Generate factory -  if native code does not load
-    /// InChIGeneratorFactory factory = new InChIGeneratorFactory();
-    /// // Get InChIGenerator
-    /// InChIGenerator gen = factory.GetInChIGenerator(container);
-    /// 
-    /// INCHI_RET ret = gen.ReturnStatus;
-    /// if (ret == INCHI_RET.WARNING) {
-    ///   // InChI generated, but with warning message
-    ///   Console.Out.WriteLine("InChI warning: " + gen.Message);
-    /// } else if (ret != INCHI_RET.OKAY) {
-    ///   // InChI generation failed
-    ///   throw new CDKException("InChI failed: " + ret.ToString()
-    ///     + " [" + gen.Message + "]");
-    /// }
-    /// 
-    /// string inchi = gen.Inchi;
-    /// string auxinfo = gen.AuxInfo;
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.InChI.InChIGenerator_Example.cs"]/*' />
     /// </example>
     /// TODO: distinguish between singlet and undefined spin multiplicity<br/>
     /// TODO: double bond and allene parities<br/>
@@ -65,14 +46,14 @@ namespace NCDK.Graphs.InChi
     // @cdk.githash
     public class InChIGenerator
     {
-        protected NInchiInput input;
-        protected NInchiOutput output;
+        protected NInchiInput Input;
+        protected NInchiOutput Output;
         private readonly bool auxNone;
 
         /// <summary>
         /// AtomContainer instance refers to.
         /// </summary>
-        protected IAtomContainer atomContainer;
+        protected IAtomContainer ReferringAtomContainer;
 
         /// <summary>
         /// Constructor. Generates InChI from CDK AtomContainer.
@@ -99,9 +80,9 @@ namespace NCDK.Graphs.InChi
         {
             try
             {
-                input = new NInchiInput(options);
+                Input = new NInchiInput(options);
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = input.Options != null && input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
             }
             catch (NInchiException jie)
             {
@@ -121,9 +102,9 @@ namespace NCDK.Graphs.InChi
         {
             try
             {
-                input = new NInchiInput(new List<INCHI_OPTION>(options));
+                Input = new NInchiInput(new List<INCHI_OPTION>(options));
                 GenerateInChIFromCDKAtomContainer(atomContainer, ignoreAromaticBonds);
-                auxNone = input.Options != null && input.Options.Contains("AuxNone");
+                auxNone = Input.Options != null && Input.Options.Contains("AuxNone");
             }
             catch (NInchiException jie)
             {
@@ -140,7 +121,7 @@ namespace NCDK.Graphs.InChi
         /// <param name="ignore"></param>
         private void GenerateInChIFromCDKAtomContainer(IAtomContainer atomContainer, bool ignore)
         {
-            this.atomContainer = atomContainer;
+            this.ReferringAtomContainer = atomContainer;
 
             // Check for 3d coordinates
             bool all3d = true;
@@ -196,7 +177,7 @@ namespace NCDK.Graphs.InChi
                 string el = atom.Symbol;
 
                 // Generate InChI atom
-                NInchiAtom iatom = input.Add(new NInchiAtom(x, y, z, el));
+                NInchiAtom iatom = Input.Add(new NInchiAtom(x, y, z, el));
                 atomMap[atom] = iatom;
 
                 // Check if charged
@@ -286,7 +267,7 @@ namespace NCDK.Graphs.InChi
                 // Create InChI bond
                 NInchiBond ibond = new NInchiBond(at0, at1, order);
                 bondMap[bond] = ibond;
-                input.Add(ibond);
+                Input.Add(ibond);
 
                 // Check for bond stereo definitions
                 BondStereo stereo = bond.Stereo;
@@ -371,7 +352,7 @@ namespace NCDK.Graphs.InChi
 
                     NInchiStereo0D jniStereo = new NInchiStereo0D(atC, at0, at1, at2, at3,
                             INCHI_STEREOTYPE.Tetrahedral, p);
-                    input.Stereos.Add(jniStereo);
+                    Input.Stereos.Add(jniStereo);
                 }
                 else if (stereoElem is IDoubleBondStereochemistry)
                 {
@@ -428,7 +409,7 @@ namespace NCDK.Graphs.InChi
 
                     NInchiStereo0D jniStereo = new NInchiStereo0D(null, at0, at1, at2, at3,
                             INCHI_STEREOTYPE.DoubleBond, p);
-                    input.Stereos.Add(jniStereo);
+                    Input.Stereos.Add(jniStereo);
                 }
                 else if (stereoElem is ExtendedTetrahedral)
                 {
@@ -519,13 +500,13 @@ namespace NCDK.Graphs.InChi
                     NInchiStereo0D jniStereo = new NInchiStereo0D(atomMap[extendedTetrahedral.Focus],
                             atomMap[peripherals[0]], atomMap[peripherals[1]], atomMap[peripherals[2]],
                             atomMap[peripherals[3]], INCHI_STEREOTYPE.Allene, parity);
-                    input.Stereos.Add(jniStereo);
+                    Input.Stereos.Add(jniStereo);
                 }
             }
 
             try
             {
-                output = NInchiWrapper.GetInchi(input);
+                Output = NInchiWrapper.GetInchi(Input);
             }
             catch (NInchiException jie)
             {
@@ -551,16 +532,16 @@ namespace NCDK.Graphs.InChi
         }
 
         /// <summary>
-        /// Gets return status from InChI process.  OKAY and WARNING indicate
+        /// Gets return status from InChI process. <see cref="INCHI_RET.OKAY"/> and <see cref="INCHI_RET.WARNING"/> indicate
         /// InChI has been generated, in all other cases InChI generation
         /// has failed.
         /// </summary>
-        public INCHI_RET ReturnStatus => output.ReturnStatus;
+        public INCHI_RET ReturnStatus => Output.ReturnStatus;
 
         /// <summary>
         /// Gets generated InChI string.
         /// </summary>
-        public string InChI => output.InChI;
+        public string InChI => Output.InChI;
 
         /// <summary>
         /// Gets generated InChIKey string.
@@ -570,7 +551,7 @@ namespace NCDK.Graphs.InChi
             NInchiOutputKey key;
             try
             {
-                key = NInchiWrapper.GetInchiKey(output.InChI);
+                key = NInchiWrapper.GetInchiKey(Output.InChI);
                 if (key.ReturnStatus == INCHI_KEY.OK)
                 {
                     return key.Key;
@@ -597,18 +578,18 @@ namespace NCDK.Graphs.InChi
                 {
                     Trace.TraceWarning("AuxInfo requested but AuxNone option is set (default).");
                 }
-                return (output.AuxInfo);
+                return (Output.AuxInfo);
             }
         }
 
         /// <summary>
         /// Gets generated (error/warning) messages.
         /// </summary>
-        public string Message => output.Message;
+        public string Message => Output.Message;
 
         /// <summary>
         /// Gets generated log.
         /// </summary>
-        public string Log => output.Log;
+        public string Log => Output.Log;
     }
 }

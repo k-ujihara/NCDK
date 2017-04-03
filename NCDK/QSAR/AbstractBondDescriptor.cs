@@ -31,7 +31,7 @@ namespace NCDK.QSAR
     // @cdk.githash
     public abstract class AbstractBondDescriptor : AbstractDescriptor, IBondDescriptor
     {
-        private const string PREVIOUS_ATOMCONTAINER = "previousAtomContainer";
+        private const string PreviousAtomContainer = "previousAtomContainer";
 
         private IDictionary<object, object> cachedDescriptorValues = null;
 
@@ -43,7 +43,7 @@ namespace NCDK.QSAR
         public bool IsCachedAtomContainer(IAtomContainer container)
         {
             if (cachedDescriptorValues == null) return false;
-            return (cachedDescriptorValues[PREVIOUS_ATOMCONTAINER] == container);
+            return (cachedDescriptorValues[PreviousAtomContainer] == container);
         }
 
         /// <summary>
@@ -69,12 +69,12 @@ namespace NCDK.QSAR
             if (cachedDescriptorValues == null)
             {
                 cachedDescriptorValues = new Dictionary<object, object>();
-                cachedDescriptorValues[PREVIOUS_ATOMCONTAINER] = container;
+                cachedDescriptorValues[PreviousAtomContainer] = container;
             }
-            else if (cachedDescriptorValues[PREVIOUS_ATOMCONTAINER] != container)
+            else if (cachedDescriptorValues[PreviousAtomContainer] != container)
             {
                 cachedDescriptorValues.Clear();
-                cachedDescriptorValues[PREVIOUS_ATOMCONTAINER] = container;
+                cachedDescriptorValues[PreviousAtomContainer] = container;
             }
             cachedDescriptorValues[bond] = doubleResult;
         }

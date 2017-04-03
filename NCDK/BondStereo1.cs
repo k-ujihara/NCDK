@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+
 
 
 namespace NCDK
@@ -10,8 +13,12 @@ namespace NCDK
     /// The first atom in the IBond (index = 0) is the <i>start</i> atom, while
     /// the second atom (index = 1) is the <i>end</i> atom.
     /// </summary>
-    public struct BondStereo : System.IComparable
+    public partial struct BondStereo : System.IComparable<BondStereo>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="BondStereo"/>.
+		/// </summary>
+		/// <seealso cref="BondStereo"/>
         public static class O
         {
             public const int None = 0;
@@ -29,8 +36,13 @@ namespace NCDK
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -163,6 +175,7 @@ namespace NCDK
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -171,16 +184,27 @@ namespace NCDK
             return this.Ordinal == ((BondStereo)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (BondStereo)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(BondStereo o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct BondStereo 
+	{
     }
 }
 

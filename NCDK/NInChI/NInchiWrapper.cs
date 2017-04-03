@@ -266,9 +266,8 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Checks and canonicalises options.
-        ///
-        /// <param name="ops">List of INCHI_OPTION</param>
         /// </summary>
+        /// <param name="ops">List of INCHI_OPTION</param>
         protected internal static string CheckOptions(IList<INCHI_OPTION> ops)
         {
             if (ops == null)
@@ -455,25 +454,23 @@ namespace NCDK.NInChI
         /// InChI is produced, otherwise the generated InChI will be a non-standard one.</para>
         ///
         /// <para><b>Valid options:</b></para>
-        /// <code>
+        /// <pre>
         ///  Structure perception (compatible with stdInChI):
         ///    /NEWPSOFF   /DoNotAddH   /SNon
         ///  Stereo interpretation (lead to generation of non-standard InChI)
         ///    /SRel /SRac /SUCF /ChiralFlagON /ChiralFlagOFF
         ///  InChI creation options (lead to generation of non-standard InChI)
         ///    /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
-        /// </code>
+        /// </pre>
         ///
         /// <para><b>Other options:</b></para>
-        /// <code>
+        /// <pre>
         ///  /AuxNone    Omit auxiliary information (default: Include)
-        ///  /Wnumber    Set time-out per structure in seconds; W0 means unlimited
-        ///              In InChI library the default value is unlimited
+        ///  /Wnumber    Set time-out per structure in seconds; W0 means unlimited In InChI library the default value is unlimited
         ///  /OutputSDF  Output SDfile instead of InChI
-        ///  /WarnOnEmptyStructure
-        ///              Warn and produce empty InChI for empty structure
+        ///  /WarnOnEmptyStructure Warn and produce empty InChI for empty structure
         ///  /SaveOpt    Save custom InChI creation options (non-standard InChI)
-        /// </code>
+        /// </pre>
         /// </remarks>
         /// <param name="input"></param>
         /// <returns></returns>

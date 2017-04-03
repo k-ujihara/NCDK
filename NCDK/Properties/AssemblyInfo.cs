@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("NCDKTests")]
+[assembly: InternalsVisibleTo("ExampleCodes")]
 [assembly: InternalsVisibleTo("Moq")]
 [assembly: InternalsVisibleTo("Castle.Core")]
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

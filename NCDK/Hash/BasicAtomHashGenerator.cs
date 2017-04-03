@@ -27,8 +27,7 @@ using System;
 namespace NCDK.Hash
 {
     /// <summary>
-    /// A generator for basic atom hash codes. This implementation is based on the description by 
-    /// <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</a>. 
+    /// A generator for basic atom hash codes. This implementation is based on the description by <token>cdk-cite-Ihlenfeldt93</token>.
     /// The hash codes use an initial combined over a series of cycles up to a specified depth. At each cycle the
     /// hash values of adjacent invariants are incorporated.
     /// </summary>
@@ -47,7 +46,6 @@ namespace NCDK.Hash
     /// should be adjusted accordingly. For example, a library of large-lipids would
     /// require deeper hashing to discriminate differences in chain length.
     /// </para> 
-    /// <a href="http://mathworld.wolfram.com/GraphDiameter.html">Graph Diameter</a>
     /// </remarks>
     /// <example>
     /// Usage
@@ -59,6 +57,8 @@ namespace NCDK.Hash
     /// long[]         hashes  = generator.Generate(benzene);
     /// </code>
     /// </example>
+    /// <seealso href="http://mathworld.wolfram.com/GraphDiameter.html">Graph Diameter</seealso>
+    /// <seealso href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</seealso>
     /// <seealso cref="SeedGenerator"/>
     // @author John May
     // @cdk.module hash

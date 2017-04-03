@@ -22,7 +22,7 @@ using System.Collections.Generic;
 namespace NCDK
 {
     /// <summary>
-    /// Class defining a molecular formula object. It maintains a list of IISotope.
+    /// Class defining a molecular formula object. It maintains a list of <see cref="IIsotope"/>.
     /// <para>
     /// Examples:
     /// <list type="bullet">
@@ -38,7 +38,7 @@ namespace NCDK
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-    public interface IMolecularFormula : ICDKObject
+    public partial interface IMolecularFormula : ICDKObject
     {
         /// <summary>
         /// Adds an molecularFormula to this MolecularFormula.
@@ -110,65 +110,5 @@ namespace NCDK
         /// has not been set the return value is null.
         /// </summary>
         int? Charge { get; set; }
-
-        /// <summary>
-        /// Sets a property for a IChemObject.
-        /// </summary>
-        /// <param name="description">An object description of the property (most likely a unique string)</param>
-        /// <param name="property">An object with the property itself</param>
-        /// <seealso cref="GetProperty(object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
-        void SetProperty(object description, object property);
-
-        /// <summary>
-        /// Set the properties of this object to the provided map (shallow copy). Any
-        /// existing properties are removed.
-        /// </summary>
-        /// <param name="properties">map key-value pairs</param>
-        void SetProperties(IEnumerable<KeyValuePair<object, object>> properties);
-
-        /// <summary>
-        /// Removes a property for a IChemObject.
-        /// </summary>
-        /// <param name="description">The object description of the property (most likely a unique string)</param>
-        /// <see cref="SetProperty(object, object)"/>
-        /// <see cref="GetProperty(object)"/> 
-        void RemoveProperty(object description);
-
-        /// <summary>
-        /// Returns a property for the IChemObject - the object is automatically
-        /// cast to the required type. This does however mean if the wrong type is
-        /// provided then a runtime ClassCastException will be thrown.
-        /// </summary>
-        /// <example>
-        /// <code>
-        ///     IAtom atom = new Atom("C");
-        ///     atom.SetProperty("number", 1); // set an integer property
-        ///
-        ///     // access the property and automatically cast to an int
-        ///     int? number = atom.GetProperty("number");
-        ///
-        ///     // if the method is in a chain or needs to be nested the type
-        ///     // can be provided
-        ///     MethodAcceptingInt(atom.GetProperty("number", int?.class));
-        ///
-        ///     // the type cannot be checked and so...
-        ///     string number = atom.GetProperty("number"); // ClassCastException
-        ///
-        ///     // if the type is provided a more meaningful error is thrown
-        ///     atom.GetProperty("number", typeof(string)); // ArgumentException
-        /// </code>
-        /// </example>
-        /// <typeparam name="T">generic return type</typeparam>
-        /// <param name="description">An object description of the property (most likely a unique string)</param>
-        /// <returns>The object containing the property. Returns null if property is not set.</returns>
-        T GetProperty<T>(object description);
-
-        /// <summary>
-        ///  Returns a IDictionary with the IChemObject's properties.
-        /// </summary>
-        /// <returns>The object's properties as an IDictionary</returns>
-        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{object, object}})"/>
-        IDictionary<object, object> GetProperties();
     }
 }

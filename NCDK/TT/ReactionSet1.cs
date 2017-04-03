@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2003-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -34,17 +34,19 @@ namespace NCDK.Default
     /// <example>
     /// To retrieve the reactions from the set, there are two options:
     /// <code>
-    /// Iterator reactions = reactionSet.reactions();
-    /// while (reactions.hasNext()) {
-    ///     IReaction reaction = (IReaction)reactions.next();
+    /// ReactionSet reactions = ...
+    /// foreach (var reaction in reactions)
+    /// {
+    ///     //
     /// }
     /// </code>
     ///
     /// and
     ///
     /// <code>
-    /// for (int i=0; i &lt; reactionSet.getReactionCount(); i++) {
-    ///    IReaction reaction = reactionSet.getReaction(i);
+    /// for (int i = 0; i &lt; reactionSet.Count; i++)
+    /// {
+    ///		IReaction reaction = reactionSet[i]; 
     /// }
     /// </code>
     /// </example>
@@ -173,17 +175,19 @@ namespace NCDK.Silent
     /// <example>
     /// To retrieve the reactions from the set, there are two options:
     /// <code>
-    /// Iterator reactions = reactionSet.reactions();
-    /// while (reactions.hasNext()) {
-    ///     IReaction reaction = (IReaction)reactions.next();
+    /// ReactionSet reactions = ...
+    /// foreach (var reaction in reactions)
+    /// {
+    ///     //
     /// }
     /// </code>
     ///
     /// and
     ///
     /// <code>
-    /// for (int i=0; i &lt; reactionSet.getReactionCount(); i++) {
-    ///    IReaction reaction = reactionSet.getReaction(i);
+    /// for (int i = 0; i &lt; reactionSet.Count; i++)
+    /// {
+    ///		IReaction reaction = reactionSet[i]; 
     /// }
     /// </code>
     /// </example>

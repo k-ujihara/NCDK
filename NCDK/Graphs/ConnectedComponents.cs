@@ -10,13 +10,7 @@ namespace NCDK.Graphs
     /// Compute the connected components of an adjacency list.
     /// </summary>
     /// <example>
-    /// <code>
-    ///     int[][]             g          = GraphUtil.ToAdjList(Container(l
-    ///     ConnectedComponents cc         = new ConnectedComponents(g);
-    ///     int[]               components = cc.Components();
-    ///     for (int v = 0; v &lt; g.Length; v++)
-    ///         components[v];
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.ConnectedComponents_Example.cs"]/*' />
     /// </example>
     // @author John May
     // @cdk.module core

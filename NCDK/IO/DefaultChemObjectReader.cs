@@ -36,9 +36,6 @@ namespace NCDK.IO
         /// </summary>
         private ReaderEvent frameReadEvent = null;
 
-        protected ChemObjectReaderModes mode = ChemObjectReaderModes.Relaxed;
-        protected IChemObjectReaderErrorHandler errorHandler = null;
-
         /* Extra convenience methods */
 
         /// <summary>
@@ -60,32 +57,20 @@ namespace NCDK.IO
             }
         }
 
-        public ChemObjectReaderModes ReaderMode
-        {
-            set
-            {
-                this.mode = value;
-            }
-        }
+        public ChemObjectReaderModes ReaderMode { get; set; } = ChemObjectReaderModes.Relaxed;
 
-        public IChemObjectReaderErrorHandler ErrorHandler
-        {
-            set
-            {
-                this.errorHandler = value;
-            }
-        }
+        public IChemObjectReaderErrorHandler ErrorHandler { get; set; } = null;
 
         public void HandleError(string message)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message);
-            if (this.mode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
         }
 
         public void HandleError(string message, Exception exception)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, exception);
-            if (this.mode == ChemObjectReaderModes.Strict)
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, exception);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict)
             {
                 throw new CDKException(message, exception);
             }
@@ -93,14 +78,14 @@ namespace NCDK.IO
 
         public void HandleError(string message, int row, int colStart, int colEnd)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, row, colStart, colEnd);
-            if (this.mode == ChemObjectReaderModes.Strict) throw new CDKException(message);
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException(message);
         }
 
         public void HandleError(string message, int row, int colStart, int colEnd, Exception exception)
         {
-            if (this.errorHandler != null) this.errorHandler.HandleError(message, row, colStart, colEnd, exception);
-            if (this.mode == ChemObjectReaderModes.Strict)
+            if (this.ErrorHandler != null) this.ErrorHandler.HandleError(message, row, colStart, colEnd, exception);
+            if (this.ReaderMode == ChemObjectReaderModes.Strict)
             {
                 throw new CDKException(message, exception);
             }

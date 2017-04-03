@@ -1,3 +1,25 @@
+/* Copyright (C) 2002-2007  Egon Willighagen <egonw@users.sf.net>
+ *
+ * Contact: cdk-devel@lists.sourceforge.net
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License
+ * as published by the Free Software Foundation; either version 2.1
+ * of the License, or (at your option) any later version.
+ * All we ask is that proper credit is given for our work, which includes
+ * - but is not limited to - adding the above copyright notice to the beginning
+ * of your source code files, and to any copyright notice that you may distribute
+ * with programs based on this work.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -6,24 +28,41 @@ using System.Xml.Linq;
 
 namespace NCDK.Config.AtomType
 {
+    /// <summary>
+    /// XML Reader for the CDKBasedAtomTypeConfigurator.
+    /// </summary>
+    /// <seealso cref="CDKBasedAtomTypeConfigurator"/>
+    // @cdk.module core
+    // @cdk.githash
     public class AtomTypeReader
     {
         private TextReader input;
 
+        /// <summary>
+        /// Instantiates the XML based AtomTypeReader.
+        /// </summary>
+        /// <param name="input">The Reader to read the IAtomType's from.</param>
         public AtomTypeReader(Stream input)
         {
             this.input = new StreamReader(input);
         }
 
+        /// <summary>
+        /// Instantiates the XML based AtomTypeReader.
+        /// </summary>
+        /// <param name="input">The Reader to read the IAtomType's from.</param>
         public AtomTypeReader(TextReader input)
         {
             this.input = input;
         }
 
-        public IList<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
+        /// <summary>
+        /// Reads the atom types from the data file.
+        /// </summary>
+        /// <param name="builder">The <see cref="IChemObjectBuilder"/> used to create new <see cref="IAtomType"/>'s.</param>
+        /// <returns><see cref="IEnumerable{T}"/> with atom types. Is empty if some reading error occurred.</returns>
+        public IEnumerable<IAtomType> ReadAtomTypes(IChemObjectBuilder builder)
         {
-            var ret = new List<IAtomType>();
-
             var settings = new XmlReaderSettings();
             settings.ValidationType = ValidationType.None;
             settings.ValidationFlags = System.Xml.Schema.XmlSchemaValidationFlags.None;
@@ -126,9 +165,9 @@ namespace NCDK.Config.AtomType
                             break;
                     }
                 }
-                ret.Add(atomType);
+                yield return atomType;
             }
-            return ret;
-        }
+            yield break;
+       }
     }
 }

@@ -1,3 +1,6 @@
+// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
 
 
 
@@ -42,8 +45,12 @@ namespace NCDK.SMSD
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public struct Algorithm : IComparable
+    public partial struct Algorithm : System.IComparable<Algorithm>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Algorithm"/>.
+		/// </summary>
+		/// <seealso cref="Algorithm"/>
         public static class O
         {
             public const int Default = 0;
@@ -56,8 +63,13 @@ namespace NCDK.SMSD
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -160,6 +172,7 @@ namespace NCDK.SMSD
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -168,16 +181,27 @@ namespace NCDK.SMSD
             return this.Ordinal == ((Algorithm)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Algorithm)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(Algorithm o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Algorithm 
+	{
         private static string[] descriptions = new[] 
         {
             "Default SMSD algorithm",

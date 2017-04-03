@@ -16,7 +16,7 @@ namespace NCDK.Common.Util
     /// strings, and various comment styles.
     /// <para>
     /// Each byte Read from the input stream is regarded as a character
-    /// in the range <code>'\u0000'</code> through <code>'\u00FF'</code>.
+    /// in the range <c>'\u0000'</c> through <c>'\u00FF'</c>.
     /// The character value is used to look up five possible attributes of
     /// the character: <i>white space</i>, <i>alphabetic</i>,
     /// <i>numeric</i>, <i>string quote</i>, and <i>comment character</i>.
@@ -184,7 +184,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <code>low &lt;= <i>c</i> &lt;= high</code>
+        /// <c>low &lt;= <i>c</i> &lt;= high</c>
         /// are word constituents. A word token consists of a word constituent
         /// followed by zero or more word constituents or number constituents.
         /// </summary>
@@ -208,7 +208,7 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <code>low &lt;= <i>c</i> &lt;= high</code>
+        /// <c>low &lt;= <i>c</i> &lt;= high</c>
         /// are white space characters. White space characters serve only to
         /// separate tokens in the input stream.
         /// <para>
@@ -236,9 +236,9 @@ namespace NCDK.Common.Util
 
         /// <summary>
         /// Specifies that all characters <i>c</i> in the range
-        /// <code>low &lt;= <i>c</i> &lt;= high</code>
+        /// <c>low &lt;= <i>c</i> &lt;= high</c>
         /// are "ordinary" in this tokenizer. See the
-        /// <code>ordinaryChar</code> method for more information on a
+        /// <see cref="OrdinaryChar(int)"/> method for more information on a
         /// character being ordinary.
         /// </summary>
         /// <param name="low">the low end of the range.</param>
@@ -301,7 +301,7 @@ namespace NCDK.Common.Util
         /// <para>
         /// When the <see cref="NextToken"/> method encounters a string
         /// constant, the <see cref="TType"/> field is set to the string
-        /// delimiter and the <code>sval</code> field is set to the body of
+        /// delimiter and the <c>sval</c> field is set to the body of
         /// the string.
         /// </para>
         /// <para>
@@ -310,7 +310,7 @@ namespace NCDK.Common.Util
         /// the string quote character, up to (but not including) the next
         /// occurrence of that same string quote character, or a line
         /// terminator, or end of file. The usual escape sequences such as
-        /// <code>"\n"</code> and <code>"\t"</code> are recognized and
+        /// <c>"\n"</c> and <c>"\t"</c> are recognized and
         /// converted to single characters as the string is parsed.
         /// </para>
         /// <para>
@@ -328,9 +328,9 @@ namespace NCDK.Common.Util
         /// Specifies that numbers should be parsed by this tokenizer. The
         /// syntax table of this tokenizer is modified so that each of the twelve
         /// characters:
-        /// <para>
+        /// <pre>
         ///      0 1 2 3 4 5 6 7 8 9 . -
-        /// </para>
+        /// </pre>
         /// has the "numeric" attribute.
         /// <para>
         /// When the parser encounters a word token that has the format of a
@@ -358,8 +358,8 @@ namespace NCDK.Common.Util
         /// this value when an end of line is Read.
         /// <para>
         /// A line is a sequence of characters ending with either a
-        /// carriage-return character (<code>'\r'</code>) or a newline
-        /// character (<code>'\n'</code>). In addition, a carriage-return
+        /// carriage-return character (<c>'\r'</c>) or a newline
+        /// character (<c>'\n'</c>). In addition, a carriage-return
         /// character followed immediately by a newline character is treated
         /// as a single end-of-line token.
         /// </para>
@@ -379,7 +379,7 @@ namespace NCDK.Common.Util
         /// Determines whether or not the tokenizer recognizes C-style comments.
         /// If the flag argument is <see langword="true"/>, this stream tokenizer
         /// recognizes C-style comments. All text between successive
-        /// occurrences of <code>/*</code> and <code>*/</code> are discarded.
+        /// occurrences of <c>/*</c> and <c>*/</c> are discarded.
         /// <para>
         /// If the flag argument is <see langword="false"/>, then C-style comments
         /// are not treated specially.</para>
@@ -394,7 +394,7 @@ namespace NCDK.Common.Util
         /// Determines whether or not the tokenizer recognizes C++-style comments.
         /// If the flag argument is <see langword="true"/>, this stream tokenizer
         /// recognizes C++-style comments. Any occurrence of two consecutive
-        /// slash characters (<code>'/'</code>) is treated as the beginning of
+        /// slash characters (<c>'/'</c>) is treated as the beginning of
         /// a comment that extends to the end of the line.
         /// <para>
         /// If the flag argument is <see langword="false"/>, then C++-style
@@ -737,9 +737,9 @@ namespace NCDK.Common.Util
         /// the line number it occurs on.
         /// <para>The precise string returned is unspecified, although the following
         /// example can be considered typical:
-        /// <code>
+        /// <pre>
         ///     Token['a'], line 10
-        /// </code>
+        /// </pre>
         /// </para>
         /// </summary>
         /// <returns>a string representation of the token</returns>

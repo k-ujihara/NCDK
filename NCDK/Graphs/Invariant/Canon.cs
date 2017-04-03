@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
 using System;
 using System.Diagnostics;
@@ -30,7 +29,7 @@ using System.IO;
 namespace NCDK.Graphs.Invariant
 {
     /// <summary>
-    /// An implementation based on the canon algorithm {@cdk.cite WEI89}. The
+    /// An implementation based on the canon algorithm <token>cdk-cite-WEI89</token>. The
     /// algorithm uses an initial set of of invariants which are assigned a rank.
     /// Equivalent ranks are then shattered using an unambiguous function (in this
     /// case, the product of primes of adjacent ranks). Once no more equivalent ranks
@@ -44,22 +43,14 @@ namespace NCDK.Graphs.Invariant
     ///  but it is not necessarily a “complete” set. No “perfect” set of invariants
     ///  is known that will distinguish all possible graph asymmetries. However,
     ///  for any given set of structures, a set of invariants can be devised to
-    ///  provide the necessary discrimination"</i> {@cdk.cite WEI89}. As such this
+    ///  provide the necessary discrimination"</i> <token>cdk-cite-WEI89</token>. As such this
     ///  producer should not be considered a complete canonical labelled but in
     ///  practice performs well. For a more accurate and computationally expensive
     ///  labelling, please using the <see cref="InChINumbersTools"/>.
     /// </remarks>
-    /// <example><code>
-    /// IAtomContainer m = ...;
-    /// int[][]        g = GraphUtil.ToAdjList(m);
-    ///
-    /// // obtain canon labelling
-    /// long[] labels = Canon.Label(m, g);
-    ///
-    /// // obtain symmetry classes
-    /// long[] labels = Canon.Symmetry(m, g);
-    /// </code>
-    ///</example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.Invariant.Canon_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module standard
     // @cdk.githash
@@ -139,8 +130,8 @@ namespace NCDK.Graphs.Invariant
 
         /// <summary>
         /// Compute the symmetry classes for the provided structure. There are known
-        /// examples where symmetry is incorrectly found. The {@link
-        /// EquivalentClassPartitioner} gives more accurate symmetry perception but
+        /// examples where symmetry is incorrectly found. The <see cref="EquivalentClassPartitioner"/> 
+        /// gives more accurate symmetry perception but
         /// this method is very quick and in practise successfully portions the
         /// majority of chemical structures.
         /// </summary>
@@ -272,10 +263,10 @@ namespace NCDK.Graphs.Invariant
 
         /// <summary>
         /// Generate the initial invariants for each atom in the <paramref name="container"/>.
-        /// The labels use the invariants described in {@cdk.cite WEI89}. 
+        /// The labels use the invariants described in <token>cdk-cite-WEI89</token>. 
         /// </summary>
         /// <remarks>
-        /// The bits in the low 32-bits are: {@code 0000000000xxxxXXXXeeeeeeescchhhh}
+        /// The bits in the low 32-bits are: <pre>0000000000xxxxXXXXeeeeeeescchhhh</pre>
         /// where:
         /// <list type="bullet">
         ///     <item>0: padding</item>

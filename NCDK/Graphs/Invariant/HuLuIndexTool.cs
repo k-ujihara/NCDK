@@ -35,7 +35,7 @@ namespace NCDK.Graphs.Invariant
     {
         /// <summary>
         /// Calculates the extended adjacency matrix index.
-        /// An implementation of the algorithm published in {@cdk.cite HU96}.
+        /// An implementation of the algorithm published in <token>cdk-cite-HU96</token>.
         /// </summary>
         // @cdk.keyword EAID number
         public static double GetEAIDNumber(AtomContainer atomContainer)

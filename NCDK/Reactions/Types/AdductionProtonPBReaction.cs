@@ -31,32 +31,13 @@ namespace NCDK.Reactions.Types
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond
     /// <para>A=B + [H+] => [A+]-B-H</para>
     /// </summary>
-    /// <example>
-    /// <para>Below you have an example how to initiate the mechanism.</para>
-    /// <para>It is processed by the AdductionPBMechanism class</para>
-    /// <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new AdductionProtonLPReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to specify the reaction in a fixed point.</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not specified then the reaction process will
-    /// try to find automatically the possible reaction centers.</para>
-    /// </example>
     /// <seealso cref="AdductionPBMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
     // @cdk.set        reaction-types
     // @cdk.githash
-    public class AdductionProtonPBReaction : ReactionEngine, IReactionProcess
+    public partial class AdductionProtonPBReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
         /// Constructor of the AdductionProtonPBReaction object.
@@ -81,22 +62,22 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: AdductionProtonPBReaction");
+            Debug.WriteLine("initiate reaction: " + GetType().Name);
 
             if (reactants.Count != 1)
             {
-                throw new CDKException("AdductionProtonPBReaction only expects one reactant");
+                throw new CDKException(GetType().Name + " only expects one reactant");
             }
             if (agents != null)
             {
-                throw new CDKException("AdductionProtonPBReaction don't expects agents");
+                throw new CDKException(GetType().Name + " don't expects agents");
             }
 
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
             if (AtomContainerManipulator.GetTotalCharge(reactant) != 0) return setOfReactions;

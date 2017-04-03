@@ -28,10 +28,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// IDescriptor characterizing the mass distribution of the molecule.
-    /// Described by Katritzky et al. {@cdk.cite KAT96}.
+    /// Described by Katritzky et al. <token>cdk-cite-KAT96</token>.
     /// For modelling purposes the value of the descriptor is calculated
     /// both with and without H atoms. Furthermore the square and cube roots
-    /// of the descriptor are also generated as described by Wessel et al. {@cdk.cite WES98}.
+    /// of the descriptor are also generated as described by Wessel et al. <token>cdk-cite-WES98</token>.
     /// </summary>
     /// <remarks>
     /// <para>

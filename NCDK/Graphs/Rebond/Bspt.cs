@@ -77,8 +77,8 @@ namespace NCDK.Graphs.Rebond
     // @cdk.keyword join-the-dots
     public sealed class Bspt<T> : IEnumerable<T> where T: Tuple
     {
-        private const int LEAF_COUNT = 4;
-        private const int STACK_DEPTH = 64;  // this corresponds to the max height of the tree
+        private const int LeafCount = 4;
+        private const int StackDepth = 64;  // this corresponds to the max height of the tree
         int dimMax;
         Element eleRoot;
 
@@ -114,13 +114,13 @@ namespace NCDK.Graphs.Rebond
 
         public IEnumerator<T> GetEnumerator()
         {
-            Node[] stack = new Node[STACK_DEPTH];
+            Node[] stack = new Node[StackDepth];
             int sp = 0;
             Element ele = eleRoot;
             while (ele is Node)
             {
                 Node node = (Node)ele;
-                if (sp == STACK_DEPTH) throw new ApplicationException("Bspt.EnumerateAll tree stack overflow");
+                if (sp == StackDepth) throw new ApplicationException("Bspt.EnumerateAll tree stack overflow");
                 stack[sp++] = node;
                 ele = node.eleLE;
             }
@@ -149,7 +149,7 @@ namespace NCDK.Graphs.Rebond
 
         public IEnumerable<T> EnumerateNears(Tuple center, double distance)
         {
-            Node[] stack = new Node[STACK_DEPTH];
+            Node[] stack = new Node[StackDepth];
             int sp = 0;
             Element ele = eleRoot;
             while (ele is Node)
@@ -157,7 +157,7 @@ namespace NCDK.Graphs.Rebond
                 Node node = (Node)ele;
                 if (center.GetDimValue(node.dim) - distance <= node.splitValue)
                 {
-                    if (sp == STACK_DEPTH) throw new ApplicationException("Bspt.EnumerateNear tree stack overflow");
+                    if (sp == StackDepth) throw new ApplicationException("Bspt.EnumerateNear tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 }
@@ -226,7 +226,7 @@ namespace NCDK.Graphs.Rebond
             double[] centerValues = new double[dimMax];
             for (int dim = dimMax; --dim >= 0;)
                 centerValues[dim] = center.GetDimValue(dim);
-            stack = new Node[STACK_DEPTH];
+            stack = new Node[StackDepth];
             sp = 0;
             Element ele = eleRoot;
             while (ele is Node)
@@ -234,7 +234,7 @@ namespace NCDK.Graphs.Rebond
                 Node node = (Node)ele;
                 if (center.GetDimValue(node.dim) - distance <= node.splitValue)
                 {
-                    if (sp == STACK_DEPTH) throw new ApplicationException("Bspt.EnumerateSphere tree stack overflow");
+                    if (sp == StackDepth) throw new ApplicationException("Bspt.EnumerateSphere tree stack overflow");
                     stack[sp++] = node;
                     ele = node.eleLE;
                 }
@@ -397,13 +397,13 @@ namespace NCDK.Graphs.Rebond
             {
                 this.parent = parent;
                 count = 0;
-                tuples = new T[LEAF_COUNT];
+                tuples = new T[LeafCount];
             }
 
             public Leaf(Bspt<T> parent, Leaf leaf, int dim, double splitValue)
                   : this(parent)
             {
-                for (int i = LEAF_COUNT; --i >= 0;)
+                for (int i = LeafCount; --i >= 0;)
                 {
                     T tuple = leaf.tuples[i];
                     double value = tuple.GetDimValue(dim);
@@ -414,16 +414,16 @@ namespace NCDK.Graphs.Rebond
                     }
                 }
                 int dest = 0;
-                for (int src = 0; src < LEAF_COUNT; ++src)
+                for (int src = 0; src < LeafCount; ++src)
                     if (leaf.tuples[src] != null) leaf.tuples[dest++] = leaf.tuples[src];
                 leaf.count = dest;
-                if (count == 0) tuples[LEAF_COUNT] = default(T); // explode
+                if (count == 0) tuples[LeafCount] = default(T); // explode
             }
 
             public double GetSplitValue(int dim)
             {
-                if (count != LEAF_COUNT) tuples[LEAF_COUNT] = default(T);
-                return (tuples[0].GetDimValue(dim) + tuples[LEAF_COUNT - 1].GetDimValue(dim)) / 2;
+                if (count != LeafCount) tuples[LeafCount] = default(T);
+                return (tuples[0].GetDimValue(dim) + tuples[LeafCount - 1].GetDimValue(dim)) / 2;
             }
 
 
@@ -435,7 +435,7 @@ namespace NCDK.Graphs.Rebond
 
             public bool AddTuple(T tuple)
             {
-                if (count == LEAF_COUNT) return false;
+                if (count == LeafCount) return false;
                 tuples[count++] = tuple;
                 return true;
             }
@@ -456,7 +456,7 @@ namespace NCDK.Graphs.Rebond
 
             public bool IsLeafWithSpace()
             {
-                return count < LEAF_COUNT;
+                return count < LeafCount;
             }
         }
     }

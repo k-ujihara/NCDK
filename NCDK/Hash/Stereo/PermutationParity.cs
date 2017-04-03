@@ -26,8 +26,8 @@ namespace NCDK.Hash.Stereo
 {
     /// <summary>
     /// Calculate the permutation parity on a given array of current values.
-    /// <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation, Wikipedia</a>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation, Wikipedia</seealso>
     // @author John May
     // @cdk.module hash
     // @cdk.githash

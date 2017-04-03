@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Calculation of topological polar surface area based on fragment
-    /// contributions (TPSA) {@cdk.cite ERTL2000}.
+    /// contributions (TPSA) <token>cdk-cite-ERTL2000</token>.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:

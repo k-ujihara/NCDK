@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// This class calculates ATS autocorrelation descriptor, where the weight equal
-    /// to the scaled atomic mass {@cdk.cite Moreau1980}.
+    /// to the scaled atomic mass <token>cdk-cite-Moreau1980</token>.
     /// </summary>
     // @author      Federico
     // @cdk.created 2007-02-08

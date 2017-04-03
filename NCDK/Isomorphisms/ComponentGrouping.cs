@@ -30,27 +30,17 @@ namespace NCDK.Isomorphisms
     /// matching. The grouping is used by SMARTS and is critical to querying
     /// reactions. The grouping specifies that substructures in the query should
     /// match to separate components in the target. The grouping specification is
-    /// indicated by an {@code int[]} array of length (|V(query)| + 1). The final
+    /// indicated by an <see cref="int"/>[] array of length (|V(query)| + 1). The final
     /// index indicates the maximum component group (in the query). A specification
     /// of '0' indicates there are no grouping restrictions.
     /// </summary>
     /// <example>
-    /// <code>
-    /// // grouping is actually set by SMARTS parser but this shows how it's stored
-    /// query.SetProperty(ComponentGrouping.Key, grouping);
-    ///
-    /// IAtomContainer query, target;
-    /// Pattern        pattern = ...; // create pattern for query
-    ///
-    /// // filter for mappings which respect component grouping in the query
-    /// Iterables.Filter(pattern.MatchAll(target),
-    ///                  new ComponentGrouping(query, target));
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.ComponentGrouping_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="Pattern"/>
     // @author John May
     // @cdk.module isomorphism
-    public sealed class ComponentGrouping : Common.Base.Predicate<int[]>
+    public sealed class ComponentGrouping
     {
         /// <summary>
         /// Key indicates where the grouping should be store in the query

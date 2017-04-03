@@ -35,20 +35,12 @@ using static NCDK.SGroups.CxSmilesState.Radical;
 namespace NCDK.Smiles
 {
     /// <summary>
-    /// Read molecules and reactions from a SMILES {@cdk.cite SMILESTUT} string.
+    /// Read molecules and reactions from a SMILES <token>cdk-cite-SMILESTUT</token> string.
     /// </summary>
     /// <example>
-    /// Example usage
-    /// <code>
-    /// try {
-    ///     SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-    ///     IAtomContainer m   = sp.ParseSmiles("c1ccccc1");
-    /// } catch (InvalidSmilesException e) {
-    ///     Console.Error.WriteLine(e.Message);
-    /// }
-    /// </code>
-    ///</example>
-    ///<remarks>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesParser_Example.cs+1"]/*' />
+    /// </example>
+    /// <remarks>
     /// Reading Aromatic SMILES
     /// <para>
     /// Aromatic SMILES are automatically kekulised producing a structure with
@@ -63,8 +55,8 @@ namespace NCDK.Smiles
     /// modifying their formula. If there are multiple locations a hydrogen could be
     /// placed the returned structure would differ depending on the atom input order.
     /// If you wish to skip the kekulistation (not recommended) then it can be
-    /// disabled with {@link #kekulise}. SMILES can be verified for validity with the
-    /// <a href="http://www.daylight.com/daycgi/depict">DEPICT</a> service.
+    /// disabled with <see cref="kekulise"/>. SMILES can be verified for validity with the
+    /// <see href="http://www.daylight.com/daycgi/depict">DEPICT</see> service.
     /// </para>
     /// Unsupported Features
     /// <para>
@@ -72,7 +64,7 @@ namespace NCDK.Smiles
     /// <list type="bullet">
     /// <item>variable order of bracket atom attributes, '[C-H]', '[CH@]' are considered invalid.
     /// The predefined order required by this parser follows the 
-    /// <a href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</a> 
+    /// <see href="http://www.opensmiles.org/opensmiles.html">OpenSMILES</see> 
     /// specification of 'isotope', 'symbol', 'chiral', 'hydrogens', 'charge', 'atom class'</item>
     /// <item>atom class indication - <i>this information is loaded but not annotated on the structure</i> </item>
     /// <item>extended tetrahedral stereochemistry (cumulated double bonds)</item>
@@ -84,14 +76,7 @@ namespace NCDK.Smiles
     /// <para>
     /// The atom class is stored as the <see cref="CDKPropertyName.AtomAtomMapping"/> property.
     /// </para>
-    /// <code>
-    /// SmilesParser   sp  = new SmilesParser(Silent.ChemObjectBuilder.Instance);
-    /// IAtomContainer m   = sp.ParseSmiles("c1[cH:5]cccc1");
-    /// var        c1  = m.Atoms[1]
-    ///                       .GetProperty&lt;int&gt;(CDKPropertyName.ATOM_ATOM_MAPPING); // 5
-    /// var        c2  = m.Atoms[2]
-    ///                       .GetProperty&lt;int&gt;(CDKPropertyName.ATOM_ATOM_MAPPING); // null
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesParser_Example.cs+1"]/*' />
     /// </remarks>
     // @author Christoph Steinbeck
     // @author Egon Willighagen
@@ -476,7 +461,7 @@ namespace NCDK.Smiles
                     pseudo.AtomicNumber = 0;
                     pseudo.ImplicitHydrogenCount = 0;
                     IAtomContainer mol = atomToMol[old];
-                    AtomContainerManipulator.RePlaceAtomByAtom(mol, old, pseudo);
+                    AtomContainerManipulator.ReplaceAtomByAtom(mol, old, pseudo);
                     atomToMol.Add(pseudo, mol);
                     atoms[e.Key] = pseudo;
                 }
@@ -685,24 +670,15 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Makes the Smiles parser set aromaticity as provided in the Smiles itself,
-        /// without detecting it. Default false. Atoms will not be typed when set to
-        /// true.
-        /// </summary>
-        /// <param name="preservingAromaticity">bool to indicate if aromaticity is to be preserved.</param>
-        /// <seealso cref="kekulise"/>
-        [Obsolete]
-        public void SetPreservingAromaticity(bool preservingAromaticity)
-        {
-            this.kekulise = !preservingAromaticity;
-        }
-
-        /// <summary>
         /// The (default false) setting to preserve aromaticity as provided in
         /// the Smiles itself. Indicating if aromaticity is preserved.
         /// </summary>
         [Obsolete]
-        public bool IsPreservingAromaticity => !kekulise;
+        public bool IsPreservingAromaticity
+        {
+            get { return !kekulise; }
+            set { kekulise = !value; }
+        }
 
         /// <summary>
         /// Indicated whether structures should be automatically kekulised if they

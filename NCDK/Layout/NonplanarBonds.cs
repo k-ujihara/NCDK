@@ -72,12 +72,10 @@ namespace NCDK.Layout
         /// <summary>
         /// Assign non-planar, up and down labels to indicate tetrahedral configuration. Currently all
         /// existing directional labels are removed before assigning new labels.
-        ///
+        /// </summary>
         /// <param name="container">the structure to assign labels to</param>
         /// <returns>a container with assigned labels (currently the same as the input)</returns>
-        /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be</exception>
-        ///                                  assigned to a tetrahedral centre
-        /// </summary>
+        /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be assigned to a tetrahedral centre</exception>
         public static IAtomContainer Assign(IAtomContainer container)
         {
             GraphUtil.EdgeToBondMap edgeToBond = GraphUtil.EdgeToBondMap.WithSpaceFor(container);
@@ -87,15 +85,12 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Assign non-planar bonds to the tetrahedral stereocenters in the <paramref name="container"/>.
-        ///
+        /// </summary>
         /// <param name="container">structure</param>
         /// <param name="g">graph adjacency list representation</param>
-        /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be</exception>
-        ///                                  assigned to a tetrahedral centre
-        /// </summary>
+        /// <exception cref="ArgumentException">an atom had no 2D coordinates or labels could not be assigned to a tetrahedral centre</exception>
         NonplanarBonds(IAtomContainer container, int[][] g, GraphUtil.EdgeToBondMap edgeToBond)
         {
-
             this.container = container;
             this.tetrahedralElements = new ITetrahedralChirality[container.Atoms.Count];
             this.doubleBondElements = new IDoubleBondStereochemistry[container.Atoms.Count];
@@ -192,12 +187,10 @@ namespace NCDK.Layout
         /// <summary>
         /// Assign non-planar labels (wedge/hatch) to the bonds of extended
         /// tetrahedral elements to correctly represent its stereochemistry.
-        ///
-        /// <param name="element">a extended tetrahedral element</param>
         /// </summary>
+        /// <param name="element">a extended tetrahedral element</param>
         private void Label(ExtendedTetrahedral element)
         {
-
             IAtom focus = element.Focus;
             IAtom[] atoms = element.Peripherals;
             IBond[] bonds = new IBond[4];
@@ -292,13 +285,11 @@ namespace NCDK.Layout
         /// <summary>
         /// Assign labels to the bonds of tetrahedral element to correctly represent
         /// its stereo configuration.
-        ///
+        /// </summary>
         /// <param name="element">a tetrahedral element</param>
         /// <exception cref="ArgumentException">the labels could not be assigned</exception>
-        /// </summary>
         private void Label(ITetrahedralChirality element)
         {
-
             IAtom focus = element.ChiralAtom;
             var atoms = element.Ligands;
             IBond[] bonds = new IBond[4];
@@ -383,10 +374,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Obtain the parity of a value x. The parity is -1 if the value is odd or
         /// +1 if the value is even.
-        ///
+        /// </summary>
         /// <param name="x">a value</param>
         /// <returns>the parity</returns>
-        /// </summary>
         private int Parity(int x)
         {
             return (x & 0x1) == 1 ? -1 : +1;
@@ -395,10 +385,9 @@ namespace NCDK.Layout
         /// <summary>
         /// Obtain the parity (winding) of a tetrahedral element. The parity is -1
         /// for clockwise (odd), +1 for anticlockwise (even) and 0 for unspecified.
-        ///
+        /// </summary>
         /// <param name="stereo">configuration</param>
         /// <returns>the parity</returns>
-        /// </summary>
         private int Parity(TetrahedralStereo stereo)
         {
             switch (stereo.Ordinal)
@@ -413,11 +402,10 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Obtain the number of centres adjacent to the atom at the index, i.
-        ///
+        /// Obtain the number of centres adjacent to the atom at the index, <paramref name="i"/>.
+        /// </summary>
         /// <param name="i">atom index</param>
         /// <returns>number of adjacent centres</returns>
-        /// </summary>
         private int NAdjacentCentres(int i)
         {
             int n = 0;
@@ -427,14 +415,13 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Obtain a prioritised array where the indices 0 to n which correspond to
-        /// the provided {@code atoms}.
-        ///
+        /// Obtain a prioritised array where the indices 0 to <paramref name="n"/> which correspond to
+        /// the provided <paramref name="atoms"/>.
+        /// </summary>
         /// <param name="focus">focus of the tetrahedral atom</param>
         /// <param name="atoms">the atom</param>
         /// <param name="n">number of atoms</param>
         /// <returns>prioritised indices</returns>
-        /// </summary>
         private int[] Priority(int focus, IList<IAtom> atoms, int n)
         {
             int[] rank = new int[n];
@@ -454,14 +441,13 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Does the atom at index {@code i} have priority over the atom at index
-        /// {@code j} for the tetrahedral atom {@code focus}.
-        ///
+        /// Does the atom at index <paramref name="i"/> have priority over the atom at index
+        /// <paramref name="j"/> for the tetrahedral atom <paramref name="focus"/>.
+        /// </summary>
         /// <param name="focus">tetrahedral centre (or -1 if double bond)</param>
         /// <param name="i">adjacent atom index</param>
         /// <param name="j">adjacent atom index</param>
         /// <returns>whether atom i has priority</returns>
-        /// </summary>
         bool HasPriority(int focus, int i, int j)
         {
 
@@ -497,15 +483,14 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Sort the {@code indices}, which correspond to an index in the {@code atoms} array in
+        /// Sort the <paramref name="indices"/>, which correspond to an index in the <paramref name="atoms"/> array in
         /// clockwise order.
-        ///
+        /// </summary>
         /// <param name="indices">indices, 0 to n</param>
         /// <param name="focus">the central atom</param>
         /// <param name="atoms">the neighbors of the focus</param>
         /// <param name="n">the number of neighbors</param>
         /// <returns>the permutation parity of the sort</returns>
-        /// </summary>
         private int SortClockwise(int[] indices, IAtom focus, IList<IAtom> atoms, int n)
         {
             int x = 0;
@@ -524,19 +509,16 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Is index {@code i}, to the left of index {@code j} when sorting clockwise around the {@code
-        /// centre}.
-        ///
-        /// <param name="i">an index in {@code atoms}</param>
-        /// <param name="j">an index in {@code atoms}</param>
+        /// Is index <paramref name="i"/>, to the left of index <paramref name="j"/> when sorting clockwise around the <paramref name="center"/>.
+        /// </summary>
+        /// <param name="i">an index in <paramref name="atoms"/></param>
+        /// <param name="j">an index in <paramref name="atoms"/></param>
         /// <param name="atoms">atoms</param>
         /// <param name="center">central point</param>
-        /// <returns>atom i is before j</returns>
-        /// @see <a href="http://stackoverflow.com/a/6989383">Sort points in clockwise order, ciamej</a>
-        /// </summary>
+        /// <returns>atom <paramref name="i"/> is before <paramref name="j"/></returns>
+        /// <seealso href="http://stackoverflow.com/a/6989383">Sort points in clockwise order, ciamej</seealso>
         static bool Less(int i, int j, IList<IAtom> atoms, Vector2 center)
         {
-
             Vector2 a = atoms[i].Point2D.Value;
             Vector2 b = atoms[j].Point2D.Value;
 
@@ -564,12 +546,10 @@ namespace NCDK.Layout
         /// Labels a double bond as unspecified either by marking an adjacent bond as
         /// wavy (up/down) or if that's not possible (e.g. it's conjugated with other double bonds
         /// that have a conformation), setting the bond to a crossed double bond.
-        /// 
-        /// <param name="doubleBond">the bond to mark as unspecified</param>
         /// </summary>
+        /// <param name="doubleBond">the bond to mark as unspecified</param>
         private void LabelUnspecified(IBond doubleBond)
         {
-
             IAtom aBeg = doubleBond.Atoms[0];
             IAtom aEnd = doubleBond.Atoms[1];
 
@@ -634,9 +614,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Locates double bonds to mark as unspecified stereochemistry.
-        /// 
-        /// <returns>set of double bonds</returns>
         /// </summary>
+        /// <returns>set of double bonds</returns>
         private List<IBond> FindUnspecifiedDoubleBonds(int[][] adjList)
         {
             var unspecifiedDoubleBonds = new List<IBond>();
@@ -768,14 +747,13 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Check that an atom (v:index) is only adjacent to plain single bonds (may be a bold or
+        /// Check that an atom (<paramref name="v"/>:index) is only adjacent to plain single bonds (may be a bold or
         /// hashed wedged - e.g. at fat end) with the single exception being the allowed double bond
         /// passed as an argument. 
-        /// 
+        /// </summary>
         /// <param name="v">atom index</param>
         /// <param name="allowedDoubleBond">a double bond that is allowed</param>
         /// <returns>the atom is adjacent to one or more plain single bonds</returns>
-        /// </summary>
         private bool HasOnlyPlainBonds(int v, IBond allowedDoubleBond)
         {
             int count = 0;

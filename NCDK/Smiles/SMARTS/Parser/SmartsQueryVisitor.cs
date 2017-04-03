@@ -16,31 +16,25 @@
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
 using NCDK.Common.Collections;
-
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
-using Smarts = NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Stereo;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Smarts = NCDK.Isomorphisms.Matchers.SMARTS;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
-    /// An AST tree visitor. It builds an instance of <code>QueryAtomContainer</code>
+    /// An AST tree visitor. It builds an instance of <see cref="QueryAtomContainer"/> 
     /// from the AST tree.
     /// </summary>
     /// <example>
     /// To use this visitor:
-    /// <code>
-    /// SMARTSParser parser = new SMARTSParser(new java.io.StringReader("C*C"));
-    /// ASTStart ast = parser.Start();
-    /// SmartsQueryVisitor visitor = new SmartsQueryVisitor();
-    /// QueryAtomContainer query = visitor.Visit(ast, null);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.Parser.SmartsQueryVisitor_Example.cs+1"]/*' />
     /// </example>
     // @author Dazhi Jiao
     // @cdk.created 2007-04-24

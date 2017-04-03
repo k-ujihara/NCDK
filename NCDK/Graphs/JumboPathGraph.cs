@@ -32,12 +32,12 @@ namespace NCDK.Graphs
     /// <summary>
     /// A Path graph (<b>P-Graph</b>) for graphs with more than 64 vertices - the
     /// P-Graph provides efficient generation of all simple cycles in a graph
-    /// {@cdk.cite HAN96}. Vertices are sequentially Removed from the graph by
+    /// <token>cdk-cite-HAN96</token>. Vertices are sequentially Removed from the graph by
     /// reducing incident edges and forming new 'Path edges'. The order in which the
     /// vertices are to be Removed should be pre-defined in the constructor as the
     /// <see cref="rank"/>[] parameter.
-    /// <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</a>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</seealso>
     /// <seealso cref="GraphUtil"/>
     /// <seealso cref="RingSearches.RingSearch"/>
     // @author John May
@@ -105,7 +105,7 @@ namespace NCDK.Graphs
         /// <param name="edge">Path edge</param>
         private void Add(PathEdge edge)
         {
-            int u = edge.Either();
+            int u = edge.Either;
             int v = edge.Other(u);
             if (rank[u] < rank[v])
                 graph[u].Add(edge);
@@ -163,7 +163,7 @@ namespace NCDK.Graphs
 
             foreach (PathEdge e in reduced)
             {
-                if (e.Len() <= limit)
+                if (e.Length <= limit)
                 {
                     if (e.IsLoop)
                         cycles.Add(e.Path());
@@ -221,10 +221,7 @@ namespace NCDK.Graphs
             /// Access either endpoint of the edge.
             /// </summary>
             /// <returns>Either endpoint.</returns>
-            public int Either()
-            {
-                return u;
-            }
+            public int Either => u;
 
             /// <summary>
             /// Given one endpoint, retrieve the other endpoint.
@@ -241,7 +238,7 @@ namespace NCDK.Graphs
             /// endpoints and reduced vertices.
             /// </summary>
             /// <returns>Length of Path</returns>
-            public abstract int Len();
+            public abstract int Length { get; }
 
             /// <summary>
             /// Reconstruct the Path through the edge by appending vertices to a
@@ -257,7 +254,7 @@ namespace NCDK.Graphs
             /// <returns>fixed size array of vertices which are in the Path.</returns>
             public int[] Path()
             {
-                return Reconstruct(new ArrayBuilder(Len()).Append(Either())).xs;
+                return Reconstruct(new ArrayBuilder(Length).Append(Either)).xs;
             }
         }
 
@@ -265,7 +262,6 @@ namespace NCDK.Graphs
         public class SimpleEdge
             : PathEdge
         {
-
             /// <summary>
             /// A new simple edge, with two endpoints.
             /// </summary>
@@ -284,10 +280,7 @@ namespace NCDK.Graphs
             }
 
             /// <inheritdoc/>
-            public override int Len()
-            {
-                return 2;
-            }
+            public override int Length => 2;
         }
 
         /// <summary>
@@ -321,13 +314,16 @@ namespace NCDK.Graphs
             }
 
             /// <inheritdoc/>
-            public override int Len()
+            public override int Length
             {
-                int count = 0;
-                foreach (bool b in xs)
-                    if (b)
-                        count++;
-                return count + 2;
+                get
+                {
+                    int count = 0;
+                    foreach (bool b in xs)
+                        if (b)
+                            count++;
+                    return count + 2;
+                }
             }
 
             static BitArray Union(BitArray s, BitArray t, int x)

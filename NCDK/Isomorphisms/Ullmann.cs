@@ -21,46 +21,25 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Graphs;
 using NCDK.Isomorphisms.Matchers;
+using System.Collections;
 using System.Collections.Generic;
 using static NCDK.Graphs.GraphUtil;
-using System.Collections;
 
 namespace NCDK.Isomorphisms
 {
     /// <summary>
-    /// A structure pattern which utilises the Ullmann algorithm {@cdk.cite Ullmann76}.
+    /// A structure pattern which utilises the Ullmann algorithm <token>cdk-cite-Ullmann76</token>.
     /// </summary>
     /// <example>
     /// Find and count the number molecules which contain the query substructure.
-    /// <code>
-    /// IAtomContainer query   = ...;
-    /// Pattern        pattern = Ullmann.FindSubstructure(query);
-    ///
-    /// int hits = 0;
-    /// foreach (var m in ms)
-    ///     if (pattern.Matches(m))
-    ///         hits++;
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Ullmann_Example.cs+1"]/*' />
     /// Finding the matching to molecules which contain the query substructure. It is
     /// more efficient to obtain the <see cref="Match(IAtomContainer)"/> and check it's size rather than
     /// test if it <see cref="MatchAll(IAtomContainer)"/> first. These methods automatically verify
     /// stereochemistry.
-    /// 
-    /// <code>
-    /// IAtomContainer query   = ...;
-    /// Pattern        pattern = Ullmann.FindSubstructure(query);
-    ///
-    /// int hits = 0;
-    /// foreach (var m in ms) {
-    ///     int[] match = pattern.Match(m);
-    ///     if (match.Length > 0)
-    ///         hits++;
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Ullmann_Example.cs+2"]/*' />
     /// </example>
     // @author John May
     // @cdk.module isomorphism

@@ -1,13 +1,20 @@
 ﻿// .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2016-2017  Kazuya Ujihara
 
+// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
 
 
 
 namespace NCDK.Renderers.Generators.Standards
 {
-    public partial struct HydrogenPosition : System.IComparable
+    public partial struct HydrogenPosition : System.IComparable<HydrogenPosition>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="HydrogenPosition"/>.
+		/// </summary>
+		/// <seealso cref="HydrogenPosition"/>
         public static class O
         {
             public const int Right = 0;
@@ -18,8 +25,13 @@ namespace NCDK.Renderers.Generators.Standards
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -98,6 +110,7 @@ namespace NCDK.Renderers.Generators.Standards
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -106,15 +119,26 @@ namespace NCDK.Renderers.Generators.Standards
             return this.Ordinal == ((HydrogenPosition)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (HydrogenPosition)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(HydrogenPosition o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct HydrogenPosition 
+	{
     }
 }

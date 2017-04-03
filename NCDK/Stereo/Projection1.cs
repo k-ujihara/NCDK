@@ -1,3 +1,6 @@
+// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
 
 
 
@@ -31,8 +34,12 @@ namespace NCDK.Stereo
     /// Stereochemistry projection types. 
     /// </summary>
     // @author John May
-    public struct Projection
+    public partial struct Projection : System.IComparable<Projection>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Projection"/>.
+		/// </summary>
+		/// <seealso cref="Projection"/>
         public static class O
         {
             public const int Unset = 0;
@@ -43,8 +50,13 @@ namespace NCDK.Stereo
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -132,6 +144,7 @@ namespace NCDK.Stereo
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -140,17 +153,27 @@ namespace NCDK.Stereo
             return this.Ordinal == ((Projection)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Projection)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
 
+		/// <inheritdoc/>
+        public int CompareTo(Projection o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Projection 
+	{
         public bool IsUnset => this.Ordinal == 0;
     }
 }

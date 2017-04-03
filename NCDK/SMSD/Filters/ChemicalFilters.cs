@@ -907,12 +907,11 @@ namespace NCDK.SMSD.Filters
         }
 
         /// <summary>
-        /// Get bond order value as {@code int} value.
-        ///
-        /// <param name="bond">The <see cref="IBond"/> for which the order is returned.</param>
-        /// <returns>1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,</returns>
-        ///              and 0 for any other bond type.
+        /// Get bond order value as <see cref="int"/> value.
         /// </summary>
+        /// <param name="bond">The <see cref="IBond"/> for which the order is returned.</param>
+        /// <returns>1 for a single bond, 2 for a double bond, 3 for a triple bond, 4 for a quadruple bond,
+        ///              and 0 for any other bond type.</returns>
         public static int ConvertBondOrder(IBond bond)
         {
             return bond.Order.Numeric;

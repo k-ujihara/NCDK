@@ -33,7 +33,7 @@ namespace NCDK.Geometries
     // @cdk.githash
     // @cdk.keyword Z-matrix
     // @cdk.created 2004-02-09
-    public class ZMatrixTools
+    public static class ZMatrixTools
     {
         /// <summary>
         /// Takes the given Z Matrix coordinates and converts them to cartesian coordinates.

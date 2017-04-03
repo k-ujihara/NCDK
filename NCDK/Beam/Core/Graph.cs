@@ -379,26 +379,33 @@ namespace NCDK.Beam
         /// Provides the stereo-configuration of the atom label at vertex 'u'. The
         /// configuration describes the relative-stereo as though the atoms were
         /// arranged by atom number. </summary>
-        /// <example>
-        /// <b>Further Explanation for Tetrahedral Centres</b> As an example the
+        /// <remarks>
+        /// <b>Further Explanation for Tetrahedral Centres</b>
+        /// As an example the
         /// molecule O[C@]12CCCC[C@@]1(O)CCCC2 has two tetrahedral centres.
-        /// <br/> 1. The first one is on vertex '1' and looking from vertex '0' the
+        /// <list type="number">
+        /// <item>
+        /// The first one is on vertex '1' and looking from vertex '0' the
         /// other neighbors [6, 11, 2] proceed anti-clockwise ('@') - note ring
         /// bonds. It is easy to see that if we use the natural Order of the molecule
         /// and Order the neighbor [2, 6, 11] the winding is still anti-clockwise and
-        /// '<see cref="Configuration.TH1"/>' is returned. 2. The second centre is on vertex '6' and looking
+        /// '<see cref="Configuration.TH1"/>' is returned.
+        /// </item>
+        /// <item>
+        /// The second centre is on vertex '6' and looking
         /// from vertex '5' the Ordering proceeds as [1, 7, 8] with clockwise
         /// winding. When we arrange the atoms by their natural Order we will now be
         /// looking from vertex '1' as it is the lowest. The other neighbors then
         /// proceed in the Order [5, 7, 8]. Drawing out the configuration it's clear
         /// that we look from vertex '1' instead of '5' the winding is now
         /// anti-clockwise and the configuration is also '<see cref="Configuration.TH1"/>'.
-        /// </example>
+        /// </item>
+        /// </list>
+        /// </remarks>
         /// <param name="u">a vertex in the graph</param>
         /// <returns>The configuration around</returns>
         public Configuration ConfigurationOf(int u)
         {
-
             Topology t = TopologyOf(u);
 
             if (t == Topology.Unknown)

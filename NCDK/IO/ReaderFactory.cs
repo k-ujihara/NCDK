@@ -31,11 +31,8 @@ namespace NCDK.IO
     /// created is determined from the content of the input. Formats
     /// of GZiped files can be detected too.
     /// </summary>
-    /// <example>
-    /// <code>
-    ///   StringReader stringReader = "&lt;molecule/>";
-    ///   ChemObjectReader reader = new ReaderFactory().CreateReader(stringReader);
-    /// </code>
+    /// <example>    
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.ReaderFactory_Example.cs"]/*' />
     /// </example>
     // @cdk.module io
     // @cdk.githash

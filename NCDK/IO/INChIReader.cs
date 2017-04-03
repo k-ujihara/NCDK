@@ -35,7 +35,7 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads the content of a IUPAC/NIST Chemical Identifier (INChI) document. See
-    /// {@cdk.cite HEL01}. Recently a new INChI format was introduced an files generated
+    /// <token>cdk-cite-HEL01</token>. Recently a new INChI format was introduced an files generated
     /// with the latest INChI generator cannot be parsed with this class. This class
     /// needs to be updated.
     /// <para>The elements that are read are given in the INChIHandler class.</para>

@@ -35,7 +35,7 @@ namespace NCDK.Graphs
     // @cdk.module  core
     // @cdk.githash
     // @cdk.created 2001-06-17
-    public class PathTools
+    public static class PathTools
     {
         /// <summary>bool with which debugging can be turned on.</summary>
         public readonly static bool CanDebug = false;
@@ -63,7 +63,7 @@ namespace NCDK.Graphs
         
         /// <summary>
         /// All-Pairs-Shortest-Path computation based on Floyd's
-        /// algorithm {@cdk.cite FLO62}. It takes an nxn
+        /// algorithm <token>cdk-cite-FLO62</token>. It takes an nxn
         /// matrix C of edge costs and produces an nxn matrix A of lengths of shortest paths.
         /// </summary>
         /// <param name="costMatrix">edge cost matrix</param>
@@ -111,7 +111,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// All-Pairs-Shortest-Path computation based on Floyd's
-        /// algorithm {@cdk.cite FLO62}. It takes an nxn
+        /// algorithm <token>cdk-cite-FLO62</token>. It takes an nxn
         /// matrix C of edge costs and produces an nxn matrix A of lengths of shortest
         /// paths.
         /// </summary>
@@ -350,7 +350,7 @@ namespace NCDK.Graphs
             return -1;
         }
 
-        protected internal static void ResetFlags(IAtomContainer atomContainer)
+        internal static void ResetFlags(IAtomContainer atomContainer)
         {
             for (int f = 0; f < atomContainer.Atoms.Count; f++)
             {
@@ -644,7 +644,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Get all the paths starting from an atom of length 0 up to the specified
-        /// length. If the number of paths exceeds the the set {@code limit} then an
+        /// length. If the number of paths exceeds the the set <paramref name="limit"/> then an
         /// exception is thrown. <p/> This method returns a set of paths. Each path
         /// is a <see cref="IList{T}"/> of <see cref="IAtom"/> that make up the path (ie they are
         /// sequentially connected).

@@ -95,8 +95,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -152,8 +152,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -215,8 +215,8 @@ namespace NCDK.Reactions.Types
             var setOfReactants = GetExampleReactants();
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             var setOfReactions = type.Initiate(setOfReactants, null);
@@ -296,8 +296,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[11].IsReactiveCenter = true;
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;

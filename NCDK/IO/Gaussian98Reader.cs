@@ -36,7 +36,7 @@ namespace NCDK.IO
     /// <summary>
     /// A reader for Gaussian98 output. 
     /// <para>Gaussian 98 is a quantum chemistry program
-    /// by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+    /// by Gaussian, Inc. (<see href="http://www.gaussian.com/">http://www.gaussian.com/</see>).
     /// </para>
     /// <para>Molecular coordinates, energies, and normal coordinates of vibrations are
     /// read. Each set of coordinates is added to the ChemFile in the order they are

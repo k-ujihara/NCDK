@@ -119,11 +119,11 @@ namespace NCDK.Hash.Stereo
         /// <summary>
         /// Determine the rotation parity of one side of the double bond. This parity
         /// is the sign of the area of a triangle.
-        /// <code>
+        /// <pre>
         /// a
         ///  \
         ///   b = c
-        /// </code>
+        /// </pre>
         /// </summary>
         /// <param name="a">coordinates of the substituent atom</param>
         /// <param name="b">coordinates of the atom next to the substituent</param>

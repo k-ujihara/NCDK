@@ -34,33 +34,10 @@ namespace NCDK.Tools
     /// </summary>
     /// <example>
     /// A full code example is:
-    /// <code>
-    ///   IAtomContainer methane = new AtomContainer();
-    ///   IAtom carbon = new Atom("C");
-    ///   methane.Add(carbon);
-    ///   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(methane.GetNewBuilder());
-    ///   foreach (var atom in methane.atoms) {
-    ///     IAtomType type = matcher.FindMatchingAtomType(methane, atom);
-    ///     AtomTypeManipulator.Configure(atom, type);
-    ///   }
-    ///   CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(methane.GetNewBuilder());
-    ///   adder.AddImplicitHydrogens(methane);
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.CDKHydrogenAdder_Example.cs+1"]/*' />
     /// If you want to add the hydrogens to a specific atom only,
     /// use this example:
-    /// <code>
-    ///   IAtomContainer ethane = new AtomContainer();
-    ///   IAtom carbon1 = new Atom("C");
-    ///   IAtom carbon2 = new Atom("C");
-    ///   ethane.Add(carbon1);
-    ///   ethane.Add(carbon2);
-    ///   CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(ethane.GetNewBuilder());
-    ///   IAtomType type = matcher.FindMatchingAtomType(ethane, carbon1);
-    ///   AtomTypeManipulator.Configure(carbon1, type);
-    ///   CDKHydrogenAdder adder = CDKHydrogenAdder.GetInstance(ethane.GetNewBuilder());
-    ///   adder.AddImplicitHydrogens(ethane, carbon1);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.CDKHydrogenAdder_Example.cs+2"]/*' />
     /// </example>
     // @author     egonw
     // @cdk.module valencycheck
@@ -89,10 +66,10 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// Sets implicit hydrogen counts for all atoms in the given IAtomContainer.
+        /// Sets implicit hydrogen counts for all atoms in the given <see cref="IAtomContainer"/>.
         /// </summary>
         /// <param name="container">The molecule to which H's will be added</param>
-        /// <exception cref="CDKException">if insufficient information is present</exception>
+        /// <exception cref="CDKException">If insufficient information is present</exception>
         // @cdk.keyword hydrogens, adding
         public void AddImplicitHydrogens(IAtomContainer container)
         {
@@ -106,7 +83,7 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// Sets the implicit hydrogen count for the indicated IAtom in the given IAtomContainer.
+        /// Sets the implicit hydrogen count for the indicated IAtom in the given <see cref="IAtomContainer"/>.
         /// If the atom type is "X", then the atom is assigned zero implicit hydrogens.
         /// </summary>
         /// <param name="container">The molecule to which H's will be added</param>

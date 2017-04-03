@@ -29,9 +29,9 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// A utility for ranking indices by invariants. The ranking is built around
-    /// a merge/insertion sort with the primary interaction through {@link #rank}.
+    /// a merge/insertion sort with the primary interaction through <see cref="InvariantRanker.Rank(int[], int[], int, long[], long[])"/> .
     /// </summary>
-    /// <remarks><a href="http://algs4.cs.princeton.edu/22mergesort/">Mergesort</a></remarks>
+    /// <seealso href="http://algs4.cs.princeton.edu/22mergesort/">Mergesort</seealso >
     /// <seealso cref="Canon"/>
     // @author John May
     // @cdk.module standard

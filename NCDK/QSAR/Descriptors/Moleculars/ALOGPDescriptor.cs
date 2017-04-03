@@ -32,15 +32,16 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// This class calculates ALOGP (Ghose-Crippen LogKow) and the
-    /// Ghose-Crippen molar refractivity {@cdk.cite GHOSE1986,GHOSE1987}.
+    /// Ghose-Crippen molar refractivity <token>cdk-cite-GHOSE1986</token>; <token>cdk-cite-GHOSE1987</token>.
     /// </summary>
     /// <remarks>
-    /// <b>Note</b> The code assumes that aromaticity has been detected before
+    /// <note type="note">
+    /// The code assumes that aromaticity has been detected before
     /// evaluating this descriptor. The code also expects that the molecule
     /// will have hydrogens explicitly set. For SD files, this is usually not
     /// a problem since hydrogens are explicit. But for the case of molecules
     /// obtained from SMILES, hydrogens must be made explicit.
-    ///
+    /// </note>
     /// <para>TODO: what should sub return if have missing fragment?
     /// Just report sum for other fragments? Or report as -9999 and
     /// then do not use descriptor if have this  value for any
@@ -435,7 +436,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             this.FindUnassignedAtoms();
 
             return new double[] { alogp, alogp2, amr };
-
         }
 
         private void CalcGroup001_005(int i)
@@ -510,7 +510,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         {
             if (fragment[i].Equals("SsssCH"))
             {
-
                 var ca = atomContainer.GetConnectedAtoms(atomContainer.Atoms[i]);
                 int htype = GetHAtomType(atomContainer.Atoms[i], ca);
                 int carbonCount = 0;

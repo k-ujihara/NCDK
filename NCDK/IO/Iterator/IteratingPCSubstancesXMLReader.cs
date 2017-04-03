@@ -85,7 +85,7 @@ namespace NCDK.IO.Iterator
                 }
                 catch (Exception e)
                 {
-                    if (mode == ChemObjectReaderModes.Strict)
+                    if (ReaderMode == ChemObjectReaderModes.Strict)
                     {
                         throw new ApplicationException("Error while parsing the XML: " + e.Message, e);
                     }

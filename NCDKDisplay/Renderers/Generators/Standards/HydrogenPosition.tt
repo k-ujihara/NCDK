@@ -5,20 +5,19 @@
 
 namespace NCDK.Renderers.Generators.Standards
 {
-    public partial struct HydrogenPosition : System.IComparable
-    {
 <# 
-        GenerateEnumBody(
-            "HydrogenPosition", 
-             new[]
-            {
-                "Right",
-                "Left",
-                "Above",
-                "Below",
-			},
-            true
-        ); 
+    GenerateEnumBody(
+        "HydrogenPosition", 
+            new[]
+        {
+            "Right",
+            "Left",
+            "Above",
+            "Below",
+		},
+        true
+    ); 
 #>
+	{
     }
 }

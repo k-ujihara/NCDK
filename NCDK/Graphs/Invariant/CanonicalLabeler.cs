@@ -32,7 +32,7 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// Canonically labels an atom container implementing
-    /// the algorithm published in David Weininger et al. {@cdk.cite WEI89}.
+    /// the algorithm published in David Weininger et al. <token>cdk-cite-WEI89</token>.
     /// The Collections.Sort() method uses a merge sort which is
     /// stable and runs in n Log(n).
     /// </summary>
@@ -49,7 +49,7 @@ namespace NCDK.Graphs.Invariant
         /// <summary>
         /// Canonically label the fragment.  The labels are set as atom property InvPair.CANONICAL_LABEL of type int, indicating the canonical order.
         /// This is an implementation of the algorithm published in
-        /// David Weininger et.al. {@cdk.cite WEI89}.
+        /// David Weininger et.al. <token>cdk-cite-WEI89</token>.
         /// <para>The Collections.Sort() method uses a merge sort which is
         /// stable and runs in n Log(n).
         /// </para>

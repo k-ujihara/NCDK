@@ -42,14 +42,14 @@ namespace NCDK.Hash
     /// the more comprehensive perturbation method (<see cref="AllEquivalentCyclicSet"/>),
     /// these are listed below.
     /// <list type="bullet">
-    /// <item>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=144432">144432</a>
-    /// and CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=15584856">15584856</a></item>
-    /// <item>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=138898">138898</a>
-    /// and CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=241107">241107</a></item>
-    /// <item>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9990759">9990759</a>
-    /// and CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=10899923">10899923</a></item>
-    /// <item>CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5460768">5460768</a>
-    /// and CID <a href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=20673269">20673269</a></item>
+    /// <item>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=144432">144432</see>
+    /// and CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=15584856">15584856</see></item>
+    /// <item>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=138898">138898</see>
+    /// and CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=241107">241107</see></item>
+    /// <item>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=9990759">9990759</see>
+    /// and CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=10899923">10899923</see></item>
+    /// <item>CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=5460768">5460768</see>
+    /// and CID <see href="http://pubchem.ncbi.nlm.nih.gov/summary/summary.cgi?cid=20673269">20673269</see></item>
     /// </list> 
     /// </remarks>
     /// <example>

@@ -139,9 +139,9 @@ namespace <#= ns.NS #>
         }
 
         public bool IsEmpty()
-            => (setOfMolecules == null || setOfMolecules.IsEmpty)
-            && (setOfReactions == null || setOfReactions.IsEmpty)
-            && (ringSet == null || ringSet.IsEmpty)
+            => (setOfMolecules == null || setOfMolecules.IsEmpty())
+            && (setOfReactions == null || setOfReactions.IsEmpty())
+            && (ringSet == null || ringSet.IsEmpty())
             && (crystal == null || crystal.IsEmpty());
     }
 }

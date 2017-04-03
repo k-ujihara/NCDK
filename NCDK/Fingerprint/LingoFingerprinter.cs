@@ -30,7 +30,7 @@ using System.Text.RegularExpressions;
 namespace NCDK.Fingerprint
 {
     /// <summary>
-    /// An implementation of the LINGO fingerprint {@cdk.cite Vidal2005}.
+    /// An implementation of the LINGO fingerprint <token>cdk-cite-Vidal2005</token>.
     /// </summary>
     /// <remarks>
     /// While the current
@@ -73,7 +73,7 @@ namespace NCDK.Fingerprint
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer atomContainer)
         {
             aromaticity.Apply(atomContainer);
-            string smiles = RePlaceDigits(gen.Create(atomContainer));
+            string smiles = ReplaceDigits(gen.Create(atomContainer));
             IDictionary<string, int> map = new Dictionary<string, int>();
             for (int i = 0, l = smiles.Length - n + 1; i < l; i++)
             {
@@ -89,7 +89,7 @@ namespace NCDK.Fingerprint
 
         public int Count => -1; // 1L << 32
 
-        private string RePlaceDigits(string smiles)
+        private string ReplaceDigits(string smiles)
         {
             return DIGITS.Replace(smiles, "0");
         }

@@ -32,7 +32,7 @@ namespace NCDK.Geometries
     // @author Peter Murray-Rust
     // @cdk.githash
     // @cdk.created 2003-06-14
-    public class AtomTools
+    public static class AtomTools
     {
         public readonly static double TETRAHEDRAL_ANGLE = 2.0 * Math.Acos(1.0 / Math.Sqrt(3.0));
 

@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</a>.
+    /// See <see href="http://www.msg.ameslab.gov/GAMESS/doc.menu.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

@@ -39,24 +39,24 @@ namespace NCDK.Renderers.Generators.Standards
     /// <summary>
     /// The standard generator creates <see cref="IRenderingElement"/>s for the atoms and bonds of a structure
     /// diagram. These are generated together allowing the bonds to drawn cleanly without overlap. The
-    /// generate is heavily based on ideas documented in {@cdk.cite Brecher08} and {@cdk.cite Clark13}.
+    /// generate is heavily based on ideas documented in <token>cdk-cite-Brecher08</token> and <token>cdk-cite-Clark13</token>.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Atom symbols are provided as {@link GeneralPath} outlines. This allows the depiction to be
+    /// Atom symbols are provided as <see cref="GeneralPath"/> outlines. This allows the depiction to be
     /// independent of the system used to view the diagram (primarily important for vector graphic
     /// depictions). The font used to generate the diagram must be provided to the constructor. <p/>
     /// </para>
     /// <para>
-    /// Atoms and bonds can be highlighted by setting the {@link #HIGHLIGHT_COLOR}. The style of
-    /// highlight is set with the {@link Highlighting} parameter.
+    /// Atoms and bonds can be highlighted by setting the <see cref="HIGHLIGHT_COLOR"/>. The style of
+    /// highlight is set with the <see cref="Highlighting"/> parameter.
     /// </para>
     /// <para>
-    /// The <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki
-    /// page</a> provides extended details of using and configuring this generator.
+    /// The <see href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki page</see>
+    /// provides extended details of using and configuring this generator.
     /// </para>
-    /// <a href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki</a>
     /// </remarks>
+    /// <seealso href="https://github.com/cdk/cdk/wiki/Standard-Generator">Standard Generator - CDK Wiki</seealso>
     // @author John May
     public sealed class StandardGenerator : IGenerator<IAtomContainer>
     {

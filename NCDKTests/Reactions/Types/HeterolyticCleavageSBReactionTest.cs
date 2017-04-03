@@ -38,7 +38,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class HeterolyticCleavageSBReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
@@ -62,14 +61,11 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-       /// A unit test suite for JUnit. Reaction: propane.
-       /// CC!-!C => C[C+] + [C-]
-       ///           C[C-] + [C+]
-       ///
-       // @cdk.inchi InChI=1/C3H8/c1-3-2/h3H2,1-2H3
-       ///
-       /// <returns>The test suite</returns>
-       /// </summary>
+        /// A unit test suite for JUnit. Reaction: propane.
+        /// CC!-!C => C[C+] + [C-]
+        ///           C[C-] + [C+]
+        /// </summary>
+        // @cdk.inchi InChI=1/C3H8/c1-3-2/h3H2,1-2H3
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
@@ -106,8 +102,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -175,8 +171,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: .
         /// C[C+]!-!C => CC + [C+]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestCsp2ChargeSingleB()
@@ -188,11 +182,8 @@ namespace NCDK.Reactions.Types
         /// A unit test suite for JUnit. Reaction: Propene.
         /// C=C!-!C => C=[C+] + [C-]
         ///            C=[C-] + [C+]
-        ///
-        // @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
         public void TestCsp2SingleB()
         {
@@ -225,8 +216,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -293,8 +284,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: .
         /// C=[C+]!-!C => C=C + [C+]
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestCspChargeSingleB()
@@ -306,11 +295,8 @@ namespace NCDK.Reactions.Types
         /// A unit test suite for JUnit. Reaction: Propyne.
         /// C#C!-!C => C#[C+] + [C-]
         ///            C#[C-] + [C+]
-        ///
-        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C3H4/c1-3-2/h1H,2H3
         [TestMethod()]
         public void TestCspSingleB()
         {
@@ -339,8 +325,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -401,10 +387,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: dimethylamine.
         /// CN!-!C => C[N-] + [C+]
-        ///
-        // @cdk.inchi  InChI=1/C2H7N/c1-3-2/h3H,1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestNsp3SingleB()
@@ -441,8 +423,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -488,17 +470,13 @@ namespace NCDK.Reactions.Types
             IAtomContainer product2 = setOfReactions[0].Products[1];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction: N-methylmethanimine.
         /// C=N!-!C =>[C+] +  C=[N-]
-        ///
-        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H5N/c1-3-2/h1H2,2H3
         [TestMethod()]
         public void TestNsp2SingleB()
         {
@@ -530,8 +508,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -573,17 +551,13 @@ namespace NCDK.Reactions.Types
             IAtomContainer product2 = setOfReactions[0].Products[0];
             queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(expected2);
             Assert.IsTrue(uiTester.IsIsomorph(product2, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit. Reaction:  methoxymethane.
         /// CO!-!C =>  C[O-] + [C+]
-        ///
-        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/C2H6O/c1-3-2/h1-2H3
         [TestMethod()]
         public void TestOsp2SingleB()
         {
@@ -617,8 +591,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -667,11 +641,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: fluoromethane.
         /// F!-!C => [F-] + [C+]
-        ///
-        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
         public void TestFspSingleB()
         {
@@ -697,8 +668,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new HeterolyticCleavageSBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -737,11 +708,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C-O => [C+] + [O-]
         /// Manually put of the reactive center.
-        ///
-        // @cdk.inchi  InChI=1/CH4O/c1-2/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/CH4O/c1-2/h2H,1H3
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -754,8 +722,8 @@ namespace NCDK.Reactions.Types
             molecule.Atoms[1].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -778,11 +746,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit. Reaction: C-O => [C+] + [O-]
         /// Test of mapped between the reactant and product. Only is mapped the reactive center.
-        ///
-        // @cdk.inchi  InChI=1/CH4O/c1-2/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        // @cdk.inchi  InChI=1/CH4O/c1-2/h2H,1H3
         [TestMethod()]
         public void TestMapping()
         {
@@ -791,8 +756,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -812,18 +777,15 @@ namespace NCDK.Reactions.Types
             IAtom mappedProductA2 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
                     molecule.Atoms[1]);
             Assert.AreEqual(mappedProductA2, product2.Atoms[0]);
-
         }
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
+        /// </summary>
         /// <param name="molecule">The IAtomContainer to analyze</param>
         /// <exception cref="CDKException"></exception>
-        /// </summary>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
-
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);
             foreach (var nextAtom in molecule.Atoms)
             {
@@ -833,9 +795,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the example set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -862,9 +823,8 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// TODO:reaction. Set the products
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();

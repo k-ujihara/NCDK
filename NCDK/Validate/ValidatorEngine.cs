@@ -29,7 +29,7 @@ namespace NCDK.Validate
     /// <code>
     /// ValidatorEngine engine = new ValidatorEngine();
     /// engine.Add(new BasicValidator());
-    /// ValidationReport report = engine.ValidateMolecule(new Molecule());
+    /// ValidationReport report = engine.ValidateMolecule(molecule);
     /// </code>
     /// </example>
     // @author   Egon Willighagen <egonw@sci.kun.nl>

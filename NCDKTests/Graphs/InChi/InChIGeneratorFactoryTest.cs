@@ -28,7 +28,7 @@ using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     // @cdk.module test-inchi

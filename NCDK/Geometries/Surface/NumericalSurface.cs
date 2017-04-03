@@ -33,12 +33,12 @@ namespace NCDK.Geometries.Surface
     /// </summary>
     /// <remarks>
     /// <para>This class is based on the Python implementation of the DCLM method
-    /// ({@cdk.cite EIS95}) by Peter McCluskey, which is a non-analytical method to generate a set of points
+    /// (<token>cdk-cite-EIS95</token>) by Peter McCluskey, which is a non-analytical method to generate a set of points
     /// representing the solvent accessible surface area of a molecule.
     /// </para>
     /// <para>
     /// The neighbor list is a simplified version of that
-    /// described in {@cdk.cite EIS95} and as a result, the surface areas of the atoms may not be exact
+    /// described in <token>cdk-cite-EIS95</token> and as a result, the surface areas of the atoms may not be exact
     /// (compared to analytical calculations). The tessellation is slightly different from
     /// that described by McCluskey and uses recursive subdivision starting from an icosahedral
     /// representation.

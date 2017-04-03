@@ -34,7 +34,7 @@ namespace NCDK.IO.Iterator
     /// in the SMILES file, without being read into memory all. Suitable
     /// for very large SMILES files. These SMILES files are expected to have one
     /// molecule on each line. If a line could not be parsed and empty molecule is
-    /// returned and the property <see cref="BAD_SMILES_INPUT"/> is set to the attempted
+    /// returned and the property <see cref="BadSmilesInput"/> is set to the attempted
     /// input. The error is also logged.
     /// 
     /// <para>For parsing each SMILES it still uses the normal <see cref="SMILESReader"/>.</para>
@@ -50,11 +50,10 @@ namespace NCDK.IO.Iterator
     {
         private TextReader input;
         private SmilesParser sp = null;
-
         private readonly IChemObjectBuilder builder;
 
         /// <summary>Store the problem input as a property.</summary>
-        public const string BAD_SMILES_INPUT = "bad.smiles.input";
+        public const string BadSmilesInput = "bad.smiles.input";
 
         /// <summary>
         /// Constructs a new IteratingSMILESReader that can read Molecule from a given Reader.
@@ -144,7 +143,7 @@ namespace NCDK.IO.Iterator
             {
                 Trace.TraceError("Error while reading the SMILES from: " + line + ", ", e);
                 IAtomContainer empty = builder.CreateAtomContainer();
-                empty.SetProperty(BAD_SMILES_INPUT, line);
+                empty.SetProperty(BadSmilesInput, line);
                 return empty;
             }
         }

@@ -33,7 +33,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// "$([*;-;!$(*~[*;+])])",
     /// "$([NH](S(=O)=O)C(F)(F)F)", and "$(n1nnnc1)" 
     /// originally presented in
-    /// JOELib {@cdk.cite WEGNER2006}.
+    /// JOELib <token>cdk-cite-WEGNER2006</token>.
     /// </summary>
     // @author      egonw
     // @cdk.module  qsarmolecular

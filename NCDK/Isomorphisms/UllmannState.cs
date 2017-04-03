@@ -28,8 +28,8 @@ using static NCDK.Graphs.GraphUtil;
 namespace NCDK.Isomorphisms
 {
     /// <summary>
-    /// A mutable state for matching graphs using the Ullmann algorithm {@cdk.cite
-    /// Ullmann76}. There are a couple of modifications in this implementation.
+    /// A mutable state for matching graphs using the Ullmann algorithm <token>cdk-cite-Ullmann76</token>.
+    /// There are a couple of modifications in this implementation.
     /// Firstly the mappings are stored in two vectors m1 and m2 and simply allows us
     /// to return <see cref="Mapping"/>  without searching the compatibility matrix.
     /// Secondly the compatibility matrix is non-binary and instead of removing

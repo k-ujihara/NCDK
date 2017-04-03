@@ -27,7 +27,7 @@ namespace NCDK.Graphs.Invariant
 {
     /// <summary>
     /// An algorithm for topological symmetry. This algorithm derived from the
-    /// algorithm {@cdk.cite Hu94}.
+    /// algorithm <token>cdk-cite-Hu94</token>.
     /// </summary>
     // @cdk.githash
     // @author Junfeng Hao

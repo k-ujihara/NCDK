@@ -36,7 +36,7 @@ namespace NCDK.Fingerprint
     // @cdk.module fingerprint
     // @cdk.githash
     [Serializable]
-    internal class RandomNumber
+    public class RandomNumber
     {
         [NonSerialized]
         private MersenneTwister rg = new MersenneTwister();

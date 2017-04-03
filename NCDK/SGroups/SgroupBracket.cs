@@ -37,12 +37,11 @@ namespace NCDK.SGroups
 
         /// <summary>
         /// Create an Sgroup bracket.
-        ///
+        /// </summary>
         /// <param name="x1">first x coord</param>
         /// <param name="y1">first y coord</param>
         /// <param name="x2">second x coord</param>
         /// <param name="y2">second y coord</param>
-        /// </summary>
         public SgroupBracket(double x1, double y1, double x2, double y2)
         {
             this.p1 = new Vector2(x1, y1);
@@ -51,9 +50,8 @@ namespace NCDK.SGroups
 
         /// <summary>
         /// First point of the bracket (x1,y1).
-        ///
-        /// <returns>first point</returns>
         /// </summary>
+        /// <returns>first point</returns>
         public Vector2 FirstPoint
         {
             get { return p1; }
@@ -62,9 +60,8 @@ namespace NCDK.SGroups
 
         /// <summary>
         /// Second point of the bracket (x2,y2).
-        ///
-        /// <returns>second point</returns>
         /// </summary>
+        /// <returns>second point</returns>
         public Vector2 SecondPoint
         {
             get { return p2; }

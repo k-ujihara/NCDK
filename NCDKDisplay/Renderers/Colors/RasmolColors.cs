@@ -25,7 +25,7 @@ namespace NCDK.Renderers.Colors
 {
     /// <summary>
     /// Atom coloring following RasMol/Chime Color scheme
-    /// <a href="http://www.umass.edu/microbio/rasmol/rascolor.htm">http://www.umass.edu/microbio/rasmol/rascolor.htm</a>.
+    /// <see href="http://www.umass.edu/microbio/rasmol/rascolor.htm">http://www.umass.edu/microbio/rasmol/rascolor.htm</see>.
     /// </summary>
     // @cdk.module render
     // @cdk.githash

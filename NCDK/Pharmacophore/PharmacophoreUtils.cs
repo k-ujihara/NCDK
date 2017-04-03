@@ -53,21 +53,14 @@ namespace NCDK.Pharmacophore
         /// </para>
         /// <para>
         /// Finally, if there is a description associated with a pharmacophore definition, it is
-        /// available as the <i>"description"</i> property of the {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} object.
+        /// available as the <i>"description"</i> property of the <see cref="PharmacophoreQuery"/> object.
         /// </para>
         /// </summary>
         /// <example>
-        /// Example usage is
-        /// <code>
-        /// IList&lt;PharmacophoreQuery&gt; defs = ReadPharmacophoreDefinitions("mydefs.xml");
-        /// Console.Out.WriteLine("Number of definitions = "+defs.Count);
-        /// for (int i = 0; i &lt; defs.Count; i++) {
-        ///     Console.Out.WriteLine("Desc: "+defs[i].GetProperty("description");
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Pharmacophore.PharmacophoreUtils_Example.cs+ReadPharmacophoreDefinitions"]/*' />
         /// </example>
         /// <param name="ins">The stream to read the definitions from</param>
-        /// <returns>A list of {@link org.openscience.cdk.pharmacophore.PharmacophoreQuery} objects</returns>
+        /// <returns>A <see cref="IList{T}"/> of <see cref="PharmacophoreQuery"/> objects</returns>
         /// <exception cref="CDKException">if there is an error in the format</exception>
         /// <exception cref="IOException"> if there is an error in opening the file</exception>
         /// <see cref="PharmacophoreQueryAtom"/>
@@ -90,11 +83,10 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Write out one or more pharmacophore queries in the CDK XML format.
-        ///
+        /// </summary>
         /// <param name="query">The pharmacophore queries</param>
         /// <param name="output">The Stream to write to</param>
         /// <exception cref="IOException">if there is a problem writing the XML document</exception>
-        /// </summary>
         public static void WritePharmacophoreDefinition(PharmacophoreQuery query, Stream output)
         {
             WritePharmacophoreDefinition(new PharmacophoreQuery[] { query }, output);
@@ -102,11 +94,10 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Write out one or more pharmacophore queries in the CDK XML format.
-        ///
+        /// </summary>
         /// <param name="queries">The pharmacophore queries</param>
         /// <param name="output">The Stream to write to</param>
         /// <exception cref="IOException">if there is a problem writing the XML document</exception>
-        /// </summary>
         public static void WritePharmacophoreDefinition(IList<PharmacophoreQuery> queries, Stream output)
         {
             WritePharmacophoreDefinition(queries.ToArray(), output);
@@ -114,11 +105,10 @@ namespace NCDK.Pharmacophore
 
         /// <summary>
         /// Write out one or more pharmacophore queries in the CDK XML format.
-        ///
+        /// </summary>
         /// <param name="queries">The pharmacophore queries</param>
         /// <param name="output">The Stream to write to</param>
         /// <exception cref="IOException">if there is a problem writing the XML document</exception>
-        /// </summary>
         public static void WritePharmacophoreDefinition(PharmacophoreQuery[] queries, Stream output)
         {
             var root = new XElement("pharmacophoreContainer");

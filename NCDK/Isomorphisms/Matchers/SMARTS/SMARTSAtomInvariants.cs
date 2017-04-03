@@ -240,7 +240,7 @@ namespace NCDK.Isomorphisms.Matchers.SMARTS
             if (ringInfo)
             {
                 // non-unique but used by daylight
-                foreach (var cycle in Cycles.SSSR(container).GetPaths())
+                foreach (var cycle in Cycles.FindSSSR(container).GetPaths())
                 {
                     int size = cycle.Length - 1;
                     for (int i = 1; i < cycle.Length; i++)

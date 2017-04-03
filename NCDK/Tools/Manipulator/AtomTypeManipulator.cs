@@ -20,16 +20,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
-using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
-    /// Class with utilities for the <code>AtomType</code> class.
-    /// - changed 21/7/05 by cho: add properties for mmff94 atom type
+    /// Class with utilities for the <see cref="IAtomType"/> class.
     /// </summary>
+    /// <remarks>
+    /// - changed 21/7/05 by cho: add properties for mmff94 atom type
+    /// </remarks>
     // @author     mfe4
     // @author     egonw
     // @cdk.module standard

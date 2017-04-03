@@ -29,7 +29,7 @@ namespace NCDK.Charges
 {
     /// <summary>
     /// Calculation of the polarizability of a molecule by the method of Kang and
-    /// Jhon and Gasteiger based on {@cdk.cite KJ81} and {@cdk.cite GH82}
+    /// Jhon and Gasteiger based on <token>cdk-cite-KJ81</token> and <token>cdk-cite-GH82</token>
     /// Limitations in parameterization of atoms:
     /// H, Csp3, Csp2, Csp2arom, Csp3, Nsp3, Nsp2, Nsp3,
     /// P, Osp3 and Osp2. Aromaticity must be calculated beforehand.
@@ -81,10 +81,9 @@ namespace NCDK.Charges
 
         /// <summary>
         ///  calculates the mean molecular polarizability as described in paper of Kang and Jhorn.
-        ///
+        /// </summary>
         /// <param name="atomContainer">AtomContainer</param>
         /// <returns>polarizabilitiy</returns>
-        /// </summary>
         public double CalculateKJMeanMolecularPolarizability(IAtomContainer atomContainer)
         {
             double polarizabilitiy = 0;

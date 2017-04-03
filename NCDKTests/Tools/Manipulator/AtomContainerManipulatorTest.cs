@@ -884,7 +884,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         [TestMethod()]
-        public void TestRePlaceAtom()
+        public void TestReplaceAtom()
         {
             IAtomContainer container = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
@@ -897,12 +897,12 @@ namespace NCDK.Tools.Manipulator
 
             IAtom atom3 = Default.ChemObjectBuilder.Instance.CreateAtom("Br");
 
-            AtomContainerManipulator.RePlaceAtomByAtom(container, atom2, atom3);
+            AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.Atoms[1]);
         }
 
         [TestMethod()]
-        public void TestRePlaceAtom_lonePair()
+        public void TestReplaceAtom_lonePair()
         {
             IAtomContainer container = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
@@ -916,12 +916,12 @@ namespace NCDK.Tools.Manipulator
 
             IAtom atom3 = Default.ChemObjectBuilder.Instance.CreateAtom("Br");
 
-            AtomContainerManipulator.RePlaceAtomByAtom(container, atom2, atom3);
+            AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.LonePairs[0].Atom);
         }
 
         [TestMethod()]
-        public void TestRePlaceAtom_singleElectron()
+        public void TestReplaceAtom_singleElectron()
         {
             IAtomContainer container = Default.ChemObjectBuilder.Instance.CreateAtomContainer();
             IAtom atom1 = Default.ChemObjectBuilder.Instance.CreateAtom("C");
@@ -935,19 +935,19 @@ namespace NCDK.Tools.Manipulator
             
             IAtom atom3 = Default.ChemObjectBuilder.Instance.CreateAtom("Br");
 
-            AtomContainerManipulator.RePlaceAtomByAtom(container, atom2, atom3);
+            AtomContainerManipulator.ReplaceAtomByAtom(container, atom2, atom3);
             Assert.AreEqual(atom3, container.SingleElectrons[0].Atom);
         }
 
         [TestMethod()]
-        public void TestRePlaceAtom_stereochemistry()
+        public void TestReplaceAtom_stereochemistry()
         {
             IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
             SmilesParser smipar = new SmilesParser(bldr);
             IAtomContainer mol = smipar.ParseSmiles("N[C@H](CC)O");
             IAtom newAtom = bldr.CreateAtom("Cl");
             newAtom.ImplicitHydrogenCount = 0;
-            AtomContainerManipulator.RePlaceAtomByAtom(mol, mol.Atoms[0], newAtom);
+            AtomContainerManipulator.ReplaceAtomByAtom(mol, mol.Atoms[0], newAtom);
             Assert.AreEqual("Cl[C@H](CC)O", SmilesGenerator.Isomeric().Create(mol));
         }
 

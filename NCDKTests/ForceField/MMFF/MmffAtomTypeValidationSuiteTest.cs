@@ -33,14 +33,12 @@ namespace NCDK.ForceField.MMFF
     /// <summary>
     /// Ensure the atom types of the validation suite (http://server.ccl.net/cca/data/MMFF94/) are
     /// correctly assigned.
-    ///
-    // @author John May
     /// </summary>
+    // @author John May
     // [TestCategory("SlowTest")] // waiting on SlowTest patch
     [TestClass()]
     public class MmffAtomTypeValidationSuiteTest : AbstractMmffAtomTypeValidationSuiteTest
     {
-
         static readonly MmffAtomTypeMatcher Instance = new MmffAtomTypeMatcher();
 
         public override string[] Assign(IAtomContainer container)

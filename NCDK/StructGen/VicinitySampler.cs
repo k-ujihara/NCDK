@@ -33,7 +33,7 @@ namespace NCDK.StructGen
     /// The VicinitySampler is a generator of constitutional isomers. It needs to be
     /// provided with a starting constitution and it makes random moves in
     /// constitutional space from there. This generator was first suggested by
-    /// Faulon {@cdk.cite FAU96}.
+    /// Faulon <token>cdk-cite-FAU96</token>.
     /// </summary>
     // @cdk.keyword  structure generator
     // @cdk.module   structgen

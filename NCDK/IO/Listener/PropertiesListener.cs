@@ -31,11 +31,11 @@ namespace NCDK.IO.Listener
     /// </summary>
     /// <remarks>
     /// For the GaussianInputWriter the properties file might look like:
-    /// <code>
+    /// <pre>
     /// Basis=6-31g
     /// Method=b3lyp
     /// Command=geometry optimization
-    /// </code>
+    /// </pre>
     /// </remarks>
     // @cdk.module io
     // @cdk.githash

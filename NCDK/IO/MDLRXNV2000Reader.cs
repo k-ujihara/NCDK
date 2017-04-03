@@ -30,7 +30,7 @@ using System.Text;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
+    /// Reads a molecule from an MDL RXN file <token>cdk-cite-DAL92</token>.
     /// This MDL RXN reader uses the MDLV2000 reader to read each mol file
     /// </summary>
     // @cdk.module io
@@ -55,7 +55,7 @@ namespace NCDK.IO
         public MDLRXNV2000Reader(TextReader ins, ChemObjectReaderModes mode)
         {
             input = ins;
-            base.mode = mode;
+            base.ReaderMode = mode;
         }
 
         public MDLRXNV2000Reader(Stream input)
@@ -214,7 +214,7 @@ namespace NCDK.IO
 
                     // read MDL molfile content
                     // Changed this to mdlv2000 reader
-                    MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()), base.mode);
+                    MDLV2000Reader reader = new MDLV2000Reader(new StringReader(molFile.ToString()), base.ReaderMode);
                     IAtomContainer reactant = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
                     reader.Close();
 

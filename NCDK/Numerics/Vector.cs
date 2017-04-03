@@ -1,16 +1,8 @@
 ﻿
 
-
-
-
-
-
-
-
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 
 using System;
 using System.Diagnostics.Contracts;
@@ -103,57 +95,46 @@ namespace NCDK.Numerics
             int vectorSizeInBytes = (int)(byteBase - vectorBase);
 
             int typeSizeInBytes = -1;
-
             if (typeof(T) == typeof(Byte))
             {
                 typeSizeInBytes = sizeof(Byte);
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 typeSizeInBytes = sizeof(SByte);
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 typeSizeInBytes = sizeof(UInt16);
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 typeSizeInBytes = sizeof(Int16);
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 typeSizeInBytes = sizeof(UInt32);
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 typeSizeInBytes = sizeof(Int32);
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 typeSizeInBytes = sizeof(UInt64);
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 typeSizeInBytes = sizeof(Int64);
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 typeSizeInBytes = sizeof(Single);
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 typeSizeInBytes = sizeof(Double);
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -166,13 +147,13 @@ namespace NCDK.Numerics
         #region Constructors
         /// <summary>
         /// Constructs a vector whose components are all <code>value</code>
-        /// </summary>        
+        /// </summary>
+        
         public unsafe Vector(T value)
             : this()
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     fixed (Byte* basePtr = &this.register.byte_0)
@@ -183,7 +164,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     fixed (SByte* basePtr = &this.register.sbyte_0)
@@ -194,7 +174,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     fixed (UInt16* basePtr = &this.register.uint16_0)
@@ -205,7 +184,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     fixed (Int16* basePtr = &this.register.int16_0)
@@ -216,7 +194,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     fixed (UInt32* basePtr = &this.register.uint32_0)
@@ -227,7 +204,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     fixed (Int32* basePtr = &this.register.int32_0)
@@ -238,7 +214,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     fixed (UInt64* basePtr = &this.register.uint64_0)
@@ -249,7 +224,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     fixed (Int64* basePtr = &this.register.int64_0)
@@ -260,7 +234,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     fixed (Single* basePtr = &this.register.single_0)
@@ -271,7 +244,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     fixed (Double* basePtr = &this.register.double_0)
@@ -282,193 +254,105 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     register.byte_0 = (Byte)(object)value;
-
                     register.byte_1 = (Byte)(object)value;
-
                     register.byte_2 = (Byte)(object)value;
-
                     register.byte_3 = (Byte)(object)value;
-
                     register.byte_4 = (Byte)(object)value;
-
                     register.byte_5 = (Byte)(object)value;
-
                     register.byte_6 = (Byte)(object)value;
-
                     register.byte_7 = (Byte)(object)value;
-
                     register.byte_8 = (Byte)(object)value;
-
                     register.byte_9 = (Byte)(object)value;
-
                     register.byte_10 = (Byte)(object)value;
-
                     register.byte_11 = (Byte)(object)value;
-
                     register.byte_12 = (Byte)(object)value;
-
                     register.byte_13 = (Byte)(object)value;
-
                     register.byte_14 = (Byte)(object)value;
-
                     register.byte_15 = (Byte)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     register.sbyte_0 = (SByte)(object)value;
-
                     register.sbyte_1 = (SByte)(object)value;
-
                     register.sbyte_2 = (SByte)(object)value;
-
                     register.sbyte_3 = (SByte)(object)value;
-
                     register.sbyte_4 = (SByte)(object)value;
-
                     register.sbyte_5 = (SByte)(object)value;
-
                     register.sbyte_6 = (SByte)(object)value;
-
                     register.sbyte_7 = (SByte)(object)value;
-
                     register.sbyte_8 = (SByte)(object)value;
-
                     register.sbyte_9 = (SByte)(object)value;
-
                     register.sbyte_10 = (SByte)(object)value;
-
                     register.sbyte_11 = (SByte)(object)value;
-
                     register.sbyte_12 = (SByte)(object)value;
-
                     register.sbyte_13 = (SByte)(object)value;
-
                     register.sbyte_14 = (SByte)(object)value;
-
                     register.sbyte_15 = (SByte)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     register.uint16_0 = (UInt16)(object)value;
-
                     register.uint16_1 = (UInt16)(object)value;
-
                     register.uint16_2 = (UInt16)(object)value;
-
                     register.uint16_3 = (UInt16)(object)value;
-
                     register.uint16_4 = (UInt16)(object)value;
-
                     register.uint16_5 = (UInt16)(object)value;
-
                     register.uint16_6 = (UInt16)(object)value;
-
                     register.uint16_7 = (UInt16)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     register.int16_0 = (Int16)(object)value;
-
                     register.int16_1 = (Int16)(object)value;
-
                     register.int16_2 = (Int16)(object)value;
-
                     register.int16_3 = (Int16)(object)value;
-
                     register.int16_4 = (Int16)(object)value;
-
                     register.int16_5 = (Int16)(object)value;
-
                     register.int16_6 = (Int16)(object)value;
-
                     register.int16_7 = (Int16)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     register.uint32_0 = (UInt32)(object)value;
-
                     register.uint32_1 = (UInt32)(object)value;
-
                     register.uint32_2 = (UInt32)(object)value;
-
                     register.uint32_3 = (UInt32)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     register.int32_0 = (Int32)(object)value;
-
                     register.int32_1 = (Int32)(object)value;
-
                     register.int32_2 = (Int32)(object)value;
-
                     register.int32_3 = (Int32)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     register.uint64_0 = (UInt64)(object)value;
-
                     register.uint64_1 = (UInt64)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     register.int64_0 = (Int64)(object)value;
-
                     register.int64_1 = (Int64)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     register.single_0 = (Single)(object)value;
-
                     register.single_1 = (Single)(object)value;
-
                     register.single_2 = (Single)(object)value;
-
                     register.single_3 = (Single)(object)value;
-
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     register.double_0 = (Double)(object)value;
-
                     register.double_1 = (Double)(object)value;
-
                 }
-
             }
         }
 
@@ -497,7 +381,6 @@ namespace NCDK.Numerics
 
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     fixed (Byte* basePtr = &this.register.byte_0)
@@ -508,7 +391,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     fixed (SByte* basePtr = &this.register.sbyte_0)
@@ -519,7 +401,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     fixed (UInt16* basePtr = &this.register.uint16_0)
@@ -530,7 +411,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     fixed (Int16* basePtr = &this.register.int16_0)
@@ -541,7 +421,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     fixed (UInt32* basePtr = &this.register.uint32_0)
@@ -552,7 +431,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     fixed (Int32* basePtr = &this.register.int32_0)
@@ -563,7 +441,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     fixed (UInt64* basePtr = &this.register.uint64_0)
@@ -574,7 +451,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     fixed (Int64* basePtr = &this.register.int64_0)
@@ -585,7 +461,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     fixed (Single* basePtr = &this.register.single_0)
@@ -596,7 +471,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     fixed (Double* basePtr = &this.register.double_0)
@@ -607,217 +481,135 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     fixed (Byte* basePtr = &this.register.byte_0)
                     {
                        *(basePtr + 0) = (Byte)(object)values[0 + index];
-
                        *(basePtr + 1) = (Byte)(object)values[1 + index];
-
                        *(basePtr + 2) = (Byte)(object)values[2 + index];
-
                        *(basePtr + 3) = (Byte)(object)values[3 + index];
-
                        *(basePtr + 4) = (Byte)(object)values[4 + index];
-
                        *(basePtr + 5) = (Byte)(object)values[5 + index];
-
                        *(basePtr + 6) = (Byte)(object)values[6 + index];
-
                        *(basePtr + 7) = (Byte)(object)values[7 + index];
-
                        *(basePtr + 8) = (Byte)(object)values[8 + index];
-
                        *(basePtr + 9) = (Byte)(object)values[9 + index];
-
                        *(basePtr + 10) = (Byte)(object)values[10 + index];
-
                        *(basePtr + 11) = (Byte)(object)values[11 + index];
-
                        *(basePtr + 12) = (Byte)(object)values[12 + index];
-
                        *(basePtr + 13) = (Byte)(object)values[13 + index];
-
                        *(basePtr + 14) = (Byte)(object)values[14 + index];
-
                        *(basePtr + 15) = (Byte)(object)values[15 + index];
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     fixed (SByte* basePtr = &this.register.sbyte_0)
                     {
                        *(basePtr + 0) = (SByte)(object)values[0 + index];
-
                        *(basePtr + 1) = (SByte)(object)values[1 + index];
-
                        *(basePtr + 2) = (SByte)(object)values[2 + index];
-
                        *(basePtr + 3) = (SByte)(object)values[3 + index];
-
                        *(basePtr + 4) = (SByte)(object)values[4 + index];
-
                        *(basePtr + 5) = (SByte)(object)values[5 + index];
-
                        *(basePtr + 6) = (SByte)(object)values[6 + index];
-
                        *(basePtr + 7) = (SByte)(object)values[7 + index];
-
                        *(basePtr + 8) = (SByte)(object)values[8 + index];
-
                        *(basePtr + 9) = (SByte)(object)values[9 + index];
-
                        *(basePtr + 10) = (SByte)(object)values[10 + index];
-
                        *(basePtr + 11) = (SByte)(object)values[11 + index];
-
                        *(basePtr + 12) = (SByte)(object)values[12 + index];
-
                        *(basePtr + 13) = (SByte)(object)values[13 + index];
-
                        *(basePtr + 14) = (SByte)(object)values[14 + index];
-
                        *(basePtr + 15) = (SByte)(object)values[15 + index];
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     fixed (UInt16* basePtr = &this.register.uint16_0)
                     {
                        *(basePtr + 0) = (UInt16)(object)values[0 + index];
-
                        *(basePtr + 1) = (UInt16)(object)values[1 + index];
-
                        *(basePtr + 2) = (UInt16)(object)values[2 + index];
-
                        *(basePtr + 3) = (UInt16)(object)values[3 + index];
-
                        *(basePtr + 4) = (UInt16)(object)values[4 + index];
-
                        *(basePtr + 5) = (UInt16)(object)values[5 + index];
-
                        *(basePtr + 6) = (UInt16)(object)values[6 + index];
-
                        *(basePtr + 7) = (UInt16)(object)values[7 + index];
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     fixed (Int16* basePtr = &this.register.int16_0)
                     {
-
                        *(basePtr + 0) = (Int16)(object)values[0 + index];
-
                        *(basePtr + 1) = (Int16)(object)values[1 + index];
-
                        *(basePtr + 2) = (Int16)(object)values[2 + index];
-
                        *(basePtr + 3) = (Int16)(object)values[3 + index];
-
                        *(basePtr + 4) = (Int16)(object)values[4 + index];
-
                        *(basePtr + 5) = (Int16)(object)values[5 + index];
-
                        *(basePtr + 6) = (Int16)(object)values[6 + index];
-
                        *(basePtr + 7) = (Int16)(object)values[7 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     fixed (UInt32* basePtr = &this.register.uint32_0)
                     {
-
                        *(basePtr + 0) = (UInt32)(object)values[0 + index];
-
                        *(basePtr + 1) = (UInt32)(object)values[1 + index];
-
                        *(basePtr + 2) = (UInt32)(object)values[2 + index];
-
                        *(basePtr + 3) = (UInt32)(object)values[3 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     fixed (Int32* basePtr = &this.register.int32_0)
                     {
-
                        *(basePtr + 0) = (Int32)(object)values[0 + index];
-
                        *(basePtr + 1) = (Int32)(object)values[1 + index];
-
                        *(basePtr + 2) = (Int32)(object)values[2 + index];
-
                        *(basePtr + 3) = (Int32)(object)values[3 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     fixed (UInt64* basePtr = &this.register.uint64_0)
                     {
-
                        *(basePtr + 0) = (UInt64)(object)values[0 + index];
-
                        *(basePtr + 1) = (UInt64)(object)values[1 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     fixed (Int64* basePtr = &this.register.int64_0)
                     {
-
                        *(basePtr + 0) = (Int64)(object)values[0 + index];
-
                        *(basePtr + 1) = (Int64)(object)values[1 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     fixed (Single* basePtr = &this.register.single_0)
                     {
-
                        *(basePtr + 0) = (Single)(object)values[0 + index];
-
                        *(basePtr + 1) = (Single)(object)values[1 + index];
-
                        *(basePtr + 2) = (Single)(object)values[2 + index];
-
                        *(basePtr + 3) = (Single)(object)values[3 + index];
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     fixed (Double* basePtr = &this.register.double_0)
                     {
-
                        *(basePtr + 0) = (Double)(object)values[0 + index];
-
                        *(basePtr + 1) = (Double)(object)values[1 + index];
-
                     }
                 }
-
             }
         }
 
@@ -842,7 +634,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 SByte* castedPtr = (SByte*)dataPointer;
@@ -855,7 +646,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 UInt16* castedPtr = (UInt16*)dataPointer;
@@ -868,7 +658,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 Int16* castedPtr = (Int16*)dataPointer;
@@ -881,7 +670,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 UInt32* castedPtr = (UInt32*)dataPointer;
@@ -894,7 +682,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 Int32* castedPtr = (Int32*)dataPointer;
@@ -907,7 +694,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 UInt64* castedPtr = (UInt64*)dataPointer;
@@ -920,7 +706,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 Int64* castedPtr = (Int64*)dataPointer;
@@ -933,7 +718,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 Single* castedPtr = (Single*)dataPointer;
@@ -946,7 +730,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 Double* castedPtr = (Double*)dataPointer;
@@ -959,7 +742,6 @@ namespace NCDK.Numerics
                     }
                 }
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -1013,7 +795,6 @@ namespace NCDK.Numerics
 
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte[] byteArray = (Byte[])(object)destination;
@@ -1025,7 +806,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte[] sbyteArray = (SByte[])(object)destination;
@@ -1037,7 +817,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16[] uint16Array = (UInt16[])(object)destination;
@@ -1049,7 +828,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16[] int16Array = (Int16[])(object)destination;
@@ -1061,7 +839,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32[] uint32Array = (UInt32[])(object)destination;
@@ -1073,7 +850,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32[] int32Array = (Int32[])(object)destination;
@@ -1085,7 +861,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64[] uint64Array = (UInt64[])(object)destination;
@@ -1097,7 +872,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64[] int64Array = (Int64[])(object)destination;
@@ -1109,7 +883,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single[] singleArray = (Single[])(object)destination;
@@ -1121,7 +894,6 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double[] doubleArray = (Double[])(object)destination;
@@ -1133,233 +905,145 @@ namespace NCDK.Numerics
                         }
                     }
                 }
-
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte[] byteArray = (Byte[])(object)destination;
                     fixed (Byte* destinationBase = byteArray)
                     {
-
                         destinationBase[startIndex + 0] = this.register.byte_0;
-
                         destinationBase[startIndex + 1] = this.register.byte_1;
-
                         destinationBase[startIndex + 2] = this.register.byte_2;
-
                         destinationBase[startIndex + 3] = this.register.byte_3;
-
                         destinationBase[startIndex + 4] = this.register.byte_4;
-
                         destinationBase[startIndex + 5] = this.register.byte_5;
-
                         destinationBase[startIndex + 6] = this.register.byte_6;
-
                         destinationBase[startIndex + 7] = this.register.byte_7;
-
                         destinationBase[startIndex + 8] = this.register.byte_8;
-
                         destinationBase[startIndex + 9] = this.register.byte_9;
-
                         destinationBase[startIndex + 10] = this.register.byte_10;
-
                         destinationBase[startIndex + 11] = this.register.byte_11;
-
                         destinationBase[startIndex + 12] = this.register.byte_12;
-
                         destinationBase[startIndex + 13] = this.register.byte_13;
-
                         destinationBase[startIndex + 14] = this.register.byte_14;
-
                         destinationBase[startIndex + 15] = this.register.byte_15;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte[] sbyteArray = (SByte[])(object)destination;
                     fixed (SByte* destinationBase = sbyteArray)
                     {
-
                         destinationBase[startIndex + 0] = this.register.sbyte_0;
-
                         destinationBase[startIndex + 1] = this.register.sbyte_1;
-
                         destinationBase[startIndex + 2] = this.register.sbyte_2;
-
                         destinationBase[startIndex + 3] = this.register.sbyte_3;
-
                         destinationBase[startIndex + 4] = this.register.sbyte_4;
-
                         destinationBase[startIndex + 5] = this.register.sbyte_5;
-
                         destinationBase[startIndex + 6] = this.register.sbyte_6;
-
                         destinationBase[startIndex + 7] = this.register.sbyte_7;
-
                         destinationBase[startIndex + 8] = this.register.sbyte_8;
-
                         destinationBase[startIndex + 9] = this.register.sbyte_9;
-
                         destinationBase[startIndex + 10] = this.register.sbyte_10;
-
                         destinationBase[startIndex + 11] = this.register.sbyte_11;
-
                         destinationBase[startIndex + 12] = this.register.sbyte_12;
-
                         destinationBase[startIndex + 13] = this.register.sbyte_13;
-
                         destinationBase[startIndex + 14] = this.register.sbyte_14;
-
                         destinationBase[startIndex + 15] = this.register.sbyte_15;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16[] uint16Array = (UInt16[])(object)destination;
                     fixed (UInt16* destinationBase = uint16Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.uint16_0;
-
                         destinationBase[startIndex + 1] = this.register.uint16_1;
-
                         destinationBase[startIndex + 2] = this.register.uint16_2;
-
                         destinationBase[startIndex + 3] = this.register.uint16_3;
-
                         destinationBase[startIndex + 4] = this.register.uint16_4;
-
                         destinationBase[startIndex + 5] = this.register.uint16_5;
-
                         destinationBase[startIndex + 6] = this.register.uint16_6;
-
                         destinationBase[startIndex + 7] = this.register.uint16_7;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16[] int16Array = (Int16[])(object)destination;
                     fixed (Int16* destinationBase = int16Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.int16_0;
-
                         destinationBase[startIndex + 1] = this.register.int16_1;
-
                         destinationBase[startIndex + 2] = this.register.int16_2;
-
                         destinationBase[startIndex + 3] = this.register.int16_3;
-
                         destinationBase[startIndex + 4] = this.register.int16_4;
-
                         destinationBase[startIndex + 5] = this.register.int16_5;
-
                         destinationBase[startIndex + 6] = this.register.int16_6;
-
                         destinationBase[startIndex + 7] = this.register.int16_7;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32[] uint32Array = (UInt32[])(object)destination;
                     fixed (UInt32* destinationBase = uint32Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.uint32_0;
-
                         destinationBase[startIndex + 1] = this.register.uint32_1;
-
                         destinationBase[startIndex + 2] = this.register.uint32_2;
-
                         destinationBase[startIndex + 3] = this.register.uint32_3;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32[] int32Array = (Int32[])(object)destination;
                     fixed (Int32* destinationBase = int32Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.int32_0;
-
                         destinationBase[startIndex + 1] = this.register.int32_1;
-
                         destinationBase[startIndex + 2] = this.register.int32_2;
-
                         destinationBase[startIndex + 3] = this.register.int32_3;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64[] uint64Array = (UInt64[])(object)destination;
                     fixed (UInt64* destinationBase = uint64Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.uint64_0;
-
                         destinationBase[startIndex + 1] = this.register.uint64_1;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64[] int64Array = (Int64[])(object)destination;
                     fixed (Int64* destinationBase = int64Array)
                     {
-
                         destinationBase[startIndex + 0] = this.register.int64_0;
-
                         destinationBase[startIndex + 1] = this.register.int64_1;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single[] singleArray = (Single[])(object)destination;
                     fixed (Single* destinationBase = singleArray)
                     {
-
                         destinationBase[startIndex + 0] = this.register.single_0;
-
                         destinationBase[startIndex + 1] = this.register.single_1;
-
                         destinationBase[startIndex + 2] = this.register.single_2;
-
                         destinationBase[startIndex + 3] = this.register.single_3;
-
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double[] doubleArray = (Double[])(object)destination;
                     fixed (Double* destinationBase = doubleArray)
                     {
-
                         destinationBase[startIndex + 0] = this.register.double_0;
-
                         destinationBase[startIndex + 1] = this.register.double_1;
-
                     }
                 }
-
             }
         }
 
@@ -1375,7 +1059,6 @@ namespace NCDK.Numerics
                 {
                     throw new IndexOutOfRangeException();
                 }
-
                 if (typeof(T) == typeof(Byte))
                 {
                     fixed (Byte* basePtr = &this.register.byte_0)
@@ -1383,7 +1066,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     fixed (SByte* basePtr = &this.register.sbyte_0)
@@ -1391,7 +1073,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     fixed (UInt16* basePtr = &this.register.uint16_0)
@@ -1399,7 +1080,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     fixed (Int16* basePtr = &this.register.int16_0)
@@ -1407,7 +1087,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     fixed (UInt32* basePtr = &this.register.uint32_0)
@@ -1415,7 +1094,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     fixed (Int32* basePtr = &this.register.int32_0)
@@ -1423,7 +1101,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     fixed (UInt64* basePtr = &this.register.uint64_0)
@@ -1431,7 +1108,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     fixed (Int64* basePtr = &this.register.int64_0)
@@ -1439,7 +1115,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     fixed (Single* basePtr = &this.register.single_0)
@@ -1447,7 +1122,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     fixed (Double* basePtr = &this.register.double_0)
@@ -1455,7 +1129,6 @@ namespace NCDK.Numerics
                         return (T)(object)*(basePtr + index);
                     }
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -1499,331 +1172,112 @@ namespace NCDK.Numerics
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     return
-
-
                         this.register.byte_0 == other.register.byte_0
-
-
-
                         && this.register.byte_1 == other.register.byte_1
-
-
-
                         && this.register.byte_2 == other.register.byte_2
-
-
-
                         && this.register.byte_3 == other.register.byte_3
-
-
-
                         && this.register.byte_4 == other.register.byte_4
-
-
-
                         && this.register.byte_5 == other.register.byte_5
-
-
-
                         && this.register.byte_6 == other.register.byte_6
-
-
-
                         && this.register.byte_7 == other.register.byte_7
-
-
-
                         && this.register.byte_8 == other.register.byte_8
-
-
-
                         && this.register.byte_9 == other.register.byte_9
-
-
-
                         && this.register.byte_10 == other.register.byte_10
-
-
-
                         && this.register.byte_11 == other.register.byte_11
-
-
-
                         && this.register.byte_12 == other.register.byte_12
-
-
-
                         && this.register.byte_13 == other.register.byte_13
-
-
-
                         && this.register.byte_14 == other.register.byte_14
-
-
-
                         && this.register.byte_15 == other.register.byte_15;
-
-
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     return
-
-
                         this.register.sbyte_0 == other.register.sbyte_0
-
-
-
                         && this.register.sbyte_1 == other.register.sbyte_1
-
-
-
                         && this.register.sbyte_2 == other.register.sbyte_2
-
-
-
                         && this.register.sbyte_3 == other.register.sbyte_3
-
-
-
                         && this.register.sbyte_4 == other.register.sbyte_4
-
-
-
                         && this.register.sbyte_5 == other.register.sbyte_5
-
-
-
                         && this.register.sbyte_6 == other.register.sbyte_6
-
-
-
                         && this.register.sbyte_7 == other.register.sbyte_7
-
-
-
                         && this.register.sbyte_8 == other.register.sbyte_8
-
-
-
                         && this.register.sbyte_9 == other.register.sbyte_9
-
-
-
                         && this.register.sbyte_10 == other.register.sbyte_10
-
-
-
                         && this.register.sbyte_11 == other.register.sbyte_11
-
-
-
                         && this.register.sbyte_12 == other.register.sbyte_12
-
-
-
                         && this.register.sbyte_13 == other.register.sbyte_13
-
-
-
                         && this.register.sbyte_14 == other.register.sbyte_14
-
-
-
                         && this.register.sbyte_15 == other.register.sbyte_15;
-
-
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     return
-
-
                         this.register.uint16_0 == other.register.uint16_0
-
-
-
                         && this.register.uint16_1 == other.register.uint16_1
-
-
-
                         && this.register.uint16_2 == other.register.uint16_2
-
-
-
                         && this.register.uint16_3 == other.register.uint16_3
-
-
-
                         && this.register.uint16_4 == other.register.uint16_4
-
-
-
                         && this.register.uint16_5 == other.register.uint16_5
-
-
-
                         && this.register.uint16_6 == other.register.uint16_6
-
-
-
                         && this.register.uint16_7 == other.register.uint16_7;
-
-
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     return
-
-
                         this.register.int16_0 == other.register.int16_0
-
-
-
                         && this.register.int16_1 == other.register.int16_1
-
-
-
                         && this.register.int16_2 == other.register.int16_2
-
-
-
                         && this.register.int16_3 == other.register.int16_3
-
-
-
                         && this.register.int16_4 == other.register.int16_4
-
-
-
                         && this.register.int16_5 == other.register.int16_5
-
-
-
                         && this.register.int16_6 == other.register.int16_6
-
-
-
                         && this.register.int16_7 == other.register.int16_7;
-
-
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     return
-
-
                         this.register.uint32_0 == other.register.uint32_0
-
-
-
                         && this.register.uint32_1 == other.register.uint32_1
-
-
-
                         && this.register.uint32_2 == other.register.uint32_2
-
-
-
                         && this.register.uint32_3 == other.register.uint32_3;
-
-
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     return
-
-
                         this.register.int32_0 == other.register.int32_0
-
-
-
                         && this.register.int32_1 == other.register.int32_1
-
-
-
                         && this.register.int32_2 == other.register.int32_2
-
-
-
                         && this.register.int32_3 == other.register.int32_3;
-
-
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     return
-
-
                         this.register.uint64_0 == other.register.uint64_0
-
-
-
                         && this.register.uint64_1 == other.register.uint64_1;
-
-
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     return
-
-
                         this.register.int64_0 == other.register.int64_0
-
-
-
                         && this.register.int64_1 == other.register.int64_1;
-
-
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     return
-
-
                         this.register.single_0 == other.register.single_0
-
-
-
                         && this.register.single_1 == other.register.single_1
-
-
-
                         && this.register.single_2 == other.register.single_2
-
-
-
                         && this.register.single_3 == other.register.single_3;
-
-
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     return
-
-
                         this.register.double_0 == other.register.double_0
-
-
-
                         && this.register.double_1 == other.register.double_1;
-
-
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -1841,7 +1295,6 @@ namespace NCDK.Numerics
 
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1850,7 +1303,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1859,7 +1311,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1868,7 +1319,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1877,7 +1327,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1886,7 +1335,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1895,7 +1343,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1904,7 +1351,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1913,7 +1359,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1922,7 +1367,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     for (int g = 0; g < Count; g++)
@@ -1931,7 +1375,6 @@ namespace NCDK.Numerics
                     }
                     return hash;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -1939,199 +1382,112 @@ namespace NCDK.Numerics
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_3.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_4.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_5.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_6.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_7.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_8.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_9.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_10.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_11.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_12.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_13.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_14.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.byte_15.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_3.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_4.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_5.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_6.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_7.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_8.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_9.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_10.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_11.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_12.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_13.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_14.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.sbyte_15.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_3.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_4.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_5.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_6.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint16_7.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_3.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_4.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_5.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_6.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int16_7.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint32_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint32_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint32_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint32_3.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int32_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int32_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int32_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int32_3.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint64_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.uint64_1.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int64_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.int64_1.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.single_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.single_1.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.single_2.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.single_3.GetHashCode());
-
                     return hash;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.double_0.GetHashCode());
-
                     hash = HashCodeHelper.CombineHashCodes(hash, this.register.double_1.GetHashCode());
-
                     return hash;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -2196,7 +1552,6 @@ namespace NCDK.Numerics
             {
                 if (Vector.IsHardwareAccelerated)
                 {
-
                     if (typeof(T) == typeof(Byte))
                     {
                         Byte* dataPtr = stackalloc Byte[Count];
@@ -2206,7 +1561,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
                         SByte* dataPtr = stackalloc SByte[Count];
@@ -2216,7 +1570,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
                         UInt16* dataPtr = stackalloc UInt16[Count];
@@ -2226,7 +1579,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
                         Int16* dataPtr = stackalloc Int16[Count];
@@ -2236,7 +1588,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
                         UInt32* dataPtr = stackalloc UInt32[Count];
@@ -2246,7 +1597,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
                         Int32* dataPtr = stackalloc Int32[Count];
@@ -2256,7 +1606,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
                         UInt64* dataPtr = stackalloc UInt64[Count];
@@ -2266,7 +1615,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
                         Int64* dataPtr = stackalloc Int64[Count];
@@ -2276,7 +1624,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
                         Single* dataPtr = stackalloc Single[Count];
@@ -2286,7 +1633,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
                         Double* dataPtr = stackalloc Double[Count];
@@ -2296,7 +1642,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else
                     {
                         throw new NotSupportedException("Argument type is not supported.");
@@ -2305,189 +1650,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> sum = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         sum.register.byte_0 = (Byte)(left.register.byte_0 + right.register.byte_0);
-
                         sum.register.byte_1 = (Byte)(left.register.byte_1 + right.register.byte_1);
-
                         sum.register.byte_2 = (Byte)(left.register.byte_2 + right.register.byte_2);
-
                         sum.register.byte_3 = (Byte)(left.register.byte_3 + right.register.byte_3);
-
                         sum.register.byte_4 = (Byte)(left.register.byte_4 + right.register.byte_4);
-
                         sum.register.byte_5 = (Byte)(left.register.byte_5 + right.register.byte_5);
-
                         sum.register.byte_6 = (Byte)(left.register.byte_6 + right.register.byte_6);
-
                         sum.register.byte_7 = (Byte)(left.register.byte_7 + right.register.byte_7);
-
                         sum.register.byte_8 = (Byte)(left.register.byte_8 + right.register.byte_8);
-
                         sum.register.byte_9 = (Byte)(left.register.byte_9 + right.register.byte_9);
-
                         sum.register.byte_10 = (Byte)(left.register.byte_10 + right.register.byte_10);
-
                         sum.register.byte_11 = (Byte)(left.register.byte_11 + right.register.byte_11);
-
                         sum.register.byte_12 = (Byte)(left.register.byte_12 + right.register.byte_12);
-
                         sum.register.byte_13 = (Byte)(left.register.byte_13 + right.register.byte_13);
-
                         sum.register.byte_14 = (Byte)(left.register.byte_14 + right.register.byte_14);
-
                         sum.register.byte_15 = (Byte)(left.register.byte_15 + right.register.byte_15);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         sum.register.sbyte_0 = (SByte)(left.register.sbyte_0 + right.register.sbyte_0);
-
                         sum.register.sbyte_1 = (SByte)(left.register.sbyte_1 + right.register.sbyte_1);
-
                         sum.register.sbyte_2 = (SByte)(left.register.sbyte_2 + right.register.sbyte_2);
-
                         sum.register.sbyte_3 = (SByte)(left.register.sbyte_3 + right.register.sbyte_3);
-
                         sum.register.sbyte_4 = (SByte)(left.register.sbyte_4 + right.register.sbyte_4);
-
                         sum.register.sbyte_5 = (SByte)(left.register.sbyte_5 + right.register.sbyte_5);
-
                         sum.register.sbyte_6 = (SByte)(left.register.sbyte_6 + right.register.sbyte_6);
-
                         sum.register.sbyte_7 = (SByte)(left.register.sbyte_7 + right.register.sbyte_7);
-
                         sum.register.sbyte_8 = (SByte)(left.register.sbyte_8 + right.register.sbyte_8);
-
                         sum.register.sbyte_9 = (SByte)(left.register.sbyte_9 + right.register.sbyte_9);
-
                         sum.register.sbyte_10 = (SByte)(left.register.sbyte_10 + right.register.sbyte_10);
-
                         sum.register.sbyte_11 = (SByte)(left.register.sbyte_11 + right.register.sbyte_11);
-
                         sum.register.sbyte_12 = (SByte)(left.register.sbyte_12 + right.register.sbyte_12);
-
                         sum.register.sbyte_13 = (SByte)(left.register.sbyte_13 + right.register.sbyte_13);
-
                         sum.register.sbyte_14 = (SByte)(left.register.sbyte_14 + right.register.sbyte_14);
-
                         sum.register.sbyte_15 = (SByte)(left.register.sbyte_15 + right.register.sbyte_15);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         sum.register.uint16_0 = (UInt16)(left.register.uint16_0 + right.register.uint16_0);
-
                         sum.register.uint16_1 = (UInt16)(left.register.uint16_1 + right.register.uint16_1);
-
                         sum.register.uint16_2 = (UInt16)(left.register.uint16_2 + right.register.uint16_2);
-
                         sum.register.uint16_3 = (UInt16)(left.register.uint16_3 + right.register.uint16_3);
-
                         sum.register.uint16_4 = (UInt16)(left.register.uint16_4 + right.register.uint16_4);
-
                         sum.register.uint16_5 = (UInt16)(left.register.uint16_5 + right.register.uint16_5);
-
                         sum.register.uint16_6 = (UInt16)(left.register.uint16_6 + right.register.uint16_6);
-
                         sum.register.uint16_7 = (UInt16)(left.register.uint16_7 + right.register.uint16_7);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         sum.register.int16_0 = (Int16)(left.register.int16_0 + right.register.int16_0);
-
                         sum.register.int16_1 = (Int16)(left.register.int16_1 + right.register.int16_1);
-
                         sum.register.int16_2 = (Int16)(left.register.int16_2 + right.register.int16_2);
-
                         sum.register.int16_3 = (Int16)(left.register.int16_3 + right.register.int16_3);
-
                         sum.register.int16_4 = (Int16)(left.register.int16_4 + right.register.int16_4);
-
                         sum.register.int16_5 = (Int16)(left.register.int16_5 + right.register.int16_5);
-
                         sum.register.int16_6 = (Int16)(left.register.int16_6 + right.register.int16_6);
-
                         sum.register.int16_7 = (Int16)(left.register.int16_7 + right.register.int16_7);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         sum.register.uint32_0 = (UInt32)(left.register.uint32_0 + right.register.uint32_0);
-
                         sum.register.uint32_1 = (UInt32)(left.register.uint32_1 + right.register.uint32_1);
-
                         sum.register.uint32_2 = (UInt32)(left.register.uint32_2 + right.register.uint32_2);
-
                         sum.register.uint32_3 = (UInt32)(left.register.uint32_3 + right.register.uint32_3);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         sum.register.int32_0 = (Int32)(left.register.int32_0 + right.register.int32_0);
-
                         sum.register.int32_1 = (Int32)(left.register.int32_1 + right.register.int32_1);
-
                         sum.register.int32_2 = (Int32)(left.register.int32_2 + right.register.int32_2);
-
                         sum.register.int32_3 = (Int32)(left.register.int32_3 + right.register.int32_3);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         sum.register.uint64_0 = (UInt64)(left.register.uint64_0 + right.register.uint64_0);
-
                         sum.register.uint64_1 = (UInt64)(left.register.uint64_1 + right.register.uint64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         sum.register.int64_0 = (Int64)(left.register.int64_0 + right.register.int64_0);
-
                         sum.register.int64_1 = (Int64)(left.register.int64_1 + right.register.int64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         sum.register.single_0 = (Single)(left.register.single_0 + right.register.single_0);
-
                         sum.register.single_1 = (Single)(left.register.single_1 + right.register.single_1);
-
                         sum.register.single_2 = (Single)(left.register.single_2 + right.register.single_2);
-
                         sum.register.single_3 = (Single)(left.register.single_3 + right.register.single_3);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         sum.register.double_0 = (Double)(left.register.double_0 + right.register.double_0);
-
                         sum.register.double_1 = (Double)(left.register.double_1 + right.register.double_1);
-
                     }
-
                     return sum;
                 }
             }
@@ -2505,7 +1763,6 @@ namespace NCDK.Numerics
             {
                 if (Vector.IsHardwareAccelerated)
                 {
-
                     if (typeof(T) == typeof(Byte))
                     {
                         Byte* dataPtr = stackalloc Byte[Count];
@@ -2515,7 +1772,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
                         SByte* dataPtr = stackalloc SByte[Count];
@@ -2525,7 +1781,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
                         UInt16* dataPtr = stackalloc UInt16[Count];
@@ -2535,7 +1790,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
                         Int16* dataPtr = stackalloc Int16[Count];
@@ -2545,7 +1799,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
                         UInt32* dataPtr = stackalloc UInt32[Count];
@@ -2555,7 +1808,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
                         Int32* dataPtr = stackalloc Int32[Count];
@@ -2565,7 +1817,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
                         UInt64* dataPtr = stackalloc UInt64[Count];
@@ -2575,7 +1826,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
                         Int64* dataPtr = stackalloc Int64[Count];
@@ -2585,7 +1835,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
                         Single* dataPtr = stackalloc Single[Count];
@@ -2595,7 +1844,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
                         Double* dataPtr = stackalloc Double[Count];
@@ -2605,7 +1853,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else
                     {
                         throw new NotSupportedException("Argument type is not supported.");
@@ -2614,189 +1861,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> difference = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         difference.register.byte_0 = (Byte)(left.register.byte_0 - right.register.byte_0);
-
                         difference.register.byte_1 = (Byte)(left.register.byte_1 - right.register.byte_1);
-
                         difference.register.byte_2 = (Byte)(left.register.byte_2 - right.register.byte_2);
-
                         difference.register.byte_3 = (Byte)(left.register.byte_3 - right.register.byte_3);
-
                         difference.register.byte_4 = (Byte)(left.register.byte_4 - right.register.byte_4);
-
                         difference.register.byte_5 = (Byte)(left.register.byte_5 - right.register.byte_5);
-
                         difference.register.byte_6 = (Byte)(left.register.byte_6 - right.register.byte_6);
-
                         difference.register.byte_7 = (Byte)(left.register.byte_7 - right.register.byte_7);
-
                         difference.register.byte_8 = (Byte)(left.register.byte_8 - right.register.byte_8);
-
                         difference.register.byte_9 = (Byte)(left.register.byte_9 - right.register.byte_9);
-
                         difference.register.byte_10 = (Byte)(left.register.byte_10 - right.register.byte_10);
-
                         difference.register.byte_11 = (Byte)(left.register.byte_11 - right.register.byte_11);
-
                         difference.register.byte_12 = (Byte)(left.register.byte_12 - right.register.byte_12);
-
                         difference.register.byte_13 = (Byte)(left.register.byte_13 - right.register.byte_13);
-
                         difference.register.byte_14 = (Byte)(left.register.byte_14 - right.register.byte_14);
-
                         difference.register.byte_15 = (Byte)(left.register.byte_15 - right.register.byte_15);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         difference.register.sbyte_0 = (SByte)(left.register.sbyte_0 - right.register.sbyte_0);
-
                         difference.register.sbyte_1 = (SByte)(left.register.sbyte_1 - right.register.sbyte_1);
-
                         difference.register.sbyte_2 = (SByte)(left.register.sbyte_2 - right.register.sbyte_2);
-
                         difference.register.sbyte_3 = (SByte)(left.register.sbyte_3 - right.register.sbyte_3);
-
                         difference.register.sbyte_4 = (SByte)(left.register.sbyte_4 - right.register.sbyte_4);
-
                         difference.register.sbyte_5 = (SByte)(left.register.sbyte_5 - right.register.sbyte_5);
-
                         difference.register.sbyte_6 = (SByte)(left.register.sbyte_6 - right.register.sbyte_6);
-
                         difference.register.sbyte_7 = (SByte)(left.register.sbyte_7 - right.register.sbyte_7);
-
                         difference.register.sbyte_8 = (SByte)(left.register.sbyte_8 - right.register.sbyte_8);
-
                         difference.register.sbyte_9 = (SByte)(left.register.sbyte_9 - right.register.sbyte_9);
-
                         difference.register.sbyte_10 = (SByte)(left.register.sbyte_10 - right.register.sbyte_10);
-
                         difference.register.sbyte_11 = (SByte)(left.register.sbyte_11 - right.register.sbyte_11);
-
                         difference.register.sbyte_12 = (SByte)(left.register.sbyte_12 - right.register.sbyte_12);
-
                         difference.register.sbyte_13 = (SByte)(left.register.sbyte_13 - right.register.sbyte_13);
-
                         difference.register.sbyte_14 = (SByte)(left.register.sbyte_14 - right.register.sbyte_14);
-
                         difference.register.sbyte_15 = (SByte)(left.register.sbyte_15 - right.register.sbyte_15);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         difference.register.uint16_0 = (UInt16)(left.register.uint16_0 - right.register.uint16_0);
-
                         difference.register.uint16_1 = (UInt16)(left.register.uint16_1 - right.register.uint16_1);
-
                         difference.register.uint16_2 = (UInt16)(left.register.uint16_2 - right.register.uint16_2);
-
                         difference.register.uint16_3 = (UInt16)(left.register.uint16_3 - right.register.uint16_3);
-
                         difference.register.uint16_4 = (UInt16)(left.register.uint16_4 - right.register.uint16_4);
-
                         difference.register.uint16_5 = (UInt16)(left.register.uint16_5 - right.register.uint16_5);
-
                         difference.register.uint16_6 = (UInt16)(left.register.uint16_6 - right.register.uint16_6);
-
                         difference.register.uint16_7 = (UInt16)(left.register.uint16_7 - right.register.uint16_7);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         difference.register.int16_0 = (Int16)(left.register.int16_0 - right.register.int16_0);
-
                         difference.register.int16_1 = (Int16)(left.register.int16_1 - right.register.int16_1);
-
                         difference.register.int16_2 = (Int16)(left.register.int16_2 - right.register.int16_2);
-
                         difference.register.int16_3 = (Int16)(left.register.int16_3 - right.register.int16_3);
-
                         difference.register.int16_4 = (Int16)(left.register.int16_4 - right.register.int16_4);
-
                         difference.register.int16_5 = (Int16)(left.register.int16_5 - right.register.int16_5);
-
                         difference.register.int16_6 = (Int16)(left.register.int16_6 - right.register.int16_6);
-
                         difference.register.int16_7 = (Int16)(left.register.int16_7 - right.register.int16_7);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         difference.register.uint32_0 = (UInt32)(left.register.uint32_0 - right.register.uint32_0);
-
                         difference.register.uint32_1 = (UInt32)(left.register.uint32_1 - right.register.uint32_1);
-
                         difference.register.uint32_2 = (UInt32)(left.register.uint32_2 - right.register.uint32_2);
-
                         difference.register.uint32_3 = (UInt32)(left.register.uint32_3 - right.register.uint32_3);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         difference.register.int32_0 = (Int32)(left.register.int32_0 - right.register.int32_0);
-
                         difference.register.int32_1 = (Int32)(left.register.int32_1 - right.register.int32_1);
-
                         difference.register.int32_2 = (Int32)(left.register.int32_2 - right.register.int32_2);
-
                         difference.register.int32_3 = (Int32)(left.register.int32_3 - right.register.int32_3);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         difference.register.uint64_0 = (UInt64)(left.register.uint64_0 - right.register.uint64_0);
-
                         difference.register.uint64_1 = (UInt64)(left.register.uint64_1 - right.register.uint64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         difference.register.int64_0 = (Int64)(left.register.int64_0 - right.register.int64_0);
-
                         difference.register.int64_1 = (Int64)(left.register.int64_1 - right.register.int64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         difference.register.single_0 = (Single)(left.register.single_0 - right.register.single_0);
-
                         difference.register.single_1 = (Single)(left.register.single_1 - right.register.single_1);
-
                         difference.register.single_2 = (Single)(left.register.single_2 - right.register.single_2);
-
                         difference.register.single_3 = (Single)(left.register.single_3 - right.register.single_3);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         difference.register.double_0 = (Double)(left.register.double_0 - right.register.double_0);
-
                         difference.register.double_1 = (Double)(left.register.double_1 - right.register.double_1);
-
                     }
-
                     return difference;
                 }
             }
@@ -2815,7 +1975,6 @@ namespace NCDK.Numerics
             {
                 if (Vector.IsHardwareAccelerated)
                 {
-
                     if (typeof(T) == typeof(Byte))
                     {
                         Byte* dataPtr = stackalloc Byte[Count];
@@ -2825,7 +1984,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
                         SByte* dataPtr = stackalloc SByte[Count];
@@ -2835,7 +1993,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
                         UInt16* dataPtr = stackalloc UInt16[Count];
@@ -2845,7 +2002,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
                         Int16* dataPtr = stackalloc Int16[Count];
@@ -2855,7 +2011,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
                         UInt32* dataPtr = stackalloc UInt32[Count];
@@ -2865,7 +2020,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
                         Int32* dataPtr = stackalloc Int32[Count];
@@ -2875,7 +2029,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
                         UInt64* dataPtr = stackalloc UInt64[Count];
@@ -2885,7 +2038,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
                         Int64* dataPtr = stackalloc Int64[Count];
@@ -2895,7 +2047,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
                         Single* dataPtr = stackalloc Single[Count];
@@ -2905,7 +2056,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
                         Double* dataPtr = stackalloc Double[Count];
@@ -2915,7 +2065,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else
                     {
                         throw new NotSupportedException("Argument type is not supported.");
@@ -2924,189 +2073,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> product = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         product.register.byte_0 = (Byte)(left.register.byte_0 * right.register.byte_0);
-
                         product.register.byte_1 = (Byte)(left.register.byte_1 * right.register.byte_1);
-
                         product.register.byte_2 = (Byte)(left.register.byte_2 * right.register.byte_2);
-
                         product.register.byte_3 = (Byte)(left.register.byte_3 * right.register.byte_3);
-
                         product.register.byte_4 = (Byte)(left.register.byte_4 * right.register.byte_4);
-
                         product.register.byte_5 = (Byte)(left.register.byte_5 * right.register.byte_5);
-
                         product.register.byte_6 = (Byte)(left.register.byte_6 * right.register.byte_6);
-
                         product.register.byte_7 = (Byte)(left.register.byte_7 * right.register.byte_7);
-
                         product.register.byte_8 = (Byte)(left.register.byte_8 * right.register.byte_8);
-
                         product.register.byte_9 = (Byte)(left.register.byte_9 * right.register.byte_9);
-
                         product.register.byte_10 = (Byte)(left.register.byte_10 * right.register.byte_10);
-
                         product.register.byte_11 = (Byte)(left.register.byte_11 * right.register.byte_11);
-
                         product.register.byte_12 = (Byte)(left.register.byte_12 * right.register.byte_12);
-
                         product.register.byte_13 = (Byte)(left.register.byte_13 * right.register.byte_13);
-
                         product.register.byte_14 = (Byte)(left.register.byte_14 * right.register.byte_14);
-
                         product.register.byte_15 = (Byte)(left.register.byte_15 * right.register.byte_15);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         product.register.sbyte_0 = (SByte)(left.register.sbyte_0 * right.register.sbyte_0);
-
                         product.register.sbyte_1 = (SByte)(left.register.sbyte_1 * right.register.sbyte_1);
-
                         product.register.sbyte_2 = (SByte)(left.register.sbyte_2 * right.register.sbyte_2);
-
                         product.register.sbyte_3 = (SByte)(left.register.sbyte_3 * right.register.sbyte_3);
-
                         product.register.sbyte_4 = (SByte)(left.register.sbyte_4 * right.register.sbyte_4);
-
                         product.register.sbyte_5 = (SByte)(left.register.sbyte_5 * right.register.sbyte_5);
-
                         product.register.sbyte_6 = (SByte)(left.register.sbyte_6 * right.register.sbyte_6);
-
                         product.register.sbyte_7 = (SByte)(left.register.sbyte_7 * right.register.sbyte_7);
-
                         product.register.sbyte_8 = (SByte)(left.register.sbyte_8 * right.register.sbyte_8);
-
                         product.register.sbyte_9 = (SByte)(left.register.sbyte_9 * right.register.sbyte_9);
-
                         product.register.sbyte_10 = (SByte)(left.register.sbyte_10 * right.register.sbyte_10);
-
                         product.register.sbyte_11 = (SByte)(left.register.sbyte_11 * right.register.sbyte_11);
-
                         product.register.sbyte_12 = (SByte)(left.register.sbyte_12 * right.register.sbyte_12);
-
                         product.register.sbyte_13 = (SByte)(left.register.sbyte_13 * right.register.sbyte_13);
-
                         product.register.sbyte_14 = (SByte)(left.register.sbyte_14 * right.register.sbyte_14);
-
                         product.register.sbyte_15 = (SByte)(left.register.sbyte_15 * right.register.sbyte_15);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         product.register.uint16_0 = (UInt16)(left.register.uint16_0 * right.register.uint16_0);
-
                         product.register.uint16_1 = (UInt16)(left.register.uint16_1 * right.register.uint16_1);
-
                         product.register.uint16_2 = (UInt16)(left.register.uint16_2 * right.register.uint16_2);
-
                         product.register.uint16_3 = (UInt16)(left.register.uint16_3 * right.register.uint16_3);
-
                         product.register.uint16_4 = (UInt16)(left.register.uint16_4 * right.register.uint16_4);
-
                         product.register.uint16_5 = (UInt16)(left.register.uint16_5 * right.register.uint16_5);
-
                         product.register.uint16_6 = (UInt16)(left.register.uint16_6 * right.register.uint16_6);
-
                         product.register.uint16_7 = (UInt16)(left.register.uint16_7 * right.register.uint16_7);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         product.register.int16_0 = (Int16)(left.register.int16_0 * right.register.int16_0);
-
                         product.register.int16_1 = (Int16)(left.register.int16_1 * right.register.int16_1);
-
                         product.register.int16_2 = (Int16)(left.register.int16_2 * right.register.int16_2);
-
                         product.register.int16_3 = (Int16)(left.register.int16_3 * right.register.int16_3);
-
                         product.register.int16_4 = (Int16)(left.register.int16_4 * right.register.int16_4);
-
                         product.register.int16_5 = (Int16)(left.register.int16_5 * right.register.int16_5);
-
                         product.register.int16_6 = (Int16)(left.register.int16_6 * right.register.int16_6);
-
                         product.register.int16_7 = (Int16)(left.register.int16_7 * right.register.int16_7);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         product.register.uint32_0 = (UInt32)(left.register.uint32_0 * right.register.uint32_0);
-
                         product.register.uint32_1 = (UInt32)(left.register.uint32_1 * right.register.uint32_1);
-
                         product.register.uint32_2 = (UInt32)(left.register.uint32_2 * right.register.uint32_2);
-
                         product.register.uint32_3 = (UInt32)(left.register.uint32_3 * right.register.uint32_3);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         product.register.int32_0 = (Int32)(left.register.int32_0 * right.register.int32_0);
-
                         product.register.int32_1 = (Int32)(left.register.int32_1 * right.register.int32_1);
-
                         product.register.int32_2 = (Int32)(left.register.int32_2 * right.register.int32_2);
-
                         product.register.int32_3 = (Int32)(left.register.int32_3 * right.register.int32_3);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         product.register.uint64_0 = (UInt64)(left.register.uint64_0 * right.register.uint64_0);
-
                         product.register.uint64_1 = (UInt64)(left.register.uint64_1 * right.register.uint64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         product.register.int64_0 = (Int64)(left.register.int64_0 * right.register.int64_0);
-
                         product.register.int64_1 = (Int64)(left.register.int64_1 * right.register.int64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         product.register.single_0 = (Single)(left.register.single_0 * right.register.single_0);
-
                         product.register.single_1 = (Single)(left.register.single_1 * right.register.single_1);
-
                         product.register.single_2 = (Single)(left.register.single_2 * right.register.single_2);
-
                         product.register.single_3 = (Single)(left.register.single_3 * right.register.single_3);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         product.register.double_0 = (Double)(left.register.double_0 * right.register.double_0);
-
                         product.register.double_1 = (Double)(left.register.double_1 * right.register.double_1);
-
                     }
-
                     return product;
                 }
             }
@@ -3130,189 +2192,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> product = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         product.register.byte_0 = (Byte)(value.register.byte_0 * (Byte)(object)factor);
-
                         product.register.byte_1 = (Byte)(value.register.byte_1 * (Byte)(object)factor);
-
                         product.register.byte_2 = (Byte)(value.register.byte_2 * (Byte)(object)factor);
-
                         product.register.byte_3 = (Byte)(value.register.byte_3 * (Byte)(object)factor);
-
                         product.register.byte_4 = (Byte)(value.register.byte_4 * (Byte)(object)factor);
-
                         product.register.byte_5 = (Byte)(value.register.byte_5 * (Byte)(object)factor);
-
                         product.register.byte_6 = (Byte)(value.register.byte_6 * (Byte)(object)factor);
-
                         product.register.byte_7 = (Byte)(value.register.byte_7 * (Byte)(object)factor);
-
                         product.register.byte_8 = (Byte)(value.register.byte_8 * (Byte)(object)factor);
-
                         product.register.byte_9 = (Byte)(value.register.byte_9 * (Byte)(object)factor);
-
                         product.register.byte_10 = (Byte)(value.register.byte_10 * (Byte)(object)factor);
-
                         product.register.byte_11 = (Byte)(value.register.byte_11 * (Byte)(object)factor);
-
                         product.register.byte_12 = (Byte)(value.register.byte_12 * (Byte)(object)factor);
-
                         product.register.byte_13 = (Byte)(value.register.byte_13 * (Byte)(object)factor);
-
                         product.register.byte_14 = (Byte)(value.register.byte_14 * (Byte)(object)factor);
-
                         product.register.byte_15 = (Byte)(value.register.byte_15 * (Byte)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         product.register.sbyte_0 = (SByte)(value.register.sbyte_0 * (SByte)(object)factor);
-
                         product.register.sbyte_1 = (SByte)(value.register.sbyte_1 * (SByte)(object)factor);
-
                         product.register.sbyte_2 = (SByte)(value.register.sbyte_2 * (SByte)(object)factor);
-
                         product.register.sbyte_3 = (SByte)(value.register.sbyte_3 * (SByte)(object)factor);
-
                         product.register.sbyte_4 = (SByte)(value.register.sbyte_4 * (SByte)(object)factor);
-
                         product.register.sbyte_5 = (SByte)(value.register.sbyte_5 * (SByte)(object)factor);
-
                         product.register.sbyte_6 = (SByte)(value.register.sbyte_6 * (SByte)(object)factor);
-
                         product.register.sbyte_7 = (SByte)(value.register.sbyte_7 * (SByte)(object)factor);
-
                         product.register.sbyte_8 = (SByte)(value.register.sbyte_8 * (SByte)(object)factor);
-
                         product.register.sbyte_9 = (SByte)(value.register.sbyte_9 * (SByte)(object)factor);
-
                         product.register.sbyte_10 = (SByte)(value.register.sbyte_10 * (SByte)(object)factor);
-
                         product.register.sbyte_11 = (SByte)(value.register.sbyte_11 * (SByte)(object)factor);
-
                         product.register.sbyte_12 = (SByte)(value.register.sbyte_12 * (SByte)(object)factor);
-
                         product.register.sbyte_13 = (SByte)(value.register.sbyte_13 * (SByte)(object)factor);
-
                         product.register.sbyte_14 = (SByte)(value.register.sbyte_14 * (SByte)(object)factor);
-
                         product.register.sbyte_15 = (SByte)(value.register.sbyte_15 * (SByte)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         product.register.uint16_0 = (UInt16)(value.register.uint16_0 * (UInt16)(object)factor);
-
                         product.register.uint16_1 = (UInt16)(value.register.uint16_1 * (UInt16)(object)factor);
-
                         product.register.uint16_2 = (UInt16)(value.register.uint16_2 * (UInt16)(object)factor);
-
                         product.register.uint16_3 = (UInt16)(value.register.uint16_3 * (UInt16)(object)factor);
-
                         product.register.uint16_4 = (UInt16)(value.register.uint16_4 * (UInt16)(object)factor);
-
                         product.register.uint16_5 = (UInt16)(value.register.uint16_5 * (UInt16)(object)factor);
-
                         product.register.uint16_6 = (UInt16)(value.register.uint16_6 * (UInt16)(object)factor);
-
                         product.register.uint16_7 = (UInt16)(value.register.uint16_7 * (UInt16)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         product.register.int16_0 = (Int16)(value.register.int16_0 * (Int16)(object)factor);
-
                         product.register.int16_1 = (Int16)(value.register.int16_1 * (Int16)(object)factor);
-
                         product.register.int16_2 = (Int16)(value.register.int16_2 * (Int16)(object)factor);
-
                         product.register.int16_3 = (Int16)(value.register.int16_3 * (Int16)(object)factor);
-
                         product.register.int16_4 = (Int16)(value.register.int16_4 * (Int16)(object)factor);
-
                         product.register.int16_5 = (Int16)(value.register.int16_5 * (Int16)(object)factor);
-
                         product.register.int16_6 = (Int16)(value.register.int16_6 * (Int16)(object)factor);
-
                         product.register.int16_7 = (Int16)(value.register.int16_7 * (Int16)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         product.register.uint32_0 = (UInt32)(value.register.uint32_0 * (UInt32)(object)factor);
-
                         product.register.uint32_1 = (UInt32)(value.register.uint32_1 * (UInt32)(object)factor);
-
                         product.register.uint32_2 = (UInt32)(value.register.uint32_2 * (UInt32)(object)factor);
-
                         product.register.uint32_3 = (UInt32)(value.register.uint32_3 * (UInt32)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         product.register.int32_0 = (Int32)(value.register.int32_0 * (Int32)(object)factor);
-
                         product.register.int32_1 = (Int32)(value.register.int32_1 * (Int32)(object)factor);
-
                         product.register.int32_2 = (Int32)(value.register.int32_2 * (Int32)(object)factor);
-
                         product.register.int32_3 = (Int32)(value.register.int32_3 * (Int32)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         product.register.uint64_0 = (UInt64)(value.register.uint64_0 * (UInt64)(object)factor);
-
                         product.register.uint64_1 = (UInt64)(value.register.uint64_1 * (UInt64)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         product.register.int64_0 = (Int64)(value.register.int64_0 * (Int64)(object)factor);
-
                         product.register.int64_1 = (Int64)(value.register.int64_1 * (Int64)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         product.register.single_0 = (Single)(value.register.single_0 * (Single)(object)factor);
-
                         product.register.single_1 = (Single)(value.register.single_1 * (Single)(object)factor);
-
                         product.register.single_2 = (Single)(value.register.single_2 * (Single)(object)factor);
-
                         product.register.single_3 = (Single)(value.register.single_3 * (Single)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         product.register.double_0 = (Double)(value.register.double_0 * (Double)(object)factor);
-
                         product.register.double_1 = (Double)(value.register.double_1 * (Double)(object)factor);
-
                     }
-
                     return product;
                 }
             }
@@ -3336,189 +2311,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> product = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         product.register.byte_0 = (Byte)(value.register.byte_0 * (Byte)(object)factor);
-
                         product.register.byte_1 = (Byte)(value.register.byte_1 * (Byte)(object)factor);
-
                         product.register.byte_2 = (Byte)(value.register.byte_2 * (Byte)(object)factor);
-
                         product.register.byte_3 = (Byte)(value.register.byte_3 * (Byte)(object)factor);
-
                         product.register.byte_4 = (Byte)(value.register.byte_4 * (Byte)(object)factor);
-
                         product.register.byte_5 = (Byte)(value.register.byte_5 * (Byte)(object)factor);
-
                         product.register.byte_6 = (Byte)(value.register.byte_6 * (Byte)(object)factor);
-
                         product.register.byte_7 = (Byte)(value.register.byte_7 * (Byte)(object)factor);
-
                         product.register.byte_8 = (Byte)(value.register.byte_8 * (Byte)(object)factor);
-
                         product.register.byte_9 = (Byte)(value.register.byte_9 * (Byte)(object)factor);
-
                         product.register.byte_10 = (Byte)(value.register.byte_10 * (Byte)(object)factor);
-
                         product.register.byte_11 = (Byte)(value.register.byte_11 * (Byte)(object)factor);
-
                         product.register.byte_12 = (Byte)(value.register.byte_12 * (Byte)(object)factor);
-
                         product.register.byte_13 = (Byte)(value.register.byte_13 * (Byte)(object)factor);
-
                         product.register.byte_14 = (Byte)(value.register.byte_14 * (Byte)(object)factor);
-
                         product.register.byte_15 = (Byte)(value.register.byte_15 * (Byte)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         product.register.sbyte_0 = (SByte)(value.register.sbyte_0 * (SByte)(object)factor);
-
                         product.register.sbyte_1 = (SByte)(value.register.sbyte_1 * (SByte)(object)factor);
-
                         product.register.sbyte_2 = (SByte)(value.register.sbyte_2 * (SByte)(object)factor);
-
                         product.register.sbyte_3 = (SByte)(value.register.sbyte_3 * (SByte)(object)factor);
-
                         product.register.sbyte_4 = (SByte)(value.register.sbyte_4 * (SByte)(object)factor);
-
                         product.register.sbyte_5 = (SByte)(value.register.sbyte_5 * (SByte)(object)factor);
-
                         product.register.sbyte_6 = (SByte)(value.register.sbyte_6 * (SByte)(object)factor);
-
                         product.register.sbyte_7 = (SByte)(value.register.sbyte_7 * (SByte)(object)factor);
-
                         product.register.sbyte_8 = (SByte)(value.register.sbyte_8 * (SByte)(object)factor);
-
                         product.register.sbyte_9 = (SByte)(value.register.sbyte_9 * (SByte)(object)factor);
-
                         product.register.sbyte_10 = (SByte)(value.register.sbyte_10 * (SByte)(object)factor);
-
                         product.register.sbyte_11 = (SByte)(value.register.sbyte_11 * (SByte)(object)factor);
-
                         product.register.sbyte_12 = (SByte)(value.register.sbyte_12 * (SByte)(object)factor);
-
                         product.register.sbyte_13 = (SByte)(value.register.sbyte_13 * (SByte)(object)factor);
-
                         product.register.sbyte_14 = (SByte)(value.register.sbyte_14 * (SByte)(object)factor);
-
                         product.register.sbyte_15 = (SByte)(value.register.sbyte_15 * (SByte)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         product.register.uint16_0 = (UInt16)(value.register.uint16_0 * (UInt16)(object)factor);
-
                         product.register.uint16_1 = (UInt16)(value.register.uint16_1 * (UInt16)(object)factor);
-
                         product.register.uint16_2 = (UInt16)(value.register.uint16_2 * (UInt16)(object)factor);
-
                         product.register.uint16_3 = (UInt16)(value.register.uint16_3 * (UInt16)(object)factor);
-
                         product.register.uint16_4 = (UInt16)(value.register.uint16_4 * (UInt16)(object)factor);
-
                         product.register.uint16_5 = (UInt16)(value.register.uint16_5 * (UInt16)(object)factor);
-
                         product.register.uint16_6 = (UInt16)(value.register.uint16_6 * (UInt16)(object)factor);
-
                         product.register.uint16_7 = (UInt16)(value.register.uint16_7 * (UInt16)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         product.register.int16_0 = (Int16)(value.register.int16_0 * (Int16)(object)factor);
-
                         product.register.int16_1 = (Int16)(value.register.int16_1 * (Int16)(object)factor);
-
                         product.register.int16_2 = (Int16)(value.register.int16_2 * (Int16)(object)factor);
-
                         product.register.int16_3 = (Int16)(value.register.int16_3 * (Int16)(object)factor);
-
                         product.register.int16_4 = (Int16)(value.register.int16_4 * (Int16)(object)factor);
-
                         product.register.int16_5 = (Int16)(value.register.int16_5 * (Int16)(object)factor);
-
                         product.register.int16_6 = (Int16)(value.register.int16_6 * (Int16)(object)factor);
-
                         product.register.int16_7 = (Int16)(value.register.int16_7 * (Int16)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         product.register.uint32_0 = (UInt32)(value.register.uint32_0 * (UInt32)(object)factor);
-
                         product.register.uint32_1 = (UInt32)(value.register.uint32_1 * (UInt32)(object)factor);
-
                         product.register.uint32_2 = (UInt32)(value.register.uint32_2 * (UInt32)(object)factor);
-
                         product.register.uint32_3 = (UInt32)(value.register.uint32_3 * (UInt32)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         product.register.int32_0 = (Int32)(value.register.int32_0 * (Int32)(object)factor);
-
                         product.register.int32_1 = (Int32)(value.register.int32_1 * (Int32)(object)factor);
-
                         product.register.int32_2 = (Int32)(value.register.int32_2 * (Int32)(object)factor);
-
                         product.register.int32_3 = (Int32)(value.register.int32_3 * (Int32)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         product.register.uint64_0 = (UInt64)(value.register.uint64_0 * (UInt64)(object)factor);
-
                         product.register.uint64_1 = (UInt64)(value.register.uint64_1 * (UInt64)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         product.register.int64_0 = (Int64)(value.register.int64_0 * (Int64)(object)factor);
-
                         product.register.int64_1 = (Int64)(value.register.int64_1 * (Int64)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         product.register.single_0 = (Single)(value.register.single_0 * (Single)(object)factor);
-
                         product.register.single_1 = (Single)(value.register.single_1 * (Single)(object)factor);
-
                         product.register.single_2 = (Single)(value.register.single_2 * (Single)(object)factor);
-
                         product.register.single_3 = (Single)(value.register.single_3 * (Single)(object)factor);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         product.register.double_0 = (Double)(value.register.double_0 * (Double)(object)factor);
-
                         product.register.double_1 = (Double)(value.register.double_1 * (Double)(object)factor);
-
                     }
-
                     return product;
                 }
             }
@@ -3537,7 +2425,6 @@ namespace NCDK.Numerics
             {
                 if (Vector.IsHardwareAccelerated)
                 {
-
                     if (typeof(T) == typeof(Byte))
                     {
                         Byte* dataPtr = stackalloc Byte[Count];
@@ -3547,7 +2434,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
                         SByte* dataPtr = stackalloc SByte[Count];
@@ -3557,7 +2443,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
                         UInt16* dataPtr = stackalloc UInt16[Count];
@@ -3567,7 +2452,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
                         Int16* dataPtr = stackalloc Int16[Count];
@@ -3577,7 +2461,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
                         UInt32* dataPtr = stackalloc UInt32[Count];
@@ -3587,7 +2470,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
                         Int32* dataPtr = stackalloc Int32[Count];
@@ -3597,7 +2479,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
                         UInt64* dataPtr = stackalloc UInt64[Count];
@@ -3607,7 +2488,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
                         Int64* dataPtr = stackalloc Int64[Count];
@@ -3617,7 +2497,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
                         Single* dataPtr = stackalloc Single[Count];
@@ -3627,7 +2506,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
                         Double* dataPtr = stackalloc Double[Count];
@@ -3637,7 +2515,6 @@ namespace NCDK.Numerics
                         }
                         return new Vector<T>(dataPtr);
                     }
-
                     else
                     {
                         throw new NotSupportedException("Argument type is not supported.");
@@ -3646,189 +2523,102 @@ namespace NCDK.Numerics
                 else
                 {
                     Vector<T> quotient = new Vector<T>();
-
                     if (typeof(T) == typeof(Byte))
                     {
-
                         quotient.register.byte_0 = (Byte)(left.register.byte_0 / right.register.byte_0);
-
                         quotient.register.byte_1 = (Byte)(left.register.byte_1 / right.register.byte_1);
-
                         quotient.register.byte_2 = (Byte)(left.register.byte_2 / right.register.byte_2);
-
                         quotient.register.byte_3 = (Byte)(left.register.byte_3 / right.register.byte_3);
-
                         quotient.register.byte_4 = (Byte)(left.register.byte_4 / right.register.byte_4);
-
                         quotient.register.byte_5 = (Byte)(left.register.byte_5 / right.register.byte_5);
-
                         quotient.register.byte_6 = (Byte)(left.register.byte_6 / right.register.byte_6);
-
                         quotient.register.byte_7 = (Byte)(left.register.byte_7 / right.register.byte_7);
-
                         quotient.register.byte_8 = (Byte)(left.register.byte_8 / right.register.byte_8);
-
                         quotient.register.byte_9 = (Byte)(left.register.byte_9 / right.register.byte_9);
-
                         quotient.register.byte_10 = (Byte)(left.register.byte_10 / right.register.byte_10);
-
                         quotient.register.byte_11 = (Byte)(left.register.byte_11 / right.register.byte_11);
-
                         quotient.register.byte_12 = (Byte)(left.register.byte_12 / right.register.byte_12);
-
                         quotient.register.byte_13 = (Byte)(left.register.byte_13 / right.register.byte_13);
-
                         quotient.register.byte_14 = (Byte)(left.register.byte_14 / right.register.byte_14);
-
                         quotient.register.byte_15 = (Byte)(left.register.byte_15 / right.register.byte_15);
-
                     }
-
                     else if (typeof(T) == typeof(SByte))
                     {
-
                         quotient.register.sbyte_0 = (SByte)(left.register.sbyte_0 / right.register.sbyte_0);
-
                         quotient.register.sbyte_1 = (SByte)(left.register.sbyte_1 / right.register.sbyte_1);
-
                         quotient.register.sbyte_2 = (SByte)(left.register.sbyte_2 / right.register.sbyte_2);
-
                         quotient.register.sbyte_3 = (SByte)(left.register.sbyte_3 / right.register.sbyte_3);
-
                         quotient.register.sbyte_4 = (SByte)(left.register.sbyte_4 / right.register.sbyte_4);
-
                         quotient.register.sbyte_5 = (SByte)(left.register.sbyte_5 / right.register.sbyte_5);
-
                         quotient.register.sbyte_6 = (SByte)(left.register.sbyte_6 / right.register.sbyte_6);
-
                         quotient.register.sbyte_7 = (SByte)(left.register.sbyte_7 / right.register.sbyte_7);
-
                         quotient.register.sbyte_8 = (SByte)(left.register.sbyte_8 / right.register.sbyte_8);
-
                         quotient.register.sbyte_9 = (SByte)(left.register.sbyte_9 / right.register.sbyte_9);
-
                         quotient.register.sbyte_10 = (SByte)(left.register.sbyte_10 / right.register.sbyte_10);
-
                         quotient.register.sbyte_11 = (SByte)(left.register.sbyte_11 / right.register.sbyte_11);
-
                         quotient.register.sbyte_12 = (SByte)(left.register.sbyte_12 / right.register.sbyte_12);
-
                         quotient.register.sbyte_13 = (SByte)(left.register.sbyte_13 / right.register.sbyte_13);
-
                         quotient.register.sbyte_14 = (SByte)(left.register.sbyte_14 / right.register.sbyte_14);
-
                         quotient.register.sbyte_15 = (SByte)(left.register.sbyte_15 / right.register.sbyte_15);
-
                     }
-
                     else if (typeof(T) == typeof(UInt16))
                     {
-
                         quotient.register.uint16_0 = (UInt16)(left.register.uint16_0 / right.register.uint16_0);
-
                         quotient.register.uint16_1 = (UInt16)(left.register.uint16_1 / right.register.uint16_1);
-
                         quotient.register.uint16_2 = (UInt16)(left.register.uint16_2 / right.register.uint16_2);
-
                         quotient.register.uint16_3 = (UInt16)(left.register.uint16_3 / right.register.uint16_3);
-
                         quotient.register.uint16_4 = (UInt16)(left.register.uint16_4 / right.register.uint16_4);
-
                         quotient.register.uint16_5 = (UInt16)(left.register.uint16_5 / right.register.uint16_5);
-
                         quotient.register.uint16_6 = (UInt16)(left.register.uint16_6 / right.register.uint16_6);
-
                         quotient.register.uint16_7 = (UInt16)(left.register.uint16_7 / right.register.uint16_7);
-
                     }
-
                     else if (typeof(T) == typeof(Int16))
                     {
-
                         quotient.register.int16_0 = (Int16)(left.register.int16_0 / right.register.int16_0);
-
                         quotient.register.int16_1 = (Int16)(left.register.int16_1 / right.register.int16_1);
-
                         quotient.register.int16_2 = (Int16)(left.register.int16_2 / right.register.int16_2);
-
                         quotient.register.int16_3 = (Int16)(left.register.int16_3 / right.register.int16_3);
-
                         quotient.register.int16_4 = (Int16)(left.register.int16_4 / right.register.int16_4);
-
                         quotient.register.int16_5 = (Int16)(left.register.int16_5 / right.register.int16_5);
-
                         quotient.register.int16_6 = (Int16)(left.register.int16_6 / right.register.int16_6);
-
                         quotient.register.int16_7 = (Int16)(left.register.int16_7 / right.register.int16_7);
-
                     }
-
                     else if (typeof(T) == typeof(UInt32))
                     {
-
                         quotient.register.uint32_0 = (UInt32)(left.register.uint32_0 / right.register.uint32_0);
-
                         quotient.register.uint32_1 = (UInt32)(left.register.uint32_1 / right.register.uint32_1);
-
                         quotient.register.uint32_2 = (UInt32)(left.register.uint32_2 / right.register.uint32_2);
-
                         quotient.register.uint32_3 = (UInt32)(left.register.uint32_3 / right.register.uint32_3);
-
                     }
-
                     else if (typeof(T) == typeof(Int32))
                     {
-
                         quotient.register.int32_0 = (Int32)(left.register.int32_0 / right.register.int32_0);
-
                         quotient.register.int32_1 = (Int32)(left.register.int32_1 / right.register.int32_1);
-
                         quotient.register.int32_2 = (Int32)(left.register.int32_2 / right.register.int32_2);
-
                         quotient.register.int32_3 = (Int32)(left.register.int32_3 / right.register.int32_3);
-
                     }
-
                     else if (typeof(T) == typeof(UInt64))
                     {
-
                         quotient.register.uint64_0 = (UInt64)(left.register.uint64_0 / right.register.uint64_0);
-
                         quotient.register.uint64_1 = (UInt64)(left.register.uint64_1 / right.register.uint64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Int64))
                     {
-
                         quotient.register.int64_0 = (Int64)(left.register.int64_0 / right.register.int64_0);
-
                         quotient.register.int64_1 = (Int64)(left.register.int64_1 / right.register.int64_1);
-
                     }
-
                     else if (typeof(T) == typeof(Single))
                     {
-
                         quotient.register.single_0 = (Single)(left.register.single_0 / right.register.single_0);
-
                         quotient.register.single_1 = (Single)(left.register.single_1 / right.register.single_1);
-
                         quotient.register.single_2 = (Single)(left.register.single_2 / right.register.single_2);
-
                         quotient.register.single_3 = (Single)(left.register.single_3 / right.register.single_3);
-
                     }
-
                     else if (typeof(T) == typeof(Double))
                     {
-
                         quotient.register.double_0 = (Double)(left.register.double_0 / right.register.double_0);
-
                         quotient.register.double_1 = (Double)(left.register.double_1 / right.register.double_1);
-
                     }
-
                     return quotient;
                 }
             }
@@ -3978,23 +2768,24 @@ namespace NCDK.Numerics
         #endregion Logical Operators
 
         #region Conversions
-
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        
         public static explicit operator Vector<Byte>(Vector<T> value)
         {
             return new Vector<Byte>(ref value.register);
         }
 
-
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        [CLSCompliant(false)]
+        
         public static explicit operator Vector<SByte>(Vector<T> value)
         {
             return new Vector<SByte>(ref value.register);
@@ -4005,6 +2796,8 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        [CLSCompliant(false)]
+        
         public static explicit operator Vector<UInt16>(Vector<T> value)
         {
             return new Vector<UInt16>(ref value.register);
@@ -4015,6 +2808,7 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        
         public static explicit operator Vector<Int16>(Vector<T> value)
         {
             return new Vector<Int16>(ref value.register);
@@ -4025,6 +2819,8 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        [CLSCompliant(false)]
+        
         public static explicit operator Vector<UInt32>(Vector<T> value)
         {
             return new Vector<UInt32>(ref value.register);
@@ -4035,6 +2831,7 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
+        
         public static explicit operator Vector<Int32>(Vector<T> value)
         {
             return new Vector<Int32>(ref value.register);
@@ -4045,8 +2842,8 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
-
         [CLSCompliant(false)]
+        
         public static explicit operator Vector<UInt64>(Vector<T> value)
         {
             return new Vector<UInt64>(ref value.register);
@@ -4057,39 +2854,33 @@ namespace NCDK.Numerics
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
-
         
         public static explicit operator Vector<Int64>(Vector<T> value)
         {
             return new Vector<Int64>(ref value.register);
         }
 
-
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
-
         
         public static explicit operator Vector<Single>(Vector<T> value)
         {
             return new Vector<Single>(ref value.register);
         }
 
-
         /// <summary>
         /// Reinterprets the bits of the given vector into those of another type.
         /// </summary>
         /// <param name="value">The source vector</param>
         /// <returns>The reinterpreted vector.</returns>
-
         
         public static explicit operator Vector<Double>(Vector<T> value)
         {
             return new Vector<Double>(ref value.register);
         }
-
 
         #endregion Conversions
 
@@ -4100,7 +2891,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -4110,7 +2900,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -4120,7 +2909,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -4130,7 +2918,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -4140,7 +2927,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -4150,7 +2936,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -4160,7 +2945,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -4170,7 +2954,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -4180,7 +2963,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -4190,7 +2972,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -4200,7 +2981,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -4209,199 +2989,112 @@ namespace NCDK.Numerics
             else
             {
                 Register register = new Register();
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     register.byte_0 = left.register.byte_0 == right.register.byte_0 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_1 = left.register.byte_1 == right.register.byte_1 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_2 = left.register.byte_2 == right.register.byte_2 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_3 = left.register.byte_3 == right.register.byte_3 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_4 = left.register.byte_4 == right.register.byte_4 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_5 = left.register.byte_5 == right.register.byte_5 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_6 = left.register.byte_6 == right.register.byte_6 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_7 = left.register.byte_7 == right.register.byte_7 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_8 = left.register.byte_8 == right.register.byte_8 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_9 = left.register.byte_9 == right.register.byte_9 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_10 = left.register.byte_10 == right.register.byte_10 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_11 = left.register.byte_11 == right.register.byte_11 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_12 = left.register.byte_12 == right.register.byte_12 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_13 = left.register.byte_13 == right.register.byte_13 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_14 = left.register.byte_14 == right.register.byte_14 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_15 = left.register.byte_15 == right.register.byte_15 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     register.sbyte_0 = left.register.sbyte_0 == right.register.sbyte_0 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_1 = left.register.sbyte_1 == right.register.sbyte_1 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_2 = left.register.sbyte_2 == right.register.sbyte_2 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_3 = left.register.sbyte_3 == right.register.sbyte_3 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_4 = left.register.sbyte_4 == right.register.sbyte_4 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_5 = left.register.sbyte_5 == right.register.sbyte_5 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_6 = left.register.sbyte_6 == right.register.sbyte_6 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_7 = left.register.sbyte_7 == right.register.sbyte_7 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_8 = left.register.sbyte_8 == right.register.sbyte_8 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_9 = left.register.sbyte_9 == right.register.sbyte_9 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_10 = left.register.sbyte_10 == right.register.sbyte_10 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_11 = left.register.sbyte_11 == right.register.sbyte_11 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_12 = left.register.sbyte_12 == right.register.sbyte_12 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_13 = left.register.sbyte_13 == right.register.sbyte_13 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_14 = left.register.sbyte_14 == right.register.sbyte_14 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_15 = left.register.sbyte_15 == right.register.sbyte_15 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     register.uint16_0 = left.register.uint16_0 == right.register.uint16_0 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_1 = left.register.uint16_1 == right.register.uint16_1 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_2 = left.register.uint16_2 == right.register.uint16_2 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_3 = left.register.uint16_3 == right.register.uint16_3 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_4 = left.register.uint16_4 == right.register.uint16_4 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_5 = left.register.uint16_5 == right.register.uint16_5 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_6 = left.register.uint16_6 == right.register.uint16_6 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_7 = left.register.uint16_7 == right.register.uint16_7 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     register.int16_0 = left.register.int16_0 == right.register.int16_0 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_1 = left.register.int16_1 == right.register.int16_1 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_2 = left.register.int16_2 == right.register.int16_2 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_3 = left.register.int16_3 == right.register.int16_3 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_4 = left.register.int16_4 == right.register.int16_4 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_5 = left.register.int16_5 == right.register.int16_5 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_6 = left.register.int16_6 == right.register.int16_6 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_7 = left.register.int16_7 == right.register.int16_7 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     register.uint32_0 = left.register.uint32_0 == right.register.uint32_0 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_1 = left.register.uint32_1 == right.register.uint32_1 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_2 = left.register.uint32_2 == right.register.uint32_2 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_3 = left.register.uint32_3 == right.register.uint32_3 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     register.int32_0 = left.register.int32_0 == right.register.int32_0 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_1 = left.register.int32_1 == right.register.int32_1 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_2 = left.register.int32_2 == right.register.int32_2 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_3 = left.register.int32_3 == right.register.int32_3 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     register.uint64_0 = left.register.uint64_0 == right.register.uint64_0 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     register.uint64_1 = left.register.uint64_1 == right.register.uint64_1 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     register.int64_0 = left.register.int64_0 == right.register.int64_0 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     register.int64_1 = left.register.int64_1 == right.register.int64_1 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     register.single_0 = left.register.single_0 == right.register.single_0 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_1 = left.register.single_1 == right.register.single_1 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_2 = left.register.single_2 == right.register.single_2 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_3 = left.register.single_3 == right.register.single_3 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     register.double_0 = left.register.double_0 == right.register.double_0 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     register.double_1 = left.register.double_1 == right.register.double_1 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -4415,7 +3108,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -4425,7 +3117,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -4435,7 +3126,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -4445,7 +3135,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -4455,7 +3144,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -4465,7 +3153,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -4475,7 +3162,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -4485,7 +3171,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -4495,7 +3180,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -4505,7 +3189,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -4515,7 +3198,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -4524,199 +3206,112 @@ namespace NCDK.Numerics
             else
             {
                 Register register = new Register();
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     register.byte_0 = left.register.byte_0 < right.register.byte_0 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_1 = left.register.byte_1 < right.register.byte_1 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_2 = left.register.byte_2 < right.register.byte_2 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_3 = left.register.byte_3 < right.register.byte_3 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_4 = left.register.byte_4 < right.register.byte_4 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_5 = left.register.byte_5 < right.register.byte_5 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_6 = left.register.byte_6 < right.register.byte_6 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_7 = left.register.byte_7 < right.register.byte_7 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_8 = left.register.byte_8 < right.register.byte_8 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_9 = left.register.byte_9 < right.register.byte_9 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_10 = left.register.byte_10 < right.register.byte_10 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_11 = left.register.byte_11 < right.register.byte_11 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_12 = left.register.byte_12 < right.register.byte_12 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_13 = left.register.byte_13 < right.register.byte_13 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_14 = left.register.byte_14 < right.register.byte_14 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_15 = left.register.byte_15 < right.register.byte_15 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     register.sbyte_0 = left.register.sbyte_0 < right.register.sbyte_0 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_1 = left.register.sbyte_1 < right.register.sbyte_1 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_2 = left.register.sbyte_2 < right.register.sbyte_2 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_3 = left.register.sbyte_3 < right.register.sbyte_3 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_4 = left.register.sbyte_4 < right.register.sbyte_4 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_5 = left.register.sbyte_5 < right.register.sbyte_5 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_6 = left.register.sbyte_6 < right.register.sbyte_6 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_7 = left.register.sbyte_7 < right.register.sbyte_7 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_8 = left.register.sbyte_8 < right.register.sbyte_8 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_9 = left.register.sbyte_9 < right.register.sbyte_9 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_10 = left.register.sbyte_10 < right.register.sbyte_10 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_11 = left.register.sbyte_11 < right.register.sbyte_11 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_12 = left.register.sbyte_12 < right.register.sbyte_12 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_13 = left.register.sbyte_13 < right.register.sbyte_13 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_14 = left.register.sbyte_14 < right.register.sbyte_14 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_15 = left.register.sbyte_15 < right.register.sbyte_15 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     register.uint16_0 = left.register.uint16_0 < right.register.uint16_0 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_1 = left.register.uint16_1 < right.register.uint16_1 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_2 = left.register.uint16_2 < right.register.uint16_2 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_3 = left.register.uint16_3 < right.register.uint16_3 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_4 = left.register.uint16_4 < right.register.uint16_4 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_5 = left.register.uint16_5 < right.register.uint16_5 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_6 = left.register.uint16_6 < right.register.uint16_6 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_7 = left.register.uint16_7 < right.register.uint16_7 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     register.int16_0 = left.register.int16_0 < right.register.int16_0 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_1 = left.register.int16_1 < right.register.int16_1 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_2 = left.register.int16_2 < right.register.int16_2 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_3 = left.register.int16_3 < right.register.int16_3 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_4 = left.register.int16_4 < right.register.int16_4 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_5 = left.register.int16_5 < right.register.int16_5 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_6 = left.register.int16_6 < right.register.int16_6 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_7 = left.register.int16_7 < right.register.int16_7 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     register.uint32_0 = left.register.uint32_0 < right.register.uint32_0 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_1 = left.register.uint32_1 < right.register.uint32_1 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_2 = left.register.uint32_2 < right.register.uint32_2 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_3 = left.register.uint32_3 < right.register.uint32_3 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     register.int32_0 = left.register.int32_0 < right.register.int32_0 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_1 = left.register.int32_1 < right.register.int32_1 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_2 = left.register.int32_2 < right.register.int32_2 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_3 = left.register.int32_3 < right.register.int32_3 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     register.uint64_0 = left.register.uint64_0 < right.register.uint64_0 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     register.uint64_1 = left.register.uint64_1 < right.register.uint64_1 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     register.int64_0 = left.register.int64_0 < right.register.int64_0 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     register.int64_1 = left.register.int64_1 < right.register.int64_1 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     register.single_0 = left.register.single_0 < right.register.single_0 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_1 = left.register.single_1 < right.register.single_1 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_2 = left.register.single_2 < right.register.single_2 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_3 = left.register.single_3 < right.register.single_3 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     register.double_0 = left.register.double_0 < right.register.double_0 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     register.double_1 = left.register.double_1 < right.register.double_1 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -4730,7 +3325,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -4740,7 +3334,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -4750,7 +3343,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -4760,7 +3352,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -4770,7 +3361,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -4780,7 +3370,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -4790,7 +3379,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -4800,7 +3388,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -4810,7 +3397,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -4820,7 +3406,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -4830,7 +3415,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -4839,199 +3423,112 @@ namespace NCDK.Numerics
             else
             {
                 Register register = new Register();
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     register.byte_0 = left.register.byte_0 > right.register.byte_0 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_1 = left.register.byte_1 > right.register.byte_1 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_2 = left.register.byte_2 > right.register.byte_2 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_3 = left.register.byte_3 > right.register.byte_3 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_4 = left.register.byte_4 > right.register.byte_4 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_5 = left.register.byte_5 > right.register.byte_5 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_6 = left.register.byte_6 > right.register.byte_6 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_7 = left.register.byte_7 > right.register.byte_7 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_8 = left.register.byte_8 > right.register.byte_8 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_9 = left.register.byte_9 > right.register.byte_9 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_10 = left.register.byte_10 > right.register.byte_10 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_11 = left.register.byte_11 > right.register.byte_11 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_12 = left.register.byte_12 > right.register.byte_12 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_13 = left.register.byte_13 > right.register.byte_13 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_14 = left.register.byte_14 > right.register.byte_14 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     register.byte_15 = left.register.byte_15 > right.register.byte_15 ? ConstantHelper.GetByteWithAllBitsSet() : (Byte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     register.sbyte_0 = left.register.sbyte_0 > right.register.sbyte_0 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_1 = left.register.sbyte_1 > right.register.sbyte_1 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_2 = left.register.sbyte_2 > right.register.sbyte_2 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_3 = left.register.sbyte_3 > right.register.sbyte_3 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_4 = left.register.sbyte_4 > right.register.sbyte_4 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_5 = left.register.sbyte_5 > right.register.sbyte_5 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_6 = left.register.sbyte_6 > right.register.sbyte_6 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_7 = left.register.sbyte_7 > right.register.sbyte_7 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_8 = left.register.sbyte_8 > right.register.sbyte_8 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_9 = left.register.sbyte_9 > right.register.sbyte_9 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_10 = left.register.sbyte_10 > right.register.sbyte_10 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_11 = left.register.sbyte_11 > right.register.sbyte_11 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_12 = left.register.sbyte_12 > right.register.sbyte_12 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_13 = left.register.sbyte_13 > right.register.sbyte_13 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_14 = left.register.sbyte_14 > right.register.sbyte_14 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     register.sbyte_15 = left.register.sbyte_15 > right.register.sbyte_15 ? ConstantHelper.GetSByteWithAllBitsSet() : (SByte)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     register.uint16_0 = left.register.uint16_0 > right.register.uint16_0 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_1 = left.register.uint16_1 > right.register.uint16_1 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_2 = left.register.uint16_2 > right.register.uint16_2 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_3 = left.register.uint16_3 > right.register.uint16_3 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_4 = left.register.uint16_4 > right.register.uint16_4 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_5 = left.register.uint16_5 > right.register.uint16_5 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_6 = left.register.uint16_6 > right.register.uint16_6 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     register.uint16_7 = left.register.uint16_7 > right.register.uint16_7 ? ConstantHelper.GetUInt16WithAllBitsSet() : (UInt16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     register.int16_0 = left.register.int16_0 > right.register.int16_0 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_1 = left.register.int16_1 > right.register.int16_1 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_2 = left.register.int16_2 > right.register.int16_2 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_3 = left.register.int16_3 > right.register.int16_3 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_4 = left.register.int16_4 > right.register.int16_4 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_5 = left.register.int16_5 > right.register.int16_5 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_6 = left.register.int16_6 > right.register.int16_6 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     register.int16_7 = left.register.int16_7 > right.register.int16_7 ? ConstantHelper.GetInt16WithAllBitsSet() : (Int16)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     register.uint32_0 = left.register.uint32_0 > right.register.uint32_0 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_1 = left.register.uint32_1 > right.register.uint32_1 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_2 = left.register.uint32_2 > right.register.uint32_2 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     register.uint32_3 = left.register.uint32_3 > right.register.uint32_3 ? ConstantHelper.GetUInt32WithAllBitsSet() : (UInt32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     register.int32_0 = left.register.int32_0 > right.register.int32_0 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_1 = left.register.int32_1 > right.register.int32_1 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_2 = left.register.int32_2 > right.register.int32_2 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     register.int32_3 = left.register.int32_3 > right.register.int32_3 ? ConstantHelper.GetInt32WithAllBitsSet() : (Int32)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     register.uint64_0 = left.register.uint64_0 > right.register.uint64_0 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     register.uint64_1 = left.register.uint64_1 > right.register.uint64_1 ? ConstantHelper.GetUInt64WithAllBitsSet() : (UInt64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     register.int64_0 = left.register.int64_0 > right.register.int64_0 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     register.int64_1 = left.register.int64_1 > right.register.int64_1 ? ConstantHelper.GetInt64WithAllBitsSet() : (Int64)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     register.single_0 = left.register.single_0 > right.register.single_0 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_1 = left.register.single_1 > right.register.single_1 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_2 = left.register.single_2 > right.register.single_2 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     register.single_3 = left.register.single_3 > right.register.single_3 ? ConstantHelper.GetSingleWithAllBitsSet() : (Single)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     register.double_0 = left.register.double_0 > right.register.double_0 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     register.double_1 = left.register.double_1 > right.register.double_1 ? ConstantHelper.GetDoubleWithAllBitsSet() : (Double)0;
-
                     return new Vector<T>(ref register);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5062,30 +3559,24 @@ namespace NCDK.Numerics
         
         internal static unsafe Vector<T> Abs(Vector<T> value)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return value;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return value;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return value;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return value;
             }
-
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -5095,7 +3586,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -5105,7 +3595,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -5115,7 +3604,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -5125,7 +3613,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -5135,7 +3622,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -5145,7 +3631,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5153,115 +3638,66 @@ namespace NCDK.Numerics
             }
             else
             {
-
                 if (typeof(T) == typeof(SByte))
                 {
-
                     value.register.sbyte_0 = (SByte)(Math.Abs(value.register.sbyte_0));
-
                     value.register.sbyte_1 = (SByte)(Math.Abs(value.register.sbyte_1));
-
                     value.register.sbyte_2 = (SByte)(Math.Abs(value.register.sbyte_2));
-
                     value.register.sbyte_3 = (SByte)(Math.Abs(value.register.sbyte_3));
-
                     value.register.sbyte_4 = (SByte)(Math.Abs(value.register.sbyte_4));
-
                     value.register.sbyte_5 = (SByte)(Math.Abs(value.register.sbyte_5));
-
                     value.register.sbyte_6 = (SByte)(Math.Abs(value.register.sbyte_6));
-
                     value.register.sbyte_7 = (SByte)(Math.Abs(value.register.sbyte_7));
-
                     value.register.sbyte_8 = (SByte)(Math.Abs(value.register.sbyte_8));
-
                     value.register.sbyte_9 = (SByte)(Math.Abs(value.register.sbyte_9));
-
                     value.register.sbyte_10 = (SByte)(Math.Abs(value.register.sbyte_10));
-
                     value.register.sbyte_11 = (SByte)(Math.Abs(value.register.sbyte_11));
-
                     value.register.sbyte_12 = (SByte)(Math.Abs(value.register.sbyte_12));
-
                     value.register.sbyte_13 = (SByte)(Math.Abs(value.register.sbyte_13));
-
                     value.register.sbyte_14 = (SByte)(Math.Abs(value.register.sbyte_14));
-
                     value.register.sbyte_15 = (SByte)(Math.Abs(value.register.sbyte_15));
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     value.register.int16_0 = (Int16)(Math.Abs(value.register.int16_0));
-
                     value.register.int16_1 = (Int16)(Math.Abs(value.register.int16_1));
-
                     value.register.int16_2 = (Int16)(Math.Abs(value.register.int16_2));
-
                     value.register.int16_3 = (Int16)(Math.Abs(value.register.int16_3));
-
                     value.register.int16_4 = (Int16)(Math.Abs(value.register.int16_4));
-
                     value.register.int16_5 = (Int16)(Math.Abs(value.register.int16_5));
-
                     value.register.int16_6 = (Int16)(Math.Abs(value.register.int16_6));
-
                     value.register.int16_7 = (Int16)(Math.Abs(value.register.int16_7));
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     value.register.int32_0 = (Int32)(Math.Abs(value.register.int32_0));
-
                     value.register.int32_1 = (Int32)(Math.Abs(value.register.int32_1));
-
                     value.register.int32_2 = (Int32)(Math.Abs(value.register.int32_2));
-
                     value.register.int32_3 = (Int32)(Math.Abs(value.register.int32_3));
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     value.register.int64_0 = (Int64)(Math.Abs(value.register.int64_0));
-
                     value.register.int64_1 = (Int64)(Math.Abs(value.register.int64_1));
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     value.register.single_0 = (Single)(Math.Abs(value.register.single_0));
-
                     value.register.single_1 = (Single)(Math.Abs(value.register.single_1));
-
                     value.register.single_2 = (Single)(Math.Abs(value.register.single_2));
-
                     value.register.single_3 = (Single)(Math.Abs(value.register.single_3));
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     value.register.double_0 = (Double)(Math.Abs(value.register.double_0));
-
                     value.register.double_1 = (Double)(Math.Abs(value.register.double_1));
-
                     return value;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5274,7 +3710,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -5284,7 +3719,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -5294,7 +3728,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -5304,7 +3737,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -5314,7 +3746,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -5324,7 +3755,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -5334,7 +3764,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -5344,7 +3773,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -5354,7 +3782,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -5364,7 +3791,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -5374,7 +3800,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5383,199 +3808,112 @@ namespace NCDK.Numerics
             else
             {
                 Vector<T> vec = new Vector<T>();
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     vec.register.byte_0 = left.register.byte_0 < right.register.byte_0 ? left.register.byte_0 : right.register.byte_0;
-
                     vec.register.byte_1 = left.register.byte_1 < right.register.byte_1 ? left.register.byte_1 : right.register.byte_1;
-
                     vec.register.byte_2 = left.register.byte_2 < right.register.byte_2 ? left.register.byte_2 : right.register.byte_2;
-
                     vec.register.byte_3 = left.register.byte_3 < right.register.byte_3 ? left.register.byte_3 : right.register.byte_3;
-
                     vec.register.byte_4 = left.register.byte_4 < right.register.byte_4 ? left.register.byte_4 : right.register.byte_4;
-
                     vec.register.byte_5 = left.register.byte_5 < right.register.byte_5 ? left.register.byte_5 : right.register.byte_5;
-
                     vec.register.byte_6 = left.register.byte_6 < right.register.byte_6 ? left.register.byte_6 : right.register.byte_6;
-
                     vec.register.byte_7 = left.register.byte_7 < right.register.byte_7 ? left.register.byte_7 : right.register.byte_7;
-
                     vec.register.byte_8 = left.register.byte_8 < right.register.byte_8 ? left.register.byte_8 : right.register.byte_8;
-
                     vec.register.byte_9 = left.register.byte_9 < right.register.byte_9 ? left.register.byte_9 : right.register.byte_9;
-
                     vec.register.byte_10 = left.register.byte_10 < right.register.byte_10 ? left.register.byte_10 : right.register.byte_10;
-
                     vec.register.byte_11 = left.register.byte_11 < right.register.byte_11 ? left.register.byte_11 : right.register.byte_11;
-
                     vec.register.byte_12 = left.register.byte_12 < right.register.byte_12 ? left.register.byte_12 : right.register.byte_12;
-
                     vec.register.byte_13 = left.register.byte_13 < right.register.byte_13 ? left.register.byte_13 : right.register.byte_13;
-
                     vec.register.byte_14 = left.register.byte_14 < right.register.byte_14 ? left.register.byte_14 : right.register.byte_14;
-
                     vec.register.byte_15 = left.register.byte_15 < right.register.byte_15 ? left.register.byte_15 : right.register.byte_15;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     vec.register.sbyte_0 = left.register.sbyte_0 < right.register.sbyte_0 ? left.register.sbyte_0 : right.register.sbyte_0;
-
                     vec.register.sbyte_1 = left.register.sbyte_1 < right.register.sbyte_1 ? left.register.sbyte_1 : right.register.sbyte_1;
-
                     vec.register.sbyte_2 = left.register.sbyte_2 < right.register.sbyte_2 ? left.register.sbyte_2 : right.register.sbyte_2;
-
                     vec.register.sbyte_3 = left.register.sbyte_3 < right.register.sbyte_3 ? left.register.sbyte_3 : right.register.sbyte_3;
-
                     vec.register.sbyte_4 = left.register.sbyte_4 < right.register.sbyte_4 ? left.register.sbyte_4 : right.register.sbyte_4;
-
                     vec.register.sbyte_5 = left.register.sbyte_5 < right.register.sbyte_5 ? left.register.sbyte_5 : right.register.sbyte_5;
-
                     vec.register.sbyte_6 = left.register.sbyte_6 < right.register.sbyte_6 ? left.register.sbyte_6 : right.register.sbyte_6;
-
                     vec.register.sbyte_7 = left.register.sbyte_7 < right.register.sbyte_7 ? left.register.sbyte_7 : right.register.sbyte_7;
-
                     vec.register.sbyte_8 = left.register.sbyte_8 < right.register.sbyte_8 ? left.register.sbyte_8 : right.register.sbyte_8;
-
                     vec.register.sbyte_9 = left.register.sbyte_9 < right.register.sbyte_9 ? left.register.sbyte_9 : right.register.sbyte_9;
-
                     vec.register.sbyte_10 = left.register.sbyte_10 < right.register.sbyte_10 ? left.register.sbyte_10 : right.register.sbyte_10;
-
                     vec.register.sbyte_11 = left.register.sbyte_11 < right.register.sbyte_11 ? left.register.sbyte_11 : right.register.sbyte_11;
-
                     vec.register.sbyte_12 = left.register.sbyte_12 < right.register.sbyte_12 ? left.register.sbyte_12 : right.register.sbyte_12;
-
                     vec.register.sbyte_13 = left.register.sbyte_13 < right.register.sbyte_13 ? left.register.sbyte_13 : right.register.sbyte_13;
-
                     vec.register.sbyte_14 = left.register.sbyte_14 < right.register.sbyte_14 ? left.register.sbyte_14 : right.register.sbyte_14;
-
                     vec.register.sbyte_15 = left.register.sbyte_15 < right.register.sbyte_15 ? left.register.sbyte_15 : right.register.sbyte_15;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     vec.register.uint16_0 = left.register.uint16_0 < right.register.uint16_0 ? left.register.uint16_0 : right.register.uint16_0;
-
                     vec.register.uint16_1 = left.register.uint16_1 < right.register.uint16_1 ? left.register.uint16_1 : right.register.uint16_1;
-
                     vec.register.uint16_2 = left.register.uint16_2 < right.register.uint16_2 ? left.register.uint16_2 : right.register.uint16_2;
-
                     vec.register.uint16_3 = left.register.uint16_3 < right.register.uint16_3 ? left.register.uint16_3 : right.register.uint16_3;
-
                     vec.register.uint16_4 = left.register.uint16_4 < right.register.uint16_4 ? left.register.uint16_4 : right.register.uint16_4;
-
                     vec.register.uint16_5 = left.register.uint16_5 < right.register.uint16_5 ? left.register.uint16_5 : right.register.uint16_5;
-
                     vec.register.uint16_6 = left.register.uint16_6 < right.register.uint16_6 ? left.register.uint16_6 : right.register.uint16_6;
-
                     vec.register.uint16_7 = left.register.uint16_7 < right.register.uint16_7 ? left.register.uint16_7 : right.register.uint16_7;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     vec.register.int16_0 = left.register.int16_0 < right.register.int16_0 ? left.register.int16_0 : right.register.int16_0;
-
                     vec.register.int16_1 = left.register.int16_1 < right.register.int16_1 ? left.register.int16_1 : right.register.int16_1;
-
                     vec.register.int16_2 = left.register.int16_2 < right.register.int16_2 ? left.register.int16_2 : right.register.int16_2;
-
                     vec.register.int16_3 = left.register.int16_3 < right.register.int16_3 ? left.register.int16_3 : right.register.int16_3;
-
                     vec.register.int16_4 = left.register.int16_4 < right.register.int16_4 ? left.register.int16_4 : right.register.int16_4;
-
                     vec.register.int16_5 = left.register.int16_5 < right.register.int16_5 ? left.register.int16_5 : right.register.int16_5;
-
                     vec.register.int16_6 = left.register.int16_6 < right.register.int16_6 ? left.register.int16_6 : right.register.int16_6;
-
                     vec.register.int16_7 = left.register.int16_7 < right.register.int16_7 ? left.register.int16_7 : right.register.int16_7;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     vec.register.uint32_0 = left.register.uint32_0 < right.register.uint32_0 ? left.register.uint32_0 : right.register.uint32_0;
-
                     vec.register.uint32_1 = left.register.uint32_1 < right.register.uint32_1 ? left.register.uint32_1 : right.register.uint32_1;
-
                     vec.register.uint32_2 = left.register.uint32_2 < right.register.uint32_2 ? left.register.uint32_2 : right.register.uint32_2;
-
                     vec.register.uint32_3 = left.register.uint32_3 < right.register.uint32_3 ? left.register.uint32_3 : right.register.uint32_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     vec.register.int32_0 = left.register.int32_0 < right.register.int32_0 ? left.register.int32_0 : right.register.int32_0;
-
                     vec.register.int32_1 = left.register.int32_1 < right.register.int32_1 ? left.register.int32_1 : right.register.int32_1;
-
                     vec.register.int32_2 = left.register.int32_2 < right.register.int32_2 ? left.register.int32_2 : right.register.int32_2;
-
                     vec.register.int32_3 = left.register.int32_3 < right.register.int32_3 ? left.register.int32_3 : right.register.int32_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     vec.register.uint64_0 = left.register.uint64_0 < right.register.uint64_0 ? left.register.uint64_0 : right.register.uint64_0;
-
                     vec.register.uint64_1 = left.register.uint64_1 < right.register.uint64_1 ? left.register.uint64_1 : right.register.uint64_1;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     vec.register.int64_0 = left.register.int64_0 < right.register.int64_0 ? left.register.int64_0 : right.register.int64_0;
-
                     vec.register.int64_1 = left.register.int64_1 < right.register.int64_1 ? left.register.int64_1 : right.register.int64_1;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     vec.register.single_0 = left.register.single_0 < right.register.single_0 ? left.register.single_0 : right.register.single_0;
-
                     vec.register.single_1 = left.register.single_1 < right.register.single_1 ? left.register.single_1 : right.register.single_1;
-
                     vec.register.single_2 = left.register.single_2 < right.register.single_2 ? left.register.single_2 : right.register.single_2;
-
                     vec.register.single_3 = left.register.single_3 < right.register.single_3 ? left.register.single_3 : right.register.single_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     vec.register.double_0 = left.register.double_0 < right.register.double_0 ? left.register.double_0 : right.register.double_0;
-
                     vec.register.double_1 = left.register.double_1 < right.register.double_1 ? left.register.double_1 : right.register.double_1;
-
                     return vec;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5588,7 +3926,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -5598,7 +3935,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -5608,7 +3944,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -5618,7 +3953,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -5628,7 +3962,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -5638,7 +3971,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -5648,7 +3980,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -5658,7 +3989,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -5668,7 +3998,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -5678,7 +4007,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -5688,7 +4016,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5697,199 +4024,112 @@ namespace NCDK.Numerics
             else
             {
                 Vector<T> vec = new Vector<T>();
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     vec.register.byte_0 = left.register.byte_0 > right.register.byte_0 ? left.register.byte_0 : right.register.byte_0;
-
                     vec.register.byte_1 = left.register.byte_1 > right.register.byte_1 ? left.register.byte_1 : right.register.byte_1;
-
                     vec.register.byte_2 = left.register.byte_2 > right.register.byte_2 ? left.register.byte_2 : right.register.byte_2;
-
                     vec.register.byte_3 = left.register.byte_3 > right.register.byte_3 ? left.register.byte_3 : right.register.byte_3;
-
                     vec.register.byte_4 = left.register.byte_4 > right.register.byte_4 ? left.register.byte_4 : right.register.byte_4;
-
                     vec.register.byte_5 = left.register.byte_5 > right.register.byte_5 ? left.register.byte_5 : right.register.byte_5;
-
                     vec.register.byte_6 = left.register.byte_6 > right.register.byte_6 ? left.register.byte_6 : right.register.byte_6;
-
                     vec.register.byte_7 = left.register.byte_7 > right.register.byte_7 ? left.register.byte_7 : right.register.byte_7;
-
                     vec.register.byte_8 = left.register.byte_8 > right.register.byte_8 ? left.register.byte_8 : right.register.byte_8;
-
                     vec.register.byte_9 = left.register.byte_9 > right.register.byte_9 ? left.register.byte_9 : right.register.byte_9;
-
                     vec.register.byte_10 = left.register.byte_10 > right.register.byte_10 ? left.register.byte_10 : right.register.byte_10;
-
                     vec.register.byte_11 = left.register.byte_11 > right.register.byte_11 ? left.register.byte_11 : right.register.byte_11;
-
                     vec.register.byte_12 = left.register.byte_12 > right.register.byte_12 ? left.register.byte_12 : right.register.byte_12;
-
                     vec.register.byte_13 = left.register.byte_13 > right.register.byte_13 ? left.register.byte_13 : right.register.byte_13;
-
                     vec.register.byte_14 = left.register.byte_14 > right.register.byte_14 ? left.register.byte_14 : right.register.byte_14;
-
                     vec.register.byte_15 = left.register.byte_15 > right.register.byte_15 ? left.register.byte_15 : right.register.byte_15;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     vec.register.sbyte_0 = left.register.sbyte_0 > right.register.sbyte_0 ? left.register.sbyte_0 : right.register.sbyte_0;
-
                     vec.register.sbyte_1 = left.register.sbyte_1 > right.register.sbyte_1 ? left.register.sbyte_1 : right.register.sbyte_1;
-
                     vec.register.sbyte_2 = left.register.sbyte_2 > right.register.sbyte_2 ? left.register.sbyte_2 : right.register.sbyte_2;
-
                     vec.register.sbyte_3 = left.register.sbyte_3 > right.register.sbyte_3 ? left.register.sbyte_3 : right.register.sbyte_3;
-
                     vec.register.sbyte_4 = left.register.sbyte_4 > right.register.sbyte_4 ? left.register.sbyte_4 : right.register.sbyte_4;
-
                     vec.register.sbyte_5 = left.register.sbyte_5 > right.register.sbyte_5 ? left.register.sbyte_5 : right.register.sbyte_5;
-
                     vec.register.sbyte_6 = left.register.sbyte_6 > right.register.sbyte_6 ? left.register.sbyte_6 : right.register.sbyte_6;
-
                     vec.register.sbyte_7 = left.register.sbyte_7 > right.register.sbyte_7 ? left.register.sbyte_7 : right.register.sbyte_7;
-
                     vec.register.sbyte_8 = left.register.sbyte_8 > right.register.sbyte_8 ? left.register.sbyte_8 : right.register.sbyte_8;
-
                     vec.register.sbyte_9 = left.register.sbyte_9 > right.register.sbyte_9 ? left.register.sbyte_9 : right.register.sbyte_9;
-
                     vec.register.sbyte_10 = left.register.sbyte_10 > right.register.sbyte_10 ? left.register.sbyte_10 : right.register.sbyte_10;
-
                     vec.register.sbyte_11 = left.register.sbyte_11 > right.register.sbyte_11 ? left.register.sbyte_11 : right.register.sbyte_11;
-
                     vec.register.sbyte_12 = left.register.sbyte_12 > right.register.sbyte_12 ? left.register.sbyte_12 : right.register.sbyte_12;
-
                     vec.register.sbyte_13 = left.register.sbyte_13 > right.register.sbyte_13 ? left.register.sbyte_13 : right.register.sbyte_13;
-
                     vec.register.sbyte_14 = left.register.sbyte_14 > right.register.sbyte_14 ? left.register.sbyte_14 : right.register.sbyte_14;
-
                     vec.register.sbyte_15 = left.register.sbyte_15 > right.register.sbyte_15 ? left.register.sbyte_15 : right.register.sbyte_15;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     vec.register.uint16_0 = left.register.uint16_0 > right.register.uint16_0 ? left.register.uint16_0 : right.register.uint16_0;
-
                     vec.register.uint16_1 = left.register.uint16_1 > right.register.uint16_1 ? left.register.uint16_1 : right.register.uint16_1;
-
                     vec.register.uint16_2 = left.register.uint16_2 > right.register.uint16_2 ? left.register.uint16_2 : right.register.uint16_2;
-
                     vec.register.uint16_3 = left.register.uint16_3 > right.register.uint16_3 ? left.register.uint16_3 : right.register.uint16_3;
-
                     vec.register.uint16_4 = left.register.uint16_4 > right.register.uint16_4 ? left.register.uint16_4 : right.register.uint16_4;
-
                     vec.register.uint16_5 = left.register.uint16_5 > right.register.uint16_5 ? left.register.uint16_5 : right.register.uint16_5;
-
                     vec.register.uint16_6 = left.register.uint16_6 > right.register.uint16_6 ? left.register.uint16_6 : right.register.uint16_6;
-
                     vec.register.uint16_7 = left.register.uint16_7 > right.register.uint16_7 ? left.register.uint16_7 : right.register.uint16_7;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     vec.register.int16_0 = left.register.int16_0 > right.register.int16_0 ? left.register.int16_0 : right.register.int16_0;
-
                     vec.register.int16_1 = left.register.int16_1 > right.register.int16_1 ? left.register.int16_1 : right.register.int16_1;
-
                     vec.register.int16_2 = left.register.int16_2 > right.register.int16_2 ? left.register.int16_2 : right.register.int16_2;
-
                     vec.register.int16_3 = left.register.int16_3 > right.register.int16_3 ? left.register.int16_3 : right.register.int16_3;
-
                     vec.register.int16_4 = left.register.int16_4 > right.register.int16_4 ? left.register.int16_4 : right.register.int16_4;
-
                     vec.register.int16_5 = left.register.int16_5 > right.register.int16_5 ? left.register.int16_5 : right.register.int16_5;
-
                     vec.register.int16_6 = left.register.int16_6 > right.register.int16_6 ? left.register.int16_6 : right.register.int16_6;
-
                     vec.register.int16_7 = left.register.int16_7 > right.register.int16_7 ? left.register.int16_7 : right.register.int16_7;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     vec.register.uint32_0 = left.register.uint32_0 > right.register.uint32_0 ? left.register.uint32_0 : right.register.uint32_0;
-
                     vec.register.uint32_1 = left.register.uint32_1 > right.register.uint32_1 ? left.register.uint32_1 : right.register.uint32_1;
-
                     vec.register.uint32_2 = left.register.uint32_2 > right.register.uint32_2 ? left.register.uint32_2 : right.register.uint32_2;
-
                     vec.register.uint32_3 = left.register.uint32_3 > right.register.uint32_3 ? left.register.uint32_3 : right.register.uint32_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     vec.register.int32_0 = left.register.int32_0 > right.register.int32_0 ? left.register.int32_0 : right.register.int32_0;
-
                     vec.register.int32_1 = left.register.int32_1 > right.register.int32_1 ? left.register.int32_1 : right.register.int32_1;
-
                     vec.register.int32_2 = left.register.int32_2 > right.register.int32_2 ? left.register.int32_2 : right.register.int32_2;
-
                     vec.register.int32_3 = left.register.int32_3 > right.register.int32_3 ? left.register.int32_3 : right.register.int32_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     vec.register.uint64_0 = left.register.uint64_0 > right.register.uint64_0 ? left.register.uint64_0 : right.register.uint64_0;
-
                     vec.register.uint64_1 = left.register.uint64_1 > right.register.uint64_1 ? left.register.uint64_1 : right.register.uint64_1;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     vec.register.int64_0 = left.register.int64_0 > right.register.int64_0 ? left.register.int64_0 : right.register.int64_0;
-
                     vec.register.int64_1 = left.register.int64_1 > right.register.int64_1 ? left.register.int64_1 : right.register.int64_1;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     vec.register.single_0 = left.register.single_0 > right.register.single_0 ? left.register.single_0 : right.register.single_0;
-
                     vec.register.single_1 = left.register.single_1 > right.register.single_1 ? left.register.single_1 : right.register.single_1;
-
                     vec.register.single_2 = left.register.single_2 > right.register.single_2 ? left.register.single_2 : right.register.single_2;
-
                     vec.register.single_3 = left.register.single_3 > right.register.single_3 ? left.register.single_3 : right.register.single_3;
-
                     return vec;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     vec.register.double_0 = left.register.double_0 > right.register.double_0 ? left.register.double_0 : right.register.double_0;
-
                     vec.register.double_1 = left.register.double_1 > right.register.double_1 ? left.register.double_1 : right.register.double_1;
-
                     return vec;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -5911,209 +4151,122 @@ namespace NCDK.Numerics
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte product = 0;
-
                     product += (Byte)(left.register.byte_0 * right.register.byte_0);
-
                     product += (Byte)(left.register.byte_1 * right.register.byte_1);
-
                     product += (Byte)(left.register.byte_2 * right.register.byte_2);
-
                     product += (Byte)(left.register.byte_3 * right.register.byte_3);
-
                     product += (Byte)(left.register.byte_4 * right.register.byte_4);
-
                     product += (Byte)(left.register.byte_5 * right.register.byte_5);
-
                     product += (Byte)(left.register.byte_6 * right.register.byte_6);
-
                     product += (Byte)(left.register.byte_7 * right.register.byte_7);
-
                     product += (Byte)(left.register.byte_8 * right.register.byte_8);
-
                     product += (Byte)(left.register.byte_9 * right.register.byte_9);
-
                     product += (Byte)(left.register.byte_10 * right.register.byte_10);
-
                     product += (Byte)(left.register.byte_11 * right.register.byte_11);
-
                     product += (Byte)(left.register.byte_12 * right.register.byte_12);
-
                     product += (Byte)(left.register.byte_13 * right.register.byte_13);
-
                     product += (Byte)(left.register.byte_14 * right.register.byte_14);
-
                     product += (Byte)(left.register.byte_15 * right.register.byte_15);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte product = 0;
-
                     product += (SByte)(left.register.sbyte_0 * right.register.sbyte_0);
-
                     product += (SByte)(left.register.sbyte_1 * right.register.sbyte_1);
-
                     product += (SByte)(left.register.sbyte_2 * right.register.sbyte_2);
-
                     product += (SByte)(left.register.sbyte_3 * right.register.sbyte_3);
-
                     product += (SByte)(left.register.sbyte_4 * right.register.sbyte_4);
-
                     product += (SByte)(left.register.sbyte_5 * right.register.sbyte_5);
-
                     product += (SByte)(left.register.sbyte_6 * right.register.sbyte_6);
-
                     product += (SByte)(left.register.sbyte_7 * right.register.sbyte_7);
-
                     product += (SByte)(left.register.sbyte_8 * right.register.sbyte_8);
-
                     product += (SByte)(left.register.sbyte_9 * right.register.sbyte_9);
-
                     product += (SByte)(left.register.sbyte_10 * right.register.sbyte_10);
-
                     product += (SByte)(left.register.sbyte_11 * right.register.sbyte_11);
-
                     product += (SByte)(left.register.sbyte_12 * right.register.sbyte_12);
-
                     product += (SByte)(left.register.sbyte_13 * right.register.sbyte_13);
-
                     product += (SByte)(left.register.sbyte_14 * right.register.sbyte_14);
-
                     product += (SByte)(left.register.sbyte_15 * right.register.sbyte_15);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16 product = 0;
-
                     product += (UInt16)(left.register.uint16_0 * right.register.uint16_0);
-
                     product += (UInt16)(left.register.uint16_1 * right.register.uint16_1);
-
                     product += (UInt16)(left.register.uint16_2 * right.register.uint16_2);
-
                     product += (UInt16)(left.register.uint16_3 * right.register.uint16_3);
-
                     product += (UInt16)(left.register.uint16_4 * right.register.uint16_4);
-
                     product += (UInt16)(left.register.uint16_5 * right.register.uint16_5);
-
                     product += (UInt16)(left.register.uint16_6 * right.register.uint16_6);
-
                     product += (UInt16)(left.register.uint16_7 * right.register.uint16_7);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16 product = 0;
-
                     product += (Int16)(left.register.int16_0 * right.register.int16_0);
-
                     product += (Int16)(left.register.int16_1 * right.register.int16_1);
-
                     product += (Int16)(left.register.int16_2 * right.register.int16_2);
-
                     product += (Int16)(left.register.int16_3 * right.register.int16_3);
-
                     product += (Int16)(left.register.int16_4 * right.register.int16_4);
-
                     product += (Int16)(left.register.int16_5 * right.register.int16_5);
-
                     product += (Int16)(left.register.int16_6 * right.register.int16_6);
-
                     product += (Int16)(left.register.int16_7 * right.register.int16_7);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32 product = 0;
-
                     product += (UInt32)(left.register.uint32_0 * right.register.uint32_0);
-
                     product += (UInt32)(left.register.uint32_1 * right.register.uint32_1);
-
                     product += (UInt32)(left.register.uint32_2 * right.register.uint32_2);
-
                     product += (UInt32)(left.register.uint32_3 * right.register.uint32_3);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32 product = 0;
-
                     product += (Int32)(left.register.int32_0 * right.register.int32_0);
-
                     product += (Int32)(left.register.int32_1 * right.register.int32_1);
-
                     product += (Int32)(left.register.int32_2 * right.register.int32_2);
-
                     product += (Int32)(left.register.int32_3 * right.register.int32_3);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64 product = 0;
-
                     product += (UInt64)(left.register.uint64_0 * right.register.uint64_0);
-
                     product += (UInt64)(left.register.uint64_1 * right.register.uint64_1);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64 product = 0;
-
                     product += (Int64)(left.register.int64_0 * right.register.int64_0);
-
                     product += (Int64)(left.register.int64_1 * right.register.int64_1);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single product = 0;
-
                     product += (Single)(left.register.single_0 * right.register.single_0);
-
                     product += (Single)(left.register.single_1 * right.register.single_1);
-
                     product += (Single)(left.register.single_2 * right.register.single_2);
-
                     product += (Single)(left.register.single_3 * right.register.single_3);
-
                     return (T)(object)product;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double product = 0;
-
                     product += (Double)(left.register.double_0 * right.register.double_0);
-
                     product += (Double)(left.register.double_1 * right.register.double_1);
-
                     return (T)(object)product;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -6126,7 +4279,6 @@ namespace NCDK.Numerics
         {
             if (Vector.IsHardwareAccelerated)
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
                     Byte* dataPtr = stackalloc Byte[Count];
@@ -6136,7 +4288,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
                     SByte* dataPtr = stackalloc SByte[Count];
@@ -6146,7 +4297,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
                     UInt16* dataPtr = stackalloc UInt16[Count];
@@ -6156,7 +4306,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
                     Int16* dataPtr = stackalloc Int16[Count];
@@ -6166,7 +4315,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
                     UInt32* dataPtr = stackalloc UInt32[Count];
@@ -6176,7 +4324,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
                     Int32* dataPtr = stackalloc Int32[Count];
@@ -6186,7 +4333,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
                     UInt64* dataPtr = stackalloc UInt64[Count];
@@ -6196,7 +4342,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
                     Int64* dataPtr = stackalloc Int64[Count];
@@ -6206,7 +4351,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
                     Single* dataPtr = stackalloc Single[Count];
@@ -6216,7 +4360,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
                     Double* dataPtr = stackalloc Double[Count];
@@ -6226,7 +4369,6 @@ namespace NCDK.Numerics
                     }
                     return new Vector<T>(dataPtr);
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -6234,199 +4376,112 @@ namespace NCDK.Numerics
             }
             else
             {
-
                 if (typeof(T) == typeof(Byte))
                 {
-
                     value.register.byte_0 = (Byte)Math.Sqrt(value.register.byte_0);
-
                     value.register.byte_1 = (Byte)Math.Sqrt(value.register.byte_1);
-
                     value.register.byte_2 = (Byte)Math.Sqrt(value.register.byte_2);
-
                     value.register.byte_3 = (Byte)Math.Sqrt(value.register.byte_3);
-
                     value.register.byte_4 = (Byte)Math.Sqrt(value.register.byte_4);
-
                     value.register.byte_5 = (Byte)Math.Sqrt(value.register.byte_5);
-
                     value.register.byte_6 = (Byte)Math.Sqrt(value.register.byte_6);
-
                     value.register.byte_7 = (Byte)Math.Sqrt(value.register.byte_7);
-
                     value.register.byte_8 = (Byte)Math.Sqrt(value.register.byte_8);
-
                     value.register.byte_9 = (Byte)Math.Sqrt(value.register.byte_9);
-
                     value.register.byte_10 = (Byte)Math.Sqrt(value.register.byte_10);
-
                     value.register.byte_11 = (Byte)Math.Sqrt(value.register.byte_11);
-
                     value.register.byte_12 = (Byte)Math.Sqrt(value.register.byte_12);
-
                     value.register.byte_13 = (Byte)Math.Sqrt(value.register.byte_13);
-
                     value.register.byte_14 = (Byte)Math.Sqrt(value.register.byte_14);
-
                     value.register.byte_15 = (Byte)Math.Sqrt(value.register.byte_15);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(SByte))
                 {
-
                     value.register.sbyte_0 = (SByte)Math.Sqrt(value.register.sbyte_0);
-
                     value.register.sbyte_1 = (SByte)Math.Sqrt(value.register.sbyte_1);
-
                     value.register.sbyte_2 = (SByte)Math.Sqrt(value.register.sbyte_2);
-
                     value.register.sbyte_3 = (SByte)Math.Sqrt(value.register.sbyte_3);
-
                     value.register.sbyte_4 = (SByte)Math.Sqrt(value.register.sbyte_4);
-
                     value.register.sbyte_5 = (SByte)Math.Sqrt(value.register.sbyte_5);
-
                     value.register.sbyte_6 = (SByte)Math.Sqrt(value.register.sbyte_6);
-
                     value.register.sbyte_7 = (SByte)Math.Sqrt(value.register.sbyte_7);
-
                     value.register.sbyte_8 = (SByte)Math.Sqrt(value.register.sbyte_8);
-
                     value.register.sbyte_9 = (SByte)Math.Sqrt(value.register.sbyte_9);
-
                     value.register.sbyte_10 = (SByte)Math.Sqrt(value.register.sbyte_10);
-
                     value.register.sbyte_11 = (SByte)Math.Sqrt(value.register.sbyte_11);
-
                     value.register.sbyte_12 = (SByte)Math.Sqrt(value.register.sbyte_12);
-
                     value.register.sbyte_13 = (SByte)Math.Sqrt(value.register.sbyte_13);
-
                     value.register.sbyte_14 = (SByte)Math.Sqrt(value.register.sbyte_14);
-
                     value.register.sbyte_15 = (SByte)Math.Sqrt(value.register.sbyte_15);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(UInt16))
                 {
-
                     value.register.uint16_0 = (UInt16)Math.Sqrt(value.register.uint16_0);
-
                     value.register.uint16_1 = (UInt16)Math.Sqrt(value.register.uint16_1);
-
                     value.register.uint16_2 = (UInt16)Math.Sqrt(value.register.uint16_2);
-
                     value.register.uint16_3 = (UInt16)Math.Sqrt(value.register.uint16_3);
-
                     value.register.uint16_4 = (UInt16)Math.Sqrt(value.register.uint16_4);
-
                     value.register.uint16_5 = (UInt16)Math.Sqrt(value.register.uint16_5);
-
                     value.register.uint16_6 = (UInt16)Math.Sqrt(value.register.uint16_6);
-
                     value.register.uint16_7 = (UInt16)Math.Sqrt(value.register.uint16_7);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int16))
                 {
-
                     value.register.int16_0 = (Int16)Math.Sqrt(value.register.int16_0);
-
                     value.register.int16_1 = (Int16)Math.Sqrt(value.register.int16_1);
-
                     value.register.int16_2 = (Int16)Math.Sqrt(value.register.int16_2);
-
                     value.register.int16_3 = (Int16)Math.Sqrt(value.register.int16_3);
-
                     value.register.int16_4 = (Int16)Math.Sqrt(value.register.int16_4);
-
                     value.register.int16_5 = (Int16)Math.Sqrt(value.register.int16_5);
-
                     value.register.int16_6 = (Int16)Math.Sqrt(value.register.int16_6);
-
                     value.register.int16_7 = (Int16)Math.Sqrt(value.register.int16_7);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(UInt32))
                 {
-
                     value.register.uint32_0 = (UInt32)Math.Sqrt(value.register.uint32_0);
-
                     value.register.uint32_1 = (UInt32)Math.Sqrt(value.register.uint32_1);
-
                     value.register.uint32_2 = (UInt32)Math.Sqrt(value.register.uint32_2);
-
                     value.register.uint32_3 = (UInt32)Math.Sqrt(value.register.uint32_3);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int32))
                 {
-
                     value.register.int32_0 = (Int32)Math.Sqrt(value.register.int32_0);
-
                     value.register.int32_1 = (Int32)Math.Sqrt(value.register.int32_1);
-
                     value.register.int32_2 = (Int32)Math.Sqrt(value.register.int32_2);
-
                     value.register.int32_3 = (Int32)Math.Sqrt(value.register.int32_3);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(UInt64))
                 {
-
                     value.register.uint64_0 = (UInt64)Math.Sqrt(value.register.uint64_0);
-
                     value.register.uint64_1 = (UInt64)Math.Sqrt(value.register.uint64_1);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Int64))
                 {
-
                     value.register.int64_0 = (Int64)Math.Sqrt(value.register.int64_0);
-
                     value.register.int64_1 = (Int64)Math.Sqrt(value.register.int64_1);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Single))
                 {
-
                     value.register.single_0 = (Single)Math.Sqrt(value.register.single_0);
-
                     value.register.single_1 = (Single)Math.Sqrt(value.register.single_1);
-
                     value.register.single_2 = (Single)Math.Sqrt(value.register.single_2);
-
                     value.register.single_3 = (Single)Math.Sqrt(value.register.single_3);
-
                     return value;
                 }
-
                 else if (typeof(T) == typeof(Double))
                 {
-
                     value.register.double_0 = (Double)Math.Sqrt(value.register.double_0);
-
                     value.register.double_1 = (Double)Math.Sqrt(value.register.double_1);
-
                     return value;
                 }
-
                 else
                 {
                     throw new NotSupportedException("Argument type is not supported.");
@@ -6439,57 +4494,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static bool ScalarEquals(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (Byte)(object)left == (Byte)(object)right;
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (SByte)(object)left == (SByte)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (UInt16)(object)left == (UInt16)(object)right;
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (Int16)(object)left == (Int16)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (UInt32)(object)left == (UInt32)(object)right;
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (Int32)(object)left == (Int32)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (UInt64)(object)left == (UInt64)(object)right;
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (Int64)(object)left == (Int64)(object)right;
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (Single)(object)left == (Single)(object)right;
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (Double)(object)left == (Double)(object)right;
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6499,57 +4543,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static bool ScalarLessThan(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (Byte)(object)left < (Byte)(object)right;
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (SByte)(object)left < (SByte)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (UInt16)(object)left < (UInt16)(object)right;
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (Int16)(object)left < (Int16)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (UInt32)(object)left < (UInt32)(object)right;
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (Int32)(object)left < (Int32)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (UInt64)(object)left < (UInt64)(object)right;
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (Int64)(object)left < (Int64)(object)right;
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (Single)(object)left < (Single)(object)right;
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (Double)(object)left < (Double)(object)right;
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6559,57 +4592,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static bool ScalarGreaterThan(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (Byte)(object)left > (Byte)(object)right;
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (SByte)(object)left > (SByte)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (UInt16)(object)left > (UInt16)(object)right;
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (Int16)(object)left > (Int16)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (UInt32)(object)left > (UInt32)(object)right;
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (Int32)(object)left > (Int32)(object)right;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (UInt64)(object)left > (UInt64)(object)right;
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (Int64)(object)left > (Int64)(object)right;
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (Single)(object)left > (Single)(object)right;
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (Double)(object)left > (Double)(object)right;
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6619,57 +4641,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T ScalarAdd(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (T)(object)(Byte)((Byte)(object)left + (Byte)(object)right);
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (T)(object)(SByte)((SByte)(object)left + (SByte)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (T)(object)(UInt16)((UInt16)(object)left + (UInt16)(object)right);
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (T)(object)(Int16)((Int16)(object)left + (Int16)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (T)(object)(UInt32)((UInt32)(object)left + (UInt32)(object)right);
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (T)(object)(Int32)((Int32)(object)left + (Int32)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (T)(object)(UInt64)((UInt64)(object)left + (UInt64)(object)right);
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (T)(object)(Int64)((Int64)(object)left + (Int64)(object)right);
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (T)(object)(Single)((Single)(object)left + (Single)(object)right);
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (T)(object)(Double)((Double)(object)left + (Double)(object)right);
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6679,57 +4690,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T ScalarSubtract(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (T)(object)(Byte)((Byte)(object)left - (Byte)(object)right);
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (T)(object)(SByte)((SByte)(object)left - (SByte)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (T)(object)(UInt16)((UInt16)(object)left - (UInt16)(object)right);
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (T)(object)(Int16)((Int16)(object)left - (Int16)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (T)(object)(UInt32)((UInt32)(object)left - (UInt32)(object)right);
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (T)(object)(Int32)((Int32)(object)left - (Int32)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (T)(object)(UInt64)((UInt64)(object)left - (UInt64)(object)right);
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (T)(object)(Int64)((Int64)(object)left - (Int64)(object)right);
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (T)(object)(Single)((Single)(object)left - (Single)(object)right);
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (T)(object)(Double)((Double)(object)left - (Double)(object)right);
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6739,57 +4739,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T ScalarMultiply(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (T)(object)(Byte)((Byte)(object)left * (Byte)(object)right);
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (T)(object)(SByte)((SByte)(object)left * (SByte)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (T)(object)(UInt16)((UInt16)(object)left * (UInt16)(object)right);
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (T)(object)(Int16)((Int16)(object)left * (Int16)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (T)(object)(UInt32)((UInt32)(object)left * (UInt32)(object)right);
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (T)(object)(Int32)((Int32)(object)left * (Int32)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (T)(object)(UInt64)((UInt64)(object)left * (UInt64)(object)right);
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (T)(object)(Int64)((Int64)(object)left * (Int64)(object)right);
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (T)(object)(Single)((Single)(object)left * (Single)(object)right);
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (T)(object)(Double)((Double)(object)left * (Double)(object)right);
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6799,57 +4788,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T ScalarDivide(T left, T right)
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (T)(object)(Byte)((Byte)(object)left / (Byte)(object)right);
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (T)(object)(SByte)((SByte)(object)left / (SByte)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (T)(object)(UInt16)((UInt16)(object)left / (UInt16)(object)right);
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (T)(object)(Int16)((Int16)(object)left / (Int16)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (T)(object)(UInt32)((UInt32)(object)left / (UInt32)(object)right);
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (T)(object)(Int32)((Int32)(object)left / (Int32)(object)right);
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (T)(object)(UInt64)((UInt64)(object)left / (UInt64)(object)right);
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (T)(object)(Int64)((Int64)(object)left / (Int64)(object)right);
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (T)(object)(Single)((Single)(object)left / (Single)(object)right);
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (T)(object)(Double)((Double)(object)left / (Double)(object)right);
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6859,67 +4837,56 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T GetZeroValue()
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 Byte value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 SByte value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 UInt16 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 Int16 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 UInt32 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 Int32 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 UInt64 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 Int64 value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 Single value = 0;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 Double value = 0;
                 return (T)(object)value;
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6929,67 +4896,56 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T GetOneValue()
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 Byte value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 SByte value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 UInt16 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 Int16 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 UInt32 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 Int32 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 UInt64 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 Int64 value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 Single value = 1;
                 return (T)(object)value;
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 Double value = 1;
                 return (T)(object)value;
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");
@@ -6999,57 +4955,46 @@ namespace NCDK.Numerics
         [MethodImplAttribute(MethodImplOptions.AggressiveInlining)]
         private static T GetAllBitsSetValue()
         {
-
             if (typeof(T) == typeof(Byte))
             {
                 return (T)(object)ConstantHelper.GetByteWithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(SByte))
             {
                 return (T)(object)ConstantHelper.GetSByteWithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(UInt16))
             {
                 return (T)(object)ConstantHelper.GetUInt16WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(Int16))
             {
                 return (T)(object)ConstantHelper.GetInt16WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(UInt32))
             {
                 return (T)(object)ConstantHelper.GetUInt32WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(Int32))
             {
                 return (T)(object)ConstantHelper.GetInt32WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(UInt64))
             {
                 return (T)(object)ConstantHelper.GetUInt64WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(Int64))
             {
                 return (T)(object)ConstantHelper.GetInt64WithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(Single))
             {
                 return (T)(object)ConstantHelper.GetSingleWithAllBitsSet();
             }
-
             else if (typeof(T) == typeof(Double))
             {
                 return (T)(object)ConstantHelper.GetDoubleWithAllBitsSet();
             }
-
             else
             {
                 throw new NotSupportedException("Argument type is not supported.");

@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<topic id="c9f38e32-3e98-455f-8e1c-33fce2abf283" revisionNumber="1">
-	<developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
-		<introduction>
-			<para></para>
-		</introduction>
+<topic id="e2ff06cc-99b7-4f8b-95c5-53965548639f" revisionNumber="1">
+  <developerConceptualDocument xmlns="http://ddue.schemas.microsoft.com/authoring/2003/5" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <introduction>
+      <para></para>
+    </introduction>
 
-		<section>
-			<title>Getting Started</title>
+    <section>
+      <title>Getting Started</title>
       <content>
         <para>
-          The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is collection of modular .NET Framework
-          libraries for processing chemical information (<legacyBold>cheminformatics</legacyBold>). The
-          modules are <link xlink:href="323b9147-5a38-423b-b1ca-91a3396c6b6d"/>free and open-source</link> and is easily
+          The <legacyBold>.NET Chemistry Development Kit</legacyBold> (NCDK) is .NET Framework port of
+          <externalLink>
+            <linkText>The Chemistry Development Kit (CDK)</linkText>
+            <linkUri>https://sourceforge.net/projects/cdk/</linkUri>
+          </externalLink>. 
+          This library is collection of modular .NET Framework libraries for processing chemical information (<legacyBold>cheminformatics</legacyBold>). 
+          The modules are <link xlink:href="#license">free and open-source</link> and is easily
           integrated with other open-source or in-house projects.
           Functionality is provided for many areas in cheminformatics including:
         </para>
@@ -56,10 +60,49 @@
           <image xlink:href="top_compound_image"/>
         </mediaLink>
       </content>
-		</section>
-
-		<relatedTopics>
-			<link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
-		</relatedTopics>
-	</developerConceptualDocument>
+    </section>
+    <section>
+      <title>Learn</title>
+      <content>
+        <list class="bullet">
+          <listItem>
+            <para>
+              C# API - This Page
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Codes in the test projects.
+            </para>
+          </listItem>
+          <listItem>
+            <para>
+              Documents for the original Java versions - 
+              <externalLink>
+                <linkText>The Chemistry Development Kit (CDK)</linkText>
+                <linkUri>https://cdk.github.io/</linkUri>
+              </externalLink>
+            </para>
+          </listItem>
+        </list>
+      </content>
+    </section>
+    <section address="license">
+      <title>License</title>
+      <content>
+        <para>
+          <externalLink>
+            <linkText>GNU Lesser General Public License, version 2.1</linkText>
+            <linkUri>https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html</linkUri>
+          </externalLink>(or later).
+        </para>
+        <para>
+          The LGPL is compatible with other major open-source licenses. Since .NET libraries are dynamically linked there is no restriction in using CDK in propitiatory software (see the FSF's LGPL and Java).
+        </para>
+      </content>
+    </section>
+    <relatedTopics>
+      <link xlink:href="38e429c1-4197-40a9-a1ee-8b5f4c592a1c" />
+    </relatedTopics>
+  </developerConceptualDocument>
 </topic>

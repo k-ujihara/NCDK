@@ -46,7 +46,7 @@ namespace NCDK.IO.CML
         {
             base.StartDocument();
             //        cdo.StartObject("Frame");
-            currentChemModel = currentChemFile.Builder.CreateChemModel();
+            CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
         }
 
         public override void StartElement(CMLStack xpath, XElement element)
@@ -60,16 +60,16 @@ namespace NCDK.IO.CML
             string s = element.Value.Trim();
             if (xpath.ToString().EndsWith("string/") && BUILTIN.Equals("stereo"))
             {
-                stereoGiven = true;
+                StereoGiven = true;
                 if (s.Trim().Equals("W"))
                 {
                     Debug.WriteLine("CML W stereo found");
-                    bondStereo.Add("1");
+                    BondStereo.Add("1");
                 }
                 else if (s.Trim().Equals("H"))
                 {
                     Debug.WriteLine("CML H stereo found");
-                    bondStereo.Add("6");
+                    BondStereo.Add("6");
                 }
             }
             else

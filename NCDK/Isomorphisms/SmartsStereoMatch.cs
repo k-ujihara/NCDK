@@ -38,7 +38,7 @@ namespace NCDK.Isomorphisms
     // @author John May
     // @cdk.module smarts
     // @cdk.githash
-    public sealed class SmartsStereoMatch : NCDK.Common.Base.Predicate<int[]>
+    public sealed class SmartsStereoMatch
     {
         /// <summary>Query and target contains.</summary>
         private readonly IAtomContainer query, target;

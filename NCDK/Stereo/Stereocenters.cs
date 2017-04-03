@@ -39,7 +39,7 @@ namespace NCDK.Stereo
     /// different ligands and <i>Para</i> ("resemble") stereo centers with
     /// constitutionally identical ligands. Some examples of para-centers
     /// are listed below. Non and potential stereogenic atoms are also indicated. The
-    /// method partially implements the rules described by {@cdk.cite Razinger93}.
+    /// method partially implements the rules described by <token>cdk-cite-Razinger93</token>.
     /// Para centers are identified in isolated rings (more common) but are not
     /// currently found in fused systems (e.g. decalin), spiro linked 'assemblages'
     /// or acyclic interdependent centers. 
@@ -48,7 +48,7 @@ namespace NCDK.Stereo
     /// <para><b>Accepted Stereo Atoms</b></para>
     /// <para>
     /// This atoms accepted as being potentially stereogenic are those defined
-    /// in the InChI Technical Manual {@cdk.cite InChITechManual}. These are: 
+    /// in the InChI Technical Manual <token>cdk-cite-InChITechManual</token>. These are: 
     /// </para>
     /// <para>
     /// <b>Tetrahedral Stereochemistry:</b>
@@ -77,7 +77,7 @@ namespace NCDK.Stereo
     /// <para>
     /// <i>N, P, As, S or Se are not stereogenic if they have a terminal H neighbor
     /// or if they have 2 neighbors of the same element (O, S, Se, Te, N) which
-    /// have at least one hydrogen. Consider: <c>P(O)(=O)(OC)OCCC</c>. Phosphines and
+    /// have at least one hydrogen. Consider: <pre>P(O)(=O)(OC)OCCC</pre>. Phosphines and
     /// arsines are always stereogenic regardless of H neighbors</i>
     /// </para>
     /// <para>
@@ -94,17 +94,17 @@ namespace NCDK.Stereo
     /// <para>
     /// <b>Examples of Para Stereocenters</b>
     /// <list type="bullet"> 
-    /// <item>inositol - has 9 stereo isomers, <c>O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O myo-inositol</c></item> 
-    /// <item>decalin - has 2 stereo isomers, <c>C1CC[C@H]2CCCC[C@H]2C1</c> (not currently identified)</item> 
-    /// <item>spiro/double-bond linked ring - <c>InChI=1/C14H24/c1-11-3-7-13(8-4-11)14-9-5-12(2)6-10-14/h11-12H,3-10H2,1-2H3/b14-13-/t11-,12-</c> (not currently identified)</item> 
-    /// <item>An example of a para-center not in a cycle <c>C[C@@H](O)[C@H](C)[C@H](C)O</c> (not currently identified)</item>
+    /// <item>inositol - has 9 stereo isomers, <pre>O[C@H]1[C@H](O)[C@@H](O)[C@H](O)[C@H](O)[C@@H]1O myo-inositol</pre></item> 
+    /// <item>decalin - has 2 stereo isomers, <pre>C1CC[C@H]2CCCC[C@H]2C1</pre> (not currently identified)</item> 
+    /// <item>spiro/double-bond linked ring - <pre>InChI=1/C14H24/c1-11-3-7-13(8-4-11)14-9-5-12(2)6-10-14/h11-12H,3-10H2,1-2H3/b14-13-/t11-,12-</pre> (not currently identified)</item> 
+    /// <item>An example of a para-center not in a cycle <pre>C[C@@H](O)[C@H](C)[C@H](C)O</pre> (not currently identified)</item>
     /// </list>
     /// </para>
     /// <para>
     /// It should be noted that para-centers may not actually have a configuration. A
     /// simple example of this is seen that by changing the configuration of one
-    /// center in <c>C[C@@H](O)[C@H:1](C)[C@H](C)O</c> removes the central
-    /// configuration as the ligands are now equivalent <c>C[C@@H](O)[CH:1]](C)[C@@H](C)O</c>
+    /// center in <pre>C[C@@H](O)[C@H:1](C)[C@H](C)O</pre> removes the central
+    /// configuration as the ligands are now equivalent <pre>C[C@@H](O)[CH:1]](C)[C@@H](C)O</pre>
     /// </para>
     /// </remarks>
     // @author John May
@@ -133,15 +133,9 @@ namespace NCDK.Stereo
         /// <summary>
         /// Determine the stereocenter atoms in the provided container based on connectivity.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer container = ...;
-        /// Stereocenters  centers   = Stereocenters.Of(container);
-        /// for (int i = 0; i &lt; container.Atoms.Count; i++) {
-        ///     if (centers.IsStereocenter(i)) {
-        ///
-        ///     }
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.Stereocenters_Example.cs+Of"]/*' />
+        /// </example>
         /// <param name="container">input container</param>
         /// <returns>the stereocenters</returns>
         public static Stereocenters Of(IAtomContainer container)
@@ -797,7 +791,7 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Represents one end of a double bond. The element only stores non-double
-        /// bonded neighbors and also indexes it's {@code other} end.
+        /// bonded neighbors and also indexes it's <see cref="other"/> end.
         /// </summary>
         private sealed class Tricoordinate : StereoElement
         {

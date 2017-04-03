@@ -23,7 +23,7 @@ using System.Windows.Media;
 namespace NCDK.Renderers.Colors
 {
     /// <summary>
-    /// Colors atoms using CPK color scheme {@cdk.cite BER2001}. 
+    /// Colors atoms using CPK color scheme <token>cdk-cite-BER2001</token>. 
     /// </summary>
     // @cdk.module  render
     // @cdk.githash

@@ -29,7 +29,7 @@ namespace NCDK.Groups
     /// is equitable.
     /// </summary>
     /// <remarks>
-    /// Closely follows algorithm 7.5 in CAGES {@cdk.cite Kreher98}. The basic idea is that the refiner
+    /// Closely follows algorithm 7.5 in CAGES <token>cdk-cite-Kreher98</token>. The basic idea is that the refiner
     /// maintains a queue of blocks to refine, starting with all the initial blocks
     /// in the partition to refine. These blocks are popped off the queue, and
     /// </remarks>
@@ -87,7 +87,7 @@ namespace NCDK.Groups
         }
 
         /// <summary>
-        /// Refines the coarse partition <code>a</code> into a finer one.
+        /// Refines the coarse partition <c>a</c> into a finer one.
         /// </summary>
         /// <param name="coarser">the partition to refine</param>
         /// <returns>a finer partition</returns>

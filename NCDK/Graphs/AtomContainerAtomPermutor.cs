@@ -21,12 +21,6 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using NCDK.Common.Collections;
-using System.Collections.ObjectModel;
-
 namespace NCDK.Graphs
 {
     /// <summary>
@@ -34,13 +28,7 @@ namespace NCDK.Graphs
     /// the next permutation in the series.
     /// </summary>
     /// <example>
-    /// Typical use:<code>
-    /// AtomContainerAtomPermutor permutor = new AtomContainerAtomPermutor(container);
-    /// while (permutor.MoveNext()) {
-    ///   IAtomContainer permutedContainer = permutor.Next();
-    ///   ...
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.AtomContainerAtomPermutor.cs"]/*' />
     /// </example>
     // @author maclean
     // @cdk.created 2009-09-09

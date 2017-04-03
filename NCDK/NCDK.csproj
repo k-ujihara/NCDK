@@ -114,9 +114,7 @@
       <DependentUpon>BondStereo.tt</DependentUpon>
     </Compile>
     <Compile Include="Common\Base\Compares.cs" />
-    <Compile Include="Common\Base\Function.cs" />
     <Compile Include="Common\Base\Preconditions.cs" />
-    <Compile Include="Common\Base\Predicate.cs" />
     <Compile Include="Common\Collections\Arrays.cs" />
     <Compile Include="Common\Collections\BidirectionalDictionary.cs" />
     <Compile Include="Common\Collections\BitArrays.cs" />
@@ -131,6 +129,16 @@
     <Compile Include="Common\Hash\Crc32.cs" />
     <Compile Include="Common\Mathematics\BitsStreamGenerator.cs" />
     <Compile Include="Common\Mathematics\JavaRandom.cs" />
+    <Compile Include="Formula\MolecularFormula1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MolecularFormula.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IHasProperties.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IHasProperties.tt</DependentUpon>
+    </Compile>
     <Compile Include="Maths\MersenneTwister.cs" />
     <Compile Include="Common\Mathematics\Vectors.cs" />
     <Compile Include="Common\Primitives\Ints.cs" />
@@ -221,16 +229,52 @@
     </Compile>
     <Compile Include="Events\ICDKChangeListener.cs" />
     <None Include="Beam\Snap.txt" />
+    <None Include="cheminf.bibx" />
+    <None Include="cheminf.tokens">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>cheminf.tt</DependentUpon>
+    </None>
     <None Include="FaulonSignatures\Snap.txt" />
+    <Content Include="cheminf.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>cheminf.tokens</LastGenOutput>
+    </Content>
+    <Content Include="Formula\MolecularFormula.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MolecularFormula1.cs</LastGenOutput>
+    </Content>
     <Content Include="Hash\BasicAtomEncoder.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BasicAtomEncoder1.cs</LastGenOutput>
+    </Content>
+    <Content Include="IHasProperties.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IHasProperties.cs</LastGenOutput>
+    </Content>
+    <Content Include="IncludeExamples.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IncludeExamples.xml</LastGenOutput>
+    </Content>
+    <Content Include="IncludeExamples.xml">
+      <DependentUpon>IncludeExamples.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
     </Content>
     <Content Include="LibIO\CML\CMLElementDefines.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>CMLElementDefines.cs</LastGenOutput>
     </Content>
     <EmbeddedResource Include="Smiles\Normalize\fixsmiles.xml" />
+    <Content Include="Reactions\Types\%24ExampleCodes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>%24ExampleCodes.cs</LastGenOutput>
+    </Content>
+    <Content Include="SGroups\SgroupType.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SgroupType.cs</LastGenOutput>
+    </Content>
     <Content Include="x64\libinchi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -244,7 +288,6 @@
     <None Include="FaulonSignatures\LICENCE.txt" />
     <Compile Include="Geometries\Alignments\KabschAlignment.cs" />
     <Compile Include="Geometries\AtomTools.cs" />
-    <Compile Include="Geometries\IRDFWeightFunction.cs" />
     <Compile Include="Geometries\Projector.cs" />
     <Compile Include="Geometries\RDFCalculator.cs" />
     <Compile Include="Graphs\Invariant\EquivalentClassPartitioner.cs" />
@@ -270,7 +313,25 @@
     <Compile Include="LibIO\CML\CMLScalar.cs" />
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
+    <Compile Include="QSAR\Descriptors\Atomic\AbstractRDFProtonDescriptor.cs" />
     <Compile Include="Reactions\ReactionChain.cs" />
+    <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractRadicalSiteReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractAdductionLPReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractElectronImpactDBReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractHeterolyticCleavageReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractRearrangementReaction.cs" />
+    <Compile Include="Reactions\Types\AbstractSharingReaction.cs" />
+    <Compile Include="Reactions\Types\%24ExampleCodes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>%24ExampleCodes.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SGroups\SgroupType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SgroupType.tt</DependentUpon>
+    </Compile>
     <Compile Include="Templates\IsoAlkanes.cs" />
     <Compile Include="NInChI\INCHI_BOND_STEREO.cs" />
     <Compile Include="NInChI\INCHI_BOND_TYPE.cs" />
@@ -327,6 +388,11 @@
       <DependentUpon>Association.tt</DependentUpon>
     </Compile>
     <Compile Include="ResourceLoader.cs" />
+    <Compile Include="TT\ChemObject1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ChemObject.tt</DependentUpon>
+    </Compile>
     <Compile Include="Validate\AbstractValidator.cs" />
     <Compile Include="Validate\BasicValidator.cs" />
     <Compile Include="Validate\CDKValidator.cs" />
@@ -434,11 +500,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ChemModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TT\ChemObject1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChemObject.tt</DependentUpon>
     </Compile>
     <Compile Include="ConformerContainer.cs" />
     <Content Include="TT\Element.tt">
@@ -1554,15 +1615,14 @@
     <Compile Include="Reactions\ReactionEngine.cs" />
     <Compile Include="Reactions\ReactionSpecification.cs" />
     <Compile Include="Reactions\Types\AdductionProtonLPReaction.cs" />
-    <Compile Include="Reactions\Types\Parameters\IParameterReact.cs" />
-    <Compile Include="Reactions\Types\Parameters\ParameterReact.cs" />
+    <Compile Include="Reactions\Types\Parameters\IParameterReaction.cs" />
+    <Compile Include="Reactions\Types\Parameters\ParameterReaction.cs" />
     <Compile Include="Reactions\Types\Parameters\SetReactionCenter.cs" />
     <Compile Include="RingSearches\AllRingsFinder.cs" />
     <Compile Include="RingSearches\RingPartitioner.cs" />
     <Compile Include="SGroups\Sgroup.cs" />
     <Compile Include="SGroups\SgroupBracket.cs" />
     <Compile Include="SGroups\SgroupKey.cs" />
-    <Compile Include="SGroups\SgroupType.cs" />
     <Compile Include="Smiles\BeamToCDK.cs" />
     <Compile Include="Smiles\CDKToBeam.cs" />
     <Compile Include="Smiles\CxSmilesParser.cs" />

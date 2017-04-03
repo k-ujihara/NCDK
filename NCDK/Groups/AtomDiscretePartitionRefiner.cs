@@ -36,36 +36,13 @@ namespace NCDK.Groups
     /// </summary>
     /// <example>
     /// There are a couple of ways to use it - firstly, get the automorphisms.
-    /// <code>
-    ///     IAtomContainer ac = ... // get an atom container somehow
-    ///     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-    ///     PermutationGroup autG = refiner.GetAutomorphismGroup(ac);
-    ///     foreach (var automorphism in autG.All()) {
-    ///         ... // do something with the permutation
-    ///     }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.AtomDiscretePartitionRefiner_Example.cs+1"]/*' />
     /// Another is to check an atom container to see if it is canonical:
-    ///
-    /// <code>
-    ///     IAtomContainer ac = ... // get an atom container somehow
-    ///     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-    ///     if (refiner.IsCanonical(ac)) {
-    ///         ... // do something with the atom container
-    ///     }
-    /// </code>
-    ///
-    /// Note that it is not necessary to call <see cref="Refine(IAtomContainer)"/>  before
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.AtomDiscretePartitionRefiner_Example.cs+2"]/*' />
+    /// Note that it is not necessary to call <see cref="Refine(IAtomContainer)"/> before
     /// either of these methods. However if both the group and the canonical check
     /// are required, then the code should be:
-    ///
-    /// <code>
-    ///     AtomDiscretePartitionRefiner refiner = new AtomDiscretePartitionRefiner();
-    ///     refiner.Refine(ac);
-    ///     bool isCanon = refiner.IsCanonical();
-    ///     PermutationGroup autG = refiner.GetAutomorphismGroup();
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.AtomDiscretePartitionRefiner_Example.cs+3"]/*' />
     /// This way, the refinement is not carried out multiple times. Finally, remember
     /// to call <see cref="Reset"/> if the refiner is re-used on multiple structures.
     /// </example>

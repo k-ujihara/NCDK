@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// This class generates a CDK IAtomContainer from an InChI string.  It places
@@ -39,27 +39,7 @@ namespace NCDK.Graphs.InChi
     /// </para>
     /// </summary>
     /// <example>
-    /// Example usage
-    /// <code>
-    /// // Generate factory -  if native code does not load
-    /// InChIGeneratorFactory factory = new InChIGeneratorFactory();
-    /// // Get InChIToStructure
-    /// InChIToStructure intostruct = factory.GetInChIToStructure(
-    ///   inchi, Default.ChemObjectBuilder.Instance
-    /// );
-    /// 
-    /// INCHI_RET ret = intostruct.ReturnStatus;
-    /// if (ret == INCHI_RET.WARNING) {
-    ///   // Structure generated, but with warning message
-    ///   Console.Out.WriteLine("InChI warning: " + intostruct.Message);
-    /// } else if (ret != INCHI_RET.OKAY) {
-    ///   // Structure generation failed
-    ///   throw new CDKException("Structure generation failed failed: " + ret.ToString()
-    ///     + " [" + intostruct.Message + "]");
-    /// }
-    /// 
-    /// IAtomContainer container = intostruct.AtomContainer;
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.InChI.InChIToStructure_Example.cs"]/*' />
     /// </example>
     // @author Sam Adams
     // @cdk.module inchi

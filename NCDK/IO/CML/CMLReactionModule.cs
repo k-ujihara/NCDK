@@ -51,87 +51,87 @@ namespace NCDK.IO.CML
             if ("reaction".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("Reaction");
-                if (currentReactionSet == null)
-                    currentReactionSet = currentChemFile.Builder.CreateReactionSet();
-                currentReaction = currentChemFile.Builder.CreateReaction();
+                if (CurrentReactionSet == null)
+                    CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
+                CurrentReaction = CurrentChemFile.Builder.CreateReaction();
                 string id = AttGetValue(element.Attributes(), "id");
-                if (id != null) currentReaction.Id = id;
+                if (id != null) CurrentReaction.Id = id;
                 //                cdo.SetObjectProperty("Reaction", "id", id);
             }
             else if ("reactionList".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("ReactionSet");
-                currentReactionSet = currentChemFile.Builder.CreateReactionSet();
+                CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
                 string id = AttGetValue(element.Attributes(), "id");
-                if (id != null) currentReactionSet.Id = id;
+                if (id != null) CurrentReactionSet.Id = id;
                 //                cdo.SetObjectProperty("reactionList", "id", id);
             }
             else if ("reactant".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("Reactant");
-                if (currentReaction == null)
+                if (CurrentReaction == null)
                 {
-                    if (currentReactionSet == null)
-                        currentReactionSet = currentChemFile.Builder.CreateReactionSet();
-                    currentReaction = currentChemFile.Builder.CreateReaction();
+                    if (CurrentReactionSet == null)
+                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
                 }
-                currentMolecule = currentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
 #if DEBUG
                 objectType = "Reactant";
 #endif
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null)
-                    currentMolecule.Id = id;
+                    CurrentMolecule.Id = id;
                 else
                 {
                     string ref_ = AttGetValue(element.Attributes(), "ref");
-                    if (ref_ != null) currentMolecule.Id = ref_;
+                    if (ref_ != null) CurrentMolecule.Id = ref_;
                 }
                 //                cdo.SetObjectProperty("Reactant", "id", id);
             }
             else if ("product".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("Product");
-                if (currentReaction == null)
+                if (CurrentReaction == null)
                 {
-                    if (currentReactionSet == null)
-                        currentReactionSet = currentChemFile.Builder.CreateReactionSet();
-                    currentReaction = currentChemFile.Builder.CreateReaction();
+                    if (CurrentReactionSet == null)
+                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
                 }
-                currentMolecule = currentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
 #if DEBUG
                 objectType = "Product";
 #endif
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null)
-                    currentMolecule.Id = id;
+                    CurrentMolecule.Id = id;
                 else
                 {
                     string ref_ = AttGetValue(element.Attributes(), "ref");
-                    if (ref_ != null) currentMolecule.Id = ref_;
+                    if (ref_ != null) CurrentMolecule.Id = ref_;
                 }
                 //                cdo.SetObjectProperty("Product", "id", id);
             }
             else if ("substance".Equals(element.Name.LocalName))
             {
                 //            cdo.StartObject("Agent");
-                if (currentReaction == null)
+                if (CurrentReaction == null)
                 {
-                    if (currentReactionSet == null)
-                        currentReactionSet = currentChemFile.Builder.CreateReactionSet();
-                    currentReaction = currentChemFile.Builder.CreateReaction();
+                    if (CurrentReactionSet == null)
+                        CurrentReactionSet = CurrentChemFile.Builder.CreateReactionSet();
+                    CurrentReaction = CurrentChemFile.Builder.CreateReaction();
                 }
-                currentMolecule = currentChemFile.Builder.CreateAtomContainer();
+                CurrentMolecule = CurrentChemFile.Builder.CreateAtomContainer();
 #if DEBUG
                 objectType = "Agent";
 #endif
                 string id = AttGetValue(element.Attributes(), "id");
                 if (id != null)
-                    currentMolecule.Id = id;
+                    CurrentMolecule.Id = id;
                 else
                 {
                     string ref_ = AttGetValue(element.Attributes(), "ref");
-                    if (ref_ != null) currentMolecule.Id = ref_;
+                    if (ref_ != null) CurrentMolecule.Id = ref_;
                 }
                 //                cdo.SetObjectProperty("Agent", "id", id);
             }
@@ -143,14 +143,14 @@ namespace NCDK.IO.CML
                 if (id != null)
                 {
                     // check for existing molecule of that id
-                    IAtomContainer existing = GetMoleculeFromID(currentMoleculeSet, id);
+                    IAtomContainer existing = GetMoleculeFromID(CurrentMoleculeSet, id);
                     if (existing != null)
                     {
-                        currentMolecule = existing;
+                        CurrentMolecule = existing;
                     }
                     else
                     {
-                        currentMolecule.Id = id;
+                        CurrentMolecule.Id = id;
                     }
                 }
                 else
@@ -158,18 +158,18 @@ namespace NCDK.IO.CML
                     string ref_ = AttGetValue(element.Attributes(), "ref");
                     if (ref_ != null)
                     {
-                        IAtomContainer atomC = GetMoleculeFromID(currentMoleculeSet, ref_);
+                        IAtomContainer atomC = GetMoleculeFromID(CurrentMoleculeSet, ref_);
 
                         // if there was no molecule create a new one for the reference. this
                         // happens when the reaction is defined before the molecule set
                         if (atomC == null)
                         {
-                            atomC = currentChemFile.Builder.CreateAtomContainer();
+                            atomC = CurrentChemFile.Builder.CreateAtomContainer();
                             atomC.Id = ref_;
-                            currentMoleculeSet.Add(atomC);
+                            CurrentMoleculeSet.Add(atomC);
                         }
 
-                        base.currentMolecule = atomC;
+                        base.CurrentMolecule = atomC;
                     }
                 }
             }
@@ -186,35 +186,35 @@ namespace NCDK.IO.CML
             if ("reaction".Equals(local))
             {
                 //            cdo.EndObject("Reaction");
-                currentReactionSet.Add(currentReaction);
-                currentChemModel.ReactionSet = currentReactionSet;
+                CurrentReactionSet.Add(CurrentReaction);
+                CurrentChemModel.ReactionSet = CurrentReactionSet;
             }
             else if ("reactionList".Equals(local))
             {
                 //            cdo.EndObject("ReactionSet");
-                currentChemModel.ReactionSet = currentReactionSet;
+                CurrentChemModel.ReactionSet = CurrentReactionSet;
                 /* FIXME: this should be when document is closed! */
             }
             else if ("reactant".Equals(local))
             {
                 //            cdo.EndObject("Reactant");
-                currentReaction.Reactants.Add(currentMolecule);
+                CurrentReaction.Reactants.Add(CurrentMolecule);
             }
             else if ("product".Equals(local))
             {
                 //            cdo.EndObject("Product");
-                currentReaction.Products.Add(currentMolecule);
+                CurrentReaction.Products.Add(CurrentMolecule);
             }
             else if ("substance".Equals(local))
             {
                 //            cdo.EndObject("Agent");
-                currentReaction.Agents.Add(currentMolecule);
+                CurrentReaction.Agents.Add(CurrentMolecule);
             }
             else if ("molecule".Equals(local))
             {
                 Debug.WriteLine("Storing Molecule");
                 //if the current molecule exists in the currentMoleculeSet means that is a reference in these.
-                if (currentMoleculeSet.GetMultiplier(currentMolecule) == -1) base.StoreData();
+                if (CurrentMoleculeSet.GetMultiplier(CurrentMolecule) == -1) base.StoreData();
                 // do nothing else but store atom/bond information
             }
             else

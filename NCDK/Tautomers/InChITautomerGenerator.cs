@@ -21,7 +21,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using NCDK.Common.Base;
-using NCDK.Graphs.InChi;
+using NCDK.Graphs.InChI;
 using NCDK.SMSD;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace NCDK.Tautomers
 
     /// <summary>
     /// Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
-    /// Algorithm described in {@cdk.cite Thalheim2010}.
+    /// Algorithm described in <token>cdk-cite-Thalheim2010</token>.
     /// <para>
     /// <b>Provide your input molecules in Kekule form, and make sure atom type are perceived.</b>
     /// </para>
@@ -64,7 +64,7 @@ namespace NCDK.Tautomers
         }
 
         /// <summary>
-        /// Overloaded {@link #GetTautomers(IAtomContainer)} to get tautomers for an input molecule with the InChI already
+        /// Overloaded <see cref="GetTautomers(IAtomContainer)"/> to get tautomers for an input molecule with the InChI already
         /// provided as input argument.
         /// </summary>
         /// <param name="inputMolecule">and input molecule for which to generate tautomers</param>
@@ -341,7 +341,7 @@ namespace NCDK.Tautomers
         private static readonly Regex subPattern = new Regex("[0-9]*", RegexOptions.Compiled);
 
         /// <summary>
-        /// Constructs tautomers following (most) steps of the algorithm in {@cdk.cite Thalheim2010}.
+        /// Constructs tautomers following (most) steps of the algorithm in <token>cdk-cite-Thalheim2010</token>.
         /// </summary>
         /// <param name="inputMolecule">input molecule</param>
         /// <param name="mobHydrAttachPositions">mobile H positions</param>
@@ -385,7 +385,7 @@ namespace NCDK.Tautomers
                         }
                     }
                 }
-                break_ATOMS:
+            break_ATOMS:
                 if (!atomRemoved) atomsToRemove = false;
 
             }
@@ -636,7 +636,8 @@ namespace NCDK.Tautomers
         /// Tries double bond combinations for a certain input container of which the double bonds have been stripped
         /// around the mobile hydrogen positions. Recursively.
         /// </summary>
-        /// <param name="container">/// <param name="dblBondsAdded">counts double bonds added so far</param></param>
+        /// <param name="container"></param>
+        /// <param name="dblBondsAdded">counts double bonds added so far</param>
         /// <param name="bondOffSet">offset for next double bond position to consider</param>
         /// <param name="doubleBondMax">maximum number of double bonds to add</param>
         /// <param name="atomsInNeedOfFix">atoms that require more bonds</param>

@@ -256,7 +256,7 @@ namespace NCDK.RingSearches
 
             if (BitArrays.Cardinality(intersect) > 1)
             {
-                AddFUsed(cycle);
+                AddFused(cycle);
             }
             else
             {
@@ -282,9 +282,9 @@ namespace NCDK.RingSearches
         /// fused it will still be added as isolated.
         /// </summary>
         /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the set bits</param>
-        private void AddFUsed(BitArray cycle)
+        private void AddFused(BitArray cycle)
         {
-            int i = IndexOfFUsed(0, cycle);
+            int i = IndexOfFused(0, cycle);
 
             if (i != -1)
             {
@@ -294,7 +294,7 @@ namespace NCDK.RingSearches
                 int j = i;
 
                 // merge other cycles we could be fused with into 'i'
-                while ((j = IndexOfFUsed(j + 1, cycle)) != -1)
+                while ((j = IndexOfFused(j + 1, cycle)) != -1)
                 {
                     cycles[i].Or(cycles[j]);
                     cycles.RemoveAt(j);
@@ -316,7 +316,7 @@ namespace NCDK.RingSearches
         /// <param name="start">start searching from here</param>
         /// <param name="cycle">test whether any current cycles are fused with this one</param>
         /// <returns>the index of the first fused after 'start', -1 if none</returns>
-        private int IndexOfFUsed(int start, BitArray cycle)
+        private int IndexOfFused(int start, BitArray cycle)
         {
             for (int i = start; i < cycles.Count(); i++)
             {

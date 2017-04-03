@@ -30,10 +30,10 @@ namespace NCDK.Indices
     /// <remarks>
     /// References:
     /// <list type="bullet">
-    ///     <item><a href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</a></item>
-    ///     <item><a href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</a></item>
+    ///     <item><see href="http://www.cas.org/EO/regsys.html">A CAS Registry Number</see></item>
+    ///     <item><see href="http://www.cas.org/EO/checkdig.html">Check Digit Verification of CAS Registry Numbers</see></item>
     /// </list> 
-    /// <a href="http://www.cas.org">CAS website</a>
+    /// <see href="http://www.cas.org">CAS website</see>
     /// </remarks>
     // @author Egon Willighagen <egonw@sci.kun.nl>
     // @cdk.githash

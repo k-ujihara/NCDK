@@ -44,7 +44,7 @@ namespace NCDK.RingSearches
         {
             IAtomContainer molecule = TestMoleculeFactory.MakeAlphaPinene();
 
-            IRingSet ringSet = Cycles.SSSR(molecule).ToRingSet();
+            IRingSet ringSet = Cycles.FindSSSR(molecule).ToRingSet();
             IAtomContainer ac = RingPartitioner.ConvertToAtomContainer(ringSet);
             Assert.AreEqual(7, ac.Atoms.Count);
             Assert.AreEqual(8, ac.Bonds.Count);
@@ -54,17 +54,17 @@ namespace NCDK.RingSearches
         public void TestPartitionIntoRings()
         {
             IAtomContainer azulene = TestMoleculeFactory.MakeAzulene();
-            IRingSet ringSet = Cycles.SSSR(azulene).ToRingSet();
+            IRingSet ringSet = Cycles.FindSSSR(azulene).ToRingSet();
             IList<IRingSet> list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(1, list.Count);
 
             IAtomContainer biphenyl = TestMoleculeFactory.MakeBiphenyl();
-            ringSet = Cycles.SSSR(biphenyl).ToRingSet();
+            ringSet = Cycles.FindSSSR(biphenyl).ToRingSet();
             list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(2, list.Count);
 
             IAtomContainer spiro = TestMoleculeFactory.MakeSpiroRings();
-            ringSet = Cycles.SSSR(spiro).ToRingSet();
+            ringSet = Cycles.FindSSSR(spiro).ToRingSet();
             list = RingPartitioner.PartitionRings(ringSet);
             Assert.AreEqual(1, list.Count);
 

@@ -22,13 +22,12 @@ using System;
 namespace NCDK.Silent
 {
     /// <summary>
-    /// Checks the functionality of the {@link AtomContainerSet}.
-    ///
-    // @cdk.module test-silent
+    /// Checks the functionality of the <see cref="IAtomContainerSet{T}"/>.
     /// </summary>
-     [TestClass()]
+    // @cdk.module test-silent
+    [TestClass()]
     public class AtomContainerSetTest
-            : AbstractAtomContainerSetTest<IAtomContainer>
+        : AbstractAtomContainerSetTest<IAtomContainer>
     {
         public override IChemObject NewChemObject()
         {

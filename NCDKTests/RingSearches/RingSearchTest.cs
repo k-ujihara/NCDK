@@ -194,7 +194,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFUsed()
+        public void TestFused()
         {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             CyclicVertexSearch cyclicSearch = mock_cyclicSearch.Object;
@@ -267,7 +267,7 @@ namespace NCDK.RingSearches
         }
         
         [TestMethod()]
-        public void TestFUsedRingFragments()  {
+        public void TestFusedRingFragments()  {
             var mock_cyclicSearch = new Mock<CyclicVertexSearch>();
             var mock_container = new Mock<IAtomContainer>();
             var mock_builder = new Mock<IChemObjectBuilder>();

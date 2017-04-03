@@ -41,10 +41,7 @@ namespace NCDK.Modeling.Builder3D
     /// </summary>
     /// <example>
     ///  Its use looks like:
-    ///  <code>
-    ///  ModelBuilder3D mb3d = ModelBuilder3D.Instance;
-    ///  IAtomContainer molecule = mb3d.Generate3DCoordinates(molecule, false);
-    ///  </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Modeling.Builder3D.ModelBuilder3D_Example.cs"]/*' />
     /// </example>
     /// <remarks>
     /// Standing problems:
@@ -53,8 +50,8 @@ namespace NCDK.Modeling.Builder3D
     ///    <item>vdWaals clashes</item>
     ///    <item>stereochemistry</item>
     ///    <item>chains running through ring systems</item>
-    ///  </list>
-    ///  </remarks>
+    /// </list>
+    /// </remarks>
     // @author      cho
     // @author      steinbeck
     // @cdk.created 2004-09-07

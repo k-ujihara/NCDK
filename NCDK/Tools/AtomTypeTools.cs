@@ -17,9 +17,7 @@
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
 using NCDK.Aromaticities;
-using NCDK.Default;
 using NCDK.Graphs;
 using NCDK.Smiles;
 using NCDK.Tools.Manipulator;
@@ -40,12 +38,12 @@ namespace NCDK.Tools
     public class AtomTypeTools
     {
         public const int NotInRing = 100;
-        public const int PYROLE_RING = 4;
-        public const int FURAN_RING = 6;
-        public const int THIOPHENE_RING = 8;
-        public const int PYRIDINE_RING = 10;
-        public const int PYRIMIDINE_RING = 12;
-        public const int BENZENE_RING = 5;
+        public const int PyrroleRing = 4;
+        public const int FuranRing = 6;
+        public const int ThiopheneRing = 8;
+        public const int PyridineRing = 10;
+        public const int PyrimidineRing = 12;
+        public const int BenzeneRing = 5;
         HOSECodeGenerator hcg = null;
 
         /// <summary>
@@ -76,14 +74,14 @@ namespace NCDK.Tools
         /// </summary>
         /// <param name="molecule"></param>
         /// <param name="aromaticity">bool true/false true if aromaticity should be calculated</param>
-        /// <returns>sssrf ringSetofTheMolecule</returns>
+        /// <returns>sssrf ring set of the molecule</returns>
         public IRingSet AssignAtomTypePropertiesToAtom(IAtomContainer molecule, bool aromaticity)
         {
             SmilesGenerator sg = new SmilesGenerator();
 
             Debug.WriteLine("assignAtomTypePropertiesToAtom Start ...");
             string hoseCode = "";
-            IRingSet ringSetMolecule = Cycles.SSSR(molecule).ToRingSet();
+            IRingSet ringSetMolecule = Cycles.FindSSSR(molecule).ToRingSet();
             Debug.WriteLine(ringSetMolecule);
 
             if (aromaticity)
@@ -190,12 +188,12 @@ namespace NCDK.Tools
             return SmilesGenerator.Unique().Create(mol);
         }
 
-        private string PYRROLE_SMI = null;
-        private string FURAN_SMI = null;
-        private string THIOPHENE_SMI = null;
-        private string PYRIDINE_SMI = null;
-        private string PYRIMIDINE_SMI = null;
-        private string BENZENE_SMI = null;
+        private string PyrroleSmi = null;
+        private string FuranSmi = null;
+        private string ThiopheneSmi = null;
+        private string PyridineSmi = null;
+        private string PyrimidineSmi = null;
+        private string BenzeneSmi = null;
 
         private static string Smicache(string cached, SmilesParser smipar, string input)
         {
@@ -217,18 +215,18 @@ namespace NCDK.Tools
 
             SmilesParser smipar = new SmilesParser(ring.Builder);
 
-            if (smile.Equals(Smicache(PYRROLE_SMI, smipar, "c1cc[nH]c1")))
-                return PYROLE_RING;
-            else if (smile.Equals(Smicache(FURAN_SMI, smipar, "o1cccc1")))
-                return FURAN_RING;
-            else if (smile.Equals(Smicache(THIOPHENE_SMI, smipar, "c1ccsc1")))
-                return THIOPHENE_RING;
-            else if (smile.Equals(Smicache(PYRIDINE_SMI, smipar, "c1ccncc1")))
-                return PYRIDINE_RING;
-            else if (smile.Equals(Smicache(PYRIMIDINE_SMI, smipar, "c1cncnc1")))
-                return PYRIMIDINE_RING;
-            else if (smile.Equals(Smicache(BENZENE_SMI, smipar, "c1ccccc1")))
-                return BENZENE_RING;
+            if (smile.Equals(Smicache(PyrroleSmi, smipar, "c1cc[nH]c1")))
+                return PyrroleRing;
+            else if (smile.Equals(Smicache(FuranSmi, smipar, "o1cccc1")))
+                return FuranRing;
+            else if (smile.Equals(Smicache(ThiopheneSmi, smipar, "c1ccsc1")))
+                return ThiopheneRing;
+            else if (smile.Equals(Smicache(PyridineSmi, smipar, "c1ccncc1")))
+                return PyridineRing;
+            else if (smile.Equals(Smicache(PyrimidineSmi, smipar, "c1cncnc1")))
+                return PyrimidineRing;
+            else if (smile.Equals(Smicache(BenzeneSmi, smipar, "c1ccccc1")))
+                return BenzeneRing;
 
             int ncount = 0;
             foreach (var atom in ring.Atoms)

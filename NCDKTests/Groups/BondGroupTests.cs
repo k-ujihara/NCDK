@@ -23,17 +23,13 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Smiles;
 
-
 namespace NCDK.Groups
 {
-    /// <summary>
     // @author maclean
     // @cdk.module test-group
-    /// </summary>
     [TestClass()]
     public class BondGroupTests : CDKTestCase
     {
-
         private static readonly IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         public IAtomContainer GetMol(string smiles)

@@ -33,6 +33,7 @@ using System.Linq;
 
 <#    foreach (var ns in namespaces) 
 {
+	bool addNofityChanged =  !ns.IsSilent;
 #>
 namespace <#= ns.NS #>
 {
@@ -48,14 +49,6 @@ namespace <#= ns.NS #>
     public class ChemObject
         : IChemObject
     {
-#if DEBUG
-        private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
-        {
-            typeof(string),
-            typeof(NCDK.Dict.DictRef),
-            typeof(NCDK.QSAR.DescriptorSpecification),
-        };
-#endif
         private ICollection<IChemObjectListener> listeners;
         /// <summary>
         /// List for listener administration.
@@ -65,7 +58,7 @@ namespace <#= ns.NS #>
             get
             {
                 if (listeners == null)
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
                     listeners = new HashSet<IChemObjectListener>(); 
 <# } else { #>
                     listeners = new ImmutableCollection<IChemObjectListener>(); 
@@ -83,7 +76,7 @@ namespace <#= ns.NS #>
             set
             {
                 isPlaced = value;
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
                 NotifyChanged();
 <# } #>
             }
@@ -99,7 +92,7 @@ namespace <#= ns.NS #>
             set
             {
                 isVisited = value;
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
                 NotifyChanged();
 <# } #>
             }
@@ -135,7 +128,7 @@ namespace <#= ns.NS #>
         /// </summary>
         public void NotifyChanged()
         {
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
             if (Notification)
                 NotifyChanged(new ChemObjectChangeEventArgs(this));
 <# } #>
@@ -150,7 +143,7 @@ namespace <#= ns.NS #>
         /// <param name="evt">A ChemObjectChangeEvent pointing to the source of where the change happened</param>
         public virtual void NotifyChanged(ChemObjectChangeEventArgs evt)
         {
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
             if (Notification)
             {
                 foreach (var listener in Listeners)
@@ -161,127 +154,9 @@ namespace <#= ns.NS #>
 <# } #>
         }
 
-        /// <summary>
-        /// A dictionary for the storage of any kind of properties of this <see cref="IChemObject"/>.
-        /// </summary>
-        IDictionary<object, object> properties;
-
-        private void InitProperties()
-        {
-            properties = new Dictionary<object, object>();
-        }
-
-        /// <summary>
-        /// Sets a property for a IChemObject.
-        /// </summary>
-        /// <param name="description"> An object description of the property (most likely an unique string)</param>
-        /// <param name="property">An object with the property itself</param>
-        /// <seealso cref="GetProperty{T}(object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
-        public virtual void SetProperty(object description, object property)
-        {
-#if DEBUG
-            if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
-#endif
-            if (this.properties == null)
-                InitProperties();
-            properties[description] = property;
-<# if (!ns.IsSilent) { #>
-            NotifyChanged();
-<# } #>
-        }
-
-        /// <summary>
-        /// Removes a property for a IChemObject.
-        /// </summary>
-        /// <param name="description">The object description of the property (most likely an unique string)</param>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="GetProperty{T}(object)"/>
-        public virtual void RemoveProperty(object description)
-        {
-#if DEBUG
-            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
-#endif
-            if (this.properties == null)
-                return;
-            var removed = properties.Remove(description);
-<# if (!ns.IsSilent) { #>
-            if (removed)
-                NotifyChanged();
-<# } #>
-        }
-
-        /// <summary>
-        /// Returns a property for the IChemObject.
-        /// </summary>
-        /// <param name="description">An object description of the property (most likely an unique string)</param>
-        /// <returns>The object containing the property. Returns null if propert is not set.</returns>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
-        public virtual T GetProperty<T>(object description)
-        {
-#if DEBUG
-            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
-#endif
-            return GetProperty(description, default(T));
-        }
-
-        public virtual T GetProperty<T>(object description, T defaultValue)
-        {
-#if DEBUG
-            if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
-#endif
-            if (this.properties == null)
-                return defaultValue;
-            object property;
-            if (properties.TryGetValue(description, out property))
-                return (T)property;
-            return defaultValue;
-        }
-
-        private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
-
-        /// <summary>
-        /// A <see cref="IDictionary{T, T}"/> with the <see cref="IChemObject"/>'s properties.
-        /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
-        /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
-        public virtual IDictionary<object, object> GetProperties() 
-        {
-            if (this.properties == null)
-                return EmptyProperties;
-            return this.properties;
-        }
-
-        public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
-        {
-            this.properties = null;
-            if (properties == null)
-                return;
-            AddProperties(properties);
-        }
-
-        /// <summary>
-        /// Sets the properties of this object.
-        /// </summary>
-        /// <param name="properties">a Dictionary specifying the property values</param>
-        /// <seealso cref="GetProperties"/>
-        public virtual void AddProperties(IEnumerable<KeyValuePair<object, object>> properties)
-        {
-            if (properties == null)
-                return;
-            if (this.properties == null)
-                InitProperties();
-            foreach (var pair in properties)
-                this.properties[pair.Key] = pair.Value;
-<# if (!ns.IsSilent) { #>
-            NotifyChanged();
-<# } #>
-        }
+<#
+		IncludePropertiesImplementation(addNofityChanged);
+#>
 
         public virtual object Clone()
         {
@@ -322,7 +197,7 @@ namespace <#= ns.NS #>
             set
             {
                 id = value;
-<# if (!ns.IsSilent) { #>
+<# if (addNofityChanged) { #>
                 NotifyChanged();
 <# } #>
             }

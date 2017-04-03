@@ -27,11 +27,11 @@ namespace NCDK.Maths
     /// <para>This generator features an extremely long period
     /// (2<sup>19937</sup>-1) and 623-dimensional equidistribution up to 32
     /// bits accuracy. The home page for this generator is located at 
-    /// <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</a>.
+    /// <see href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html</see>.
     /// </para>
     /// <para>
     /// This generator is described in a paper by Makoto Matsumoto and
-    /// Takuji Nishimura in 1998: <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/mt.pdf">Mersenne Twister: A 623-Dimensionally Equidistributed Uniform Pseudo-Random Number Generator</a>, 
+    /// Takuji Nishimura in 1998: <see href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/ARTICLES/mt.pdf">Mersenne Twister: A 623-Dimensionally Equidistributed Uniform Pseudo-Random Number Generator</see>, 
     /// ACM Transactions on Modeling and Computer
     /// Simulation, Vol. 8, No. 1, January 1998, pp 3--30
     /// </para>

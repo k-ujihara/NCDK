@@ -1203,8 +1203,6 @@ namespace NCDK.NInChI
             Assert.AreEqual(flag + "Compress " + flag + "SNon ", options);
         }
 
-        /// <summary>
-        /// </summary>
         [TestMethod()]
         public void TestCheckOptionsString()
         {

@@ -26,7 +26,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
     ///  The stabilization of the positive charge
     ///  (e.g.) obtained in the polar breaking of a bond is calculated from the sigma- and
     ///  lone pair-electronegativity values of the atoms that are in conjugation to the atoms
-    ///  obtaining the charges. The method is based following {@cdk.cite Saller85}.
+    ///  obtaining the charges. The method is based following <token>cdk-cite-Saller85</token>.
     ///  The value is calculated looking for resonance structures which can stabilize the charge.
     /// </summary>
     /// <remarks>

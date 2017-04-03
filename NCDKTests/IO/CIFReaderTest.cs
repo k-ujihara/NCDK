@@ -39,7 +39,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Ensure a CIF file from the crystallography open database can be read.
-        /// Example input <a href="http://www.crystallography.net/1100784.cif">1100784</a>.
+        /// Example input <see href="http://www.crystallography.net/1100784.cif">1100784</see>.
         /// </summary>
         [TestMethod()]
         public void Cod1100784()

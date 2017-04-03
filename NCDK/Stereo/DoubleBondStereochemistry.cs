@@ -44,7 +44,7 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Creates a new double bond stereo chemistry. The path of length three is defined by
-        /// <code>ligandBonds[0]</code>, <code>stereoBonds</code>, and <code>ligandBonds[1]</code>.
+        /// <c>ligandBonds[0]</c>, <c>stereoBonds</c>, and <c>ligandBonds[1]</c>.
         /// </summary>
         public DoubleBondStereochemistry(IBond stereoBond, IEnumerable<IBond> ligandBonds, DoubleBondConformation stereo)
         {

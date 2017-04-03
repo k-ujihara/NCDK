@@ -34,7 +34,7 @@ using System.Text.RegularExpressions;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Reads a molecule from the original MDL MOL or SDF file {@cdk.cite DAL92}. An SD files
+    /// Reads a molecule from the original MDL MOL or SDF file <token>cdk-cite-DAL92</token>. An SD files
     /// is read into a <see cref="IChemSequence"/> of <see cref="IChemModel"/>'s. Each ChemModel will contain one
     /// Molecule. If the MDL molfile contains a property block, the <see cref="MDLV2000Reader"/> should be
     /// used.
@@ -45,7 +45,7 @@ namespace NCDK.IO
     /// <para>
     /// The title of the MOL file is read and can be retrieved with:
     /// <code>
-    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.TITLE);
+    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.Title);
     /// </code>
     /// </para>
     /// </summary>
@@ -85,7 +85,7 @@ namespace NCDK.IO
         public MDLReader(Stream ins, ChemObjectReaderModes mode)
             : this(new StreamReader(ins))
         {
-            base.mode = mode;
+            base.ReaderMode = mode;
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace NCDK.IO
 
         public MDLReader(TextReader ins, ChemObjectReaderModes mode)
         {
-            base.mode = mode;
+            base.ReaderMode = mode;
             input = ins;
             InitIOSettings();
         }
@@ -361,7 +361,7 @@ namespace NCDK.IO
                 line = input.ReadLine();
                 linecount++;
                 Debug.WriteLine("Line " + linecount + ": " + line);
-                if (mode == ChemObjectReaderModes.Strict)
+                if (ReaderMode == ChemObjectReaderModes.Strict)
                 {
                     if (line.Contains("V2000") || line.Contains("v2000"))
                     {
@@ -448,7 +448,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        if (mode == ChemObjectReaderModes.Strict)
+                        if (ReaderMode == ChemObjectReaderModes.Strict)
                         {
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");

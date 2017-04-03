@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.schrodinger.com/">here</a>.
+    /// See <see href="http://www.schrodinger.com/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

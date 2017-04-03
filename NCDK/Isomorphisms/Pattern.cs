@@ -35,15 +35,9 @@ namespace NCDK.Isomorphisms
         /// exist an empty mapping is returned. Depending on the implementation
         /// stereochemistry may be checked (recommended).
         /// </summary>
-        /// <example><code>
-        /// Pattern        pattern = ...; // create pattern
-        /// foreach (var m in ms) {
-        ///     int[] mapping = pattern.Match(m);
-        ///     if (mapping.Length > 0) {
-        ///         // found mapping!
-        ///     }
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Pattern_Example.cs+Match"]/*' />
+        /// </example>
         /// <param name="target">the container to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target or an empty array</returns>
         public abstract int[] Match(IAtomContainer target);
@@ -53,14 +47,9 @@ namespace NCDK.Isomorphisms
         /// Depending on the implementation stereochemistry may be checked
         /// (recommended).
         /// </summary>
-        /// <example><code>
-        /// Pattern        pattern = ...; // create pattern
-        /// foreach (var m in ms) {
-        ///     if (pattern.Matches(m)) {
-        ///         // found mapping!
-        ///     }
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Pattern_Example.cs+Matches"]/*' />
+        /// </example>
         /// <param name="target">the container to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>
         public bool Matches(IAtomContainer target)
@@ -73,26 +62,12 @@ namespace NCDK.Isomorphisms
         /// should not be checked to allow filtering with <see cref="Mappings.GetStereochemistry"/>. 
         /// </summary>
         /// <example>
-        /// <code>
-        /// Pattern pattern = Pattern.FindSubstructure(query);
-        /// foreach (var m in ms) {
-        ///     for (int[] mapping : pattern.MatchAll(m)) {
-        ///         // found mapping
-        ///     }
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Pattern_Example.cs+MatchAll1"]/*' />
         /// Using the fluent interface (see <see cref="Mappings"/>) we can search and
         /// manipulate the mappings. Here's an example of finding the first 5
         /// mappings and creating an array. If the mapper is lazy other states are
         /// simply not explored.
-        ///
-        /// <code>
-        /// // find only the first 5 mappings and store them in an array
-        /// Pattern pattern  = Pattern.FindSubstructure(query);
-        /// int[][] mappings = pattern.MatchAll(target)
-        ///                           .Limit(5)
-        ///                           .ToArray();
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Pattern_Example.cs+MatchAll2"]/*' />
         /// </example>
         /// <param name="target">the container to search for the pattern in</param>
         /// <returns>the mapping from the pattern to the target</returns>

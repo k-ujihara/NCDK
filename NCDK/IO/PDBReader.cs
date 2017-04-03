@@ -40,7 +40,7 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Reads the contents of a PDBFile.
-    /// <para>A description can be found at <a href="http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html">http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</a>.</para>
+    /// <para>A description can be found at <see href="http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html">http://www.rcsb.org/pdb/static.do?p=file_formats/pdb/index.html</see>.</para>
     /// </summary>
     // @cdk.module  pdb
     // @cdk.githash

@@ -32,19 +32,19 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <para>
     /// Traditionally the e-state descriptors identify the relevant fragments and
     /// then evaluate the actual e-state value. However it has been
-    /// <a href="http://www.mdpi.org/molecules/papers/91201004.pdf">shown</a> in {@cdk.cite BUTINA2004}
+    /// <see href="http://www.mdpi.org/molecules/papers/91201004.pdf">shown</see> in <token>cdk-cite-BUTINA2004</token>
     /// that simply using the <i>counts</i> of the e-state fragments can lead to QSAR models
     /// that exhibit similar performance to those built using the actual e-state indices.
     /// </para>
     /// <para>
     /// Atom typing and aromaticity perception should be performed prior to calling this
-    /// descriptor. The atom type definitions are taken from {@cdk.cite HALL1995}.
-    /// The SMARTS definitions were obtained from <a href="http://www.rdkit.org">RDKit</a>.
+    /// descriptor. The atom type definitions are taken from <token>cdk-cite-HALL1995</token>.
+    /// The SMARTS definitions were obtained from <see href="http://www.rdkit.org">RDKit</see>.
     /// </para>
     /// <para>
     /// The descriptor returns an integer array result of 79 values with the
-    /// following names (see <a href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">
-    /// here</a> for the corresponding chemical groups).
+    /// following names (see <see href="http://www.edusoft-lc.com/molconn/manuals/350/appV.html">here</see>
+    /// for the corresponding chemical groups).
     /// </para>
     /// <list type="table">
     /// <listheader>

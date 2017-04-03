@@ -33,7 +33,7 @@ namespace NCDK.Fingerprint
     /// the <see cref="Fingerprinter"/> with additional bits describing ring
     /// features.
     /// </summary>
-    /// <see cref="Fingerprinter"/>
+    /// <seealso cref="Fingerprinter"/>
     // @author         shk3
     // @cdk.created    2006-01-13
     // @cdk.keyword    fingerprint
@@ -42,21 +42,20 @@ namespace NCDK.Fingerprint
     // @cdk.githash
     internal class ExtendedFingerprinter : IFingerprinter
     {
-
-        private const int RESERVED_BITS = 25;
+        private const int ReservedBits = 25;
 
         private Fingerprinter fingerprinter = null;
 
         /// <summary>
-        /// Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
-        /// and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
+        /// Creates a fingerprint generator of length <see cref="Fingerprinter.DefaultSize"/> 
+        /// and with a search depth of <see cref="Fingerprinter.DefaultSearchDepth"/>.
         /// </summary>
         public ExtendedFingerprinter()
-            : this(Fingerprinter.DEFAULT_SIZE, Fingerprinter.DEFAULT_SEARCH_DEPTH)
+            : this(Fingerprinter.DefaultSize, Fingerprinter.DefaultSearchDepth)
         { }
 
         public ExtendedFingerprinter(int size)
-           : this(size, Fingerprinter.DEFAULT_SEARCH_DEPTH)
+           : this(size, Fingerprinter.DefaultSearchDepth)
         { }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace NCDK.Fingerprint
         /// <param name="searchDepth">The desired depth of search</param>
         public ExtendedFingerprinter(int size, int searchDepth)
         {
-            this.fingerprinter = new Fingerprinter(size - RESERVED_BITS, searchDepth);
+            this.fingerprinter = new Fingerprinter(size - ReservedBits, searchDepth);
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace NCDK.Fingerprint
         /// <summary>
         /// Generates a fingerprint of the default size for the given
         /// AtomContainer, using path and ring metrics. It contains the
-        /// informations from GetBitFingerprint() and bits which tell if the structure
+        /// informations from <see cref="Fingerprinter.GetBitFingerprint(IAtomContainer)"/> and bits which tell if the structure
         /// has 0 rings, 1 or less rings, 2 or less rings ... 10 or less rings and
         /// bits which tell if there is a fused ring system with 1,2...8 or more
         /// rings in it. The RingSet used is passed via rs parameter. This must be
@@ -103,7 +102,7 @@ namespace NCDK.Fingerprint
         /// systems in the molecule.
         /// </summary>
         /// <param name="atomContainer">The AtomContainer for which a Fingerprint is generated</param>
-        /// <param name="ringSet">An SSSR RingSet of ac (if not available, use GetExtendedFingerprint(AtomContainer ac), which does the calculation)</param>
+        /// <param name="ringSet">An SSSR RingSet of ac (if not available, use <see cref="GetBitFingerprint(IAtomContainer)"/>, which does the calculation)</param>
         /// <param name="rslist">A list of all ring systems in ac</param>
         /// <exception cref="CDKException">for example if input can not be cloned.</exception>
         /// <returns>a BitArray representing the fingerprint</returns>
@@ -114,15 +113,14 @@ namespace NCDK.Fingerprint
 
             IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(container);
             int size = this.Count;
-            double weight = MolecularFormulaManipulator.GetTotalNaturalAbundance(MolecularFormulaManipulator
-                    .GetMolecularFormula(container));
+            double weight = MolecularFormulaManipulator.GetTotalNaturalAbundance(MolecularFormulaManipulator.GetMolecularFormula(container));
             for (int i = 1; i < 11; i++)
             {
                 if (weight > (100 * i)) fingerprint.Set(size - 26 + i); // 26 := RESERVED_BITS+1
             }
             if (ringSet == null)
             {
-                ringSet = Cycles.SSSR(container).ToRingSet();
+                ringSet = Cycles.FindSSSR(container).ToRingSet();
                 rslist = RingPartitioner.PartitionRings(ringSet);
             }
             for (int i = 0; i < 7; i++)
@@ -133,7 +131,6 @@ namespace NCDK.Fingerprint
             for (int i = 0; i < rslist.Count; i++)
             {
                 if (((IRingSet)rslist[i]).Count > maximumringsystemsize)
-
                     maximumringsystemsize = ((IRingSet)rslist[i]).Count;
             }
             for (int i = 0; i < maximumringsystemsize && i < 9; i++)
@@ -144,11 +141,9 @@ namespace NCDK.Fingerprint
         }
 
         /// <inheritdoc/>
-
-        public int Count => fingerprinter.Count + RESERVED_BITS;
+        public int Count => fingerprinter.Count + ReservedBits;
 
         /// <inheritdoc/>
-
         public ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();

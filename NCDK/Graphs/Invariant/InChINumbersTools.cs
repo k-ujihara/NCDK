@@ -21,7 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NCDK.NInChI;
-using NCDK.Graphs.InChi;
+using NCDK.Graphs.InChI;
 
 namespace NCDK.Graphs.Invariant
 {
@@ -30,7 +30,7 @@ namespace NCDK.Graphs.Invariant
     /// </summary>
     // @cdk.module  inchi
     // @cdk.githash
-    public class InChINumbersTools
+    public static class InChINumbersTools
     {
         /// <summary>
         /// Makes an array containing the InChI atom numbers of the non-hydrogen
@@ -53,7 +53,7 @@ namespace NCDK.Graphs.Invariant
 
         /// <summary>
         /// Obtain the InChI numbers for the input container to be used to order
-        /// atoms in Universal SMILES {@cdk.cite OBoyle12}. The numbers are obtained
+        /// atoms in Universal SMILES <token>cdk-cite-OBoyle12</token>. The numbers are obtained
         /// using the fixedH and RecMet options of the InChI. All non-bridged
         /// hydrogens are labelled as 0.
         /// </summary>

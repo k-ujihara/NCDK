@@ -63,7 +63,7 @@ namespace NCDK.Renderers
 
         /// <summary>
         /// Displays a symbol based on the preferred representation from the IUPAC guidelines (GR-2.1.2)
-        /// {@cdk.cite Brecher08}. Carbons are unlabeled unless they have abnormal valence, parallel
+        /// <token>cdk-cite-Brecher08</token>. Carbons are unlabeled unless they have abnormal valence, parallel
         /// bonds, or are terminal (i.e. methyl, methylene, etc).
         /// </summary>
         /// <returns>symbol visibility instance</returns>
@@ -71,7 +71,7 @@ namespace NCDK.Renderers
 
         /// <summary>
         /// Displays a symbol based on the acceptable representation from the IUPAC guidelines (GR-2.1.2)
-        /// {@cdk.cite Brecher08}. Carbons are unlabeled unless they have abnormal valence, parallel
+        /// <token>cdk-cite-Brecher08</token>. Carbons are unlabeled unless they have abnormal valence, parallel
         /// bonds. The recommendations note that it is acceptable to leave methyl groups unlabelled.
         /// </summary>
         /// <returns>symbol visibility instance</returns>

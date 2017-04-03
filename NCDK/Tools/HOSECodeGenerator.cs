@@ -36,7 +36,7 @@ using System.Text;
 namespace NCDK.Tools
 {
     /// <summary>
-    /// Generates HOSE codes {@cdk.cite BRE78}.
+    /// Generates HOSE codes <token>cdk-cite-BRE78</token>.
     /// IMPORTANT: Your molecule must contain implicit or explicit hydrogens
     /// for this method to work properly.
     /// </summary>
@@ -150,7 +150,7 @@ namespace NCDK.Tools
         /// <param name="root">The root atom for which to produce the spheres.</param>
         /// <param name="noOfSpheres">The number of spheres to look at.</param>
         /// <param name="ringsize">Shall the center code have the ring size in it? Only use if you want to have the hose code later, else say false.</param>
-        /// <returns> An array of <see cref="List{IAtom}"/>. The list at i-1 contains the atoms at sphere i as <see cref="TreeNode"/>s.</returns>
+        /// <returns> An array <see cref="IList{T}"/> of <see cref="IAtom"/>. The list at i-1 contains the atoms at sphere i as <see cref="TreeNode"/>s.</returns>
         public IList<IAtom>[] GetSpheres(IAtomContainer ac, IAtom root, int noOfSpheres, bool ringsize)
         {
             EnsureIsotopeFactory();
@@ -259,7 +259,7 @@ namespace NCDK.Tools
         {
             if (ac != acold)
             {
-                soar = Cycles.SSSR(ac).ToRingSet();
+                soar = Cycles.FindSSSR(ac).ToRingSet();
             }
             bool[] bool_ = new bool[1000];
             StringBuilder sb = new StringBuilder();

@@ -99,12 +99,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
             this.smartQueryBond = queryBond;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
+        /// <inheritdoc/>
         /// <param name="targetConatiner">target container</param>
         /// <param name="targetBond">target bond</param>
         /// <returns>true if bonds match</returns>
-        /// </summary>
         public bool Matches(TargetProperties targetConatiner, IBond targetBond)
         {
             if (this.smartQueryBond != null)
@@ -131,7 +129,6 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Return true if a bond is matched between query and target
-        /// <param name="targetBond">/// @return</param>
         /// </summary>
         private bool IsBondTypeMatch(IBond targetBond)
         {

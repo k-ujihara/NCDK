@@ -30,17 +30,13 @@ namespace NCDK.Geometries.CIP
 {
     /// <summary>
     /// Tool to help determine the R,S and stereochemistry definitions of a subset of the
-    /// CIP rules {@cdk.cite Cahn1966}. The used set up sub rules are specified in the
+    /// CIP rules <token>cdk-cite-Cahn1966</token>. The used set up sub rules are specified in the
     /// <see cref="CIPLigandRule"/> class.
     /// </summary>
     /// <example>
     /// Basic use starts from a <see cref="ITetrahedralChirality"/> and therefore
     /// assumes atoms with four neighbours:
-    /// <code>
-    /// IAtom[] ligandAtoms = mol.GetConnectedAtoms(centralAtom).ToArray(new IAtom[4]);
-    /// ITetrahedralChirality tetraStereo = new TetrahedralChirality(centralAtom, ligandAtoms, Stereo.AntiClockwise);
-    /// CIPChirality cipChirality = CIPTool.GetCIPChirality(mol, tetraStereo);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.CIP.CIPTool_Example.cs"]/*' />
     /// The <see cref="BondStereo"/> value can be
     /// reconstructed from 3D coordinates with the <see cref="StereoTool"/>.
     /// </example>
@@ -51,7 +47,7 @@ namespace NCDK.Geometries.CIP
         /// <summary>
         /// IAtom index to indicate an implicit hydrogen, not present in the chemical graph.
         /// </summary>
-        public const int HYDROGEN = -1;
+        public const int Hydrogen = -1;
 
         private static CIPLigandRule cipRule = new CIPLigandRule();
 
@@ -85,8 +81,8 @@ namespace NCDK.Geometries.CIP
         }
 
         /// <summary>
-        /// Convenience method for labelling all stereo elements. The <see cref="CIPChirality"/> is determined for each element and stored as as {@link
-        /// string} on the {@link CDKConstants#CIP_DESCRIPTOR} property key.
+        /// Convenience method for labelling all stereo elements. The <see cref="CIPChirality"/> is determined for each element and stored as as <see cref="string"/> 
+        /// on the <see cref="CDKPropertyName.CIP_Descriptor"/> property key.
         /// Atoms/bonds that are not stereocenters have no label assigned and the
         /// property will be null.
         /// </summary>
@@ -261,7 +257,7 @@ namespace NCDK.Geometries.CIP
         /// <summary>
         /// Creates a ligancy for chirality around a single chiral atom, where the involved
         /// atoms are identified by there index in the <see cref="IAtomContainer"/>. For the four ligand
-        /// atoms, <see cref="HYDROGEN"/> can be passed as index, which will indicate the presence of
+        /// atoms, <see cref="Hydrogen"/> can be passed as index, which will indicate the presence of
         /// an implicit hydrogen, not explicitly present in the chemical graph of the
         /// given <paramref name="container"/>.
         /// </summary>
@@ -289,7 +285,7 @@ namespace NCDK.Geometries.CIP
         /// <summary>
         /// Creates a ligand attached to a single chiral atom, where the involved
         /// atoms are identified by there index in the <see cref="IAtomContainer"/>. For ligand
-        /// atom, <see cref="HYDROGEN"/> can be passed as index, which will indicate the presence of
+        /// atom, <see cref="Hydrogen"/> can be passed as index, which will indicate the presence of
         /// an implicit hydrogen, not explicitly present in the chemical graph of the
         /// given <paramref name="container"/>.
         /// </summary>
@@ -301,7 +297,7 @@ namespace NCDK.Geometries.CIP
         public static ILigand DefineLigand(IAtomContainer container, VisitedAtoms visitedAtoms, int chiralAtom,
                 int ligandAtom)
         {
-            if (ligandAtom == HYDROGEN)
+            if (ligandAtom == Hydrogen)
             {
                 return new ImplicitHydrogenLigand(container, visitedAtoms, container.Atoms[chiralAtom]);
             }

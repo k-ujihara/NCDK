@@ -42,17 +42,19 @@ namespace NCDK.Normalize
     {
         /// <summary>
         ///  The method takes an xml files like the following:
-        ///  <code>
+        ///  <pre>
         ///  &lt;replace-set&gt;
         ///  &lt;replace&gt;O=N=O&lt;/replace&gt;
         ///  &lt;replacement&gt;[O-][N+]=O&lt;/replacement&gt;
         ///  &lt;/replace-set&gt;
-        ///  </code>
+        ///  </pre>
+        /// </summary>
+        /// <remarks>
         ///  All parts in ac which are the same as replace will be changed according to replacement.
         ///  Currently the following changes are done: BondOrder, FormalCharge.
-        ///  For detection of fragments like replace, we rely on UniversalIsomorphismTester.
+        ///  For detection of fragments like replace, we rely on <see cref="UniversalIsomorphismTester"/>.
         ///  doc may contain several replace-sets and a replace-set may contain several replace fragments, which will all be normalized according to replacement.
-        /// </summary>
+        ///  </remarks>
         /// <param name="ac">The atomcontainer to normalize.</param>
         /// <param name="doc">The configuration file.</param>
         /// <returns>Did a replacement take place?</returns>

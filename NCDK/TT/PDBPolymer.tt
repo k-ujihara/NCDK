@@ -64,7 +64,6 @@ namespace <#= ns.NS #>
             secondaryStructures.Add(structure);
         }
 
-
         public IEnumerable<IPDBStructure> GetStructures()
         {
             //        don't return the original
@@ -75,22 +74,19 @@ namespace <#= ns.NS #>
         /// Adds the atom oAtom without specifying a <see cref="IMonomer"/> or a Strand. Therefore the
         /// atom to this AtomContainer, but not to a certain Strand or <see cref="IMonomer"/> (intended
         /// e.g. for HETATMs).
-        ///
-        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         /// </summary>
-
+        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         public void Add(IPDBAtom oAtom)
         {
-            base.Add(oAtom);
+            base.Atoms.Add(oAtom);
         }
 
         /// <summary>
         /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
         /// record of the iCode.
-        ///
+        /// </summary>
         /// <param name="oAtom">The IPDBAtom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-        /// </summary>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -114,9 +110,8 @@ namespace <#= ns.NS #>
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+		/// <seealso cref="IPolymer.GetMonomerNames()"/>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original

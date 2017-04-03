@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">here</a>.
+    /// See <see href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

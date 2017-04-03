@@ -24,27 +24,9 @@ using System.Linq;
 namespace NCDK.Reactions.Types
 {
     /// <summary>
-    /// <para>IReactionProcess which make an electron impact for for Non-Bonding Electron Lost.
-    /// This reaction type is a representation of the processes which occurs in the mass spectrometer.</para>
-    /// <para>It is processed by the RemovingSEofNBMechanism class</para>
+    /// <para>IReactionProcess which make an electron impact for for Non-Bonding Electron Lost.</para>
+    /// <para>This reaction type is a representation of the processes which occurs in the mass spectrometer.</para>
     /// </summary>
-    /// <example>
-    ///<code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new ElectronImpactNBEReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not localized then the reaction process will
-    /// try to find automatically the possible reactive center.</para>
-    /// </example>
     /// <seealso cref="Mechanisms.RemovingSEofNBMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-04-01
@@ -52,7 +34,7 @@ namespace NCDK.Reactions.Types
     // @cdk.githash
     // @cdk.set        reaction-types
     // @cdk.dictref    reaction-types:electronImpact
-    public class ElectronImpactNBEReaction : ReactionEngine, IReactionProcess
+    public partial class ElectronImpactNBEReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
         /// Constructor of the ElectronImpactNBEReaction object.
@@ -95,7 +77,7 @@ namespace NCDK.Reactions.Types
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var atom in reactant.Atoms)
             {

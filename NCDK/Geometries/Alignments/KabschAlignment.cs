@@ -23,6 +23,7 @@ using NCDK.Common.Collections;
 using NCDK.Config;
 using NCDK.Numerics;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -32,27 +33,16 @@ namespace NCDK.Geometries.Alignments
     /// Aligns two structures to minimize the RMSD using the Kabsch algorithm.
     /// </summary>
     /// <remarks>
-    /// This class is an implementation of the Kabsch algorithm ({@cdk.cite KAB76}, {@cdk.cite KAB78})
+    /// This class is an implementation of the Kabsch algorithm (<token>cdk-cite-KAB76</token>, <token>cdk-cite-KAB78</token>)
     /// and evaluates the optimal rotation matrix (U) to minimize the RMSD between the two structures.
     /// Since the algorithm assumes that the number of points are the same in the two structures
     /// it is the job of the caller to pass the proper number of atoms from the two structures. Constructors
-    /// which take whole <c>AtomContainer</c>'s are provided but they should have the same number
+    /// which take whole <see cref="IAtomContainer"/>'s are provided but they should have the same number
     /// of atoms.
     /// The algorithm allows for the use of atom weightings and by default all points are given a weight of 1.0,
     /// </remarks>
     /// <example>
-    /// Example usage can be:
-    /// <code>
-    /// AtomContainer ac1, ac2;
-    ///
-    /// try 
-    /// {
-    ///    KabschAlignment sa = new KabschAlignment(ac1.GetAtoms(),ac2.GetAtoms());
-    ///    sa.Align();
-    ///    Console.Out.WriteLine(sa.RMSD);
-    /// } 
-    /// catch (CDKException e){}
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.Alignments.KabschAlignment_Example.cs"]/*' />
     /// In many cases, molecules will be aligned based on some common substructure.
     /// In this case the center of masses calculated during alignment refer to these
     /// substructures rather than the whole molecules. To superimpose the molecules
@@ -62,27 +52,7 @@ namespace NCDK.Geometries.Alignments
     /// of the substructure specified for this molecule. This center of mass can be obtained
     /// by a call to <see cref="CenterOfMass"/> and then manually translating the coordinates.
     /// Thus an example would be
-    /// <code>
-    /// AtomContainer ac1, ac2;  // whole molecules
-    /// Atom[] a1, a2;           // some subset of atoms from the two molecules
-    /// KabschAlignment sa;
-    ///
-    /// try {
-    ///    sa = new KabschAlignment(a1,a2);
-    ///    sa.Align();
-    /// } catch (CDKException e){}
-    ///
-    /// Vector3 cm1 = sa.CenterOfMass;
-    /// for (int i = 0; i &lt; ac1.Atoms.Count; i++) {
-    ///    Atom a = ac1.GetAtomAt(i);
-    ///    a.SetX3d( a.Point3D.X - cm1.X );
-    ///    a.SetY3d( a.Point3D.Y - cm1.Y );
-    ///    a.SetY3d( a.Point3D.Z - cm1.Z );
-    /// }
-    /// sa.RotateAtomContainer(ac2);
-    ///
-    /// // display the two AtomContainer's
-    ///</code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.Alignments.KabschAlignment_Example.cs+substructure"]/*' />
     ///</example>
     // @author           Rajarshi Guha
     // @cdk.created      2004-12-11
@@ -103,16 +73,16 @@ namespace NCDK.Geometries.Alignments
         /// <see cref="Align"/>
         public double RMSD { get; private set; } = -1;
 
-        private Vector3[] p1, p2, rp;                                                          // rp are the rotated coordinates
+        private Vector3[] p1, p2, rp;  // rp are the rotated coordinates
         private double[] wts;
         private int npoint;
         private Vector3 cm1, cm2;
         private double[] atwt1, atwt2;
 
-        private Vector3[] GetPoint3DArray(IAtom[] a)
+        private Vector3[] GetPoint3DArray(IList<IAtom> a)
         {
-            var p = new Vector3[a.Length];
-            for (int i = 0; i < a.Length; i++)
+            var p = new Vector3[a.Count];
+            for (int i = 0; i < a.Count; i++)
             {
                 p[i] = a[i].Point3D.Value;
             }
@@ -129,9 +99,9 @@ namespace NCDK.Geometries.Alignments
             return p;
         }
 
-        private double[] GetAtomicMasses(IAtom[] a)
+        private double[] GetAtomicMasses(IList<IAtom> a)
         {
-            var am = new double[a.Length];
+            var am = new double[a.Count];
             IsotopeFactory factory = null;
             try
             {
@@ -144,7 +114,7 @@ namespace NCDK.Geometries.Alignments
             }
 
             Trace.Assert(factory != null);
-            for (int i = 0; i < a.Length; i++)
+            for (int i = 0; i < a.Count; i++)
             {
                 am[i] = factory.GetMajorIsotope(a[i].Symbol).ExactMass.Value;
             }
@@ -196,13 +166,13 @@ namespace NCDK.Geometries.Alignments
         /// <param name="al1">An array of <see cref="IAtom"/> objects</param>
         /// <param name="al2">An array of <see cref="IAtom"/> objects. This array will have its coordinates rotated so that the RMDS is minimized to the coordinates of the first array</param>
         /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays</exception>
-        public KabschAlignment(IAtom[] al1, IAtom[] al2)
+        public KabschAlignment(IList<IAtom> al1, IList<IAtom> al2)
         {
-            if (al1.Length != al2.Length)
+            if (al1.Count != al2.Count)
             {
                 throw new CDKException("The Atom[]'s being aligned must have the same numebr of atoms");
             }
-            this.npoint = al1.Length;
+            this.npoint = al1.Count;
             this.p1 = GetPoint3DArray(al1);
             this.p2 = GetPoint3DArray(al2);
             this.wts = new double[this.npoint];
@@ -223,21 +193,20 @@ namespace NCDK.Geometries.Alignments
         /// <param name="wts">A vector atom weights.</param>
         /// <exception cref="CDKException">if the number of Atom's are not the same in the two arrays or
         ///                         length of the weight vector is not the same as the Atom arrays</exception>
-        public KabschAlignment(IAtom[] al1, IAtom[] al2, double[] wts)
+        public KabschAlignment(IList<IAtom> al1, IList<IAtom> al2, IList<double> wts)
         {
-            if (al1.Length != al2.Length)
+            if (al1.Count != al2.Count)
             {
                 throw new CDKException("The Atom[]'s being aligned must have the same number of atoms");
             }
-            if (al1.Length != wts.Length)
+            if (al1.Count != wts.Count)
             {
                 throw new CDKException("Number of weights must equal number of atoms");
             }
-            this.npoint = al1.Length;
+            this.npoint = al1.Count;
             this.p1 = GetPoint3DArray(al1);
             this.p2 = GetPoint3DArray(al2);
-            this.wts = new double[this.npoint];
-            Array.Copy(wts, 0, this.wts, 0, this.npoint);
+            this.wts = wts.Take(this.npoint).ToArray();
 
             this.atwt1 = GetAtomicMasses(al1);
             this.atwt2 = GetAtomicMasses(al2);

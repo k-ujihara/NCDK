@@ -12,7 +12,7 @@ namespace NCDK.Beam
     /// <para>
     /// This class provides storage and manipulation of a matching. A new match is
     /// added with <see cref="Match(int, int)"/>, any existing match for the newly matched
-    /// vertices is non-longer available. For convenience {@link #GetMatches()} provides
+    /// vertices is non-longer available. For convenience <see cref="GetMatches()"/> provides
     /// the current independent edge set.
     /// </para>
     /// </summary>

@@ -33,18 +33,18 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Eigenvalue based descriptor noted for its utility in chemical diversity.
-    /// Described by Pearlman et al. {@cdk.cite PEA99}.
+    /// Described by Pearlman et al. <token>cdk-cite-PEA99</token>.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The descriptor is based on a weighted version of the Burden matrix {@cdk.cite BUR89, BUR97}
+    /// The descriptor is based on a weighted version of the Burden matrix <token>cdk-cite-BUR89</token>; <token>cdk-cite-BUR97</token>
     /// which takes into account both the connectivity as well as atomic
     /// properties of a molecule. The weights are a variety of atom properties placed along the
     /// diagonal of the Burden matrix. Currently three weighting schemes are employed
     /// <list type="bullet">
     /// <item>atomic weight</item>
     /// <item>partial charge (Gasteiger Marsilli)</item>
-    /// <item>polarizability {@cdk.cite KJ81}</item>
+    /// <item>polarizability <token>cdk-cite-KJ81</token></item>
     /// </list> 
     /// </para>
     /// <para>By default, the descriptor will return the highest and lowest eigenvalues for the three

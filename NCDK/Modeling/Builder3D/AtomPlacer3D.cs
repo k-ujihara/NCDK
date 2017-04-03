@@ -17,13 +17,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Mathematics;
-using NCDK.Default;
 using NCDK.Geometries;
 using System;
 using System.Collections.Generic;
 using NCDK.Numerics;
-using System.Linq;
 
 namespace NCDK.Modeling.Builder3D
 {
@@ -352,11 +349,10 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         ///  Gets the distanceValue attribute of the parameter set.
-        ///
+        /// </summary>
         /// <param name="id1">atom1 id</param>
         /// <param name="id2">atom2 id</param>
         /// <returns>The distanceValue value from the force field parameter set</returns>
-        /// </summary>
         public double GetBondLengthValue(string id1, string id2)
         {
             string dkey = "";
@@ -379,12 +375,11 @@ namespace NCDK.Modeling.Builder3D
 
         /// <summary>
         ///  Gets the angleKey attribute of the AtomPlacer3D object.
-        ///
+        /// </summary>
         /// <param name="id1">Description of the Parameter</param>
         /// <param name="id2">Description of the Parameter</param>
         /// <param name="id3">Description of the Parameter</param>
         /// <returns>The angleKey value</returns>
-        /// </summary>
         public double GetAngleValue(string id1, string id2, string id3)
         {
             string akey = "";

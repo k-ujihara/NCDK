@@ -21,16 +21,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
+using NCDK.Beam;
+using NCDK.Config;
+using NCDK.Stereo;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using NCDK.Beam;
-using NCDK.Common.Collections;
-using NCDK.Stereo;
-using static NCDK.Common.Base.Preconditions;
-using NCDK.Config;
 using System.IO;
+using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Smiles
 {
@@ -40,24 +37,18 @@ namespace NCDK.Smiles
     /// generate a standard-from SMILES and/or arrange the vertices in a canonical
     /// output order.
     /// </summary>
-    /// <b>Important:</b> The conversion respects the implicit hydrogen count and if
-    /// the number of implicit hydrogen ({@link IAtom#ImplicitHydrogenCount}) is
+    /// <remarks>
+    /// <note type="important">
+    /// The conversion respects the implicit hydrogen count and if
+    /// the number of implicit hydrogen (<see cref="IAtom.ImplicitHydrogenCount"/>) is
     /// null an exception will be thrown. To ensure correct conversion please ensure
     /// all atoms have their implicit hydrogen count set.
-    ///
-    /// <example><code>
-    /// IAtomContainer m   = ...;
-    ///
-    /// // converter is thread-safe and can be used by multiple threads
-    /// CDKToBeam      c2g = new CDKToBeam();
-    /// ChemicalGraph  g   = c2g.ToBeamGraph(m);
-    ///
-    /// // get the SMILES notation from the Beam graph
-    /// string         smi = g.ToSmiles():
-    /// </code></example>
-    /// <remarks>
-    /// <a href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</a>
+    /// </note> 
     /// </remarks>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.CDKToBeam_Example.cs"]/*' />
+    /// </example>
+    /// <seealso href="http://johnmay.github.io/Beam">Beam SMILES Toolkit</seealso>
     // @author John May
     // @cdk.module smiles
     // @cdk.keyword SMILES

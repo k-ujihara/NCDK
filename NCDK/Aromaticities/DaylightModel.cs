@@ -316,7 +316,7 @@ namespace NCDK.Aromaticities
 
         /// <summary>
         /// Lookup of the number of valence electrons for elements near those which
-        /// this model considers aromatic. As only the {@link #AromaticElement(int)}
+        /// this model considers aromatic. As only the <see cref="AromaticElement(int)"/> 
         /// are checked we need only consider elements within a charge range.
         /// </summary>
         /// <param name="element">the atomic number of an element</param>

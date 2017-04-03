@@ -48,10 +48,8 @@ namespace NCDK.SMSD.Tools
 
         /// <summary>
         /// Creates a new instance of MolHandler
-        /// <param name="molFile">atomContainer file name</param>
-        /// <param name="cleanMolecule">/// @param removeHydrogen</param>
-        ///
         /// </summary>
+        /// <param name="molFile">atomContainer file name</param>
         public MolHandler(string molFile, bool removeHydrogen, bool cleanMolecule)
         {
             MDLReader molRead = null;
@@ -115,7 +113,6 @@ namespace NCDK.SMSD.Tools
         /// <summary>
         /// Creates a new instance of MolHandler
         /// <param name="container">Molecule AtomContainer</param>
-        /// <param name="cleanMolecule">/// @param removeHydrogen</param>
         /// </summary>
         public MolHandler(IAtomContainer container, bool removeHydrogen, bool cleanMolecule)
         {

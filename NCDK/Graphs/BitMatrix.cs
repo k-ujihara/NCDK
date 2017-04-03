@@ -39,11 +39,12 @@ namespace NCDK.Graphs
     /// whether a cycle can be made of other cycles in our basis. In the example
     /// below each row can be made by XORing the other two rows.
     /// </summary>
-    /// <example><para>
+    /// <example>
+    /// <pre>
     /// 1:   111000111   (can be made by 2 XOR 3)
     /// 2:   111000000   (can be made by 1 XOR 3)
     /// 3:   000000111   (can be made by 1 XOR 2)
-    /// </para>
+    /// </pre>
     /// <code>
     /// BitMatrix m = new BitMatrix(9, 3);
     /// m.Add(ToBitArray("111000111"));
@@ -234,13 +235,12 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
-        /// Utility method xors the vectors {@literal u} and {@literal v}. Neither
+        /// Utility method xors the vectors <paramref name="u"/> and <paramref name="v"/>. Neither
         /// input is modified.
-        ///
+        /// </summary>
         /// <param name="u">a bit set</param>
         /// <param name="v">a bit set</param>
-        /// <returns>the 'xor' of {@literal u} and {@literal v}</returns>
-        /// </summary>
+        /// <returns>the 'xor' of <paramref name="u"/> and <paramref name="v"/></returns>
         internal static BitArray Xor(BitArray u, BitArray v)
         {
             BitArray w = (BitArray)u.Clone();

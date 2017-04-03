@@ -33,7 +33,8 @@ namespace NCDK.IO.CML
 {
     /// <summary>
     /// Implements the PDB convention used by PDB2CML.
-    /// 
+    /// </summary>
+    /// <remarks>
     /// <para>This is a lousy implementation, though. Problems that will arise:
     /// <list type="bullet">
     ///   <item>when this new convention is adopted in the root element no
@@ -52,7 +53,7 @@ namespace NCDK.IO.CML
     ///     (of which version 1999 produces invalid CML 1.0)</item>
     /// </list>
     /// </para>
-    /// </summary>
+    /// </remarks>
     // @cdk.module io
     // @cdk.githash
     // @author Egon Willighagen <egonw@sci.kun.nl>
@@ -119,7 +120,7 @@ namespace NCDK.IO.CML
                         }
                         else if (qname.Equals("title"))
                         {
-                            elementTitle = atti.Value;
+                            ElementTitle = atti.Value;
                             Debug.WriteLine(name, "->TITLE found: ", atti.Value);
                         }
                         else
@@ -130,9 +131,9 @@ namespace NCDK.IO.CML
                     if (attj.Name.LocalName.Equals("convention") && attj.Value.Equals("PDB"))
                     {
                         //                    cdo.StartObject("PDBPolymer");
-                        currentStrand = currentChemFile.Builder.CreateStrand();
-                        currentStrand.StrandName = "A";
-                        currentMolecule = currentChemFile.Builder.CreatePDBPolymer();
+                        CurrentStrand = CurrentChemFile.Builder.CreateStrand();
+                        CurrentStrand.StrandName = "A";
+                        CurrentMolecule = CurrentChemFile.Builder.CreatePDBPolymer();
                     }
                     else if (attj.Name.LocalName.Equals("dictRef") && attj.Value.Equals("pdb:sequence"))
                     {
@@ -144,7 +145,7 @@ namespace NCDK.IO.CML
                             if (atti.Name.LocalName.Equals("id"))
                             {
                                 //                            cdo.SetObjectProperty("Molecule", "id", atts.GetValue(i));
-                                currentMolecule.Id = atti.Value;
+                                CurrentMolecule.Id = atti.Value;
                             }
                             else if (atti.Name.LocalName.Equals("dictRef"))
                             {
@@ -232,17 +233,17 @@ namespace NCDK.IO.CML
                 if (xpath.Count == 1)
                 {
                     //                cdo.EndObject("Molecule");
-                    if (currentMolecule is IAtomContainer)
+                    if (CurrentMolecule is IAtomContainer)
                     {
                         Debug.WriteLine("Adding molecule to set");
-                        currentMoleculeSet.Add(currentMolecule);
-                        Debug.WriteLine("#mols in set: " + currentMoleculeSet.Count);
+                        CurrentMoleculeSet.Add(CurrentMolecule);
+                        Debug.WriteLine("#mols in set: " + CurrentMoleculeSet.Count);
                     }
-                    else if (currentMolecule is ICrystal)
+                    else if (CurrentMolecule is ICrystal)
                     {
                         Debug.WriteLine("Adding crystal to chemModel");
-                        currentChemModel.Crystal = (ICrystal)currentMolecule;
-                        currentChemSequence.Add(currentChemModel);
+                        CurrentChemModel.Crystal = (ICrystal)CurrentMolecule;
+                        CurrentChemSequence.Add(CurrentChemModel);
                     }
                 }
             }
@@ -293,7 +294,7 @@ namespace NCDK.IO.CML
 
             if (isELSYM)
             {
-                elsym.Add(s);
+                ElSym.Add(s);
             }
             else if (isBond)
             {
@@ -313,9 +314,9 @@ namespace NCDK.IO.CML
                             //                                (new Integer(atom1)).ToString());
                             //                        cdo.SetObjectProperty("Bond", "atom2",
                             //                                (new Integer(atom2)).ToString());
-                            currentBond = currentMolecule.Builder.CreateBond(currentMolecule.Atoms[int.Parse(connect_root) - 1],
-                                    currentMolecule.Atoms[int.Parse(atom) - 1], BondOrder.Single);
-                            currentMolecule.Bonds.Add(currentBond);
+                            CurrentBond = CurrentMolecule.Builder.CreateBond(CurrentMolecule.Atoms[int.Parse(connect_root) - 1],
+                                    CurrentMolecule.Atoms[int.Parse(atom) - 1], BondOrder.Single);
+                            CurrentMolecule.Bonds.Add(CurrentBond);
                         }
                     }
                 }
@@ -324,10 +325,10 @@ namespace NCDK.IO.CML
 
         protected override void StoreData()
         {
-            if (inchi != null)
+            if (InChIString != null)
             {
                 //            cdo.SetObjectProperty("Molecule", "inchi", inchi);
-                currentMolecule.SetProperty(CDKPropertyName.InChI, inchi);
+                CurrentMolecule.SetProperty(CDKPropertyName.InChI, InChIString);
             }
             StoreAtomData();
             StoreBondData();
@@ -335,8 +336,8 @@ namespace NCDK.IO.CML
 
         protected override void StoreAtomData()
         {
-            Debug.WriteLine("No atoms: ", atomCounter);
-            if (atomCounter == 0)
+            Debug.WriteLine("No atoms: ", AtomCounter);
+            if (AtomCounter == 0)
             {
                 return;
             }
@@ -355,189 +356,189 @@ namespace NCDK.IO.CML
             bool hasSpinMultiplicities = false;
             bool hasOccupancies = false;
 
-            if (elid.Count == atomCounter)
+            if (ElId.Count == AtomCounter)
             {
                 hasID = true;
             }
             else
             {
-                Debug.WriteLine("No atom ids: " + elid.Count, " != " + atomCounter);
+                Debug.WriteLine("No atom ids: " + ElId.Count, " != " + AtomCounter);
             }
 
-            if (elsym.Count == atomCounter)
+            if (ElSym.Count == AtomCounter)
             {
                 hasSymbols = true;
             }
             else
             {
-                Debug.WriteLine("No atom symbols: " + elsym.Count, " != " + atomCounter);
+                Debug.WriteLine("No atom symbols: " + ElSym.Count, " != " + AtomCounter);
             }
 
-            if (eltitles.Count == atomCounter)
+            if (ElTitles.Count == AtomCounter)
             {
                 hasTitles = true;
             }
             else
             {
-                Debug.WriteLine("No atom titles: " + eltitles.Count, " != " + atomCounter);
+                Debug.WriteLine("No atom titles: " + ElTitles.Count, " != " + AtomCounter);
             }
 
-            if ((x3.Count == atomCounter) && (y3.Count == atomCounter) && (z3.Count == atomCounter))
+            if ((X3.Count == AtomCounter) && (Y3.Count == AtomCounter) && (Z3.Count == AtomCounter))
             {
                 has3D = true;
             }
             else
             {
-                Debug.WriteLine("No 3D info: " + x3.Count, " " + y3.Count, " " + z3.Count, " != " + atomCounter);
+                Debug.WriteLine("No 3D info: " + X3.Count, " " + Y3.Count, " " + Z3.Count, " != " + AtomCounter);
             }
 
-            if ((xfract.Count == atomCounter) && (yfract.Count == atomCounter) && (zfract.Count == atomCounter))
+            if ((XFract.Count == AtomCounter) && (YFract.Count == AtomCounter) && (ZFract.Count == AtomCounter))
             {
                 has3Dfract = true;
             }
             else
             {
-                Debug.WriteLine("No 3D fractional info: " + xfract.Count, " " + yfract.Count, " " + zfract.Count, " != "
-                        + atomCounter);
+                Debug.WriteLine("No 3D fractional info: " + XFract.Count, " " + YFract.Count, " " + ZFract.Count, " != "
+                        + AtomCounter);
             }
 
-            if ((x2.Count == atomCounter) && (y2.Count == atomCounter))
+            if ((X2.Count == AtomCounter) && (Y2.Count == AtomCounter))
             {
                 has2D = true;
             }
             else
             {
-                Debug.WriteLine("No 2D info: " + x2.Count, " " + y2.Count, " != " + atomCounter);
+                Debug.WriteLine("No 2D info: " + X2.Count, " " + Y2.Count, " != " + AtomCounter);
             }
 
-            if (formalCharges.Count == atomCounter)
+            if (FormalCharges.Count == AtomCounter)
             {
                 hasFormalCharge = true;
             }
             else
             {
-                Debug.WriteLine("No formal Charge info: " + formalCharges.Count, " != " + atomCounter);
+                Debug.WriteLine("No formal Charge info: " + FormalCharges.Count, " != " + AtomCounter);
             }
 
-            if (partialCharges.Count == atomCounter)
+            if (PartialCharges.Count == AtomCounter)
             {
                 hasPartialCharge = true;
             }
             else
             {
-                Debug.WriteLine("No partial Charge info: " + partialCharges.Count, " != " + atomCounter);
+                Debug.WriteLine("No partial Charge info: " + PartialCharges.Count, " != " + AtomCounter);
             }
 
-            if (hCounts.Count == atomCounter)
+            if (HCounts.Count == AtomCounter)
             {
                 hasHCounts = true;
             }
             else
             {
-                Debug.WriteLine("No hydrogen Count info: " + hCounts.Count, " != " + atomCounter);
+                Debug.WriteLine("No hydrogen Count info: " + HCounts.Count, " != " + AtomCounter);
             }
 
-            if (spinMultiplicities.Count == atomCounter)
+            if (SpinMultiplicities.Count == AtomCounter)
             {
                 hasSpinMultiplicities = true;
             }
             else
             {
-                Debug.WriteLine("No spinMultiplicity info: " + spinMultiplicities.Count, " != " + atomCounter);
+                Debug.WriteLine("No spinMultiplicity info: " + SpinMultiplicities.Count, " != " + AtomCounter);
             }
 
-            if (occupancies.Count == atomCounter)
+            if (Occupancies.Count == AtomCounter)
             {
                 hasOccupancies = true;
             }
             else
             {
-                Debug.WriteLine("No occupancy info: " + occupancies.Count, " != " + atomCounter);
+                Debug.WriteLine("No occupancy info: " + Occupancies.Count, " != " + AtomCounter);
             }
 
-            if (atomDictRefs.Count == atomCounter)
+            if (AtomDictRefs.Count == AtomCounter)
             {
                 hasDictRefs = true;
             }
             else
             {
-                Debug.WriteLine("No dictRef info: " + atomDictRefs.Count, " != " + atomCounter);
+                Debug.WriteLine("No dictRef info: " + AtomDictRefs.Count, " != " + AtomCounter);
             }
 
-            if (isotope.Count == atomCounter)
+            if (Isotope.Count == AtomCounter)
             {
                 hasIsotopes = true;
             }
             else
             {
-                Debug.WriteLine("No isotope info: " + isotope.Count, " != " + atomCounter);
+                Debug.WriteLine("No isotope info: " + Isotope.Count, " != " + AtomCounter);
             }
-            if (atomCounter > 0)
+            if (AtomCounter > 0)
             {
                 //            cdo.StartObject("PDBMonomer");
-                currentMonomer = currentChemFile.Builder.CreatePDBMonomer();
+                CurrentMonomer = CurrentChemFile.Builder.CreatePDBMonomer();
             }
 
-            for (int i = 0; i < atomCounter; i++)
+            for (int i = 0; i < AtomCounter; i++)
             {
                 Trace.TraceInformation("Storing atom: ", i);
                 //            cdo.StartObject("PDBAtom");
-                currentAtom = currentChemFile.Builder.CreatePDBAtom("H");
+                CurrentAtom = CurrentChemFile.Builder.CreatePDBAtom("H");
                 if (hasID)
                 {
                     //                cdo.SetObjectProperty("Atom", "id", (string)elid[i]);
-                    currentAtom.Id = (string)elid[i];
+                    CurrentAtom.Id = (string)ElId[i];
                 }
                 if (hasTitles)
                 {
                     if (hasSymbols)
                     {
-                        string symbol = (string)elsym[i];
+                        string symbol = (string)ElSym[i];
                         if (symbol.Equals("Du") || symbol.Equals("Dummy"))
                         {
                             //                        cdo.SetObjectProperty("PseudoAtom", "label", (string)eltitles[i]);
-                            if (!(currentAtom is IPseudoAtom))
+                            if (!(CurrentAtom is IPseudoAtom))
                             {
-                                currentAtom = currentChemFile.Builder.CreatePseudoAtom(currentAtom);
+                                CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
                             }
-                            ((IPseudoAtom)currentAtom).Label = (string)eltitles[i];
+                            ((IPseudoAtom)CurrentAtom).Label = (string)ElTitles[i];
                         }
                         else
                         {
                             //                        cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                             // FIXME: is a guess, Atom.title is not found in ChemFileCDO
-                            currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
+                            CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
                         }
                     }
                     else
                     {
                         //                    cdo.SetObjectProperty("Atom", "title", (string)eltitles[i]);
                         //                    FIXME: is a guess, Atom.title is not found in ChemFileCDO
-                        currentAtom.SetProperty(CDKPropertyName.Title, (string)eltitles[i]);
+                        CurrentAtom.SetProperty(CDKPropertyName.Title, (string)ElTitles[i]);
                     }
                 }
 
                 // store optional atom properties
                 if (hasSymbols)
                 {
-                    string symbol = (string)elsym[i];
+                    string symbol = (string)ElSym[i];
                     if (symbol.Equals("Du") || symbol.Equals("Dummy"))
                     {
                         symbol = "R";
                     }
                     //                cdo.SetObjectProperty("Atom", "type", symbol);
-                    if (symbol.Equals("R") && !(currentAtom is IPseudoAtom))
+                    if (symbol.Equals("R") && !(CurrentAtom is IPseudoAtom))
                     {
-                        currentAtom = currentChemFile.Builder.CreatePseudoAtom(currentAtom);
+                        CurrentAtom = CurrentChemFile.Builder.CreatePseudoAtom(CurrentAtom);
                     }
-                    currentAtom.Symbol = symbol;
+                    CurrentAtom.Symbol = symbol;
                     try
                     {
-                        Isotopes.Instance.Configure(currentAtom);
+                        Isotopes.Instance.Configure(CurrentAtom);
                     }
                     catch (Exception e)
                     {
-                        Trace.TraceError("Could not configure atom: " + currentAtom);
+                        Trace.TraceError("Could not configure atom: " + CurrentAtom);
                         Debug.WriteLine(e);
                     }
                 }
@@ -547,10 +548,10 @@ namespace NCDK.IO.CML
                     //                cdo.SetObjectProperty("Atom", "x3", (string)x3[i]);
                     //                cdo.SetObjectProperty("Atom", "y3", (string)y3[i]);
                     //                cdo.SetObjectProperty("Atom", "z3", (string)z3[i]);
-                    currentAtom.Point3D = new Vector3(
-                        double.Parse((string)x3[i]),
-                        double.Parse((string)y3[i]),
-                        double.Parse((string)z3[i]));
+                    CurrentAtom.Point3D = new Vector3(
+                        double.Parse((string)X3[i]),
+                        double.Parse((string)Y3[i]),
+                        double.Parse((string)Z3[i]));
                 }
 
                 if (has3Dfract)
@@ -559,17 +560,17 @@ namespace NCDK.IO.CML
                     //                cdo.SetObjectProperty("Atom", "xFract", (string)xfract[i]);
                     //                cdo.SetObjectProperty("Atom", "yFract", (string)yfract[i]);
                     //                cdo.SetObjectProperty("Atom", "zFract", (string)zfract[i]);
-                    currentAtom.FractionalPoint3D = new Vector3(
-                        double.Parse((string)xfract[i]),
-                        double.Parse((string)yfract[i]),
-                        double.Parse((string)zfract[i]));
+                    CurrentAtom.FractionalPoint3D = new Vector3(
+                        double.Parse((string)XFract[i]),
+                        double.Parse((string)YFract[i]),
+                        double.Parse((string)ZFract[i]));
                 }
 
                 if (hasFormalCharge)
                 {
                     //              cdo.SetObjectProperty("Atom", "formalCharge",
                     //                                    (string)formalCharges[i]);
-                    currentAtom.FormalCharge = int.Parse((string)formalCharges[i]);
+                    CurrentAtom.FormalCharge = int.Parse((string)FormalCharges[i]);
                 }
 
                 if (hasPartialCharge)
@@ -577,60 +578,60 @@ namespace NCDK.IO.CML
                     Debug.WriteLine("Storing partial atomic charge...");
                     //              cdo.SetObjectProperty("Atom", "partialCharge",
                     //              (string)partialCharges[i]);
-                    currentAtom.Charge = double.Parse((string)partialCharges[i]);
+                    CurrentAtom.Charge = double.Parse((string)PartialCharges[i]);
                 }
 
                 if (hasHCounts)
                 {
                     //              cdo.SetObjectProperty("Atom", "hydrogenCount", (string)hCounts[i]);
                     // FIXME: the hCount in CML is the total of implicit *and* explicit
-                    currentAtom.ImplicitHydrogenCount = int.Parse((string)hCounts[i]);
+                    CurrentAtom.ImplicitHydrogenCount = int.Parse((string)HCounts[i]);
                 }
 
                 if (has2D)
                 {
-                    if (x2[i] != null && y2[i] != null)
+                    if (X2[i] != null && Y2[i] != null)
                     {
                         //                    cdo.SetObjectProperty("Atom", "x2", (string)x2[i]);
                         //                    cdo.SetObjectProperty("Atom", "y2", (string)y2[i]);
-                        currentAtom.Point2D = new Vector2(
-                            double.Parse((string)x2[i]),
-                            double.Parse((string)y2[i]));
+                        CurrentAtom.Point2D = new Vector2(
+                            double.Parse((string)X2[i]),
+                            double.Parse((string)Y2[i]));
                     }
                 }
 
                 if (hasDictRefs)
                 {
                     //                cdo.SetObjectProperty("Atom", "dictRef", (string)atomDictRefs[i]);
-                    currentAtom.SetProperty("org.openscience.cdk.dict", (string)atomDictRefs[i]);
+                    CurrentAtom.SetProperty("org.openscience.cdk.dict", (string)AtomDictRefs[i]);
                 }
 
-                if (hasSpinMultiplicities && spinMultiplicities[i] != null)
+                if (hasSpinMultiplicities && SpinMultiplicities[i] != null)
                 {
                     //                cdo.SetObjectProperty("Atom", "spinMultiplicity", (string)spinMultiplicities[i]);
-                    int unpairedElectrons = int.Parse((string)spinMultiplicities[i]) - 1;
+                    int unpairedElectrons = int.Parse((string)SpinMultiplicities[i]) - 1;
                     for (int sm = 0; sm < unpairedElectrons; sm++)
                     {
-                        currentMolecule.SingleElectrons.Add(currentChemFile.Builder.CreateSingleElectron(currentAtom));
+                        CurrentMolecule.SingleElectrons.Add(CurrentChemFile.Builder.CreateSingleElectron(CurrentAtom));
                     }
                 }
 
-                if (hasOccupancies && occupancies[i] != null)
+                if (hasOccupancies && Occupancies[i] != null)
                 {
                     //                cdo.SetObjectProperty("PDBAtom", "occupancy", (string)occupancies[i]);
-                    double occ = double.Parse((string)occupancies[i]);
-                    if (occ >= 0.0) ((IPDBAtom)currentAtom).Occupancy = occ;
+                    double occ = double.Parse((string)Occupancies[i]);
+                    if (occ >= 0.0) ((IPDBAtom)CurrentAtom).Occupancy = occ;
                 }
 
                 if (hasIsotopes)
                 {
                     //              cdo.SetObjectProperty("Atom", "massNumber", (string)isotope[i]);
-                    currentAtom.MassNumber = int.Parse((string)isotope[i]);
+                    CurrentAtom.MassNumber = int.Parse((string)Isotope[i]);
                 }
 
                 if (hasScalar)
                 {
-                    IPDBAtom pdbAtom = (IPDBAtom)currentAtom;
+                    IPDBAtom pdbAtom = (IPDBAtom)CurrentAtom;
                     //                cdo.SetObjectProperty("PDBAtom", "altLoc", altLocV[i].ToString());
                     if (altLocV.Count > 0) pdbAtom.AltLoc = altLocV[i].ToString();
                     //                cdo.SetObjectProperty("PDBAtom", "chainID", chainIDV[i].ToString());
@@ -658,19 +659,19 @@ namespace NCDK.IO.CML
                 }
 
                 //            cdo.EndObject("PDBAtom");
-                string cResidue = ((IPDBAtom)currentAtom).ResName + "A" + ((IPDBAtom)currentAtom).ResSeq;
-                ((IPDBMonomer)currentMonomer).MonomerName = cResidue;
-                ((IPDBMonomer)currentMonomer).MonomerType = ((IPDBAtom)currentAtom).ResName;
-                ((IPDBMonomer)currentMonomer).ChainID = ((IPDBAtom)currentAtom).ChainID;
-                ((IPDBMonomer)currentMonomer).ICode = ((IPDBAtom)currentAtom).ICode;
-                ((IPDBPolymer)currentMolecule).AddAtom(((IPDBAtom)currentAtom), currentMonomer, currentStrand);
+                string cResidue = ((IPDBAtom)CurrentAtom).ResName + "A" + ((IPDBAtom)CurrentAtom).ResSeq;
+                ((IPDBMonomer)CurrentMonomer).MonomerName = cResidue;
+                ((IPDBMonomer)CurrentMonomer).MonomerType = ((IPDBAtom)CurrentAtom).ResName;
+                ((IPDBMonomer)CurrentMonomer).ChainID = ((IPDBAtom)CurrentAtom).ChainID;
+                ((IPDBMonomer)CurrentMonomer).ICode = ((IPDBAtom)CurrentAtom).ICode;
+                ((IPDBPolymer)CurrentMolecule).AddAtom(((IPDBAtom)CurrentAtom), CurrentMonomer, CurrentStrand);
             }
             //        cdo.EndObject("PDBMonomer");
             // nothing done in the CDO for this event
-            if (elid.Count > 0)
+            if (ElId.Count > 0)
             {
                 // assume this is the current working list
-                bondElid = elid;
+                BondElId = ElId;
             }
             NewAtomData();
         }

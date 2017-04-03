@@ -42,16 +42,8 @@ namespace NCDK.Fingerprint
     /// </summary>
     /// <example>
     /// A fingerprint is generated for an AtomContainer with this code:
-    /// It is recommended to use atomtyped container before generating the fingerprints.    ///
-    /// For example: <c>AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);</c>
-    /// <code>
-    ///   AtomContainer molecule = new AtomContainer();
-    ///   AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(atomContainer);
-    ///   IFingerprinter fingerprinter = new ShortestPathFingerprinter();
-    ///   IBitFingerprint fingerprint = fingerprinter.GetFingerprint(molecule);
-    ///   fingerprint.FingerprintLength(); // returns 1024 by default
-    ///   fingerprint.Length; // returns the highest set bit
-    /// </code>
+    /// It is recommended to use atomtyped container before generating the fingerprints. 
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.ShortestPathFingerprinter_Example.cs"]/*' />
     ///</example>
     ///<remarks>
     /// <para>The FingerPrinter calculates fingerprint based on the Shortest Paths between two atoms. It also takes into account
@@ -66,12 +58,12 @@ namespace NCDK.Fingerprint
     // @cdk.module fingerprint
     // @cdk.githash
     [Serializable]
-    internal class ShortestPathFingerprinter : RandomNumber, IFingerprinter
+    public class ShortestPathFingerprinter : RandomNumber, IFingerprinter
     {
         /// <summary>
         /// The default length of created fingerprints.
         /// </summary>
-        const int DEFAULT_SIZE = 1024;
+        const int DefaultSize = 1024;
 
         /// <summary>
         /// The default length of created fingerprints.
@@ -79,10 +71,10 @@ namespace NCDK.Fingerprint
         private int fingerprintLength;
 
         /// <summary>
-        /// Creates a fingerprint generator of length <see cref="DEFAULT_SIZE"/>. 
+        /// Creates a fingerprint generator of length <see cref="DefaultSize"/>. 
         /// </summary>
         public ShortestPathFingerprinter()
-            : this(DEFAULT_SIZE)
+            : this(DefaultSize)
         { }
 
         /// <summary>
@@ -125,7 +117,7 @@ namespace NCDK.Fingerprint
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        /// <param name="ac">The AtomContainer for which a fingerprint is generated</param>
+        /// <param name="ac">The <see cref="IAtomContainer"/> for which a fingerprint is generated</param>
         /// <returns><see cref="IDictionary{T, T}"/> of raw fingerprint paths/features</returns>
         /// <exception cref="NotSupportedException">method is not supported</exception>
         public IDictionary<string, int> GetRawFingerprint(IAtomContainer ac)

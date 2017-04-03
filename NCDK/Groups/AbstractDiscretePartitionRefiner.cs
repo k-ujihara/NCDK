@@ -70,7 +70,7 @@ namespace NCDK.Groups
         private PermutationGroup group;
 
         /// <summary>
-        /// A refiner - it is necessary to call {@link #setup} before use.
+        /// A refiner - it is necessary to call <see cref="Setup(PermutationGroup, IEquitablePartitionRefiner)"/> before use.
         /// </summary>
         public AbstractDiscretePartitionRefiner()
         {

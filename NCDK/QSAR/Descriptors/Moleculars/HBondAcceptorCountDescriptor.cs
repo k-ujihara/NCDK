@@ -25,7 +25,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// This descriptor calculates the number of hydrogen bond acceptors using a slightly simplified version of the
-    /// <a href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</a>.
+    /// <see href="http://www.chemie.uni-erlangen.de/model2001/abstracts/rester.html">PHACIR atom types</see>.
     /// </summary>
     /// <remarks>
     /// <para>

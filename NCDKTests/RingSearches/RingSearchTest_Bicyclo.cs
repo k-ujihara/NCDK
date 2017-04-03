@@ -66,7 +66,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFUsed()
+        public void TestFused()
         {
             Assert.AreEqual(1, new RingSearch(bicyclo).Fused().Length, "one fused cycle should be found");
 
@@ -94,7 +94,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFUsedRingFragments()
+        public void TestFusedRingFragments()
         {
 
             IList<IAtomContainer> fragments = new RingSearch(bicyclo).FusedRingFragments();

@@ -32,7 +32,7 @@ using System.IO;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Writes MDL SD files ({@cdk.cite DAL92}). A MDL SD file contains one or more molecules,
+    /// Writes MDL SD files (<token>cdk-cite-DAL92</token>). A MDL SD file contains one or more molecules,
     /// complemented by properties.
     /// </summary>
     // @cdk.module  io

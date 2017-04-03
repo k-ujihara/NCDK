@@ -194,7 +194,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <param name="x4">first x coordinate of line 2</param>
         /// <param name="y4">first y coordinate of line 2</param>
         /// <returns>the point where the two lines intersect (or null)</returns>
-        /// <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection, Wikipedia</a>
+        /// <seealso href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection, Wikipedia</seealso>
         public static Vector2 Intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4)
         {
             double x = ((x2 - x1) * (x3 * y4 - x4 * y3) - (x4 - x3) * (x1 * y2 - x2 * y1))

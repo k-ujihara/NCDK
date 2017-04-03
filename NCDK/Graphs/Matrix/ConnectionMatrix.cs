@@ -26,7 +26,7 @@ namespace NCDK.Graphs.Matrix
     /// adjacency matrix is a matrix of square NxN matrix, where N is the number of
     /// atoms in the AtomContainer. If the i-th and the j-th atom in the
     /// atomcontainer share a bond, the element i,j in the matrix is set to the
-    /// bond order value. Otherwise it is zero. See {@cdk.cite TRI92}.
+    /// bond order value. Otherwise it is zero. See <token>cdk-cite-TRI92</token>.
     /// </summary>
     // @cdk.module  standard
     // @cdk.githash

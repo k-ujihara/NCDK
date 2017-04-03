@@ -41,9 +41,7 @@ namespace NCDK.Tools.Manipulator
     /// </summary>
     /// <example>
     /// For example:
-    /// <code>
-    /// AtomContainerManipulator.RePlaceAtomByAtom(container, atom1, atom2);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.AtomContainerManipulator_Example.cs+1"]/*' />
     /// will replace the Atom in the AtomContainer, but in all the ElectronContainer's
     /// it participates too.
     /// </example>
@@ -110,7 +108,7 @@ namespace NCDK.Tools.Manipulator
         /// <param name="oldAtom">the atom to replace</param>
         /// <param name="newAtom">the atom to insert</param>
         /// <returns>whether replacement was made</returns>
-        public static bool RePlaceAtomByAtom(IAtomContainer container, IAtom oldAtom, IAtom newAtom)
+        public static bool ReplaceAtomByAtom(IAtomContainer container, IAtom oldAtom, IAtom newAtom)
         {
             var map = new CDKObjectMap();
 
@@ -317,7 +315,7 @@ namespace NCDK.Tools.Manipulator
         /// Counts the number of hydrogens on the provided IAtomContainer. As this
         /// method will sum all implicit hydrogens on each atom it is important to
         /// ensure the atoms have already been perceived (and thus have an implicit
-        /// hydrogen count) (see. {@link #PercieveAtomTypesAndConfigureAtoms}).
+        /// hydrogen count) (see. <see cref="PercieveAtomTypesAndConfigureAtoms(IAtomContainer)"/>).
         /// </summary>
         /// <param name="container">the container to count the hydrogens on</param>
         /// <returns>the total number of hydrogens</returns>
@@ -653,7 +651,7 @@ namespace NCDK.Tools.Manipulator
         /// Suppress any explicit hydrogens in the provided container. Only hydrogens
         /// that can be represented as a hydrogen count value on the atom are
         /// suppressed. The container is updated and no elements are copied, please
-        /// use either {@link #CopyAndSuppressedHydrogens} if you would to preserve
+        /// use either <see cref="CopyAndSuppressedHydrogens(IAtomContainer)"/> if you would to preserve
         /// the old instance.
         /// </summary>
         /// <param name="org">the container from which to remove hydrogens</param>
@@ -1048,7 +1046,7 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Sets a property on all <code>Atom</code>s in the given container.
+        /// Sets a property on all <see cref="IAtom"/>s in the given container.
         /// </summary>
         public static void SetAtomProperties(IAtomContainer container, string propKey, object propVal)
         {
@@ -1196,14 +1194,13 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Convenience method to perceive atom types for all <code>IAtom</code>s in the
+        /// Convenience method to perceive atom types for all <see cref="IAtom"/>s in the
         /// <see cref="IAtomContainer"/>, using the <see cref="CDKAtomTypeMatcher"/>. If the
-        /// matcher finds a matching atom type, the <code>IAtom</code> will be configured
+        /// matcher finds a matching atom type, the <see cref="IAtom"/> will be configured
         /// to have the same properties as the <see cref="IAtomType"/>. If no matching atom
         /// type is found, no configuration is performed.
         /// <b>This method overwrites existing values.</b>
         /// </summary>
-        /// <param name="container">/// @</param>
         public static void PercieveAtomTypesAndConfigureUnsetProperties(IAtomContainer container)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(container.Builder);
@@ -1216,14 +1213,16 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// This method will reset all atom configuration to unset.
-        ///
-        /// This method is the reverse of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
-        /// and after a call to this method all atoms will be "unconfigured".
-        ///
-        /// Note that it is not a complete reversal of {@link #PercieveAtomTypesAndConfigureAtoms(IAtomContainer)}
-        /// since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
-        /// by the configuration method (such as IS_HYDROGENBOND_ACCEPTOR or ISAROMATIC) will be set to False.
         /// </summary>
+        /// <remarks>
+        /// This method is the reverse of <see cref="PercieveAtomTypesAndConfigureAtoms(IAtomContainer)"/> 
+        /// and after a call to this method all atoms will be "unconfigured".
+        /// <note type="note">
+        /// Note that it is not a complete reversal of <see cref="PercieveAtomTypesAndConfigureAtoms(IAtomContainer)"/> 
+        /// since the atomic symbol of the atoms remains unchanged. Also, all the flags that were set
+        /// by the configuration method (such as <see cref="IAtomType.IsHydrogenBondAcceptor"/> or <see cref="IMolecularEntity.IsAromatic"/>) will be set to False.
+        /// </note>
+        /// </remarks>
         /// <param name="container">The molecule, whose atoms are to be unconfigured</param>
         /// <seealso cref="PercieveAtomTypesAndConfigureAtoms(IAtomContainer)"/>
         public static void ClearAtomConfigurations(IAtomContainer container)
@@ -1345,7 +1344,7 @@ namespace NCDK.Tools.Manipulator
 
         /// <summary>
         /// Create a skeleton copy of the provided structure. The skeleton copy is
-        /// similar to an anonymous copy ({@link #anonymise}) except that atom
+        /// similar to an anonymous copy (<see cref="Anonymise(IAtomContainer)"/>) except that atom
         /// elements are preserved. All bonds are converted to single bonds and a
         /// 'clean' atom is created for the input elements. The 'clean' atom has
         /// unset charge, mass, and hydrogen count.
@@ -1403,14 +1402,9 @@ namespace NCDK.Tools.Manipulator
         /// which occur in rings. If any such bonds are found the flag is also set
         /// on the container.
         /// </summary>
-        /// <example><code>
-        ///     SmilesParser parser = new SmilesParser(...);
-        ///     parser.PreservingAromaticity = true;
-        ///
-        ///     IAtomContainer biphenyl = parser.ParseSmiles("c1cccc(c1)c1ccccc1");
-        ///
-        ///     AtomContainerManipulator.SingleOrDoubleFlags = biphenyl;
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.AtomContainerManipulator_Example.cs+SetSingleOrDoubleFlags"]/*' />
+        /// </example>
         /// <param name="ac">container to which the flags are assigned</param>
         /// <returns>the input for convenience</returns>
         public static IAtomContainer SetSingleOrDoubleFlags(IAtomContainer ac)

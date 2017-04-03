@@ -31,7 +31,7 @@ namespace NCDK.Hash.Stereo
     /// coordinates. The 3D coordinates correspond to the four ligands of a
     /// tetrahedral atom. If a tetrahedral atom has an implicit hydrogen (only 3
     /// ligands) the forth coordinate should be that of the atom at the centre
-    /// <a href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</a>.
+    /// <see href="http://www.mdpi.org/molecules/papers/61100915/61100915.htm">Cieplak, T and Wisniewski, J.L. 2001</see>.
     /// </summary>
     // @author John May
     // @cdk.module hash

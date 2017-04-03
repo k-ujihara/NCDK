@@ -101,10 +101,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.maps = new List<IDictionary<INode, IAtom>>();
         }
 
-        /// <summary>
-        ///
-        /// <param name="queryMolecule">/// @param bondMatcher</param>
-        /// </summary>
         public VFMapper(IAtomContainer queryMolecule, bool bondMatcher)
         {
             SetTimeManager(new TimeManager());
@@ -112,9 +108,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             this.maps = new List<IDictionary<INode, IAtom>>();
         }
 
-        /// <summary> {@inheritDoc}
+        /// <inheritdoc/>
         /// <param name="targetMolecule">targetMolecule graph</param>
-        /// </summary>
         public bool HasMap(IAtomContainer targetMolecule)
         {
             IState state = new VFState(query, new TargetProperties(targetMolecule));
@@ -146,9 +141,8 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
             return maps.Count;
         }
 
-        /// <summary> {@inheritDoc}
+        /// <inheritdoc/>
         /// <param name="targetMolecule">targetMolecule graph</param>
-        /// </summary>
         public bool HasMap(TargetProperties targetMolecule)
         {
             IState state = new VFState(query, targetMolecule);

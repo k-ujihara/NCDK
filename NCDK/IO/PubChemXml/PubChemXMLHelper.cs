@@ -98,62 +98,62 @@ namespace NCDK.IO.PubChemXml
         private const string EL_PROPS_BVAL = "PC-InfoData_value_binary";
 
         /// <summary>"http://www.ncbi.nlm.nih.gov"</summary>
-        public static readonly XNamespace PubChem_Namespace = XNamespace.Get("http://www.ncbi.nlm.nih.gov");
+        internal static readonly XNamespace PubChem_Namespace = XNamespace.Get("http://www.ncbi.nlm.nih.gov");
         /// <summary>PC-Compound</summary>
-        public static readonly XName Name_EL_PCCOMPOUND = PubChem_Namespace + "PC-Compound";
+        internal static readonly XName Name_EL_PCCOMPOUND = PubChem_Namespace + "PC-Compound";
         /// <summary>PC-Compounds</summary>
-        public static readonly XName Name_EL_PCCOMPOUNDS = PubChem_Namespace + "PC-Compounds";
+        internal static readonly XName Name_EL_PCCOMPOUNDS = PubChem_Namespace + "PC-Compounds";
         /// <summary>PC-Substance</summary>
-        public static readonly XName Name_EL_PCSUBSTANCE = PubChem_Namespace + "PC-Substance";
+        internal static readonly XName Name_EL_PCSUBSTANCE = PubChem_Namespace + "PC-Substance";
         /// <summary>PC-Substance_sid</summary>
-        public static readonly XName Name_EL_PCSUBSTANCE_SID = PubChem_Namespace + "PC-Substance_sid";
+        internal static readonly XName Name_EL_PCSUBSTANCE_SID = PubChem_Namespace + "PC-Substance_sid";
         /// <summary>PC-Compound_id</summary>
-        public static readonly XName Name_EL_PCCOMPOUND_ID = PubChem_Namespace + "PC-Compound_id";
+        internal static readonly XName Name_EL_PCCOMPOUND_ID = PubChem_Namespace + "PC-Compound_id";
         /// <summary>PC-CompoundType_id_cid</summary>
-        public static readonly XName Name_EL_PCCOMPOUND_CID = PubChem_Namespace + "PC-CompoundType_id_cid";
+        internal static readonly XName Name_EL_PCCOMPOUND_CID = PubChem_Namespace + "PC-CompoundType_id_cid";
         /// <summary>PC-ID_id</summary>
-        public static readonly XName Name_EL_PCID_ID = PubChem_Namespace + "PC-ID_id";
+        internal static readonly XName Name_EL_PCID_ID = PubChem_Namespace + "PC-ID_id";
 
         // atom block elements
-        public static readonly XName Name_EL_ATOMBLOCK = PubChem_Namespace + EL_ATOMBLOCK;
-        public static readonly XName Name_EL_ATOMSELEMENT = PubChem_Namespace + EL_ATOMSELEMENT;
-        public static readonly XName Name_EL_ATOMSCHARGE = PubChem_Namespace + EL_ATOMSCHARGE;
-        public static readonly XName Name_EL_ATOMINT = PubChem_Namespace + EL_ATOMINT;
-        public static readonly XName Name_EL_ATOMINT_AID = PubChem_Namespace + EL_ATOMINT_AID;
-        public static readonly XName Name_EL_ATOMINT_VALUE = PubChem_Namespace + EL_ATOMINT_VALUE;
-        public static readonly XName Name_EL_ELEMENT = PubChem_Namespace + EL_ELEMENT;
+        internal static readonly XName Name_EL_ATOMBLOCK = PubChem_Namespace + EL_ATOMBLOCK;
+        internal static readonly XName Name_EL_ATOMSELEMENT = PubChem_Namespace + EL_ATOMSELEMENT;
+        internal static readonly XName Name_EL_ATOMSCHARGE = PubChem_Namespace + EL_ATOMSCHARGE;
+        internal static readonly XName Name_EL_ATOMINT = PubChem_Namespace + EL_ATOMINT;
+        internal static readonly XName Name_EL_ATOMINT_AID = PubChem_Namespace + EL_ATOMINT_AID;
+        internal static readonly XName Name_EL_ATOMINT_VALUE = PubChem_Namespace + EL_ATOMINT_VALUE;
+        internal static readonly XName Name_EL_ELEMENT = PubChem_Namespace + EL_ELEMENT;
 
         // coordinate block elements
-        public static readonly XName Name_EL_COORDINATESBLOCK = PubChem_Namespace + EL_COORDINATESBLOCK;
-        public static readonly XName Name_EL_COORDINATES_AID = PubChem_Namespace + EL_COORDINATES_AID;
-        public static readonly XName Name_EL_COORDINATES_AIDE = PubChem_Namespace + EL_COORDINATES_AIDE;
-        public static readonly XName Name_EL_ATOM_CONFORMER = PubChem_Namespace + EL_ATOM_CONFORMER;
-        public static readonly XName Name_EL_ATOM_CONFORMER_X = PubChem_Namespace + EL_ATOM_CONFORMER_X;
-        public static readonly XName Name_EL_ATOM_CONFORMER_XE = PubChem_Namespace + EL_ATOM_CONFORMER_XE;
-        public static readonly XName Name_EL_ATOM_CONFORMER_Y = PubChem_Namespace + EL_ATOM_CONFORMER_Y;
-        public static readonly XName Name_EL_ATOM_CONFORMER_YE = PubChem_Namespace + EL_ATOM_CONFORMER_YE;
-        public static readonly XName Name_EL_ATOM_CONFORMER_Z = PubChem_Namespace + EL_ATOM_CONFORMER_Z;
-        public static readonly XName Name_EL_ATOM_CONFORMER_ZE = PubChem_Namespace + EL_ATOM_CONFORMER_ZE;
+        internal static readonly XName Name_EL_COORDINATESBLOCK = PubChem_Namespace + EL_COORDINATESBLOCK;
+        internal static readonly XName Name_EL_COORDINATES_AID = PubChem_Namespace + EL_COORDINATES_AID;
+        internal static readonly XName Name_EL_COORDINATES_AIDE = PubChem_Namespace + EL_COORDINATES_AIDE;
+        internal static readonly XName Name_EL_ATOM_CONFORMER = PubChem_Namespace + EL_ATOM_CONFORMER;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_X = PubChem_Namespace + EL_ATOM_CONFORMER_X;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_XE = PubChem_Namespace + EL_ATOM_CONFORMER_XE;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_Y = PubChem_Namespace + EL_ATOM_CONFORMER_Y;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_YE = PubChem_Namespace + EL_ATOM_CONFORMER_YE;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_Z = PubChem_Namespace + EL_ATOM_CONFORMER_Z;
+        internal static readonly XName Name_EL_ATOM_CONFORMER_ZE = PubChem_Namespace + EL_ATOM_CONFORMER_ZE;
 
         // bond block elements
-        public static readonly XName Name_EL_BONDBLOCK = PubChem_Namespace + EL_BONDBLOCK;
-        public static readonly XName Name_EL_BONDID1 = PubChem_Namespace + EL_BONDID1;
-        public static readonly XName Name_EL_BONDID2 = PubChem_Namespace + EL_BONDID2;
-        public static readonly XName Name_EL_BONDORDER = PubChem_Namespace + EL_BONDORDER;
+        internal static readonly XName Name_EL_BONDBLOCK = PubChem_Namespace + EL_BONDBLOCK;
+        internal static readonly XName Name_EL_BONDID1 = PubChem_Namespace + EL_BONDID1;
+        internal static readonly XName Name_EL_BONDID2 = PubChem_Namespace + EL_BONDID2;
+        internal static readonly XName Name_EL_BONDORDER = PubChem_Namespace + EL_BONDORDER;
 
         // property block elements
-        public static readonly XName Name_EL_PROPSBLOCK = PubChem_Namespace + EL_PROPSBLOCK;
-        public static readonly XName Name_EL_PROPS_INFODATA = PubChem_Namespace + EL_PROPS_INFODATA;
-        public static readonly XName Name_EL_PROPS_URNLABEL = PubChem_Namespace + EL_PROPS_URNLABEL;
-        public static readonly XName Name_EL_PROPS_URNNAME = PubChem_Namespace + EL_PROPS_URNNAME;
-        public static readonly XName Name_EL_PROPS_SVAL = PubChem_Namespace + EL_PROPS_SVAL;
-        public static readonly XName Name_EL_PROPS_FVAL = PubChem_Namespace + EL_PROPS_FVAL;
-        public static readonly XName Name_EL_PROPS_BVAL = PubChem_Namespace + EL_PROPS_BVAL;
+        internal static readonly XName Name_EL_PROPSBLOCK = PubChem_Namespace + EL_PROPSBLOCK;
+        internal static readonly XName Name_EL_PROPS_INFODATA = PubChem_Namespace + EL_PROPS_INFODATA;
+        internal static readonly XName Name_EL_PROPS_URNLABEL = PubChem_Namespace + EL_PROPS_URNLABEL;
+        internal static readonly XName Name_EL_PROPS_URNNAME = PubChem_Namespace + EL_PROPS_URNNAME;
+        internal static readonly XName Name_EL_PROPS_SVAL = PubChem_Namespace + EL_PROPS_SVAL;
+        internal static readonly XName Name_EL_PROPS_FVAL = PubChem_Namespace + EL_PROPS_FVAL;
+        internal static readonly XName Name_EL_PROPS_BVAL = PubChem_Namespace + EL_PROPS_BVAL;
 
         // field tags
-        public static readonly XName Name_EL_PCBonds_aid1_E = PubChem_Namespace + "PC-Bonds_aid1_E";
-        public static readonly XName Name_EL_PCBonds_aid2_E = PubChem_Namespace + "PC-Bonds_aid2_E";
-        public static readonly XName Name_EL_PCBondType = PubChem_Namespace + "PC-BondType";
+        internal static readonly XName Name_EL_PCBonds_aid1_E = PubChem_Namespace + "PC-Bonds_aid1_E";
+        internal static readonly XName Name_EL_PCBonds_aid2_E = PubChem_Namespace + "PC-Bonds_aid2_E";
+        internal static readonly XName Name_EL_PCBondType = PubChem_Namespace + "PC-BondType";
 
         public IAtomContainerSet<IAtomContainer> ParseCompoundsBlock(XElement parser)
         {

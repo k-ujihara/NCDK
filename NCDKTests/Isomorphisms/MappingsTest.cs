@@ -21,13 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NCDK.Smiles;
-
 using System.Collections.Generic;
+using System;
+using NCDK.Common.Base;
 
 namespace NCDK.Isomorphisms
 {
@@ -55,11 +54,14 @@ namespace NCDK.Isomorphisms
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
 
-            var m_f = new Mock<Predicate<int[]>>(); var f = m_f.Object;
-            m_f.Setup(n => n.Apply(p1)).Returns(false);
-            m_f.Setup(n => n.Apply(p2)).Returns(true);
-            m_f.Setup(n => n.Apply(p3)).Returns(false);
-            m_f.Setup(n => n.Apply(p4)).Returns(true);
+            System.Predicate<int[]> f = n =>
+                {
+                    if (n == p1) return false;
+                    if (n == p2) return true;
+                    if (n == p3) return false;
+                    if (n == p4) return true;
+                    throw new InvalidOperationException();
+                };
 
             Assert.IsTrue(Compares.AreDeepEqual(new int[][] { p2, p4 }, ms.Filter(f).ToArray()));
         }
@@ -81,16 +83,20 @@ namespace NCDK.Isomorphisms
 
             Mappings ms = new Mappings(new Mock<IAtomContainer>().Object, new Mock<IAtomContainer>().Object, iterable);
 
-            var m_f = new Mock<Function<int[], string>>(); var f = m_f.Object;
-            m_f.Setup(n => n.Apply(p1)).Returns("p1");
-            m_f.Setup(n => n.Apply(p2)).Returns("p2");
-            m_f.Setup(n => n.Apply(p3)).Returns("p3");
-            m_f.Setup(n => n.Apply(p4)).Returns("p4");
-
-            var strings = ms.GetMapping(f);
+            int nCalls = 0;
+            var strings = ms.GetMapping(
+                n =>
+                {
+                    nCalls++;
+                    if (n == p1) return "p1";
+                    if (n == p2) return "p2";
+                    if (n == p3) return "p3";
+                    if (n == p4) return "p4";
+                    return null;
+                });
             var stringIt = strings.GetEnumerator();
 
-            m_f.Verify(n => n.Apply(It.IsAny<int[]>()), Times.AtMost(0));
+            Assert.AreEqual(0, nCalls);
 
             Assert.IsTrue(stringIt.MoveNext());
             Assert.AreEqual(stringIt.Current, "p1");
@@ -102,7 +108,7 @@ namespace NCDK.Isomorphisms
             Assert.AreEqual(stringIt.Current, "p4");
             Assert.IsFalse(stringIt.MoveNext());
 
-            m_f.Verify(n => n.Apply(It.IsAny<int[]>()), Times.AtMost(4));
+            Assert.AreEqual(4, nCalls);
         }
 
         [TestMethod()]

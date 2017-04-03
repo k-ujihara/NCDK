@@ -30,9 +30,7 @@ using System.Linq;
 namespace NCDK.Hash
 {
     /// <summary>
-    /// A perturbed hash generator 
-    /// <a href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</a> 
-    /// which differentiates
+    /// A perturbed hash generator <token>cdk-cite-Ihlenfeldt93</token> which differentiates
     /// molecules with uniform atom environments and symmetry. The generator first
     /// calculates the basic hash codes (<see cref="BasicAtomHashGenerator"/>) and then
     /// checks for duplicate values (uniform environments). These duplicate values
@@ -54,6 +52,7 @@ namespace NCDK.Hash
     /// long hash = generator.Generate(molecule);
     /// </code>
     /// </example>
+    /// <seealso href="http://onlinelibrary.wiley.com/doi/10.1002/jcc.540150802/abstract">Wolf Dietrich Ihlenfeldt, Johann Gasteiger</seealso>  
     /// <seealso cref="HashGeneratorMaker"/>
     // @see 
     // @author John May

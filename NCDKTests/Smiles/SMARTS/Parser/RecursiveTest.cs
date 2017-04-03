@@ -29,11 +29,10 @@ namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
     /// Test recursive smarts
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.module test-smarts
     // @cdk.require ant1.6
-    /// </summary>
     [TestClass()]
     public class RecursiveTest : CDKTestCase
     {

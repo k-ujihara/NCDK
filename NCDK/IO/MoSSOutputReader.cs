@@ -28,15 +28,17 @@ using System.IO;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Reader for MoSS output files {@cdk.cite BOR2002} which present the results
+    /// Reader for MoSS output files <token>cdk-cite-BOR2002</token> which present the results
     /// of a substructure mining study. These files look like:
-    /// <code>
+    /// <pre>
     /// id,description,nodes,edges,s_abs,s_rel,c_abs,c_rel
     /// 1,S-c:c:c:c:c:c,7,6,491,5.055081,5,1.7421603
     /// 2,S-c:c:c:c:c,6,5,493,5.0756717,5,1.7421603
-    /// </code>
-    /// <b>Caution</b>: the output contains substructures, not full molecules,
+    /// </pre>
+    /// <note type="caution">
+    /// The output contains substructures, not full molecules,
     /// even though they are read as such right now.
+    /// </note>
     /// </summary>
     // @cdk.module  smiles
     // @cdk.githash

@@ -33,11 +33,12 @@ namespace NCDK.StructGen
     /// RandomGenerator is a generator of constitutional isomers. It needs to be
     /// provided with a starting constitution and it makes random moves in
     /// constitutional space from there.
-    /// This generator was first suggested by J.-L. Faulon {@cdk.cite FAU96}.
-    ///
+    /// This generator was first suggested by J.-L. Faulon <token>cdk-cite-FAU96</token>.
+    /// </summary>
+    /// <remarks>
     /// <para>Unlike the VicinitySampler, this methods does not sample
     /// the full Faulon vicinity.</para>
-    /// </summary>
+    /// </remarks>
     /// <seealso cref="VicinitySampler"/>
     // @cdk.githash
     // @cdk.keyword structure generator

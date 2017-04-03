@@ -34,10 +34,10 @@ namespace NCDK.Renderers.Colors
     /// IAtomColorer colorer = new CDK2DAtomColors().Set("H", Color.LightGray).Set("O", WPF::Media.Colors.Red.lighter());
     /// </code>
     /// </example>
+    ///<seealso href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</seealso>
+    ///<seealso href="http://jmol.sourceforge.net/jscolors/">Jmol, Colors</seealso>
     // @cdk.module render
     // @cdk.githash
-    // @see <a href="http://en.wikipedia.org/wiki/CPK_coloring">CPK coloring</a>
-    // @see <a href="http://jmol.sourceforge.net/jscolors/">Jmol, Colors</a>
     [Serializable]
     public class CDK2DAtomColors : IAtomColorer
     {

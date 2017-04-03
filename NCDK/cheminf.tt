@@ -1,0 +1,213 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Xml" #>
+<#@ assembly name="System.Xml.Linq" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ output extension=".tokens" #>
+<?xml version="1.0" encoding="utf-8" ?>
+<#
+		{
+			var fn = Path.Combine(new FileInfo(this.Host.TemplateFile).Directory.FullName, "cheminf.bibx");
+            using (var reader = XmlReader.Create(fn))
+            {
+                var output = new XDocument();
+                var content = new XElement("content");
+                content.SetAttributeValue(XNamespace.Xml + "space", XNamespace_space.NamespaceName);
+                content.SetAttributeValue(XNamespace.Xmlns + "ddue", XNamespace_ddue.NamespaceName);
+                content.SetAttributeValue(XNamespace.Xmlns + "xlink", XNamespace_xlink.NamespaceName);
+                output.Add(content);
+
+                var root = XElement.Load(reader);
+                foreach (var entry in root.Elements(XName_entry))
+                    foreach (var cont in entry.Elements().Where(n => n.Name.Namespace == XNamespace_bibtex))
+                    {
+                        var item = new XElement("item");
+                        item.SetAttributeValue("id", "cdk-cite" + "-" + entry.Attribute("id").Value);
+                        XElement toAddText = item;
+						XNode url = null;
+                        switch (cont.Name.LocalName)
+                        {
+                            case "article":
+                                toAddText = MakeExternalLink(cont, item);
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "journal", "?Journal?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "volume", "?"));
+                                toAddText.Add(":");
+                                toAddText.Add(MakeElement(cont, "pages", "?-?"));
+                                content.Add(item);
+                                break;
+                            case "inbook":
+                                toAddText = MakeExternalLink(cont, item);
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "series", "?In Series?"));
+                                toAddText.Add(", Ch. ");
+                                toAddText.Add(MakeElement(cont, "chapter", "?chapter?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "volume", "?"));
+                                toAddText.Add(":");
+                                toAddText.Add(MakeElement(cont, "pages", "?-?"));
+                                toAddText.Add(", Eds. ");
+                                toAddText.Add(MakeElement(cont, "editor", "?Editors?"));
+                                content.Add(item);
+                                break;
+                            case "phdthesis":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "adress", "?Institute?"));
+                                content.Add(item);
+                                break;
+                            case "book":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "publisher", "?Publisher?"));
+                                content.Add(item);
+                                break;
+                            case "misc":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                content.Add(item);
+                                break;
+                            case "techreport":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "institution", "?Institute?"));
+								url = MakeElement(cont, "url", null);
+								if (url != null)
+								{
+	                                toAddText.Add(", ");
+									toAddText.Add(url);
+								}
+                                content.Add(item);
+                                break;
+                            case "inproceedings":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "booktitle", "?BookTitle?"));
+								if (url != null)
+								{
+	                                toAddText.Add(", ");
+									toAddText.Add(url);
+								}
+                                content.Add(item);
+                                break;
+                            case "thesis":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "isbn", "?ISBN?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "school", "?School?"));
+                                content.Add(item);
+                                break;
+                            case "manual":
+                                toAddText.Add(MakeElement(cont, "author", "?Authors?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "i", "title", "?Title?"));
+                                toAddText.Add(", ");
+                                toAddText.Add(MakeElement(cont, "b", "year", "19??"));
+                                toAddText.Add(", ");
+								if (url != null)
+								{
+	                                toAddText.Add(", ");
+									toAddText.Add(url);
+								}
+                                content.Add(item);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+				var str = output.ToString();
+#>
+<#= str #>
+<#
+            }
+        }
+#>
+<#+
+        
+        static readonly XNamespace XNamespace_bibtex = "http://bibtexml.sf.net/";
+        static readonly XName XName_entry = XNamespace_bibtex + "entry";
+        static readonly XNamespace XNamespace_ddue = "http://ddue.schemas.microsoft.com/authoring/2003/5";
+        static readonly XNamespace XNamespace_xlink = "http://www.w3.org/1999/xlink";
+        static readonly XNamespace XNamespace_space = "preserve";
+        static readonly XName XName_externalLink = XNamespace_ddue + "externalLink";
+        static readonly XName XName_linkText = XNamespace_ddue + "linkText";
+        static readonly XName XName_linkUri = XNamespace_ddue + "linkUri";
+
+        private static string GetString(XElement node, string childElement, string def)
+        {
+            var elm = node.Element(XNamespace_bibtex + childElement);
+            return elm != null ? elm.Value : def;
+        }
+
+        private static XElement MakeExternalLink(XElement cont, XElement item)
+        {
+            XElement toAddText = item;
+            XElement externalLink = null;
+            {
+                var doi = GetString(cont, "doi", null);
+                if (doi != null)
+                {
+                    externalLink = new XElement("a");
+                    externalLink.SetAttributeValue("href", "http://dx.doi.org/" + doi);
+                    item.Add(externalLink);
+                }
+            }
+            if (externalLink != null)
+            {
+                toAddText = externalLink;
+            }
+            return toAddText;
+        }
+
+        private static XText MakeElement(XElement cont, string childElement, string def)
+        {
+            var e = GetString(cont, childElement, def);
+            return e != null ? new XText(e) : null;
+        }
+
+        private static XElement MakeElement(XElement cont, string tag, string childElement, string def)
+        {
+            var i = new XElement(tag);
+            i.Add(GetString(cont, childElement, def));
+            return i;
+        }
+#>

@@ -33,10 +33,8 @@ using System.Linq;
 
 namespace NCDK.Smiles
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-smiles
-    /// </summary>
     [TestClass()]
     public class BeamToCDKTest
     {

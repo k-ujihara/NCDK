@@ -241,9 +241,9 @@ namespace NCDK.SMSD.Tools
         }
 
         /// <summary>
-        /// Convenience method to perceive atom types for all <code>IAtom</code>s in the
+        /// Convenience method to perceive atom types for all <see cref="IAtom"/>s in the
         /// <see cref="IAtomContainer"/>, using the <see cref="CDKAtomTypeMatcher"/>. If the
-        /// matcher finds atom matching atom type, the <code>IAtom</code> will be configured
+        /// matcher finds atom matching atom type, the <see cref="IAtom"/> will be configured
         /// to have the same properties as the <see cref="IAtomType"/>. If no matching atom
         /// type is found, no configuration is performed.
         /// </summary>

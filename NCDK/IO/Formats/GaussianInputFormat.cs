@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.gaussian.com/g_ur/m_input.htm">here</a>.
+    /// See <see href="http://www.gaussian.com/g_ur/m_input.htm">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

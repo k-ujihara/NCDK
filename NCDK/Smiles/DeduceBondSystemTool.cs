@@ -37,12 +37,12 @@ namespace NCDK.SGroups
     /// Tool that tries to deduce bond orders based on connectivity and hybridization
     /// for a number of common ring systems of up to seven-membered rings. It assumes
     /// that atom types have been perceived before that class is used.
-    ///
-    /// <para>The calculation can be interrupted with <see cref="Interrupted"/>,
+    /// </summary>
+    /// <remarks>
+    /// The calculation can be interrupted with <see cref="Interrupted"/>,
     /// but assumes that this class is not used in a threaded fashion. When a calculation
     /// is interrupted, the bool is reset to false.
-    /// </para>
-    /// </summary>
+    /// </remarks>
     // @author Todd Martin
     // @cdk.module smiles
     // @cdk.githash
@@ -210,7 +210,6 @@ namespace NCDK.SGroups
 
         private void FixPyridineNOxides(IAtomContainer atomContainer, IRingSet ringSet)
         {
-
             //convert n(=O) to [n+][O-]
 
             for (int i = 0; i < atomContainer.Atoms.Count; i++)
@@ -232,22 +231,17 @@ namespace NCDK.SGroups
                                 atomContainer.GetBond(ai, caj).Order = BondOrder.Single;
                             }
                         }// end for (int j=0;j<ca.Count;j++)
-
                     } // end if (InRingSet(ai,ringSet)) {
                 } // end if (ai.Symbol.Equals("N") && ai.FormalCharge==0)
-
             } // end for (int i=0;i<atomContainer.Atoms.Count;i++)
-
         }
 
         private void ApplyBonds(IAtomContainer m, IList<string> al)
         {
-
             //Debug.WriteLine("");
 
             for (int i = 0; i <= al.Count - 1; i++)
             {
-
                 string s = al[i];
                 string s1 = s.Substring(0, s.IndexOf('-'));
                 string s2 = s.Substring(s.IndexOf('-') + 1);
@@ -259,9 +253,7 @@ namespace NCDK.SGroups
 
                 IBond b = m.GetBond(m.Atoms[i1], m.Atoms[i2]);
                 b.Order = BondOrder.Double;
-
             }
-
         }
 
         private void FiveMemberedRingPossibilities(IAtomContainer m, IRing r, IList<IList<IList<string>>> MasterList)
@@ -327,7 +319,6 @@ namespace NCDK.SGroups
             //        mal.Add(al11);
 
             MasterList.Add(mal);
-
         }
 
         private void SixMemberedRingPossibilities(IAtomContainer m, IRing r, IList<IList<IList<string>>> MasterList)
@@ -435,7 +426,6 @@ namespace NCDK.SGroups
             mal.Add(al18);
 
             MasterList.Add(mal);
-
         }
 
         private void SevenMemberedRingPossibilities(IAtomContainer m, IRing r, IList<IList<IList<string>>> MasterList)
@@ -488,7 +478,6 @@ namespace NCDK.SGroups
             mal.Add(al5);
 
             MasterList.Add(mal);
-
         }
 
         private int GetBadCount(IAtomContainer atomContainer, IRingSet ringSet)
@@ -536,12 +525,10 @@ namespace NCDK.SGroups
                                         }
                                     }
                                 }
-
                                 if (doublebondcount == 2)
                                 {
                                     count++;
                                 }
-
                             }
                         }
                         else if (atom.FormalCharge == 1)
@@ -589,7 +576,6 @@ namespace NCDK.SGroups
         private IAtomContainer Loop(long starttime, IAtomContainer atomContainer, int index,
                 IList<IList<IList<string>>> MasterList, int[] choices, IAtomContainerSet<IAtomContainer> som)
         {
-
             //Debug.WriteLine(System.CurrentTimeMillis());
 
             long time = DateTime.Now.Ticks;
@@ -614,7 +600,6 @@ namespace NCDK.SGroups
 
             for (int i = 0; i <= ringlist.Count - 1; i++)
             {
-
                 choices[index] = i;
 
                 if (index == MasterList.Count - 1)
@@ -643,12 +628,10 @@ namespace NCDK.SGroups
 
                     if (IsStructureOK(mnew))
                     {
-
                         IRingSet rs = this.RemoveExtraRings(mnew); // need to redo this since created new atomContainer (mnew)
 
                         if (rs != null)
                         {
-
                             int count = this.GetBadCount(mnew, rs);
                             // Debug.WriteLine("bad count="+count);
 
@@ -665,7 +648,6 @@ namespace NCDK.SGroups
                             }
                         }
                     }
-
                 }
 
                 if (index + 1 <= MasterList.Count - 1)
@@ -680,7 +662,6 @@ namespace NCDK.SGroups
                 }
             }
             return null;
-
         }
 
         private bool IsStructureOK(IAtomContainer atomContainer)
@@ -753,24 +734,22 @@ namespace NCDK.SGroups
                 Debug.WriteLine(e.ToString());
                 return false;
             }
-
         }
 
         /// <summary>
         /// Remove rings.
-        /// <p/>
+        /// </summary>
+        /// <remarks>
         /// Removes rings which do not have all sp2/planar3 aromatic atoms and also gets rid of rings that have more than
         /// 7 or less than 5 atoms in them.
-        ///
+        /// </remarks>
         /// <param name="m">The AtomContainer from which we want to remove rings</param>
         /// <returns>The set of reduced rings</returns>
-        /// </summary>
         private IRingSet RemoveExtraRings(IAtomContainer m)
         {
-
             try
             {
-                IRingSet rs = Cycles.SSSR(m).ToRingSet();
+                IRingSet rs = Cycles.FindSSSR(m).ToRingSet();
 
                 //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
 
@@ -778,7 +757,6 @@ namespace NCDK.SGroups
 
                 for (int i = 0; i <= rs.Count - 1; i++)
                 {
-
                     IRing r = (IRing)rs[i];
 
                     if (r.Atoms.Count > 7 || r.Atoms.Count < 5)
@@ -819,7 +797,6 @@ namespace NCDK.SGroups
                     ;
                 }
                 return rs;
-
             }
             catch (Exception)
             {
@@ -829,7 +806,6 @@ namespace NCDK.SGroups
 
         private bool[] FindRingsToCheck(IRingSet rs)
         {
-
             bool[] Check = new bool[rs.Count];
 
             for (int i = 0; i <= Check.Length - 1; i++)
@@ -839,7 +815,6 @@ namespace NCDK.SGroups
             
             for (int i = 0; i <= rs.Count - 1; i++)
             {
-
                 IRing r = (IRing)rs[i];
 
                 if (r.Atoms.Count > 7)
@@ -852,7 +827,6 @@ namespace NCDK.SGroups
 
                 for (int j = 0; j <= r.Atoms.Count - 1; j++)
                 {
-
                     // Debug.WriteLine(j+"\t"+r.GetAtomAt(j).Symbol+"\t"+r.GetAtomAt(j).Hybridization);
 
                     if (r.Atoms[j].Hybridization.IsUnset || 

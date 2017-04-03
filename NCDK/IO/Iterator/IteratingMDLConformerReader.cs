@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +9,7 @@ namespace NCDK.IO.Iterator
     /// </summary>
     /// <remarks>
     /// <para>
-    /// This class is analogous to the {@link org.openscience.cdk.io.iterator.IteratingSDFReader} except that
+    /// This class is analogous to the <see cref="IteratingSDFReader"/> except that
     /// rather than return a single <see cref="IAtomContainer"/> at each iteration this
     /// class will return all the conformers for a given molecule at each iteration.
     /// </para>
@@ -27,16 +26,7 @@ namespace NCDK.IO.Iterator
     /// </para>
     /// </remarks>
     /// <example>
-    /// Example usage is
-    /// <code>
-    /// string filename = "/Users/rguha/conf2.sdf";
-    /// IteratingMDLConformerReader2 reader = new IteratingMDLConformerReader2(
-    ///         new FileReader(new File(filename)), Default.ChemObjectBuilder.Instance);
-    /// while (reader.HasNext()) {
-    ///      ConformerContainer2 cc = (ConformerContainer2) reader.Next();
-    /// }
-    /// // do something with this set of conformers
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.IteratingMDLConformerReader_Example.cs"]/*' />
     /// </example>
     // @cdk.module extra
     // @cdk.githash

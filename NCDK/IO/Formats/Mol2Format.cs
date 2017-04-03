@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.tripos.com/data/support/mol2.pdf">here</a>.
+    /// See <see href="http://www.tripos.com/data/support/mol2.pdf">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

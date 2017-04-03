@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html">here</a>.
+    /// See <see href="http://www.sinica.edu.tw/~scimath/msi/insight2K/zindo/C_Files.html">here</see>.
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

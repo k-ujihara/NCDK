@@ -31,9 +31,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// Evaluates the Petitjean shape indices,
     /// </summary>
     /// <remarks>
-    /// These original Petitjean number was described by Petitjean ({@cdk.cite PET92})
+    /// These original Petitjean number was described by Petitjean (<token>cdk-cite-PET92</token>)
     /// and considered the molecular graph. This class also implements the geometric analog
-    /// of the topological shape index described by Bath et al ({@cdk.cite BAT95}).
+    /// of the topological shape index described by Bath et al (<token>cdk-cite-BAT95</token>).
     /// <para>
     /// The descriptor returns a <see cref="DoubleArrayResult"/> which contains
     /// <list type="bullet"> 

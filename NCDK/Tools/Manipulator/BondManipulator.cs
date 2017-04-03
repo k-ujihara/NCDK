@@ -22,21 +22,14 @@
  *  */
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
     /// <summary>
-    /// Class with convenience methods that provide methods to manipulate
-    /// AtomContainer's. 
+    /// Class with convenience methods that provide methods to manipulate 
+    /// <see cref="IAtomContainer"/>'s <see cref="IBond"/>. 
     /// </summary>
-    /// <example>For example:
-    /// <code>
-    /// AtomContainerManipulator.ReplaceAtomByAtom(container, atom1, atom2);
-    /// </code>
-    /// will replace the Atom in the AtomContainer, but in all the ElectronContainer's
-    /// it participates too.
-    /// </example>
+    // fixed CDK's invalid comment
     // @cdk.module  core
     // @cdk.githash
     // @author  Egon Willighagen
@@ -46,8 +39,6 @@ namespace NCDK.Tools.Manipulator
         /// <summary>
         /// Constructs an array of Atom objects from Bond.
         /// </summary>
-        /// <param name="container">The Bond object.</param>
-        /// <returns>The array of Atom objects.</returns>
         public static IAtom[] GetAtomArray(IBond container)
         {
             IAtom[] ret = new IAtom[container.Atoms.Count];
@@ -175,7 +166,6 @@ namespace NCDK.Tools.Manipulator
         /// <param name="bondOrder">The bond order object</param>
         /// <returns>The numeric value</returns>
         /// <seealso cref="CreateBondOrder(double)"/>
-        // @deprecated 
         [Obsolete("use BondOrder.Numeric instead")]
         public static double DestroyBondOrder(BondOrder bondOrder)
         {

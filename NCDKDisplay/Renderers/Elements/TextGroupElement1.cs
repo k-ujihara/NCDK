@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+
 
 
 namespace NCDK.Renderers.Elements
@@ -8,8 +11,12 @@ namespace NCDK.Renderers.Elements
         /// <summary>
         /// Compass-point positions for text element annotation children.
         /// </summary>
-		public struct Position : System.IComparable
-	    {
+    public partial struct Position : System.IComparable<Position>, System.IComparable
+    {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Position"/>.
+		/// </summary>
+		/// <seealso cref="Position"/>
         public static class O
         {
             public const int NW = 0;
@@ -24,8 +31,13 @@ namespace NCDK.Renderers.Elements
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -116,6 +128,7 @@ namespace NCDK.Renderers.Elements
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -124,16 +137,27 @@ namespace NCDK.Renderers.Elements
             return this.Ordinal == ((Position)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Position)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(Position o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Position 
+		{
 		}
 	}
 }

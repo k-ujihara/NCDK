@@ -33,36 +33,30 @@ namespace NCDK.ForceField.MMFF
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
-    ///     <item>{@cdk.cite Halgren96a}</item>
-    ///     <item>{@cdk.cite Halgren96b}</item>
-    ///     <item>{@cdk.cite Halgren96c}</item>
-    ///     <item>{@cdk.cite Halgren96d}</item>
-    ///     <item>{@cdk.cite Halgren96e}</item>     
+    ///     <item><token>cdk-cite-Halgren96a</token></item>
+    ///     <item><token>cdk-cite-Halgren96b</token></item>
+    ///     <item><token>cdk-cite-Halgren96c</token></item>
+    ///     <item><token>cdk-cite-Halgren96d</token></item>
+    ///     <item><token>cdk-cite-Halgren96e</token></item>     
     /// </list>
     /// 
     /// <h4>Atom Types</h4>
-    /// 
+    /// <para>
     /// Symbolic atom types are assigned with <see cref="Mmff.AssignAtomTypes(IAtomContainer)"/>.
     /// The atom type name can be accessed with <see cref="IAtomType.AtomTypeName"/>.
-    /// 
+    /// </para>
     /// <h4>Partial Charges</h4>
-    /// 
+    /// <para>
     /// Partial charges are assigned with <see cref="Mmff.PartialCharges(IAtomContainer)"/>.
     /// Atom types must be assigned before calling this function. Effective formal
     /// charges can also be obtained with <see cref="Mmff.EffectiveCharges(IAtomContainer)"/>
     /// both charge values are accessed with <see cref="IAtom.Charge"/>. Atoms of
     /// unknown type are assigned a neutral charge - to avoid this check the return
     /// value of <see cref="Mmff.AssignAtomTypes(IAtomContainer)"/>.
+    /// </para>
     /// </remarks>
     /// <example>
-    /// <code>
-    /// IAtomContainer mol = ...;
-    /// 
-    /// Mmff mmff = new Mmff();
-    /// mmff.AssignAtomTypes(mol);
-    /// mmff.PartialCharges(mol);
-    /// mmff.ClearProps(mol); // optional
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ForceField.MMFF.Mmff.cs"]/*' />
     /// </example>
     // @author John May
     // @cdk.githash
@@ -78,7 +72,7 @@ namespace NCDK.ForceField.MMFF
         /// <summary>
         /// Assign MMFF Symbolic atom types. The symbolic type can be accessed with
         /// <see cref="IAtomType.AtomTypeName"/>. An atom of unknown type is assigned the
-        /// symbolic type {@code 'UNK'}. <p/>
+        /// symbolic type <pre>(UNK'</pre>.
         /// All atoms, including hydrogens must be explicitly represented.
         ///
         /// <param name="mol">molecule</param>

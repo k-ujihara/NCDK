@@ -28,7 +28,7 @@ namespace NCDK.Geometries.Surface
     /// </summary>
     /// <remarks>
     /// The routine is a simplified version of the neighbor list described
-    /// in {@cdk.cite EIS95} and is based on the implementation by Peter McCluskey.
+    /// in <token>cdk-cite-EIS95</token> and is based on the implementation by Peter McCluskey.
     /// Due to the fact that it divides the cube into a fixed number of sub cubes,
     /// some accuracy may be lost.
     /// </remarks>

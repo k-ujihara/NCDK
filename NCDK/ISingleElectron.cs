@@ -20,19 +20,14 @@
 namespace NCDK
 {
     /// <summary>
-    /// A Single Electron is an orbital which is occupied by only one electron.
+    /// A single electron is an orbital which is occupied by only one electron.
     /// </summary>
     /// <example>
-    /// A radical in CDK is represented by an AtomContainer that contains an Atom
-    /// and a SingleElectron type ElectronContainer:
-    /// <code>
-    ///   AtomContainer radical = new AtomContainer();
-    ///   Atom carbon = new Atom("C");
-    ///   carbon.setImplicitHydrogens(3);
-    ///   radical.addElectronContainer(new SingleElectron(carbon));
-    /// </code>
+    /// A radical in CDK is represented by an <see cref="IAtomContainer"/> that contains an <see cref="IAtom"/>  
+    /// and a <see cref="ISingleElectron"/> type <see cref="IElectronContainer"/>:
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ISingleElectron_Example.cs"]/*' />
     /// </example>
-    /// @cdk.module interfaces
+    // @cdk.module interfaces
     // @cdk.githash
     // @cdk.keyword radical
     // @cdk.keyword electron, unpaired
@@ -45,7 +40,7 @@ namespace NCDK
         IAtom Atom { get; set; }
 
         /// <summary>
-        /// Returns true if the given atom participates in this SingleElectron.
+        /// Returns <see langword="true"/> if the given atom participates in this <see cref="ISingleElectron"/>.
         /// </summary>
         /// <param name="atom">The atom to be tested if it participates in this bond</param>
         /// <returns><see langword="true"/> if this <see cref="ISingleElectron"/> is associated with the atom</returns>

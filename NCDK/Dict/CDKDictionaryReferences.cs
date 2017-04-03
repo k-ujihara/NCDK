@@ -40,7 +40,7 @@ namespace NCDK.Dict
     // @cdk.module     dict
     public class CDKDictionaryReferences
     {
-        private static string prefix = DictionaryDatabase.DICTREFPROPERTYNAME;
+        private static string prefix = DictionaryDatabase.DictRefPropertyName;
 
         public static void MakeReferencesExplicit(IChemObject obj)
         {

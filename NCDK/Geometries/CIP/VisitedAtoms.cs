@@ -65,7 +65,7 @@ namespace NCDK.Geometries.CIP
         }
 
         /// <summary>
-        /// Adds all atoms from the <code>visitedAtoms</code> list to the current list.
+        /// Adds all atoms from the <paramref name="visitedAtoms"/> list to the current list.
         /// </summary>
         /// <param name="visitedAtoms">the <see cref="VisitedAtoms"/> from which all atoms are added</param>
         public void Visited(VisitedAtoms visitedAtoms)

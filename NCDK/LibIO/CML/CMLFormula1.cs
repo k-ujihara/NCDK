@@ -1,6 +1,9 @@
 ﻿// .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara
 
+// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
 
 
 
@@ -8,8 +11,12 @@ namespace NCDK.LibIO.CML
 {
     public partial class CMLFormula
     {
-        public struct Types : System.IComparable
-        {
+    public partial struct Types : System.IComparable<Types>, System.IComparable
+    {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Types"/>.
+		/// </summary>
+		/// <seealso cref="Types"/>
         public static class O
         {
             public const int NOPUNCTUATION = 0;
@@ -27,8 +34,13 @@ namespace NCDK.LibIO.CML
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -161,6 +173,7 @@ namespace NCDK.LibIO.CML
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -169,20 +182,35 @@ namespace NCDK.LibIO.CML
             return this.Ordinal == ((Types)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Types)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(Types o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Types 
+		{
         }
 
-        public struct Sorts : System.IComparable
-        {
+    public partial struct Sorts : System.IComparable<Sorts>, System.IComparable
+    {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Sorts"/>.
+		/// </summary>
+		/// <seealso cref="Sorts"/>
         public static class O
         {
             public const int ALPHABETIC_ELEMENTS = 0;
@@ -191,8 +219,13 @@ namespace NCDK.LibIO.CML
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -271,6 +304,7 @@ namespace NCDK.LibIO.CML
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -279,16 +313,27 @@ namespace NCDK.LibIO.CML
             return this.Ordinal == ((Sorts)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Sorts)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(Sorts o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Sorts 
+		{
         }
     }
 }

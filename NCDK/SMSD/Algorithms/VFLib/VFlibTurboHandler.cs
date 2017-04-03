@@ -95,11 +95,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
+        /// <summary> 
         /// Set the VFLib MCS software
-        ///
-        /// <param name="reactant">/// @param product</param>
         /// </summary>
         public void Set(MolHandler reactant, MolHandler product)
         {

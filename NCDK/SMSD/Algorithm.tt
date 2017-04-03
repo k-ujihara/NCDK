@@ -41,23 +41,22 @@ namespace NCDK.SMSD
     // @cdk.module smsd
     // @cdk.githash
     // @author Syed Asad Rahman <asad@ebi.ac.uk>
-    public struct Algorithm : IComparable
-    {
 <# 
-        GenerateEnumBody(
-            "Algorithm", 
-             new[]
-            {
-                "Default:Default SMSD algorithm.",
-                "MCSPlus:MCS Plus algorithm.",
-                "VFLibMCS:VF Lib based MCS algorithm.",
-                "CDKMCS:CDK UIT MCS.",
-                "SubStructure:Substructure search will return all maps.",
-                "TurboSubStructure:Substructure search will return first map.",
-            },
-            true
-        ); 
+    GenerateEnumBody(
+        "Algorithm", 
+            new[]
+        {
+            "Default:Default SMSD algorithm.",
+            "MCSPlus:MCS Plus algorithm.",
+            "VFLibMCS:VF Lib based MCS algorithm.",
+            "CDKMCS:CDK UIT MCS.",
+            "SubStructure:Substructure search will return all maps.",
+            "TurboSubStructure:Substructure search will return first map.",
+        },
+        true
+    ); 
 #>
+	{
         private static string[] descriptions = new[] 
         {
             "Default SMSD algorithm",

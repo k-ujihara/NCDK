@@ -26,11 +26,8 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Beam
 {
@@ -40,13 +37,13 @@ namespace NCDK.Beam
     /// "NC(/C)=C\C" has no directional label between the nitrogen and the
     /// carbon. Applying this procedure will 'fill-in' missing directional
     /// information on the edge - "N/C(/C)=C\C". 
-    /// <para>
+    /// </summary>
+    /// <remarks>
     /// If required the directional labels in conjugated systems may be adjusted to
     /// allow for full-specification. Attempting to assign a directional label to the
     /// central carbon of "F/C=C(/F)C(/F)=C/F" creates a conflict. This conflict
     /// will be resolved by flipping the labels on the second double-bond - "F/C=C(/F)\C(\F)=C\F".
-    /// </para>
-    /// </summary>
+    /// </remarks>
     // @author John May
     internal sealed class AddDirectionalLabels
         : AbstractFunction<Graph, Graph>
@@ -88,7 +85,7 @@ namespace NCDK.Beam
             {
                 foreach (var e in new List<Edge>(remaining))
                 {
-                    if (!RePlaceImplWithExpl(g, e, replacements))
+                    if (!ReplaceImplWithExpl(g, e, replacements))
                     {
                         remaining.Remove(e);
                         altered = true;
@@ -123,30 +120,29 @@ namespace NCDK.Beam
         /// <param name="e">  a edge in the graph </param>('double bond type')
         /// <param name="acc">accumulator for new edges</param>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
-        private bool RePlaceImplWithExpl(Graph g,
+        private bool ReplaceImplWithExpl(Graph g,
                                             Edge e,
                                             IDictionary<Edge, Edge> acc)
         {
-
             int u = e.Either(), v = e.Other(u);
 
-            bool uDone = RePlaceImplWithExpl(g, e, u, acc);
-            bool vDone = RePlaceImplWithExpl(g, e, v, acc);
+            bool uDone = ReplaceImplWithExpl(g, e, u, acc);
+            bool vDone = ReplaceImplWithExpl(g, e, v, acc);
 
             return uDone || vDone;
         }
 
         /// <summary>
         /// Given a double bond edge traverse the neighbors of one of the endpoints
-        /// and accumulate any explicit replacements in the 'acc' accumulator.
+        /// and accumulate any explicit replacements in the <paramref name="acc"/> accumulator.
         /// </summary>
-        /// <param name="g">  the chemical graph</param>
-        /// <param name="e">  a edge in the graph </param>('double bond type')
-        /// <param name="u">  a endpoint of the edge 'e'</param>
+        /// <param name="g">the chemical graph</param>
+        /// <param name="e">a edge in the graph ('double bond type')</param>
+        /// <param name="u">a endpoint of the edge <paramref name="e"/></param>
         /// <param name="acc">accumulator for new edges</param>
-        /// <returns>does the edge 'e' need to be reconsidered later</returns>
+        /// <returns>does the edge <paramref name="e"/> need to be reconsidered later</returns>
         /// <exception cref="InvalidSmilesException">thrown if the edge could not be converted</exception>
-        private bool RePlaceImplWithExpl(Graph g,
+        private bool ReplaceImplWithExpl(Graph g,
                                             Edge e,
                                             int u,
                                             IDictionary<Edge, Edge> acc)

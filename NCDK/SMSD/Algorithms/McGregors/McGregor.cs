@@ -35,7 +35,7 @@ namespace NCDK.SMSD.Algorithms.McGregors
     ///
     ///  <para>The SMSD algorithm is described in this paper.
     /// please refer Rahman <i>et.al. 2009</i>
-    ///  {@cdk.cite SMSD2009}.
+    ///  <token>cdk-cite-SMSD2009</token>.
     ///  </para>
     /// </summary>
     // @cdk.module smsd

@@ -36,7 +36,10 @@ using System.Text;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Ctab V3000 format output. This writer provides output to the more modern (but less widely
+    /// Ctab V3000 format output. 
+    /// </summary>
+    /// <remarks>
+    /// This writer provides output to the more modern (but less widely
     /// supported) V3000 format. Unlikely the V2000 format that is limited to 999 atoms or bonds
     /// V3000 can write arbitrarily large molecules. Beyond this the format removes some (but not all)
     /// ambiguities and simplifies output values with tagging (e.g 'CHG=-1' instead of '5').
@@ -48,7 +51,7 @@ namespace NCDK.IO
     ///     MultipleGroup, SRUs, (Un)ordered Mixtures</item>
     /// </list>
     /// The 3D block and enhanced stereochemistry is not currently supported.
-    /// </summary>
+    /// </remarks>
     public sealed class MDLV3000Writer : DefaultChemObjectWriter
     {
         private V30LineWriter writer;
@@ -178,8 +181,8 @@ namespace NCDK.IO
         /// <param name="atoms">the atoms of a molecule in desired output order</param>
         /// <param name="idxs">index lookup</param>
         /// <param name="atomToStereo">tetrahedral stereo lookup</param>
-        // @ low-level IO error
-        // @ inconsistent state etc
+        /// <exception cref="IOException">low-level IO error</exception>
+        /// <exception cref="CDKException">inconsistent state etc</exception>
         private void WriteAtomBlock(IAtomContainer mol, IAtom[] atoms, IDictionary<IChemObject, int> idxs, IDictionary<IAtom, ITetrahedralChirality> atomToStereo)
         {
             if (mol.Atoms.Count == 0)
@@ -290,7 +293,7 @@ namespace NCDK.IO
         /// <param name="mol">molecule</param>
         /// <param name="idxs">index lookup</param>
         /// <exception cref="IOException">low-level IO error</exception>
-        /// <exception cref="InvalidOperationException">inconsistent state etc</exception>
+        /// <exception cref="CDKException">inconsistent state etc</exception>
         private void WriteBondBlock(IAtomContainer mol, IDictionary<IChemObject, int> idxs)
         {
             if (mol.Bonds.Count == 0)
@@ -348,7 +351,6 @@ namespace NCDK.IO
                       .Write(' ')
                       .Write(endIdx);
 
-
                 switch (stereo.Ordinal)
                 {
                     case BondStereo.O.Up:
@@ -389,11 +391,12 @@ namespace NCDK.IO
         /// for implicit hydrogens. Old applications (Symyx Draw) seem to push any
         /// hydrogen to (implied) the last position but newer applications
         /// (Accelrys/BioVia Draw) only do so for implicit hydrogens (makes more sense).
-        /// 
+        /// </summary>
+        /// <remarks>
         /// To avoid the ambiguity for those who read 0D stereo (bad anyways) we
         /// actually do push all hydrogens atoms to the back of the atom list giving
         /// them highest value (4) when writing parity values.
-        /// </summary>
+        /// </remarks>
         /// <param name="mol">molecule</param>
         /// <param name="atomToIdx">mapping that will be filled with the output index</param>
         /// <returns>the output order of atoms</returns>

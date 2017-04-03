@@ -76,7 +76,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFUsed()
+        public void TestFused()
         {
             Assert.AreEqual(0, new RingSearch(benzylbenzene).Fused().Length);
         }
@@ -102,7 +102,7 @@ namespace NCDK.RingSearches
         }
 
         [TestMethod()]
-        public void TestFUsedRingFragments()
+        public void TestFusedRingFragments()
         {
             RingSearch search = new RingSearch(benzylbenzene);
             IList<IAtomContainer> fused = search.FusedRingFragments();

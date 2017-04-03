@@ -10,26 +10,24 @@ namespace NCDK.Beam
     /// </summary>
     /// <para>
     /// This implementation was adapted D Eppstein's python code 
-    /// (<a href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
+    /// (<see href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</see>)
     /// which provides efficient tree traversal and handling of blossoms. The
     /// implementation may be quite daunting as a general introduction to the ideas.
-    /// Personally I found <a href="http://www.keithschwarz.com/interesting/">Keith Schwarz</a> 
+    /// Personally I found <see href="http://www.keithschwarz.com/interesting/">Keith Schwarz</see> 
     /// version very informative when starting to understand the workings. 
     /// </para>
     /// <para>
     /// An asymptotically better algorithm is described by Micali and Vazirani (1980)
-    /// and is similar to bipartite matching (<a href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp</a>)
+    /// and is similar to bipartite matching (<see href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp</see>)
     /// where by multiple augmenting paths are discovered at once. In general though
     /// this version is very fast - particularly if given an existing matching to
     /// start from. Even the very simple <see cref="ArbitraryMatching"/> eliminates many
     /// loop iterations particularly at the start when all length 1 augmenting paths
     /// are discovered.
     /// </para>
-    /// <list type="bullet">
-    /// <item><a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</a></item>
-    /// <item><a href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp, Wikipedia</a></item>
-    /// <item><a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</a></item>
-    /// </list>
+    /// <seealso href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</seealso>
+    /// <seealso href="http://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp, Wikipedia</seealso>
+    /// <seealso href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</seealso>
     // @author John May
     internal sealed class MaximumMatching
     {

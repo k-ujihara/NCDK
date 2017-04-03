@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml">here</a>. 
+    /// See <see href="http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml">here</see>. 
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

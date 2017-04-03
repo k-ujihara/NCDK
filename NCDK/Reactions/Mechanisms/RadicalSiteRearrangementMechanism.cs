@@ -39,7 +39,9 @@ namespace NCDK.Reactions.Mechanisms
         /// Initiates the process for the given mechanism. The atoms to apply are mapped between
         /// reactants and products.
         /// </summary>
-        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">
+        /// The list of atoms taking part in the mechanism. Only allowed two atoms.
         ///                    The first atom is the atom which must be moved and the second
         ///                    is the atom which receives the atom1 and the third is the atom which loss
         ///                    the first atom</param>

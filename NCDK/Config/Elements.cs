@@ -325,8 +325,8 @@ namespace NCDK.Config
         /// (or electron density) towards itself. This method provides access to the
         /// Pauling electronegativity value for a chemical element. If no value is
         /// available <see langword="null"/> is returned.
-        /// <a href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</a>
         /// </summary>
+        /// <seealso href="http://en.wikipedia.org/wiki/Electronegativity#Pauling_electronegativity">Pauling Electronegativity</seealso>
         public double? Electronegativity { get; private set; }
 
         /// <summary>
@@ -531,12 +531,7 @@ namespace NCDK.Config
         /// the specified atomic number then <see cref="Unknown"/> is returned.
         /// </summary>
         /// <example>
-        /// <code>
-        /// // carbon
-        /// Elements e = Elements.OfNumber(6);
-        /// // oxygen
-        /// Elements e = Elements.OfNumber(8);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfNumber"]/*' />
         /// </example>
         /// <param name="number">number atomic number</param>
         /// <returns>an element, or <see cref="Unknown"/></returns>
@@ -552,12 +547,8 @@ namespace NCDK.Config
         /// input is case-insensitive.
         /// </summary>
         /// <example>
-        /// <code>
-        /// Elements e = Elements.OfString("c");
-        /// Elements e = Elements.OfString("C");
-        /// Elements e = Elements.OfString("Carbon");
-        /// Elements e = Elements.OfString("carbon");
-        /// </code></example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.Elements.cs+OfString"]/*' />
+        /// </example>
         /// <param name="str">input string</param>
         /// <returns>an element, or <see cref="Unknown"/></returns>
         public static Elements OfString(string str)

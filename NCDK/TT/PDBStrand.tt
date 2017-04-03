@@ -71,9 +71,8 @@ namespace <#= ns.NS #>
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+        /// <seealso cref="IPolymer.GetMonomerNames()"/>
         public ICollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original

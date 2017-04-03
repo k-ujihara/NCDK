@@ -432,10 +432,8 @@ namespace NCDK.Hash
         /// <summary>
         /// This test demonstrates that the nine stereo isomers of inositol can be
         /// hashed to the same value or to different values (perturbed).
-        ///
-        // @see <a href="http://en.wikipedia.org/wiki/Inositol#Isomers_and_structure">Inositol
-        ///      Isomers</a>
         /// </summary>
+        /// <seealso href="http://en.wikipedia.org/wiki/Inositol#Isomers_and_structure">Inositol Isomers</seealso>
         [TestMethod()]
         public void Inositols()
         {

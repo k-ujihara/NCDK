@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2001-2007  Egon Willighagen <egonw@users.sf.net>
  *
@@ -70,9 +70,8 @@ namespace NCDK.Default
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+        /// <seealso cref="IPolymer.GetMonomerNames()"/>
         public ICollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
@@ -131,9 +130,8 @@ namespace NCDK.Silent
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+        /// <seealso cref="IPolymer.GetMonomerNames()"/>
         public ICollection<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original

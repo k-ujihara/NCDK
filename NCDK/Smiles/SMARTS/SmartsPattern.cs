@@ -40,32 +40,14 @@ namespace NCDK.Smiles.SMARTS
     /// </summary>
     /// <example>
     /// Simple usage:
-    /// <code>
-    /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-    ///
-    /// foreach (var ac in acs) {
-    ///   if (ptrn.Matches(ac)) {
-    ///       // 'ac' contains the pattern
-    ///   }
-    /// }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+1"]/*' />
     /// Obtaining a <see cref="Mappings"/> instance and determine the number of unique
     /// matches.
-    ///
-    /// <code>
-    /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-    ///
-    /// foreach (var ac in acs) {
-    ///   nUniqueHits += ptrn.MatchAll(ac)
-    ///                      .CountUnique();
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+2"]/*' />
     /// </example>
     // @author John May
     public sealed class SmartsPattern : Pattern
     {
-
         /// <summary>Parsed query.</summary>
         private readonly IAtomContainer query;
 
@@ -115,15 +97,8 @@ namespace NCDK.Smiles.SMARTS
         /// aromaticity. <b>Do not use this for matching multiple SMARTS againsts the
         /// same container</b>.
         /// </summary>
-        /// <example><code>
-        /// Pattern ptrn = SmartsPattern.Create("O[C@?H](C)CC");
-        /// int nUniqueHits = 0;
-        ///
-        /// foreach (var ac in acs) {
-        ///   nUniqueHits += ptrn.MatchAll(ac)
-        ///                      .CountUnique();
-        /// }
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SmartsPattern_Example.cs+MatchAll"]/*' />
         /// See <see cref="Mappings"/> for available methods.
         /// </example>
         /// <param name="target">the target compound in which we want to match the pattern</param>
@@ -152,10 +127,12 @@ namespace NCDK.Smiles.SMARTS
 
             // stereochemistry and component grouping filters are skipped if the
             // query does not contain them
+            var stereoMatch = new SmartsStereoMatch(query, target);
             foreach (var stereoElement in query.StereoElements)
-                mappings = mappings.Filter(new SmartsStereoMatch(query, target));
+                mappings = mappings.Filter(n => stereoMatch.Apply(n));
+            var grouping = new ComponentGrouping(query, target);
             if (query.GetProperty<object>(ComponentGrouping.Key) != null)
-                mappings = mappings.Filter(new ComponentGrouping(query, target));
+                mappings = mappings.Filter(n => grouping.Apply(n));
 
             // Note: Mappings is lazy, we can't reset aromaticity etc as the
             // substructure match may not have finished
@@ -164,7 +141,7 @@ namespace NCDK.Smiles.SMARTS
         }
 
         /// <summary>
-        /// Create a <see cref="Pattern"/> that will match the given {@code smarts} query.
+        /// Create a <see cref="Pattern"/> that will match the given <paramref name="smarts"/> query.
         /// </summary>
         /// <param name="smarts">SMARTS pattern string</param>
         /// <param name="builder">chem object builder used to create objects</param>

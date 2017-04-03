@@ -27,7 +27,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// A topological descriptor combining distance and adjacency information.
-    /// This descriptor is described by Sharma et al. {@cdk.cite SHA97} and has been shown
+    /// This descriptor is described by Sharma et al. <token>cdk-cite-SHA97</token> and has been shown
     /// to correlate well with a number of physical properties. The descriptor is also reported to
     /// have good discriminatory ability.
     /// </summary>
@@ -35,9 +35,9 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <para>
     /// The eccentric connectivity index for a hydrogen supressed molecular graph is given by the
     /// expression
-    /// <code>
+    /// <pre>
     /// \xi^{c} = \sum_{i = 1}{n} E(i) V(i)
-    /// </code>
+    /// </pre>
     /// where E(i) is the eccentricity of the i<sup>th</sup> atom (path length from the
     /// i<sup>th</sup> atom to the atom farthest from it) and V(i) is the vertex degree of the
     /// i<sup>th</sup> atom.

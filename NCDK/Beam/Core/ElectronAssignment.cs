@@ -96,7 +96,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Test if an a number, {@code x} is odd.
+        /// Test if an a number, <paramref name="x"/> is odd.
         /// </summary>
         /// <param name="x">a number</param>
         /// <returns>the number is odd</returns>

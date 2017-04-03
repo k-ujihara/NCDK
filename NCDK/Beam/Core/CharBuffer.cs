@@ -69,7 +69,7 @@ namespace NCDK.Beam
         /// Access the next character in the buffer and progress the position.
         /// </summary>
         /// <returns>the next character</returns>
-        /// @see #Next()
+        /// <seealso cref="NextChar"/>
         public char Get()
         {
             return cs[Position++];
@@ -80,7 +80,7 @@ namespace NCDK.Beam
         /// position.
         /// </summary>
         /// <returns>the next character</returns>
-        /// @see #Get()
+        /// <seealso cref="Get()"/>
         public char NextChar => cs[Position];
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace NCDK.Beam
         /// character is a digit.
         /// </summary>
         /// <returns>the next character in the buffer as a digit</returns>.
-        /// @see #NextIsDigit()
+        /// <see cref="NextIsDigit()"/> 
         public int GetAsDigit()
         {
             return ToDigit(Get());
@@ -111,14 +111,14 @@ namespace NCDK.Beam
         /// next character is a digit.
         /// </summary>
         /// <returns>the next character in the buffer as a digit</returns>.
-        /// @see #NextIsDigit()
+        /// <see cref="NextIsDigit()"/> 
         public int GetNextAsDigit()
         {
             return ToDigit(NextChar);
         }
 
         /// <summary>
-        /// Determine if the next character is {@literal c}.
+        /// Determine if the next character is <paramref name="c"/>.
         /// </summary>
         /// <param name="c">test if the next character is</param>
         /// <returns>whether there are characters remaining and the</returns>
@@ -209,7 +209,7 @@ namespace NCDK.Beam
         /// <summary>
         /// Convert the specified character to the corresponding integral digit.
         /// Note, no check is made as to whether the character is actually a digit
-        /// which should be performed with {@link #IsDigit(char)}.
+        /// which should be performed with <see cref="IsDigit(char)"/>.
         /// </summary>
         /// <param name="c">a character</param>
         /// <returns>the digit for character</returns>

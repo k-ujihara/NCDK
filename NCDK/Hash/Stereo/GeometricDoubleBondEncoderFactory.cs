@@ -183,13 +183,13 @@ namespace NCDK.Hash.Stereo
         /// Create a permutation parity for the given neighbors. The neighbor list
         /// should include the other double bonded atom but in the last index.
         ///
-        /// <code>
+        /// <pre>
         /// c3
         ///  \
         ///   c2 = c1  = [c3,c4,c1]
         ///  /
         /// c4
-        /// </code>
+        /// </pre>
         /// </summary>
         /// <param name="neighbors">neighbors of a double bonded atom specified by index</param>
         /// <returns>a new permutation parity</returns>

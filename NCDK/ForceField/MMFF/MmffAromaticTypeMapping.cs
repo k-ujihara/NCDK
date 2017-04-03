@@ -33,7 +33,7 @@ namespace NCDK.ForceField.MMFF
 {
     /// <summary>
     /// Assign MMFF aromatic atom types from the preliminary symbolic type. The assignment is described
-    /// in the appendix of {@cdk.cite Halgren96a}:
+    /// in the appendix of <token>cdk-cite-Halgren96a</token>:
     /// <para>
     /// For non-hydrogen atoms, the assignment of symbolic MMFF atom types takes place in two stages. In
     /// the first, a provisional atom type is assigned based on local connectivity. In the second,

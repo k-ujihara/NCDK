@@ -24,7 +24,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
     /// Prediction of logP based on the number of carbon and hetero atoms. The
-    /// implemented equation was proposed in {@cdk.cite Mannhold2009}.
+    /// implemented equation was proposed in <token>cdk-cite-Mannhold2009</token>.
     /// </summary>
     // @cdk.module     qsarmolecular
     // @cdk.githash

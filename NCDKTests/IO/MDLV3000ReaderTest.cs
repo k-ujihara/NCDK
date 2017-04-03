@@ -112,7 +112,7 @@ namespace NCDK.IO
         }
 
         [TestMethod()]
-        public void PseuDoAtomRePlacement()
+        public void PseuDoAtomReplacement()
         {
             using (MDLV3000Reader reader = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "pseudoAtomReplacement.mol")))
             {

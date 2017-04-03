@@ -27,6 +27,7 @@ using System.Linq;
 using NCDK.Graphs;
 using System.Collections.ObjectModel;
 using System.Collections;
+using System;
 
 namespace NCDK.Isomorphisms
 {
@@ -37,104 +38,27 @@ namespace NCDK.Isomorphisms
     /// matching using <see cref="Pattern"/>.
     /// </summary>
     /// <example>
-    /// <code>
-    /// IAtomContainer query  = ...;
-    /// IAtomContainer target = ...;
-    ///
-    /// Mappings mappings = Pattern.FindSubstructure(query)
-    ///                            .MatchAll(target);
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+1"]/*' />
     /// The primary function is to provide an iterable of matches - each match is
     /// a permutation (mapping) of the query graph indices (atom indices).
-    ///
-    /// <code>
-    /// for (int[] p : mappings) {
-    ///     for (int i = 0; i &lt; p.Length; i++)
-    ///         // query.Atoms[i] is mapped to target.Atoms[p[i]];
-    /// }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+enum_mappings"]/*' />
     /// The matches can be filtered to provide only those that have valid
     /// stereochemistry.
-    ///
-    /// <code>
-    /// for (int[] p : mappings.GetStereochemistry()) {
-    ///     // ...
-    /// }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+stereochemistry"]/*' />
     /// Unique matches can be obtained for both atoms and bonds.
-    ///
-    /// <code>
-    /// for (int[] p : mappings.GetUniqueAtoms()) {
-    ///     // ...
-    /// }
-    ///
-    /// for (int[] p : mappings.GetUniqueBonds()) {
-    ///     // ...
-    /// }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+unique_matches"]/*' />
     /// As matches may be lazily generated - iterating over the match twice (as
     /// above) will actually perform two graph matchings. If the mappings are needed
     /// for subsequent use the <see cref="ToArray"/> provides the permutations as a
     /// fixed size array.
-    ///
-    /// <code>
-    /// int[][] ps = mappings.ToArray();
-    /// for (int[] p : ps) {
-    ///    // ...
-    /// }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+toarray"]/*' />
     /// Graphs with a high number of automorphisms can produce many valid matchings.
     /// Operations can be combined such as to limit the number of matches we
     /// retrieve.
-    ///
-    /// <code>
-    /// // first ten matches
-    /// for (int[] p : mappings.Limit(10)) {
-    ///     // ...
-    /// }
-    ///
-    /// // first 10 unique matches
-    /// for (int[] p : mappings.GetUniqueAtoms()
-    ///                        .Limit(10)) {
-    ///     // ...
-    /// }
-    ///
-    /// // ensure we don't waste memory and only 'fix' up to 100 unique matches
-    /// int[][] ps = mappings.GetUniqueAtoms()
-    ///                      .Limit(100)
-    ///                      .ToArray();
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+limit_matches"]/*' />
     /// There is no restrictions on which operation can be applied and how many times
     /// but the order of operations may change the result.
-    ///
-    /// <code>
-    /// // first 100 unique matches
-    /// Mappings m = mappings.GetUniqueAtoms()
-    ///                      .Limit(100);
-    ///
-    /// // unique matches in the first 100 matches
-    /// Mappings m = mappings.Limit(100)
-    ///                      .GetUniqueAtoms();
-    ///
-    /// // first 10 unique matches in the first 100 matches
-    /// Mappings m = mappings.Limit(100)
-    ///                      .GetUniqueAtoms()
-    ///                      .Limit(10);
-    ///
-    /// // number of unique atom matches
-    /// int n = mappings.CountUnique();
-    ///
-    /// // number of unique atom matches with correct stereochemistry
-    /// int n = mappings.GetStereochemistry()
-    ///                 .CountUnique();
-    ///
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+all"]/*' />
     /// </example>
     /// <seealso cref="Pattern"/>
     // @author John May
@@ -172,25 +96,13 @@ namespace NCDK.Isomorphisms
         /// predicate (Guava).
         /// </summary>
         /// <example>
-        /// <code>
-        ///     IAtomContainer query;
-        ///     IAtomContainer target;
-        ///
-        ///     // obtain only the mappings where the first atom in the query is
-        ///     // mapped to the first atom in the target
-        ///     Mappings mappings = Pattern.FindSubstructure(query)
-        ///                                .MatchAll(target)
-        ///                                .Filter(new Predicate&lt;int[]&gt;() {
-        ///                                    public bool Apply(int[] input) {
-        ///                                        return input[0] == 0;
-        ///                                    }});
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+Filter"]/*' />
         /// </example>
         /// <param name="predicate">a predicate</param>
         /// <returns>fluent-api reference</returns>
-        public Mappings Filter(NCDK.Common.Base.Predicate<int[]> predicate)
+        public Mappings Filter(Predicate<int[]> predicate)
         {
-            return new Mappings(query, target, iterable.Where(n => predicate.Apply(n)));
+            return new Mappings(query, target, iterable.Where(n => predicate.Invoke(n)));
         }
 
         /// <summary>
@@ -198,33 +110,14 @@ namespace NCDK.Isomorphisms
         /// provided function.
         /// </summary>
         /// <example>
-        /// <code>
-        /// readonly IAtomContainer query;
-        /// readonly IAtomContainer target;
-        /// 
-        /// Mappings mappings = Pattern.FindSubstructure(query)
-        ///                             .MatchAll(target);
-        /// // a string that indicates the mapping of atom elements and numbers
-        /// IEnumerable&lt;string&gt; strs = mappings.GetMapping(new Function&lt;int[], string&gt;() 
-        /// {
-        ///   StringBuilder sb = new StringBuilder();
-        ///   for (int i = 0; i &lt; input.Length; i++) {
-        ///     if (i > 0) sb.Append(", ");
-        ///     sb.Append(query.Atoms[i])
-        ///       .Append(i + 1)
-        ///       .Append(" -> ")
-        ///       .Append(target.Atoms[input[i]])
-        ///       .Append(input[i] + 1);
-        ///    }
-        ///    return sb.ToString();
-        /// }
-        /// </code></example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+Filter"]/*' />
+        /// </example>
         /// <typeparam name="T"></typeparam>
         /// <param name="f">function to transform a mapping</param>
         /// <returns>The transformed types</returns>
-        public IEnumerable<T> GetMapping<T>(NCDK.Common.Base.Function<int[], T> f)
+        public IEnumerable<T> GetMapping<T>(Func<int[], T> f)
         {
-            return iterable.Select(n => f.Apply(n));
+            return iterable.Select(n => f(n));
         }
 
         /// <summary>
@@ -247,7 +140,8 @@ namespace NCDK.Isomorphisms
         {
             // query structures currently have special requirements (i.e. SMARTS)
             if (query is IQueryAtomContainer) return this;
-            return Filter(new StereoMatch(query, target));
+            var match = new StereoMatch(query, target);
+            return Filter(n => match.Apply(n));
         }
 
         /// <summary>
@@ -286,42 +180,9 @@ namespace NCDK.Isomorphisms
         /// mappings.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer query  = ...;
-        /// IAtomContainer target = ...;
-        ///
-        /// Pattern pat = Pattern.FindSubstructure(query);
-        ///
-        /// // lazily iterator
-        /// for (int[] mapping : pat.MatchAll(target)) {
-        ///     // logic...
-        /// }
-        ///
-        /// int[][] mappings = pat.MatchAll(target)
-        ///                       .ToArray();
-        ///
-        /// // same as lazy iterator but we now can refer to and parse 'mappings'
-        /// // to other methods without regenerating the graph match
-        /// for (int[] mapping : mappings) {
-        ///     // logic...
-        /// }
-        /// </code>
-        ///
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToArray1"]/*' />
         /// The method can be used in combination with other modifiers.
-        ///
-        /// <code>
-        ///
-        /// IAtomContainer query  = ...;
-        /// IAtomContainer target = ...;
-        ///
-        /// Pattern pat = Pattern.FindSubstructure(query);
-        ///
-        /// // array of the first 5 unique atom mappings
-        /// int[][] mappings = pat.MatchAll(target)
-        ///                       .GetUniqueAtoms()
-        ///                       .Limit(5)
-        ///                       .ToArray();
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToArray2"]/*' />
         /// </example>
         /// <returns>array of mappings</returns>
         public int[][] ToArray()
@@ -333,75 +194,52 @@ namespace NCDK.Isomorphisms
         /// Convert the permutations to a atom-atom map.
         /// </summary>
         /// <example>
-        /// <code>
-        /// for (IDictionary&lt;IAtom,IAtom&gt; map : mappings.ToAtomMap()) {
-        ///     for (KeyValuePair&lt;IAtom,IAtom&gt; e : map.EntrySet()) {
-        ///         IAtom queryAtom  = e.Key;
-        ///         IAtom targetAtom = e.Value;
-        ///     }
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomMap"]/*' />
         /// </example>
         /// <returns>iterable of atom-atom mappings</returns>
         public IEnumerable<IDictionary<IAtom, IAtom>> ToAtomMap()
         {
-            return GetMapping(new AtomMaper(query, target));
+            var mapper = new AtomMaper(query, target);
+            return GetMapping(n => mapper.Apply(n));
         }
 
         /// <summary>
         /// Convert the permutations to a bond-bond map.
         /// </summary>
         /// <example>
-        /// <code>
-        /// for (IDictionary&lt;IBond,IBond&gt; map : mappings.ToBondMap()) {
-        ///     for (KeyValuePair&lt;IBond,IBond&gt; e : map.EntrySet()) {
-        ///         IBond queryBond  = e.Key;
-        ///         IBond targetBond = e.Value;
-        ///     }
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToBondMap"]/*' />
         /// </example>
         /// <returns>iterable of bond-bond mappings</returns>
         public IEnumerable<IDictionary<IBond, IBond>> ToBondMap()
         {
-            return GetMapping(new BondMaper(query, target));
+            var mapper = new BondMaper(query, target);
+            return GetMapping(n => mapper.Apply(n));
         }
 
         /// <summary>
         /// Convert the permutations to an atom-atom bond-bond map.
         /// </summary>
-        /// <example><code>
-        /// foreach (IDictionary&lt;IChemObject,IChemObject&gt; map in mappings.ToBondMap()) {
-        ///    foreach (KeyValuePair&lt;IChemObject,IChemObject&gt; e in map) {
-        ///       IChemObject queryObj = e.Key;
-        ///       IChemObject targetObj = e.Value;
-        ///    }
-        ///    IAtom matchedAtom = map[query.Atoms[i]];
-        ///    IBond matchedBond = map[query.Bonds[i]];
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToAtomBondMap"]/*' />
+        /// </example>
         /// <returns>iterable of atom-atom and bond-bond mappings</returns>
         public IEnumerable<IDictionary<IChemObject, IChemObject>> ToAtomBondMap()
         {
-            return GetMapping(new AtomBondMaper(query, target));
+            var map = new AtomBondMaper(query, target);
+            return GetMapping(n => map.Apply(n));
         }
 
         /// <summary>
         /// Obtain the chem objects (atoms and bonds) that have 'hit' in the target molecule.
         /// </summary>
         /// <example>
-        /// <code>
-        /// foreach (var obj in mappings.ToChemObjects()) {
-        ///   if (obj is IAtom) {
-        ///      // this atom was 'hit' by the pattern
-        ///   }
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToChemObjects"]/*' />
         /// </example>
         /// <returns>lazy iterable of chem objects</returns>
         public IEnumerable<IChemObject> ToChemObjects()
         {
-            foreach (var a in GetMapping(new AtomBondMaper(query, target)).Select(map => map.Values))
+            var mapper = new AtomBondMaper(query, target);
+            foreach (var a in GetMapping(n => mapper.Apply(n)).Select(map => map.Values))
                 foreach (var b in a)
                     yield return b;
             yield break;
@@ -412,21 +250,13 @@ namespace NCDK.Isomorphisms
         /// and bonds are the same as in the target molecule but there may be less of them.
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer query, target
-        /// Mappings mappings = ...;
-        /// foreach (var mol in mol.ToSubstructures()) {
-        ///    foreach (var atom in mol.Atoms)
-        ///      target.Contains(atom); // always true
-        ///    foreach (var atom in target.Atoms)
-        ///      mol.Contains(atom): // not always true
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+ToSubstructures"]/*' />
         /// </example>
         /// <returns>lazy iterable of molecules</returns>
         public IEnumerable<IAtomContainer> ToSubstructures()
         {
-            return GetMapping(new AtomBondMaper(query, target)).Select(map =>
+            var mapper = new AtomBondMaper(query, target);
+            return GetMapping(n => mapper.Apply(n)).Select(map =>
             {
                 IAtomContainer submol = target.Builder.CreateAtomContainer();
                 foreach (var atom in query.Atoms)
@@ -441,16 +271,7 @@ namespace NCDK.Isomorphisms
         /// Efficiently determine if there are at least 'n' matches
         /// </summary>
         /// <example>
-        /// <code>
-        /// Mappings mappings = ...;
-        ///
-        /// if (mappings.AtLeast(5))
-        ///    // set bit flag etc.
-        ///
-        /// // are the at least 5 unique matches?
-        /// if (mappings.GetUniqueAtoms().AtLeast(5))
-        ///    // set bit etc.
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Isomorphisms.Mappings_Example.cs+AtLeast"]/*' />
         /// </example>
         /// <param name="n">number of matches</param>
         /// <returns>there are at least 'n' matches</returns>
@@ -509,7 +330,7 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>Utility to transform a permutation into the atom-atom map.</summary>
-        private sealed class AtomMaper : NCDK.Common.Base.Function<int[], IDictionary<IAtom, IAtom>>
+        private sealed class AtomMaper
         {
             /// <summary>Query/target containers from the graph matching.</summary>
             private readonly IAtomContainer query, target;
@@ -536,7 +357,7 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>Utility to transform a permutation into the bond-bond map.</summary>
-        public sealed class BondMaper : NCDK.Common.Base.Function<int[], IDictionary<IBond, IBond>>
+        public sealed class BondMaper
         {
             /// <summary>The query graph - indicates a presence of edges.</summary>
             private readonly int[][] g1;
@@ -576,7 +397,7 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>Utility to transform a permutation into an atom-atom and bond-bond map.</summary>
-        private sealed class AtomBondMaper : NCDK.Common.Base.Function<int[], IDictionary<IChemObject, IChemObject>>
+        private sealed class AtomBondMaper
         {
             /// <summary>The query graph - indicates a presence of edges.</summary>
             private readonly int[][] g1;

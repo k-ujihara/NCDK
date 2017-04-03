@@ -41,8 +41,8 @@ namespace NCDK.RingSearches
     /// every isolated cycle (ring) does not share any edges (bonds) with any other
     /// elementary cycle it cannot be made by composing any other cycles (rings).
     /// Therefore, all isolated cycles (rings) are relevant and are members of all
-    /// minimum cycle bases (SSSRs). <b>Important</b> the cycle sets returned are not
-    /// ordered in the path of the cycle.
+    /// minimum cycle bases (SSSRs). 
+    /// <note type="important">The cycle sets returned are not ordered in the path of the cycle.</note> 
     /// </summary>
     /// <remarks>
     /// <para>Further Explanation</para> 
@@ -63,40 +63,10 @@ namespace NCDK.RingSearches
     /// </list>
     /// </remarks>
     /// <example>
-    /// <para>Example Usage</para>
-    /// <code>
-    /// // construct the search for a given molecule, if an adjacency list
-    /// // representation (int[][]) is available this can be passed to the
-    /// // constructor for improved performance
-    /// IAtomContainer container  = ...;
-    /// RingSearch     ringSearch = new RingSearch(container);
-    ///
-    /// // indices of cyclic vertices
-    /// int[] cyclic = ringSearch.Cyclic();
-    ///
-    /// // iterate over fused systems (atom indices)
-    /// For(int[] fused : ringSearch.Fused()){
-    ///     ...
-    /// }
-    ///
-    /// // iterate over isolated rings (atom indices)
-    /// For(int[] isolated : ringSearch.Isolated()){
-    ///     ...
-    /// }
-    ///
-    /// // convenience methods for getting the fragments
-    /// IAtomContainer cyclic = ringSearch.RingFragments();
-    ///
-    /// For(IAtomContainer fragment : ringSearch.FusedRingFragments()){
-    ///     ....
-    /// }
-    /// For(IAtomContainer fragment : ringSearch.IsolatedRingFragments()){
-    ///     ....
-    /// }               ///
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.RinSearch_Example.cs"]/*' />
     /// </example>
-    /// <a href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph Theory) - Wikipedia</a>
-    /// <a href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</a>
+    /// <seealso href="http://en.wikipedia.org/wiki/Cycle_(graph_theory)">Cycle (Graph Theory) - Wikipedia</seealso>
+    /// <seealso href="http://efficientbits.blogspot.co.uk/2012/12/scaling-up-faster-ring-detection-in-cdk.html">Scaling Up: Faster Ring Detecting in CDK - Efficient Bits, Blog</seealso>
     /// <seealso cref="SpanningTree"/>
     /// <seealso cref="AllRingsFinder"/>
     /// <seealso cref="CyclicVertexSearch"/>
@@ -191,16 +161,7 @@ namespace NCDK.RingSearches
         /// Determine whether the provided atom belongs to a ring (is cyclic).
         /// </summary>
         /// <example>
-        /// <code>
-        /// IAtomContainer mol        = ...;
-        /// RingSearch     ringSearch = new RingSearch(mol);
-        ///
-        /// For(IAtom atom : mol.Atoms){
-        ///     if(ringSearch.Cyclic(atom)){
-        ///         ...
-        ///     }
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.RingSearch_Example.cs+Cyclic"]/*' />
         /// </example>
         /// <param name="atom">an atom</param>
         /// <returns>whether the atom is in a ring</returns>
@@ -229,19 +190,11 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Determine whether the vertex at index <i>i</i> is a cyclic vertex.
+        /// Determine whether the vertex at index <paramref name="i"/> is a cyclic vertex.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer  mol    = ...;
-        /// RingSearch      tester = new RingSearch(mol);
-        ///
-        /// int n = mol.Atoms.Count;
-        /// For(int i = 0; i &lt; n; i++) {
-        ///     if(tester.Cyclic(i)) {
-        ///         ...
-        ///     }
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.RingSearch_Example.cs+Cyclic_int"]/*' />
+        /// </example>
         /// <param name="i">atom index</param>
         /// <returns>whether the vertex at the given index is in a cycle</returns>
         public bool Cyclic(int i)
@@ -261,16 +214,9 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Construct the sets of vertices which belong to isolated rings.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer  biphenyl   = ...;
-        /// RingSearch      ringSearch = new RingSearch(biphenyl);
-        ///
-        /// int[][] isolated = ringSearch.Isolated();
-        /// isolated.Length; // 2 isolated rings in biphenyl
-        ///
-        /// isolated[0].Length; // 6 vertices in one benzene
-        /// isolated[1].Length; // 6 vertices in the other benzene
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.RingSearch_Example.cs+Isolated"]/*' />
+        /// </example>
         /// <returns>array of isolated fragments, defined by the vertices in the fragment</returns>
         public int[][] Isolated()
         {
@@ -280,17 +226,9 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Construct the sets of vertices which belong to fused ring systems.
         /// </summary>
-        /// <example><code>
-        /// IAtomContainer  mol        = ...;
-        /// RingSearch      ringSearch = new RingSearch(mol);
-        ///
-        /// int[][] fused = ringSearch.Fused();
-        /// fused.Length; // e.g. 3 separate fused ring systems
-        ///
-        /// fused[0].Length; // e.g. 6 vertices in the first system
-        /// fused[1].Length; // e.g. 10 vertices in the second system
-        /// fused[2].Length; // e.g. 4 vertices in the third system
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.RingSearch_Example.cs+Fused"]/*' />
+        /// </example>
         /// <returns>array of fused fragments, defined by the vertices in the fragment</returns>
         public int[][] Fused()
         {
@@ -320,7 +258,6 @@ namespace NCDK.RingSearches
 
             foreach (var bond in abonds)
             {
-
                 IAtom either = bond.Atoms[0];
                 IAtom other = bond.Atoms[1];
 
@@ -399,7 +336,7 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Utility method for creating a fragment from an array of vertices
         /// </summary>
-        /// <param name="vertices">array of vertices .Length=cycle weight, values 0 ... nAtoms</param>
+        /// <param name="vertices">array of vertices. Length=cycle weight, values 0 ... nAtoms</param>
         /// <returns>atom container only containing the specified atoms (and bonds)</returns>
         private IAtomContainer ToFragment(int[] vertices)
         {

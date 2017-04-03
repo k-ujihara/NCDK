@@ -85,8 +85,8 @@ namespace NCDK.Reactions.Types
 
             /* initiate */
             IReactionProcess type = new ElectronImpactSDBReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;

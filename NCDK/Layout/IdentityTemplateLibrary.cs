@@ -61,8 +61,6 @@ namespace NCDK.Layout
     // @author John May
     internal sealed class IdentityTemplateLibrary
     {
-        //private static readonly DecimalFormat DECIMAL_FORMAT = new DecimalFormat(".##");
-
         private readonly MultiDictionary<string, Vector2[]> templateMap = new MultiDictionary<string, Vector2[]>();
 
         private readonly SmilesGenerator smigen = SmilesGenerator.Unique();

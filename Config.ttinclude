@@ -39,9 +39,38 @@
         return s.Split(':');
     }
 
-    public void GenerateEnumBody(string name, string[] entities, bool isStruct)
+	public string StructOrClass(bool isStruct)
+	{
+		return isStruct ? "struct" : "class";
+	}
+
+	public void GenerateEnumBody(string name, string[] entities, bool isStruct)
+	{
+		GenerateEnumBody(name, entities, isStruct, null);
+	}
+
+    public void GenerateEnumBody(string name, string[] entities, string implements)
+    {
+		GenerateEnumBody(name, entities, false, implements);
+	}
+
+	public void GenerateEnumBody(string name, string[] entities, bool isStruct, string implements)
     {
 #>
+    public partial <#= StructOrClass(isStruct)  #> <#= name #> : System.IComparable<<#= name #>>, System.IComparable
+<#+
+		if (implements != null)
+		{
+#>
+			 , <#= implements #> 
+<#+
+		}
+#>
+    {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="<#= name #>"/>.
+		/// </summary>
+		/// <seealso cref="<#= name #>"/>
         public static class O
         {
 <#+ 
@@ -56,8 +85,13 @@
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -168,6 +202,7 @@ foreach (var s in entities)
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
 <#+ if (isStruct) { #>    
@@ -180,16 +215,26 @@ foreach (var s in entities)
 <#+ } #>
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (<#= name #>)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(<#= name #> o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial <#= StructOrClass(isStruct)  #> <#= name #> 
 <#+
     }
 #>

@@ -28,7 +28,7 @@ namespace NCDK.Signature
     /// <summary>
     /// <para>
     /// A molecule signature is a way to produce <see cref="AtomSignature"/>s and to get
-    /// the canonical {@cdk.cite FAU04} signature string for a molecule. There are
+    /// the canonical <token>cdk-cite-FAU04</token> signature string for a molecule. There are
     /// several possible uses for a molecule signature.
     /// </para>
     /// </summary>
@@ -36,14 +36,14 @@ namespace NCDK.Signature
     /// <para>
     /// Firstly, a signature with a height greater than the diameter of a molecule
     /// can be used to reconstruct the molecule. In this sense, the signature string
-    /// is like a SMILES {@cdk.cite WEI88, WEI89} string. It is more verbose, but it
+    /// is like a SMILES <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token> string. It is more verbose, but it
     /// will work for all molecules.
     /// </para>
     ///
     /// <para>
     /// Secondly, the set of signatures for a molecule partition the atoms into
     /// equivalence classes (or 'orbits' - see the <see cref="Orbit"/> class). This is
-    /// similar to partitioning atoms by Morgan number {@cdk.cite MOR65} except that
+    /// similar to partitioning atoms by Morgan number <token>cdk-cite-MOR65</token> except that
     /// it works for 3-regular graphs like fullerenes.
     /// </para>
     ///
@@ -56,28 +56,10 @@ namespace NCDK.Signature
     /// </remarks>
     /// <example>
     /// So, for example, to get the canonical signature for a molecule:
-    ///
-    /// <code>
-    /// IAtomContainer diamantane = MoleculeFactory.MakeBenzene();
-    /// MoleculeSignature moleculeSignature = new MoleculeSignature(diamantane);
-    /// string canonicalSignature = moleculeSignature.ToCanonicalString();
-    /// </code>
-    ///
-    /// to get the orbits of this molecule:
-    ///
-    /// <code>
-    /// List&lt;Orbit&gt; orbits = moleculeSignature.CalculateOrbits();
-    /// </code>
-    ///
-    /// and to get the height-2 signature string of just atom 5:
-    ///
-    /// <code>
-    /// string hSignatureForAtom5 = moleculeSignature.SignatureStringForVertex(5, 2);
-    /// </code>
-    ///
-    /// it is also possible to get AtomSignatures using the signatureForVertex method
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Signature.MoleculeSignature_Example.cs"]/*' />
+    /// it is also possible to get AtomSignatures using the <see cref="SignatureForVertex(int)"/> method
     /// - which is just a convenience method equivalent to calling the constructor of
-    /// an AtomSignature class.
+    /// an <see cref="AtomSignature"/> class.
     /// </example>
     // @cdk.module signature
     // @author maclean
@@ -91,8 +73,8 @@ namespace NCDK.Signature
 
         /// <summary>
         /// Creates a signature that represents this molecule.
-        /// <param name="molecule">the molecule to convert to a signature</param>
         /// </summary>
+        /// <param name="molecule">the molecule to convert to a signature</param>
         public MoleculeSignature(IAtomContainer molecule)
             : base()
         {

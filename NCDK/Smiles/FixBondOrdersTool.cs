@@ -21,16 +21,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-using NCDK.Common.Base;
-using NCDK.Aromaticities;
-using NCDK.AtomTypes;
 using NCDK.Graphs;
-using NCDK.RingSearches;
 using NCDK.Tools;
-using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NCDK.SGroups
 {
@@ -77,7 +71,6 @@ namespace NCDK.SGroups
 
             public Matrix(int rows, int cols)
             {
-
                 //Single array of size rows * cols in matrix
                 mArray = new int[rows * cols];
 
@@ -198,7 +191,6 @@ namespace NCDK.SGroups
             //proper molecule.
             for (int i = 0; i < ringGroups.Count; i++)
             {
-
                 //Set all ring bonds with single order to allow Matrix solving to work
                 SetAllRingBondsSingleOrder(ringGroups[i], ringSet);
 
@@ -267,14 +259,12 @@ namespace NCDK.SGroups
         /// <summary>
         /// Removes rings which do not have all sp2/planar3 aromatic atoms.
         /// and also gets rid of rings that have more than 8 atoms in them.
-        ///
+        /// </summary>
         /// <param name="m">The <see cref="IAtomContainer"/> from which we want to remove rings</param>
         /// <returns>The set of reduced rings</returns>
-        /// </summary>
         private IRingSet RemoveExtraRings(IAtomContainer m)
         {
-
-            IRingSet rs = Cycles.SSSR(m).ToRingSet();
+            IRingSet rs = Cycles.FindSSSR(m).ToRingSet();
 
             //remove rings which dont have all aromatic atoms (according to hybridization set by lower case symbols in smiles):
             var rToRemove = new List<int>();
@@ -305,12 +295,10 @@ namespace NCDK.SGroups
 
         /// <summary>
         /// Stores an <see cref="IRingSet"/> corresponding to a molecule using the bond numbers.
-        ///
+        /// </summary>
         /// <param name="mol">The IAtomContainer for which to store the IRingSet.</param>
         /// <param name="ringSet">The IRingSet to store</param>
         /// <returns>The List of int arrays for the bond numbers of each ringSet</returns>
-        /// </summary>
-
         private IList<int[]> GetRingSystem(IAtomContainer mol, IRingSet ringSet)
         {
             List<int[]> bondsArray;
@@ -389,7 +377,6 @@ namespace NCDK.SGroups
         {
             for (int i = 0; i < ringGroups.Count - 1; i++)
             {
-
                 //Look for another group to combine with it
                 for (int j = i + 1; j < ringGroups.Count; j++)
                 {
@@ -397,7 +384,6 @@ namespace NCDK.SGroups
                     {
                         if (ringGroups[i].Contains(ringGroups[j][k]))
                         {
-
                             //Add all the new elements
                             for (int l = 0; l < ringGroups[j].Count; l++)
                             {
@@ -544,7 +530,6 @@ namespace NCDK.SGroups
                     {
                         //No need to do anything because implicitH already set to 0
                     }
-
                 }
                 else
                 {

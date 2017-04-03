@@ -41,16 +41,7 @@ namespace NCDK.IO.Iterator
     /// for SDF files with MDL formats prior to the V2000 format.
     /// </summary>
     /// <example>
-    /// Example use:
-    /// <code>
-    /// File sdfFile = new File("../zinc-structures/ZINC_subset3_3D_charged_wH_maxmin1000.sdf");
-    /// IteratingMDLReader reader = new IteratingMDLReader(
-    ///   new FileInputStream(sdfFile), Default.ChemObjectBuilder.Instance
-    /// );
-    /// while (reader.HasNext()) {
-    ///   IAtomContainer molecule = (IAtomContainer)reader.Next();
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Iterator.IteratingSDFReader_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="MDLV2000Reader"/>
     /// <seealso cref="MDLV3000Reader"/>
@@ -73,10 +64,10 @@ namespace NCDK.IO.Iterator
         private static readonly string LINE_SEPARATOR = Environment.NewLine;
 
         // patterns to match
-        private static Regex MDL_VERSION = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
+        private static Regex MDL_Version = new Regex("[vV](2000|3000)", RegexOptions.Compiled);
         private static Regex M_END = new Regex("M\\s\\sEND", RegexOptions.Compiled);
-        private static Regex SDF_RECORD_SEPARATOR = new Regex("\\$\\$\\$\\$", RegexOptions.Compiled);
-        private static Regex SDF_FIELD_START = new Regex("\\A>\\s", RegexOptions.Compiled);
+        private static Regex SDF_RecordSeparator = new Regex("\\$\\$\\$\\$", RegexOptions.Compiled);
+        private static Regex SDF_FieldStart = new Regex("\\A>\\s", RegexOptions.Compiled);
 
         // map of MDL formats to their readers
         private readonly IDictionary<IChemFormat, ISimpleChemObjectReader> readerMap = new Dictionary<IChemFormat, ISimpleChemObjectReader>(5);
@@ -91,7 +82,7 @@ namespace NCDK.IO.Iterator
         { }
 
         /// <summary>
-        /// Constructs a new IteratingMDLReader that can read Molecule from a given Stream.
+        /// Constructs a new <see cref="IteratingSDFReader"/> that can read Molecule from a given Stream.
         /// </summary>
         /// <param name="ins">The Stream to read from</param>
         /// <param name="builder">The builder</param>
@@ -149,8 +140,8 @@ namespace NCDK.IO.Iterator
             if (!readerMap.ContainsKey(format))
             {
                 ISimpleChemObjectReader reader = factory.CreateReader(format);
-                reader.ErrorHandler = this.errorHandler;
-                reader.ReaderMode = this.mode;
+                reader.ErrorHandler = this.ErrorHandler;
+                reader.ReaderMode = this.ReaderMode;
                 if (currentFormat is MDLV2000Format)
                 {
                     reader.AddSettings(IOSettings.Settings);
@@ -175,7 +166,7 @@ namespace NCDK.IO.Iterator
                 buffer.Append(currentLine).Append(LINE_SEPARATOR);
 
                 // do MDL molfile version checking
-                var versionMatcher = MDL_VERSION.Match(currentLine);
+                var versionMatcher = MDL_Version.Match(currentLine);
                 if (versionMatcher.Success)
                 {
                     currentFormat = "2000".Equals(versionMatcher.Groups[1].Value) ? (IChemFormat)MDLV2000Format.Instance
@@ -220,7 +211,7 @@ namespace NCDK.IO.Iterator
                     {
                         // null molecule and skip = true, eat up the rest of the entry until '$$$$'
                         string line;
-                        while ((line = input.ReadLine()) != null && !SDF_RECORD_SEPARATOR.IsMatch(line))
+                        while ((line = input.ReadLine()) != null && !SDF_RecordSeparator.IsMatch(line))
                         {
                             buffer.Clear();
                         }
@@ -238,7 +229,7 @@ namespace NCDK.IO.Iterator
                 // in ReadDataBlockInto()) the buffer is cleared and the iterator continues reading
                 if (currentLine == null)
                     break;
-                if (SDF_RECORD_SEPARATOR.IsMatch(currentLine))
+                if (SDF_RecordSeparator.IsMatch(currentLine))
                 {
                     buffer.Clear();
                 }
@@ -249,11 +240,11 @@ namespace NCDK.IO.Iterator
         private void ReadDataBlockInto(IAtomContainer m)
         {
             string fieldName = null;
-            while ((currentLine = input.ReadLine()) != null && !SDF_RECORD_SEPARATOR.IsMatch(currentLine))
+            while ((currentLine = input.ReadLine()) != null && !SDF_RecordSeparator.IsMatch(currentLine))
             {
                 Debug.WriteLine("looking for data header: ", currentLine);
                 string str = currentLine;
-                if (SDF_FIELD_START.IsMatch(str))
+                if (SDF_FieldStart.IsMatch(str))
                 {
                     fieldName = ExtractFieldName(fieldName, str);
                     str = SkipOtherFieldHeaderLines(str);

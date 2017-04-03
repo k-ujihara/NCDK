@@ -59,7 +59,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         }
 
         /// <summary>
-        /// Numbers extracted from {@cdk.cite Wiener1947}.
+        /// Numbers extracted from <token>cdk-cite-Wiener1947</token>.
         /// </summary>
         [TestMethod()]
         public void TestOriginalWienerPaperCompounds()

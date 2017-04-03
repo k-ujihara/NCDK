@@ -17,26 +17,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// <see cref="IDifference"/> between two {@link double?}.
+    /// <see cref="IDifference"/> between two <see cref="double"/>.
     /// </summary>
     // @author     egonw
     // @cdk.module diff
     // @cdk.githash
-    public class DoubleDifference : IDifference {
-
+    public class DoubleDifference : IDifference
+    {
         private const double ERROR = 0.000000001;
 
         private string name;
         private double? first;
         private double? second;
 
-        private DoubleDifference(string name, double? first, double? second) {
+        private DoubleDifference(string name, double? first, double? second)
+        {
             this.name = name;
             this.first = first;
             this.second = second;
@@ -44,20 +43,23 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Constructs a new <see cref="IDifference"/> object.
-        ///
+        /// </summary>
         /// <param name="name">a name reflecting the nature of the created <see cref="IDifference"/></param>
         /// <param name="first">the first object to compare</param>
         /// <param name="second">the second object to compare</param>
         /// <returns>an <see cref="IDifference"/> reflecting the differences between the first and second object</returns>
-        /// </summary>
-        public static IDifference Construct(string name, double? first, double? second) {
-            if (first == null && second == null) {
+        public static IDifference Construct(string name, double? first, double? second)
+        {
+            if (first == null && second == null)
+            {
                 return null; // no difference
             }
-            if (first == null || second == null) {
+            if (first == null || second == null)
+            {
                 return new DoubleDifference(name, first, second);
             }
-            if (Math.Abs(first.Value - second.Value) < ERROR) {
+            if (Math.Abs(first.Value - second.Value) < ERROR)
+            {
                 return null; // no difference
             }
             return new DoubleDifference(name, first, second);
@@ -65,11 +67,10 @@ namespace NCDK.Tools.Diff.Tree
 
         /// <summary>
         /// Returns a <see cref="string"/> representation for this <see cref="IDifference"/>.
-        ///
-        /// <returns>a <see cref="string"/></returns>
         /// </summary>
-
-        public override string ToString() {
+        /// <returns>a <see cref="string"/></returns>
+        public override string ToString()
+        {
             return name + ":" + (first == null ? "NA" : first.ToString()) + "/" + (second == null ? "NA" : second.ToString());
         }
     }

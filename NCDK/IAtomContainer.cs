@@ -26,11 +26,9 @@ namespace NCDK
     /// </summary>
     /// <example>
     /// Looping over all <see cref="IBond"/>s in the <see cref="IAtomContainer"/> is typically done like:
-    /// <code>
-    /// foreach (var bond in atomContainer.Bonds) {
-    ///     // do something
-    /// }
-    /// </code>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IAtomContainer_Example.cs"]/*' />
+    /// </example>
     /// </example>
     // @cdk.module interfaces
     // @cdk.githash

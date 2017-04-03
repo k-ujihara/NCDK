@@ -27,12 +27,13 @@ namespace NCDK.Signature
     /// <summary>
     /// A signature quotient graph has a vertex for every signature symmetry class
     /// and an edge for each bond in the molecule between atoms in their class.
-    ///
+    /// </summary>
+    /// <remarks>
     /// So a structure where all the atoms are in the same symmetry class will have a
     /// quotient graph with one vertex and one loop edge. At the other extreme, a
     /// structure where every atom is in a different class will have a quotient
     /// graph the same as the molecule.
-    /// </summary>
+    /// </remarks>
     // @cdk.module signature
     // @author maclean
     // @cdk.githash

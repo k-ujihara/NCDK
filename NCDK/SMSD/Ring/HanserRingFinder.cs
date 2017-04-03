@@ -52,7 +52,7 @@ namespace NCDK.SMSD.Ring
 {
     /// <summary>
     /// Finds the Set of all Rings. This is an implementation of the algorithm
-    /// published in {@cdk.cite HAN96}. Some of the comments refer to pseudo code
+    /// published in <token>cdk-cite-HAN96</token>. Some of the comments refer to pseudo code
     /// fragments listed in this article. The concept is that a regular molecular
     /// graph is first converted into a path graph (refer PathGraph.java),
     /// i.e. a graph where the edges are actually paths. This can list several

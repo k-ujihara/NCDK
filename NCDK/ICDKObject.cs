@@ -36,15 +36,28 @@ namespace NCDK
         /// <value>The <see cref="IChemObjectBuilder"/> matching this <see cref="ICDKObject"/></value>
         IChemObjectBuilder Builder { get; }
 
+        /// <summary>
+        /// A deep clone of this object.
+        /// </summary>
+        /// <param name="map">A map of the original atoms/bonds to the cloned atoms/bonds.</param>
+        /// <returns>Object the clone of this object.</returns>
         ICDKObject Clone(CDKObjectMap map);
     }
 
+    /// <summary>
+    /// A mapping of the original atoms/bonds to the cloned atoms/bonds.
+    /// </summary>
     public class CDKObjectMap
     {
+        IDictionary<IAtom, IAtom> atomMap;
+        IDictionary<IBond, IBond> bondMap;
+
         public CDKObjectMap()
         { }
 
-        IDictionary<IAtom, IAtom> atomMap;
+        /// <summary>
+        /// A map of <see cref="IAtom"/>s. 
+        /// </summary>
         public IDictionary<IAtom, IAtom> AtomMap
         {
             get
@@ -55,7 +68,9 @@ namespace NCDK
             }
         }
 
-        IDictionary<IBond, IBond> bondMap;
+        /// <summary>
+        /// A map of <see cref="IBond"/>s. 
+        /// </summary>
         public IDictionary<IBond, IBond> BondMap
         {
             get

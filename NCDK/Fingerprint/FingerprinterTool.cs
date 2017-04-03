@@ -44,19 +44,10 @@ namespace NCDK.Fingerprint
         /// substructure of bs1. 
         /// </summary>
         /// <example>
-        /// Example: 
-        /// <code>
-        /// Molecule mol = MoleculeFactory.MakeIndole();
-        /// BitArray bs = Fingerprinter.GetBitFingerprint(mol);
-        /// Molecule frag1 = MoleculeFactory.MakePyrrole();
-        /// BitArray bs1 = Fingerprinter.GetBitFingerprint(frag1);
-        /// if (Fingerprinter.IsSubset(bs, bs1)) {
-        ///     Console.Out.WriteLine("Pyrrole is subset of Indole.");
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.FingerprinterTool_Example.cs+IsSubset"]/*' />
         /// </example>
-        /// <param name="bs1">The reference BitArray</param>
-        /// <param name="bs2">The BitArray which is compared with bs1</param>
+        /// <param name="bs1">The reference <see cref="BitArray"/></param>
+        /// <param name="bs2">The <see cref="BitArray"/> which is compared with bs1</param>
         /// <returns>True, if bs2 is a subset of bs1</returns>
         // @cdk.keyword    substructure search
         public static bool IsSubset(BitArray bs1, BitArray bs2)
@@ -72,7 +63,7 @@ namespace NCDK.Fingerprint
 
         /// <summary>
         /// This lists all bits set in bs2 and not in bs2 (other way round not considered) in a list and to logger.
-        /// See. {@link #Differences(java.util.BitArray, java.util.BitArray)} for a method to list all differences,
+        /// See. <see cref="Differences(BitArray, BitArray)"/> for a method to list all differences,
         /// including those missing present in bs2 but not bs1.
         /// </summary>
         /// <param name="bs1">First bitset</param>

@@ -29,185 +29,29 @@ namespace NCDK.Reactions.Types
     /// deficiency of charge of the atom A, the double bond is desplaced.</para>
     /// <para>Make sure that the molecule has the corresponend lone pair electrons
     /// for each atom. You can use the method: <see cref="Tools.LonePairElectronChecker"/></para>
-    /// <para>It is processed by the RearrangementChargeMechanism class</para>
     /// </summary>
-    /// <example>
-    /// <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new RearrangementCationReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    /// </example>
-    /// <remarks>
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not localized then the reaction process will
-    /// try to find automatically the posible reactive center.</para>
-    /// </remarks>
     /// <seealso cref="Mechanisms.RearrangementChargeMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    public class RearrangementCationReaction : ReactionEngine, IReactionProcess
+    public partial class RearrangementCationReaction : AbstractRearrangementReaction
     {
-        /// <summary>
-        /// Constructor of the RearrangementCharge2Reaction object
-        /// </summary>
         public RearrangementCationReaction() { }
 
-        /// <summary>
-        ///  Gets the specification attribute of the RearrangementCationReaction object
-        /// </summary>
-        /// <returns>The specification value</returns>
-        public ReactionSpecification Specification =>
+        /// <inheritdoc/>
+        public override ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#RearrangementCation", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /// <summary>
-        ///  Initiate process.
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
-        ///  from the class tools.HydrogenAdder.
-        /// </summary>
-        /// <exception cref="CDKException"> Description of the Exception</exception>
-        /// <param name="reactants">reactants of the reaction.</param>
-        /// <param name="agents">agents of the reaction (Must be in this case null).</param>
-        public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        /// <inheritdoc/>
+        public override IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: RearrangementCationReaction");
-
-            if (reactants.Count != 1)
-            {
-                throw new CDKException("RearrangementCationReaction only expects one reactant");
-            }
-            if (agents != null)
-            {
-                throw new CDKException("RearrangementCationReaction don't expects agents");
-            }
-
-            IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
-            IAtomContainer reactant = reactants[0];
-
-            // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
-            if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
-
-            foreach (var atomi in reactant.Atoms)
-            {
-                if (atomi.IsReactiveCenter && atomi.FormalCharge == 1)
-                {
-
-                    foreach (var bondi in reactant.GetConnectedBonds(atomi))
-                    {
-                        if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Single)
-                        {
-
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
-                            if (atomj.IsReactiveCenter
-                                    && (atomj.FormalCharge ?? 0) == 0
-                                    && !reactant.GetConnectedSingleElectrons(atomj).Any())
-                            {
-                                foreach (var bondj in reactant.GetConnectedBonds(atomj))
-                                {
-                                    if (bondj.Equals(bondi)) continue;
-
-                                    if (bondj.IsReactiveCenter
-                                            && bondj.Order == BondOrder.Double)
-                                    {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
-                                        if (atomk.IsReactiveCenter
-                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && (atomk.FormalCharge ?? 0) == 0)
-                                        {
-
-                                            var atomList = new List<IAtom>();
-                                            atomList.Add(atomi);
-                                            atomList.Add(atomj);
-                                            atomList.Add(atomk);
-                                            var bondList = new List<IBond>();
-                                            bondList.Add(bondi);
-                                            bondList.Add(bondj);
-
-                                            IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet<IAtomContainer>();
-
-                                            moleculeSet.Add(reactant);
-                                            IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
-                                            if (reaction == null)
-                                                continue;
-                                            else
-                                                setOfReactions.Add(reaction);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            return setOfReactions;
-
-        }
-
-        /// <summary>
-        /// set the active center for this molecule.
-        /// The active center will be those which correspond with [A+]-B=C.
-        /// <code>
-        /// A: Atom with positive charge
-        /// -: Single bond
-        /// B: Atom
-        /// =: Double bond
-        /// C: Atom
-        ///  </code>
-        /// </summary>
-        /// <param name="reactant">The molecule to set the activity</param>
-        private void SetActiveCenters(IAtomContainer reactant)
-        {
-            foreach (var atomi in reactant.Atoms)
-            {
-                if (atomi.FormalCharge == 1)
-                {
-
-                    foreach (var bondi in reactant.GetConnectedBonds(atomi))
-                    {
-                        if (bondi.Order == BondOrder.Single)
-                        {
-
-                            IAtom atomj = bondi.GetConnectedAtom(atomi);
-                            if ((atomj.FormalCharge ?? 0) == 0
-                                    && !reactant.GetConnectedSingleElectrons(atomj).Any())
-                            {
-
-                                foreach (var bondj in reactant.GetConnectedBonds(atomj))
-                                {
-                                    if (bondj.Equals(bondi)) continue;
-
-                                    if (bondj.Order == BondOrder.Double)
-                                    {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
-                                        if (!reactant.GetConnectedSingleElectrons(atomk).Any()
-                                                && (atomk.FormalCharge ?? 0) == 0)
-                                        {
-
-                                            atomi.IsReactiveCenter = true;
-                                            atomj.IsReactiveCenter = true;
-                                            atomk.IsReactiveCenter = true;
-                                            bondi.IsReactiveCenter = true;
-                                            bondj.IsReactiveCenter = true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            return base.Initiate(reactants, agents,
+                (mol, atom) => atom.FormalCharge == 1,
+                atom => (atom.FormalCharge ?? 0) == 0);
         }
     }
 }

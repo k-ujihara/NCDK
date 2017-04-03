@@ -60,7 +60,7 @@ namespace NCDK.IO
         {
             input = ins;
             InitIOSettings();
-            base.mode = mode;
+            base.ReaderMode = mode;
             /* compile patterns */
             keyValueTuple = new Regex("\\s*(\\w+)=([^\\s]*)(.*)", RegexOptions.Compiled); // e.g. CHG=-1
             keyValueTuple2 = new Regex("\\s*(\\w+)=\\(([^\\)]*)\\)(.*)", RegexOptions.Compiled); // e.g. ATOMS=(1 31)
@@ -284,7 +284,7 @@ namespace NCDK.IO
                     }
                     else
                     {
-                        if (mode == ChemObjectReaderModes.Strict)
+                        if (ReaderMode == ChemObjectReaderModes.Strict)
                         {
                             throw new CDKException(
                                     "Invalid element type. Must be an existing element, or one in: A, Q, L, LP, *.");
@@ -619,7 +619,7 @@ namespace NCDK.IO
                                 }
                                 ((IPseudoAtom)replacement).Label = label;
                                 if (replacement != original)
-                                    AtomContainerManipulator.RePlaceAtomByAtom(readData, original, replacement);
+                                    AtomContainerManipulator.ReplaceAtomByAtom(readData, original, replacement);
                             }
                         }
                     }

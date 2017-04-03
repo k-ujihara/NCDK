@@ -67,7 +67,7 @@ namespace NCDK.FaulonSignatures
         }
 
         /// <summary>
-        /// If the vertex indexed by <code>vertexIndex</code> is in the symmetry 
+        /// If the vertex indexed by <paramref name="vertexIndex"/> is in the symmetry 
         /// class then return the smaller of it and the lowest element. If it is not
         /// in the symmetry class, return -1.
         /// </summary>

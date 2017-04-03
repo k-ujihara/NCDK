@@ -27,47 +27,24 @@ namespace NCDK.Groups
     /// <summary>
     /// A tool for determining the automorphism group of the atoms in a molecule, or
     /// for checking for a canonical form of a molecule.
-    ///
+    /// </summary>
+    /// <remarks>
     /// If two bonds are equivalent under an automorphism in the group, then
     /// roughly speaking they are in symmetric positions in the molecule. For
     /// example, the C-C bonds attaching two methyl groups to a benzene ring
     /// are 'equivalent' in this sense.
-    /// </summary>
+    /// </remarks>
     /// <example>
     /// There are a couple of ways to use it - firstly, get the automorphisms.
-    ///
-    /// <code>
-    ///     IAtomContainer ac = ... // get an atom container somehow
-    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-    ///     PermutationGroup autG = refiner.GetAutomorphismGroup(ac);
-    ///     foreach (var automorphism in autG.All()) {
-    ///         ... // do something with the permutation
-    ///     }
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.BondDiscretePartitionRefiner_Example.cs+1"]/*' />
     /// Another is to check an atom container to see if it is canonical:
-    ///
-    /// <code>
-    ///     IAtomContainer ac = ... // get an atom container somehow
-    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-    ///     if (refiner.IsCanonical(ac)) {
-    ///         ... // do something with the atom container
-    ///     }
-    /// </code>
-    /// 
-    /// Note that it is not necessary to call {@link #Refine(IAtomContainer)} before
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.BondDiscretePartitionRefiner_Example.cs+2"]/*' />
+    /// Note that it is not necessary to call <see cref="Refine(IAtomContainer)"/> before
     /// either of these methods. However if both the group and the canonical check
     /// are required, then the code should be:
-    ///
-    /// <code>
-    ///     BondDiscretePartitionRefiner refiner = new BondDiscretePartitionRefiner();
-    ///     refiner.Refine(ac);
-    ///     bool isCanon = refiner.IsCanonical();
-    ///     PermutationGroup autG = refiner.GetAutomorphismGroup();
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Groups.BondDiscretePartitionRefiner_Example.cs+3"]/*' />
     /// This way, the refinement is not carried out multiple times. Finally, remember
-    /// to call <see cref="Reset"/> if the refiner is re-used on multiple structures.
+    /// to call <see cref="Reset()"/> if the refiner is re-used on multiple structures.
     /// </example>
     // @author maclean
     // @cdk.module group
@@ -122,7 +99,7 @@ namespace NCDK.Groups
 
         /// <summary>
         /// Used by the equitable refiner to get the indices of bonds connected to
-        /// the bond at <code>bondIndex</code>.
+        /// the bond at <paramref name="bondIndex"/>.
         /// </summary>
         /// <param name="bondIndex">the index of the incident bond</param>
         /// <returns>an array of bond indices</returns>
@@ -208,11 +185,12 @@ namespace NCDK.Groups
         /// <summary>
         /// Refine an atom container, which has the side effect of calculating
         /// the automorphism group.
-        ///
+        /// </summary>
+        /// <remarks>
         /// If the group is needed afterwards, call <see cref="AbstractDiscretePartitionRefiner.GetAutomorphismGroup"/>
         /// instead of <see cref="GetAutomorphismGroup(IAtomContainer)"/> otherwise the
         /// refine method will be called twice.
-        /// </summary>
+        /// </remarks>
         /// <param name="atomContainer">the atomContainer to refine</param>
         public void Refine(IAtomContainer atomContainer)
         {

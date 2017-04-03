@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html">here</a>.
+    /// See <see href="http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html">here</see>.
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

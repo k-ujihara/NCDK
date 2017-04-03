@@ -29,7 +29,7 @@ namespace NCDK.IO
     /// <summary>
     /// A reader for Gaussian03 output.
     /// Gaussian 03 is a quantum chemistry program
-    /// by Gaussian, Inc. (<a href="http://www.gaussian.com/">http://www.gaussian.com/</a>).
+    /// by Gaussian, Inc. (<see href="http://www.gaussian.com/">http://www.gaussian.com/</see>).
     /// <para>
     /// Molecular coordinates, energies, and normal coordinates of
     /// vibrations are read. Each set of coordinates is added to the

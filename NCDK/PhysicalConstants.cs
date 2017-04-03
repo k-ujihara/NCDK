@@ -23,7 +23,7 @@ namespace NCDK
      /// </summary>
      // @cdk.keyword physical properties
      // @cdk.githash
-    public class PhysicalConstants
+    public static class PhysicalConstants
     {
         /// <summary>
         /// Mass of a proton.

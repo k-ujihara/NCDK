@@ -46,7 +46,7 @@ namespace NCDK.Layout
     public class AtomPlacer
     {
         public const bool debug = true;
-        public const string PRIORITY = "Weight";
+        public const string Priority = "Weight";
 
         /// <summary>
         ///  Constructor for the AtomPlacer object
@@ -286,13 +286,13 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Places the atoms in a linear chain.
-        ///
-        /// <para>Expects the first atom to be placed and
+        /// </summary>
+        /// <remarks>
+        /// Expects the first atom to be placed and
         /// places the next atom according to initialBondVector. The rest of the chain
         /// is placed such that it is as linear as possible (in the overall result, the
         /// angles in the chain are set to 120 Deg.)
-        /// </para>
-        /// </summary>
+        /// </remarks>
         /// <param name="atomContainer">The IAtomContainer containing the chain atom to be placed</param>
         /// <param name="initialBondVector">The Vector indicating the direction of the first bond</param>
         /// <param name="bondLength">The factor used to scale the initialBondVector</param>
@@ -731,10 +731,9 @@ namespace NCDK.Layout
 
         /// <summary>
         ///  True is all the atoms in the given AtomContainer have been placed
-        ///
+        /// </summary>
         /// <param name="ac">The AtomContainer to be searched</param>
         /// <returns>True is all the atoms in the given AtomContainer have been placed</returns>
-        /// </summary>
         static public bool AllPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -762,9 +761,8 @@ namespace NCDK.Layout
 
         /// <summary>
         ///  Marks all the atoms in the given AtomContainer as placed
-        ///
-        /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
         /// </summary>
+        /// <param name="ac">The AtomContainer whose atoms are to be marked</param>
         static public void MarkPlaced(IAtomContainer ac)
         {
             for (int f = 0; f < ac.Atoms.Count; f++)
@@ -816,7 +814,7 @@ namespace NCDK.Layout
         /// Calculates priority for atoms in a Molecule.
         /// </summary>
         /// <param name="mol">connected molecule</param>
-        /// <seealso cref="PRIORITY"/>
+        /// <seealso cref="Priority"/>
         internal static void Prioritise(IAtomContainer mol)
         {
             Prioritise(mol, GraphUtil.ToAdjList(mol));
@@ -827,13 +825,13 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="mol">connected molecule</param>
         /// <param name="adjList">fast adjacency lookup</param>
-        /// <seealso cref="PRIORITY"/>
+        /// <seealso cref="Priority"/>
         static void Prioritise(IAtomContainer mol, int[][] adjList)
         {
             int[] weights = GetPriority(mol, adjList);
             for (int i = 0; i < mol.Atoms.Count; i++)
             {
-                mol.Atoms[i].SetProperty(PRIORITY, weights[i]);
+                mol.Atoms[i].SetProperty(Priority, weights[i]);
             }
         }
 
@@ -897,10 +895,12 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// <pre>
         /// -C#N
         /// -[N+]#[C-]
         /// -C=[N+]=N
         /// -N=[N+]=N
+        /// </pre>
         /// </summary>
         bool IsColinear(IAtom atom, IEnumerable<IBond> bonds)
         {

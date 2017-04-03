@@ -23,7 +23,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// This Class contains a method that returns the number failures of the
     /// Lipinski's Rule Of 5.
-    /// See <a href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</a>.
+    /// See <see href="http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five">http://en.wikipedia.org/wiki/Lipinski%27s_Rule_of_Five</see>.
     /// </summary>
     /// <remarks>
     /// <para>This descriptor uses these parameters:

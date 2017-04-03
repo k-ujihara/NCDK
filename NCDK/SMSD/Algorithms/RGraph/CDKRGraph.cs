@@ -44,10 +44,10 @@ namespace NCDK.SMSD.Algorithms.RGraph
     /// </summary>
     /// <remarks>
     /// <para>Example:
-    /// <code>
+    /// <pre>
     ///    G1 : C-C=O  and G2 : C-C-C=0
     ///         1 2 3           1 2 3 4
-    /// </code>
+    /// </pre>
     /// </para>
     /// <para>The resulting CDKRGraph(G1,G2) will contain 3 nodes:
     /// <list type="bullet">
@@ -78,15 +78,16 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///  both model is performed by the RTools class. In this way the CDKRGraph
     ///  class may be reused in other graph context (conceptual graphs,....)
     /// </para>
-    ///  <para><bitSet>Important note</bitSet>: This implementation of the algorithm has not been
+    /// <note type="important">
+    /// This implementation of the algorithm has not been
     ///                      optimized for speed at this stage. It has been
     ///                      written with the goal to clearly retrace the
     ///                      principle of the underlined search method. There is
     ///                      room for optimization in many ways including the
     ///                      the algorithm itself.
-    /// </para>
+    /// </note>
     ///  <para>This algorithm derives from the algorithm described in
-    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.</para>
+    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.</para>
     /// </remarks>
     // @author      Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ac.uk> (modified the orignal code)
     // @cdk.created 2002-07-17
@@ -159,15 +160,14 @@ namespace NCDK.SMSD.Algorithms.RGraph
         ///  of starting nodes (targetBitSet) and parses recursively the
         ///  CDKRGraph to find a list of solution according to
         ///  these parameters.
-        ///
+        /// </summary>
         /// <param name="sourceBitSet">constrain on the graph G1</param>
         /// <param name="targetBitSet">constrain on the graph G2</param>
         /// <param name="findAllStructure">true if we want all results to be generated</param>
         /// <param name="findAllMap">true is we want all possible 'mappings'</param>
-        /// <param name="timeManager">/// @throws CDKException</param>
-        /// </summary>
-        public void Parse(BitArray sourceBitSet, BitArray targetBitSet, bool findAllStructure, bool findAllMap,
-                TimeManager timeManager)
+        /// <param name="timeManager"></param>
+        /// <exception cref="CDKException"></exception>
+        public void Parse(BitArray sourceBitSet, BitArray targetBitSet, bool findAllStructure, bool findAllMap, TimeManager timeManager)
         {
             // initialize the list of solution
             CheckTimeOut();

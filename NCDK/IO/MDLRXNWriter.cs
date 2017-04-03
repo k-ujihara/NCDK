@@ -36,14 +36,10 @@ namespace NCDK.IO
     /// coefficients have to be natural numbers.
     /// </summary>
     /// <example>
-    /// <code>
-    /// MDLRXNWriter writer = new MDLRXNWriter(new FileWriter(new File("output.mol")));
-    /// writer.Write((Molecule)molecule);
-    /// writer.Close();
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.MDLRXNWriter_Example.cs"]/*' />
     /// </example>
     /// <remarks>
-    /// See {@cdk.cite DAL92}.
+    /// See <token>cdk-cite-DAL92</token>.
     /// </remarks>
     // @cdk.module io
     // @cdk.githash
@@ -94,11 +90,11 @@ namespace NCDK.IO
         /// <summary>
         /// Here you can set a map which will be used to build rd fields in the file.
         /// The entries will be translated to rd fields like this:
-        /// <code>
+        /// <pre>
         /// &gt; &lt;key&gt;
         /// &gt; value
         /// empty line
-        /// </code>
+        /// </pre>
         /// </summary>
         /// <param name="map">The map to be used, map of string-string pairs</param>
         public void SetRdFields(IDictionary<string, object> map)

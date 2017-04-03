@@ -61,7 +61,7 @@ namespace NCDK.IO
     /// </para>
     /// <para>The title of the MOL file is read and can be retrieved with:
     /// <code>
-    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.TITLE);
+    ///   molecule.GetProperty&lt;string&gt;(CDKPropertyName.Title);
     /// </code>
     /// </para>
     /// <para>RGroups which are saved in the MDL molfile as R#, are renamed according to
@@ -129,7 +129,7 @@ namespace NCDK.IO
         {
             this.input = input;
             InitIOSettings();
-            base.mode = mode;
+            base.ReaderMode = mode;
         }
 
         public override IResourceFormat Format
@@ -594,7 +594,7 @@ namespace NCDK.IO
                         newAtom.Symbol = "H";
                         newAtom.AtomicNumber = 1;
                         isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 2));
-                        AtomContainerManipulator.RePlaceAtomByAtom(molecule, atom, newAtom);
+                        AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
                     }
                     else if ("T".Equals(pseudo.Label))
                     {
@@ -602,7 +602,7 @@ namespace NCDK.IO
                         newAtom.Symbol = "H";
                         newAtom.AtomicNumber = 1;
                         isotopeFactory.Configure(newAtom, isotopeFactory.GetIsotope("H", 3));
-                        AtomContainerManipulator.RePlaceAtomByAtom(molecule, atom, newAtom);
+                        AtomContainerManipulator.ReplaceAtomByAtom(molecule, atom, newAtom);
                     }
                 }
             }
@@ -655,8 +655,8 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Parse an atom line from the atom block using the format: {@code
-        /// xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee}
+        /// Parse an atom line from the atom block using the format: 
+        /// <pre>xxxxx.xxxxyyyyy.yyyyzzzzz.zzzz aaaddcccssshhhbbbvvvHHHrrriiimmmnnneee</pre>
         /// where: <list type="bullet"> <item>x: x coordinate</item> <item>y: y coordinate</item> <item>z: z
         /// coordinate</item> <item>a: atom symbol</item> <item>d: mass difference</item>
         /// <item>c: charge</item> <item>s: stereo parity</item> <item>h: hydrogen count + 1
@@ -751,7 +751,7 @@ namespace NCDK.IO
 
         /// <summary>
         /// Read a bond from a line in the MDL bond block. The bond block is
-        /// formatted as follows, {@code 111222tttsssxxxrrrccc}, where:
+        /// formatted as follows, <pre>111222tttsssxxxrrrccc</pre>, where:
         /// <list type="bullet">
         ///     <item>111: first atom number</item>
         ///     <item>222: second atom number</item>
@@ -845,7 +845,7 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// Reads the property block from the {@code input} setting the values in the
+        /// Reads the property block from the <paramref name="input"/> setting the values in the
         /// container.
         /// </summary>
         /// <param name="input">input resource</param>
@@ -1008,7 +1008,7 @@ namespace NCDK.IO
                     // labelling the structure as you wish. If unique labels are required, downstream processing will be
                     // necessary to enforce this.
                     //
-                    if (mode == ChemObjectReaderModes.Strict)
+                    if (ReaderMode == ChemObjectReaderModes.Strict)
                     {
                         throw new CDKException("Atom property ZZC is illegal in Strict mode");
                     }
@@ -1038,14 +1038,14 @@ namespace NCDK.IO
                         lnOffset = 10 + (i * 8);
                         index = ReadMolfileInt(line, lnOffset);
 
-                        if (mode == ChemObjectReaderModes.Strict && sgroups.ContainsKey(index))
+                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroups.ContainsKey(index))
                             HandleError("STY line must appear before any other line that supplies Sgroup information");
 
                         sgroup = new Sgroup();
                         sgroups[index] = sgroup;
 
                         SgroupType type = SgroupType.ParseCtabKey(Strings.Substring(line, lnOffset + 4, 3));
-                        if (type != null)
+                        if (type != SgroupType.Nil)
                             sgroup.Type = type;
                     }
                 }
@@ -1059,12 +1059,12 @@ namespace NCDK.IO
                     {
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
-                        if (mode == ChemObjectReaderModes.Strict && sgroup.Type != SgroupType.CtabCopolymer)
+                        if (ReaderMode == ChemObjectReaderModes.Strict && sgroup.Type != SgroupType.CtabCopolymer)
                             HandleError("SST (Sgroup Subtype) specified for a non co-polymer group");
 
                         string sst = Strings.Substring(line, st + 4, 3);
 
-                        if (mode == ChemObjectReaderModes.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
+                        if (ReaderMode == ChemObjectReaderModes.Strict && !("ALT".Equals(sst) || "RAN".Equals(sst) || "BLO".Equals(sst)))
                             HandleError("Invalid sgroup subtype: " + sst + " expected (ALT, RAN, or BLO)");
 
                         sgroup.PutValue(SgroupKey.CtabSubType, sst);
@@ -1124,7 +1124,7 @@ namespace NCDK.IO
                         sgroup = EnsureSgroup(sgroups,
                                               ReadMolfileInt(line, st));
                         string con = Strings.Substring(line, st + 4, 3).Trim();
-                        if (mode == ChemObjectReaderModes.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
+                        if (ReaderMode == ChemObjectReaderModes.Strict && !("HH".Equals(con) || "HT".Equals(con) || "EU".Equals(con)))
                             HandleError("Unknown SCN type (expected: HH, HT, or EU) was " + con);
                         sgroup.PutValue(SgroupKey.CtabConnectivity,
                                         con);
@@ -1187,7 +1187,7 @@ namespace NCDK.IO
                             sgroup.PutValue(SgroupKey.CtabExpansion, true);
                         }
                     }
-                    else if (mode == ChemObjectReaderModes.Strict)
+                    else if (ReaderMode == ChemObjectReaderModes.Strict)
                     {
                         HandleError("Expected EXP to follow SDS tag");
                     }
@@ -1271,7 +1271,7 @@ namespace NCDK.IO
             Sgroup sgroup;
             if (!map.TryGetValue(idx, out sgroup))
             {
-                if (mode == ChemObjectReaderModes.Strict)
+                if (ReaderMode == ChemObjectReaderModes.Strict)
                     HandleError("Sgroups must first be defined by a STY property");
                 map[idx] = (sgroup = new Sgroup());
             }
@@ -1294,23 +1294,23 @@ namespace NCDK.IO
                 case 0:
                     return type == 2 ? BondStereo.EZByCoordinates : BondStereo.None;
                 case 1:
-                    if (mode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
                         throw new CDKException("stereo flag was 'up' but bond order was 2");
                     return BondStereo.Up;
                 case 3:
-                    if (mode == ChemObjectReaderModes.Strict && type == 1)
+                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 1)
                         throw new CDKException("stereo flag was 'cis/trans' but bond order was 1");
                     return BondStereo.EOrZ;
                 case 4:
-                    if (mode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
                         throw new CDKException("stereo flag was 'up/down' but bond order was 2");
                     return BondStereo.UpOrDown;
                 case 6:
-                    if (mode == ChemObjectReaderModes.Strict && type == 2)
+                    if (ReaderMode == ChemObjectReaderModes.Strict && type == 2)
                         throw new CDKException("stereo flag was 'down' but bond order was 2");
                     return BondStereo.Down;
             }
-            if (mode == ChemObjectReaderModes.Strict) throw new CDKException("unknown bond stereo type: " + stereo);
+            if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("unknown bond stereo type: " + stereo);
             return BondStereo.None;
         }
 
@@ -1348,7 +1348,7 @@ namespace NCDK.IO
             {
                 HandleError("invalid symbol: " + symbol, lineNum, 31, 34);
                 // when strict only accept labels from the specification
-                if (mode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
+                if (ReaderMode == ChemObjectReaderModes.Strict) throw new CDKException("invalid symbol: " + symbol);
             }
 
             // will be renumbered later by RGP if R1, R2 etc. if not renumbered then
@@ -1597,7 +1597,7 @@ namespace NCDK.IO
                 pseudoAtom.Valency = atom.Valency;
                 pseudoAtom.Label = label;
                 // XXX: would be faster to track all replacements and do it all in one
-                AtomContainerManipulator.RePlaceAtomByAtom(container, atom, pseudoAtom);
+                AtomContainerManipulator.ReplaceAtomByAtom(container, atom, pseudoAtom);
             }
         }
 
@@ -2033,7 +2033,7 @@ namespace NCDK.IO
                     IAtom newPseudoAtom = container.Builder.CreatePseudoAtom(alias);
                     if (aliasAtom.Point2D != null) newPseudoAtom.Point2D = aliasAtom.Point2D;
                     if (aliasAtom.Point3D != null) newPseudoAtom.Point3D = aliasAtom.Point3D;
-                    AtomContainerManipulator.RePlaceAtomByAtom(container, aliasAtom, newPseudoAtom);
+                    AtomContainerManipulator.ReplaceAtomByAtom(container, aliasAtom, newPseudoAtom);
                 }
                 else if (line.StartsWith("M  ISO"))
                 {
@@ -2131,7 +2131,7 @@ namespace NCDK.IO
                         {
                             pseudoAtom.Point3D = prevAtom.Point3D;
                         }
-                        AtomContainerManipulator.RePlaceAtomByAtom(container, prevAtom, pseudoAtom);
+                        AtomContainerManipulator.ReplaceAtomByAtom(container, prevAtom, pseudoAtom);
                     }
                     catch (FormatException exception)
                     {

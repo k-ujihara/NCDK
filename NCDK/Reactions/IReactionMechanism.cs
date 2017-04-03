@@ -32,7 +32,8 @@ namespace NCDK.Reactions
         /// Initiates the process for the given mechanism. The atoms to apply are mapped between
         /// reactants and products.
         /// </summary>
-        /// <param name="atomContainerSet">/// <param name="atomList">The list of atoms taking part in the mechanism</param></param>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism</param>
         /// <param name="bondList">The list of bonds taking part in the mechanism</param>
         /// <returns>The Reaction mechanism</returns>
         /// <exception cref="CDKException">if an error occurs during the reaction process. See documentation for individual reaction processes</exception>

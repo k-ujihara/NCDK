@@ -23,12 +23,10 @@ namespace NCDK.Charges
 {
     /// <summary>
     ///  TestSuite that runs a test for the MMFF94PartialCharges.
-    ///
-    // @cdk.module test-forcefield
-    ///
-    ///@author        cubic
-    ///@cdk.created       2004-11-04
     /// </summary>
+    // @cdk.module test-forcefield
+    // @author        cubic
+    // @cdk.created       2004-11-04
     [TestClass()]
     public class MMFF94PartialChargesTest : CDKTestCase
     {

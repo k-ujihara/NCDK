@@ -34,8 +34,8 @@ namespace NCDK.Graphs
     /// <summary>
     /// Compute the set of initial cycles (<i>C'<sub>I</sub></i>) in a graph. The
     /// super-set contains the minimum cycle basis (<i>C<sub>B</sub></i>) and the
-    /// relevant cycles (<i>C<sub>R</sub></i>) of the provided graph {@cdk.cite
-    /// Vismara97}. This class is intend for internal use by other cycle processing
+    /// relevant cycles (<i>C<sub>R</sub></i>) of the provided graph <token>cdk-cite-Vismara97</token>.
+    /// This class is intend for internal use by other cycle processing
     /// algorithms.
     /// </summary>
     /// <seealso cref="RelevantCycles"/>
@@ -60,8 +60,8 @@ namespace NCDK.Graphs
         /// by counting how many of each degree there is then putting values in place
         /// directly. This is known as key-value counting and is used in radix
         /// sorts.
-        /// <a href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix Sort</a>
         /// </summary>
+        /// <seealso href="https://en.wikipedia.org/wiki/Radix_sort#Least_significant_digit_radix_sorts">Radix Sort</seealso>
         private const int DEFAULT_DEGREE = 4;
 
         /// <summary>Number of vertices which have degree 2.</summary>
@@ -233,7 +233,7 @@ namespace NCDK.Graphs
 
         /// <summary>
         /// Compute the initial cycles. The code corresponds to algorithm 1 from
-        /// {@cdk.cite Vismara97}, where possible the variable names have been kept
+        /// <token>cdk-cite-Vismara97</token>, where possible the variable names have been kept
         /// the same.
         /// </summary>
         private void Compute()
@@ -373,7 +373,7 @@ namespace NCDK.Graphs
         /// Compute the vertex ordering (π). The ordering is based on the vertex
         /// degree and <![CDATA[π(x) < π(y) => Deg(x) ≤ Deg(y)]]>. The ordering
         /// guarantees the number of elements in <i>C<sub>I</sub></i> is 
-        /// <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of {@cdk.cite Vismara97}.
+        /// <i>2m<sup>2</sup> + vn</i>. See Lemma 3 of <token>cdk-cite-Vismara97</token>.
         /// </summary>
         /// <returns>the order of each vertex</returns>
         private int[] GetOrdering(int[][] graph)

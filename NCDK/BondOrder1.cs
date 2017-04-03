@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+
 
 
 namespace NCDK
@@ -6,8 +9,12 @@ namespace NCDK
     /// <summary>
     /// A list of permissible bond orders.
     /// </summary>
-    public struct BondOrder : System.IComparable
+    public partial struct BondOrder : System.IComparable<BondOrder>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="BondOrder"/>.
+		/// </summary>
+		/// <seealso cref="BondOrder"/>
         public static class O
         {
             public const int Unset = 0;
@@ -21,8 +28,13 @@ namespace NCDK
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -110,6 +122,7 @@ namespace NCDK
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -118,16 +131,27 @@ namespace NCDK
             return this.Ordinal == ((BondOrder)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (BondOrder)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(BondOrder o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct BondOrder 
+	{
         /// <summary>
         /// A numeric value for the number of bonded electron pairs.
         /// </summary>

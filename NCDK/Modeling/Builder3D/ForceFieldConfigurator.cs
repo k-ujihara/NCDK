@@ -244,7 +244,7 @@ namespace NCDK.Modeling.Builder3D
             string hoseCode = "";
             HOSECodeGenerator hcg = new HOSECodeGenerator();
             int NumberOfRingAtoms = 0;
-            IRingSet ringSetMolecule = Cycles.SSSR(molecule).ToRingSet();
+            IRingSet ringSetMolecule = Cycles.FindSSSR(molecule).ToRingSet();
             bool isInHeteroRing = false;
             try
             {

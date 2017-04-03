@@ -86,13 +86,11 @@ namespace NCDK.IO.InChI
         /// <summary>
         /// Processes the content from the connections field of the INChI.
         /// Typical values look like 1-2-4-6-5-3-1, from INChI=1.12Beta/C6H6/c1-2-4-6-5-3-1/h1-6H.
-        ///
+        /// </summary>
         /// <param name="bondsEncoding">the content of the INChI connections field</param>
         /// <param name="container">the atomContainer parsed from the formula field</param>
         /// <param name="source">the atom to build the path upon. If -1, then start new path</param>
-        ///
-        /// @see   #processFormula
-        /// </summary>
+        /// <seealso cref="ProcessFormula(IAtomContainer, string)"/> 
         public void ProcessConnections(string bondsEncoding, IAtomContainer container, int source)
         {
             Debug.WriteLine("Parsing bond data: ", bondsEncoding);

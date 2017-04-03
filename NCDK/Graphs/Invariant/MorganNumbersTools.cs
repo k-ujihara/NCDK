@@ -25,7 +25,7 @@ using System;
 namespace NCDK.Graphs.Canon
 {
     /// <summary>
-    /// Compute the extended connectivity values (Morgan Numbers) {@cdk.cite MOR65}.
+    /// Compute the extended connectivity values (Morgan Numbers) <token>cdk-cite-MOR65</token>.
     /// The tool does not produce the lexicographic smallest labelling on the graph
     /// and should not be used as a robust canonical labelling tool. To canonical
     /// label a graph please use <see cref="InChINumbersTools"/> or <see cref="CanonicalLabeler"/>.
@@ -41,7 +41,7 @@ namespace NCDK.Graphs.Canon
     // @cdk.githash
     // @cdk.created 2003-06-30
     // @cdk.keyword Morgan number
-    public class MorganNumbersTools
+    public static class MorganNumbersTools
     {
         /// <summary>Default size of adjacency lists.</summary>
         private const int InitialDegree = 4;

@@ -20,35 +20,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using static NCDK.SGroups.CxSmilesState;
 
 namespace NCDK.SGroups
 {
     /// <summary>
-    /// Parse CXSMILES (ChemAxon Extended SMILES) layers. The layers are suffixed after the SMILES but before the title
+    /// Parse CXSMILES (ChemAxon Extended SMILES) layers. 
+    /// </summary>
+    /// <remarks>
+    /// The layers are suffixed after the SMILES but before the title
     /// and encode a large number of the features. CXSMILES was not intended for outside consumption so has some quirks
     /// but does provide some useful features. This parser handles a subset of the grammar:
-    /// <para>
-    /// <code>
-    /// - Atom Labels
-    /// - Atom Values
-    /// - Atom Coordinates
-    /// - Positional Variations
-    /// - Polymer Sgroups
-    /// - Atom Radicals
-    /// - Fragment grouping
-    /// </code>
+    /// <list type="bullet">
+    /// <item>Atom Labels</item>
+    /// <item>Atom Values</item>
+    /// <item>Atom Coordinates</item>
+    /// <item>Positional Variations</item>
+    /// <item>Polymer Sgroups</item>
+    /// <item>Atom Radicals</item>
+    /// <item>Fragment grouping</item>
+    /// </list> 
     /// The following properties are ignored
-    /// <code>
-    /// - cis/trans specification
-    /// - relative stereochemistry
-    /// </code>
-    /// </para>
-    /// </summary>
+    /// <list type="bullet">
+    /// <item>cis/trans specification</item>
+    /// <item>relative stereochemistry</item>
+    /// </list> 
+    /// </remarks>
     internal sealed class CxSmilesParser
     {
         private const char COMMA_SEPARATOR = ',';
@@ -408,7 +406,6 @@ namespace NCDK.SGroups
         /// <returns>position where CXSMILES ends (below 0 means no CXSMILES)</returns>
         public static int ProcessCx(string str, CxSmilesState state)
         {
-
             CharIter iter = new CharIter(str);
 
             if (!iter.NextIf('|'))
@@ -608,7 +605,6 @@ namespace NCDK.SGroups
         /// </summary>
         sealed class CharIter
         {
-
             private readonly string str;
             private readonly int len;
             public int pos = 0;
@@ -621,10 +617,9 @@ namespace NCDK.SGroups
 
             /// <summary>
             /// If the next character matches the provided query the iterator is progressed.
-            ///
+            /// </summary>
             /// <param name="c">query character</param>
             /// <returns>iterator was moved forwards</returns>
-            /// </summary>
             public bool NextIf(char c)
             {
                 if (!MoveNext() || str[pos] != c)

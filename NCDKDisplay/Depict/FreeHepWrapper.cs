@@ -31,8 +31,8 @@ namespace NCDK.Depict
     /// <summary>
     /// Internal - wrapper around the FreeHEP vector graphics output that makes things consistent
     ///  in terms of writing the required headers and footers.
-    ///  <a href="http://java.freehep.org/">java.freehep.org</a>
     /// </summary>
+    /// <seealso href="http://java.freehep.org/">java.freehep.org</seealso>
     sealed class FreeHepWrapper
     {
         private readonly MemoryStream bout;

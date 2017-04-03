@@ -39,8 +39,8 @@ namespace NCDK.Layout
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The RBS (rotate, bend, stretch) algorithm is first described by {@cdk.cite Shelley83},
-    /// and later in more detail by {@cdk.cite HEL99}.
+    /// The RBS (rotate, bend, stretch) algorithm is first described by <token>cdk-cite-Shelley83</token>,
+    /// and later in more detail by <token>cdk-cite-HEL99</token>.
     /// </para>
     /// <para>
     /// Essentially we have a measure of <see cref="Congestion"/>. From that we find 
@@ -49,10 +49,10 @@ namespace NCDK.Layout
     /// shortest path between the congested pair. Operations, from most to least 
     /// favourable, are:
     /// <list type="bullet">
-    ///     <item>Rotation (or reflection), {@link #Rotate(Collection)}</item>
-    ///     <item>Inversion (not described in lit), {@link #Invert(Collection)}</item>
-    ///     <item>Stretch, {@link #Stretch(AtomPair, IntStack, Vector2[])}</item>
-    ///     <item>Bend, {@link #Bend(AtomPair, IntStack, Vector2[])}</item>
+    ///     <item>Rotation (or reflection), <see cref="Rotate(ICollection{AtomPair})"/></item>
+    ///     <item>Inversion (not described in lit), <see cref="Invert(IEnumerable{AtomPair})"/></item>
+    ///     <item>Stretch, <see cref="Stretch(AtomPair, IntStack, Vector2[])"/></item>
+    ///     <item>Bend, <see cref="Bend(AtomPair, IntStack, Vector2[])"/></item>
     /// </list>
     /// </para>
     /// </remarks>
@@ -63,37 +63,37 @@ namespace NCDK.Layout
         /// </summary>
 
         // bond length should be changeable
-        private const double BOND_LENGTH = 1.5;
+        private const double BondLength = 1.5;
 
         // Min dist between un-bonded atoms, making the denominator smaller means
         // we want to spread atoms out more
-        private const double MIN_DIST = BOND_LENGTH / 2;
+        private const double MinDistance = BondLength / 2;
 
         // Min score is derived from the min distance
-        private const double MIN_SCORE = 1 / (MIN_DIST * MIN_DIST);
+        private const double MinScore = 1 / (MinDistance * MinDistance);
 
         // How much do we add to a bond when making it longer.
-        private const double STRETCH_STEP = 0.32 * BOND_LENGTH;
+        private const double StrechStep = 0.32 * BondLength;
 
         // How much we bend bonds by
-        private readonly double BEND_STEP = Vectors.DegreeToRadian(10);
+        private readonly double BendStep = Vectors.DegreeToRadian(10);
 
         // Ensure we don't stretch bonds too long.
-        private const double MAX_BOND_LENGTH = 2 * BOND_LENGTH;
+        private const double MaxBondLength = 2 * BondLength;
 
         // Only accept if improvement is >= 2%. I don't like this because
         // huge structures will have less improvement even though the overlap
         // was resolved.
-        public const double IMPROVEMENT_PERC_THRESHOLD = 0.02;
+        public const double ImprovementPrecThreshold = 0.02;
 
         // Rotation (reflection) is always good if it improves things
         // since we're not distorting the layout. Rather than use the
         // percentage based threshold we accept an modification if
         // the improvement is this much better.
-        public const int ROTATE_DELTA_THRESHOLD = 5;
+        public const int RotateDeltaThreshold = 5;
 
         // Maximum number of iterations whilst improving
-        private const int MAX_ITERATIONS = 10;
+        private const int MaxIterations = 10;
 
         // fast lookup structures
         private readonly IAtomContainer mol;
@@ -117,9 +117,8 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Create a new layout refiner for the provided molecule.
-        /// 
-        /// <param name="mol">molecule to refine</param>
         /// </summary>
+        /// <param name="mol">molecule to refine</param>
         public LayoutRefiner(IAtomContainer mol)
         {
             this.mol = mol;
@@ -161,11 +160,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Simple method for marking ring systems with a flood-fill.
-        ///
+        /// </summary>
         /// <param name="ringSystem">ring system vector</param>
         /// <param name="v">start atom</param>
         /// <param name="rnum">the number to mark atoms of this ring</param>
-        /// </summary>
         private void TraverseRing(int[] ringSystem, int v, int rnum)
         {
             ringSystem[v] = rnum;
@@ -178,12 +176,10 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Find all pairs of un-bonded atoms that are congested.
-        ///
-        /// <returns>pairs of congested atoms</returns>
         /// </summary>
+        /// <returns>pairs of congested atoms</returns>
         List<AtomPair> FindCongestedPairs()
         {
-
             List<AtomPair> pairs = new List<AtomPair>();
 
             // only add a single pair between each ring system, otherwise we
@@ -211,11 +207,11 @@ namespace NCDK.Layout
 
                     // an un-bonded atom pair is congested if they're and with a certain distance
                     // or any of their bonds are crossing
-                    if (contribution >= MIN_SCORE || contribution >= maybeCrossed && HaveCrossingBonds(u, v))
+                    if (contribution >= MinScore || contribution >= maybeCrossed && HaveCrossingBonds(u, v))
                     {
 
-                        int uWeight = mol.Atoms[u].GetProperty<int>(AtomPlacer.PRIORITY);
-                        int vWeight = mol.Atoms[v].GetProperty<int>(AtomPlacer.PRIORITY);
+                        int uWeight = mol.Atoms[u].GetProperty<int>(AtomPlacer.Priority);
+                        int vWeight = mol.Atoms[v].GetProperty<int>(AtomPlacer.Priority);
 
                         int[] path = uWeight > vWeight ? apsp.From(u).GetPathTo(v)
                                                        : apsp.From(v).GetPathTo(u);
@@ -257,10 +253,10 @@ namespace NCDK.Layout
 
             public int Compare(AtomPair a, AtomPair b)
             {
-                int a1 = parent.atoms[a.fst].GetProperty<int>(AtomPlacer.PRIORITY);
-                int a2 = parent.atoms[a.snd].GetProperty<int>(AtomPlacer.PRIORITY);
-                int b1 = parent.atoms[b.fst].GetProperty<int>(AtomPlacer.PRIORITY);
-                int b2 = parent.atoms[b.snd].GetProperty<int>(AtomPlacer.PRIORITY);
+                int a1 = parent.atoms[a.fst].GetProperty<int>(AtomPlacer.Priority);
+                int a2 = parent.atoms[a.snd].GetProperty<int>(AtomPlacer.Priority);
+                int b1 = parent.atoms[b.fst].GetProperty<int>(AtomPlacer.Priority);
+                int b2 = parent.atoms[b.snd].GetProperty<int>(AtomPlacer.Priority);
                 int amin, amax;
                 int bmin, bmax;
                 if (a1 < a2)
@@ -291,20 +287,19 @@ namespace NCDK.Layout
 
         /// <summary>
         /// Check if two bonds are crossing.
-        ///
+        /// </summary>
         /// <param name="beg1">first atom of first bond</param>
         /// <param name="end1">second atom of first bond</param>
         /// <param name="beg2">first atom of second bond</param>
         /// <param name="end2">first atom of second bond</param>
         /// <returns>bond is crossing</returns>
-        /// </summary>
         private bool IsCrossed(Vector2 beg1, Vector2 end1, Vector2 beg2, Vector2 end2)
         {
             return Vectors.LinesIntersect(beg1.X, beg1.Y, end1.X, end1.Y, beg2.X, beg2.Y, end2.X, end2.Y);
         }
 
         /// <summary>
-        /// Check if any of the bonds adjacent to u, v (not bonded) are crossing.
+        /// Check if any of the bonds adjacent to <paramref name="u"/>, <paramref name="v"/> (not bonded) are crossing.
         /// </summary>
         /// <param name="u">an atom (idx)</param>
         /// <param name="v">another atom (idx)</param>
@@ -367,8 +362,8 @@ namespace NCDK.Layout
                     if (adjList[begIdx].Length == 1 || adjList[endIdx].Length == 1)
                         continue;
 
-                    int begPriority = beg.GetProperty<int>(AtomPlacer.PRIORITY);
-                    int endPriority = end.GetProperty<int>(AtomPlacer.PRIORITY);
+                    int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
+                    int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
                     Arrays.Fill(visited, false);
                     if (begPriority < endPriority)
@@ -389,8 +384,8 @@ namespace NCDK.Layout
                     double delta = min - congestion.Score();
 
                     // keep if decent improvement or improvement and resolves this overlap
-                    if (delta > ROTATE_DELTA_THRESHOLD ||
-                        (delta > 1 && congestion.Contribution(pair.fst, pair.snd) < MIN_SCORE))
+                    if (delta > RotateDeltaThreshold ||
+                        (delta > 1 && congestion.Contribution(pair.fst, pair.snd) < MinScore))
                     {
                         goto continue_Pair;
                     }
@@ -421,7 +416,7 @@ namespace NCDK.Layout
         {
             foreach (var pair in pairs)
             {
-                if (congestion.Contribution(pair.fst, pair.snd) < MIN_SCORE)
+                if (congestion.Contribution(pair.fst, pair.snd) < MinScore)
                     continue;
                 if (FusionPointInversion(pair))
                     continue;
@@ -470,7 +465,7 @@ namespace NCDK.Layout
                     Reflect(stackBackup, new Vector2(a.X - perp.Y, a.Y + perp.X), new Vector2(a.X + perp.Y, a.Y - perp.X));
                     congestion.Update(visited, stackBackup.xs, stackBackup.len);
 
-                    if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD)
+                    if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold)
                     {
                         return true;
                     }
@@ -546,12 +541,12 @@ namespace NCDK.Layout
 
                 // perform bend one way
                 BackupCoords(backup, stack);
-                Bend(stack.xs, 0, split, pivotA, BEND_STEP);
-                Bend(stack.xs, split, stack.len, pivotB, -BEND_STEP);
+                Bend(stack.xs, 0, split, pivotA, BendStep);
+                Bend(stack.xs, split, stack.len, pivotB, -BendStep);
 
                 congestion.Update(stack.xs, stack.len);
 
-                if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD)
+                if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold)
                 {
                     BackupCoords(coords, stack);
                     stackBackup.CopyFrom(stack);
@@ -560,10 +555,10 @@ namespace NCDK.Layout
 
                 // now bend the other way
                 RestoreCoords(stack, backup);
-                Bend(stack.xs, 0, split, pivotA, -BEND_STEP);
-                Bend(stack.xs, split, stack.len, pivotB, BEND_STEP);
+                Bend(stack.xs, 0, split, pivotA, -BendStep);
+                Bend(stack.xs, split, stack.len, pivotB, BendStep);
                 congestion.Update(stack.xs, stack.len);
-                if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.Score() < min)
+                if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold && congestion.Score() < min)
                 {
                     BackupCoords(coords, stack);
                     stackBackup.CopyFrom(stack);
@@ -586,8 +581,8 @@ namespace NCDK.Layout
 
                     IAtom beg = bond.Atoms[0];
                     IAtom end = bond.Atoms[1];
-                    int begPriority = beg.GetProperty<int>(AtomPlacer.PRIORITY);
-                    int endPriority = end.GetProperty<int>(AtomPlacer.PRIORITY);
+                    int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
+                    int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
                     Arrays.Fill(visited, false);
                     if (begPriority < endPriority)
@@ -599,12 +594,12 @@ namespace NCDK.Layout
 
                     // bend one way
                     if (begPriority < endPriority)
-                        Bend(stack.xs, 0, stack.len, beg, pair.attempt * BEND_STEP);
+                        Bend(stack.xs, 0, stack.len, beg, pair.attempt * BendStep);
                     else
-                        Bend(stack.xs, 0, stack.len, end, pair.attempt * BEND_STEP);
+                        Bend(stack.xs, 0, stack.len, end, pair.attempt * BendStep);
                     congestion.Update(visited, stack.xs, stack.len);
 
-                    if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD &&
+                    if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold &&
                             congestion.Score() < min)
                     {
                         BackupCoords(coords, stack);
@@ -614,12 +609,12 @@ namespace NCDK.Layout
 
                     // bend other way
                     if (begPriority < endPriority)
-                        Bend(stack.xs, 0, stack.len, beg, pair.attempt * -BEND_STEP);
+                        Bend(stack.xs, 0, stack.len, beg, pair.attempt * -BendStep);
                     else
-                        Bend(stack.xs, 0, stack.len, end, pair.attempt * -BEND_STEP);
+                        Bend(stack.xs, 0, stack.len, end, pair.attempt * -BendStep);
                     congestion.Update(visited, stack.xs, stack.len);
 
-                    if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.Score() < min)
+                    if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold && congestion.Score() < min)
                     {
                         BackupCoords(coords, stack);
                         stackBackup.CopyFrom(stack);
@@ -664,8 +659,8 @@ namespace NCDK.Layout
                 IAtom end = bond.Atoms[1];
                 int begIdx = idxs[beg];
                 int endIdx = idxs[end];
-                int begPriority = beg.GetProperty<int>(AtomPlacer.PRIORITY);
-                int endPriority = end.GetProperty<int>(AtomPlacer.PRIORITY);
+                int begPriority = beg.GetProperty<int>(AtomPlacer.Priority);
+                int endPriority = end.GetProperty<int>(AtomPlacer.Priority);
 
                 Arrays.Fill(visited, false);
                 if (begPriority < endPriority)
@@ -675,13 +670,13 @@ namespace NCDK.Layout
 
                 BackupCoords(backup, stack);
                 if (begPriority < endPriority)
-                    Stretch(stack, end, beg, pair.attempt * STRETCH_STEP);
+                    Stretch(stack, end, beg, pair.attempt * StrechStep);
                 else
-                    Stretch(stack, beg, end, pair.attempt * STRETCH_STEP);
+                    Stretch(stack, beg, end, pair.attempt * StrechStep);
 
                 congestion.Update(visited, stack.xs, stack.len);
 
-                if (PercDiff(score, congestion.Score()) >= IMPROVEMENT_PERC_THRESHOLD && congestion.Score() < min)
+                if (PercDiff(score, congestion.Score()) >= ImprovementPrecThreshold && congestion.Score() < min)
                 {
                     BackupCoords(coords, stack);
                     min = congestion.Score();
@@ -698,7 +693,6 @@ namespace NCDK.Layout
             return min;
         }
 
-
         /// <summary>
         /// Resolves conflicts either by bending bonds or stretching bonds in the
         /// shortest path between an overlapping pair. Bending and stretch are tried
@@ -707,7 +701,6 @@ namespace NCDK.Layout
         /// <param name="pairs">pairs</param>
         private void BendOrStretch(IEnumerable<AtomPair> pairs)
         {
-
             IntStack bendStack = new IntStack(atoms.Length);
             IntStack stretchStack = new IntStack(atoms.Length);
 
@@ -750,7 +743,7 @@ namespace NCDK.Layout
         /// </summary>
         public void Refine()
         {
-            for (int i = 1; i <= MAX_ITERATIONS; i++)
+            for (int i = 1; i <= MaxIterations; i++)
             {
                 var pairs = FindCongestedPairs();
 
@@ -844,16 +837,16 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Reflect a point (p) in a line formed of 'base', 'a', and 'b'.
+        /// Reflect a point (p) in a line formed of <paramref name="baseOfSource"/>, <paramref name="a"/>, and <paramref name="b"/>.
         /// </summary>
         /// <param name="ap">point to reflect</param>
-        /// <param name="base_">base of the refection source</param>
+        /// <param name="baseOfSource">base of the refection source</param>
         /// <param name="a">a reflection coef</param>
         /// <param name="b">b reflection coef</param>
-        private static void Reflect(IAtom ap, Vector2 base_, double a, double b)
+        private static void Reflect(IAtom ap, Vector2 baseOfSource, double a, double b)
         {
-            double x = a * (ap.Point2D.Value.X - base_.X) + b * (ap.Point2D.Value.Y - base_.Y) + base_.X;
-            double y = b * (ap.Point2D.Value.X - base_.X) - a * (ap.Point2D.Value.Y - base_.Y) + base_.Y;
+            double x = a * (ap.Point2D.Value.X - baseOfSource.X) + b * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.X;
+            double y = b * (ap.Point2D.Value.X - baseOfSource.X) - a * (ap.Point2D.Value.Y - baseOfSource.Y) + baseOfSource.Y;
             ap.Point2D = new Vector2(x, y);
         }
 
@@ -895,7 +888,7 @@ namespace NCDK.Layout
             Vector2 begPoint = beg.Point2D.Value;
             Vector2 endPoint = end.Point2D.Value;
 
-            if (Vector2.Distance(begPoint, endPoint) + amount > MAX_BOND_LENGTH)
+            if (Vector2.Distance(begPoint, endPoint) + amount > MaxBondLength)
                 return;
 
             Vector2 vector = new Vector2(endPoint.X - begPoint.X, endPoint.Y - begPoint.Y);
@@ -1138,11 +1131,9 @@ namespace NCDK.Layout
                 if (o == null || GetType() != o.GetType()) return false;
 
                 IntTuple that = (IntTuple)o;
-
-
+                
                 return (this.fst == that.fst && this.snd == that.snd) ||
                         (this.fst == that.snd && this.snd == that.fst);
-
             }
 
             public override int GetHashCode()

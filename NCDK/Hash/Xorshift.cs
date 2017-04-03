@@ -25,9 +25,9 @@ namespace NCDK.Hash
 {
     /// <summary>
     /// A fast pseudorandom number generator based on feedback shift registers.
-    /// <a href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</a>
-    /// <a href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift random number generators</a>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Xorshift">Xorshift</seealso>
+    /// <seealso href="http://www.javamex.com/tutorials/random_numbers/xorshift.shtml">Xorshift random number generators</seealso>
     // @author John May
     // @cdk.githash
     // @cdk.module hash

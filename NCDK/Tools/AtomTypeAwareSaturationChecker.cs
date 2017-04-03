@@ -285,11 +285,11 @@ namespace NCDK.Tools
         }
 
         /// <summary>
-        /// This method calculates the number of bonds that an <code>IAtom</code>
+        /// This method calculates the number of bonds that an <see cref="IAtom"/>
         /// can have.
         /// </summary>
-        /// <param name="atom">The <code>IAtom</code> to be investigated</param>
-        /// <returns>The max number of bonds the <code>IAtom</code> can have</returns>
+        /// <param name="atom">The <see cref="IAtom"/> to be investigated</param>
+        /// <returns>The max number of bonds the <see cref="IAtom"/> can have</returns>
         /// <exception cref="CDKException">when the atom's valency is not set</exception>
         public double GetMaxNoOfBonds(IAtom atom)
         {

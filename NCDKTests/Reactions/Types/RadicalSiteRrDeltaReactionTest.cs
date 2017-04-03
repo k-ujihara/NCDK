@@ -36,7 +36,6 @@ namespace NCDK.Reactions.Types
     [TestClass()]
     public class RadicalSiteRrDeltaReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
         /// <summary>
@@ -76,11 +75,11 @@ namespace NCDK.Reactions.Types
 
             molecule.Atoms[0].IsReactiveCenter = true;
             molecule.Atoms[1].IsReactiveCenter = true;
-            molecule.Atoms[5].IsReactiveCenter = true;
+            molecule.Atoms[6].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -118,9 +117,9 @@ namespace NCDK.Reactions.Types
             molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[3], molecule.Atoms[4], BondOrder.Single);
             molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.Atoms[5].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
             molecule.Atoms.Add(builder.CreateAtom("C"));
+            molecule.Atoms[6].FormalCharge = 1;
             molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Single);
 
             try
@@ -132,8 +131,8 @@ namespace NCDK.Reactions.Types
                 Console.Out.WriteLine(e.StackTrace);
             }
 
-            molecule.Atoms[5].FormalCharge = 0;
-            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[5]));
+            molecule.Atoms[6].FormalCharge = 0;
+            molecule.SingleElectrons.Add(new SingleElectron(molecule.Atoms[6]));
 
             try
             {
@@ -171,7 +170,7 @@ namespace NCDK.Reactions.Types
             molecule.Atoms.Add(builder.CreateAtom("C"));
             molecule.AddBond(molecule.Atoms[4], molecule.Atoms[5], BondOrder.Single);
             molecule.Atoms.Add(builder.CreateAtom("C"));
-            molecule.AddBond(molecule.Atoms[4], molecule.Atoms[6], BondOrder.Single);
+            molecule.AddBond(molecule.Atoms[5], molecule.Atoms[6], BondOrder.Single);
 
             try
             {
@@ -215,11 +214,11 @@ namespace NCDK.Reactions.Types
             /* manually put the reactive center */
             molecule.Atoms[0].IsReactiveCenter = true;
             molecule.Atoms[1].IsReactiveCenter = true;
-            molecule.Atoms[5].IsReactiveCenter = true;
+            molecule.Atoms[6].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -234,17 +233,12 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Atoms[0].IsReactiveCenter);
             Assert.IsTrue(molecule.Atoms[1].IsReactiveCenter);
             Assert.IsTrue(reactant.Atoms[1].IsReactiveCenter);
-            Assert.IsTrue(molecule.Atoms[5].IsReactiveCenter);
-            Assert.IsTrue(reactant.Atoms[5].IsReactiveCenter);
+            Assert.IsTrue(molecule.Atoms[6].IsReactiveCenter);
+            Assert.IsTrue(reactant.Atoms[6].IsReactiveCenter);
             Assert.IsTrue(molecule.Bonds[0].IsReactiveCenter);
             Assert.IsTrue(reactant.Bonds[0].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -256,11 +250,11 @@ namespace NCDK.Reactions.Types
             /* automatic search of the center active */
             molecule.Atoms[0].IsReactiveCenter = true;
             molecule.Atoms[1].IsReactiveCenter = true;
-            molecule.Atoms[5].IsReactiveCenter = true;
+            molecule.Atoms[6].IsReactiveCenter = true;
             molecule.Bonds[0].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -278,8 +272,8 @@ namespace NCDK.Reactions.Types
                     molecule.Atoms[1]);
             Assert.AreEqual(mappedProductA2, product.Atoms[1]);
             IAtom mappedProductA3 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[5]);
-            Assert.AreEqual(mappedProductA3, product.Atoms[5]);
+                    molecule.Atoms[6]);
+            Assert.AreEqual(mappedProductA3, product.Atoms[6]);
         }
 
         /// <summary>

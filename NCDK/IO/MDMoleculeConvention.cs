@@ -108,7 +108,7 @@ namespace NCDK.IO.CML
                 {
                     //                Console.Out.WriteLine("creating a MDMolecule");
                     base.StartElement(xpath, element);
-                    currentMolecule = new MDMolecule(currentMolecule);
+                    CurrentMolecule = new MDMolecule(CurrentMolecule);
                 }
                 else
                 {
@@ -136,8 +136,8 @@ namespace NCDK.IO.CML
                 if ("md:switchingAtom".Equals(DICTREF))
                 {
                     //Set current atom as switching atom
-                    Console.Out.WriteLine("Adding Switching atom: " + currentAtom);
-                    currentChargeGroup.SetSwitchingAtom(currentAtom);
+                    Console.Out.WriteLine("Adding Switching atom: " + CurrentAtom);
+                    currentChargeGroup.SetSwitchingAtom(CurrentAtom);
                 }
                 else
                 {
@@ -152,22 +152,22 @@ namespace NCDK.IO.CML
                     if (id != null)
                     {
                         // ok, an atom is referenced; look it up
-                        currentAtom = null;
+                        CurrentAtom = null;
                         //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
-                        foreach (var nextAtom in currentMolecule.Atoms)
+                        foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
                             {
-                                currentAtom = nextAtom;
+                                CurrentAtom = nextAtom;
                             }
                         }
-                        if (currentAtom == null)
+                        if (CurrentAtom == null)
                         {
                             Trace.TraceError($"Could not found the referenced atom '{id}' for this charge group!");
                         }
                         else
                         {
-                            currentChargeGroup.Atoms.Add(currentAtom);
+                            currentChargeGroup.Atoms.Add(CurrentAtom);
                         }
                     }
                 }
@@ -179,7 +179,7 @@ namespace NCDK.IO.CML
                         // ok, an atom is referenced; look it up
                         IAtom referencedAtom = null;
                         //                    Console.Out.WriteLine("#atoms: " + currentMolecule.Atoms.Count);
-                        foreach (var nextAtom in currentMolecule.Atoms)
+                        foreach (var nextAtom in CurrentMolecule.Atoms)
                         {
                             if (nextAtom.Id.Equals(id))
                             {
@@ -221,9 +221,9 @@ namespace NCDK.IO.CML
                 // add chargeGroup, and then delete them
                 if (currentChargeGroup != null)
                 {
-                    if (currentMolecule is MDMolecule)
+                    if (CurrentMolecule is MDMolecule)
                     {
-                        ((MDMolecule)currentMolecule).AddChargeGroup(currentChargeGroup);
+                        ((MDMolecule)CurrentMolecule).AddChargeGroup(currentChargeGroup);
                     }
                     else
                     {
@@ -236,9 +236,9 @@ namespace NCDK.IO.CML
                 // add chargeGroup, and then delete them
                 if (currentResidue != null)
                 {
-                    if (currentMolecule is MDMolecule)
+                    if (CurrentMolecule is MDMolecule)
                     {
-                        ((MDMolecule)currentMolecule).AddResidue(currentResidue);
+                        ((MDMolecule)CurrentMolecule).AddResidue(currentResidue);
                     }
                     else
                     {

@@ -27,12 +27,14 @@ using NCDK.RingSearches;
 using System.Collections.Generic;
 using static NCDK.Graphs.GraphUtil;
 using static NCDK.Common.Base.Preconditions;
-using System.Linq;
 
 namespace NCDK.Aromaticities
 {
     /// <summary>
-    /// A configurable model to perceive aromatic systems. Aromaticity is useful as
+    /// A configurable model to perceive aromatic systems. 
+    /// </summary>
+    /// <remarks>
+    /// Aromaticity is useful as
     /// both a chemical property indicating stronger stabilisation and as a way to
     /// treat different resonance forms as equivalent. Each has its own implications
     /// the first in physicochemical attributes and the second in similarity,
@@ -40,16 +42,16 @@ namespace NCDK.Aromaticities
     /// <para>
     /// To address the resonance forms, several simplified (sometimes conflicting)
     /// models have arisen. Generally the models <b>loosely</b> follow
-    /// <a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a>
+    /// <see href="https://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</see>
     /// for determining aromaticity. A common omission being that planarity is not
     /// tested and chemical compounds which are non-planar can be perceived
     /// as aromatic. An example of one such compound is, cyclodeca-1,3,5,7,9-pentaene.
     /// </para>
     /// <para>
     /// Although there is not a single universally accepted model there are models
-    /// which may better suited for a specific use (<a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a>).
+    /// which may better suited for a specific use (<see href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</see>).
     /// The different models are often ill-defined or unpublished but it is important
-    /// to acknowledge that there are differences (see. <a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a>).
+    /// to acknowledge that there are differences (see. <see href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</see>).
     /// </para>
     /// <para>
     /// Although models may get more complicated (e.g. considering tautomers)
@@ -65,28 +67,13 @@ namespace NCDK.Aromaticities
     /// <see cref="ElectronDonation.CDKModel"/>, <see cref="ElectronDonation.CDKAllowingExocyclicModel"/>,
     /// <see cref="ElectronDonation.DaylightModel"/> or <see cref="ElectronDonation.PiBondsModel"/>.
     /// </para>
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// // mimics the old CDKHuckelAromaticityDetector which uses the CDK atom types
-    /// ElectronDonation model       = ElectronDonation.CDKModel;
-    /// CycleFinder      cycles      = Cycles.CDKAromaticSetFinder;
-    /// Aromaticity      aromaticity = new Aromaticity(model, cycles);
-    /// // apply our configured model to each molecule, the CDK model
-    /// // requires that atom types are perceived
-    /// foreach (var molecule in molecules) {
-    ///     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-    ///     aromaticity.Apply(molecule);
-    /// }
-    /// </code>
-    /// </example>
-    /// <remarks>
-    /// <list type="bullet">
-    /// <item><a href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</a></item>
-    /// <item><a href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</a></item>
-    /// <item><a href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</a></item>
-    /// </list>
     /// </remarks>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs"]/*' />
+    /// </example>
+    /// <seealso href="http://en.wikipedia.org/wiki/H%C3%BCckel's_rule">Hückel's rule</seealso>
+    /// <seealso href="http://www.slideshare.net/NextMoveSoftware/cheminformatics-toolkits-a-personal-perspective">Cheminformatics Toolkits: A Personal Perspective, Roger Sayle</seealso>
+    /// <seealso href="http://blueobelisk.shapado.com/questions/aromaticity-perception-differences">Aromaticity Perception Differences, Blue Obelisk</seealso>
     // @author John May
     // @cdk.module standard
     // @cdk.githash
@@ -121,16 +108,7 @@ namespace NCDK.Aromaticities
         /// polynomial cycle set <see cref="Cycles.RelevantFinder"/> used.
         /// </remarks>
         /// <example>
-        /// <code>
-        /// // mimics the CDKHuckelAromaticityDetector
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
-        /// // mimics the DoubleBondAcceptingAromaticityDetector
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKAllowingExocyclicModel, Cycles.CDKAromaticSetFinder);
-        /// // a good model for writing SMILES
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.AllFinder);
-        /// // a good model for writing MDL/Mol2
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.PiBondsModel, Cycles.AllFinder);
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+ctor"]/*' />
         /// </example>
         /// <param name="model"></param>
         /// <param name="cycles"></param>
@@ -146,16 +124,7 @@ namespace NCDK.Aromaticities
         /// Find the bonds of a <paramref name="molecule"/> which this model determined were aromatic.
         /// </summary>
         /// <example>
-        /// <code>
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
-        /// IAtomContainer container = ...;
-        /// try {
-        ///     ICollection&lt;IBond&gt;bonds = aromaticity.FindBonds(container);
-        ///     int        nAromaticBonds = bonds.Count;
-        /// } catch (CDKException e) {
-        ///     // cycle computation was intractable
-        /// }
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+FindBonds"]/*' />
         /// </example>
         /// <param name="molecule">the molecule to apply the model to</param>
         /// <returns>the set of bonds which are aromatic</returns>
@@ -199,18 +168,10 @@ namespace NCDK.Aromaticities
         /// the result is the same irrespective of existing aromatic flags. If you
         /// require aromatic flags to be preserved the <see cref="FindBonds(IAtomContainer)"/>
         /// can be used to find bonds without setting any flags.
-        /// <code>
-        /// Aromaticity aromaticity = new Aromaticity(ElectronDonation.CDKModel, Cycles.AllFinder);
-        /// IAtomContainer container = ...;
-        /// try {
-        ///     if (aromaticity.Apply(container)) {
-        ///         //
-        ///     }
-        /// } catch (CDKException e) {
-        ///     // cycle computation was intractable
-        /// }
-        /// </code>
         /// </summary>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+Apply"]/*' />
+        /// </example>
         /// <param name="molecule">the molecule to apply the model to</param>
         /// <returns>the model found the molecule was aromatic</returns>
         public bool Apply(IAtomContainer molecule)
@@ -295,13 +256,11 @@ namespace NCDK.Aromaticities
             return Arrays.CopyOf(vs, n);
         }
 
-        /// <summary>Replicates CDKHueckelAromaticityDetector.</summary>
-        private static readonly Aromaticity CDK_LEGACY = new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
-
         /// <summary>
-        /// Access an aromaticity instance that replicates the previously utilised -
-        /// CDKHueckelAromaticityDetector. It has the following configuration:
-        /// <code>new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);</code>
+        /// Access an aromaticity instance. It has the following configuration: 
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+CDKLegacy_CDKAromaticSetFinder"]/*' />
+        /// </summary>
+        /// <remarks>
         /// <para>
         /// This model is not necessarily bad (or really considered legacy) but
         /// should <b>not</b> be considered a gold standard model that covers all
@@ -314,9 +273,9 @@ namespace NCDK.Aromaticities
         /// versions. The same electron donation model can be used to test
         /// aromaticity of more cycles. For instance, the following configuration
         /// will identify more bonds in a some structures as aromatic:
-        /// <code>new Aromaticity(ElectronDonation.CDKModel, Cycles.Or(Cycles.AllFinder, Cycles.Relevant));</code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Aromaticities.Aromaticity_Example.cs+CDKLegacy_AllFinder_RelevantFinder"]/*' />
         /// </para>
-        /// </summary>
-        public static Aromaticity CDKLegacy => CDK_LEGACY;
+        /// </remarks>
+        public static Aromaticity CDKLegacy { get; } = new Aromaticity(ElectronDonation.CDKModel, Cycles.CDKAromaticSetFinder);
     }
 }

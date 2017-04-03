@@ -28,20 +28,18 @@ namespace NCDK.Groups
 {
     /// <summary>
     /// A permutation group with a Schreier-Sims representation. For a number n, a
-    /// list of permutation sets is stored (U0,...,Un-1). All n! permutations of
+    /// list of permutation sets is stored (U<sub>0</sub>,...,U<sub>n-1</sub>). All n! permutations of
     /// [0...n-1] can be reconstructed from this list by backtracking - see, for
-    /// example, the <a href="#GenerateAll">GenerateAll</a> method.
+    /// example, the <see cref="GenerateAll()"/> method.
     /// </summary>
     /// <remarks>
     /// <para>
     /// So if G is a group on X = {0, 1, 2, 3, ..., n-1}, then:
-    /// <code>
-    ///      G<sub>0</sub> = {g Å∏ G  : g(0) = 0}
-    ///      G<sub>1</sub> = {g Å∏ G<sub>0</sub> : g(1) = 1}
-    ///      G<sub>2</sub> = {g Å∏ G<sub>1</sub> : g(2) = 2}
-    ///      ...
-    ///      G<sub>n-1</sub> = {g in G<sub>n-2</sub> : g(n - 1) = n - 1} = {I}
-    /// </code>
+    ///     G<sub>0</sub> = {g Å∏ G  : g(0) = 0}<br/>
+    ///     G<sub>1</sub> = {g Å∏ G<sub>0</sub> : g(1) = 1}<br/>
+    ///     G<sub>2</sub> = {g Å∏ G<sub>1</sub> : g(2) = 2}<br/>
+    ///     ...<br/>
+    ///     G<sub>n-1</sub> = {g in G<sub>n-2</sub> : g(n - 1) = n - 1} = {I}<br/>
     /// and G<sub>0</sub>, G<sub>1</sub>, G<sub>2</sub>, ..., G<sub>n-1</sub> are
     /// subgroups of G.
     /// </para>
@@ -61,7 +59,7 @@ namespace NCDK.Groups
     /// </para>
     ///
     /// <para>
-    /// This is port of the code from the C.A.G.E.S. book {@cdk.cite Kreher98}. The
+    /// This is port of the code from the C.A.G.E.S. book <token>cdk-cite-Kreher98</token>. The
     /// mathematics in the description above is also from that book (pp. 203).
     /// </para>
     /// </remarks>
@@ -101,7 +99,7 @@ namespace NCDK.Groups
         /// <summary>
         /// The base of the group
         /// </summary>
-        private Permutation base_;
+        private Permutation basePermutation;
 
         /// <summary>
         /// Make a group with just a single identity permutation of size n.
@@ -112,17 +110,17 @@ namespace NCDK.Groups
         { }
 
         /// <summary>
-        /// Creates the initial group, with the base <code>base</code>.
+        /// Creates the initial group, with the base <paramref name="basePermutation"/>.
         /// </summary>
-        /// <param name="base">the permutation that the group is based on</param>
-        public PermutationGroup(Permutation @base)
+        /// <param name="basePermutation">the permutation that the group is based on</param>
+        public PermutationGroup(Permutation basePermutation)
         {
-            this.size = @base.Count;
-            this.base_ = new Permutation(@base);
+            this.size = basePermutation.Count;
+            this.basePermutation = new Permutation(basePermutation);
             this.permutations = Arrays.CreateJagged<Permutation>(size, size);
             for (int i = 0; i < size; i++)
             {
-                this.permutations[i][this.base_[i]] = new Permutation(size);
+                this.permutations[i][this.basePermutation[i]] = new Permutation(size);
             }
         }
 
@@ -354,14 +352,14 @@ namespace NCDK.Groups
         }
 
         /// <summary>
-        /// Change the base of the group to the new base <code>newBase</code>.
+        /// Change the base of the group to the new base <paramref name="newBase"/>.
         /// </summary>
         /// <param name="newBase">the new base for the group</param>
         public void ChangeBase(Permutation newBase)
         {
             PermutationGroup h = new PermutationGroup(newBase);
 
-            int firstDiffIndex = base_.FirstIndexOfDifference(newBase);
+            int firstDiffIndex = basePermutation.FirstIndexOfDifference(newBase);
 
             for (int j = firstDiffIndex; j < size; j++)
             {
@@ -382,13 +380,13 @@ namespace NCDK.Groups
                     Permutation g = permutations[j][a];
                     if (g != null)
                     {
-                        int hj = h.base_[j];
+                        int hj = h.basePermutation[j];
                         int x = g[hj];
                         h.permutations[j][x] = new Permutation(g);
                     }
                 }
             }
-            this.base_ = new Permutation(h.base_);
+            this.basePermutation = new Permutation(h.basePermutation);
             this.permutations = (Permutation[][])h.permutations.Clone();
         }
 
@@ -406,7 +404,7 @@ namespace NCDK.Groups
             }
             else
             {
-                permutations[i][g[base_[i]]] = new Permutation(g);
+                permutations[i][g[basePermutation[i]]] = new Permutation(g);
             }
 
             for (int j = 0; j <= i; j++)
@@ -433,7 +431,7 @@ namespace NCDK.Groups
         {
             for (int i = 0; i < size; i++)
             {
-                int x = permutation[base_[i]];
+                int x = permutation[basePermutation[i]];
                 Permutation h = permutations[i][x];
                 if (h == null)
                 {
@@ -450,7 +448,7 @@ namespace NCDK.Groups
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("Base = ").Append(base_).Append('\n');
+            sb.Append("Base = ").Append(basePermutation).Append('\n');
             for (int i = 0; i < size; i++)
             {
                 sb.Append('U').Append(i).Append(" = ");

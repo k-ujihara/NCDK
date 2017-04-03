@@ -29,7 +29,7 @@ namespace NCDK.Isomorphisms
 {
     // @cdk.module    standard
     // @cdk.githash
-    public class AtomMappingTools
+    public static class AtomMappingTools
     {
         /// <summary>
         /// Returns a IDictionary with the AtomNumbers, the first number corresponds to the first (or the largest

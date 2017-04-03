@@ -63,7 +63,7 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFUsed()
+        public void TestFused()
         {
             int[][] fused = new RingSearch(hexaphenylene).Fused();
             Assert.AreEqual(1, fused.Length);
@@ -87,7 +87,7 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFUsedRingFragments()
+        public void TestFusedRingFragments()
         {
             RingSearch search = new RingSearch(hexaphenylene);
             IList<IAtomContainer> fused = search.FusedRingFragments();
@@ -96,9 +96,7 @@ namespace NCDK.RingSearches {
             Assert.AreEqual(hexaphenylene.Bonds.Count, fused[0].Bonds.Count);
         }
 
-        /// <summary>
         // @cdk.inchi InChI=1S/C36H24/c1-2-14-26-25(13-1)27-15-3-4-17-29(27)31-19-7-8-21-33(31)35-23-11-12-24-36(35)34-22-10-9-20-32(34)30-18-6-5-16-28(26)30/h1-24H/b27-25-,28-26-,31-29-,32-30-,35-33-,36-34-
-        /// </summary>
         public static IAtomContainer Hexaphenylene()
         {
             IAtomContainer mol = new AtomContainer();

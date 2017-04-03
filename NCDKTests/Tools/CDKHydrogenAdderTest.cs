@@ -32,12 +32,10 @@ namespace NCDK.Tools
     /// <summary>
     /// Tests CDK's hydrogen adding capabilities in terms of
     /// example molecules.
-    ///
+    /// </summary>
     // @cdk.module  test-valencycheck
-    ///
     // @author      Egon Willighagen <egonw@users.sf.net>
     // @cdk.created 2007-07-28
-    /// </summary>
     [TestClass()]
     public class CDKHydrogenAdderTest : CDKTestCase
     {

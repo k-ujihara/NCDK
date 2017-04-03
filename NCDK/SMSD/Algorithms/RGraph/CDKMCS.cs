@@ -76,20 +76,14 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///  in other contexts.</para>
     ///
     ///  <para>This algorithm derives from the algorithm described in
-    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.</para>
+    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.</para>
     ///
     ///  <para>With the <see cref="IsSubgraph(IAtomContainer, IAtomContainer, bool)"/> method, the second, and only the second
     ///  argument <b>may</b> be atom <see cref="IQueryAtomContainer"/>, which allows one to do MQL like queries.
-    ///  The first IAtomContainer must never be an <see cref="IQueryAtomContainer"/>. An example:
-    ///  <code>
-    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-    ///  IAtomContainer atomContainer = sp.ParseSmiles("CC(=O)OC(=O)C"); // acetic acid anhydride
-    ///  IAtomContainer SMILESquery = sp.ParseSmiles("CC"); // acetic acid anhydride
-    ///  IQueryAtomContainer query = IQueryAtomContainerCreator.CreateBasicQueryContainer(SMILESquery);
-    ///  bool isSubstructure = graphContainer.IsSubgraph(atomContainer, query);
-    ///  </code>
+    ///  The first IAtomContainer must never be an <see cref="IQueryAtomContainer"/>.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.SMSD.Algorithms.RGraph.CDKMCS_Example.cs"]/*' />
     /// </para>
-    ///  <para><b>WARNING</b>:
+    /// <note type="warning">
     ///    As atom result of the adjacency perception used in this algorithm
     ///    there is atom single limitation : cyclopropane and isobutane are seen as isomorph
     ///    This is due to the fact that these two compounds are the only ones where
@@ -103,7 +97,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
     ///    screened out by atom fingerprint based filtering.
     ///    It is possible to add atom special treatment for this special query.
     ///    Be reminded that this algorithm matches bonds only.
-    /// </para>
+    /// </note>
     /// </remarks>
     // @author      Stephane Werner from IXELIS mail@ixelis.net, Syed Asad Rahman <asad@ebi.ebi.uk> (modified the orignal code)
     // @cdk.created 2002-07-17

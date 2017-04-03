@@ -57,7 +57,7 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFUsed() {
+        public void TestFused() {
             Assert.AreEqual(0, new RingSearch(nonCyclic).Fused().Length);
         }
 
@@ -72,7 +72,7 @@ namespace NCDK.RingSearches {
         }
 
         [TestMethod()]
-        public void TestFUsedRingFragments() {
+        public void TestFusedRingFragments() {
             Assert.IsTrue(new RingSearch(nonCyclic).FusedRingFragments().Count == 0);
         }
     }

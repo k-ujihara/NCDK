@@ -34,19 +34,14 @@ namespace NCDK.Reactions.Mechanisms
     // @cdk.githash
     public class HomolyticCleavageMechanism : IReactionMechanism
     {
-
         /// <summary>
         /// Initiates the process for the given mechanism. The atoms to apply are mapped between
         /// reactants and products.
-        ///
-        ///
-        /// <param name="atomContainerSet">/// @param atomList    The list of atoms taking part in the mechanism. Only allowed two atoms.</param>
-        ///                    Both atoms acquire a ISingleElectron
+        /// </summary>
+        /// <param name="atomContainerSet"></param>
+        /// <param name="atomList">The list of atoms taking part in the mechanism. Only allowed two atoms. Both atoms acquire a ISingleElectron</param>
         /// <param name="bondList">The list of bonds taking part in the mechanism. Only allowed one bond</param>
         /// <returns>The Reaction mechanism</returns>
-        ///
-        /// </summary>
-
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder);

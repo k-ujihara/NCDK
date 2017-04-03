@@ -31,7 +31,6 @@ using NCDK.Common.Collections;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace NCDK.Beam
 {
@@ -61,7 +60,7 @@ namespace NCDK.Beam
 
         public AllCycles(Graph g, ElectronDonation model, int lim)
         {
-           this.org = g;
+            this.org = g;
             this.ps = new int[g.Order];
             this.pathGraph = new IList<PathEdge>[g.Order];
             this.aromatic = new bool[g.Order];

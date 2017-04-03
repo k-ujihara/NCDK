@@ -153,7 +153,7 @@ namespace NCDK.RingSearches
             // intersect by more then 1 vertex, we 'may' have a fused cycle
             if (intersect != 0 && Longs.BitCount(intersect) > 1)
             {
-                AddFUsed(cycle);
+                AddFused(cycle);
             }
             else
             {
@@ -180,10 +180,10 @@ namespace NCDK.RingSearches
         /// fused it will still be added as isolated.
         /// </summary>
         /// <param name="cycle">vertex set of a potentially fused cycle, indicated by the set bits</param>
-        private void AddFUsed(long cycle)
+        private void AddFused(long cycle)
         {
             // find index of first fused cycle
-            int i = IndexOfFUsed(0, cycle);
+            int i = IndexOfFused(0, cycle);
 
             if (i != -1)
             {
@@ -193,7 +193,7 @@ namespace NCDK.RingSearches
 
                 // merge other cycles we are share an edge with
                 int j = i;
-                while ((j = IndexOfFUsed(j + 1, cycles[i])) != -1)
+                while ((j = IndexOfFused(j + 1, cycles[i])) != -1)
                 {
                     var newval = cycles[j] | cycles[i];
                     cycles[i] = newval;
@@ -217,7 +217,7 @@ namespace NCDK.RingSearches
         /// <param name="start">start searching from here</param>
         /// <param name="cycle">test whether any current cycles are fused with this one</param>
         /// <returns>the index of the first fused after 'start', -1 if none</returns>
-        private int IndexOfFUsed(int start, long cycle)
+        private int IndexOfFused(int start, long cycle)
         {
             for (int i = start; i < cycles.Count(); i++)
             {
@@ -347,7 +347,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Convert the bits of a {@code long} to an array of integers. The size of
+        /// Convert the bits of a <see cref="long"/> to an array of integers. The size of
         /// the output array is the number of bits set in the value.
         /// </summary>
         /// <param name="set">value to convert</param>

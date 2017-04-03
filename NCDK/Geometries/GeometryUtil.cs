@@ -79,9 +79,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Adds an automatically calculated offset to the coordinates of all atoms such that all
-        /// coordinates are positive and the smallest x or y coordinate is exactly zero. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// coordinates are positive and the smallest x or y coordinate is exactly zero. 
         /// </summary>
         /// <param name="atomCon">AtomContainer for which all the atoms are translated to positive coordinates</param>
         public static void TranslateAllPositive(IAtomContainer atomCon)
@@ -107,8 +105,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Translates the given molecule by the given Vector. See comment for Center(IAtomContainer
-        /// atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// Translates the given molecule by the given Vector.
         /// </summary>
         /// <param name="atomCon">The molecule to be translated</param>
         /// <param name="transX">translation in x direction</param>
@@ -119,9 +116,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Scales a molecule such that it fills a given percentage of a given dimension. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Scales a molecule such that it fills a given percentage of a given dimension. 
         /// </summary>
         /// <param name="atomCon">The molecule to be scaled {width, height}</param>
         /// <param name="areaDim">The dimension to be filled {width, height}</param>
@@ -136,9 +131,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Multiplies all the coordinates of the atoms of the given molecule with the scalefactor. See
-        /// comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates)
-        /// for details on coordinate sets
+        /// Multiplies all the coordinates of the atoms of the given molecule with the scalefactor. 
         /// </summary>
         /// <param name="atomCon">The molecule to be scaled</param>
         /// <param name="scaleFactor">Description of the Parameter</param>
@@ -171,8 +164,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Centers the molecule in the given area. See comment for Center(IAtomContainer atomCon,
-        /// Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// Centers the molecule in the given area. 
         /// </summary>
         /// <param name="atomCon">molecule to be centered</param>
         /// <param name="areaDim">dimension in which the molecule is to be centered, array containing {width, height}</param>
@@ -250,11 +242,11 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Rotates a 3D point about a specified line segment by a specified angle.
-        ///
-        /// The code is based on code available <a href="http://astronomy.swin.edu.au/~pbourke/geometry/rotate/source.c">here</a>.
-        /// Positive angles are anticlockwise looking down the axis towards the origin. Assume right hand
-        /// coordinate system.
         /// </summary>
+        /// <remarks>
+        /// The code is based on code available <see href="http://astronomy.swin.edu.au/~pbourke/geometry/rotate/source.c">here</see>.
+        /// Positive angles are anticlockwise looking down the axis towards the origin. Assume right hand
+        /// coordinate system.</remarks>
         /// <param name="atom">The atom to rotate</param>
         /// <param name="p1">The  first point of the line segment</param>
         /// <param name="p2">The second point of the line segment</param>
@@ -316,17 +308,10 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Returns the minimum and maximum X and Y coordinates of the atoms in the
-        /// AtomContainer. The output is returned as: 
-        /// <code>
-        ///   minmax[0] = minX;
-        ///   minmax[1] = minY;
-        ///   minmax[2] = maxX;
-        ///   minmax[3] = maxY;
-        /// </code>
-        /// See comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary
-        /// renderingCoordinates) for details on coordinate sets
+        /// <see cref="IAtomContainer"/>. The output is returned as: 
+        /// <c>double[] {minX, minY, maxX, maxY }</c>.
         /// </summary>
-        /// <param name="container">Description of the Parameter</param>
+        /// <param name="container"></param>
         /// <returns>An four int array as defined above.</returns>
         public static double[] GetMinMax(IAtomContainer container)
         {
@@ -366,9 +351,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Translates a molecule from the origin to a new point denoted by a vector. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Translates a molecule from the origin to a new point denoted by a vector. 
         /// </summary>
         /// <param name="atomCon">molecule to be translated</param>
         /// <param name="p">Description of the Parameter</param>
@@ -386,9 +369,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calculates the center of the given atoms and returns it as a Vector2. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Calculates the center of the given atoms and returns it as a Vector2. 
         /// </summary>
         /// <param name="atoms">The vector of the given atoms</param>
         /// <returns>The center of the given atoms as Vector2</returns>
@@ -410,9 +391,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the geometric center of all the rings in this ringset. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Returns the geometric center of all the rings in this ringset. 
         /// </summary>
         /// <param name="ringSet">Description of the Parameter</param>
         /// <returns>the geometric center of the rings in this ringset</returns>
@@ -432,9 +411,8 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calculates the center of mass for the <code>Atom</code>s in the AtomContainer for the 2D
-        /// coordinates. See comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary
-        /// renderingCoordinates) for details on coordinate sets
+        /// Calculates the center of mass for the <see cref="IAtom"/>s in the AtomContainer for the 2D
+        /// coordinates. 
         /// </summary>
         /// <param name="ac">AtomContainer for which the center of mass is calculated</param>
         /// <returns>Null, if any of the atomcontainer <see cref="IAtom"/>'s</returns>
@@ -460,9 +438,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the geometric center of all the atoms in the atomContainer. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Returns the geometric center of all the atoms in the atomContainer.
         /// </summary>
         /// <param name="container">Description of the Parameter</param>
         /// <returns>the geometric center of the atoms in this atomContainer</returns>
@@ -505,9 +481,8 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calculates the center of mass for the <code>Atom</code>s in the AtomContainer for the 2D
-        /// coordinates. See comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary
-        /// renderingCoordinates) for details on coordinate sets
+        /// Calculates the center of mass for the <see cref="IAtom"/>s in the AtomContainer for the 2D
+        /// coordinates. 
         /// </summary>
         /// <param name="ac">AtomContainer for which the center of mass is calculated</param>
         /// <returns>Description of the Return Value</returns>
@@ -538,9 +513,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the geometric center of all the atoms in this atomContainer. See comment for
-        /// Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details
-        /// on coordinate sets
+        /// Returns the geometric center of all the atoms in this atomContainer. 
         /// </summary>
         /// <param name="ac">Description of the Parameter</param>
         /// <returns>the geometric center of the atoms in this atomContainer</returns>
@@ -647,9 +620,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Writes the coordinates of the atoms participating the given bond into an array. See comment
-        /// for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for
-        /// details on coordinate sets
+        /// Writes the coordinates of the atoms participating the given bond into an array. 
         /// </summary>
         /// <param name="bond">The given bond</param>
         /// <returns>The array with the coordinates</returns>
@@ -668,9 +639,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the atom of the given molecule that is closest to the given coordinates. See comment
-        /// for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for
-        /// details on coordinate sets
+        /// Returns the atom of the given molecule that is closest to the given coordinates. 
         /// </summary>
         /// <param name="xPosition">The x coordinate</param>
         /// <param name="yPosition">The y coordinate</param>
@@ -728,8 +697,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Returns the atom of the given molecule that is closest to the given coordinates and is not
-        /// the atom. See comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary
-        /// renderingCoordinates) for details on coordinate sets
+        /// the atom.
         /// </summary>
         /// <param name="xPosition">The x coordinate</param>
         /// <param name="yPosition">The y coordinate</param>
@@ -765,9 +733,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the atom of the given molecule that is closest to the given coordinates. See comment
-        /// for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for
-        /// details on coordinate sets
+        /// Returns the atom of the given molecule that is closest to the given coordinates. 
         /// </summary>
         /// <param name="xPosition">The x coordinate</param>
         /// <param name="yPosition">The y coordinate</param>
@@ -797,9 +763,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the bond of the given molecule that is closest to the given coordinates. See comment
-        /// for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for
-        /// details on coordinate sets
+        /// Returns the bond of the given molecule that is closest to the given coordinates.
         /// </summary>
         /// <param name="xPosition">The x coordinate</param>
         /// <param name="yPosition">The y coordinate</param>
@@ -826,9 +790,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Returns the bond of the given molecule that is closest to the given coordinates. See comment
-        /// for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates) for
-        /// details on coordinate sets
+        /// Returns the bond of the given molecule that is closest to the given coordinates.
         /// </summary>
         /// <param name="xPosition">The x coordinate</param>
         /// <param name="yPosition">The y coordinate</param>
@@ -856,8 +818,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Sorts a Vector of atoms such that the 2D distances of the atom locations from a given point
-        /// are smallest for the first atoms in the vector. See comment for Center(IAtomContainer
-        /// atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// are smallest for the first atoms in the vector. 
         /// </summary>
         /// <param name="point">The point from which the distances to the atoms are measured</param>
         /// <param name="atoms">The atoms for which the distances to point are measured</param>
@@ -890,8 +851,7 @@ namespace NCDK.Geometries
         /// <summary>
         /// Determines the scale factor for displaying a structure loaded from disk in a frame. An
         /// average of all bond length values is produced and a scale factor is determined which would
-        /// scale the given molecule such that its See comment for Center(IAtomContainer atomCon,
-        /// Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// scale the given molecule.
         /// </summary>
         /// <param name="container">The AtomContainer for which the ScaleFactor is to be calculated</param>
         /// <param name="bondLength">The target bond length</param>
@@ -962,13 +922,9 @@ namespace NCDK.Geometries
 
             foreach (var atom in container.Atoms)
             {
-
                 if (atom == null || atom.Point2D == null) return false;
-
             }
-
             return true;
-
         }
 
         /// <summary>
@@ -1002,9 +958,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Determines if this AtomContainer contains 2D coordinates for some or all molecules. See
-        /// comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary renderingCoordinates)
-        /// for details on coordinate sets
+        /// Determines if this AtomContainer contains 2D coordinates for some or all molecules.
         /// </summary>
         /// <param name="container">the molecule to be considered</param>
         /// <returns>0 no 2d, 1=some, 2= for each atom</returns>
@@ -1042,8 +996,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Determines if this Atom contains 2D coordinates. See comment for Center(IAtomContainer
-        /// atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// Determines if this Atom contains 2D coordinates. 
         /// </summary>
         /// <param name="atom">Description of the Parameter</param>
         /// <returns>bool indication that 2D coordinates are available</returns>
@@ -1053,8 +1006,7 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Determines if this Bond contains 2D coordinates. See comment for Center(IAtomContainer
-        /// atomCon, Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// Determines if this Bond contains 2D coordinates.
         /// </summary>
         /// <param name="bond">Description of the Parameter</param>
         /// <returns>bool indication that 2D coordinates are available</returns>
@@ -1099,7 +1051,7 @@ namespace NCDK.Geometries
         /// method will return <see cref="CoordinateCoverage.None"/>. If the provided container is null <see cref="CoordinateCoverage.None"/> is also returned.
         /// </summary>
         /// <param name="container">the container to inspect</param>
-        /// <returns><see cref="CoordinateCoverage.Full"/>, <see cref="CoordinateCoverage.Partial"/> or {@link  CoordinateCoverage#None} depending on the number of 3D coordinates present</returns>
+        /// <returns><see cref="CoordinateCoverage.Full"/>, <see cref="CoordinateCoverage.Partial"/> or <see cref="CoordinateCoverage.None"/> depending on the number of 3D coordinates present</returns>
         /// <seealso cref="CoordinateCoverage"/>
         /// <seealso cref="Has3DCoordinates(IAtomContainer)"/>
         /// <seealso cref="Get2DCoordinateCoverage(IAtomContainer)"/>
@@ -1136,8 +1088,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Calculates the normalization factor in order to get an average bond length of 1.5. It takes
-        /// only into account Bond's with two atoms. See comment for Center(IAtomContainer atomCon,
-        /// Dimension areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// only into account Bond's with two atoms.
         /// </summary>
         /// <param name="container">Description of the Parameter</param>
         /// <returns>The normalizationFactor value</returns>
@@ -1169,8 +1120,7 @@ namespace NCDK.Geometries
 
         /// <summary>
         /// Determines the best alignment for the label of an atom in 2D space. It returns 1 if left
-        /// aligned, and -1 if right aligned. See comment for Center(IAtomContainer atomCon, Dimension
-        /// areaDim, Dictionary renderingCoordinates) for details on coordinate sets
+        /// aligned, and -1 if right aligned. 
         /// </summary>
         /// <param name="container">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>
@@ -1195,8 +1145,7 @@ namespace NCDK.Geometries
         /// <summary>
         /// Determines the best alignment for the label of an atom in 2D space. It returns 1 if right
         /// (=default) aligned, and -1 if left aligned. returns 2 if top aligned, and -2 if H is aligned
-        /// below the atom See comment for Center(IAtomContainer atomCon, Dimension areaDim, Dictionary
-        /// renderingCoordinates) for details on coordinate sets
+        /// below the atom.
         /// </summary>
         /// <param name="container">Description of the Parameter</param>
         /// <param name="atom">Description of the Parameter</param>

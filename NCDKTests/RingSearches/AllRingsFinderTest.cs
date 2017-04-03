@@ -239,14 +239,12 @@ namespace NCDK.RingSearches
         /// AllRingsFinder actually stops for the given examples.
         /// And it does, after a very long time.
         /// So, the test is commented out because of its long runtime.
-        ///
-        // @cdk.bug 777488
         /// </summary>
+        // @cdk.bug 777488
+        [TestCategory("SlowTest")]
         [TestMethod()]
         public void TestBug777488()
         {
-            //Assume.AssumeTrue(RunSlowTests());
-
             //string filename = "data/Bug646.cml";
             string filename = "NCDK.Data.CML.testBug777488-1-AllRingsFinder.cml";
             //string filename = "data/NCI_diversity_528.mol.cml";

@@ -23,13 +23,9 @@
  */
 
 using NCDK.Common.Collections;
-using NCDK.Graphs;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using static NCDK.Graphs.GraphUtil;
 using static NCDK.Common.Base.Preconditions;
 using NCDK.Config;
 

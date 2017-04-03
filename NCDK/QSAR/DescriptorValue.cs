@@ -84,7 +84,7 @@ namespace NCDK.QSAR
         /// <p/>
         /// Many descriptors return multiple values. In general it is useful for the
         /// descriptor to indicate the names for each value. When a descriptor creates
-        /// a <code>DescriptorValue</code> object, it should supply an array of names equal
+        /// a <see cref="DescriptorValue"/> object, it should supply an array of names equal
         /// in length to the number of descriptor calculated.
         /// <p/>
         /// In many cases, these names can be as simple as X1, X2, ..., XN where X is a prefix
@@ -95,7 +95,7 @@ namespace NCDK.QSAR
         /// Note that by default if a descriptor returns a single value (such as <see cref="NCDK.QSAR.Descriptors.Moleculars.ALOGPDescriptor"/>
         /// the return array will have a single element
         /// <p/>
-        /// In case a descriptor creates a <code>DescriptorValue</code> object with no names, this
+        /// In case a descriptor creates a <see cref="DescriptorValue"/> object with no names, this
         /// method will generate a set of names based on the <see cref="DescriptorSpecification"/> object
         /// supplied at instantiation.
         /// </summary>

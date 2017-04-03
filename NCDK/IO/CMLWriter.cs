@@ -37,31 +37,12 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Serializes a <see cref="IAtomContainerSet"/> or a <see cref="IAtomContainer"/> object to CML 2 code.
-    /// Chemical Markup Language is an XML-based file format {@cdk.cite PMR99}.
+    /// Chemical Markup Language is an XML-based file format <token>cdk-cite-PMR99</token>.
     /// Output can be redirected to other Writer objects like <see cref="StringWriter"/>
     /// and <see cref="StreamWriter"/>. 
     /// </summary>
     /// <example>
-    /// An example:
-    ///
-    /// <code>
-    ///   StringWriter output = new StringWriter();
-    ///   bool makeFragment = true;
-    ///   CMLWriter cmlwriter = new CMLWriter(output, makeFragment);
-    ///   cmlwriter.Write(molecule);
-    ///   cmlwriter.Close();
-    ///   string cmlcode = output.ToString();
-    /// </code>
-    ///
-    /// Output to a file called "molecule.cml" can done with:
-    ///
-    /// <code>
-    ///   FileWriter output = new FileWriter("molecule.cml");
-    ///   CMLWriter cmlwriter = new CMLWriter(output);
-    ///   cmlwriter.Write(molecule);
-    ///   cmlwriter.Close();
-    /// </code>
-    ///
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.CMLWriter_Example.cs"]/*' />
     /// For atoms it outputs: coordinates, element type and formal charge.
     /// For bonds it outputs: order, atoms (2, or more) and wedges.
     /// </example>

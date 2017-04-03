@@ -16,15 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace NCDK.Tools.Diff.Tree
 {
     /// <summary>
-    /// <see cref="IDifference"/> between two {@link bool?}s.
+    /// <see cref="IDifference"/> between two <see cref="bool"/>s.
     /// </summary>
     // @author     egonw
     // @cdk.module diff

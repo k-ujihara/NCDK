@@ -63,7 +63,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AbstractAtomContainerTests.cs" />
+    <Compile Include="AbstractAtomContainerTest.cs" />
     <Compile Include="AbstractCDKObjectTest.cs" />
     <Compile Include="AbstractChemObjectTest.cs" />
     <Compile Include="Beam\Core\ArbitraryMatchingTest.cs" />
@@ -116,12 +116,12 @@
     <Compile Include="Config\TXTBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Default\ElementTest.cs" />
     <Compile Include="Default\ReactionTest.cs" />
-    <Compile Include="Graphs\AllCyclesTests.cs" />
-    <Compile Include="Graphs\GraphUtilTests.cs" />
+    <Compile Include="Graphs\AllCyclesTest.cs" />
+    <Compile Include="Graphs\GraphUtilTest.cs" />
     <Compile Include="Graphs\InitialCyclesTest.cs" />
-    <Compile Include="Graphs\JumboPathGraphTests.cs" />
-    <Compile Include="Graphs\RegularPathGraphTests.cs" />
-    <Compile Include="Graphs\ShortestPathsTests.cs" />
+    <Compile Include="Graphs\JumboPathGraphTest.cs" />
+    <Compile Include="Graphs\RegularPathGraphTest.cs" />
+    <Compile Include="Graphs\ShortestPathsTest.cs" />
     <Compile Include="Hash\AbstractHashGeneratorTest.cs" />
     <Compile Include="Hash\AllEquivalentCyclicSetTest.cs" />
     <Compile Include="Hash\AtomSuppressionTest.cs" />
@@ -230,8 +230,8 @@
     <Compile Include="Reactions\Types\RadicalSiteInitiationReactionTest.cs" />
     <Compile Include="Reactions\Types\RadicalSiteRrAlphaReactionTest.cs" />
     <Compile Include="Reactions\Types\RadicalSiteRrBetaReactionTest.cs" />
-    <Compile Include="Reactions\Types\RadicalSiteRrDeltaReactionTest.cs" />
     <Compile Include="Reactions\Types\RadicalSiteRrGammaReactionTest.cs" />
+    <Compile Include="Reactions\Types\RadicalSiteRrDeltaReactionTest.cs" />
     <Compile Include="Reactions\Types\RearrangementAnionReactionTest.cs" />
     <Compile Include="Reactions\Types\RearrangementCationReactionTest.cs" />
     <Compile Include="Reactions\Types\RearrangementLonePairReactionTest.cs" />
@@ -290,7 +290,7 @@
     <Compile Include="Templates\TestMoleculeFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RingSearches\JumboCyclicVertexSearchTests.cs" />
+    <Compile Include="RingSearches\JumboCyclicVertexSearchTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CDKTestCase.cs" />
@@ -859,7 +859,7 @@
     <Compile Include="Geometries\Volume\VABCVolumeTest.cs" />
     <Compile Include="Geometries\ZMatrixToolsTest.cs" />
     <Compile Include="Graphs\AllPairsShortestPathsTest.cs" />
-    <Compile Include="Graphs\BitMatrixTests.cs" />
+    <Compile Include="Graphs\BitMatrixTest.cs" />
     <Compile Include="Graphs\AtomContainerAtomPermutorTest.cs" />
     <Compile Include="Graphs\AtomContainerBondPermutorTest.cs" />
     <Compile Include="Graphs\AtomContainerPermutorTest.cs" />
@@ -882,8 +882,8 @@
     <Compile Include="Graphs\Invariant\MorganNumbersToolsTest.cs" />
     <Compile Include="Graphs\MatchingTest.cs" />
     <Compile Include="Graphs\Matrix\AdjacencyMatrixTest.cs" />
-    <Compile Include="Graphs\PathToolsTests.cs" />
-    <Compile Include="Graphs\RelevantCyclesTests.cs" />
+    <Compile Include="Graphs\PathToolsTest.cs" />
+    <Compile Include="Graphs\RelevantCyclesTest.cs" />
     <Compile Include="Graphs\PermutorTest.cs" />
     <Compile Include="Graphs\Rebond\BsptTest.cs" />
     <Compile Include="Graphs\Rebond\PointTest.cs" />

@@ -38,14 +38,12 @@ namespace NCDK.Smiles
     /// Unit tests for converting CDK IAtomContainer's to the grins object module.
     /// For clarity often the SMILES output is verified if a test fails it could be
     /// the Grins output changed and there was not a problem with the conversion.
-    ///
+    /// </summary>
     // @author John May
     // @cdk.module test-smiles
-    /// </summary>
     [TestClass()]
     public class CDKToBeamTest
     {
-
         [TestMethod()]
         [ExpectedException(typeof(NullReferenceException))]
         public void NoImplicitHCount()
@@ -646,8 +644,7 @@ namespace NCDK.Smiles
             return Convert(ac, perceiveAromaticity, isomeric, true, true);
         }
 
-        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, bool isomeric, bool aromatic,
-                bool atomClasses)
+        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, bool isomeric, bool aromatic, bool atomClasses)
         {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(ac);

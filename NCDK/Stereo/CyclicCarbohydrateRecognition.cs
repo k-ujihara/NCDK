@@ -21,15 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
-using NCDK.Common.Base;
 using NCDK.Common.Collections;
-using NCDK.Common.Mathematics;
 using NCDK.Graphs;
+using NCDK.Numerics;
 using NCDK.RingSearches;
 using System;
 using System.Collections.Generic;
-using NCDK.Numerics;
 using static NCDK.Graphs.GraphUtil;
 
 namespace NCDK.Stereo
@@ -38,12 +35,13 @@ namespace NCDK.Stereo
     /// Recognise stereochemistry of Haworth, Chair, and Boat (not yet implemented)
     /// projections. These projections are a common way of depicting closed-chain
     /// (furanose and pyranose) carbohydrates and require special treatment to
-    /// interpret stereo conformation. <p/>
-    /// 
-    /// The methods used are described by {@cdk.cite batchelor13}. <p/> 
-    /// <a href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</a>
-    /// <a href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</a>
+    /// interpret stereo conformation. 
+    /// <para>
+    /// The methods used are described by <token>cdk-cite-batchelor13</token>. 
+    /// </para>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Haworth_projection">Haworth projection (Wikipedia)</seealso>
+    /// <seealso href="http://en.wikipedia.org/wiki/Chair_conformation">Chair conformation (Wikipedia)</seealso>
     // @author John May
     // @cdk.githash
     internal sealed class CyclicCarbohydrateRecognition
@@ -54,9 +52,9 @@ namespace NCDK.Stereo
         /// The tested vector is of unit length and so the threshold is simply the
         /// angle (in radians).
         /// </summary>
-        public const double CARDINALITY_THRESHOLD = 5.0 / 180 * Math.PI;
+        public const double CardinalityThreshold = 5.0 / 180 * Math.PI;
 
-        public const double QUART_CARDINALITY_THRESHOLD = CARDINALITY_THRESHOLD / 4;
+        public const double QuartCardinalityThreshold = CardinalityThreshold / 4;
 
         private readonly IAtomContainer container;
         private readonly int[][] graph;
@@ -88,7 +86,6 @@ namespace NCDK.Stereo
         /// <returns>recognised stereocenters</returns>
         public IList<IStereoElement> Recognise(ICollection<Projection> projections)
         {
-
             if (!projections.Contains(Projection.Haworth) && !projections.Contains(Projection.Chair))
                 return Array.Empty<IStereoElement>();
 
@@ -97,7 +94,6 @@ namespace NCDK.Stereo
             RingSearch ringSearch = new RingSearch(container, graph);
             foreach (var isolated in ringSearch.Isolated())
             {
-
                 if (isolated.Length < 5 || isolated.Length > 7)
                     continue;
 
@@ -118,7 +114,7 @@ namespace NCDK.Stereo
                 Vector2 horizontalXy = HorizontalOffset(points, turns, projection.Projection);
 
                 // near vertical, should also flag as potentially ambiguous 
-                if (1 - Math.Abs(horizontalXy.Y) < QUART_CARDINALITY_THRESHOLD)
+                if (1 - Math.Abs(horizontalXy.Y) < QuartCardinalityThreshold)
                     continue;
 
                 int[] above = (int[])cycle.Clone();
@@ -342,7 +338,7 @@ namespace NCDK.Stereo
             deltaX /= mag;
             deltaY /= mag;
 
-            if (haworth && Math.Abs(deltaX) > CARDINALITY_THRESHOLD)
+            if (haworth && Math.Abs(deltaX) > CardinalityThreshold)
                 return Direction.Other;
 
             return deltaY > 0 ? Direction.Up : Direction.Down;
@@ -362,7 +358,7 @@ namespace NCDK.Stereo
 
                 double deltaY = curr.Y - next.Y;
 
-                if (Math.Abs(deltaY) < CARDINALITY_THRESHOLD)
+                if (Math.Abs(deltaY) < CardinalityThreshold)
                     return true;
             }
 

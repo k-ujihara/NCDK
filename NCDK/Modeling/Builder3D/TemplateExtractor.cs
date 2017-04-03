@@ -123,7 +123,7 @@ namespace NCDK.Modeling.Builder3D
                     foreach (var m in imdl)
                     {
                         Console.Out.WriteLine("Atoms:" + m.Atoms.Count);
-                        IRingSet ringSetM = Cycles.SSSR(m).ToRingSet();
+                        IRingSet ringSetM = Cycles.FindSSSR(m).ToRingSet();
                         // som.Add(m);
                         for (int i = 0; i < ringSetM.Count; i++)
                         {
@@ -179,7 +179,7 @@ namespace NCDK.Modeling.Builder3D
                                 // try{ HueckelAromaticityDetector.DetectAromaticity(m);
                                 // }Catch(Exception ex1){ Console.Out.WriteLine("Could not find
                                 // aromaticity due to:"+ex1); }
-                                IRingSet ringSetM = Cycles.SSSR(m).ToRingSet();
+                                IRingSet ringSetM = Cycles.FindSSSR(m).ToRingSet();
 
                                 if (counterMolecules % 1000 == 0)
                                 {
@@ -369,7 +369,7 @@ namespace NCDK.Modeling.Builder3D
 
         public IList<IBitFingerprint> MakeFingerprintsFromSdf(bool anyAtom, bool anyAtomAnyBond, IDictionary<string, int> timings, TextReader fin, int limit)
         {
-            IFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DEFAULT_SIZE, HybridizationFingerprinter.DEFAULT_SEARCH_DEPTH);
+            IFingerprinter fingerPrinter = new HybridizationFingerprinter(HybridizationFingerprinter.DefaultSize, HybridizationFingerprinter.DefaultSearchDepth);
             //QueryAtomContainer query=null;
             IAtomContainer query = null;
             List<IBitFingerprint> data = new List<IBitFingerprint>();

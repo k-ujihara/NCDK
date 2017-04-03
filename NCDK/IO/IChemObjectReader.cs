@@ -69,12 +69,12 @@ namespace NCDK.IO
         /// any problem in the format of the read file, instead of trying to
         /// recover from that.
         /// </summary>
-        ChemObjectReaderModes ReaderMode { set; }
+        ChemObjectReaderModes ReaderMode { get;  set; }
 
         /// <summary>
         /// An error handler that is sent events when file format issues occur.
         /// </summary>
-        IChemObjectReaderErrorHandler ErrorHandler { set; }
+        IChemObjectReaderErrorHandler ErrorHandler { get; set; }
 
         /// <summary>
         /// Redirects an error message to the <see cref="IChemObjectReaderErrorHandler"/>.

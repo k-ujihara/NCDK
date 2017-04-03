@@ -36,17 +36,9 @@ namespace NCDK.Geometries
     /// By default, the RDF is unweighted. By implementing and registering a
     /// <c>RDFWeightFunction</c>, the RDF can become weighted. For example,
     /// to weight according to partial charge interaction, this code could be used:
-    /// <code>
-    /// RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0,
-    ///     new RDFWeightFunction() {
-    ///         public double Calculate(Atom atom, Atom atom2) {
-    ///             return atom.Charge*atom2.Charge;
-    ///         }
-    ///     }
-    /// );
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Geometries.RDFCalculator_Example.cs"]/*' />
     /// </example>
-    /// <seealso cref="IRDFWeightFunction"/>
+    /// <seealso cref="WeightFunction"/>
     // @cdk.module  extra
     // @cdk.githash
     // @author      Egon Willighagen
@@ -60,7 +52,19 @@ namespace NCDK.Geometries
         private double resolution;
         private double peakWidth;
 
-        private IRDFWeightFunction weightFunction;
+        /// <summary>
+        /// Calculates the weight for the interaction between the two atoms.
+        /// </summary>
+        /// <param name="atom">First atom.</param>
+        /// <param name="atom2">Second atom.</param>
+        /// <returns></returns>
+        // @cdk.module  extra
+        // @cdk.githash
+        // @author      Egon Willighagen
+        // @cdk.created 2005-01-14
+        public delegate double WeightFunction(IAtom atom, IAtom atom2);
+
+        private WeightFunction weightFunction;
 
         /// <summary>
         /// Constructs a RDF calculator that calculates a unweighted, digitized
@@ -83,7 +87,7 @@ namespace NCDK.Geometries
         /// <param name="peakWidth">width of the gaussian applied to the peaks in Ångstrom</param>
         /// <param name="weightFunction">the weight function. If null, then an unweighted RDF is calculated</param>
         public RDFCalculator(double startCutoff, double cutoff, double resolution, double peakWidth,
-                IRDFWeightFunction weightFunction)
+                WeightFunction weightFunction)
         {
             this.startCutoff = startCutoff;
             this.cutoff = cutoff;
@@ -136,7 +140,7 @@ namespace NCDK.Geometries
                 double weight = 1.0;
                 if (weightFunction != null)
                 {
-                    weight = weightFunction.Calculate(atom, atomInContainer);
+                    weight = weightFunction(atom, atomInContainer);
                 }
                 if (factors.Length > 0)
                 {

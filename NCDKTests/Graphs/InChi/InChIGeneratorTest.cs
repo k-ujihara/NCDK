@@ -24,7 +24,7 @@ using NCDK.Stereo;
 using NCDK.NInChI;
 using NCDK.Numerics;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// TestCase for the InChIGenerator.

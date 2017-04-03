@@ -38,7 +38,7 @@ namespace NCDK.Fingerprint
 {
     /// <summary>
     ///  <para>Circular fingerprints: for generating fingerprints that are functionally equivalent to ECFP-2/4/6 and FCFP-2/4/6
-    ///  fingerprints, which are partially described by Rogers et al. {@cdk.cite Rogers2010}.</para>
+    ///  fingerprints, which are partially described by Rogers et al. <token>cdk-cite-Rogers2010</token>.</para>
     /// </summary>
     /// <remarks>
     ///  <para>While the literature describes the method in detail, it does not disclose either the hashing technique for converting
@@ -53,7 +53,7 @@ namespace NCDK.Fingerprint
     ///    <para>The  integer hashing is done using the CRC32 algorithm, using the Java CRC32 class, which is the same
     ///    formula/parameters as used by PNG files, and described in:</para>
     ///
-    ///        <a href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</a>
+    ///        <see href="http://www.w3.org/TR/PNG/#D-CRCAppendix">http://www.w3.org/TR/PNG/#D-CRCAppendix</see>
     ///
     ///    <para>Implicit vs. explicit hydrogens are handled, i.e. it doesn't matter whether the incoming molecule is hydrogen
     ///    suppressed or not.</para>
@@ -65,13 +65,13 @@ namespace NCDK.Fingerprint
     ///  binary compatibility with formerly identical implementations on other platforms.</para>
     ///
     ///  <para>For the FCFP class of fingerprints, atom typing is done using a scheme similar to that described by
-    ///  Green et al {@cdk.cite Green1994}.</para>
+    ///  Green et al <token>cdk-cite-Green1994</token>.</para>
     ///  
     ///  <para>The fingerprints and their uses have been described in the literature: A.M. Clark, M. Sarker, E. Ekins,
     ///  "New target prediction and visualization tools incorporating open source molecular fingerprints for TB Mobile 2.0",
     ///  Journal of Cheminformatics, 6:38 (2014).</para>
     ///  
-    ///      <a href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</a>
+    ///      <see href="http://www.jcheminf.com/content/6/1/38">http://www.jcheminf.com/content/6/1/38</see>
     /// </remarks>
     // @author         am.clark
     // @cdk.created    2014-01-01

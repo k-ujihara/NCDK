@@ -19,7 +19,6 @@ using System.Text;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-
     /// <summary>
     /// An AST Tree visitor. It dumps the whole AST tree into console
     /// </summary>
@@ -30,7 +29,6 @@ namespace NCDK.Smiles.SMARTS.Parser
     // @cdk.keyword SMARTS AST
     public class SmartsDumpVisitor : SMARTSParserVisitor
     {
-
         public object Visit(ASTRingIdentifier node, object data)
         {
             System.Console.Out.WriteLine(IndentString() + node);

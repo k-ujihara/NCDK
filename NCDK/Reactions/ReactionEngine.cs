@@ -58,14 +58,12 @@ namespace NCDK.Reactions
             {
                 Console.Error.WriteLine(e.StackTrace);
             }
-
         }
 
         /// <summary>
         /// Extract the mechanism necessary for this reaction.
-        ///
-        /// <param name="entry">The EntryReact object</param>
         /// </summary>
+        /// <param name="entry">The EntryReact object</param>
         private void ExtractMechanism(EntryReact entry)
         {
             string mechanismName = "NCDK.Reactions.Mechanisms." + entry.Mechanism;
@@ -86,13 +84,27 @@ namespace NCDK.Reactions
             }
         }
 
+        /*protected*/
+        internal void CheckInitiateParams(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
+        {
+            Debug.WriteLine($"initiate reaction: {GetType().Name}");
+
+            if (reactants.Count != 1)
+            {
+                throw new CDKException($"{GetType().Name} only expects one reactant");
+            }
+            if (agents != null)
+            {
+                throw new CDKException($"{GetType().Name} don't expects agents");
+            }
+        }
+
         /// <summary>
         /// Open the Dictionary OWLReact.
-        ///
+        /// </summary>
         /// <param name="nameDict">Name of the Dictionary</param>
         /// <param name="reaction">The IReactionProcess</param>
         /// <returns>The entry for this reaction</returns>
-        /// </summary>
         private EntryReact InitiateDictionary(string nameDict, IReactionProcess reaction)
         {
             DictionaryDatabase db = new DictionaryDatabase();
@@ -110,13 +122,13 @@ namespace NCDK.Reactions
         {
             var paramDic = entry.ParameterClass;
 
-            ParameterList = new List<IParameterReact>();
+            ParameterList = new List<IParameterReaction>();
             foreach (var param in paramDic)
             {
                 string paramName = "NCDK.Reactions.Types.Parameters." + param[0];
                 try
                 {
-                    IParameterReact ipc = (IParameterReact)this.GetType().Assembly.GetType(paramName).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
+                    IParameterReaction ipc = (IParameterReaction)this.GetType().Assembly.GetType(paramName).GetConstructor(Type.EmptyTypes).Invoke(new object[0]);
                     ipc.IsSetParameter = bool.Parse(param[1]);
                     ipc.Value = param[2];
 
@@ -137,18 +149,17 @@ namespace NCDK.Reactions
         }
 
         /// <summary>
-        /// the current parameter IDictionary for this reaction.
+        /// The current parameter IDictionary for this reaction.
         /// </summary>
         /// <remarks>Must be done before calling calculate as the parameters influence the calculation outcome.</remarks>
-        public IList<IParameterReact> ParameterList { get; set; }
+        public IList<IParameterReaction> ParameterList { get; set; }
 
         /// <summary>
         /// Return the IParameterReact if it exists given the class.
-        ///
+        /// </summary>
         /// <param name="paramClass">The class</param>
         /// <returns>The IParameterReact</returns>
-        /// </summary>
-        public IParameterReact GetParameterClass(Type paramClass)
+        public IParameterReaction GetParameterClass(Type paramClass)
         {
             foreach (var ipr in ParameterList)
             {

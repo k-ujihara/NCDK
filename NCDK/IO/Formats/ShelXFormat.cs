@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://shelx.uni-ac.gwdg.de/SHELX/">here</a>.
+    /// See <see href="http://shelx.uni-ac.gwdg.de/SHELX/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

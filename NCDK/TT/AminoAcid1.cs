@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2005-2007  Egon Willighagen <e.willighagen@science.ru.nl>
  *
@@ -30,6 +30,15 @@ using System.Text;
 
 namespace NCDK.Default
 {
+    /// <summary>
+    /// A AminoAcid is Monomer which stores additional amino acid specific
+    /// informations, like the N-terminus atom.
+    /// </summary>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author      Egon Willighagen <e.willighagen@science.ru.nl>
+    // @cdk.created 2005-08-11
+    // @cdk.keyword amino acid
     [Serializable]
     public class AminoAcid
         : Monomer, IAminoAcid
@@ -47,18 +56,27 @@ namespace NCDK.Default
         /// <summary>C-terminus atom.</summary>
         public IAtom CTerminus => cTerminus;
         
+		/// <summary>
+        /// Add an <see cref="IAtom"/> and makes it the N-terminus atom.
+        /// </summary>
+        /// <param name="atom">The <see cref="IAtom"/> that is the N-terminus</param>
         public void AddNTerminus(IAtom atom)
         {
             base.Atoms.Add(atom);    //  OnStateChanged is called here
             nTerminus = atom;
         }
 
+		/// <summary>
+        /// Add an <see cref="IAtom"/> and makes it the C-terminus atom.
+        /// </summary>
+        /// <param name="atom">The <see cref="IAtom"/> that is the C-terminus</param>
         public void AddCTerminus(IAtom atom)
         {
             base.Atoms.Add(atom);    //  OnStateChanged is called here
             cTerminus = atom;
         }
 
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AminoAcid)base.Clone(map);
@@ -69,6 +87,7 @@ namespace NCDK.Default
             return clone;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -86,6 +105,15 @@ namespace NCDK.Default
 }
 namespace NCDK.Silent
 {
+    /// <summary>
+    /// A AminoAcid is Monomer which stores additional amino acid specific
+    /// informations, like the N-terminus atom.
+    /// </summary>
+    // @cdk.module  silent
+    // @cdk.githash
+    // @author      Egon Willighagen <e.willighagen@science.ru.nl>
+    // @cdk.created 2005-08-11
+    // @cdk.keyword amino acid
     [Serializable]
     public class AminoAcid
         : Monomer, IAminoAcid
@@ -103,18 +131,27 @@ namespace NCDK.Silent
         /// <summary>C-terminus atom.</summary>
         public IAtom CTerminus => cTerminus;
         
+		/// <summary>
+        /// Add an <see cref="IAtom"/> and makes it the N-terminus atom.
+        /// </summary>
+        /// <param name="atom">The <see cref="IAtom"/> that is the N-terminus</param>
         public void AddNTerminus(IAtom atom)
         {
             base.Atoms.Add(atom);    //  OnStateChanged is called here
             nTerminus = atom;
         }
 
+		/// <summary>
+        /// Add an <see cref="IAtom"/> and makes it the C-terminus atom.
+        /// </summary>
+        /// <param name="atom">The <see cref="IAtom"/> that is the C-terminus</param>
         public void AddCTerminus(IAtom atom)
         {
             base.Atoms.Add(atom);    //  OnStateChanged is called here
             cTerminus = atom;
         }
 
+        /// <inheritdoc/>
         public override ICDKObject Clone(CDKObjectMap map)
         {
             var clone = (AminoAcid)base.Clone(map);
@@ -125,6 +162,7 @@ namespace NCDK.Silent
             return clone;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();

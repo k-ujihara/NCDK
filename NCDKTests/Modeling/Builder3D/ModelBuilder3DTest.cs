@@ -172,8 +172,6 @@ namespace NCDK.Modeling.Builder3D
         [TestCategory("SlowTest")]
         public void TestModelBuilder3D_CCCCCCCCCC_with2d()
         {
-            //Assume.AssumeTrue(RunSlowTests());
-
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Silent.ChemObjectBuilder.Instance);
             string smile = "CCCCCCCCCC";
             SmilesParser sp = new SmilesParser(Silent.ChemObjectBuilder.Instance);

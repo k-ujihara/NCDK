@@ -39,15 +39,15 @@ namespace NCDK.Fingerprint
     public class GraphOnlyFingerprinter : Fingerprinter
     {
         /// <summary>
-        /// Creates a fingerprint generator of length <see cref="Fingerprinter.DEFAULT_SIZE"/>
-        /// and with a search depth of <see cref="Fingerprinter.DEFAULT_SEARCH_DEPTH"/>.
+        /// Creates a fingerprint generator of length <see cref="Fingerprinter.DefaultSize"/>
+        /// and with a search depth of <see cref="Fingerprinter.DefaultSearchDepth"/>.
         /// </summary>
         public GraphOnlyFingerprinter()
-            : base(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH)
+            : base(DefaultSize, DefaultSearchDepth)
         { }
 
         public GraphOnlyFingerprinter(int size)
-            : base(size, DEFAULT_SEARCH_DEPTH)
+            : base(size, DefaultSearchDepth)
         { }
 
         public GraphOnlyFingerprinter(int size, int searchDepth)

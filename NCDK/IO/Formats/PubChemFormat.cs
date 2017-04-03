@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</a>.
+    /// See <see href="http://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

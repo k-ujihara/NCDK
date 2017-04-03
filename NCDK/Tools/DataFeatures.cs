@@ -31,12 +31,8 @@ namespace NCDK.Tools
     /// <example>
     /// To test whether a IChemFormat supports a certain feature, the
     /// following code can be used:
-    /// <code>
-    /// int features = new XYZFormat().SupportedDataFeatures;
-    /// bool has3DCoords = (features &amp; HAS_3D_COORDINATES) == HAS_3D_COORDINATES;
-    /// </code>
-    /// 
-    /// This list of constants matches the latest <a href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml">Blue Obelisk Data Features Ontology</a>.
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Tools.DataFeatures_Example.cs+1"]/*' />
+    /// This list of constants matches the latest <see href="http://qsar.sourceforge.net/ontologies/data-features/index.xhtml">Blue Obelisk Data Features Ontology</see>.
     /// </example>
     // @author     Egon Willighagen <ewilligh@uni-koeln.de>
     // @cdk.module annotation

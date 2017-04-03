@@ -37,7 +37,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// <summary>
     /// Prediction of logP based on the atom-type method called XLogP. 
     /// <b>Requires all hydrogens to be explicit</b>.
-    /// <para>For description of the methodology see Ref. {@cdk.cite WANG97} and {@cdk.cite WANG00}.
+    /// <para>For description of the methodology see Ref. <token>cdk-cite-WANG97</token> and <token>cdk-cite-WANG00</token>.
     /// Actually one molecular factor is missing (presence of para Hs donor pair).</para>
     /// </summary>
     /// <remarks>
@@ -188,7 +188,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
                 return GetDummyDescriptorValue(e);
             }
 
-            IRingSet rs = Cycles.SSSR(ac).ToRingSet();
+            IRingSet rs = Cycles.FindSSSR(ac).ToRingSet();
             if (checkAromaticity)
             {
                 try

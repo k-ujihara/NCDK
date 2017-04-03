@@ -21,11 +21,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace NCDK.IO.Setting
 {
@@ -38,21 +36,7 @@ namespace NCDK.IO.Setting
     /// that character case differences do not affect the retrieval of objects.
     /// </summary>
     /// <example>
-    /// <b>Usage:</b>
-    /// <code>
-    /// // create the manager and add a setting
-    /// var manager = new SettingManager&lt;IOSetting&gt;();
-    /// manager.Add(new BooleanIOSetting("Sample", IOSetting.Medium, "This is a sample?", "true"));
-    ///
-    /// // check the setting is present (case insensitive)
-    /// if (manager.Has("sample")) {    ///
-    ///      // access requiring multiple lines of code
-    ///      BooleanIOSetting setting = manager["sample"];
-    ///      string           v1      = setting.Setting;
-    ///      // single line access (useful for conditional statements)
-    ///      string v2 = manager["sample", typeof(BooleanIOSetting]).Setting;
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Setting.SettingManager_Example.cs"]/*' />
     /// </example>
     /// <typeparam name="T">the type of setting that will be managed (e.g. IOSetting).</typeparam>
     /// <seealso cref="ISetting"/>
@@ -105,15 +89,7 @@ namespace NCDK.IO.Setting
         /// the add to be used in assignments as follows:
         /// </summary>
         /// <example>
-        /// <code>
-        /// SettingManager   manager  = new SettingManager();
-        /// BooleanIOSetting setting1 = manager.Add(new BooleanIOSetting("use.3d", ...));
-        /// BooleanIOSetting setting2 = manager.Add(new BooleanIOSetting("use.3d", ...));
-        ///
-        /// // setting1 == setting2 and so changing a field in setting1 will also change the field
-        /// // in setting2
-        /// </code>
-        ///
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Setting.SettingManager_Example.cs+Add"]/*' />
         /// If the names are not equal or the names are equal but the classes are not the new setting
         /// is added and returned.
         ///</example>
@@ -147,13 +123,7 @@ namespace NCDK.IO.Setting
         /// type is provided a <see cref="InvalidCastException"/> may be thrown.
         /// </summary>
         /// <example>
-        /// <code>
-        /// SettingManager manager = ...;
-        /// manger.Add(new BooleanIOSetting("name", ...));
-        /// 
-        /// BooleanIOSetting setting = manager["Name"]; // okay
-        /// OptionIOSetting setting  = manager["Name"]; // class cast exception
-        /// </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.Setting.SettingManager_Example.cs+get"]/*' />
         /// </example>
         /// <param name="name">name of the setting to retrieve</param>
         /// <returns>instance of the setting for the provided name</returns>

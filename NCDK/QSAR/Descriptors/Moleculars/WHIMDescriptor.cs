@@ -27,7 +27,7 @@ using System.Linq;
 
 namespace NCDK.QSAR.Descriptors.Moleculars {
     /// <summary>
-    /// Holistic descriptors described by Todeschini et al {@cdk.cite TOD98}.
+    /// Holistic descriptors described by Todeschini et al <token>cdk-cite-TOD98</token>.
     /// </summary>
     /// <remarks>
     /// <para>
@@ -42,7 +42,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     /// <item>E-state values described by Kier &amp; Hall</item>
     /// </list>
     /// Currently weighting schemes 1,2,3,4 &amp; 5 are implemented. The weight values
-    /// are taken from {@cdk.cite TOD98} and as a result 19 elements are considered.
+    /// are taken from <token>cdk-cite-TOD98</token> and as a result 19 elements are considered.
     /// </para>
     /// <para>For each weighting scheme we can obtain
     /// <list type="bullet"> 
@@ -50,7 +50,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars {
     /// <item>6 non-directional WHIM descriptors (T, A, V, K, G, D)</item>
     /// </list>
     /// </para>
-    /// <para>Though {@cdk.cite TOD98} mentions that for planar molecules only 8 directional WHIM
+    /// <para>Though <token>cdk-cite-TOD98</token> mentions that for planar molecules only 8 directional WHIM
     /// descriptors are required the current code will return all 11.
     /// </para>
     /// <para>

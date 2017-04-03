@@ -23,7 +23,7 @@ using NCDK.NInChI;
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// Factory providing access to <see cref="InChIGenerator"/> and <see cref="InChIToStructure"/>.

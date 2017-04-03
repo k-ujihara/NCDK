@@ -28,20 +28,19 @@ namespace NCDK
     /// <summary>
     /// Enumeration that defines the two possible chiralities for this stereochemistry type.
     /// </summary>
-    public struct TetrahedralStereo
-    {
 <# 
-        GenerateEnumBody(
-            "TetrahedralStereo", 
-             new[]
-            {
-                "Unset",
-                "Clockwise",
-                "AntiClockwise",
-            },
-            true
-        ); 
+    GenerateEnumBody(
+        "TetrahedralStereo", 
+            new[]
+        {
+            "Unset",
+            "Clockwise",
+            "AntiClockwise",
+        },
+        true
+    ); 
 #>
+	{
         public bool IsUnset => this.Ordinal == 0;
 
         /// <summary>

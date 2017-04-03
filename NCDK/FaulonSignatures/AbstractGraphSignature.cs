@@ -69,7 +69,7 @@ namespace NCDK.FaulonSignatures
 
         /// <summary>
         /// Return the canonical signature string for the vertex at index 
-        /// <code>vertexIndex</code> in the graph.
+        /// <paramref name="vertexIndex"/> in the graph.
         /// </summary>
         /// <param name="vertexIndex">the vertex index</param>
         /// <returns>the canonical signature string for this vertex</returns>
@@ -77,7 +77,7 @@ namespace NCDK.FaulonSignatures
 
         /// <summary>
         /// Return the canonical signature string for the vertex at index 
-        /// <code>vertexIndex</code> in the graph with a height of 
+        /// <paramref name="vertexIndex"/> in the graph with a height of 
         /// <paramref name="height"/>.
         /// </summary>
         /// <param name="vertexIndex">the vertex index</param>
@@ -86,7 +86,7 @@ namespace NCDK.FaulonSignatures
         public abstract string SignatureStringForVertex(int vertexIndex, int height);
 
         /// <summary>
-        /// Generate and return an AbstractVertexSignature rooted at the vertex with index <code>vertexIndex</code>.
+        /// Generate and return an AbstractVertexSignature rooted at the vertex with index <paramref name="vertexIndex"/>.
         /// </summary>
         /// <param name="vertexIndex">the vertex to use</param>
         /// <returns>an AbstractSignature object</returns>

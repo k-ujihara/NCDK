@@ -102,8 +102,8 @@ namespace NCDK.Reactions.Types
             MakeSureAtomTypesAreRecognized(reactant);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -202,8 +202,8 @@ namespace NCDK.Reactions.Types
             setOfReactants.Add(molecule);
 
             IReactionProcess type = new ElectronImpactNBEReaction();
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -273,8 +273,8 @@ namespace NCDK.Reactions.Types
 
             IReactionProcess type = new ElectronImpactNBEReaction();
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -341,8 +341,8 @@ namespace NCDK.Reactions.Types
 
             IReactionProcess type = new ElectronImpactNBEReaction();
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -394,8 +394,8 @@ namespace NCDK.Reactions.Types
             /* manually put the reactive center */
             molecule.Atoms[1].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -427,8 +427,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;

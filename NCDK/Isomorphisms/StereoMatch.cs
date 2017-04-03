@@ -39,7 +39,7 @@ namespace NCDK.Isomorphisms
     /// </code></example>
     // @author John May
     // @cdk.module isomorphism
-    internal sealed class StereoMatch : NCDK.Common.Base.Predicate<int[]>
+    internal sealed class StereoMatch 
     {
         /// <summary>Query and target contains.</summary>
         private readonly IAtomContainer query, target;

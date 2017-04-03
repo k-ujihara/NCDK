@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://en.wikipedia.org/wiki/Chemical_Markup_Language">here</a>.
+    /// See <see href="http://en.wikipedia.org/wiki/Chemical_Markup_Language">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

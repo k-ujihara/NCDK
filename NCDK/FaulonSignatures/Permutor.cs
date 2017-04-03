@@ -6,12 +6,12 @@ namespace NCDK.FaulonSignatures
     /// General permutation generator, that uses orderly generation by ranking and
     /// unranking. The basic idea is that all permutations of length N can be ordered
     /// (lexicographically) like:
-    /// <code>
+    /// <pre>
     /// 0 [0, 1, 2]
     /// 1 [0, 2, 1]
     /// 2 [1, 0, 2]
     /// ...
-    /// </code>
+    /// </pre>
     /// where the number to the left of each permutation is the <i>rank</i> - really
     /// just the index in this ordered list. The list is created on demand, by a
     /// process called <i>unranking</i> where the rank is converted to the 

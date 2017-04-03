@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 2001-2008  Egon Willighagen <egonw@users.sf.net>
  *
@@ -63,7 +63,6 @@ namespace NCDK.Default
             secondaryStructures.Add(structure);
         }
 
-
         public IEnumerable<IPDBStructure> GetStructures()
         {
             //        don't return the original
@@ -74,10 +73,8 @@ namespace NCDK.Default
         /// Adds the atom oAtom without specifying a <see cref="IMonomer"/> or a Strand. Therefore the
         /// atom to this AtomContainer, but not to a certain Strand or <see cref="IMonomer"/> (intended
         /// e.g. for HETATMs).
-        ///
-        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         /// </summary>
-
+        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         public void Add(IPDBAtom oAtom)
         {
             base.Atoms.Add(oAtom);
@@ -86,10 +83,9 @@ namespace NCDK.Default
         /// <summary>
         /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
         /// record of the iCode.
-        ///
+        /// </summary>
         /// <param name="oAtom">The IPDBAtom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-        /// </summary>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -113,9 +109,8 @@ namespace NCDK.Default
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+		/// <seealso cref="IPolymer.GetMonomerNames()"/>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original
@@ -171,7 +166,6 @@ namespace NCDK.Silent
             secondaryStructures.Add(structure);
         }
 
-
         public IEnumerable<IPDBStructure> GetStructures()
         {
             //        don't return the original
@@ -182,10 +176,8 @@ namespace NCDK.Silent
         /// Adds the atom oAtom without specifying a <see cref="IMonomer"/> or a Strand. Therefore the
         /// atom to this AtomContainer, but not to a certain Strand or <see cref="IMonomer"/> (intended
         /// e.g. for HETATMs).
-        ///
-        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         /// </summary>
-
+        /// <param name="oAtom">The <see cref="IPDBAtom"/> to add</param>
         public void Add(IPDBAtom oAtom)
         {
             base.Atoms.Add(oAtom);
@@ -194,10 +186,9 @@ namespace NCDK.Silent
         /// <summary>
         /// Adds the atom oAtom to a specified Monomer. Additionally, it keeps
         /// record of the iCode.
-        ///
+        /// </summary>
         /// <param name="oAtom">The IPDBAtom to add</param>
         /// <param name="oMonomer">The monomer the atom belongs to</param>
-        /// </summary>
         public void AddAtom(IPDBAtom oAtom, IMonomer oMonomer)
         {
             base.AddAtom(oAtom, oMonomer);
@@ -221,9 +212,8 @@ namespace NCDK.Silent
 
         /// <summary>
         /// Returns the monomer names in the order in which they were added.
-        ///
-        /// @see IPolymer#GetMonomerNames()
         /// </summary>
+		/// <seealso cref="IPolymer.GetMonomerNames()"/>
         public IEnumerable<string> GetMonomerNamesInSequentialOrder()
         {
             // don't return the original

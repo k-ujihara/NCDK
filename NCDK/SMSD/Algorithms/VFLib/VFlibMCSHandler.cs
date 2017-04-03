@@ -127,11 +127,8 @@ namespace NCDK.SMSD.Algorithms.VFLib
             return false;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
+        /// <summary>
         /// Set the VFLib MCS software
-        ///
-        /// <param name="reactant">/// @param product</param>
         /// </summary>
         public void Set(MolHandler reactant, MolHandler product)
         {
@@ -139,10 +136,7 @@ namespace NCDK.SMSD.Algorithms.VFLib
             mol2 = product.Molecule;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
-        /// <param name="source">/// @param target</param>
-        /// </summary>
+        /// <inheritdoc/>
         public void Set(IQueryAtomContainer source, IAtomContainer target)
         {
             queryMol = source;

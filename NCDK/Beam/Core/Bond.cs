@@ -26,8 +26,6 @@
  * of the authors and should not be interpreted as representing official policies,
  * either expressed or implied, of the FreeBSD Project.
  */
-
-using System;
 using System.Collections.Generic;
 
 namespace NCDK.Beam
@@ -55,8 +53,8 @@ namespace NCDK.Beam
     /// <item><term><see cref="Up"/></term><term>/</term><term>2</term><term><see cref="Down"/></term></item>
     /// <item><term><see cref="Down"/></term><term>\</term><term>2</term><term><see cref="Up"/></term></item>
     /// </list>
-    /// <a href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</a>
     /// </remarks>
+    /// <seealso href="http://www.opensmiles.org/opensmiles.html#bonds">Bonds, OpenSMILES Specification</seealso>
     // @author John May
     public class Bond
     {
@@ -160,7 +158,7 @@ namespace NCDK.Beam
         public int Order => order;
 
         /// <summary>
-        /// Access the inverse of a directional bond ({@link #Up}, {@link #Down}). If
+        /// Access the inverse of a directional bond <see cref="Up"/>, <see cref="Down"/>). If
         /// a bond is non-directional the same bond is returned.
         /// </summary>
         /// <returns>inverse of the bond</returns>

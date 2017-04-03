@@ -28,7 +28,7 @@ namespace NCDK.IO.CML
     /// <summary>
     /// This class resolves DOCTYPE declaration for Chemical Markup Language (CML)
     /// files and uses a local version for validation. More information about
-    /// CML can be found at <a href="http://www.xml-cml.org/">http://www.xml-cml.org/</a>.
+    /// CML can be found at <see href="http://www.xml-cml.org/">http://www.xml-cml.org/</see>.
     /// </summary>
     // @cdk.module io
     // @cdk.githash

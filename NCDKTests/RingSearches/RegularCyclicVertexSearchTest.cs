@@ -214,7 +214,7 @@ namespace NCDK.RingSearches
         /// C1CC2CCC1CC2
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed()
+        public virtual void TestFused()
         {
             int[][] g = new int[][] { new[] { 1, 5, 6 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4, 7 }, new[] { 3, 5 }, new[] { 0, 4 }, new[] { 0, 7 }, new[] { 6, 3 } };
             CyclicVertexSearch search = new RegularCyclicVertexSearch(g);
@@ -230,7 +230,7 @@ namespace NCDK.RingSearches
         /// have a (non cyclic) edge which connects them C1CC2(CCC1CC2)C12CCC(CC1)CC2
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_BiocycloEdgeLinked()
+        public virtual void TestFused_BiocycloEdgeLinked()
         {
             // biocyclooctanylbiocylooctane like
             int[][] g = new int[][]{new[]{1, 5, 6}, new[] {0, 2}, new[] {1, 3}, new[] {2, 4, 7, 8}, new[] {3, 5}, new[] {0, 4}, new[] {0, 7}, new[] {6, 3},
@@ -250,7 +250,7 @@ namespace NCDK.RingSearches
         /// cyclic vertex which is adjacent to both C(C12CCC(CC1)CC2)C12CCC(CC1)CC2
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_BiocycloVertexLinked()
+        public virtual void TestFused_BiocycloVertexLinked()
         {
             // biocyclooctanylbiocylooctane like
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3, 6, 16}, new[] {2, 4}, new[] {3, 5}, new[] {4, 0, 7}, new[] {2, 7}, new[] {6, 5}, new[] {9, 13},
@@ -268,7 +268,7 @@ namespace NCDK.RingSearches
         /// C1CCC2CCCCC2C1
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_OrthoFused()
+        public virtual void TestFused_OrthoFused()
         {
             // napthalene like
             int[][] g = new int[][] { new[] { 1, 5 }, new[] { 0, 2 }, new[] { 1, 3 }, new[] { 2, 4 }, new[] { 3, 5, 7 }, new[] { 0, 6, 4 }, new[] { 5, 9 }, new[] { 4, 8 }, new[] { 7, 9 }, new[] { 6, 8 } };
@@ -284,7 +284,7 @@ namespace NCDK.RingSearches
         /// C1CCC2CC3CCCCC3CC2C1
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_BiorthoFused()
+        public virtual void TestFused_BiorthoFused()
         {
             // 3 fused rings
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2, 10}, new[] {3, 13, 1}, new[] {2, 4}, new[] {3, 5, 7}, new[] {0, 6, 4}, new[] {5, 9}, new[] {4, 8}, new[] {7, 9},
@@ -301,7 +301,7 @@ namespace NCDK.RingSearches
         /// C1CC23CCC4(CC2)CCC2(CCCC5(CCCC6(CCC7(CCCC8(CCC9(CC8)CCC8(CCCC%10(CCCC%11(CCC(C1)(CC%11)C3)C%10)C8)CC9)C7)CC6)C5)C2)CC4
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_Cylclophane()
+        public virtual void TestFused_Cylclophane()
         {
             // medium size spiro cyclophane
             int[][] g = new int[][]{ new[] {1, 5}, new[] {0, 2}, new[] {1, 3, 50, 46}, new[] {2, 4}, new[] {3, 5}, new[] {0, 4, 7, 8}, new[] {7, 10}, new[] {5, 6}, new[] {5, 9},
@@ -323,7 +323,7 @@ namespace NCDK.RingSearches
         /// CHEBI:33128
         /// </summary>
         [TestMethod()]
-        public virtual void TestFUsed_Fullerene()
+        public virtual void TestFused_Fullerene()
         {
             int[][] g = new int[][]{ new[] {1, 4, 8}, new[] {0, 2, 11}, new[] {1, 3, 14}, new[] {2, 4, 17}, new[] {3, 0, 5}, new[] {4, 6, 19}, new[] {5, 7, 21},
                         new[] {6, 8, 24}, new[] {7, 0, 9}, new[] {8, 10, 25}, new[] {9, 11, 28}, new[] {10, 1, 12}, new[] {11, 13, 29}, new[] {12, 14, 32}, new[] {13, 2, 15},

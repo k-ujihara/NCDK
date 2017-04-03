@@ -29,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The descriptor is described in {@cdk.cite YANG2010} and is an approach to
+    /// The descriptor is described in <token>cdk-cite-YANG2010</token> and is an approach to
     /// characterizing molecular complexity based on the Murcko framework present
     /// in the molecule. The descriptor is the ratio of heavy atoms in the framework to the
     /// total number of heavy atoms in the molecule. By definition, acyclic molecules

@@ -77,13 +77,13 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        /// calculate the electronegativity of orbitals pi.
+        /// Calculate the electronegativity of orbitals pi.
         /// </summary>
-        /// <param name="ac">IAtomContainer</param>
+        /// <param name="ac"></param>
         /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
         /// <param name="maxIterations">The maximal number of Iteration</param>
         /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
-        /// <returns>piElectronegativity</returns>
+        /// <returns>Electronegativity of orbitals pi.</returns>
         public double CalculatePiElectronegativity(IAtomContainer ac, IAtom atom, int maxIterations, int maxResonStruc)
         {
             MaxIterations = maxIterations;

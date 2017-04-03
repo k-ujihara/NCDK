@@ -28,14 +28,11 @@ using static Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NCDK.Isomorphisms
 {
-    /// <summary>
     // @author John May
     // @cdk.module test-isomorphism
-    /// </summary>
     [TestClass()]
     public class ComponentGroupingTest
     {
-
         // mock matching [#8].[#8]
         [TestMethod()]
         public void Ungrouped()

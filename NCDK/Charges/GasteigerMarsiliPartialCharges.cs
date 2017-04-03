@@ -22,7 +22,7 @@ namespace NCDK.Charges
 {
     /// <summary>
     /// The calculation of the Gasteiger Marsili (PEOE) partial charges is based on
-    /// {@cdk.cite GM80}. This class only implements the original method which only
+    /// <token>cdk-cite-GM80</token>. This class only implements the original method which only
     /// applies to É–-bond systems.
     /// </summary>
     // @author      chhoppe
@@ -166,10 +166,9 @@ namespace NCDK.Charges
 
         /// <summary>
         ///  Method which stores and assigns the factors a,b,c and CHI+.
-        ///
+        /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>Array of doubles [a1,b1,c1,denom1,chi1,q1...an,bn,cn...] 1:Atom 1-n in AtomContainer</returns>
-        /// </summary>
         public double[] AssignGasteigerSigmaMarsiliFactors(IAtomContainer ac)
         {
             //a,b,c,denom,chi,q

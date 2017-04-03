@@ -31,7 +31,7 @@ using System.Text;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Reads a molecule from an MDL RXN file {@cdk.cite DAL92}.
+    /// Reads a molecule from an MDL RXN file <token>cdk-cite-DAL92</token>.
     /// </summary>
     // @cdk.module io
     // @cdk.githash
@@ -55,7 +55,7 @@ namespace NCDK.IO
         public MDLRXNReader(TextReader ins, ChemObjectReaderModes mode)
         {
             input = ins;
-            base.mode = mode;
+            base.ReaderMode = mode;
         }
 
         public MDLRXNReader(Stream input)
@@ -389,7 +389,7 @@ namespace NCDK.IO
                     } while (!molFileLine.Equals("M  END"));
 
                     // read MDL molfile content
-                    MDLReader reader = new MDLReader(new StringReader(molFile.ToString()), base.mode);
+                    MDLReader reader = new MDLReader(new StringReader(molFile.ToString()), base.ReaderMode);
                     IAtomContainer product = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
                     reader.Close();
 

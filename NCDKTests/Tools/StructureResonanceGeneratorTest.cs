@@ -47,21 +47,18 @@ namespace NCDK.Tools
         [TestMethod()]
         public void TestStructureResonanceGenerator()
         {
-
             Assert.IsNotNull(new StructureResonanceGenerator());
         }
 
         [TestMethod()]
         public void TestStructureResonanceGenerator_boolean()
         {
-
             Assert.IsNotNull(new StructureResonanceGenerator(true));
         }
 
         [TestMethod()]
         public void TestGetReactions()
         {
-
             Assert.IsNotNull(new StructureResonanceGenerator().Reactions);
         }
 
@@ -371,8 +368,8 @@ namespace NCDK.Tools
             molecule.Bonds[2].IsReactiveCenter = true;
             molecule.Atoms[3].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
 

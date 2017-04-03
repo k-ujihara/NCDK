@@ -36,29 +36,9 @@ namespace NCDK.Hash
     /// are added is the order they will be used. Therefore one can expect different
     /// hash codes if there is a change in the order they are specified.
     /// </summary>
-    /// <example>Examples
-    /// <code>
-    /// // simple
-    /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(16)
-    ///                                                           .Elemental()
-    ///                                                           .Molecular();
-    ///
-    /// // fast
-    /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(8)
-    ///                                                           .Elemental()
-    ///                                                           .Isotopic()
-    ///                                                           .Charged()
-    ///                                                           .Orbital()
-    ///                                                           .Molecular();
-    /// // comprehensive
-    /// MoleculeHashGenerator generator = new HashGeneratorMaker().Depth(32)
-    ///                                                           .Elemental()
-    ///                                                           .Isotopic()
-    ///                                                           .Charged()
-    ///                                                           .Chiral()
-    ///                                                           .Perturbed()
-    ///                                                           .Molecular();
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Hash.HashGeneratorMaker_Example.cs"]/*' />
+    /// </example>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
@@ -207,8 +187,8 @@ namespace NCDK.Hash
         /// hashing there is always a probability of collision but some of these
         /// collisions may be due to an insufficiency in the algorithm opposed to a
         /// random chance of collision. Currently there are three strategies but one
-        /// should choose either to use the fast, but good, heuristic {@link
-        /// MinimumEquivalentCyclicSet} or the exact <see cref="AllEquivalentCyclicSet"/>.
+        /// should choose either to use the fast, but good, heuristic <see cref="MinimumEquivalentCyclicSet"/> 
+        /// or the exact <see cref="AllEquivalentCyclicSet"/>.
         /// In practice <see cref="MinimumEquivalentCyclicSet"/> is good enough for most
         /// applications but it is important to understand the potential trade off.
         /// The <see cref="MinimumEquivalentCyclicSetUnion"/> is provided for demonstration

@@ -63,7 +63,7 @@ namespace NCDK.Fingerprint
         int GetHash(int index);
 
         /// <summary>
-        /// Merge all from <code>fp</code> into the current fingerprint.
+        /// Merge all from <paramref name="fp"/> into the current fingerprint.
         /// </summary>
         /// <param name="fp">to be merged</param>
         void Merge(ICountFingerprint fp);

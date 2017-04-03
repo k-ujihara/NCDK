@@ -29,7 +29,7 @@ using System.Linq;
 namespace NCDK.QSAR.Descriptors.Moleculars
 {
     /// <summary>
-    /// Calculates the Molecular Distance Edge descriptor described in {@cdk.cite LIU98}.
+    /// Calculates the Molecular Distance Edge descriptor described in <token>cdk-cite-LIU98</token>.
     /// This class evaluates the 10 MDE descriptors described by Liu et al. and
     /// in addition it calculates variants where O and N are considered (as found in the DEDGE routine
     /// from ADAPT).

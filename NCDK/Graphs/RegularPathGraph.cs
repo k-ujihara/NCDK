@@ -31,12 +31,12 @@ namespace NCDK.Graphs
     /// <summary>
     /// A path graph (<b>P-Graph</b>) for graphs with less than 64 vertices - the
     /// P-Graph provides efficient generation of all simple cycles in a graph
-    /// {@cdk.cite HAN96}. Vertices are sequentially removed from the graph by
+    /// <token>cdk-cite-HAN96</token>. Vertices are sequentially removed from the graph by
     /// reducing incident edges and forming new 'path edges'. The order in which the
     /// vertices are to be removed should be pre-defined in the constructor as the
     /// <see cref="rank"/> parameter.
-    /// <a href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</a>
     /// </summary>
+    /// <seealso href="http://en.wikipedia.org/wiki/Biconnected_component">Wikipedia: Biconnected Component</seealso>
     /// <seealso cref="RingSearches.RingSearch"/>
     /// <seealso cref="GraphUtil"/>
     // @author John May
@@ -160,7 +160,7 @@ namespace NCDK.Graphs
 
             foreach (PathEdge e in reduced)
             {
-                if (e.Len() <= limit) {
+                if (e.Length <= limit) {
                     if (e.IsLoop)
                         cycles.Add(e.Path());
                     else
@@ -176,7 +176,7 @@ namespace NCDK.Graphs
         /// An abstract path edge. A path edge has two end points and 0 or more
         /// reduced vertices which represent a path between those endpoints.
         /// </summary>
-        abstract class PathEdge
+        internal abstract class PathEdge
         {
             /// <summary>Endpoints of the edge.</summary>
             public readonly int u, v;
@@ -240,7 +240,7 @@ namespace NCDK.Graphs
             /// endpoints and reduced vertices.
             /// </summary>
             /// <returns>Length of path</returns>
-            public abstract int Len();
+            public abstract int Length { get; }
 
             /// <summary>
             /// Reconstruct the path through the edge by appending vertices to a
@@ -256,12 +256,12 @@ namespace NCDK.Graphs
             /// <returns>fixed size array of vertices which are in the path.</returns>
             public int[] Path()
             {
-                return Reconstruct(new ArrayBuilder(Len()).Append(Either())).xs;
+                return Reconstruct(new ArrayBuilder(Length).Append(Either())).xs;
             }
         }
 
         /// <summary>A simple non-reduced edge, just the two end points.</summary>
-        sealed class SimpleEdge
+        internal sealed class SimpleEdge
             : PathEdge
         {
             /// <summary>
@@ -281,20 +281,16 @@ namespace NCDK.Graphs
             }
 
             /// <inheritdoc/>
-            public override int Len()
-            {
-                return 2;
-            }
+            public override int Length => 2;
         }
 
         /// <summary>
         /// A reduced edge, made from two existing path edges and an endpoint they
         /// have in common.
         /// </summary>
-        sealed class ReducedEdge
+        internal sealed class ReducedEdge
             : PathEdge
         {
-
             /// <summary>Reduced edges.</summary>
             private readonly PathEdge e, f;
 
@@ -319,17 +315,14 @@ namespace NCDK.Graphs
             }
 
             /// <inheritdoc/>
-            public override int Len()
-            {
-                return Longs.BitCount(xs) + 2;
-            }
+            public override int Length => Longs.BitCount(xs) + 2;
         }
 
         /// <summary>
         /// A simple helper class for constructing a fixed size int[] array and
         /// sequentially appending vertices.
         /// </summary>
-        sealed class ArrayBuilder
+        internal sealed class ArrayBuilder
         {
             private int i = 0;
             public readonly int[] xs;

@@ -55,7 +55,7 @@ namespace NCDK.AtomTypes.Mapper
 
         /// <summary>
         /// Instantiates an atom type to atom type mapping, based on the given mapping file.
-        /// For example, the mapping file <code>org.openscience.cdk.config.data.cdk-sybyl-mappings.owl</code>
+        /// For example, the mapping file NCDK.Config.Data.cdk-sybyl-mappings.owl
         /// which defines how CDK atom types are mapped to Sybyl atom types.
         /// </summary>
         /// <param name="mappingFile">File name of the OWL file defining the atom type to atom type mappings.</param>

@@ -26,7 +26,7 @@ namespace NCDK.Charges
 {
     /// <summary>
     /// The calculation of the inductive partial atomic charges and equalization of
-    /// effective electronegativities is based on {@cdk.cite CHE03}.
+    /// effective electronegativities is based on <token>cdk-cite-CHE03</token>.
     /// </summary>
     // @author      mfe4
     // @cdk.module  charges

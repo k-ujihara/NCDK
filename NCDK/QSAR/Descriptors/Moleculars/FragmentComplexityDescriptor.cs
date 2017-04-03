@@ -27,10 +27,10 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The complexity is defined as {@cdk.cite Nilakantan06}:
-    ///  <code>
+    /// The complexity is defined as <token>cdk-cite-Nilakantan06</token>:
+    ///  <pre>
     ///  C=Abs(B^2-A^2+A)+H/100
-    ///  </code>
+    ///  </pre>
     ///  where C=complexity, A=number of non-hydrogen atoms, B=number of bonds and H=number of heteroatoms
     /// </para>
     /// <para>This descriptor uses no parameters.</para>

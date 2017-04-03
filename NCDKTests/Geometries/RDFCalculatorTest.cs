@@ -40,15 +40,12 @@ namespace NCDK.Geometries
             Assert.IsNotNull(calculator);
         }
 
-        class RDFWeightFunction : IRDFWeightFunction
-        {
-            public double Calculate(IAtom atom, IAtom atom2) => 1;
-        }
+        static double Returns1(IAtom atom, IAtom atom2) => 1;
 
         [TestMethod()]
         public void TestRDFCalculator_double_double_double_double_RDFWeightFunction()
         {
-            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new RDFWeightFunction());
+            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, Returns1);
             Assert.IsNotNull(calculator);
         }
 
@@ -81,7 +78,7 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void TestCalculate_RDFWeightFunction()
         {
-            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new RDFWeightFunction());
+            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, Returns1);
             AtomContainer h2mol = new AtomContainer();
             Atom h1 = new Atom("H");
             h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
@@ -104,15 +101,12 @@ namespace NCDK.Geometries
             }
         }
 
-        class RDFWeightFunctionCmulC : IRDFWeightFunction
-        {
-            public double Calculate(IAtom atom, IAtom atom2) => atom.Charge.Value * atom2.Charge.Value;
-        }
+        static double ReturnsMul(IAtom atom, IAtom atom2) => atom.Charge.Value * atom2.Charge.Value;
 
         [TestMethod()]
         public void TestCalculate_RDFWeightFunction2()
         {
-            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, new RDFWeightFunctionCmulC());
+            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.0, ReturnsMul);
             AtomContainer h2mol = new AtomContainer();
             Atom h1 = new Atom("H");
             h1.Point3D = new Vector3(-0.5, 0.0, 0.0);
@@ -140,7 +134,7 @@ namespace NCDK.Geometries
         [TestMethod()]
         public void TestCalculate_With_Gauss()
         {
-            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3, new RDFWeightFunctionCmulC());
+            RDFCalculator calculator = new RDFCalculator(0.0, 5.0, 0.1, 0.3, ReturnsMul);
             AtomContainer h2mol = new AtomContainer();
             Atom h1 = new Atom("H");
             h1.Point3D = new Vector3(-0.5, 0.0, 0.0);

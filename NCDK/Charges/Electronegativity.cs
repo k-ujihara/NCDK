@@ -46,10 +46,9 @@ namespace NCDK.Charges
 
         /// <summary>
         /// Constructor for the Electronegativity object.
-        ///
+        /// </summary>
         /// <param name="maxIterations">The maximal number of Iteration</param>
         /// <param name="maxResonStruc">The maximal number of Resonance Structures</param>
-        /// </summary>
         public Electronegativity(int maxIterations, int maxResonStruc)
         {
             peoe = new GasteigerMarsiliPartialCharges();
@@ -59,12 +58,10 @@ namespace NCDK.Charges
 
         /// <summary>
         /// calculate the electronegativity of orbitals sigma.
-        ///
+        /// </summary>
         /// <param name="ac">IAtomContainer</param>
         /// <param name="atom">atom for which effective atom electronegativity should be calculated</param>
-        ///
         /// <returns>piElectronegativity</returns>
-        /// </summary>
         public double CalculateSigmaElectronegativity(IAtomContainer ac, IAtom atom)
         {
             return CalculateSigmaElectronegativity(ac, atom, MaxIterations, MaxResonanceStructures);

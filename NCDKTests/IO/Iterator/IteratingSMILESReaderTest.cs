@@ -192,7 +192,7 @@ namespace NCDK.IO.Iterator
             IAtomContainer m2 = smis.Current;
             Assert.AreEqual(0, m2.Atoms.Count);
             Assert.AreEqual("bad", m2.GetProperty<string>(CDKPropertyName.Title));
-            Assert.AreEqual("n1cccc1 bad", m2.GetProperty<string>(IteratingSMILESReader.BAD_SMILES_INPUT));
+            Assert.AreEqual("n1cccc1 bad", m2.GetProperty<string>(IteratingSMILESReader.BadSmilesInput));
             smis.MoveNext();
             IAtomContainer m3 = smis.Current;
             Assert.AreEqual(0, m3.Atoms.Count);

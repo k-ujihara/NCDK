@@ -1,0 +1,116 @@
+﻿<#@ include file="..\..\Config.ttinclude" #>
+
+using System.Collections.Generic;
+
+namespace NCDK.SGroups
+{
+    /// <summary>
+    /// Enumeration of Ctab Sgroup types.
+    /// </summary>
+    /// <remarks>
+    /// <b>Display shortcuts</b>
+    /// <list type="bullet">
+    /// <item>SUP, abbreviation Sgroup (formerly called superatom)</item>
+    /// <item>MUL, multiple group</item>
+    /// <item>GEN, generic</item>
+    /// </list>
+    /// <b>Polymers</b>
+    /// <list type="bullet">
+    /// <item>SRU, SRU type</item>
+    /// <item>MON, monomer</item>
+    /// <item>MER, Mer type</item>
+    /// <item>COP, copolymer</item>
+    /// <item>CRO, crosslink</item>
+    /// <item>MOD, modification</item>
+    /// <item>GRA, graft</item>
+    /// <item>ANY, any polymer</item> 
+    /// </list>
+    /// <b>Components, Mixtures, and formulations</b>
+    /// <list type="bullet">
+    /// <item>COM, component</item>
+    /// <item>MIX, mixture</item>
+    /// <item>FOR, formulation</item>
+    /// </list>
+    /// <b>Non-chemical</b>
+    /// <list type="bullet">
+    /// <item>DAT, data Sgroup</item>
+    /// </list>
+    /// </remarks>
+<# 
+    GenerateEnumBody(
+        "SgroupType", 
+        new[]
+        {
+			"Nil",
+			// Display shortcuts
+			"CtabAbbreviation:SUP, abbreviation Sgroup (formerly called superatom)",
+			"CtabMultipleGroup:MUL, multiple group",
+			"CtabStructureRepeatUnit:GEN, generic",
+			// Polymers
+			"CtabMonomer:SRU, SRU type",
+			"CtabModified:MON, monomer",
+			"CtabCopolymer:MER, Mer type",
+			"CtabMer:COP, copolymer",
+			"CtabCrossLink:CRO, crosslink",
+			"CtabGraft:MOD, modification",
+			"CtabAnyPolymer:GRA, graft",
+			"CtabComponent:ANY, any polymer",
+			// Components, Mixtures, and formulations
+			"CtabMixture:COM, component",
+			"CtabFormulation:MIX, mixture",
+			"CtabData:FOR, formulation",
+			// Non-chemical
+			"CtabGeneric:DAT, data Sgroup",
+			// extension for handling positional variation and distributed coordination bonds
+			"ExtMulticenter",
+		},
+        true
+    ); 
+#>
+	{
+		private static Dictionary<string, int> map;
+
+		private static string[] ctabKeys = new string[]
+		{
+			"",
+		   "SUP",
+		   "MUL",
+		   "SRU",
+		   "MON",
+		   "MOD", 
+		   "COP", 
+		   "MER", 
+		   "CRO",
+		   "GRA", 
+		   "ANY", 
+		   "COM",
+		   "MIX",
+		   "FOR",
+		   "DAT",
+		   "GEN", 
+		   "N/A",
+		};
+
+        static SgroupType()
+        {
+			map = new Dictionary<string, int>();
+
+			for (int i = 0; i < O.ExtMulticenter; i++)
+				map.Add(ctabKeys[i], i);
+        }
+		
+		public string Key => ctabKeys[Ordinal];
+
+        public static SgroupType ParseCtabKey(string str)
+        {
+            int o;
+            if (!map.TryGetValue(str, out o))
+            {
+                o = SgroupType.CtabGeneric.Ordinal;
+            }
+            return values[o];
+        }
+	}
+}
+
+

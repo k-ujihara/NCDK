@@ -28,7 +28,7 @@ using System.IO;
 namespace NCDK.IO
 {
     /// <summary>
-    /// Reads Ghemical (<a href="http://www.uku.fi/~thassine/ghemical/">http://www.uku.fi/~thassine/ghemical/</a>) molecular mechanics (*.mm1gp) files.
+    /// Reads Ghemical (<see href="http://www.uku.fi/~thassine/ghemical/">http://www.uku.fi/~thassine/ghemical/</see>) molecular mechanics (*.mm1gp) files.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

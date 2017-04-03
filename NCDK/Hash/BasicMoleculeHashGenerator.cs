@@ -26,7 +26,7 @@ using System;
 namespace NCDK.Hash
 {
     /// <summary>
-    /// A generator for basic molecule hash codes {@cdk.cite Ihlenfeldt93}. The
+    /// A generator for basic molecule hash codes <token>cdk-cite-Ihlenfeldt93</token>. The
     /// provided <see cref="IAtomHashGenerator"/> is used to produce individual atom hash
     /// codes. These are then combined together in an order independent manner to
     /// generate a single hash code for the molecule.

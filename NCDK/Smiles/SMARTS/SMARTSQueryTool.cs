@@ -17,20 +17,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-using NCDK.Isomorphisms.Matchers;
-using System.Collections.Generic;
-using System;
-using NCDK.Graphs;
 using NCDK.Aromaticities;
-using NCDK.Smiles.SMARTS.Parser;
-using static NCDK.Common.Base.Preconditions;
-using NCDK.Isomorphisms;
-using System.Linq;
-using System.Collections;
 using NCDK.Common.Collections;
+using NCDK.Graphs;
+using NCDK.Isomorphisms;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
-using System.Diagnostics;
 using NCDK.Isomorphisms.MCSS;
+using NCDK.Smiles.SMARTS.Parser;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Smiles.SMARTS
 {
@@ -79,50 +79,37 @@ namespace NCDK.Smiles.SMARTS
     /// <term>x must be specified and should be between 1 and 8 (inclusive), corresponding to SP1, SP2, SP3, SP3D1, SP3D2 SP3D3, SP3D4 and SP3D5. Supported by the OpenEye SMARTS implementation</term>
     /// </item>
     /// </list>
-    /// <h3>Notes</h3> 
+    /// <note type="note">
     /// <list type="bullet">
     /// <item>
     /// <term>
-    /// As <a href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</a>
-    /// by Craig James the <code>h&lt;n&gt;</code> SMARTS pattern should not be used. It was included in the Daylight spec
-    /// for backwards compatibility. To match hydrogens, use the <code>H&lt;n&gt;</code> pattern.
+    /// As <see href="http://sourceforge.net/mailarchive/message.php?msg_name=4964F605.1070502%40emolecules.com">described</see>
+    /// by Craig James the <pre>h&lt;n&gt;</pre> SMARTS pattern should not be used. It was included in the Daylight spec
+    /// for backwards compatibility. To match hydrogens, use the <pre>H&lt;n&gt;</pre> pattern.
     /// </term>
     /// <term>
-    /// The wild card pattern (<code>*</code>) will not match hydrogens (explicit or implicit) unless an isotope is specified. In other
-    /// words, <code>*</code> gives two hits against <code>C[2H]</code> but 1 hit against <code>C[H]</code>. This also means
-    /// that it gives no hits against <code>[H][H]</code>. This is contrary to what is shown by Daylights <a
-    /// href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</a> service, but is based on this <a
-    /// href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</a>. A
-    /// work around to get <code>*</code> to match <code>[H][H]</code> is to write it in the form <code>[1H][1H]</code>.
+    /// The wild card pattern (<pre>*</pre>) will not match hydrogens (explicit or implicit) unless an isotope is specified. In other
+    /// words, <pre>*</pre> gives two hits against <pre>C[2H]</pre> but 1 hit against <pre>C[H]</pre>. This also means
+    /// that it gives no hits against <pre>[H][H]</pre>. This is contrary to what is shown by Daylights 
+    /// <see href="http://www.daylight.com/daycgi_tutorials/depictmatch.cgi">depictmatch</see> service, but is based on this 
+    /// <see href="https://sourceforge.net/mailarchive/message.php?msg_name=4964FF9D.3040004%40emolecules.com">discussion</see>. A
+    /// work around to get <pre>*</pre> to match <pre>[H][H]</pre> is to write it in the form <pre>[1H][1H]</pre>.
     /// <para>
     /// It's not entirely clear what the behavior of * should be with respect to hydrogens. it is possible that the code will
-    /// be updated so that <code>*</code> will not match <i>any</i> hydrogen in the future.</para>
+    /// be updated so that <pre>*</pre> will not match <i>any</i> hydrogen in the future.</para>
     /// </term>
     /// <term>
-    /// The 
-    /// org.openscience.cdk.aromaticity.CDKHueckelAromaticityDetector only considers single rings and two fused non-spiro
+    /// The CDKHueckelAromaticityDetector only considers single rings and two fused non-spiro
     /// rings. As a result, it does not properly detect aromaticity in polycyclic systems such as
-    /// <code>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</code>. Thus SMARTS patterns that depend on proper aromaticity
+    /// <pre>[O-]C(=O)c1ccccc1c2c3ccc([O-])cc3oc4cc(=O)ccc24</pre>. Thus SMARTS patterns that depend on proper aromaticity
     /// detection may not work correctly in such polycyclic systems
     /// </term>
     /// </item>
     /// </list>
+    /// </note>
     /// </remarks>
     /// <example>
-    /// Example usage would be
-    /// <code>
-    /// SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-    /// IAtomContainer atomContainer = sp.ParseSmiles(&quot;CC(=O)OC(=O)C&quot;);
-    /// SMARTSQueryTool querytool = new SMARTSQueryTool(&quot;O=CO&quot;);
-    /// bool status = querytool.Matches(atomContainer);
-    /// if (status) {
-    ///    int nmatch = querytool.MatchesCount;
-    ///    List mappings = querytool.GetMatchingAtoms();
-    ///    for (int i = 0; i &lt; nmatch; i++) {
-    ///       List atomIndices = (List) mappings[i];
-    ///    }
-    /// }
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SMARTSQueryTool_Example.cs"]/*' />
     /// </example>
     // @author Rajarshi Guha
     // @cdk.created 2007-04-08
@@ -155,7 +142,7 @@ namespace NCDK.Smiles.SMARTS
             {
                 public override IRingSet ComputeRingSet(IAtomContainer m)
                 {
-                    return Cycles.SSSR(m).ToRingSet();
+                    return Cycles.FindSSSR(m).ToRingSet();
                 }
             }
 
@@ -294,16 +281,8 @@ namespace NCDK.Smiles.SMARTS
         /// may required certain attributes to be set (e.g. atom typing). These
         /// will not be automatically configured and should be preset before matching.
         /// </summary>
-        /// <example><code>
-        /// SMARTSQueryTool sqt = new SMARTSQueryTool(...);
-        /// sqt.SetAromaticity(new Aromaticity(ElectronDonation.CDKModel, Cycles.cdkAromaticSet));
-        /// foreach (var molecule in molecules) 
-        /// {
-        ///     // CDK Aromatic model needs atom types
-        ///     AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-        ///     sqt.Matches(molecule);
-        /// }
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SMARTS.SMARTSQueryTool_Example.cs+SetAromaticity"]/*' />
         /// </example>
         /// <param name="aromaticity">the new aromaticity perception</param>
         /// <seealso cref="ElectronDonation"/>

@@ -56,7 +56,7 @@ namespace NCDK.AtomTypes
         }
 
         /// <summary>
-        /// Returns an instance of this atom typer. It uses the given <code>builder</code> to
+        /// Returns an instance of this atom typer. It uses the given <paramref name="builder"/> to
         /// create atom type objects.
         /// </summary>
         /// <param name="builder"><see cref="IChemObjectBuilder"/> to use to create <see cref="IAtomType"/> instances.</param>

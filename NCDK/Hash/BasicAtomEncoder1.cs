@@ -1,6 +1,9 @@
 ﻿// .NET Framework port by Kazuya Ujihara
 // Copyright (C) 2017  Kazuya Ujihara
 
+// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
 
 
 
@@ -41,14 +44,19 @@ namespace NCDK.Hash
     /// a section of the prime number table. However, In practice using a
     /// pseudorandom number generator to distribute the encoded values provides a
     /// good distribution.
-    /// <a href="http://www.bigprimes.net/archive/prime/">Prime numbers archive</a>
     /// </summary>
+    /// <seealso href="http://www.bigprimes.net/archive/prime/">Prime numbers archive</seealso>
     /// <seealso cref="ConjugatedAtomEncoder"/>
     // @author John May
     // @cdk.module hash
     // @cdk.githash
-    public sealed class BasicAtomEncoder : IAtomEncoder, IComparable<BasicAtomEncoder>
+    public partial class BasicAtomEncoder : System.IComparable<BasicAtomEncoder>, System.IComparable
+			 , IAtomEncoder 
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="BasicAtomEncoder"/>.
+		/// </summary>
+		/// <seealso cref="BasicAtomEncoder"/>
         public static class O
         {
             public const int AtomicNumber = 0;
@@ -62,8 +70,13 @@ namespace NCDK.Hash
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -152,49 +165,56 @@ namespace NCDK.Hash
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
             var o = obj as BasicAtomEncoder;
             return this.Ordinal == o.Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (BasicAtomEncoder)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
 
+		/// <inheritdoc/>
+        public int CompareTo(BasicAtomEncoder o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial class BasicAtomEncoder 
+	{
         private delegate int EncodeDelegate(IAtom atom, IAtomContainer container);
-        private EncodeDelegate OnEncode { get; set; }
+        private static EncodeDelegate[] listOnEncode;
 
         public int Encode(IAtom atom, IAtomContainer container)
         {
-            return OnEncode(atom, container);
-        }
-
-        public int CompareTo(BasicAtomEncoder other)
-        {
-            return Ordinal.CompareTo(other.Ordinal);
+			return listOnEncode[Ordinal](atom, container);
         }
 
         static BasicAtomEncoder()
         {
-            values[O.AtomicNumber].OnEncode = (atom, container) => atom.AtomicNumber ?? 32451169;
-            values[O.MassNumber].OnEncode = (atom, container) => atom.MassNumber ?? 32451179;
-            values[O.FormalCharge].OnEncode = (atom, container) => atom.FormalCharge ?? 32451193;
-            values[O.NConnectedAtoms].OnEncode = (atom, container) => container.GetConnectedAtoms(atom).Count();
-            values[O.BondOrderSum].OnEncode = (atom, container) => container.GetBondOrderSum(atom).GetHashCode(); // Fixed CDK's bug?? HashCode() removed.
-            values[O.OrbitalHybridization].OnEncode = (atom, container) =>
+			listOnEncode = new EncodeDelegate[values.Length];
+            listOnEncode[O.AtomicNumber] = (atom, container) => atom.AtomicNumber ?? 32451169;
+            listOnEncode[O.MassNumber] = (atom, container) => atom.MassNumber ?? 32451179;
+            listOnEncode[O.FormalCharge] = (atom, container) => atom.FormalCharge ?? 32451193;
+            listOnEncode[O.NConnectedAtoms] = (atom, container) => container.GetConnectedAtoms(atom).Count();
+            listOnEncode[O.BondOrderSum] = (atom, container) => container.GetBondOrderSum(atom).GetHashCode(); // Fixed CDK's bug?? HashCode() removed.
+            listOnEncode[O.OrbitalHybridization] = (atom, container) =>
                 {
                     var hybridization = atom.Hybridization;
                     return !hybridization.IsUnset ? hybridization.Ordinal : 32451301;
                 };
-            values[O.FreeRadicals].OnEncode = (atom, container) => container.GetConnectedSingleElectrons(atom).Count();
+            listOnEncode[O.FreeRadicals] = (atom, container) => container.GetConnectedSingleElectrons(atom).Count();
         }
     }
 }

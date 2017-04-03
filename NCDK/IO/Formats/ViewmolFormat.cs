@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://viewmol.sourceforge.net/">here</a>.
+    /// See <see href="http://viewmol.sourceforge.net/">here</see>.
     /// </summary>
     // @author Miguel Rojas
     // @cdk.module ioformats

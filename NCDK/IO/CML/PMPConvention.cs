@@ -54,7 +54,7 @@ namespace NCDK.IO.CML
         {
             base.StartDocument();
             //        cdo.StartObject("Frame");
-            currentChemModel = currentChemFile.Builder.CreateChemModel();
+            CurrentChemModel = CurrentChemFile.Builder.CreateChemModel();
         }
 
         public override void StartElement(CMLStack xpath, XElement element)
@@ -67,7 +67,7 @@ namespace NCDK.IO.CML
         {
             string s = element.Value.Trim();
             Debug.WriteLine($"Start PMP chardata ({CurrentElement}) :{s}");
-            Debug.WriteLine($" ElTitle: {elementTitle}");
+            Debug.WriteLine($" ElTitle: {ElementTitle}");
             if (xpath.ToString().EndsWith("string/") && BUILTIN.Equals("spacegroup"))
             {
                 string sg = "P1";
@@ -77,31 +77,31 @@ namespace NCDK.IO.CML
                     sg = "P 2_1 2_1 2_1";
                 }
                 //            cdo.SetObjectProperty("Crystal", "spacegroup", sg);
-                ((ICrystal)currentMolecule).SpaceGroup = sg;
+                ((ICrystal)CurrentMolecule).SpaceGroup = sg;
             }
             else if (xpath.ToString().EndsWith("floatArray/")
-                  && (elementTitle.Equals("a") || elementTitle.Equals("b") || elementTitle.Equals("c")))
+                  && (ElementTitle.Equals("a") || ElementTitle.Equals("b") || ElementTitle.Equals("c")))
             {
                 var tokens = s.Split(' ');
                 if (tokens.Length > 2)
                 {
-                    if (elementTitle.Equals("a"))
+                    if (ElementTitle.Equals("a"))
                     {
-                        ((ICrystal)currentMolecule).A = new Vector3(
+                        ((ICrystal)CurrentMolecule).A = new Vector3(
                             double.Parse(tokens[0]),
                             double.Parse(tokens[1]),
                             double.Parse(tokens[2]));
                     }
-                    else if (elementTitle.Equals("b"))
+                    else if (ElementTitle.Equals("b"))
                     {
-                        ((ICrystal)currentMolecule).B = new Vector3(
+                        ((ICrystal)CurrentMolecule).B = new Vector3(
                             double.Parse(tokens[0]),
                             double.Parse(tokens[1]),
                             double.Parse(tokens[2]));
                     }
-                    else if (elementTitle.Equals("c"))
+                    else if (ElementTitle.Equals("c"))
                     {
-                        ((ICrystal)currentMolecule).C = new Vector3(
+                        ((ICrystal)CurrentMolecule).C = new Vector3(
                             double.Parse(tokens[0]),
                             double.Parse(tokens[1]),
                             double.Parse(tokens[2]));

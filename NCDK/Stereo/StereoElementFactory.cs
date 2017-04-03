@@ -40,19 +40,8 @@ namespace NCDK.Stereo
     /// the configuration is unambiguous and the bond does not connect to another
     /// stereocenter.
     /// </summary>
-    /// <example><code>
-    /// IAtomContainer       container = ...;
-    /// StereoElementFactory stereo    = StereoElementFactory.Using2DCoordinates()
-    ///                                                      .InterpretProjections(Projection.Haworth);
-    ///
-    /// // set the elements replacing any existing elements (recommended)
-    /// container.SetStereoElements(stereo.CreateAll());
-    ///
-    /// // adding elements individually is no recommended as the AtomContainer
-    /// // does not check for duplicate or contradicting elements
-    /// foreach (var element in stereo.CreateAll())
-    ///     container.AddStereoElement(element); // bad, there may already be elements
-    /// </code>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs"]/*' />
     /// </example>
     /// <seealso cref="Stereocenters"/>
     // @author John May
@@ -60,7 +49,6 @@ namespace NCDK.Stereo
     // @cdk.githash
     public abstract class StereoElementFactory
     {
-
         /// <summary>Native CDK structure representation.</summary>
         protected readonly IAtomContainer container;
 
@@ -74,11 +62,10 @@ namespace NCDK.Stereo
 
         /// <summary>
         /// Internal constructor.
-        ///
+        /// </summary>
         /// <param name="container">an atom container</param>
         /// <param name="graph">adjacency list representation</param>
         /// <param name="bondMap">lookup bonds by atom index</param>
-        /// </summary>
         protected StereoElementFactory(IAtomContainer container, int[][] graph, EdgeToBondMap bondMap)
         {
             this.container = container;
@@ -89,14 +76,12 @@ namespace NCDK.Stereo
         /// <summary>
         /// Creates all stereo elements found by <see cref="Stereocenters"/> using the or
         /// 2D/3D coordinates to specify the configuration (clockwise/anticlockwise).
-        /// Currently only <see cref="ITetrahedralChirality"/> and {@link
-        /// IDoubleBondStereochemistry} elements are created..
-        ///
-        /// <returns>a list of stereo elements</returns>
+        /// Currently only <see cref="ITetrahedralChirality"/> and <see cref="IDoubleBondStereochemistry"/> 
+        /// elements are created..
         /// </summary>
+        /// <returns>a list of stereo elements</returns>
         public IList<IStereoElement> CreateAll()
         {
-
             Stereocenters centers = new Stereocenters(container, graph, bondMap);
             List<IStereoElement> elements = new List<IStereoElement>();
 
@@ -157,17 +142,8 @@ namespace NCDK.Stereo
         /// (i.e. up/down, wedge/hatch). The method does not check if tetrahedral
         /// chirality is supported - for this functionality use <see cref="Stereocenters"/>.
         /// </summary>
-        /// <example><code>
-        /// StereoElementFactory  factory   = ...; // 2D/3D
-        /// IAtomContainer        container = ...; // container
-        ///
-        /// for (int v = 0; v &lt; container.Atoms.Count; v++) {
-        ///     // ... verify v is a stereo atom ...
-        ///     ITetrahedralChirality element = factory.CreateTetrahedral(v);
-        ///     if (element != null)
-        ///         container.AddStereoElement(element);
-        /// }
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs+CreateTetrahedral_int"]/*' />
         /// </example>
         /// <param name="v">atom index (vertex)</param>
         /// <returns>a new stereo element</returns>
@@ -181,17 +157,9 @@ namespace NCDK.Stereo
         /// The method does not check if tetrahedral chirality is supported - for
         /// this functionality use <see cref="Stereocenters"/>.
         /// </summary>
-        /// <example><code>
-        /// StereoElementFactory  factory   = ...; // 2D/3D
-        /// IAtomContainer        container = ...; // container
-        ///
-        /// foreach (var atom in container.Atoms) {
-        ///     // ... verify atom is a stereo atom ...
-        ///     ITetrahedralChirality element = factory.CreateTetrahedral(atom);
-        ///     if (element != null)
-        ///         container.AddStereoElement(element);
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs+CreateTetrahedral_IAtom"]/*' />
+        /// </example>
         /// <param name="atom">atom</param>
         /// <returns>a new stereo element</returns>
         public abstract ITetrahedralChirality CreateTetrahedral(IAtom atom, Stereocenters stereocenters);
@@ -217,19 +185,9 @@ namespace NCDK.Stereo
         /// label. The method does not check if double bond stereo is supported - for
         /// this functionality use <see cref="Stereocenters"/>.
         /// </summary>
-        /// <example><code>
-        /// StereoElementFactory  factory   = ...; // 2D/3D
-        /// IAtomContainer        container = ...; // container
-        ///
-        /// foreach (var bond in container.Bonds) {
-        ///     if (bond.Order != Double)
-        ///         continue;
-        ///     // ... verify bond is a stereo bond...
-        ///     IDoubleBondStereochemistry element = factory.CreateGeometric(bond);
-        ///     if (element != null)
-        ///         container.AddStereoElement(element);
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs+CreateGeometric_IBond"]/*' />
+        /// </example>
         /// <param name="bond">the bond to create a configuration for</param>
         /// <returns>a new stereo element</returns>
         public abstract IDoubleBondStereochemistry CreateGeometric(IBond bond, Stereocenters stereocenters);
@@ -243,17 +201,9 @@ namespace NCDK.Stereo
         /// check if tetrahedral chirality is supported - for this functionality
         /// use <see cref="Stereocenters"/>.
         /// </summary>
-        /// <example><code>
-        /// StereoElementFactory  factory   = ...; // 2D/3D
-        /// IAtomContainer        container = ...; // container
-        ///
-        /// for (int v = 0; v &lt; container.Atoms.Count; v++) {
-        ///     // ... verify v is a stereo atom ...
-        ///     ExtendedTetrahedral element = factory.CreateExtendedTetrahedral(v);
-        ///     if (element != null)
-        ///         container.AddStereoElement(element);
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs+CreateExtendedTetrahedral"]/*' />
+        /// </example>
         /// <param name="v">atom index (vertex)</param>
         /// <returns>a new stereo element</returns>
         public abstract ExtendedTetrahedral CreateExtendedTetrahedral(int v, Stereocenters stereocenters);
@@ -262,11 +212,9 @@ namespace NCDK.Stereo
         /// Indicate that stereochemistry drawn as a certain projection should be
         /// interpreted. 
         /// </summary>
-        /// <code>
-        /// StereoElementFactory factory = 
-        ///   StereoElementFactory.Using2DCoordinates(container)
-        ///                       .InterpretProjections(Projection.Fischer, Projection.Haworth);
-        /// </code>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Stereo.StereoElementFactory_Example.cs+InterpretProjections"]/*' />
+        /// </example>
         /// <param name="projections">types of projection</param>
         /// <returns>self</returns>
         /// <seealso cref="Projection"/>
@@ -389,7 +337,6 @@ namespace NCDK.Stereo
                         // stereocenter) ala Daylight
                         if (bond.Stereo == BondStereo.Down || bond.Stereo == BondStereo.DownInverted)
                         {
-
                             // we stick to the 'point' end convention but can
                             // interpret if the bond isn't connected to another
                             // stereocenter - otherwise it's ambiguous!

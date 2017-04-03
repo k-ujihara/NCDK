@@ -25,7 +25,7 @@ namespace NCDK.Reactions.Types.Parameters
     // @author      miguelrojasch
     // @cdk.module  reaction
     // @cdk.githash
-    public class SetReactionCenter : ParameterReact
+    public class SetReactionCenter : ParameterReaction
     {
     }
 }

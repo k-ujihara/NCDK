@@ -26,10 +26,11 @@ using static NCDK.Graphs.GraphUtil;
 namespace NCDK.Isomorphisms
 {
     /// <summary>
-    /// Vento-Foggia (VF) state for matching isomorphisms (identity) {@cdk.cite
-    /// Cordella04}. </summary>
-    /// <remarks>Note: no heuristics or sorting are performed as all and
-    /// should be checked externally
+    /// Vento-Foggia (VF) state for matching isomorphisms (identity) <token>cdk-cite-Cordella04</token>.</summary>
+    /// <remarks>
+    /// <note type="note">
+    /// No heuristics or sorting are performed as all and
+    /// should be checked externally</note>
     /// </remarks>
     // @author John May
     // @cdk.module isomorphism

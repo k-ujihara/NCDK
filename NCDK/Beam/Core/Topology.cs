@@ -88,17 +88,15 @@ namespace NCDK.Beam
         public abstract void Copy(int[] dest);
 
         /// <summary>
-        /// Compute the permutation parity of the vertices {@literal vs} for the
-        /// given {@literal rank}. The parity defines the oddness or evenness of a
+        /// Compute the permutation parity of the vertices <paramref name="vs"/> for the
+        /// given <paramref name="rank"/>. The parity defines the oddness or evenness of a
         /// permutation and is the number of inversions (swaps) one would need to
         /// make to place the 'vs' in the Order specified by rank.
         /// </summary>
-        /// <remarks>
-        /// <a href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation</a>
-        /// </remarks>
         /// <param name="vs">  array of vertices</param>
         /// <param name="rank">rank of vertices</param>, |R| = Max(vs) + 1
         /// <returns>sign of the permutation, -1=odd or 1=even</returns>
+        /// <seealso href="http://en.wikipedia.org/wiki/Parity_of_a_permutation">Parity of a Permutation</seealso>
         public static int Parity(int[] vs, int[] rank)
         {
             // count elements which are out of Order and by how much
@@ -135,8 +133,7 @@ namespace NCDK.Beam
         }
 
         /// <summary>
-        /// Sorts the array {@literal vs} into the Order given by the {@literal
-        /// rank}.
+        /// Sorts the array <paramref name="vs"/> into the Order given by the <paramref name="rank"/>.
         /// </summary>
         /// <param name="vs">vertices to sort</param>
         /// <param name="rank">rank of vertices</param>
@@ -230,7 +227,7 @@ namespace NCDK.Beam
         /// </summary>
         /// <remarks>
         /// Implicit Valence Explicit Example
-        /// <code>
+        /// <pre>
         /// @ 4       @TH1     O[C@H](N)C or O[C@]([H])(N)C
         /// @@ 4       @TH2     O[C@@H](N)C or O[C@@]([H])(N)C
         /// @ 3       @TH1     C[S@](N)=O
@@ -241,7 +238,7 @@ namespace NCDK.Beam
         /// @@ 5       @TB2     S[As@@](F)(Cl)(Br)C=O
         /// @ 5       @OH1     S[Co@@](F)(Cl)(Br)(I)C=O
         /// @@ 5       @OH2     O=C[Co@](F)(Cl)(Br)(I)S
-        /// </code>
+        /// </pre>
         /// </remarks>
         /// <param name="g">chemical graph</param>
         /// <param name="u">the atom to which the configuration is associated</param>

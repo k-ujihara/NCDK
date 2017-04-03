@@ -180,10 +180,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         //Function compaires a structure array with itself. Sometimes a mapping occurs several times within the array.
         //The function eliminates these recurring mappings. Function is called in function best_solution.
         //The function is called by itself as long as the last list element is processed.
-        /// <summary>
-        ///
-        /// <param name="atomMapping">/// @return</param>
-        /// </summary>
         protected internal static IList<int> RemoveRecurringMappings(IList<int> atomMapping)
         {
             bool exist = true;
@@ -219,8 +215,6 @@ namespace NCDK.SMSD.Algorithms.McGregors
         /// atom by atom matching. After this the function replaces all entries in the same row and column of the current
         /// position by zeros. Only the entry of the current position is set to one.
         /// Return value "count_arcsleft" counts the number of arcs, which are still in the matrix.
-        /// <param name="row">/// @param column</param>
-        /// <param name="marcs">/// @param mcGregorHelper</param>
         /// </summary>
         protected internal static void RemoveRedundantArcs(int row, int column, IList<int> marcs, McgregorHelper mcGregorHelper)
         {

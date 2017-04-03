@@ -31,10 +31,7 @@ namespace NCDK.IO
     /// of GZiped files can be detected too.
     /// </summary>
     /// <example>
-    /// <code>
-    ///   StringReader stringReader = new StringReader("&lt;molecule/>");
-    ///   IChemFormat format = new FormatFactory().GuessFormat(stringReader);
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.IO.FormatFactory_Example.cs"]/*' />
     /// </example>
     // @cdk.module  ioformats
     // @cdk.githash
@@ -86,7 +83,7 @@ namespace NCDK.IO
         public IList<IChemFormatMatcher> Formats => formats;
 
         /// <summary>
-        /// Creates a string of the Class name of the <code>IChemObject</code> reader
+        /// Creates a string of the Class name of the <see cref="IChemObject"/> reader
         /// for this file format. The input is read line-by-line
         /// until a line containing an identifying string is
         /// found.

@@ -25,7 +25,7 @@ namespace NCDK.Common.Mathematics
     // @since 2.0
     public abstract class BitsStreamGenerator
     {
-       /// <summary> Next gaussian. </summary>
+       /// <summary>Next gaussian.</summary>
         private double nextGaussian;
 
         /// <summary> Creates a new random number generator.</summary>
@@ -43,15 +43,17 @@ namespace NCDK.Common.Mathematics
         /// <inheritdoc/>
         public abstract void SetSeed(long seed);
 
-        /// <summary> Generate next pseudorandom number.
+        /// <summary>Generate next pseudorandom number.
+        /// </summary>
+        /// <remarks>
         /// <para>This method is the core generation algorithm. It is used by all the
-        /// public generation methods for the various primitive types {@link
-        /// #NextBoolean()}, {@link #NextBytes(byte[])}, {@link #NextDouble()},
-        /// {@link #NextFloat()}, {@link #NextGaussian()}, {@link #NextInt()},
-        /// {@link #Next(int)} and {@link #NextLong()}.</para>
+        /// public generation methods for the various primitive types <see cref="NextBool()"/>,
+        /// <see cref="NextBytes(byte[])"/>, <see cref="NextDouble()"/>,
+        /// <see cref="NextFloat()"/>, <see cref="NextGaussian()"/>, <see cref="Next()"/>,
+        /// <see cref="Next(int)"/> and <see cref="NextLong()"/>.</para>
+        /// </remarks>
         /// <param name="bits">number of random bits to produce</param>
         /// <returns>random bits generated</returns>
-        /// </summary>
         protected abstract uint Next(int bits);
 
         /// <inheritdoc/>
@@ -134,20 +136,18 @@ namespace NCDK.Common.Mathematics
         }
 
         /// <summary>
-        /// {@inheritDoc}
-        /// <para>This default implementation is copied from Apache Harmony
-        /// java.util.Random (r929253).</para>
-        ///
-        /// <para>Implementation notes: <list type="bullet">
-        /// <item>If n is a power of 2, this method returns
-        /// {@code (int) ((n * (long) Next(31)) >> 31)}.</item>
-        ///
-        /// <item>If n is not a power of 2, what is returned is {@code Next(31) % n}
-        /// with {@code Next(31)} values rejected (i.e. regenerated) until a
-        /// value that is larger than the remainder of {@code int.MaxValue / n}
-        /// is generated. Rejection of this initial segment is necessary to ensure
-        /// a uniform distribution.</item></list></para>
+        /// <inheritdoc/>
         /// </summary>
+        /// <remarks>
+        /// <para>This default implementation is copied from Apache Harmony java.util.Random (r929253).</para>
+        /// <note type="note">
+        /// <para>If n is a power of 2, this method returns <c>(int) ((n * (long) Next(31)) >> 31)}</c>.</para>
+        /// <item>If n is not a power of 2, what is returned is <c>Next(31) % n</c>
+        /// with <c>Next(31)</c> values rejected (i.e. regenerated) until a
+        /// value that is larger than the remainder of <c>int.MaxValue / n</c>
+        /// is generated. Rejection of this initial segment is necessary to ensure
+        /// a uniform distribution.</item></note>
+        /// </remarks>
         public int NextInt(int n)
         {
             if (n > 0)
@@ -178,8 +178,7 @@ namespace NCDK.Common.Mathematics
         }
 
         /// <summary>
-        /// Clears the cache used by the default implementation of
-        /// {@link #nextGaussian}.
+        /// Clears the cache used by the default implementation of <see cref="nextGaussian"/>.
         /// </summary>
         public void Clear()
         {

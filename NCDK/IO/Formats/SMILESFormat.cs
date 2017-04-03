@@ -21,7 +21,7 @@ using NCDK.Tools;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.daylight.com/smiles/f_smiles.html">here</a>.
+    /// See <see href="http://www.daylight.com/smiles/f_smiles.html">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

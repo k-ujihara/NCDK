@@ -72,7 +72,7 @@ namespace NCDK.FaulonSignatures
         public int Height => this.height;
 
         /// <summary>
-        /// Look up the original graph vertex that <code>vertexIndex</code> maps to.  
+        /// Look up the original graph vertex that <paramref name="vertexIndex"/> maps to.  
         /// </summary>
         /// <param name="vertexIndex">the internal vertex index that </param>
         /// <returns>the vertex index in the original graph</returns>

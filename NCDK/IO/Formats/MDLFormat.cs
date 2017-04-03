@@ -26,7 +26,7 @@ using NCDK.Common.Primitives;
 namespace NCDK.IO.Formats
 {
     /// <summary>
-    /// See <a href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</a>.
+    /// See <see href="http://www.mdl.com/downloads/public/ctfile/ctfile.jsp">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash

@@ -18,9 +18,7 @@
  */
 using NCDK.Reactions.Types.Parameters;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using NCDK.Reactions.Mechanisms;
 
 namespace NCDK.Reactions.Types
 {
@@ -28,84 +26,34 @@ namespace NCDK.Reactions.Types
     /// <para>IReactionProcess which produces a tautomerization chemical reaction.
     /// As most commonly encountered, this reaction results in the formal migration
     /// of a hydrogen atom or proton, accompanied by a switch of a single bond and adjacent double bond</para>
-    /// <code>X=Y-Z-H => X(H)-Y=Z</code>
+    /// <pre>X=Y-Z-H => X(H)-Y=Z</pre>
     /// </summary>
-    /// <example>
-    /// <para>Below you have an example how to initiate the mechanism.</para>
-    /// <para>It is processed by the HeterolyticCleavageMechanism class</para>
-    /// <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new TautomerizationReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///  </example>
-    ///  <remarks>
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to specify the reaction in a fixed point.</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not specified then the reaction process will
-    /// try to find automatically the possible reaction centers.</para>
-    /// </remarks>
-    /// <seealso cref="TautomerizationMechanism"/>
+    /// <seealso cref="Mechanisms.TautomerizationMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
     // @cdk.set        reaction-types
     // @cdk.githash
-    public class TautomerizationReaction : ReactionEngine, IReactionProcess
+    public partial class TautomerizationReaction : ReactionEngine, IReactionProcess
     {
-
-        /// <summary>
-        /// Constructor of the TautomerizationReaction object.
-        ///
-        /// </summary>
         public TautomerizationReaction() { }
 
-        /// <summary>
-        ///  Gets the specification attribute of the TautomerizationReaction object.
-        ///
-        /// <returns>The specification value</returns>
-        /// </summary>
-
+        /// <inheritdoc/>
         public ReactionSpecification Specification =>
             new ReactionSpecification(
                     "http://almost.cubic.uni-koeln.de/jrg/Members/mrc/reactionDict/reactionDict#Tautomerization", this
                             .GetType().Name, "$Id$", "The Chemistry Development Kit");
 
-        /// <summary>
-        ///  Initiate process.
-        ///  It is needed to call the addExplicitHydrogensToSatisfyValency
-        ///  from the class tools.HydrogenAdder.
-        ///
-        /// <param name="reactants">reactants of the reaction</param>
-        /// <param name="agents">agents of the reaction (Must be in this case null)</param>
-        ///
-        /// <exception cref="CDKException"> Description of the Exception</exception>
-        /// </summary>
-
+        /// <inheritdoc/>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-
-            Debug.WriteLine("initiate reaction: TautomerizationReaction");
-
-            if (reactants.Count != 1)
-            {
-                throw new CDKException("TautomerizationReaction only expects one reactant");
-            }
-            if (agents != null)
-            {
-                throw new CDKException("TautomerizationReaction don't expects agents");
-            }
+            CheckInitiateParams(reactants, agents);
 
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
             foreach (var atomi in reactant.Atoms)
@@ -118,7 +66,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.IsReactiveCenter && bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi); // Atom pos 2
+                            IAtom atomj = bondi.GetConnectedAtom(atomi);
                             if (atomj.IsReactiveCenter
                                     && (atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
@@ -126,13 +74,15 @@ namespace NCDK.Reactions.Types
                                 foreach (var bondj in reactant.GetConnectedBonds(atomj))
                                 {
                                     if (bondj.Equals(bondi)) continue;
+
                                     if (bondj.IsReactiveCenter
                                             && bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj); // Atom pos 3
+                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if (atomk.IsReactiveCenter
                                                 && (atomk.FormalCharge ?? 0) == 0
-                                                && !reactant.GetConnectedSingleElectrons(atomk).Any())
+                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
+										)
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {
@@ -144,7 +94,6 @@ namespace NCDK.Reactions.Types
                                                     if (atoml.IsReactiveCenter
                                                             && atoml.Symbol.Equals("H"))
                                                     {
-
                                                         var atomList = new List<IAtom>();
                                                         atomList.Add(atomi);
                                                         atomList.Add(atomj);
@@ -156,10 +105,8 @@ namespace NCDK.Reactions.Types
                                                         bondList.Add(bondk);
 
                                                         IAtomContainerSet<IAtomContainer> moleculeSet = reactant.Builder.CreateAtomContainerSet<IAtomContainer>();
-
                                                         moleculeSet.Add(reactant);
-                                                        IReaction reaction = Mechanism.Initiate(moleculeSet, atomList,
-                                                                bondList);
+                                                        IReaction reaction = Mechanism.Initiate(moleculeSet, atomList, bondList);
                                                         if (reaction == null)
                                                             continue;
                                                         else
@@ -168,26 +115,22 @@ namespace NCDK.Reactions.Types
                                                         break; // because of the others atoms are hydrogen too.
                                                     }
                                                 }
-
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-
                     }
-
                 }
             }
-
             return setOfReactions;
         }
 
         /// <summary>
         /// set the active center for this molecule.
         /// The active center will be those which correspond with X=Y-Z-H.
-        /// <code>
+        /// <pre>
         /// X: Atom
         /// =: bond
         /// Y: Atom
@@ -195,7 +138,7 @@ namespace NCDK.Reactions.Types
         /// Z: Atom
         /// -: bond
         /// H: Atom
-        ///  </code>
+        ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
@@ -209,7 +152,7 @@ namespace NCDK.Reactions.Types
                     {
                         if (bondi.Order == BondOrder.Double)
                         {
-                            IAtom atomj = bondi.GetConnectedAtom(atomi); // Atom pos 2
+                            IAtom atomj = bondi.GetConnectedAtom(atomi);
                             if ((atomj.FormalCharge ?? 0) == 0
                                     && !reactant.GetConnectedSingleElectrons(atomj).Any())
                             {
@@ -218,9 +161,10 @@ namespace NCDK.Reactions.Types
                                     if (bondj.Equals(bondi)) continue;
                                     if (bondj.Order == BondOrder.Single)
                                     {
-                                        IAtom atomk = bondj.GetConnectedAtom(atomj); // Atom pos 3
+                                        IAtom atomk = bondj.GetConnectedAtom(atomj);
                                         if ((atomk.FormalCharge ?? 0) == 0
-                                                && !reactant.GetConnectedSingleElectrons(atomk).Any())
+                                                && !reactant.GetConnectedSingleElectrons(atomk).Any()
+										)
                                         {
                                             foreach (var bondk in reactant.GetConnectedBonds(atomk))
                                             {

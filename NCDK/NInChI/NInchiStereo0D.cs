@@ -66,10 +66,7 @@ namespace NCDK.NInChI
 
         /// <summary>
         /// Constructor.  See <tt>inchi_api.h</tt> for details of usage.
-        ///
-        /// @see CreateNewTetrahedralStereo0D()
-        /// @see CreateNewDoublebondStereo0D()
-        ///
+        /// </summary>
         /// <param name="atC">Central atom</param>
         /// <param name="at0">Neighbour atom 0</param>
         /// <param name="at1">Neighbour atom 1</param>
@@ -77,7 +74,8 @@ namespace NCDK.NInChI
         /// <param name="at3">Neighbour atom 3</param>
         /// <param name="type">Stereo parity type</param>
         /// <param name="parity">Parity</param>
-        /// </summary>
+        /// <see cref="CreateNewTetrahedralStereo0D(NInchiAtom, NInchiAtom, NInchiAtom, NInchiAtom, NInchiAtom, INCHI_PARITY)"/> 
+        /// <see cref="CreateNewDoublebondStereo0D(NInchiAtom, NInchiAtom, NInchiAtom, NInchiAtom, INCHI_PARITY)"/> 
         public NInchiStereo0D(NInchiAtom atC, NInchiAtom at0,
                  NInchiAtom at1, NInchiAtom at2, NInchiAtom at3,
                  INCHI_STEREOTYPE type, INCHI_PARITY parity)
@@ -127,7 +125,7 @@ namespace NCDK.NInChI
         ///</summary>
         /// <remarks>
         /// <b>Usage notes from <i>inchi_api.h</i>:</b>
-        /// <code>
+        /// <pre>
         ///  4 neighbors
         ///
         ///           X                    neighbor[4] : {#W, #X, #Y, #Z}
@@ -166,7 +164,7 @@ namespace NCDK.NInChI
         ///                               | xW  xX  xY  xZ |  atom W, etc. (xyz is a
         ///  CML atomParity = determinant | yW  yX  yY  yZ |  'right-handed' Cartesian
         ///                               | zW  zX  xY  zZ |  coordinate system)
-        /// </code>
+        /// </pre>
         /// </remarks>
         /// <param name="atC">Central atom</param>
         /// <param name="at0">Neighbour atom 0</param>
@@ -188,7 +186,7 @@ namespace NCDK.NInChI
         /// </summary>
         /// <remarks>
         /// <b>Usage notes from <i>inchi_api.h</i>:</b>
-        /// <code>
+        /// <pre>
         ///  =============================================
         ///  stereogenic bond &gt;A=B&lt; or cumulene &gt;A=C=C=B&lt;
         ///  =============================================
@@ -210,7 +208,7 @@ namespace NCDK.NInChI
         ///  ==============================================================
         ///  CML 'C' (cis)      &lt;=&gt; INCHI_PARITY_ODD
         ///  CML 'T' (trans)    &lt;=&gt; INCHI_PARITY_EVEN
-        /// </code>
+        /// </pre>
         /// </remarks>
         /// <param name="at0">Neighbour atom 0</param>
         /// <param name="at1">Neighbour atom 1</param>

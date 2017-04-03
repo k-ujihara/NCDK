@@ -60,7 +60,7 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void _hexa_1_3_5_triene()
+        public void Hexa_1_3_5_triene()
         {
             Test("cccccc", "C=CC=CC=C");
         }

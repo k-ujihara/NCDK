@@ -22,9 +22,8 @@ namespace NCDK.Reactions.Mechanisms
 {
     /// <summary>
     /// Tests for HeterolyticCleavageMechanism implementations.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class HeterolyticCleavageMechanismTest : ReactionMechanismTest
     {
@@ -42,10 +41,7 @@ namespace NCDK.Reactions.Mechanisms
         }
 
         /// <summary>
-        /// Junit test.
         /// TODDO: REACT: add an example
-        ///
-        // @throws Exception
         /// </summary>
         [TestMethod()]
         public void TestInitiate_IAtomContainerSet_ArrayList_ArrayList()

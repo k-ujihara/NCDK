@@ -40,10 +40,9 @@ namespace NCDK.Dict
     // @cdk.module     dict
     public class DictionaryDatabase
     {
-        public const string DICTREFPROPERTYNAME = "NCDK.Dict";
+        public const string DictRefPropertyName = "NCDK.Dict";
 
-        private string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms",
-                "reaction-processes"                        };
+        private string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
         private string[] dictionaryTypes = { "xml", "owl", "owl", "owl_React" };
 
         private IDictionary<string, EntryDictionary> dictionaries;
@@ -93,7 +92,7 @@ namespace NCDK.Dict
             catch (Exception exception)
             {
                 dictionary = null;
-                Trace.TraceError("Could not read dictionary ", databaseLocator);
+                Trace.TraceError($"Could not read dictionary {databaseLocator}");
                 Debug.WriteLine(exception);
             }
             return dictionary;
@@ -107,7 +106,7 @@ namespace NCDK.Dict
         public void ReadDictionary(TextReader reader, string name)
         {
             name = name.ToLowerInvariant();
-            Debug.WriteLine("Reading dictionary: ", name);
+            Debug.WriteLine($"Reading dictionary: {name}");
             if (!dictionaries.ContainsKey(name))
             {
                 try
@@ -118,13 +117,13 @@ namespace NCDK.Dict
                 }
                 catch (Exception exception)
                 {
-                    Trace.TraceError("Could not read dictionary: ", name);
+                    Trace.TraceError($"Could not read dictionary: {name}");
                     Debug.WriteLine(exception);
                 }
             }
             else
             {
-                Trace.TraceError("Dictionary already loaded: ", name);
+                Trace.TraceError($"Dictionary already loaded: {name}");
             }
         }
 

@@ -80,7 +80,7 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C
+        /// Reaction: O-C=C-C => [O+]=C-[C-]-C
         /// Automatic search of the center active.
         /// </summary>
         /// <returns>The test suite</returns>
@@ -95,8 +95,8 @@ namespace NCDK.Reactions.Types
 
             /* initiate */
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -117,10 +117,9 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: O-C=C-C => [O+]=C-[C-]-C
+        /// Reaction: O-C=C-C => [O+]=C-[C-]-C
         /// Manually put of the center active.
         /// </summary>
-        /// <returns>The test suite</returns>
         // @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
         [TestMethod()]
         public void TestManuallyCentreActive()
@@ -139,8 +138,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[2].IsReactiveCenter = true;
             molecule.Atoms[3].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -159,7 +158,6 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         [TestMethod()]
@@ -177,8 +175,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[0].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -209,8 +207,8 @@ namespace NCDK.Reactions.Types
             molecule.LonePairs.Add(new LonePair(molecule.Atoms[0]));
 
             /* automatic search of the center active */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -256,9 +254,8 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// get the molecule 1: O-C=C-C
+        /// Get the molecule 1: O-C=C-C
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         // @cdk.inchi  InChI=1/C3H6O/c1-2-3-4/h2-4H,1H3
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -293,7 +290,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// Get the expected set of molecules.
         /// </summary>
-        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -345,7 +341,6 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// A unit test suite for JUnit: Resonance Fluorobenzene  Fc1ccccc1 &lt;=&gt; ...
         /// </summary>
-        /// <returns>The test suite</returns>
         /// InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
         public void TestFluorobenzene()
@@ -376,8 +371,8 @@ namespace NCDK.Reactions.Types
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
             setOfReactants.Add(molecule);
             /* automatic search of the center active */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;

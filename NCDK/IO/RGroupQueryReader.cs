@@ -40,7 +40,7 @@ namespace NCDK.IO
     /// member of each Rgroup in the query.
     ///
     /// <para>The RGFile format is described in the manual
-    /// <a href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">"CTFile Formats"</a> , Chapter 5.
+    /// <see href="http://www.symyx.com/downloads/public/ctfile/ctfile.pdf">"CTFile Formats"</see> , Chapter 5.
     /// </para>
     /// </summary>
     // @cdk.module io

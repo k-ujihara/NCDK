@@ -41,7 +41,7 @@ namespace NCDK.Isomorphisms
     /// </code></example>
     // @author John May
     // @cdk.module isomorphism
-    internal sealed class UniqueBondMatches : NCDK.Common.Base.Predicate<int[]>
+    internal sealed class UniqueBondMatches 
     {
         /// <summary>Which mappings have we seen already.</summary>
         private readonly HashSet<ICollection<Tuple>> unique;

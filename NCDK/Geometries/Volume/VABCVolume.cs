@@ -26,7 +26,7 @@ namespace NCDK.Geometries.Volume
 {
     /// <summary>
     /// Calculates the Van der Waals volume using the method proposed
-    /// in {@cdk.cite Zhao2003}. The method is limited to molecules
+    /// in <token>cdk-cite-Zhao2003</token>. The method is limited to molecules
     /// with the following elements: H, C, N, O, F, Cl, Br, I,
     /// P, S, As, B, Si, Se, and Te.
     /// </summary>
@@ -97,7 +97,7 @@ namespace NCDK.Geometries.Volume
             var savedFlags = ChemObjectFlagBag.Save(molecule);
             //bool[] originalFlags = molecule.GetFlags();
             Aromaticity.CDKLegacy.Apply(molecule);
-            IRingSet ringSet = Cycles.SSSR(molecule).ToRingSet();
+            IRingSet ringSet = Cycles.FindSSSR(molecule).ToRingSet();
             if (ringSet.Count() > 0)
             {
                 int aromRingCount = 0;

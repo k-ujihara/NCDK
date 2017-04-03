@@ -26,29 +26,22 @@ namespace NCDK.Charges
     /// </summary>
     /// <example>
     /// Charges are stored as atom properties ("MMFF94charge") for an AtomContainer ac, values are calculated with:
-    /// <code>
-    ///  HydrogenAdder hAdder = new HydrogenAdder();
-    ///  SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
-    ///  IAtomContainer ac = sp.ParseSmiles("CC");
-    ///  hAdder.AddExplicitHydrogensToSatisfyValency((Molecule)ac);
-    ///  MMFF94PartialCharges mmff = new MMFF94PartialCharges();
-    ///  mmff.AssignMMFF94PartialCharges(ac);
-    ///  </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Charges.MMFF94PartialCharges_Example.cs"]/*' />
     /// and for each atom, the value is given by:
-    /// <code>
-    ///  ( atom.GetProperty&lt;double&gt;("MMFF94charge") ).Value.
-    ///  </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Charges.MMFF94PartialCharges_Example.cs+result"]/*' />
     ///  </example>
     /// <remarks>
-    /// <b>Note:</b> This class delegates to <see cref="Mmff"/> and charges are also assigned
+    /// <note type="note">
+    /// This class delegates to <see cref="Mmff"/> and charges are also assigned
     /// directly to the atom attribute <see cref="IAtom.Charge"/>.
+    /// </note>
     /// </remarks>
+    /// <seealso cref="Mmff.PartialCharges(IAtomContainer)"/> 
     // @author mfe4
     // @author chhoppe
     // @cdk.created 2004-11-03
     // @cdk.module forcefield
     // @cdk.githash
-    // @see Mmff#PartialCharges(IAtomContainer) 
     public class MMFF94PartialCharges : IChargeCalculator
     {
         public const string MMFF_94_CHARGE = "MMFF94charge";
@@ -63,11 +56,10 @@ namespace NCDK.Charges
 
         /// <summary>
         /// Main method which assigns MMFF94 partial charges
-        ///
+        /// </summary>
         /// <param name="ac">AtomContainer</param>
         /// <returns>AtomContainer with MMFF94 partial charges as atom properties</returns>
         /// <exception cref="Exception">Possible Exceptions</exception>
-        /// </summary>
         public IAtomContainer AssignMMFF94PartialCharges(IAtomContainer ac)
         {
             if (!mmff.AssignAtomTypes(ac))

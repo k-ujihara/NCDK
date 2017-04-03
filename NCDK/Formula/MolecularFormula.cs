@@ -36,7 +36,7 @@ namespace NCDK.Formula
     // @cdk.created 2007-11-20
     // @cdk.keyword molecular formula
     // @cdk.githash
-    public class MolecularFormula : IMolecularFormula
+    public partial class MolecularFormula : IMolecularFormula
     {
         private IDictionary<IIsotope, int?> isotopes;
 
@@ -44,11 +44,6 @@ namespace NCDK.Formula
         /// The partial charge of the molecularFormula. The default value is double.NaN.
         /// </summary>
         public int? Charge { get; set; } = null;
-
-        /// <summary>
-        /// A hashtable for the storage of any kind of properties of this IChemObject.
-        /// </summary>
-        private IDictionary<object, object> properties = new Dictionary<object, object>();
 
         /// <summary>
         /// Constructs an empty MolecularFormula.
@@ -200,55 +195,6 @@ namespace NCDK.Formula
         }
 
         public ICDKObject Clone(CDKObjectMap map) => (ICDKObject)Clone();
-
-
-        /// <summary>
-        /// Sets a property for a IChemObject. I should integrate into ChemObject.
-        /// </summary>
-        public virtual void SetProperty(object key, object value)
-        {
-            properties[key] = value;
-        }
-
-        /// <summary>
-        /// Removes a property for a IChemObject. I should integrate into ChemObject.
-        /// </summary>
-        /// <param name="description">The object description of the property (most likely a unique string)</param>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="GetProperty(object)"/>
-        public virtual void RemoveProperty(object description)
-        {
-            properties.Remove(description);
-        }
-
-        /// <inheritdoc/>
-        public virtual T GetProperty<T>(object key)
-        {
-            object property;
-            if (properties.TryGetValue(key, out property))
-                return (T)property;
-            return default(T);
-        }
-
-        /// <summary>
-        /// Returns a IDictionary with the IChemObject's properties.I should integrate into ChemObject.
-        /// </summary>
-        /// <returns>The object's properties as an Dictionary</returns>
-        /// <seealso cref="SetProperties(IEnumerable{KeyValuePair{object, object}})"/>
-        public virtual IDictionary<object, object> GetProperties()
-            => properties;
-
-        /// <summary>
-        /// Sets the properties of this object.
-        /// </summary>
-        /// <param name="properties">a Dictionary specifying the property values</param>
-        /// <seealso cref="GetProperties"/>
-        public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
-        {
-            this.properties = new Dictionary<object, object>();
-            foreach (var pair in properties)
-                this.properties.Add(pair);
-        }
 
         /// <summary>
         /// Compare to IIsotope. The method doesn't compare instance but if they

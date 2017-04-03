@@ -40,13 +40,13 @@ namespace NCDK.Stereo
     /// neighbours is subtly different. To assist in the description here are how
     /// atoms are referred to.
     /// </para>
-    /// <code>
+    /// <pre>
     /// p0           p2     p&lt;i&gt;: periphals
     ///  \          /       t&lt;i&gt;: terminals
     ///   t0 = f = t1       f:    focus
     ///  /          \
     /// p1           p3
-    /// </code>
+    /// </pre>
     /// <para>
     /// The data structure stores, the central 'focus' atom and the four peripheral
     /// atoms. The peripheral atoms are stored in a single array, <c>{p0, p1,
@@ -54,13 +54,13 @@ namespace NCDK.Stereo
     /// terminal atom (t0 or t1). For convenience the terminal atoms can be found with
     /// <see cref="FindTerminalAtoms(IAtomContainer)"/> .
     /// </para>
-    /// <code>
+    /// <pre>
     /// p0           p2          p0   p2
     ///  \          /              \ /
     ///   t0 = f = t1       -->     c       c: t0/f/t1
     ///  /          \              / \
     /// p1           p3           p1  p3
-    /// </code>
+    /// </pre>
     /// <para>
     /// The configuration treats the focus and terminal atoms as a single atom, the
     /// neighbours <c>{p1, p2, p3}</c> then proceeded either clockwise or

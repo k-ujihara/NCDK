@@ -1,10 +1,17 @@
-﻿
+﻿// Copyright (C) 2017  Kazuya Ujihara
+// This file is under LGPL-2.1 
+
+
 
 
 namespace NCDK
 {
-    public struct DoubleBondConformation : System.IComparable
+    public partial struct DoubleBondConformation : System.IComparable<DoubleBondConformation>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="DoubleBondConformation"/>.
+		/// </summary>
+		/// <seealso cref="DoubleBondConformation"/>
         public static class O
         {
             public const int Unset = 0;
@@ -14,8 +21,13 @@ namespace NCDK
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -97,6 +109,7 @@ namespace NCDK
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -105,16 +118,27 @@ namespace NCDK
             return this.Ordinal == ((DoubleBondConformation)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (DoubleBondConformation)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(DoubleBondConformation o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct DoubleBondConformation 
+	{
         public bool IsUnset => this.Ordinal == 0;
 
         public DoubleBondConformation Invert() => Ordinal == O.Together ? Opposite : Together;

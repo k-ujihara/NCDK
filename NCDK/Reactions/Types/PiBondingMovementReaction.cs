@@ -19,42 +19,24 @@
 using NCDK.Reactions.Types.Parameters;
 using NCDK.RingSearches;
 using NCDK.Tools.Manipulator;
-using System.Diagnostics;
 
 namespace NCDK.Reactions.Types
 {
     /// <summary>
     /// IReactionProcess which tries to reproduce the delocalization of electrons
-    ///  which are unsaturated bonds from conjugated rings. Only is allowed those
-    ///  movements which produces from neutral to neutral structures and not take account the possible
-    ///  movements influenced from lone pairs, or empty orbitals. This movements are
-    ///  typically from rings without any access or deficiency of charge and have a
-    ///  even number of atoms. 
-    ///  </summary>
-    ///  <example>
-    ///  <para>The reaction don't care if the product are the same in symmetry.</para>
-    ///  <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new PiBondingMovementReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not localized then the reaction process will
-    /// try to find automatically the possible reactive center.</para>
-    /// </example>
+    /// which are unsaturated bonds from conjugated rings. Only is allowed those
+    /// movements which produces from neutral to neutral structures and not take account the possible
+    /// movements influenced from lone pairs, or empty orbitals. This movements are
+    /// typically from rings without any access or deficiency of charge and have a
+    /// even number of atoms. 
+    /// <para>The reaction don't care if the product are the same in symmetry.</para>
+    /// </summary>
     // @author         Miguel Rojas
     // @cdk.created    2007-02-02
     // @cdk.module     reaction
     // @cdk.set        reaction-types
     // @cdk.githash
-    public class PiBondingMovementReaction : ReactionEngine, IReactionProcess
+    public partial class PiBondingMovementReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
         /// Constructor of the PiBondingMovementReaction object
@@ -79,16 +61,7 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null).</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: PiBondingMovementReaction");
-
-            if (reactants.Count != 1)
-            {
-                throw new CDKException("PiBondingMovementReaction only expects one reactant");
-            }
-            if (agents != null)
-            {
-                throw new CDKException("PiBondingMovementReaction don't expects agents");
-            }
+            CheckInitiateParams(reactants, agents);
 
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
@@ -96,7 +69,7 @@ namespace NCDK.Reactions.Types
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(reactant);
 
             // if the parameter hasActiveCenter is not fixed yet, set the active centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
 
             //        if((bool)paramsMap["lookingSymmetry"]){

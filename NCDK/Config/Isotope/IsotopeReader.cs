@@ -47,7 +47,7 @@ namespace NCDK.Config.Isotope
         private IChemObjectBuilder builder;
 
         /// <summary>
-        /// Instantiates a new reader that parses the XML from the given <code>input</code>.
+        /// Instantiates a new reader that parses the XML from the given <paramref name="input"/>.
         /// </summary>
         /// <param name="input"><see cref="Stream"/> with the XML source</param>
         /// <param name="builder">The <see cref="IChemObjectBuilder"/> used to create new <see cref="IIsotope"/>'s.</param>

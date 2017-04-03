@@ -31,14 +31,14 @@ namespace NCDK.Graphs
 {
     /// <summary>
     /// Maximum matching in general graphs using Edmond's Blossom Algorithm
-    /// {@cdk.cite Edmonds65}. <p/>
+    /// <token>cdk-cite-Edmonds65</token>. <p/>
     /// </summary>
     /// <remarks>
     /// This implementation was adapted from D Eppstein's python implementation 
-    /// (<a href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</a>)
+    /// (<see href="http://www.ics.uci.edu/~eppstein/PADS/CardinalityMatching.py">src</see>)
     /// providing efficient tree traversal and handling of blossoms.
-    /// <a href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</a>
-    /// <a href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</a>
+    /// <see href="http://en.wikipedia.org/wiki/Blossom_algorithm">Blossom algorithm, Wikipedia</see>
+    /// <see href="http://research.microsoft.com/apps/video/dl.aspx?id=171055">Presentation from Vazirani on his and Micali O(|E| * Sqrt(|V|)) algorithm</see>
     /// </remarks>
     // @author John May
     // @cdk.module standard

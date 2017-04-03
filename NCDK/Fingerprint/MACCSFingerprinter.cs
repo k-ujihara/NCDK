@@ -26,7 +26,6 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.RingSearches;
 using NCDK.Smiles.SMARTS.Parser;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,7 +40,7 @@ namespace NCDK.Fingerprint
     /// <remarks>
     /// <para>
     /// The SMARTS patterns for each of the features was taken from
-    /// <a href="http://www.rdkit.org"> RDKit</a>. However given that there is no
+    /// <see href="http://www.rdkit.org"> RDKit</see>. However given that there is no
     /// official and explicit listing of the original key definitions, the results
     /// of this implementation may differ from others.
     /// </para>
@@ -49,17 +48,17 @@ namespace NCDK.Fingerprint
     /// This class assumes that aromaticity perception, atom typing and adding of
     /// implicit hydrogens have been performed prior to generating the fingerprint.
     /// </para>
-    /// <para>
-    /// <b>Note</b> Currently bits 1 and 44 are completely ignored since the RDKit
+    /// <note type="note">
+    /// Currently bits 1 and 44 are completely ignored since the RDKit
     /// defs do not provide a definition and I can't find an official description
     /// of them.
-    /// </para>
-    /// <para>
-    /// <b>Warning - MACCS substructure keys cannot be used for substructure
+    /// </note>
+    /// <note type="warning">
+    /// MACCS substructure keys cannot be used for substructure
     /// filtering. It is possible for some keys to match substructures and not match
     /// the superstructures. Some keys check for hydrogen counts which may not be
-    /// preserved in a superstructure.</b>
-    /// </para>
+    /// preserved in a superstructure.
+    /// </note>
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.created 2008-07-23
@@ -69,7 +68,7 @@ namespace NCDK.Fingerprint
     // @cdk.githash
     internal class MACCSFingerprinter : IFingerprinter
     {
-        private const string KEY_DEFINITIONS = "Data.maccs.txt";
+        private const string KeyDefinitions = "Data.maccs.txt";
 
         private volatile IList<MaccsKey> keys = null;
 
@@ -92,7 +91,6 @@ namespace NCDK.Fingerprint
         }
 
         /// <inheritdoc/>
-
         public IBitFingerprint GetBitFingerprint(IAtomContainer container)
         {
             IList<MaccsKey> keys = GetKeys(container.Builder);
@@ -170,7 +168,7 @@ namespace NCDK.Fingerprint
         private IList<MaccsKey> ReadKeyDef(IChemObjectBuilder builder)
         {
             List<MaccsKey> keys = new List<MaccsKey>(166);
-            var reader = new StreamReader(ResourceLoader.GetAsStream(GetType(), KEY_DEFINITIONS));
+            var reader = new StreamReader(ResourceLoader.GetAsStream(GetType(), KeyDefinitions));
 
             // now process the keys
             string line;
@@ -188,7 +186,6 @@ namespace NCDK.Fingerprint
 
         private class MaccsKey
         {
-
             private string smarts;
             private int count;
             private Pattern pattern;
@@ -209,7 +206,6 @@ namespace NCDK.Fingerprint
 
 
         /// <inheritdoc/>
-
         public ICountFingerprint GetCountFingerprint(IAtomContainer container)
         {
             throw new NotSupportedException();

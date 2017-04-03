@@ -21,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Collections;
-using NCDK.Common.Mathematics;
 using NCDK.Graphs;
 using NCDK.RingSearches;
 using System;
@@ -39,9 +37,13 @@ namespace NCDK.Layout
     /// should be done in when generating a structure diagram (and consider
     /// overlaps). This method finds double bonds with incorrect depicted
     /// configuration and reflects one side to correct the configuration.
-    /// <b>IMPORTANT: should be invoked before labelling up/down bonds. Cyclic
-    /// double-bonds with a configuration can not be corrected (error logged).</b>
     /// </summary>
+    /// <remarks>
+    /// <note type="important">
+    /// Should be invoked before labelling up/down bonds. Cyclic
+    /// double-bonds with a configuration can not be corrected (error logged).
+    /// </note>
+    /// </remarks>
     // @author John May
     // @cdk.module sdg
     internal sealed class CorrectGeometricConfiguration
@@ -62,11 +64,15 @@ namespace NCDK.Layout
         private readonly bool[] visited;
 
         /// <summary>
-        /// Adjust all double bond elements in the provided structure. <b>IMPORTANT:
+        /// Adjust all double bond elements in the provided structure. 
+        /// </summary>
+        /// <remarks>
+        /// <note type="important">
         /// up/down labels should be adjusted before adjust double-bond
         /// configurations. coordinates are reflected by this method which can lead
-        /// to incorrect tetrahedral specification.</b>
-        /// </summary>
+        /// to incorrect tetrahedral specification.
+        /// </note>
+        /// </remarks>
         /// <param name="container">the structure to adjust</param>
         /// <exception cref="ArgumentException">an atom had unset coordinates</exception>
         public static IAtomContainer Correct(IAtomContainer container)
@@ -257,7 +263,8 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Reflect the point <paramref name="p"/> in the line (x0,y0 - x1,y1).
+        /// Reflect the point <paramref name="p"/> 
+        /// in the line (<paramref name="x0"/>, <paramref name="y0"/> - <paramref name="x1"/>, <paramref name="y1"/>).
         /// </summary>
         /// <param name="p">the point to reflect</param>
         /// <param name="x0">plane x start</param>

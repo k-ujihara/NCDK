@@ -34,26 +34,7 @@ namespace NCDK.Graphs.Invariant
         ///  before calling this method.
         /// </summary>
         /// <example>
-        /// An example for detection of Radical Allyl:
-        /// <code>
-        ///    Atom a0 = new Atom("C"); mol.Atoms.Add(a0);
-        ///    Atom a1 = new Atom("C"); mol.Atoms.Add(a1);
-        ///    Atom a2 = new Atom("C"); mol.Atoms.Add(a2);
-        ///    Atom h1 = new Atom("H"); mol.Atoms.Add(h1);
-        ///    Atom h2 = new Atom("H"); mol.Atoms.Add(h2);
-        ///    Atom h3 = new Atom("H"); mol.Atoms.Add(h3);
-        ///    Atom h4 = new Atom("H"); mol.Atoms.Add(h4);
-        ///    Atom h5 = new Atom("H"); mol.Atoms.Add(h5);
-        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[1], BondOrder.Double);
-        ///    mol.Bonds.Add(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
-        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[3], BondOrder.Single);
-        ///    mol.Bonds.Add(mol.Atoms[0], mol.Atoms[4], BondOrder.Single);
-        ///    mol.Bonds.Add(mol.Atoms[1], mol.Atoms[5], BondOrder.Single);
-        ///    mol.Bonds.Add(mol.Atoms[2], mol.Atoms[6], BondOrder.Single);
-        ///    mol.Bonds.Add(mol.Atoms[2], mol.Atoms[7], BondOrder.Single);
-        ///    SingleElectron se = new SingleElectron(a2);
-        ///    mol.AddElectronContainer(se);
-        ///  </code>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.InChI.ConjugatedPiSystemsDetector_Example.cs+Detect"]/*' />
         /// </example>
         /// <param name="ac">The AtomContainer for which to detect conjugated pi systems</param>
         /// <returns>The set of AtomContainers with conjugated pi systems</returns>
@@ -147,7 +128,7 @@ namespace NCDK.Graphs.Invariant
             }
             else if (currentAtom.FormalCharge == -1)
             {
-                //// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND //////////////
+                //// NEGATIVE CHARGES WITH A NEIGHBOOR PI BOND ////
                 int counterOfPi = 0;
                 foreach (var atom in atoms)
                 {

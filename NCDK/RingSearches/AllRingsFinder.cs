@@ -25,8 +25,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using NCDK.Graphs;
 using static NCDK.Graphs.GraphUtil;
 
@@ -39,21 +37,13 @@ namespace NCDK.RingSearches
     /// </summary>
     /// <remarks>
     /// To avoid combinatorial explosion there is a configurable threshold, at which
-    /// the computation aborts. The <see cref="Threshold"/> values have been precomputed on
+    /// the computation aborts. The <see cref="threshold"/> values have been precomputed on
     /// PubChem-Compound and can be used with the <see cref="UsingThreshold(Threshold)"/> .
     /// Alternatively, other ring sets which are a subset of this set offer a
     /// tractable alternative. </remarks>
-    ///
-    /// <example><code>
-    /// AllRingsFinder arf = new AllRingsFinder();
-    /// foreach (var m in ms) {
-    ///     try {
-    ///         IRingSet rs = arf.FindAllRings(m);
-    ///     } catch (CDKException e) {
-    ///         // molecule was too complex, handle error
-    ///     }
-    /// }
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.AllRingsFinder_Example.cs"]/*' />
+    /// </example>
     /// <seealso cref="AllCycles"/>
     // @author steinbeck
     // @author johnmay
@@ -102,7 +92,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Compute all rings up to and including the {@literal maxRingSize}. The
+        /// Compute all rings up to and including the <paramref name="maxRingSize"/>. The
         /// container is first partitioned into ring systems which are then processed
         /// separately. If the molecule has already be partitioned, consider using <see cref="FindAllRingsInIsolatedRingSystem(IAtomContainer, int)"/>. 
         /// </summary>
@@ -162,7 +152,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Compute all rings up to an including the {@literal maxRingSize}. No
+        /// Compute all rings up to an including the <paramref name="maxRingSize"/>. No
         /// pre-processing is done on the container.
         /// </summary>
         /// <param name="atomContainer">the molecule to be searched for rings</param>
@@ -202,7 +192,7 @@ namespace NCDK.RingSearches
         }
 
         /// <summary>
-        /// Sets the timeout value in milliseconds of the AllRingsFinder object This
+        /// Sets the timeout value in milliseconds of the <see cref="AllRingsFinder"/> object This
         /// is used to prevent this AllRingsFinder to run for ages in certain rare
         /// cases with ring systems of large size or special topology
         /// </summary>
@@ -211,12 +201,12 @@ namespace NCDK.RingSearches
         [Obsolete("use the new threshold (during construction)")]
         public AllRingsFinder SetTimeout(long timeout)
         {
-            Console.Error.WriteLine("AllRingsFinder.SetTimeout() is not used, please " + "use the new threshold values");
+            Console.Error.WriteLine(nameof(AllRingsFinder) + "." + nameof(SetTimeout) + "() is not used, please " + "use the new threshold values");
             return this;
         }
 
         /// <summary>
-        /// Gets the timeout values in milliseconds of the AllRingsFinder object
+        /// Gets the timeout values in milliseconds of the <see cref="AllRingsFinder"/> object
         /// </summary>
         /// <returns>The timeout value</returns>
         [Obsolete("timeout not used")]
@@ -293,8 +283,8 @@ namespace NCDK.RingSearches
         /// <item><term>1440</term><term>99.993</term><term>17841602</term><term>1246</term></item>
         /// <item><term>3072</term><term>99.994</term><term>17841789</term><term>1059</term></item>
         /// </list>
-        /// <a href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">AllRingsFinder, Sport Edition</a>
         /// </remarks>
+        /// <seealso href="http://efficientbits.blogspot.co.uk/2013/06/allringsfinder-sport-edition.html">AllRingsFinder, Sport Edition</seealso>
         public class Threshold
         {
             /// <summary>
@@ -357,10 +347,9 @@ namespace NCDK.RingSearches
         /// <summary>
         /// Create an <see cref="AllRingsFinder"/> instance using the given threshold.
         /// </summary>
-        /// <example><code>
-        /// // import static AllRingsFinder.Threshold.PubChem_99;
-        /// AllRingsFinder arf = AllRingsFinder.UsingThreshold(PubChem_99);
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.RingSearches.AllRingsFinder_Example.cs+UsingThreshold"]/*' />
+        /// </example>
         /// <param name="threshold">the threshold value</param>
         /// <returns>instance with the set threshold</returns>
         public static AllRingsFinder UsingThreshold(Threshold threshold)

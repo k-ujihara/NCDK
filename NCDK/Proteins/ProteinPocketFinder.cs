@@ -30,7 +30,7 @@ using System.IO;
 namespace NCDK.Proteins
 {
     /// <summary>
-    /// The detection of pocket and cavities in a bioPolymer is done similar to the program LIGSITE {@cdk.cite MH1997}.
+    /// The detection of pocket and cavities in a bioPolymer is done similar to the program LIGSITE <token>cdk-cite-MH1997</token>.
     /// TODO: Optimisation of the cubic grid placement
     /// </summary>
     // @author      cho

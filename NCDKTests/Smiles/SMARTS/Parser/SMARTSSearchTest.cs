@@ -32,11 +32,10 @@ namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
     /// JUnit test routines for the SMARTS substructure search.
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.module test-smarts
     // @cdk.require ant1.6
-    /// </summary>
     [TestClass()]
     public class SMARTSSearchTest : CDKTestCase
     {

@@ -28,24 +28,18 @@ namespace NCDK.Config
     /// <summary>
     /// Used to store and return data of a particular isotope. As this class is a
     /// singleton class, one gets an instance with:
-    /// <code>
-    /// IsotopeFactory ifac = IsotopFactory.GetInstance(new ChemObject().Builder);
-    /// </code>
-    /// <para>
-    /// Data about the isotopes are read from the file
-    /// NCDK.Config.Data.isotopes.xml in the cdk-standard
-    /// module. Part of the data in this file was collected from
-    /// the website <a href="http://www.webelements.org">webelements.org</a>.
-    /// </para>
-    /// <para>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.XMLIsotopeFactory_Example.cs+1"]/*' />
+    /// </summary>
+    /// <remarks>
+    /// Data about the isotopes are read from the NCDK.Config.Data.isotopes.xml resource.
+    /// Part of the data in this file was collected from
+    /// the website <see href="http://www.webelements.org">webelements.org</see>.
+    /// </remarks>
+    /// <example>
     /// The use of this class is exemplified as follows. To get information
     /// about the major isotope of hydrogen, one can use this code:
-    /// </para>
-    /// <code>
-    ///   IsotopeFactory factory = XMLIsotopeFactory.GetInstance(DefaultChemObjectBuilder.Instance);
-    ///   Isotope major = factory.GetMajorIsotope("H");
-    /// </code>
-    /// </summary>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Config.XMLIsotopeFactory_Example.cs+example"]/*' />
+    /// </example>
     // @cdk.module     extra
     // @cdk.githash
     // @author     steinbeck

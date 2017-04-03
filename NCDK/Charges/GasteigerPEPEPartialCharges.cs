@@ -32,7 +32,7 @@ namespace NCDK.Charges
 {
     /// <summary>
     /// The calculation of the Gasteiger (PEPE) partial charges is based on
-    /// {@cdk.cite Saller85}. This class doesn't implement the original method of the Marsili but the
+    /// <token>cdk-cite-Saller85</token>. This class doesn't implement the original method of the Marsili but the
     /// method based on H. Saller which is described from Petra manual version 2.6
     /// </summary>
     /// <remarks>
@@ -66,7 +66,8 @@ namespace NCDK.Charges
         // Use IsPlaced flag because it has the same mask
 
         /// <summary>Corresponds an empirical influence between the electrostatic potential and the neighbours.</summary>
-        private double fE = 1.1;                                                                     
+        private double fE = 1.1;
+                                         
         /// <summary>Scale factor which makes same heavy for all structures</summary>
         private double fS = 0.37;
 
@@ -106,8 +107,8 @@ namespace NCDK.Charges
             /* 1: detect resonance structure */
             StructureResonanceGenerator gR1 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
             var reactionList1 = gR1.Reactions;
-            var paramList1 = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            var paramList1 = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList1.Add(param);
             HeterolyticCleavagePBReaction reactionHCPB = new HeterolyticCleavagePBReaction();
@@ -122,8 +123,8 @@ namespace NCDK.Charges
             StructureResonanceGenerator gR2 = new StructureResonanceGenerator(); // according G. should be integrated the breaking bonding
             gR2.MaximalStructures = MaxResonanceStructures;
             var reactionList2 = gR2.Reactions;
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact paramA = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction paramA = new SetReactionCenter();
             paramA.IsSetParameter = true;
             paramList.Add(paramA);
             reactionList2.Add(new HeterolyticCleavagePBReaction());
@@ -494,8 +495,8 @@ namespace NCDK.Charges
 
             setOfReactants.Add(ac);
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -512,8 +513,8 @@ namespace NCDK.Charges
                     mol.Bonds[k].Atoms[1].IsReactiveCenter = false;
                 }
                 setOfM2.Add(mol);
-                List<IParameterReact> paramList2 = new List<IParameterReact>();
-                IParameterReact param2 = new SetReactionCenter();
+                List<IParameterReaction> paramList2 = new List<IParameterReaction>();
+                IParameterReaction param2 = new SetReactionCenter();
                 param2.IsSetParameter = false;
                 paramList2.Add(param);
                 type.ParameterList = paramList2;
@@ -570,7 +571,7 @@ namespace NCDK.Charges
         }
 
         /// <summary>
-        /// get the topological weight factor for each atomContainer.
+        /// Get the topological weight factor for each atomContainer.
         /// </summary>
         /// <param name="atomContainer">The IAtomContainer to study.</param>
         /// <param name="ac">The IAtomContainer to study.</param>

@@ -28,7 +28,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     /// <remarks>
     /// Polarizabilities are taken from
-    /// <a href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm">http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm</a>.
+    /// <see href="http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm">http://www.sunysccc.edu/academic/mst/ptable/p-table2.htm</see>.
     /// <para>
     /// This class need explicit hydrogens.
     /// </para>

@@ -36,43 +36,39 @@ using System.Text;
 namespace NCDK.Fingerprint
 {
     /// <summary>
-    /// Generates a fingerprint for a given AtomContainer. Fingerprints are
+    /// Generates a fingerprint for a given <see cref="IAtomContainer"/>. Fingerprints are
     /// one-dimensional bit arrays, where bits are set according to a the
     /// occurrence of a particular structural feature (See for example the
     /// Daylight inc. theory manual for more information). Fingerprints allow for
     /// a fast screening step to exclude candidates for a substructure search in a
     /// database. They are also a means for determining the similarity of chemical
     /// structures. 
+    /// <para>
+    /// The FingerPrinter assumes that hydrogens are explicitly given! 
+    /// Furthermore, if pseudo atoms or atoms with malformed symbols are present,
+    /// their atomic number is taken as one more than the last element currently 
+    /// supported in <see cref="PeriodicTable"/>.</para>
     /// </summary>
     /// <example>
-    /// A fingerprint is generated for an AtomContainer with this code: 
-    /// <code>
-    ///   Molecule molecule = new Molecule();
-    ///   IFingerprinter fingerprinter = new Fingerprinter();
-    ///   IBitFingerprint fingerprint = fingerprinter.GetBitFingerprint(molecule);
-    ///   fingerprint.Count; // returns 1024 by default
-    ///   fingerprint.Length(); // returns the highest set bit
-    /// </code>
+    /// A fingerprint is generated for an <see cref="IAtomContainer"/> with this code: 
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.Fingerprinter_Example.cs"]/*' />
     /// </example>
     /// <remarks>
-    /// The FingerPrinter assumes that hydrogens are explicitly given! Furthermore,
-    /// if pseudo atoms or atoms with malformed symbols are present, their atomic
-    /// number is taken as one more than the last element currently supported in
-    /// <see cref="PeriodicTable"/>.
-    /// <para>Warning: The aromaticity detection for this
+    /// <note type="warning">
+    /// The aromaticity detection for this
     /// FingerPrinter relies on AllRingsFinder, which is known to take very long
     /// for some molecules with many cycles or special cyclic topologies. Thus,
     /// the AllRingsFinder has a built-in timeout of 5 seconds after which it
     /// aborts and  Exception. If you want your SMILES generated at any
     /// expense, you need to create your own AllRingsFinder, set the timeout to a
     /// higher value, and assign it to this FingerPrinter. In the vast majority of
-    /// cases, however, the defaults will be fine. </para>
-    /// <para>Another Warning : The daylight manual says:
+    /// cases, however, the defaults will be fine. </note>
+    /// <note type="warning">The daylight manual says:
     /// "Fingerprints are not so definite: if a fingerprint indicates a pattern is
     /// missing then it certainly is, but it can only indicate a pattern's presence
     /// with some probability." In the case of very small molecules, the
     /// probability that you get the same fingerprint for different molecules is
-    /// high. </para>
+    /// high.</note>
     /// </remarks>
     // @author         steinbeck
     // @cdk.created    2002-02-24
@@ -83,18 +79,19 @@ namespace NCDK.Fingerprint
     public class Fingerprinter : IFingerprinter
     {
         /// <summary>Throw an exception if too many paths (per atom) are generated.</summary>
-        private const int DEFAULT_PATH_LIMIT = 1500;
+        private const int DefaultPathLimit = 1500;
 
         /// <summary>The default length of created fingerprints.</summary>
-        public const int DEFAULT_SIZE = 1024;
+        public const int DefaultSize = 1024;
         /// <summary>The default search depth used to create the fingerprints.</summary>
-        public const int DEFAULT_SEARCH_DEPTH = 8;
+        public const int DefaultSearchDepth = 8;
 
         private int size;
         private int searchDepth;
-        private int pathLimit = DEFAULT_PATH_LIMIT;
+        private int pathLimit = DefaultPathLimit;
 
-        private static readonly IDictionary<string, string> QUERY_REPLACE = new Dictionary<string, string>() {
+        private static readonly IDictionary<string, string> QueryReplace = new Dictionary<string, string>()
+        {
             { "Cl", "X" },
             { "Br", "Z" },
             { "Si", "Y" },
@@ -107,15 +104,15 @@ namespace NCDK.Fingerprint
         };
 
         /// <summary>
-        /// Creates a fingerprint generator of length <code>DEFAULT_SIZE</code>
-        /// and with a search depth of <code>DEFAULT_SEARCH_DEPTH</code>.
+        /// Creates a fingerprint generator of length <see cref="DefaultSize"/> 
+        /// and with a search depth of <see cref="DefaultSearchDepth"/>.
         /// </summary>
         public Fingerprinter()
-            : this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH)
+            : this(DefaultSize, DefaultSearchDepth)
         { }
 
         public Fingerprinter(int size)
-            : this(size, DEFAULT_SEARCH_DEPTH)
+            : this(size, DefaultSearchDepth)
         { }
 
         /// <summary>
@@ -274,7 +271,7 @@ namespace NCDK.Fingerprint
         private string ConvertSymbol(string symbol)
         {
             string returnSymbol;
-            if (!QUERY_REPLACE.TryGetValue(symbol, out returnSymbol))
+            if (!QueryReplace.TryGetValue(symbol, out returnSymbol))
                 return symbol;
             return returnSymbol;
         }

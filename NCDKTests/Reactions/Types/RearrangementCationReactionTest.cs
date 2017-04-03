@@ -18,11 +18,9 @@
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.AtomTypes;
-using NCDK.Default;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Reactions.Types.Parameters;
-using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System;
 using System.Collections.Generic;
@@ -33,26 +31,18 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the RearrangementCationReactionTest.
     /// Generalized Reaction: [A+]-B=C => A=B-[c+].
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class RearrangementCationReactionTest : ReactionProcessTest
     {
-
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public RearrangementCationReactionTest()
         {
             SetReaction(typeof(RearrangementCationReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestRearrangementCationReaction()
         {
@@ -61,13 +51,10 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-C=C-C => C=C-[C+]-C
+        /// Reaction: [C+]-C=C-C => C=C-[C+]-C
         /// Automatic search of the center active.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
-
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
             IReactionProcess type = new RearrangementCationReaction();
@@ -76,8 +63,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
             /* initiate */
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -94,14 +81,11 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule2 = GetExpectedProducts()[0];
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
-        /// A unit test suite for JUnit. Reaction: [C+]-C=C-C => C=C-[C+]-C
+        /// Reaction: [C+]-C=C-C => C=C-[C+]-C
         /// Manually put of the center active.
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
         public void TestManuallyCentreActive()
@@ -118,8 +102,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[0].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -138,14 +122,8 @@ namespace NCDK.Reactions.Types
 
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(new UniversalIsomorphismTester().IsIsomorph(molecule2, queryAtom));
-
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -161,8 +139,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[0].IsReactiveCenter = true;
             molecule.Bonds[1].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -183,11 +161,6 @@ namespace NCDK.Reactions.Types
             Assert.IsTrue(reactant.Bonds[1].IsReactiveCenter);
         }
 
-        /// <summary>
-        /// A unit test suite for JUnit.
-        ///
-        /// <returns>The test suite</returns>
-        /// </summary>
         [TestMethod()]
         public void TestMapping()
         {
@@ -197,8 +170,8 @@ namespace NCDK.Reactions.Types
             IAtomContainer molecule = setOfReactants[0];
 
             /* automatic search of the center active */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -231,7 +204,6 @@ namespace NCDK.Reactions.Types
             IAtomContainer moleculeTest = GetExampleReactants()[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeTest);
             MakeSureAtomTypesAreRecognized(moleculeTest);
-
         }
 
         /// <summary>
@@ -243,13 +215,10 @@ namespace NCDK.Reactions.Types
             IAtomContainer moleculeTest = GetExpectedProducts()[0];
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(moleculeTest);
             MakeSureAtomTypesAreRecognized(moleculeTest);
-
         }
 
         /// <summary>
-        /// get the molecule 1: [C+]-C=C-C
-        ///
-        /// <returns>The IAtomContainerSet</returns>
+        /// Get the molecule 1: [C+]-C=C-C
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
@@ -279,8 +248,6 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
@@ -311,10 +278,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Test to recognize if a IAtomContainer matcher correctly identifies the CDKAtomTypes.
-        ///
-        /// <param name="molecule">The IAtomContainer to analyze</param>
-        /// <exception cref="CDKException"></exception>
         /// </summary>
+        /// <param name="molecule">The IAtomContainer to analyze</param>
         private void MakeSureAtomTypesAreRecognized(IAtomContainer molecule)
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(molecule.Builder);

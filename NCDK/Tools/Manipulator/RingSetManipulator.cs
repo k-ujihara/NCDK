@@ -200,18 +200,20 @@ namespace NCDK.Tools.Manipulator
         }
 
         /// <summary>
-        /// Checks if <code>atom1</code> and <code>atom2</code> share membership in the same ring or ring system.
+        /// Checks if <paramref name="atom1"/> and <paramref name="atom2"/> share membership in the same ring or ring system.
         /// Membership in the same ring is checked if the RingSet contains the SSSR of a molecule; membership in
         /// the same ring or same ring system is checked if the RingSet contains all rings of a molecule.
         /// </summary>
         /// <remarks>
-        /// <b>Important:</b> This method only returns meaningful results if <code>atom1</code> and
-        /// <code>atom2</code> are members of the same molecule for which the RingSet was calculated!
+        /// <note type="important">
+        /// This method only returns meaningful results if <paramref name="atom1"/> and 
+        /// <paramref name="atom2"/> are members of the same molecule for which the RingSet was calculated!
+        /// </note>
         /// </remarks>
         /// <param name="ringSet">The collection of rings</param>
         /// <param name="atom1">The first atom</param>
         /// <param name="atom2">The second atom</param>
-        /// <returns>bool true if <code>atom1</code> and <code>atom2</code> share membership of at least one ring or ring system, false otherwise</returns>
+        /// <returns>bool true if <paramref name="atom1"/> and <paramref name="atom2"/> share membership of at least one ring or ring system, false otherwise</returns>
         public static bool IsSameRing(IRingSet ringSet, IAtom atom1, IAtom atom2)
         {
             foreach (var atomContainer in ringSet)

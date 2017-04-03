@@ -662,7 +662,7 @@ namespace NCDK.Layout
         /// java.lang.NullPointerException
         ///   at javax.vecmath.Tuple2d.<init>(Tuple2d.java:66)
         ///   at javax.vecmath.Vector2.<init>(Vector2.java:74)
-        ///   at org.openscience.cdk.layout.RingPlacer.PlaceFUsedRing(RingPlacer.java:379)
+        ///   at org.openscience.cdk.layout.RingPlacer.PlaceFusedRing(RingPlacer.java:379)
         ///   at org.openscience.cdk.layout.RingPlacer.PlaceRing(RingPlacer.java:99)
         ///   at org.openscience.cdk.layout.RingPlacer.PlaceConnectedRings(RingPlacer.java:663)
         ///   at org.openscience.cdk.layout.StructureDiagramGenerator.LayoutRingSet(StructureDiagramGenerator.java:516)

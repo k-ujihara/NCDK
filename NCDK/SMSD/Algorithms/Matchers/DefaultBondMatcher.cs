@@ -75,10 +75,10 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Constructor
+        /// </summary>
         /// <param name="queryMol">query Molecule</param>
         /// <param name="queryBond">query Molecule</param>
         /// <param name="shouldMatchBonds">bond match flag</param>
-        /// </summary>
         public DefaultBondMatcher(IAtomContainer queryMol, IBond queryBond, bool shouldMatchBonds)
                 : base()
         {
@@ -89,20 +89,18 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Constructor
-        /// <param name="queryBond">query Molecule</param>
         /// </summary>
+        /// <param name="queryBond">query Molecule</param>
         public DefaultBondMatcher(IQueryBond queryBond)
                 : base()
         {
             this.smartQueryBond = queryBond;
         }
 
-        /// <summary> {@inheritDoc}
-        ///
+        /// <inheritdoc/>
         /// <param name="targetContainer">target container</param>
         /// <param name="targetBond">target bond</param>
         /// <returns>true if bonds match</returns>
-        /// </summary>
         public bool Matches(IAtomContainer targetContainer, IBond targetBond)
         {
             if (this.smartQueryBond != null && queryBond == null)
@@ -129,7 +127,6 @@ namespace NCDK.SMSD.Algorithms.Matchers
 
         /// <summary>
         /// Return true if a bond is matched between query and target
-        /// <param name="targetBond">/// @return</param>
         /// </summary>
         private bool IsBondTypeMatch(IBond targetBond)
         {

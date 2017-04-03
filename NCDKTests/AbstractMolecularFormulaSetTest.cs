@@ -316,7 +316,7 @@ namespace NCDK
         /// <returns>The test suite</returns>
         /// </summary>
         [TestMethod()]
-        public virtual void TestRePlaceMolecularFormula_int_IMolecularFormula() {
+        public virtual void TestReplaceMolecularFormula_int_IMolecularFormula() {
             IMolecularFormulaSet mfS = Builder.CreateMolecularFormulaSet();
             IMolecularFormula mf1 = Builder.CreateMolecularFormula();
             IMolecularFormula mf2 = Builder.CreateMolecularFormula();

@@ -28,11 +28,9 @@ namespace NCDK.IO
 {
     /// <summary>
     /// Tests whether all Reader and Writer classes can be instantiated.
-    ///
-    // @cdk.module test-io
-    ///
-    // @author  Egon Willighagen <egonw@sci.kun.nl>
     /// </summary>
+    // @cdk.module test-io
+    // @author  Egon Willighagen <egonw@sci.kun.nl>
     [TestClass()]
     public class ChemObjectIOInstantionTests : CDKTestCase
     {

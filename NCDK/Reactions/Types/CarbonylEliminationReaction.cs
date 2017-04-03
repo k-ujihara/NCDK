@@ -25,36 +25,16 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// <para>IReactionProcess which participate mass spectrum process.
     /// This reaction could be represented as RC-C#[O+] => R[C] + |C#[O+]</para>
-    /// </summary>
-    /// <example>
     /// Make sure that the molecule has the correspond lone pair electrons
-    /// for each atom. You can use the method: 
-    /// <code>LonePairElectronChecker </code>
-    /// <para>It is processed by the HeterolyticCleavageMechanism class</para>
-    ///
-    /// <code>
-    ///  IAtomContainerSet setOfReactants = Default.ChemObjectBuilder.Instance.NewAtomContainerSet();
-    ///  setOfReactants.Add(new AtomContainer());
-    ///  IReactionProcess type = new CarbonylEliminationReaction();
-    ///  object[] parameters = {bool.FALSE};
-    ///  type.Parameters = parameters;
-    ///  IReactionSet setOfReactions = type.Initiate(setOfReactants, null);
-    ///  </code>
-    ///
-    /// <para>We have the possibility to localize the reactive center. Good method if you
-    /// want to localize the reaction in a fixed point</para>
-    /// <code>atoms[0].IsReactiveCenter = true;</code>
-    /// <para>Moreover you must put the parameter true</para>
-    /// <para>If the reactive center is not localized then the reaction process will
-    /// try to find automatically the possible reactive center.</para>
-    /// </example>
+    /// for each atom. You can use <see cref="Tools.LonePairElectronChecker"/>.
+    /// </summary>
     /// <seealso cref="Mechanisms.HeterolyticCleavageMechanism"/>
     // @author         Miguel Rojas
     // @cdk.created    2006-10-16
     // @cdk.module     reaction
     // @cdk.githash
     // @cdk.set        reaction-types
-    public class CarbonylEliminationReaction : ReactionEngine, IReactionProcess
+    public partial class CarbonylEliminationReaction : ReactionEngine, IReactionProcess
     {
         /// <summary>
         /// Constructor of the CarbonylEliminationReaction object.
@@ -78,23 +58,14 @@ namespace NCDK.Reactions.Types
         /// <param name="agents">agents of the reaction (Must be in this case null)</param>
         public IReactionSet Initiate(IAtomContainerSet<IAtomContainer> reactants, IAtomContainerSet<IAtomContainer> agents)
         {
-            Debug.WriteLine("initiate reaction: CarbonylEliminationReaction");
-
-            if (reactants.Count != 1)
-            {
-                throw new CDKException("CarbonylEliminationReaction only expects one reactant");
-            }
-            if (agents != null)
-            {
-                throw new CDKException("CarbonylEliminationReaction don't expects agents");
-            }
+            CheckInitiateParams(reactants, agents);
 
             IReactionSet setOfReactions = reactants.Builder.CreateReactionSet();
             IAtomContainer reactant = reactants[0];
 
             // if the parameter hasActiveCenter is not fixed yet, set the active
             // centers
-            IParameterReact ipr = base.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = base.GetParameterClass(typeof(SetReactionCenter));
             if (ipr != null && !ipr.IsSetParameter) SetActiveCenters(reactant);
             foreach (var atomi in reactant.Atoms)
             {
@@ -150,13 +121,13 @@ namespace NCDK.Reactions.Types
         /// <summary>
         /// set the active center for this molecule.
         /// The active center will be those which correspond with RC-C#[O+].
-        /// <code>
+        /// <pre>
         /// C: Atom
         /// -: single bond
         /// C: Atom
         /// #: triple bond
         /// O: Atom with formal charge = 1
-        ///  </code>
+        ///  </pre>
         /// </summary>
         /// <param name="reactant">The molecule to set the activity</param>
         private void SetActiveCenters(IAtomContainer reactant)
@@ -176,7 +147,6 @@ namespace NCDK.Reactions.Types
 
                                 if (bondj.Order == BondOrder.Single)
                                 {
-
                                     IAtom atomk = bondj.GetConnectedAtom(atomj);
                                     if (atomk.FormalCharge == 0)
                                     {

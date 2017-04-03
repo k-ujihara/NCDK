@@ -21,7 +21,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Config;
 using NCDK.RingSearches;
 using System;
@@ -50,8 +49,8 @@ namespace NCDK.Stereo
     /// sigma bonds. In a hydrogen suppressed representation, one of the left or 
     /// right bonds (to the implied hydrogen) may be omitted but can be correctly
     /// interpreted.</para>
-    /// <a href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer projection (Wikipedia)</a>
     /// </remarks>
+    /// <seealso href="http://en.wikipedia.org/wiki/Fischer_projection">Fischer projection (Wikipedia)</seealso>
     // @author John May
     // @cdk.githash
     internal sealed class FischerRecognition

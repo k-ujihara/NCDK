@@ -22,16 +22,11 @@ using System.IO;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
-    /// <summary>
-    /// JUnit test routines for the SMARTS parser.
-    ///
     // @author Egon Willighagen
     // @cdk.module test-smarts
     // @cdk.require ant1.6
-    /// </summary>
     public class ParserTest : CDKTestCase
     {
-
         private void Parse(string smarts)
         {
             //SMARTSParser.Parse(smarts);

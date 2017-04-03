@@ -28,8 +28,8 @@ namespace NCDK.Renderers.Colors
 {
     /// <summary>
     /// Default Jmol colors.
-    /// <a href="http://Jmol.sourceforge.net/jscolors/">Jmol, Colors</a>
     /// </summary>
+    /// <seealso href="http://Jmol.sourceforge.net/jscolors/">Jmol, Colors</seealso>
     public sealed class JmolColors : IAtomColorer
     {
         private static readonly Color hexFFFFFF = Color.FromRgb(0xFF, 0xFF, 0xFF);

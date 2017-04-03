@@ -183,7 +183,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// </summary>
         /// <param name="points">set of points</param>
         /// <returns>points in the convex hull</returns>
-        /// <a href="http://en.wikipedia.org/wiki/Graham_scan">Graham scan, Wikipedia</a>
+        /// <seealso href="http://en.wikipedia.org/wiki/Graham_scan">Graham scan, Wikipedia</seealso>
         public static IList<Point> GrahamScan(IList<Point> points)
         {
             if (points.Count <= 3) return new List<Point>(points);
@@ -269,9 +269,7 @@ namespace NCDK.Renderers.Generators.Standards
         /// <summary>
         /// Calculate the intersection of two lines described by the points (x1,y1 -> x2,y2) and (x3,y3 -> x4,y4).
         /// </summary>
-        /// <remarks>
-        /// <a href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection, Wikipedia</a> 
-        /// </remarks>
+        /// <seealso href="http://en.wikipedia.org/wiki/Line–line_intersection">Line-line intersection, Wikipedia</seealso> 
         /// <param name="x1">first x coordinate of line 1</param>
         /// <param name="y1">first y coordinate of line 1</param>
         /// <param name="x2">second x coordinate of line 1</param>

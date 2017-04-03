@@ -98,10 +98,7 @@ namespace NCDK.SMSD.Helper
             return GetEnumerator();
         }
 
-        /// <summary>
-        ///  {@inheritDoc}
-        ///
-        /// </summary>
+        /// <inheritdoc/>
         public int Count => mappings.Count;
     }
 }

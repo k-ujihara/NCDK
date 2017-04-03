@@ -21,18 +21,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-using System;
 using NCDK.Beam;
-using static NCDK.Beam.Configuration.Types;
 using NCDK.Common.Collections;
 using NCDK.Stereo;
+using System;
+using static NCDK.Beam.Configuration.Types;
 
 namespace NCDK.Smiles
 {
     /// <summary>
     /// Convert the Beam toolkit object model to the CDK. Currently the aromatic
-    /// bonds from SMILES are loaded as singly bonded <see cref="IBond"/>s with the {@link
-    /// org.openscience.cdk.CDKConstants#ISAROMATIC} flag set.
+    /// bonds from SMILES are loaded as singly bonded <see cref="IBond"/>s with the 
+    /// <see cref="IMolecularEntity.IsAromatic"/> flag set.
     /// </summary>
     /// <example><code>
     /// IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
@@ -45,7 +45,7 @@ namespace NCDK.Smiles
     /// // set implicit hydrogen property
     /// IAtomContainer    ac       = g2c.ToAtomContainer(Functions.Expand(g));
     /// </code></example>
-    /// <remarks><a href="http://johnmay.github.io/beam">Beam SMILES Toolkit</a></remarks>
+    /// <seealso href="http://johnmay.github.io/beam">Beam SMILES Toolkit</seealso >
     // @author John May
     // @cdk.module smiles
     internal sealed class BeamToCDK
@@ -54,11 +54,13 @@ namespace NCDK.Smiles
         private readonly IChemObjectBuilder builder;
 
         /// <summary> Base atom objects for cloning - SMILES is very efficient and noticeable
-        ///  lag is seen using the IChemObjectBuilders./// </summary>
+        ///  lag is seen using the IChemObjectBuilders.
+        ///  </summary>
         private readonly IAtom templateAtom;
 
         /// <summary> Base atom objects for cloning - SMILES is very efficient and noticeable
-        ///  lag is seen using the IChemObjectBuilders./// </summary>
+        ///  lag is seen using the IChemObjectBuilders.
+        ///  </summary>
         private readonly IBond templateBond;
 
         /// <summary>
@@ -87,7 +89,8 @@ namespace NCDK.Smiles
         /// <param name="g">Beam graph instance</param>
         /// <returns>the CDK <see cref="IAtomContainer"/> for the input</returns>
         /// <exception cref="ArgumentException">the Beam graph was not 'expanded' - and
-        /// contained organic subset atoms. If this happens use the Beam Functions.Expand() to</exception>
+        /// contained organic subset atoms. If this happens use the Beam <see cref="Beam.Functions.Expand(Graph)"/> to
+        /// </exception>
         public IAtomContainer ToAtomContainer(Graph g)
         {
             IAtomContainer ac = CreateEmptyContainer();
@@ -203,7 +206,6 @@ namespace NCDK.Smiles
             // hydrogen or lone pair at the moment
             if (vs.Length != 4)
             {
-
                 // sanity check
                 if (vs.Length != 3) return null;
 
@@ -215,8 +217,7 @@ namespace NCDK.Smiles
             // @TH1/@TH2 = anti-clockwise and clockwise respectively
             TetrahedralStereo stereo = c == Configuration.TH1 ? TetrahedralStereo.AntiClockwise : TetrahedralStereo.Clockwise;
 
-            return new TetrahedralChirality(atoms[u], new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]] },
-                    stereo);
+            return new TetrahedralChirality(atoms[u], new IAtom[] { atoms[vs[0]], atoms[vs[1]], atoms[vs[2]], atoms[vs[3]] }, stereo);
         }
 
         private IStereoElement NewExtendedTetrahedral(int u, Graph g, IAtom[] atoms)
@@ -237,15 +238,13 @@ namespace NCDK.Smiles
 
             Array.Sort(xs);
 
-            TetrahedralStereo stereo = g.ConfigurationOf(u).Shorthand == Configuration.Clockwise ? TetrahedralStereo.Clockwise
-                    : TetrahedralStereo.AntiClockwise;
+            TetrahedralStereo stereo = g.ConfigurationOf(u).Shorthand == Configuration.Clockwise ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
 
-            return new ExtendedTetrahedral(atoms[u], new IAtom[]{atoms[xs[0]], atoms[xs[1]],
-                    atoms[xs[2]], atoms[xs[3]]}, stereo);
+            return new ExtendedTetrahedral(atoms[u], new IAtom[]{atoms[xs[0]], atoms[xs[1]], atoms[xs[2]], atoms[xs[3]]}, stereo);
         }
 
         /// <summary>
-        /// Insert the vertex 'v' into sorted position in the array 'vs'.
+        /// Insert the vertex <paramref name="v"/> into sorted position in the array <paramref name="vs"/>.
         /// </summary>
         /// <param name="v">a vertex (int id)</param>
         /// <param name="vs">array of vertices (int ids)</param>

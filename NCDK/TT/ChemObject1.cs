@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2015-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara
 
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -47,14 +47,6 @@ namespace NCDK.Default
     public class ChemObject
         : IChemObject
     {
-#if DEBUG
-        private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
-        {
-            typeof(string),
-            typeof(NCDK.Dict.DictRef),
-            typeof(NCDK.QSAR.DescriptorSpecification),
-        };
-#endif
         private ICollection<IChemObjectListener> listeners;
         /// <summary>
         /// List for listener administration.
@@ -148,8 +140,17 @@ namespace NCDK.Default
             }
         }
 
+#if DEBUG
+        private static IList<System.Type> AcceptablePropertyKeyTypes { get; } = new List<System.Type>()
+        {
+            typeof(string),
+            typeof(NCDK.Dict.DictRef),
+            typeof(NCDK.QSAR.DescriptorSpecification),
+        };
+#endif
+
         /// <summary>
-        /// A dictionary for the storage of any kind of properties of this <see cref="IChemObject"/>.
+        /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
         IDictionary<object, object> properties;
 
@@ -158,18 +159,12 @@ namespace NCDK.Default
             properties = new Dictionary<object, object>();
         }
 
-        /// <summary>
-        /// Sets a property for a IChemObject.
-        /// </summary>
-        /// <param name="description"> An object description of the property (most likely an unique string)</param>
-        /// <param name="property">An object with the property itself</param>
-        /// <seealso cref="GetProperty{T}(object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
+        /// <inheritdoc/>
         public virtual void SetProperty(object description, object property)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 InitProperties();
@@ -177,17 +172,12 @@ namespace NCDK.Default
             NotifyChanged();
         }
 
-        /// <summary>
-        /// Removes a property for a IChemObject.
-        /// </summary>
-        /// <param name="description">The object description of the property (most likely an unique string)</param>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="GetProperty{T}(object)"/>
+        /// <inheritdoc/>
         public virtual void RemoveProperty(object description)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 return;
@@ -196,27 +186,22 @@ namespace NCDK.Default
                 NotifyChanged();
         }
 
-        /// <summary>
-        /// Returns a property for the IChemObject.
-        /// </summary>
-        /// <param name="description">An object description of the property (most likely an unique string)</param>
-        /// <returns>The object containing the property. Returns null if propert is not set.</returns>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
+        /// <inheritdoc/>
         public virtual T GetProperty<T>(object description)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             return GetProperty(description, default(T));
         }
 
+        /// <inheritdoc/>
         public virtual T GetProperty<T>(object description, T defaultValue)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 return defaultValue;
@@ -226,13 +211,9 @@ namespace NCDK.Default
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
-        /// <summary>
-        /// A <see cref="IDictionary{T, T}"/> with the <see cref="IChemObject"/>'s properties.
-        /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
-        /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
+        /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
@@ -240,6 +221,7 @@ namespace NCDK.Default
             return this.properties;
         }
 
+        /// <inheritdoc/>
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
             this.properties = null;
@@ -248,11 +230,7 @@ namespace NCDK.Default
             AddProperties(properties);
         }
 
-        /// <summary>
-        /// Sets the properties of this object.
-        /// </summary>
-        /// <param name="properties">a Dictionary specifying the property values</param>
-        /// <seealso cref="GetProperties"/>
+        /// <inheritdoc/>
         public virtual void AddProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
             if (properties == null)
@@ -322,14 +300,6 @@ namespace NCDK.Silent
     public class ChemObject
         : IChemObject
     {
-#if DEBUG
-        private static Type[] AcceptablePropertyKeyTypes { get; } = new Type[]
-        {
-            typeof(string),
-            typeof(NCDK.Dict.DictRef),
-            typeof(NCDK.QSAR.DescriptorSpecification),
-        };
-#endif
         private ICollection<IChemObjectListener> listeners;
         /// <summary>
         /// List for listener administration.
@@ -412,8 +382,17 @@ namespace NCDK.Silent
         {
         }
 
+#if DEBUG
+        private static IList<System.Type> AcceptablePropertyKeyTypes { get; } = new List<System.Type>()
+        {
+            typeof(string),
+            typeof(NCDK.Dict.DictRef),
+            typeof(NCDK.QSAR.DescriptorSpecification),
+        };
+#endif
+
         /// <summary>
-        /// A dictionary for the storage of any kind of properties of this <see cref="IChemObject"/>.
+        /// A dictionary for the storage of any kind of properties of this object.
         /// </summary>
         IDictionary<object, object> properties;
 
@@ -422,62 +401,46 @@ namespace NCDK.Silent
             properties = new Dictionary<object, object>();
         }
 
-        /// <summary>
-        /// Sets a property for a IChemObject.
-        /// </summary>
-        /// <param name="description"> An object description of the property (most likely an unique string)</param>
-        /// <param name="property">An object with the property itself</param>
-        /// <seealso cref="GetProperty{T}(object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
+        /// <inheritdoc/>
         public virtual void SetProperty(object description, object property)
         {
 #if DEBUG
             if (description != null && !AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 InitProperties();
             properties[description] = property;
         }
 
-        /// <summary>
-        /// Removes a property for a IChemObject.
-        /// </summary>
-        /// <param name="description">The object description of the property (most likely an unique string)</param>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="GetProperty{T}(object)"/>
+        /// <inheritdoc/>
         public virtual void RemoveProperty(object description)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 return;
             var removed = properties.Remove(description);
         }
 
-        /// <summary>
-        /// Returns a property for the IChemObject.
-        /// </summary>
-        /// <param name="description">An object description of the property (most likely an unique string)</param>
-        /// <returns>The object containing the property. Returns null if propert is not set.</returns>
-        /// <seealso cref="SetProperty(object, object)"/>
-        /// <seealso cref="RemoveProperty(object)"/>
+        /// <inheritdoc/>
         public virtual T GetProperty<T>(object description)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             return GetProperty(description, default(T));
         }
 
+        /// <inheritdoc/>
         public virtual T GetProperty<T>(object description, T defaultValue)
         {
 #if DEBUG
             if (!AcceptablePropertyKeyTypes.Contains(description.GetType()))
-                throw new Exception();
+                throw new System.Exception();
 #endif
             if (this.properties == null)
                 return defaultValue;
@@ -487,13 +450,9 @@ namespace NCDK.Silent
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
-        /// <summary>
-        /// A <see cref="IDictionary{T, T}"/> with the <see cref="IChemObject"/>'s properties.
-        /// </summary>
-        /// <returns>The object's properties as an <see cref="IDictionary{T, T}"/></returns>
-        /// <seealso cref="AddProperties(IEnumerable{KeyValuePair{object, object}})"/>
+        /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
@@ -501,6 +460,7 @@ namespace NCDK.Silent
             return this.properties;
         }
 
+        /// <inheritdoc/>
         public void SetProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
             this.properties = null;
@@ -509,11 +469,7 @@ namespace NCDK.Silent
             AddProperties(properties);
         }
 
-        /// <summary>
-        /// Sets the properties of this object.
-        /// </summary>
-        /// <param name="properties">a Dictionary specifying the property values</param>
-        /// <seealso cref="GetProperties"/>
+        /// <inheritdoc/>
         public virtual void AddProperties(IEnumerable<KeyValuePair<object, object>> properties)
         {
             if (properties == null)

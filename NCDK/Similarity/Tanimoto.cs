@@ -33,24 +33,20 @@ namespace NCDK.Similarity
     /// <summary>
     ///  Calculates the Tanimoto coefficient for a given pair of two
     ///  fingerprint bitsets or real valued feature vectors.
-    ///
-    ///  The Tanimoto coefficient is one way to
-    ///  quantitatively measure the "distance" or similarity of
-    ///  two chemical structures.
-    ///
-    ///  <para>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
-    ///  We assume that you have two structures stored in cdk.Molecule objects.
-    ///  A tanimoto coefficient can then be calculated like:
-    ///  <code>
-    ///   BitArray fingerprint1 = Fingerprinter.GetBitFingerprint(molecule1);
-    ///   BitArray fingerprint2 = Fingerprinter.GetBitFingerprint(molecule2);
-    ///   double tanimoto_coefficient = Tanimoto.Calculate(fingerprint1, fingerprint2);
-    ///  </code>
-    /// </para>
-    ///  <para>The FingerPrinter assumes that hydrogens are explicitely given, if this
-    ///  is desired!</para>
-    ///  <para>Note that the continuous Tanimoto coefficient does not lead to a metric space</para>
     /// </summary>
+    /// <remarks>
+    /// The Tanimoto coefficient is one way to
+    /// quantitatively measure the "distance" or similarity of
+    /// two chemical structures.
+    /// <para>You can use the FingerPrinter class to retrieve two fingerprint bitsets.
+    /// We assume that you have two structures stored in cdk.Molecule objects.
+    /// A tanimoto coefficient can then be calculated like:
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Similarity.Tanimoto_Example.cs+1"]/*' />
+    /// </para>
+    /// <para>The FingerPrinter assumes that hydrogens are explicitely given, if this
+    /// is desired!</para>
+    /// <para>Note that the continuous Tanimoto coefficient does not lead to a metric space</para>
+    /// </remarks>
     ///@author         steinbeck
     // @cdk.githash
     // @cdk.created    2005-10-19
@@ -116,7 +112,6 @@ namespace NCDK.Similarity
         /// <exception cref="CDKException"> if the features are not of the same length</exception>
         public static double Calculate(double[] features1, double[] features2)
         {
-
             if (features1.Length != features2.Length)
             {
                 throw new CDKException("Features vectors must be of the same length");
@@ -188,7 +183,7 @@ namespace NCDK.Similarity
         /// Calculates Tanimoto distance for two count fingerprints using method 1.
         ///
         /// The feature/count type fingerprints may be of different length.
-        /// Uses Tanimoto method from {@cdk.cite Steffen09}.
+        /// Uses Tanimoto method from <token>cdk-cite-Steffen09</token>.
         /// </summary>
         /// <param name="fp1">count fingerprint 1</param>
         /// <param name="fp2">count fingerprint 2</param>
@@ -216,7 +211,7 @@ namespace NCDK.Similarity
         }
 
         /// <summary>
-        /// Calculates Tanimoto distance for two count fingerprints using method 2 {@cdk.cite Grant06}.
+        /// Calculates Tanimoto distance for two count fingerprints using method 2 <token>cdk-cite-Grant06</token>.
         /// </summary>
         /// <param name="fp1">count fingerprint 1</param>
         /// <param name="fp2">count fingerprint 2</param>

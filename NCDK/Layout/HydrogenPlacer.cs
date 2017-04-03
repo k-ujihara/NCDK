@@ -32,11 +32,9 @@ namespace NCDK.Layout
     /// to layout 2D and 3D coordinates for hydrogen atoms added to a molecule which
     /// already has coordinates for the rest of the atoms.
     /// </summary>
-    /// <example><code>
-    /// IAtomContainer container      = ...;
-    /// HydrogenPlacer hydrogenPlacer = new HydrogenPlacer();
-    /// hydrogenPlacer.PlaceHydrogens2D(container, 1.5);
-    /// </code></example>
+    /// <example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Layout.HydrogenPlacer_Example.cs"]/*' />
+    /// </example>  
     /// <seealso cref="AtomPlacer"/>
     // @author Christoph Steinbeck
     // @cdk.created 2003-08-06
@@ -67,9 +65,9 @@ namespace NCDK.Layout
         /// Place hydrogens connected to the given atom using the average bond length
         /// in the container.
         /// </summary>
-        /// <param name="container">atom container of which <i>atom</i> is a member</param>
+        /// <param name="container">atom container of which <paramref name="atom"/> is a member</param>
         /// <param name="atom">the atom of which to place connected hydrogens</param>
-        /// <exception cref="ArgumentException">if the <i>atom</i> does not have 2d coordinates</exception>
+        /// <exception cref="ArgumentException">if the <paramref name="atom"/> does not have 2d coordinates</exception>
         /// <seealso cref="PlaceHydrogens2D(IAtomContainer, double)"/>
         public void PlaceHydrogens2D(IAtomContainer container, IAtom atom)
         {
@@ -113,8 +111,7 @@ namespace NCDK.Layout
                     }
                     else
                     {
-                        throw new ArgumentException("cannot place hydrogens, atom has connected"
-                                + " non-hydrogens without coordinates");
+                        throw new ArgumentException("cannot place hydrogens, atom has connected non-hydrogens without coordinates");
                     }
                 }
                 else
@@ -134,10 +131,10 @@ namespace NCDK.Layout
             atomPlacer.DistributePartners(atom, placed, centerPlacedAtoms, unplaced, bondLength);
 
             Debug.WriteLine("Atom placement after procedure:");
-            Debug.WriteLine("Centre atom ", atom.Symbol, ": ", atom.Point2D);
+            Debug.WriteLine($"Centre atom {atom.Symbol}: {atom.Point2D}");
             for (int i = 0; i < unplaced.Atoms.Count; i++)
             {
-                Debug.WriteLine("H-" + i, ": ", unplaced.Atoms[i].Point2D);
+                Debug.WriteLine($"H-{i}: {unplaced.Atoms[i].Point2D}");
             }
         }
     }

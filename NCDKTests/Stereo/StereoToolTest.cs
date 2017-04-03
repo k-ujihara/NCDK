@@ -97,7 +97,7 @@ namespace NCDK.Stereo
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 2));
             TetrahedralSign tetSign = StereoTool.GetHandedness(baseC, baseB, baseA, positiveApex);
-            Assert.AreEqual(TetrahedralSign.MINUS, tetSign);
+            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
         }
 
         [TestMethod()]
@@ -110,7 +110,7 @@ namespace NCDK.Stereo
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 2));
             TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
-            Assert.AreEqual(TetrahedralSign.PLUS, tetSign);
+            Assert.AreEqual(TetrahedralSign.Plus, tetSign);
         }
 
         [TestMethod()]
@@ -123,7 +123,7 @@ namespace NCDK.Stereo
 
             IAtom negativeApex = new Atom("C", new Vector3(0.5, 0.5, -1));
             TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
-            Assert.AreEqual(TetrahedralSign.MINUS, tetSign);
+            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
         }
 
         [TestMethod()]
@@ -136,7 +136,7 @@ namespace NCDK.Stereo
 
             IAtom positiveApex = new Atom("C", new Vector3(0.5, 0.5, 0));
             TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, positiveApex);
-            Assert.AreEqual(TetrahedralSign.PLUS, tetSign);
+            Assert.AreEqual(TetrahedralSign.Plus, tetSign);
         }
 
         [TestMethod()]
@@ -149,7 +149,7 @@ namespace NCDK.Stereo
 
             IAtom negativeApex = new Atom("C", new Vector3(0.5, 0.5, -2));
             TetrahedralSign tetSign = StereoTool.GetHandedness(baseA, baseB, baseC, negativeApex);
-            Assert.AreEqual(TetrahedralSign.MINUS, tetSign);
+            Assert.AreEqual(TetrahedralSign.Minus, tetSign);
         }
 
         [TestMethod()]
@@ -192,7 +192,7 @@ namespace NCDK.Stereo
             IAtom atomD = new Atom("C", new Vector3(2, 2, 0));
 
             SquarePlanarShape shape = StereoTool.GetSquarePlanarShape(atomA, atomB, atomC, atomD);
-            Assert.AreEqual(SquarePlanarShape.U_SHAPE, shape);
+            Assert.AreEqual(SquarePlanarShape.UShape, shape);
         }
 
         [TestMethod()]
@@ -205,7 +205,7 @@ namespace NCDK.Stereo
             IAtom atomD = new Atom("C", new Vector3(1, 1, 0));
 
             SquarePlanarShape shape = StereoTool.GetSquarePlanarShape(atomA, atomB, atomC, atomD);
-            Assert.AreEqual(SquarePlanarShape.FOUR_SHAPE, shape);
+            Assert.AreEqual(SquarePlanarShape.FourShape, shape);
         }
 
         [TestMethod()]
@@ -218,7 +218,7 @@ namespace NCDK.Stereo
             IAtom atomD = new Atom("C", new Vector3(2, 1, 0));
 
             SquarePlanarShape shape = StereoTool.GetSquarePlanarShape(atomA, atomB, atomC, atomD);
-            Assert.AreEqual(SquarePlanarShape.Z_SHAPE, shape);
+            Assert.AreEqual(SquarePlanarShape.ZShape, shape);
         }
 
         [TestMethod()]

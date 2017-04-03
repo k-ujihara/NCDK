@@ -167,8 +167,7 @@ namespace NCDK.SMSD.Algorithms.Matchers
             return atom.ImplicitHydrogenCount ?? 0;
         }
 
-        /// <summary> {@inheritDoc}
-        /// </summary>
+        /// <inheritdoc/>
         public bool Matches(IAtomContainer targetContainer, IAtom targetAtom)
         {
             if (smartQueryAtom != null && qAtom == null)

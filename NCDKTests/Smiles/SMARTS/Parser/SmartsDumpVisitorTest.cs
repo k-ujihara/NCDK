@@ -5,13 +5,12 @@ namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>
     /// Junit testing routine for SmartsDumpVisitor
-    ///
+    /// </summary>
     // @author Dazhi Jiao
     // @cdk.created 2007-05-10
     // @cdk.module test-smarts
     // @cdk.keyword SMARTS
-    /// </summary>
-     [TestClass()]
+    [TestClass()]
     public class SmartsDumpVisitorTest : CDKTestCase
     {
         public void Dump(string smarts)
@@ -22,6 +21,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             visitor.Visit(start, null);
         }
 
+        [TestMethod()]
         public void TestRing()
         {
             Dump("(C=1CCC1).(CCC).(C1CC1CCC=12CCCC2)");

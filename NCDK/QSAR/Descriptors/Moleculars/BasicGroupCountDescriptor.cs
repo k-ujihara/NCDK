@@ -35,7 +35,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// "[$([*;+;!$(*~[*;-])])]",
     /// "[$(N=C-N)]", and "[$(N-C=N)]" 
     /// originally presented in
-    /// JOELib {@cdk.cite WEGNER2006}.
+    /// JOELib <token>cdk-cite-WEGNER2006</token>.
     /// </summary>
     // @author      egonw
     // @cdk.module  qsarmolecular

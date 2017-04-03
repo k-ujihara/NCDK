@@ -72,7 +72,6 @@ namespace NCDK.SMSD.Algorithms.VFLib.Map
 
         /// <summary>
         /// Initialise the VFState with query and target
-        /// <param name="query">/// @param target</param>
         /// </summary>
         public VFState(IQuery query, TargetProperties target)
         {

@@ -30,28 +30,20 @@ namespace NCDK.Reactions.Types
     /// <summary>
     /// TestSuite that runs a test for the AdductionProtonLPReactionTest.
     /// Generalized Reaction: [X-] + [H+] => X -H.
-    ///
-    // @cdk.module test-reaction
     /// </summary>
+    // @cdk.module test-reaction
     [TestClass()]
     public class AdductionProtonLPReactionTest : ReactionProcessTest
     {
-
         private readonly LonePairElectronChecker lpcheck = new LonePairElectronChecker();
         private IChemObjectBuilder builder = Silent.ChemObjectBuilder.Instance;
         private UniversalIsomorphismTester uiTester = new UniversalIsomorphismTester();
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         public AdductionProtonLPReactionTest()
         {
             SetReaction(typeof(AdductionProtonLPReaction));
         }
 
-        /// <summary>
-        ///  The JUnit setup method
-        /// </summary>
         [TestMethod()]
         public void TestAdductionProtonLPReaction()
         {
@@ -60,49 +52,40 @@ namespace NCDK.Reactions.Types
         }
 
         /// <summary>
-        /// A unit test suite for JUnit for acetaldehyde.
+        /// A unit test suite for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Automatically looks for the active centre.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        /// <returns>The test suite</returns>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public override void TestInitiate_IAtomContainerSet_IAtomContainerSet()
         {
-
             IReactionProcess type = new AdductionProtonLPReaction();
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
             var setOfReactions = type.Initiate(GetExampleReactants(), null);
-
             Assert.AreEqual(1, setOfReactions.Count);
             Assert.AreEqual(1, setOfReactions[0].Products.Count);
 
             IAtomContainer product = setOfReactions[0].Products[0];
-
             IAtomContainer molecule2 = GetExpectedProducts()[0];
-
             IQueryAtomContainer queryAtom = QueryAtomContainerCreator.CreateSymbolAndChargeQueryContainer(product);
             Assert.IsTrue(uiTester.IsIsomorph(molecule2, queryAtom));
-
         }
 
         /// <summary>
         /// A unit test suite for JUnit for acetaldehyde.
         /// Reaction: O=C-C-H => O(H)-C=C.
         /// Manually tests for active centre.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        /// <returns>The test suite</returns>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestManuallyCentreActive()
         {
@@ -113,8 +96,8 @@ namespace NCDK.Reactions.Types
             setOfReactants[0].Atoms[0].IsReactiveCenter = true;
 
             /* initiate */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -134,11 +117,9 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// A unit test suite for JUnit.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        /// <returns>The test suite</returns>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestCDKConstants_REACTIVE_CENTER()
         {
@@ -155,8 +136,8 @@ namespace NCDK.Reactions.Types
             molecule.Bonds[1].IsReactiveCenter = true;
             molecule.Bonds[3].IsReactiveCenter = true;
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -182,19 +163,17 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// A unit test suite for JUnit.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The test suite</returns>
         /// </summary>
+        /// <returns>The test suite</returns>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         [TestMethod()]
         public void TestMapping()
         {
             IReactionProcess type = new AdductionProtonLPReaction();
 
             /* automatic looking for active center */
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = false;
             paramList.Add(param);
             type.ParameterList = paramList;
@@ -205,22 +184,16 @@ namespace NCDK.Reactions.Types
             var setOfReactions = type.Initiate(setOfReactants, null);
 
             IAtomContainer product = setOfReactions[0].Products[0];
-
             Assert.AreEqual(8, setOfReactions[0].Mappings.Count);
-
-            IAtom mappedProductA0 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0],
-                    molecule.Atoms[0]);
+            IAtom mappedProductA0 = (IAtom)ReactionManipulator.GetMappedChemObject(setOfReactions[0], molecule.Atoms[0]);
             Assert.AreEqual(mappedProductA0, product.Atoms[0]);
-
         }
 
         /// <summary>
         /// Get the Acetaldehyde structure.
-        ///
-        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
+        // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2H,1H3
         private IAtomContainerSet<IAtomContainer> GetExampleReactants()
         {
             var setOfReactants = Default.ChemObjectBuilder.Instance.CreateAtomContainerSet();
@@ -242,7 +215,6 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-
                 lpcheck.Saturate(molecule);
             }
             catch (CDKException e)
@@ -256,9 +228,8 @@ namespace NCDK.Reactions.Types
 
         /// <summary>
         /// Get the expected set of molecules.
-        ///
-        /// <returns>The IAtomContainerSet</returns>
         /// </summary>
+        /// <returns>The IAtomContainerSet</returns>
         private IAtomContainerSet<IAtomContainer> GetExpectedProducts()
         {
             var setOfProducts = builder.CreateAtomContainerSet();
@@ -282,7 +253,6 @@ namespace NCDK.Reactions.Types
             try
             {
                 AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
-
                 lpcheck.Saturate(molecule);
             }
             catch (CDKException e)

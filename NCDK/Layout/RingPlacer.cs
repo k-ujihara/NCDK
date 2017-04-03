@@ -46,20 +46,20 @@ namespace NCDK.Layout
     {
         // indicate we want to snap to regular polygons for bridges, not generally applicable
         // but useful for macro cycles
-        internal const string SNAP_HINT = "sdg.snap.bridged";
+        internal const string SnapHint = "sdg.snap.bridged";
         const bool debug = false;
 
         public IAtomContainer Molecule { get; set; }
         public AtomPlacer AtomPlacer { get; set; } = new AtomPlacer();
 
-        internal const int FUSED = 0;
-        internal const int BRIDGED = 1;
-        internal const int SPIRO = 2;
+        internal const int Fused = 0;
+        internal const int Bridged = 1;
+        internal const int Spiro = 2;
 
         /// <summary>
         /// Default ring start angles. Map contains pairs: ring size with start angle.
         /// </summary>
-        public static readonly IDictionary<int, double> defaultAngles = new Dictionary<int, double>()
+        public static IDictionary<int, double> DefaultAngles { get; } = new Dictionary<int, double>()
         {
             {3, Math.PI* (0.1666667)},
             {4, Math.PI * (0.25)},
@@ -71,18 +71,15 @@ namespace NCDK.Layout
         /// <summary>
         /// Suggested ring start angles for JChempaint, different due to Y inversion of canvas.
         /// </summary>
-        public static readonly IDictionary<int, double> jcpAngles = new Dictionary<int, double>()
-{
+        public static IDictionary<int, double> JCPAngles { get; } = new Dictionary<int, double>()
+        {
             {3, Math.PI * (0.5)},
             {4, Math.PI * (0.25)},
             {5, Math.PI * (0.5)},
             {7, Math.PI * (0.07)},
             {8, Math.PI * (0.125)},
-    };
+        };
 
-        /// <summary>
-        /// The empty constructor.
-        /// </summary>
         public RingPlacer()
         {
         }
@@ -106,7 +103,7 @@ namespace NCDK.Layout
             }
             else if (sharedAtomCount == 2)
             {
-                PlaceFUsedRing(ring, sharedAtoms, ringCenterVector, bondLength);
+                PlaceFusedRing(ring, sharedAtoms, ringCenterVector, bondLength);
             }
             else if (sharedAtomCount == 1)
             {
@@ -115,14 +112,14 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Place ring with default start angles, using {@link #defaultAngles}.
+        /// Place ring with default start angles, using <see cref="DefaultAngles"/>.
         /// </summary>
         /// <param name="ring">the ring to place.</param>
         /// <param name="ringCenter">center coordinates of the ring.</param>
         /// <param name="bondLength">given bond length.</param>
         public void PlaceRing(IRing ring, Vector2 ringCenter, double bondLength)
         {
-            PlaceRing(ring, ringCenter, bondLength, defaultAngles);
+            PlaceRing(ring, ringCenter, bondLength, DefaultAngles);
         }
 
         /// <summary>
@@ -229,7 +226,7 @@ namespace NCDK.Layout
             Vector2 bondAtom1Vector = bondAtom1.Point2D.Value;
             Vector2 bondAtom2Vector = bondAtom2.Point2D.Value;
 
-            bool snap = ring.GetProperty<bool>(SNAP_HINT);
+            bool snap = ring.GetProperty<bool>(SnapHint);
 
             Vector2 midPoint = GetMidPoint(bondAtom1Vector, bondAtom2Vector);
             Vector2 ringCenter;
@@ -423,12 +420,12 @@ namespace NCDK.Layout
         /// <param name="sharedAtoms">The atoms of this ring, also members of another ring, which are already placed</param>
         /// <param name="ringCenterVector">A vector pointing the the center of the new ring</param>
         /// <param name="bondLength">The standard bondlength</param>
-        public void PlaceFUsedRing(IRing ring,
+        public void PlaceFusedRing(IRing ring,
                                    IAtomContainer sharedAtoms,
                                    Vector2 ringCenterVector,
                                    double bondLength)
         {
-            Debug.WriteLine("RingPlacer.PlaceFUsedRing() start");
+            Debug.WriteLine("RingPlacer.PlaceFusedRing() start");
 
             IAtom beg = sharedAtoms.Atoms[0];
             IAtom end = sharedAtoms.Atoms[1];
@@ -724,9 +721,9 @@ namespace NCDK.Layout
                     IAtomContainer sharedAtoms = AtomContainerManipulator.GetIntersection(ring, connectedRing);
                     int numSharedAtoms = sharedAtoms.Atoms.Count;
                     Debug.WriteLine("placeConnectedRings-> connectedRing: " + (ring.ToString()));
-                    if ((numSharedAtoms == 2 && handleType == FUSED) ||
-                        (numSharedAtoms == 1 && handleType == SPIRO) ||
-                        (numSharedAtoms > 2 && handleType == BRIDGED))
+                    if ((numSharedAtoms == 2 && handleType == Fused) ||
+                        (numSharedAtoms == 1 && handleType == Spiro) ||
+                        (numSharedAtoms > 2 && handleType == Bridged))
                     {
                         Vector2 sharedAtomsCenter = GeometryUtil.Get2DCenter(sharedAtoms);
                         Vector2 oldRingCenter = GeometryUtil.Get2DCenter(ring);

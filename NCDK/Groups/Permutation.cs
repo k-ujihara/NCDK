@@ -31,7 +31,7 @@ namespace NCDK.Groups
     /// <summary>
     /// A permutation with some associated methods to multiply, invert, and convert
     /// to cycle strings. Much of the code in this was implemented from the
-    /// C.A.G.E.S. book {@cdk.cite Kreher98}.
+    /// C.A.G.E.S. book <token>cdk-cite-Kreher98</token>.
     /// </summary>
     // @author maclean
     // @cdk.module group

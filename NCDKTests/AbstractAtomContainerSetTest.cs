@@ -28,9 +28,8 @@ namespace NCDK
 {
     /// <summary>
     /// Checks the functionality of <see cref="IAtomContainerSet{T}"/> implementations.
-    ///
-    // @cdk.module test-interfaces
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractAtomContainerSetTest<T>
         : AbstractChemObjectTest
@@ -487,7 +486,7 @@ namespace NCDK
         }
 
         [TestMethod()]
-        public virtual void TestRePlaceAtomContainer_int_IAtomContainer()
+        public virtual void TestReplaceAtomContainer_int_IAtomContainer()
         {
             IAtomContainerSet<T> som = (IAtomContainerSet<T>)NewChemObject();
             T ac1 = NewContainerObject();

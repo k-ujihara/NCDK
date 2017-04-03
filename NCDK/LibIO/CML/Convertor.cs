@@ -582,7 +582,7 @@ namespace NCDK.LibIO.CML
                 if (key is string)
                 {
                     string keyName = (string)key;
-                    if (keyName.StartsWith(DictionaryDatabase.DICTREFPROPERTYNAME))
+                    if (keyName.StartsWith(DictionaryDatabase.DictRefPropertyName))
                     {
                         string dictRef = (string)properties[keyName];
                         cmlElement.SetAttributeValue("dictRef", dictRef);

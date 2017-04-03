@@ -125,7 +125,7 @@ namespace NCDK.IO.CML
                 DescriptorSpecification descriptorSpecification = new DescriptorSpecification(
                         currentDescriptorAlgorithmSpecification, currentDescriptorImplementationTitel,
                         currentDescriptorImplementationIdentifier, currentDescriptorImplementationVendor);
-                currentMolecule.SetProperty(descriptorSpecification, new DescriptorValue(descriptorSpecification,
+                CurrentMolecule.SetProperty(descriptorSpecification, new DescriptorValue(descriptorSpecification,
                         new string[0], new object[0],
                         currentDescriptorDataIsArray ? NewDescriptorResultArray(currentDescriptorResult)
                                 : NewDescriptorResult(currentDescriptorResult), new string[0]));

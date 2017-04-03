@@ -49,8 +49,6 @@ namespace NCDK.SMSD.Algorithms.Single
         /// <summary>
         /// Returns single mapping solutions.
         /// </summary>
-        /// <param name="source">/// @param target</param>
-        /// <param name="removeHydrogen"></param>
         /// <returns>Mappings</returns>
         /// <exception cref="CDKException"></exception>
         protected internal IList<IDictionary<IAtom, IAtom>> GetOverLaps(IAtomContainer source, IAtomContainer target, bool removeHydrogen)

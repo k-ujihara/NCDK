@@ -30,7 +30,7 @@ namespace NCDK.Graphs
 {
     /// <summary>
     /// Collection of static utilities for manipulating adjacency list
-    /// representations stored as a {@literal int[][]}. May well be replaced in
+    /// representations stored as a <see cref="int"/>[][]. May well be replaced in
     /// future with a <i>Graph</i> data type.
     /// </summary>
     /// <seealso cref="ShortestPaths"/>
@@ -58,7 +58,7 @@ namespace NCDK.Graphs
         /// </summary>
         /// <param name="container">the molecule</param>
         /// <param name="bondMap">a map to index the bonds into</param>
-        /// <returns>adjacency list representation stored as an {@literal int[][]}.</returns>
+        /// <returns>adjacency list representation stored as an <see cref="int"/>[][].</returns>
         /// <exception cref="ArgumentNullException">the container was null</exception>
         /// <exception cref="ArgumentException">a bond was found which contained atoms not in the molecule</exception>
         public static int[][] ToAdjList(IAtomContainer container, EdgeToBondMap bondMap)
@@ -100,16 +100,9 @@ namespace NCDK.Graphs
         /// to <paramref name="include"/> in the subgraph. The provided vertices also
         /// provide the mapping between vertices in the subgraph and the original.
         /// </summary>
-        /// <example><code>
-        /// int[][] g  = ToAdjList(naphthalene);
-        /// int[]   vs = new int[]{0, 1, 2, 3, 4, 5};
-        ///
-        /// int[][] h = Subgraph(g, vs);
-        /// // for the vertices in h, the provided 'vs' gives the original index
-        /// for (int v = 0; v &lt; h.Length; v++) {
-        ///     // vs[v] is 'v' in 'g'
-        /// }
-        /// </code></example>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Graphs.GraphUtil_Example.cs+Subgraph"]/*' />
+        /// </example>
         /// <param name="graph">adjacency list graph</param>
         /// <param name="include">the vertices of he graph to include in the subgraph</param>
         /// <returns>the subgraph</returns>

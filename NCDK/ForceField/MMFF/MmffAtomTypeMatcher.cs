@@ -21,14 +21,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
-
 using NCDK.Common.Primitives;
 using NCDK.Graphs;
 using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Smiles.SMARTS.Parser;
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -37,18 +35,14 @@ using static NCDK.Graphs.GraphUtil;
 namespace NCDK.ForceField.MMFF
 {
     /// <summary>
-    /// Determine the MMFF symbolic atom types {@cdk.cite Halgren96a}. The matcher uses SMARTS patterns
+    /// Determine the MMFF symbolic atom types <token>cdk-cite-Halgren96a</token>. The matcher uses SMARTS patterns
     /// to assign preliminary symbolic types. The types are then adjusted considering aromaticity
     /// <see cref="MmffAromaticTypeMapping"/>. The assigned atom types validate completely with the validation suite
     /// (http://server.ccl.net/cca/data/MMFF94/).
     /// </summary>
     /// <example>
-    /// <code>
-    /// MmffAtomTypeMatcher mmffAtomTypes = new MmffAtomTypeMatcher();
-    /// foreach (var container in containers) {
-    ///     string[] symbs = mmffAtomTypes.SymbolicTypes(container);
-    /// }
-    /// </code></example>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.ForceField.MMFF.MmffAtomTypeMatcher_Example.cs"]/*' />
+    /// </example>
     // @author John May
     internal sealed class MmffAtomTypeMatcher
     {

@@ -18,18 +18,15 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using NCDK.Default;
 
 namespace NCDK
 {
     /// <summary>
-    /// Checks the functionality of {@link IRingSet} implementations.
-    ///
-    // @cdk.module test-interfaces
+    /// Checks the functionality of <see cref="IRingSet"/> implementations.
     /// </summary>
+    // @cdk.module test-interfaces
     [TestClass()]
     public abstract class AbstractRingSetTest : AbstractAtomContainerSetTest<IRing>
     {
@@ -50,7 +47,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestToString()
         {
             IRingSet ringset = (IRingSet)NewChemObject();
@@ -63,7 +59,6 @@ namespace NCDK
         }
 
         [TestMethod()]
-
         public override void TestClone()
         {
             IRingSet ringset = (IRingSet)NewChemObject();
@@ -320,8 +315,8 @@ namespace NCDK
         /// When using method GetConnectedRings(...) of RingSet.java fused or bridged rings
         /// returned a list of connected rings that contained duplicates.
         /// Bug fix by Andreas Schueller <a.schueller@chemie.uni-frankfurt.de>
-        // @cdk.bug 1772613
         /// </summary>
+        // @cdk.bug 1772613
         [TestMethod()]
         public virtual void TestGetConnectedRingsBug1772613()
         {

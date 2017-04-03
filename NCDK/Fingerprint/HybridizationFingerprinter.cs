@@ -44,15 +44,10 @@ namespace NCDK.Fingerprint
     /// </summary>
     /// <example>
     /// A fingerprint is generated for an AtomContainer with this code:
-    /// <code>
-    ///   Molecule molecule = new Molecule();
-    ///   IFingerprinter fingerprinter = new HybridizationFingerprinter();
-    ///   BitArray fingerprint = fingerprinter.GetFingerprint(molecule);
-    ///   fingerprint.Count; // returns 1024 by default
-    ///   fingerprint.Length(); // returns the highest set bit
-    /// </code>
+    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Fingerprint.HybridizationFingerprinter_Example.cs"]/*' />
     /// </example>
-    /// <remarks>The FingerPrinter assumes that hydrogens are explicitly given!
+    /// <remarks>
+    /// The FingerPrinter assumes that hydrogens are explicitly given!
     /// Furthermore, if pseudo atoms or atoms with malformed symbols are present,
     /// their atomic number is taken as one more than the last element currently
     /// supported in <see cref="PeriodicTable"/>.
@@ -67,35 +62,36 @@ namespace NCDK.Fingerprint
     public class HybridizationFingerprinter : IFingerprinter
     {
         /// <summary>The default length of created fingerprints.</summary>
-        public const int DEFAULT_SIZE = 1024;
+        public const int DefaultSize = 1024;
         /// <summary>The default search depth used to create the fingerprints.</summary>
-        public const int DEFAULT_SEARCH_DEPTH = 8;
+        public const int DefaultSearchDepth = 8;
 
         private int size;
         private int searchDepth;
 
-        private static readonly IDictionary<string, string> QUERY_REPLACE = new Dictionary<string, string>() {
-                                                                          { "Cl", "X" },
-                                                                          { "Br", "Z" },
-                                                                          { "Si", "Y" },
-                                                                          { "As", "D" },
-                                                                          { "Li", "L" },
-                                                                          { "Se", "E" },
-                                                                          { "Na", "G" },
-                                                                          { "Ca", "J" },
-                                                                          { "Al", "A" },
-                                                                      };
+        private static readonly IDictionary<string, string> QUERY_REPLACE = new Dictionary<string, string>()
+        {
+            { "Cl", "X" },
+            { "Br", "Z" },
+            { "Si", "Y" },
+            { "As", "D" },
+            { "Li", "L" },
+            { "Se", "E" },
+            { "Na", "G" },
+            { "Ca", "J" },
+            { "Al", "A" },
+        };
 
         /// <summary>
-        /// Creates a fingerprint generator of length <see cref="DEFAULT_SIZE"/>
-        /// and with a search depth of <see cref="DEFAULT_SEARCH_DEPTH"/>.
+        /// Creates a fingerprint generator of length <see cref="DefaultSize"/>
+        /// and with a search depth of <see cref="DefaultSearchDepth"/>.
         /// </summary>
         public HybridizationFingerprinter()
-           : this(DEFAULT_SIZE, DEFAULT_SEARCH_DEPTH)
+           : this(DefaultSize, DefaultSearchDepth)
         { }
 
         public HybridizationFingerprinter(int size)
-            : this(size, DEFAULT_SEARCH_DEPTH)
+            : this(size, DefaultSearchDepth)
         { }
 
         /// <summary>

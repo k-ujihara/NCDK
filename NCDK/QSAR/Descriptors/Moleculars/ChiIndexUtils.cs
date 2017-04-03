@@ -49,7 +49,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// using the <see cref="QueryAtomContainerCreator.CreateAnyAtomAnyBondContainer(IAtomContainer, bool)"/> method of the <see cref="QueryAtomContainerCreator"/>
         /// CDK class, since we are only interested in connectivity and not actual atom or bond type information.</para>
         /// </summary>
-        /// <param name="atomContainer">The target <code>AtomContainer</code></param>
+        /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="queries">An array of query fragments</param>
         /// <returns>A list of lists, each list being the atoms that match the query fragments</returns>
         public static IList<IList<int>> GetFragments(IAtomContainer atomContainer, QueryAtomContainer[] queries)
@@ -100,7 +100,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// <summary>
         /// Evaluates the simple chi index for a set of fragments.
         /// </summary>
-        /// <param name="atomContainer">The target <code>AtomContainer</code></param>
+        /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="fragLists">A list of fragments</param>
         /// <returns>The simple chi index</returns>
         public static double EvalSimpleIndex(IAtomContainer atomContainer, IList<IList<int>> fragLists)
@@ -127,7 +127,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
         /// This method takes into account the S and P atom types described in
         /// Kier &amp; Hall (1986), page 20 for which empirical delta V values are used.
         /// </remarks>
-        /// <param name="atomContainer">The target <code>AtomContainer</code></param>
+        /// <param name="atomContainer">The target <see cref="IAtomContainer"/></param>
         /// <param name="fragList">A list of fragments</param>
         /// <returns>The valence corrected chi index</returns>
         /// <exception cref="CDKException"> if the <see cref="IsotopeFactory"/> cannot be created</exception>

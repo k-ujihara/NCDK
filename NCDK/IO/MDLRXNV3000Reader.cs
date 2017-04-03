@@ -49,7 +49,7 @@ namespace NCDK.IO
         {
             input = ins;
             InitIOSettings();
-            base.mode = mode;
+            base.ReaderMode = mode;
         }
 
         public MDLRXNV3000Reader(Stream input)
@@ -204,7 +204,7 @@ namespace NCDK.IO
                 try
                 {
                     // read MDL molfile content
-                    MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.ToString()), base.mode);
+                    MDLV3000Reader reader = new MDLV3000Reader(new StringReader(molFile.ToString()), base.ReaderMode);
                     IAtomContainer reactant = (IAtomContainer)reader.Read(builder.CreateAtomContainer());
                     reader.Close();
 

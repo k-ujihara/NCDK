@@ -23,7 +23,7 @@ using NCDK.Stereo;
 using NCDK.NInChI;
 using System.Collections.Generic;
 
-namespace NCDK.Graphs.InChi
+namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// TestCase for the {@link InChIToStructure} class.

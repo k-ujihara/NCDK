@@ -16,9 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using NCDK.QSAR.Result;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -31,7 +29,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The TAE descriptors ({@cdk.cite BREN1995} {@cdk.cite BREN1997} {@cdk.cite WHITE2003})
+    /// The TAE descriptors (<token>cdk-cite-BREN1995</token> <token>cdk-cite-BREN1997</token> <token>cdk-cite-WHITE2003</token>)
     /// are derived from pre-calculated quantum mechanical parameters. This class
     /// uses the parameters for amino acids and thus evaluates a set of 147 descriptors for peptide
     /// sequences.
@@ -42,9 +40,9 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// </para>
     /// <para>
     /// The descriptors are returned in the following order (see
-    /// <a href="http://www.chem.rpi.edu/chemweb/recondoc/TAE.doc">here</a>
+    /// <see href="http://www.chem.rpi.edu/chemweb/recondoc/TAE.doc">here</see>
     /// for a detailed description of the individual descriptors):
-    /// <code>
+    /// <pre>
     /// Energy Population VOLTAE SurfArea
     /// SIDel.Rho.N Del.Rho.NMin Del.Rho.NMax Del.Rho.NIA Del.Rho.NA1
     /// Del.Rho.NA2 Del.Rho.NA3 Del.Rho.NA4 Del.Rho.NA5 Del.Rho.NA6
@@ -75,7 +73,7 @@ namespace NCDK.QSAR.Descriptors.Proteins
     /// Lapl LaplMin LaplMax Lapl1 Lapl2
     /// Lapl3 Lapl4 Lapl5 Lapl6 Lapl7
     /// Lapl8 Lapl9 Lapl10
-    /// </code>
+    /// </pre>
     /// </para>
     /// <para>This descriptor uses these parameters:
     /// <list type="table">

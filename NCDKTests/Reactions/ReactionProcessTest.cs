@@ -222,17 +222,17 @@ namespace NCDK.Reactions
         {
             IReactionProcess type = reaction;
 
-            IParameterReact ipr = type.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr = type.GetParameterClass(typeof(SetReactionCenter));
             Assert.IsNotNull(ipr);
             Assert.IsFalse(ipr.IsSetParameter);
 
-            List<IParameterReact> paramList = new List<IParameterReact>();
-            IParameterReact param = new SetReactionCenter();
+            List<IParameterReaction> paramList = new List<IParameterReaction>();
+            IParameterReaction param = new SetReactionCenter();
             param.IsSetParameter = true;
             paramList.Add(param);
             type.ParameterList = paramList;
 
-            IParameterReact ipr2 = type.GetParameterClass(typeof(SetReactionCenter));
+            IParameterReaction ipr2 = type.GetParameterClass(typeof(SetReactionCenter));
             Assert.IsTrue(ipr2.IsSetParameter);
         }
 

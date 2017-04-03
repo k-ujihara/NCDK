@@ -44,10 +44,10 @@ namespace NCDK.Isomorphisms.MCSS
     /// <remarks>
     /// <para>
     /// Example:
-    /// <code>
+    /// <pre>
     ///    G1 : C-C=O  and G2 : C-C-C=0
     ///         1 2 3           1 2 3 4
-    /// </code>
+    /// </pre>
     /// </para>
     /// <para>
     /// The resulting RGraph(G1,G2) will contain 3 nodes:
@@ -86,17 +86,17 @@ namespace NCDK.Isomorphisms.MCSS
     ///  both model is performed by the RTools class. In this way the RGraph
     ///  class may be reused in other graph context (conceptual graphs,....)
     /// </para>
-    /// <para>
-    /// <b>Important note</b>: This implementation of the algorithm has not been
+    /// <note type="important">
+    /// This implementation of the algorithm has not been
     ///                      optimized for speed at this stage. It has been
     ///                      written with the goal to clearly retrace the
     ///                      principle of the underlined search method. There is
     ///                      room for optimization in many ways including the
     ///                      the algorithm itself.
-    /// </para>
+    /// </note>
     /// <para>
     /// This algorithm derives from the algorithm described in
-    ///  {@cdk.cite HAN90} and modified in the thesis of T. Hanser {@cdk.cite HAN93}.
+    ///  <token>cdk-cite-HAN90</token> and modified in the thesis of T. Hanser <token>cdk-cite-HAN93</token>.
     /// </para>
     /// </remarks>
     // @author      Stephane Werner from IXELIS mail@ixelis.net

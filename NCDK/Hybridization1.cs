@@ -12,8 +12,12 @@ namespace NCDK
     /// <summary>
     /// Hybridization states.
     /// </summary>
-    public struct Hybridization : System.IComparable
+    public partial struct Hybridization : System.IComparable<Hybridization>, System.IComparable
     {
+		/// <summary>
+		/// The <see cref="Ordinal"/> values of <see cref="Hybridization"/>.
+		/// </summary>
+		/// <seealso cref="Hybridization"/>
         public static class O
         {
             public const int Unset = 0;
@@ -31,8 +35,13 @@ namespace NCDK
         }
 
         private readonly int ordinal;
+		/// <summary>
+		/// The ordinal of this enumeration constant. The list is in <see cref="O"/>.
+		/// </summary>
+		/// <seealso cref="O"/>
         public int Ordinal => ordinal;
 
+		/// <inheritdoc/>
         public override string ToString()
         {
             return names[Ordinal];
@@ -162,6 +171,7 @@ namespace NCDK
             return !(a == b);
         }
 
+		/// <inheritdoc/>
         public override bool Equals(object obj)
         {
     
@@ -170,16 +180,27 @@ namespace NCDK
             return this.Ordinal == ((Hybridization)obj).Ordinal;
         }
 
+		/// <inheritdoc/>
         public override int GetHashCode()
         {
             return Ordinal;
         }
 
+		/// <inheritdoc/>
         public int CompareTo(object obj)
         {
             var o = (Hybridization)obj;
             return ((int)Ordinal).CompareTo((int)o.Ordinal);
         }   
+
+		/// <inheritdoc/>
+        public int CompareTo(Hybridization o)
+        {
+            return (Ordinal).CompareTo(o.Ordinal);
+        }   	
+	}
+	public partial struct Hybridization 
+	{
         public string Name => ToString();
 
         public bool IsUnset => this.Ordinal == 0;
