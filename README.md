@@ -1,4 +1,4 @@
-#NCDK: The Chemistry Development Kit ported to C# 
+# NCDK: The Chemistry Development Kit ported to C# 
 
 NCDK is .NET Framework port of the Chemistry Development Project (CDK).
 
@@ -8,11 +8,11 @@ The Chemistry Development Project (CDK) <https://github.com/cdk/cdk> is developi
 
 License: LGPL v2.1, see LICENSE.
 
-#Getting Started
+## Getting Started
 Most of codes are written in C#. You can learn NCDK from CDK documents, NCDKTests and NCDKDisplayTests project.
 
-#Build and Test
+## Build and Test
 Open NCDK.sln or NCDKDisplay.sln. You can see the library and its test project.
 
-#Contribute
+## Contribute
 The current release is based on cdk-1.5.13.
