@@ -56,7 +56,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created    2004-11-03
     // @cdk.module     qsarmolecular
     // @cdk.githash
-    // @cdk.set        qsar-descriptors
     // @cdk.dictref    qsar-descriptors:wienerNumbers
     // @cdk.keyword    Wiener number
     public class WienerNumbersDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor

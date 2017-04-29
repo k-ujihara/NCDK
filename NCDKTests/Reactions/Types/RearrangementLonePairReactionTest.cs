@@ -60,7 +60,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2006-05-05
     // @cdk.module     test-reaction
-    // @cdk.set        reaction-types
     [TestClass()]
     public class RearrangementLonePairReactionTest : ReactionProcessTest
     {

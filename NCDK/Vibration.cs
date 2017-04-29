@@ -16,16 +16,19 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+using NCDK.Numerics;
+using System.Collections.Generic;
+
 namespace NCDK
 {
     /// <summary>
     /// A molecular vibration composed of a set of atom vectors.
     /// The atom vectors represent forces acting on the atoms. 
-    /// They are specified by double[3] arrays containing the components of the vector.
+    /// They are specified by <see cref="Vector3"/> containing the components of the vector.
     /// </summary>
     // @author Bradley A. Smith <yeldar@home.com>
     // @cdk.githash
-    public class Vibration : System.Collections.ObjectModel.Collection<double[]>
+    public class Vibration : List<Vector3>
     {
         /// <summary>
         /// Label identifying this vibration. For example, the frequency in reciprocal centimetres could be used.
@@ -40,20 +43,5 @@ namespace NCDK
         {
             this.Label = label;
         }
-
-        protected override void InsertItem(int index, double[] item)
-        {
-            if (item.Length != 3)
-                throw new System.ArgumentException();
-            base.InsertItem(index, item);
-        }
-
-        protected override void SetItem(int index, double[] item)
-        {
-            if (item.Length != 3)
-                throw new System.ArgumentException();
-            base.SetItem(index, item);
-        }
     }
 }
-

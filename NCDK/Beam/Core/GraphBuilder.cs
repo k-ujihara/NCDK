@@ -239,8 +239,40 @@ namespace NCDK.Beam
 
         private void AssignDirectionalLabels()
         {
+            if (!builders.Any())
+                return;
+
             // store the vertices which are adjacent to pi bonds with a config
-            BitArray adjToDb = new BitArray(g.Order);
+            BitArray pibonded = new BitArray(g.Order);
+            BitArray unspecified = new BitArray(g.Order);
+            var unspecEdges = new HashSet<Edge>();
+
+            // clear existing directional labels, if build is called multiple times
+            // this can cause problems
+            if (g.GetFlags(Graph.HAS_BND_STRO) != 0)
+            {
+                foreach (Edge edge in g.Edges)
+                {
+                    if (edge.Bond.IsDirectional)
+                    {
+                        edge.SetBond(Bond.Implicit);
+                    }
+                }
+            }
+
+            foreach (Edge e in g.Edges)
+            {
+                 int u = e.Either();
+                 int v = e.Other(u);
+                if (e.Bond.Order == 2 && g.Degree(u) >= 2 && g.Degree(v) >= 2)
+                {
+                    unspecified.Set(u, true);
+                    unspecified.Set(v, true);
+                    pibonded.Set(u, true);
+                    pibonded.Set(v, true);
+                    unspecEdges.Add(e);
+                }
+            }
 
             foreach (var builder in builders)
             {
@@ -255,22 +287,26 @@ namespace NCDK.Beam
 
                 if (x == y) continue;
 
-                Fix(g, u, v, adjToDb);
-                Fix(g, v, u, adjToDb);
+                unspecEdges.Remove(g.CreateEdge(u, v));
+                unspecified.Set(u, false);
+                unspecified.Set(v, false);
 
-                Bond first = FirstDirectionalLabel(u, x, adjToDb);
+                Fix(g, u, v, pibonded);
+                Fix(g, v, u, pibonded);
+
+                Bond first = FirstDirectionalLabel(u, x, pibonded);
                 Bond second = builder.c == Configuration.DoubleBond.Together ? first
                                                     : first.Inverse();
 
                 // check if the second label would cause a conflict
-                if (CheckDirectionalAssignment(second, v, y, adjToDb))
+                if (CheckDirectionalAssignment(second, v, y, pibonded))
                 {
                     // okay to assign the labels as they are
                     g.Replace(g.CreateEdge(u, x), new Edge(u, x, first));
                     g.Replace(g.CreateEdge(v, y), new Edge(v, y, second));
                 }
                 // there will be a conflict - check if we invert the first one...
-                else if (CheckDirectionalAssignment(first.Inverse(), u, x, adjToDb))
+                else if (CheckDirectionalAssignment(first.Inverse(), u, x, pibonded))
                 {
                     g.Replace(g.CreateEdge(u, x), new Edge(u, x, (first = first.Inverse())));
                     g.Replace(g.CreateEdge(v, y), new Edge(v, y, (second = second.Inverse())));
@@ -279,9 +315,9 @@ namespace NCDK.Beam
                 {
                     BitArray visited = new BitArray(g.Order);
                     visited.Set(v, true);
-                    InvertExistingDirectionalLabels(adjToDb, visited, v, u);
-                    if (!CheckDirectionalAssignment(first, u, x, adjToDb) ||
-                            !CheckDirectionalAssignment(second, v, y, adjToDb))
+                    InvertExistingDirectionalLabels(pibonded, visited, v, u);
+                    if (!CheckDirectionalAssignment(first, u, x, pibonded) ||
+                            !CheckDirectionalAssignment(second, v, y, pibonded))
                         throw new ArgumentException("cannot assign geometric configuration");
                     g.Replace(g.CreateEdge(u, x), new Edge(u, x, first));
                     g.Replace(g.CreateEdge(v, y), new Edge(v, y, second));
@@ -299,12 +335,59 @@ namespace NCDK.Beam
                         e.SetBond(e.Either() == v ? second.Inverse() : second);
                     }
 
-
-                adjToDb.Set(u, true);
-                adjToDb.Set(v, true);
-
             }
-            builders.Clear();
+
+            // unspecified pibonds should "not" have a configuration, if they
+            // do we try to eliminate it
+            foreach (Edge unspecEdge in unspecEdges)
+            {
+                 int u = unspecEdge.Either();
+                 int v = unspecEdge.Other(u);
+                // no problem if one side isn't defined
+                if (!HasDirectional(g, u) || !HasDirectional(g, v))
+                    continue;
+                foreach (Edge e in g.GetEdges(u))
+                    if (IsRedundantDirectionalEdge(g, e, unspecified))
+                        e.SetBond(Bond.Implicit);
+                if (!HasDirectional(g, u))
+                    continue;
+                foreach (Edge e in g.GetEdges(v))
+                    if (IsRedundantDirectionalEdge(g, e, unspecified))
+                        e.SetBond(Bond.Implicit);
+                // if (hasDirectional(g, v))
+                // could generate warning!
+            }
+        }
+
+        private bool HasDirectional(Graph g, int v)
+        {
+            foreach (Edge e in g.GetEdges(v))
+            {
+                if (e.Bond.IsDirectional)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool IsRedundantDirectionalEdge(Graph g, Edge edge, BitArray unspecified)
+        {
+            if (!edge.Bond.IsDirectional)
+                return false;
+            int u = edge.Either();
+            int v = edge.Other(u);
+            if (!unspecified[u])
+            {
+                foreach (Edge f in g.GetEdges(u))
+                    if (f.Bond.IsDirectional && edge != f)
+                        return true;
+            }
+            else if (!unspecified[v])
+            {
+                foreach (Edge f in g.GetEdges(v))
+                    if (f.Bond.IsDirectional && edge != f)
+                        return true;
+            }
+            return false;
         }
 
         private void Fix(Graph g, int u, int p, BitArray adjToDb)

@@ -33,7 +33,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2008-02-11
     // @cdk.module     reaction
-    // @cdk.set        reaction-types
     // @cdk.githash
     public partial class AdductionProtonLPReaction : AbstractAdductionLPReaction
     {

@@ -94,8 +94,8 @@ namespace NCDK.IO
         }
 
         /// <summary>
-        /// reads the content from a XYZ input. It can only return a
-        /// IChemObject of type ChemFile
+        /// Reads the content from a XYZ input. It can only return a
+        /// <see cref="IChemObject"/> of type <see cref="IChemFile"/>.
         /// </summary>
         /// <param name="obj">class must be of type ChemFile</param>
         /// <seealso cref="IChemFile"/>
@@ -129,7 +129,7 @@ namespace NCDK.IO
         ///  Private method that actually parses the input to read a ChemFile
         ///  object.
         /// </summary>
-        /// <param name="som">The set of molecules that came fron the file</param>
+        /// <param name="som">The set of molecules that came from the file</param>
         /// <returns>A ChemFile containing the data parsed from input.</returns>
         private IAtomContainerSet<IAtomContainer> ReadAtomContainerSet(IAtomContainerSet<IAtomContainer> som)
         {

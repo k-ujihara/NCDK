@@ -40,6 +40,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor()
         {
             IAtomContainer mol = builder.CreateAtomContainer();
@@ -61,6 +62,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestNotCharged()
         {
             IAtomContainer mol = builder.CreateAtomContainer();
@@ -81,6 +83,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestStabilizationPlusChargeDescriptor2()
         {
             IAtomContainer mol = builder.CreateAtomContainer();
@@ -102,6 +105,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestStabilizationComparative()
         {
             IAtomContainer mol1 = builder.CreateAtomContainer();
@@ -154,6 +158,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/C3H7Cl/c1-2-3-4/h2-3H2,1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCompareIonized()
         {
             IAtomContainer molA = builder.CreateAtomContainer();

@@ -26,34 +26,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace NCDK.SGroups
+namespace NCDK.Smiles
 {
     /// <summary>
     /// Light-weight intermediate data-structure for transferring information CDK to/from
     /// CXSMILES.
     /// </summary>
-    internal sealed class CxSmilesState
+    internal sealed partial class CxSmilesState
     {
         public IDictionary<int, string> atomLabels = null;
         public IDictionary<int, string> atomValues = null;
         public IList<double[]> AtomCoords { get; set; } = null;
-        public IList<IList<int>> fragGroups = null;
+        public IList<List<int>> fragGroups = null;
         public IDictionary<int, Radical> atomRads = null;
         public IDictionary<int, IList<int>> positionVar = null;
         public IList<PolymerSgroup> sgroups = null;
         public IList<DataSgroup> dataSgroups = null;
-        public bool zCoords = false;
-
-        public enum Radical
-        {
-            Monovalent,
-            Divalent,
-            DivalentSinglet,
-            DivalentTriplet,
-            Trivalent,
-            TrivalentDoublet,
-            TrivalentQuartet
-        }
+        public bool coordFlag = false;
 
         public sealed class DataSgroup
         {
@@ -121,10 +110,10 @@ namespace NCDK.SGroups
 
         public sealed class PolymerSgroup
         {
-            readonly string type;
-            readonly IList<int> atomset;
-            readonly string subscript;
-            readonly string supscript;
+            internal readonly string type;
+            internal readonly List<int> atomset;
+            internal readonly string subscript;
+            internal readonly string supscript;
 
             public PolymerSgroup(string type, IList<int> atomset, string subscript, string supscript)
             {
@@ -134,7 +123,6 @@ namespace NCDK.SGroups
                 this.subscript = subscript;
                 this.supscript = supscript;
             }
-
 
             public override bool Equals(Object o)
             {
@@ -148,7 +136,6 @@ namespace NCDK.SGroups
                        supscript.Equals(that.supscript);
             }
 
-
             public override int GetHashCode()
             {
                 int result = type.GetHashCode();
@@ -158,7 +145,6 @@ namespace NCDK.SGroups
                 result = 31 * result + supscript.GetHashCode();
                 return result;
             }
-
 
             public override string ToString()
             {
@@ -176,7 +162,6 @@ namespace NCDK.SGroups
             internal string Supscript => supscript;
         }
 
-
         static string Escape(string str)
         {
             StringBuilder sb = new StringBuilder();
@@ -189,7 +174,6 @@ namespace NCDK.SGroups
                     sb.Append(c);
             }
             return sb.ToString();
-
         }
 
         private static bool IsEscapeChar(char c)

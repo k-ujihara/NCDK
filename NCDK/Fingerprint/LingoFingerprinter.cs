@@ -50,7 +50,7 @@ namespace NCDK.Fingerprint
         private readonly Aromaticity aromaticity = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
 
         /// <summary>
-        /// Initialize the fingerprinter with a defult substring length of 4.
+        /// Initialize the fingerprinter with a default substring length of 4.
         /// </summary>
         public LingoFingerprinter()
             : this(4)

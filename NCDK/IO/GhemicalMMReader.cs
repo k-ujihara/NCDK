@@ -32,7 +32,6 @@ namespace NCDK.IO
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     // @author Egon Willighagen <egonw@sci.kun.nl>   
     public class GhemicalMMReader : DefaultChemObjectReader
     {

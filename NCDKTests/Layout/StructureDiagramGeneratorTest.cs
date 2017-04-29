@@ -36,12 +36,10 @@ namespace NCDK.Layout
 {
     /// <summary>
     ///  A set of test cases for the StructureDiagramGenerator
-    ///
+    /// </summary>
     // @cdk.module test-sdg
-    ///
     ///@author     steinbeck
     ///@cdk.created    August 29, 2003
-    /// </summary>
     [TestClass()]
     public class StructureDiagramGeneratorTest : CDKTestCase
     {
@@ -74,10 +72,9 @@ namespace NCDK.Layout
 
         /// <summary>
         ///  A unit test for JUnit
-        ///
-        /// <exception cref="Exception"> thrown if something goes wrong</exception>
-        ///@cdk.bug 1670871
         /// </summary>
+        /// <exception cref="Exception">thrown if something goes wrong</exception>
+        // @cdk.bug 1670871
         [TestMethod()]
         [Timeout(5000)]
         public void TestBugLecture2007()
@@ -93,9 +90,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestAlphaPinene()
@@ -121,10 +115,7 @@ namespace NCDK.Layout
             Layout(mol);
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(mol));
         }
-
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
+        
         [TestMethod()]
         [Timeout(5000)]
         public void TestBiphenyl()
@@ -134,9 +125,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void Test4x3CondensedRings()
@@ -146,9 +134,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestPhenylEthylBenzene()
@@ -158,9 +143,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestSpiroRings()
@@ -170,9 +152,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestMethylDecaline()
@@ -182,9 +161,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBranchedAliphatic()
@@ -194,9 +170,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestDiamantane()
@@ -206,12 +179,8 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        ///
         /// <exception cref="Exception"> thrown if something goes wrong</exception>
-        ///@cdk.bug 1670871
-        /// </summary>
+        // @cdk.bug 1670871
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1670871()
@@ -223,9 +192,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestEthylCyclohexane()
@@ -235,9 +201,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBicycloRings()
@@ -247,9 +210,6 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         public IAtomContainer MakeJhao3()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -257,9 +217,6 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         public IAtomContainer MakeJhao4()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -267,9 +224,6 @@ namespace NCDK.Layout
             return mol;
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBenzene()
@@ -280,9 +234,7 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
         // @cdk.bug 780545
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug780545()
@@ -293,9 +245,7 @@ namespace NCDK.Layout
             Assert.IsTrue(GeometryUtil.Has2DCoordinates(ac));
         }
 
-        /// <summary>
         // @cdk.bug 1598409
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1598409()
@@ -306,9 +256,7 @@ namespace NCDK.Layout
             Layout(cdkMol);
         }
 
-        /// <summary>
         // @cdk.bug 1572062
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1572062()
@@ -327,12 +275,9 @@ namespace NCDK.Layout
             {
                 Layout(molecule);
             }
-
         }
 
-        /// <summary>
         // @cdk.bug 884993
-        /// </summary>
         public void TestBug884993()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -344,8 +289,8 @@ namespace NCDK.Layout
         /// <summary>
         /// Test for bug #1677912 "SDG JUnit test hangs"
         /// The SMILES parsing takes hence a longer timeout.
-        // @cdk.bug 1677912
         /// </summary>
+        // @cdk.bug 1677912
         [TestMethod()]
         [Timeout(10000)]
         public void TestBug1677912SDGHangs()
@@ -358,12 +303,10 @@ namespace NCDK.Layout
             // Generate 2D coordinates
             Layout(molecule);
 
-            // Test completed, no timeout occured
+            // Test completed, no timeout occurred
         }
 
-        /// <summary>
         // @cdk.bug 1714794
-        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug1714794()
@@ -723,16 +666,16 @@ namespace NCDK.Layout
             // rebuild 2D coordinates
             Layout(molecule);
 
-            // test completed, no timeout occured
+            // test completed, no timeout occurred
         }
 
         /// <summary>
-       /// For the SMILES compound below (the largest molecule in Chembl) a
-       /// handful of atoms had invalid (NaN) Double coordinates.
-       ///
-       /// <exception cref="Exception">if the test failed</exception>
-       // @cdk.bug 2842445
-       /// </summary>
+        /// For the SMILES compound below (the largest molecule in Chembl) a
+        /// handful of atoms had invalid (NaN) Double coordinates.
+        ///
+        /// <exception cref="Exception">if the test failed</exception>
+        // @cdk.bug 2842445
+        /// </summary>
         [TestMethod()]
         [Timeout(5000)]
         public void TestBug2843445NaNCoords()
@@ -922,15 +865,15 @@ namespace NCDK.Layout
             foreach (var atom in mol.Atoms)
                 Assert.IsNotNull(atom.Point2D);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[1].Point2D.Value),
                 0.001);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[2].Point2D.Value),
                 0.001);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[3].Point2D.Value),
                 0.001);
         }
@@ -944,11 +887,11 @@ namespace NCDK.Layout
             foreach (var atom in mol.Atoms)
                 Assert.IsNotNull(atom.Point2D);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[1].Point2D.Value),
                 0.001);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[4].Point2D.Value, mol.Atoms[5].Point2D.Value),
                 0.001);
         }
@@ -966,8 +909,8 @@ namespace NCDK.Layout
             {
                 var distLi = Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[i].Point2D.Value);
                 var distAl = Vector2.Distance(mol.Atoms[1].Point2D.Value, mol.Atoms[i].Point2D.Value);
-                var diffLi = distLi - SDG.BondLength;
-                var diffAl = distAl - SDG.BondLength;
+                var diffLi = distLi - 1.5 * SDG.BondLength;
+                var diffAl = distAl - 1.5 * SDG.BondLength;
                 if (Math.Abs(diffLi) > 0.001 && Math.Abs(diffAl) > 0.001)
                     Assert.Fail("Chlorine must be bond length from Al or Li atoms");
             }
@@ -982,7 +925,7 @@ namespace NCDK.Layout
             foreach (var atom in mol.Atoms)
                 Assert.IsNotNull(atom.Point2D);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[1].Point2D.Value),
                 0.001);
         }
@@ -997,9 +940,11 @@ namespace NCDK.Layout
             Layout(mol);
             foreach (var atom in mol.Atoms)
                 Assert.IsNotNull(atom.Point2D);
+            Assert.AreEqual(17, mol.Atoms[0].AtomicNumber);
+            Assert.AreEqual(7, mol.Atoms[15].AtomicNumber);
             Assert.AreEqual(
-                SDG.BondLength,
-                Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[2].Point2D.Value),
+                1.5 * SDG.BondLength,
+                Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[15].Point2D.Value),
                 0.001);
         }
 
@@ -1012,7 +957,7 @@ namespace NCDK.Layout
             foreach (var atom in mol.Atoms)
                 Assert.IsNotNull(atom.Point2D);
             Assert.AreEqual(
-                SDG.BondLength,
+                1.5 * SDG.BondLength,
                 Vector2.Distance(mol.Atoms[0].Point2D.Value, mol.Atoms[1].Point2D.Value),
                 0.001);
         }
@@ -1065,7 +1010,7 @@ namespace NCDK.Layout
             int ptFound = 0;
             foreach (var chlorine in chlorines)
             {
-                var delta = Vector2.Distance(chlorine.Point2D.Value, platinum.Point2D.Value) - SDG.BondLength;
+                var delta = Vector2.Distance(chlorine.Point2D.Value, platinum.Point2D.Value) - 1.5 * SDG.BondLength;
                 if (Math.Abs(delta) < 0.01)
                     ptFound++;
             }
@@ -1077,7 +1022,7 @@ namespace NCDK.Layout
                 int kFound = 0;
                 foreach (var oxygen in oxygens)
                 {
-                    var delta = Vector2.Distance(oxygen.Point2D.Value, potassium.Point2D.Value) - SDG.BondLength;
+                    var delta = Vector2.Distance(oxygen.Point2D.Value, potassium.Point2D.Value) - 1.5 * SDG.BondLength;
                     if (Math.Abs(delta) < 0.01)
                         kFound++;
                 }
@@ -1090,7 +1035,7 @@ namespace NCDK.Layout
                 int clFound = 0;
                 foreach (var chlorine in chlorines)
                 {
-                    var delta = Vector2.Distance(chlorine.Point2D.Value, aluminium.Point2D.Value) - SDG.BondLength;
+                    var delta = Vector2.Distance(chlorine.Point2D.Value, aluminium.Point2D.Value) - 1.5 * SDG.BondLength;
                     if (Math.Abs(delta) < 0.01)
                         clFound++;
                 }
@@ -1292,6 +1237,28 @@ namespace NCDK.Layout
                     mol.Atoms[i + 12].Point2D.Value)
                     < 0.01);
             }
+        }
+
+        /// <summary>
+        /// These molecules are laid out 'H2N=NH2.H2N=NH2', ensure we give them more space than
+        /// usual (bond length)
+        /// </summary>
+        [TestMethod()]
+        public void Dihydroazine()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("N=N.N=N");
+            Layout(mol);
+            Assert.IsTrue(mol.Atoms[2].Point2D.Value.X - mol.Atoms[1].Point2D.Value.X > SDG.BondLength);
+        }
+
+        [TestMethod()]
+        public void NH4OH()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = smipar.ParseSmiles("[NH4+].[OH-]");
+            Layout(mol);
+            Assert.IsTrue(SDG.BondLength < mol.Atoms[1].Point2D.Value.X - mol.Atoms[0].Point2D.Value.X);
         }
     }
 }

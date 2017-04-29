@@ -46,7 +46,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-04-11
     // @cdk.module  qsaratomic
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:PartialTChargePEOE
     public class PartialTChargePEOEDescriptor : AbstractAtomicDescriptor
     {

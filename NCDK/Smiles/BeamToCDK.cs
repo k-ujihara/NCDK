@@ -87,11 +87,12 @@ namespace NCDK.Smiles
         /// Convert a Beam ChemicalGraph to a CDK IAtomContainer.
         /// </summary>
         /// <param name="g">Beam graph instance</param>
+        /// <param name="kekule">the input has been kekulzied</param>
         /// <returns>the CDK <see cref="IAtomContainer"/> for the input</returns>
         /// <exception cref="ArgumentException">the Beam graph was not 'expanded' - and
         /// contained organic subset atoms. If this happens use the Beam <see cref="Beam.Functions.Expand(Graph)"/> to
         /// </exception>
-        public IAtomContainer ToAtomContainer(Graph g)
+        public IAtomContainer ToAtomContainer(Graph g, bool kekule)
         {
             IAtomContainer ac = CreateEmptyContainer();
             IAtom[] atoms = new IAtom[g.Order];
@@ -102,7 +103,7 @@ namespace NCDK.Smiles
             for (int i = 0; i < g.Order; i++)
                 atoms[i] = ToCDKAtom(g.GetAtom(i), g.ImplHCount(i));
             foreach (var e in g.Edges)
-                bonds[j++] = ToCDKBond(e, atoms);
+                bonds[j++] = ToCDKBond(e, atoms, kekule);
 
             // atom-centric stereo-specification (only tetrahedral ATM)
             for (int u = 0; u < g.Order; u++)
@@ -155,22 +156,114 @@ namespace NCDK.Smiles
 
                 // if either atom is not incident to a directional label there
                 // is no configuration
-                if (first == null || second == null) continue;
+                if (first != null && second != null)
+                {
+                    // if the directions (relative to the double bond) are the
+                    // same then they are on the same side - otherwise they
+                    // are opposite
+                    DoubleBondConformation conformation = first.GetBond(u) == second.GetBond(v) ? DoubleBondConformation.Together : DoubleBondConformation.Opposite;
 
-                // if the directions (relative to the double bond) are the
-                // same then they are on the same side - otherwise they
-                // are opposite
-                DoubleBondConformation conformation = first.GetBond(u) == second.GetBond(v) ? DoubleBondConformation.Together : DoubleBondConformation.Opposite;
+                    // get the stereo bond and build up the ligands for the
+                    // stereo-element - linear search could be improved with
+                    // map or API change to double bond element
+                    IBond db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
 
-                // get the stereo bond and build up the ligands for the
-                // stereo-element - linear search could be improved with
-                // map or API change to double bond element
-                IBond db = ac.GetBond(ac.Atoms[u], ac.Atoms[v]);
-
-                IBond[] ligands = new IBond[]{ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
+                    IBond[] ligands = new IBond[]{ac.GetBond(ac.Atoms[u], ac.Atoms[first.Other(u)]),
                         ac.GetBond(ac.Atoms[v], ac.Atoms[second.Other(v)])};
 
-                ac.StereoElements.Add(new DoubleBondStereochemistry(db, ligands, conformation));
+                    ac.StereoElements.Add(new DoubleBondStereochemistry(db, ligands, conformation));
+                }
+                // extension F[C@]=[C@@]F
+                else
+                {
+                    Configuration uConf = g.ConfigurationOf(u);
+                    Configuration vConf = g.ConfigurationOf(v);
+                    if (uConf.Type == Configuration.Types.DoubleBond &&
+                        vConf.Type == Configuration.Types.DoubleBond)
+                    {
+
+                        int[] nbrs = new int[6];
+                        int[] uNbrs = g.Neighbors(u);
+                        int[] vNbrs = g.Neighbors(v);
+
+                        if (uNbrs.Length < 2 || uNbrs.Length > 3)
+                            continue;
+                        if (vNbrs.Length < 2 || vNbrs.Length > 3)
+                            continue;
+
+                        int idx = 0;
+                        System.Array.Copy(uNbrs, 0, nbrs, idx, uNbrs.Length);
+                        idx += uNbrs.Length;
+                        if (uNbrs.Length == 2) nbrs[idx++] = u;
+                        System.Array.Copy(vNbrs, 0, nbrs, idx, vNbrs.Length);
+                        idx += vNbrs.Length;
+                        if (vNbrs.Length == 2) nbrs[idx] = v;
+                        Array.Sort(nbrs, 0, 3);
+                        Array.Sort(nbrs, 3, 3);
+
+                        int vPos = Array.BinarySearch(nbrs, 0, 3, v);
+                        int uPos = Array.BinarySearch(nbrs, 3, 3, u);
+
+                        int uhi = 0, ulo = 0;
+                        int vhi = 0, vlo = 0;
+
+                        uhi = nbrs[(vPos + 1) % 3];
+                        ulo = nbrs[(vPos + 2) % 3];
+                        vhi = nbrs[3 + ((uPos + 1) % 3)];
+                        vlo = nbrs[3 + ((uPos + 2) % 3)];
+
+                        if (uConf.Shorthand == Configuration.Clockwise)
+                        {
+                            int tmp = uhi;
+                            uhi = ulo;
+                            ulo = tmp;
+                        }
+                        if (vConf.Shorthand == Configuration.AntiClockwise)
+                        {
+                            int tmp = vhi;
+                            vhi = vlo;
+                            vlo = tmp;
+                        }
+
+                        DoubleBondConformation conf = DoubleBondConformation.Unset;
+                        IBond[] bonds = new IBond[2];
+
+                        if (uhi != u)
+                        {
+                            bonds[0] = ac.GetBond(ac.Atoms[u], ac.Atoms[uhi]);
+                            if (vhi != v)
+                            {
+                                // System.err.println(uhi + "\\=/" + vhi);
+                                conf = DoubleBondConformation.Together;
+                                bonds[1] = ac.GetBond(ac.Atoms[v], ac.Atoms[vhi]);
+                            }
+                            else if (vlo != v)
+                            {
+                                // System.err.println(uhi + "\\=\\" + vlo);
+                                conf = DoubleBondConformation.Opposite;
+                                bonds[1] = ac.GetBond(ac.Atoms[v], ac.Atoms[vlo]);
+                            }
+                        }
+                        else if (ulo != u)
+                        {
+                            bonds[0] = ac.GetBond(ac.Atoms[u], ac.Atoms[ulo]);
+                            if (vhi != v)
+                            {
+                                // System.err.println(ulo + "/=/" + vhi);
+                                conf = DoubleBondConformation.Opposite;
+                                bonds[1] = ac.GetBond(ac.Atoms[v], ac.Atoms[vhi]);
+                            }
+                            else if (vlo != v)
+                            {
+                                // System.err.println(ulo + "/=\\" + vlo);
+                                conf = DoubleBondConformation.Together;
+                                bonds[1] = ac.GetBond(ac.Atoms[v], ac.Atoms[vlo]);
+                            }
+                        }
+
+                        ac.StereoElements.Add(new DoubleBondStereochemistry(ac.GetBond(ac.Atoms[u], ac.Atoms[v]), bonds, conf));
+                    }
+                }
             }
         }
 
@@ -240,7 +333,7 @@ namespace NCDK.Smiles
 
             TetrahedralStereo stereo = g.ConfigurationOf(u).Shorthand == Configuration.Clockwise ? TetrahedralStereo.Clockwise : TetrahedralStereo.AntiClockwise;
 
-            return new ExtendedTetrahedral(atoms[u], new IAtom[]{atoms[xs[0]], atoms[xs[1]], atoms[xs[2]], atoms[xs[3]]}, stereo);
+            return new ExtendedTetrahedral(atoms[u], new IAtom[] { atoms[xs[0]], atoms[xs[1]], atoms[xs[2]], atoms[xs[3]] }, stereo);
         }
 
         /// <summary>
@@ -315,7 +408,7 @@ namespace NCDK.Smiles
         /// <param name="edge">the Beam edge to convert</param>
         /// <param name="atoms">the already converted atoms</param>
         /// <returns>new bond instance</returns>
-        public IBond ToCDKBond(Edge edge, IAtom[] atoms)
+        public IBond ToCDKBond(Edge edge, IAtom[] atoms, bool kekule)
         {
             int u = edge.Either();
             int v = edge.Other(u);
@@ -332,9 +425,10 @@ namespace NCDK.Smiles
             }
             else if (aa == Bond.Implicit)
             {
-                if (atoms[u].IsAromatic && atoms[v].IsAromatic)
+                if (!kekule && atoms[u].IsAromatic && atoms[v].IsAromatic)
                 {
                     bond.IsAromatic = true;
+                    bond.Order = BondOrder.Unset;
                     atoms[u].IsAromatic = true;
                     atoms[v].IsAromatic = true;
                 }
@@ -429,4 +523,3 @@ namespace NCDK.Smiles
         }
     }
 }
-

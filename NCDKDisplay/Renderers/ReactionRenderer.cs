@@ -124,13 +124,12 @@ namespace NCDK.Renderers
         }
 
         /// <summary>
-        /// A renderer that draws <see cref="IReaction"/>s with the passed <see cref="IGenerator"/>
+        /// A renderer that draws <see cref="IReaction"/>s with the passed <see cref="IGenerator{T}"/>
         /// for both <see cref="IAtomContainer"/> and <see cref="IReaction"/> content.
-        ///
-        /// <param name="generators">a list of classes that implement the <see cref="IGenerator"/> interface</param>
-        /// <param name="reactionGenerators">a list of <see cref="IGenerator"/> related to <see cref="IReaction"/>s</param>
-        /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
         /// </summary>
+        /// <param name="generators">a list of classes that implement the <see cref="IGenerator{T}"/> interface</param>
+        /// <param name="reactionGenerators">a list of <see cref="IGenerator{T}"/> related to <see cref="IReaction"/>s</param>
+        /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
         public ReactionRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IEnumerable<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager)
                 : this(generators, fontManager)
         {

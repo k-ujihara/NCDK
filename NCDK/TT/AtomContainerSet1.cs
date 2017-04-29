@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 /* 
  * Copyright (C) 2003-2007  Christoph Steinbeck <steinbeck@users.sf.net>
@@ -26,8 +26,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -49,17 +47,26 @@ namespace NCDK.Default
         internal IList<T> atomContainers;
         internal IList<double?> multipliers;
 
+		 /// <summary> Constructs an empty AtomContainerSet.</summary>
         public AtomContainerSet()
         {
             atomContainers = new ObservableChemObjectCollection<T>(this);
             multipliers = new List<double?>();
         }
 
-        public void Add(T atomContainer)
-        {
+		/// <summary>
+		/// Adds an atomContainer to this container.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be added to this container</param>
+		public void Add(T atomContainer)
+		{
             Add(atomContainer, 1.0); // this calls notify
         }
 
+		/// <summary>
+		/// Removes an AtomContainer from this container.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be removed from this container</param>
         public bool Remove(T atomContainer)
         {
             bool ret = false;
@@ -71,29 +78,42 @@ namespace NCDK.Default
             return ret;
         }
 
+		/// <summary>
+		/// Removes all AtomContainer from this container.
+		/// </summary>
         public void Clear()
         {
             atomContainers.Clear();
             multipliers.Clear();
         }
 
+		/// <summary>
+		/// Removes an AtomContainer from this container.
+		/// </summary>
+		/// <param name="pos">The position of the AtomContainer to be removed from this container</param>
         public void RemoveAt(int pos)
         {
             atomContainers.RemoveAt(pos);
             multipliers.RemoveAt(pos);
         }
 
+        /// <summary>
+        /// The AtomContainer at a specific position (array has to be large enough).
+        /// </summary>
+        /// <param name="position">position in array for AtomContainer</param>
         public T this[int position]
         {
             get { return atomContainers[position]; }
             set { atomContainers[position] = value; }
         }
 
-        public void SetMultiplier(int position, double? multiplier)
-        {
-            multipliers[position] = multiplier;
-             NotifyChanged();         }
-
+        /// <summary>
+        /// Sets the coefficient of a AtomContainer to a given value.
+        /// </summary>
+        /// <param name="container">The AtomContainer for which the multiplier is set</param>
+        /// <param name="multiplier">The new multiplier for the AtomContatiner</param>
+        /// <returns>true if multiplier has been set</returns>
+        /// <seealso cref="GetMultiplier(T)"/>
         public void SetMultiplier(T container, double? multiplier)
         {
             var index = atomContainers.IndexOf(container);
@@ -102,8 +122,25 @@ namespace NCDK.Default
             multipliers[index] = multiplier;
              NotifyChanged();         }
 
+		/// <summary>
+		/// Sets the coefficient of a AtomContainer to a given value.
+		/// </summary>
+		/// <param name="position">The position of the AtomContainer for which the multiplier is set in [0,..]</param>
+		/// <param name="multiplier">The new multiplier for the AtomContatiner at <paramref name="position"/></param>
+		/// <seealso cref="GetMultiplier(int)"/>
+        public void SetMultiplier(int position, double? multiplier)
+        {
+            multipliers[position] = multiplier;
+             NotifyChanged();         }
+
         public IReadOnlyList<double?> GetMultipliers() => new ReadOnlyCollection<double?>(multipliers);
 
+		/// <summary>
+		/// Sets the multipliers of the AtomContainers.
+		/// </summary>
+		/// <param name="multipliers">The new multipliers for the AtomContainers in this set</param>
+		/// <returns>true if multipliers have been set.</returns>
+		/// <seealso cref="GetMultipliers"/>
         public bool SetMultipliers(IEnumerable<double?> multipliers)
         {
             if (multipliers.Count() == atomContainers.Count)
@@ -114,6 +151,12 @@ namespace NCDK.Default
             return false;
         }
 
+		/// <summary>
+		/// Adds an atomContainer to this container with the given
+		/// multiplier.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be added to this container</param>
+		/// <param name="multiplier">The multiplier of this atomContainer</param>
         public void Add(T atomContainer, double? multiplier)
         {
             atomContainers.Add(atomContainer);
@@ -136,6 +179,13 @@ namespace NCDK.Default
 
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
+        /// <summary>
+        /// Returns the multiplier for the AtomContainer at position <code>number</code> in the
+        /// container.
+        /// </summary>
+        /// <param name="number">The position of the multiplier of the AtomContainer to be returned.</param>
+        /// <returns>The multiplier for the AtomContainer at position <paramref name="number"/>.</returns>
+        /// <seealso cref="SetMultiplier(int, double?)"/>
         public double? GetMultiplier(int number) => multipliers[number];
 
         /// <summary>
@@ -151,6 +201,7 @@ namespace NCDK.Default
             return multipliers[index];
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -274,17 +325,26 @@ namespace NCDK.Silent
         internal IList<T> atomContainers;
         internal IList<double?> multipliers;
 
+		 /// <summary> Constructs an empty AtomContainerSet.</summary>
         public AtomContainerSet()
         {
             atomContainers = new ObservableChemObjectCollection<T>(this);
             multipliers = new List<double?>();
         }
 
-        public void Add(T atomContainer)
-        {
+		/// <summary>
+		/// Adds an atomContainer to this container.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be added to this container</param>
+		public void Add(T atomContainer)
+		{
             Add(atomContainer, 1.0); // this calls notify
         }
 
+		/// <summary>
+		/// Removes an AtomContainer from this container.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be removed from this container</param>
         public bool Remove(T atomContainer)
         {
             bool ret = false;
@@ -296,29 +356,42 @@ namespace NCDK.Silent
             return ret;
         }
 
+		/// <summary>
+		/// Removes all AtomContainer from this container.
+		/// </summary>
         public void Clear()
         {
             atomContainers.Clear();
             multipliers.Clear();
         }
 
+		/// <summary>
+		/// Removes an AtomContainer from this container.
+		/// </summary>
+		/// <param name="pos">The position of the AtomContainer to be removed from this container</param>
         public void RemoveAt(int pos)
         {
             atomContainers.RemoveAt(pos);
             multipliers.RemoveAt(pos);
         }
 
+        /// <summary>
+        /// The AtomContainer at a specific position (array has to be large enough).
+        /// </summary>
+        /// <param name="position">position in array for AtomContainer</param>
         public T this[int position]
         {
             get { return atomContainers[position]; }
             set { atomContainers[position] = value; }
         }
 
-        public void SetMultiplier(int position, double? multiplier)
-        {
-            multipliers[position] = multiplier;
-                    }
-
+        /// <summary>
+        /// Sets the coefficient of a AtomContainer to a given value.
+        /// </summary>
+        /// <param name="container">The AtomContainer for which the multiplier is set</param>
+        /// <param name="multiplier">The new multiplier for the AtomContatiner</param>
+        /// <returns>true if multiplier has been set</returns>
+        /// <seealso cref="GetMultiplier(T)"/>
         public void SetMultiplier(T container, double? multiplier)
         {
             var index = atomContainers.IndexOf(container);
@@ -327,8 +400,25 @@ namespace NCDK.Silent
             multipliers[index] = multiplier;
                     }
 
+		/// <summary>
+		/// Sets the coefficient of a AtomContainer to a given value.
+		/// </summary>
+		/// <param name="position">The position of the AtomContainer for which the multiplier is set in [0,..]</param>
+		/// <param name="multiplier">The new multiplier for the AtomContatiner at <paramref name="position"/></param>
+		/// <seealso cref="GetMultiplier(int)"/>
+        public void SetMultiplier(int position, double? multiplier)
+        {
+            multipliers[position] = multiplier;
+                    }
+
         public IReadOnlyList<double?> GetMultipliers() => new ReadOnlyCollection<double?>(multipliers);
 
+		/// <summary>
+		/// Sets the multipliers of the AtomContainers.
+		/// </summary>
+		/// <param name="multipliers">The new multipliers for the AtomContainers in this set</param>
+		/// <returns>true if multipliers have been set.</returns>
+		/// <seealso cref="GetMultipliers"/>
         public bool SetMultipliers(IEnumerable<double?> multipliers)
         {
             if (multipliers.Count() == atomContainers.Count)
@@ -339,6 +429,12 @@ namespace NCDK.Silent
             return false;
         }
 
+		/// <summary>
+		/// Adds an atomContainer to this container with the given
+		/// multiplier.
+		/// </summary>
+		/// <param name="atomContainer">The atomContainer to be added to this container</param>
+		/// <param name="multiplier">The multiplier of this atomContainer</param>
         public void Add(T atomContainer, double? multiplier)
         {
             atomContainers.Add(atomContainer);
@@ -361,6 +457,13 @@ namespace NCDK.Silent
 
         public IEnumerator<T> GetEnumerator() => atomContainers.GetEnumerator();
 
+        /// <summary>
+        /// Returns the multiplier for the AtomContainer at position <code>number</code> in the
+        /// container.
+        /// </summary>
+        /// <param name="number">The position of the multiplier of the AtomContainer to be returned.</param>
+        /// <returns>The multiplier for the AtomContainer at position <paramref name="number"/>.</returns>
+        /// <seealso cref="SetMultiplier(int, double?)"/>
         public double? GetMultiplier(int number) => multipliers[number];
 
         /// <summary>
@@ -376,6 +479,7 @@ namespace NCDK.Silent
             return multipliers[index];
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder();

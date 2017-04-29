@@ -120,9 +120,8 @@ namespace NCDK.Renderers.Generators.Standards
 
             /// <summary>
             /// An outer glow is placed in the background behind the depiction.
-            ///
-            // @see StandardGenerator.OuterGlowWidth
             /// </summary>
+            /// <seealso cref="StandardGenerator.OuterGlowWidth"/> 
             OuterGlow
         }
 

@@ -1,5 +1,5 @@
 /* Copyright (C) 2001-2007  Christoph Steinbeck <steinbeck@users.sf.net>
- *                    2013  Egon Willighagen <egonw@users.sf.net>
+ *                    2013,2016  Egon Willighagen <egonw@users.sf.net>
  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
@@ -25,14 +25,21 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Reflection;
 using NCDK.Tools;
 
 namespace NCDK.Config
 {
     /// <summary>
-    /// List of isotopes. Data is taken from the Blue Obelisk Data Repository, version 10.
+    /// List of isotopes. Data is taken from the <see href="https://github.com/egonw/bodr">Blue Obelisk Data Repository</see>,
+    /// <see href="https://github.com/egonw/bodr/releases/tag/BODR-10">version 10</see> <token>cdk-cite-BODR10</token>.
+    /// The data set is described in the first Blue Obelisk paper <token>cdk-cite-Guha2006</token>.
     /// </summary>
+    /// <remarks>
+    /// <para>The <pre>isotopes.dat</pre> file that is used by this class is a binary class
+    /// of this data, improving loading times over the BODR XML representation. It is created
+    /// from the original BODR files using tools from the <pre>cdk-build-util</pre>
+    /// repository.</para>
+    /// </remarks>
     // @author      egonw
     // @cdk.module  core
     // @cdk.githash

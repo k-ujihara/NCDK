@@ -23,16 +23,15 @@ using NCDK.IO;
 using NCDK.Stereo;
 using NCDK.NInChI;
 using NCDK.Numerics;
+using NCDK.Smiles;
 
 namespace NCDK.Graphs.InChI
 {
     /// <summary>
     /// TestCase for the InChIGenerator.
-    ///
-    // @cdk.module test-inchi
-    ///
-    // @see org.openscience.cdk.inchi.InChIGenerator
     /// </summary>
+    // @cdk.module test-inchi
+    // @see org.openscience.cdk.inchi.InChIGenerator
     [TestClass()]
     public class InChIGeneratorTest : CDKTestCase
     {
@@ -49,8 +48,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests element name is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromChlorineAtom()
@@ -112,8 +109,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests charge is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromLithiumIon()
@@ -129,8 +124,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
        /// Tests isotopic mass is correctly passed to InChI.
-       ///
-       // @
        /// </summary>
         [TestMethod()]
         public void TestGetInchiFromChlorine37Atom()
@@ -146,8 +139,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests implicit hydrogen count is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromHydrogenChlorideImplicitH()
@@ -163,8 +154,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests radical state is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromMethylRadical()
@@ -181,8 +170,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests single bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthane()
@@ -203,8 +190,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests double bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthene()
@@ -224,8 +209,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests triple bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromEthyne()
@@ -245,13 +228,10 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests 2D coordinates are correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiEandZ12Dichloroethene2D()
         {
-
             // (E)-1,2-dichloroethene
             IAtomContainer acE = new AtomContainer();
             IAtom a1E = new Atom("C", new Vector2(2.866, -0.250));
@@ -299,13 +279,10 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests 3D coordinates are correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetInchiFromLandDAlanine3D()
         {
-
             // L-Alanine
             IAtomContainer acL = new AtomContainer();
             IAtom a1L = new Atom("C", new Vector3(-0.358, 0.819, 20.655));
@@ -379,8 +356,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests element name is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromChlorineAtom()
@@ -394,8 +369,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests charge is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromLithiumIon()
@@ -411,8 +384,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
        /// Tests isotopic mass is correctly passed to InChI.
-       ///
-       // @
        /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromChlorine37Atom()
@@ -428,8 +399,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests implicit hydrogen count is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromHydrogenChlorideImplicitH()
@@ -445,8 +414,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests radical state is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromMethylRadical()
@@ -463,8 +430,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests single bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthane()
@@ -485,8 +450,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests double bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthene()
@@ -506,8 +469,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests triple bond is correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiFromEthyne()
@@ -527,8 +488,6 @@ namespace NCDK.Graphs.InChI
 
         /// <summary>
         /// Tests 2D coordinates are correctly passed to InChI.
-        ///
-        // @
         /// </summary>
         [TestMethod()]
         public void TestGetStandardInchiEandZ12Dichloroethene2D()
@@ -904,6 +863,90 @@ namespace NCDK.Graphs.InChI
                 InChIGenerator generator = GetFactory().GetInChIGenerator(m);
                 Assert.AreEqual("InChI=1S/C5H8/c1-3-5-4-2/h3-4H,1-2H3/t5-/m1/s1", generator.InChI);
             }
+        }
+
+        //[TestMethod()]
+        public void Timeout()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            string smiles = "C(CCCNC(=N)N)(COCC(COP([O])(=O)OCCCCCCNC(NC1=CC(=C(C=C1)C2(C3=CC=C(C=C3OC=4C2=CC=C(C4)O)O)C)C(=O)[O])=S)OP(=O)([O])OCC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(=N)N)CCCNC(=N)N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP(OCC(COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)OP(=O)([O])OCC(COCC(CCCNC(=N)N)(CCCNC(N)=N)CCC/[NH]=C(/N)\\[NH])OP([O])(=O)CCC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)OP([O])(=O)OCC(COCC(CCCNC(N)=N)(CCCNC(N)=N)CCC/[NH]=C(\\[NH])/N)OP(OCC(COCC(CCCNC(N)=N)(CCC/[NH]=C(/N)\\[NH])CCCNC(N)=N)O=P([O])(OCC(COP(=OC(COCC(CCC/[NH]=C(\\[NH])/N)(CCCNC(N)=N)CCCNC(N)=N)COP([O])(=O)OC(COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP(OC(COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)COP([O])(=O)OC(COP(OC(COP(OC(COP(=O)([O])OC(COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(N)=N)CCCNC(=N)N)COP([O])(=O)OCCCCCCNC(NC=5C=CC(=C(C5)C(=O)[O])C6(C7=CC=C(C=C7OC=8C6=CC=C(C8)O)O)C)=S)COCC(CCCNC(N)=N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCC/[NH]=C(\\[NH])/N)CCCNC(=N)N)([O])=O)COCC(CCCNC(=N)N)(CCCNC(=N)N)CCC/[NH]=C(\\[NH])/N)([O])=O)([O])=O)COCC(CCC/[NH]=C(/N)\\[NH])(CCCNC(=N)N)CCCNC(=N)N)([O])[O])(C)COP(OCCCCCCO)(=O)[O])[O])(=O)[O])([O])=O)(CCC/[NH]=C(\\[NH])/[NH])CCCNC(=N)N";
+            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            InChIGenerator generator = inchiFact.GetInChIGenerator(mol, "W0.01");
+            Assert.AreEqual(INCHI_RET.ERROR, generator.ReturnStatus);
+            Assert.IsTrue(generator.Log.Contains("Time limit exceeded"));
+        }
+
+        /// <summary>
+        /// Standard inchi for guanine.
+        /// </summary>
+        // @cdk.smiles NC1=NC2=C(N=CN2)C(=O)N1 
+        [TestMethod()]
+        public void Guanine_std()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol);
+            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual("InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)", inchigen.InChI);
+        }
+
+        /// <summary>
+        /// Ensures KET (Keto-enol) option can be passed to InChI for guanine.
+        /// </summary>
+        // @cdk.smiles NC1=NC2=C(N=CN2)C(=O)N1 
+        [TestMethod()]
+        public void Guanine_ket()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            string smiles = "NC1=NC2=C(N=CN2)C(=O)N1";
+            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "KET");
+            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual("InChI=1/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,2,6,7,8,9,10,11)", inchigen.InChI);
+        }
+
+        /// <summary>
+        /// Standard test for aminopropenol.
+        /// </summary>
+        // @cdk.smiles N\C=C/C=O 
+        [TestMethod()]
+        public void Aminopropenol_std()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            string smiles = "N\\C=C/C=O";
+            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            InChIGenerator stdinchi = inchiFact.GetInChIGenerator(mol);
+            Assert.AreEqual(INCHI_RET.OKAY, stdinchi.ReturnStatus);
+            Assert.AreEqual("InChI=1S/C3H5NO/c4-2-1-3-5/h1-3H,4H2/b2-1-", stdinchi.InChI);
+            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
+            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
+        }
+
+        /// <summary>
+        /// Ensures 15T (1,5-shifts) option can be passed to InChI for aminopropenol.
+        /// </summary>
+        // @cdk.smiles N\C=C/C=O 
+        [TestMethod()]
+        public void Aminopropenol_15T()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            string smiles = "N\\C=C/C=O";
+            IAtomContainer mol = smipar.ParseSmiles(smiles);
+            InChIGeneratorFactory inchiFact = InChIGeneratorFactory.Instance;
+            InChIGenerator inchigen = inchiFact.GetInChIGenerator(mol, "15T");
+            Assert.AreEqual(INCHI_RET.OKAY, inchigen.ReturnStatus);
+            Assert.AreEqual("InChI=1/C3H5NO/c4-2-1-3-5/h1-3H,(H2,4,5)", inchigen.InChI);
         }
     }
 }

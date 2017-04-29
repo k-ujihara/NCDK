@@ -647,7 +647,7 @@ namespace NCDK.SMSD.Algorithms.RGraph
         }
 
         /// <summary>
-        /// true if a time out occured else false
+        /// true if a time out occurred else false
         /// </summary>
         public bool IsTimedOut
         {

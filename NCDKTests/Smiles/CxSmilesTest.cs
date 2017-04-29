@@ -25,6 +25,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.SGroups;
 using System.Collections.Generic;
 using System.Linq;
+using NCDK.Silent;
 
 namespace NCDK.Smiles
 {
@@ -205,6 +206,208 @@ namespace NCDK.Smiles
         public void GenericReaction()
         {
             IReaction rxn = smipar.ParseReactionSmiles("C1=CC(=CC=C1)C(CC(N)=O)=O.*C>C1(=CC=CC=C1)N.C*.C1=CC(=CC=C1)C=2C=C(C3=C(N2)C=CC=C3)O.C*.C*> |$;;;;;;;;;;;;R22;;;;;;;;;;;;;;;;;;;;;;;;;;;;;R22$,f:0.1,2.3,4.5.6,m:13:0.1.2.3.4.5,21:14.15.16.17.18.19,40:23.24.25.26.27.28,42:29.30.31.32.33.34.35.36.37.38|");
+        }
+
+        [TestMethod()]
+        public void TrailingAtomLabelSemiColonAndAtomValues()
+        {
+            IAtomContainer mol = smipar.ParseSmiles("[H]C1=C([H])N2C(=O)C(=C([O-])[N+](CC3=CN=C(Cl)S3)=C2C(C)=C1[H])C1=CC(*)=CC=C1.** |$;;;;;;;;;;;;;;;;;;;;;;;;;;R;;;;RA;$,$_AV:;;;;;;;;;;;;;;;;;;;;;;;;2;;;4;5;6;;$,c:1,18,22,29,31,t:7,12,14,26,m:31:29.28.27.25.24.23|");
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            Assert.IsInstanceOfType(mol.Atoms[26], typeof(IPseudoAtom));
+            Assert.IsInstanceOfType(mol.Atoms[30], typeof(IPseudoAtom));
+            Assert.AreEqual("R", ((IPseudoAtom)mol.Atoms[26]).Label);
+            Assert.AreEqual("RA", ((IPseudoAtom)mol.Atoms[30]).Label);
+            Assert.AreEqual("2", mol.Atoms[24].GetProperty<string>(CDKPropertyName.Comment));
+            Assert.AreEqual("4", mol.Atoms[27].GetProperty<string>(CDKPropertyName.Comment));
+            Assert.AreEqual("5", mol.Atoms[28].GetProperty<string>(CDKPropertyName.Comment));
+            Assert.AreEqual("6", mol.Atoms[29].GetProperty<string>(CDKPropertyName.Comment));
+            Assert.AreEqual(1, sgroups.Count);
+        }
+
+        [TestMethod()]
+        public void GenerateLabelledSmiles()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms[0].ImplicitHydrogenCount = 3;
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms[1].ImplicitHydrogenCount = 2;
+            mol.Atoms.Add(new PseudoAtom("R1"));
+            mol.Atoms[2].ImplicitHydrogenCount = 0;
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxAtomLabel);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("CC* |$;;R1$|", smi);
+        }
+
+        [TestMethod()]
+        public void GenerateCanonLabelledSmiles()
+        {
+            IAtomContainer mol = new AtomContainer();
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms[0].ImplicitHydrogenCount = 3;
+            mol.Atoms.Add(new Atom("C"));
+            mol.Atoms[1].ImplicitHydrogenCount = 2;
+            mol.Atoms.Add(new PseudoAtom("R1"));
+            mol.Atoms[2].ImplicitHydrogenCount = 0;
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            mol.AddBond(mol.Atoms[1], mol.Atoms[2], BondOrder.Single);
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical |
+                                                         SmiFlavor.CxAtomLabel);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("*CC |$R1$|", smi);
+        }
+
+        [TestMethod()]
+        public void RoundTripMulticenter()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols |
+                                                         SmiFlavor.CxMulticenter);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|", smi);
+        }
+
+        [TestMethod()]
+        public void CanonMulticenter()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1.*Cl |m:6:0.1.2.3.4.5|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols |
+                                                         SmiFlavor.CxMulticenter |
+                                                         SmiFlavor.Canonical);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("*Cl.c1ccccc1 |m:0:2.3.4.5.6.7|", smi);
+        }
+
+
+        [TestMethod()]
+        public void RoundTripPEGn()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxPolymer);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("CCCOCCO |Sg:n:1,2,3:n:ht|", smi);
+        }
+
+        [TestMethod()]
+        public void CanonPEGn()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCCOCCO |Sg:n:1,2,3::ht|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical |
+                                                         SmiFlavor.CxPolymer);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("OCCOCCC |Sg:n:3,4,5:n:ht|", smi);
+        }
+
+        [TestMethod()]
+        public void CoordsEtOH()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxCoordinates);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("CCO |(,,;1,1,;2,2,)|", smi);
+        }
+
+        [TestMethod()]
+        public void CanonCoordsEtOH()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical |
+                                                         SmiFlavor.CxCoordinates);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("OCC |(2,2,;1,1,;,,)|", smi);
+        }
+
+        [TestMethod()]
+        public void NoCoordsOptEtOH()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCO |(,,;1,1,;2,2,)|");
+            SmilesGenerator smigen = new SmilesGenerator(0);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("CCO", smi);
+        }
+
+        [TestMethod()]
+        public void NoCoordsInEtOH()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("CCO");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxCoordinates);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("CCO", smi);
+        }
+
+        [TestMethod()]
+        public void RoundTripRadicals()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxRadical);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|", smi);
+        }
+
+        [TestMethod()]
+        public void CanonRadicals()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("[C]1C[CH][CH]OC1 |^1:2,3,^2:0|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxRadical |
+                                                         SmiFlavor.Canonical);
+            string smi = smigen.Create(mol);
+            Assert.AreEqual("[C]1CO[CH][CH]C1 |^1:3,4,^2:0|", smi);
+        }
+
+        [TestMethod()]
+        public void RoundTripReactionAtomLabelsAndFragmentGroups()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IReaction rxn = smipar.ParseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:3.4.5.6|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxAtomLabel |
+                                                         SmiFlavor.CxFragmentGroup);
+            Assert.AreEqual("CC(C)C1=CC=CC=C1.ClC(*)=O>ClCCl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(*)=O |f:3.4.5.6,$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1$|", smigen.Create(rxn));
+        }
+
+        [TestMethod()]
+        public void CanonicalReactionAtomLabelsAndFragmentGroups()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IReaction rxn1 = smipar.ParseReactionSmiles("CC(C)c1ccccc1.ClC([*])=O>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;;;;;;;;;;R1;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.4.5|");
+            IReaction rxn2 = smipar.ParseReactionSmiles("ClC([*])=O.CC(C)c1ccccc1>[Al+3].[Cl-].[Cl-].[Cl-].ClCCl>CC(C)c1ccc(cc1)C([*])=O |$;;R1;;;;;;;;;;;;;;;;;;;;;;;;;;;;R1;$,f:2.3.5.4|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.CxAtomLabel |
+                                                         SmiFlavor.CxFragmentGroup |
+                                                         SmiFlavor.Canonical);
+            Assert.AreEqual(smigen.Create(rxn2), smigen.Create(rxn1));
+        }
+
+        [TestMethod()]
+        public void CanonAtomLabels()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1O |$_AV:0;1;2;3;4;5;6$|");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical | SmiFlavor.CxAtomValue);
+            Assert.AreEqual("OC=1C=CC=CC1 |$_AV:6;5;0;1;2;3;4$|", smigen.Create(mol));
         }
     }
 }

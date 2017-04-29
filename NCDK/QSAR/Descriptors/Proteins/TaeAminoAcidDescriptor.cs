@@ -95,7 +95,6 @@ namespace NCDK.QSAR.Descriptors.Proteins
     // @cdk.created 2006-08-23
     // @cdk.module  qsarprotein
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:taeAminoAcid
     public class TaeAminoAcidDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {

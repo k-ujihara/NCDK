@@ -31,7 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace NCDK.SGroups
+namespace NCDK.Smiles
 {
     /// <summary>
     /// Tool that tries to deduce bond orders based on connectivity and hybridization
@@ -110,6 +110,13 @@ namespace NCDK.SGroups
         /// <exception cref="CDKException">thrown when something went wrong</exception>
         public IAtomContainer FixAromaticBondOrders(IAtomContainer atomContainer)
         {
+            // preset all bond orders to single
+            foreach (IBond bond in atomContainer.Bonds)
+            {
+                if (bond.IsAromatic && bond.Order == BondOrder.Unset)
+                    bond.Order = BondOrder.Single;
+            }
+
             // OK, we take advantage here from the fact that this class does not take
             // into account rings larger than 7 atoms. See FixAromaticBondOrders().
             IRingSet rs = allRingsFinder.FindAllRings(atomContainer, 7);

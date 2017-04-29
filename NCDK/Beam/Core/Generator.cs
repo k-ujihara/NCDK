@@ -150,7 +150,7 @@ namespace NCDK.Beam
 
         private void PrepareStereochemistry(int u, int prev)
         {
-             Topology topology = g.TopologyOf(u);
+            Topology topology = g.TopologyOf(u);
             if (topology != Topology.Unknown)
             {
                 IList<RingClosure> closures;
@@ -186,7 +186,7 @@ namespace NCDK.Beam
                         int rank = visitedAt[u];
                         for (int i = 0; i < closures.Count; ++i)
                         {
-                             int v = closures[i].Other(u);
+                            int v = closures[i].Other(u);
                             tmp[i] = visitedAt[v];
                             visitedAt[v] = ++rank;
                         }
@@ -251,8 +251,9 @@ namespace NCDK.Beam
             tokens[u].Append(sb);
 
             int d = g.Degree(u);
-            for (int j = 0; j <d; ++j) {
-                 Edge e = g.EdgeAt(u,j);
+            for (int j = 0; j < d; ++j)
+            {
+                Edge e = g.EdgeAt(u, j);
                 int v = e.Other(u);
                 if (visitedAt[v] < 0)
                 {
@@ -292,11 +293,11 @@ namespace NCDK.Beam
         {
             IList<RingClosure> closures;
             if (!rings.TryGetValue(u, out closures))
-            if (closures == null)
-            {
-                closures = new List<RingClosure>(2);
-                rings.Add(u, closures);
-            }
+                if (closures == null)
+                {
+                    closures = new List<RingClosure>(2);
+                    rings.Add(u, closures);
+                }
             closures.Add(rc);
         }
 

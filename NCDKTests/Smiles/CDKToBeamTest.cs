@@ -252,7 +252,6 @@ namespace NCDK.Smiles
             Assert.AreEqual(Beam.Bond.Triple.CreateEdge(0, 1), c2g.ToBeamEdge(b, mock.Object));
         }
 
-
         [TestMethod()]
         public void QuadrupleBond()
         {
@@ -269,14 +268,14 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Adeneine()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeAdenine());
+            Beam.Graph g = Convert(TestMoleculeFactory.MakeAdenine(), 0);
             Assert.AreEqual("C12=C(N=CN=C1N)NC=N2", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Benzene_kekule()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeBenzene());
+            Beam.Graph g = Convert(TestMoleculeFactory.MakeBenzene(), 0);
             Assert.AreEqual("C=1C=CC=CC1", g.ToSmiles());
         }
 
@@ -284,28 +283,28 @@ namespace NCDK.Smiles
         public void Benzene()
         {
             IAtomContainer ac = TestMoleculeFactory.MakeBenzene();
-            Beam.Graph g = Convert(ac, true, true);
+            Beam.Graph g = Convert(ac, true, SmiFlavor.UseAromaticSymbols);
             Assert.AreEqual("c1ccccc1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole_kekule()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), false, true);
+            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), false, 0);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, true);
+            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, SmiFlavor.UseAromaticSymbols);
             Assert.AreEqual("c1[nH]cnc1", g.ToSmiles());
         }
 
         [TestMethod()]
         public void Imidazole_ignoreAromatic()
         {
-            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, true, false, true);
+            Beam.Graph g = Convert(TestMoleculeFactory.MakeImidazole(), true, 0);
             Assert.AreEqual("C=1NC=NC1", g.ToSmiles());
         }
 
@@ -316,7 +315,7 @@ namespace NCDK.Smiles
             IAtom a = new Default.Atom("C");
             a.MassNumber = 13;
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.AtomicMass);
             Assert.AreEqual(13, g.GetAtom(0).Isotope);
             Assert.AreEqual("[13CH4]", g.ToSmiles());
         }
@@ -328,7 +327,7 @@ namespace NCDK.Smiles
             IAtom a = new Default.Atom("C");
             a.MassNumber = 13;
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac, false, false); // non-isomeric
+            Beam.Graph g = Convert(ac, false, 0); // non-isomeric
             Assert.AreEqual(-1, g.GetAtom(0).Isotope);
             Assert.AreEqual("C", g.ToSmiles());
         }
@@ -340,7 +339,7 @@ namespace NCDK.Smiles
             IAtom a = new Default.Atom("N");
             a.FormalCharge = +1;
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(+1, g.GetAtom(0).Charge);
             Assert.AreEqual("[NH4+]", g.ToSmiles());
         }
@@ -352,7 +351,7 @@ namespace NCDK.Smiles
             IAtom a = new Default.Atom("O");
             a.FormalCharge = -1;
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(-1, g.GetAtom(0).Charge);
             Assert.AreEqual("[OH-]", g.ToSmiles());
         }
@@ -364,20 +363,18 @@ namespace NCDK.Smiles
             IAtom a = new Default.Atom("O");
             a.FormalCharge = -2;
             ac.Atoms.Add(a);
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, 0);
             Assert.AreEqual(-2, g.GetAtom(0).Charge);
             Assert.AreEqual("[O-2]", g.ToSmiles());
         }
 
         /// <summary>
         /// (E)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1+
         [TestMethod()]
         public void E_1_2_difluoroethene()
         {
-
             IAtomContainer ac = new Default.AtomContainer();
             ac.Atoms.Add(new Default.Atom("F"));
             ac.Atoms.Add(new Default.Atom("C"));
@@ -389,19 +386,17 @@ namespace NCDK.Smiles
 
             ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                     DoubleBondConformation.Opposite));
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.StereoCisTrans);
             Assert.AreEqual("F/C=C/F", g.ToSmiles());
         }
 
         /// <summary>
         /// (Z)-1,2-difluoroethene
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         [TestMethod()]
         public void Z_1_2_difluoroethene()
         {
-
             IAtomContainer ac = new Default.AtomContainer();
             ac.Atoms.Add(new Default.Atom("F"));
             ac.Atoms.Add(new Default.Atom("C"));
@@ -413,7 +408,7 @@ namespace NCDK.Smiles
 
             ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                     DoubleBondConformation.Together));
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.StereoCisTrans);
             Assert.AreEqual("F/C=C\\F", g.ToSmiles());
         }
 
@@ -443,7 +438,7 @@ namespace NCDK.Smiles
                         ac.Atoms[5], // H
                 }, TetrahedralStereo.Clockwise));
 
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.StereoTetrahedral);
             Assert.AreEqual("CC[C@@](C)(O)[H]", g.ToSmiles());
         }
 
@@ -454,7 +449,6 @@ namespace NCDK.Smiles
         [TestMethod()]
         public void Test_2S_butan_2_ol()
         {
-
             IAtomContainer ac = new Default.AtomContainer();
             ac.Atoms.Add(new Default.Atom("C"));
             ac.Atoms.Add(new Default.Atom("C"));
@@ -474,7 +468,7 @@ namespace NCDK.Smiles
                         ac.Atoms[5], // H
                 }, TetrahedralStereo.AntiClockwise));
 
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.StereoTetrahedral);
             Assert.AreEqual("CC[C@](C)(O)[H]", g.ToSmiles());
         }
 
@@ -482,13 +476,11 @@ namespace NCDK.Smiles
         /// This is a mock test where we don't want aromatic bonds to have a
         /// configuration. (Z)-1,2-difluoroethene is not aromatic but a 'real'
         /// example would be porphyrins.
-        ///
-        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         /// </summary>
+        // @cdk.inchi InChI=1/C2H2F2/c3-1-2-4/h1-2H/b2-1-
         [TestMethod()]
         public void Z_1_2_difluoroethene_aromatic()
         {
-
             IAtomContainer ac = new Default.AtomContainer();
             ac.Atoms.Add(new Default.Atom("F"));
             ac.Atoms.Add(new Default.Atom("C"));
@@ -502,7 +494,7 @@ namespace NCDK.Smiles
 
             ac.StereoElements.Add(new DoubleBondStereochemistry(ac.Bonds[1], new IBond[] { ac.Bonds[0], ac.Bonds[2] },
                    DoubleBondConformation.Together));
-            Beam.Graph g = Convert(ac);
+            Beam.Graph g = Convert(ac, SmiFlavor.UseAromaticSymbols);
             Assert.AreEqual("F[CH]:[CH]F", g.ToSmiles());
         }
 
@@ -524,7 +516,7 @@ namespace NCDK.Smiles
             ac.Atoms[0].SetProperty(CDKPropertyName.AtomAtomMapping, 3);
             ac.Atoms[1].SetProperty(CDKPropertyName.AtomAtomMapping, 1);
             ac.Atoms[2].SetProperty(CDKPropertyName.AtomAtomMapping, 2);
-            Assert.AreEqual("[CH3:3][CH2:1][OH:2]", Convert(ac).ToSmiles());
+            Assert.AreEqual("[CH3:3][CH2:1][OH:2]", Convert(ac, SmiFlavor.AtomAtomMap).ToSmiles());
         }
 
         [TestMethod()]
@@ -545,7 +537,7 @@ namespace NCDK.Smiles
                         m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.AntiClockwise);
             m.SetStereoElements(new[] { element });
 
-            Assert.AreEqual("CC=[C@]=CC", Convert(m).ToSmiles());
+            Assert.AreEqual("CC=[C@]=CC", Convert(m, SmiFlavor.Stereo).ToSmiles());
         }
 
         [TestMethod()]
@@ -566,7 +558,7 @@ namespace NCDK.Smiles
                         m.Atoms[3], m.Atoms[4]}, TetrahedralStereo.Clockwise);
             m.SetStereoElements(new[] { element });
 
-            Assert.AreEqual("CC=[C@@]=CC", Convert(m).ToSmiles());
+            Assert.AreEqual("CC=[C@@]=CC", Convert(m, SmiFlavor.Stereo).ToSmiles());
         }
 
         [TestMethod()]
@@ -597,7 +589,7 @@ namespace NCDK.Smiles
                             m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
-                Assert.AreEqual("CC(=[C@@]=C(C)[H])[H]", Convert(m).ToSmiles());
+                Assert.AreEqual("CC(=[C@@]=C(C)[H])[H]", Convert(m, SmiFlavor.Stereo).ToSmiles());
             }
         }
 
@@ -629,29 +621,22 @@ namespace NCDK.Smiles
                             m.Atoms[atoms[i][1]], m.Atoms[atoms[i][2]], m.Atoms[atoms[i][3]]}, stereos[i]);
                 m.SetStereoElements(new[] { element });
 
-                Assert.AreEqual("CC(=[C@]=C(C)[H])[H]", Convert(m).ToSmiles());
-
+                Assert.AreEqual("CC(=[C@]=C(C)[H])[H]", Convert(m, SmiFlavor.Stereo).ToSmiles());
             }
         }
 
-        static Beam.Graph Convert(IAtomContainer ac)
+        static Beam.Graph Convert(IAtomContainer ac, int options)
         {
-            return Convert(ac, false, true);
+            return Convert(ac, false, options);
         }
 
-        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, bool isomeric)
-        {
-            return Convert(ac, perceiveAromaticity, isomeric, true, true);
-        }
-
-        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, bool isomeric, bool aromatic, bool atomClasses)
+        static Beam.Graph Convert(IAtomContainer ac, bool perceiveAromaticity, int options)
         {
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(ac);
             CDKHydrogenAdder.GetInstance(Silent.ChemObjectBuilder.Instance).AddImplicitHydrogens(ac);
             if (perceiveAromaticity) Aromaticity.CDKLegacy.Apply(ac);
-            return new CDKToBeam(isomeric, aromatic, atomClasses).ToBeamGraph(ac);
+            return new CDKToBeam(options).ToBeamGraph(ac);
         }
     }
 }
-
 

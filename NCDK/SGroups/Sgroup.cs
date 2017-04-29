@@ -36,19 +36,19 @@ namespace NCDK.SGroups
         /// <summary>
         /// the atoms of this substructure group.
         /// </summary>
-        public ICollection<IAtom> Atoms { get; private set; }
+        public ISet<IAtom> Atoms { get; private set; }
 
         /// <summary>
         /// Access the bonds that belong to this substructure group.
         /// For data Sgroups, the bonds are the containment bonds,
         /// for all other <see cref="Sgroup"/> types, they are crossing bonds.
         /// </summary>
-        public ICollection<IBond> Bonds { get; private set; }
+        public ISet<IBond> Bonds { get; private set; }
 
         /// <summary>
         /// the parents of this Sgroup.
         /// </summary>
-        public ICollection<Sgroup> Parents { get; private set; }
+        public ISet<Sgroup> Parents { get; private set; }
 
         private readonly IDictionary<SgroupKey, object> attributes = new SortedDictionary<SgroupKey, object>();
 

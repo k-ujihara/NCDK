@@ -115,13 +115,18 @@ namespace NCDK.Layout
         // in the same ring system
         private readonly int[] ringsystems;
 
+        private readonly ISet<IAtom> afix;
+        private readonly ISet<IBond> bfix;
+
         /// <summary>
         /// Create a new layout refiner for the provided molecule.
         /// </summary>
         /// <param name="mol">molecule to refine</param>
-        public LayoutRefiner(IAtomContainer mol)
+        internal LayoutRefiner(IAtomContainer mol, ISet<IAtom> afix, ISet<IBond> bfix)
         {
             this.mol = mol;
+            this.afix = afix;
+            this.bfix = bfix;
             this.bondMap = GraphUtil.EdgeToBondMap.WithSpaceFor(mol);
             this.adjList = GraphUtil.ToAdjList(mol, bondMap);
             this.idxs = new Dictionary<IAtom, int>();
@@ -335,14 +340,15 @@ namespace NCDK.Layout
             // don't need to test again
             var tried = new HashSet<IBond>();
 
-        Pair:
+            Pair:
             foreach (var pair in pairs)
             {
                 foreach (var bond in pair.bndAt)
                 {
-
                     // only try each bond once per phase and skip
                     if (!tried.Add(bond))
+                        continue;
+                    if (bfix.Contains(bond))
                         continue;
 
                     // those we have found to probably be symmetric
@@ -369,10 +375,38 @@ namespace NCDK.Layout
                     if (begPriority < endPriority)
                     {
                         stackBackup.len = VisitAdj(visited, stackBackup.xs, begIdx, endIdx);
+
+                        // avoid moving fixed atoms
+                        if (afix.Any())
+                        {
+                            int begCnt = NumFixedMoved(stackBackup.xs, stackBackup.len);
+                            if (begCnt > 0)
+                            {
+                                Arrays.Fill(visited, false);
+                                stackBackup.len = VisitAdj(visited, stackBackup.xs, endIdx, begIdx);
+                                int endCnt = NumFixedMoved(stackBackup.xs, stackBackup.len);
+                                if (endCnt > 0)
+                                    continue;
+                            }
+                        }
                     }
                     else
                     {
                         stackBackup.len = VisitAdj(visited, stackBackup.xs, endIdx, begIdx);
+
+                        // avoid moving fixed atoms
+                        if (afix.Any())
+                        {
+                            int endCnt = NumFixedMoved(stackBackup.xs, stackBackup.len);
+                            if (endCnt > 0)
+                            {
+                                Arrays.Fill(visited, false);
+                                stackBackup.len = VisitAdj(visited, stackBackup.xs, begIdx, endIdx);
+                                int begCnt = NumFixedMoved(stackBackup.xs, stackBackup.len);
+                                if (begCnt > 0)
+                                    continue;
+                            }
+                        }
                     }
 
                     double min = congestion.Score();
@@ -403,8 +437,24 @@ namespace NCDK.Layout
                     }
                 }
             }
-        continue_Pair:
+            continue_Pair:
             ;
+        }
+
+        private int NumFixedMoved(int[] xs, int len)
+        {
+            int cnt = 0;
+            ISet<IAtom> amoved = new HashSet<IAtom>();
+            for (int i = 0; i < len; i++)
+            {
+                amoved.Add(mol.Atoms[xs[i]]);
+            }
+            foreach (IBond bond in bfix)
+            {
+                if (amoved.Contains(bond.Atoms[0]) && amoved.Contains(bond.Atoms[1]))
+                    cnt++;
+            }
+            return cnt;
         }
 
         /// <summary>
@@ -451,6 +501,8 @@ namespace NCDK.Layout
 
                 foreach (var bond in acyclic)
                 {
+                    if (bfix.Contains(bond))
+                        continue;
                     Arrays.Fill(visited, false);
                     stackBackup.len = Visit(visited, stackBackup.xs, v, idxs[bond.GetConnectedAtom(atom)], 0);
 
@@ -512,8 +564,9 @@ namespace NCDK.Layout
         /// <param name="pair">congested atom pair</param>
         /// <param name="stack">best result vertices</param>
         /// <param name="coords">best result coords</param>
+        /// <param name="firstVisit">visit map to avoid repeating work</param>
         /// <returns>congestion score of best result</returns>
-        private double Bend(AtomPair pair, IntStack stack, Vector2[] coords)
+        private double Bend(AtomPair pair, IntStack stack, Vector2[] coords, IDictionary<IBond, AtomPair> firstVisit)
         {
             stackBackup.Clear();
 
@@ -528,6 +581,9 @@ namespace NCDK.Layout
             {
                 IBond bndA = pair.bndAt[2];
                 IBond bndB = pair.bndAt[3];
+
+                if (bfix.Contains(bndA) || bfix.Contains(bndB))
+                    return int.MaxValue;
 
                 IAtom pivotA = GetCommon(bndA, pair.bndAt[1]);
                 IAtom pivotB = GetCommon(bndB, pair.bndAt[0]);
@@ -578,6 +634,14 @@ namespace NCDK.Layout
                 foreach (var bond in pair.bndAt)
                 {
                     if (bond.IsInRing) continue;
+                    if (bfix.Contains(bond)) continue;
+
+                    // has this bond already been tested as part of another pair
+                    AtomPair first;
+                    if (!firstVisit.TryGetValue(bond, out first))
+                        firstVisit[bond] = first = pair;
+                    if (first != pair)
+                        continue;
 
                     IAtom beg = bond.Atoms[0];
                     IAtom end = bond.Atoms[1];
@@ -641,8 +705,9 @@ namespace NCDK.Layout
         /// <param name="pair">congested atom pair</param>
         /// <param name="stack">best result vertices</param>
         /// <param name="coords">best result coords</param>
+        /// <param name="firstVisit">visit map to avoid repeating work</param>
         /// <returns>congestion score of best result</returns>
-        private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords)
+        private double Stretch(AtomPair pair, IntStack stack, Vector2[] coords, IDictionary<IBond, AtomPair> firstVisit)
         {
             stackBackup.Clear();
 
@@ -653,6 +718,14 @@ namespace NCDK.Layout
             {
                 // don't stretch ring bonds
                 if (bond.IsInRing)
+                    continue;
+                if (bfix.Contains(bond)) continue;
+
+                // has this bond already been tested as part of another pair
+                AtomPair first;
+                if (!firstVisit.TryGetValue(bond, out first))
+                    firstVisit[bond] = first = pair;
+                if (first != pair)
                     continue;
 
                 IAtom beg = bond.Atoms[0];
@@ -701,6 +774,11 @@ namespace NCDK.Layout
         /// <param name="pairs">pairs</param>
         private void BendOrStretch(IEnumerable<AtomPair> pairs)
         {
+            // without checking which bonds have been bent/stretch already we
+            // could end up repeating a lot of repeated work to no avail
+            IDictionary<IBond, AtomPair> bendVisit = new Dictionary<IBond, AtomPair>();
+            IDictionary<IBond, AtomPair> stretchVisit = new Dictionary<IBond, AtomPair>();
+
             IntStack bendStack = new IntStack(atoms.Length);
             IntStack stretchStack = new IntStack(atoms.Length);
 
@@ -716,8 +794,8 @@ namespace NCDK.Layout
 
                     // attempt both bending and stretching storing the
                     // best result in the provided buffer
-                    double bendScore = Bend(pair, bendStack, buffer1);
-                    double stretchScore = Stretch(pair, stretchStack, buffer2);
+                    double bendScore = Bend(pair, bendStack, buffer1, bendVisit);
+                    double stretchScore = Stretch(pair, stretchStack, buffer2, stretchVisit);
 
                     // bending is better than stretching
                     if (bendScore < stretchScore && bendScore < score)
@@ -726,7 +804,6 @@ namespace NCDK.Layout
                         congestion.Update(bendStack.xs, bendStack.len);
                         break;
                     }
-
                     // stretching is better than bending
                     else if (bendScore > stretchScore && stretchScore < score)
                     {
@@ -1131,7 +1208,7 @@ namespace NCDK.Layout
                 if (o == null || GetType() != o.GetType()) return false;
 
                 IntTuple that = (IntTuple)o;
-                
+
                 return (this.fst == that.fst && this.snd == that.snd) ||
                         (this.fst == that.snd && this.snd == that.fst);
             }

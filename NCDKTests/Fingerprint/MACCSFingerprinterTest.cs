@@ -31,9 +31,7 @@ using System.Collections;
 
 namespace NCDK.Fingerprint
 {
-    /// <summary>
     // @cdk.module test-fingerprint
-    /// </summary>
     [TestClass()]
     public class MACCSFingerprinterTest : AbstractFixedLengthFingerprinterTest
     {
@@ -120,7 +118,6 @@ namespace NCDK.Fingerprint
         [TestMethod()]
         public override void TestBug706786()
         {
-
             IAtomContainer superStructure = Bug706786_1();
             IAtomContainer subStructure = Bug706786_2();
 
@@ -135,10 +132,10 @@ namespace NCDK.Fingerprint
 
             Assert.IsTrue(BitArrays.AreEqual(
                 AsBitSet(53, 56, 65, 71, 73, 88, 97, 100, 104, 111, 112, 126, 130, 136, 138, 139, 140, 142, 143,
-                        144, 145, 148, 149, 151, 153, 156, 158, 159, 162, 163, 164),
+                        144, 145, 148, 149, 151, 153, 156, 158, 159, 161, 162, 163, 164),
                 superBits.AsBitSet()));
             Assert.IsTrue(BitArrays.AreEqual(
-                AsBitSet(56, 97, 100, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 162, 163, 164),
+                AsBitSet(56, 97, 100, 104, 108, 112, 117, 127, 131, 136, 143, 144, 146, 151, 152, 156, 161, 162, 163, 164),
                 subBits.AsBitSet()));
         }
     }

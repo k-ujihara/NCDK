@@ -58,41 +58,37 @@ namespace NCDK.Smiles
         /// Whether to convert the molecule with isotope and stereo information -
         /// Isomeric SMILES.
         /// </summary>
-        private readonly bool isomeric;
-
-        /// <summary>Use aromatic flags.</summary>
-        private readonly bool aromatic;
-
-        /// <summary>Set atom class data.</summary>
-        private readonly bool atomClasses;
+        private readonly int flavour;
 
         /// <summary>Create a isomeric and aromatic converter.</summary>
-        public CDKToBeam()
-            : this(true, true)
+        internal CDKToBeam() : this(SmiFlavor.AtomicMass | SmiFlavor.AtomAtomMap | SmiFlavor.UseAromaticSymbols)
         {
         }
 
-        /// <summary>Create a aromatic converter specifying whether to be isomeric or not.</summary>
-        public CDKToBeam(bool isomeric)
-            : this(isomeric, true)
+        internal CDKToBeam(int flavour)
         {
+            this.flavour = flavour;
         }
 
-        /// <summary>
-        /// Create a convert which will optionally convert isomeric and aromatic
-        /// information from CDK data model.
-        /// </summary>
-        /// <param name="isomeric">convert isomeric information</param>
-        /// <param name="aromatic">convert aromatic information</param>
-        public CDKToBeam(bool isomeric, bool aromatic)
-           : this(isomeric, aromatic, true)
-        { }
-
-        public CDKToBeam(bool isomeric, bool aromatic, bool atomClasses)
+        internal Graph ToBeamGraph(IAtomContainer ac)
         {
-            this.isomeric = isomeric;
-            this.aromatic = aromatic;
-            this.atomClasses = atomClasses;
+            return ToBeamGraph(ac, flavour);
+        }
+
+        internal Atom ToBeamAtom(IAtom atom)
+        {
+            return ToBeamAtom(atom, flavour);
+        }
+
+        internal Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices)
+        {
+
+            CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
+
+            int u = indices[b.Atoms[0]];
+            int v = indices[b.Atoms[1]];
+
+            return ToBeamEdgeLabel(b, this.flavour).CreateEdge(u, v);
         }
 
         /// <summary>
@@ -102,7 +98,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="ac">an atom container instance</param>
         /// <returns>the Beam ChemicalGraph for additional manipulation</returns>
-        public Graph ToBeamGraph(IAtomContainer ac)
+        internal static Graph ToBeamGraph(IAtomContainer ac, int flavour)
         {
             int order = ac.Atoms.Count;
 
@@ -112,28 +108,31 @@ namespace NCDK.Smiles
             foreach (var a in ac.Atoms)
             {
                 indices[a] = indices.Count;
-                gb.Add(ToBeamAtom(a));
+                gb.Add(ToBeamAtom(a, flavour));
             }
 
             foreach (var b in ac.Bonds)
             {
-                gb.Add(ToBeamEdge(b, indices));
+                gb.Add(ToBeamEdge(b, flavour, indices));
             }
 
             // configure stereo-chemistry by encoding the stereo-elements
-            if (isomeric)
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.Stereo))
             {
-                foreach (var se in ac.StereoElements)
+                foreach (IStereoElement se in ac.StereoElements)
                 {
-                    if (se is ITetrahedralChirality)
+                    if (SmiFlavor.IsSet(flavour, SmiFlavor.StereoTetrahedral) &&
+                        se is ITetrahedralChirality)
                     {
                         AddTetrahedralConfiguration((ITetrahedralChirality)se, gb, indices);
                     }
-                    else if (se is IDoubleBondStereochemistry)
+                    else if (SmiFlavor.IsSet(flavour, SmiFlavor.StereoCisTrans) &&
+                             se is IDoubleBondStereochemistry)
                     {
-                        AddGeometricConfiguration((IDoubleBondStereochemistry)se, gb, indices);
+                        AddGeometricConfiguration((IDoubleBondStereochemistry)se, flavour, gb, indices);
                     }
-                    else if (se is ExtendedTetrahedral)
+                    else if (SmiFlavor.IsSet(flavour, SmiFlavor.StereoExTetrahedral) &&
+                             se is ExtendedTetrahedral)
                     {
                         AddExtendedTetrahedralConfiguration((ExtendedTetrahedral)se, gb, indices);
                     }
@@ -152,9 +151,9 @@ namespace NCDK.Smiles
         /// <param name="a">cdk Atom instance</param>
         /// <returns>a Beam atom</returns>
         /// <exception cref="NullReferenceException">the atom had an undefined symbol or implicit hydrogen count</exception>
-        public Atom ToBeamAtom(IAtom a)
+        static Atom ToBeamAtom(IAtom a, int flavour)
         {
-            bool aromatic = this.aromatic && a.IsAromatic;
+            bool aromatic = SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && a.IsAromatic;
             int? charge = a.FormalCharge;
             string symbol = CheckNotNull(a.Symbol, "An atom had an undefined symbol");
 
@@ -177,7 +176,7 @@ namespace NCDK.Smiles
             if (charge.HasValue) ab.Charge(charge.Value);
 
             // use the mass number to specify isotope?
-            if (isomeric)
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.AtomicMass))
             {
                 int? massNumber = a.MassNumber;
                 if (massNumber.HasValue)
@@ -197,7 +196,7 @@ namespace NCDK.Smiles
             }
 
             int? atomClass = a.GetProperty<int?>(CDKPropertyName.AtomAtomMapping);
-            if (atomClasses && atomClass.HasValue)
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.AtomAtomMap) && atomClass != null)
             {
                 ab.AtomClass(atomClass.Value);
             }
@@ -213,14 +212,14 @@ namespace NCDK.Smiles
         /// <returns>a Beam edge</returns>
         /// <exception cref="ArgumentException">the bond did not have 2 atoms or an unsupported order</exception>
         /// <exception cref="NullReferenceException">the bond order was undefined</exception>
-        public Edge ToBeamEdge(IBond b, IDictionary<IAtom, int> indices)
+        internal static Edge ToBeamEdge(IBond b, int flavour, IDictionary<IAtom, int> indices)
         {
             CheckArgument(b.Atoms.Count == 2, "Invalid number of atoms on bond");
 
             int u = indices[b.Atoms[0]];
             int v = indices[b.Atoms[1]];
 
-            return ToBeamEdgeLabel(b).CreateEdge(u, v);
+            return ToBeamEdgeLabel(b, flavour).CreateEdge(u, v);
         }
 
         /// <summary>
@@ -230,9 +229,9 @@ namespace NCDK.Smiles
         /// <returns>the edge label for the Beam edge</returns>
         /// <exception cref="NullReferenceException">the bond order was null and the bond was not-aromatic</exception>
         /// <exception cref="ArgumentException">the bond order could not be converted</exception>
-        private Bond ToBeamEdgeLabel(IBond b)
+        private static Bond ToBeamEdgeLabel(IBond b, int flavour)
         {
-            if (this.aromatic && b.IsAromatic) return Bond.Aromatic;
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && b.IsAromatic) return Bond.Aromatic;
 
             if (b.Order.IsUnset) throw new CDKException("A bond had undefined order, possible query bond?");
 
@@ -264,13 +263,13 @@ namespace NCDK.Smiles
         /// <param name="dbs">stereo element specifying double-bond configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddGeometricConfiguration(IDoubleBondStereochemistry dbs, int flavour, GraphBuilder gb, IDictionary<IAtom, int> indices)
         {
             IBond db = dbs.StereoBond;
             var bs = dbs.Bonds;
 
             // don't try to set a configuration on aromatic bonds
-            if (this.aromatic && db.IsAromatic) return;
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.UseAromaticSymbols) && db.IsAromatic) return;
 
             int u = indices[db.Atoms[0]];
             int v = indices[db.Atoms[1]];
@@ -295,7 +294,7 @@ namespace NCDK.Smiles
         /// <param name="tc">stereo element specifying tetrahedral configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddTetrahedralConfiguration(ITetrahedralChirality tc, GraphBuilder gb, IDictionary<IAtom, int> indices)
         {
             var ligands = tc.Ligands;
 
@@ -316,7 +315,8 @@ namespace NCDK.Smiles
         /// <param name="et">stereo element specifying tetrahedral configuration</param>
         /// <param name="gb">the current graph builder</param>
         /// <param name="indices">atom indices</param>
-        private void AddExtendedTetrahedralConfiguration(ExtendedTetrahedral et, GraphBuilder gb, IDictionary<IAtom, int> indices)
+        private static void AddExtendedTetrahedralConfiguration(ExtendedTetrahedral et, GraphBuilder gb,
+                    IDictionary<IAtom, int> indices)
         {
             IAtom[] ligands = et.Peripherals;
 

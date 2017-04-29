@@ -40,6 +40,8 @@ namespace NCDK.Dict
     // @cdk.module     dict
     public class DictionaryDatabase
     {
+        private static readonly IDictionary<string, EntryDictionary> cache = new Dictionary<string, EntryDictionary>();
+
         public const string DictRefPropertyName = "NCDK.Dict";
 
         private string[] dictionaryNames = {"chemical", "elements", "descriptor-algorithms", "reaction-processes" };
@@ -72,30 +74,38 @@ namespace NCDK.Dict
                 databaseLocator += "." + type.Substring(0, type.Length - 6);
             else
                 databaseLocator += "." + type;
-            Trace.TraceInformation("Reading dictionary from ", databaseLocator);
-            try
+            if (cache.ContainsKey(databaseLocator))
             {
-                var reader = new StreamReader(ResourceLoader.GetAsStream(databaseLocator));
-                if (type.Equals("owl"))
-                {
-                    dictionary = OWLFile.Unmarshal(reader);
-                }
-                else if (type.Equals("owl_React"))
-                {
-                    dictionary = OWLReact.Unmarshal(reader);
-                }
-                else
-                { // assume XML using Castor
-                    dictionary = EntryDictionary.Unmarshal(reader);
-                }
+                return cache[databaseLocator];
             }
-            catch (Exception exception)
+            else
             {
-                dictionary = null;
-                Trace.TraceError($"Could not read dictionary {databaseLocator}");
-                Debug.WriteLine(exception);
+                Trace.TraceInformation("Reading dictionary from ", databaseLocator);
+                try
+                {
+                    var reader = new StreamReader(ResourceLoader.GetAsStream(databaseLocator));
+                    if (type.Equals("owl"))
+                    {
+                        dictionary = OWLFile.Unmarshal(reader);
+                    }
+                    else if (type.Equals("owl_React"))
+                    {
+                        dictionary = OWLReact.Unmarshal(reader);
+                    }
+                    else
+                    { // assume XML using Castor
+                        dictionary = EntryDictionary.Unmarshal(reader);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    dictionary = null;
+                    Trace.TraceError($"Could not read dictionary {databaseLocator}");
+                    Debug.WriteLine(exception);
+                }
+                cache[databaseLocator] = dictionary;
+                return dictionary;
             }
-            return dictionary;
         }
 
         /// <summary>

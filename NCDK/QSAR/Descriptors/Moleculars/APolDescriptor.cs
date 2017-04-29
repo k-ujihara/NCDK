@@ -47,7 +47,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-13
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:apol
     // @cdk.keyword polarizability, atomic
     public class APolDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor

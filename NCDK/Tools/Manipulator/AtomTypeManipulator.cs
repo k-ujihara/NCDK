@@ -27,9 +27,6 @@ namespace NCDK.Tools.Manipulator
     /// <summary>
     /// Class with utilities for the <see cref="IAtomType"/> class.
     /// </summary>
-    /// <remarks>
-    /// - changed 21/7/05 by cho: add properties for mmff94 atom type
-    /// </remarks>
     // @author     mfe4
     // @author     egonw
     // @cdk.module standard
@@ -38,7 +35,7 @@ namespace NCDK.Tools.Manipulator
     {
         /// <summary>
         /// Method that assign properties to an atom given a particular atomType.
-        /// An <see cref="ArgumentException"/> is thrown if the given <see cref="IAtomType"/> 
+        /// An <see cref="ArgumentException"/> is thrown if the given <see cref="IAtomType"/>
         /// is null. <b>This method overwrites non-null values.</b>
         /// </summary>
         /// <param name="atom">Atom to configure</param>
@@ -58,14 +55,14 @@ namespace NCDK.Tools.Manipulator
             // we set the atom type name, but nothing else
             atom.AtomTypeName = atomType.AtomTypeName;
 
-            // configuring aotm type information is not really valid
+            // configuring atom type information is not really valid
             // for pseudo atoms - first because they basically have no
             // type information and second because they may have information
             // associated with them from another context, which should not be
             // overwritten. So we only do the stuff below if we have a non pseudoatom
             //
             // a side effect of this is that it is probably not valid to get the atom
-            // type of a peudo atom. I think this is OK, since you can always check
+            // type of a pseudo atom. I think this is OK, since you can always check
             // whether an atom is a pseudo atom without looking at its atom type
             if (!(atom is IPseudoAtom))
             {
@@ -84,7 +81,8 @@ namespace NCDK.Tools.Manipulator
                 {
                     atom.SetProperty(CDKPropertyName.ChemicalGroupConstant, constant);
                 }
-                atom.IsAromatic = atomType.IsAromatic;
+                if (atomType.IsAromatic)
+                    atom.IsAromatic = atomType.IsAromatic;
 
                 object color = atomType.GetProperty<object>(CDKPropertyName.Color);
                 if (color != null)

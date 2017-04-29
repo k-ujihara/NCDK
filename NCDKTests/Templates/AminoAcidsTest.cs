@@ -22,13 +22,10 @@ using System.Collections.Generic;
 
 namespace NCDK.Templates
 {
-    /// <summary>
     // @cdk.module test-pdb
-    /// </summary>
     [TestClass()]
     public class AminoAcidsTest : CDKTestCase
     {
-
         [TestMethod()]
         public void TestCreateBondMatrix()
         {

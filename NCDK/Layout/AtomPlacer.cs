@@ -435,61 +435,33 @@ namespace NCDK.Layout
         ///  farmost away from the rest of the molecules. The "weight" mentioned here is
         ///  calculated by a modified morgan number algorithm.
         /// </summary>
-        /// <param name="atomsToDraw">All the atoms to draw</param>
-        /// <param name="startAngle">A start angle, giving the angle of the most clockwise atom which has already been placed</param>
-        /// <param name="addAngle">An angle to be added to startAngle for each atom from atomsToDraw</param>
-        /// <param name="rotationCenter">The center of a ring, or an atom for which the partners are to be placed</param>
+        /// <param name="atoms">All the atoms to draw</param>
+        /// <param name="thetaBeg">A start angle (in radians), giving the angle of the most clockwise                  atom which has already been placed</param>
+        /// <param name="thetaStep">An angle (in radians) to be added for each atom from                  atomsToDraw</param>
+        /// <param name="center">The center of a ring, or an atom for which the                  partners are to be placed</param>
         /// <param name="radius">The radius of the polygon to be populated: bond length or ring radius</param>
-        public void PopulatePolygonCorners(IEnumerable<IAtom> atomsToDraw, Vector2 rotationCenter, double startAngle, double addAngle, double radius)
+        public void PopulatePolygonCorners(IList<IAtom> atoms,
+                                        Vector2 center,
+                                        double thetaBeg,
+                                        double thetaStep,
+                                        double radius)
         {
-            double angle = startAngle;
-            Debug.WriteLine("populatePolygonCorners->startAngle: ", Vectors.RadianToDegree(angle));
-            List<Vector2> points = new List<Vector2>();
-            //IAtom atom = null;
+             int numAtoms = atoms.Count;
+            double theta = thetaBeg;
 
-            Debug.WriteLine("  centerX:", rotationCenter.X);
-            Debug.WriteLine("  centerY:", rotationCenter.Y);
-            Debug.WriteLine("  radius :", radius);
+            Debug.WriteLine($"populatePolygonCorners(numAtoms={numAtoms}, center={center}, thetaBeg={Common.Mathematics.Vectors.RadianToDegree(thetaBeg)}, r={radius}");
 
-            foreach (var atom in atomsToDraw)
+            foreach (IAtom atom in atoms)
             {
-                angle = angle + addAngle;
-                if (angle >= 2.0 * Math.PI)
-                {
-                    angle -= 2.0 * Math.PI;
-                }
-                Debug.WriteLine("populatePolygonCorners->angle: ", Vectors.RadianToDegree(angle));
-                var x = Math.Cos(angle) * radius;
-                var y = Math.Sin(angle) * radius;
-                var newX = x + rotationCenter.X;
-                var newY = y + rotationCenter.Y;
-                Debug.WriteLine("  newX:", newX);
-                Debug.WriteLine("  newY:", newY);
-                points.Add(new Vector2(newX, newY));
+                theta += thetaStep;
+                double x = Math.Cos(theta) * radius;
+                double y = Math.Sin(theta) * radius;
+                double newX = x + center.X;
+                double newY = y + center.Y;
+                atom.Point2D = new Vector2(newX, newY);
+                atom.IsPlaced = true;
+                Debug.WriteLine($"populatePolygonCorners - angle={Vectors.RadianToDegree(theta)}, newX={newX}, newY={newY}");
             }
-
-            int i = 0;
-            foreach (var connectAtom in atomsToDraw)
-            {
-                connectAtom.Point2D = (Vector2)points[i++];
-                connectAtom.IsPlaced = true;
-
-#if DEBUG
-                if (connectAtom != null)
-                {
-                    try
-                    {
-                        Debug.WriteLine("populatePolygonCorners->connectAtom: " + (Molecule.Atoms.IndexOf(connectAtom) + 1)
-                                + " placed at " + connectAtom.Point2D);
-                    }
-                    catch (Exception exc)
-                    {
-                        // nothing to catch here. This is just for logging
-                    }
-                }
-#endif
-            }
-
         }
 
         /// <summary>
@@ -787,6 +759,33 @@ namespace NCDK.Layout
                 }
             }
             return ret;
+        }
+
+        /// <summary>
+        /// Copy placed atoms/bonds from one container to another.
+        /// </summary>
+        /// <param name="dest">destination container</param>
+        /// <param name="src">source container</param>
+        internal static void CopyPlaced(IRing dest, IAtomContainer src)
+        {
+            foreach (IBond bond in src.Bonds)
+            {
+                IAtom beg = bond.Atoms[0];
+                IAtom end = bond.Atoms[1];
+                if (beg.IsPlaced)
+                {
+                    dest.Atoms.Add(beg);
+                    if (end.IsPlaced)
+                    {
+                        dest.Atoms.Add(end);
+                        dest.Bonds.Add(bond);
+                    }
+                }
+                else if (end.IsPlaced)
+                {
+                    dest.Atoms.Add(end);
+                }
+            }
         }
 
         /// <summary>

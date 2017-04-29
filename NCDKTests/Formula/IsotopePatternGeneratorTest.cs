@@ -239,7 +239,7 @@ namespace NCDK.Formula
         /// Calculate isotopes for C20H30Fe2P2S4Cl4 (in CDK 1.5.12, this call 
         /// sometimes returns 34 and sometimes 35 isotopes, non-deterministically).
         /// </summary>
-        [TestMethod()]
+        //@Ignore("Non-deterministic test value is bad! This likely depends on our current isotope data which is also bad.")
         public void TestCalculateIsotopesC20H30Fe2P2S4Cl4()
         {
             IMolecularFormula molFor = MolecularFormulaManipulator.GetMajorIsotopeMolecularFormula("C20H30Fe2P2S4Cl4", builder);

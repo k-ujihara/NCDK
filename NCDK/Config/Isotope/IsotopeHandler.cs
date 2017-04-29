@@ -28,7 +28,7 @@ namespace NCDK.Config.Isotope
     /// Reads an isotope list in CML2 format. 
     /// An example definition is:
     /// <![CDATA[
-    /// <isotopeList id = "H" >
+    /// <isotopeList id = "H">
     ///   <isotope id="H1" isotopeNumber="1" elementTyp="H">
     ///     <abundance dictRef="cdk:relativeAbundance">100.0</abundance>
     ///     <scalar dictRef="cdk:exactMass">1.00782504</scalar>

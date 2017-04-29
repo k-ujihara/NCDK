@@ -33,14 +33,13 @@ using static NCDK.Beam.Configuration.DoubleBond;
 
 namespace NCDK.Beam
 {
-   /// <summary> <author>John May </author></summary>
+    // @author John May
     [TestClass()]
     public class GraphBuilderTest
     {
         [TestMethod()]
         public void Clockwise_parity()
         {
-
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomBuilder.Aliphatic("C").Build())
                                 .Add(AtomImpl.AliphaticSubset.Nitrogen)
@@ -63,7 +62,6 @@ namespace NCDK.Beam
         [TestMethod()]
         public void Anticlockwise_parity()
         {
-
             GraphBuilder gb = GraphBuilder.Create(5);
             Graph g = gb.Add(AtomBuilder.Aliphatic("C").Build())
                                 .Add(AtomImpl.AliphaticSubset.Nitrogen)
@@ -345,6 +343,118 @@ namespace NCDK.Beam
                     .Neighbors(2, 3, 4)
                     .Winding(Configuration.AL1)
                     .Build();
+        }
+
+        [TestMethod()]
+        public void BuildCHEMBL1204342()
+        {
+            GraphBuilder gb = GraphBuilder.Create(50);
+            gb.Add(Element.Carbon, 3)
+              .Add(Element.Carbon, 3)
+              .Add(Element.Carbon, 3)
+              .Add(Element.Carbon, 3)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 1)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Carbon, 0)
+              .Add(Element.Nitrogen, 1)
+              .Add(Element.Nitrogen, 1)
+              .Add(Element.Nitrogen, 1)
+              .Add(Element.Nitrogen, 1)
+              .Add(Element.Nitrogen, 0)
+              .Add(Element.Nitrogen, 0)
+              .Add(Element.Nitrogen, 0)
+              .Add(Element.Nitrogen, 0)
+              .Add(Element.Oxygen, 0)
+              .Add(Element.Chlorine, 1)
+              .Add(0, 20, Bond.Implicit)
+              .Add(1, 20, Bond.Implicit)
+              .Add(2, 21, Bond.Implicit)
+              .Add(3, 21, Bond.Implicit)
+              .Add(4, 8, Bond.Double)
+              .Add(4, 22, Bond.Implicit)
+              .Add(5, 9, Bond.Double)
+              .Add(5, 22, Bond.Implicit)
+              .Add(6, 10, Bond.Double)
+              .Add(6, 23, Bond.Implicit)
+              .Add(7, 11, Bond.Double)
+              .Add(7, 23, Bond.Implicit)
+              .Add(8, 24, Bond.Implicit)
+              .Add(9, 24, Bond.Implicit)
+              .Add(10, 25, Bond.Implicit)
+              .Add(11, 25, Bond.Implicit)
+              .Add(12, 14, Bond.Double)
+              .Add(12, 26, Bond.Implicit)
+              .Add(13, 15, Bond.Double)
+              .Add(13, 27, Bond.Implicit)
+              .Add(14, 28, Bond.Implicit)
+              .Add(15, 29, Bond.Implicit)
+              .Add(16, 17, Bond.Double)
+              .Add(16, 32, Bond.Implicit)
+              .Add(17, 33, Bond.Implicit)
+              .Add(18, 26, Bond.Double)
+              .Add(18, 30, Bond.Implicit)
+              .Add(19, 27, Bond.Double)
+              .Add(19, 31, Bond.Implicit)
+              .Add(20, 40, Bond.Implicit)
+              .Add(21, 41, Bond.Implicit)
+              .Add(22, 32, Bond.Double)
+              .Add(23, 33, Bond.Double)
+              .Add(24, 36, Bond.Double)
+              .Add(25, 37, Bond.Double)
+              .Add(26, 34, Bond.Implicit)
+              .Add(27, 35, Bond.Implicit)
+              .Add(28, 30, Bond.Implicit)
+              .Add(28, 42, Bond.Double)
+              .Add(29, 31, Bond.Implicit)
+              .Add(29, 43, Bond.Double)
+              .Add(30, 44, Bond.Double)
+              .Add(31, 45, Bond.Double)
+              .Add(32, 46, Bond.Implicit)
+              .Add(33, 46, Bond.Implicit)
+              .Add(34, 38, Bond.Double)
+              .Add(34, 40, Bond.Implicit)
+              .Add(35, 39, Bond.Double)
+              .Add(35, 41, Bond.Implicit)
+              .Add(36, 42, Bond.Implicit)
+              .Add(36, 44, Bond.Implicit)
+              .Add(37, 43, Bond.Implicit)
+              .Add(37, 45, Bond.Implicit);
+            gb.Geometric(23, 33).Together(6, 17)
+              .Geometric(25, 37).Together(10, 43)
+              .Geometric(24, 36).Together(8, 42)
+              .Geometric(22, 32).Opposite(4, 16);
+            Assert.AreEqual("CC(C)NC(C=1C=CC=2C(C1)=N\\C(=C3\\C=CC(/C=C3)=C\\4C=C/C(=C/5C=C/C(C=C5)=C/6\\N=C7C=CC(=CC7=N6)C(=N)NC(C)C)/O4)\\N2)=N.Cl", gb.Build().ToSmiles());
         }
     }
 }

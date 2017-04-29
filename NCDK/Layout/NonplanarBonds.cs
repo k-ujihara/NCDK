@@ -440,6 +440,14 @@ namespace NCDK.Layout
             return rank;
         }
 
+        private bool IsSp3Carbon(IAtom atom, int deg)
+        {
+            int? elem = atom.AtomicNumber;
+            int? hcnt = atom.ImplicitHydrogenCount;
+            if (elem == null || hcnt == null) return false;
+            return elem == 6 && hcnt <= 1 && deg + hcnt == 4;
+        }
+
         /// <summary>
         /// Does the atom at index <paramref name="i"/> have priority over the atom at index
         /// <paramref name="j"/> for the tetrahedral atom <paramref name="focus"/>.
@@ -450,12 +458,23 @@ namespace NCDK.Layout
         /// <returns>whether atom i has priority</returns>
         bool HasPriority(int focus, int i, int j)
         {
-
             // prioritise bonds to non-centres
             if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
             if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
             if (doubleBondElements[i] == null && doubleBondElements[j] != null) return true;
             if (doubleBondElements[i] != null && doubleBondElements[j] == null) return false;
+
+            IAtom iAtom = container.Atoms[i];
+            IAtom jAtom = container.Atoms[j];
+
+            bool iIsSp3 = IsSp3Carbon(iAtom, graph[i].Length);
+            bool jIsSp3 = IsSp3Carbon(jAtom, graph[j].Length);
+            if (iIsSp3 != jIsSp3)
+                return !iIsSp3;
+
+            // avoid possible Sp3 centers
+            if (tetrahedralElements[i] == null && tetrahedralElements[j] != null) return true;
+            if (tetrahedralElements[i] != null && tetrahedralElements[j] == null) return false;
 
             // prioritise acyclic bonds
             bool iCyclic = focus >= 0 ? ringSearch.Cyclic(focus, i) : ringSearch.Cyclic(i);
@@ -464,9 +483,9 @@ namespace NCDK.Layout
             if (iCyclic && !jCyclic) return false;
 
             // avoid placing on pseudo atoms
-            if (container.Atoms[i].AtomicNumber > 0 && container.Atoms[j].AtomicNumber == 0)
+            if (iAtom.AtomicNumber > 0 && jAtom.AtomicNumber == 0)
                 return true;
-            if (container.Atoms[i].AtomicNumber == 0 && container.Atoms[j].AtomicNumber > 0)
+            if (iAtom.AtomicNumber == 0 && jAtom.AtomicNumber > 0)
                 return false;
 
             // prioritise atoms with fewer neighbors
@@ -474,9 +493,9 @@ namespace NCDK.Layout
             if (graph[i].Length > graph[j].Length) return false;
 
             // prioritise by atomic number
-            if (container.Atoms[i].AtomicNumber < container.Atoms[j].AtomicNumber)
+            if (iAtom.AtomicNumber < jAtom.AtomicNumber)
                 return true;
-            if (container.Atoms[i].AtomicNumber > container.Atoms[j].AtomicNumber)
+            if (iAtom.AtomicNumber > jAtom.AtomicNumber)
                 return false;
 
             return false;

@@ -96,6 +96,48 @@ namespace NCDK.Graphs
         }
 
         /// <summary>
+        /// Create an adjacent list representation of the {@literal container} that only
+        /// includes bonds that are in the set provided as an argument.
+        /// </summary>
+        /// <param name="container">the molecule</param>
+        /// <returns>adjacency list representation stored as an {@literal int[][]}.</returns>
+        /// <exception cref="ArgumentNullException">the container was null</exception>
+        /// <exception cref="ArgumentException">a bond was found which contained atoms                                  not in the molecule</exception>
+        public static int[][] ToAdjListSubgraph(IAtomContainer container, ISet<IBond> include)
+        {
+            if (container == null) throw new ArgumentNullException("atom container was null");
+
+            int n = container.Atoms.Count;
+
+            List<int>[] graph = new List<int>[n];
+            for (var i = 0; i < n; i++)
+                graph[i] = new List<int>();
+
+            foreach (IBond bond in container.Bonds)
+            {
+                if (!include.Contains(bond))
+                    continue;
+
+                int v = container.Atoms.IndexOf(bond.Atoms[0]);
+                int w = container.Atoms.IndexOf(bond.Atoms[1]);
+
+                if (v < 0 || w < 0)
+                    throw new ArgumentException($"bond at index {container.Bonds.IndexOf(bond)} contained an atom not pressent in molecule");
+
+                graph[v].Add(w);
+                graph[w].Add(v);
+            }
+
+            int[][] agraph = new int[n][];
+            for (int v = 0; v < n; v++)
+            {
+                agraph[v] = graph[v].ToArray();
+            }
+
+            return agraph;
+        }
+
+        /// <summary>
         /// Create a subgraph by specifying the vertices from the original <paramref name="graph"/>
         /// to <paramref name="include"/> in the subgraph. The provided vertices also
         /// provide the mapping between vertices in the subgraph and the original.

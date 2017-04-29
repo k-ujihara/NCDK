@@ -29,6 +29,7 @@ using NCDK.Smiles.SMARTS.Parser;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace NCDK.Smiles.SMARTS
 {
@@ -55,7 +56,7 @@ namespace NCDK.Smiles.SMARTS
         private readonly Pattern pattern;
 
         /// <summary>Include invariants about ring size / number.</summary>
-        private readonly bool ringInfo;
+        private readonly bool ringInfo, hasStereo, hasCompGrp, hasRxnMap;
 
         /// <summary>Aromaticity model.</summary>
         private readonly Aromaticity arom = new Aromaticity(ElectronDonation.DaylightModel, Cycles.Or(Cycles.AllFinder, Cycles.RelevantFinder));
@@ -68,20 +69,27 @@ namespace NCDK.Smiles.SMARTS
         /// <exception cref="IOException">the pattern could not be parsed</exception>
         private SmartsPattern(string smarts, IChemObjectBuilder builder)
         {
+#if !DEBUG
             try
+#endif
             {
                 this.query = SMARTSParser.Parse(smarts, builder);
             }
+#if !DEBUG
             catch (Exception e)
             {
                 throw new IOException(e.Message);
             }
+#endif
             this.pattern = Pattern.FindSubstructure(query);
 
             // X<num>, R and @ are cheap and done always but R<num>, r<num> are not
             // we inspect the SMARTS pattern string to determine if ring
             // size or number queries are needed
             this.ringInfo = RingSizeOrNumber(smarts);
+            this.hasStereo = query.StereoElements.Any();
+            this.hasCompGrp = query.GetProperty<int[]>(ComponentGrouping.Key) != null;
+            this.hasRxnMap = smarts.Contains(":");
         }
 
         /// <inheritdoc/>
@@ -125,14 +133,23 @@ namespace NCDK.Smiles.SMARTS
 
             Mappings mappings = pattern.MatchAll(target);
 
-            // stereochemistry and component grouping filters are skipped if the
-            // query does not contain them
-            var stereoMatch = new SmartsStereoMatch(query, target);
-            foreach (var stereoElement in query.StereoElements)
-                mappings = mappings.Filter(n => stereoMatch.Apply(n));
-            var grouping = new ComponentGrouping(query, target);
-            if (query.GetProperty<object>(ComponentGrouping.Key) != null)
+            // apply required post-match filters
+            if (hasStereo)
+            {
+                var stereoMatch = new SmartsStereoMatch(query, target);
+                foreach (var stereoElement in query.StereoElements)
+                    mappings = mappings.Filter(n => stereoMatch.Apply(n));
+            }
+            if (hasCompGrp)
+            {
+                var grouping = new ComponentGrouping(query, target);
                 mappings = mappings.Filter(n => grouping.Apply(n));
+            }
+            if (hasRxnMap)
+            {
+                var filter = new SmartsAtomAtomMapFilter(query, target);
+                mappings = mappings.Filter(n => filter.Apply(n));
+            }
 
             // Note: Mappings is lazy, we can't reset aromaticity etc as the
             // substructure match may not have finished
@@ -150,6 +167,17 @@ namespace NCDK.Smiles.SMARTS
         public static SmartsPattern Create(string smarts, IChemObjectBuilder builder)
         {
             return new SmartsPattern(smarts, builder);
+        }
+
+        /// <summary>
+        /// Default SMARTS pattern constructor, passes in a null chem object builder.
+        /// </summary>
+        /// <param name="smarts">SMARTS pattern string</param>
+        /// <returns>a SMARTS pattern</returns>
+        /// <exception cref="IOException">problem with SMARTS string syntax/semantics</exception>
+        public static SmartsPattern Create(string smarts)
+        {
+            return new SmartsPattern(smarts, null);
         }
 
         /// <summary>

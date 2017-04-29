@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -211,13 +211,13 @@ namespace NCDK.Default
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
-                return EmptyProperties;
+                return emptyProperties;
             return this.properties;
         }
 
@@ -450,13 +450,13 @@ namespace NCDK.Silent
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
-                return EmptyProperties;
+                return emptyProperties;
             return this.properties;
         }
 

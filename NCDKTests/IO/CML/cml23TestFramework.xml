@@ -176,24 +176,24 @@
   </molecule>
   
   <!-- CML23FragmentsTest.testReaction() -->
-    <reaction>
-        <reactantList>
-            <reactant>
-                <molecule id='react'/>
-            </reactant>
-        </reactantList>
-        <productList>
-            <product>
-                <molecule id='product'/>
-            </product>
-        </productList>
-        <substanceList>
-            <substance>
-                <molecule id='water'/>
-            </substance>
-        </substanceList>
-    </reaction>
-    
+	<reaction>
+		<reactantList>
+			<reactant>
+				<molecule id='react'/>
+			</reactant>
+		</reactantList>
+		<productList>
+			<product>
+				<molecule id='product'/>
+			</product>
+		</productList>
+		<substanceList>
+			<substance>
+				<molecule id='water'/>
+			</substance>
+		</substanceList>
+	</reaction>
+	
   <!-- not tested yet -->
   <molecule>
     <formula concise="C 1 H 4" dictRef="mb:possibleMatch"/>

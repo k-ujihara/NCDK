@@ -290,25 +290,13 @@ namespace NCDK.Layout
             foreach (var point in points)
             {
                 if (sb.Length > 2) sb.Append(";");
-                sb.Append(ToStringF2(point.X));
+                sb.Append(Strings.ToSimpleString(point.X, 2));
                 sb.Append(',');
-                sb.Append(ToStringF2(point.Y));
+                sb.Append(Strings.ToSimpleString(point.Y, 2));
                 sb.Append(',');
             }
             sb.Append(")|");
             return sb.ToString();
-        }
-
-        private static string ToStringF2(double f)
-        {
-            var v = f.ToString("F2");
-            if (v.StartsWith("0."))
-                v = v.Substring(1);
-            else if (v.StartsWith("-0."))
-                v = "-" + v.Substring(2);
-            if (v.EndsWith("0"))
-                v = v.Substring(0, v.Length - 1);
-            return v;
         }
 
         /// <summary>

@@ -26,7 +26,6 @@ namespace NCDK.Reactions.Types
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
     // @cdk.githash
-    // @cdk.set        reaction-types
     public abstract class AbstractRearrangementReaction : ReactionEngine, IReactionProcess
     {
         public AbstractRearrangementReaction() { }

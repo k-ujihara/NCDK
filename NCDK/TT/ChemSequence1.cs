@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 using System;
 using System.Collections;
@@ -33,7 +33,6 @@ namespace NCDK.Default
 	/// store the course of a reaction. Each state of the reaction would be
 	/// stored in one ChemModel.    
 	/// </summary>
-	// @cdk.module  silent
 	// @cdk.githash
 	// @cdk.keyword animation
 	// @cdk.keyword reaction
@@ -133,7 +132,6 @@ namespace NCDK.Silent
 	/// store the course of a reaction. Each state of the reaction would be
 	/// stored in one ChemModel.    
 	/// </summary>
-	// @cdk.module  silent
 	// @cdk.githash
 	// @cdk.keyword animation
 	// @cdk.keyword reaction

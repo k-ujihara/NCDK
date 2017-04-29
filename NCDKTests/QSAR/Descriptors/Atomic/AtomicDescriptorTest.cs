@@ -54,6 +54,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCalculate_IAtomContainer()
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
@@ -74,10 +75,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         /// Checks if the given labels are consistent.
-        ///
-        /// <exception cref="Exception">Passed on from calculate.</exception>
         /// </summary>
+        /// <exception cref="Exception">Passed on from calculate.</exception>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestLabels()
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
@@ -105,6 +106,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// of the names
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestNamesConsistency()
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();
@@ -121,6 +123,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCalculate_NoModifications()
         {
             IAtomContainer mol = SomeoneBringMeSomeWater();

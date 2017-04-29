@@ -18,10 +18,11 @@
  */
 using NCDK.Isomorphisms.Matchers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using static NCDK.Smiles.SMARTS.Parser.SMARTSParserConstants;
 using static NCDK.Smiles.SMARTS.Parser.SMARTSParserTreeConstants;
+using static NCDK.Smiles.SMARTS.Parser.SMARTSParserConstants;
 
 namespace NCDK.Smiles.SMARTS.Parser
 {
@@ -58,7 +59,8 @@ namespace NCDK.Smiles.SMARTS.Parser
         private int componentId = 0;
 
         /// <summary>
-        /// This method parses a Smarts string and returns an instance of <see cref="QueryAtomContainer"/>. 
+        /// This method parses a Smarts String and returns an instance of
+        /// <code>QueryAtomContainer</code>
         /// </summary>
         public static QueryAtomContainer Parse(string smarts, IChemObjectBuilder builder)
         {
@@ -81,35 +83,33 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
 
         /// <summary>
-        /// <![CDATA[
-        /// Start ::= <ReactionExpression> <#_WS>
-        /// ReactionExpression ::= <GroupExpression> (">>" <GroupExpression>)? |
-        ///                               ">" <GroupExpression> ">" | ">>" <GroupExpression>
-        /// GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
-        /// SmartsExpression ::= <AtomExpression> ( 
-        ///                                ( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
-        ///                                ( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
-        /// AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> "]" ) | <ExplicitAtomExpression>
-        /// LowAndBond ::= <OrBond> [ ";" <AndBond> ]
-        /// OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
-        /// ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
-        /// ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
-        /// NotBond ::= [ "!" ] <SimpleBond>
-        /// SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
-        /// ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I" 
-        ///                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ] 
-        /// LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
-        /// OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
+        ///                     Start ::= <ReactionExpression> <#_WS>
+        ///        ReactionExpression ::= <GroupExpression>? (">" <GroupExpression>? ">" <GroupExpression>?)?
+        ///           GroupExpression ::= ["("] <SmartsExpresion> [")"] ( "." ["("] <SmartsExpression> [")"] )*
+        ///          SmartsExpression ::= <AtomExpression> (
+        /// ( [ <LowAndBond> ] ( <Digit> | <AtomExpression> ) ) |
+        /// ( "(" [ <LowAndBond> ] <SmartsExpression> ")" ) )*
+        /// AtomExpression ::= ( "[" [ <AtomicMass> ] <LowAndExpression> [:<Digit>+] "]" ) | <ExplicitAtomExpression>
+        ///                LowAndBond ::= <OrBond> [ ";" <AndBond> ]
+        ///                    OrBond ::= <ExplicitHighAndBond> [ "," <OrBond> ]
+        ///       ExplicitHighAndBond ::= <ImplicitHighAndBond> [ "&" <ExplicitHighAndBond> ]
+        ///       ImplicitHighAndBond ::= <NotBond> [ <ImplicitHighAndBond> ]
+        ///                   NotBond ::= [ "!" ] <SimpleBond>
+        ///                SimpleBond ::= "/" | "\\" | "/?" | "\\?" | "=" | "#" | "~" | "@"
+        ///    ExplicitAtomExpression ::= [ "B" | "C" | "N" | "O" | "P" | "S" | "F" | "CL" | "BR" | "I"
+        ///                               | "c" | "o" | "n" | "*" | "A" | "a" | "p" | "as" | "se" ]
+        ///          LowAndExpression ::= <OrExpression> ( ";" <LowAndExpression> )?
+        ///              OrExpression ::= <ExplicitHighAndExpression> ( "," <OrExpression> ) ?
         /// ExplicitHighAndExpression ::= <ImplicitHighAndExpression> ( "&" <ExplicitHighAndExpression> )?
         /// ImplicitHighAndExpression ::= <NotExpression> ( <ImplicitHighAndExpression> ) ?
-        /// NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
+        ///             NotExpression ::= "!" ( <PrimitiveAtomExpression> | <RecursiveSmartsExpression> )
         /// RecursiveSmartsExpression ::= "$" "(" <SmartsExpression> ")"
-        /// PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
-        ///                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)  
+        ///   PrimitiveAtomExpression ::= <NonHydrogenElement> | "*" | "A" | "a" | "D" (<Digits>)? | "H" (<Digits>)? | "h" (<Digits>)?
+        ///                               | "R" (<Digit>+)? | "r" (<Digit>+)? | "v" (<Digit>+)? | "#X" | "G" (<DIGIT>+)
         ///                               | "X" (<Digit>+)? | "x" (<Digit>+)? | "^" (<DIGIT>)
         ///                               | ("+" | "-") (<Digit>+)? | "#" (<Digit>+) | "@" | "@@" | <Digit>+
-        /// Digit ::= ( "0" - "9")
-        /// NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
+        ///                     Digit ::= ( "0" - "9")
+        ///        NonHydrogenElement ::= [ "HE" | "LI" | "BE" | "NE" | "NA" | "MG" | "AL" | "SI" | "AR" | "CA" | "SC" |
         ///                               "TI" | "CR" | "MN" | "FE" | "CO" | "NI" | "CU" | "ZN" | "GA" | "GE" | "AS" |
         ///                               "SE" | "BR" | "KR" | "RB" | "SR" | "ZR" | "NB" | "MO" | "TC" | "RU" | "RH" |
         ///                               "PD" | "AG" | "CD" | "IN" | "SN" | "SB" | "TE" | "XE" | "CS" | "BA" | "LA" |
@@ -117,18 +117,17 @@ namespace NCDK.Smiles.SMARTS.Parser
         ///                               "PO" | "AT" | "RN" | "FR" | "RA" | "AC" | "TH" | "PA" |
         ///                               "B" | "C" | "N" | "O" | "F" | "P" | "S" | "K" | "V" | "Y" | "I" | "U" |
         ///                               "c" | "o" | "n" | "p" | "as" | "se" ]
-        /// ]]>
         /// </summary>
         public ASTStart Start()
         {
             /*@bgen(jjtree) Start */
-            ASTStart jjtn000 = new ASTStart(JJTSTART); 
+            ASTStart jjtn000 = new ASTStart(JJTSTART);
             bool jjtc000 = true;
             jjtree.OpenNodeScope(jjtn000);
             try
             {
                 ReactionExpression();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case WS:
                         Jj_consume_token(WS);
@@ -145,25 +144,21 @@ namespace NCDK.Smiles.SMARTS.Parser
                 jjtc000 = false;
                 { if (true) return jjtn000; }
             }
-            catch (NotImplementedException jjte000)
+            catch (Exception jjte000)
             {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
                 { if (true) throw (Exception)jjte000; }
             }
             finally
@@ -176,7 +171,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             throw new Exception("Missing return statement in function");
         }
 
-        public void ReactionExpression()
+         public void ReactionExpression()
         {
             /*@bgen(jjtree) Reaction */
             ASTReaction jjtn000 = new ASTReaction(JJTREACTION);
@@ -184,7 +179,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000);
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case c:
                     case n:
@@ -209,80 +204,101 @@ namespace NCDK.Smiles.SMARTS.Parser
                     case L_BRACKET:
                     case L_PAREN:
                         GroupExpression();
-                        switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                        break;
+                    default:
+                        jj_la1[1] = jj_gen;
+                        break;
+                }
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case 147:
+                        Jj_consume_token(147);
+                        if (jjtree.NodeArity() > 0)
+                          ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_REACTANT);
+                        switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                         {
-                            case 147:
-                                Jj_consume_token(147);
-                                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                                {
-                                    case c:
-                                    case n:
-                                    case o:
-                                    case s:
-                                    case p:
-                                    case as_:
-                                    case se:
-                                    case B:
-                                    case C:
-                                    case N:
-                                    case O:
-                                    case F:
-                                    case P:
-                                    case S:
-                                    case CL:
-                                    case BR:
-                                    case I:
-                                    case WILDCARD:
-                                    case a:
-                                    case A:
-                                    case L_BRACKET:
-                                    case L_PAREN:
-                                        GroupExpression();
-                                        break;
-                                    default:
-                                        jj_la1[1] = jj_gen;
-                                        break;
-                                }
+                            case c:
+                            case n:
+                            case o:
+                            case s:
+                            case p:
+                            case as_:
+                            case se:
+                            case B:
+                            case C:
+                            case N:
+                            case O:
+                            case F:
+                            case P:
+                            case S:
+                            case CL:
+                            case BR:
+                            case I:
+                            case WILDCARD:
+                            case a:
+                            case A:
+                            case L_BRACKET:
+                            case L_PAREN:
+                                GroupExpression();
+                                ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_AGENT);
                                 break;
                             default:
                                 jj_la1[2] = jj_gen;
                                 break;
                         }
-                        break;
-                    case 148:
-                        Jj_consume_token(148);
-                        GroupExpression();
-                        Jj_consume_token(148);
-                        break;
-                    case 147:
                         Jj_consume_token(147);
-                        GroupExpression();
+                        switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                        {
+                            case c:
+                            case n:
+                            case o:
+                            case s:
+                            case p:
+                            case as_:
+                            case se:
+                            case B:
+                            case C:
+                            case N:
+                            case O:
+                            case F:
+                            case P:
+                            case S:
+                            case CL:
+                            case BR:
+                            case I:
+                            case WILDCARD:
+                            case a:
+                            case A:
+                            case L_BRACKET:
+                            case L_PAREN:
+                                GroupExpression();
+                                ((ASTGroup)jjtree.PeekNode()).SetRole(ASTGroup.ROLE_PRODUCT);
+                                break;
+                            default:
+                                jj_la1[3] = jj_gen;
+                                break;
+                        }
                         break;
                     default:
-                        jj_la1[3] = jj_gen;
-                        Jj_consume_token(-1);
-                        throw new ParseException();
+                        jj_la1[4] = jj_gen;
+                        break;
                 }
             }
-            catch (NotImplementedException jjte000)
+            catch (Exception jjte000)
             {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
                 { if (true) throw (Exception)jjte000; }
             }
             finally
@@ -294,7 +310,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void GroupExpression()
+         public void GroupExpression()
         {
             /*@bgen(jjtree) Group */
             ASTGroup jjtn000 = new ASTGroup(JJTGROUP);
@@ -302,30 +318,30 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000);
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case L_PAREN:
                         Jj_consume_token(L_PAREN);
                         SmartsExpression();
                         ((ASTSmarts)jjtree.PeekNode()).ComponentId = ++componentId;
+                        label_1:
                         while (true)
                         {
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
-                                case 149:
+                                case 148:
                                     ;
                                     break;
                                 default:
-                                    jj_la1[4] = jj_gen;
-                                    goto break_label_1;
+                                    jj_la1[5] = jj_gen;
+                                   goto break_label_1;
                             }
-                            Jj_consume_token(149);
+                            Jj_consume_token(148);
                             SmartsExpression();
                             // same component grouping
                             ((ASTSmarts)jjtree.PeekNode()).ComponentId = componentId;
                         }
-                        break_label_1:;
-
+                    break_label_1:
                         Jj_consume_token(R_PAREN);
                         break;
                     case c:
@@ -352,23 +368,24 @@ namespace NCDK.Smiles.SMARTS.Parser
                         SmartsExpression();
                         break;
                     default:
-                        jj_la1[5] = jj_gen;
+                        jj_la1[6] = jj_gen;
                         Jj_consume_token(-1);
                         throw new ParseException();
                 }
+                label_2:
                 while (true)
                 {
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
-                        case 149:
+                        case 148:
                             ;
                             break;
                         default:
-                            jj_la1[6] = jj_gen;
+                            jj_la1[7] = jj_gen;
                             goto break_label_2;
                     }
-                    Jj_consume_token(149);
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    Jj_consume_token(148);
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case L_PAREN:
                             Jj_consume_token(L_PAREN);
@@ -377,22 +394,21 @@ namespace NCDK.Smiles.SMARTS.Parser
                             label_3:
                             while (true)
                             {
-                                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                                 {
-                                    case 149:
+                                    case 148:
                                         ;
                                         break;
                                     default:
-                                        jj_la1[7] = jj_gen;
+                                        jj_la1[8] = jj_gen;
                                         goto break_label_3;
                                 }
-                                Jj_consume_token(149);
+                                Jj_consume_token(148);
                                 SmartsExpression();
                                 // same component grouping
                                 ((ASTSmarts)jjtree.PeekNode()).ComponentId = componentId;
                             }
                             break_label_3:
-                            ;
                             Jj_consume_token(R_PAREN);
                             break;
                         case c:
@@ -419,33 +435,29 @@ namespace NCDK.Smiles.SMARTS.Parser
                             SmartsExpression();
                             break;
                         default:
-                            jj_la1[8] = jj_gen;
+                            jj_la1[9] = jj_gen;
                             Jj_consume_token(-1);
                             throw new ParseException();
                     }
                 }
-                break_label_2:
+            break_label_2:
                 ;
             }
-            catch (NotImplementedException jjte000)
+            catch (Exception jjte000)
             {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
                 { if (true) throw (Exception)jjte000; }
             }
             finally
@@ -457,7 +469,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void SmartsExpression()
+         public void SmartsExpression()
         {
             /*@bgen(jjtree) Smarts */
             ASTSmarts jjtn000 = new ASTSmarts(JJTSMARTS);
@@ -467,9 +479,10 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 atom = AtomExpression();
+                label_4:
                 while (true)
                 {
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case NOT:
                         case S_BOND:
@@ -506,14 +519,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                         case L_BRACKET:
                         case L_PAREN:
                         case DOLLAR:
-                        case 150:
+                        case 149:
                             ;
                             break;
                         default:
-                            jj_la1[9] = jj_gen;
+                            jj_la1[10] = jj_gen;
                             goto break_label_4;
                     }
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case NOT:
                         case S_BOND:
@@ -549,8 +562,8 @@ namespace NCDK.Smiles.SMARTS.Parser
                         case DIGIT:
                         case L_BRACKET:
                         case DOLLAR:
-                        case 150:
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                        case 149:
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case NOT:
                                 case S_BOND:
@@ -567,28 +580,28 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     LowAndBond();
                                     break;
                                 default:
-                                    jj_la1[10] = jj_gen;
+                                    jj_la1[11] = jj_gen;
                                     break;
                             }
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
-                                case 150:
-                                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                                case 149:
+                                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                                     {
                                         case DIGIT:
                                             Jj_consume_token(DIGIT);
                                             ringIdToken = token.image[0] - '0';
                                             break;
-                                        case 150:
-                                            Jj_consume_token(150);
+                                        case 149:
+                                            Jj_consume_token(149);
                                             Jj_consume_token(DIGIT);
                                             ringIdToken = 10 * (token.image[0] - '0');
                                             Jj_consume_token(DIGIT);
                                             ringIdToken += token.image[0] - '0';
                                             break;
                                         default:
-                                            jj_la1[11] = jj_gen;
+                                            jj_la1[12] = jj_gen;
                                             Jj_consume_token(-1);
                                             throw new ParseException();
                                     }
@@ -600,7 +613,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                                         ringId.JJTAddChild(bond, 0);
                                     }
                                     ringId.RingId = ringIdToken;
-                                    atom.JJTAddChild(ringId, atom.JJTGetNumChildren());
+                                    jjtree.PushNode(ringId);
                                     break;
                                 case c:
                                 case n:
@@ -626,14 +639,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     atom = AtomExpression();
                                     break;
                                 default:
-                                    jj_la1[12] = jj_gen;
+                                    jj_la1[13] = jj_gen;
                                     Jj_consume_token(-1);
                                     throw new ParseException();
                             }
                             break;
                         case L_PAREN:
                             Jj_consume_token(L_PAREN);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case NOT:
                                 case S_BOND:
@@ -650,14 +663,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                                     LowAndBond();
                                     break;
                                 default:
-                                    jj_la1[13] = jj_gen;
+                                    jj_la1[14] = jj_gen;
                                     break;
                             }
                             SmartsExpression();
                             Jj_consume_token(R_PAREN);
                             break;
                         default:
-                            jj_la1[14] = jj_gen;
+                            jj_la1[15] = jj_gen;
                             Jj_consume_token(-1);
                             throw new ParseException();
                     }
@@ -665,25 +678,21 @@ namespace NCDK.Smiles.SMARTS.Parser
                 break_label_4:
                 ;
             }
-            catch (NotImplementedException jjte000)
+            catch (Exception jjte000)
             {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
                 { if (true) throw (Exception)jjte000; }
             }
             finally
@@ -695,7 +704,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public ASTAtom AtomExpression()
+         public ASTAtom AtomExpression()
         {
             /*@bgen(jjtree) Atom */
             ASTAtom jjtn000 = new ASTAtom(JJTATOM);
@@ -704,23 +713,24 @@ namespace NCDK.Smiles.SMARTS.Parser
             Token secondToken;
             Token rightBracket;
             ASTAtomicMass massNode = null;
+            StringBuilder mapidx = new StringBuilder();
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case L_BRACKET:
                         Jj_consume_token(L_BRACKET);
                         token_source.SwitchTo(SMARTSParserConstants.ATOM_EXPRESSION);
                         firstToken = GetToken(1);
                         secondToken = GetToken(2);
-                        switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                        switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                         {
                             case DIGIT:
                                 AtomicMass();
                                 massNode = (ASTAtomicMass)jjtree.PopNode();
                                 break;
                             default:
-                                jj_la1[15] = jj_gen;
+                                jj_la1[16] = jj_gen;
                                 break;
                         }
                         LowAndExpression();
@@ -729,6 +739,41 @@ namespace NCDK.Smiles.SMARTS.Parser
                             ASTLowAndExpression topNode = (ASTLowAndExpression)jjtree.PopNode();
                             topNode.InsertLeafChild(massNode);
                             jjtree.PushNode(topNode);
+                        }
+                        switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                        {
+                            case AR_BOND:
+                                Jj_consume_token(AR_BOND);
+                                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                                {
+                                    case Q_MARK:
+                                        Jj_consume_token(Q_MARK);
+                                        break;
+                                    default:
+                                        jj_la1[17] = jj_gen;
+                                        break;
+                                }
+                                label_5:
+                                while (true)
+                                {
+                                    Jj_consume_token(DIGIT);
+                                    mapidx.Append(token.image);
+                                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                                    {
+                                        case DIGIT:
+                                            ;
+                                            break;
+                                        default:
+                                            jj_la1[18] = jj_gen;
+                                          goto break_label_5;
+                                    }
+                                }
+                                break_label_5:
+                                   ((ASTLowAndExpression)jjtree.PeekNode()).SetMapIdx(int.Parse(mapidx.ToString()));
+                                break;
+                            default:
+                                jj_la1[19] = jj_gen;
+                                break;
                         }
                         Jj_consume_token(R_BRACKET);
                         token_source.SwitchTo(SMARTSParserConstants.Default); rightBracket = token;
@@ -785,7 +830,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         ExplicitAtomExpression();
                         break;
                     default:
-                        jj_la1[16] = jj_gen;
+                        jj_la1[20] = jj_gen;
                         Jj_consume_token(-1);
                         throw new ParseException();
                 }
@@ -793,25 +838,21 @@ namespace NCDK.Smiles.SMARTS.Parser
                 jjtc000 = false;
                 { if (true) return jjtn000; }
             }
-            catch (NotImplementedException jjte000)
+            catch (Exception jjte000)
             {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
                 { if (true) throw (Exception)jjte000; }
             }
             finally
@@ -824,7 +865,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             throw new Exception("Missing return statement in function");
         }
 
-        public void LowAndBond()
+         public void LowAndBond()
         {
             /*@bgen(jjtree) LowAndBond */
             ASTLowAndBond jjtn000 = new ASTLowAndBond(JJTLOWANDBOND);
@@ -833,14 +874,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 OrBond();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case L_AND:
                         Jj_consume_token(L_AND);
                         LowAndBond();
                         break;
                     default:
-                        jj_la1[17] = jj_gen;
+                        jj_la1[21] = jj_gen;
                         break;
                 }
             }
@@ -854,10 +895,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else
                 {
                     jjtree.PopNode();
-                }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
                 }
                 if (jjte000 is ParseException)
                 {
@@ -874,7 +911,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void OrBond()
+         public void OrBond()
         {
             /*@bgen(jjtree) OrBond */
             ASTOrBond jjtn000 = new ASTOrBond(JJTORBOND);
@@ -883,14 +920,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 ExplicitHighAndBond();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case OR:
                         Jj_consume_token(OR);
                         OrBond();
                         break;
                     default:
-                        jj_la1[18] = jj_gen;
+                        jj_la1[22] = jj_gen;
                         break;
                 }
             }
@@ -904,10 +941,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else
                 {
                     jjtree.PopNode();
-                }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
                 }
                 if (jjte000 is ParseException)
                 {
@@ -924,7 +957,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void ExplicitHighAndBond()
+         public void ExplicitHighAndBond()
         {
             /*@bgen(jjtree) ExplicitHighAndBond */
             ASTExplicitHighAndBond jjtn000 = new ASTExplicitHighAndBond(JJTEXPLICITHIGHANDBOND);
@@ -933,14 +966,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 ImplicitHighAndBond();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case H_AND:
                         Jj_consume_token(H_AND);
                         ExplicitHighAndBond();
                         break;
                     default:
-                        jj_la1[19] = jj_gen;
+                        jj_la1[23] = jj_gen;
                         break;
                 }
             }
@@ -954,10 +987,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else
                 {
                     jjtree.PopNode();
-                }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
                 }
                 if (jjte000 is ParseException)
                 {
@@ -974,7 +1003,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void ImplicitHighAndBond()
+         public void ImplicitHighAndBond()
         {
             /*@bgen(jjtree) ImplicitHighAndBond */
             ASTImplicitHighAndBond jjtn000 = new ASTImplicitHighAndBond(JJTIMPLICITHIGHANDBOND);
@@ -983,7 +1012,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 NotBond();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case NOT:
                     case S_BOND:
@@ -1000,7 +1029,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         ImplicitHighAndBond();
                         break;
                     default:
-                        jj_la1[20] = jj_gen;
+                        jj_la1[24] = jj_gen;
                         break;
                 }
             }
@@ -1014,10 +1043,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else
                 {
                     jjtree.PopNode();
-                }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
                 }
                 if (jjte000 is ParseException)
                 {
@@ -1034,7 +1059,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void NotBond()
+         public void NotBond()
         {
             /*@bgen(jjtree) NotBond */
             ASTNotBond jjtn000 = new ASTNotBond(JJTNOTBOND);
@@ -1042,14 +1067,14 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000);
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case NOT:
                         Jj_consume_token(NOT);
                         jjtn000.Type = SMARTSParserConstants.NOT;
                         break;
                     default:
-                        jj_la1[21] = jj_gen;
+                        jj_la1[25] = jj_gen;
                         break;
                 }
                 SimpleBond();
@@ -1065,10 +1090,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 {
                     jjtree.PopNode();
                 }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
-                }
                 if (jjte000 is ParseException)
                 {
                     { if (true) throw (ParseException)jjte000; }
@@ -1084,7 +1105,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void SimpleBond()
+         public void SimpleBond()
         {
             /*@bgen(jjtree) SimpleBond */
             ASTSimpleBond jjtn000 = new ASTSimpleBond(JJTSIMPLEBOND);
@@ -1098,7 +1119,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 }
                 else
                 {
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case UP_S_BOND:
                             Jj_consume_token(UP_S_BOND);
@@ -1131,7 +1152,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                             Jj_consume_token(R_BOND);
                             break;
                         default:
-                            jj_la1[22] = jj_gen;
+                            jj_la1[26] = jj_gen;
                             Jj_consume_token(-1);
                             throw new ParseException();
                     }
@@ -1149,7 +1170,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void ExplicitAtomExpression()
+         public void ExplicitAtomExpression()
         {
             /*@bgen(jjtree) ExplicitAtom */
             ASTExplicitAtom jjtn000 = new ASTExplicitAtom(JJTEXPLICITATOM);
@@ -1157,7 +1178,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000);
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case B:
                         Jj_consume_token(B);
@@ -1220,7 +1241,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         Jj_consume_token(as_);
                         break;
                     default:
-                        jj_la1[23] = jj_gen;
+                        jj_la1[27] = jj_gen;
                         Jj_consume_token(-1);
                         throw new ParseException();
                 }
@@ -1239,7 +1260,7 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         // TODO: This requires a fully implemented SMARTSAtom API (or something else) that 
         // could encapsulate logical criterias
-        public void LowAndExpression()
+         public void LowAndExpression()
         {
             /*@bgen(jjtree) LowAndExpression */
             ASTLowAndExpression jjtn000 = new ASTLowAndExpression(JJTLOWANDEXPRESSION);
@@ -1248,508 +1269,15 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 OrExpression();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case L_AND:
                         Jj_consume_token(L_AND);
                         LowAndExpression();
                         break;
                     default:
-                        jj_la1[24] = jj_gen;
-                        break;
-                }
-            }
-            catch (NotImplementedException jjte000)
-            {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
-                { if (true) throw (Exception)jjte000; }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void OrExpression()
-        {
-            /*@bgen(jjtree) OrExpression */
-            ASTOrExpression jjtn000 = new ASTOrExpression(JJTOREXPRESSION);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000);
-            try
-            {
-                ExplicitHighAndExpression();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case OR:
-                        Jj_consume_token(OR);
-                        OrExpression();
-                        break;
-                    default:
-                        jj_la1[25] = jj_gen;
-                        break;
-                }
-            }
-            catch (NotImplementedException jjte000)
-            {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
-                { if (true) throw (Exception)jjte000; }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void ExplicitHighAndExpression()
-        {
-            /*@bgen(jjtree) ExplicitHighAndExpression */
-            ASTExplicitHighAndExpression jjtn000 = new ASTExplicitHighAndExpression(JJTEXPLICITHIGHANDEXPRESSION);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000);
-            try
-            {
-                ImplicitHighAndExpression();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case H_AND:
-                        Jj_consume_token(H_AND);
-                        ExplicitHighAndExpression();
-                        break;
-                    default:
-                        jj_la1[26] = jj_gen;
-                        break;
-                }
-            }
-            catch (NotImplementedException jjte000)
-            {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
-                { if (true) throw (Exception)jjte000; }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void ImplicitHighAndExpression()
-        {
-            /*@bgen(jjtree) ImplicitHighAndExpression */
-            ASTImplicitHighAndExpression jjtn000 = new ASTImplicitHighAndExpression(JJTIMPLICITHIGHANDEXPRESSION);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000);
-            try
-            {
-                NotExpression();
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case NOT:
-                    case S_BOND:
-                    case T_BOND:
-                    case R_BOND:
-                    case c:
-                    case n:
-                    case o:
-                    case s:
-                    case p:
-                    case as_:
-                    case se:
-                    case B:
-                    case C:
-                    case N:
-                    case O:
-                    case F:
-                    case P:
-                    case S:
-                    case CL:
-                    case BR:
-                    case I:
-                    case WILDCARD:
-                    case a:
-                    case A:
-                    case CARET:
-                    case DOLLAR:
-                    case PLUS:
-                    case h:
-                    case D:
-                    case R:
-                    case r:
-                    case v:
-                    case X:
-                    case x:
-                    case G:
-                    case HX:
-                    case H:
-                    case HE:
-                    case LI:
-                    case BE:
-                    case NE:
-                    case NA:
-                    case MG:
-                    case AL:
-                    case SI:
-                    case AR:
-                    case K:
-                    case CA:
-                    case TI:
-                    case V:
-                    case CR:
-                    case MN:
-                    case FE:
-                    case CO:
-                    case NI:
-                    case CU:
-                    case ZN:
-                    case GA:
-                    case GE:
-                    case AS:
-                    case SE:
-                    case KR:
-                    case RB:
-                    case SR:
-                    case Y:
-                    case ZR:
-                    case NB:
-                    case MO:
-                    case TC:
-                    case RU:
-                    case RH:
-                    case PD:
-                    case AG:
-                    case CD:
-                    case IN:
-                    case SN:
-                    case SB:
-                    case TE:
-                    case XE:
-                    case CS:
-                    case BA:
-                    case LA:
-                    case HF:
-                    case TA:
-                    case W:
-                    case RE:
-                    case OS:
-                    case IR:
-                    case PT:
-                    case AU:
-                    case HG:
-                    case TL:
-                    case PB:
-                    case BI:
-                    case PO:
-                    case AT:
-                    case RN:
-                    case FR:
-                    case RA:
-                    case AC:
-                    case TH:
-                    case PA:
-                    case U:
-                    case PU:
-                    case AM:
-                    case CM:
-                    case BK:
-                    case CF:
-                    case ES:
-                    case FM:
-                    case MD:
-                    case NO:
-                    case LR:
-                    case NP:
-                    case CE:
-                    case ND:
-                    case PM:
-                    case SM:
-                    case EU:
-                    case GD:
-                    case TB:
-                    case DY:
-                    case HO:
-                    case ER:
-                    case TM:
-                    case YB:
-                    case LU:
-                    case PR:
-                    case SC:
-                    case 151:
-                    case 152:
-                    case 153:
-                    case 154:
-                    case 155:
-                    case 156:
-                    case 157:
-                    case 158:
-                    case 159:
-                    case 160:
-                    case 161:
-                    case 162:
-                    case 163:
-                    case 164:
-                        ImplicitHighAndExpression();
-                        break;
-                    default:
-                        jj_la1[27] = jj_gen;
-                        break;
-                }
-            }
-            catch (NotImplementedException jjte000)
-            {
-                //if (jjtc000)
-                //{
-                //    jjtree.ClearNodeScope(jjtn000);
-                //    jjtc000 = false;
-                //}
-                //else
-                //{
-                //    jjtree.PopNode();
-                //}
-                //if (jjte000 is ApplicationException)
-                //{
-                //    { if (true) throw (ApplicationException)jjte000; }
-                //}
-                //if (jjte000 is ParseException)
-                //{
-                //    { if (true) throw (ParseException)jjte000; }
-                //}
-                { if (true) throw (Exception)jjte000; }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void NotExpression()
-        {
-            /*@bgen(jjtree) NotExpression */
-            ASTNotExpression jjtn000 = new ASTNotExpression(JJTNOTEXPRESSION);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); jjtn000.Type = SMARTSParserConstants.Default;
-            try
-            {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case NOT:
-                        Jj_consume_token(NOT);
-                        jjtn000.Type = SMARTSParserConstants.NOT;
-                        break;
-                    default:
                         jj_la1[28] = jj_gen;
                         break;
-                }
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case S_BOND:
-                    case T_BOND:
-                    case R_BOND:
-                    case c:
-                    case n:
-                    case o:
-                    case s:
-                    case p:
-                    case as_:
-                    case se:
-                    case B:
-                    case C:
-                    case N:
-                    case O:
-                    case F:
-                    case P:
-                    case S:
-                    case CL:
-                    case BR:
-                    case I:
-                    case WILDCARD:
-                    case a:
-                    case A:
-                    case CARET:
-                    case PLUS:
-                    case h:
-                    case D:
-                    case R:
-                    case r:
-                    case v:
-                    case X:
-                    case x:
-                    case G:
-                    case HX:
-                    case H:
-                    case HE:
-                    case LI:
-                    case BE:
-                    case NE:
-                    case NA:
-                    case MG:
-                    case AL:
-                    case SI:
-                    case AR:
-                    case K:
-                    case CA:
-                    case TI:
-                    case V:
-                    case CR:
-                    case MN:
-                    case FE:
-                    case CO:
-                    case NI:
-                    case CU:
-                    case ZN:
-                    case GA:
-                    case GE:
-                    case AS:
-                    case SE:
-                    case KR:
-                    case RB:
-                    case SR:
-                    case Y:
-                    case ZR:
-                    case NB:
-                    case MO:
-                    case TC:
-                    case RU:
-                    case RH:
-                    case PD:
-                    case AG:
-                    case CD:
-                    case IN:
-                    case SN:
-                    case SB:
-                    case TE:
-                    case XE:
-                    case CS:
-                    case BA:
-                    case LA:
-                    case HF:
-                    case TA:
-                    case W:
-                    case RE:
-                    case OS:
-                    case IR:
-                    case PT:
-                    case AU:
-                    case HG:
-                    case TL:
-                    case PB:
-                    case BI:
-                    case PO:
-                    case AT:
-                    case RN:
-                    case FR:
-                    case RA:
-                    case AC:
-                    case TH:
-                    case PA:
-                    case U:
-                    case PU:
-                    case AM:
-                    case CM:
-                    case BK:
-                    case CF:
-                    case ES:
-                    case FM:
-                    case MD:
-                    case NO:
-                    case LR:
-                    case NP:
-                    case CE:
-                    case ND:
-                    case PM:
-                    case SM:
-                    case EU:
-                    case GD:
-                    case TB:
-                    case DY:
-                    case HO:
-                    case ER:
-                    case TM:
-                    case YB:
-                    case LU:
-                    case PR:
-                    case SC:
-                    case 151:
-                    case 152:
-                    case 153:
-                    case 154:
-                    case 155:
-                    case 156:
-                    case 157:
-                    case 158:
-                    case 159:
-                    case 160:
-                    case 161:
-                    case 162:
-                    case 163:
-                    case 164:
-                        PrimitiveAtomExpression();
-                        break;
-                    case DOLLAR:
-                        RecursiveSmartsExpression();
-                        break;
-                    default:
-                        jj_la1[29] = jj_gen;
-                        Jj_consume_token(-1);
-                        throw new ParseException();
                 }
             }
             catch (Exception jjte000)
@@ -1762,10 +1290,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 else
                 {
                     jjtree.PopNode();
-                }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
                 }
                 if (jjte000 is ParseException)
                 {
@@ -1782,7 +1306,484 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void RecursiveSmartsExpression()
+         public void OrExpression()
+        {
+            /*@bgen(jjtree) OrExpression */
+            ASTOrExpression jjtn000 = new ASTOrExpression(JJTOREXPRESSION);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000);
+            try
+            {
+                ExplicitHighAndExpression();
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case OR:
+                        Jj_consume_token(OR);
+                        OrExpression();
+                        break;
+                    default:
+                        jj_la1[29] = jj_gen;
+                        break;
+                }
+            }
+            catch (Exception jjte000)
+            {
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
+                { if (true) throw (Exception)jjte000; }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void ExplicitHighAndExpression()
+        {
+            /*@bgen(jjtree) ExplicitHighAndExpression */
+            ASTExplicitHighAndExpression jjtn000 = new ASTExplicitHighAndExpression(JJTEXPLICITHIGHANDEXPRESSION);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000);
+            try
+            {
+                ImplicitHighAndExpression();
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case H_AND:
+                        Jj_consume_token(H_AND);
+                        ExplicitHighAndExpression();
+                        break;
+                    default:
+                        jj_la1[30] = jj_gen;
+                        break;
+                }
+            }
+            catch (Exception jjte000)
+            {
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
+                { if (true) throw (Exception)jjte000; }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void ImplicitHighAndExpression()
+        {
+            /*@bgen(jjtree) ImplicitHighAndExpression */
+            ASTImplicitHighAndExpression jjtn000 = new ASTImplicitHighAndExpression(JJTIMPLICITHIGHANDEXPRESSION);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000);
+            try
+            {
+                NotExpression();
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case NOT:
+                    case S_BOND:
+                    case T_BOND:
+                    case R_BOND:
+                    case c:
+                    case n:
+                    case o:
+                    case s:
+                    case p:
+                    case as_:
+                    case se:
+                    case B:
+                    case C:
+                    case N:
+                    case O:
+                    case F:
+                    case P:
+                    case S:
+                    case CL:
+                    case BR:
+                    case I:
+                    case WILDCARD:
+                    case a:
+                    case A:
+                    case CARET:
+                    case DOLLAR:
+                    case PLUS:
+                    case h:
+                    case D:
+                    case R:
+                    case r:
+                    case v:
+                    case X:
+                    case x:
+                    case G:
+                    case HX:
+                    case H:
+                    case HE:
+                    case LI:
+                    case BE:
+                    case NE:
+                    case NA:
+                    case MG:
+                    case AL:
+                    case SI:
+                    case AR:
+                    case K:
+                    case CA:
+                    case TI:
+                    case V:
+                    case CR:
+                    case MN:
+                    case FE:
+                    case CO:
+                    case NI:
+                    case CU:
+                    case ZN:
+                    case GA:
+                    case GE:
+                    case AS:
+                    case SE:
+                    case KR:
+                    case RB:
+                    case SR:
+                    case Y:
+                    case ZR:
+                    case NB:
+                    case MO:
+                    case TC:
+                    case RU:
+                    case RH:
+                    case PD:
+                    case AG:
+                    case CD:
+                    case IN:
+                    case SN:
+                    case SB:
+                    case TE:
+                    case XE:
+                    case CS:
+                    case BA:
+                    case LA:
+                    case HF:
+                    case TA:
+                    case W:
+                    case RE:
+                    case OS:
+                    case IR:
+                    case PT:
+                    case AU:
+                    case HG:
+                    case TL:
+                    case PB:
+                    case BI:
+                    case PO:
+                    case AT:
+                    case RN:
+                    case FR:
+                    case RA:
+                    case AC:
+                    case TH:
+                    case PA:
+                    case U:
+                    case PU:
+                    case AM:
+                    case CM:
+                    case BK:
+                    case CF:
+                    case ES:
+                    case FM:
+                    case MD:
+                    case NO:
+                    case LR:
+                    case NP:
+                    case CE:
+                    case ND:
+                    case PM:
+                    case SM:
+                    case EU:
+                    case GD:
+                    case TB:
+                    case DY:
+                    case HO:
+                    case ER:
+                    case TM:
+                    case YB:
+                    case LU:
+                    case PR:
+                    case SC:
+                    case 150:
+                    case 151:
+                    case 152:
+                    case 153:
+                    case 154:
+                    case 155:
+                    case 156:
+                    case 157:
+                    case 158:
+                    case 159:
+                    case 160:
+                    case 161:
+                    case 162:
+                    case 163:
+                        ImplicitHighAndExpression();
+                        break;
+                    default:
+                        jj_la1[31] = jj_gen;
+                        break;
+                }
+            }
+            catch (Exception jjte000)
+            {
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
+                { if (true) throw (Exception)jjte000; }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void NotExpression()
+        {
+            /*@bgen(jjtree) NotExpression */
+            ASTNotExpression jjtn000 = new ASTNotExpression(JJTNOTEXPRESSION);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000); jjtn000.Type = SMARTSParserConstants.Default;
+            try
+            {
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case NOT:
+                        Jj_consume_token(NOT);
+                        jjtn000.Type = SMARTSParserConstants.NOT;
+                        break;
+                    default:
+                        jj_la1[32] = jj_gen;
+                        break;
+                }
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case S_BOND:
+                    case T_BOND:
+                    case R_BOND:
+                    case c:
+                    case n:
+                    case o:
+                    case s:
+                    case p:
+                    case as_:
+                    case se:
+                    case B:
+                    case C:
+                    case N:
+                    case O:
+                    case F:
+                    case P:
+                    case S:
+                    case CL:
+                    case BR:
+                    case I:
+                    case WILDCARD:
+                    case a:
+                    case A:
+                    case CARET:
+                    case PLUS:
+                    case h:
+                    case D:
+                    case R:
+                    case r:
+                    case v:
+                    case X:
+                    case x:
+                    case G:
+                    case HX:
+                    case H:
+                    case HE:
+                    case LI:
+                    case BE:
+                    case NE:
+                    case NA:
+                    case MG:
+                    case AL:
+                    case SI:
+                    case AR:
+                    case K:
+                    case CA:
+                    case TI:
+                    case V:
+                    case CR:
+                    case MN:
+                    case FE:
+                    case CO:
+                    case NI:
+                    case CU:
+                    case ZN:
+                    case GA:
+                    case GE:
+                    case AS:
+                    case SE:
+                    case KR:
+                    case RB:
+                    case SR:
+                    case Y:
+                    case ZR:
+                    case NB:
+                    case MO:
+                    case TC:
+                    case RU:
+                    case RH:
+                    case PD:
+                    case AG:
+                    case CD:
+                    case IN:
+                    case SN:
+                    case SB:
+                    case TE:
+                    case XE:
+                    case CS:
+                    case BA:
+                    case LA:
+                    case HF:
+                    case TA:
+                    case W:
+                    case RE:
+                    case OS:
+                    case IR:
+                    case PT:
+                    case AU:
+                    case HG:
+                    case TL:
+                    case PB:
+                    case BI:
+                    case PO:
+                    case AT:
+                    case RN:
+                    case FR:
+                    case RA:
+                    case AC:
+                    case TH:
+                    case PA:
+                    case U:
+                    case PU:
+                    case AM:
+                    case CM:
+                    case BK:
+                    case CF:
+                    case ES:
+                    case FM:
+                    case MD:
+                    case NO:
+                    case LR:
+                    case NP:
+                    case CE:
+                    case ND:
+                    case PM:
+                    case SM:
+                    case EU:
+                    case GD:
+                    case TB:
+                    case DY:
+                    case HO:
+                    case ER:
+                    case TM:
+                    case YB:
+                    case LU:
+                    case PR:
+                    case SC:
+                    case 150:
+                    case 151:
+                    case 152:
+                    case 153:
+                    case 154:
+                    case 155:
+                    case 156:
+                    case 157:
+                    case 158:
+                    case 159:
+                    case 160:
+                    case 161:
+                    case 162:
+                    case 163:
+                        PrimitiveAtomExpression();
+                        break;
+                    case DOLLAR:
+                        RecursiveSmartsExpression();
+                        break;
+                    default:
+                        jj_la1[33] = jj_gen;
+                        Jj_consume_token(-1);
+                        throw new ParseException();
+                }
+            }
+            catch (Exception jjte000)
+            {
+                if (jjtc000)
+                {
+                    jjtree.ClearNodeScope(jjtn000);
+                    jjtc000 = false;
+                }
+                else
+                {
+                    jjtree.PopNode();
+                }
+                if (jjte000 is ParseException)
+                {
+                    { if (true) throw (ParseException)jjte000; }
+                }
+                { if (true) throw (Exception)jjte000; }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void RecursiveSmartsExpression()
         {
             /*@bgen(jjtree) RecursiveSmartsExpression */
             ASTRecursiveSmartsExpression jjtn000 = new ASTRecursiveSmartsExpression(JJTRECURSIVESMARTSEXPRESSION);
@@ -1810,10 +1811,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 {
                     jjtree.PopNode();
                 }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
-                }
                 if (jjte000 is ParseException)
                 {
                     { if (true) throw (ParseException)jjte000; }
@@ -1829,9 +1826,9 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void PrimitiveAtomExpression()
+         public void PrimitiveAtomExpression()
         {
-            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
             {
                 case c:
                 case n:
@@ -1979,6 +1976,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                     break;
                 case S_BOND:
                 case PLUS:
+                case 150:
                 case 151:
                 case 152:
                 case 153:
@@ -1992,7 +1990,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case 161:
                 case 162:
                 case 163:
-                case 164:
                     Charge();
                     break;
                 case T_BOND:
@@ -2011,13 +2008,13 @@ namespace NCDK.Smiles.SMARTS.Parser
                     HybridizationNumber();
                     break;
                 default:
-                    jj_la1[30] = jj_gen;
+                    jj_la1[34] = jj_gen;
                     Jj_consume_token(-1);
                     throw new ParseException();
             }
         }
 
-        public void TotalHCount()
+         public void TotalHCount()
         {
             /*@bgen(jjtree) TotalHCount */
             ASTTotalHCount jjtn000 = new ASTTotalHCount(JJTTOTALHCOUNT);
@@ -2027,52 +2024,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 Jj_consume_token(H);
                 jjtn000.Count = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case DIGIT:
-                        label_5:
-                        while (true)
-                        {
-                            Jj_consume_token(DIGIT);
-                            digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                            {
-                                case DIGIT:
-                                    ;
-                                    break;
-                                default:
-                                    jj_la1[31] = jj_gen;
-                                    goto break_label_5;
-                            }
-                        }
-                        break_label_5:;
-                        jjtn000.Count = int.Parse(digits.ToString());
-                        break;
-                    default:
-                        jj_la1[32] = jj_gen;
-                        break;
-                }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void ImplicitHCount()
-        {
-            /*@bgen(jjtree) ImplicitHCount */
-            ASTImplicitHCount jjtn000 = new ASTImplicitHCount(JJTIMPLICITHCOUNT);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
-            try
-            {
-                Jj_consume_token(h);
-                jjtn000.Count = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case DIGIT:
                         label_6:
@@ -2080,63 +2032,18 @@ namespace NCDK.Smiles.SMARTS.Parser
                         {
                             Jj_consume_token(DIGIT);
                             digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                            {
-                                case DIGIT:
-                                    ;
-                                    break;
-                                default:
-                                    jj_la1[33] = jj_gen;
-                                    goto break_label_6;
-                            }
-                        }
-                        break_label_6:;
-                        jjtn000.Count = int.Parse(digits.ToString());
-                        break;
-                    default:
-                        jj_la1[34] = jj_gen;
-                        break;
-                }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void ExplicitConnectivity()
-        {
-            /*@bgen(jjtree) ExplicitConnectivity */
-            ASTExplicitConnectivity jjtn000 = new ASTExplicitConnectivity(JJTEXPLICITCONNECTIVITY);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
-            try
-            {
-                Jj_consume_token(D);
-                jjtn000.NumOfConnection = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case DIGIT:
-                        label_7:
-                        while (true)
-                        {
-                            Jj_consume_token(DIGIT);
-                            digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
                                     ;
                                     break;
                                 default:
                                     jj_la1[35] = jj_gen;
-                                    goto break_label_7;
+                                    goto break_label_6;
                             }
                         }
-                        break_label_7:;
-                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
+                        break_label_6:
+                        jjtn000.Count = int.Parse(digits.ToString());
                         break;
                     default:
                         jj_la1[36] = jj_gen;
@@ -2152,7 +2059,97 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void AtomicNumber()
+         public void ImplicitHCount()
+        {
+            /*@bgen(jjtree) ImplicitHCount */
+            ASTImplicitHCount jjtn000 = new ASTImplicitHCount(JJTIMPLICITHCOUNT);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            try
+            {
+                Jj_consume_token(h);
+                jjtn000.Count = 1;
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case DIGIT:
+                        label_7:
+                        while (true)
+                        {
+                            Jj_consume_token(DIGIT);
+                            digits.Append(token.image);
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                            {
+                                case DIGIT:
+                                    ;
+                                    break;
+                                default:
+                                    jj_la1[37] = jj_gen;
+                                    goto break_label_7;
+                            }
+                        }
+                        break_label_7:
+                        jjtn000.Count = int.Parse(digits.ToString());
+                        break;
+                    default:
+                        jj_la1[38] = jj_gen;
+                        break;
+                }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void ExplicitConnectivity()
+        {
+            /*@bgen(jjtree) ExplicitConnectivity */
+            ASTExplicitConnectivity jjtn000 = new ASTExplicitConnectivity(JJTEXPLICITCONNECTIVITY);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            try
+            {
+                Jj_consume_token(D);
+                jjtn000.NumOfConnection = 1;
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case DIGIT:
+                        label_8:
+                        while (true)
+                        {
+                            Jj_consume_token(DIGIT);
+                            digits.Append(token.image);
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                            {
+                                case DIGIT:
+                                    ;
+                                    break;
+                                default:
+                                    jj_la1[39] = jj_gen;
+                                    goto break_label_8;
+                            }
+                        }
+                        break_label_8:
+                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
+                        break;
+                    default:
+                        jj_la1[40] = jj_gen;
+                        break;
+                }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void AtomicNumber()
         {
             /*@bgen(jjtree) AtomicNumber */
             ASTAtomicNumber jjtn000 = new ASTAtomicNumber(JJTATOMICNUMBER);
@@ -2161,22 +2158,22 @@ namespace NCDK.Smiles.SMARTS.Parser
             try
             {
                 Jj_consume_token(T_BOND);
-                label_8:
+                label_9:
                 while (true)
                 {
                     Jj_consume_token(DIGIT);
                     digits.Append(token.image);
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case DIGIT:
                             ;
                             break;
                         default:
-                            jj_la1[37] = jj_gen;
-                            goto break_label_8;
+                            jj_la1[41] = jj_gen;
+                            goto break_label_9;
                     }
                 }
-                break_label_8:;
+                break_label_9:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
                 jjtn000.Number = int.Parse(digits.ToString());
@@ -2190,7 +2187,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void HybridizationNumber()
+         public void HybridizationNumber()
         {
             /*@bgen(jjtree) HybrdizationNumber */
             ASTHybrdizationNumber jjtn000 = new ASTHybrdizationNumber(JJTHYBRDIZATIONNUMBER);
@@ -2215,7 +2212,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void Charge()
+         public void Charge()
         {
             /*@bgen(jjtree) Charge */
             ASTCharge jjtn000 = new ASTCharge(JJTCHARGE);
@@ -2227,151 +2224,151 @@ namespace NCDK.Smiles.SMARTS.Parser
                 {
                     Jj_consume_token(PLUS);
                     jjtn000.IsPositive = true; jjtn000.Charge = 1;
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case DIGIT:
-                            label_9:
+                            label_10:
                             while (true)
                             {
                                 Jj_consume_token(DIGIT);
                                 digits.Append(token.image);
-                                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                                 {
                                     case DIGIT:
                                         ;
                                         break;
                                     default:
-                                        jj_la1[38] = jj_gen;
-                                        goto break_label_9;
+                                        jj_la1[42] = jj_gen;
+                                        goto break_label_10;
                                 }
                             }
-                            break_label_9:;
+                            break_label_10:
                             jjtn000.Charge = int.Parse(digits.ToString());
                             break;
                         default:
-                            jj_la1[39] = jj_gen;
+                            jj_la1[43] = jj_gen;
                             break;
                     }
                 }
                 else
                 {
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case S_BOND:
                             Jj_consume_token(S_BOND);
                             jjtn000.IsPositive = false; jjtn000.Charge = 1;
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
-                                    label_10:
+                                    label_11:
                                     while (true)
                                     {
                                         Jj_consume_token(DIGIT);
                                         digits.Append(token.image);
-                                        switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                                        switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                                         {
                                             case DIGIT:
                                                 ;
                                                 break;
                                             default:
-                                                jj_la1[40] = jj_gen;
-                                                goto break_label_10;
+                                                jj_la1[44] = jj_gen;
+                                               goto break_label_11;
                                         }
                                     }
-                                    break_label_10:;
+                                    break_label_11:
                                     jjtn000.Charge = int.Parse(digits.ToString());
                                     break;
                                 default:
-                                    jj_la1[41] = jj_gen;
+                                    jj_la1[45] = jj_gen;
                                     break;
                             }
+                            break;
+                        case 150:
+                            Jj_consume_token(150);
+                            jjtree.CloseNodeScope(jjtn000, true);
+                            jjtc000 = false;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 2;
                             break;
                         case 151:
                             Jj_consume_token(151);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 2;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 3;
                             break;
                         case 152:
                             Jj_consume_token(152);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 3;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 4;
                             break;
                         case 153:
                             Jj_consume_token(153);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 4;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 5;
                             break;
                         case 154:
                             Jj_consume_token(154);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 5;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 6;
                             break;
                         case 155:
                             Jj_consume_token(155);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 6;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 7;
                             break;
                         case 156:
                             Jj_consume_token(156);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 7;
+                            jjtn000.IsPositive = false; jjtn000.Charge = 8;
                             break;
                         case 157:
                             Jj_consume_token(157);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = false; jjtn000.Charge = 8;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 2;
                             break;
                         case 158:
                             Jj_consume_token(158);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 2;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 3;
                             break;
                         case 159:
                             Jj_consume_token(159);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 3;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 4;
                             break;
                         case 160:
                             Jj_consume_token(160);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 4;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 5;
                             break;
                         case 161:
                             Jj_consume_token(161);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 5;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 6;
                             break;
                         case 162:
                             Jj_consume_token(162);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 6;
+                            jjtn000.IsPositive = true; jjtn000.Charge = 7;
                             break;
                         case 163:
                             Jj_consume_token(163);
                             jjtree.CloseNodeScope(jjtn000, true);
                             jjtc000 = false;
-                            jjtn000.IsPositive = true; jjtn000.Charge = 7;
-                            break;
-                        case 164:
-                            Jj_consume_token(164);
-                            jjtree.CloseNodeScope(jjtn000, true);
-                            jjtc000 = false;
                             jjtn000.IsPositive = true; jjtn000.Charge = 8;
                             break;
                         default:
-                            jj_la1[42] = jj_gen;
+                            jj_la1[46] = jj_gen;
                             Jj_consume_token(-1);
                             throw new ParseException();
                     }
@@ -2386,7 +2383,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void RingConnectivity()
+         public void RingConnectivity()
         {
             /*@bgen(jjtree) RingConnectivity */
             ASTRingConnectivity jjtn000 = new ASTRingConnectivity(JJTRINGCONNECTIVITY);
@@ -2396,28 +2393,28 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 Jj_consume_token(x);
                 jjtn000.NumOfConnection = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case DIGIT:
-                        label_11:
+                        label_12:
                         while (true)
                         {
                             Jj_consume_token(DIGIT);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
                                     ;
                                     break;
                                 default:
-                                    jj_la1[43] = jj_gen;
-                                    goto break_label_11;
+                                    jj_la1[47] = jj_gen;
+                                    goto break_label_12;
                             }
                         }
-                        break_label_11:;
+                        break_label_12:
                         jjtn000.NumOfConnection = int.Parse(token.image);
                         break;
                     default:
-                        jj_la1[44] = jj_gen;
+                        jj_la1[48] = jj_gen;
                         break;
                 }
             }
@@ -2430,7 +2427,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void PeriodicGroupNumber()
+         public void PeriodicGroupNumber()
         {
             /*@bgen(jjtree) PeriodicGroupNumber */
             ASTPeriodicGroupNumber jjtn000 = new ASTPeriodicGroupNumber(JJTPERIODICGROUPNUMBER);
@@ -2440,27 +2437,27 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 Jj_consume_token(G);
 
-                label_12:
+                label_13:
                 while (true)
                 {
                     Jj_consume_token(DIGIT);
                     digits.Append(token.image);
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case DIGIT:
                             ;
                             break;
                         default:
-                            jj_la1[45] = jj_gen;
-                            goto break_label_12;
+                            jj_la1[49] = jj_gen;
+                            goto break_label_13;
                     }
                 }
-                break_label_12:;
+                break_label_13:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
                 int tmpInt = int.Parse(digits.ToString());
                 if (tmpInt < 1 || tmpInt > 18) { if (true) throw new ParseException("Invalid group number"); }
-                jjtn000.GroupNumber = int.Parse(digits.ToString());
+                jjtn000.GroupNumber= int.Parse(digits.ToString());
             }
             finally
             {
@@ -2471,7 +2468,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void TotalConnectivity()
+         public void TotalConnectivity()
         {
             /*@bgen(jjtree) TotalConnectivity */
             ASTTotalConnectivity jjtn000 = new ASTTotalConnectivity(JJTTOTALCONNECTIVITY);
@@ -2481,52 +2478,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 Jj_consume_token(X);
                 jjtn000.NumOfConnection = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case DIGIT:
-                        label_13:
-                        while (true)
-                        {
-                            Jj_consume_token(DIGIT);
-                            digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                            {
-                                case DIGIT:
-                                    ;
-                                    break;
-                                default:
-                                    jj_la1[46] = jj_gen;
-                                    goto break_label_13;
-                            }
-                        }
-                        break_label_13:;
-                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
-                        break;
-                    default:
-                        jj_la1[47] = jj_gen;
-                        break;
-                }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void Valence()
-        {
-            /*@bgen(jjtree) Valence */
-            ASTValence jjtn000 = new ASTValence(JJTVALENCE);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
-            try
-            {
-                Jj_consume_token(v);
-                jjtn000.Order = 1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case DIGIT:
                         label_14:
@@ -2534,63 +2486,18 @@ namespace NCDK.Smiles.SMARTS.Parser
                         {
                             Jj_consume_token(DIGIT);
                             digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                            {
-                                case DIGIT:
-                                    ;
-                                    break;
-                                default:
-                                    jj_la1[48] = jj_gen;
-                                    goto break_label_14;
-                            }
-                        }
-                        break_label_14:;
-                        jjtn000.Order = int.Parse(digits.ToString());
-                        break;
-                    default:
-                        jj_la1[49] = jj_gen;
-                        break;
-                }
-            }
-            finally
-            {
-                if (jjtc000)
-                {
-                    jjtree.CloseNodeScope(jjtn000, true);
-                }
-            }
-        }
-
-        public void RingMembership()
-        {
-            /*@bgen(jjtree) RingMembership */
-            ASTRingMembership jjtn000 = new ASTRingMembership(JJTRINGMEMBERSHIP);
-            bool jjtc000 = true;
-            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
-            try
-            {
-                Jj_consume_token(R);
-                jjtn000.NumOfMembership = -1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
-                {
-                    case DIGIT:
-                        label_15:
-                        while (true)
-                        {
-                            Jj_consume_token(DIGIT);
-                            digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
                                     ;
                                     break;
                                 default:
                                     jj_la1[50] = jj_gen;
-                                    goto break_label_15;
+                                    goto break_label_14;
                             }
                         }
-                        break_label_15:;
-                        jjtn000.NumOfMembership = int.Parse(digits.ToString());
+                        break_label_14:
+                        jjtn000.NumOfConnection = int.Parse(digits.ToString());
                         break;
                     default:
                         jj_la1[51] = jj_gen;
@@ -2606,36 +2513,36 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void SmallestRingSize()
+         public void Valence()
         {
-            /*@bgen(jjtree) SmallestRingSize */
-            ASTSmallestRingSize jjtn000 = new ASTSmallestRingSize(JJTSMALLESTRINGSIZE);
+            /*@bgen(jjtree) Valence */
+            ASTValence jjtn000 = new ASTValence(JJTVALENCE);
             bool jjtc000 = true;
             jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                Jj_consume_token(r);
-                jjtn000.Size = -1;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                Jj_consume_token(v);
+                jjtn000.Order = 1;
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case DIGIT:
-                        label_16:
+                        label_15:
                         while (true)
                         {
                             Jj_consume_token(DIGIT);
                             digits.Append(token.image);
-                            switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                             {
                                 case DIGIT:
                                     ;
                                     break;
                                 default:
                                     jj_la1[52] = jj_gen;
-                                    goto break_label_16;
+                                    goto break_label_15;
                             }
                         }
-                        break_label_16:;
-                        jjtn000.Size = int.Parse(digits.ToString());
+                        break_label_15:
+                        jjtn000.Order = int.Parse(digits.ToString());
                         break;
                     default:
                         jj_la1[53] = jj_gen;
@@ -2651,7 +2558,97 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void Aliphatic()
+         public void RingMembership()
+        {
+            /*@bgen(jjtree) RingMembership */
+            ASTRingMembership jjtn000 = new ASTRingMembership(JJTRINGMEMBERSHIP);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            try
+            {
+                Jj_consume_token(R);
+                jjtn000.NumOfMembership = -1;
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case DIGIT:
+                        label_16:
+                        while (true)
+                        {
+                            Jj_consume_token(DIGIT);
+                            digits.Append(token.image);
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                            {
+                                case DIGIT:
+                                    ;
+                                    break;
+                                default:
+                                    jj_la1[54] = jj_gen;
+                                    goto break_label_16;
+                            }
+                        }
+                        break_label_16:
+                        jjtn000.NumOfMembership = int.Parse(digits.ToString());
+                        break;
+                    default:
+                        jj_la1[55] = jj_gen;
+                        break;
+                }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void SmallestRingSize()
+        {
+            /*@bgen(jjtree) SmallestRingSize */
+            ASTSmallestRingSize jjtn000 = new ASTSmallestRingSize(JJTSMALLESTRINGSIZE);
+            bool jjtc000 = true;
+            jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
+            try
+            {
+                Jj_consume_token(r);
+                jjtn000.Size = -1;
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                {
+                    case DIGIT:
+                        label_17:
+                        while (true)
+                        {
+                            Jj_consume_token(DIGIT);
+                            digits.Append(token.image);
+                            switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
+                            {
+                                case DIGIT:
+                                    ;
+                                    break;
+                                default:
+                                    jj_la1[56] = jj_gen;
+                                    goto break_label_17;
+                            }
+                        }
+                        break_label_17:
+                        jjtn000.Size = int.Parse(digits.ToString());
+                        break;
+                    default:
+                        jj_la1[57] = jj_gen;
+                        break;
+                }
+            }
+            finally
+            {
+                if (jjtc000)
+                {
+                    jjtree.CloseNodeScope(jjtn000, true);
+                }
+            }
+        }
+
+         public void Aliphatic()
         {
             /*@bgen(jjtree) Aliphatic */
             ASTAliphatic jjtn000 = new ASTAliphatic(JJTALIPHATIC);
@@ -2670,7 +2667,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void NonCHHeavyAtom()
+         public void NonCHHeavyAtom()
         {
             /*@bgen(jjtree) NonCHHeavyAtom */
             ASTNonCHHeavyAtom jjtn000 = new ASTNonCHHeavyAtom(JJTNONCHHEAVYATOM);
@@ -2689,7 +2686,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void Aromatic()
+         public void Aromatic()
         {
             /*@bgen(jjtree) Aromatic */
             ASTAromatic jjtn000 = new ASTAromatic(JJTAROMATIC);
@@ -2708,7 +2705,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void AnyAtom()
+         public void AnyAtom()
         {
             /*@bgen(jjtree) AnyAtom */
             ASTAnyAtom jjtn000 = new ASTAnyAtom(JJTANYATOM);
@@ -2727,7 +2724,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void AtomicMass()
+         public void AtomicMass()
         {
             /*@bgen(jjtree) AtomicMass */
             ASTAtomicMass jjtn000 = new ASTAtomicMass(JJTATOMICMASS);
@@ -2735,22 +2732,22 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000); StringBuilder digits = new StringBuilder();
             try
             {
-                label_17:
+                label_18:
                 while (true)
                 {
                     Jj_consume_token(DIGIT);
                     digits.Append(token.image);
-                    switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                    switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                     {
                         case DIGIT:
                             ;
                             break;
                         default:
-                            jj_la1[54] = jj_gen;
-                            goto break_label_17;
+                            jj_la1[58] = jj_gen;
+                            goto break_label_18;
                     }
                 }
-                break_label_17:;
+                break_label_18:
                 jjtree.CloseNodeScope(jjtn000, true);
                 jjtc000 = false;
                 jjtn000.Mass = int.Parse(digits.ToString());
@@ -2764,7 +2761,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void RingIdentifier()
+         public void RingIdentifier()
         {
             /*@bgen(jjtree) RingIdentifier */
             ASTRingIdentifier jjtn000 = new ASTRingIdentifier(JJTRINGIDENTIFIER);
@@ -2786,10 +2783,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                 {
                     jjtree.PopNode();
                 }
-                if (jjte000 is ApplicationException)
-                {
-                    { if (true) throw (ApplicationException)jjte000; }
-                }
                 if (jjte000 is ParseException)
                 {
                     { if (true) throw (ParseException)jjte000; }
@@ -2805,7 +2798,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void Chirality()
+         public void Chirality()
         {
             /*@bgen(jjtree) Chirality */
             ASTChirality jjtn000 = new ASTChirality(JJTCHIRALITY);
@@ -2815,24 +2808,24 @@ namespace NCDK.Smiles.SMARTS.Parser
             {
                 Jj_consume_token(R_BOND);
                 jjtn000.IsClockwise = false;
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case R_BOND:
                         Jj_consume_token(R_BOND);
                         jjtn000.IsClockwise = true;
                         break;
                     default:
-                        jj_la1[55] = jj_gen;
+                        jj_la1[59] = jj_gen;
                         break;
                 }
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case Q_MARK:
                         Jj_consume_token(Q_MARK);
-                        jjtn000.IsUnspecified = true;
+                        jjtn000.IsUnspecified= true;
                         break;
                     default:
-                        jj_la1[56] = jj_gen;
+                        jj_la1[60] = jj_gen;
                         break;
                 }
             }
@@ -2845,7 +2838,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             }
         }
 
-        public void NoHydrogenElement()
+         public void NoHydrogenElement()
         {
             /*@bgen(jjtree) Element */
             ASTElement jjtn000 = new ASTElement(JJTELEMENT);
@@ -2853,7 +2846,7 @@ namespace NCDK.Smiles.SMARTS.Parser
             jjtree.OpenNodeScope(jjtn000);
             try
             {
-                switch ((jj_ntk == -1) ? JJ_ntk() : jj_ntk)
+                switch ((jj_ntk == -1) ? Jj_ntk() : jj_ntk)
                 {
                     case HE:
                         Jj_consume_token(HE);
@@ -3183,7 +3176,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                         Jj_consume_token(PR);
                         break;
                     default:
-                        jj_la1[57] = jj_gen;
+                        jj_la1[61] = jj_gen;
                         Jj_consume_token(-1);
                         throw new ParseException();
                 }
@@ -3204,34 +3197,16 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             jj_la = xla; jj_lastpos = jj_scanpos = token;
             try { return !Jj_3_1(); }
-            catch (LookaheadSuccess) { return true; }
-            finally { Jj_save(0, xla); }
+    catch (LookaheadSuccess) { return true; }
+    finally { Jj_save(0, xla); }
         }
 
         private bool Jj_2_2(int xla)
         {
             jj_la = xla; jj_lastpos = jj_scanpos = token;
             try { return !Jj_3_2(); }
-            catch (LookaheadSuccess) { return true; }
-            finally { Jj_save(1, xla); }
-        }
-
-        private bool Jj_3R_19()
-        {
-            if (Jj_scan_token(DIGIT)) return true;
-            return false;
-        }
-
-        private bool Jj_3R_18()
-        {
-            Token xsp;
-            if (Jj_3R_19()) return true;
-            while (true)
-            {
-                xsp = jj_scanpos;
-                if (Jj_3R_19()) { jj_scanpos = xsp; break; }
-            }
-            return false;
+            catch  (LookaheadSuccess) { return true; }
+    finally { Jj_save(1, xla); }
         }
 
         private bool Jj_3_1()
@@ -3245,7 +3220,25 @@ namespace NCDK.Smiles.SMARTS.Parser
             if (Jj_scan_token(PLUS)) return true;
             Token xsp;
             xsp = jj_scanpos;
-            if (Jj_3R_18()) jj_scanpos = xsp;
+            if (Jj_3R_19()) jj_scanpos = xsp;
+            return false;
+        }
+
+        private bool Jj_3R_20()
+        {
+            if (Jj_scan_token(DIGIT)) return true;
+            return false;
+        }
+
+        private bool Jj_3R_19()
+        {
+            Token xsp;
+            if (Jj_3R_20()) return true;
+            while (true)
+            {
+                xsp = jj_scanpos;
+                if (Jj_3R_20()) { jj_scanpos = xsp; break; }
+            }
             return false;
         }
 
@@ -3260,396 +3253,398 @@ namespace NCDK.Smiles.SMARTS.Parser
         private Token jj_scanpos, jj_lastpos;
         private int jj_la;
         private int jj_gen;
-        readonly private int[] jj_la1 = new int[58];
+        readonly private int[] jj_la1 = new int[62];
         static private int[] jj_la1_0;
         static private int[] jj_la1_1;
         static private int[] jj_la1_2;
         static private int[] jj_la1_3;
         static private int[] jj_la1_4;
         static private int[] jj_la1_5;
-        static SMARTSParser()
-        {
-            Jj_la1_init_0();
-            Jj_la1_init_1();
-            Jj_la1_init_2();
-            Jj_la1_init_3();
-            Jj_la1_init_4();
-            Jj_la1_init_5();
-        }
+        static SMARTSParser() {
+      Jj_la1_init_0();
+      Jj_la1_init_1();
+      Jj_la1_init_2();
+      Jj_la1_init_3();
+      Jj_la1_init_4();
+      Jj_la1_init_5();
+    }
         private static void Jj_la1_init_0()
         {
             unchecked
             {
-                jj_la1_0 = new int[] { 0x3, (int)0xffff0000, 0x0, (int)0xffff0000, 0x0, (int)0xffff0000, 0x0, 0x0, (int)0xffff0000, (int)0xffffffe0, 0xffe0, 0x0, (int)0xffff0000, 0xffe0, (int)0xffffffe0, 0x0, (int)0xffff0000, 0x4, 0x10, 0x8, 0xffe0, 0x20, 0xff80, (int)0xffff0000, 0x4, 0x10, 0x8, (int)0xffff9060, 0x20, (int)0xffff9040, (int)0xffff9040, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x40, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x8000, 0x0, (int)0xffff0000, };
+                jj_la1_0 = new int[] { (int)0x3, (int)0xffff0000, (int)0xffff0000, (int)0xffff0000, (int)0x0, (int)0x0, (int)0xffff0000, (int)0x0, (int)0x0, (int)0xffff0000, (int)0xffffffe0, (int)0xffe0, (int)0x0, (int)0xffff0000, (int)0xffe0, (int)0xffffffe0, (int)0x0, (int)0x0, (int)0x0, (int)0x2000, (int)0xffff0000, (int)0x4, (int)0x10, (int)0x8, (int)0xffe0, (int)0x20, (int)0xff80, (int)0xffff0000, (int)0x4, (int)0x10, (int)0x8, (int)0xffff9060, (int)0x20, (int)0xffff9040, (int)0xffff9040, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x40, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x8000, (int)0x0, (int)0xffff0000, };
             }
         }
         private static void Jj_la1_init_1()
         {
             unchecked
             {
-                jj_la1_1 = new int[] { 0x0, 0x18f, 0x0, 0x18f, 0x0, 0x18f, 0x0, 0x0, 0x18f, 0x9cf, 0x800, 0x40, 0xcf, 0x800, 0x9cf, 0x40, 0x8f, 0x0, 0x0, 0x0, 0x800, 0x0, 0x800, 0xf, 0x0, 0x0, 0x0, (int)0xfffff81f, 0x0, (int)0xfffff81f, (int)0xfffff01f, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x0, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x40, 0x0, 0x20, (int)0xff800001, };
+                jj_la1_1 = new int[] { (int)0x0, (int)0x18f, (int)0x18f, (int)0x18f, (int)0x0, (int)0x0, (int)0x18f, (int)0x0, (int)0x0, (int)0x18f, (int)0x9cf, (int)0x800, (int)0x40, (int)0xcf, (int)0x800, (int)0x9cf, (int)0x40, (int)0x20, (int)0x40, (int)0x0, (int)0x8f, (int)0x0, (int)0x0, (int)0x0, (int)0x800, (int)0x0, (int)0x800, (int)0xf, (int)0x0, (int)0x0, (int)0x0, (int)0xfffff81f, (int)0x0, (int)0xfffff81f, (int)0xfffff01f, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x0, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x40, (int)0x0, (int)0x20, (int)0xff800001, };
             }
         }
         private static void Jj_la1_init_2()
         {
             unchecked
             {
-                jj_la1_2 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, 0x0, (int)0xffffffff, (int)0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, };
+                jj_la1_2 = new int[] { (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffffffff, (int)0x0, (int)0xffffffff, (int)0xffffffff, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffffffff, };
             }
         }
         private static void Jj_la1_init_3()
         {
             unchecked
             {
-                jj_la1_3 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, 0x0, (int)0xffffffff, (int)0xffffffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xffffffff, };
+                jj_la1_3 = new int[] { (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffffffff, (int)0x0, (int)0xffffffff, (int)0xffffffff, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffffffff, };
             }
         }
         private static void Jj_la1_init_4()
         {
             unchecked
             {
-                jj_la1_4 = new int[] { 0x0, 0x0, 0x80000, 0x180000, 0x200000, 0x0, 0x200000, 0x200000, 0x0, 0x400000, 0x0, 0x400000, 0x400000, 0x0, 0x400000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xff87ffff, 0x0, (int)0xff87ffff, (int)0xff87ffff, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, (int)0xff800000, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x7ffff, };
+                jj_la1_4 = new int[] { (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x80000, (int)0x100000, (int)0x0, (int)0x100000, (int)0x100000, (int)0x0, (int)0x200000, (int)0x0, (int)0x200000, (int)0x200000, (int)0x0, (int)0x200000, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffc7ffff, (int)0x0, (int)0xffc7ffff, (int)0xffc7ffff, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xffc00000, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x7ffff, };
             }
         }
         private static void Jj_la1_init_5()
         {
-            jj_la1_5 = new int[] { 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1f, 0x0, 0x1f, 0x1f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x1f, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, };
-        }
-        readonly private JJCalls[] jj_2_rtns = new JJCalls[2];
-        private bool jj_rescan = false;
-        private int jj_gc = 0;
-
-        /// <summary>Constructor with Stream.</summary>
-        public SMARTSParser(System.IO.Stream stream)
-           : this(stream, null)
-        { }
-        /// <summary>Constructor with Stream and supplied encoding</summary>
-        public SMARTSParser(System.IO.Stream stream, string encoding)
-        {
-            try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch (ArgumentException e) { throw new ApplicationException(e.Message); }
-            token_source = new SMARTSParserTokenManager(jj_input_stream);
-            token = new Token();
-            jj_ntk = -1;
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        /// <summary>Reinitialise.</summary>
-        public void ReInit(System.IO.Stream stream)
-        {
-            ReInit(stream, null);
-        }
-        /// <summary>Reinitialise.</summary>
-        public void ReInit(System.IO.Stream stream, string encoding)
-        {
-            try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch (ArgumentException e) { throw new ApplicationException(e.Message); }
-            token_source.ReInit(jj_input_stream);
-            token = new Token();
-            jj_ntk = -1;
-            jjtree.Reset();
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        /// <summary>Constructor.</summary>
-        public SMARTSParser(System.IO.TextReader stream)
-        {
-            jj_input_stream = new SimpleCharStream(stream, 1, 1);
-            token_source = new SMARTSParserTokenManager(jj_input_stream);
-            token = new Token();
-            jj_ntk = -1;
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        /// <summary>Reinitialise.</summary>
-        public void ReInit(System.IO.TextReader stream)
-        {
-            jj_input_stream.ReInit(stream, 1, 1);
-            token_source.ReInit(jj_input_stream);
-            token = new Token();
-            jj_ntk = -1;
-            jjtree.Reset();
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        /// <summary>Constructor with generated Token Manager.</summary>
-        public SMARTSParser(SMARTSParserTokenManager tm)
-        {
-            token_source = tm;
-            token = new Token();
-            jj_ntk = -1;
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        /// <summary>Reinitialise.</summary>
-        public void ReInit(SMARTSParserTokenManager tm)
-        {
-            token_source = tm;
-            token = new Token();
-            jj_ntk = -1;
-            jjtree.Reset();
-            jj_gen = 0;
-            for (int i = 0; i < 58; i++) jj_la1[i] = -1;
-            for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
-        }
-
-        private Token Jj_consume_token(int kind)
-        {
-            Token oldToken;
-            if ((oldToken = token).next != null) token = token.next;
-            else token = token.next = token_source.GetNextToken();
-            jj_ntk = -1;
-            if (token.kind == kind)
+            unchecked
             {
-                jj_gen++;
-                if (++jj_gc > 100)
+                jj_la1_5 = new int[] { (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xf, (int)0x0, (int)0xf, (int)0xf, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0xf, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, (int)0x0, };
+            }
+        }
+    readonly private JJCalls[] jj_2_rtns = new JJCalls[2];
+    private bool jj_rescan = false;
+    private int jj_gc = 0;
+
+    /// <summary>Constructor with InputStream.</summary>
+    public SMARTSParser(Stream stream) : this(stream, null) {
+    }
+    /// <summary>Constructor with InputStream and supplied encoding</summary>
+    public SMARTSParser(Stream stream, string encoding)
+    {
+        try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch (ArgumentException e) { throw e; } // unsupported encoding
+        token_source = new SMARTSParserTokenManager(jj_input_stream);
+        token = new Token();
+        jj_ntk = -1;
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    /// <summary>Reinitialise.</summary>
+    public void ReInit(Stream stream)
+    {
+        ReInit(stream, null);
+    }
+    /// <summary>Reinitialise.</summary>
+    public void ReInit(Stream stream, string encoding)
+    {
+        try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(ArgumentException e) { throw e; }// unsupported encoding
+            token_source.ReInit(jj_input_stream);
+        token = new Token();
+        jj_ntk = -1;
+        jjtree.Reset();
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    /// <summary>Constructor.</summary>
+    public SMARTSParser(TextReader stream)
+    {
+        jj_input_stream = new SimpleCharStream(stream, 1, 1);
+        token_source = new SMARTSParserTokenManager(jj_input_stream);
+        token = new Token();
+        jj_ntk = -1;
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    /// <summary>Reinitialise.</summary>
+    public void ReInit(TextReader stream)
+    {
+        jj_input_stream.ReInit(stream, 1, 1);
+        token_source.ReInit(jj_input_stream);
+        token = new Token();
+        jj_ntk = -1;
+        jjtree.Reset();
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    /// <summary>Constructor with generated Token Manager.</summary>
+    public SMARTSParser(SMARTSParserTokenManager tm)
+    {
+        token_source = tm;
+        token = new Token();
+        jj_ntk = -1;
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    /// <summary>Reinitialise.</summary>
+    public void ReInit(SMARTSParserTokenManager tm)
+    {
+        token_source = tm;
+        token = new Token();
+        jj_ntk = -1;
+        jjtree.Reset();
+        jj_gen = 0;
+        for (int i = 0; i < 62; i++) jj_la1[i] = -1;
+        for (int i = 0; i < jj_2_rtns.Length; i++) jj_2_rtns[i] = new JJCalls();
+    }
+
+    private Token Jj_consume_token(int kind)
+    {
+        Token oldToken;
+        if ((oldToken = token).next != null) token = token.next;
+        else token = token.next = token_source.GetNextToken();
+        jj_ntk = -1;
+        if (token.kind == kind)
+        {
+            jj_gen++;
+            if (++jj_gc > 100)
+            {
+                jj_gc = 0;
+                for (int i = 0; i < jj_2_rtns.Length; i++)
                 {
-                    jj_gc = 0;
-                    for (int i = 0; i < jj_2_rtns.Length; i++)
+                    JJCalls c = jj_2_rtns[i];
+                    while (c != null)
                     {
-                        JJCalls c = jj_2_rtns[i];
-                        while (c != null)
-                        {
-                            if (c.gen < jj_gen) c.first = null;
-                            c = c.next;
-                        }
+                        if (c.gen < jj_gen) c.first = null;
+                        c = c.next;
                     }
                 }
-                return token;
             }
-            token = oldToken;
-            jj_kind = kind;
-            throw GenerateParseException();
-        }
-
-         private sealed class LookaheadSuccess : Exception { }
-        readonly private LookaheadSuccess jj_ls = new LookaheadSuccess();
-        private bool Jj_scan_token(int kind)
-        {
-            if (jj_scanpos == jj_lastpos)
-            {
-                jj_la--;
-                if (jj_scanpos.next == null)
-                {
-                    jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.GetNextToken();
-                }
-                else
-                {
-                    jj_lastpos = jj_scanpos = jj_scanpos.next;
-                }
-            }
-            else
-            {
-                jj_scanpos = jj_scanpos.next;
-            }
-            if (jj_rescan)
-            {
-                int i = 0; Token tok = token;
-                while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
-                if (tok != null) Jj_add_error_token(kind, i);
-            }
-            if (jj_scanpos.kind != kind) return true;
-            if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
-            return false;
-        }
-
-
-        /// <summary>Get the next Token.</summary>
-         public Token GetNextToken()
-        {
-            if (token.next != null) token = token.next;
-            else token = token.next = token_source.GetNextToken();
-            jj_ntk = -1;
-            jj_gen++;
             return token;
         }
-
-        /// <summary>Get the specific Token.</summary>
-         public Token GetToken(int index)
+        token = oldToken;
+        jj_kind = kind;
+        throw GenerateParseException();
+    }
+    
+     private sealed class LookaheadSuccess : Exception { }
+    readonly private LookaheadSuccess jj_ls = new LookaheadSuccess();
+    private bool Jj_scan_token(int kind)
+    {
+        if (jj_scanpos == jj_lastpos)
         {
-            Token t = token;
-            for (int i = 0; i < index; i++)
+            jj_la--;
+            if (jj_scanpos.next == null)
             {
-                if (t.next != null) t = t.next;
-                else t = t.next = token_source.GetNextToken();
+                jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.GetNextToken();
             }
-            return t;
-        }
-
-        private int JJ_ntk()
-        {
-            if ((jj_nt = token.next) == null)
-                return (jj_ntk = (token.next = token_source.GetNextToken()).kind);
             else
-                return (jj_ntk = jj_nt.kind);
-        }
-
-        private System.Collections.Generic.List<int[]> jj_expentries = new System.Collections.Generic.List<int[]>();
-        private int[] jj_expentry;
-        private int jj_kind = -1;
-        private int[] jj_lasttokens = new int[100];
-        private int jj_endpos;
-
-        private void Jj_add_error_token(int kind, int pos)
-        {
-            if (pos >= 100) return;
-            if (pos == jj_endpos + 1)
             {
-                jj_lasttokens[jj_endpos++] = kind;
+                jj_lastpos = jj_scanpos = jj_scanpos.next;
             }
-            else if (jj_endpos != 0)
+        }
+        else
+        {
+            jj_scanpos = jj_scanpos.next;
+        }
+        if (jj_rescan)
+        {
+            int i = 0; Token tok = token;
+            while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
+            if (tok != null) Jj_add_error_token(kind, i);
+        }
+        if (jj_scanpos.kind != kind) return true;
+        if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+        return false;
+    }
+
+    /// <summary>Get the next Token.</summary>
+     public Token GetNextToken()
+    {
+        if (token.next != null) token = token.next;
+        else token = token.next = token_source.GetNextToken();
+        jj_ntk = -1;
+        jj_gen++;
+        return token;
+    }
+
+    /// <summary>Get the specific Token.</summary>
+     public Token GetToken(int index)
+    {
+        Token t = token;
+        for (int i = 0; i < index; i++)
+        {
+            if (t.next != null) t = t.next;
+            else t = t.next = token_source.GetNextToken();
+        }
+        return t;
+    }
+
+    private int Jj_ntk()
+    {
+        if ((jj_nt = token.next) == null)
+            return (jj_ntk = (token.next = token_source.GetNextToken()).kind);
+        else
+            return (jj_ntk = jj_nt.kind);
+    }
+
+    private IList<int[]> jj_expentries = new List<int[]>();
+    private int[] jj_expentry;
+    private int jj_kind = -1;
+    private int[] jj_lasttokens = new int[100];
+    private int jj_endpos;
+
+    private void Jj_add_error_token(int kind, int pos)
+    {
+        if (pos >= 100) return;
+        if (pos == jj_endpos + 1)
+        {
+            jj_lasttokens[jj_endpos++] = kind;
+        }
+        else if (jj_endpos != 0)
+        {
+            jj_expentry = new int[jj_endpos];
+            for (int i = 0; i < jj_endpos; i++)
             {
-                jj_expentry = new int[jj_endpos];
-                for (int i = 0; i < jj_endpos; i++)
-                {
-                    jj_expentry[i] = jj_lasttokens[i];
-                }
-                jj_entries_loop: foreach (var oldentry in jj_expentries)
+                jj_expentry[i] = jj_lasttokens[i];
+            }
+            jj_entries_loop:
+            foreach (int[] oldentry in jj_expentries)
                 {
                     if (oldentry.Length == jj_expentry.Length)
+                {
+                    for (int i = 0; i < jj_expentry.Length; i++)
                     {
-                        for (int i = 0; i < jj_expentry.Length; i++)
+                        if (oldentry[i] != jj_expentry[i])
                         {
-                            if (oldentry[i] != jj_expentry[i])
-                            {
                                 goto continue_jj_entries_loop;
-                            }
-                        }
-                        jj_expentries.Add(jj_expentry);
-                        goto break_jj_entries_loop;
-                    }
-                    continue_jj_entries_loop:;
-                }
-                break_jj_entries_loop:;
-                if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
-            }
-        }
-
-        /// <summary>Generate ParseException.</summary>
-        public ParseException GenerateParseException()
-        {
-            jj_expentries.Clear();
-            bool[] la1tokens = new bool[165];
-            if (jj_kind >= 0)
-            {
-                la1tokens[jj_kind] = true;
-                jj_kind = -1;
-            }
-            for (int i = 0; i < 58; i++)
-            {
-                if (jj_la1[i] == jj_gen)
-                {
-                    for (int j = 0; j < 32; j++)
-                    {
-                        if ((jj_la1_0[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[j] = true;
-                        }
-                        if ((jj_la1_1[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[32 + j] = true;
-                        }
-                        if ((jj_la1_2[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[64 + j] = true;
-                        }
-                        if ((jj_la1_3[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[96 + j] = true;
-                        }
-                        if ((jj_la1_4[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[128 + j] = true;
-                        }
-                        if ((jj_la1_5[i] & (1 << j)) != 0)
-                        {
-                            la1tokens[160 + j] = true;
                         }
                     }
-                }
-            }
-            for (int i = 0; i < 165; i++)
-            {
-                if (la1tokens[i])
-                {
-                    jj_expentry = new int[1];
-                    jj_expentry[0] = i;
                     jj_expentries.Add(jj_expentry);
+                    goto break_jj_entries_loop;
                 }
+                    continue_jj_entries_loop:
+                    ;
             }
-            jj_endpos = 0;
-            Jj_rescan_token();
-            Jj_add_error_token(0, 0);
-            int[][] exptokseq = new int[jj_expentries.Count][];
-            for (int i = 0; i < jj_expentries.Count; i++)
-            {
-                exptokseq[i] = jj_expentries[i];
-            }
-            return new ParseException(token, exptokseq, tokenImage);
-        }
-
-        /// <summary>Enable tracing.</summary>
-        public void Enable_tracing()
-        {
-        }
-
-        /// <summary>Disable tracing.</summary>
-        public void Disable_tracing()
-        {
-        }
-
-        private void Jj_rescan_token()
-        {
-            jj_rescan = true;
-            for (int i = 0; i < 2; i++)
-            {
-                try
-                {
-                    JJCalls p = jj_2_rtns[i];
-                    do
-                    {
-                        if (p.gen > jj_gen)
-                        {
-                            jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
-                            switch (i)
-                            {
-                                case 0: Jj_3_1(); break;
-                                case 1: Jj_3_2(); break;
-                            }
-                        }
-                        p = p.next;
-                    } while (p != null);
-                }
-                catch (LookaheadSuccess) { }
-            }
-            jj_rescan = false;
-        }
-
-        private void Jj_save(int index, int xla)
-        {
-            JJCalls p = jj_2_rtns[index];
-            while (p.gen > jj_gen)
-            {
-                if (p.next == null) { p = p.next = new JJCalls(); break; }
-                p = p.next;
-            }
-            p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
-        }
-
-        sealed class JJCalls
-        {
-            public int gen;
-            public Token first;
-            public int arg;
-            public JJCalls next;
+                break_jj_entries_loop:
+            if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
         }
     }
+
+    /// <summary>Generate ParseException.</summary>
+    public ParseException GenerateParseException()
+    {
+        jj_expentries.Clear();
+        bool[] la1tokens = new bool[164];
+        if (jj_kind >= 0)
+        {
+            la1tokens[jj_kind] = true;
+            jj_kind = -1;
+        }
+        for (int i = 0; i < 62; i++)
+        {
+            if (jj_la1[i] == jj_gen)
+            {
+                for (int j = 0; j < 32; j++)
+                {
+                    if ((jj_la1_0[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[j] = true;
+                    }
+                    if ((jj_la1_1[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[32 + j] = true;
+                    }
+                    if ((jj_la1_2[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[64 + j] = true;
+                    }
+                    if ((jj_la1_3[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[96 + j] = true;
+                    }
+                    if ((jj_la1_4[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[128 + j] = true;
+                    }
+                    if ((jj_la1_5[i] & (1 << j)) != 0)
+                    {
+                        la1tokens[160 + j] = true;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 164; i++)
+        {
+            if (la1tokens[i])
+            {
+                jj_expentry = new int[1];
+                jj_expentry[0] = i;
+                jj_expentries.Add(jj_expentry);
+            }
+        }
+        jj_endpos = 0;
+        Jj_rescan_token();
+        Jj_add_error_token(0, 0);
+        int[][] exptokseq = new int[jj_expentries.Count][];
+        for (int i = 0; i < jj_expentries.Count; i++)
+        {
+            exptokseq[i] = jj_expentries[i];
+        }
+        return new ParseException(token, exptokseq, tokenImage);
+    }
+
+    /// <summary>Enable tracing.</summary>
+     public void Enable_tracing()
+    {
+    }
+
+    /// <summary>Disable tracing.</summary>
+     public void Disable_tracing()
+    {
+    }
+
+    private void Jj_rescan_token()
+    {
+        jj_rescan = true;
+        for (int i = 0; i < 2; i++)
+        {
+            try
+            {
+                JJCalls p = jj_2_rtns[i];
+                do
+                {
+                    if (p.gen > jj_gen)
+                    {
+                        jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
+                        switch (i)
+                        {
+                            case 0: Jj_3_1(); break;
+                            case 1: Jj_3_2(); break;
+                        }
+                    }
+                    p = p.next;
+                } while (p != null);
+            } catch (LookaheadSuccess ls) { }
+        }
+        jj_rescan = false;
+    }
+
+    private void Jj_save(int index, int xla)
+    {
+        JJCalls p = jj_2_rtns[index];
+        while (p.gen > jj_gen)
+        {
+            if (p.next == null) { p = p.next = new JJCalls(); break; }
+            p = p.next;
+        }
+        p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
+    }
+
+    sealed class JJCalls
+    {
+        internal int gen;
+            internal Token first;
+            internal int arg;
+            internal JJCalls next;
+    }
+
+}
 }

@@ -31,9 +31,7 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    /// </summary>
     [TestClass()]
     public class AtomContainerManipulatorTest : CDKTestCase
     {
@@ -48,9 +46,7 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(6, ringSubstructure.Bonds.Count);
         }
 
-        /// <summary>
         // @cdk.bug 1254
-        /// </summary>
         [TestMethod()]
         public void TestGetTotalHydrogenCount_IAtomContainer()
         {
@@ -189,6 +185,20 @@ namespace NCDK.Tools.Manipulator
             IAtomContainer ac = AtomContainerManipulator.RemoveHydrogens(mol);
             Assert.AreEqual(2, ac.Atoms.Count);
             Assert.IsTrue(ac.IsAromatic);
+        }
+
+        [TestMethod()]
+        public void DontSuppressHydrogensOnPseudoAtoms()
+        {
+            IAtomContainer mol = new AtomContainer(); // *[H]
+            mol.Atoms.Add(new PseudoAtom("*"));
+            mol.Atoms.Add(new Atom("H"));
+            mol.Atoms[0].ImplicitHydrogenCount = 0;
+            mol.Atoms[1].ImplicitHydrogenCount = 1;
+            mol.AddBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Single);
+            Assert.AreEqual(2, mol.Atoms.Count);
+            IAtomContainer ac = AtomContainerManipulator.RemoveHydrogens(mol);
+            Assert.AreEqual(2, ac.Atoms.Count);
         }
 
         private IAtomContainer GetChiralMolTemplate()
@@ -880,7 +890,6 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual(5,
                     AtomContainerManipulator.GetImplicitHydrogenCount(container),
                     "Adenine should have 5 implicit hydrogens");
-
         }
 
         [TestMethod()]

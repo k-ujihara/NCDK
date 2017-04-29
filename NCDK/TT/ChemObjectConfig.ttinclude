@@ -114,13 +114,13 @@
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
-                return EmptyProperties;
+                return emptyProperties;
             return this.properties;
         }
 
@@ -153,7 +153,7 @@
     {
 #>
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 <#+
     }
 #>

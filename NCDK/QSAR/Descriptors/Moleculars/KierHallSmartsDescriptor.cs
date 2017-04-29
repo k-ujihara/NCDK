@@ -294,7 +294,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:kierHallSmarts
     public class KierHallSmartsDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {

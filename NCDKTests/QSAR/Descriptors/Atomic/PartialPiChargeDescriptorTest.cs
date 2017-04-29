@@ -45,6 +45,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Methyl_Fluoride()
         {
             double[] testResult = { 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -82,6 +83,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         // @cdk.inchi InChI=1/C2H3F/c1-2-3/h2H,1H2
         // @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Fluoroethylene()
         {
             double[] testResult = { 0.0299, 0.0, -0.0299, 0.0, 0.0, 0.0 };
@@ -120,6 +122,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi  InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_FormicAcid()
         {
             double[] testResult = { 0.0221, -0.1193, 0.0972, 0.0, 0.0 };
@@ -158,6 +161,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         //  @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Fluorobenzene()
         {
             double[] testResult = { 0.0262, 0.0, -0.0101, 0.0, -0.006, 0.0, -0.0101, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -206,6 +210,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //  @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
         //  @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_Methoxyethylene()
         {
             double[] testResult = { -0.044, 0.0, 0.044, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -244,9 +249,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  A unit test for JUnit with 1-Methoxybutadiene
         /// </summary>
-        //  @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
-        //  @cdk.bug   1959099
+        // @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
+        // @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptor_1_Methoxybutadiene()
         {
             double[] testResult = { -0.0333, 0.0, -0.0399, 0.0, 0.0733, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -301,9 +307,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
 
         /// <summary>
         ///  A unit test for JUnit
-        ///  @cdk.bug   1959099
         /// </summary>
+        // @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptoCharge_1()
         {
             double[] testResult = { 0.0613, -0.0554, 0.0, -0.0059, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -334,10 +341,10 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// <summary>
         ///  A unit test for JUnit : n1ccccc1
         /// </summary>
-        ///
         //  @cdk.inchi InChI: InChI=1/C5H5N/c1-2-4-6-5-3-1/h1-5H
         //  @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescriptoCharge_2()
         {
             double[] testResult = { -0.0822, 0.02, 0.0, 0.0423, 0.0, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
@@ -414,6 +421,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         ///  @cdk.inchi InChI: InChI=1/C5H12O2/c1-2-7-5-3-4-6/h6H,2-5H2,1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialPiChargeDescripto4()
         {
             double[] testResult = { 0.0 };
@@ -434,8 +442,9 @@ namespace NCDK.QSAR.Descriptors.Atomic
             }
         }
 
-        //  @cdk.inchi InChI=1/C2H5NO/c1-2(3)4/h1H3,(H2,3,4)/f/h3H2
+        // @cdk.inchi InChI=1/C2H5NO/c1-2(3)4/h1H3,(H2,3,4)/f/h3H2
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestArticle1()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -469,6 +478,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         //  @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSousa()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -533,6 +543,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //  @cdk.inchi  InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
         //  @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBondNotConjugated()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -566,6 +577,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         //  @cdk.inchi InChI=1/C4H6O/c1-2-3-4-5/h2,4H,1,3H2
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestDifferentStarts()
         {
             SmilesParser sp = new SmilesParser(Default.ChemObjectBuilder.Instance);
@@ -598,6 +610,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         //  @cdk.inchi  InChI=1/C3H6/c1-3-2/h3H,1H2,2H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBondNotConjugated1()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -629,6 +642,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         //  @cdk.bug   1959099
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBondNotConjugated2()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();
@@ -662,6 +676,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         //  @cdk.bug   1959099
         //  @cdk.inchi
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestLangCalculation()
         {
             IAtomicDescriptor descriptor = new PartialPiChargeDescriptor();

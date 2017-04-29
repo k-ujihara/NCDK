@@ -45,7 +45,6 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2006-05-18
     // @cdk.module  qsarbond
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondPartialTCharge
     public class BondPartialTChargeDescriptor : AbstractBondDescriptor
     {

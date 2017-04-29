@@ -27,7 +27,6 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class PDBMLFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

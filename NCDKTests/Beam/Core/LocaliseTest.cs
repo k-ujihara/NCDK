@@ -130,7 +130,7 @@ namespace NCDK.Beam
         public void Biphenyl()
         {
             Test("c1ccccc1c1ccccc1", "C1=CC=CC=C1C2=CC=CC=C2");
-            Test("c1ccccc1-c1ccccc1", "C1=CC=CC=C1C2=CC=CC=C2");
+            Test("c1ccccc1-c1ccccc1", "C1=CC=CC=C1-C2=CC=CC=C2");
         }
 
         [TestMethod()]
@@ -170,8 +170,7 @@ namespace NCDK.Beam
         [TestMethod()]
         public void TrivalentBoronNoPiBonds() 
         {
-            Test("b1(C)ob(C)ob1(C)",
-             "B1(C)OB(C)OB1C");
+            Test("b1(C)ob(C)ob1(C)", "B1(C)OB(C)OB1C");
         }
 
         [TestMethod()]
@@ -260,10 +259,10 @@ namespace NCDK.Beam
         }
 
         [TestMethod()]
-        public void Mixing_IsAromatic_and_aliphatic()
+        public void Mixing_aromatic_and_aliphatic()
         {
             Test("c1=cc=cc=c1", "C1=CC=CC=C1");
-            Test("c-1c-cc-cc1", "C1=CC=CC=C1");
+            Test("c-1c-cc-cc1", "C-1=C-C=C-C=C1");
             Test("C:1:C:C:C:C:C1", "C1CCCCC1"); // XXX: not handled inplace
         }
 
@@ -276,13 +275,13 @@ namespace NCDK.Beam
             Test("c1=cc=cc=c1", "C1=CC=CC=C1");
             Test("c1=c:c:c:c:c1", "C1=CC=CC=C1");
             Test("c1=c:c=c:c:c1", "C1=CC=CC=C1");
-            Test("c1=c-c=c:c:c1", "C1=CC=CC=C1");
+            Test("c1=c-c=c:c:c1", "C1=C-C=CC=C1");
         }
 
         [TestMethod()]
         public void Fluorene()
         {
-            Test("C1c2ccccc2-c3ccccc13", "C1C2=CC=CC=C2C3=CC=CC=C13");
+            Test("C1c2ccccc2-c3ccccc13", "C1C2=CC=CC=C2-C3=CC=CC=C13");
             Test("C1c2ccccc2c3ccccc13", "C1C2=CC=CC=C2C3=CC=CC=C13");
         }
 
@@ -308,7 +307,7 @@ namespace NCDK.Beam
         public void Bo_25756()
         {
             Test("Nc1c2c3ccccc3c4cccc(cc1)c24",
-                 "NC1=C2C3=CC=CC=C3C=4C=CC=C(C=C1)C24");  // "NC1=C2C3=CC=CC=C3C4=CC=CC(C=C1)=C24");
+                        "NC1=C2C3=CC=CC=C3C=4C=CC=C(C=C1)C24");
         }
 
         /* Examples from http://www.daylight.com/dayhtml_tutorials/languages/smiles/smiles_examples.html */
@@ -324,7 +323,7 @@ namespace NCDK.Beam
         public void Xanax()
         {
             Test("Cc1nnc2CN=C(c3ccccc3)c4cc(Cl)ccc4-n12",
-                 "CC1=NN=C2CN=C(C3=CC=CC=C3)C4=CC(Cl)=CC=C4N12");
+                "CC1=NN=C2CN=C(C3=CC=CC=C3)C4=CC(Cl)=CC=C4-N12");
         }
 
         [TestMethod()]
@@ -501,12 +500,11 @@ namespace NCDK.Beam
             Assert.IsFalse(Localise.InSmallRing(g, g.CreateEdge(3, 6)));
         }
 
-
         static void Test(string delocalised, string localised)
         {
             Graph g = Graph.FromSmiles(delocalised);
             Graph h = Localise.GenerateLocalise(g);
-            Assert.AreEqual(h.ToSmiles(), localised);
+            Assert.AreEqual(localised, h.ToSmiles());   //fixed CDK
         }
     }
 }

@@ -36,7 +36,6 @@ namespace NCDK.Reactions.Types
     // @cdk.created    2006-06-09
     // @cdk.module     reaction
     // @cdk.githash
-    // @cdk.set        reaction-types
     public partial class HeterolyticCleavagePBReaction : AbstractHeterolyticCleavageReaction
     {
         /// <summary>

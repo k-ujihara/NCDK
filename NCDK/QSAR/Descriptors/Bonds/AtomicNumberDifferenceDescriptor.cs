@@ -32,7 +32,6 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2007-12-29
     // @cdk.module  qsarbond
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondAtomicNumberImbalance
     public class AtomicNumberDifferenceDescriptor : AbstractBondDescriptor, IBondDescriptor
     {

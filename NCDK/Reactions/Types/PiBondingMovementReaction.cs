@@ -34,7 +34,6 @@ namespace NCDK.Reactions.Types
     // @author         Miguel Rojas
     // @cdk.created    2007-02-02
     // @cdk.module     reaction
-    // @cdk.set        reaction-types
     // @cdk.githash
     public partial class PiBondingMovementReaction : ReactionEngine, IReactionProcess
     {

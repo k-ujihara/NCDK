@@ -330,7 +330,7 @@ namespace NCDK.Smiles.SMARTS.Parser
         }
         /// <summary>Constructor.</summary>
         public SimpleCharStream(System.IO.Stream dstream, string encoding, int startline,
-        int startcolumn, int buffersize)
+            int startcolumn, int buffersize)
           : this(encoding == null ? new System.IO.StreamReader(dstream) : new System.IO.StreamReader(dstream, System.Text.Encoding.GetEncoding(encoding)), startline, startcolumn, buffersize)
         { }
 

@@ -37,7 +37,7 @@ using NCDK.Dict;
 namespace NCDK.IO.CML
 {
     /// <summary>
-    /// Core CML 1.X and 2.X elements are parsed by this class.
+    /// Core CML 1.x and 2.x elements are parsed by this class (see <token>cdk-cite-WIL01</token>).
     ///
     /// <para>Please file a bug report if this parser fails to parse
     /// a certain element or attribute value in a valid CML document.</para>

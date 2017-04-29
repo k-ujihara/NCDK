@@ -104,6 +104,47 @@ namespace NCDK.Common.Primitives
             return ret;
         }
 
+        public static string ToSimpleString(double value, int maxZeroLength)
+        {
+            if (maxZeroLength < 0)
+                throw new ArgumentOutOfRangeException(nameof(maxZeroLength));
+
+            var v = value.ToString("F" + maxZeroLength.ToString());
+            bool needToCutZeros = v.StartsWith(value.ToString());
+
+            if (v.StartsWith("0."))
+                v = v.Substring(1);
+            else if (v.StartsWith("-0."))
+                v = "-" + v.Substring(2);
+            if (needToCutZeros)
+            {
+                // Need to cut tail zeros.
+                for (int i = v.Length; i > 0; i--)
+                {
+                    char c = v[i - 1];
+                    if (c != '0')
+                    {
+                        v = v.Substring(0, i);
+                        break;
+                    }
+                }
+            }
+            if (v.EndsWith("."))
+                v = v.Substring(0, v.Length - 1);
+            switch (v)
+            {
+                case "":
+                    v = "0";
+                    break;
+                case "-":
+                    v = "-0";
+                    break;
+                default:
+                    break;
+            }
+            return v;
+        }
+
         public static string ToJavaString(object o)
         {
             if (o is Array)

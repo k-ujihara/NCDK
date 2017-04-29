@@ -18,15 +18,15 @@
  */
 using NCDK.Tools;
 
-namespace NCDK.IO.Formats {
+namespace NCDK.IO.Formats
+{
     /// <summary>
     /// See<see href="http://www.uku.fi/~thassine/ghemical/">here</see>.
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
-    public class GhemicalMMFormat : SimpleChemFormatMatcher, IChemFormatMatcher {
-
+    public class GhemicalMMFormat : SimpleChemFormatMatcher, IChemFormatMatcher
+    {
         private static IResourceFormat myself = null;
 
         public GhemicalMMFormat() { }
@@ -47,8 +47,10 @@ namespace NCDK.IO.Formats {
         public override string ReaderClassName => "NCDK.IO.GhemicalMMReader";
         public override string WriterClassName => null;
 
-        public override bool Matches(int lineNumber, string line) {
-            if (line.StartsWith("!Header gpr")) {
+        public override bool Matches(int lineNumber, string line)
+        {
+            if (line.StartsWith("!Header gpr"))
+            {
                 return true;
             }
             return false;
@@ -56,6 +58,6 @@ namespace NCDK.IO.Formats {
 
         public override bool IsXmlBased => false;
         public override int SupportedDataFeatures => DataFeatures.None;
-       public override int RequiredDataFeatures => DataFeatures.None;
+        public override int RequiredDataFeatures => DataFeatures.None;
     }
 }

@@ -2,8 +2,8 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("NCDK Display")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("NCDK Display: Display module of Chemistry Development Kit for .NET Framework")]
+[assembly: AssemblyDescription("Display module of NCDK based on cdk-1.5.14.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NCDK Display")]

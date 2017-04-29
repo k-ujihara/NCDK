@@ -29,7 +29,6 @@ namespace NCDK.Reactions.Types
     // @cdk.created    2006-05-05
     // @cdk.module     reaction
     // @cdk.githash
-    // @cdk.set        reaction-types
     public partial class RadicalChargeSiteInitiationReaction : AbstractRadicalSiteInitiationReaction
     {
         public RadicalChargeSiteInitiationReaction() { }

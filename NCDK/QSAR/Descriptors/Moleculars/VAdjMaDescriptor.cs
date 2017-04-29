@@ -47,7 +47,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-03
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:vAdjMa
     public class VAdjMaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {

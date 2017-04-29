@@ -47,6 +47,7 @@ namespace NCDK.Layout
         // indicate we want to snap to regular polygons for bridges, not generally applicable
         // but useful for macro cycles
         internal const string SnapHint = "sdg.snap.bridged";
+        public static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
         const bool debug = false;
 
         public IAtomContainer Molecule { get; set; }
@@ -208,6 +209,16 @@ namespace NCDK.Layout
             return treatedAtoms;
         }
 
+        private static double Det(double xa, double ya, double xb, double yb, double xc, double yc)
+        {
+            return (xa - xc) * (yb - yc) - (ya - yc) * (xb - xc);
+        }
+
+        private static double Det(Vector2 a, Vector2 b, Vector2 c)
+        {
+            return Det(a.X, a.Y, b.X, b.Y, c.X, c.Y);
+        }
+
         /// <summary>
         /// Generated coordinates for a given ring, which is connected to another ring a bridged ring,
         /// i.e. it shares more than two atoms with another ring.
@@ -222,11 +233,25 @@ namespace NCDK.Layout
             IAtom[] bridgeAtoms = GetBridgeAtoms(sharedAtoms);
             IAtom bondAtom1 = bridgeAtoms[0];
             IAtom bondAtom2 = bridgeAtoms[1];
+            List<IAtom> otherAtoms = new List<IAtom>();
+            foreach (IAtom atom in sharedAtoms.Atoms)
+                if (atom != bondAtom1 && atom != bondAtom2)
+                    otherAtoms.Add(atom);
+
+            bool snap = ring.GetProperty<bool>(SnapHint, false);
+
+            bool swap = snap ? Det(bondAtom1.Point2D.Value, GeometryUtil.Get2DCenter(otherAtoms), bondAtom2.Point2D.Value) < 0
+                                : Det(bondAtom1.Point2D.Value, GeometryUtil.Get2DCenter(otherAtoms), bondAtom2.Point2D.Value) > 0;
+
+            if (swap)
+            {
+                IAtom tmp = bondAtom1;
+                bondAtom1 = bondAtom2;
+                bondAtom2 = tmp;
+            }
 
             Vector2 bondAtom1Vector = bondAtom1.Point2D.Value;
             Vector2 bondAtom2Vector = bondAtom2.Point2D.Value;
-
-            bool snap = ring.GetProperty<bool>(SnapHint);
 
             Vector2 midPoint = GetMidPoint(bondAtom1Vector, bondAtom2Vector);
             Vector2 ringCenter;
@@ -240,10 +265,8 @@ namespace NCDK.Layout
                                                     new Vector2(midPoint.X - sharedAtomsCenter.X, midPoint.Y - sharedAtomsCenter.Y));
 
                 offset = 0;
-                foreach (var atom in sharedAtoms.Atoms)
+                foreach (IAtom atom in otherAtoms)
                 {
-                    if (atom == bondAtom1 || atom == bondAtom2)
-                        continue;
                     double dist = Vector2.Distance(atom.Point2D.Value, midPoint);
                     if (dist > offset)
                         offset = dist;
@@ -258,110 +281,46 @@ namespace NCDK.Layout
             ringCenterVector = ringCenterVector * (radius - offset);
             ringCenter += ringCenterVector;
 
-            Vector2 originRingCenterVector = ringCenter;
+            bondAtom1Vector -= ringCenter;
+            bondAtom2Vector -= ringCenter;
 
-            bondAtom1Vector -= originRingCenterVector;
-            bondAtom2Vector -= originRingCenterVector;
+            int numUnplaced = ring.RingSize - sharedAtoms.Atoms.Count;
 
-            var occupiedAngle = Vectors.Angle(bondAtom1Vector, bondAtom2Vector);
+            double dot = bondAtom2Vector.X * bondAtom1Vector.X + bondAtom2Vector.Y * bondAtom1Vector.Y;
+            double det = bondAtom2Vector.X * bondAtom1Vector.Y - bondAtom2Vector.Y * bondAtom1Vector.X;
 
-            double remainingAngle = (2 * Math.PI) - occupiedAngle;
-            double addAngle = remainingAngle / (ring.RingSize - sharedAtoms.Atoms.Count + 1);
+            // theta remain/step
+            double tRemain = Math.Atan2(det, dot);
+            if (tRemain < 0) tRemain = Math.PI + (Math.PI + tRemain);
+            double tStep = tRemain / (numUnplaced + 1);
 
-            Debug.WriteLine("placeBridgedRing->occupiedAngle: " + Vectors.RadianToDegree(occupiedAngle));
-            Debug.WriteLine("placeBridgedRing->remainingAngle: " + Vectors.RadianToDegree(remainingAngle));
-
-            Debug.WriteLine("placeBridgedRing->addAngle: " + Vectors.RadianToDegree(addAngle));
-
-            IAtom startAtom;
-
-            double centerX = ringCenter.X;
-            double centerY = ringCenter.Y;
-
-            double xDiff = bondAtom1.Point2D.Value.X - bondAtom2.Point2D.Value.X;
-            double yDiff = bondAtom1.Point2D.Value.Y - bondAtom2.Point2D.Value.Y;
+            Debug.WriteLine($"placeBridgedRing->tRemain: {Vectors.RadianToDegree(tRemain)}");
+            Debug.WriteLine($"placeBridgedRing->tStep: {Vectors.RadianToDegree(tStep)}");
 
             double startAngle;
+            int direction = -1;
 
-            int direction = 1;
-            // if bond is vertical
-            if (xDiff == 0)
-            {
-                Debug.WriteLine("placeBridgedRing->Bond is vertical");
-                //starts with the lower Atom
-                if (bondAtom1.Point2D.Value.Y > bondAtom2.Point2D.Value.Y)
-                {
-                    startAtom = bondAtom1;
-                }
-                else
-                {
-                    startAtom = bondAtom2;
-                }
+            startAngle = GeometryUtil.GetAngle(bondAtom1.Point2D.Value.X - ringCenter.X, bondAtom1.Point2D.Value.Y - ringCenter.Y);
 
-                //changes the drawing direction
-                if (centerX < sharedAtomsCenter.X)
-                {
-                    direction = 1;
-                }
-                else
-                {
-                    direction = -1;
-                }
-            }
-
-            // if bond is not vertical
-            else
-            {
-                //starts with the left Atom
-                if (bondAtom1.Point2D.Value.X > bondAtom2.Point2D.Value.X)
-                {
-                    startAtom = bondAtom1;
-                }
-                else
-                {
-                    startAtom = bondAtom2;
-                }
-
-                //changes the drawing direction
-                if (centerY - sharedAtomsCenter.Y > (centerX - sharedAtomsCenter.X) * yDiff / xDiff)
-                {
-                    direction = 1;
-                }
-                else
-                {
-                    direction = -1;
-                }
-            }
-            startAngle = GeometryUtil.GetAngle(startAtom.Point2D.Value.X - ringCenter.X, startAtom.Point2D.Value.Y
-                    - ringCenter.Y);
-
-            IAtom currentAtom = startAtom;
+            IAtom currentAtom = bondAtom1;
             IBond currentBond = sharedAtoms.GetConnectedBonds(currentAtom).First();
 
-            var atomsToDraw = new List<IAtom>();
+            List<IAtom> atoms = new List<IAtom>();
             for (int i = 0; i < ring.Bonds.Count; i++)
             {
                 currentBond = ring.GetNextBond(currentBond, currentAtom);
                 currentAtom = currentBond.GetConnectedAtom(currentAtom);
                 if (!sharedAtoms.Contains(currentAtom))
                 {
-                    atomsToDraw.Add(currentAtom);
+                    atoms.Add(currentAtom);
                 }
             }
-            try
-            {
-                Debug.WriteLine("placeBridgedRing->atomsToPlace: " + AtomPlacer.ListNumbers(Molecule, atomsToDraw));
-                Debug.WriteLine("placeBridgedRing->startAtom is: " + (Molecule.Atoms.IndexOf(startAtom) + 1));
-                Debug.WriteLine("placeBridgedRing->startAngle: " + Vectors.RadianToDegree(startAngle));
-                Debug.WriteLine("placeBridgedRing->addAngle: " + Vectors.RadianToDegree(addAngle));
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Caught an exception while logging in RingPlacer");
-            }
 
-            addAngle = addAngle * direction;
-            AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+            Debug.WriteLine($"placeBridgedRing->atomsToPlace: {AtomPlacer.ListNumbers(Molecule, atoms)}");
+            Debug.WriteLine($"placeBridgedRing->startAngle: {Vectors.RadianToDegree(startAngle)}");
+            Debug.WriteLine($"placeBridgedRing->tStep: {Vectors.RadianToDegree(tStep)}");
+
+            AtomPlacer.PopulatePolygonCorners(atoms, ringCenter, startAngle, -tStep, radius);
         }
 
         /// <summary>
@@ -535,18 +494,43 @@ namespace NCDK.Layout
                 atomsToDraw.Add(currentAtom);
             }
             addAngle = addAngle * direction;
-            try
-            {
-                Debug.WriteLine("placeFusedRing->startAngle: " + Vectors.RadianToDegree(startAngle));
-                Debug.WriteLine("placeFusedRing->addAngle: " + Vectors.RadianToDegree(addAngle));
-                Debug.WriteLine("placeFusedRing->startAtom is: " + (Molecule.Atoms.IndexOf(startAtom) + 1));
-                Debug.WriteLine("AtomsToDraw: " + AtomPlacer.ListNumbers(Molecule, atomsToDraw));
-            }
-            catch (Exception)
-            {
-                Debug.WriteLine("Caught an exception while logging in RingPlacer");
-            }
+
+            Debug.WriteLine("placeFusedRing->startAngle: " + Vectors.RadianToDegree(startAngle));
+            Debug.WriteLine("placeFusedRing->addAngle: " + Vectors.RadianToDegree(addAngle));
+            Debug.WriteLine("placeFusedRing->startAtom is: " + (Molecule.Atoms.IndexOf(startAtom) + 1));
+            Debug.WriteLine("AtomsToDraw: " + AtomPlacer.ListNumbers(Molecule, atomsToDraw));
+
             AtomPlacer.PopulatePolygonCorners(atomsToDraw, ringCenter, startAngle, addAngle, radius);
+        }
+
+        /// <summary>
+        /// Completes the layout of a partiallyed laid out ring.
+        /// </summary>
+        /// <param name="rset">ring set</param>
+        /// <param name="ring">the ring to complete</param>
+        /// <param name="bondLength">the bond length</param>
+        internal bool CompletePartiallyPlacedRing(IRingSet rset, IRing ring, double bondLength)
+        {
+            if (ring.IsPlaced)
+                return true;
+            IRing partiallyPlacedRing = Molecule.Builder.CreateRing();
+            foreach (IAtom atom in ring.Atoms)
+                if (atom.Point2D != null)
+                    atom.IsPlaced = true;
+            AtomPlacer.CopyPlaced(partiallyPlacedRing, ring);
+
+            if (partiallyPlacedRing.Atoms.Count > 0 && partiallyPlacedRing.Atoms.Count < ring.Atoms.Count)
+            {
+                PlaceConnectedRings(rset, partiallyPlacedRing, RingPlacer.Fused, bondLength);
+                PlaceConnectedRings(rset, partiallyPlacedRing, RingPlacer.Bridged, bondLength);
+                PlaceConnectedRings(rset, partiallyPlacedRing, RingPlacer.Spiro, bondLength);
+                ring.IsPlaced = true;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -604,22 +588,25 @@ namespace NCDK.Layout
         /// a ring as PLACED if all of its atoms have been placed.
         /// </summary>
         /// <param name="rs">The ringset to be checked</param>
-        public void CheckAndMarkPlaced(IEnumerable<IRing> rs)
+        public void CheckAndMarkPlaced(IRingSet rs)
         {
             bool allPlaced = true;
+            bool ringsetPlaced = true;
             foreach (var ring in rs)
-            { 
+            {
                 allPlaced = true;
                 for (int j = 0; j < ring.Atoms.Count; j++)
                 {
                     if (!(ring.Atoms[j]).IsPlaced)
                     {
                         allPlaced = false;
+                        ringsetPlaced = false;
                         break;
                     }
                 }
                 ring.IsPlaced = allPlaced;
             }
+            rs.IsPlaced = ringsetPlaced;
         }
 
         /// <summary>
@@ -701,6 +688,14 @@ namespace NCDK.Layout
             return new Vector2((Math.Cos(rotangle) * newRingPerpendicular), (Math.Sin(rotangle) * newRingPerpendicular));
         }
 
+        private void Rotate(Vector2 vec, double rad)
+        {
+            double rx = (vec.X * Math.Cos(rad)) - (vec.Y * Math.Sin(rad));
+            double ry = (vec.X * Math.Sin(rad)) + (vec.Y * Math.Cos(rad));
+            vec.X = rx;
+            vec.Y = ry;
+        }
+
         /// <summary>
         /// Layout all rings in the given RingSet that are connected to a given Ring
         /// </summary>
@@ -730,9 +725,59 @@ namespace NCDK.Layout
                         Vector2 tempVector = sharedAtomsCenter;
                         Vector2 newRingCenterVector = tempVector;
                         newRingCenterVector -= oldRingCenter;
+
+                        // zero (or v. small ring center)
+                        if (Math.Abs(newRingCenterVector.X) < 0.001 && Math.Abs(newRingCenterVector.Y) < 0.001)
+                        {
+                            // first see if we can use terminal bonds
+                            IAtomContainer terminalOnly = Molecule.Builder.CreateAtomContainer();
+
+                            foreach (IAtom atom in ring.Atoms)
+                            {
+                                if (ring.GetConnectedBonds(atom).Count() == 1)
+                                    terminalOnly.Atoms.Add(atom);
+                            }
+
+                            if (terminalOnly.Atoms.Count == 2)
+                            {
+                                newRingCenterVector = GeometryUtil.Get2DCenter(terminalOnly);
+                                newRingCenterVector = oldRingCenter;
+                                connectedRing.SetProperty(RingPlacer.SnapHint, true);
+                            }
+                            else
+                            {
+                                // project coordinates on 12 axis (30 degree snaps) and choose one with most spread
+                                Vector2 vec = new Vector2(0, 1);
+                                double bestLen = -double.MaxValue;
+
+                                for (int i = 0; i < 12; i++)
+                                {
+                                    Vector2 orth = new Vector2(-vec.Y, vec.X);
+                                    orth = Vector2.Normalize(orth);
+                                    double min = double.MaxValue, max = -double.MaxValue;
+                                    foreach (IAtom atom in sharedAtoms.Atoms)
+                                    {
+                                        // s: scalar projection
+                                        double s = Vector2.Dot(orth, atom.Point2D.Value);
+                                        if (s < min)
+                                            min = s;
+                                        if (s > max)
+                                            max = s;
+                                    }
+                                    double len = max - min;
+                                    if (len > bestLen)
+                                    {
+                                        bestLen = len;
+                                        newRingCenterVector = vec;
+                                    }
+                                    Rotate(vec, RAD_30);
+                                }
+                            }
+                        }
+
                         Vector2 oldRingCenterVector = newRingCenterVector;
                         Debug.WriteLine($"placeConnectedRing -> tempVector: {tempVector}, tempVector.Length: {tempVector.Length()}");
-                        Debug.WriteLine("placeConnectedRing -> bondCenter: " + sharedAtomsCenter);
+                        Debug.WriteLine($"placeConnectedRing -> bondCenter: {sharedAtomsCenter}");
                         Debug.WriteLine($"placeConnectedRing -> oldRingCenterVector.Length: {oldRingCenterVector.Length()}");
                         Debug.WriteLine($"placeConnectedRing -> newRingCenterVector.Length: {newRingCenterVector.Length()}");
                         Vector2 tempPoint = sharedAtomsCenter;
@@ -742,6 +787,69 @@ namespace NCDK.Layout
                         PlaceConnectedRings(rs, connectedRing, handleType, bondLength);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sorts ring systems prioritising the most complex. To sort correctly,
+        /// <see cref="CountHetero(List{IRingSet})"/> must first be invoked.
+        /// </summary>
+        internal static IComparer<IRingSet> RING_COMPARATOR = new RingComparatorImpl();
+
+        class RingComparatorImpl : IComparer<IRingSet>
+        {
+            public int Compare(IRingSet a, IRingSet b)
+            {
+                // polycyclic better
+                int cmp = (a.Count == 1).CompareTo(b.Count == 1);
+                if (cmp != 0) return cmp;
+
+                // more hetero atoms better
+                int numHeteroRingA = a.GetProperty<int>(NUM_HETERO_RINGS, 0);
+                int numHeteroRingB = b.GetProperty<int>(NUM_HETERO_RINGS, 0);
+                cmp = -numHeteroRingA.CompareTo(numHeteroRingB);
+                if (cmp != 0) return cmp;
+
+                // more hetero rings better
+                int numHeteroAtomA = a.GetProperty<int>(NUM_HETERO_ATOMS, 0);
+                int numHeteroAtomB = b.GetProperty<int>(NUM_HETERO_ATOMS, 0);
+                cmp = -numHeteroAtomA.CompareTo(numHeteroAtomB);
+                if (cmp != 0) return cmp;
+
+                // more rings better
+                return -a.Count.CompareTo(b.Count);
+            }
+        }
+
+        private const string NUM_HETERO_RINGS = "sdg:numHeteroRings";
+        private const string NUM_HETERO_ATOMS = "sdg:numHeteroAtoms";
+
+        /// <summary>
+        /// Counds the number of hetero atoms and hetero rings in a ringset. The
+        /// properties <code>sdg:numHeteroRings</code> and <code>sdg:numHeteroAtoms</code>
+        /// are set.
+        /// </summary>
+        /// <param name="rsets">ring systems</param>
+        internal static void CountHetero(List<IRingSet> rsets)
+        {
+            foreach (IRingSet rset in rsets)
+            {
+                int numHeteroAtoms = 0;
+                int numHeteroRings = 0;
+                foreach (IAtomContainer ring in rset)
+                {
+                    int prevNumHeteroAtoms = numHeteroAtoms;
+                    foreach (IAtom atom in ring.Atoms)
+                    {
+                        var elem = atom.AtomicNumber;
+                        if (elem != null && elem != 6 && elem != 1)
+                            numHeteroAtoms++;
+                    }
+                    if (numHeteroAtoms > prevNumHeteroAtoms)
+                        numHeteroRings++;
+                }
+                rset.SetProperty(NUM_HETERO_ATOMS, numHeteroAtoms);
+                rset.SetProperty(NUM_HETERO_RINGS, numHeteroRings);
             }
         }
     }

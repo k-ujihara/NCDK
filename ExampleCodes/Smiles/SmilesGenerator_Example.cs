@@ -9,14 +9,13 @@ namespace NCDK.Smiles
         void Main()
         {
             {
-                SmilesGenerator sg = null;
                 string smi = null;
+                SmilesGenerator sg = null;
                 {
                     #region 1
                     IAtomContainer ethanol = TestMoleculeFactory.MakeEthanol();
-
-                    sg = SmilesGenerator.Generic();
-                    smi = sg.Create(ethanol); // CCO or OCC
+                    sg = new SmilesGenerator(SmiFlavor.Generic);
+                    smi = sg.Create(ethanol); // CCO, C(C)O, C(O)C, or OCC
 
                     sg = SmilesGenerator.Unique();
                     smi = sg.Create(ethanol); // only CCO
@@ -25,43 +24,34 @@ namespace NCDK.Smiles
                     #region 2
                     IAtomContainer benzene = TestMoleculeFactory.MakeBenzene();
 
-                    // with no flags set the output is always kekule
-                    sg = SmilesGenerator.Generic();
+                    // 'benzene' molecule has no arom flags, we always get Kekulﾃｩ output
+                    sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = SmilesGenerator.Generic().Aromatic();
-                    smi = sg.Create(ethanol); // C1=CC=CC=C1
+                    sg = new SmilesGenerator(SmiFlavor.Generic |
+                                                                 SmiFlavor.UseAromaticSymbols);
+                    smi = sg.Create(benzene); // C1=CC=CC=C1 flags not set!
 
-                    foreach (var a in benzene.Atoms)
+                    // Note, in practice we'd use an aromaticity algorithm
+                    foreach (IAtom a in benzene.Atoms)
                         a.IsAromatic = true;
-                    foreach (var b in benzene.Bonds)
+                    foreach (IBond b in benzene.Bonds)
                         b.IsAromatic = true;
 
-                    // with flags set, the aromatic generator encodes this information
-                    sg = SmilesGenerator.Generic();
+                    // 'benzene' molecule now has arom flags, we always get aromatic SMILES if we request it
+                    sg = new SmilesGenerator(SmiFlavor.Generic);
                     smi = sg.Create(benzene); // C1=CC=CC=C1
 
-                    sg = SmilesGenerator.Generic()
-                                                             .Aromatic();
-                    smi = sg.Create(ethanol); // c1ccccc1
-                    #endregion
-
-                    #region 3
-                    // see CDKConstants for property key
-                    benzene.Atoms[3].SetProperty(CDKPropertyName.AtomAtomMapping, 42);
-
-                    sg = SmilesGenerator.Generic();
-                    smi = sg.Create(benzene); // C1=CC=CC=C1
-
-                    sg = SmilesGenerator.Generic().WithAtomClasses();
-                    smi = sg.Create(ethanol); // C1=CC=[CH:42]C=C1
+                    sg = new SmilesGenerator(SmiFlavor.Generic |
+                                                                 SmiFlavor.UseAromaticSymbols);
+                    smi = sg.Create(benzene); // c1ccccc1
                     #endregion
                 }
             }
             {
                 #region 4
                 IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator sg = SmilesGenerator.Generic();
+                SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
 
                 int n = mol.Atoms.Count;
                 int[] order = new int[n];
@@ -81,13 +71,6 @@ namespace NCDK.Smiles
             }
 
             {
-                #region Aromatic
-                IAtomContainer container = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator smilesGen = SmilesGenerator.Unique().Aromatic();
-                smilesGen.CreateSMILES(container);
-                #endregion
-            }
-            {
                 #region WithAtomClasses
                 IAtomContainer container = TestMoleculeFactory.MakeAlphaPinene();
                 SmilesGenerator smilesGen = SmilesGenerator.Unique().WithAtomClasses();
@@ -95,24 +78,46 @@ namespace NCDK.Smiles
                 #endregion
             }
             {
-                #region
-                 IAtomContainer  mol = TestMoleculeFactory.MakeAlphaPinene();
-                SmilesGenerator sg  = SmilesGenerator.Generic();
-                
-                 int   n     = mol.Atoms.Count;
-                 int[] order = new int[n];
-                
-                 // the order array is filled up as the SMILES is generated
-                 string smi = sg.Create(mol, order);
-                
-                 // load the coordinates array such that they are in the order the atoms
-                 // are read when parsing the SMILES
-                 Vector2[] coords = new Vector2[mol.Atoms.Count];
-                 for (int i = 0; i < coords.Length; i++)
-                     coords[order[i]] = mol.Atoms[i].Point2D.Value;
-                
-                 // SMILES string suffixed by the coordinates
-                 string smi2d = smi + " " + Arrays.ToJavaString(coords);
+                #region Create_IAtomContainer_int
+                IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
+                SmilesGenerator sg = new SmilesGenerator();
+
+                int n = mol.Atoms.Count;
+                int[] order = new int[n];
+
+                // the order array is filled up as the SMILES is generated
+                string smi = sg.Create(mol, order);
+
+                // load the coordinates array such that they are in the order the atoms
+                // are read when parsing the SMILES
+                Vector2[] coords = new Vector2[mol.Atoms.Count];
+                for (int i = 0; i < coords.Length; i++)
+                    coords[order[i]] = mol.Atoms[i].Point2D.Value;
+
+                // SMILES string suffixed by the coordinates
+                string smi2d = smi + " " + Arrays.ToJavaString(coords);
+                #endregion
+            }
+            {
+                IAtomContainer container = null;
+                #region Create_IAtomContainer_int_int
+                IAtomContainer mol = TestMoleculeFactory.MakeAlphaPinene();
+                SmilesGenerator sg = new SmilesGenerator();
+
+                int n = mol.Atoms.Count;
+                int[] order = new int[n];
+
+                // the order array is filled up as the SMILES is generated
+                string smi = sg.Create(mol, order);
+
+                // load the coordinates array such that they are in the order the atoms
+                // are read when parsing the SMILES
+                Vector2[] coords = new Vector2[mol.Atoms.Count];
+                for (int i = 0; i < coords.Length; i++)
+                    coords[order[i]] = container.Atoms[i].Point2D.Value;
+
+                // SMILES string suffixed by the coordinates
+                string smi2d = smi + " " + Arrays.ToJavaString(coords);
                 #endregion
             }
         }

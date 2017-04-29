@@ -23,30 +23,51 @@
 using NCDK.Beam;
 using NCDK.Graphs;
 using NCDK.Graphs.Invariant;
+using NCDK.SGroups;
+using NCDK.Tools.Manipulator;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace NCDK.Smiles
 {
     /// <summary>
-    /// Generate a SMILES <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token> string for a provided structure.
-    /// The generator can produce several <i>flavour</i> of SMILES.
+    /// Generate a SMILES <token>cdk-cite-WEI88</token>; <token>cdk-cite-WEI89</token>provides a compact representation of
+    /// chemical structures and reactions.
     /// </summary>
     /// <remarks>
+    /// Different <i>flavours</i> of SMILES can be generated and are fully configurable.
+    /// The standard flavours of SMILES defined by Daylight are:
     /// <list type="bullet">
-    ///     <item>generic - non-canonical SMILES string, different atom ordering
+    ///     <item><b>Generic</b> - non-canonical SMILES string, different atom ordering
     ///         produces different SMILES. No isotope or stereochemistry encoded.
     ///         </item>
-    ///     <item>unique - canonical SMILES string, different atom ordering
+    ///     <item><b>Unique</b> - canonical SMILES string, different atom ordering
     ///         produces the same* SMILES. No isotope or stereochemistry encoded.
     ///         </item>
-    ///     <item>isomeric - non-canonical SMILES string, different atom ordering
+    ///     <item><b>Isomeric</b> - non-canonical SMILES string, different atom ordering
     ///         produces different SMILES. Isotope and stereochemistry is encoded.
     ///         </item>
-    ///     <item>absolute - canonical SMILES string, different atom ordering
+    ///     <item><b>Absolute</b> - canonical SMILES string, different atom ordering
     ///         produces the same SMILES. Isotope and stereochemistry is encoded.</item>
-    /// </list>
+    /// </list> 
+    /// 
+    /// To output a given flavour the flags in <see cref="SmiFlavor"/> are used:
+    /// <code>
+    /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Isomeric);
+    /// </code>
+    /// <see cref="SmiFlavor"/> provides more fine grained control, for example,
+    /// for the following is equivalent to <see cref="SmiFlavor.Isomeric"/>:
+    /// <code>
+    /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
+    ///                                              SmiFlavor.AtomicMass);
+    /// </code>
+    /// Bitwise logic can be used such that we can remove options:
+    /// <see cref="SmiFlavor.Isomeric"/> <pre>^</pre> <see cref="SmiFlavor.AtomicMass"/>
+    /// will generate isomeric SMILES without atomic mass.
     /// </remarks>
     /// <example>
     /// A generator instance is created using one of the static methods, the SMILES
@@ -59,28 +80,38 @@ namespace NCDK.Smiles
     /// written it may need to be determined from 2D/3D coordinates using <see cref="Stereo.StereoElementFactory"/>.
     /// </para> 
     /// <para>
-    /// By default the generator will not write aromatic SMILES. Kekulé SMILES are
+    /// By default the generator will not write aromatic SMILES. Kekulﾃｩ SMILES are
     /// generally preferred for compatibility and aromaticity can easily be
-    /// reperceived. Modifying a generator to produce <see cref="Aromatic()"/> SMILES
-    /// will use the <see cref="IMolecularEntity.IsAromatic"/> flags.
-    /// These flags can be set manually or with the
-    /// <see cref="Aromaticities.Aromaticity"/> utility.
+    /// re-perceived by most tool kits whilst kekulisation may fail. If you
+    /// really want aromatic SMILES the following code demonstrates
     /// </para>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+2"]/*' />
     /// <para>
-    /// By default atom classes are not written. Atom classes can be written but
-    /// creating a generator <see cref="WithAtomClasses()"/>.</para>
-    /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+3"]/*' />
-    /// <para>
-    /// Auxiliary data can be stored with SMILES by knowing the output order of
-    /// atoms. The following example demonstrates the storage of 2D coordinates.
+    /// 
+    /// It can be useful to know the output order of SMILES. On input the order of the atoms
+    /// reflects the atom index. If we know this order we can refer to atoms by index and
+    /// associate data with the SMILES string.
+    /// The output order is obtained by parsing in an auxiliary array during creation. The
+    /// following snippet demonstrates how we can write coordinates in order.
+    /// 
     /// </para>
     /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+4"]/*' />
-    /// <note type="note">
-    ///   the unique SMILES generation uses a fast equitable labelling procedure
+    /// <para>
+    /// Using the output order of SMILES forms the basis of
+    /// <see href="https://www.chemaxon.com/marvin-archive/latest/help/formats/cxsmiles-doc.html">
+    /// ChemAxon Extended SMILES (CXSMILES)</see> which can also be generated. Extended SMILES
+    /// allows additional structure data to be serialized including, atom labels/values, fragment
+    /// grouping (for salts in reactions), polymer repeats, multi center bonds, and coordinates.
+    /// The CXSMILES layer is appended after the SMILES so that parser which don't interpret it
+    /// can ignore it.
+    /// </para>
+    /// <para>
+    /// The two aggregate flavours are <see cref="SmiFlavor.CxSmiles"/> and <see cref="SmiFlavor.CxSmilesWithCoords"/>.
+    /// As with other flavours, fine grain control is possible {@see SmiFlavor}.
+    /// </para>
+    /// <b>*</b> the unique SMILES generation uses a fast equitable labelling procedure
     ///   and as such there are some structures which may not be unique. The number
     ///   of such structures is generally minimal.
-    ///   </note>
     /// </example>
     /// <seealso cref="Aromaticities.Aromaticity"/> 
     /// <seealso cref="Stereo.StereoElementFactory"/>
@@ -96,57 +127,66 @@ namespace NCDK.Smiles
     // @cdk.githash
     public sealed class SmilesGenerator
     {
-        private readonly bool isomeric, canonical, aromatic, classes;
-        private readonly CDKToBeam converter;
+        private readonly int flavour;
 
         /// <summary>
-        /// Create the generic SMILES generator.
-        /// <seealso cref="Generic"/>
+        /// Create the SMILES generator, the default output is described by: <see cref="SmiFlavor.Default"/>
+        /// but is best to choose/set this flavor.
         /// </summary>
-        public SmilesGenerator()
-            : this(false, false, false, false)
+        /// <seealso cref="SmiFlavor.Default"/>
+        [Obsolete("Use " + nameof(SmilesGenerator) + "(int) configuring with " + nameof(SmiFlavor) + ".")]
+        public SmilesGenerator() : this(SmiFlavor.Default)
         {
         }
 
         /// <summary>
-        /// Create the SMILES generator.
-        /// </summary>
-        /// <param name="isomeric">include isotope and stereo configurations in produced SMILES</param>
-        private SmilesGenerator(bool isomeric, bool canonical, bool aromatic, bool classes)
-        {
-            this.isomeric = isomeric;
-            this.canonical = canonical;
-            this.aromatic = aromatic;
-            this.classes = classes;
-            this.converter = new CDKToBeam(isomeric, aromatic, classes);
-        }
-
-        /// <summary>
-        /// The generator should write aromatic (lower-case) SMILES. This option is
-        /// not recommended as different parsers can interpret where bonds should be
-        /// placed.
+        /// Create a SMILES generator with the specified <see cref="SmiFlavor"/>.
         /// </summary>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Aromatic"]/*' />
+        /// <code>
+        /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Stereo |
+        ///                                              SmiFlavor.Canonical);
+        /// </code>
+        /// </example>
+        /// <param name="flavour">SMILES flavour flags <see cref="SmiFlavor"/></param>
+        public SmilesGenerator(int flavour)
+        {
+            this.flavour = flavour;
+        }
+
+        /// <summary>
+        /// Derived a new generator that writes aromatic atoms in lower case.
+        /// </summary>
+        /// <example>
+        /// The preferred way of doing this is now to use the <see cref="SmilesGenerator(int)"/> constructor:
+        /// <code>
+        /// SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.UseAromaticSymbols);
+        /// </code>
         /// </example>
         /// <returns>a generator for aromatic SMILES</returns>
+        [Obsolete("Configure with " + nameof(SmilesGenerator))]
         public SmilesGenerator Aromatic()
         {
-            return new SmilesGenerator(isomeric, canonical, true, classes);
+            return new SmilesGenerator(this.flavour | SmiFlavor.UseAromaticSymbols);
         }
 
         /// <summary>
         /// Specifies that the generator should write atom classes in SMILES. Atom
-        /// classes are provided by the <see cref="CDKPropertyName.AtomAtomMapping"/> 
+        /// classes are provided by the {@link org.openscience.cdk.CDKConstants#ATOM_ATOM_MAPPING}
         /// property. This method returns a new SmilesGenerator to use.
+        /// 
+        /// <blockquote><pre>
+        /// IAtomContainer  container = ...;
+        /// SmilesGenerator smilesGen = SmilesGenerator.unique()
+        ///                                            .atomClasses();
+        /// smilesGen.createSMILES(container); // C[CH2:4]O second atom has class = 4
+        /// </pre></blockquote>
         /// </summary>
-        /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+WithAtomClasses"]/*' />
-        /// </example>
         /// <returns>a generator for SMILES with atom classes</returns>
-        public SmilesGenerator WithAtomClasses()
+        [Obsolete("Configure with " + nameof(SmilesGenerator))]
+    public SmilesGenerator WithAtomClasses()
         {
-            return new SmilesGenerator(isomeric, canonical, aromatic, true);
+            return new SmilesGenerator(this.flavour | SmiFlavor.AtomAtomMap);
         }
 
         /// <summary>
@@ -158,18 +198,18 @@ namespace NCDK.Smiles
         /// <returns>a new arbitrary SMILES generator</returns>
         public static SmilesGenerator Generic()
         {
-            return new SmilesGenerator(false, false, false, false);
+            return new SmilesGenerator(SmiFlavor.Generic);
         }
 
         /// <summary>
         /// Convenience method for creating an isomeric generator. Isomeric SMILES
-        /// are non-unique but contain isotope numbers (e.g. <c>[13C]</c>) and
+        /// are non-unique but contain isotope numbers (e.g. <code>[13C]</code>) and
         /// stereo-chemistry.
         /// </summary>
         /// <returns>a new isomeric SMILES generator</returns>
         public static SmilesGenerator Isomeric()
         {
-            return new SmilesGenerator(true, false, false, false);
+            return new SmilesGenerator(SmiFlavor.Isomeric);
         }
 
         /// <summary>
@@ -179,7 +219,7 @@ namespace NCDK.Smiles
         /// <returns>a new unique SMILES generator</returns>
         public static SmilesGenerator Unique()
         {
-            return new SmilesGenerator(false, true, false, false);
+            return new SmilesGenerator(SmiFlavor.Unique);
         }
 
         /// <summary>
@@ -191,17 +231,17 @@ namespace NCDK.Smiles
         /// <returns>a new absolute SMILES generator</returns>
         public static SmilesGenerator CreateAbsolute()
         {
-            return new SmilesGenerator(true, true, false, false);
+            return new SmilesGenerator(SmiFlavor.Absolute);
         }
 
         /// <summary>
         /// Create a SMILES string for the provided molecule.
         /// </summary>
         /// <param name="molecule">the molecule to create the SMILES of</param>
-        /// <returns>a SMILES string</returns> 
-        /// <exception cref="ArgumentException">SMILES could not be generated</exception>
+        /// <returns>a SMILES string</returns>
+        /// <exception cref="CDKException">SMILES could not be generated</exception>
         [Obsolete("Use " + nameof(Create))]
-        public string CreateSMILES(IAtomContainer molecule)
+    public string CreateSMILES(IAtomContainer molecule)
         {
             try
             {
@@ -210,7 +250,7 @@ namespace NCDK.Smiles
             catch (CDKException e)
             {
                 throw new ArgumentException(
-                        "SMILES could not be generated, please use the new API method 'Create()'"
+                        "SMILES could not be generated, please use the new API method 'create()'"
                                 + "to catch the checked exception", e);
             }
         }
@@ -220,7 +260,7 @@ namespace NCDK.Smiles
         /// </summary>
         /// <param name="reaction">the reaction to create the SMILES of</param>
         /// <returns>a reaction SMILES string</returns>
-        /// <exception cref="ArgumentException">SMILES could not be generated</exception>
+        /// <exception cref="CDKException">SMILES could not be generated</exception>
         [Obsolete("Use " + nameof(CreateReactionSMILES))]
         public string CreateSMILES(IReaction reaction)
         {
@@ -231,38 +271,62 @@ namespace NCDK.Smiles
             catch (CDKException e)
             {
                 throw new ArgumentException(
-                        "SMILES could not be generated, please use the new API method 'Create()'"
+                        "SMILES could not be generated, please use the new API method 'create()'"
                                 + "to catch the checked exception", e);
             }
         }
 
         /// <summary>
-        /// Generate SMILES for the provided <paramref name="molecule"/>.
+        /// Generate SMILES for the provided <code>molecule</code>.
         /// </summary>
         /// <param name="molecule">The molecule to evaluate</param>
         /// <returns>the SMILES string</returns>
-        /// <exception cref="ArgumentException">SMILES could not be generated</exception>
+        /// <exception cref="CDKException">SMILES could not be created</exception>
         public string Create(IAtomContainer molecule)
         {
             return Create(molecule, new int[molecule.Atoms.Count]);
         }
 
         /// <summary>
-        /// Create a SMILES string and obtain the order which the atoms were
-        /// written. The output order allows one to arrange auxiliary atom data in the
-        /// order that a SMILES string will be read. A simple example is seen below
-        /// where 2D coordinates are stored with a SMILES string. In reality a more
-        /// compact binary encoding would be used instead of printing the coordinates
-        /// as a string.
+        /// Creates a SMILES string of the flavour specified in the constructor
+        /// and write the output order to the provided array.
         /// </summary>
+        /// <remarks>
+        /// The output order allows one to arrange auxiliary atom data in the
+        /// order that a SMILES string will be read. A simple example is seen below
+        /// where 2D coordinates are stored with a SMILES string. This method
+        /// forms the basis of CXSMILES.
+        /// </remarks>
         /// <example>
-        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create"]/*' />
-        /// </example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create_IAtomContainer_int"]/*' />
+        /// <example>
         /// <param name="molecule">the molecule to write</param>
         /// <param name="order">array to store the output order of atoms</param>
         /// <returns>the SMILES string</returns>
-        /// <exception cref="ArgumentException">SMILES could not be generated</exception>
+        /// <exception cref="CDKException">SMILES could not be created</exception>
         public string Create(IAtomContainer molecule, int[] order)
+        {
+            return Create(molecule, this.flavour, order);
+        }
+
+        /// <summary>
+        /// Creates a SMILES string of the flavour specified as a parameter
+        /// and write the output order to the provided array.
+        /// </summary>
+        /// <remarks>
+        /// The output order allows one to arrange auxiliary atom data in the
+        /// order that a SMILES string will be read. A simple example is seen below
+        /// where 2D coordinates are stored with a SMILES string. This method
+        /// forms the basis of CXSMILES.
+        /// </remarks>
+        /// <example>
+        /// <include file='IncludeExamples.xml' path='Comments/Codes[@id="NCDK.Smiles.SmilesGenerator_Example.cs+Create_IAtomContainer_int_int"]/*' />
+        /// <example>
+        /// <param name="molecule">the molecule to write</param>
+        /// <param name="order">array to store the output order of atoms</param>
+        /// <returns>the SMILES string</returns>
+        /// <exception cref="CDKException">a valid SMILES could not be created</exception>
+        public static string Create(IAtomContainer molecule, int flavour, int[] order)
         {
             try
             {
@@ -270,18 +334,19 @@ namespace NCDK.Smiles
                     throw new ArgumentException("the array for storing output order should be"
                             + "the same length as the number of atoms");
 
-                Graph g = converter.ToBeamGraph(molecule);
+                Graph g = CDKToBeam.ToBeamGraph(molecule, flavour);
 
                 // apply the canonical labelling
-                if (canonical)
+                if (SmiFlavor.IsSet(flavour, SmiFlavor.Canonical))
                 {
                     // determine the output order
-                    int[] labels = Labels(molecule);
+                    int[] labels = Labels(flavour, molecule);
 
                     g = g.Permute(labels).Resonate();
 
-                    if (isomeric)
+                    if (SmiFlavor.IsSet(flavour, SmiFlavor.StereoCisTrans))
                     {
+
                         // FIXME: required to ensure canonical double bond labelling
                         g.Sort(new Graph.VisitHighOrderFirst());
 
@@ -301,13 +366,26 @@ namespace NCDK.Smiles
                     int[] canorder = new int[order.Length];
                     for (int i = 0; i < labels.Length; i++)
                         canorder[i] = order[labels[i]];
-                    Array.Copy(canorder, 0, order, 0, order.Length);
+                    System.Array.Copy(canorder, 0, order, 0, order.Length);
+
+                    if (SmiFlavor.IsSet(flavour, SmiFlavor.CxSmilesWithCoords))
+                    {
+                        smiles += CxSmilesGenerator.Generate(GetCxSmilesState(flavour, molecule),
+                                                             flavour, null, order);
+                    }
 
                     return smiles;
                 }
                 else
                 {
-                    return g.ToSmiles(order);
+                    string smiles = g.ToSmiles(order);
+
+                    if (SmiFlavor.IsSet(flavour, SmiFlavor.CxSmilesWithCoords))
+                    {
+                        smiles += CxSmilesGenerator.Generate(GetCxSmilesState(flavour, molecule), flavour, null, order);
+                    }
+
+                    return smiles;
                 }
             }
             catch (IOException e)
@@ -317,53 +395,170 @@ namespace NCDK.Smiles
         }
 
         /// <summary>
-        /// Generate a SMILES for the given <paramref name="reaction"/>.
+        /// Create a SMILES for a reaction.
         /// </summary>
-        /// <param name="reaction">the reaction in question</param>
-        /// <returns>the SMILES representation of the reaction</returns>
-        /// <exception cref="CDKException">if there is an error during SMILES generation</exception>
+        /// <param name="reaction">CDK reaction instance</param>
+        /// <returns>reaction SMILES</returns>
+        /// <exception cref="CDKException">a valid SMILES could not be created</exception>
+        [Obsolete("Use " + nameof(Create) + "(" + nameof(IAtomContainer) + ")")]
         public string CreateReactionSMILES(IReaction reaction)
         {
-            StringBuilder reactionSMILES = new StringBuilder();
-            IAtomContainerSet<IAtomContainer> reactants = reaction.Reactants;
-            for (int i = 0; i < reactants.Count; i++)
+            return Create(reaction);
+        }
+
+        /// <summary>
+        /// Create a SMILES for a reaction of the flavour specified in the constructor.
+        /// </summary>
+        /// <param name="reaction">CDK reaction instance</param>
+        /// <returns>reaction SMILES</returns>
+        public string Create(IReaction reaction)
+        {
+            return Create(reaction, new int[ReactionManipulator.GetAtomCount(reaction)]);
+        }
+
+        // utility method that safely collects the Sgroup from a molecule
+        private void SafeAddSgroups(List<Sgroup> sgroups, IAtomContainer mol)
+        {
+            IList<Sgroup> molSgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (molSgroups != null)
+                foreach (var g in molSgroups)
+                    sgroups.Add(g);
+        }
+
+        /// <summary>
+        /// Create a SMILES for a reaction of the flavour specified in the constructor and
+        /// write the output order to the provided array.
+        /// </summary>
+        /// <param name="reaction">CDK reaction instance</param>
+        /// <returns>reaction SMILES</returns>
+        public string Create(IReaction reaction, int[] ordering)
+        {
+    var reactants = reaction.Reactants;
+            var agents = reaction.Agents;
+            var products = reaction.Products;
+
+            IAtomContainer reactantPart = reaction.Builder.CreateAtomContainer();
+            IAtomContainer agentPart = reaction.Builder.CreateAtomContainer();
+            IAtomContainer productPart = reaction.Builder.CreateAtomContainer();
+
+            List<Sgroup> sgroups = new List<Sgroup>();
+
+            foreach (IAtomContainer reactant in reactants)
             {
-                reactionSMILES.Append(Create(reactants[i]));
-                if (i + 1 < reactants.Count)
-                {
-                    reactionSMILES.Append('.');
-                }
+                reactantPart.Add(reactant);
+                SafeAddSgroups(sgroups, reactant);
             }
-            reactionSMILES.Append('>');
-            IAtomContainerSet<IAtomContainer> agents = reaction.Agents;
-            for (int i = 0; i < agents.Count; i++)
+            foreach (IAtomContainer agent in agents)
             {
-                reactionSMILES.Append(Create(agents[i]));
-                if (i + 1 < agents.Count)
-                {
-                    reactionSMILES.Append('.');
-                }
+                agentPart.Add(agent);
+                SafeAddSgroups(sgroups, agent);
             }
-            reactionSMILES.Append('>');
-            IAtomContainerSet<IAtomContainer> products = reaction.Products;
-            for (int i = 0; i < products.Count; i++)
+            foreach (IAtomContainer product in products)
             {
-                reactionSMILES.Append(Create(products[i]));
-                if (i + 1 < products.Count)
-                {
-                    reactionSMILES.Append('.');
-                }
+                productPart.Add(product);
+                SafeAddSgroups(sgroups, product);
             }
-            return reactionSMILES.ToString();
+
+            int[] reactantOrder = new int[reactantPart.Atoms.Count];
+            int[] agentOrder = new int[agentPart.Atoms.Count];
+            int[] productOrder = new int[productPart.Atoms.Count];
+
+             int expectedSize = reactantOrder.Length + agentOrder.Length + productOrder.Length;
+            if (expectedSize != ordering.Length)
+            {
+                throw new CDKException("Output ordering array does not have correct amount of space: " + ordering.Length +
+                                       " expected: " + expectedSize);
+            }
+
+            // we need to make sure we generate without the CXSMILES layers
+            string smi = Create(reactantPart, flavour & ~SmiFlavor.CxSmilesWithCoords, reactantOrder) + ">" +
+                         Create(agentPart, flavour & ~SmiFlavor.CxSmilesWithCoords, agentOrder) + ">" +
+                         Create(productPart, flavour & ~SmiFlavor.CxSmilesWithCoords, productOrder);
+
+            // copy ordering back to unified array and adjust values
+            int agentBeg = reactantOrder.Length;
+            int agentEnd = reactantOrder.Length + agentOrder.Length;
+            int prodEnd = reactantOrder.Length + agentOrder.Length + productOrder.Length;
+            System.Array.Copy(reactantOrder, 0, ordering, 0, agentBeg);
+            System.Array.Copy(agentOrder, 0, ordering, agentBeg, agentEnd - agentBeg);
+            System.Array.Copy(productOrder, 0, ordering, agentEnd, prodEnd - agentEnd);
+            for (int i = agentBeg; i < agentEnd; i++)
+                ordering[i] += agentBeg;
+            for (int i = agentEnd; i < prodEnd; i++)
+                ordering[i] += agentEnd;
+
+            if (SmiFlavor.IsSet(flavour, SmiFlavor.CxSmilesWithCoords))
+            {
+                IAtomContainer unified = reaction.Builder.CreateAtomContainer();
+                unified.Add(reactantPart);
+                unified.Add(agentPart);
+                unified.Add(productPart);
+                unified.SetProperty(CDKPropertyName.CtabSgroups, sgroups);
+
+                // base CXSMILES state information
+                 CxSmilesState cxstate = GetCxSmilesState(flavour, unified);
+
+                int[] components = null;
+
+                // extra state info on fragment grouping, specific to reactions
+                if (SmiFlavor.IsSet(flavour, SmiFlavor.CxFragmentGroup))
+                {
+
+                    cxstate.fragGroups = new List<List<int>>();
+
+                    // calculate the connected components
+                    components = new ConnectedComponents(GraphUtil.ToAdjList(unified)).Components();
+
+                    // AtomContainerSet is ordered so this is safe, it was actually a set we
+                    // would need some extra data structures
+                    var tmp = new HashSet<int>();
+                    int beg = 0, end = 0;
+                    foreach (IAtomContainer mol in reactants)
+                    {
+                        end = end + mol.Atoms.Count;
+                        tmp.Clear();
+                        for (int i = beg; i < end; i++)
+                            tmp.Add(components[i]);
+                        if (tmp.Count > 1)
+                            cxstate.fragGroups.Add(new List<int>(tmp));
+                        beg = end;
+                    }
+                    foreach (IAtomContainer mol in agents)
+                    {
+                        end = end + mol.Atoms.Count;
+                        tmp.Clear();
+                        for (int i = beg; i < end; i++)
+                            tmp.Add(components[i]);
+                        if (tmp.Count > 1)
+                            cxstate.fragGroups.Add(new List<int>(tmp));
+                        beg = end;
+                    }
+                    foreach (IAtomContainer mol in products)
+                    {
+                        end = end + mol.Atoms.Count;
+                        tmp.Clear();
+                        for (int i = beg; i < end; i++)
+                            tmp.Add(components[i]);
+                        if (tmp.Count > 1)
+                            cxstate.fragGroups.Add(new List<int>(tmp));
+                        beg = end;
+                    }
+
+                }
+
+
+                smi += CxSmilesGenerator.Generate(cxstate, flavour, components, ordering);
+            }
+
+            return smi;
         }
 
         /// <summary>
         /// Indicates whether output should be an aromatic SMILES.
         /// </summary>
-        /// <param name="useAromaticityFlag">if false only SP2-hybridized atoms will be lower case (default),
-        /// true=SP2 or aromaticity trigger lower case</param>
-        [Obsolete("since 1.5.6, use " + nameof(Aromatic) + " - invoking this method does nothing")]
-        public void SetUseAromaticityFlag(bool useAromaticityFlag)
+        /// <param name="useAromaticityFlag">if false only SP2-hybridized atoms will be lower case (default), true=SP2 or aromaticity trigger lower case</param>
+        [Obsolete("Since 1.5.6, use " + nameof(Aromatic) + "()  - invoking this method does nothing")]
+    public void SetUseAromaticityFlag(bool useAromaticityFlag)
         {
         }
 
@@ -377,9 +572,11 @@ namespace NCDK.Smiles
         /// <param name="molecule">the molecule to</param>
         /// <returns>the permutation</returns>
         /// <seealso cref="Canon"/>
-        private int[] Labels(IAtomContainer molecule)
+        private static int[] Labels(int flavour, IAtomContainer molecule)
         {
-            long[] labels = isomeric ? InChINumbers(molecule) : Canon.Label(molecule, GraphUtil.ToAdjList(molecule));
+            // FIXME: use SmiOpt.InChiLabelling
+            long[] labels = SmiFlavor.IsSet(flavour, SmiFlavor.Isomeric) ? InchiNumbers(molecule)
+                                                                         : Canon.Label(molecule, GraphUtil.ToAdjList(molecule));
             int[] cpy = new int[labels.Length];
             for (int i = 0; i < labels.Length; i++)
                 cpy[i] = (int)labels[i] - 1;
@@ -395,12 +592,247 @@ namespace NCDK.Smiles
         /// <param name="container">a structure</param>
         /// <returns>the inchi numbers</returns>
         /// <exception cref="CDKException">the inchi numbers could not be obtained</exception>
-        private long[] InChINumbers(IAtomContainer container)
+        private static long[] InchiNumbers(IAtomContainer container)
         {
             // TODO: create an interface so we don't have to dynamically load the
             // class each time
+            string cname = "NCDK.Graphs.Invariant.InChINumbersTools";
+            string mname = "GetUSmilesNumbers";
+            try
+            {
+                var c = Type.GetType(cname, true);
+                var method = c.GetMethod("GetUSmilesNumbers", BindingFlags.Public | BindingFlags.Static, null, new[] { container.GetType() }, null);
+                return (long[])method.Invoke(c, new[] { container });
+            }
+            catch (FileNotFoundException)
+            {
+                throw new CDKException("The cdk-inchi module is not loaded,"
+                        + " this module is need when gernating absolute SMILES.");
+            }
+            catch (TypeLoadException e)
+            {
+                throw new CDKException("The method " + mname + " was not found", e);
+            }
+            catch (TargetInvocationException e)
+            {
+                throw new CDKException("An InChI could not be generated and used to canonise SMILES: " + e.Message, e);
+            }
+        }
 
-            return InChINumbersTools.GetUSmilesNumbers(container);
+        // utility safety check to guard against invalid state
+        private static int EnsureNotNull(int? x)
+        {
+            if (x == null)
+                throw new InvalidOperationException("Inconsistent CXSMILES state! Check the SGroups.");
+            return x.Value;
+        }
+
+        // utility method maps the atoms to their indicies using the provided map.
+        private static List<int> ToAtomIdxs(ICollection<IAtom> atoms, IDictionary<IAtom, int> atomidx)
+        {
+            List<int> idxs = new List<int>(atoms.Count);
+            foreach (IAtom atom in atoms)
+                idxs.Add(EnsureNotNull(atomidx[atom]));
+            return idxs;
+        }
+
+        private class Comp<T> : IEqualityComparer<T>
+        {
+            public bool Equals(T x, T y) => object.ReferenceEquals(x, y);
+            public int GetHashCode(T obj) => 0;
+        }
+
+        // Creates a CxSmilesState from a molecule with atom labels, repeat units, multicenter bonds etc
+        private static CxSmilesState GetCxSmilesState(int flavour, IAtomContainer mol)
+        {
+            CxSmilesState state = new CxSmilesState();
+            state.AtomCoords = new List<double[]>();
+            state.coordFlag = false;
+
+            // set the atom labels, values, and coordinates,
+            // and build the atom->idx map required by other parts
+            IDictionary<IAtom, int> atomidx = new Dictionary<IAtom, int>(new Comp<IAtom>());
+                for (int idx = 0; idx < mol.Atoms.Count; idx++)
+            {
+                IAtom atom = mol.Atoms[idx];
+                if (atom is IPseudoAtom)
+                {
+
+                    if (state.atomLabels == null)
+                        state.atomLabels = new Dictionary<int, string>();
+
+                    IPseudoAtom pseudo = (IPseudoAtom)atom;
+                    if (pseudo.AttachPointNum > 0)
+                    {
+                        state.atomLabels[idx] = "_AP" + pseudo.AttachPointNum;
+                    }
+                    else
+                    {
+                        if (!"*".Equals(pseudo.Label))
+                            state.atomLabels[idx] = pseudo.Label;
+                    }
+                }
+                object comment = atom.GetProperty<object>(CDKPropertyName.Comment);
+                if (comment != null)
+                {
+                    if (state.atomValues == null)
+                        state.atomValues = new Dictionary<int, string>();
+                    state.atomValues[idx] = comment.ToString();
+                }
+                atomidx[atom] = idx;
+
+                var p2 = atom.Point2D;
+                var p3 = atom.Point3D;
+
+                if (SmiFlavor.IsSet(flavour, SmiFlavor.Cx2dCoordinates) && p2 != null)
+                {
+                    state.AtomCoords.Add(new double[] { p2.Value.X, p2.Value.Y, 0 });
+                    state.coordFlag = true;
+                }
+                else if (SmiFlavor.IsSet(flavour, SmiFlavor.Cx3dCoordinates) && p3 != null)
+                {
+                    state.AtomCoords.Add(new double[] { p3.Value.X, p3.Value.Y, p3.Value.Z });
+                    state.coordFlag = true;
+                }
+                else if (SmiFlavor.IsSet(flavour, SmiFlavor.CxCoordinates))
+                {
+                    state.AtomCoords.Add(new double[3]);
+                }
+            }
+
+            if (!state.coordFlag)
+                state.AtomCoords = null;
+
+            // radicals
+            if (mol.SingleElectrons.Count > 0)
+            {
+                state.atomRads = new Dictionary<int, CxSmilesState.Radical>();
+                foreach (ISingleElectron radical in mol.SingleElectrons)
+                {
+                    CxSmilesState.Radical val;
+
+                    // 0->1, 1->2, 2->3
+                    if (!state.atomRads.TryGetValue(EnsureNotNull(atomidx[radical.Atom]), out val))
+                        val = CxSmilesState.Radical.Monovalent;
+                    else if (val == CxSmilesState.Radical.Monovalent)
+                        val = CxSmilesState.Radical.Divalent;
+                    else if (val == CxSmilesState.Radical.Divalent)
+                        val = CxSmilesState.Radical.Trivalent;
+                    else if (val == CxSmilesState.Radical.Trivalent)
+                        throw new ArgumentException("Invalid radical state, can not be more than trivalent");
+
+                    state.atomRads[atomidx[radical.Atom]] =
+                                       val;
+                }
+            }
+
+            IList<Sgroup> sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
+            if (sgroups != null)
+            {
+                state.sgroups = new List<CxSmilesState.PolymerSgroup>();
+                state.positionVar = new Dictionary<int, IList<int>>();
+                foreach (Sgroup sgroup in sgroups)
+                {
+                    switch (sgroup.Type.Ordinal)
+                    {
+                        // polymer SRU
+                        case SgroupType.O.CtabStructureRepeatUnit:
+                        case SgroupType.O.CtabMonomer:
+                        case SgroupType.O.CtabMer:
+                        case SgroupType.O.CtabCopolymer:
+                        case SgroupType.O.CtabCrossLink:
+                        case SgroupType.O.CtabModified:
+                        case SgroupType.O.CtabMixture:
+                        case SgroupType.O.CtabFormulation:
+                        case SgroupType.O.CtabAnyPolymer:
+                        case SgroupType.O.CtabGeneric:
+                        case SgroupType.O.CtabComponent:
+                        case SgroupType.O.CtabGraft:
+                            state.sgroups.Add(new CxSmilesState.PolymerSgroup(GetSgroupPolymerKey(sgroup),
+                                                                              ToAtomIdxs(sgroup.Atoms, atomidx),
+                                                                              sgroup.Subscript,
+                                                                              (string)sgroup.GetValue(SgroupKey.CtabConnectivity)));
+                            break;
+                        case SgroupType.O.ExtMulticenter:
+                            IAtom beg = null;
+                            List<IAtom> ends = new List<IAtom>();
+                            ISet<IBond> bonds = sgroup.Bonds;
+                            if (bonds.Count != 1)
+                                throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
+                            IBond bond = bonds.First();
+                            foreach (IAtom atom in sgroup.Atoms)
+                            {
+                                if (bond.Contains(atom))
+                                {
+                                    if (beg != null)
+                                        throw new ArgumentException("Multicenter Sgroup in inconsistent state!");
+                                    beg = atom;
+                                }
+                                else
+                                {
+                                    ends.Add(atom);
+                                }
+                            }
+                            state.positionVar[EnsureNotNull(atomidx[beg])] =
+                                                  ToAtomIdxs(ends, atomidx);
+                            break;
+                        case SgroupType.O.CtabAbbreviation:
+                        case SgroupType.O.CtabMultipleGroup:
+                            // display shortcuts are not output
+                            break;
+                        default:
+                            throw new NotSupportedException("Unsupported Sgroup Polymer");
+
+                    }
+                }
+            }
+
+            return state;
+        }
+
+        private static string GetSgroupPolymerKey(Sgroup sgroup)
+        {
+            switch (sgroup.Type.Ordinal)
+            {
+                case SgroupType.O.CtabStructureRepeatUnit:
+                    return "n";
+                case SgroupType.O.CtabMonomer:
+                    return "mon";
+                case SgroupType.O.CtabMer:
+                    return "mer";
+                case SgroupType.O.CtabCopolymer:
+                    string subtype = (string)sgroup.GetValue(SgroupKey.CtabSubType);
+                    if (subtype == null)
+                        return "co";
+                    switch (subtype)
+                    {
+                        case "RAN":
+                            return "ran";
+                        case "ALT":
+                            return "alt";
+                        case "BLO":
+                            return "blk";
+                    }
+                    goto case SgroupType.O.CtabCrossLink;
+                case SgroupType.O.CtabCrossLink:
+                    return "xl";
+                case SgroupType.O.CtabModified:
+                    return "mod";
+                case SgroupType.O.CtabMixture:
+                    return "mix";
+                case SgroupType.O.CtabFormulation:
+                    return "f";
+                case SgroupType.O.CtabAnyPolymer:
+                    return "any";
+                case SgroupType.O.CtabGeneric:
+                    return "gen";
+                case SgroupType.O.CtabComponent:
+                    return "c";
+                case SgroupType.O.CtabGraft:
+                    return "grf";
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }

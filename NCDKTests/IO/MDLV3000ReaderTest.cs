@@ -137,5 +137,16 @@ namespace NCDK.IO
                 Assert.AreEqual(SgroupType.ExtMulticenter, sgroups[0].Type);
             }
         }
+
+        [TestMethod()]
+        public void RadicalsInCH3()
+        {
+            using (MDLV3000Reader reader = new MDLV3000Reader(GetType().Assembly.GetManifestResourceStream(GetType(), "CH3.mol")))
+            {
+                IAtomContainer container = reader.Read(new AtomContainer());
+                Assert.AreEqual(1, container.SingleElectrons.Count);
+                Assert.AreEqual(3, container.Atoms[0].ImplicitHydrogenCount);
+            }
+        }
     }
 }

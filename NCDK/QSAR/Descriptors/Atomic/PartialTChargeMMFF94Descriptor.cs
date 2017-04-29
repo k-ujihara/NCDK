@@ -40,7 +40,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-04-11
     // @cdk.module qsaratomic
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:partialTChargeMMFF94
     // @cdk.bug 1628461
     public class PartialTChargeMMFF94Descriptor : AbstractAtomicDescriptor

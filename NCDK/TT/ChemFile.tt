@@ -36,7 +36,6 @@ namespace <#= ns.NS #>
     /// </summary>
     // @author        steinbeck
     // @cdk.githash
-    // @cdk.module silent
     [Serializable]
     public class ChemFile
         : ChemObject, IChemFile, IChemObjectListener

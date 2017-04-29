@@ -44,6 +44,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/CH3F/c1-2/h1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_Methyl_Fluoride()
         {
             double[] testResult = { -0.2527, 0.0795, 0.0577, 0.0577, 0.0577 };
@@ -72,6 +73,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         ///  A unit test for JUnit with Fluoroethylene
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_Fluoroethylene()
         {
             double[] testResult = { -0.1839, 0.079, -0.1019, 0.0942, 0.0563, 0.0563 };
@@ -98,6 +100,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi  InChI=1/CH2O2/c2-1-3/h1H,(H,2,3)/f/h2H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_FormicAcid()
         {
             double[] testResult = { 0.2672, -0.3877, -0.2365, 0.1367, 0.2203 };
@@ -128,6 +131,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_Fluorobenzene()
         {
             double[] testResult = { -0.1785, 0.1227, -0.0373, -0.0598, -0.0683 };
@@ -167,6 +171,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/C3H6O/c1-3-4-2/h3H,1H2,2H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_Methoxyethylene()
         {
             double[] testResult = { -0.1211, 0.0314, -0.3121, 0.0429, 0.056, 0.056, 0.0885, 0.056, 0.056, 0.056 };
@@ -199,6 +204,7 @@ namespace NCDK.QSAR.Descriptors.Atomic
         /// </summary>
         // @cdk.inchi InChI=1/C5H8O/c1-3-4-5-6-2/h3-5H,1H2,2H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestPartialTChargeDescriptor_1_Methoxybutadiene()
         {
             double[] testResult = {-0.1331, -0.0678, -0.0803, 0.0385, -0.2822, 0.0429, 0.0541, 0.0541, 0.0619, 0.0644,

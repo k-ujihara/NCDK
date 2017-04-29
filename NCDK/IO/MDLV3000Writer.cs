@@ -195,7 +195,17 @@ namespace NCDK.IO
                 int chg = NullAsZero(atom.FormalCharge);
                 int mass = NullAsZero(atom.MassNumber);
                 int hcnt = NullAsZero(atom.ImplicitHydrogenCount);
-                int rad = mol.GetConnectedSingleElectrons(atom).Count();
+                 int elec = mol.GetConnectedSingleElectrons(atom).Count();
+                int rad = 0;
+                switch (elec)
+                {
+                    case 1: // 2
+                        rad = MDLV2000Writer.SpinMultiplicity.Monovalent.Value;
+                        break;
+                    case 2: // 1 or 3? Information loss as to which
+                        rad = MDLV2000Writer.SpinMultiplicity.DivalentSinglet.Value;
+                        break;
+                }
 
                 int expVal = 0;
                 foreach (var bond in mol.GetConnectedBonds(atom))

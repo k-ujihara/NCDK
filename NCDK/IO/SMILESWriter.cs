@@ -92,7 +92,7 @@ namespace NCDK.IO
         /// <summary>
         /// Writes the content from object to output.
         /// </summary>
-        /// <param name="obj">IChemObject of which the data is outputted.</param>
+        /// <param name="obj">IChemObject of which the data is given as output.</param>
         public override void Write(IChemObject obj)
         {
             if (obj is IAtomContainerSet<IAtomContainer>)
@@ -131,7 +131,7 @@ namespace NCDK.IO
         /// <summary>
         /// Writes the content from molecule to output.
         /// </summary>
-        /// <param name="molecule">Molecule of which the data is outputted.</param>
+        /// <param name="molecule">Molecule of which the data is given as output.</param>
         public void WriteAtomContainer(IAtomContainer molecule)
         {
             SmilesGenerator sg = new SmilesGenerator();

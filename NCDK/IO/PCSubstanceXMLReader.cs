@@ -110,7 +110,7 @@ namespace NCDK.IO
                 }
                 catch (IOException e)
                 {
-                    throw new CDKException("An IO Exception occured while reading the file.", e);
+                    throw new CDKException("An IO Exception occurred while reading the file.", e);
                 }
                 catch (CDKException e)
                 {
@@ -118,7 +118,7 @@ namespace NCDK.IO
                 }
                 catch (Exception e)
                 {
-                    throw new CDKException("An error occured: " + e.Message, e);
+                    throw new CDKException("An error occurred: " + e.Message, e);
                 }
             }
             else

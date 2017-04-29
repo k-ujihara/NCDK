@@ -51,10 +51,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 10);
-            mfRange.Add(h, 0, 10);
-            mfRange.Add(o, 0, 10);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
+            mfRange.AddIsotope(o, 0, 10);
+            mfRange.AddIsotope(n, 0, 10);
 
             double minMass = 100.0;
             double maxMass = 100.05;
@@ -80,10 +80,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 10);
-            mfRange.Add(h, 0, 10);
-            mfRange.Add(o, 0, 10);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
+            mfRange.AddIsotope(o, 0, 10);
+            mfRange.AddIsotope(n, 0, 10);
 
             double minMass = 100.0;
             double maxMass = 100.05;
@@ -110,10 +110,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 10);
-            mfRange.Add(h, 0, 10);
-            mfRange.Add(o, 0, 10);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
+            mfRange.AddIsotope(o, 0, 10);
+            mfRange.AddIsotope(n, 0, 10);
 
             double minMass = 100.0;
             double maxMass = 100.05;
@@ -159,12 +159,12 @@ namespace NCDK.Formula
             IIsotope s = ifac.GetMajorIsotope("S");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 1000);
-            mfRange.Add(h, 0, 1000);
-            mfRange.Add(o, 0, 1000);
-            mfRange.Add(n, 0, 1000);
-            mfRange.Add(p, 0, 1000);
-            mfRange.Add(s, 0, 1000);
+            mfRange.AddIsotope(c, 0, 1000);
+            mfRange.AddIsotope(h, 0, 1000);
+            mfRange.AddIsotope(o, 0, 1000);
+            mfRange.AddIsotope(n, 0, 1000);
+            mfRange.AddIsotope(p, 0, 1000);
+            mfRange.AddIsotope(s, 0, 1000);
 
             double minMass = 100000.0;
             double maxMass = 100000.001;
@@ -178,6 +178,7 @@ namespace NCDK.Formula
             });
             new Thread(cancelThread).Start();
 
+            Thread.Sleep(10);
             // We will get stuck in the next method call until the cancel thread
             // calls the Cancel() method
             gen.GetAllFormulas();
@@ -210,7 +211,7 @@ namespace NCDK.Formula
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 100);
+            mfRange.AddIsotope(c, 0, 100);
             new MolecularFormulaGenerator(builder, -20, -10,
                     new MolecularFormulaRange());
         }
@@ -230,10 +231,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 5, 20);
-            mfRange.Add(h, 5, 20);
-            mfRange.Add(o, 5, 20);
-            mfRange.Add(n, 5, 20);
+            mfRange.AddIsotope(c, 5, 20);
+            mfRange.AddIsotope(h, 5, 20);
+            mfRange.AddIsotope(o, 5, 20);
+            mfRange.AddIsotope(n, 5, 20);
 
             // The minimal formula MF=C5H5O5N5 MW=215.0290682825
             double minMass = 100;
@@ -270,10 +271,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 3, 7);
-            mfRange.Add(h, 3, 7);
-            mfRange.Add(o, 3, 7);
-            mfRange.Add(n, 3, 7);
+            mfRange.AddIsotope(c, 3, 7);
+            mfRange.AddIsotope(h, 3, 7);
+            mfRange.AddIsotope(o, 3, 7);
+            mfRange.AddIsotope(n, 3, 7);
 
             // The maximal formula MF=C7H7O7N7 MW=301.0406955954
             double minMass = 250;
@@ -305,7 +306,7 @@ namespace NCDK.Formula
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 100);
+            mfRange.AddIsotope(c, 0, 100);
 
             double minMass = 5;
             double maxMass = 15;
@@ -330,7 +331,7 @@ namespace NCDK.Formula
             IIsotope c = ifac.GetMajorIsotope("C");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 100000);
+            mfRange.AddIsotope(c, 0, 100000);
 
             double minMass = 120000.0 - 1;
             double maxMass = 120000.0 + 1;
@@ -361,12 +362,12 @@ namespace NCDK.Formula
             IIsotope s = ifac.GetMajorIsotope("S");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 10);
-            mfRange.Add(h, 0, 10);
-            mfRange.Add(o, 0, 10);
-            mfRange.Add(n, 0, 10);
-            mfRange.Add(p, 0, 10);
-            mfRange.Add(s, 0, 10);
+            mfRange.AddIsotope(c, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
+            mfRange.AddIsotope(o, 0, 10);
+            mfRange.AddIsotope(n, 0, 10);
+            mfRange.AddIsotope(p, 0, 10);
+            mfRange.AddIsotope(s, 0, 10);
 
             double minMass = 1;
             double maxMass = 20;
@@ -391,12 +392,32 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// Test to find MF=C5H11N2O, MW=115.08714
+        /// MolecularFormulaGenerator should use full enumeration method when smallest element has large weight
         /// </summary>
         [TestMethod()]
-        public void TestSmallMass()
+        public void TestUseFullEnumerationWhenNoHydrogen()
         {
+            IsotopeFactory ifac = Isotopes.Instance;
+            IIsotope c = ifac.GetMajorIsotope("C");
+            IIsotope n = ifac.GetMajorIsotope("N");
+            IIsotope o = ifac.GetMajorIsotope("O");
 
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.AddIsotope(c, 0, 50);
+            mfRange.AddIsotope(o, 0, 30);
+            mfRange.AddIsotope(n, 0, 10);
+
+            MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1023.000, 1023.002, mfRange);
+            Assert.IsTrue(generator.formulaGenerator is FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
+        }
+
+        /// <summary>
+        /// MolecularFormulaGenerator should use full enumeration method when the mass deviation is very large (i.e. as
+        /// large as the smallest weight)
+        /// </summary>
+        [TestMethod()]
+        public void TestUseFullEnumerationWhenSuperLargeMassDeviation()
+        {
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -404,10 +425,77 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 20);
-            mfRange.Add(h, 0, 30);
-            mfRange.Add(o, 0, 15);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 20);
+            mfRange.AddIsotope(h, 0, 30);
+            mfRange.AddIsotope(o, 0, 15);
+            mfRange.AddIsotope(n, 0, 10);
+
+            MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 13, 14, mfRange);
+            Assert.IsTrue(generator.formulaGenerator is FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
+        }
+
+        /// <summary>
+        /// MolecularFormulaGenerator should use full enumeration method when mass to decompose is too large to encode
+        /// it as 32 bit integer with default blowup factor
+        /// </summary>
+        [TestMethod()]
+        public void TestUseFullEnumerationWhenExceedIntegerSpace()
+        {
+            IsotopeFactory ifac = Isotopes.Instance;
+            IIsotope c = ifac.GetMajorIsotope("C");
+            IIsotope h = ifac.GetMajorIsotope("H");
+            IIsotope n = ifac.GetMajorIsotope("N");
+            IIsotope o = ifac.GetMajorIsotope("O");
+
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.AddIsotope(c, 0, 20);
+            mfRange.AddIsotope(h, 0, 30);
+            mfRange.AddIsotope(o, 0, 15);
+            mfRange.AddIsotope(n, 0, 10);
+
+            MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 1300000, 1300000.1, mfRange);
+            Assert.IsTrue(generator.formulaGenerator is FullEnumerationFormulaGenerator, "generator implementation should be instance of FullEnumerationFormulaGenerator");
+        }
+
+        /// <summary>
+        /// MolecularFormulaGenerator should use Round Robin when using proper input
+        /// </summary>
+        [TestMethod()]
+        public void TestUseRoundRobinWheneverPossible()
+        {
+            IsotopeFactory ifac = Isotopes.Instance;
+            IIsotope c = ifac.GetMajorIsotope("C");
+            IIsotope h = ifac.GetMajorIsotope("H");
+            IIsotope n = ifac.GetMajorIsotope("N");
+            IIsotope o = ifac.GetMajorIsotope("O");
+
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.AddIsotope(c, 0, 20);
+            mfRange.AddIsotope(h, 0, 30);
+            mfRange.AddIsotope(o, 0, 15);
+            mfRange.AddIsotope(n, 0, 10);
+
+            MolecularFormulaGenerator generator = new MolecularFormulaGenerator(builder, 230.002, 230.004, mfRange);
+            Assert.IsTrue(generator.formulaGenerator is RoundRobinFormulaGenerator, "generator implementation should be instance of RoundRobinFormulaGenerator");
+        }
+
+        /// <summary>
+        /// Test to find MF=C5H11N2O, MW=115.08714
+        /// </summary>
+        [TestMethod()]
+        public void TestSmallMass()
+        {
+            IsotopeFactory ifac = Isotopes.Instance;
+            IIsotope c = ifac.GetMajorIsotope("C");
+            IIsotope h = ifac.GetMajorIsotope("H");
+            IIsotope n = ifac.GetMajorIsotope("N");
+            IIsotope o = ifac.GetMajorIsotope("O");
+
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            mfRange.AddIsotope(c, 0, 20);
+            mfRange.AddIsotope(h, 0, 30);
+            mfRange.AddIsotope(o, 0, 15);
+            mfRange.AddIsotope(n, 0, 10);
 
             double minMass = 115.08714 - 0.0001;
             double maxMass = 115.08714 + 0.0001;
@@ -424,12 +512,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test to find pentacarboxyporphyrin, MF=C37H38N4O10 MW=698.25879
-        /// 
         /// </summary>
         [TestMethod()]
         public void TestMiddleMass()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -437,10 +523,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 50);
-            mfRange.Add(h, 0, 100);
-            mfRange.Add(o, 0, 30);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 50);
+            mfRange.AddIsotope(h, 0, 100);
+            mfRange.AddIsotope(o, 0, 30);
+            mfRange.AddIsotope(n, 0, 10);
 
             double minMass = 698.25879 - 0.0001;
             double maxMass = 698.25879 + 0.0001;
@@ -457,12 +543,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test to find ubiquitin: MF=C374H623N103O116S MW=8445.573784
-        ///
         /// </summary>
         [TestMethod()]
         public void TestHighMass()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -471,11 +555,11 @@ namespace NCDK.Formula
             IIsotope s = ifac.GetMajorIsotope("S");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 350, 400);
-            mfRange.Add(h, 620, 650);
-            mfRange.Add(o, 100, 150);
-            mfRange.Add(n, 100, 150);
-            mfRange.Add(s, 0, 10);
+            mfRange.AddIsotope(c, 350, 400);
+            mfRange.AddIsotope(h, 620, 650);
+            mfRange.AddIsotope(o, 100, 150);
+            mfRange.AddIsotope(n, 100, 150);
+            mfRange.AddIsotope(s, 0, 10);
 
             double minMass = 8445.573784 - 0.00001;
             double maxMass = 8445.573784 + 0.00001;
@@ -491,11 +575,8 @@ namespace NCDK.Formula
         }
 
         /// <summary>
-        /// 
-        ///
         /// Test if formula MF=C4H11NO4 MW=137.06881 is found in mass range
         /// 137-137.2.
-        ///
         /// </summary>
         [TestMethod()]
         public void TestFormulaFoundInRange()
@@ -507,10 +588,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 1, 50);
-            mfRange.Add(h, 1, 100);
-            mfRange.Add(o, 1, 50);
-            mfRange.Add(n, 1, 50);
+            mfRange.AddIsotope(c, 1, 50);
+            mfRange.AddIsotope(h, 1, 100);
+            mfRange.AddIsotope(o, 1, 50);
+            mfRange.AddIsotope(n, 1, 50);
 
             double minMass = 137.0;
             double maxMass = 137.2;
@@ -535,12 +616,10 @@ namespace NCDK.Formula
 
         /// <summary>
         /// Test if formula MF=C11H10NO2 MW=188.07115 is found in mass range 187-189.
-        ///
         /// </summary>
         [TestMethod()]
         public void TestFormulaFoundInRange2()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -548,10 +627,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 1, 50);
-            mfRange.Add(h, 1, 100);
-            mfRange.Add(o, 1, 50);
-            mfRange.Add(n, 1, 50);
+            mfRange.AddIsotope(c, 1, 50);
+            mfRange.AddIsotope(h, 1, 100);
+            mfRange.AddIsotope(o, 1, 50);
+            mfRange.AddIsotope(n, 1, 50);
 
             double minMass = 187;
             double maxMass = 189;
@@ -577,12 +656,10 @@ namespace NCDK.Formula
         /// <summary>
         /// Test if formula with 7 different elements is found in a narrow mass
         /// range. MF=C8H9Cl3NO2PS MW=318.915719
-        ///
         /// </summary>
         [TestMethod()]
         public void TestCompoundWith7Elements()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -593,13 +670,13 @@ namespace NCDK.Formula
             IIsotope cl = ifac.GetMajorIsotope("Cl");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 7, 9);
-            mfRange.Add(h, 8, 10);
-            mfRange.Add(o, 1, 3);
-            mfRange.Add(n, 0, 2);
-            mfRange.Add(s, 0, 2);
-            mfRange.Add(p, 0, 2);
-            mfRange.Add(cl, 2, 4);
+            mfRange.AddIsotope(c, 7, 9);
+            mfRange.AddIsotope(h, 8, 10);
+            mfRange.AddIsotope(o, 1, 3);
+            mfRange.AddIsotope(n, 0, 2);
+            mfRange.AddIsotope(s, 0, 2);
+            mfRange.AddIsotope(p, 0, 2);
+            mfRange.AddIsotope(cl, 2, 4);
 
             double minMass = 318.915719 - 0.0001;
             double maxMass = 318.915719 + 0.0001;
@@ -612,7 +689,6 @@ namespace NCDK.Formula
             Assert.AreEqual(1, mfSet.Count);
             Assert.AreEqual("C8H9Cl3NO2PS", MolecularFormulaManipulator
                     .GetString(mfSet[0]));
-
         }
 
         /// <summary>
@@ -621,7 +697,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestDifferentIsotopes()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             var carbons = ifac.GetIsotopes("C");
@@ -629,9 +704,9 @@ namespace NCDK.Formula
             IIsotope h = ifac.GetMajorIsotope("H");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 11);
-            mfRange.Add(c13, 0, 10);
-            mfRange.Add(h, 0, 10);
+            mfRange.AddIsotope(c, 0, 11);
+            mfRange.AddIsotope(c13, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
 
             double minMass = 54.04193 - 0.001;
             double maxMass = 54.04193 + 0.001;
@@ -654,7 +729,6 @@ namespace NCDK.Formula
                     [0].GetCount(c));
             Assert.AreEqual(trueFormula.GetCount(c13), mfSet
                     [0].GetCount(c13));
-
         }
 
         /// <summary>
@@ -664,7 +738,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestFixedElementCounts()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -672,10 +745,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 7, 7);
-            mfRange.Add(h, 15, 15);
-            mfRange.Add(o, 4, 4);
-            mfRange.Add(n, 2, 2);
+            mfRange.AddIsotope(c, 7, 7);
+            mfRange.AddIsotope(h, 15, 15);
+            mfRange.AddIsotope(o, 4, 4);
+            mfRange.AddIsotope(n, 2, 2);
 
             double massMin = 10d;
             double massMax = 1000d;
@@ -688,7 +761,6 @@ namespace NCDK.Formula
             Assert.AreEqual(1, mfSet.Count);
             Assert.AreEqual("C7H15N2O4", MolecularFormulaManipulator
                     .GetString(mfSet[0]));
-
         }
 
         /// <summary>
@@ -698,7 +770,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMassRangeTooHigh()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -706,10 +777,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 0, 10);
-            mfRange.Add(h, 0, 10);
-            mfRange.Add(o, 0, 10);
-            mfRange.Add(n, 0, 10);
+            mfRange.AddIsotope(c, 0, 10);
+            mfRange.AddIsotope(h, 0, 10);
+            mfRange.AddIsotope(o, 0, 10);
+            mfRange.AddIsotope(n, 0, 10);
 
             double massMin = 1000d;
             double massMax = 2000d;
@@ -720,7 +791,6 @@ namespace NCDK.Formula
 
             Assert.IsNotNull(mfSet);
             Assert.AreEqual(0, mfSet.Count);
-
         }
 
         /// <summary>
@@ -730,7 +800,6 @@ namespace NCDK.Formula
         [TestMethod()]
         public void TestMassRangeTooLow()
         {
-
             IsotopeFactory ifac = Isotopes.Instance;
             IIsotope c = ifac.GetMajorIsotope("C");
             IIsotope h = ifac.GetMajorIsotope("H");
@@ -738,10 +807,10 @@ namespace NCDK.Formula
             IIsotope o = ifac.GetMajorIsotope("O");
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(c, 100, 200);
-            mfRange.Add(h, 100, 200);
-            mfRange.Add(o, 100, 200);
-            mfRange.Add(n, 100, 200);
+            mfRange.AddIsotope(c, 100, 200);
+            mfRange.AddIsotope(h, 100, 200);
+            mfRange.AddIsotope(o, 100, 200);
+            mfRange.AddIsotope(n, 100, 200);
 
             double massMin = 50d;
             double massMax = 100d;

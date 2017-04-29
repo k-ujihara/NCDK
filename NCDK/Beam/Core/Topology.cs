@@ -319,15 +319,24 @@ namespace NCDK.Beam
             // odd number of cumulated double bond systems (e.g. allene)
             else if (deg == 2)
             {
+                int nDoubleBonds = 0;
+
                 // check both bonds are double
                 int d = g.Degree(u);
                 for (int j = 0; j < d; ++j)
                 {
                     Edge e = g.EdgeAt(u, j);
                     if (e.Bond != Bond.Double)
-                        return Configuration.Unknown;
+                        nDoubleBonds++;
                 }
-                return c == AntiClockwise ? AL1 : AL2;
+                if (nDoubleBonds == 1)
+                {
+                    return c == AntiClockwise ? DB1 : DB2;
+                }
+                else
+                {
+                    return c == AntiClockwise ? AL1 : AL2;
+                }
             }
 
             // trigonal bipyramidal

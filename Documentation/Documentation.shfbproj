@@ -33,7 +33,7 @@
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
-    <HelpFileVersion>1.5.13.1</HelpFileVersion>
+    <HelpFileVersion>1.5.14.0</HelpFileVersion>
     <MaximumGroupParts>200</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#</SyntaxFilters>
@@ -62,34 +62,35 @@
     <SourceCodeBasePath>..\NCDK\</SourceCodeBasePath>
     <ApiFilter>
       <Filter entryType="Namespace" fullName="NCDK.Beam" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Base" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Collections" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Hash" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Mathematics" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Primitives" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Common.Util" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.FaulonSignatures" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.Chemistry" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.EdgeColored" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.Simple" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.NInChI" isExposed="False" />
-<Filter entryType="Namespace" fullName="NCDK.Reactions.Types" isExposed="True">
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractAdductionLPReaction" filterName="AbstractAdductionLPReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractElectronImpactDBReaction" filterName="AbstractElectronImpactDBReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractHeterolyticCleavageReaction" filterName="AbstractHeterolyticCleavageReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRadicalSiteInitiationReaction" filterName="AbstractRadicalSiteInitiationReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRadicalSiteReaction" filterName="AbstractRadicalSiteReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRearrangementReaction" filterName="AbstractRearrangementReaction" isExposed="False" />
-  <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractSharingReaction" filterName="AbstractSharingReaction" isExposed="False" />
-</Filter>
-<Filter entryType="Namespace" fullName="NCDK.Smiles.SMARTS.Parser" isExposed="False">
-  <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.Smarts2MQLVisitor" filterName="Smarts2MQLVisitor" isExposed="True" />
-  <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SmartsDumpVisitor" filterName="SmartsDumpVisitor" isExposed="True" />
-  <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SMARTSParser" filterName="SMARTSParser" isExposed="True" />
-  <Filter entryType="Interface" fullName="NCDK.Smiles.SMARTS.Parser.SMARTSParserVisitor" filterName="SMARTSParserVisitor" isExposed="True" />
-  <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SmartsQueryVisitor" filterName="SmartsQueryVisitor" isExposed="True" />
-</Filter>
-<Filter entryType="Namespace" fullName="NCDK.Util.Xml" isExposed="False" /></ApiFilter>
+      <Filter entryType="Namespace" fullName="NCDK.Common.Base" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Common.Collections" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Common.Hash" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Common.Mathematics" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Common.Primitives" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Common.Util" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.FaulonSignatures" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.Chemistry" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.EdgeColored" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.FaulonSignatures.Simple" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.NInChI" isExposed="False" />
+      <Filter entryType="Namespace" fullName="NCDK.Reactions.Types" isExposed="True">
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractAdductionLPReaction" filterName="AbstractAdductionLPReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractElectronImpactDBReaction" filterName="AbstractElectronImpactDBReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractHeterolyticCleavageReaction" filterName="AbstractHeterolyticCleavageReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRadicalSiteInitiationReaction" filterName="AbstractRadicalSiteInitiationReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRadicalSiteReaction" filterName="AbstractRadicalSiteReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractRearrangementReaction" filterName="AbstractRearrangementReaction" isExposed="False" />
+        <Filter entryType="Class" fullName="NCDK.Reactions.Types.AbstractSharingReaction" filterName="AbstractSharingReaction" isExposed="False" />
+      </Filter>
+      <Filter entryType="Namespace" fullName="NCDK.Smiles.SMARTS.Parser" isExposed="False">
+        <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.Smarts2MQLVisitor" filterName="Smarts2MQLVisitor" isExposed="True" />
+        <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SmartsDumpVisitor" filterName="SmartsDumpVisitor" isExposed="True" />
+        <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SMARTSParser" filterName="SMARTSParser" isExposed="True" />
+        <Filter entryType="Interface" fullName="NCDK.Smiles.SMARTS.Parser.SMARTSParserVisitor" filterName="SMARTSParserVisitor" isExposed="True" />
+        <Filter entryType="Class" fullName="NCDK.Smiles.SMARTS.Parser.SmartsQueryVisitor" filterName="SmartsQueryVisitor" isExposed="True" />
+      </Filter>
+      <Filter entryType="Namespace" fullName="NCDK.Util.Xml" isExposed="False" />
+    </ApiFilter>
     <VisibleItems>InheritedMembers, InheritedFrameworkMembers, Protected, ProtectedInternalAsProtected</VisibleItems>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
@@ -117,6 +118,7 @@
     <Folder Include="media" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\VersionHistory\v1.0.2.0.aml" />
     <None Include="Content\VersionHistory\v1.0.0.0.aml" />
     <None Include="Content\VersionHistory\VersionHistory.aml" />
     <None Include="Content\Welcome.aml" />

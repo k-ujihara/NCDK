@@ -20,12 +20,12 @@ namespace NCDK.Formula
              IIsotope s = ifac.GetMajorIsotope("S");
              
              MolecularFormulaRange mfRange = new MolecularFormulaRange();
-             mfRange.Add(c, 0, 50);
-             mfRange.Add(h, 0, 100);
-             mfRange.Add(o, 0, 50);
-             mfRange.Add(n, 0, 50);
-             mfRange.Add(p, 0, 10);
-             mfRange.Add(s, 0, 10);
+             mfRange.AddIsotope(c, 0, 50);
+             mfRange.AddIsotope(h, 0, 100);
+             mfRange.AddIsotope(o, 0, 50);
+             mfRange.AddIsotope(n, 0, 50);
+             mfRange.AddIsotope(p, 0, 10);
+             mfRange.AddIsotope(s, 0, 10);
 
             var builder = Silent.ChemObjectBuilder.Instance;
             double minMass = 133.003;

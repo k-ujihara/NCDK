@@ -130,8 +130,8 @@ namespace NCDK.Renderers
         /// generators for <see cref="IAtomContainer"/>s and <see cref="IReactionSet"/>s
         /// and manages fonts with the supplied font manager.
         /// </summary>
-        /// <param name="generators">a list of classes that implement the <see cref="IGenerator"/> interface</param>
-        /// <param name="reactionGenerators">a list of classes that implement the <see cref="IGenerator"/> interface</param>
+        /// <param name="generators">a list of classes that implement the <see cref="IGenerator{T}"/> interface</param>
+        /// <param name="reactionGenerators">a list of classes that implement the <see cref="IGenerator{T}"/> interface</param>
         /// <param name="fontManager">a class that manages mappings between zoom and font sizes</param>
         public ReactionSetRenderer(IEnumerable<IGenerator<IAtomContainer>> generators, IEnumerable<IGenerator<IReaction>> reactionGenerators, IFontManager fontManager)
             : this(new RendererModel(), generators, reactionGenerators, fontManager)

@@ -109,7 +109,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2004-11-30
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:BCUT
     // @cdk.keyword BCUT
     // @cdk.keyword descriptor

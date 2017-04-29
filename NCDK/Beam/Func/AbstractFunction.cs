@@ -27,9 +27,6 @@
  * either expressed or implied, of the FreeBSD Project.
  */
 
-using System;
-using System.Collections.Generic;
-
 namespace NCDK.Beam
 {
     /// <summary>

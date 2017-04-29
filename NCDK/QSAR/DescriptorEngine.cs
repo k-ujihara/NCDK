@@ -137,7 +137,7 @@ namespace NCDK.QSAR
         /// on the <see cref="DescriptorSpecification"/> object for that descriptor</para>
         /// </remarks>
         /// <param name="molecule">The molecule for which we want to calculate descriptors</param>
-        /// <exception cref="CDKException">if an error occured during descriptor calculation or the descriptors and/or specifications have not been initialized</exception>
+        /// <exception cref="CDKException">if an error occurred during descriptor calculation or the descriptors and/or specifications have not been initialized</exception>
         public void Process(IAtomContainer molecule)
         {
             if (descriptors == null || speclist == null)

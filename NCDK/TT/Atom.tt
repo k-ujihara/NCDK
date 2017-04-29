@@ -54,7 +54,6 @@ namespace <#= ns.NS #>
     /// Junit test for this class.
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
-    // @cdk.module  silent
     // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02

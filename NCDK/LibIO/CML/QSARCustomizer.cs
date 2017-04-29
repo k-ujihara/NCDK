@@ -37,7 +37,6 @@ namespace NCDK.LibIO.CML
     // @cdk.created   2005-05-04
     // @cdk.module    qsarcml
     // @cdk.githash
-    // @cdk.set       libio-cml-customizers
     public class QSARCustomizer : ICMLCustomizer
     {
         private const string QSAR_NAMESPACE = "qsar";

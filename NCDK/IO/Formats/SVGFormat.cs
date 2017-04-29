@@ -16,11 +16,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-namespace NCDK.IO.Formats {
+namespace NCDK.IO.Formats
+{
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
-    public class SVGFormat : AbstractResourceFormat, IResourceFormat {
+    public class SVGFormat : AbstractResourceFormat, IResourceFormat
+    {
         private static IResourceFormat myself = null;
 
         public SVGFormat() { }
@@ -41,4 +42,3 @@ namespace NCDK.IO.Formats {
         public override bool IsXmlBased => true;
     }
 }
- 

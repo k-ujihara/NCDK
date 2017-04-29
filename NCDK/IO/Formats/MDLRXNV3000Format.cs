@@ -26,7 +26,6 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class MDLRXNV3000Format : AbstractResourceFormat, IChemFormatMatcher
     {
         private static IResourceFormat myself = null;

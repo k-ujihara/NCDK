@@ -140,7 +140,7 @@ namespace NCDK.QSAR.Descriptors.Moleculars
             }
             catch (IOException e)
             {
-                throw new CDKException("IO problem occured when using the CDK atom config\n" + e.Message, e);
+                throw new CDKException("IO problem occurred when using the CDK atom config\n" + e.Message, e);
             }
             double sum = 0;
             foreach (var aFragList in fragList)

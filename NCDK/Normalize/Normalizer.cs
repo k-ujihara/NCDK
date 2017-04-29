@@ -32,7 +32,7 @@ using System.Xml.Linq;
 namespace NCDK.Normalize
 {
     /// <summary>
-    /// Adjusts parts of an AtomContainer to the congiguratin of a fragment.
+    /// Adjusts parts of an AtomContainer to the configuration of a fragment.
     /// </summary>
     // @author        shk3
     // @cdk.created   2004-03-04
@@ -41,7 +41,7 @@ namespace NCDK.Normalize
     public class Normalizer
     {
         /// <summary>
-        ///  The method takes an xml files like the following:
+        ///  The method takes an XML files like the following:
         ///  <pre>
         ///  &lt;replace-set&gt;
         ///  &lt;replace&gt;O=N=O&lt;/replace&gt;

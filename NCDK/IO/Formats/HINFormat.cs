@@ -25,10 +25,8 @@ namespace NCDK.IO.Formats
     /// </summary>
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class HINFormat : SimpleChemFormatMatcher, IChemFormatMatcher
     {
-
         private static IResourceFormat myself = new HINFormat();
 
         public HINFormat() { }

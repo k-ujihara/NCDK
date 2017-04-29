@@ -167,10 +167,13 @@ namespace NCDK
         /// hydrogens are not aromatic).
         /// </summary>
         /// <param name="container">the atom container to check</param>
-        protected void AssertAllSingleAndAromatic(IAtomContainer container)
+        protected void AssertAllSingleOrAromatic(IAtomContainer container)
         {
-            foreach (var bond in container.Bonds)
-                Assert.AreEqual(BondOrder.Single, bond.Order);
+            foreach (IBond bond in container.Bonds)
+            {
+                if (!bond.IsAromatic)
+                    Assert.AreEqual(BondOrder.Single, bond.Order);
+            }
 
             foreach (var atom in container.Atoms)
             {

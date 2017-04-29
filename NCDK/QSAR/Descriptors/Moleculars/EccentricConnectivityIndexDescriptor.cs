@@ -62,7 +62,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created     2005-03-19
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:eccentricConnectivityIndex
     public class EccentricConnectivityIndexDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {

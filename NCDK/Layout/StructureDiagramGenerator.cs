@@ -34,6 +34,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NCDK.Numerics;
+using NCDK.Config;
 
 namespace NCDK.Layout
 {
@@ -64,10 +65,11 @@ namespace NCDK.Layout
     // @cdk.bug 1788686
     public class StructureDiagramGenerator
     {
+        public static readonly double RAD_30 = Vectors.DegreeToRadian(-30);
         public const double DefaultBondLength = 1.5;
 
         private IAtomContainer molecule;
-        private IAtomContainerSet<IRing> sssr;
+        private IRingSet sssr;
         /// <summary>
         /// The bond length used for laying out the molecule. 
         /// The default value is 1.5.
@@ -78,12 +80,15 @@ namespace NCDK.Layout
         private AtomPlacer atomPlacer = new AtomPlacer();
         private MacroCycleLayout macroPlacer = null;
         private List<IRingSet> ringSystems = null;
+        private ISet<IAtom> afix = null;
+        private ISet<IBond> bfix = null;
         /// <summary>
         /// Whether identity templates are used. Identity templates use an exact match
         /// are are very fast. They are used for layout of the 'primary' ring system
         /// in de facto orientation.
         /// </summary>
-        public bool UseIdentityTemplates { private get; set; }
+        public bool UseIdentityTemplates { private get; set; } = true;
+        private bool alignMappedReaction = true;
 
         /// <summary>
         /// show we orient the structure (false: keep de facto ring systems drawn the right way up)
@@ -96,7 +101,7 @@ namespace NCDK.Layout
         private IdentityTemplateLibrary identityLibrary;
 
         public static Vector2 DefaultBondVector = new Vector2(0, 1);
-        private static IdentityTemplateLibrary DefaultTempleteLibrary = 
+        private static IdentityTemplateLibrary DefaultTempleteLibrary =
             IdentityTemplateLibrary.LoadFromResource("custom-templates.smi")
                 .Add(IdentityTemplateLibrary.LoadFromResource("chebi-ring-templates.smi"));
 
@@ -120,35 +125,233 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// Assings a molecule to be layed out. Call <see cref="GenerateCoordinates()"/> to do the actual layout.
+        /// Convenience method for generating 2D coordinates.
+        /// </summary>
+        /// <example>
+        /// The method is short-hand for calling:
+        /// <code>
+        /// sdg.setMolecule(mol, false);
+        /// sdg.generateCoordinates();
+        /// </code></example>
+        /// <param name="mol">molecule to layout</param>
+        /// <exception cref="CDKException">problem with layout</exception>
+        public void GenerateCoordinates(IAtomContainer mol)
+        {
+            SetMolecule(mol, false);
+            GenerateCoordinates();
+        }
+
+        /// <summary>
+        /// <p>Convenience method to generate 2D coordinates for a reaction. If atom-atom
+        /// maps are present on a reaction, the substructures are automatically aligned.</p>
+        /// <p>This feature can be disabled by changing the <see cref="SetAlignMappedReaction(bool)"/></p>
+        /// </summary>
+        /// <param name="reaction">reaction to layout</param>
+        /// <exception cref="CDKException">problem with layout</exception>
+        public void GenerateCoordinates(IReaction reaction)
+        {
+            // layout products and agents
+            foreach (IAtomContainer mol in reaction.Products)
+                GenerateCoordinates(mol);
+            foreach (IAtomContainer mol in reaction.Agents)
+                GenerateCoordinates(mol);
+
+            // do not align = simple layout of reactants
+            if (alignMappedReaction)
+            {
+                ISet<IBond> mapped = ReactionManipulator.FindMappedBonds(reaction);
+
+                var refmap = new MultiDictionary<int, IDictionary<int, IAtom>>();
+
+                foreach (IAtomContainer mol in reaction.Products)
+                {
+                    Cycles.MarkRingAtomsAndBonds(mol);
+                    ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjListSubgraph(mol, mapped));
+                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.Components());
+                    foreach (IAtomContainer part in parts)
+                    {
+                        // skip single atoms (unmapped)
+                        if (part.Atoms.Count == 1)
+                            continue;
+                        IDictionary<int, IAtom> map = new Dictionary<int, IAtom>();
+                        foreach (IAtom atom in part.Atoms)
+                        {
+                            // safe as substructure should only be mapped bonds and therefore atoms!
+                            int idx = atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+                            if (map.ContainsKey(idx))
+                            {
+                                map[idx] = atom;
+                            }
+                            else
+                            {
+                                map[idx] = atom;
+                                refmap.Add(idx, map);
+                            }
+                        }
+                    }
+                }
+
+                IDictionary<IAtom, IAtom> afix = new Dictionary<IAtom, IAtom>();
+                ISet<IBond> bfix = new HashSet<IBond>();
+
+                foreach (IAtomContainer mol in reaction.Reactants)
+                {
+                    Cycles.MarkRingAtomsAndBonds(mol);
+                    ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjListSubgraph(mol, mapped));
+                    var parts = ConnectivityChecker.PartitionIntoMolecules(mol, cc.Components());
+
+                    // we only aligned the largest part
+                    IAtomContainer largest = null;
+                    foreach (IAtomContainer part in parts)
+                    {
+                        if (largest == null || part.Bonds.Count > largest.Bonds.Count)
+                            largest = part;
+                    }
+
+                    afix.Clear();
+                    bfix.Clear();
+
+                    if (largest != null && largest.Atoms.Count > 1)
+                    {
+                        int idx = largest.Atoms[0].GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+
+                        // select the largest and use those coordinates
+                        IDictionary<int, IAtom> reference = Select(refmap[idx]);
+                        foreach (IAtom atom in largest.Atoms)
+                        {
+                            idx = atom.GetProperty<int>(CDKPropertyName.AtomAtomMapping);
+                            IAtom src = reference[idx];
+                            if (src == null) continue;
+                            atom.Point2D = src.Point2D;
+                            afix[atom] = src;
+                        }
+                    }
+
+                    if (afix.Any())
+                    {
+                        foreach (IBond bond in mol.Bonds)
+                        {
+                            if (afix.ContainsKey(bond.Atoms[0]) && afix.ContainsKey(bond.Atoms[1]))
+                            {
+                                // only fix acyclic bonds if the source atoms were also acyclic
+                                if (!bond.IsInRing)
+                                {
+                                    IAtom srcBeg = afix[bond.Atoms[0]];
+                                    IAtom srcEnd = afix[bond.Atoms[1]];
+                                    foreach (IAtomContainer product in reaction.Products)
+                                    {
+                                        IBond srcBond = product.GetBond(srcBeg, srcEnd);
+                                        if (srcBond != null)
+                                        {
+                                            if (!srcBond.IsInRing)
+                                                bfix.Add(bond); // safe to add
+                                            break;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    bfix.Add(bond);
+                                }
+                            }
+                        }
+                    }
+
+                    SetMolecule(mol, false, Sets.Wrap(afix.Keys), bfix);
+                    GenerateCoordinates();
+                }
+
+                // reorder reactants such that they are in the same order they appear on the right
+                reaction.Reactants.Sort(centerComparer);
+
+            }
+            else
+            {
+                foreach (IAtomContainer mol in reaction.Reactants)
+                    GenerateCoordinates(mol);
+            }
+        }
+
+        static readonly CenterComparer centerComparer = new CenterComparer();
+        class CenterComparer : IComparer<IAtomContainer>
+        {
+            public int Compare(IAtomContainer a, IAtomContainer b)
+            {
+                var aCenter = GeometryUtil.Get2DCenter(a);
+                var bCenter = GeometryUtil.Get2DCenter(b);
+                return aCenter.X.CompareTo(bCenter.X);
+            }
+        }
+
+        private IDictionary<int, IAtom> Select(IEnumerable<IDictionary<int, IAtom>> refs)
+        {
+            IDictionary<int, IAtom> largest = Dictionaries.Empty<int, IAtom>();
+            foreach (IDictionary<int, IAtom> ref_ in refs)
+            {
+                if (ref_.Count > largest.Count)
+                    largest = ref_;
+            }
+            return largest;
+        }
+
+        public void SetMolecule(IAtomContainer mol, bool clone)
+        {
+            SetMolecule(mol, clone, Sets.Empty<IAtom>(), Sets.Empty<IBond>());
+        }
+
+        /// <summary>
+        /// Assigns a molecule to be laid out. After, setting the molecule call generateCoordinates() to assign
+        /// 2D coordinates. An optional set of atoms/bonds can be parsed in to allow partial layout, these will
+        /// be 'fixed' in place. This only applies to non-cloned molecules, and only atoms with coordinates can
+        /// be fixed.
         /// </summary>
         /// <param name="mol">the molecule for which coordinates are to be generated.</param>
         /// <param name="clone">Should the whole process be performed with a cloned copy?</param>
-        public void SetMolecule(IAtomContainer mol, bool clone)
+        /// <param name="afix">Atoms that should be fixed in place, coordinates are not changed.</param>
+        /// <param name="bfix">Bonds that should be fixed in place, they will not be flipped, bent, or streched.</param>
+        public void SetMolecule(IAtomContainer mol, bool clone, ISet<IAtom> afix, ISet<IBond> bfix)
         {
-            IAtom atom = null;
             if (clone)
             {
+                if (afix.Any() || bfix.Any())
+                    throw new ArgumentException("Laying out a cloned molecule, can't fix atom or bonds.");
                 this.molecule = (IAtomContainer)mol.Clone();
             }
             else
             {
                 this.molecule = mol;
             }
-            for (int f = 0; f < molecule.Atoms.Count; f++)
+            this.afix = afix;
+            this.bfix = bfix;
+            foreach (IAtom atom in molecule.Atoms)
             {
-                atom = molecule.Atoms[f];
-                atom.Point2D = null;
-                atom.IsPlaced = false;
-                atom.IsVisited = false;
-                atom.IsInRing = false;
-                atom.IsAliphatic = false;
+                bool afixed = afix.Contains(atom);
+
+                if (afixed && atom.Point2D == null)
+                {
+                    afixed = false;
+                    afix.Remove(atom);
+                }
+
+                if (afixed)
+                {
+                    atom.IsPlaced = true;
+                    atom.IsVisited = true;
+                }
+                else
+                {
+                    atom.Point2D = null;
+                    atom.IsPlaced = false;
+                    atom.IsVisited = false;
+                    atom.IsInRing = false;
+                    atom.IsAliphatic = false;
+                }
             }
             atomPlacer.Molecule = this.molecule;
             ringPlacer.Molecule = this.molecule;
             ringPlacer.AtomPlacer = this.atomPlacer;
             macroPlacer = new MacroCycleLayout(mol);
-            selectOrientation = true;
+            selectOrientation = !afix.Any();
         }
 
         /// <summary>
@@ -182,6 +385,15 @@ namespace NCDK.Layout
         }
 
         /// <summary>
+        /// Set whether reaction reactants should be allignned to their product.
+        /// </summary>
+        /// <param name="align">align setting</param>
+        public void SetAlignMappedReaction(bool align)
+        {
+            this.alignMappedReaction = align;
+        }
+
+        /// <summary>
         /// The molecule with new coordinates (if <see cref="GenerateCoordinates()"/> had been called)
         /// </summary>
         public IAtomContainer Molecule
@@ -198,10 +410,11 @@ namespace NCDK.Layout
 
         /// <summary>
         /// This method uses <see cref="GenerateCoordinates()"/>, but it removes the hydrogens first,
-        /// lays out the structuren and then adds them again.
+        /// lays out the structure and then adds them again.
         /// </summary>
         /// <exception cref="CDKException">if an error occurs</exception>
         /// <seealso cref="GenerateCoordinates()"/>
+        [Obsolete("Use " + nameof(GenerateCoordinates) + "()")]
         public void GenerateExperimentalCoordinates()
         {
             GenerateExperimentalCoordinates(DefaultBondVector);
@@ -213,6 +426,7 @@ namespace NCDK.Layout
         /// </summary>
         /// <param name="firstBondVector">the vector of the first bond to lay out</param>
         /// <exception cref="CDKException">if an error occurs</exception>
+        [Obsolete("Use " + nameof(GenerateCoordinates) + "()")]
         public void GenerateExperimentalCoordinates(Vector2 firstBondVector)
         {
             // first make a shallow copy: Atom/Bond references are kept
@@ -254,31 +468,33 @@ namespace NCDK.Layout
         }
 
         /// <summary>
-        /// The main method of this <see cref="StructureDiagramGenerator"/>. Assign a molecule to the
-        /// <see cref="StructureDiagramGenerator"/>, call the <see cref="GenerateCoordinates()"/>  method and get
+        /// The main method of this StructureDiagramGenerator. Assign a molecule to the
+        /// StructureDiagramGenerator, call the generateCoordinates() method and get
         /// your molecule back.
         /// </summary>
         /// <param name="firstBondVector">the vector of the first bond to lay out</param>
         /// <param name="isConnected">the 'molecule' attribute is guaranteed to be connected (we have checked)</param>
-        /// <param name="isSubLayout">the 'molecule' attribute is guaranteed to be connected (we have checked)</param>
+        /// <param name="isSubLayout">the 'molecule' is being laid out as part of a large collection of fragments</param>
         /// <exception cref="CDKException">problem occurred during layout</exception>
         private void GenerateCoordinates(Vector2 firstBondVector, bool isConnected, bool isSubLayout)
         {
-            int safetyCounter = 0;
-            
+            int numAtoms = molecule.Atoms.Count;
+            int numBonds = molecule.Bonds.Count;
+            this.firstBondVector = firstBondVector;
+
             // if molecule contains only one Atom, don't fail, simply set
             // coordinates to simplest: 0,0. See bug #780545
-            Debug.WriteLine("Entry point of GenerateCoordinates()");
-            Debug.WriteLine("We have a molecules with " + molecule.Atoms.Count + " atoms.");
-            if (molecule.Atoms.Count == 1)
+            Debug.WriteLine("Entry point of generateCoordinates()");
+            Debug.WriteLine("We have a molecules with " + numAtoms + " atoms.");
+            if (numAtoms == 1)
             {
-                molecule.Atoms[0].Point2D = Vector2.Zero;
+                molecule.Atoms[0].Point2D = new Vector2(0, 0);
                 return;
             }
-            else if (molecule.Bonds.Count == 1)
+            else if (molecule.Bonds.Count == 1 && molecule.Atoms.Count == 2)
             {
                 double xOffset = 0;
-                foreach (var atom in molecule.Atoms)
+                foreach (IAtom atom in molecule.Atoms)
                 {
                     atom.Point2D = new Vector2(xOffset, 0);
                     xOffset += BondLength;
@@ -296,146 +512,224 @@ namespace NCDK.Layout
                     // don't call set molecule as it wipes x,y coordinates!
                     // this looks like a self assignment but actually the fragment
                     // method changes this.molecule
-                    //this.molecule = molecule;
+                    this.molecule = molecule;
                     return;
                 }
             }
 
-            // compute the minimum number of rings as given by Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
-            int nrOfEdges = molecule.Bonds.Count;
-            //Vector2 ringSystemVector = null;
-            //Vector2 newRingSystemVector = null;
-            this.firstBondVector = firstBondVector;
-            double angle;
+            // initial layout seeding either from a ring system of longest chain
+            SeedLayout();
 
-            int expectedRingCount = nrOfEdges - molecule.Atoms.Count + 1;
-            if (expectedRingCount > 0)
+            // Now, do the layout of the rest of the molecule
+            int iter = 0;
+            for (; !AtomPlacer.AllPlaced(molecule) && iter < numAtoms; iter++)
             {
-                Debug.WriteLine("*** Start of handling rings. ***");
-                Cycles.MarkRingAtomsAndBonds(molecule);
+                Debug.WriteLine("*** Start of handling the rest of the molecule. ***");
+                // layout for all acyclic parts of the molecule which are
+                // connected to the parts which have already been laid out.
+                LayoutAcyclicParts();
+                // layout cyclic parts of the molecule which
+                // are connected to the parts which have already been laid out.
+                LayoutCyclicParts();
+            }
 
-                // Get the smallest set of smallest rings on this molecule
-                
-                sssr = Cycles.FindSSSR(molecule).ToRingSet();
-                if (!sssr.Any())
+            // display reasonable error on failed layout, otherwise we'll have a NPE somewhere
+            if (iter == numAtoms && !AtomPlacer.AllPlaced(molecule))
+                throw new CDKException("Could not generate layout? If a set of 'fixed' atoms were provided"
+                                           + " try removing these and regenerating the layout.");
+
+            if (!isSubLayout)
+            {
+                // correct double-bond stereo, this changes the layout and in reality
+                // should be done during the initial placement
+                if (molecule.StereoElements.Any())
+                    CorrectGeometricConfiguration.Correct(molecule);
+            }
+
+            RefinePlacement(molecule);
+            FinalizeLayout(molecule);
+
+            if (!isSubLayout)
+                AssignStereochem(molecule);
+
+        }
+
+        /// <summary>
+        /// Determine if any atoms in a connected molecule are fixed (i.e. already have coordinates/
+        /// have been placed).
+        /// </summary>
+        /// <param name="mol">the moleucle to check</param>
+        /// <returns>atoms are fixed</returns>
+        private bool HasFixedPart(IAtomContainer mol)
+        {
+            if (!afix.Any()) return false;
+            foreach (IAtom atom in mol.Atoms)
+                if (afix.Contains(atom))
+                    return true;
+            return false;
+        }
+
+        private void SeedLayout()
+        {
+            int numAtoms = this.molecule.Atoms.Count;
+            int numBonds = this.molecule.Bonds.Count;
+            // Compute the circuit rank (https://en.wikipedia.org/wiki/Circuit_rank).
+            // Frerejacque, Bull. Soc. Chim. Fr., 5, 1008 (1939)
+            int circuitrank = numBonds - numAtoms + 1;
+            if (HasFixedPart(molecule))
+            {
+                // no seeding needed as the molecule has atoms with coordinates, just calc rings if needed
+                if (circuitrank > 0)
                 {
-                    return;
-                }
-
-                // Order the rings because SSSRFinder.FindSSSR() returns rings in an undeterministic order.
-                AtomContainerSetManipulator.Sort(sssr);
-
-                // Mark all the atoms from the ring system as "ISINRING"
-                MarkRingAtoms(sssr);
-                
-                // Give a handle of our molecule to the ringPlacer
-                ringPlacer.Molecule = molecule;
-                ringPlacer.CheckAndMarkPlaced(sssr);
-                
-                // Partition the smallest set of smallest rings into disconnected
-                // ring system. The RingPartioner returns a Vector containing
-                // RingSets. Each of the RingSets contains rings that are connected
-                // to each other either as bridged ringsystems, fused rings or via
-                // spiro connections.
-                ringSystems = RingPartitioner.PartitionRings(sssr).ToList();
-
-                // We got our ring systems now, sort by number of bonds (largest first)
-                ringSystems.Sort(ANumberOfBondsLargestFirstComparator);
-
-                // Do the layout for the first connected ring system ...
-                int largest = 0;
-                int numComplex = 0;
-                int largestSize = (ringSystems[0]).Count;
-                if (largestSize > 1)
-                    numComplex++;
-                Debug.WriteLine("We have " + ringSystems.Count + " ring System(s).");
-                for (int f = 1; f < ringSystems.Count; f++)
-                {
-                    Debug.WriteLine("RingSet " + f + " has size " + ((IRingSet)ringSystems[f]).Count);
-                    int size = (ringSystems[f]).Count;
-                    if (size > 1)
-                        numComplex++;
-                    if (size > largestSize)
+                    PrepareRingSystems();
+                    foreach (IRingSet rset in ringSystems)
                     {
-                        largestSize = (ringSystems[f]).Count;
-                        largest = f;
+                        if (rset.IsPlaced)
+                        {
+                            ringPlacer.PlaceRingSubstituents(rset, BondLength);
+                        }
+                        else
+                        {
+                            List<IRing> placed = new List<IRing>();
+                            List<IRing> unplaced = new List<IRing>();
+
+                            foreach (IAtomContainer ring in rset)
+                            {
+                                if (ring.IsPlaced)
+                                    placed.Add((IRing)ring);
+                                else
+                                    unplaced.Add((IRing)ring);
+                            }
+
+                            // partially laid out rings
+                            if (!placed.Any())
+                            {
+                                foreach (IRing ring in unplaced)
+                                {
+                                    if (ringPlacer.CompletePartiallyPlacedRing(rset, ring, BondLength))
+                                        placed.Add(ring);
+                                }
+                                foreach (var ring in placed)
+                                    unplaced.Remove(ring);
+                            }
+
+                            while (unplaced.Any() && placed.Any())
+                            {
+                                foreach (IAtomContainer ring in placed)
+                                {
+                                    ringPlacer.PlaceConnectedRings(rset, (IRing)ring, RingPlacer.Fused, BondLength);
+                                    ringPlacer.PlaceConnectedRings(rset, (IRing)ring, RingPlacer.Bridged, BondLength);
+                                    ringPlacer.PlaceConnectedRings(rset, (IRing)ring, RingPlacer.Spiro, BondLength);
+                                }
+                                placed.Clear();
+                                foreach (var ring in unplaced)
+                                {
+                                    if (ring.IsPlaced)
+                                    {
+                                        placed.Add(ring);
+                                    }
+                                }
+                                foreach (var ring in placed)
+                                    unplaced.Remove(ring);
+
+                                if (AllPlaced(rset))
+                                {
+                                    rset.IsPlaced = true;
+                                    ringPlacer.PlaceRingSubstituents(rset, BondLength);
+                                }
+                            }
+                        }
                     }
                 }
-                Debug.WriteLine("Largest RingSystem is at RingSet collection's position " + largest);
-                Debug.WriteLine("Size of Largest RingSystem: " + largestSize);
+            }
+            else if (circuitrank > 0)
+            {
+                Debug.WriteLine("*** Start of handling rings. ***");
+                PrepareRingSystems();
 
-                int respect = LayoutRingSet(firstBondVector, ringSystems[largest]);
+                // We got our ring systems now choose the best one based on size and
+                // number of heteroatoms
+                RingPlacer.CountHetero(ringSystems);
+                ringSystems.Sort(RingPlacer.RING_COMPARATOR);
 
-                if (respect == 1 && numComplex == 1 || respect == 2)
+                int respect = LayoutRingSet(firstBondVector, ringSystems[0]);
+
+                // rotate monocyclic and when >= 4 polycyclic
+                if (respect == 1)
+                {
+                    if (ringSystems[0].Count == 1)
+                    {
+                        respect = 0;
+                    }
+                    else if (ringSystems.Count >= 4)
+                    {
+                        int numPoly = 0;
+                        foreach (IRingSet rset in ringSystems)
+                            if (rset.Count > 1)
+                                numPoly++;
+                        if (numPoly >= 4)
+                            respect = 0;
+                    }
+                }
+
+                if (respect == 1 || respect == 2)
                     selectOrientation = false;
 
                 Debug.WriteLine("First RingSet placed");
 
-                // and do the placement of all the directly connected atoms of this ringsystem
-                ringPlacer.PlaceRingSubstituents((IRingSet)ringSystems[largest], BondLength);
+                // place of all the directly connected atoms of this ring system
+                ringPlacer.PlaceRingSubstituents(ringSystems[0], BondLength);
             }
             else
             {
                 Debug.WriteLine("*** Start of handling purely aliphatic molecules. ***");
-                
-                // We are here because there are no rings in the molecule so we get
-                // the longest chain in the molecule and placed in on a horizontal
-                // axis
+
+                // We are here because there are no rings in the molecule so we get the longest chain in the molecule
+                // and placed in on a horizontal axis
                 Debug.WriteLine("Searching initialLongestChain for this purely aliphatic molecule");
                 IAtomContainer longestChain = AtomPlacer.GetInitialLongestChain(molecule);
                 Debug.WriteLine("Found linear chain of length " + longestChain.Atoms.Count);
                 Debug.WriteLine("Setting coordinated of first atom to 0,0");
-                longestChain.Atoms[0].Point2D = Vector2.Zero;
+                longestChain.Atoms[0].Point2D = new Vector2(0, 0);
                 longestChain.Atoms[0].IsPlaced = true;
 
-                // place the first bond such that the whole chain will be
-                // horizontally alligned on the x axis
-                angle = Vectors.DegreeToRadian(-30);
+                // place the first bond such that the whole chain will be horizontally alligned on the x axis
                 Debug.WriteLine("Attempting to place the first bond such that the whole chain will be horizontally alligned on the x axis");
                 if (firstBondVector != null && firstBondVector != DefaultBondVector)
                     atomPlacer.PlaceLinearChain(longestChain, firstBondVector, BondLength);
                 else
-                    atomPlacer.PlaceLinearChain(longestChain, new Vector2(Math.Cos(angle), Math.Sin(angle)), BondLength);
+                    atomPlacer.PlaceLinearChain(longestChain, new Vector2(Math.Cos(RAD_30), Math.Sin(RAD_30)), BondLength);
                 Debug.WriteLine("Placed longest aliphatic chain");
             }
-
-            // Now, do the layout of the rest of the molecule
-            do
-            {
-                safetyCounter++;
-                Debug.WriteLine("*** Start of handling the rest of the molecule. ***");
-                
-                // do layout for all aliphatic parts of the molecule which are
-                // connected to the parts which have already been laid out.
-                HandleAliphatics();
-                
-                // do layout for the next ring aliphatic parts of the molecule which
-                // are connected to the parts which have already been laid out.
-                LayoutNextRingSystem();
-            } while (!AtomPlacer.AllPlaced(molecule) && safetyCounter <= molecule.Atoms.Count);
-
-            if (!isSubLayout)
-            {
-                AssignStereochem(molecule);
-            }
-            RefinePlacement(molecule);
-            FinalizeLayout(molecule);
         }
 
-        static NumberOfBondsLargestFirstComparator ANumberOfBondsLargestFirstComparator { get; } = new NumberOfBondsLargestFirstComparator();
-        class NumberOfBondsLargestFirstComparator : IComparer<IAtomContainerSet<IRing>>
+        private void PrepareRingSystems()
         {
-            public int Compare(IAtomContainerSet<IRing> a, IAtomContainerSet<IRing> b)
-            {
-                return -AtomContainerSetManipulator.GetBondCount(a).CompareTo(AtomContainerSetManipulator.GetBondCount(b));
-            }
+            Cycles.MarkRingAtomsAndBonds(molecule);
+
+            // compute SSSR/MCB
+            sssr = Cycles.FindSSSR(molecule).ToRingSet();
+
+            if (sssr.Count < 1)
+                throw new InvalidOperationException("Molecule expected to have rings, but had none?");
+
+            // Give a handle of our molecule to the ringPlacer
+            ringPlacer.Molecule = molecule;
+            ringPlacer.CheckAndMarkPlaced(sssr);
+
+            // Partition the smallest set of smallest rings into disconnected
+            // ring system. The RingPartioner returns a Vector containing
+            // RingSets. Each of the RingSets contains rings that are connected
+            // to each other either as bridged ringsystems, fused rings or via
+            // spiro connections.
+            ringSystems = RingPartitioner.PartitionRings(sssr).ToList();
         }
 
         private void AssignStereochem(IAtomContainer molecule)
         {
-            // correct double-bond stereo, this changes the layout and in reality
-            // should be done during the initial placement
-            CorrectGeometricConfiguration.Correct(molecule);
+            // XXX: can't check this unless we store 'unspecified' double bonds
+            // if (!molecule.stereoElements().iterator().hasNext())
+            //     return;
 
             // assign up/down labels, this doesn't not alter layout and could be
             // done on-demand (e.g. when writing a MDL Molfile)
@@ -447,7 +741,7 @@ namespace NCDK.Layout
             AtomPlacer.Prioritise(molecule);
 
             // refine the layout by rotating, bending, and stretching bonds
-            LayoutRefiner refiner = new LayoutRefiner(molecule);
+            LayoutRefiner refiner = new LayoutRefiner(molecule, afix, bfix);
             refiner.Refine();
 
             // choose the orientation in which to display the structure
@@ -615,8 +909,100 @@ namespace NCDK.Layout
             }
             return count;
         }
+        private double AdjustForHydrogen(IAtom atom, IAtomContainer mol)
+        {
+            var hcnt = atom.ImplicitHydrogenCount;
+            if (hcnt == null || hcnt == 0)
+                return 0;
+            var bonds = mol.GetConnectedBonds(atom);
 
-        private void GenerateFragmentCoordinates(IAtomContainer mol, IEnumerable<IAtomContainer> frags)
+            int pos = 0; // right
+
+            // isolated atoms, HCl vs NH4+ etc
+            if (!bonds.Any())
+            {
+                Elements elem = Elements.OfNumber(atom.AtomicNumber.Value);
+                // see HydrogenPosition for canonical list
+                switch (elem.AtomicNumber)
+                {
+                    case Elements.O.Oxygen:
+                    case Elements.O.Sulfur:
+                    case Elements.O.Selenium:
+                    case Elements.O.Tellurium:
+                    case Elements.O.Fluorine:
+                    case Elements.O.Chlorine:
+                    case Elements.O.Bromine:
+                    case Elements.O.Iodine:
+                        pos = -1; // left
+                        break;
+                    default:
+                        pos = +1; // right
+                        break;
+                }
+            }
+            else if (bonds.Count() == 1)
+            {
+                IAtom other = bonds.First().GetConnectedAtom(atom);
+                double deltaX = atom.Point2D.Value.X - other.Point2D.Value.X;
+                if (Math.Abs(deltaX) > 0.05)
+                    pos = (int)Math.Sign(deltaX);
+            }
+            return pos * (BondLength / 2);
+        }
+
+        /// <summary>
+        /// Similar to the method <see cref="GeometryUtil.GetMinMax(IAtomContainer)"/> but considers
+        /// heteroatoms with hydrogens.
+        /// </summary>
+        /// <param name="mol">molecule</param>
+        /// <returns>the min/max x and y bounds</returns>
+        private double[] GetAprxBounds(IAtomContainer mol)
+        {
+            double maxX = -double.MaxValue;
+            double maxY = -double.MaxValue;
+            double minX = double.MaxValue;
+            double minY = double.MaxValue;
+            IAtom[] boundedAtoms = new IAtom[4];
+            for (int i = 0; i < mol.Atoms.Count; i++)
+            {
+                IAtom atom = mol.Atoms[i];
+                if (atom.Point2D != null)
+                {
+                    if (atom.Point2D.Value.X < minX)
+                    {
+                        minX = atom.Point2D.Value.X;
+                        boundedAtoms[0] = atom;
+                    }
+                    if (atom.Point2D.Value.Y < minY)
+                    {
+                        minY = atom.Point2D.Value.Y;
+                        boundedAtoms[1] = atom;
+                    }
+                    if (atom.Point2D.Value.X > maxX)
+                    {
+                        maxX = atom.Point2D.Value.X;
+                        boundedAtoms[2] = atom;
+                    }
+                    if (atom.Point2D.Value.Y > maxY)
+                    {
+                        maxY = atom.Point2D.Value.Y;
+                        boundedAtoms[3] = atom;
+                    }
+                }
+            }
+            double[] minmax = new double[4];
+            minmax[0] = minX;
+            minmax[1] = minY;
+            minmax[2] = maxX;
+            minmax[3] = maxY;
+            double minXAdjust = AdjustForHydrogen(boundedAtoms[0], mol);
+            double maxXAdjust = AdjustForHydrogen(boundedAtoms[1], mol);
+            if (minXAdjust < 0) minmax[0] += minXAdjust;
+            if (maxXAdjust > 0) minmax[1] += maxXAdjust;
+            return minmax;
+        }
+
+        private void GenerateFragmentCoordinates(IAtomContainer mol, IList<IAtomContainer> frags)
         {
             var ionicBonds = MakeIonicBonds(frags);
 
@@ -635,16 +1021,24 @@ namespace NCDK.Layout
             }
 
             var limits = new List<double[]>();
-            int numFragments = 0;
+            int numFragments = frags.Count;
+
+            // avoid overwriting our state
+            ISet<IAtom> afixbackup = new HashSet<IAtom>(afix);
+            ISet<IBond> bfixbackup = new HashSet<IBond>(bfix);
 
             // generate the sub-layouts
-            foreach (var fragment in frags)
+            foreach (IAtomContainer fragment in frags)
             {
-                SetMolecule(fragment, false);
+                SetMolecule(fragment, false, afix, bfix);
                 GenerateCoordinates(DefaultBondVector, true, true);
-                limits.Add(GeometryUtil.GetMinMax(fragment));
-                numFragments++;
+                LengthenIonicBonds(ionicBonds, fragment);
+                limits.Add(GetAprxBounds(fragment));
             }
+
+            // restore
+            afix = afixbackup;
+            bfix = bfixbackup;
 
             int nRow = (int)Math.Floor(Math.Sqrt(numFragments));
             int nCol = (int)Math.Ceiling(numFragments / (double)nRow);
@@ -654,7 +1048,7 @@ namespace NCDK.Layout
 
             // calc the max widths/height of each row, we also add some
             // spacing
-            double spacing = 1.5 * BondLength;
+            double spacing = BondLength;
             for (int i = 0; i < numFragments; i++)
             {
                 // +1 because first offset is always 0
@@ -692,9 +1086,95 @@ namespace NCDK.Layout
                                          dest.X - curr.X, dest.Y - curr.Y);
             }
 
+            // correct double-bond stereo, this changes the layout and in reality
+            // should be done during the initial placement
+            if (molecule.StereoElements.Any())
+                CorrectGeometricConfiguration.Correct(molecule);
+
             // finalize
             AssignStereochem(mol);
             FinalizeLayout(mol);
+        }
+
+        private void LengthenIonicBonds(IList<IBond> ionicBonds, IAtomContainer fragment)
+        {
+            IChemObjectBuilder bldr = fragment.Builder;
+
+            if (!ionicBonds.Any())
+                return;
+
+            IAtomContainer newfrag = bldr.CreateAtomContainer();
+            IAtom[] atoms = new IAtom[fragment.Atoms.Count];
+            for (int i = 0; i < atoms.Length; i++)
+                atoms[i] = fragment.Atoms[i];
+            newfrag.SetAtoms(atoms);
+
+            foreach (IBond bond in fragment.Bonds)
+            {
+                if (!ionicBonds.Contains(bond))
+                {
+                    newfrag.Bonds.Add(bond);
+                }
+                else
+                {
+                    int numBegIonic = bond.Atoms[0].GetProperty<int>("ionicDegree", 0);
+                    int numEndIonic = bond.Atoms[1].GetProperty<int>("ionicDegree", 0);
+                    numBegIonic++;
+                    numEndIonic++;
+                    bond.Atoms[0].SetProperty("ionicDegree", numBegIonic);
+                    bond.Atoms[1].SetProperty("ionicDegree", numEndIonic);
+                }
+            }
+
+            if (newfrag.Bonds.Count == fragment.Bonds.Count)
+                return;
+
+            var subfragments = ConnectivityChecker.PartitionIntoMolecules(newfrag);
+            IDictionary<IAtom, IAtomContainer> atomToFrag = new Dictionary<IAtom, IAtomContainer>();
+
+            // index atom->fragment
+            foreach (IAtomContainer subfragment in subfragments)
+                foreach (IAtom atom in subfragment.Atoms)
+                    atomToFrag[atom] = subfragment;
+
+            foreach (IBond bond in ionicBonds)
+            {
+                IAtom beg = bond.Atoms[0];
+                IAtom end = bond.Atoms[1];
+
+                // select which bond to stretch from
+                int? numBegIonic = bond.Atoms[0].GetProperty<int?>("ionicDegree");
+                int? numEndIonic = bond.Atoms[1].GetProperty<int?>("ionicDegree");
+                if (numBegIonic == null || numEndIonic == null)
+                    continue;
+                if (numBegIonic > numEndIonic)
+                {
+                    IAtom tmp = beg;
+                    beg = end;
+                    end = tmp;
+                }
+                else if (numBegIonic.Equals(numEndIonic) && numBegIonic > 1)
+                {
+                    // can't stretch these
+                    continue;
+                }
+
+                IAtomContainer endFrags = bldr.CreateAtomContainer();
+                IAtomContainer begFrag;
+                if (!atomToFrag.TryGetValue(beg, out begFrag))
+                    continue;
+                foreach (IAtomContainer mol in subfragments)
+                {
+                    if (mol != begFrag)
+                        endFrags.Add(mol);
+                }
+                double dx = end.Point2D.Value.X - beg.Point2D.Value.X;
+                double dy = end.Point2D.Value.Y - beg.Point2D.Value.Y;
+                Vector2 bondVec = new Vector2(dx, dy);
+                bondVec = Vector2.Normalize(bondVec);
+                bondVec *= BondLength / 2; // 1.5 bond length
+                GeometryUtil.Translate2D(endFrags, bondVec);
+            }
         }
 
         /// <summary>
@@ -832,7 +1312,6 @@ namespace NCDK.Layout
         private IList<IBond> MakeIonicBonds(IEnumerable<IAtomContainer> frags)
         {
             Trace.Assert(frags.Count() > 1);
-            var remove = new HashSet<IAtomContainer>();
 
             // merge duplicates together, e.g. [H-].[H-].[H-].[Na+].[Na+].[Na+]
             // would be two needsMerge fragments. We currently only do single
@@ -861,7 +1340,6 @@ namespace NCDK.Layout
 
             List<IAtom> cations = new List<IAtom>();
             List<IAtom> anions = new List<IAtom>();
-            IDictionary<IAtom, IAtomContainer> atmMap = new Dictionary<IAtom, IAtomContainer>();
 
             // trivial case
             if (posFrags.Count == 1 && negFrags.Count == 1)
@@ -964,7 +1442,7 @@ namespace NCDK.Layout
             foreach (var container in rs)
                 ringSystem.Add(container);
 
-            var ringAtoms = new HashSet<IAtom>();
+            ISet<IAtom> ringAtoms = new HashSet<IAtom>();
             foreach (var atom in ringSystem.Atoms)
                 ringAtoms.Add(atom);
 
@@ -1076,7 +1554,9 @@ namespace NCDK.Layout
             {
                 // attempt ring peeling and retemplate
                 IRingSet core = GetRingSetCore(rs);
-                if (core.Count > 0 && LookupRingSystem(core, molecule, !macro || rs.Count > 1))
+                if (core.Count > 0 &&
+          core.Count < rs.Count &&
+          LookupRingSystem(core, molecule, !macro || rs.Count > 1))
                 {
                     foreach (var container in core)
                         container.IsPlaced = true;
@@ -1161,7 +1641,10 @@ namespace NCDK.Layout
                         foreach (var attached in ringlookup[bond])
                         {
                             if (attached != ring && ringsystem.Contains(attached))
+                            {
                                 numAttach++;
+                                break;
+                            }
                         }
                     }
                     if (numAttach <= 1)
@@ -1215,7 +1698,7 @@ namespace NCDK.Layout
         /// neighbours and stops when a ring is encountered.
         /// </summary>
         /// <exception cref="CDKException">if an error occurs</exception>
-        private void HandleAliphatics()
+        private void LayoutAcyclicParts()
         {
             Debug.WriteLine("Start of handleAliphatics");
 
@@ -1304,12 +1787,12 @@ namespace NCDK.Layout
         /// of its attachment bond to the rest of the molecule.
         /// </summary>
         /// <exception cref="CDKException">if an error occurs</exception>
-        private void LayoutNextRingSystem()
+        private void LayoutCyclicParts()
         {
             Debug.WriteLine("Start of LayoutNextRingSystem()");
 
             ResetUnplacedRings();
-            IAtomContainer tempAc = AtomPlacer.GetPlacedAtoms(molecule);
+            IAtomContainer placedAtoms = AtomPlacer.GetPlacedAtoms(molecule);
             Debug.WriteLine("Finding attachment bond to already placed part...");
             IBond nextRingAttachmentBond = GetNextBondWithUnplacedRingAtom();
             if (nextRingAttachmentBond != null)
@@ -1325,9 +1808,7 @@ namespace NCDK.Layout
                 IRingSet nextRingSystem = GetRingSystemOfAtom(ringSystems, ringAttachmentAtom);
 
                 // Get all rings of nextRingSytem as one IAtomContainer
-                IAtomContainer ringSystem = tempAc.Builder.CreateAtomContainer();
-                foreach (var container in RingSetManipulator.GetAllAtomContainers(nextRingSystem))
-                    ringSystem.Add((IAtomContainer)container);
+                IAtomContainer ringSystem = RingSetManipulator.GetAllInOneContainer(nextRingSystem);
 
                 // Save coordinates of ringAttachmentAtom and chainAttachmentAtom
                 Vector2 oldRingAttachmentAtomPoint = ringAttachmentAtom.Point2D.Value;
@@ -1337,10 +1818,10 @@ namespace NCDK.Layout
                 LayoutRingSet(firstBondVector, nextRingSystem);
 
                 // Place all the substituents of next ring system
-                AtomPlacer.MarkNotPlaced(tempAc);
+                AtomPlacer.MarkNotPlaced(placedAtoms);
                 IAtomContainer placedRingSubstituents = ringPlacer.PlaceRingSubstituents(nextRingSystem, BondLength);
                 ringSystem.Add(placedRingSubstituents);
-                AtomPlacer.MarkPlaced(tempAc);
+                AtomPlacer.MarkPlaced(placedAtoms);
 
                 // Move and rotate the laid out ring system to match the geometry of the attachment bond
                 Debug.WriteLine("Computing translation/rotation of new ringset to fit old attachment bond orientation...");
@@ -1378,7 +1859,21 @@ namespace NCDK.Layout
                 Debug.WriteLine("...done translating/rotating new ringset to fit old attachment bond orientation.");
             }
             else
+            {
                 Debug.WriteLine("...no bond found");
+
+                // partially laid out ring system
+                if (ringSystems != null)
+                {
+                    foreach (IRingSet ringset in ringSystems)
+                    {
+                        foreach (IAtomContainer ring in ringset)
+                            ringPlacer.CompletePartiallyPlacedRing(ringset, (IRing)ring, BondLength);
+                        if (AllPlaced(ringset))
+                            ringPlacer.PlaceRingSubstituents(ringset, BondLength);
+                    }
+                }
+            }
 
             Debug.WriteLine("End of LayoutNextRingSystem()");
         }
@@ -1452,18 +1947,17 @@ namespace NCDK.Layout
         /// <returns>the next bond with an unplaced ring atom</returns>
         private IBond GetNextBondWithUnplacedRingAtom()
         {
-            foreach (var bond in molecule.Bonds)
+            foreach (IBond bond in molecule.Bonds)
             {
-                if (bond.Atoms[0].Point2D != null && bond.Atoms[1].Point2D != null)
+                IAtom beg = bond.Atoms[0];
+                IAtom end = bond.Atoms[1];
+                if (beg.Point2D != null && end.Point2D != null)
                 {
-                    if (bond.Atoms[1].IsPlaced && !bond.Atoms[0].IsPlaced
-                        && bond.Atoms[0].IsInRing)
+                    if (end.IsPlaced && !beg.IsPlaced && beg.IsInRing)
                     {
                         return bond;
                     }
-
-                    if (bond.Atoms[0].IsPlaced && !bond.Atoms[1].IsPlaced
-                        && bond.Atoms[1].IsInRing)
+                    if (beg.IsPlaced && !end.IsPlaced && end.IsInRing)
                     {
                         return bond;
                     }
@@ -1500,7 +1994,7 @@ namespace NCDK.Layout
                 point += bondVector;
                 atom.Point2D = point;
                 atom.IsPlaced = true;
-                
+
                 // The new ring is layed out relativ to some shared atoms that have
                 // already been placed. Usually this is another ring, that has
                 // already been draw and to which the new ring is somehow connected,
@@ -1534,17 +2028,6 @@ namespace NCDK.Layout
                 }
             }
             return true;
-        }
-
-        /// <summary>
-        /// Mark all atoms in the molecule as being part of a ring
-        /// </summary>
-        /// <param name="rings">an IRingSet with the rings to process</param>
-        private void MarkRingAtoms(IEnumerable<IRing> rings)
-        {
-            foreach (var ring in rings)
-                foreach (var atom in ring.Atoms)
-                    atom.IsInRing = true;
         }
 
         /// <summary>
@@ -1636,7 +2119,7 @@ namespace NCDK.Layout
         /// <param name="mol">molecule to place the multiple groups of</param>
         private void PlaceMultipleGroups(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
             var multipleGroups = new List<Sgroup>();
@@ -1834,7 +2317,7 @@ namespace NCDK.Layout
 
         private void PlacePositionalVariation(IAtomContainer mol)
         {
-            var sgroups = mol.GetProperty<IList<Sgroup>> (CDKPropertyName.CtabSgroups);
+            var sgroups = mol.GetProperty<IList<Sgroup>>(CDKPropertyName.CtabSgroups);
             if (sgroups == null)
                 return;
 
@@ -1916,6 +2399,41 @@ namespace NCDK.Layout
                         // get all atoms connected to the part we will move
                         var visited = new HashSet<int>();
                         Visit(visited, adjlist, atomIdx);
+
+                        // gather up other position group
+                        HashSet<int> newvisit = new HashSet<int>();
+                        do
+                        {
+                            newvisit.Clear();
+                            foreach (var idx in visited)
+                            {
+                                IAtom visitedAtom = mol.Atoms[idx];
+                                if (e.Key.Contains(visitedAtom) || e.Value.Contains(visitedAtom))
+                                    continue;
+                                foreach (var e2 in mapping.Entries)
+                                {
+                                    if (e2.Key.Contains(visitedAtom))
+                                    {
+                                        int other = idxs[e2.Value];
+                                        if (!visited.Contains(other) && newvisit.Add(other))
+                                        {
+                                            Visit(newvisit, adjlist, other);
+                                        }
+                                    }
+                                    else if (e2.Value == visitedAtom)
+                                    {
+                                        int other = idxs[e2.Key.First()];
+                                        if (!visited.Contains(other) && newvisit.Add(other))
+                                        {
+                                            Visit(newvisit, adjlist, other);
+                                        }
+                                    }
+                                }
+                            }
+                            foreach (var visit in newvisit)
+                                visited.Add(visit);
+                        } while (newvisit.Any());
+
                         IAtomContainer frag = mol.Builder.CreateAtomContainer();
                         foreach (var visit in visited)
                             frag.Atoms.Add(mol.Atoms[visit]);
@@ -2178,6 +2696,33 @@ namespace NCDK.Layout
                     return brackets != null && brackets.Count != 0;
                 default:
                     return false;
+            }
+        }
+
+        private sealed class IntTuple
+        {
+            private readonly int beg, end;
+
+            public IntTuple(int beg, int end)
+            {
+                this.beg = beg;
+                this.end = end;
+            }
+
+            public override bool Equals(Object o)
+            {
+                if (this == o) return true;
+                if (o == null || GetType() != o.GetType()) return false;
+
+                IntTuple that = (IntTuple)o;
+
+                return (this.beg == that.beg && this.end == that.end) ||
+                       (this.beg == that.end && this.end == that.beg);
+            }
+
+            public override int GetHashCode()
+            {
+                return beg ^ end;
             }
         }
     }

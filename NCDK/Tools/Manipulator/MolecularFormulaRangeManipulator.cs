@@ -53,7 +53,7 @@ namespace NCDK.Tools.Manipulator
                     int occur_new = mf.GetCount(isotope);
                     if (!mfRange.Contains(isotope))
                     {
-                        mfRange.Add(isotope, occur_new, occur_new);
+                        mfRange.AddIsotope(isotope, occur_new, occur_new);
                     }
                     else
                     {
@@ -62,12 +62,12 @@ namespace NCDK.Tools.Manipulator
                         if (occur_new > occur_old_Max)
                         {
                             mfRange.Remove(isotope);
-                            mfRange.Add(isotope, occur_old_Min, occur_new);
+                            mfRange.AddIsotope(isotope, occur_old_Min, occur_new);
                         }
                         else if (occur_new < occur_old_Min)
                         {
                             mfRange.Remove(isotope);
-                            mfRange.Add(isotope, occur_new, occur_old_Max);
+                            mfRange.AddIsotope(isotope, occur_new, occur_old_Max);
                         }
                     }
                 }
@@ -82,7 +82,7 @@ namespace NCDK.Tools.Manipulator
                         if (!mf.Contains(isotope))
                         {
                             int occurMax = mfRange.GetIsotopeCountMax(isotope);
-                            mfRange.Add(isotope, 0, occurMax);
+                            mfRange.AddIsotope(isotope, 0, occurMax);
                         }
                     }
                 }

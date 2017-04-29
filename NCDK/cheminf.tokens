@@ -5,6 +5,7 @@
   <item id="cdk-cite-BER2001">Bernstein, H.J., <i>Manual RasMol 2.7.2.1 - CPK Colours</i></item>
   <item id="cdk-cite-BGdV04a">Berger, F. and Gritzmann, P. and De Vries, S., <i>Minimum cycle bases for network graphs</i>, Algorithmica, <b>2004</b>, ?:51-62</item>
   <item id="cdk-cite-BODR10">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></item>
+  <item id="cdk-cite-BODR10">Willighagen, E. and Hutchinson, G. and Niehaus, C. and Buchwald, J. and Pfeiffer, M. and Leidert, D. and Brefort, J., <i>Blue Obelisk Data Repository (version 10)</i></item>
   <item id="cdk-cite-Brecher08">Jonathan Brecher, <i>Graphical representation standards for chemical structure diagrams (IUPAC Recommendations 2008)</i>, Pure Appl. Chem, <b>2008</b>, 80:277–410</item>
   <item id="cdk-cite-Cahn1966">Cahn, R.S. and Ingold, C. and Prelog, V., <i>Specification of Molecular Chirality</i>, Angew. Chem. Int. Ed., <b>1966</b>, 5:385-415</item>
   <item id="cdk-cite-Cieplak2001">Cieplak, T and Wisniewski J. L., <i>A New Effective Algorithm for the Unambiguous Identification of the Stereochemical Characteristics of Compounds During Their Registration in Databases</i>, Molecules, <b>2001</b>, 6:915-926</item>
@@ -58,12 +59,20 @@
   <item id="cdk-cite-Halgren96c">T. A. Halgren, <i>Merck Molecular Force Field. III. Molecular Geometries and Vibrational Frequencies for MMFF94</i>, J. Comput. Chem, <b>1996</b>, 17:553-586</item>
   <item id="cdk-cite-Halgren96d">T. A. Halgren, <i>Merck Molecular Force Field. IV. Conformational Energies and Geometries for MMFF94</i>, J. Comput. Chem, <b>1996</b>, 17:587-615</item>
   <item id="cdk-cite-Halgren96e">T. A. Halgren, <i>Merck Molecular Force Field. V. Extension of MMFF94 Using Experimental Data, Additional Computational Data, and Empirical Rules</i>, J. Comput. Chem, <b>1996</b>, 17:616-641</item>
+  <item id="cdk-cite-Halgren96a">T. A. Halgren, <i>Merck Molecular Force Field. I. Basis, Form, Scope, Parametrization, and Performance of MMFF94</i>, J. Comput. Chem, <b>1996</b>, 17:490-519</item>
+  <item id="cdk-cite-Halgren96b">T. A. Halgren, <i>Merck Molecular Force Field. II. MMFF94 van der Waals and Electrostatic Parameters for Intermolecular Interactions</i>, J. Comput. Chem, <b>1996</b>, 17:520-552</item>
+  <item id="cdk-cite-Halgren96c">T. A. Halgren, <i>Merck Molecular Force Field. III. Molecular Geometries and Vibrational Frequencies for MMFF94</i>, J. Comput. Chem, <b>1996</b>, 17:553-586</item>
+  <item id="cdk-cite-Halgren96d">T. A. Halgren, <i>Merck Molecular Force Field. IV. Conformational Energies and Geometries for MMFF94</i>, J. Comput. Chem, <b>1996</b>, 17:587-615</item>
+  <item id="cdk-cite-Halgren96e">T. A. Halgren, <i>Merck Molecular Force Field. V. Extension of MMFF94 Using Experimental Data, Additional Computational Data, and Empirical Rules</i>, J. Comput. Chem, <b>1996</b>, 17:616-641</item>
   <item id="cdk-cite-HAN90">Tonnelier, C. and Jauffret, Ph. and Hanser, Th. and Jauffret, Ph. and Kaufmann, G., <i>Machine Learning of generic reactions: 3. An efficient algorithm for maximal common substructure determination</i>, Tetrahedron Comput. Methodol., <b>1990</b>, 3:351-358</item>
   <item id="cdk-cite-HAN93">Hanser, Th., <i>Apprentissage automatique de méthodes de synthèse à partir d'exemples</i>, <b>1993</b>, ?Institute?</item>
   <item id="cdk-cite-HAN96">Hanser, Th. and Jauffret, Ph. and Kaufmann, G., <i>A New Algorithm for Exhaustive Ring Perception in a 
         Molecular Graph</i>, J. Chem. Inf. Comput. Sci., <b>1996</b>, 36:1146-1152</item>
   <item id="cdk-cite-Hinselmann2011">
     <a href="http://dx.doi.org/10.1186/1758-2946-3-3">Hinselmann and Georg and Rosenbaum and Lars and Jahn and Andreas and Fechner and Nikolas and Zell and Andreas, <i>jCompoundMapper: An open source Java library and command line tool for chemical fingerprints</i>, Journal of Cheminformatics, <b>2011</b>, 3:1-14</a>
+  </item>
+  <item id="cdk-cite-Hinselmann2011">
+    <a href="http://dx.doi.org/10.1186/1758-2946-3-3">Hinselmann, and Georg and Rosenbaum, and Lars and Jahn, and Andreas and Fechner, and Nikolas and Zell, and Andreas, <i>jCompoundMapper: An open source Java library and command-line tool for chemical fingerprints</i>, Journal of Cheminformatics, <b>2011</b>, 3:1‒14</a>
   </item>
   <item id="cdk-cite-HEL99">Helson, Harold E., <i>Structure Diagram Generation</i>, Reviews in Computational Chemistry, Ch. ?chapter?, <b>1999</b>, 13:313-398, Eds. Lipkowitz, K. B. and Boyd, D. B.</item>
   <item id="cdk-cite-BGdV04a">Berger, F. and Gritzmann, P. and De Vries, S., <i>Minimum cycle bases for network graphs</i>, Algorithmica, <b>2004</b>, ?:51-62</item>
@@ -85,7 +94,6 @@ obtained by accurate mass spectrometry</i>, BMC Bioinformatics, <b>2007</b>, 8:?
               Christoph, <i>JChemPaint - Using the Collaborative Forces of the Internet to
           Develop a Free Editor for 2D Chemical Structures</i>, Molecules, <b>2000</b>, 5:93-98</item>
   <item id="cdk-cite-Kreher98">Kreher, Donald and Stinson, Douglas, <i>Combinatorial Algorithms Generation Enumeration and Search</i>, <b>1998</b>, CRC Press</item>
-  <item id="cdk-cite-Pluskal2012">Pluskal, Tomas and Uehara, Taisuke and Yanagida, Mitsuhiro, <i>Highly accurate chemical formula prediction tool utilizing high-resolution mass spectra, MS/MS fragmentation, heuristic rules, and isotope pattern matching</i>, Analytical Chemistry, <b>2012</b>, 84:4396-4403</item>
   <item id="cdk-cite-MAR89">Marston, C.C., <i></i>, J.Chem.Phys., <b>1989</b>, 91:3571</item>
   <item id="cdk-cite-Mannhold2009">Mannhold, R. and Poda, G.I. and Ostermann, C. and Tetko, I.V., <i>Calculation of molecular lipophilicity: State-of-the-art and comparison of log P methods on more than 96,000 compounds</i>, J.Pharm.Sci., <b>2009</b>, 98:861--893</item>
   <item id="cdk-cite-Molchanova96">Molchanova, <i>Computer Generation of Molecular Structures by the SMOG Program</i>, J.Chem.Inf.Comput.Sci., <b>1996</b>, 36:889</item>
@@ -178,6 +186,9 @@ Surface Property Descriptors Computed by the Transferable Atom Equivalent
 Method </i>, Journal of Computational Chemistry, <b>1997</b>, 18:182-197</item>
   <item id="cdk-cite-WHITE2003">Whitehead, C.E. and Sukumar, N. and Breneman, C.M. and Ryan, M.D.
           , <i> Transferable Atom Equivalent Multi-Centered Multipole Expansion Method</i>, Journal of Computational Chemistry, <b>2003</b>, 24:512-529</item>
+  <item id="cdk-cite-Liu2011">
+    <a href="http://dx.doi.org/10.1002/smll.201002366">Liu, R. and Rallo, R. and George, S. and Ji, Z. and Nair, S. and Nel, A.E. and Cohen, Y., <i>Classification NanoSAR development for cytotoxicity of metal oxide nanoparticles</i>, Small, <b>2011</b>, 7:1118-1126</a>
+  </item>
   <item id="cdk-cite-Liu2011">
     <a href="http://dx.doi.org/10.1002/smll.201002366">Liu, R. and Rallo, R. and George, S. and Ji, Z. and Nair, S. and Nel, A.E. and Cohen, Y., <i>Classification NanoSAR development for cytotoxicity of metal oxide nanoparticles</i>, Small, <b>2011</b>, 7:1118-1126</a>
   </item>

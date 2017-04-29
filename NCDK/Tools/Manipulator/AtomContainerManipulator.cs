@@ -122,6 +122,8 @@ namespace NCDK.Tools.Manipulator
                 }
                 else
                 {
+                    if (atom == newAtom)
+                        throw new ArgumentException("Cannot replace atom with one from the same molecule.");
                     map.AtomMap.Add(atom, atom);
                 }
             }
@@ -430,11 +432,12 @@ namespace NCDK.Tools.Manipulator
                 atomContainer.Bonds.Add(bond);
 
             // update tetrahedral elements with an implicit part
-            foreach (var se in atomContainer.StereoElements)
+            List<IStereoElement> stereos = new List<IStereoElement>();
+            foreach (IStereoElement stereo in atomContainer.StereoElements)
             {
-                if (se is ITetrahedralChirality)
+                if (stereo is ITetrahedralChirality)
                 {
-                    ITetrahedralChirality tc = (ITetrahedralChirality)se;
+                    ITetrahedralChirality tc = (ITetrahedralChirality)stereo;
 
                     IAtom focus = tc.ChiralAtom;
                     var neighbors = tc.Ligands;
@@ -442,22 +445,33 @@ namespace NCDK.Tools.Manipulator
 
                     // in sulfoxide - the implicit part of the tetrahedral centre
                     // is a lone pair
-                    if (!hNeighbor.TryGetValue(focus, out hydrogen))
-                        continue;
-                    for (int i = 0; i < tc.Ligands.Count; i++)
+
+                    if (hNeighbor.TryGetValue(focus, out hydrogen))
                     {
-                        if (neighbors[i] == focus)
+                        for (int i = 0; i < 4; i++)
                         {
-                            neighbors[i] = hydrogen;
-                            break;
+                            if (neighbors[i] == focus)
+                            {
+                                neighbors[i] = hydrogen;
+                                break;
+                            }
                         }
+                        // neighbors is a copy so need to create a new stereocenter
+                        stereos.Add(new TetrahedralChirality(focus, neighbors, tc.Stereo));
+                    }
+                    else
+                    {
+                        stereos.Add(stereo);
                     }
                 }
+                else
+                {
+                    stereos.Add(stereo);
+                }
             }
+            atomContainer.SetStereoElements(stereos);
         }
 
-        /// <summary>
-        /// </summary>
         /// <returns>The summed implicit + explicit hydrogens of the given IAtom.</returns>
         public static int CountHydrogens(IAtomContainer atomContainer, IAtom atom)
         {
@@ -880,8 +894,9 @@ namespace NCDK.Tools.Manipulator
             // molecule hydrogen with implicit H?
             if (atom.ImplicitHydrogenCount != null && atom.ImplicitHydrogenCount != 0) return false;
             // molecule hydrogen
-            IEnumerable<IAtom> neighbors = container.GetConnectedAtoms(atom);
-            if (neighbors.Count() == 1 && neighbors.ElementAt(0).Symbol.Equals("H")) return false;
+            var neighbors = container.GetConnectedAtoms(atom).ToList();
+            if (neighbors.Count == 1 && (neighbors[0].Symbol.Equals("H") ||
+                                      neighbors[0] is IPseudoAtom)) return false;
             // what about bridging hydrogens?
             // hydrogens with atom-atom mapping?
             return true;
@@ -929,10 +944,15 @@ namespace NCDK.Tools.Manipulator
             if (atom.MassNumber != null && atom.MassNumber != 1) return false;
             // hydrogen is either not attached to 0 or 2 neighbors
             if (graph[v].Length != 1) return false;
-
-            // okay the hydrogen has one neighbor, if that neighbor is not a
-            // hydrogen (i.e. molecular hydrogen) then we can suppress it
-            return !"H".Equals(container.Atoms[graph[v][0]].Symbol);
+            
+            // okay the hydrogen has one neighbor, if that neighbor is a
+            // hydrogen (i.e. molecular hydrogen) then we can not suppress it
+            if ("H".Equals(container.Atoms[graph[v][0]].Symbol))
+                return false;
+            // can not nicely suppress hydrogens on pseudo atoms
+            if (container.Atoms[graph[v][0]] is IPseudoAtom)
+                return false;
+            return true;
         }
 
         /// <summary>

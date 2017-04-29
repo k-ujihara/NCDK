@@ -27,7 +27,7 @@ using System;
 namespace NCDK
 {
     /// <summary>
-    /// Exception thrown when an error is occured during SMILES parsing.
+    /// Exception thrown when an error is occurred during SMILES parsing.
     /// </summary>
     // @cdk.module standard
     // @cdk.githash

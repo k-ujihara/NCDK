@@ -17,32 +17,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  *
  */
-
-using NCDK.Common.Base;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using NCDK.IO;
 using NCDK.Smiles;
 using NCDK.Templates;
 using NCDK.Tools.Manipulator;
-using System.Collections.Generic;
 using System.Linq;
-
 
 namespace NCDK.Graphs
 {
     /// <summary>
     ///  Checks the functionality of the ConnectivityChecker
-    ///
+    /// </summary>
     // @cdk.module test-standard
-    ///
     // @author     steinbeck
     // @cdk.created    2001-07-24
-    /// </summary>
     [TestClass()]
     public class ConnectivityCheckerTest : CDKTestCase
     {
-
         public ConnectivityCheckerTest()
             : base()
         { }

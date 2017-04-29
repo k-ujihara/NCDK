@@ -54,7 +54,14 @@ namespace NCDK.Beam
                         var aa = e.Bond;
                         if (aa == Bond.Single)
                         {
-                            localised.AddEdge(Bond.Implicit.CreateEdge(u, v));
+                            if (aromatic[u] && aromatic[v])
+                            {
+                                localised.AddEdge(Bond.Single.CreateEdge(u, v));
+                            }
+                            else
+                            {
+                                localised.AddEdge(Bond.Implicit.CreateEdge(u, v));
+                            }
                         }
                         else if (aa == Bond.Aromatic)
                         {
@@ -113,7 +120,14 @@ namespace NCDK.Beam
                         var aa = e.Bond;
                         if (aa == Bond.Single)
                         {
-                            e.SetBond(Bond.Implicit);
+                            if (aromatic[u] && aromatic[v])
+                            {
+                                e.SetBond(Bond.Single);
+                            }
+                            else
+                            {
+                                e.SetBond(Bond.Implicit);
+                            }
                         }
                         else if (aa == Bond.Aromatic)
                         {

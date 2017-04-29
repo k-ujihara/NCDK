@@ -23,7 +23,6 @@ namespace NCDK.IO.Formats
     // @author Miguel Rojas
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class Chem3D_Cartesian_1Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

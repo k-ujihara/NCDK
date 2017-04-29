@@ -127,7 +127,7 @@ namespace NCDK.Smiles
         public void TestBug1535587()
         {
             string smiles = "COC(=O)c2ccc3n([H])c1ccccc1c3(c2)";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
             Assert.AreEqual(18, mol.Atoms.Count);
@@ -142,7 +142,7 @@ namespace NCDK.Smiles
         public void TestBug1579235()
         {
             string smiles = "c2cc1cccn1cc2";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
             Assert.AreEqual(9, mol.Atoms.Count);
@@ -183,7 +183,7 @@ namespace NCDK.Smiles
         public void TestBug1579230()
         {
             string smiles = "Cc1cccc2sc3nncn3c12";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
             Assert.AreEqual(13, mol.Atoms.Count);
@@ -1579,13 +1579,13 @@ namespace NCDK.Smiles
         public void TestPyrrole1()
         {
             string smiles = "[nH]1cccc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(5, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "C", "C", "C", "C" }, mol);
 
@@ -1601,13 +1601,13 @@ namespace NCDK.Smiles
         public void TestPyrrole2()
         {
             string smiles = "n1([H])cccc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(6, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "H", "C", "C", "C", "C" }, mol);
 
@@ -1632,13 +1632,13 @@ namespace NCDK.Smiles
         public void TestPyrroleAnion1()
         {
             string smiles = "[n-]1cccc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(5, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "C", "C", "C", "C" }, mol);
 
@@ -1654,13 +1654,13 @@ namespace NCDK.Smiles
         public void TestImidazole1()
         {
             string smiles = "[nH]1cncc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(5, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "C", "N", "C", "C" }, mol);
 
@@ -1676,13 +1676,13 @@ namespace NCDK.Smiles
         public void TestImidazole2()
         {
             string smiles = "n1([H])cncc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(6, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "H", "C", "N", "C", "C" }, mol);
 
@@ -1707,13 +1707,13 @@ namespace NCDK.Smiles
         public void TestImidazole4()
         {
             string smiles = "n1cc[nH]c1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(5, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "C", "C", "N", "C" }, mol);
 
@@ -1748,13 +1748,13 @@ namespace NCDK.Smiles
         public void TestPyrimidine1()
         {
             string smiles = "n1cnccc1";
-            IAtomContainer mol = LoadExact(smiles);
+            IAtomContainer mol = Load(smiles);
             MakeAtomType(mol);
             AssertAtomTypesPerceived(mol);
 
             Assert.AreEqual(6, mol.Atoms.Count);
 
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
 
             AssertAtomSymbols(new string[] { "N", "C", "N", "C", "C", "C" }, mol);
 
@@ -2438,7 +2438,7 @@ namespace NCDK.Smiles
         {
             IAtomContainer mol = LoadExact("c1cc2c3cc1.c1cb23cc1");
             Assert.IsNotNull(mol);
-            AssertAllSingleAndAromatic(mol);
+            AssertAllSingleOrAromatic(mol);
         }
 
         /// <summary>
@@ -2516,6 +2516,32 @@ namespace NCDK.Smiles
             Load("50-00-0");
         }
 
+        [TestMethod()]
+        public void AtomBasedDbStereo()
+        {
+            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric().Create(Load("F[C@H]=[C@@H]F")));
+            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric().Create(Load("F[C@H]=[C@H]F")));
+            Assert.AreEqual("F/C=C/F", SmilesGenerator.Isomeric().Create(Load("F[C@@H]=[C@H]F")));
+            Assert.AreEqual("F/C=C\\F", SmilesGenerator.Isomeric().Create(Load("F[C@@H]=[C@@H]F")));
+        }
+
+        [TestMethod()]
+        public void AtomBasedDbStereoReversing()
+        {
+            Assert.AreEqual("C(\\F)=C\\F", SmilesGenerator.Isomeric().Create(Load("[C@H](F)=[C@@H]F")));
+        }
+
+        [TestMethod()]
+        public void AzuleneHasAllBondOrdersSet()
+        {
+            IAtomContainer mol = Load("c1ccc-2cccccc12");
+            foreach (IBond bond in mol.Bonds)
+            {
+                if (bond.Order == BondOrder.Unset)
+                    Assert.Fail("Unset bond order");
+            }
+        }
+
         /// <summary>
         /// Counts aromatic atoms in a molecule.
         /// </summary>
@@ -2567,6 +2593,14 @@ namespace NCDK.Smiles
             SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             parser.Kekulise(false);
             return parser.ParseSmiles(smi);
+        }
+
+        [TestMethod()]
+        public void TestNoTitle()
+        {
+            SmilesParser parser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IAtomContainer mol = parser.ParseSmiles("CCC");
+            Assert.IsNull(mol.GetProperty<object>("cdk:Title"));
         }
     }
 }

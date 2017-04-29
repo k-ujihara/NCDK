@@ -42,7 +42,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created 2006-12-11
     // @cdk.module  qsaratomic
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:rdfProtonCalculatedValues
     // @cdk.bug     1632419
     public class RDFProtonDescriptor_GSR : AbstractRDFProtonDescriptor

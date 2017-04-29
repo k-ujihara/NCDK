@@ -35,7 +35,6 @@ namespace NCDK.SMSD.Algorithms.RGraph
     [TestClass()]
     public class CDKRMapHandlerTest
     {
-
         private readonly CDKRMapHandler handler = new CDKRMapHandler();
 
         public CDKRMapHandlerTest() { }

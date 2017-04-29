@@ -44,7 +44,7 @@ namespace NCDK.IO.Formats
             Assert.IsNotNull(chemFormat, $"You must use {nameof(SetChemFormat)}() to set the IChemFormat object.");
         }
 
-        [TestMethod()]
+        //@Ignore("Test cannot be run because it causes a circular dependency cycle")
         public void TestGetReaderClassName()
         {
             // two valid output options: NULL and non-zero, existing class
@@ -57,7 +57,7 @@ namespace NCDK.IO.Formats
             }
         }
 
-        [TestMethod()]
+        //@Ignore("Test cannot be run because it causes a circular dependency cycle")
         public void TestGetWriterClassName()
         {
             // two valid output options: NULL and non-zero, existing class

@@ -26,6 +26,7 @@ using NCDK.Config;
 using NCDK.Default;
 using System;
 using System.Diagnostics;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NCDK.Templates
 {
@@ -34,8 +35,18 @@ namespace NCDK.Templates
     /// copy of <see cref="FaulonSignatures.Chemistry.MoleculeFactory"/> for use in tests.
     /// </summary>
     // @cdk.module test-data
+    [TestClass()]
     public class TestMoleculeFactory
     {
+        [TestMethod()]
+        public void Test()
+        {
+            MakeNaphthalene();
+            MakeAnthracene();
+            MakeCyclophaneLike();
+            MakeGappedCyclophaneLike();
+        }
+
         private static void MolAddBond(IAtomContainer mol, int a, int b, BondOrder order)
         {
             mol.AddBond(mol.Atoms[a], mol.Atoms[b], order);
@@ -1905,6 +1916,5 @@ namespace NCDK.Templates
                 Trace.TraceError($"Could not configure molecule! {exc.Message}");
             }
         }
-
     }
 }

@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 /* Copyright (C) 1997-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -48,7 +48,6 @@ namespace NCDK.Default
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.module  silent
     // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond
@@ -419,7 +418,6 @@ namespace NCDK.Silent
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.module  silent
     // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond

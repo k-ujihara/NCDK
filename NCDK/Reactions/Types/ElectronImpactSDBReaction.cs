@@ -27,7 +27,6 @@ namespace NCDK.Reactions.Types
     // @cdk.created    2006-04-01
     // @cdk.module     reaction
     // @cdk.githash
-    // @cdk.set        reaction-types
     public partial class ElectronImpactSDBReaction : AbstractElectronImpactDBReaction
     {
         public ElectronImpactSDBReaction() { }

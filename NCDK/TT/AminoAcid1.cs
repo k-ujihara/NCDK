@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 /* Copyright (C) 2005-2007  Egon Willighagen <e.willighagen@science.ru.nl>
  *
@@ -34,7 +34,6 @@ namespace NCDK.Default
     /// A AminoAcid is Monomer which stores additional amino acid specific
     /// informations, like the N-terminus atom.
     /// </summary>
-    // @cdk.module  silent
     // @cdk.githash
     // @author      Egon Willighagen <e.willighagen@science.ru.nl>
     // @cdk.created 2005-08-11
@@ -109,7 +108,6 @@ namespace NCDK.Silent
     /// A AminoAcid is Monomer which stores additional amino acid specific
     /// informations, like the N-terminus atom.
     /// </summary>
-    // @cdk.module  silent
     // @cdk.githash
     // @author      Egon Willighagen <e.willighagen@science.ru.nl>
     // @cdk.created 2005-08-11

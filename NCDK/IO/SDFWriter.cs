@@ -46,20 +46,20 @@ namespace NCDK.IO
         private ICollection<string> propertiesToWrite;
 
         /// <summary>
-        /// Constructs a new SDFWriter that writes to the given <see cref="TextWriter"/>.
+        /// Create an SDfile writer.
         /// </summary>
-        /// <param name="output">The <see cref="TextWriter"/> to write to</param>
-        public SDFWriter(TextWriter output)
+        /// <param name="wtr">writer</param>
+        public SDFWriter(TextWriter wtr)
         {
-            this.writer = output;
+            this.writer = wtr;
             InitIOSettings();
         }
 
         /// <summary>
-        /// Constructs a new MDLWriter that can write to a given
-        /// <see cref="Stream"/>.
+        /// Create an SDfile writer, the provided output stream is wrapped
+        /// in a UTF-8 buffered writer.
         /// </summary>
-        /// <param name="output">The <see cref="Stream"/> to write to</param>
+        /// <param name="output">out stream</param>
         public SDFWriter(Stream output)
             : this(new StreamWriter(output))
         { }

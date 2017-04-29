@@ -23,7 +23,6 @@ namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class CMLRSSFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

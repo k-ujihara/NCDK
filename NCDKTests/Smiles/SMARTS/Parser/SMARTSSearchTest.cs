@@ -2198,8 +2198,8 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         /// <summary>
         /// Ensure 'r' without a size is equivalent to !R0 and R.
-        // @cdk.bug 1364
         /// </summary>
+        // @cdk.bug 1364
         [TestMethod()]
         public void Bug1364()
         {

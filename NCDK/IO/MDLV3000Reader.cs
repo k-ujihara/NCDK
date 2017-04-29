@@ -29,6 +29,8 @@ using System.IO;
 using NCDK.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
+using NCDK.Isomorphisms.Matchers;
+using System.Linq;
 
 namespace NCDK.IO
 {
@@ -152,6 +154,34 @@ namespace NCDK.IO
                 }
                 lastLine = ReadLine();
             }
+
+            foreach (IAtom atom in readData.Atoms)
+            {
+                // XXX: slow method is slow
+                int valence = 0;
+                foreach (IBond bond in readData.GetConnectedBonds(atom))
+                {
+                    if (bond is IQueryBond || bond.Order == BondOrder.Unset)
+                    {
+                        valence = -1;
+                        break;
+                    }
+                    else
+                    {
+                        valence += bond.Order.Numeric;
+                    }
+                }
+                if (valence < 0)
+                {
+                    Trace.TraceWarning("Cannot set valence for atom with query bonds"); // also counts aromatic bond as query
+                }
+                else
+                {
+                    int unpaired = readData.GetConnectedSingleElectrons(atom).Count();
+                    ApplyMDLValenceModel(atom, valence + unpaired, unpaired);
+                }
+            }
+
             return readData;
         }
 
@@ -333,17 +363,50 @@ namespace NCDK.IO
                             string value = options[key];
                             try
                             {
-                                if (key.Equals("CHG"))
+                                switch (key)
                                 {
-                                    int charge = int.Parse(value);
-                                    if (charge != 0)
-                                    { // zero is no charge specified
-                                        atom.FormalCharge = charge;
-                                    }
-                                }
-                                else
-                                {
-                                    Trace.TraceWarning("Not parsing key: " + key);
+                                    case "CHG":
+                                        int charge = int.Parse(value);
+                                        if (charge != 0)
+                                        { // zero is no charge specified
+                                            atom.FormalCharge = charge;
+                                        }
+                                        break;
+                                    case "RAD":
+                                        int numElectons = MDLV2000Writer.SpinMultiplicity.OfValue(int.Parse(value)).SingleElectrons;
+                                        while (numElectons-- > 0)
+                                        {
+                                            readData.SingleElectrons.Add(readData.Builder.CreateSingleElectron(atom));
+                                        }
+                                        break;
+                                    case "VAL":
+                                        if (!(atom is IPseudoAtom))
+                                        {
+                                            try
+                                            {
+                                                int valence = int.Parse(value);
+                                                if (valence != 0)
+                                                {
+                                                    //15 is defined as 0 in mol files
+                                                    if (valence == 15)
+                                                        atom.Valency = 0;
+                                                    else
+                                                        atom.Valency = valence;
+                                                }
+                                            }
+                                            catch (Exception exception)
+                                            {
+                                                HandleError("Could not parse valence information field", lineNumber, 0, 0, exception);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Trace.TraceError("Cannot set valence information for a non-element!");
+                                        }
+                                        break;
+                                    default:
+                                        Trace.TraceWarning("Not parsing key: " + key);
+                                        break;
                                 }
                             }
                             catch (Exception exception)
@@ -464,42 +527,41 @@ namespace NCDK.IO
                             string value = options[key];
                             try
                             {
-                                if (key.Equals("CFG"))
+                                switch (key)
                                 {
-                                    int configuration = int.Parse(value);
-                                    if (configuration == 0)
-                                    {
-                                        bond.Stereo = BondStereo.None;
-                                    }
-                                    else if (configuration == 1)
-                                    {
-                                        bond.Stereo = BondStereo.Up;
-                                    }
-                                    else if (configuration == 2)
-                                    {
-                                        bond.Stereo = BondStereo.None;
-                                    }
-                                    else if (configuration == 3)
-                                    {
-                                        bond.Stereo = BondStereo.Down;
-                                    }
-                                }
-                                else if (key.Equals("ENDPTS"))
-                                {
-                                    string[] endptStr = value.Split(' ');
-                                    // skip first value that is count
-                                    for (int i = 1; i < endptStr.Length; i++)
-                                    {
-                                        endpts.Add(readData.Atoms[int.Parse(endptStr[i]) - 1]);
-                                    }
-                                }
-                                else if (key.Equals("ATTACH"))
-                                {
-                                    attach = value;
-                                }
-                                else
-                                {
-                                    Trace.TraceWarning("Not parsing key: " + key);
+                                    case "CFG":
+                                        int configuration = int.Parse(value);
+                                        if (configuration == 0)
+                                        {
+                                            bond.Stereo = BondStereo.None;
+                                        }
+                                        else if (configuration == 1)
+                                        {
+                                            bond.Stereo = BondStereo.Up;
+                                        }
+                                        else if (configuration == 2)
+                                        {
+                                            bond.Stereo = BondStereo.None;
+                                        }
+                                        else if (configuration == 3)
+                                        {
+                                            bond.Stereo = BondStereo.Down;
+                                        }
+                                        break;
+                                    case "ENDPTS":
+                                        string[] endptStr = value.Split(' ');
+                                        // skip first value that is count
+                                        for (int i = 1; i < endptStr.Length; i++)
+                                        {
+                                            endpts.Add(readData.Atoms[int.Parse(endptStr[i]) - 1]);
+                                        }
+                                        break;
+                                    case "ATTACH":
+                                        attach = value;
+                                        break;
+                                    default:
+                                        Trace.TraceWarning("Not parsing key: " + key);
+                                        break;
                                 }
                             }
                             catch (Exception exception)
@@ -730,10 +792,47 @@ namespace NCDK.IO
 
         private void InitIOSettings() { }
 
+        /// <summary>
+        /// Applies the MDL valence model to atoms using the explicit valence (bond
+        /// order sum) and charge to determine the correct number of implicit
+        /// hydrogens. The model is not applied if the explicit valence is less than
+        /// 0 - this is the case when a query bond was read for an atom.
+        /// </summary>
+        /// <param name="atom">the atom to apply the model to</param>
+        /// <param name="explicitValence">the explicit valence (bond order sum)</param>
+        private void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
+        {
+
+            if (atom.Valency != null)
+            {
+                if (atom.Valency >= explicitValence)
+                    atom.ImplicitHydrogenCount = atom.Valency - (explicitValence - unpaired);
+                else
+                    atom.ImplicitHydrogenCount = 0;
+            }
+            else
+            {
+                int element = atom.AtomicNumber ?? 0;
+
+                int charge = atom.FormalCharge ?? 0;
+
+                int implicitValence = MDLValence.ImplicitValence(element, charge, explicitValence);
+                if (implicitValence < explicitValence)
+                {
+                    atom.Valency = explicitValence;
+                    atom.ImplicitHydrogenCount = 0;
+                }
+                else
+                {
+                    atom.Valency = implicitValence;
+                    atom.ImplicitHydrogenCount = implicitValence - explicitValence;
+                }
+            }
+        }
+
         public override void Dispose()
         {
             Close();
         }
     }
 }
-

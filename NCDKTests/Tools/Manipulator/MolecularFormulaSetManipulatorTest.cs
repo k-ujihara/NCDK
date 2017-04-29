@@ -311,9 +311,9 @@ namespace NCDK.Tools.Manipulator
         {
 
             MolecularFormulaRange formulaRange = new MolecularFormulaRange();
-            formulaRange.Add(builder.CreateIsotope("C"), 0, 4);
-            formulaRange.Add(builder.CreateIsotope("H"), 0, 12);
-            formulaRange.Add(builder.CreateIsotope("N"), 0, 2);
+            formulaRange.AddIsotope(builder.CreateIsotope("C"), 0, 4);
+            formulaRange.AddIsotope(builder.CreateIsotope("H"), 0, 12);
+            formulaRange.AddIsotope(builder.CreateIsotope("N"), 0, 2);
 
             IMolecularFormula mf2 = new MolecularFormula();
             mf2.Add(builder.CreateIsotope("C"), 1);

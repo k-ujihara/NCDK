@@ -44,7 +44,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2004-11-13
     // @cdk.module     qsaratomic
     // @cdk.githash
-    // @cdk.set        qsar-descriptors
     // @cdk.dictref qsar-descriptors:distanceToAtom
     public class DistanceToAtomDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {

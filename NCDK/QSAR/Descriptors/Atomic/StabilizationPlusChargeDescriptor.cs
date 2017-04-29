@@ -42,7 +42,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @author         Miguel Rojas Cherto
     // @cdk.created    2008-104-31
     // @cdk.module     qsaratomic
-    // @cdk.set        qsar-descriptors
     // @cdk.githash
     public class StabilizationPlusChargeDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {

@@ -29,7 +29,7 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// <see cref="IGenerator"/> that will show how atoms map between the reactant and product side.
+    /// <see cref="IGenerator{T}"/> that will show how atoms map between the reactant and product side.
     /// </summary>
     // @cdk.module renderextra
     // @cdk.githash

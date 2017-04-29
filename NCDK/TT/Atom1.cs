@@ -1,7 +1,7 @@
 
 
 // .NET Framework port by Kazuya Ujihara
-// Copyright (C) 2016-2017  Kazuya Ujihara
+// Copyright (C) 2016-2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 
 /* Copyright (C) 2000-2007  Christoph Steinbeck <steinbeck@users.sf.net>
  *
@@ -53,7 +53,6 @@ namespace NCDK.Default
     /// Junit test for this class.
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
-    // @cdk.module  silent
     // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02
@@ -300,7 +299,6 @@ namespace NCDK.Silent
     /// Junit test for this class.
     /// </example>
     /// <seealso cref="NCDK.Config.XMLIsotopeFactory.GetInstance(IChemObjectBuilder)"/>
-    // @cdk.module  silent
     // @cdk.githash
     // @author     steinbeck
     // @cdk.created    2000-10-02

@@ -84,5 +84,31 @@ namespace NCDK.Tools.Manipulator
             Assert.AreEqual("C", atom.Symbol);
             Assert.AreEqual(6, atom.AtomicNumber);
         }
+
+        // @cdk.bug 1322 
+        [TestMethod()]
+        public void AromaticityIsNotOverwritten()
+        {
+            IAtom atom = new Atom(Elements.Carbon.ToIElement());
+            atom.IsAromatic = true;
+            IAtomType atomType = new AtomType(Elements.Unknown.ToIElement());
+            atomType.IsAromatic = false;
+            atomType.AtomTypeName = "C.sp3";
+            AtomTypeManipulator.Configure(atom, atomType);
+            Assert.IsTrue(atom.IsAromatic);
+        }
+
+        // @cdk.bug 1322 
+        [TestMethod()]
+        public void AromaticitySetIfForType()
+        {
+            IAtom atom = new Atom(Elements.Carbon.ToIElement());
+            atom.IsAromatic = false;
+            IAtomType atomType = new AtomType(Elements.Unknown.ToIElement());
+            atomType.IsAromatic = true;
+            atomType.AtomTypeName = "C.am";
+            AtomTypeManipulator.Configure(atom, atomType);
+            Assert.IsTrue(atom.IsAromatic);
+        }
     }
 }

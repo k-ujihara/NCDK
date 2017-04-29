@@ -63,6 +63,7 @@ namespace NCDK.Smiles
             SmilesParser smilesParser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             smilesParser.Kekulise(false);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
             molecule = fbot.KekuliseAromaticRings(molecule);
@@ -87,6 +88,7 @@ namespace NCDK.Smiles
             SmilesParser smilesParser = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             smilesParser.Kekulise(false);
             IAtomContainer molecule = smilesParser.ParseSmiles(smiles);
+            AtomContainerManipulator.SetSingleOrDoubleFlags(molecule);
             AtomContainerManipulator.PercieveAtomTypesAndConfigureAtoms(molecule);
 
             molecule = fbot.KekuliseAromaticRings(molecule);

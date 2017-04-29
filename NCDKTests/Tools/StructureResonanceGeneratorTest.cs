@@ -340,6 +340,7 @@ namespace NCDK.Tools
         /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestFlagActiveCenter1()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -530,6 +531,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestFluorobenzene()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -612,6 +614,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestFluorobenzeneContainer()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -645,6 +648,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestFluorobenzene_symm()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -728,6 +732,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestAniline()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -792,6 +797,7 @@ namespace NCDK.Tools
         /// Cl=C([H])[C-]([H])[C+]([H])[H] + Cl=C([H])C([H])=C([H])[H]
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestAllyl()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -815,6 +821,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestAllylRadical()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1026,6 +1033,7 @@ namespace NCDK.Tools
 
         // @cdk.bug      1728830
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBenzene()
         {
             IAtomContainer molecule = TestMoleculeFactory.MakeBenzene();
@@ -1044,6 +1052,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C2H4O/c1-2-3/h2-3H,1H2/p-1/fC2H3O/h3h/q-1
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetContainers_IAtomContainer()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1117,6 +1126,7 @@ namespace NCDK.Tools
         /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetContainer_IAtomContainer_IAtom()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1163,6 +1173,7 @@ namespace NCDK.Tools
         /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetContainer_IAtomContainer_IBond()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1209,6 +1220,7 @@ namespace NCDK.Tools
         /// A unit test suite for JUnit: Resonance C-C=C-[C+]-C-C=C-[C+] &lt;=&gt; C-[C+]-C=C-C-C=C-[C+]
         /// </summary>
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetID()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1266,6 +1278,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi  InChI=1/C7H7F/c1-6-4-2-3-5-7(6)8/h2-5H,1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetContainersFluoromethylbenzene()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1309,6 +1322,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C6H5F/c7-6-4-2-1-3-5-6/h1-5H
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestGetContainersFluorobenzene()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1350,6 +1364,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C3H5Cl/c1-3(2)4/h1H2,2H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void Test1Propene2chloro()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1376,6 +1391,7 @@ namespace NCDK.Tools
         /// </summary>
         // @cdk.inchi InChI=1/C7H7BrO/c1-9-7-4-2-6(8)3-5-7/h2-5H,1H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestBenzene1bromo4methoxy()
         {
             IAtomContainer molecule = builder.CreateAtomContainer();
@@ -1453,6 +1469,7 @@ namespace NCDK.Tools
         }
 
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestSetMaximalStructures_int()
         {
             StructureResonanceGenerator gRI = new StructureResonanceGenerator();

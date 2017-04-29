@@ -32,7 +32,6 @@ namespace NCDK.LibIO.CML
     // @author ola
     // @cdk.module libiomd
     // @cdk.githash
-    // @cdk.set       libio-cml-customizers
     public class MDMoleculeCustomizer : ICMLCustomizer
     {
         internal static readonly XNamespace NS_MD = "http://www.bioclipse.net/mdmolecule/";

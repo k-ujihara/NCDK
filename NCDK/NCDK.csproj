@@ -126,19 +126,30 @@
     <Compile Include="Common\Collections\Lists.cs" />
     <Compile Include="Common\Collections\Maps.cs" />
     <Compile Include="Common\Collections\MultiMap.cs" />
+    <Compile Include="Common\Collections\Sets.cs" />
     <Compile Include="Common\Hash\Crc32.cs" />
     <Compile Include="Common\Mathematics\BitsStreamGenerator.cs" />
     <Compile Include="Common\Mathematics\JavaRandom.cs" />
+    <Compile Include="Config\Elements1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Elements.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Formula\FullEnumerationFormulaGenerator.cs" />
+    <Compile Include="Formula\IFormulaGenerator.cs" />
     <Compile Include="Formula\MolecularFormula1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MolecularFormula.tt</DependentUpon>
     </Compile>
+    <Compile Include="Formula\RoundRobinFormulaGenerator.cs" />
+    <Compile Include="Graphs\InChI\JniInChIInputAdapter.cs" />
     <Compile Include="IHasProperties.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IHasProperties.tt</DependentUpon>
     </Compile>
+    <Compile Include="Isomorphisms\Matchers\SMARTS\ReactionRoleQueryAtom.cs" />
     <Compile Include="Maths\MersenneTwister.cs" />
     <Compile Include="Common\Mathematics\Vectors.cs" />
     <Compile Include="Common\Primitives\Ints.cs" />
@@ -240,6 +251,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>cheminf.tokens</LastGenOutput>
     </Content>
+    <Content Include="Config\Elements.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Elements1.cs</LastGenOutput>
+    </Content>
+    <None Include="Config\Elements.txt" />
     <Content Include="Formula\MolecularFormula.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>MolecularFormula1.cs</LastGenOutput>
@@ -274,6 +290,11 @@
     <Content Include="SGroups\SgroupType.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SgroupType.cs</LastGenOutput>
+    </Content>
+    <Compile Include="Smiles\CxSmilesGenerator.cs" />
+    <Content Include="Smiles\CxSmilesState.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CxSmilesState1.cs</LastGenOutput>
     </Content>
     <Content Include="x64\libinchi.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -314,6 +335,7 @@
     <Compile Include="LibIO\DotNetRDF\Convertor.cs" />
     <Compile Include="Proteins\ProteinPocketFinder.cs" />
     <Compile Include="QSAR\Descriptors\Atomic\AbstractRDFProtonDescriptor.cs" />
+    <Compile Include="ReactionRole.cs" />
     <Compile Include="Reactions\ReactionChain.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteInitiationReaction.cs" />
     <Compile Include="Reactions\Types\AbstractRadicalSiteReaction.cs" />
@@ -332,6 +354,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SgroupType.tt</DependentUpon>
     </Compile>
+    <Compile Include="SMARTS\SmartsFragmentExtractor.cs" />
+    <Compile Include="Smiles\CxSmilesState1.cs">
+      <DependentUpon>CxSmilesState.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Smiles\SMARTS\SmartsAtomAtomMapFilter.cs" />
+    <Compile Include="Smiles\SmiFlavor.cs" />
     <Compile Include="Templates\IsoAlkanes.cs" />
     <Compile Include="NInChI\INCHI_BOND_STEREO.cs" />
     <Compile Include="NInChI\INCHI_BOND_TYPE.cs" />

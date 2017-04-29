@@ -192,8 +192,12 @@ namespace NCDK.Beam
         public static readonly Element Darmstadtium = new Element(110, "Ds");
         public static readonly Element Roentgenium = new Element(111, "Rg");
         public static readonly Element Copernicium = new Element(112, "Cn");
+        public static readonly Element Nihonium = new Element(113, "Nh");
         public static readonly Element Flerovium = new Element(114, "Fl");
+        public static readonly Element Moscovium = new Element(115, "Mc");
         public static readonly Element Livermorium = new Element(116, "Lv");
+        public static readonly Element Tennessine = new Element(117, "Ts");
+        public static readonly Element Oganesson = new Element(118, "Og");
 
         public static readonly Element Lanthanum = new Element(57, "La");
         public static readonly Element Cerium = new Element(58, "Ce");
@@ -242,10 +246,10 @@ namespace NCDK.Beam
         /// <summary>Look up of elements by symbol</summary>
         private static readonly IDictionary<string, Element> elementMap = new Dictionary<string, Element>();
 
-        private static readonly Element[] elements = new Element[117];
+        private static readonly Element[] elements = new Element[119];
 
         /// <summary>Lookup elements by atomic number.</summary>
-        public static readonly IEnumerable<Element> Values = new Element[]
+        public static Element[] Values { get; } = new Element[]
         {
         #region Values
             Unknown,
@@ -361,8 +365,12 @@ namespace NCDK.Beam
             Darmstadtium,
             Roentgenium,
             Copernicium,
+            Nihonium,
             Flerovium,
+            Moscovium,
             Livermorium,
+            Tennessine,
+            Oganesson,
         #endregion
         };
 

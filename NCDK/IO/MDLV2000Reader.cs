@@ -504,7 +504,7 @@ namespace NCDK.IO
                     else
                     {
                         int unpaired = outputContainer.GetConnectedSingleElectrons(outputContainer.Atoms[i]).Count();
-                        ApplyMDLValenceModel(outputContainer.Atoms[i], valence + unpaired);
+                        ApplyMDLValenceModel(outputContainer.Atoms[i], valence + unpaired, unpaired);
                     }
                 }
 
@@ -551,13 +551,12 @@ namespace NCDK.IO
         /// </summary>
         /// <param name="atom">the atom to apply the model to</param>
         /// <param name="explicitValence">the explicit valence (bond order sum)</param>
-        private void ApplyMDLValenceModel(IAtom atom, int explicitValence)
+        private void ApplyMDLValenceModel(IAtom atom, int explicitValence, int unpaired)
         {
-
             if (atom.Valency != null)
             {
                 if (atom.Valency >= explicitValence)
-                    atom.ImplicitHydrogenCount = atom.Valency - explicitValence;
+                    atom.ImplicitHydrogenCount = atom.Valency - (explicitValence - unpaired);
                 else
                     atom.ImplicitHydrogenCount = 0;
             }
@@ -2075,26 +2074,12 @@ namespace NCDK.IO
                             st.MoveNext();
                             int atomNumber = int.Parse(st.Current.Trim());
                             st.MoveNext();
-                            int spinMultiplicity = int.Parse(st.Current.Trim());
+                            int rad = int.Parse(st.Current.Trim());
                             MDLV2000Writer.SpinMultiplicity spin = MDLV2000Writer.SpinMultiplicity.None;
-                            if (spinMultiplicity > 0)
+                            if (rad > 0)
                             {
                                 IAtom radical = container.Atoms[atomNumber - 1];
-                                switch (spinMultiplicity)
-                                {
-                                    case 1:
-                                        spin = MDLV2000Writer.SpinMultiplicity.Doublet;
-                                        break;
-                                    case 2:
-                                        spin = MDLV2000Writer.SpinMultiplicity.Singlet;
-                                        break;
-                                    case 3:
-                                        spin = MDLV2000Writer.SpinMultiplicity.Triplet;
-                                        break;
-                                    default:
-                                        Debug.WriteLine("Invalid spin multiplicity found: " + spinMultiplicity);
-                                        break;
-                                }
+                                spin = MDLV2000Writer.SpinMultiplicity.OfValue(rad);
                                 for (int j = 0; j < spin.SingleElectrons; j++)
                                 {
                                     container.SingleElectrons.Add(container.Builder.CreateSingleElectron(radical));

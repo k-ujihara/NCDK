@@ -32,7 +32,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-02-08
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     public class AutocorrelationDescriptorMass : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private readonly static string[] NAMES = { "ATSm1", "ATSm2", "ATSm3", "ATSm4", "ATSm5" };

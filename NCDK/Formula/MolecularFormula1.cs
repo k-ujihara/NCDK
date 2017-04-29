@@ -75,13 +75,13 @@ namespace NCDK.Formula
             return defaultValue;
         }
 
-        private static readonly IDictionary<object, object> EmptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
+        private static readonly IDictionary<object, object> emptyProperties = new System.Collections.ObjectModel.ReadOnlyDictionary<object, object>(new Dictionary<object, object>(0));
 
         /// <inheritdoc/>
         public virtual IDictionary<object, object> GetProperties() 
         {
             if (this.properties == null)
-                return EmptyProperties;
+                return emptyProperties;
             return this.properties;
         }
 

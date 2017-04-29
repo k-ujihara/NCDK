@@ -25,7 +25,7 @@ using System;
 namespace NCDK
 {
     /// <summary>
-    /// Exception that is thrown by CDK classes when some problem has occured.
+    /// Exception that is thrown by CDK classes when some problem has occurred.
     /// </summary>
     // @cdk.module core
     // @cdk.githash

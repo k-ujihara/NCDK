@@ -49,7 +49,6 @@ namespace <#= ns.NS #>
     /// </para>
     /// </remarks>
     // @author steinbeck
-    // @cdk.module  silent
     // @cdk.githash
     // @cdk.created 2003-10-02
     // @cdk.keyword bond

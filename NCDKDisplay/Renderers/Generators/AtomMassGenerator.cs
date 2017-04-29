@@ -23,7 +23,7 @@ using System.IO;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// <see cref="IGenerator"/> that can render mass number information of atoms.
+    /// <see cref="IGenerator{T}"/> that can render mass number information of atoms.
     /// </summary>
     // @cdk.module renderextra
     // @cdk.githash

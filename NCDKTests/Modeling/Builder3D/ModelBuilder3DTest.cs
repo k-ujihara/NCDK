@@ -360,6 +360,7 @@ namespace NCDK.Modeling.Builder3D
 
         // @cdk.bug 1241421
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestModelBuilder3D_bug_1241421()
         {
             ModelBuilder3D mb3d = ModelBuilder3D.GetInstance(Default.ChemObjectBuilder.Instance);

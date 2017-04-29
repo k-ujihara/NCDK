@@ -40,6 +40,22 @@ namespace NCDK.Smiles
             Assert.IsTrue(state.atomLabels.Contains(new KeyValuePair<int, string>(3, "Het")));
             Assert.IsTrue(state.atomLabels.Contains(new KeyValuePair<int, string>(8, "A")));
         }
+        
+        [TestMethod()]
+        public void EscapedAtomLabels()
+        {
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|$R&#39;;;;;;;$|", state));
+            Assert.IsTrue(state.atomLabels[0] == "R'");
+        }
+
+        [TestMethod()]
+        public void EscapedAtomLabels2()
+        {
+            CxSmilesState state = new CxSmilesState();
+            Assert.AreNotEqual(-1, CxSmilesParser.ProcessCx("|$;;;&#40;C&#40;R41&#41;&#40;R41&#41;&#41;n;;R41;R41;R41;;_AP1;R41;R41;;_AP1$|", state));
+            Assert.IsTrue(state.atomLabels[3] == "(C(R41)(R41))n");
+        }
 
         [TestMethod()]
         public void AtomValues()

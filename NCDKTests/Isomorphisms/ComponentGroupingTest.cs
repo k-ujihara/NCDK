@@ -107,10 +107,10 @@ namespace NCDK.Isomorphisms
             m.AddBond(m.Atoms[2], m.Atoms[3], BondOrder.Single);
             return m;
         }
-
+        
         static ComponentGrouping Create(int[] grouping, IAtomContainer container)
         {
-            return new ComponentGrouping(grouping, new ConnectedComponents(GraphUtil.ToAdjList(container)));
+            return new ComponentGrouping(grouping, new ConnectedComponents(GraphUtil.ToAdjList(container)).Components());
         }
     }
 }

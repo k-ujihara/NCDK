@@ -1514,5 +1514,35 @@ namespace NCDK.Smiles.SMARTS.Parser
         {
             Visit("[$([C;#12]=1CCCCC1)]");
         }
+
+        [TestMethod()]
+        public void Reaction()
+        {
+            Visit("CCO.CC(=O)O>[H+]>CCOC(=O)C.O");
+        }
+
+        [TestMethod()]
+        public void ReactionNoAgents()
+        {
+            Visit("CCO.CC(=O)O>>CCOC(=O)C.O");
+        }
+
+        [TestMethod()]
+        public void ReactionNoProduct()
+        {
+            Visit("CCO.CC(=O)O>>");
+        }
+
+        [TestMethod()]
+        public void ReactionNoReactant()
+        {
+            Visit(">>CCOC(=O)C.O");
+        }
+
+        [TestMethod()]
+        public void ReactionOnlyAgents()
+        {
+            Visit(">>CCOC(=O)C.O");
+        }
     }
 }

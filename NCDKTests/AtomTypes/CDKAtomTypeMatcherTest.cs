@@ -54,7 +54,7 @@ namespace NCDK.AtomTypes
         public void TestGetInstance_IChemObjectBuilder_int()
         {
             CDKAtomTypeMatcher matcher = CDKAtomTypeMatcher.GetInstance(Default.ChemObjectBuilder.Instance,
-                    CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
             Assert.IsNotNull(matcher);
         }
 
@@ -3174,7 +3174,7 @@ namespace NCDK.AtomTypes
         {
             IAtomContainer mol = new AtomContainer();
             CDKAtomTypeMatcher atm = CDKAtomTypeMatcher.GetInstance(mol.Builder,
-                    CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
 
             mol.Atoms.Add(new Atom("O"));
             mol.Atoms[0].FormalCharge = +1;
@@ -3216,6 +3216,21 @@ namespace NCDK.AtomTypes
 
             string[] expectedTypes = { "C.sp3", "C.radical.planar", "C.sp3", "C.sp3" };
             AssertAtomTypes(testedAtomTypes, expectedTypes, mol);
+        }
+
+        // @cdk.bug 1382 
+        [TestMethod()]
+        public void TestCarbonDiradical()
+        {
+            IAtomContainer mol = new AtomContainer();
+            IAtom atom = new Atom("C");
+            mol.Atoms.Add(atom);
+            mol.AddSingleElectronTo(mol.Atoms[0]);
+            mol.AddSingleElectronTo(mol.Atoms[0]);
+
+            IAtomTypeMatcher atm = GetAtomTypeMatcher(mol.Builder);
+            IAtomType foundType = atm.FindMatchingAtomType(mol, atom);
+            Assert.AreEqual("X", foundType.AtomTypeName);
         }
 
         [TestMethod()]

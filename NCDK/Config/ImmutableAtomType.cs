@@ -1,4 +1,4 @@
-/* Copyright (C) 2012-2015  Egon Willighagen <egonw@users.sf.net>
+/* Copyright (C) 2012-2016  Egon Willighagen <egonw@users.sf.net>
  *               2012-2014  John May <john.wilkinsonmay@gmail.com>
  *
  * Contact: cdk-devel@lists.sourceforge.net
@@ -21,11 +21,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using System;
 using System.Collections.Generic;
 using NCDK.Default;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace NCDK.Config
 {
@@ -252,6 +252,47 @@ namespace NCDK.Config
         public ICDKObject Clone(CDKObjectMap map)
         {
             return (ImmutableAtomType)this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            var resultString = new StringBuilder();
+            resultString.Append("ImmutableAtomType(").Append(GetHashCode());
+            if (AtomTypeName != null)
+            {
+                resultString.Append(", N:").Append(AtomTypeName);
+            }
+            if (MaxBondOrder != BondOrder.Unset)
+            {
+                resultString.Append(", MBO:").Append(MaxBondOrder);
+            }
+            if (BondOrderSum != null)
+            {
+                resultString.Append(", BOS:").Append(BondOrderSum);
+            }
+            if (FormalCharge != null)
+            {
+                resultString.Append(", FC:").Append(FormalCharge);
+            }
+            if (Hybridization != Hybridization.Unset)
+            {
+                resultString.Append(", H:").Append(Hybridization);
+            }
+            if (FormalNeighbourCount != null)
+            {
+                resultString.Append(", NC:").Append(FormalNeighbourCount);
+            }
+            if (CovalentRadius != null)
+            {
+                resultString.Append(", CR:").Append(CovalentRadius);
+            }
+            if (Valency != null)
+            {
+                resultString.Append(", EV:").Append(Valency);
+            }
+            resultString.Append(", ").Append(base.ToString());
+            resultString.Append(')');
+            return resultString.ToString();
         }
     }
 }

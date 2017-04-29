@@ -66,8 +66,17 @@ namespace NCDK.Graphs
         public static IAtomContainerSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container)
         {
             ConnectedComponents cc = new ConnectedComponents(GraphUtil.ToAdjList(container));
-            int[] components = cc.Components();
-            IAtomContainer[] containers = new IAtomContainer[cc.NComponents + 1];
+            return PartitionIntoMolecules(container, cc.Components());
+        }
+
+        public static IAtomContainerSet<IAtomContainer> PartitionIntoMolecules(IAtomContainer container, int[] components)
+        {
+            int maxComponentIndex = 0;
+            foreach (int component in components)
+                if (component > maxComponentIndex)
+                    maxComponentIndex = component;
+
+            IAtomContainer[] containers = new IAtomContainer[maxComponentIndex + 1];
             IDictionary<IAtom, IAtomContainer> componentsMap = new Dictionary<IAtom, IAtomContainer>(2 * container.Atoms.Count);
 
             for (int i = 1; i < containers.Length; i++)
@@ -81,8 +90,13 @@ namespace NCDK.Graphs
                 containers[components[i]].Atoms.Add(container.Atoms[i]);
             }
 
-            foreach (var bond in container.Bonds)
-                componentsMap[bond.Atoms[0]].Bonds.Add(bond);
+            foreach (IBond bond in container.Bonds)
+            {
+                IAtomContainer begComp = componentsMap[bond.Atoms[0]];
+                IAtomContainer endComp = componentsMap[bond.Atoms[1]];
+                if (begComp == endComp)
+                    begComp.Bonds.Add(bond);
+            }
 
             foreach (var electron in container.SingleElectrons)
                 componentsMap[electron.Atom].SingleElectrons.Add(electron);

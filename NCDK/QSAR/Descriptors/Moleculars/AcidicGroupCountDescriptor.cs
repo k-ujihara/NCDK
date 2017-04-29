@@ -38,7 +38,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @author      egonw
     // @cdk.module  qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:acidicGroupCount  
     public class AcidicGroupCountDescriptor 
         : AbstractMolecularDescriptor, IMolecularDescriptor

@@ -36,7 +36,7 @@ namespace NCDK.Fingerprint
         private int signatureDepth;
 
         /// <summary>
-        /// Initialize the fingerprinter with a defult signature depth of 1.
+        /// Initialize the fingerprinter with a default signature depth of 1.
         /// </summary>
         public SignatureFingerprinter()
                 : this(1)

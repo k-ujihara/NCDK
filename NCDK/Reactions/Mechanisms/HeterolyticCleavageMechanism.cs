@@ -47,7 +47,7 @@ namespace NCDK.Reactions.Mechanisms
         public IReaction Initiate(IAtomContainerSet<IAtomContainer> atomContainerSet, IList<IAtom> atomList, IList<IBond> bondList)
         {
             CDKAtomTypeMatcher atMatcher = CDKAtomTypeMatcher.GetInstance(atomContainerSet.Builder,
-                    CDKAtomTypeMatcher.REQUIRE_EXPLICIT_HYDROGENS);
+                    CDKAtomTypeMatcher.RequireExplicitHydrogens);
             if (atomContainerSet.Count != 1)
             {
                 throw new CDKException("TautomerizationMechanism only expects one IAtomContainer");

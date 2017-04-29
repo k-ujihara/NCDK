@@ -30,7 +30,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using static NCDK.SGroups.CxSmilesState.Radical;
 
 namespace NCDK.Smiles
 {
@@ -211,7 +210,8 @@ namespace NCDK.Smiles
 
                 // convert the Beam object model to the CDK - note exception thrown
                 // if a kekule structure could not be assigned.
-                IAtomContainer mol = beamToCDK.ToAtomContainer(kekulise ? g.Kekule() : g);
+                IAtomContainer mol = beamToCDK.ToAtomContainer(kekulise ? g.Kekule() : g,
+                                                           kekulise);
 
                 if (!isRxnPart)
                 {
@@ -480,7 +480,7 @@ namespace NCDK.Smiles
                 int numAtoms = atoms.Count;
                 int numCoords = cxstate.AtomCoords.Count;
                 int lim = Math.Min(numAtoms, numCoords);
-                if (cxstate.zCoords)
+                if (cxstate.coordFlag)
                 {
                     for (int i = 0; i < lim; i++)
                         atoms[i].Point3D = new Vector3(
@@ -508,21 +508,21 @@ namespace NCDK.Smiles
 
                     int count = 0;
                     var aa = e.Value;
-                    switch (e.Value)
+                    switch (e.Value.Ordinal)
                     {
-                        case Monovalent:
+                        case CxSmilesState.Radical.O.Monovalent:
                             count = 1;
                             break;
                         // no distinction in CDK between singled/triplet
-                        case Divalent:
-                        case DivalentSinglet:
-                        case DivalentTriplet:
+                        case CxSmilesState.Radical.O.Divalent:
+                        case CxSmilesState.Radical.O.DivalentSinglet:
+                        case CxSmilesState.Radical.O.DivalentTriplet:
                             count = 2;
                             break;
                         // no distinction in CDK between doublet/quartet
-                        case Trivalent:
-                        case TrivalentDoublet:
-                        case TrivalentQuartet:
+                        case CxSmilesState.Radical.O.Trivalent:
+                        case CxSmilesState.Radical.O.TrivalentDoublet:
+                        case CxSmilesState.Radical.O.TrivalentQuartet:
                             count = 3;
                             break;
                     }
@@ -659,7 +659,7 @@ namespace NCDK.Smiles
                             break;
                     }
                     sgroupMap.Add(mol, sgroup);
-                C_PolySgroup:
+                    C_PolySgroup:
                     ;
                 }
             }

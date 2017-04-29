@@ -53,7 +53,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-1-03
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:largestChain
     public class LargestChainDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor
     {

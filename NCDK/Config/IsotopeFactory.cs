@@ -38,7 +38,9 @@ namespace NCDK.Config
         protected IDictionary<string, IIsotope> majorIsotopes = null;
 
         /// <summary>
-        /// The number of isotopes defined by this class.
+        /// The number of isotopes defined by this class. The classes
+        /// <see cref="Isotopes"/> extends this class and is to be used to get isotope
+        /// information.
         /// </summary>
         public int Count => isotopes.Count;
 

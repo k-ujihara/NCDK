@@ -265,6 +265,7 @@ namespace NCDK.Beam
                 }
                 else if (c.Type == Configuration.Types.ExtendedTetrahedral)
                 {
+                    g.AddFlags(Graph.HAS_EXT_STRO);
                     // Extended tetrahedral is a little more complicated, note
                     // following presumes the end atoms are not in ring closures
                     int v = es[0].Other(u);
@@ -349,7 +350,6 @@ namespace NCDK.Beam
                 }
                 if (arrangement.ContainsKey(u))
                     arrangement[u].Add(v);
-
             }
             stack.Push(v);
             bond = Bond.Implicit;
@@ -376,7 +376,6 @@ namespace NCDK.Beam
                 char c = buffer.Get();
                 switch (c)
                 {
-
                     // aliphatic subset
                     case '*':
                         AddAtom(AtomImpl.AliphaticSubset.Unknown, buffer);
@@ -438,7 +437,6 @@ namespace NCDK.Beam
                         g.AddFlags(Graph.HAS_AROM);
                         break;
 
-
                     // D/T for hydrogen isotopes - non-standard but OpenSMILES spec
                     // says it's possible. The D and T here are automatic converted
                     // to [2H] and [3H].
@@ -483,6 +481,8 @@ namespace NCDK.Beam
                         int num = buffer.GetNumber(2);
                         if (num < 0)
                             throw new InvalidSmilesException("a number (<digit>+) must follow '%':", buffer);
+                        if (strict && num < 10)
+                            throw new InvalidSmilesException("two digits must follow '%'", buffer);
                         Ring(num, buffer);
                         break;
 
@@ -549,7 +549,7 @@ namespace NCDK.Beam
                     // termination
                     case '\t':
                     case ' ':
-                        // string suffix is title 
+                        // String suffix is title 
                         StringBuilder sb = new StringBuilder();
                         while (buffer.HasRemaining())
                         {
@@ -786,10 +786,10 @@ namespace NCDK.Beam
             if (!arrangement.TryGetValue(u, out la))
             {
                 la = new LocalArrangement();
-                 int d = g.Degree(u);
+                int d = g.Degree(u);
                 for (int j = 0; j < d; ++j)
                 {
-                     Edge e = g.EdgeAt(u, j);
+                    Edge e = g.EdgeAt(u, j);
                     la.Add(e.Other(u));
                 }
                 arrangement[u] = la;
@@ -831,6 +831,8 @@ namespace NCDK.Beam
             bond = Bond.Implicit;
             // adjust the arrangement replacing where this ring number was openned
             arrangement[rbond.u].Replace(-rnum, stack.Peek());
+            if (arrangement.ContainsKey(v))
+                arrangement[v].Add(rbond.u);
             openRings--;
         }
 

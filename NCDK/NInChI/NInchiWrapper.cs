@@ -16,9 +16,11 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with JNI-InChI.  If not, see <http://www.gnu.org/licenses/>.
  */
+using NCDK.Common.Primitives;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -298,34 +300,23 @@ namespace NCDK.NInChI
                 throw new ArgumentNullException(nameof(ops), "Null options");
             }
 
-            StringBuilder sbOptions = null;
-            var tok = ops.Split(" \t\n\r\f".ToCharArray());
-
-            foreach (var s_op in tok)
+            var tok = Strings.Tokenize(ops);
+            var sbOptions = string.Join(" ", tok.Select(n =>
             {
-                var op = s_op;
-                if (string.IsNullOrEmpty(op))
-                    continue;
+                string op = n;
                 if (op.StartsWith("-") || op.StartsWith("/"))
                 {
                     op = op.Substring(1);
                 }
-
                 INCHI_OPTION option = INCHI_OPTION.ValueOfIgnoreCase(op);
                 if (option != null)
                 {
-                    if (sbOptions == null)
-                        sbOptions = new StringBuilder();
-                    else
-                        sbOptions.Append(" ");
-                    sbOptions.Append(FlagChar + option.Name);
+                    return FlagChar + option.Name;
                 }
-                else
-                {
-                    throw new NInchiException("Unrecognised InChI option");
-                }
-            }
-            return sbOptions == null ? "" : sbOptions.ToString();
+                throw new NInchiException("Unrecognised InChI option");
+            }));
+
+            return sbOptions;
         }
 
         struct Set_inchi_Input_

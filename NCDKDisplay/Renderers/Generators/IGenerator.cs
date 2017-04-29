@@ -22,7 +22,7 @@ using System.Collections.Generic;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// An <see cref="IGenerator"/> converts chemical entities into parts of the
+    /// An <see cref="IGenerator{T}"/> converts chemical entities into parts of the
     /// chemical drawing expressed as <see cref="IRenderingElement"/>s.
     /// </summary>
     /// <remarks>

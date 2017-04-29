@@ -33,7 +33,6 @@ namespace NCDK.LibIO.CML
     // @cdk.created   2005-05-04
     // @cdk.module pdbcml
     // @cdk.githash
-    // @cdk.set libio-cml-customizers
     // @cdk.require java1.5+
     public class PDBAtomCustomizer : ICMLCustomizer
     {

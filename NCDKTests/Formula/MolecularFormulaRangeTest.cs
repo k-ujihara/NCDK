@@ -18,6 +18,7 @@
  *
  */
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace NCDK.Formula
@@ -81,8 +82,8 @@ namespace NCDK.Formula
         {
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(builder.CreateIsotope("C"), 0, 10);
-            mfRange.Add(builder.CreateIsotope("H"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("H"), 0, 10);
 
             Assert.AreEqual(2, mfRange.Count);
         }
@@ -97,12 +98,12 @@ namespace NCDK.Formula
         {
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(builder.CreateIsotope("C"), 0, 10);
-            mfRange.Add(builder.CreateIsotope("H"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("H"), 0, 10);
 
             IIsotope hy = builder.CreateIsotope("C");
             hy.NaturalAbundance = 2.00342342;
-            mfRange.Add(hy, 0, 10);
+            mfRange.AddIsotope(hy, 0, 10);
 
             Assert.AreEqual(3, mfRange.Count);
         }
@@ -119,8 +120,8 @@ namespace NCDK.Formula
 
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope h1 = builder.CreateIsotope("H");
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
             Assert.AreEqual(2, mfRange.Count);
             Assert.AreEqual(10, mfRange.GetIsotopeCountMax(carb));
@@ -140,8 +141,8 @@ namespace NCDK.Formula
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope h1 = builder.CreateIsotope("H");
             IIsotope flu = builder.CreateIsotope("F");
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
             Assert.AreEqual(2, mfRange.Count);
             Assert.AreEqual(0, mfRange.GetIsotopeCountMin(carb));
@@ -161,11 +162,11 @@ namespace NCDK.Formula
 
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope h1 = builder.CreateIsotope("H");
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
-            mfRange.Add(carb, 5, 10);
-            mfRange.Add(h1, 5, 10);
+            mfRange.AddIsotope(carb, 5, 10);
+            mfRange.AddIsotope(h1, 5, 10);
 
             Assert.AreEqual(2, mfRange.Count);
             Assert.AreEqual(5, mfRange.GetIsotopeCountMin(carb));
@@ -189,11 +190,11 @@ namespace NCDK.Formula
             IIsotope carb2 = builder.CreateIsotope("C");
             IIsotope h2 = builder.CreateIsotope("H");
 
-            mfRange.Add(carb1, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb1, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
-            mfRange.Add(carb2, 5, 10);
-            mfRange.Add(h2, 5, 10);
+            mfRange.AddIsotope(carb2, 5, 10);
+            mfRange.AddIsotope(h2, 5, 10);
 
             Assert.AreEqual(2, mfRange.Count);
             Assert.AreEqual(5, mfRange.GetIsotopeCountMin(carb1));
@@ -221,11 +222,11 @@ namespace NCDK.Formula
             IIsotope h2 = builder.CreateIsotope("H");
             h2.NaturalAbundance = 2.0968768;
 
-            mfRange.Add(carb1, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb1, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
-            mfRange.Add(carb2, 5, 10);
-            mfRange.Add(h2, 5, 10);
+            mfRange.AddIsotope(carb2, 5, 10);
+            mfRange.AddIsotope(h2, 5, 10);
 
             Assert.AreEqual(4, mfRange.Count);
             Assert.AreEqual(0, mfRange.GetIsotopeCountMin(carb1));
@@ -245,8 +246,8 @@ namespace NCDK.Formula
         {
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(builder.CreateIsotope("C"), 0, 10);
-            mfRange.Add(builder.CreateIsotope("F"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("C"), 0, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("F"), 0, 10);
 
             IEnumerator<IIsotope> istoIter = mfRange.GetIsotopes().GetEnumerator();
             int counter = 0;
@@ -273,8 +274,8 @@ namespace NCDK.Formula
             IIsotope h2 = builder.CreateIsotope("H");
             h2.ExactMass = 2.0004;
 
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
             Assert.IsTrue(mfRange.Contains(carb));
             Assert.IsFalse(mfRange.Contains(cl));
@@ -294,9 +295,9 @@ namespace NCDK.Formula
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope flu = builder.CreateIsotope("F");
             IIsotope h1 = builder.CreateIsotope("H");
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(flu, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(flu, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
             // remove the Fluorine
             mfRange.Remove(flu);
@@ -319,9 +320,9 @@ namespace NCDK.Formula
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope flu = builder.CreateIsotope("F");
             IIsotope h1 = builder.CreateIsotope("H");
-            mfRange.Add(carb, 0, 10);
-            mfRange.Add(flu, 0, 10);
-            mfRange.Add(h1, 0, 10);
+            mfRange.AddIsotope(carb, 0, 10);
+            mfRange.AddIsotope(flu, 0, 10);
+            mfRange.AddIsotope(h1, 0, 10);
 
             // remove the Fluorine
             mfRange.Clear();
@@ -338,7 +339,7 @@ namespace NCDK.Formula
         /// MolecularFormula are correctly cloned.
         ///
         /// <returns>The test suite</returns>
-       /// </summary>
+        /// </summary>
         [TestMethod()]
         public void TestClone()
         {
@@ -352,7 +353,7 @@ namespace NCDK.Formula
         /// <summary>
         /// A unit test suite for JUnit. Only test whether
         /// the MolecularFormula are correctly cloned.
-       /// </summary>
+        /// </summary>
         [TestMethod()]
         public void TestClone_Isotopes()
         {
@@ -360,9 +361,9 @@ namespace NCDK.Formula
             IIsotope carb = builder.CreateIsotope("C");
             IIsotope flu = builder.CreateIsotope("F");
             IIsotope h1 = builder.CreateIsotope("H");
-            mfRange.Add(carb, 0, 5);
-            mfRange.Add(flu, 2, 8);
-            mfRange.Add(h1, 4, 10);
+            mfRange.AddIsotope(carb, 0, 5);
+            mfRange.AddIsotope(flu, 2, 8);
+            mfRange.AddIsotope(h1, 4, 10);
 
             Assert.AreEqual(3, mfRange.Count);
             Assert.AreEqual(0, mfRange.GetIsotopeCountMin(carb));
@@ -385,6 +386,20 @@ namespace NCDK.Formula
             Assert.AreEqual(5, ((MolecularFormulaRange)clone).GetIsotopeCountMax(carb));
             Assert.AreEqual(8, ((MolecularFormulaRange)clone).GetIsotopeCountMax(flu));
             Assert.AreEqual(10, ((MolecularFormulaRange)clone).GetIsotopeCountMax(h1));
+        }
+
+        /// <summary>
+        /// Test what happens when null isotope is added to MF range.
+        /// </summary>
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestNull()
+        {
+            MolecularFormulaRange mfRange = new MolecularFormulaRange();
+            IIsotope carb = builder.CreateIsotope("C");
+            IIsotope nul = null;
+            mfRange.AddIsotope(carb, 2, 5);
+            mfRange.AddIsotope(nul, 3, 7);
         }
     }
 }

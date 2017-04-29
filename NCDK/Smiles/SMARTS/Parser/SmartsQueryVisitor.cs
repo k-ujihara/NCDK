@@ -20,6 +20,8 @@ using NCDK.Isomorphisms;
 using NCDK.Isomorphisms.Matchers;
 using NCDK.Isomorphisms.Matchers.SMARTS;
 using NCDK.Stereo;
+using NCDK.Tools.Manipulator;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,8 +47,6 @@ namespace NCDK.Smiles.SMARTS.Parser
     {
         // current atoms with a ring identifier
         private RingIdentifierAtom[] ringAtoms;
-
-        private IMultiDictionary<IAtom, RingIdentifierAtom> ringAtomLookup = new MultiDictionary<IAtom, RingIdentifierAtom>();
 
         // query
         private IQueryAtomContainer query;
@@ -103,68 +103,77 @@ namespace NCDK.Smiles.SMARTS.Parser
             IQueryAtom atom = (IQueryAtom)node.JJTGetChild(0).JJTAccept(this, data);
             for (int i = 1; i < node.JJTGetNumChildren(); i++)
             { // if there are ring identifiers
-                ASTRingIdentifier ringIdentifier = (ASTRingIdentifier)node.JJTGetChild(i);
-                RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.JJTAccept(this, atom);
+                throw new InvalidOperationException();
+            }
+            return atom;
+        }
 
-                // if there is already a RingIdentifierAtom, create a bond between
-                // them and add the bond to the query
-                int ringId = ringIdentifier.RingId;
+        private void HandleRingClosure(IQueryAtom atom, ASTRingIdentifier ringIdentifier)
+        {
+            RingIdentifierAtom ringIdAtom = (RingIdentifierAtom)ringIdentifier.JJTAccept(this, atom);
 
-                // ring digit > 9 - expand capacity
-                if (ringId >= ringAtoms.Length) ringAtoms = Arrays.CopyOf(ringAtoms, 100);
+            // if there is already a RingIdentifierAtom, create a bond between
+            // them and add the bond to the query
+            int ringId = ringIdentifier.RingId;
 
-                // Ring Open
-                if (ringAtoms[ringId] == null)
+            // ring digit > 9 - expand capacity
+            if (ringId >= ringAtoms.Length) ringAtoms = Arrays.CopyOf(ringAtoms, 100);
+
+            // Ring Open
+            if (ringAtoms[ringId] == null)
+            {
+                ringAtoms[ringId] = ringIdAtom;
+                if (neighbors.ContainsKey(atom))
                 {
-                    ringAtoms[ringId] = ringIdAtom;
-                    ringAtomLookup.Add(atom, ringIdAtom);
+                    neighbors[atom].Add(ringIdAtom);
                 }
+            }
 
-                // Ring Close
-                else
+            // Ring Close
+            else
+            {
+                IQueryBond ringBond;
+                // first check if the two bonds ma
+                if (ringAtoms[ringId].RingBond == null)
                 {
-                    IQueryBond ringBond;
-                    // first check if the two bonds ma
-                    if (ringAtoms[ringId].RingBond == null)
+                    if (ringIdAtom.RingBond == null)
                     {
-                        if (ringIdAtom.RingBond == null)
+                        if (atom is AromaticSymbolAtom
+                                && ringAtoms[ringId].Atom is AromaticSymbolAtom)
                         {
-                            if (atom is AromaticSymbolAtom
-                                    && ringAtoms[ringId].Atom is AromaticSymbolAtom)
-                            {
-                                ringBond = new AromaticQueryBond(builder);
-                            }
-                            else
-                            {
-                                ringBond = new RingBond(builder);
-                            }
+                            ringBond = new AromaticQueryBond(builder);
                         }
                         else
                         {
-                            ringBond = ringIdAtom.RingBond;
+                            ringBond = new RingBond(builder);
                         }
                     }
                     else
                     {
-                        // Here I assume the bond are always same. This should be checked by the parser already
-                        ringBond = ringAtoms[ringId].RingBond;
+                        ringBond = ringIdAtom.RingBond;
                     }
-                    ((IBond)ringBond).SetAtoms(new[] { ringAtoms[ringId].Atom, atom });
-                    query.Bonds.Add((IBond)ringBond);
-
-                    // if the connected atoms was tracking neighbors, replace the
-                    // placeholder reference
-                    if (neighbors.ContainsKey(ringAtoms[ringId].Atom))
-                    {
-                        IList<IAtom> localNeighbors = neighbors[ringAtoms[ringId].Atom];
-                        localNeighbors[localNeighbors.IndexOf(ringAtoms[ringId])] = atom;
-                    }
-
-                    ringAtomLookup.Remove(ringAtoms[ringId].Atom, ringIdAtom);
-                    ringAtoms[ringId] = null;
                 }
+                else
+                {
+                    // Here I assume the bond are always same. This should be checked by the parser already
+                    ringBond = ringAtoms[ringId].RingBond;
+                }
+                ((IBond)ringBond).SetAtoms(new[] { ringAtoms[ringId].Atom, atom });
+                query.Bonds.Add((IBond)ringBond);
+
+                // if the connected atoms was tracking neighbors, replace the
+                // placeholder reference
+                if (neighbors.ContainsKey(ringAtoms[ringId].Atom))
+                {
+                    IList<IAtom> localNeighbors = neighbors[ringAtoms[ringId].Atom];
+                    localNeighbors[localNeighbors.IndexOf(ringAtoms[ringId])] = atom;
+                }
+                if (neighbors.ContainsKey(atom))
+                {
+                    neighbors[atom].Add(ringAtoms[ringId].Atom);
+                }
+                ringAtoms[ringId] = null;
             }
-            return atom;
         }
 
         public object Visit(SimpleNode node, object data)
@@ -177,19 +186,73 @@ namespace NCDK.Smiles.SMARTS.Parser
             return node.JJTGetChild(0).JJTAccept(this, data);
         }
 
-        // TODO: No QueryReaction API
         public object Visit(ASTReaction node, object data)
         {
-            return node.JJTGetChild(0).JJTAccept(this, data);
+            IAtomContainer query = new QueryAtomContainer(builder);
+            for (int grpIdx = 0; grpIdx < node.JJTGetNumChildren(); grpIdx++)
+            {
+
+                int rollback = query.Atoms.Count;
+
+                ASTGroup group = (ASTGroup)node.JJTGetChild(grpIdx);
+                group.JJTAccept(this, query);
+
+                // fill in the roles for newly create atoms
+                if (group.GetRole() != ASTGroup.ROLE_ANY)
+                {
+                    IQueryAtom roleQueryAtom = null;
+                    ReactionRole? role = null;
+
+                    // use single instances
+                    switch (group.GetRole())
+                    {
+                        case ASTGroup.ROLE_REACTANT:
+                            roleQueryAtom = ReactionRoleQueryAtom.RoleReactant;
+                            role = ReactionRole.Reactant;
+                            break;
+                        case ASTGroup.ROLE_AGENT:
+                            roleQueryAtom = ReactionRoleQueryAtom.RoleAgent;
+                            role = ReactionRole.Agent;
+                            break;
+                        case ASTGroup.ROLE_PRODUCT:
+                            roleQueryAtom = ReactionRoleQueryAtom.RoleProduct;
+                            role = ReactionRole.Product;
+                            break;
+                    }
+
+                    if (roleQueryAtom != null)
+                    {
+                        while (rollback < query.Atoms.Count)
+                        {
+                            IAtom org = query.Atoms[rollback];
+                            IAtom rep = LogicalOperatorAtom.And(roleQueryAtom, (IQueryAtom)org);
+                            // ensure AAM is propagated
+                            rep.SetProperty(CDKPropertyName.AtomAtomMapping, org.GetProperty<int?>(CDKPropertyName.AtomAtomMapping));
+                            rep.SetProperty(CDKPropertyName.ReactionRole, role);
+                            AtomContainerManipulator.ReplaceAtomByAtom(query, org, rep);
+                            rollback++;
+                        }
+                    }
+                }
+            }
+            return query;
         }
 
         public object Visit(ASTGroup node, object data)
         {
-            IAtomContainer fullQuery = new QueryAtomContainer(builder);
+            IAtomContainer fullQuery = (IAtomContainer)data;
+
+            if (fullQuery == null)
+                fullQuery = new QueryAtomContainer(builder);
 
             // keeps track of component grouping
-            int[] components = new int[0];
+            int[] components = fullQuery.GetProperty<int[]>(ComponentGrouping.Key, new int[0]);
             int maxId = 0;
+            if (components.Length > 0)
+            {
+                foreach (int id in components)
+                    if (id > maxId) maxId = id;
+            }
 
             for (int i = 0; i < node.JJTGetNumChildren(); i++)
             {
@@ -200,7 +263,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 smarts.JJTAccept(this, null);
 
                 // update component info
-                if (smarts.ComponentId > 0)
+                if (components.Length > 0 || smarts.ComponentId > 0)
                 {
                     components = Arrays.CopyOf(components, 1 + fullQuery.Atoms.Count + query.Atoms.Count);
                     int id = smarts.ComponentId;
@@ -292,18 +355,17 @@ namespace NCDK.Smiles.SMARTS.Parser
                 query.Bonds.Add(bond);
                 bond = null;
             }
+            // first ATOM in expresion
             query.Atoms.Add(atom);
 
             if (BitArrays.GetValue(tetrahedral, query.Atoms.Count - 1))
             {
                 List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(atom));
                 localNeighbors.Add(atom);
-                // placeholders for ring closure
-                foreach (var ringIdAtom in ringAtomLookup[atom])
-                    localNeighbors.Add(ringIdAtom);
                 neighbors[atom] = localNeighbors;
             }
 
+            // now process the rest of the bonds/atoms
             for (int i = 1; i < node.JJTGetNumChildren(); i++)
             {
                 Node child = node.JJTGetChild(i);
@@ -330,9 +392,6 @@ namespace NCDK.Smiles.SMARTS.Parser
                     {
                         List<IAtom> localNeighbors = new List<IAtom>(query.GetConnectedAtoms(newAtom));
                         localNeighbors.Add(newAtom);
-                        // placeholders for ring closure
-                        foreach (var ringIdAtom in ringAtomLookup[newAtom])
-                            localNeighbors.Add(ringIdAtom);
                         neighbors[newAtom] = localNeighbors;
                     }
 
@@ -343,6 +402,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                 { // another smarts
                     child.JJTAccept(this, new object[] { atom, bond });
                     bond = null;
+                }
+                else if (child is ASTRingIdentifier)
+                {
+                    HandleRingClosure(atom, (ASTRingIdentifier)child);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Unhandled node type: " + child.GetType());
                 }
             }
 
@@ -612,13 +679,15 @@ namespace NCDK.Smiles.SMARTS.Parser
 
         public object Visit(ASTLowAndExpression node, object data)
         {
-            object left = node.JJTGetChild(0).JJTAccept(this, data);
-            if (node.JJTGetNumChildren() == 1)
+            IAtom expr = (IAtom)node.JJTGetChild(0).JJTAccept(this, data);
+            if (node.JJTGetNumChildren() > 1)
             {
-                return left;
+                IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
+                expr = LogicalOperatorAtom.And((IQueryAtom)expr, right);
             }
-            IQueryAtom right = (IQueryAtom)node.JJTGetChild(1).JJTAccept(this, data);
-            return LogicalOperatorAtom.And((IQueryAtom)left, right);
+            if (node.GetMapIdx() > 0)
+                expr.SetProperty(CDKPropertyName.AtomAtomMapping, node.GetMapIdx());
+            return expr;
         }
 
         public object Visit(ASTOrExpression node, object data)

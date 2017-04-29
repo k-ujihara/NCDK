@@ -68,7 +68,6 @@ namespace NCDK.QSAR.Descriptors.Atomic
     // @cdk.created    2005-03-24
     // @cdk.module     qsaratomic
     // @cdk.githash
-    // @cdk.set        qsar-descriptors
     // @cdk.dictref qsar-descriptors:atomHybridizationVSEPR
     public class AtomHybridizationVSEPRDescriptor : AbstractAtomicDescriptor, IAtomicDescriptor
     {

@@ -33,7 +33,6 @@ namespace NCDK.Reactions
     // @author         Miguel Rojas
     // @cdk.created    2008-02-01
     // @cdk.module     reaction
-    // @cdk.set        reaction-types
     // @cdk.githash
     public class ReactionEngine
     {

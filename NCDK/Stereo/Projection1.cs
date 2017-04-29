@@ -1,4 +1,4 @@
-// Copyright (C) 2017  Kazuya Ujihara
+// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
 // This file is under LGPL-2.1 
 
 

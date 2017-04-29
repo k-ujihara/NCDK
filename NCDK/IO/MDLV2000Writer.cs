@@ -25,6 +25,7 @@
 using NCDK.Config;
 using NCDK.IO.Formats;
 using NCDK.IO.Setting;
+using NCDK.Isomorphisms.Matchers;
 using NCDK.SGroups;
 using NCDK.Tools.Manipulator;
 using System;
@@ -67,9 +68,9 @@ namespace NCDK.IO
         public class SpinMultiplicity
         {
             public static readonly SpinMultiplicity None = new SpinMultiplicity(0, 0);
-            public static readonly SpinMultiplicity Singlet = new SpinMultiplicity(2, 1);
-            public static readonly SpinMultiplicity Doublet = new SpinMultiplicity(1, 2);
-            public static readonly SpinMultiplicity Triplet = new SpinMultiplicity(3, 2);
+            public static readonly SpinMultiplicity Monovalent = new SpinMultiplicity(2, 1);
+            public static readonly SpinMultiplicity DivalentSinglet = new SpinMultiplicity(1, 2);
+            public static readonly SpinMultiplicity DivalentTriplet = new SpinMultiplicity(3, 2);
 
             /// <summary>
             /// Radical value for the spin multiplicity in the properties block.
@@ -99,11 +100,11 @@ namespace NCDK.IO
                     case 0:
                         return None;
                     case 1:
-                        return Doublet;
+                        return DivalentSinglet;
                     case 2:
-                        return Singlet;
+                        return Monovalent;
                     case 3:
-                        return Triplet;
+                        return DivalentTriplet;
                     default:
                         throw new CDKException("unknown spin multiplicity: " + value);
                 }
@@ -568,15 +569,66 @@ namespace NCDK.IO
                         line = FormatMDLInt(atomindex[bond.Atoms[0]] + 1, 3);
                         line += FormatMDLInt(atomindex[bond.Atoms[1]] + 1, 3);
                     }
-                    int bondType;
-                    if (WriteAromaticBondTypes.IsSet && bond.IsAromatic)
-                        bondType = 4;
-                    else if (BondOrder.Quadruple == bond.Order)
-                        throw new CDKException("MDL molfiles do not support quadruple bonds.");
-                    else
-                        bondType = bond.Order.Numeric;
-                    line += FormatMDLInt(bondType, 3);
+                    int bondType = 0;
 
+                    if (bond is CTFileQueryBond)
+                    {
+                        // Could do ordinal()-1 but this is clearer
+                        switch (((CTFileQueryBond)bond).Type)
+                        {
+                            case CTFileQueryBond.BondType.Single:
+                                bondType = 1;
+                                break;
+                            case CTFileQueryBond.BondType.Double:
+                                bondType = 2;
+                                break;
+                            case CTFileQueryBond.BondType.Triple:
+                                bondType = 3;
+                                break;
+                            case CTFileQueryBond.BondType.Aromatic:
+                                bondType = 4;
+                                break;
+                            case CTFileQueryBond.BondType.SingleOrDouble:
+                                bondType = 5;
+                                break;
+                            case CTFileQueryBond.BondType.SingleOrAromatic:
+                                bondType = 6;
+                                break;
+                            case CTFileQueryBond.BondType.DoubleOrAromatic:
+                                bondType = 7;
+                                break;
+                            case CTFileQueryBond.BondType.Any:
+                                bondType = 8;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (bond.Order.Ordinal)
+                        {
+                            case BondOrder.O.Single:
+                            case BondOrder.O.Double:
+                            case BondOrder.O.Triple:
+                                if (WriteAromaticBondTypes.IsSet && bond.IsAromatic)
+                                    bondType = 4;
+                                else
+                                    bondType = bond.Order.Numeric;
+                                break;
+                            case BondOrder.O.Unset:
+                                if (bond.IsAromatic)
+                                {
+                                    if (!WriteAromaticBondTypes.IsSet)
+                                        throw new CDKException("Bond at idx " + container.Bonds.IndexOf(bond) + " was an unspecific aromatic bond which should only be used for querie in Molfiles. These can be written if desired by enabling the option 'WriteAromaticBondTypes'.");
+                                    bondType = 4;
+                                }
+                                break;
+                        }
+                    }
+
+                    if (bondType == 0)
+                        throw new CDKException("Bond at idx=" + container.Bonds.IndexOf(bond) + " is not supported by Molfile, bond=" + bond.Order);
+
+                    line += FormatMDLInt(bondType, 3);
                     line += "  ";
                     switch (bond.Stereo.Ordinal)
                     {
@@ -648,13 +700,11 @@ namespace NCDK.IO
                         case 0:
                             continue;
                         case 1:
-                            atomIndexSpinMap[i] = SpinMultiplicity.Singlet;
+                            atomIndexSpinMap[i] = SpinMultiplicity.Monovalent;
                             break;
                         case 2:
-                            atomIndexSpinMap[i] = SpinMultiplicity.Doublet;
-                            break;
-                        case 3:
-                            atomIndexSpinMap[i] = SpinMultiplicity.Triplet;
+                            // information loss, divalent but singlet or triplet?
+                            atomIndexSpinMap[i] = SpinMultiplicity.DivalentSinglet;
                             break;
                         default:
                             Debug.WriteLine("Invalid number of radicals found: " + eCount);
@@ -1022,6 +1072,22 @@ namespace NCDK.IO
                                                                      "Should aromatic bonds be written as bond type 4?", "false"));
             WriteQueryFormatValencies = IOSettings.Add(new BooleanIOSetting("WriteQueryFormatValencies",
                                                                         IOSetting.Importance.Low, "Should valencies be written in the MDL Query format? (deprecated)", "false"));
+        }
+
+        /// <summary>
+        /// Convenience method to set the option for writing aromatic bond types.
+        /// </summary>
+        /// <param name="val">the value.</param>
+        public void SetWriteAromaticBondTypes(bool val)
+        {
+            try
+            {
+                WriteAromaticBondTypes.Setting = val.ToString();
+            }
+            catch (CDKException)
+            {
+                // ignored can't happen since we are statically typed here
+            }
         }
 
         public void CustomizeJob()

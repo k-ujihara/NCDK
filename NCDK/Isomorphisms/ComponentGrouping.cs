@@ -51,8 +51,7 @@ namespace NCDK.Isomorphisms
         /// <summary>The required  (query) and the targetComponents of the target.</summary>
         private readonly int[] queryComponents, targetComponents;
 
-        /// <summary>Connected components of the target.</summary>
-        private readonly ConnectedComponents cc;
+        private readonly int maxComponentIdx;
 
         /// <summary>
         /// Create a predicate to match components for the provided query and target.
@@ -63,21 +62,36 @@ namespace NCDK.Isomorphisms
         /// <param name="query">query structure</param>
         /// <param name="target">target structure</param>
         public ComponentGrouping(IAtomContainer query, IAtomContainer target)
-            : this(query, GraphUtil.ToAdjList(target))
+            : this(query.GetProperty<int[]>(Key),
+             query.GetProperty<int[]>(Key) != null ? DetermineComponents(target) : (int[])null)
         { }
 
-        /// <summary>
-        /// Create a predicate to match components for the provided query and target.
-        /// The target is pre-converted to an adjacency list (
-        /// <see cref="GraphUtil.ToAdjList(IAtomContainer)"/>) and the query components extracted
-        /// from the property <see cref="Key"/> in the query.
-        /// </summary>
-        /// <param name="query">query structure</param>
-        /// <param name="target">target structure</param>
-        public ComponentGrouping(IAtomContainer query, int[][] target)
-            : this(query.GetProperty<int[]>(Key), query.GetProperty<int[]>(Key) != null ? new ConnectedComponents(target)
-                    : null)
-        { }
+        private static int[] DetermineComponents(IAtomContainer target)
+        {
+            int[] components = null;
+            // no atoms -> no components
+            if (target.IsEmpty())
+                components = new int[0];
+            // defined by reaction grouping
+            if (components == null && target.Atoms[0].GetProperty<int?>(CDKPropertyName.ReactionGroup) != null)
+            {
+                components = new int[target.Atoms.Count];
+                for (int i = 0; i < target.Atoms.Count; i++)
+                {
+                    int? grp = target.Atoms[i].GetProperty<int?>(CDKPropertyName.ReactionGroup);
+                    if (grp == null)
+                    {
+                        components = null;
+                        break;
+                    }
+                    components[i] = grp.Value;
+                }
+            }
+            // calculate from connection table
+            if (components == null)
+                components = new ConnectedComponents(GraphUtil.ToAdjList(target)).Components();
+            return components;
+        }
 
         /// <summary>
         /// Create a predicate to match components for the provided query (grouping)
@@ -85,11 +99,18 @@ namespace NCDK.Isomorphisms
         /// </summary>
         /// <param name="grouping">query grouping</param>
         /// <param name="cc">connected component of the target</param>
-        public ComponentGrouping(int[] grouping, ConnectedComponents cc)
+        public ComponentGrouping(int[] grouping, int[] targetComponents)
         {
             this.queryComponents = grouping;
-            this.cc = cc;
-            this.targetComponents = cc != null ? cc.Components() : null;
+            this.targetComponents = targetComponents;
+            int max = 0;
+            if (targetComponents != null)
+            {
+                for (int i = 0; i < targetComponents.Length; i++)
+                    if (targetComponents[i] > max)
+                        max = targetComponents[i];
+            }
+            this.maxComponentIdx = max;
         }
 
         /// <summary>
@@ -105,7 +126,7 @@ namespace NCDK.Isomorphisms
 
             // bidirectional map of query/target components, last index
             // of query components holds the count
-            int[] usedBy = new int[cc.NComponents + 1];
+            int[] usedBy = new int[maxComponentIdx + 1];
             int[] usedIn = new int[queryComponents[mapping.Length] + 1];
 
             // verify we don't have any collisions

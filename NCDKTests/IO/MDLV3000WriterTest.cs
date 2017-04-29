@@ -85,7 +85,7 @@ namespace NCDK.IO
             mol.Atoms[0].ImplicitHydrogenCount = 3;
             mol.AddSingleElectronTo(mol.Atoms[0]);
             string res = WriteToStr(mol);
-            Assert.IsTrue(res.Contains("M  V30 1 C 0 0 0 0 RAD=1 VAL=3\n"));
+            Assert.IsTrue(res.Contains("M  V30 1 C 0 0 0 0 RAD=2 VAL=3\n"));
         }
 
         [TestMethod()]

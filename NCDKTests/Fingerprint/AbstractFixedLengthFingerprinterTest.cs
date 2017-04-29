@@ -29,7 +29,7 @@ using NCDK.SGroups;
 using NCDK.Tools;
 using NCDK.Tools.Manipulator;
 using System.Collections;
-
+using NCDK.Smiles;
 
 namespace NCDK.Fingerprint
 {

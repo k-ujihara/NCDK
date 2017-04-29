@@ -27,7 +27,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </summary>
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:vabc
     // @cdk.keyword volume
     // @cdk.keyword descriptor

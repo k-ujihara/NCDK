@@ -31,7 +31,6 @@ using System.Text.RegularExpressions;
 
 namespace NCDK.Tautomers
 {
-
     /// <summary>
     /// Creates tautomers for a given input molecule, based on the mobile H atoms listed in the InChI.
     /// Algorithm described in <token>cdk-cite-Thalheim2010</token>.
@@ -48,7 +47,7 @@ namespace NCDK.Tautomers
     public class InChITautomerGenerator
     {
         /// <summary>
-        /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by jniinchi.
+        /// Public method to get tautomers for an input molecule, based on the InChI which will be calculated by .NET prot of JNI-InChI..
         /// </summary>
         /// <param name="molecule">molecule for which to generate tautomers</param>
         /// <returns>a list of tautomers, if any</returns>

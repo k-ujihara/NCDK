@@ -33,7 +33,7 @@ using WPF = System.Windows;
 namespace NCDK.Renderers.Generators
 {
     /// <summary>
-    /// <see cref="IGenerator"/> for <see cref="IAtomContainer"/>s that will draw atom numbers for the atoms.
+    /// <see cref="IGenerator{T}"/> for <see cref="IAtomContainer"/>s that will draw atom numbers for the atoms.
     /// </summary>
     // @author      maclean
     // @cdk.module  renderextra

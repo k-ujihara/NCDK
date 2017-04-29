@@ -45,7 +45,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     /// </remarks>
     // @author Rajarshi Guha
     // @cdk.module qsarmolecular
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:FMF
     // @cdk.githash
     // @see org.openscience.cdk.fragment.MurckoFragmenter

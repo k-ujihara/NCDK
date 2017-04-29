@@ -72,7 +72,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created      2005-02-07
     // @cdk.module       qsarmolecular
     // @cdk.githash
-    // @cdk.set          qsar-descriptors
     // @cdk.dictref      qsar-descriptors:momentOfInertia
     // @cdk.keyword      moment of inertia
     public class MomentOfInertiaDescriptor : AbstractMolecularDescriptor, IMolecularDescriptor

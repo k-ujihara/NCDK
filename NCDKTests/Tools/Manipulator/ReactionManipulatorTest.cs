@@ -24,12 +24,9 @@ using System.Linq;
 
 namespace NCDK.Tools.Manipulator
 {
-    /// <summary>
     // @cdk.module test-standard
-    ///
     // @author     Egon Willighagen
     // @cdk.created    2003-07-23
-    /// </summary>
     [TestClass()]
     public class ReactionManipulatorTest : CDKTestCase
     {
@@ -283,6 +280,19 @@ namespace NCDK.Tools.Manipulator
             reaction.Products.Add(builder.CreateAtomContainer());
             reaction.Products.Add(builder.CreateAtomContainer());
             Assert.AreEqual(2, ReactionManipulator.GetAllProducts(reaction).Count);
+        }
+
+        [TestMethod()]
+        public void InliningReactions()
+        {
+            IChemObjectBuilder bldr = Silent.ChemObjectBuilder.Instance;
+            SmilesParser smipar = new SmilesParser(bldr);
+            IReaction reaction = smipar.ParseReactionSmiles("CCO.CC(=O)O>[H+]>CCOC(=O)C.O ethyl esterification");
+            SmilesGenerator smigen = SmilesGenerator.Isomeric();
+            // convert to molecule
+            IAtomContainer mol = ReactionManipulator.ToMolecule(reaction);
+            Assert.AreEqual("CCO.CC(=O)O.[H+].CCOC(=O)C.O", smigen.Create(mol));
+            Assert.AreEqual("CCO.CC(=O)O>[H+]>CCOC(=O)C.O", smigen.CreateReactionSMILES(ReactionManipulator.ToReaction(mol)));
         }
     }
 }

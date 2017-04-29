@@ -21,6 +21,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
+using NCDK.Tools.Manipulator;
+
 namespace NCDK.Isomorphisms
 {
     /// <summary>
@@ -58,6 +60,26 @@ namespace NCDK.Isomorphisms
         }
 
         /// <summary>
+        /// Determine if there is a mapping of this pattern in the <code>target</code>
+        /// reaction.
+        /// 
+        /// <blockquote><pre>
+        /// Pattern        pattern = ...; // create pattern
+        /// for (IReaction r : rs) {
+        ///     if (pattern.matches(r)) {
+        ///         // found mapping!
+        ///     }
+        /// }
+        /// </pre></blockquote>
+        /// </summary>
+        /// <param name="target">the reaction to search for the pattern in</param>
+        /// <returns>the mapping from the pattern to the target</returns>
+        public bool Matches(IReaction target)
+        {
+            return Matches(ReactionManipulator.ToMolecule(target));
+        }
+
+        /// <summary>
         /// Find all mappings of this pattern in the <paramref name="target"/>. Stereochemistry
         /// should not be checked to allow filtering with <see cref="Mappings.GetStereochemistry"/>. 
         /// </summary>
@@ -73,6 +95,31 @@ namespace NCDK.Isomorphisms
         /// <returns>the mapping from the pattern to the target</returns>
         /// <seealso cref="Mappings"/>
         public abstract Mappings MatchAll(IAtomContainer target);
+
+        /// <summary>
+        /// Find all mappings of this pattern in the <code>target</code> reaction.
+        /// 
+        /// <blockquote><pre>
+        /// Pattern pattern = Pattern.findSubstructure(query);
+        /// for (IReaction r : rs) {
+        ///     for (int[] mapping : pattern.matchAll(r)) {
+        ///         // found mapping
+        ///     }
+        /// }
+        /// </pre></blockquote>
+        /// 
+        /// The reaction is inlined into a molecule and vs mapped id's correspond
+        /// to the absolute atom index in the reaction when considered as reactants, agents,
+        /// products {@see ReactionManipulator#toMolecule}.
+        /// </summary>
+        /// <param name="target">the reaction to search for the pattern in</param>
+        /// <returns>the mapping from the pattern to the target</returns>
+        /// <seealso cref="Mappings"/>
+        /// <seealso cref="ReactionManipulator.ToMolecule(IReaction)"/>
+        public Mappings MatchAll(IReaction target)
+        {
+            return MatchAll(ReactionManipulator.ToMolecule(target));
+        }
 
         /// <summary>
         /// Create a pattern which can be used to find molecules which contain the

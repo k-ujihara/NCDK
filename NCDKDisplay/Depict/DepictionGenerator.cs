@@ -50,7 +50,7 @@ namespace NCDK.Depict
      * }</code>
      * <p/>
      * <h4>One Line Quick Use</h4>
-     * For simplifed use we can create a generator and use it once for a single depiction.
+     * For simplified use we can create a generator and use it once for a single depiction.
      * <code>{@code
      * new DepictionGenerator().Depict(mol)
      *                         .WriteTo("~/mol.png");
@@ -145,7 +145,7 @@ namespace NCDK.Depict
         /// </summary>
         private readonly Typeface font;
 
-        private readonly double emSize;
+        private readonly double emSize = 9;
 
         /// <summary>
         /// Diagram generators.
@@ -153,14 +153,14 @@ namespace NCDK.Depict
         private readonly List<IGenerator<IAtomContainer>> gens = new List<IGenerator<IAtomContainer>>();
 
         /// <summary>
-        /// Structure diagram generator instance.
-        /// </summary>
-        private readonly StructureDiagramGenerator sdg = new StructureDiagramGenerator();
-
-        /// <summary>
         /// Flag to indicate atom numbers should be displayed.
         /// </summary>
         private bool annotateAtomNum = false;
+
+        /// <summary>
+        /// Flag to indicate atom values should be displayed.
+        /// </summary>
+        private bool annotateAtomVal = false;
 
         /// <summary>
         /// Flag to indicate atom maps should be displayed.
@@ -176,6 +176,11 @@ namespace NCDK.Depict
         /// Colors to use in atom-map highlighting.
         /// </summary>
         private Color[] atomMapColors = null;
+
+        /// <summary>
+        /// Reactions are aligned such that mapped atoms have the same coordinates on the left/right.
+        /// </summary>
+        private bool alignMappedReactions = true;
 
         /// <summary>
         /// Object that should be highlighted
@@ -225,8 +230,6 @@ namespace NCDK.Depict
             // since it depends on raster (px) vs vector (mm)
             SetParam(typeof(BasicSceneGenerator.Margin), AUTOMATIC);
             SetParam(typeof(RendererModel.Padding), AUTOMATIC);
-
-            sdg.UseTemplates = false;
         }
 
         /// <summary>
@@ -236,6 +239,7 @@ namespace NCDK.Depict
         private DepictionGenerator(DepictionGenerator org)
         {
             this.annotateAtomMap = org.annotateAtomMap;
+            this.annotateAtomVal = org.annotateAtomVal;
             this.annotateAtomNum = org.annotateAtomNum;
             this.highlightAtomMap = org.highlightAtomMap;
             this.atomMapColors = org.atomMapColors;
@@ -246,6 +250,7 @@ namespace NCDK.Depict
             this.gens.AddRange(org.gens);
             foreach (var e in parameters)
                 this.parameters[e.Key] = e.Value;
+            this.alignMappedReactions = org.alignMappedReactions;
         }
 
         private U GetParameterValue<U>(Type key)
@@ -360,7 +365,7 @@ namespace NCDK.Depict
             if (copy.GetParameterValueV<bool>(typeof(BasicSceneGenerator.ShowMoleculeTitle)))
             {
                 foreach (var mol in mols)
-                    titles.Add(copy.GenerateTitle(mol));
+                    titles.Add(copy.GenerateTitle(mol, model.GetV<double>(typeof(BasicSceneGenerator.Scale))));
             }
 
             // remove current highlight buffer
@@ -441,6 +446,8 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">a depiction could not be generated</exception>
         public Depiction Depict(IReaction rxn)
         {
+            Ensure2dLayout(rxn); // can reorder components!
+
             Color fgcol = GetParameterValue<IAtomColorer>(typeof(StandardGenerator.AtomColor)).GetAtomColor(rxn.Builder.CreateAtom("C"));
 
             var reactants = ToList(rxn.Reactants);
@@ -507,18 +514,18 @@ namespace NCDK.Depict
             ResetCoords(agents, agentScales);
 
             Bounds emptyBounds = new Bounds();
-            Bounds title = copy.GetParameterValueV<bool>(typeof(BasicSceneGenerator.ShowReactionTitle)) ? copy.GenerateTitle(rxn) : emptyBounds;
+            Bounds title = copy.GetParameterValueV<bool>(typeof(BasicSceneGenerator.ShowReactionTitle)) ? copy.GenerateTitle(rxn, scale) : emptyBounds;
             var reactantTitles = new List<Bounds>();
             var productTitles = new List<Bounds>();
             if (copy.GetParameterValueV<bool>(typeof(BasicSceneGenerator.ShowMoleculeTitle)))
             {
-                foreach (var reactant in reactants)
-                    reactantTitles.Add(copy.GenerateTitle(reactant));
-                foreach (var product in products)
-                    productTitles.Add(copy.GenerateTitle(product));
+                foreach (IAtomContainer reactant in reactants)
+                    reactantTitles.Add(copy.GenerateTitle(reactant, scale));
+                foreach (IAtomContainer product in products)
+                    productTitles.Add(copy.GenerateTitle(product, scale));
             }
 
-            Bounds conditions = GenerateReactionConditions(rxn, fgcol);
+            Bounds conditions = GenerateReactionConditions(rxn, fgcol, model.GetV<double>(typeof(BasicSceneGenerator.Scale)));
 
             return new ReactionDepiction(model,
                                          reactantBounds, productBounds, agentBounds,
@@ -531,12 +538,11 @@ namespace NCDK.Depict
         }
 
         /// <summary>
-        /// Internal - makes a map of the highlights for reaciton mapping.
-        ///
+        /// Internal - makes a map of the highlights for reaction mapping.
+        /// </summary>
         /// <param name="reactants">reaction reactants</param>
         /// <param name="products">reaction products</param>
         /// <returns>the highlight map</returns>
-        /// </summary>
         private Dictionary<IChemObject, Color> MakeHighlightAtomMap(List<IAtomContainer> reactants,
                                                              List<IAtomContainer> products)
         {
@@ -620,7 +626,6 @@ namespace NCDK.Depict
 
         private IRenderingElement Generate(IAtomContainer molecule, RendererModel model, int atomNum)
         {
-
             // tag the atom and bond ids
             string molId = molecule.GetProperty<string>(MarkedElement.ID_KEY);
             if (molId != null)
@@ -639,6 +644,16 @@ namespace NCDK.Depict
                     if (atom.GetProperty<string>(StandardGenerator.ANNOTATION_LABEL) != null)
                         throw new InvalidOperationException("Multiple annotation labels are not supported.");
                     atom.SetProperty(StandardGenerator.ANNOTATION_LABEL, (atomNum++).ToString());
+                }
+            }
+            else if (annotateAtomVal)
+            {
+                foreach (IAtom atom in molecule.Atoms)
+                {
+                    if (atom.GetProperty<string>(StandardGenerator.ANNOTATION_LABEL) != null)
+                        throw new NotSupportedException("Multiple annotation labels are not supported.");
+                    atom.SetProperty(StandardGenerator.ANNOTATION_LABEL,
+                                     atom.GetProperty<string>(CDKPropertyName.Comment));
                 }
             }
             else if (annotateAtomMap)
@@ -688,23 +703,22 @@ namespace NCDK.Depict
         /// </summary>
         /// <param name="chemObj">molecule or reaction</param>
         /// <returns>bound element</returns>
-        private Bounds GenerateTitle(IChemObject chemObj)
+        private Bounds GenerateTitle(IChemObject chemObj, double scale)
         {
             string title = chemObj.GetProperty<string>(CDKPropertyName.Title);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
-            double scale = 1 / GetParameterValueV<double>(typeof(BasicSceneGenerator.Scale)) * GetParameterValueV<double>(typeof(RendererModel.TitleFontScale));
+            scale = 1 / scale * GetParameterValueV<double>(typeof(RendererModel.TitleFontScale));
             return new Bounds(MarkedElement.Markup(StandardGenerator.EmbedText(font, emSize, title, GetParameterValueV<Color>(typeof(RendererModel.TitleColor)), scale), "title"));
         }
 
-        private Bounds GenerateReactionConditions(IReaction chemObj, Color fg)
+        private Bounds GenerateReactionConditions(IReaction chemObj, Color fg, double scale)
         {
             string title = chemObj.GetProperty<string>(CDKPropertyName.ReactionConditions);
             if (string.IsNullOrEmpty(title))
                 return new Bounds();
-            double scale = 1 / GetParameterValueV<double>(typeof(BasicSceneGenerator.Scale));
-
-            return new Bounds(MarkedElement.Markup(StandardGenerator.EmbedText(font, emSize, title, fg, scale), "conditions"));
+            return new Bounds(MarkedElement.Markup(StandardGenerator.EmbedText(font, emSize, title, fg, 1 / scale),
+                                              "conditions"));
         }
 
         /// <summary>
@@ -717,12 +731,8 @@ namespace NCDK.Depict
         {
             if (!GeometryUtil.Has2DCoordinates(container))
             {
-                // SDG - mutable state is not thread safe :(
-                lock (sdg)
-                {
-                    sdg.SetMolecule(container, false);
-                    sdg.GenerateCoordinates();
-                }
+                StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+                sdg.GenerateCoordinates(container);
                 return true;
             }
             return false;
@@ -735,12 +745,9 @@ namespace NCDK.Depict
         /// <exception cref="CDKException">coordinates could not be generated</exception>
         private void Ensure2dLayout(IReaction rxn)
         {
-            foreach (var mol in rxn.Reactants)
-                Ensure2dLayout(mol);
-            foreach (var mol in rxn.Products)
-                Ensure2dLayout(mol);
-            foreach (var mol in rxn.Agents)
-                Ensure2dLayout(mol);
+            StructureDiagramGenerator sdg = new StructureDiagramGenerator();
+            sdg.SetAlignMappedReaction(alignMappedReactions);
+            sdg.GenerateCoordinates(rxn);
         }
 
         /// <summary>
@@ -818,14 +825,34 @@ namespace NCDK.Depict
         /// (but this can be achieved by manually setting the annotation).
         /// </remarks>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="withAtomMapNumbers"/>
+        /// <seealso cref="WithAtomMapNumbers"/>
         /// <seealso cref="StandardGenerator.ANNOTATION_LABEL"/>
         public DepictionGenerator WithAtomNumbers()
         {
-            if (annotateAtomMap)
-                throw new ArgumentException();
+            if (annotateAtomMap || annotateAtomVal)
+                throw new ArgumentException("Can not annotated atom numbers, atom values or maps are already annotated");
             DepictionGenerator copy = new DepictionGenerator(this);
             copy.annotateAtomNum = true;
+            return copy;
+        }
+
+        /// <summary>
+        /// Display atom numbers on the molecule or reaction. The numbers are based on the
+        /// ordering of atoms in the molecule data structure and not a systematic system
+        /// such as IUPAC numbering.
+        /// <p/>
+        /// Note: A depiction can not have both atom numbers and atom maps visible
+        /// (but this can be achieved by manually setting the annotation).
+        /// </summary>
+        /// <returns>new generator for method chaining</returns>
+        /// <seealso cref="WithAtomMapNumbers()"/>
+        /// <seealso cref="StandardGenerator.ANNOTATION_LABEL"/>
+        public DepictionGenerator WithAtomValues()
+        {
+            if (annotateAtomNum || annotateAtomMap)
+                throw new InvalidOperationException("Can not annotated atom values, atom numbers or maps are already annotated");
+            DepictionGenerator copy = new DepictionGenerator(this);
+            copy.annotateAtomVal = true;
             return copy;
         }
 
@@ -839,13 +866,13 @@ namespace NCDK.Depict
         /// the annotation).
         /// </remarks>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="withAtomNumbers"/>
+        /// <seealso cref="WithAtomNumbers"/>
         /// <seealso cref="CDKPropertyName.AtomAtomMapping"/>
         /// <seealso cref="StandardGenerator.ANNOTATION_LABEL"/>
         public DepictionGenerator WithAtomMapNumbers()
         {
             if (annotateAtomNum)
-                throw new ArgumentException();
+                throw new InvalidOperationException("Can not annotated atom maps, atom numbers or values are already annotated");
             DepictionGenerator copy = new DepictionGenerator(this);
             copy.annotateAtomMap = true;
             return copy;
@@ -859,7 +886,7 @@ namespace NCDK.Depict
         /// </summary>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="WithAtomMapNumbers"/>
-        /// <seealso cref="WithAtomMapHighlight"/>
+        /// <seealso cref="WithAtomMapHighlight(Color[])"/>
         public DepictionGenerator WithAtomMapHighlight()
         {
             return WithAtomMapHighlight(KELLY_MAX_CONTRAST);
@@ -874,7 +901,7 @@ namespace NCDK.Depict
         /// <param name="colors">array of colors</param>
         /// <returns>new generator for method chaining</returns>
         /// <seealso cref="WithAtomMapNumbers"/>
-        /// <seealso cref="WithAtomMapHighlight"/>
+        /// <seealso cref="WithAtomMapHighlight()"/>
         public DepictionGenerator WithAtomMapHighlight(Color[] colors)
         {
             DepictionGenerator copy = new DepictionGenerator(this);
@@ -906,6 +933,19 @@ namespace NCDK.Depict
         public DepictionGenerator WithRxnTitle()
         {
             return WithParam(typeof(BasicSceneGenerator.ShowReactionTitle), true);
+        }
+
+        /// <summary>
+        /// Specifies that reactions with atom-atom mappings should have their reactants/product
+        /// coordinates aligned. Default: true.
+        /// </summary>
+        /// <param name="val">setting value</param>
+        /// <returns>new generator for method chaining</returns>
+        public DepictionGenerator WithMappedRxnAlign(bool val)
+        {
+            DepictionGenerator copy = new DepictionGenerator(this);
+            copy.alignMappedReactions = val;
+            return copy;
         }
 
         /// <summary>
@@ -1007,7 +1047,7 @@ namespace NCDK.Depict
         /// <param name="w">max width</param>
         /// <param name="h">max height</param>
         /// <returns>new generator for method chaining</returns>
-        /// <seealso cref="withFillToFit"/>
+        /// <seealso cref="WithFillToFit"/>
         public DepictionGenerator WithSize(double w, double h)
         {
             if (w < 0 && h >= 0 || h < 0 && w >= 0)

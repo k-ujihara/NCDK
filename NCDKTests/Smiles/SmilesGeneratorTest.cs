@@ -37,18 +37,12 @@ using NCDK.Numerics;
 
 namespace NCDK.Smiles
 {
-    /// <summary>
     // @author         steinbeck
     // @cdk.created    2004-02-09
     // @cdk.module     test-smiles
-    /// </summary>
     [TestClass()]
     public class SmilesGeneratorTest : CDKTestCase
     {
-
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestSmilesGenerator()
         {
@@ -60,9 +54,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("C1(=CCC2CC1C2(C)C)C", smiles2);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestEthylPropylPhenantren()
         {
@@ -74,9 +65,6 @@ namespace NCDK.Smiles
             Assert.AreEqual("C=1C=CC(=C2C=CC3=C(C12)C=CC(=C3)CCC)CC", smiles1);
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestPropylCycloPropane()
         {
@@ -617,14 +605,11 @@ namespace NCDK.Smiles
             }
         }
 
-        /// <summary>
-        ///  A unit test for JUnit
-        /// </summary>
         [TestMethod()]
         public void TestPseudoAtom()
         {
             IAtom atom = new PseudoAtom("Star");
-            SmilesGenerator sg = new SmilesGenerator();
+            SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
             string smiles = "";
             IAtomContainer molecule = new AtomContainer();
             molecule.Atoms.Add(atom);
@@ -654,8 +639,8 @@ namespace NCDK.Smiles
             methane.Atoms[0].ImplicitHydrogenCount = 4;
             gold.Atoms[0].ImplicitHydrogenCount = 0;
 
-            SmilesGenerator sg = new SmilesGenerator();
-            string smiles = sg.CreateReactionSMILES(reaction);
+            SmilesGenerator sg = new SmilesGenerator(SmiFlavor.Generic);
+            string smiles = sg.Create(reaction);
             //Debug.WriteLine("Generated SMILES: " + smiles);
             Assert.AreEqual("C>*>[Au]", smiles);
         }
@@ -1217,8 +1202,18 @@ namespace NCDK.Smiles
                 Canon("[H]c2c([H])c(c1c(nc(n1([H]))C(F)(F)F)c2Cl)Cl"));
         }
 
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException))]
+        public void WarnOnBadInput()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            smipar.Kekulise(false);
+            IAtomContainer mol = smipar.ParseSmiles("c1ccccc1");
+            System.Console.Error.WriteLine(SmilesGenerator.Isomeric().Create(mol));
+        }
+
         /// <summary>
-        // @see https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node
+        /// <see href="https://tech.knime.org/forum/cdk/buggy-behavior-of-molecule-to-cdk-node"/>
         /// </summary>
         [TestMethod()]
         public void AssignDbStereo()
@@ -1226,7 +1221,19 @@ namespace NCDK.Smiles
             string ins = "C(/N)=C\\C=C\\1/N=C1";
             SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
             IAtomContainer mol = smipar.ParseSmiles(ins);
-            Assert.AreEqual("C(\\N)=C/C=C/1\\N=C1", SmilesGenerator.Isomeric().Create(mol));
+            Assert.AreEqual("C(\\N)=C/C=C/1N=C1", SmilesGenerator.Isomeric().Create(mol));
+        }
+
+        [TestMethod()]
+        public void CanonicalReactions()
+        {
+            SmilesParser smipar = new SmilesParser(Silent.ChemObjectBuilder.Instance);
+            IReaction r1 = smipar.ParseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+            IReaction r2 = smipar.ParseReactionSmiles("C(CC(=O)Cl)CCl.CC(C)C1=CC=CC=C1>[Al+3].[Cl-].[Cl-].[Cl-].C(Cl)Cl>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+            IReaction r3 = smipar.ParseReactionSmiles("CC(C)C1=CC=CC=C1.C(CC(=O)Cl)CCl>C(Cl)Cl.[Al+3].[Cl-].[Cl-].[Cl-]>CC(C)C1=CC=C(C=C1)C(=O)CCCCl");
+            SmilesGenerator smigen = new SmilesGenerator(SmiFlavor.Canonical);
+            Assert.AreEqual(smigen.Create(r2), smigen.Create(r1));
+            Assert.AreEqual(smigen.Create(r3), smigen.Create(r2));
         }
 
         static ITetrahedralChirality Anticlockwise(IAtomContainer container, int central, int a1, int a2, int a3, int a4)

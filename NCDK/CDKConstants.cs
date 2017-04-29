@@ -148,6 +148,23 @@ namespace NCDK
         /// </summary>
         public const string RelevantRings = "cdk:RelevantRings";
 
+
+        /// <summary>
+        /// Property used for reactions when converted to/from molecules. It defines what role and atom
+        /// has an a reaction.
+        /// 
+        /// Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
+        /// </summary>
+        public const string ReactionRole = "cdk:ReactionRole";
+
+        /// <summary>
+        /// Property used for reactions when converted to/from molecules. It defines fragment grouping, for example
+        /// when handling ionic components.
+        /// 
+        /// Used in. ReactionManipulator.toMolecule and ReactionManipulator.toReaction.
+        /// </summary>
+        public const string ReactionGroup = "cdk:ReactionGroup";
+
         // **************************************
         // Some predefined property names for * Atoms *
         // **************************************
@@ -230,7 +247,7 @@ namespace NCDK
         public const string LonePairCount = "cdk:Lone Pair Count";
 
         /// <summary>Used as property key for indicating the number of single electrons on the atom type.</summary>
-        public const string SingleElectronCount = "cdk:Lone Pair Count";
+        public const string SingleElectronCount = "cdk:Single Electron Count";
 
         /// <summary>pack the RGB color space components into a single int.</summary>
         public const string Color = "org.openscience.cdk.renderer." + "color";

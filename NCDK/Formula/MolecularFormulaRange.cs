@@ -62,8 +62,11 @@ namespace NCDK.Formula
         /// <param name="isotope">The isotope to be added to this MolecularFormulaExpand</param>
         /// <param name="countMax">The maximal number of occurrences to add</param>
         /// <param name="countMin">The minimal number of occurrences to add</param>
-        public void Add(IIsotope isotope, int countMin, int countMax)
+        public void AddIsotope(IIsotope isotope, int countMin, int countMax)
         {
+            if (isotope == null)
+                throw new ArgumentNullException("Isotope must not be null");
+
             bool flag = false;
             foreach (var thisIsotope in GetIsotopes())
             {
@@ -190,7 +193,7 @@ namespace NCDK.Formula
             MolecularFormulaRange clone = new MolecularFormulaRange();
             foreach (var isotope in GetIsotopes())
             {
-                clone.Add((IIsotope)isotope.Clone(), GetIsotopeCountMin(isotope), GetIsotopeCountMax(isotope));
+                clone.AddIsotope((IIsotope)isotope.Clone(), GetIsotopeCountMin(isotope), GetIsotopeCountMax(isotope));
             }
             return clone;
         }

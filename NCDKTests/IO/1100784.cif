@@ -18,8 +18,8 @@ _publ_author_name
 'Smith, Mark D.'
 _publ_section_title
 ;
- Supramolecular networks of Silver(i) and Iron(ii) complexes of the
- third generation Tris(pyrazolyl)methane ligand Ph2(O)POCH2C(pz)3 (pz =
+ Supramolecular networks of silver(i) and iron(ii) complexes of the
+ third generation tris(pyrazolyl)methane ligand Ph2(O)POCH2C(pz)3 (pz =
  pyrazolyl ring)
 ;
 _journal_issue                   17

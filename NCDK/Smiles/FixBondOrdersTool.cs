@@ -26,7 +26,7 @@ using NCDK.Tools;
 using System;
 using System.Collections.Generic;
 
-namespace NCDK.SGroups
+namespace NCDK.Smiles
 {
     /// <summary>
     /// Class to Fix bond orders at present for Aromatic Rings only.
@@ -56,6 +56,7 @@ namespace NCDK.SGroups
     // @author Lucy Entwistle
     // @cdk.module smiles
     // @cdk.githash
+    [Obsolete("Use " + nameof(Aromaticities.Kekulization))]
     public class FixBondOrdersTool
     {
         /// <summary>

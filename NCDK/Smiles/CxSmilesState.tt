@@ -1,0 +1,27 @@
+﻿<#@ include file="..\..\Config.ttinclude" #>
+
+namespace NCDK.Smiles
+{
+    internal sealed partial class CxSmilesState
+    {
+<# 
+    GenerateEnumBody(
+        "Radical", 
+        new[]
+        {
+            "Monovalent",
+            "Divalent",
+            "DivalentSinglet",
+            "DivalentTriplet",
+            "Trivalent",
+            "TrivalentDoublet",
+            "TrivalentQuartet",
+        },
+        true
+    ); 
+#>
+		{}
+	}
+}
+
+	

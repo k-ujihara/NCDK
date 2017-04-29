@@ -7,7 +7,6 @@ namespace NCDK.Fingerprint
     [TestClass]
     public class PubchemFingerprinter_Example
     {
-        [TestMethod]
         public void Main()
         {
             {

@@ -481,11 +481,10 @@ namespace NCDK.Geometries
         }
 
         /// <summary>
-        /// Calculates the center of mass for the <see cref="IAtom"/>s in the AtomContainer for the 2D
-        /// coordinates. 
+        /// Calculates the center of mass for the <see cref="IAtom"/>s in the AtomContainer.
         /// </summary>
         /// <param name="ac">AtomContainer for which the center of mass is calculated</param>
-        /// <returns>Description of the Return Value</returns>
+        /// <returns>The center of mass of the molecule, or <see langword="null"/> if the molecule does not have 3D coordinates or if any of the atoms do not have a valid atomic mass</returns>
         // @cdk.keyword center of mass
         // @cdk.dictref blue-obelisk:calculate3DCenterOfMass
         public static Vector3? Get3DCentreOfMass(IAtomContainer ac)

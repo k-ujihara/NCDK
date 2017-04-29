@@ -116,6 +116,7 @@
     <Compile Include="Config\TXTBasedAtomTypeConfiguratorTest.cs" />
     <Compile Include="Default\ElementTest.cs" />
     <Compile Include="Default\ReactionTest.cs" />
+    <Compile Include="Fingerprint\CircularFingerprintSmartsTest.cs" />
     <Compile Include="Graphs\AllCyclesTest.cs" />
     <Compile Include="Graphs\GraphUtilTest.cs" />
     <Compile Include="Graphs\InitialCyclesTest.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Hash\SuppressedAtomHashGeneratorTest.cs" />
     <Compile Include="Hash\SuppressedTest.cs" />
     <Compile Include="Hash\XorshiftTest.cs" />
+    <Compile Include="ImmutableAtomTypeTest.cs" />
     <Compile Include="IO\Formats\Chem3D_Cartesian_1FormatTest.cs" />
     <Compile Include="IO\Formats\Chem3D_Cartesian_2FormatTest.cs" />
     <Compile Include="IO\Formats\ChemtoolFormatTest.cs" />
@@ -281,6 +283,8 @@
     <Compile Include="Silent\SingleElectronTest.cs" />
     <Compile Include="Silent\StrandTest.cs" />
     <Compile Include="Silent\SubstanceTest.cs" />
+    <Compile Include="SMARTS\SmartsFragmentExtractorTest.cs" />
+    <Compile Include="Smiles\CxSmilesGeneratorTest.cs" />
     <Compile Include="SMSD\Algorithms\VFLib\Molecules.cs" />
     <Compile Include="SMSD\Ring\HanserRingFinderTest.cs" />
     <Compile Include="SMSD\Tools\TimeManagerTest.cs" />
@@ -1674,6 +1678,7 @@
     <EmbeddedResource Include="Data\CDD\pyridineacid.mol" />
     <None Include="app.config" />
     <EmbeddedResource Include="IO\structure-with-radical.mol" />
+    <EmbeddedResource Include="IO\CH3.mol" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Smiles\SMARTS\Parser\drugs.smi" />
   </ItemGroup>

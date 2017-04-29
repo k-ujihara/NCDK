@@ -22,7 +22,6 @@ namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set     io-formats
     public class PubChemSubstancesXMLFormat
             : SimpleChemFormatMatcher, IChemFormatMatcher
     {

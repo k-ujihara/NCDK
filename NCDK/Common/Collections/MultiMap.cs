@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -14,6 +15,7 @@ namespace NCDK.Common.Collections
         IEnumerable<V> Values { get; }
         IEnumerable<V> this[T key] { get; }
         void Remove(T key, V value);
+        IEnumerable<KeyValuePair<T, V>> Entries { get; }
     }
 
     public sealed class MultiDictionary<T, V>
@@ -77,6 +79,17 @@ namespace NCDK.Common.Collections
                 foreach (var v in BaseMap.Values)
                     foreach (var w in v)
                         yield return w;
+                yield break;
+            }
+        }
+
+        public IEnumerable<KeyValuePair<T, V>> Entries
+        {
+            get
+            {
+                foreach (var e in BaseMap)
+                    foreach (var v in e.Value)
+                        yield return new KeyValuePair<T, V>(e.Key, v);
                 yield break;
             }
         }

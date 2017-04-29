@@ -23,7 +23,6 @@ namespace NCDK.IO.Formats
     // @author Miguel Rojas
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set    io-formats
     public class DMol3Format : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

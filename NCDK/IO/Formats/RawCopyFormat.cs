@@ -22,10 +22,6 @@ namespace NCDK.IO.Formats
 {
     // @cdk.module ioformats
     // @cdk.githash
-    // @cdk.set     io-formats
-    // @cdk.module ioformats
-    // @cdk.githash
-    // @cdk.set     io-formats
     public class RawCopyFormat : AbstractResourceFormat, IChemFormat
     {
         private static IResourceFormat myself = null;

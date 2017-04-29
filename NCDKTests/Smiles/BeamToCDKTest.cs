@@ -146,7 +146,7 @@ namespace NCDK.Smiles
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Single.CreateEdge(0, 5), atoms);
+            IBond b = g2c.ToCDKBond(Bond.Single.CreateEdge(0, 5), atoms, true);
             Assert.AreEqual(BondOrder.Single, b.Order);
             Assert.IsFalse(b.IsAromatic);
             Assert.AreEqual(atoms[0], b.Atoms[0]);
@@ -163,7 +163,7 @@ namespace NCDK.Smiles
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Aromatic.CreateEdge(0, 5), atoms);
+            IBond b = g2c.ToCDKBond(Bond.Aromatic.CreateEdge(0, 5), atoms, true);
             Assert.AreEqual(BondOrder.Single, b.Order);
             Assert.IsTrue(b.IsAromatic);
             Assert.AreEqual(atoms[0], b.Atoms[0]);
@@ -180,7 +180,7 @@ namespace NCDK.Smiles
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object,
                 new Mock<IAtom>().Object, };
-            IBond b = g2c.ToCDKBond(Bond.Double.CreateEdge(0, 5), atoms);
+            IBond b = g2c.ToCDKBond(Bond.Double.CreateEdge(0, 5), atoms, true);
             Assert.AreEqual(BondOrder.Double, b.Order);
             Assert.IsFalse(b.IsAromatic);
             Assert.AreEqual(atoms[0], b.Atoms[0]);
@@ -201,7 +201,7 @@ namespace NCDK.Smiles
             }
             foreach (var b in ac.Bonds)
             {
-                Assert.AreEqual(BondOrder.Single, b.Order);
+                Assert.AreEqual(BondOrder.Unset, b.Order);
                 Assert.IsTrue(b.IsAromatic);
             }
         }
@@ -263,7 +263,7 @@ namespace NCDK.Smiles
 
             foreach (var b in ac.Bonds)
             {
-                Assert.AreEqual(BondOrder.Single, b.Order);
+                Assert.AreEqual(BondOrder.Unset, b.Order);
                 Assert.IsTrue(b.IsAromatic);
             }
         }
@@ -346,7 +346,7 @@ namespace NCDK.Smiles
             ITetrahedralChirality tc = (ITetrahedralChirality)se;
 
             Assert.AreEqual(ac.Atoms[2], tc.ChiralAtom);
-           Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[3], ac.Atoms[4], ac.Atoms[5] }, tc.Ligands));
+            Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[3], ac.Atoms[4], ac.Atoms[5] }, tc.Ligands));
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, tc.Stereo);
         }
 
@@ -378,7 +378,7 @@ namespace NCDK.Smiles
             }
 
             Assert.AreEqual(ac.Atoms[1], tc1.ChiralAtom);
-           Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[0], ac.Atoms[2], ac.Atoms[6], ac.Atoms[11] }, tc1.Ligands));
+            Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[0], ac.Atoms[2], ac.Atoms[6], ac.Atoms[11] }, tc1.Ligands));
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, tc1.Stereo);
 
             // the configuration around atom 6 flips as the ring closure '[C@@]1'
@@ -388,7 +388,7 @@ namespace NCDK.Smiles
             // SMILES again one can see it will flip back clockwise ('@@').
 
             Assert.AreEqual(ac.Atoms[6], tc2.ChiralAtom);
-           Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[5], ac.Atoms[7], ac.Atoms[8] }, tc2.Ligands));
+            Assert.IsTrue(Compares.AreEqual(new IAtom[] { ac.Atoms[1], ac.Atoms[5], ac.Atoms[7], ac.Atoms[8] }, tc2.Ligands));
             Assert.AreEqual(TetrahedralStereo.AntiClockwise, tc2.Stereo);
         }
 
@@ -509,7 +509,7 @@ namespace NCDK.Smiles
         }
 
         [TestMethod()]
-        [ExpectedException(typeof(IOException), AllowDerivedTypes =true)]
+        [ExpectedException(typeof(IOException), AllowDerivedTypes = true)]
         public void ErroneousLabels_bad1()
         {
             Convert("[this]-is-not-okay]CC");
@@ -586,7 +586,7 @@ namespace NCDK.Smiles
         {
             BeamToCDK g2c = new BeamToCDK(Silent.ChemObjectBuilder.Instance);
             Graph g = Graph.FromSmiles(smi);
-            return g2c.ToAtomContainer(g);
+            return g2c.ToAtomContainer(g, false);
         }
     }
 }

@@ -36,7 +36,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2007-03-01
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     public class AutocorrelationDescriptorPolarizability : AbstractMolecularDescriptor, IMolecularDescriptor
     {
         private static readonly string[] NAMES = { "ATSp1", "ATSp2", "ATSp3", "ATSp4", "ATSp5" };

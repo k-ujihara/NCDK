@@ -25,12 +25,13 @@ using Moq;
 
 namespace NCDK.Graphs.Invariant
 {
-    /// <summary>@cdk.module test-inchi</summary>
+    // @cdk.module test-inchi
     [TestClass()]
-    public class InChINumbersToolsTest : CDKTestCase {
-
+    public class InChINumbersToolsTest : CDKTestCase
+    {
         [TestMethod()]
-        public void TestSimpleNumbering() {
+        public void TestSimpleNumbering()
+        {
             IAtomContainer container = new AtomContainer();
             container.Atoms.Add(new Atom("O"));
             container.Atoms.Add(new Atom("C"));
@@ -42,7 +43,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void TestHydrogens() {
+        public void TestHydrogens()
+        {
             IAtomContainer container = new AtomContainer();
             container.Atoms.Add(new Atom("H"));
             container.Atoms.Add(new Atom("C"));
@@ -63,7 +65,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void TestGlycine() {
+        public void TestGlycine()
+        {
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
@@ -76,7 +79,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void TestGlycine_uSmiles() {
+        public void TestGlycine_uSmiles()
+        {
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = parser.ParseSmiles("C(C(=O)O)N");
             long[] numbers = InChINumbersTools.GetNumbers(atomContainer);
@@ -89,7 +93,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void FixedH() {
+        public void FixedH()
+        {
             SmilesParser parser = new SmilesParser(Default.ChemObjectBuilder.Instance);
             IAtomContainer atomContainer = parser.ParseSmiles("N1C=NC2=CC=CC=C12");
             string auxInfo = InChINumbersTools.AuxInfo(atomContainer, INCHI_OPTION.FixedH);
@@ -99,14 +104,16 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void ParseStandard() {
+        public void ParseStandard()
+        {
             Assert.IsTrue(Compares.AreEqual(
                 new long[] { 3, 2, 1 },
                 InChINumbersTools.ParseUSmilesNumbers("AuxInfo=1/0/N:3,2,1/rA:3OCC/rB:s1;s2;/rC:;;;", Mock(3))));
         }
 
         [TestMethod()]
-        public void ParseRecMet() {
+        public void ParseRecMet()
+        {
 
             // C(=O)O[Pt](N)(N)Cl
             Assert.IsTrue(Compares.AreEqual(
@@ -117,7 +124,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void ParseFixedH() {
+        public void ParseFixedH()
+        {
             // N1C=NC=C1
             Assert.IsTrue(Compares.AreEqual(
                 new long[] { 4, 3, 5, 2, 1 },
@@ -128,7 +136,8 @@ namespace NCDK.Graphs.Invariant
         }
 
         [TestMethod()]
-        public void ParseDisconnected() {
+        public void ParseDisconnected()
+        {
             // O.N1C=NC=C1
             Assert.IsTrue(Compares.AreEqual(
                 new long[] { 6, 4, 3, 5, 2, 1 },
@@ -150,26 +159,30 @@ namespace NCDK.Graphs.Invariant
 
         // if '[O-]' is first start at '=O' instead
         [TestMethod()]
-        public void FavorCarbonyl() {
+        public void FavorCarbonyl()
+        {
             IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance).ParseSmiles("P([O-])=O");
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 2, 1 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
 
         [TestMethod()]
-        public void UnlabelledHydrogens() {
+        public void UnlabelledHydrogens()
+        {
             IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
                     .ParseSmiles("[H]C([H])([H])[H]");
             Assert.IsTrue(Compares.AreEqual(new long[] { 2, 1, 3, 4, 5 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
 
         [TestMethod()]
-        public void Bug1370() {
+        public void Bug1370()
+        {
             IAtomContainer container = new SmilesParser(Silent.ChemObjectBuilder.Instance)
                     .ParseSmiles("O=[Bi]Cl");
             Assert.IsTrue(Compares.AreEqual(new long[] { 3, 1, 2 }, InChINumbersTools.GetUSmilesNumbers(container)));
         }
 
-        static IAtomContainer Mock(int nAtoms) {
+        static IAtomContainer Mock(int nAtoms)
+        {
             var mock_container = new Mock<IAtomContainer>();
             mock_container.Setup(n => n.Atoms.Count).Returns(nAtoms);
             for (int i = 0; i < nAtoms; i++)

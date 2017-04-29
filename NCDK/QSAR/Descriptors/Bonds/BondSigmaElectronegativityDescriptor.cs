@@ -41,7 +41,6 @@ namespace NCDK.QSAR.Descriptors.Bonds
     // @cdk.created 2006-05-08
     // @cdk.module  qsarbond
     // @cdk.githash
-    // @cdk.set     qsar-descriptors
     // @cdk.dictref qsar-descriptors:bondSigmaElectronegativity
     public class BondSigmaElectronegativityDescriptor : AbstractBondDescriptor, IBondDescriptor
     {

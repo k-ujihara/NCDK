@@ -93,8 +93,8 @@ namespace NCDK.Formula.Rules
             IRule rule = new ElementRule();
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(builder.CreateIsotope("C"), 1, 10);
-            mfRange.Add(builder.CreateIsotope("H"), 1, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("C"), 1, 10);
+            mfRange.AddIsotope(builder.CreateIsotope("H"), 1, 10);
 
             rule.Parameters = new object[] { mfRange };
 
@@ -140,8 +140,8 @@ namespace NCDK.Formula.Rules
             formula.Add(builder.CreateIsotope("H"), 6);
 
             MolecularFormulaRange mfRange = new MolecularFormulaRange();
-            mfRange.Add(builder.CreateIsotope("C"), 1, 2);
-            mfRange.Add(builder.CreateIsotope("H"), 1, 2);
+            mfRange.AddIsotope(builder.CreateIsotope("C"), 1, 2);
+            mfRange.AddIsotope(builder.CreateIsotope("H"), 1, 2);
 
             rule.Parameters = new object[] { mfRange };
 

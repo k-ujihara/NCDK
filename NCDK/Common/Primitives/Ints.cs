@@ -19,7 +19,7 @@ using static NCDK.Common.Base.Preconditions;
 
 namespace NCDK.Common.Primitives
 {
-    public static class Ints
+    public static partial class Ints
     {
         /// <summary>
         /// Compares the two specified <see cref="int"/> values. The sign of the value returned is the same as
@@ -62,6 +62,96 @@ namespace NCDK.Common.Primitives
             int[] copy = new int[length];
             Array.Copy(original, 0, copy, 0, Math.Min(original.Length, length));
             return copy;
+        }       
+    }
+}
+
+/*
+ * Copyright 1994-2006 Sun Microsystems, Inc.  All Rights Reserved.
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * This code is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License version 2 only, as
+ * published by the Free Software Foundation.  Sun designates this
+ * particular file as subject to the "Classpath" exception as provided
+ * by Sun in the LICENSE file that accompanied this code.
+ *
+ * This code is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+ * version 2 for more details (a copy is included in the LICENSE file that
+ * accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version
+ * 2 along with this work; if not, write to the Free Software Foundation,
+ * Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * Please contact Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+ * CA 95054 USA or visit www.sun.com if you need additional information or
+ * have any questions.
+ */
+namespace NCDK.Common.Primitives
+{
+    public static partial class Ints
+    {
+        /// <summary>
+        /// Returns an <see cref="int"/> value with at most a single one-bit, in the
+        /// position of the highest-order("leftmost") one-bit in the specified
+        /// <see cref="int"/> value.Returns zero if the specified value has no
+        /// one-bits in its two's complement binary representation, that is, if it
+        /// is equal to zero.
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns>an <see cref="int"/> value with a single one-bit, in the position
+        /// of the highest-order one-bit in the specified value, or zero if
+        /// the specified value is itself equal to zero.
+        /// </returns>
+        public static int HighestOneBit(int i)
+        {
+            uint ui = (uint)i;
+            // HD, Figure 3-1
+            ui |= (ui >> 1);
+            ui |= (ui >> 2);
+            ui |= (ui >> 4);
+            ui |= (ui >> 8);
+            ui |= (ui >> 16);
+            return (int)(ui - (ui >> 1));
+        }
+
+        /// <summary>
+        /// Returns the number of zero bits preceding the highest-order
+        /// ("leftmost") one-bit in the two's complement binary representation
+        /// of the specified <see cref="int"/> value.  Returns 32 if the
+        /// specified value has no one-bits in its two's complement representation,
+        /// in other words if it is equal to zero.
+        /// </summary>
+        /// <remarks>
+        /// <para>Note that this method is closely related to the logarithm base 2.
+        /// For all positive <see cref="int"/> values x:
+        /// <list type="bullet">
+        /// <item>floor(log<sub>2</sub>(x)) = <c>31 - numberOfLeadingZeros(x)</c></item>
+        /// <item>ceil(log<sub>2</sub>(x)) = <c>32 - numberOfLeadingZeros(x - 1)</c></item>
+        /// </list> 
+        /// </para>
+        /// </remarks>
+        /// <param name="i"></param>
+        /// <returns>the number of zero bits preceding the highest-order
+        ///     ("leftmost") one-bit in the two's complement binary representation
+        ///     of the specified <see cref="int"/> value, or 32 if the value
+        ///     is equal to zero.</returns>
+        public static int NumberOfLeadingZeros(int i)
+        {
+            uint ui = (uint)i;
+            // HD, Figure 5-6
+            if (ui == 0)
+                return 32;
+            uint n = 1;
+            if (ui >> 16 == 0) { n += 16; ui <<= 16; }
+            if (ui >> 24 == 0) { n += 8; ui <<= 8; }
+            if (ui >> 28 == 0) { n += 4; ui <<= 4; }
+            if (ui >> 30 == 0) { n += 2; ui <<= 2; }
+            n -= ui >> 31;
+            return (int)n;
         }
     }
 }

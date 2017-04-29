@@ -21,9 +21,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 U
  */
 using System.Collections.Generic;
-using static NCDK.SGroups.CxSmilesState;
+using static NCDK.Smiles.CxSmilesState;
+using static NCDK.Smiles.CxSmilesState.Radical;
 
-namespace NCDK.SGroups
+namespace NCDK.Smiles
 {
     /// <summary>
     /// Parse CXSMILES (ChemAxon Extended SMILES) layers. 
@@ -65,7 +66,7 @@ namespace NCDK.SGroups
         private static bool ProcessAtomLabels(CharIter iter, IDictionary<int, string> dest)
         {
             int atomIdx = 0;
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
 
                 // fast forward through empty labels
@@ -75,17 +76,43 @@ namespace NCDK.SGroups
                 char c = iter.Next();
                 if (c == '$')
                 {
+                    iter.NextIf(','); // optional
                     // end of atom label
                     return true;
                 }
                 else
                 {
-                    int beg = iter.pos - 1;
-                    while (iter.MoveNext())
+                    iter.pos--; // push back
+                    int beg = iter.pos;
+                    int rollback = beg;
+                    while (iter.HasNext())
                     {
-                        if (iter.Curr() == ';' || iter.Curr() == '$')
+                        // correct step over of escaped label
+                        if (iter.Curr() == '&')
+                        {
+                            rollback = iter.pos;
+                            if (iter.NextIf('&') && iter.NextIf('#') && iter.NextIfDigit())
+                            {
+                                while (iter.NextIfDigit()) { } // more digits
+                                if (!iter.NextIf(';'))
+                                {
+                                    iter.pos = rollback;
+                                }
+                                else
+                                {
+                                }
+                            }
+                            else
+                            {
+                                iter.pos = rollback;
+                            }
+                        }
+                        else if (iter.Curr() == ';')
                             break;
-                        iter.Next();
+                        else if (iter.Curr() == '$')
+                            break;
+                        else
+                            iter.Next();
                     }
                     dest.Add(atomIdx, Unescape(iter.Substr(beg, iter.pos)));
                     atomIdx++;
@@ -117,7 +144,7 @@ namespace NCDK.SGroups
             iter.NextIf('.');
 
             char c;
-            while (iter.MoveNext() && IsDigit(c = iter.Curr()))
+            while (iter.HasNext() && IsDigit(c = iter.Curr()))
             {
                 fracPart *= 10;
                 fracPart += c - '0';
@@ -138,7 +165,7 @@ namespace NCDK.SGroups
         {
             if (state.AtomCoords == null)
                 state.AtomCoords = new List<double[]>();
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
 
                 // end of coordinate list
@@ -158,7 +185,7 @@ namespace NCDK.SGroups
                 double z = ReadDouble(iter);
                 iter.NextIf(';');
 
-                state.zCoords = state.zCoords || z != 0;
+                state.coordFlag = state.coordFlag || z != 0;
                 state.AtomCoords.Add(new double[] { x, y, z });
             }
             return false;
@@ -174,9 +201,9 @@ namespace NCDK.SGroups
         private static bool ProcessFragmentGrouping(CharIter iter, CxSmilesState state)
         {
             if (state.fragGroups == null)
-                state.fragGroups = new List<IList<int>>();
+                state.fragGroups = new List<List<int>>();
             IList<int> dest = new List<int>();
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
                 dest.Clear();
                 if (!ProcessIntList(iter, DOT_SEPARATOR, dest))
@@ -213,14 +240,14 @@ namespace NCDK.SGroups
             if (!iter.NextIf(':'))
                 return false;
             int beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string field = Unescape(iter.Substr(beg, iter.pos));
 
             if (!iter.NextIf(':'))
                 return false;
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string value = Unescape(iter.Substr(beg, iter.pos));
 
@@ -231,7 +258,7 @@ namespace NCDK.SGroups
             }
 
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string operator_ = Unescape(iter.Substr(beg, iter.pos));
 
@@ -242,7 +269,7 @@ namespace NCDK.SGroups
             }
 
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string unit = Unescape(iter.Substr(beg, iter.pos));
 
@@ -253,7 +280,7 @@ namespace NCDK.SGroups
             }
 
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string tag = Unescape(iter.Substr(beg, iter.pos));
 
@@ -273,7 +300,7 @@ namespace NCDK.SGroups
             if (state.sgroups == null)
                 state.sgroups = new List<PolymerSgroup>();
             int beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             string keyword = iter.Substr(beg, iter.pos);
             if (!iter.NextIf(':'))
@@ -292,7 +319,7 @@ namespace NCDK.SGroups
             // "If the subscript equals the keyword of the Sgroup this field can be empty", ergo
             // if omitted it equals the keyword
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             subscript = Unescape(iter.Substr(beg, iter.pos));
             if (string.IsNullOrEmpty(subscript))
@@ -303,7 +330,7 @@ namespace NCDK.SGroups
             if (!iter.NextIf(':'))
                 return false;
             beg = iter.pos;
-            while (iter.MoveNext() && !IsSgroupDelim(iter.Curr()))
+            while (iter.HasNext() && !IsSgroupDelim(iter.Curr()))
                 iter.Next();
             supscript = Unescape(iter.Substr(beg, iter.pos));
             if (string.IsNullOrEmpty(supscript))
@@ -329,7 +356,7 @@ namespace NCDK.SGroups
         {
             if (state.positionVar == null)
                 state.positionVar = new SortedDictionary<int, IList<int>>();
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
                 if (IsDigit(iter.Curr()))
                 {
@@ -364,25 +391,25 @@ namespace NCDK.SGroups
             switch (iter.Next())
             {
                 case '1':
-                    rad = CxSmilesState.Radical.Monovalent;
+                    rad = Monovalent;
                     break;
                 case '2':
-                    rad = CxSmilesState.Radical.Divalent;
+                    rad = Divalent;
                     break;
                 case '3':
-                    rad = CxSmilesState.Radical.DivalentSinglet;
+                    rad = DivalentSinglet;
                     break;
                 case '4':
-                    rad = CxSmilesState.Radical.DivalentTriplet;
+                    rad = DivalentTriplet;
                     break;
                 case '5':
-                    rad = CxSmilesState.Radical.Trivalent;
+                    rad = Trivalent;
                     break;
                 case '6':
-                    rad = CxSmilesState.Radical.TrivalentDoublet;
+                    rad = TrivalentDoublet;
                     break;
                 case '7':
-                    rad = CxSmilesState.Radical.TrivalentQuartet;
+                    rad = TrivalentQuartet;
                     break;
                 default:
                     return false;
@@ -411,16 +438,18 @@ namespace NCDK.SGroups
             if (!iter.NextIf('|'))
                 return -1;
 
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
                 switch (iter.Next())
                 {
                     case '$': // atom labels and values
                               // dest is atom labels by default
-                        IDictionary<int, string> dest = state.atomLabels = new SortedDictionary<int, string>();
+                        IDictionary<int, string> dest;
                         // check for atom values
                         if (iter.NextIf("_AV:"))
                             dest = state.atomValues = new SortedDictionary<int, string>();
+                        else
+                            dest = state.atomLabels = new SortedDictionary<int, string>();
                         if (!ProcessAtomLabels(iter, dest))
                             return -1;
                         break;
@@ -485,7 +514,7 @@ namespace NCDK.SGroups
                     case 'H': // skip coordination and hydrogen bonding
                         if (!iter.NextIf(':'))
                             return -1;
-                        while (iter.MoveNext() && IsDigit(iter.Curr()))
+                        while (iter.HasNext() && IsDigit(iter.Curr()))
                         {
                             if (!SkipIntList(iter, DOT_SEPARATOR))
                                 return -1;
@@ -511,7 +540,7 @@ namespace NCDK.SGroups
 
         private static bool SkipIntList(CharIter iter, char sep)
         {
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
                 char c = iter.Curr();
                 if (IsDigit(c) || c == sep)
@@ -519,20 +548,20 @@ namespace NCDK.SGroups
                 else
                     return true;
             }
-            // ran of end
+            // ran off end
             return false;
         }
 
         private static int ProcessUnsignedInt(CharIter iter)
         {
-            if (!iter.MoveNext())
+            if (!iter.HasNext())
                 return -1;
             char c = iter.Curr();
             if (!IsDigit(c))
                 return -1;
             int res = c - '0';
             iter.Next();
-            while (iter.MoveNext() && IsDigit(c = iter.Curr()))
+            while (iter.HasNext() && IsDigit(c = iter.Curr()))
             {
                 res = res * 10 + c - '0';
                 iter.Next();
@@ -549,7 +578,7 @@ namespace NCDK.SGroups
         /// <returns>int-list was successfully processed</returns>
         private static bool ProcessIntList(CharIter iter, char sep, IList<int> dest)
         {
-            while (iter.MoveNext())
+            while (iter.HasNext())
             {
                 char c = iter.Curr();
                 if (IsDigit(c))
@@ -609,7 +638,7 @@ namespace NCDK.SGroups
             private readonly int len;
             public int pos = 0;
 
-            public CharIter(string str)
+            internal CharIter(string str)
             {
                 this.str = str;
                 this.len = str.Length;
@@ -620,9 +649,17 @@ namespace NCDK.SGroups
             /// </summary>
             /// <param name="c">query character</param>
             /// <returns>iterator was moved forwards</returns>
-            public bool NextIf(char c)
+            internal bool NextIf(char c)
             {
-                if (!MoveNext() || str[pos] != c)
+                if (!HasNext() || str[pos] != c)
+                    return false;
+                pos++;
+                return true;
+            }
+
+            internal bool NextIfDigit()
+            {
+                if (!HasNext() || !IsDigit(str[pos]))
                     return false;
                 pos++;
                 return true;
@@ -634,7 +671,7 @@ namespace NCDK.SGroups
             /// </summary>
             /// <param name="prefix">prefix string</param>
             /// <returns>iterator was moved forwards</returns>
-            public bool NextIf(string prefix)
+            internal bool NextIf(string prefix)
             {
                 bool res;
                 if (res = this.str.Substring(pos).StartsWith(prefix))
@@ -646,7 +683,7 @@ namespace NCDK.SGroups
             /// Is there more chracters to read?
             /// </summary>
             /// <returns>whether more characters are available</returns>
-            public bool MoveNext()
+            internal bool HasNext()
             {
                 return pos < len;
             }
@@ -655,7 +692,7 @@ namespace NCDK.SGroups
             /// Access the current character of the iterator.
             /// </summary>
             /// <returns>charactor</returns>
-            public char Curr()
+            internal char Curr()
             {
                 return str[pos];
             }
@@ -665,7 +702,7 @@ namespace NCDK.SGroups
             /// to the next position.
             /// </summary>
             /// <returns>charactor</returns>
-            public char Next()
+            internal char Next()
             {
                 return str[pos++];
             }
@@ -676,7 +713,7 @@ namespace NCDK.SGroups
             /// <param name="beg">begin position (inclusive)</param>
             /// <param name="end">end position (exclusive)</param>
             /// <returns>substring</returns>
-            public string Substr(int beg, int end)
+            internal string Substr(int beg, int end)
             {
                 return str.Substring(beg, end - beg);
             }

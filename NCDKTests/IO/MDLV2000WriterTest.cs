@@ -835,5 +835,40 @@ namespace NCDK.IO
                 Assert.IsTrue(output.Contains("    0.0000    0.0000    0.0000 C   0  0  2  0  0  0  0  0  0  0  0  0" + Environment.NewLine));
             }
         }
+
+        [TestMethod()]
+        [ExpectedException(typeof(CDKException))]
+        public void AromaticBondTypes()
+        {
+            IAtomContainer mol = builder.CreateAtomContainer();
+            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
+            IBond bond = builder.CreateBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
+            bond.IsAromatic = true;
+            mol.Bonds.Add(bond);
+            StringWriter sw = new StringWriter();
+            using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.Write(mol);
+            }
+        }
+
+        [TestMethod()]
+        public void AromaticBondTypesEnabled()
+        {
+            IAtomContainer mol = builder.CreateAtomContainer();
+            mol.Atoms.Add(builder.CreateAtom("C"));
+            mol.Atoms.Add(builder.CreateAtom("C"));
+            IBond bond = builder.CreateBond(mol.Atoms[0], mol.Atoms[1], BondOrder.Unset);
+            bond.IsAromatic = true;
+            mol.Bonds.Add(bond);
+            StringWriter sw = new StringWriter();
+            using (MDLV2000Writer mdlw = new MDLV2000Writer(sw))
+            {
+                mdlw.SetWriteAromaticBondTypes(true);
+                mdlw.Write(mol);
+            }
+            Assert.IsTrue(sw.ToString().Replace(Environment.NewLine, "\n").Contains("  1  2  4  0  0  0  0 \n"));
+        }
     }
 }

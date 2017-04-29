@@ -58,7 +58,6 @@ namespace NCDK.QSAR.Descriptors.Moleculars
     // @cdk.created 2006-11-13
     // @cdk.module qsarmolecular
     // @cdk.githash
-    // @cdk.set qsar-descriptors
     // @cdk.dictref qsar-descriptors:chiPathCluster
     // @cdk.keyword chi path cluster index
     // @cdk.keyword descriptor

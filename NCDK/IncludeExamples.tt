@@ -1,4 +1,8 @@
-﻿<#@ template debug="false" hostspecific="true" language="C#" #>
+﻿<#
+// Copyright (C) 2017  Kazuya Ujihara <uzzy@users.sourceforge.net>
+// This file is under LGPL-2.1 
+#>
+<#@ template debug="false" hostspecific="true" language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ assembly name="System.Xml" #>
 <#@ assembly name="System.Xml.Linq" #>

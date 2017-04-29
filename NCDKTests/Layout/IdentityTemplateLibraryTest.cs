@@ -21,9 +21,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
 using NCDK.Common.Base;
-using NCDK.Common.Mathematics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NCDK.Default;
 using System.Collections.Generic;
@@ -36,7 +34,6 @@ namespace NCDK.Layout
     [TestClass()]
     public class IdentityTemplateLibraryTest
     {
-
         [TestMethod()]
         public void DecodeCoordinates()
         {
@@ -51,10 +48,9 @@ namespace NCDK.Layout
         [TestMethod()]
         public void EncodeCoordinates()
         {
-            Vector2[] points = new Vector2[] { new Vector2(12.5f, 5.5f), new Vector2(4f, 2f) };
+            Vector2[] points = new Vector2[] { new Vector2(12.5, 5.5), new Vector2(4, 2) };
             string str = IdentityTemplateLibrary.EncodeCoordinates(points);
-            Assert.AreEqual("|(12.5,5.5,;4.0,2.0,)|", str);
-
+            Assert.AreEqual("|(12.5,5.5,;4,2,)|", str);
         }
 
         [TestMethod()]
@@ -64,7 +60,7 @@ namespace NCDK.Layout
             Vector2[] points = new Vector2[] { new Vector2(12.5f, 5.5f), new Vector2(4f, 2f) };
             string encoded = IdentityTemplateLibrary.EncodeEntry(new KeyValuePair<string, Vector2[]>(smiles, points));
             var entry = IdentityTemplateLibrary.DecodeEntry(encoded);
-            Assert.AreEqual("CO |(12.5,5.5,;4.0,2.0,)|", encoded);
+            Assert.AreEqual("CO |(12.5,5.5,;4,2,)|", encoded);
         }
 
         [TestMethod()]
@@ -73,7 +69,7 @@ namespace NCDK.Layout
             string encode = "CO 12.500, 5.500, 4.000, 2.000";
             var entry = IdentityTemplateLibrary.DecodeEntry(encode);
             Assert.AreEqual("CO", entry.Key);
-            Assert.IsTrue(Compares.AreDeepEqual(new Vector2[] { new Vector2(12.5f, 5.5f), new Vector2(4f, 2f) }, entry.Value));
+            Assert.IsTrue(Compares.AreDeepEqual(new Vector2[] { new Vector2(12.5, 5.5), new Vector2(4, 2) }, entry.Value));
         }
 
         [TestMethod()]
@@ -125,9 +121,8 @@ namespace NCDK.Layout
             using (var baos = new MemoryStream())
             {
                 lib.Store(baos);
-                baos.Close();
                 Assert.AreEqual(
-                    "[C][C][O] |(.0,1.0,;2.0,3.0,;4.0,5.0,)|\n[C][C] |(.0,1.0,;2.0,3.0,)|\n",
+                    "[C][C][O] |(0,1,;2,3,;4,5,)|\n[C][C] |(0,1,;2,3,)|\n",
                     Encoding.UTF8.GetString(baos.ToArray()));
             }
         }

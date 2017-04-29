@@ -6,6 +6,8 @@ namespace NCDK.Smiles.SMARTS.Parser
     public
     class ASTLowAndExpression : SimpleNode
     {
+        private int mapIdx = 0;
+
         public ASTLowAndExpression(int id)
           : base(id)
         {
@@ -15,7 +17,16 @@ namespace NCDK.Smiles.SMARTS.Parser
           : base(p, id)
         {
         }
+        
+        public int GetMapIdx()
+        {
+            return mapIdx;
+        }
 
+        public void SetMapIdx(int mapIdx)
+        {
+            this.mapIdx = mapIdx;
+        }
 
         /// <summary>Accept the visitor. </summary>
         public override object JJTAccept(SMARTSParserVisitor visitor, object data)

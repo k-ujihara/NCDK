@@ -35,13 +35,10 @@ namespace NCDK.Renderers.Generators.Standards
     /// Immutable outline of text. The outline is maintained as a Java 2D shape
     /// instance and can be transformed. As an immutable instance, transforming the
     /// outline creates a new instance.
-    ///
-    // @author John May
     /// </summary>
+    // @author John May
     sealed class TextOutline
     {
-        //public static readonly Typeface FONT_RENDER_CONTEXT = new FontRenderContext(new AffineTransform(), true, true);
-
         /// <summary>
         /// The original text.
         /// </summary>

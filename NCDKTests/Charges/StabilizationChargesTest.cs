@@ -56,6 +56,7 @@ namespace NCDK.Charges
         /// <returns>The test suite</returns>
         //  @cdk.inchi InChI=1/C4H8/c1-3-4-2/h3H,1,4H2,2H3
         [TestMethod()]
+        [TestCategory("SlowTest")]
         public void TestCalculatePositive_IAtomContainer_IAtom()
         {
             StabilizationCharges sc = new StabilizationCharges();

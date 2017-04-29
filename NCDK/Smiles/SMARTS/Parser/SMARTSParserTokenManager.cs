@@ -16,9 +16,6 @@
  * Foundation, 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  * (or see http://www.gnu.org/copyleft/lesser.html)
  */
-
-using static NCDK.Smiles.SMARTS.Parser.SMARTSParserConstants;
-
 namespace NCDK.Smiles.SMARTS.Parser
 {
     /// <summary>Token Manager.</summary>
@@ -61,7 +58,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case 36:
                     return JjStopAtPos(0, 43);
                 case 37:
-                    return JjStopAtPos(0, 150);
+                    return JjStopAtPos(0, 149);
                 case 38:
                     return JjStopAtPos(0, 3);
                 case 40:
@@ -72,14 +69,14 @@ namespace NCDK.Smiles.SMARTS.Parser
                     return JjStopAtPos(0, 33);
                 case 43:
                     jjmatchedKind = 44;
-                    return JjMoveStringLiteralDfa1_1(0x0L, 0x1fc0000000L);
+                    return JjMoveStringLiteralDfa1_1(0x0L, 0xfe0000000L);
                 case 44:
                     return JjStopAtPos(0, 4);
                 case 45:
                     jjmatchedKind = 6;
-                    return JjMoveStringLiteralDfa1_1(0x0L, 0x3f800000L);
+                    return JjMoveStringLiteralDfa1_1(0x0L, 0x1fc00000L);
                 case 46:
-                    return JjStopAtPos(0, 149);
+                    return JjStopAtPos(0, 148);
                 case 47:
                     jjmatchedKind = 7;
                     return JjMoveStringLiteralDfa1_1(0x200L, 0x0L);
@@ -90,8 +87,7 @@ namespace NCDK.Smiles.SMARTS.Parser
                 case 61:
                     return JjStopAtPos(0, 11);
                 case 62:
-                    jjmatchedKind = 148;
-                    return JjMoveStringLiteralDfa1_1(0x0L, 0x80000L);
+                    return JjStopAtPos(0, 147);
                 case 63:
                     return JjStopAtPos(0, 37);
                 case 64:
@@ -156,23 +152,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x40000000L) != 0L)
+                    if ((active2 & 0x20000000L) != 0L)
                     {
-                        jjmatchedKind = 158;
+                        jjmatchedKind = 157;
                         jjmatchedPos = 1;
                     }
-                    return JjMoveStringLiteralDfa2_1(active0, 0L, active2, 0x1f80000000L);
+                    return JjMoveStringLiteralDfa2_1(active0, 0L, active2, 0xfc0000000L);
                 case 45:
-                    if ((active2 & 0x800000L) != 0L)
+                    if ((active2 & 0x400000L) != 0L)
                     {
-                        jjmatchedKind = 151;
+                        jjmatchedKind = 150;
                         jjmatchedPos = 1;
                     }
-                    return JjMoveStringLiteralDfa2_1(active0, 0L, active2, 0x3f000000L);
-                case 62:
-                    if ((active2 & 0x80000L) != 0L)
-                        return JjStopAtPos(1, 147);
-                    break;
+                    return JjMoveStringLiteralDfa2_1(active0, 0L, active2, 0x1f800000L);
                 case 63:
                     if ((active0 & 0x200L) != 0L)
                         return JjStopAtPos(1, 9);
@@ -213,19 +205,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x80000000L) != 0L)
+                    if ((active2 & 0x40000000L) != 0L)
                     {
-                        jjmatchedKind = 159;
+                        jjmatchedKind = 158;
                         jjmatchedPos = 2;
                     }
-                    return JjMoveStringLiteralDfa3_1(active2, 0x1f00000000L);
+                    return JjMoveStringLiteralDfa3_1(active2, 0xf80000000L);
                 case 45:
-                    if ((active2 & 0x1000000L) != 0L)
+                    if ((active2 & 0x800000L) != 0L)
                     {
-                        jjmatchedKind = 152;
+                        jjmatchedKind = 151;
                         jjmatchedPos = 2;
                     }
-                    return JjMoveStringLiteralDfa3_1(active2, 0x3e000000L);
+                    return JjMoveStringLiteralDfa3_1(active2, 0x1f000000L);
                 default:
                     break;
             }
@@ -244,19 +236,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x100000000L) != 0L)
+                    if ((active2 & 0x80000000L) != 0L)
                     {
-                        jjmatchedKind = 160;
+                        jjmatchedKind = 159;
                         jjmatchedPos = 3;
                     }
-                    return JjMoveStringLiteralDfa4_1(active2, 0x1e00000000L);
+                    return JjMoveStringLiteralDfa4_1(active2, 0xf00000000L);
                 case 45:
-                    if ((active2 & 0x2000000L) != 0L)
+                    if ((active2 & 0x1000000L) != 0L)
                     {
-                        jjmatchedKind = 153;
+                        jjmatchedKind = 152;
                         jjmatchedPos = 3;
                     }
-                    return JjMoveStringLiteralDfa4_1(active2, 0x3c000000L);
+                    return JjMoveStringLiteralDfa4_1(active2, 0x1e000000L);
                 default:
                     break;
             }
@@ -275,19 +267,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x200000000L) != 0L)
+                    if ((active2 & 0x100000000L) != 0L)
                     {
-                        jjmatchedKind = 161;
+                        jjmatchedKind = 160;
                         jjmatchedPos = 4;
                     }
-                    return JjMoveStringLiteralDfa5_1(active2, 0x1c00000000L);
+                    return JjMoveStringLiteralDfa5_1(active2, 0xe00000000L);
                 case 45:
-                    if ((active2 & 0x4000000L) != 0L)
+                    if ((active2 & 0x2000000L) != 0L)
                     {
-                        jjmatchedKind = 154;
+                        jjmatchedKind = 153;
                         jjmatchedPos = 4;
                     }
-                    return JjMoveStringLiteralDfa5_1(active2, 0x38000000L);
+                    return JjMoveStringLiteralDfa5_1(active2, 0x1c000000L);
                 default:
                     break;
             }
@@ -306,19 +298,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x400000000L) != 0L)
+                    if ((active2 & 0x200000000L) != 0L)
                     {
-                        jjmatchedKind = 162;
+                        jjmatchedKind = 161;
                         jjmatchedPos = 5;
                     }
-                    return JjMoveStringLiteralDfa6_1(active2, 0x1800000000L);
+                    return JjMoveStringLiteralDfa6_1(active2, 0xc00000000L);
                 case 45:
-                    if ((active2 & 0x8000000L) != 0L)
+                    if ((active2 & 0x4000000L) != 0L)
                     {
-                        jjmatchedKind = 155;
+                        jjmatchedKind = 154;
                         jjmatchedPos = 5;
                     }
-                    return JjMoveStringLiteralDfa6_1(active2, 0x30000000L);
+                    return JjMoveStringLiteralDfa6_1(active2, 0x18000000L);
                 default:
                     break;
             }
@@ -337,19 +329,19 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x800000000L) != 0L)
+                    if ((active2 & 0x400000000L) != 0L)
                     {
-                        jjmatchedKind = 163;
+                        jjmatchedKind = 162;
                         jjmatchedPos = 6;
                     }
-                    return JjMoveStringLiteralDfa7_1(active2, 0x1000000000L);
+                    return JjMoveStringLiteralDfa7_1(active2, 0x800000000L);
                 case 45:
-                    if ((active2 & 0x10000000L) != 0L)
+                    if ((active2 & 0x8000000L) != 0L)
                     {
-                        jjmatchedKind = 156;
+                        jjmatchedKind = 155;
                         jjmatchedPos = 6;
                     }
-                    return JjMoveStringLiteralDfa7_1(active2, 0x20000000L);
+                    return JjMoveStringLiteralDfa7_1(active2, 0x10000000L);
                 default:
                     break;
             }
@@ -368,12 +360,12 @@ namespace NCDK.Smiles.SMARTS.Parser
             switch ((int)curChar)
             {
                 case 43:
-                    if ((active2 & 0x1000000000L) != 0L)
-                        return JjStopAtPos(7, 164);
+                    if ((active2 & 0x800000000L) != 0L)
+                        return JjStopAtPos(7, 163);
                     break;
                 case 45:
-                    if ((active2 & 0x20000000L) != 0L)
-                        return JjStopAtPos(7, 157);
+                    if ((active2 & 0x10000000L) != 0L)
+                        return JjStopAtPos(7, 156);
                     break;
                 default:
                     break;
@@ -961,10 +953,10 @@ namespace NCDK.Smiles.SMARTS.Parser
     "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr",
     "Np", "Ce", "Nd", "Pm", "Sm", "Eu", "Gd",
     "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu",
-    "Pr", "Sc", ">>", ">", ".", "%", "--", "---",
-    "----", "-----", "------", "-------",
-    "--------", "++", "+++", "++++", "+++++",
-    "++++++", "+++++++", "++++++++", };
+    "Pr", "Sc", ">", ".", "%", "--", "---", "----",
+    "-----", "------", "-------", "--------",
+     "++", "+++", "++++", "+++++", "++++++",
+    "+++++++", "++++++++", };
 
         /// <summary>Lexer state names.</summary>
         public static readonly string[] lexStateNames = new string[]{
@@ -973,15 +965,16 @@ namespace NCDK.Smiles.SMARTS.Parser
     };
 
         /// <summary>Lex State array.</summary>
-        public static readonly int[] jjnewLexState = new int[] {
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-       -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-    };
+        public static readonly int[] jjnewLexState = new int[]
+        {
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+           -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+        };
         protected SimpleCharStream input_stream;
         private readonly int[] jjrounds = new int[2];
         private readonly int[] jjstateSet = new int[4];

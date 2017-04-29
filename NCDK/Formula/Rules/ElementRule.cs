@@ -120,7 +120,7 @@ namespace NCDK.Formula.Rules
 
                 mfRange = new MolecularFormulaRange();
                 foreach (var element in elements)
-                    mfRange.Add(builder.CreateIsotope(element), 0, 50);
+                    mfRange.AddIsotope(builder.CreateIsotope(element), 0, 50);
             }
         }
     }

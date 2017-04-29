@@ -30,7 +30,7 @@ namespace NCDK.Renderers
 {
     /// <summary>
     /// Interface that all 2D renderers implement. The constructor is responsible
-    /// for registering the <see cref="IGenerator"/>s' <see cref="IGeneratorParameter"/>s with
+    /// for registering the <see cref="IGenerator{T}"/>s' <see cref="IGeneratorParameter"/>s with
     /// with the associated <see cref="RendererModel"/>.
     /// </summary>
     // @author egonw
